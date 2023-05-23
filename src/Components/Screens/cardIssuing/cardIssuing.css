@@ -1,0 +1,17 @@
+.page_overall_root_background_gradient {
+  background: linear-gradient(106.37deg, #d8e5ff 1.88%, #f8e4ff 100%);
+}
+
+.card_activation_boxshadow{
+  box-shadow: 0px 0px 10.6104px rgba(0, 0, 0, 0.25);
+  background: rgba(146, 171, 254, 0.18);
+}
+
+.card_activation_boxshadow2{
+  box-shadow: 0px 0px 10.6104px rgba(0, 0, 0, 0.25);
+}
+
+
+.card_activation_boxshadow3{
+  box-shadow: 0px 0px 12.1875px #3FBDF1;
+}
