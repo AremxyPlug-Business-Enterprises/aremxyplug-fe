@@ -1,30 +1,22 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
+import { ContextProvider } from "../Context";
 import { Modal } from "../Screens/Modal/Modal";
 import { VerifyViaEmail } from "./VeirifyViaEmail/VerifyViaEmail";
 import { VerifyViaSms } from "./VerifyViaSms/VerifyViaSms";
 
-export const Verification = ({ Email, phoneNumber }) => {
-  const [buttonColor, setButtonColor] = useState("#0003");
-  const [borderColor, setBorderColor] = useState(false);
-  const [viaEmail, setViaEmail] = useState(false);
-  const [viaSms, setViaSms] = useState(false);
-  const [sms, setSms] = useState(true);
-  const [email, setEmail] = useState(true);
-
-  const onClick = () => {
-    setButtonColor("#04177f");
-    setBorderColor(!borderColor);
-    setSms(true);
-    setEmail(true);
-  };
-
-  const submitHandler = () => {
-    if (sms) {
-      setViaSms(true);
-    } else if (email) {
-      setViaEmail(true);
-    }
-  };
+export const Verification = () => {
+  const {
+    buttonColor,
+    smsborderColor,
+    emailborderColor,
+    viaEmail,
+    viaSms,
+    sms,
+    email,
+    onClickSms,
+    onClickEmail,
+    submitHandler,
+  } = useContext(ContextProvider);
 
   return (
     <>
@@ -36,9 +28,9 @@ export const Verification = ({ Email, phoneNumber }) => {
           {/* ========Button to verify through SMS====== */}
           {sms && (
             <div
-              onClick={onClick}
+              onClick={onClickSms}
               style={{
-                border: `1px solid ${borderColor ? "#D166FF" : "#0003"}`,
+                border: `1px solid ${smsborderColor}`,
               }}
               className="flex h-[32px] w-[92px] cursor-pointer rounded-[4.5px] p-1 gap-[5px] lg:w-[161px] lg:h-[60px] lg:rounded-[8px]"
             >
@@ -57,9 +49,9 @@ export const Verification = ({ Email, phoneNumber }) => {
           {/* =========Button to verify through Email====== */}
           {email && (
             <div
-              onClick={onClick}
+              onClick={onClickEmail}
               style={{
-                border: `1px solid ${!borderColor ? "#D166FF" : "#0003"}`,
+                border: `1px solid ${emailborderColor}`,
               }}
               className="flex h-[32px] w-[92px] cursor-pointer rounded-[4.5px] p-1 gap-[5px] lg:w-[161px] lg:h-[60px] lg:rounded-[8px]"
             >
@@ -89,7 +81,7 @@ export const Verification = ({ Email, phoneNumber }) => {
       {/* ========Email verification pop up==== */}
       {viaEmail && (
         <Modal>
-          <VerifyViaEmail themail={email} />
+          <VerifyViaEmail />
         </Modal>
       )}
 

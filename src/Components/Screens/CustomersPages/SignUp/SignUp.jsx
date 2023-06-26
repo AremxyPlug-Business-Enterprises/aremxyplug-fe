@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import ReactFlagsSelect from "chima-flags-select";
 import PhoneInput from "react-phone-input-2";
 import { AiFillEyeInvisible } from "react-icons/ai";
@@ -7,12 +7,28 @@ import { FcGoogle } from "react-icons/fc";
 import "./SignUp.css";
 import { Link } from "react-router-dom";
 import { ContextProvider } from "../../../Context";
-import Joi from "joi";
 import { Verification } from "../../../VerificationCode/Verification";
 import { Modal } from "../../Modal/Modal";
 
 export const SignUp = () => {
-  const { hideNavbar, setHideNavbar } = useContext(ContextProvider);
+  const {
+    hideNavbar,
+    setHideNavbar,
+    isFocused,
+    showPassword,
+    showPasswordTwo,
+    errors,
+    verification,
+    state,
+    handleCountryChange,
+    handlePhoneNumberChange,
+    changeHandler,
+    handleFocus,
+    handleBlur,
+    handleSubmit,
+    setShowPassword,
+    setShowPasswordTwo,
+  } = useContext(ContextProvider);
 
   const setNav = () => {
     setHideNavbar(true);
@@ -27,22 +43,6 @@ export const SignUp = () => {
     // eslint-disable-next-line
   }, []);
 
-  const [isFocused, setIsFocused] = useState([]);
-  const [showPassword, setShowPassword] = useState(false);
-  const [showPasswordTwo, setShowPasswordTwo] = useState(false);
-  const [errors, setErrors] = useState({});
-  const [verification, setVerification] = useState(false);
-  const [state, setState] = useState({
-    country: "",
-    fullName: "",
-    userName: "",
-    email: "",
-    phoneNumber: "",
-    IVcode: "",
-    password: "",
-    confirmPassword: "",
-  });
-
   const {
     country,
     // fullName,
@@ -56,121 +56,6 @@ export const SignUp = () => {
 
   console.log(state);
 
-  // ========form validation using regex=======
-  const schema = Joi.object({
-    country: Joi.string().required(),
-
-    fullName: Joi.string()
-      .pattern(new RegExp(/^[A-Za-z]+(?:\s[A-Za-z]+)+$/))
-      .required()
-      .messages({
-        "string.pattern.base": "Please enter your First name and last name",
-      }),
-
-    userName: Joi.string()
-      .pattern(new RegExp(/^[A-Za-z\s]+$/))
-      .required()
-      .messages({ "string.pattern.base": "Invalid Username" }),
-
-    email: Joi.string()
-      .pattern(new RegExp(/^[^\s@]+@[^\s@]+\.[^\s@]+$/))
-      .required()
-      .messages({ "string.pattern.base": "Invalid email " }),
-
-    phoneNumber: Joi.string().required(),
-
-    password: Joi.string()
-      .pattern(new RegExp(/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[^a-zA-Z\d\s]).{8,}$/))
-      .required()
-      .messages({
-        "string.pattern.base":
-          "Password must have At least one alphabetical character, At least one digit, Contains at least one special character (e.g., !@#$%^&*) and Minimum length of 8 characters",
-      }),
-
-    confirmPassword: Joi.string()
-      .pattern(new RegExp(/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[^a-zA-Z\d\s]).{8,}$/))
-      .required()
-      .messages({
-        "string.pattern.base":
-          "Password must have At least one alphabetical character, At least one digit, Contains at least one special character (e.g., !@#$%^&*) and Minimum length of 8 characters",
-      }),
-  });
-  // ======end of form valdiation=====
-
-  const handleCountryChange = (countryCode) => {
-    setState({ ...state, country: countryCode });
-  };
-
-  const handlePhoneNumberChange = (value) => {
-    setState({ ...state, phoneNumber: value });
-  };
-
-  function changeHandler(e) {
-    const { name, value } = e.target;
-    setState({ ...state, [name]: value });
-  }
-
-  const handleFocus = (index) => {
-    if (!isFocused.includes(index)) {
-      setIsFocused([...isFocused, index]);
-    }
-  };
-
-  const handleBlur = (index) => {
-    if (isFocused.includes(index)) {
-      setIsFocused(isFocused.filter((item) => item !== index));
-    }
-  };
-
-  // ======on submit function=======
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    const {
-      country,
-      fullName,
-      userName,
-      email,
-      phoneNumber,
-      password,
-      confirmPassword,
-    } = state;
-
-    const { error } = schema.validate({
-      fullName,
-      userName,
-      email,
-      phoneNumber,
-      password,
-      confirmPassword,
-      country,
-    });
-
-    if (error) {
-      // Handle validation error
-      setErrors(
-        error.details.reduce((acc, curr) => {
-          acc[curr.path[0]] = curr.message;
-          return acc;
-        }, {})
-      );
-    } else {
-      console.log("Form submitted successfully");
-      setVerification(true);
-      setState({
-        country: "",
-        fullName: "",
-        userName: "",
-        email: "",
-        phoneNumber: "",
-        IVcode: "",
-        password: "",
-        confirmPassword: "",
-      });
-      setErrors({});
-    }
-  };
-
   return (
     <div className="bg-[#04177f] md:h-[100%] pb-[%] md:flex md:pb-0 md:">
       {/* =====Hero Image==== */}
@@ -180,8 +65,7 @@ export const SignUp = () => {
         alt="/"
       />
       {/* =====Hero Image==== */}
-      {/* md:h-[640px] */}
-      {/* lg:h-[1024px] */}
+
       {/* =====Sign up Form==== */}
       <div className="md:h-[100%] pb-[10%] bg-[#ffffff] ml-[3%] rounded-bl-3xl rounded-tl-3xl px-[4%] md:pb-[5%] md:w-[573px]  md:ml-[30%] lg:w-[1001px]  lg:ml-[%] lg:px-0 lg:rounded-bl-[52px] lg:rounded-tl-[52px]">
         <Link to="/">
@@ -198,7 +82,7 @@ export const SignUp = () => {
           Create an account Now to get started...
         </p>
         <form
-          // onSubmit={handleSubmit}
+          onSubmit={handleSubmit}
           className="pt-[5%] pb-[10%] md:grid md:grid-cols-2 md:gap-[5%] md:mx-[8%] lg:pt-[13%] lg:px-[10%] lg:pb-[6%]"
         >
           {/* =====Country Input start======= */}
@@ -484,7 +368,10 @@ export const SignUp = () => {
                 Privacy Policy{" "}
               </Link>
               and{" "}
-              <Link to="/terms-and-condition" className="text-[#04177f] hover:underline">
+              <Link
+                to="/terms-and-condition"
+                className="text-[#04177f] hover:underline"
+              >
                 Terms & Conditions
               </Link>
               .
@@ -527,7 +414,7 @@ export const SignUp = () => {
 
       {verification && (
         <Modal>
-          <Verification Email={email} phone={phoneNumber} />
+          <Verification />
         </Modal>
       )}
     </div>
