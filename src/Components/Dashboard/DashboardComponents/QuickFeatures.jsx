@@ -2,6 +2,7 @@ import React from "react";
 import { useContext } from "react";
 import { ContextProvider } from "../../Context";
 import styles from "./component.module.css";
+import { Link } from "react-router-dom";
 const QuickFeatures = () => {
 
   const {isDarkMode} = useContext(ContextProvider)
@@ -18,7 +19,7 @@ const QuickFeatures = () => {
       <div className={`${styles.quickgrid} grid grid-cols-5 gap-y-2 mt-[3%]`}>
         <div className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${styles.feature}`}>
           <img className="h-[25px] w-[25px] md:w-[] md:h-[] lg:h-[79px] lg:w-[79px]" src="./Images/Dashboardimages/feature1.png" alt="/" />
-          <p>Airtime Topup</p>
+          <Link to={`/airtime-topup`}>Airtime Topup</Link>
         </div>
         <div className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${styles.feature}`}>
           <img className=" h-[25px] w-[25px] md:w-[] md:h-[] lg:h-[79px] lg:w-[79px]" src="./Images/Dashboardimages/feature2.png" alt="/" />

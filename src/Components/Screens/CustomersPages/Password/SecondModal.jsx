@@ -33,7 +33,7 @@ const SecondModal = ({value}) => {
             setSubmission(true);
         }
     }
-    console.log(+OTP);
+    
   return (
     <>
         {/* this is such that whatever is selected determines the kind of modal that shows and it contents */}
@@ -89,7 +89,7 @@ const SecondModal = ({value}) => {
                         <h2 className='text-red-500 text-[5.7px] text-center leading-normal lg:text-[10px] mt-[3px]'>{error}</h2>
                         <ResendOTP handelResendClick={() => alert("Resend clicked")} className='text-[5.7px] text-primary lg:text-[10px]'/>
                         <div className='flex justify-center mt-[20.65px]'>
-                            <button className='py-[5.729px] px-[20.052px] border rounded-[4.583px] disabled:bg-[#ccc] font-bold text-white text-[6.875px] leading-normal bg-primary lg:py-[10px] lg:px-[35px] lg:text-[12px] lg:rounded-[8px]' disabled={OTP.length !==6 } onClick={handleSubmit}>Continue</button>
+                            <button className='py-[5.729px] px-[20.052px] border rounded-[4.583px] disabled:bg-[#ccc] font-bold text-white text-[6.875px] leading-normal bg-primary lg:py-[10px] lg:px-[35px] lg:text-[12px] lg:rounded-[8px]' disabled={ OTP.length !==6 } onClick={handleSubmit}>Continue</button>
                         </div>
                     </form>
                 </div>

@@ -163,7 +163,7 @@ export const MainDashboard = () => {
                   isDarkMode ? "border bg-black" : "bg-[#04177f]"
                 } ${styles.viewWallet}`}
               >
-                View Wallets
+                <Link to={`/wallet`}>View Wallets</Link>
               </button>
               <p
                 className={`${
