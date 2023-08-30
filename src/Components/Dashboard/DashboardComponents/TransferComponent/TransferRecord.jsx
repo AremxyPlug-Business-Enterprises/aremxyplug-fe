@@ -48,7 +48,8 @@ const CountrySelect = ({ onSelect, selectedCountry, countries }) => {
 
   const {
     setNoRecord,
-    setAvailableAccount,
+    setPersonalAccount,
+    setBusinessAccount,
     image,
     setImage,
     setCode,
@@ -56,6 +57,7 @@ const CountrySelect = ({ onSelect, selectedCountry, countries }) => {
     setShowList,
     selected,
     setSelected,
+    activeButton,
   } = useContext(ContextProvider);
 
   const handleOptionClick = (country, flag, id, code) => {
@@ -65,7 +67,13 @@ const CountrySelect = ({ onSelect, selectedCountry, countries }) => {
     setShowList(false);
     setSelected(true);
     setNoRecord(id !== 1);
-    setAvailableAccount(id === 1);
+    if (activeButton[0]) {
+      setPersonalAccount(id === 1);
+      // setBusinessAccount(false);
+    } else if (activeButton[1]) {
+      setBusinessAccount(id === 1);
+      // setPersonalAccount(false);
+    }
 
     console.log(id);
   };
@@ -131,11 +139,19 @@ const CountrySelect = ({ onSelect, selectedCountry, countries }) => {
   );
 };
 
-// ===================Transfer Page To Account================
+// ===================Transfer To Account Page================
 export const TransferRecord = () => {
   const { isDarkMode, handleActive, activeButton } =
     useContext(ContextProvider);
-  const { noRecord, availableAccount, image } = useContext(ContextProvider);
+  const {
+    noRecord,
+    personalAccount,
+    businessAccount,
+    setPersonalAccount,
+    setBusinessAccount,
+    setNoRecord,
+    image,
+  } = useContext(ContextProvider);
   const [selectedCountry, setSelectedCountry] = useState("");
 
   const handleCountrySelect = (country, id) => {
@@ -149,6 +165,8 @@ export const TransferRecord = () => {
           <div
             onClick={() => {
               handleActive(0);
+              setBusinessAccount(false);
+              setNoRecord(true);
             }}
             className={`${
               activeButton[0]
@@ -161,6 +179,8 @@ export const TransferRecord = () => {
           <div
             onClick={() => {
               handleActive(1);
+              setPersonalAccount(false);
+              setNoRecord(true);
             }}
             className={`${
               activeButton[1]
@@ -209,7 +229,8 @@ export const TransferRecord = () => {
         </div>
       )}
 
-      {availableAccount && (
+      {/* =======================Personal Account Table==================== */}
+      {personalAccount && (
         <table className="text-[7px] md:text-[12px] lg:text-[16px]">
           <thead>
             <tr className="bg-[#c3d9ff] lg:h-[47px]">
@@ -253,6 +274,65 @@ export const TransferRecord = () => {
                 <p>
                   {" "}
                   <Link to="/personal-account">AP-2023 0703-001 </Link>
+                </p>
+                <img
+                  className="w-[10px] h-[10px] md:w-[14px] md:h-[14px] lg:w-[20px] lg:h-[20px]"
+                  src="./Images/Dashboardimages/arrowright.png"
+                  alt="/"
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      )}
+
+      {/* =======================Business Account Table==================== */}
+      {businessAccount && (
+        <table className="text-[7px] md:text-[12px] lg:text-[16px]">
+          <thead>
+            <tr className="bg-[#c3d9ff] lg:h-[47px]">
+              <th>Country</th>
+              <th>Currency</th>
+              <th>Bank Name</th>
+              <th>Account Name</th>
+              <th>Account Number</th>
+              <th>Reference No</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td className="">
+                <div className="flex gap-[3px] lg:gap-[10px]">
+                  <img
+                    className="w-[11px] h-[11px] lg:w-[24px] lg:h-[24px]"
+                    src={image}
+                    alt=""
+                  />{" "}
+                  <p>
+                    {" "}
+                    <Link to="/business-account">Nigeria</Link>
+                  </p>
+                </div>
+              </td>
+              <td>
+                <Link to="/business-account">NGN</Link>
+              </td>
+              <td>
+                <Link to="/business-account">Mercury Bank</Link>
+              </td>
+              <td>
+                <Link to="/business-account">
+                  AremxyPlug Business Ent, LTD.
+                </Link>
+              </td>
+              <td>
+                <Link to="/business-account">01234*****</Link>
+              </td>
+              <td className="flex gap-[5px] lg:gap-[10px]">
+                <p>
+                  {" "}
+                  <Link to="/business-account">AP-2023 0703-001 </Link>
                 </p>
                 <img
                   className="w-[10px] h-[10px] md:w-[14px] md:h-[14px] lg:w-[20px] lg:h-[20px]"

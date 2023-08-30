@@ -11,7 +11,7 @@ import { DeleteAccountPopUp } from "../TransferComponent/PopUps/DeleteAccountPop
 import { DeleteSuccessfulPopUp } from "../TransferComponent/PopUps/DeleteSuccessfulPopUp";
 import { InputPinPopUp } from "../TransferComponent/PopUps/InputPinPopUp";
 
-export const PersonalAccountPage = () => {
+export const BusinessAccountPage = () => {
   const {
     isDarkMode,
     image,
@@ -109,9 +109,9 @@ export const PersonalAccountPage = () => {
             >
               <div className="flex flex-col gap-[5px] md:gap-[10px]">
                 <p className="text-[13px] font-extrabold md:text-[20px]">
-                  Email Address
+                  Company's Email
                 </p>
-                <p className="text-[10px] md:text-[15px]">habib@gmail.com</p>
+                <p className="text-[10px] md:text-[15px]">hello@aremxyplug.com</p>
               </div>
               <img
                 className="w-[18px] h-[18px] md:w-[24px] md:h-[24px] lg:w-[29px] lg:h-[29px]"
@@ -126,10 +126,10 @@ export const PersonalAccountPage = () => {
             >
               <div className="flex flex-col gap-[5px] md:gap-[10px]">
                 <p className="text-[13px] font-extrabold md:text-[20px]">
-                  Home Address
+                  Company's Address
                 </p>
                 <p className="text-[10px] md:text-[15px]">
-                  AC 123 AremxyPlug Street, Nigeria
+                  AC 123 AremxyPlug Street
                 </p>
               </div>
               <img
@@ -162,9 +162,9 @@ export const PersonalAccountPage = () => {
             >
               <div className="flex flex-col gap-[5px] md:gap-[10px]">
                 <p className="text-[13px] font-extrabold md:text-[20px]">
-                  Account Name
+                  Company's Name
                 </p>
-                <p className="text-[10px] md:text-[15px]">Habib Kamaldeen</p>
+                <p className="text-[10px] md:text-[15px]">Aremxyplug Business Ent, LTD.</p>
               </div>
               <img
                 className="w-[18px] h-[18px] md:w-[24px] md:h-[24px] lg:w-[29px] lg:h-[29px]"

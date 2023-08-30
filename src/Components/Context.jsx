@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useRef } from "react";
 import Joi from "joi";
 import axios from "axios";
 // import { BASE_URL } from "../config";
@@ -340,6 +340,7 @@ export const Context = ({ children }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isValue, SetIsValue] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
+  const date = new Date();
 
   const handleToggle = () => {
     setIsDarkMode(!isDarkMode);
@@ -350,14 +351,44 @@ export const Context = ({ children }) => {
   };
   // =============End Dashboard====================
 
-  // ==============Start Transfer page=============
+  // ==============Start Transfer pages=============
   const [noRecord, setNoRecord] = useState(true);
-  const [availableAccount, setAvailableAccount] = useState(false);
+  const [personalAccount, setPersonalAccount] = useState(false);
+  const [businessAccount, setBusinessAccount] = useState(false);
   const [image, setImage] = useState("");
   const [code, setCode] = useState("");
   const [activeButton, setActiveButtons] = useState([true, false]);
   const [showList, setShowList] = useState(false);
   const [selected, setSelected] = useState(false);
+  const [amtToTransfer, setAmtToTransfer] = useState("");
+  const [confirmationPopUp, setConfirmationPopUp] = useState(false);
+  const [inputPinPopUp, setInputPinPopUp] = useState(false);
+  const [transactSuccessPopUp, setTransactSuccessPopUp] = useState(false);
+  const [tfPopUp, setTfPopUp] = useState(false);
+  const [deletePopUp, setDeletePopUp] = useState(false);
+  const [deleteSuccess, setDeleteSuccess] = useState(false);
+  const [inputPin, setInputPin] = useState("");
+  const textRef = useRef(null);
+  const transferFee = 50;
+
+  // =============Copy to Clipboard function=============
+  const handleCopyClick = () => {
+    const text = textRef.current.innerText;
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        alert("Copied to clipboard");
+      })
+      .catch((err) => {
+        console.error("Error copying text: ", err);
+      });
+  };
+
+  const inputPinHandler = (e) => {
+    setInputPin(e.target.value);
+    setInputPinPopUp(false);
+    setTransactSuccessPopUp(true);
+  };
 
   const handleActive = (index) => {
     const updatedButtons = activeButton.map((isActive, i) => i === index);
@@ -492,8 +523,10 @@ export const Context = ({ children }) => {
     // =========transferpages===========
     noRecord,
     setNoRecord,
-    availableAccount,
-    setAvailableAccount,
+    personalAccount,
+    setPersonalAccount,
+    businessAccount,
+    setBusinessAccount,
     image,
     setImage,
     code,
@@ -505,6 +538,28 @@ export const Context = ({ children }) => {
     setShowList,
     selected,
     setSelected,
+    amtToTransfer,
+    setAmtToTransfer,
+    textRef,
+    transferFee,
+    date,
+    useRef,
+    confirmationPopUp,
+    setConfirmationPopUp,
+    inputPinPopUp,
+    setInputPinPopUp,
+    transactSuccessPopUp,
+    setTransactSuccessPopUp,
+    handleCopyClick,
+    tfPopUp,
+    setTfPopUp,
+    deletePopUp,
+    setDeletePopUp,
+    deleteSuccess,
+    setDeleteSuccess,
+    inputPin,
+    setInputPin,
+    inputPinHandler,
   };
 
   return (

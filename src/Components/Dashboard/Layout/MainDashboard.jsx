@@ -87,7 +87,6 @@ export const MainDashboard = () => {
     return;
   };
 
-  
   return (
     <div>
       {/* ==============TOP BAR========== */}
@@ -458,18 +457,22 @@ export const MainDashboard = () => {
                 <p>Transfer</p>
               </div>
             </Link>
-            <div
+            <Link
+              to="/withdraw"
               className={`${
                 isDarkMode ? " border bg-[#000]" : "bg-[#04177f]"
               } ${styles.button}`}
             >
-              <img
-                className="w-[11px] h-[11px] md:h-[20px] md:w-[20px] lg:w-[51px] lg:h-[51px]"
-                src="./Images/dashboardImages/withdraw.png"
-                alt="topup"
-              />
-              <p>Withdraw</p>
-            </div>
+              {" "}
+              <div className="flex items-center gap-[6%]">
+                <img
+                  className="w-[11px] h-[11px] md:h-[20px] md:w-[20px] lg:w-[51px] lg:h-[51px]"
+                  src="./Images/dashboardImages/withdraw.png"
+                  alt="topup"
+                />
+                <p>Withdraw</p>
+              </div>
+            </Link>
             <div
               className={`${
                 isDarkMode ? " border bg-[#000]" : "bg-[#04177f]"
