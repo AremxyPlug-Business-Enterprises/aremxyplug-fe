@@ -308,7 +308,7 @@ export const InternationalDetail = ({
 
               <div className="w-full mx-auto mt-[15px] md:w-[100%] ">
                 <p className="text-[10px] font-extrabold md:text-[16px] lg:text-[14px]">
-                  Message
+                  Messages
                 </p>
                 <textarea
                   placeholder="Optional"
