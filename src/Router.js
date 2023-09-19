@@ -34,7 +34,7 @@ import PointBalance from "./Components/Wallet/PointBalance";
 import VirtualAccount from "./Components/Screens/virtualAccount/VirtualAccount";
 import { PersonalAccountPage } from "./Components/Dashboard/DashboardComponents/PersonalAccountPage/PersonalAccountPage";
 import AirTime from "./Components/AirTimePage/AirTime";
-import AirtimeVtu from "./Components/AirtimeTopUp/AirtimeVtu";
+import AirtimeVtu from "./Components/AirTimePage/AirtimeVtu";
 import { AddAccount } from "./Components/Dashboard/DashboardComponents/PersonalAccountPage/AddAccountPage/AddAccount";
 import NgnVirtualAccount from "./Components/Screens/ngnVirtualAccount/NgnVirtualAccount";
 import { CookiesSettings } from "./Components/Screens/Home/Cookie/CookiesSettings";

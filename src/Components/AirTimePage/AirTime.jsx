@@ -8,7 +8,6 @@ import { Link } from 'react-router-dom'
 
 const AirTime = () => {
     const [activeTab, setActiveTab] = useState('tab_1');
-    const [showVTU, setShowVTU] = useState(false);
     const [showRoll, setShowRoll] = useState(false);
     const [showVoucher, setShowVoucher] = useState(false);
     const [showSchedule, setShowSchedule] = useState(false);
@@ -70,8 +69,8 @@ const AirTime = () => {
                            <TabOneItem
                              title='Airtime VTU'
                              text='Top up your mobile sim using our automated airtime vending directly from network providers.'
-                             link=''
-                             onClick={()=> setShowVTU(true)}
+                             link='/airtime-vtu'
+                             onClick=''
                              icon='./Images/airtimeTopUp/simcard.svg'
                            />
                             <TabOneItem
@@ -107,8 +106,8 @@ const AirTime = () => {
                              <TabOneItem
                              title='Airtime VTU'
                              text='Top up your mobile sim using our automated airtime vending directly from network providers.'
-                             link=''
-                             onClick={()=> setShowVTU(true)}
+                             link='/airtime-vtu'
+                             onClick=''
                              icon='./Images/airtimeTopUp/simcard.svg'
                            />
                             <TabOneItem
@@ -154,23 +153,6 @@ const AirTime = () => {
                                 <div className={styles.coming}>
                                     <h2>Coming soon...</h2>
                                     <button className={styles.btnOk} onClick={handleTab1}>Okay</button>
-                                </div>
-                            </div>
-                        </WalletModal>
-                    }
-                    { showVTU &&
-                        <WalletModal>
-                            <div className={styles.NotInter}>
-                                <div className={styles.timeAble}>
-                                    <h2>Airtime VTU.</h2>
-                                    <h3>This Feature Will Soon Be Available.</h3>
-                                </div>
-                                <div className={styles.InterAirtime}>
-                                    <img src="./Images/airtimeTopUp/International-airtime.png" alt=""/>
-                                </div>
-                                <div className={styles.coming}>
-                                    <h2>Coming soon...</h2>
-                                    <button className={styles.btnOk} onClick={()=>setShowVTU(false)}>Okay</button>
                                 </div>
                             </div>
                         </WalletModal>

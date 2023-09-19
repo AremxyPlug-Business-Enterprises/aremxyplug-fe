@@ -63,7 +63,7 @@ const AirtimeTopUp = () => {
                              title='Airtime VTU'
                              text='Top up your mobile sim using our automated airtime vending directly from network providers.'
                              link='/airtime-vtu'
-                             onClick=''
+                             onClick='/airtime-vtu'
                              icon='./Images/airtimeTopUp/simcard.svg'
                            />
                             <TabOneItem
