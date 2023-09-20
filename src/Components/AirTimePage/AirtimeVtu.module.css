@@ -14,7 +14,7 @@
     margin: 0 auto;
     padding: 30px 40px;
     display: flex;
-    gap: 200px;
+    justify-content: space-between;
     background: linear-gradient(92.3deg, #73FF9A 26.51%, #6EDCFF 82.31%);
     border-radius: 20px;
     position: relative;
