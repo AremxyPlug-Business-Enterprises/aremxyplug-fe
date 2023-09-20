@@ -10,28 +10,28 @@
     margin: 0 auto;
 }
 .airtimeTop .banner {
-    width: 95%;
+    width: 98%;
     margin: 0 auto;
     padding: 30px 40px;
     display: flex;
-    gap: 300px;
+    gap: 200px;
     background: linear-gradient(92.3deg, #73FF9A 26.51%, #6EDCFF 82.31%);
     border-radius: 20px;
     position: relative;
-    height: 240px;
+    height: 200px;
 }
 .globalAir h3 {
-    font-size: 26px;
+    font-size: 22px;
     font-weight: 900;
-    line-height: 40px;
+    line-height: 30px;
     letter-spacing: 0em;
     margin-bottom: 3%;
     color: #000000;
 }
 .globalAir p {
-    font-size: 17px;
+    font-size: 14px;
     font-weight: 400;
-    line-height: 24px;
+    line-height: 20px;
     letter-spacing: 0em;
     text-align: left;
     color: #000000;
@@ -41,50 +41,52 @@
     margin-top: -1%;
 }
 .young img {
-    width: 220px;
-    height: 200px;
+    width: 200px;
+    height: 170px;
 }
 
 /* Previous Recipients */
 
 .airtimeTop .containFlex {
     padding-top: 5%;
-    width: 85%;
-    margin-left: 35px;
+    width: 88%;
+    margin-left: 10px;
     display: flex;
     justify-content: space-between;
 }
 .FlexPut {
     display: flex;
     justify-content: space-between;
-    padding: 14px 20px 12px;
+    padding: 14px 20px 14px;
     margin: auto 0;
     border-radius: 10px;
-    width: 375px;
-    height: 51px;
+    width: 350px;
+    height: 47px;
     border: none;
     box-shadow: 0px 0px 4px 0px #00000040;
+    font-size: 12px;
 }
 .FlexPut .FlexImg img {
     width: 24px;
 }
 .containFlex1 {
     padding-top: 2%;
-    width: 95%;
+    width: 98%;
     margin: 0 auto;
 }
 .FlexPut1 {
     display: flex;
     justify-content: space-between;
-    padding: 14px 20px 12px;
+    padding: 14px 20px 16px;
     margin: auto 0;
     border-radius: 10px;
-    width: 375px;
-    height: 51px;
+    width: 350px;
+    height: 47px;
     border: none;
     background: #04177F;
     box-shadow: 0px 0px 4px 0px #00000040;
     color: #FFF;
+    font-size: 12px;
 }
 .FlexPut1 .FlexImg1 img {
     width: 24px;
@@ -96,29 +98,29 @@
 
 .airtimeTop .mainGrid {
     padding-top: 3.5%;
-    width: 85%;
-    margin-left: 35px;
+    width: 88%;
+    margin-left: 10px;
     display: grid;
     grid-template-columns: repeat(2, min-content);
     justify-content: space-between;
-    row-gap: 20px;
+    row-gap: 25px;
 }
-
-
 .input {
     display: flex;
     justify-content: space-between;
-    padding: 14px 20px 12px;
+    padding: 14px 20px 14px;
     margin: auto 0;
     border-radius: 10px;
-    width: 375px;
-    height: 51px;
+    width: 350px;
+    height: 47px;
     border: none;
     box-shadow: 0px 0px 4px 0px #00000040;
+    font-size: 12px;
 }
 .input .head2 {
     font-weight: 800;
     color: #000000;
+    font-size: 12px;
 }
 .btnDrop {
     opacity: 1;
@@ -131,9 +133,10 @@
     border: none;
     box-shadow: 0px 4px 10px 0px #00000040;
     border-radius: 5px;
-    width: 375px;
+    width: 350px;
     transition: height .3s ease;
     background: #FFF;
+    font-size: 12px;
 }
 .labelInput {
     display: flex;
@@ -147,7 +150,7 @@
     gap: 2px;
     padding: 8px;
     margin: auto 0;
-    width: 375px;
+    width: 350px;
     transition: .3s;
 }
 .netList1 {
@@ -157,7 +160,7 @@
     gap: 2px;
     padding: 8px;
     margin: auto 0;
-    width: 375px;
+    width: 350px;
     transition: .3s;
 }
 .netList .netImage {
@@ -168,7 +171,7 @@
     object-fit: cover;
 }
 .netList1 .netName1 {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 800;
     line-height: 21px;
     letter-spacing: 0em;
@@ -176,7 +179,7 @@
     color: #219250;
 }
 .netList .netName {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     line-height: 21px;
     letter-spacing: 0em;
@@ -186,27 +189,30 @@
 .input1 {
     display: flex;
     justify-content: space-between;
-    padding: 14px 20px 12px;
+    padding: 14px 20px 14px;
     margin: auto 0;
     border-radius: 10px;
-    width: 375px;
-    height: 51px;
+    width: 350px;
+    height: 47px;
     border: none;
+    font-size: 12px;
     box-shadow: 0px 0px 4px 0px #00000040;
 }
 .input1 .span2 {
     color: #219250;
     font-weight: 800;
+    font-weight: 14px;
 }
 .input2 {
     display: flex;
     justify-content: space-between;
-    padding: 14px 20px 12px;
+    padding: 14px 20px 14px;
     margin: auto 0;
     border-radius: 10px;
-    width: 375px;
-    height: 51px;
+    width: 350px;
+    height: 47px;
     border: none;
+    font-size: 12px;
     box-shadow: 0px 0px 4px 0px #00000040;
 }
 .disc img {
@@ -215,7 +221,7 @@
 }
 .input .phone {
     outline: none;
-    font-size: 16px;
+    font-size: 12px;
     font-weight: 600;
     line-height: 21px;
     letter-spacing: 0em;
@@ -223,13 +229,14 @@
 }
 .phone::placeholder {
     font-weight: 400;
+    font-size: 12px;
 }
 .call img {
     margin: auto 0;
     width: 24px;
 }
 .span3 {
-    font-size: 12px;
+    font-size: 10px;
     font-weight: 700;
     line-height: 16px;
     letter-spacing: 0em;
@@ -238,13 +245,13 @@
 .head3 {
     color: #000000;
     font-weight: 600;
-    font-size: 16px;
+    font-size: 12px;
     line-height: 20.8px;
     padding-bottom: 3%;
 }
 .labelInput .head4 {
     margin: auto 0;
-    font-size: 16px;
+    font-size: 12px;
     font-weight: 500;
     line-height: 21px;
     letter-spacing: 0em;
@@ -257,16 +264,34 @@
     padding-top: 5%;
     display: flex;
     gap: 2px;
-    width: 95%;
+    width: 98%;
     margin: auto;
 }
 .add h2 {
-    font-size: 16px;
+    font-size: 12px;
     font-weight: 600;
     line-height: 21px;
     letter-spacing: 0em;
     text-align: left;
 }
+.containFlex2 {
+    padding-top: 5%;
+    width: 98%;
+    text-align: left;
+}
+.FlexPut2 {
+    padding: 8px 16px 18px;
+    margin: auto 0;
+    border-radius: 10px;
+    width: 158px;
+    height: 35px;
+    font-size: 12px;
+    border: none;
+    background: #04177F;
+    box-shadow: 0px 0px 4px 0px #00000040;
+    color: #FFF;
+}
+
 
 /* Contact aspect of the airtimeVTU page */
 

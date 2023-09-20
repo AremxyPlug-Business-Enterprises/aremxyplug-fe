@@ -10,28 +10,28 @@
     margin: 0 auto;
 }
 .airtimeTop .banner {
-    width: 95%;
+    width: 98%;
     margin: 0 auto;
     padding: 30px 40px;
     display: flex;
-    gap: 300px;
+    gap: 200px;
     background: linear-gradient(92.3deg, #6EDCFF 31.38%, rgba(65, 107, 255, 0.79) 98.66%);
     border-radius: 20px;
     position: relative;
-    height: 240px;
+    height: 200px;
 }
 .globalAir h3 {
-    font-size: 26px;
+    font-size: 22px;
     font-weight: 900;
-    line-height: 40px;
+    line-height: 30px;
     letter-spacing: 0em;
     margin-bottom: 3%;
     color: #000000;
 }
 .globalAir p {
-    font-size: 17px;
+    font-size: 14px;
     font-weight: 400;
-    line-height: 24px;
+    line-height: 20px;
     letter-spacing: 0em;
     text-align: left;
     color: #000000;
@@ -41,19 +41,19 @@
     margin-top: -1%;
 }
 .young img {
-    width: 220px;
-    height: 200px;
+    width: 200px;
+    height: 170px;
 }
 .airType {
     display: flex;
     padding-top: 5%;
     margin: auto;
-    width: 95%;
+    width: 98%;
     gap: 20px;
     cursor: pointer;
 }
 .airType h2 {
-    font-size: 20px;
+    font-size: 14px;
     font-weight: 500;
     line-height: 26px;
     letter-spacing: 0em;
@@ -61,7 +61,7 @@
     color: #7C7C7C;
 }
 .localInter {
-    width: 95%;
+    width: 98%;
     margin: 0 auto;
     padding-top: 5%;
     display: flex;
@@ -72,6 +72,7 @@
 }
 .localInter li {
     cursor: pointer;
+    font-size: 14px;
 }
 .active {
     border-top-right-radius: 10px;
@@ -101,7 +102,7 @@
     margin-bottom: 13%;
 }  
 .timeAble h2 {
-    font-size: 18px;
+    font-size: 14px;
     font-weight: 600;
     line-height: 24px;
     letter-spacing: 0em;
@@ -109,7 +110,7 @@
     margin-bottom: 2%;
 }
 .timeAble h3 {
-    font-size: 18px;
+    font-size: 14px;
     font-weight: 800;
     line-height: 24px;
     letter-spacing: 0em;
@@ -117,7 +118,7 @@
 }
 .NotInter .InterAirtime {
     margin: 0 auto;
-    padding-bottom: 13%;
+    padding-bottom: 16%;
 }
 .InterAirtime img {
     width: 260px;
@@ -133,7 +134,7 @@
     position: relative;
     left: 200px;
     top: 15px;
-    font-size: 12px;
+    font-size: 10px;
     font-weight: 800;
     line-height: 15px;
     letter-spacing: 0em;
@@ -145,7 +146,7 @@
     padding: 5px 25px;
     background: #04177F;
     color: #fff;
-    font-size: 18px;
+    font-size: 14px;
 }
 
 /* For each Tab that's not ready */
@@ -156,10 +157,10 @@
 }
 .NotInterX .timeAbleX {
     text-align: center; 
-    margin-bottom: 13%;
+    margin-bottom: 11%;
 }  
 .timeAbleX h2 {
-    font-size: 18px;
+    font-size: 14px;
     font-weight: 600;
     line-height: 24px;
     letter-spacing: 0em;
@@ -167,7 +168,7 @@
     margin-bottom: 2%;
 }
 .timeAbleX h3 {
-    font-size: 18px;
+    font-size: 14px;
     font-weight: 800;
     line-height: 24px;
     letter-spacing: 0em;
@@ -175,7 +176,7 @@
 }
 .NotInterX .InterAirtimeX {
     margin: 0 auto;
-    padding-bottom: 10%;
+    padding-bottom: 15%;
 }
 .InterAirtimeX img {
     width: 180px;
@@ -191,7 +192,7 @@
     position: relative;
     left: 200px;
     top: 15px;
-    font-size: 12px;
+    font-size: 10px;
     font-weight: 800;
     line-height: 15px;
     letter-spacing: 0em;
@@ -203,7 +204,7 @@
     padding: 5px 25px;
     background: #04177F;
     color: #fff;
-    font-size: 18px;
+    font-size: 14px;
 }
 
 /* This is the Local Airtime section */
@@ -212,7 +213,7 @@
     display: flex;
     flex-direction: column;
     gap: 30px;
-    width: 95%;
+    width: 98%;
     margin: 0 auto;
 }
 
@@ -225,7 +226,7 @@
     justify-content: space-between;
     border: none;
     border-radius: 12px;
-    padding: 25px;
+    padding: 15px;
     transition: .5s;
 }
 .airtimeCol:hover {
@@ -247,16 +248,16 @@
     display: flex;
     flex-direction: column;
     margin: auto 0;
-    gap: 5px;
+    gap: 3px;
 }
 .airText h2 {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 800;
     line-height: 24px;
     letter-spacing: 0em;
 }
 .airText p {
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 500;
     line-height: 21px;
     letter-spacing: 0em;

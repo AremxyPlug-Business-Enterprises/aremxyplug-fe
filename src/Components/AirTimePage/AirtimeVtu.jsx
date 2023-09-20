@@ -504,8 +504,8 @@ const AirtimeVtu = () => {
                         </div>
                     </div>
             }
-            <div className='py-[30px] lg:py-[60px] mt-10'>
-                <button className='w-full md:w-fit bg-primary text-white rounded-md px-[28px] text-[10px] leading-[15px] lg:text-[16px] lg:leading-[24px] py-[6px]' onClick={handleProceed}>Proceed</button>
+            <div className={styles.containFlex2}>
+                <button className={styles.FlexPut2} onClick={handleProceed}>Proceed</button>
             </div>
         </div>
         <div className={styles.help}>
