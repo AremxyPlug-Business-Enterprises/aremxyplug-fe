@@ -1,31 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import { useContext } from "react";
 import { ContextProvider } from "../../../../../../Context";
 import { Modal } from "../../../../../../Screens/Modal/Modal";
 import styles from "../../../../TransferComponent/transfer.module.css";
+import { InternationalInputPinPopUp } from "./InternationInputPinPopUp";
 
-export const ConfirmInterTransactionPopUp = ({
-  transferamount,
-  bankName,
-  accountNumber,
-  accountName,
-  swiftCode,
-  recipientAddress,
-  purposeOfPayment,
-  amountToTransfer,
-  amountToReceive
-}) => {
-  const { toggleSideBar, transferFee, image, internationalBankConfirmation } =
-    useContext(ContextProvider);
+export const ConfirmInterTransactionPopUp = () => {
+  const {
+    toggleSideBar,
+    transferFee,
+    image,
+    internationalBankConfirmation,
+    setInternationalBankConfirmation,
+    bankName,
+    accountNumber,
+    accountName,
+    swiftCode,
+    recipientAddress,
+    purposeOfPayment,
+    receive,
+    transfer,
+  } = useContext(ContextProvider);
 
-  //   const [otherInputPinPopUp, setOtherInputPinPopUp] = useState(false);
+  const [internationalInputPinPopUp, setInternationalInputPinPopUp] =
+    useState(false);
 
   // const TotalAmount = transferamount;
   const pointsEarned = "+2.00";
 
   const handleSwitch = () => {
-    // setOtherInputPinPopUp(true);
-    // setOtherBankConfirmation(false);
+    setInternationalInputPinPopUp(true);
+    setInternationalBankConfirmation(false);
   };
   return (
     <div>
@@ -50,7 +55,7 @@ export const ConfirmInterTransactionPopUp = ({
             <p className="text-[7px] text-[#0008] text-center mb-2 md:text-[12px] lg:text-[14px]">
               You are about to transfer{" "}
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">
-                &#8358;{amountToTransfer}.00 for &#36;{amountToReceive}{" "}
+                &#8358;{transfer}.00 for &#36;{receive}{" "}
               </span>
               from your NGN wallet to{" "}
             </p>
@@ -82,11 +87,11 @@ export const ConfirmInterTransactionPopUp = ({
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#0008]">Amount to Transfer</p>
-                <span>&#8358;{amountToTransfer}.00</span>
+                <span>&#8358;{transfer}.00</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#0008]">Recipient Will Receive</p>
-                <span>&#36; {amountToReceive}.00</span>
+                <span>&#36; {receive}.00</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#0008]">Transfaction fee</p>
@@ -128,14 +133,12 @@ export const ConfirmInterTransactionPopUp = ({
           )
         </Modal>
       )}
-      {/* <OtherInputPinPopUp */}
-      {/* otherInputPinPopUp={otherInputPinPopUp}
-      setOtherInputPinPopUp={setOtherInputPinPopUp}
-      accountname={accountname}
-      accountnumber={accountnumber}
-      transferamount={transferamount}
-      bankname={bankname} */}
-      {/* /> */}
+      {
+        <InternationalInputPinPopUp
+          internationalInputPinPopUp={internationalInputPinPopUp}
+          setInternationalInputPinPopUp={setInternationalInputPinPopUp}
+        />
+      }
     </div>
   );
 };

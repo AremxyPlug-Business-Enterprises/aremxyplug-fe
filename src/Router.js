@@ -49,6 +49,7 @@ import DigitalServices from "./Components/Screens/digitalServices/DigitalService
 import { ToOtherBanks } from "./Components/Dashboard/DashboardComponents/TransferComponent/TransferToOtherBankPages/ToOtherBanks";
 import { OtherBankReceipt } from "./Components/Dashboard/DashboardComponents/TransferComponent/TransferToOtherBankPages/OtherBankPopUp/OtherBankPopUp/OtherBankReceipt";
 import GlobalTransfer from "./Components/Dashboard/DashboardComponents/TransferComponent/TransferToOtherBankPages/GlobalTransfer";
+import { InternationalReceipt } from "./Components/Dashboard/DashboardComponents/TransferComponent/TransferToOtherBankPages/OtherBankPopUp/InternationalPopUp/InternationalReceipt";
 
 export const Router = () => {
   return (
@@ -115,6 +116,7 @@ export const Router = () => {
         <Route path="/withdrawal-receipt" element={<WithdrawalReceipt />} />
         <Route path="/To-other-banks" element={<ToOtherBanks />} />
         <Route path="/other-bank-receipt" element={<OtherBankReceipt />} />
+        <Route path="/international-bank-receipt" element={<InternationalReceipt />} />
         <Route path="/global-transfer" element={<GlobalTransfer />} />
       </Routes>
     </div>

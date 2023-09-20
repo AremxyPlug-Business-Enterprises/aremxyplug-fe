@@ -1,106 +1,23 @@
-import { useState } from "react";
+// import { useState } from "react";
 import { useContext } from "react";
 import { ContextProvider } from "../../../../../../Context";
 import { Modal } from "../../../../../../Screens/Modal/Modal";
 import styles from "../../../../TransferComponent/transfer.module.css";
-import Joi from "joi";
-import { ConfirmInterTransactionPopUp } from "../InternationalPopUp/ConfirmInterTransactionPopUp";
+import { ConfirmInterTransactionPopUp } from "./ConfirmInterTransactionPopUp";
 
-export const InternationalDetail = ({
-  InternationalDetailPopUp,
-  setInternationalDetailPopUp,
-  amountToTransfer,
-  amountToReceive
-}) => {
-  const { isDarkMode, toggleSideBar, setInternationalBankConfirmation } =
-    useContext(ContextProvider);
-
-  const [state, setState] = useState({
-    bankName: "",
-    accountNumber: "",
-    accountName: "",
-    swiftCode: "",
-    recipientAddress: "",
-    purposeOfPayment: "",
-    message: "",
-  });
-
-  const [purpose, setPurpose] = useState(false);
-  const [errors, setErrors] = useState({});
-
-  const handleInputChange = (event) => {
-    const { name, value, type, checked } = event.target;
-    const inputValue = type === "checkbox" ? checked : value;
-    setState({
-      ...state,
-      [name]: inputValue,
-    });
-  };
-
-  // ========form validation using regex=======
-  const schema = Joi.object({
-    bankName: Joi.string()
-      .required()
-      .messages({ "string.pattern.base": "Bank name cannot be empty" }),
-    accountNumber: Joi.string()
-      .pattern(new RegExp(/^\d{10,}/))
-      .required()
-      .messages({
-        "string.pattern.base": "Account number should be 10 digits ",
-      }),
-    accountName: Joi.string().required(),
-    swiftCode: Joi.string().required(),
-    recipientAddress: Joi.string().required(),
-    purposeOfPayment: Joi.string().required(),
-  });
-  // ======end of form valdiation=====
-
-  // ==========Submit Handler============
-  const handleProceed = (e) => {
-    e.preventDefault();
-
-    const {
-      bankName,
-      accountNumber,
-      accountName,
-      swiftCode,
-      recipientAddress,
-      purposeOfPayment,
-    } = state;
-
-    const { error } = schema.validate({
-      bankName,
-      accountNumber,
-      accountName,
-      swiftCode,
-      recipientAddress,
-      purposeOfPayment,
-    });
-
-    if (error) {
-      setErrors(
-        error.details.reduce((acc, curr) => {
-          acc[curr.path[0]] = curr.message;
-          return acc;
-        }, {})
-      );
-    } else {
-      setInternationalDetailPopUp(false);
-      setInternationalBankConfirmation(true);
-    }
-
-    // console.log(successful);
-  };
-
-  // const handlePurposePopUpOpen = () => {
-  //   setInternationalDetailPopUp(false);
-  //   setPurpose(true);
-  // };
-
-  // const handlePurposePopUpClose = () => {
-  //   setPurpose(false);
-  //   setInternationalDetailPopUp(true);
-  // };
+export const InternationalDetail = () => {
+  const {
+    isDarkMode,
+    toggleSideBar,
+    InternationalDetailPopUp,
+    setInternationalDetailPopUp,
+    internationalDetails,
+    purpose,
+    setPurpose,
+    internErrors,
+    handleInternationalInputChange,
+    handleProceedButton,
+  } = useContext(ContextProvider);
 
   return (
     <div>
@@ -134,9 +51,9 @@ export const InternationalDetail = ({
                 </p>
                 <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[40px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
                   <input
-                    onChange={handleInputChange}
+                    onChange={handleInternationalInputChange}
                     name="bankName"
-                    value={state.bankName}
+                    value={internationalDetails.bankName}
                     className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
                     type="text"
                   />
@@ -146,9 +63,9 @@ export const InternationalDetail = ({
                     alt="dropdown"
                   />
                 </div>
-                {errors.bankName && (
+                {internErrors.bankName && (
                   <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                    {errors.bankName}
+                    {internErrors.bankName}
                   </div>
                 )}
               </div>
@@ -160,16 +77,16 @@ export const InternationalDetail = ({
                 </p>
                 <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[40px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
                   <input
-                    onChange={handleInputChange}
+                    onChange={handleInternationalInputChange}
                     name="accountNumber"
-                    value={state.accountNumber}
+                    value={internationalDetails.accountNumber}
                     className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
                     type="number"
                   />
                 </div>
-                {errors.accountNumber && (
+                {internErrors.accountNumber && (
                   <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                    {errors.accountNumber}
+                    {internErrors.accountNumber}
                   </div>
                 )}
               </div>
@@ -181,16 +98,16 @@ export const InternationalDetail = ({
                 </p>
                 <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[40px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
                   <input
-                    onChange={handleInputChange}
+                    onChange={handleInternationalInputChange}
                     name="accountName"
-                    value={state.accountName}
+                    value={internationalDetails.accountName}
                     className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
                     type="text"
                   />
                 </div>
-                {errors.accountName && (
+                {internErrors.accountName && (
                   <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                    {errors.accountName}
+                    {internErrors.accountName}
                   </div>
                 )}
               </div>
@@ -202,16 +119,16 @@ export const InternationalDetail = ({
                 </p>
                 <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[40px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
                   <input
-                    onChange={handleInputChange}
+                    onChange={handleInternationalInputChange}
                     name="swiftCode"
-                    value={state.swiftCode}
+                    value={internationalDetails.swiftCode}
                     className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
                     type="text"
                   />
                 </div>
-                {errors.swiftCode && (
+                {internErrors.swiftCode && (
                   <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                    {errors.swiftCode}
+                    {internErrors.swiftCode}
                   </div>
                 )}
               </div>
@@ -223,16 +140,16 @@ export const InternationalDetail = ({
                 </p>
                 <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[40px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
                   <input
-                    onChange={handleInputChange}
+                    onChange={handleInternationalInputChange}
                     name="recipientAddress"
-                    value={state.recipientAddress}
+                    value={internationalDetails.recipientAddress}
                     className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
                     type="text"
                   />
                 </div>
-                {errors.recipientAddress && (
+                {internErrors.recipientAddress && (
                   <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                    {errors.recipientAddress}
+                    {internErrors.recipientAddress}
                   </div>
                 )}
               </div>
@@ -290,16 +207,16 @@ export const InternationalDetail = ({
                 )}
                 <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[40px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
                   <input
-                    onChange={handleInputChange}
+                    onChange={handleInternationalInputChange}
                     name="purposeOfPayment"
-                    value={state.purposeOfPayment}
+                    value={internationalDetails.purposeOfPayment}
                     className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
                     type="text"
                   />
                 </div>
-                {errors.purposeOfPayment && (
+                {internErrors.purposeOfPayment && (
                   <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                    {errors.purposeOfPayment}
+                    {internErrors.purposeOfPayment}
                   </div>
                 )}
               </div>
@@ -315,15 +232,15 @@ export const InternationalDetail = ({
                   className="text-[10px] outline-none w-full border-[1px] h-[40px] flex flex-col justify-between p-[1%] rounded-[4px] md:h-[100px] md:text-[14px] md:rounded-[8px] md:border-[1px] lg:border-[#0003] lg:h-[80px] lg:w-[100%]"
                 ></textarea>
               </div>
-              {errors.message && (
+              {internErrors.message && (
                 <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                  {errors.message}
+                  {internErrors.message}
                 </div>
               )}
             </div>
 
             <button
-              onClick={handleProceed}
+              onClick={handleProceedButton}
               className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:mt-[15%] lg:text-[16px] lg:h-[38px] lg:my-`}
             >
               Proceed
@@ -332,16 +249,7 @@ export const InternationalDetail = ({
         </Modal>
       )}
 
-      <ConfirmInterTransactionPopUp
-        bankName={state.bankName}
-        accountNumber={state.accountNumber}
-        accountName={state.accountName}
-        swiftCode={state.swiftCode}
-        recipientAddress={state.recipientAddress}
-        purposeOfPayment={state.purposeOfPayment}
-        amountToTransfer={amountToTransfer}
-        amountToReceive={amountToReceive}
-      />
+      <ConfirmInterTransactionPopUp />
     </div>
   );
 };

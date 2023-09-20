@@ -22,7 +22,7 @@ export const TransferPage = () => {
       <div
         className={`${
           isDarkMode ? "" : ""
-        } scroll-none mx-[%] mt-[10%] md:mt-[5%] ${
+        } scroll-none mx-[%] mt-[8%] md:mt-[3%] ${
           toggleSideBar ? "lg:mx-[0%] lg:mt-[1%]" : "lg:mx-0 lg:mt-[3%]"
         } flex flex-col justify-between h-full`}
       >

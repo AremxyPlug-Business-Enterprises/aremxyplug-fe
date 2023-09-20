@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import { ContextProvider } from "../../../../../../Context";
 import { Modal } from "../../../../../../Screens/Modal/Modal";
 import styles from "../../../../TransferComponent/transfer.module.css";
-import { OtherInputPinPopUp } from "../../OtherInputPinPop";
+import { OtherInputPinPopUp } from "./OtherInputPinPop";
 
 export const ConfirmOtherTransaction = ({
   otherBanksConfirmation,
