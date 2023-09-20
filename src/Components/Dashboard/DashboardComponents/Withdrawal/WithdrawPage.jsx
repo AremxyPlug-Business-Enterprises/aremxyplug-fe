@@ -22,10 +22,8 @@ export const WithdrawPage = () => {
   return (
     <DashBoardLayout>
       <div
-        className={`${
-          isDarkMode ? "" : ""
-        } scroll-none mx-[%] mt-[8%] md:mt-[3%] ${
-          toggleSideBar ? "lg:mx-[0%] lg:mt-[1%]" : "lg:mx-0 lg:mt-[3%]"
+        className={`${isDarkMode ? "" : ""} scroll-none mx-[%] ${
+          toggleSideBar ? " lg:mt-0" : ""
         } flex flex-col justify-between h-full`}
       >
         <div className="">
