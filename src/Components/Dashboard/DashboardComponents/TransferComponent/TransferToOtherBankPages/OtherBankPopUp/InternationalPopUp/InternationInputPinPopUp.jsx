@@ -1,36 +1,35 @@
 import React from "react";
-import { Modal } from "../../../../Screens/Modal/Modal";
+import { Modal } from "../../../../../../Screens/Modal/Modal";
 import OtpInput from "react-otp-input";
 import { useContext } from "react";
-import { ContextProvider } from "../../../../Context";
-import styles from "../../TransferComponent/transfer.module.css";
+import { ContextProvider } from "../../../../../../Context";
+import styles from "../../../../TransferComponent/transfer.module.css";
 import { useState } from "react";
-import { TransactionSuccessToOtherBank } from "./OtherBankPopUp/OtherBankPopUp/TransactionSuccessToOtherBank";
+import { InternationalTransactionSuccessPopUp } from "./InternationalTransactionSuccessPopUp";
+// import { TransactionSuccessToOtherBank } from "./TransactionSuccessToOtherBank";
 
-export const OtherInputPinPopUp = ({
+export const InternationalInputPinPopUp = ({
   otherInputPinPopUp,
   setOtherInputPinPopUp,
-  accountname,
-  accountnumber,
-  transferamount,
-  bankname,
+  internationalInputPinPopUp,
+  setInternationalInputPinPopUp,
 }) => {
   const { toggleSideBar } = useContext(ContextProvider);
 
   const [inputPin, setInputPin] = useState("");
-  const [transactSuccessToOtherBank, setTransactSuccessToOtherBank] =
+  const [internationalTransactSuccess, setInternationalTransactSuccess] =
     useState(false);
 
   const inputPinHandler = (e) => {
     setInputPin(e.target.value);
-    setTransactSuccessToOtherBank(true);
-    setOtherInputPinPopUp(false);
+    setInternationalTransactSuccess(true);
+    setInternationalInputPinPopUp(false);
   };
 
   return (
     <div>
       {" "}
-      {otherInputPinPopUp && (
+      {internationalInputPinPopUp && (
         <Modal>
           <div
             className={`${styles.inputPin} ${
@@ -80,13 +79,13 @@ export const OtherInputPinPopUp = ({
           </div>
         </Modal>
       )}
-      <TransactionSuccessToOtherBank
+      {/* <TransactionSuccessToOtherBank
         transactSuccessToOtherBank={transactSuccessToOtherBank}
         setTransactSuccessToOtherBank={setTransactSuccessToOtherBank}
-        accountname={accountname}
-        accountnumber={accountnumber}
-        transferamount={transferamount}
-        bankname={bankname}
+      /> */}
+      <InternationalTransactionSuccessPopUp
+        internationalTransactSuccess={internationalTransactSuccess}
+        setInternationalTransactSuccess={setInternationalTransactSuccess}
       />
     </div>
   );

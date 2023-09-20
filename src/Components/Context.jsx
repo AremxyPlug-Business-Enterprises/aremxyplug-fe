@@ -404,10 +404,96 @@ export const Context = ({ children }) => {
   };
   // ==========End Transfer page=============
 
-  // ================Start of Transfer To International Banks PopUp =====================
+  // ================Start of Transfer To International Banks =====================
   const [internationalBankConfirmation, setInternationalBankConfirmation] =
     useState(false);
-  // ================End of Transfer To International Banks PopUp =======================
+  const [InternationalDetailPopUp, setInternationalDetailPopUp] =
+    useState(false);
+  const [transfer, setTransfer] = useState("");
+  const [receive, setReceive] = useState("");
+
+  const [internationalDetails, setInternationalDetails] = useState({
+    bankName: "",
+    accountNumber: "",
+    accountName: "",
+    swiftCode: "",
+    recipientAddress: "",
+    purposeOfPayment: "",
+    message: "",
+  });
+
+  const [purpose, setPurpose] = useState(false);
+  const [internErrors, setInternErrors] = useState({});
+
+  const handleInternationalInputChange = (event) => {
+    const { name, value, type, checked } = event.target;
+    const inputValue = type === "checkbox" ? checked : value;
+    setInternationalDetails({
+      ...internationalDetails,
+      [name]: inputValue,
+    });
+  };
+
+  const schemaForInternationalDetails = Joi.object({
+    bankName: Joi.string()
+      .required()
+      .messages({ "string.pattern.base": "Bank name cannot be empty" }),
+    accountNumber: Joi.string()
+      .pattern(new RegExp(/^\d{10,}/))
+      .required()
+      .messages({
+        "string.pattern.base": "Account number should be 10 digits ",
+      }),
+    accountName: Joi.string().required(),
+    swiftCode: Joi.string().required(),
+    recipientAddress: Joi.string().required(),
+    purposeOfPayment: Joi.string().required(),
+  });
+
+  const handleProceedButton = (e) => {
+    e.preventDefault();
+
+    const {
+      bankName,
+      accountNumber,
+      accountName,
+      swiftCode,
+      recipientAddress,
+      purposeOfPayment,
+    } = internationalDetails;
+
+    const { error } = schemaForInternationalDetails.validate({
+      bankName,
+      accountNumber,
+      accountName,
+      swiftCode,
+      recipientAddress,
+      purposeOfPayment,
+    });
+
+    if (error) {
+      setInternErrors(
+        error.details.reduce((acc, curr) => {
+          acc[curr.path[0]] = curr.message;
+          return acc;
+        }, {})
+      );
+    } else {
+      setInternationalDetailPopUp(false);
+      setInternationalBankConfirmation(true);
+    }
+
+    // console.log(successful);
+  };
+
+  const bankName = internationalDetails.bankName;
+  const accountNumber = internationalDetails.accountName;
+  const accountName = internationalDetails.accountNumber;
+  const swiftCode = internationalDetails.swiftCode;
+  const recipientAddress = internationalDetails.recipientAddress;
+  const purposeOfPayment = internationalDetails.purposeOfPayment;
+
+  // ================End of Transfer To International Banks =======================
 
   const hold = {
     firstDrop,
@@ -578,7 +664,27 @@ export const Context = ({ children }) => {
     // ===========International transfer ==============
     internationalBankConfirmation,
     setInternationalBankConfirmation,
-  };
+    InternationalDetailPopUp,
+    setInternationalDetailPopUp,
+    transfer,
+    setTransfer,
+    receive,
+    setReceive,
+    internationalDetails,
+    setInternationalDetails,
+    purpose,
+    setPurpose,
+    internErrors,
+    setInternErrors,
+    handleInternationalInputChange,
+    handleProceedButton,
+    bankName,
+    accountNumber,
+    accountName,
+    swiftCode,
+    recipientAddress,
+    purposeOfPayment,
+  }
 
   return (
     <div>

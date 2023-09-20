@@ -1,14 +1,20 @@
 import React, { useState } from "react";
 import { CountrySelector } from "../../CountrySelect/CountrySelector";
 import Joi from "joi";
-import { InternationalDetail } from "./OtherBankPopUp/OtherBankPopUp/InternationalDetail";
+import { InternationalDetail } from "./OtherBankPopUp/InternationalPopUp/InternationalDetail";
+import { useContext } from "react";
+import { ContextProvider } from "../../../../Context";
 
 export const InternationalTransfer = () => {
-  const [transfer, setTransfer] = useState("");
-  const [receive, setReceive] = useState("");
   const [errors, setErrors] = useState({});
-  const [InternationalDetailPopUp, setInternationalDetailPopUp] =
-    useState(false);
+
+  const {
+    transfer,
+    setTransfer,
+    receive,
+    setReceive,
+    setInternationalDetailPopUp,
+  } = useContext(ContextProvider);
 
   const transferHandler = (e) => {
     setTransfer(e.target.value);
@@ -151,12 +157,7 @@ export const InternationalTransfer = () => {
       >
         Proceed
       </button>
-      <InternationalDetail
-        InternationalDetailPopUp={InternationalDetailPopUp}
-        setInternationalDetailPopUp={setInternationalDetailPopUp}
-        amountToReceive={receive}
-        amountToTransfer={transfer}
-      />
+      <InternationalDetail />
     </div>
   );
 };
