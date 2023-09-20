@@ -92,16 +92,6 @@ export const InternationalDetail = ({
     // console.log(successful);
   };
 
-  // const handlePurposePopUpOpen = () => {
-  //   setInternationalDetailPopUp(false);
-  //   setPurpose(true);
-  // };
-
-  // const handlePurposePopUpClose = () => {
-  //   setPurpose(false);
-  //   setInternationalDetailPopUp(true);
-  // };
-
   return (
     <div>
       {InternationalDetailPopUp && (
@@ -127,6 +117,7 @@ export const InternationalDetail = ({
             </h2>
 
             <div className="mx-[5%] mt-[4%] flex flex-col gap-[10px] md:grid md:grid-cols-2 md:gap-[5%] h-[] lg:w-[90%]">
+              
               {/* ============================Bank Name====================== */}
               <div className={` ${styles.inputBox}`}>
                 <p className="text-[10px] font-extrabold lg:text-[16px]">
