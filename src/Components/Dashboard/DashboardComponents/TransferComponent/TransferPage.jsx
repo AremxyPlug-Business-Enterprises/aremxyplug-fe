@@ -26,7 +26,7 @@ export const TransferPage = () => {
       >
         <div className="">
           <img
-            className="w-[100%] h-[80px] md:h-[180px] lg:h-[230px]"
+            className="w-[100%] h-[90px] md:h-[180px] lg:h-[230px] "
             src="/Images/dashboardImages/transferImg.png"
             alt="/"
           />
