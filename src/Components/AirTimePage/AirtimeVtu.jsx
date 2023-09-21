@@ -251,7 +251,7 @@ const AirtimeVtu = () => {
             <div className={styles.banner}>
                 <div className={styles.globalAir}>
                     <h3>AIRTIME VTU, FAST AND AUTOMATED.</h3>
-                    <p>Top up your mobile sim using our automated airtime vending directly <br /> from network providers, enjoy discounts without any hassle or hidden fee.</p>
+                    <p>Top up your mobile sim using our automated airtime vending directly from network providers, enjoy discounts without any hassle or hidden fee.</p>
                 </div>
                 <div className={styles.young}>
                     <img src="./Images/airtimeTopUp/young.png" alt="" />
@@ -259,24 +259,30 @@ const AirtimeVtu = () => {
             </div>
             <div className={styles.containFlex}>
                 <div className={styles.FlexPut}>
-                    <h2>Select Recipient</h2>
-                    <div className={styles.FlexImg}>
-                        <img src={weight} alt="" className=''/>
+                    <div className={styles.conPut}>
+                        <h2>Select Recipient</h2>
+                        <div className={styles.FlexImg}>
+                            <img src={weight} alt="" className=''/>
+                        </div>
                     </div>
                 </div>
                 <div className={styles.FlexPut}>
-                    <h2>Add Recipient</h2>
-                    <div className={styles.FlexImg}>
-                        <img src={add} alt="" className=''/>
+                    <div className={styles.conPut}>
+                        <h2>Add Recipient</h2>
+                        <div className={styles.FlexImg}>
+                            <img src={add} alt="" className=''/>
+                        </div>
                     </div>
                 </div>
             </div>
             <div className={styles.containFlex1}>
                 <div className={styles.FlexPut1}>
-                    <h2>Airtime Balance USSD Codes</h2>
-                    <div className={styles.FlexImg1}>
-                        <img src={data} alt="" className=''/>
-                    </div>
+                        <div className={styles.conPut1}>
+                            <h2>Airtime Balance USSD Codes</h2>
+                            <div className={styles.FlexImg1}>
+                                <img src={data} alt="" className=''/>
+                            </div>
+                        </div>
                 </div>
             </div>
             <div className={styles.mainGrid}>
@@ -284,19 +290,21 @@ const AirtimeVtu = () => {
                     <div className={styles.NetworkFlex}>
                         <h2 className={styles.head3}>Select Network</h2>
                         <div className={styles.input}>
-                            { selected ? 
-                                <li className={styles.labelInput}>
-                                    <div className={styles.network}>
-                                        { networkImage && <img src={networkImage} alt=""/>}
-                                    </div> 
-                                    <h2 className={styles.head2}>{networkName}</h2>
-                                </li>
-                            : 
-                                <h2>Select Network</h2>
-                            }
-                            <button className={styles.btnDrop} onClick={handleShowList}>
-                                <img src={arrowDown} alt=""/>
-                            </button>
+                            <div className={styles.output2}>
+                                { selected ? 
+                                    <li className={styles.labelInput}>
+                                        <div className={styles.network}>
+                                            { networkImage && <img src={networkImage} alt=""/>}
+                                        </div> 
+                                        <h2 className={styles.head2}>{networkName}</h2>
+                                    </li>
+                                : 
+                                    <h2>Select Network</h2>
+                                }
+                                <button className={styles.btnDrop} onClick={handleShowList}>
+                                    <img src={arrowDown} alt=""/>
+                                </button>
+                            </div>
                         </div>
                     </div>
                     { showList && 
@@ -339,58 +347,67 @@ const AirtimeVtu = () => {
                 <div>
                     <h2 className={styles.head3}>Phone Number <span className={styles.span3}>(Select Recipient)</span></h2>
                     <div className={styles.input}>
-                        <input type='text' className={styles.phone} placeholder='Add recipient phone number' onChange={(event)=>setRecipientNumber(event.target.value)} value={recipientNumber}/>
-                        <div className={styles.call}>
-                            <img src={call} alt=""/>
+                        <div className={styles.output}>
+                            <input type='text' className={styles.phone} placeholder='Add recipient phone number' onChange={(event)=>setRecipientNumber(event.target.value)} value={recipientNumber}/>
+                            <div className={styles.call}>
+                                <img src={call} alt=""/>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div>
-                    <h2 className={styles.head3}>Recipient Name <span className={styles.span3}>(Optional)</span></h2>
+                    <h2 className={styles.head3}>Recipient Name <span className={styles.span4}>(optional)</span></h2>
                     <div className={styles.input}>
-                        <input type='text' className={styles.phone} placeholder='Add recipient name' onChange={(event)=>setRecipientName(event.target.value)} value={recipientName}/>
-                        <div className={styles.call}>
-                            <img src={user} alt=""/>
+                        <div className={styles.output}>
+                            <input type='text' className={styles.phone} placeholder='Add recipient name' onChange={(event)=>setRecipientName(event.target.value)} value={recipientName}/>
+                            <div className={styles.call}>
+                                <img src={user} alt=""/>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div>
                     <h2 className={styles.head3}>Type Amount</h2>
                     <div className={styles.input}>
-                        <input type='text' placeholder='Type amount' className={styles.phone} onChange={(event)=>setAmount(event.target.value)} value={amount.toLocaleString()}/>
-                        <div className={styles.call}>
-                            <img src={money} alt=""/>                            
+                        <div className={styles.output}>
+                            <input type='text' placeholder='Type amount' className={styles.phone} onChange={(event)=>setAmount(event.target.value)} value={amount.toLocaleString()}/>
+                            <div className={styles.call}>
+                                <img src={money} alt=""/>                            
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div>
                     <h2 className={styles.head3}>Total Amount</h2>
                     <div className={styles.input}>
-                        <h2>{newAmount ? `NGN${newAmount}` : `Total Amount`}</h2>
-                        <div className={styles.disc}>
-                            <img src={money} alt="" className='w-full h-full'/>
+                        <div className={styles.output1}>
+                            <h2>{newAmount ? `NGN${newAmount}` : `Total Amount`}</h2>
+                            <div className={styles.disc}>
+                                <img src={money} alt="" className='w-full h-full'/>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div>
                     <div>
                         <h2 className={styles.head3}>Payment Method</h2>
-                        <div className={styles.input}>
-                            { paymentSelected ? 
-                                <li className={styles.labelInput}> 
-                                    <h2 className={styles.head4}>{name}</h2>
-                                    <h2 className={styles.head4}>Wallet({paymentAmount.toLocaleString()}.00)</h2>
-                                </li> 
-                                :
-                                <h2 className={styles.head4}>Select Payment Method</h2>}
+                        <div className={styles.input1}>
                                 { paymentSelected ? 
-                                    <button className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]" onClick={handleShowPayment}>
-                                        <img src={image} alt="" className='w-full h-full object-cover'/>
+                                    <li className={styles.labelInput}> 
+                                        <h2 className={styles.head4}>{name}</h2>
+                                        <h2 className={styles.head4}>Wallet({paymentAmount.toLocaleString()}.00)</h2>
+                                    </li> 
+                                    :
+                                    <h2 className={styles.head4}>Select Payment Method</h2>}
+                                    { paymentSelected ? 
+                                        <button className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]" onClick={handleShowPayment}>
+                                            <img src={image} alt="" className='w-full h-full object-cover'/>
+                                        </button>
+                                    : 
+                                    <button className='lg:w-6 lg:h-6 h-[11px] w-[11px]' onClick={handleShowPayment}>
+                                        <img src={arrowDown} alt="" className='w-full h-full'/>
                                     </button>
-                                : 
-                                <button className='lg:w-6 lg:h-6 h-[11px] w-[11px]' onClick={handleShowPayment}>
-                                    <img src={arrowDown} alt="" className='w-full h-full'/>
-                                </button>}
+                                }
                         </div>
                     </div>
                     { showPayment && 

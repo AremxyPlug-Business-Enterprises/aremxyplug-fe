@@ -6,58 +6,66 @@
 
 /* Banner Section */
 
-.airtimeTop {
-    margin: 0 auto;
-}
 .airtimeTop .banner {
-    width: 95%;
+    width: 936px;
     margin: 0 auto;
-    padding: 30px 40px;
     display: flex;
     justify-content: space-between;
     background: linear-gradient(92.3deg, #73FF9A 26.51%, #6EDCFF 82.31%);
     border-radius: 20px;
     position: relative;
-    height: 240px;
+    height: 196px;
+}
+.banner .globalAir {
+    width: 591px;
+    height: 152px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    position: relative;
+    top: 22px;
+    left: 50px;
 }
 .globalAir h3 {
-    font-size: 26px;
+    width: 481px;
+    height: 36px;
+    font-size: 24px;
     font-weight: 900;
-    line-height: 40px;
+    line-height: 36px;
     letter-spacing: 0em;
-    margin-bottom: 3%;
     color: #000000;
 }
 .globalAir p {
-    font-size: 17px;
+    font-size: 16px;
     font-weight: 400;
-    line-height: 24px;
+    line-height: 20.8px;
     letter-spacing: 0em;
-    text-align: left;
+    width: 588px;
+    height: 65px;
     color: #000000;
-    margin-bottom: 3%;
-}
-.banner .young {
-    margin-top: -1%;
 }
 .young img {
-    width: 220px;
-    height: 200px;
+    width: 169.41px;
+    height: 150px;
+    position: relative;
+    top: 23px;
+    right: 40px;
 }
 
 /* Previous Recipients */
 
 .airtimeTop .containFlex {
-    padding-top: 5%;
-    width: 85%;
-    margin-left: 35px;
-    display: flex;
-    justify-content: space-between;
+    padding-top: 3%;
+    width: 850px;
+    height: 51px;
+    display: grid;
+    grid-template-columns: 500px 500px;
+    grid-template-rows: 100px;
+    position: relative;
+    right: 40px;
+    margin: 0 auto;
 }
 .FlexPut {
-    display: flex;
-    justify-content: space-between;
-    padding: 14px 20px 12px;
     margin: auto 0;
     border-radius: 10px;
     width: 375px;
@@ -65,18 +73,36 @@
     border: none;
     box-shadow: 0px 0px 4px 0px #00000040;
 }
+.FlexPut .conPut {
+    width: 349px;
+    height: 24px;
+    position: relative;
+    top: 13px;
+    left: 10px;
+    display: flex;
+    gap: 200px;
+}
+.conPut h2 {
+    width: 177px;
+    height: 21px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 21px;
+    letter-spacing: 0em;
+    text-align: left;
+}
 .FlexPut .FlexImg img {
     width: 24px;
+    height: 24px;
 }
 .containFlex1 {
-    padding-top: 2%;
-    width: 95%;
+    width: 375px;
+    position: relative;
     margin: 0 auto;
+    right: 280px;
+    top: 90px;
 }
 .FlexPut1 {
-    display: flex;
-    justify-content: space-between;
-    padding: 14px 20px 12px;
     margin: auto 0;
     border-radius: 10px;
     width: 375px;
@@ -86,29 +112,43 @@
     box-shadow: 0px 0px 4px 0px #00000040;
     color: #FFF;
 }
+.FlexPut1 .conPut1 {
+    width: 349px;
+    height: 24px;
+    position: relative;
+    top: 13px;
+    left: 10px;
+    display: flex;
+    gap: 75px;
+}
+.FlexPut1 .conPut1 h2 {
+    width: 250px;
+    height: 22px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 21px;
+    letter-spacing: 0em;
+    text-align: left;
+}
 .FlexPut1 .FlexImg1 img {
     width: 24px;
-    position: relative;
-    top: 1px;
+    height: 24px;
 }
 
 /* Main input section */
 
 .airtimeTop .mainGrid {
-    padding-top: 5%;
-    width: 85%;
-    margin-left: 35px;
+    margin: 10% auto 10%;
+    width: 850px;
+    height: 403px;
+    position: relative;
+    top: 52px;
+    right: 40px;
     display: grid;
-    grid-template-columns: repeat(2, min-content);
-    justify-content: space-between;
-    row-gap: 20px;
+    grid-template-columns: 500px 500px;
+    row-gap: 25px;
 }
-
-
 .input {
-    display: flex;
-    justify-content: space-between;
-    padding: 14px 20px 12px;
     margin: auto 0;
     border-radius: 10px;
     width: 375px;
@@ -116,14 +156,49 @@
     border: none;
     box-shadow: 0px 0px 4px 0px #00000040;
 }
+.input .output {
+    width: 355px;
+    height: 24px;
+    position: relative;
+    top: 14px;
+    left: 10px;
+    display: flex;
+    gap: 100px;
+}
+.output input {
+    width: 220px;
+}
+.input .output1 {
+    width: 355px;
+    height: 24px;
+    position: relative;
+    top: 14px;
+    left: 10px;
+    display: flex;
+    gap: 215px;
+}
+.output1 input {
+    width: 177px;
+}
+.input .output2 {
+    width: 355px;
+    height: 24px;
+    position: relative;
+    top: 14px;
+    left: 10px;
+    display: flex;
+    gap: 205px;
+}
+.output2 input {
+    width: 177px;
+}
 .input .head2 {
     font-weight: 800;
     color: #000000;
 }
-.btnDrop {
-    opacity: 1;
-    transform: translateY(0);
-    transition: .3s;
+.btnDrop img {
+    width: 24px;
+    height: 24px;
 }
 .colDown {
     position: absolute;
@@ -232,9 +307,16 @@
 .span3 {
     font-size: 12px;
     font-weight: 700;
-    line-height: 16px;
+    line-height: 15.6px;
     letter-spacing: 0em;
     color: #04177F;
+}
+.span4 {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20.8px;
+    letter-spacing: 0em;
+    color: #7C7C7C;
 }
 .head3 {
     color: #000000;
@@ -255,23 +337,27 @@
 /* Add recipients */
 
 .add {
-    padding-top: 5%;
     display: flex;
-    gap: 10px;
-    width: 95%;
-    margin: auto;
+    gap: 20px;
+    width: 213px;
+    height: 22.23px;
+    margin: 5% auto 0;
+    position: relative;
+    right: 355px;
 }
 .add h2 {
     font-size: 16px;
     font-weight: 600;
-    line-height: 21px;
+    line-height: 20.8px;
     letter-spacing: 0em;
     text-align: left;
 }
 .containFlex2 {
-    padding-top: 5%;
-    width: 95%;
-    margin: 0 auto;
+    width: 163px;
+    height: 38px;
+    position: relative;
+    right: 385px;
+    margin: 5% auto 0;
 }
 .FlexPut2 {
     padding: 8px 16px;
@@ -287,31 +373,419 @@
     border-radius: 12px;
 }
 
-/* Contact aspect of the airtimeVTU page */
+/* Contact aspect of the airtime page */
 
 .help {
-    margin: auto;
-    width: 20%;
-    padding-top: 10%;
+    margin: 200px auto 15px;
+    width: 187px;
+    height: 20px;
     display: flex;
-    gap: 15px;
+    gap: 26px;
 }
 .help h2 {
     font-size: 12px;
     font-weight: 500;
-    line-height: 16px;
+    line-height: 15.6px;
     letter-spacing: 0em;
+    width: 88px;
 }
 .help .btnContact {
     background: #04177F;
+    width: 73px;
     padding: 5px 15px 10px 15px;
     height: 20px;
     border-radius: 9px;
     color: #fff;
-    font-size: 10px;
+    font-size: 8px;
     font-weight: 500;
-    line-height: 10px;
+    line-height: 10.4px;
     letter-spacing: 0em;
     position: relative;
     bottom: 3px;
+}
+
+@media (max-width: 425px) {
+    .airtimeTop .banner {
+        width: 312px;
+        height: 64.5px;
+        border-radius: 6.58px;
+        margin: 0 auto;
+    }
+    .banner .globalAir {
+        width: 194px;
+        height: 50.02px;
+        position: relative;
+        top: 7.24px;
+        left: 16.45px;
+        gap: 4.94px;
+    }
+    .globalAir h3 {
+        width: 158px;
+        height: 12px;
+        font-size: 8px;
+        font-weight: 600;
+        line-height: 12px;
+        letter-spacing: 0em;
+        text-align: left;
+        color: #000000;
+    }
+    .globalAir p {
+        width: 210px;
+        height: 22px;
+        font-size: 7px;
+        font-weight: 400;
+        line-height: 9.1px;
+        letter-spacing: 0em;
+        text-align: left;
+    }
+    .young img {
+        width: 55.75px;
+        height: 49.36px;
+        position: relative;
+        top: 7.57px;
+        right: 20px;
+    }
+    .airtimeTop .containFlex {
+        width: 308px;
+        display: grid;
+        grid-template-columns: 170px 170px;
+        grid-template-rows: 100px;
+        position: relative;
+        top: 0;
+        left: 0;
+        margin: 1% auto 0;
+    }
+    .FlexPut {
+        margin: auto 0;
+        border-radius: 3.67px;
+        width: 137px;
+        height: 18px;
+        border: none;
+        box-shadow: 0px 0px 4px 0px #00000040;
+    }
+    .FlexPut .conPut {
+        width: 128px;
+        height: 9px;
+        position: relative;
+        top: 4.68px;
+        left: 3.67px;
+        display: flex;
+        gap: 60px;
+    }
+    .conPut h2 {
+        width: 64.97px;
+        height: 9px;
+        font-size: 7px;
+        font-weight: 600;
+        line-height: 9px;
+        letter-spacing: 0em;
+        text-align: left;
+    }
+    .FlexPut .FlexImg img {
+        width: 8.81px;
+        height: 8.81px;
+    }
+    .containFlex1 {
+        width: 312px;
+        height: 19px;
+        position: relative;
+        margin: 0 auto;
+        right: 0px;
+        top: 40px;
+    }
+    .containFlex1 .FlexPut1 {
+        margin: auto;
+        border-radius: 10px;
+        width: 312px;
+        height: 19px;
+        border: none;   
+        border-radius: 1.94px;
+        padding: 3.24px 8.09px;
+        background: #04177F;
+        box-shadow: 0px 0px 4px 0px #00000040;
+        color: #FFF;
+    }
+    .containFlex1 .conPut1 {
+        position: relative;
+        top: 1px;
+        left: 0;
+        margin: 0 auto;
+        display: flex;
+        gap: 1px;
+    }
+    .FlexPut1 .conPut1 h2 {
+        width: 116px;
+        height: 10px;
+        font-size: 8px;
+        font-weight: 600;
+        line-height: 10px;
+        letter-spacing: 0em;
+        text-align: left;
+        position: relative;
+        left: 80px;
+    }
+    .FlexPut1 .FlexImg1 img {
+        width: 12px;
+        height: 12px;
+        position: relative;
+        left: 80px;
+    }
+    .airtimeTop .mainGrid {
+        margin: 10% auto 10%;
+        width: 312px;
+        height: 493px;
+        position: relative;
+        top: 52px;
+        right: 0;
+        display: grid;
+        grid-template-columns: auto;
+        row-gap: 20px;
+    }
+    .input {
+        margin: auto 0;
+        border-radius: 3.67px;
+        width: 311px;
+        height: 30px;
+        border: 0.5;
+        box-shadow: 0px 0px 4px 0px #00000040;
+    }
+    .input1 span {
+        font-size: 8px;
+        font-weight: 600;
+        line-height: 10px;
+        letter-spacing: 0em;
+    }
+    .input .output {
+        width: 355px;
+        height: 24px;
+        position: relative;
+        top: 4px;
+        left: 0;
+        display: flex;
+        gap: 50px;
+    }
+    .output input {
+        width: 220px;
+    }
+    .output img {
+        position: relative;
+        top: 5px;
+    }
+    .input .output1 {
+        width: 355px;
+        height: 24px;
+        position: relative;
+        top: 14px;
+        left: 15px;
+        display: flex;
+        gap: 50px;
+    }
+    .output1 input {
+        width: 220px;
+    }
+    .input .output2 {
+        width: 355px;
+        height: 24px;
+        position: relative;
+        top: 14px;
+        left: 10px;
+        display: flex;
+        gap: 205px;
+    }
+    .output1 h2 {
+        font-size: 8px;
+        font-weight: 600;
+        line-height: 10px;
+        letter-spacing: 0em;
+    }
+    .output2 h2 {
+        font-size: 8px;
+        font-weight: 600;
+        line-height: 10px;
+        letter-spacing: 0em;
+    }
+    .output2 input {
+        width: 177px;
+    }
+    .input .head2 {
+        font-weight: 800;
+        color: #000000;
+    }
+    .btnDrop img {
+        width: 12px;
+        height: 12px;
+    }
+    .colDown {
+        position: absolute;
+        margin-top: 4px;
+        border: none;
+        box-shadow: 0px 4px 10px 0px #00000040;
+        border-radius: 5px;
+        width: 375px;
+        transition: height .3s ease;
+        background: #FFF;
+    }
+    .labelInput {
+        display: flex;
+        gap: 3px;
+        list-style: none;
+    }
+    .netList {
+        border-bottom-width: 1px;
+        cursor: pointer;
+        display: flex;
+        gap: 2px;
+        padding: 8px;
+        margin: auto 0;
+        width: 375px;
+        transition: .3s;
+    }
+    .netList1 {
+        border-bottom-width: 1px;
+        cursor: pointer;
+        display: flex;
+        gap: 2px;
+        padding: 8px;
+        margin: auto 0;
+        width: 375px;
+        transition: .3s;
+    }
+    .netList .netImage {
+        width: 12px;
+        overflow: hidden;
+    }
+    .netImage .NoImage {
+        object-fit: cover;
+        width: 12px;
+    }
+    .netList1 .netName1 {
+        font-size: 8px;
+        font-weight: 600;
+        line-height: 10px;
+        letter-spacing: 0em;
+        text-align: left;
+        color: #219250;
+    }
+    .netList .netName {
+        font-size: 8px;
+        font-weight: 600;
+        line-height: 10px;
+        letter-spacing: 0em;
+        text-align: left;
+        color: #7C7C7C;
+    }
+    .input1 {
+        display: flex;
+        gap: 100px;
+        position: relative;
+        top: 0;
+        margin: auto 0;
+        border-radius: 3.67px;
+        width: 311px;
+        height: 30px;
+        border: 0.5px;
+        box-shadow: 0px 0px 4px 0px #00000040;
+    }
+    .input1 .span2 {
+        color: #219250;
+        font-weight: 800;
+    }
+    .input1 img {
+        position: relative;
+        top: -4px;
+        left: 5px;
+    }
+    .input2 {
+        display: flex;
+        justify-content: space-between;
+        margin: auto 0;
+        border-radius: 3.67px;
+        width: 311px;
+        height: 30px;
+        border: none;
+        box-shadow: 0px 0px 4px 0px #00000040;
+    }
+    .disc img {
+        margin: auto 0;
+        width: 12px;
+    }
+    .input .phone {
+        outline: none;
+        font-size: 8px;
+        font-weight: 600;
+        line-height: 10px;
+        letter-spacing: 0em;
+        text-align: left;
+        color: #000000;
+    }
+    .phone::placeholder {
+        font-weight: 400;
+    }
+    .call img {
+        margin: auto 0;
+        width: 12px;
+        height: 14px;
+    }
+    .span3 {
+        font-size: 7px;
+        font-weight: 700;
+        line-height: 9px;
+        letter-spacing: 0em;
+        text-align: left;
+        color: #04177F;
+    }
+    .span4 {
+        font-size: 8px;
+        font-weight: 600;
+        line-height: 10px;
+        letter-spacing: 0em;
+        color: #7C7C7C;
+    }
+    .head3 {
+        color: #000000;
+        font-size: 8px;
+        font-weight: 600;
+        line-height: 10px;
+        letter-spacing: 0em;
+        text-align: left;
+    }
+    .head4 {
+        font-size: 8px;
+        font-weight: 600;
+        line-height: 10px;
+        letter-spacing: 0em;
+        color: #7C7C7C;
+        position: relative;
+        top: -3px;
+        left: 0;
+    }
+    .help {
+        margin: 50px auto 20px;
+        width: 129.08px;
+        height: 14.73px;
+        display: none;
+        gap: 14.9px;
+    }
+    .help h2 {
+        font-size: 8px;
+        font-weight: 500;
+        line-height: 10px;
+        letter-spacing: 0em;       
+        width: 59px;
+    }
+    .help .btnContact {
+        background: #04177F;
+        width: 55.19px;
+        padding: 2.86px 8.59px;
+        height: 14.73px;
+        border-radius: 9px;
+        color: #fff;
+        font-size: 7px;
+        font-weight: 500;
+        line-height: 9px;
+        letter-spacing: 0em;
+        text-align: left;
+        position: relative;
+        bottom: 3px;
+    }
 }
