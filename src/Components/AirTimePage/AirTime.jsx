@@ -48,16 +48,20 @@ const AirTime = () => {
             <div className={styles.airtimeTop}>
                 <div className={styles.banner}>
                     <div className={styles.globalAir}>
-                        <h3>TOP UP AIRTIME GLOBALLY WITH <br /> AREMXYPLUG.</h3>
-                        <p>Top up your mobile sim with our automated airtime vending, receive <br /> instantly, enjoy discount, purchase in bulk, send to friends, family, team, <br /> employees, and your loved ones without any hassle or hidden fee.</p>
+                        <h3>TOP UP AIRTIME GLOBALLY WITH AREMXYPLUG.</h3>
+                        <p>Top up your mobile sim with our automated airtime vending, receive instantly, enjoy discount, purchase in bulk, send to friends, family, team, employees, and your loved ones without any hassle or hidden fee.</p>
                     </div>
                     <div className={styles.young}>
                         <img src="./Images/airtimeTopUp/young.png" alt="" />
                     </div>
                 </div>
                 <div className={styles.airType}>
-                    <h2>Select Airtime Type</h2>
-                    <img src="./Images/wallet/arrow-square-right.svg" alt="" />
+                    <div>
+                        <h2>Select Airtime Type</h2>
+                    </div>
+                    <div>
+                        <img src="./Images/wallet/arrow-square-right.svg" alt="" />
+                    </div>
                 </div>
                 <ul className={styles.localInter}>
                     <li className={activeTab === 'tab_1' ? active : inactive} onClick={handleTab1}>Local Airtime</li>
