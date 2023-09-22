@@ -6,7 +6,7 @@ import { TransferRecord } from "./TransferRecord";
 export const ToMyAccountPage = () => {
   return (
     <DashBoardLayout>
-      <div className=" lg:mt-[3%]">
+      <div className="">
         <img
           className=" w-[100%] h-[80px] md:h-[180px] lg:h-[230px]"
           src="/Images/dashboardImages/ToMyAccount.png"

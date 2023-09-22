@@ -121,30 +121,61 @@ export const MainDashboard = () => {
           >
             <SwiperSlide>
               {" "}
-              <div className="h-[100px] md:h-[150px] lg:h-[270px] ">
+              <div className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] bg-[#FFC589] flex px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px]">
+                <div className="py-[13px] lg:py-[40px]">
+                  <h2 className="text-[9px] md:text-[13.75px] font-bold mb-3 lg:text-[24px] lg:mb-4">
+                    Welcome TO AREMXYPLUG!
+                  </h2>
+                  <h2 className="text-[7px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3">
+                    The most Reliable Platform for Telecom, Payments, and
+                    Digital Services.
+                  </h2>
+                </div>
+
                 <img
-                  className="w-[100%] h-[75px] md:h-[120px] lg:h-[238px]"
-                  src="./Images/dashboardImages/hero1.png"
-                  alt="Welcome to AremxyPlug"
+                  className="w-[91px] h-[66px] lg:w-[288px] lg:h-[200px]"
+                  src="./Images/dashboardImages/hero1image.png"
+                  alt=""
                 />
               </div>
             </SwiperSlide>
             <SwiperSlide>
-              <div>
-                <img
-                  className="w-[100%] h-[75px] md:h-[120px] lg:h-[238px]"
-                  src="./Images/dashboardImages/hero2.png"
-                  alt="Welcome to AremxyPlug"
-                />
+              <div className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] bg-[#BAC5F4] flex px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px]">
+                <div className="py-[13px] lg:py-[40px]">
+                  <h2 className="text-[9px] md:text-[13.75px] font-bold mb-3 lg:text-[24px] lg:mb-4">
+                    SPEND GLOBALLY WITH AREMXYPLUG!
+                  </h2>
+                  <h2 className="text-[7px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3">
+                    Send, Receive, and Store Money Securely without any Hassle.
+                  </h2>
+                </div>
+                <div className="w-[91px] h-[66px] lg:w-[275px] lg:h-[200px]">
+                  <img
+                    src="./Images/dashboardImages/hero2image.png"
+                    alt=""
+                    className="h-full"
+                  />
+                </div>
               </div>
             </SwiperSlide>
             <SwiperSlide>
-              <div>
-                <img
-                  className="w-[100%] h-[75px] md:h-[120px] lg:h-[238px]"
-                  src="./Images/dashboardImages/hero3.png"
-                  alt="Welcome to AremxyPlug"
-                />
+              <div className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] bg-[#3FBDF1] flex px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px]">
+                <div className="py-[13px] lg:py-[40px]">
+                  <h2 className="text-[9px] md:text-[13.75px] font-bold mb-3 lg:text-[24px] lg:mb-4">
+                    OUR PLATFORM IS PROTECTED AND SECURED.
+                  </h2>
+                  <h2 className="text-[7px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3">
+                    We use Industry-Standard Security Protocols and Advanced
+                    Encryption to Protect your Data.
+                  </h2>
+                </div>
+                <div className="w-[91px] h-[66px] lg:w-[220px] lg:h-[180px]">
+                  <img
+                    src="./Images/dashboardImages/hero3image.png"
+                    alt=""
+                    className="h-full"
+                  />
+                </div>
               </div>
             </SwiperSlide>
           </Swiper>
