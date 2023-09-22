@@ -39,12 +39,12 @@ const Wallet = () => {
     <DashBoardLayout>
         <div className="flex flex-col justify-between h-full">
           <div>
-            <div className="w-full h-[65.33px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] bg-[#61CCFF] flex px-[16px] lg:px-[50px] justify-between lg:rounded-[20px]">
+            <div className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] bg-[#61CCFF] flex items-center px-[16px] lg:px-[50px] justify-between lg:rounded-[20px]">
               <div className='py-[13px] lg:py-[40px]'>
-                <h2 className='text-[8px] md:text-[13.75px] font-bold mb-3 lg:text-[24px] lg:mb-4'>WALLETS OVERVIEW.</h2>
-                <h2 className='text-[6.6px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3'>Please select wallet type from the available options below.</h2>
+                <h2 className='text-[10px] md:text-[13.75px] font-bold mb-3 lg:text-[24px] lg:mb-4'>WALLETS OVERVIEW.</h2>
+                <h2 className='text-[7px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3'>Please select wallet type from the available options below.</h2>
               </div>
-              <div className='h-full lg:w-[254.8px]'>
+              <div className='w-[91px] h-[66px] lg:w-[254px] lg:h-[170px]'>
                 <img src='./Images/wallet/walletBanner.png' alt="" className='h-full'/>
               </div>
             </div>

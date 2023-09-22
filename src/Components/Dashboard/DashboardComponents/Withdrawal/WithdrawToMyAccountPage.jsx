@@ -6,29 +6,29 @@ import { WithdrawAccounts } from "./WithdrawAccounts";
 export const WithdrawToMyAccountPage = () => {
   return (
     <DashBoardLayout>
-      <div className=" lg:mt-[3%]">
-      <div
-            className=" flex gap-[10%] p-[5%] h-[80px] md:h-[180px] lg:h-[230px] rounded-[7px]"
-            style={{
-              background:
-                "linear-gradient(91deg, #33B6FF 0.39%, #4AFFCD 101.71%)",
-            }}
-          >
-            <div className="flex flex-col gap-[10%] text-justify">
-              <p className="text-[10px] font-extrabold">
-                WITHDRAW MONEY TO MY ACCOUNT.
-              </p>
-              <p className="text-[7px]">
-                Withdraw money from your wallets to your personal or business
-                bank accounts without any hassle or hidden fee.
-              </p>
-            </div>
-            <img
-              className=" w-[66px] h-[60px] md:h-[180px] lg:h-[180px] lg:w-[200px]"
-              src="/Images/withdrawImages/moneyandphone.png"
-              alt="/"
-            />
+      <div className="">
+        <div
+          className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] flex px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px]"
+          style={{
+            background:
+              "linear-gradient(91deg, #33B6FF 0.39%, #4AFFCD 101.71%)",
+          }}
+        >
+          <div className="py-[13px] lg:py-[40px]">
+            <p className="text-[10px] font-extrabold  md:text-[13.75px] mb-3 lg:text-[24px] lg:mb-4">
+              WITHDRAW MONEY TO MY ACCOUNT.
+            </p>
+            <p className="text-[7px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3">
+              Withdraw money from your wallets to your personal or business bank
+              accounts without any hassle or hidden fee.
+            </p>
           </div>
+          <img
+            className=" w-[66px] h-[60px] md:h-[180px] lg:h-[180px] lg:w-[200px]"
+            src="/Images/withdrawImages/moneyandphone.png"
+            alt="/"
+          />
+        </div>
 
         {/* ===================Mobile view====================== */}
         <div className="md:hidden flex border w-[136px] h-[20px] rounded-[5px] items-center my-[6%] md:h-[30px] md:w-[24%] lg:h-[41px] lg:w-[231px] lg:rounded-[12px] lg:justify-between lg:pr-[1%]">

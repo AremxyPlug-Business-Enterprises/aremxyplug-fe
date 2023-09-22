@@ -18,7 +18,7 @@ export const ToOtherBanks = () => {
       <div className="flex flex-col h-full justify-between md:h-full lg:gap-[200px] lg:h-full ">
         <div className="lg:h-[100%]">
           <img
-            className="w-[100%] h-[80px] md:h-[180px] lg:h-[230px]"
+            className="w-[100%] h-[80px] md:h-[180px] lg:h-[196px]"
             src="./Images/otherBanksImages/other-banks-hero.png"
             alt="/"
           />

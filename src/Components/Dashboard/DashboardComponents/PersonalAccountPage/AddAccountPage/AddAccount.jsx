@@ -18,7 +18,7 @@ export const AddAccount = () => {
       <div className="flex flex-col justify-between md:h-full lg:gap-[200px] lg:h-full lg:">
         <div className="lg:h-[100%] ">
           <img
-            className="w-[100%] h-[80px] md:h-[180px] lg:h-[230px]"
+            className="w-[100%] h-[80px] md:h-[180px] lg:h-[196px]"
             src="/Images/addAccountImages/add-new-account.png"
             alt="/"
           />
