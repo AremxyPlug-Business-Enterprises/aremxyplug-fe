@@ -345,20 +345,6 @@ export const WithdrawAccounts = () => {
         </table>
       )}
 
-      <div className="flex gap-[15px] justify-center items-center absolute top-[100%] left-[35%] lg:top-[220%] lg:left-[40%]">
-        <div className="text-[8px] md:text-[12px] lg:text-[16px]">
-          You need help ?
-        </div>
-        <Link to="/ContactUs">
-          <div
-            className={`${isDarkMode ? "border " : "bg-[#04177f]"} ${
-              styles.contactus
-            }`}
-          >
-            Contact Us
-          </div>
-        </Link>
-      </div>
     </div>
   );
 };

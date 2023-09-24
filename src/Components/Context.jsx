@@ -375,6 +375,8 @@ export const Context = ({ children }) => {
   const [tfPopUp, setTfPopUp] = useState(false);
   const [deletePopUp, setDeletePopUp] = useState(false);
   const [deleteSuccess, setDeleteSuccess] = useState(false);
+  const [withrawalDeletePopUp, setWithdrawlDeletePopUp] = useState(false);
+  const [withdrawDeleteSuccess, setWithdrawalDeleteSuccess] = useState(false);
   const [inputPin, setInputPin] = useState("");
   const textRef = useRef(null);
   const transferFee = 50;
@@ -654,8 +656,11 @@ export const Context = ({ children }) => {
     setTfPopUp,
     deletePopUp,
     setDeletePopUp,
+    withrawalDeletePopUp, setWithdrawlDeletePopUp,
     deleteSuccess,
     setDeleteSuccess,
+    withdrawDeleteSuccess,
+    setWithdrawalDeleteSuccess,
     inputPin,
     setInputPin,
     inputPinHandler,
@@ -684,7 +689,7 @@ export const Context = ({ children }) => {
     swiftCode,
     recipientAddress,
     purposeOfPayment,
-  }
+  };
 
   return (
     <div>
