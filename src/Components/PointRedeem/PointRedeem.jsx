@@ -64,8 +64,8 @@ const PointRedeem = () => {
                 </div>
                 
                 <div className='flex flex-row items-center justify-center mt-[40px] md:mt-[250px] gap-2'>
-                    <div className='text-[8px] font-[600] text-black'>You need help?</div>
-                    <div className=' bg-primary text-white text-[7px] px-2 py-1 leading-[10.5px] rounded-lg text-center '>Contact us</div>
+                    <div className='text-[8px] lg:text-[12px] font-[600] text-black'>You need help?</div>
+                    <div className=' bg-primary text-white lg:text-[8px] text-[7px] px-2 py-1 leading-[10.5px] rounded-lg text-center '>Contact us</div>
                 </div>
             </div> 
         </DashBoardLayout>
