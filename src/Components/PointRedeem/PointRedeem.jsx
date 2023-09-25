@@ -45,17 +45,17 @@ const PointRedeem = () => {
                     </div>
                 </div>
                 {/* Section after input boxes */}
-                <div className='flex flex-row mt-[20px] blur-[1px] lg:blur-[2px] justify-between text-[#7C7C7C] font-[600] text-[6px] lg:text-[16px]' >
+                <div className='flex flex-row mt-[20px] blur-[1px] md:blur-[2px] lg:blur-[2px]  justify-between text-[#7C7C7C] font-[600] md:text-[9.17px] text-[6px] lg:text-[16px]' >
                     <div className='flex flex-row items-center gap-1'>
-                        <div> <img src= {icon1} className='lg:w-[20px] ' alt="" /></div>
+                        <div> <img src= {icon1} className='lg:w-[20px] md:w-[11px] ' alt="" /></div>
                         <div>1 PTS ~ 1 NGN</div>
                     </div>
                     <div className='flex flex-row items-center gap-1'>
-                        <div> <img src= {icon2} className='lg:w-[20px] ' alt="" /> </div>
+                        <div> <img src= {icon2} className='lg:w-[20px] md:w-[11px]  ' alt="" /> </div>
                         <div>Transaction Fee - ₦0.00 </div>
                     </div>
                     <div className='flex flex-row items-center gap-1'>
-                        <div> <img src= {icon3} className='lg:w-[20px] ' alt="" /> </div>
+                        <div> <img src= {icon3} className='lg:w-[20px] md:w-[11px]  ' alt="" /> </div>
                         <div>Completion Time - Instantly.</div>
                     </div>
                 </div>
