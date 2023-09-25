@@ -10,7 +10,7 @@ export const TopBar = () => {
   const { setToggleSideBar, isDarkMode, toggleSideBar } =
     useContext(ContextProvider);
   const [logout, setLogout] = useState(false);
-
+  
   return (
     <div
       className={`${styles.topbar} ${
