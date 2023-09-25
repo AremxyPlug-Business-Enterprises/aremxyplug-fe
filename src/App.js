@@ -4,8 +4,8 @@ import  PointRedeem  from "./Components/PointRedeem/PointRedeem"
 function App() {
   return (
     <>
-      {/* <Layout /> */}
-      <PointRedeem />
+      <Layout />
+      {/* <PointRedeem /> */}
     </>
   );
 }
