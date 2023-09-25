@@ -29,6 +29,8 @@ const DataTopUpPage = () => {
     setActiveBtn(clickedBtn);
   };
 
+
+
   return (
     <DashBoardLayout>
       <div className="bg-[#FFF] relative 2xl:px-[90px]">
@@ -92,7 +94,7 @@ const DataTopUpPage = () => {
 
               <p
                 className={`py-[5px] md:text-[11.736px] font-[500] text-[7px] ${
-                  activeBtn[1] 
+                  activeBtn[1]
                     ? "bg-[#E2F3FF] border-b-[4px] border-b-[#04177F]"
                     : ""
                 } px-[50px] rounded-[5px] lg:text-[20px]`}
@@ -113,7 +115,11 @@ const DataTopUpPage = () => {
 
             <div className="flex justify-between md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[10px] gap-[8px] shadow-sm mt-[20px] md:mt-[30px]">
               <div className="flex gap-[10px]">
-                <img src={DataBundles} alt="" className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px]" />
+                <img
+                  src={DataBundles}
+                  alt=""
+                  className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px]"
+                />
 
                 <div className="">
                   <p className="text-[8px] font-[500] md:text-[9.389px] lg:text-[16px]">
@@ -135,7 +141,11 @@ const DataTopUpPage = () => {
 
             <div className="flex justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[10px] gap-[px] shadow-sm mt-[20px]">
               <div className="flex gap-[10px]">
-                <img src={DataRoll} alt="" className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px]"/>
+                <img
+                  src={DataRoll}
+                  alt=""
+                  className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px]"
+                />
 
                 <div className="">
                   <p className="text-[8px] font-[500] md:text-[9.389px] lg:text-[16px]">
@@ -157,7 +167,11 @@ const DataTopUpPage = () => {
 
             <div className="flex justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[10px] gap-[8px] shadow-sm mt-[20px]">
               <div className="flex gap-[10px]">
-                <img src={DataVoucher} alt="" className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px]"/>
+                <img
+                  src={DataVoucher}
+                  alt=""
+                  className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px]"
+                />
 
                 <div className="">
                   <p className="text-[8px] font-[500] md:text-[9.389px] lg:text-[16px]">
@@ -179,7 +193,11 @@ const DataTopUpPage = () => {
 
             <div className="flex justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[10px] gap-[8px] shadow-sm mt-[20px]">
               <div className="flex gap-[10px]">
-                <img src={DataSchedule} alt="" className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px]"/>
+                <img
+                  src={DataSchedule}
+                  alt=""
+                  className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px]"
+                />
 
                 <div className="">
                   <p className="text-[8px] font-[500] md:text-[9.389px] lg:text-[16px]">
@@ -201,7 +219,11 @@ const DataTopUpPage = () => {
 
             <div className="flex justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[10px] gap-[8px] shadow-sm mt-[20px]">
               <div className="flex gap-[10px]">
-                <img src={BulkData} alt="" className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px]" />
+                <img
+                  src={BulkData}
+                  alt=""
+                  className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px]"
+                />
 
                 <div className="">
                   <p className="text-[8px] font-[500] md:text-[9.389px] lg:text-[16px]">
