@@ -18,7 +18,7 @@ import { RecentTransaction } from "../DashboardComponents/RecentTransaction";
 import { Link } from "react-router-dom";
 
 export const MainDashboard = () => {
-  const { setHideNavbar, toggleSideBar, isDarkMode } =
+  const { setHideNavbar, toggleSideBar, isDarkMode, } =
     useContext(ContextProvider);
   const [visible, setVisibility] = useState(true);
   const [activeButtons, setActiveButtons] = useState([false, false, false]);
@@ -492,7 +492,7 @@ export const MainDashboard = () => {
               to="/withdraw"
               className={`${
                 isDarkMode ? " border bg-[#000]" : "bg-[#04177f]"
-              } ${styles.button} pr-3`}
+                } ${styles.button} pr-3`}
             >
               {" "}
               <div className="flex items-center gap-[10%]">
