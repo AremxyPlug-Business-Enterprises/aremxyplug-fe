@@ -175,12 +175,12 @@ export const InternationalDetail = () => {
                         toggleSideBar
                           ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]"
                           : "md:w-[80%] lg:w-[562px]"
-                      } w-[90%] bg-white shadow-lg rounded-[8px] h-[269px] flex flex-col items-center py-[4%] gap-[40px] md:h-[360px] lg:h-[404px] lg:py-[3%] lg:rounded-[20px]`}
+                      } w-[90%] bg-white shadow-lg rounded-[8px] h-[269px] flex flex-col items-center py-[4%] gap-[20px] md:h-[370px] lg:h-[404px] lg:py-[1%] lg:rounded-[20px]`}
                     >
-                      <hr className="h-[6px] w-full bg-[#04177f] border-none mt-[5%] md:mt-[6%] md:h-[10px]" />
+                      <hr className="h-[6px] w-full bg-[#04177f] border-none mt-[5%] md:mt-[3%] md:h-[12px] lg:mt-[5%] lg:h-[10px]" />
 
-                      <div className="flex flex-col justify-between h-full">
-                        <p className="leading-[11px] text-[9px] text-[#7C7C7C] text-center font-extrabold md:text-[10px] lg:w-[90%] lg:mx-auto lg:text-[16px] lg:flex lg:flex-col lg:gap-[5%] lg:leading-[19.5px]">
+                      <div className="flex flex-col justify-between h-full ">
+                        <p className="leading-[11px] text-[9px] text-[#7C7C7C] text-center font-extrabold md:text-[14px] lg:w-[90%] lg:mx-auto lg:text-[16px] lg:flex lg:flex-col lg:gap-[5%] lg:leading-[19.5px]">
                           <span className="text-[#04177f] font-extrabold">
                             Purpose of Payments can be any of the following,
                             E.g;
@@ -193,6 +193,11 @@ export const InternationalDetail = () => {
                           </p>
                         </p>
 
+                        <img
+                          className="w-[86px] h-[86px] md:w-[120px] md:h-[120px] mx-auto lg:w-[150px] lg:h-[150px]"
+                          src="./Images/transferImages/payment.gif"
+                          alt="conversion"
+                        />
                         <div
                           onClick={() => setPurpose(false)}
                           className={` ${

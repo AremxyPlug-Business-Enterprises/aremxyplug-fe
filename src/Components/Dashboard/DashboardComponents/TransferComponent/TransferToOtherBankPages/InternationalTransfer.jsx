@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { CountrySelector } from "../../CountrySelect/CountrySelector";
 import Joi from "joi";
 import { InternationalDetail } from "./OtherBankPopUp/InternationalPopUp/InternationalDetail";
@@ -64,6 +64,21 @@ export const InternationalTransfer = () => {
   const handleCountrySelect = (country, id) => {
     setSelectedCountry(country);
   };
+
+  const [exchangeRate, setExchangeRate] = useState(null);
+
+  useEffect(() => {
+    // Replace 'YOUR_API_KEY' with your actual API key or use a different exchange rate API.
+    const apiUrl = `https://api.exchangerate-api.com/v4/latest/USD`;
+
+    fetch(apiUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        const nairaToDollarRate = data.rates["NGN"];
+        setExchangeRate(nairaToDollarRate);
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []);
 
   return (
     <div>
@@ -148,12 +163,44 @@ export const InternationalTransfer = () => {
           </div>
         )}
       </div>
+
+      <div className="my-[5%] flex text-[7px] gap-[6%] text-[#7C7C7C] lg:text-[16px] lg:gap-[21%]">
+        <div className="flex gap-[2px] items-center lg:gap-[6px]">
+          <img
+            className="w-[10px] h-[10px] lg:w-[24px] lg:h-[24px]"
+            src="./Images/transferImages/ticket.png"
+            alt="conversion"
+          />
+          {exchangeRate !== null ? (
+            <p>1 NGN ~ {exchangeRate} USD</p>
+          ) : (
+            <p>Loading exchange rate...</p>
+          )}
+        </div>
+        <div className="flex gap-[2px] items-center lg:gap-[6px]">
+          <img
+            className="w-[10px] h-[10px] lg:w-[24px] lg:h-[24px]"
+            src="./Images/transferImages/ticket.png"
+            alt="conversion"
+          />
+          <p>Transaction Fee - &#8358;50.00</p>
+        </div>
+        <div className="flex gap-[2px] items-center lg:gap-[6px]">
+          <img
+            className="w-[10px] h-[10px] lg:w-[24px] lg:h-[24px]"
+            src="./Images/transferImages/ticket.png"
+            alt="conversion"
+          />
+          <p>Completion Time - 5-15 minutes</p>
+        </div>
+      </div>
+
       <button
         onClick={handleProceed}
         className={`${
           (transfer.length < 4 ? "bg-[#0008]" : "bg-[#04177f]",
           receive.length < 4 ? "bg-[#0008]" : "bg-[#04177f]")
-        } my-[5%] w-full flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
+        } mt-[15%] w-full flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:mt-[10%]`}
       >
         Proceed
       </button>
