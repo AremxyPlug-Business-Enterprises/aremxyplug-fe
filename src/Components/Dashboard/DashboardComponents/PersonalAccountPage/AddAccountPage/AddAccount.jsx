@@ -17,11 +17,30 @@ export const AddAccount = () => {
     <DashBoardLayout>
       <div className="flex flex-col justify-between md:h-full lg:gap-[200px] lg:h-full lg:">
         <div className="lg:h-[100%] ">
-          <img
-            className="w-[100%] h-[80px] md:h-[180px] lg:h-[230px]"
-            src="/Images/addAccountImages/add-new-account.png"
-            alt="/"
-          />
+          <div
+            style={{
+              background:
+                "linear-gradient(91deg, #FFB57F 0.39%, #7A7FFF 101.71%)",
+            }}
+            className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] flex px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px]"
+          >
+            <div className="py-[13px] lg:py-[40px]">
+              <h2 className="text-[10px] md:text-[13.75px] font-bold mb-3 lg:text-[24px] lg:mb-4">
+                ADD NEW ACCOUNTS.
+              </h2>
+              <h2 className="text-[7px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3">
+                Add your new personal or business accounts to receive money
+                internationally.
+              </h2>
+            </div>
+            <div className="w-[91px] h-[66px] lg:w-[220px] lg:h-[179px]">
+              <img
+                src="./Images/addAccountImages/addAccount.png"
+                alt=""
+                className="h-full"
+              />
+            </div>
+          </div>
           <div className="flex text-[#7c7c7c] text-[10px] leading-[130%] items-center my-[10%] gap-[8px] md:my-[5%] md:text-[18px] lg:text-[20px]">
             <p>Select Account type </p>
             <img

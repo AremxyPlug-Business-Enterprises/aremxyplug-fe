@@ -4,12 +4,12 @@ import { ContextProvider } from "../../../Context";
 import { DashBoardLayout } from "../../Layout/DashBoardLayout";
 import styles from "../TransferComponent/transfer.module.css";
 import { Link } from "react-router-dom";
-import { DeleteAccountPopUp } from "../TransferComponent/PopUps/DeleteAccountPopUp";
-import { DeleteSuccessfulPopUp } from "../TransferComponent/PopUps/DeleteSuccessfulPopUp";
 import { InputPinPopUp } from "../TransferComponent/PopUps/InputPinPopUp";
 import { WithdrawMoneyToAccountPopUp } from "./WithdrawalPopUps/WithdrawMoneyToAccountPopUp";
 import { ConfirmWithdrawalPopUp } from "./WithdrawalPopUps/ConfirmWithdrawalPopUp";
 import { WithdrawSuccesfulPopUp } from "./WithdrawalPopUps/WithdrawSuccessfulPopUp";
+import { WithdrawalDeletePopUp } from "./WithdrawalPopUps/WithdrawalDeletePopUp";
+import { WithdrawalDeleteSuccessPopUp } from "./WithdrawalPopUps/WithdrawalDeleteSuccessPopUp";
 
 export const WithdrawToPersonalAccountPage = () => {
   const {
@@ -19,7 +19,7 @@ export const WithdrawToPersonalAccountPage = () => {
     toggleSideBar,
     amtToTransfer,
     setTfPopUp,
-    setDeletePopUp,
+    setWithdrawlDeletePopUp,
   } = useContext(ContextProvider);
 
   console.log(amtToTransfer);
@@ -34,17 +34,17 @@ export const WithdrawToPersonalAccountPage = () => {
         <div>
           {" "}
           <div
-            className=" flex gap-[10%] p-[5%] h-[80px] md:h-[180px] lg:h-[230px] rounded-[7px]"
+            className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] flex px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px]"
             style={{
               background:
                 "linear-gradient(91deg, #33B6FF 0.39%, #4AFFCD 101.71%)",
             }}
           >
-            <div className="flex flex-col gap-[10%] text-justify">
-              <p className="text-[10px] font-extrabold">
+            <div className="py-[13px] lg:py-[40px]">
+              <p className="text-[10px] font-extrabold  md:text-[13.75px] mb-3 lg:text-[24px] lg:mb-4">
                 WITHDRAW MONEY TO MY ACCOUNT.
               </p>
-              <p className="text-[7px]">
+              <p className="text-[7px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3">
                 Withdraw money from your wallets to your personal or business
                 bank accounts without any hassle or hidden fee.
               </p>
@@ -317,7 +317,7 @@ export const WithdrawToPersonalAccountPage = () => {
               Edit Account Details
             </button>
             <button
-              onClick={() => setDeletePopUp(true)}
+              onClick={() => setWithdrawlDeletePopUp(true)}
               className="cursor-pointer text-[#F95252] text-[14px] w-full rounded-[6px] font-extrabold md:text-[20px] lg:text-[20px]"
             >
               Delete Account
@@ -355,10 +355,10 @@ export const WithdrawToPersonalAccountPage = () => {
         <WithdrawSuccesfulPopUp />
 
         {/* =============Delete Account PopUp===================== */}
-        <DeleteAccountPopUp />
+        <WithdrawalDeletePopUp />
 
         {/* =============Delete Successful PopUp================== */}
-        <DeleteSuccessfulPopUp />
+        <WithdrawalDeleteSuccessPopUp />
 
         {/* =============Input Pin PopUp========================== */}
         <InputPinPopUp />
