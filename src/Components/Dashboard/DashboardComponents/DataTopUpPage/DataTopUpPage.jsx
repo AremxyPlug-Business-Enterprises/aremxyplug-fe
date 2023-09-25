@@ -21,15 +21,11 @@ const DataTopUpPage = () => {
   };
 
   const [activeBtn, setActiveBtn] = useState([true, false]);
-  const [localData, setLocalData] = useState(true);
-  const [internationalData, setinternationalData] = useState(false);
 
   const handleClick = (index) => {
     const clickedBtn = activeBtn.map((isActive, i) => i === index);
     setActiveBtn(clickedBtn);
   };
-
-
 
   return (
     <DashBoardLayout>
@@ -79,17 +75,11 @@ const DataTopUpPage = () => {
                     ? "bg-[#E2F3FF] border-b-[4px] border-b-[#04177F]"
                     : ""
                 } md:text-[11.736px] font-[500] lg:text-[20px]`}
+                onClick={() => {
+                  handleClick(0);
+                }}
               >
-                <a
-                  href="#"
-                  onClick={() => {
-                    handleClick(0);
-                    setLocalData(false);
-                    setinternationalData(true);
-                  }}
-                >
-                  Local Data
-                </a>
+                Local Data
               </p>
 
               <p
@@ -98,18 +88,12 @@ const DataTopUpPage = () => {
                     ? "bg-[#E2F3FF] border-b-[4px] border-b-[#04177F]"
                     : ""
                 } px-[50px] rounded-[5px] lg:text-[20px]`}
+                onClick={() => {
+                  handleClick(1);
+                  showPopup();
+                }}
               >
-                <a
-                  href="#"
-                  onClick={() => {
-                    handleClick(1);
-                    setLocalData(false);
-                    setinternationalData(true);
-                    showPopup();
-                  }}
-                >
-                  International Data
-                </a>
+                International Data
               </p>
             </div>
 
