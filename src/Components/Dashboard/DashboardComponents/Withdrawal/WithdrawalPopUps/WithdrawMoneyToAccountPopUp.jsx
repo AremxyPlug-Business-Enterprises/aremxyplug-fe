@@ -10,8 +10,8 @@ export const WithdrawMoneyToAccountPopUp = () => {
     toggleSideBar,
     image,
     amtToTransfer,
-    tfPopUp,
-    setTfPopUp,
+    wthPopUp,
+    setWthPopUp,
     setAmtToTransfer,
     setConfirmationPopUp,
   } = useContext(ContextProvider);
@@ -45,7 +45,7 @@ export const WithdrawMoneyToAccountPopUp = () => {
         }, {})
       );
     } else {
-      setTfPopUp(false);
+      setWthPopUp(false);
       setConfirmationPopUp(true);
       // console.log(confirmationPopUp);
       setErrors({});
@@ -54,7 +54,7 @@ export const WithdrawMoneyToAccountPopUp = () => {
 
   return (
     <div>
-      {tfPopUp && (
+      {wthPopUp && (
         <Modal>
           (
           <div
@@ -65,7 +65,7 @@ export const WithdrawMoneyToAccountPopUp = () => {
             } w-[90%]`}
           >
             <img
-              onClick={() => setTfPopUp(false)}
+              onClick={() => setWthPopUp(false)}
               className="absolute right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px]"
               src="/Images/transferImages/close-circle.png"
               alt=""

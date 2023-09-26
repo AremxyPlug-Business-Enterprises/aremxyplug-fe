@@ -46,10 +46,10 @@ export const InternationalDetail = () => {
             <div className="mx-[5%] mt-[4%] flex flex-col gap-[10px] md:grid md:grid-cols-2 md:gap-[5%] h-[] lg:w-[90%]">
               {/* ============================Bank Name====================== */}
               <div className={` ${styles.inputBox}`}>
-                <p className="text-[10px] font-extrabold lg:text-[16px]">
+                <p className="text-[10px] font-extrabold md:text-[14px] lg:text-[16px]">
                   Bank Name
                 </p>
-                <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[40px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
+                <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 md:h-[35px] lg:h-[40px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
                   <input
                     onChange={handleInternationalInputChange}
                     name="bankName"
@@ -72,10 +72,10 @@ export const InternationalDetail = () => {
 
               {/* =========================Account Number / IBAN==================== */}
               <div className={styles.inputBox}>
-                <p className="text-[10px] font-extrabold lg:text-[16px]">
+                <p className="text-[10px] font-extrabold md:text-[14px] lg:text-[16px]">
                   Account Number / IBAN
                 </p>
-                <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[40px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
+                <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 md:h-[35px] lg:h-[40px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
                   <input
                     onChange={handleInternationalInputChange}
                     name="accountNumber"
@@ -93,10 +93,10 @@ export const InternationalDetail = () => {
 
               {/* ===========================Account Name============================ */}
               <div className={` ${styles.inputBox} lg:flex lg:justify-end`}>
-                <p className="text-[10px] font-extrabold lg:text-[16px]">
+                <p className="text-[10px] font-extrabold md:text-[14px] lg:text-[16px]">
                   Account Name
                 </p>
-                <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[40px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
+                <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 md:h-[35px] lg:h-[40px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
                   <input
                     onChange={handleInternationalInputChange}
                     name="accountName"
@@ -114,10 +114,10 @@ export const InternationalDetail = () => {
 
               {/* ===================Swift Code/ Sort Code / Routine Number ============ */}
               <div className={styles.inputBox}>
-                <p className="text-[10px] font-extrabold lg:text-[16px]">
+                <p className="text-[10px] font-extrabold md:text-[14px] lg:text-[16px]">
                   Swift Code/ Sort Code / Routine Number
                 </p>
-                <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[40px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
+                <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 md:h-[35px] lg:h-[40px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
                   <input
                     onChange={handleInternationalInputChange}
                     name="swiftCode"
@@ -135,10 +135,10 @@ export const InternationalDetail = () => {
 
               {/* =====================Recipient Address=========================== */}
               <div className={styles.inputBox}>
-                <p className="text-[10px] font-extrabold lg:text-[16px]">
+                <p className="text-[10px] font-extrabold md:text-[14px] lg:text-[16px]">
                   Recipient Address
                 </p>
-                <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[40px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
+                <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 md:h-[35px] lg:h-[40px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
                   <input
                     onChange={handleInternationalInputChange}
                     name="recipientAddress"
@@ -157,7 +157,7 @@ export const InternationalDetail = () => {
               {/* =====================Purpose of Payment=========================== */}
               <div className={styles.inputBox}>
                 <div className="flex items-center gap-[5px]">
-                  <p className="text-[10px] font-extrabold lg:text-[16px]">
+                  <p className="text-[10px] font-extrabold md:text-[14px] lg:text-[16px]">
                     Purpose of payment
                   </p>
                   <img
@@ -175,12 +175,12 @@ export const InternationalDetail = () => {
                         toggleSideBar
                           ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]"
                           : "md:w-[80%] lg:w-[562px]"
-                      } w-[90%] bg-white shadow-lg rounded-[8px] h-[269px] flex flex-col items-center py-[4%] gap-[40px] md:h-[360px] lg:h-[404px] lg:py-[3%] lg:rounded-[20px]`}
+                      } w-[90%] bg-white shadow-lg rounded-[8px] h-[269px] flex flex-col items-center py-[4%] gap-[20px] md:h-[370px] lg:h-[404px] lg:py-[1%] lg:rounded-[20px]`}
                     >
-                      <hr className="h-[6px] w-full bg-[#04177f] border-none mt-[5%] md:mt-[6%] md:h-[10px]" />
+                      <hr className="h-[6px] w-full bg-[#04177f] border-none mt-[5%] md:mt-[3%] md:h-[12px] lg:mt-[5%] lg:h-[10px]" />
 
-                      <div className="flex flex-col justify-between h-full">
-                        <p className="leading-[11px] text-[9px] text-[#7C7C7C] text-center font-extrabold md:text-[10px] lg:w-[90%] lg:mx-auto lg:text-[16px] lg:flex lg:flex-col lg:gap-[5%] lg:leading-[19.5px]">
+                      <div className="flex flex-col justify-between h-full ">
+                        <p className="leading-[11px] text-[9px] text-[#7C7C7C] text-center font-extrabold md:text-[14px] lg:w-[90%] lg:mx-auto lg:text-[16px] lg:flex lg:flex-col lg:gap-[5%] lg:leading-[19.5px]">
                           <span className="text-[#04177f] font-extrabold">
                             Purpose of Payments can be any of the following,
                             E.g;
@@ -193,6 +193,11 @@ export const InternationalDetail = () => {
                           </p>
                         </p>
 
+                        <img
+                          className="w-[86px] h-[86px] md:w-[120px] md:h-[120px] mx-auto lg:w-[150px] lg:h-[150px]"
+                          src="./Images/transferImages/payment.gif"
+                          alt="conversion"
+                        />
                         <div
                           onClick={() => setPurpose(false)}
                           className={` ${
@@ -205,7 +210,7 @@ export const InternationalDetail = () => {
                     </div>
                   </Modal>
                 )}
-                <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[40px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
+                <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 md:h-[35px] lg:h-[40px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
                   <input
                     onChange={handleInternationalInputChange}
                     name="purposeOfPayment"
@@ -241,7 +246,7 @@ export const InternationalDetail = () => {
 
             <button
               onClick={handleProceedButton}
-              className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:mt-[15%] lg:text-[16px] lg:h-[38px] lg:my-`}
+              className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:mt-[10%] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:mt-[15%] lg:text-[16px] lg:h-[38px] lg:my-`}
             >
               Proceed
             </button>

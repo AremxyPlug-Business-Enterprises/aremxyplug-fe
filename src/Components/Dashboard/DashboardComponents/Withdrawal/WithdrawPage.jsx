@@ -36,7 +36,7 @@ export const WithdrawPage = () => {
           >
             <div className="py-[13px] lg:py-[40px]">
               <h2 className="text-[9px] md:text-[13.75px] font-bold mb-3 lg:text-[24px] lg:mb-4">
-                Withdraw MONEY without any hassel!
+                WITHDRAW MONEY WITHOUT ANY HASSEL!
               </h2>
               <h2 className="text-[7px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3">
                 Withdraw money easily and securely from your wallets to your

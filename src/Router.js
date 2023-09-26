@@ -51,6 +51,7 @@ import { OtherBankReceipt } from "./Components/Dashboard/DashboardComponents/Tra
 import GlobalTransfer from "./Components/Dashboard/DashboardComponents/TransferComponent/TransferToOtherBankPages/GlobalTransfer";
 import { InternationalReceipt } from "./Components/Dashboard/DashboardComponents/TransferComponent/TransferToOtherBankPages/OtherBankPopUp/InternationalPopUp/InternationalReceipt";
 import FiatConversion from "./Components/CurrencyConversion/FiatConversion";
+import DataTopUpPage from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataTopUpPage";
 
 export const Router = () => {
   return (
@@ -120,6 +121,7 @@ export const Router = () => {
         <Route path="/international-bank-receipt" element={<InternationalReceipt />} />
         <Route path="/global-transfer" element={<GlobalTransfer />} />
         <Route path="/fiat" element={<FiatConversion/>}/>
+        <Route path="/data-top-up" element={<DataTopUpPage/>} />
       </Routes>
     </div>
   );

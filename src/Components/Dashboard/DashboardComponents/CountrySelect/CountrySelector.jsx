@@ -78,12 +78,12 @@ export const CountrySelector = ({ onSelect, selectedCountry }) => {
     <div>
       <button
         onClick={() => setShowList(!showList)}
-        className="text-[8px] text-[#0005] h-[23.5px] w-[50px] flex justify-center gap-[20%] items-center bg-[#04177f] mb-[4%] md:w-[142px] md:h-[22px] md:text-[12px] lg:w-[180px] lg:h-[44px] lg:text-[16px] "
+        className="text-[8px] text-[#0005] h-[23.5px] w-[50px] flex justify-center gap-[20%] items-center bg-[#04177f] mb-[4%] md:h-[45px] md:w-[160px] md:text-[12px] lg:w-[180px] lg:h-[44px] lg:text-[16px] "
       >
         {selected ? (
           <div className="flex gap-[5px] items-center md:gap-[8px]">
             <img
-              className="w-[11px] h-[11px] lg:w-[29px] lg:h-[29px]"
+              className="w-[11px] h-[11px] md:w-[20px] md:h-[20px] lg:w-[29px] lg:h-[29px]"
               src={image}
               alt=""
             />
@@ -91,20 +91,20 @@ export const CountrySelector = ({ onSelect, selectedCountry }) => {
           </div>
         ) : (
           <img
-              className="w-[11px] h-[11px] lg:w-[29px] lg:h-[29px]"
+              className="w-[11px] h-[11px] md:w-[20px] md:h-[20px] lg:w-[29px] lg:h-[29px]"
               src="./Images/otherBanksImages/USFLAG.png"
               alt=""
             />
         )}
         {selected ? (
           <img
-            className=" h-[8.3px] w-[8.3px] lg:w-[24px] lg:h-[24px]"
+            className=" h-[8.3px] w-[8.3px] md:h-[15px] md:w-[15px] lg:w-[24px] lg:h-[24px]"
             src="./Images/dashboardImages/arrow-down2.png"
             alt="dropdown"
           />
         ) : (
           <img
-            className=" h-[8.3px] w-[8.3px] lg:w-[24px] lg:h-[24px]"
+            className=" h-[8.3px] w-[8.3px] md:h-[15px] md:w-[15px] lg:w-[24px] lg:h-[24px]"
             src="./Images/dashboardImages/arrow-down2.png"
             alt="dropdown"
           />

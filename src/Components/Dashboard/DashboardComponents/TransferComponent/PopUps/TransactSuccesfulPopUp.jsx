@@ -20,7 +20,8 @@ export const TransactSuccesfulPopUp = () => {
 
   const handleTransactionSuccessClose = () => {
     setTransactSuccessPopUp(false);
-  };
+  }; 
+
 
   return (
     <div>
@@ -28,7 +29,7 @@ export const TransactSuccesfulPopUp = () => {
         <Modal>
           {/* <TransactFailedPopUp/> */}
           <div
-            className={`${styles.successful} ${
+            className={`${styles.successfulTwo} ${
               toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
             } md:w-[45%] w-[90%] overflow-auto`}
           >
@@ -52,7 +53,7 @@ export const TransactSuccesfulPopUp = () => {
               Transaction Successful
             </h2>
             <img
-              className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[60px] lg:h-[60px]"
+              className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[250px] lg:h-[250px]"
               src="./Gif/checkMarkGif.gif"
               alt="/"
             />

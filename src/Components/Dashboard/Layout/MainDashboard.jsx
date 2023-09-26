@@ -18,7 +18,7 @@ import { RecentTransaction } from "../DashboardComponents/RecentTransaction";
 import { Link } from "react-router-dom";
 
 export const MainDashboard = () => {
-  const { setHideNavbar, toggleSideBar, isDarkMode } =
+  const { setHideNavbar, toggleSideBar, isDarkMode, } =
     useContext(ContextProvider);
   const [visible, setVisibility] = useState(true);
   const [activeButtons, setActiveButtons] = useState([false, false, false]);
@@ -121,7 +121,7 @@ export const MainDashboard = () => {
           >
             <SwiperSlide>
               {" "}
-              <div className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] bg-[#FFC589] flex px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px]">
+              <div className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] bg-[#FFC589] flex px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px] ">
                 <div className="py-[13px] lg:py-[40px]">
                   <h2 className="text-[9px] md:text-[13.75px] font-bold mb-3 lg:text-[24px] lg:mb-4">
                     Welcome TO AREMXYPLUG!
@@ -492,7 +492,7 @@ export const MainDashboard = () => {
               to="/withdraw"
               className={`${
                 isDarkMode ? " border bg-[#000]" : "bg-[#04177f]"
-              } ${styles.button} pr-3`}
+                } ${styles.button} pr-3`}
             >
               {" "}
               <div className="flex items-center gap-[10%]">
