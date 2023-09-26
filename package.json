@@ -1,6 +1,6 @@
 {
-  "name": "aremxyplug-fe",
-  "version": "0.1.0",
+  "name": "yes",
+  "version": "v1.22.19",
   "private": true,
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",
@@ -66,5 +66,10 @@
   },
   "devDependencies": {
     "tailwindcss": "^3.3.2"
-  }
+  },
+  "description": "yes",
+  "main": "yes",
+  "repository": "yes",
+  "author": "yes",
+  "license": "yes"
 }
