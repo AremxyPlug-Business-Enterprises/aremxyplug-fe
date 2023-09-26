@@ -14,7 +14,7 @@ export const SideBar = () => {
     dropdown5: false,
     dropdown6: false,
   });
-
+  
   const dropHandler = (dropdownName) => {
     setDropDownOpen((prevState) => ({
       dropdown1: dropdownName === "dropdown1" ? !prevState.dropdown1 : false,
@@ -215,6 +215,8 @@ export const SideBar = () => {
                       />
                       <Link to={"/airtime-topup"}>Airtime Top-up</Link>
                     </li>
+
+                    <Link to="/data-top-up">
                     <li className="flex gap-[5%] hover:underline text-[#fff] pt-1 pb-1 font-medium md:text-[11px] lg:pt-[6%] lg:pb-[6%] lg:pl-[%] lg:text-[14px] ">
                       <img
                         className="w-[8.5px] h-[8.5px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
@@ -223,6 +225,8 @@ export const SideBar = () => {
                       />
                       <div>Data Top-up</div>
                     </li>
+                    </Link>
+                    
                     <li className="flex gap-[5%] hover:underline text-[#fff] pt-1 pb-1  font-medium md:text-[11px] lg:pt-[6%] lg:pb-[6%] lg:pl-[%] lg:text-[14px] ">
                       <img
                         className="w-[8.5px] h-[8.5px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
