@@ -102,7 +102,7 @@ const CurrencyConversion = () =>{
             <p className="text-[#04177F] text-[8px] md:text-[10px] lg:text-[16px] text-center font-semibold">This Feature is Currently Not Available.</p>
             <div className="relative my-[20px]">
               <div className="flex justify-center">
-                <img src={cryptoFeature} alt="" className="lg:h-[200px] md:w-[120] lg:w-[204.4px] md:h-[120px]"/>
+                <img src={cryptoFeature} alt="" className="lg:h-[200px] md:w-[120px] lg:w-[204.4px] md:h-[120px]"/>
               </div>
               <span className="text-[7px] md:text-[10px] lg:text-[12px] font-semibold absolute right-12">Coming soon...</span>
             </div>
@@ -130,7 +130,7 @@ const CurrencyConversion = () =>{
             <p className="text-[#04177F] text-[8px] md:text-[10px] lg:text-[16px] text-center font-semibold">This Feature is Currently Not Available.</p>
             <div className="relative my-[20px]">
               <div className="flex justify-center">
-                <img src={mwFeature} alt=""  className="lg:h-[200px] md:w-[120] lg:w-[204.4px] md:h-[120px]"/>
+                <img src={mwFeature} alt=""  className="lg:h-[200px] md:w-[120px] lg:w-[204.4px] md:h-[120px]"/>
               </div>
               <span className="text-[7px] md:text-[8px] lg:text-[10px] font-semibold absolute right-12">Coming soon...</span>
             </div>
