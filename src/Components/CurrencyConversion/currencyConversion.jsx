@@ -4,12 +4,11 @@ import "../CurrencyConversion/currencyConversion.css";
 import creditCard from "../CurrencyConversion/Images/credit.svg";
 import right from "./Images/right.svg"
 import fiat from "./Images/fiat.svg"
-import crypto from "./Images/crypto.svg"
 import multiwallet from "./Images/multiwallet.svg"
 import airtime from "./Images/airtime.svg"
 import points from "./Images/points.svg"
 import { DashBoardLayout } from '../Dashboard/Layout/DashBoardLayout';
-import FiatConversion from "./FiatConversion"
+// import FiatConversion from "./FiatConversion"
 import Modal from "./cryptoPopup"
 import mwFeature from "./Images/MW-feature.svg"
 import cryptoFeature from "./Images/cryptofeature.svg"
