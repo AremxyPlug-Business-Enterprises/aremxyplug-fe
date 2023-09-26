@@ -1,5 +1,5 @@
 import React from 'react';
-import { DashBoardLayout } from '../Dashboard/Layout/DashBoardLayout';
+import { DashBoardLayout } from '../../Layout/DashBoardLayout';
 import cloud from '../PointRedeem/images/cloud storage convert.svg'
 import icon from '../PointRedeem/images/receipt-add.svg'
 import arrowdown from '../PointRedeem/images/arrow-down.svg'
