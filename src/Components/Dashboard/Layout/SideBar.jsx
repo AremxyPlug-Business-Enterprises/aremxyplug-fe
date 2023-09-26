@@ -5,7 +5,8 @@ import { ContextProvider } from "../../Context";
 import styles from "./Dashboard.module.css";
 
 export const SideBar = () => {
-  const { setToggleSideBar, isDarkMode, handleClickOutside } = useContext(ContextProvider);
+  const { setToggleSideBar, isDarkMode, handleClickOutside } =
+    useContext(ContextProvider);
   const [dropDownOpen, setDropDownOpen] = useState({
     dropdown1: false,
     dropdown2: false,
@@ -27,12 +28,12 @@ export const SideBar = () => {
   };
 
   useEffect(() => {
-    document.addEventListener('click', handleClickOutside);
+    document.addEventListener("click", handleClickOutside);
 
     return () => {
-      document.removeEventListener('click', handleClickOutside);
+      document.removeEventListener("click", handleClickOutside);
     };
-  }, );
+  });
 
   return (
     <div
@@ -322,6 +323,7 @@ export const SideBar = () => {
                       />
                       <div>Virtual Accounts</div>
                     </li>
+
                     <Link to="/money-transfer">
                       <li className="flex gap-[5%] hover:underline text-[#fff] pt-1 pb-1 font-medium md:text-[11px] lg:pt-[6%] lg:pb-[6%] lg:pl-[%] lg:text-[14px] ">
                         <img
@@ -332,6 +334,7 @@ export const SideBar = () => {
                         <div>Money Transfer</div>
                       </li>
                     </Link>
+
                     <li className="flex gap-[5%] hover:underline text-[#fff] pt-1 pb-1 font-medium md:text-[11px] lg:pt-[6%] lg:pb-[6%] lg:pl-[%] lg:text-[14px] ">
                       <img
                         className="w-[8.5px] h-[8.5px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"

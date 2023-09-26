@@ -12,14 +12,14 @@ export const ConfirmWithdrawalPopUp = () => {
     amtToTransfer,
     confirmationPopUp,
     setConfirmationPopUp,
-    setInputPinPopUp,
+    setWithdrawPinPopUp,
   } = useContext(ContextProvider);
 
   const TotalAmount = amtToTransfer;
   const pointsEarned = "+2.00";
 
   const handleSwitch = () => {
-    setInputPinPopUp(true);
+    setWithdrawPinPopUp(true);
     setConfirmationPopUp(false);
   };
   return (

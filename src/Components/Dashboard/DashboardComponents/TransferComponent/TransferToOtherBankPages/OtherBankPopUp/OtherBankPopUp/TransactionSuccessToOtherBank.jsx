@@ -32,7 +32,7 @@ export const TransactionSuccessToOtherBank = ({
         <Modal>
           {/* <TransactFailedPopUp/> */}
           <div
-            className={`${styles.successful} ${
+            className={`${styles.successfulTwo} ${
               toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
             } md:w-[45%] w-[90%] overflow-auto`}
           >
