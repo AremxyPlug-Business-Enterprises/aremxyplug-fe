@@ -1,3 +1,5 @@
+
+
 @font-face {
   font-family: interFont;
   src: url(./font/Inter/static/Inter-Regular.ttf);
@@ -200,3 +202,16 @@ html {
     font-size: 16px;
   }
 }
+/* Oladimeji styling starts */
+@import url('https://fonts.googleapis.com/css2?family=Mooli&family=Nunito+Sans:opsz,wght@6..12,500&family=Open+Sans&family=Poppins&display=swap');
+.rectangle1{
+  background: linear-gradient(92deg, #92ABFE 4.68%, #404EDE 55.04%);
+
+}
+.Refer table td{
+  border: none;
+}
+.font-style{
+  font-family: 'Poppins', sans-serif;
+}
+/* Oladimeji styling ends */
