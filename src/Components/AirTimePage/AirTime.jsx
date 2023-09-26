@@ -47,13 +47,7 @@ const AirTime = () => {
         <div>
             <div className={styles.airtimeTop}>
                 <div className={styles.banner}>
-                    <div className={styles.globalAir}>
-                        <h3>TOP UP AIRTIME GLOBALLY WITH AREMXYPLUG.</h3>
-                        <p>Top up your mobile sim with our automated airtime vending, receive instantly, enjoy discount, purchase in bulk, send to friends, family, team, employees, and your loved ones without any hassle or hidden fee.</p>
-                    </div>
-                    <div className={styles.young}>
-                        <img src="./Images/airtimeTopUp/young.png" alt="" />
-                    </div>
+                    <img src="./Images/airtimeTopUp/blue_banners.png" alt="" />
                 </div>
                 <div className={styles.airType}>
                     <div>
@@ -106,7 +100,7 @@ const AirTime = () => {
                              icon='./Images/airtimeTopUp/math.svg'
                            />
                         </div> :
-                        <div>
+                        <div className={styles.containAir}>
                              <TabOneItem
                              title='Airtime VTU'
                              text='Top up your mobile sim using our automated airtime vending directly from network providers.'
@@ -199,7 +193,7 @@ const AirTime = () => {
                         <WalletModal>
                             <div className={styles.NotInterX} >
                                 <div className={styles.timeAbleX}>
-                                    <h2>Airtime Schedule.</h2>
+                                    <h2>Bulk Airtime.</h2>
                                     <h3>This Feature is Currently Not Available.</h3>
                                 </div>
                                 <div className={styles.InterAirtimeX}>

@@ -4,12 +4,12 @@ import { ContextProvider } from "../../../Context";
 import { DashBoardLayout } from "../../Layout/DashBoardLayout";
 import styles from "../TransferComponent/transfer.module.css";
 import { Link } from "react-router-dom";
-import { InputPinPopUp } from "../TransferComponent/PopUps/InputPinPopUp";
 import { WithdrawMoneyToAccountPopUp } from "./WithdrawalPopUps/WithdrawMoneyToAccountPopUp";
 import { ConfirmWithdrawalPopUp } from "./WithdrawalPopUps/ConfirmWithdrawalPopUp";
 import { WithdrawSuccesfulPopUp } from "./WithdrawalPopUps/WithdrawSuccessfulPopUp";
 import { WithdrawalDeletePopUp } from "./WithdrawalPopUps/WithdrawalDeletePopUp";
 import { WithdrawalDeleteSuccessPopUp } from "./WithdrawalPopUps/WithdrawalDeleteSuccessPopUp";
+import { WithdrawalPinPopUp } from "./WithdrawalPopUps/WithdrawPinPopUp";
 
 export const WithdrawToPersonalAccountPage = () => {
   const {
@@ -18,7 +18,7 @@ export const WithdrawToPersonalAccountPage = () => {
     code,
     toggleSideBar,
     amtToTransfer,
-    setTfPopUp,
+    setWthPopUp,
     setWithdrawlDeletePopUp,
   } = useContext(ContextProvider);
 
@@ -57,7 +57,7 @@ export const WithdrawToPersonalAccountPage = () => {
           </div>
           <div className="flex my-[5%] gap-11 font-extrabold md:w-[80%]">
             <button
-              onClick={() => setTfPopUp(true)}
+              onClick={() => setWthPopUp(true)}
               className={`${styles.transferMoneyBtn} flex gap-[5px] w-[100%] h-[26px] justify-center items-center md:w-[390px] lg:h-[41px]`}
             >
               <h2 className="text-[9px] md:text-[12px] lg:text-[16px] ">
@@ -361,7 +361,7 @@ export const WithdrawToPersonalAccountPage = () => {
         <WithdrawalDeleteSuccessPopUp />
 
         {/* =============Input Pin PopUp========================== */}
-        <InputPinPopUp />
+        <WithdrawalPinPopUp />
       </div>
     </DashBoardLayout>
   );

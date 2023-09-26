@@ -15,7 +15,6 @@
   backdrop-filter: blur(5.589743614196777px);
 }
 
-
 .balance {
   margin-top: 5%;
   display: flex;
@@ -68,7 +67,7 @@ select {
   width: 50px;
   outline: none;
   font-weight: bolder;
-/* z-index: 99px; */
+  /* z-index: 99px; */
 }
 
 .currency {
@@ -190,7 +189,6 @@ select {
   .button p {
     color: #fff;
     font-size: 13.333px;
-    font-style: normal;
     font-weight: 900;
     line-height: normal;
   }
@@ -230,7 +228,7 @@ select {
   }
 
   /* .walletText { */
-    /* font-size: 25.5px; */
+  /* font-size: 25.5px; */
   /* } */
 
   .dashboard {
@@ -288,7 +286,7 @@ select {
   }
 
   /* .ttwc { */
-    /* gap: 10%; */
+  /* gap: 10%; */
   /* } */
 
   .button {
@@ -297,12 +295,12 @@ select {
   }
 
   .button p {
-    font-size: 20.162px;
+    font-size: 14.162px;
   }
 
   .button img {
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
   }
 
   .logout {
@@ -341,7 +339,7 @@ select {
   }
 
   /* .walletText { */
-    /* font-size: 16px; */
+  /* font-size: 16px; */
   /* } */
 
   .viewBalance {
@@ -387,8 +385,8 @@ select {
     display: flex;
     width: 20%;
     /* padding: 21.226px 46.293px; */
-    padding-top:21.226px;
-    padding-bottom:21.226px;
+    padding-top: 21.226px;
+    padding-bottom: 21.226px;
     justify-content: center;
     align-items: center;
     gap: 19.226px;
@@ -493,4 +491,3 @@ select {
     font-size: 20px;
   }
 }
-

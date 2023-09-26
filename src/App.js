@@ -1,6 +1,5 @@
 import "./App.css";
 import { Layout } from "./Components/Layout/Layout";
-// import DataTopUpPage from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataTopUpPage";
 // import { TransferPage } from "./Components/Dashboard/DashboardComponents/TransferComponent/TransferPage"
 
 function App() {
@@ -11,5 +10,6 @@ function App() {
     </>
   );
 }
+
 
 export default App;

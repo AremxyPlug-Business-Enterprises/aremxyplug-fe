@@ -116,7 +116,7 @@ export const WithdrawToMyAccountPage = () => {
           <WithdrawAccounts />
         </div>
 
-        <div className="flex gap-[15px] justify-center items-center my-10">
+        <div className="flex gap-[15px] justify-center items-center my-10 md:mb-[20%]">
           <div className="text-[8px] md:text-[12px] lg:text-[16px]">
             You need help ?
           </div>

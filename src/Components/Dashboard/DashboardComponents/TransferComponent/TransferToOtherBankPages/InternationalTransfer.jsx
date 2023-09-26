@@ -4,9 +4,12 @@ import Joi from "joi";
 import { InternationalDetail } from "./OtherBankPopUp/InternationalPopUp/InternationalDetail";
 import { useContext } from "react";
 import { ContextProvider } from "../../../../Context";
+import styles from "../../TransferComponent/transfer.module.css";
+import { Modal } from "../../../../Screens/Modal/Modal";
 
 export const InternationalTransfer = () => {
   const [errors, setErrors] = useState({});
+  const [checkrate, setCheckrate] = useState(false);
 
   const {
     transfer,
@@ -83,7 +86,10 @@ export const InternationalTransfer = () => {
   return (
     <div>
       {" "}
-      <div className="bg-[#04177f] text-[#fff] text-[10px] h-[20px] flex justify-center items-center rounded-[2px] lg:text-[16px] lg:h-[38px] lg:w-[50%]">
+      <div
+        onClick={() => setCheckrate(true)}
+        className="bg-[#04177f] text-[#fff] text-[10px] h-[20px] flex justify-center items-center rounded-[2px] md:text-[14px] md:h-[35px] lg:text-[16px] lg:h-[38px] lg:w-[50%]"
+      >
         Real-time International Transfer Check Rate
       </div>
       <div className="font-extrabold flex text-[#7c7c7c] text-[10px] leading-[130%] items-center my-[7%] gap-[8px] md:my-[5%] md:text-[18px] lg:text-[20px]">
@@ -95,23 +101,23 @@ export const InternationalTransfer = () => {
         />
       </div>
       <div className={``}>
-        <div className="border h-[25px] flex justify-between pl-[2%] lg:h-[45px] lg:border-[1px] lg:border-[#0003]">
+        <div className="border h-[25px] flex justify-between pl-[2%] md:h-[45px] lg:h-[45px] lg:border-[1px] lg:border-[#0003]">
           {" "}
           <input
             onChange={transferHandler}
             type="number"
             placeholder="Amount to Transfer"
-            className="text-[10px] w-[90%] h-[100%] outline-none lg:text-[16px]"
+            className="text-[10px] w-[90%] h-[100%] outline-none md:text-[16px] lg:text-[16px]"
           />
-          <div className="h-[23.5px] w-[50px] flex justify-center gap-[20%] items-center bg-[#04177f] lg:w-[180px] lg:h-[44px]">
+          <div className="h-[23.5px] w-[50px] flex justify-center gap-[20%] items-center bg-[#04177f] md:h-[45px] md:w-[180px] lg:w-[180px] lg:h-[44px]">
             {" "}
             <img
-              className="w-[11px] h-[11px] lg:w-[29px] lg:h-[29px]"
+              className="w-[11px] h-[11px] md:w-[20px] md:h-[20px] lg:w-[29px] lg:h-[29px]"
               src="./Images/otherBanksImages/NAIJAFLAG.png"
               alt=""
             />
             <img
-              className=" h-[8.3px] w-[8.3px] lg:w-[24px] lg:h-[24px]"
+              className=" h-[8.3px] w-[8.3px] md:w-[17px] md:h-[17px] lg:w-[24px] lg:h-[24px]"
               src="./Images/dashboardImages/arrow-down2.png"
               alt="dropdown"
             />
@@ -124,7 +130,7 @@ export const InternationalTransfer = () => {
           </div>
         )}
       </div>
-      <div className="border rounded-[3.3px] h-[20px] w-[50%] mx-auto my-[3%] flex justify-between items-center px-[2%] lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
+      <div className="border rounded-[3.3px] h-[20px] w-[50%] mx-auto my-[3%] flex justify-between items-center px-[2%] md:h-[40px] lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
         <p className="text-[8px] text-[#0008] md:text-[14px] lg:text-[16px]">
           Available Balance(&#8358;50,000.00)
         </p>
@@ -143,13 +149,13 @@ export const InternationalTransfer = () => {
         />
       </div>
       <div className={``}>
-        <div className="border rounded-[px] h-[25px] flex justify-between pl-[2%] lg:h-[45px] lg:border-[1px] lg:border-[#0003]">
+        <div className="border rounded-[px] h-[25px] flex justify-between pl-[2%] md:h-[45px] lg:h-[45px] lg:border-[1px] lg:border-[#0003]">
           {" "}
           <input
             onChange={receiveHandler}
             type="number"
             placeholder="Recipient will Receive"
-            className="text-[10px] w-[90%] h-[100%] outline-none lg:text-[16px]"
+            className="text-[10px] w-[90%] h-[100%] outline-none md:text-[14px] lg:text-[16px]"
           />
           <CountrySelector
             onSelect={handleCountrySelect}
@@ -163,10 +169,10 @@ export const InternationalTransfer = () => {
           </div>
         )}
       </div>
-      <div className="my-[5%] flex text-[6px] gap-[6%] text-[#7C7C7C] lg:text-[16px] lg:justify-between">
+      <div className="my-[5%] flex text-[7px] justify-between text-[#7C7C7C] md:text-[16px] lg:text-[16px] lg:justify-between">
         <div className="flex gap-[2px] items-center lg:gap-[6px]">
           <img
-            className="w-[8px] h-[8px] lg:w-[24px] lg:h-[24px]"
+            className="w-[8px] h-[8px] md:w-[17px] md:h-[17px] lg:w-[24px] lg:h-[24px]"
             src="./Images/transferImages/ticket.png"
             alt="conversion"
           />
@@ -178,7 +184,7 @@ export const InternationalTransfer = () => {
         </div>
         <div className="flex gap-[2px] items-center lg:gap-[6px]">
           <img
-            className="w-[8px] h-[8px] lg:w-[24px] lg:h-[24px]"
+            className="w-[8px] h-[8px] md:w-[17px] md:h-[17px] lg:w-[24px] lg:h-[24px]"
             src="./Images/transferImages/convert-card.png"
             alt="conversion"
           />
@@ -186,7 +192,7 @@ export const InternationalTransfer = () => {
         </div>
         <div className="flex gap-[2px] items-center lg:gap-[6px]">
           <img
-            className="w-[8px] h-[8px] lg:w-[24px] lg:h-[24px]"
+            className="w-[8px] h-[8px] md:w-[17px] md:h-[17px] lg:w-[24px] lg:h-[24px]"
             src="./Images/transferImages/clock.png"
             alt="conversion"
           />
@@ -203,6 +209,110 @@ export const InternationalTransfer = () => {
         Proceed
       </button>
       <InternationalDetail />
+      {checkrate && (
+        <Modal>
+          <div className={`${styles.checkrate}`}>
+            {" "}
+            <img
+              onClick={() => setCheckrate(false)}
+              className="absolute left-[87%] w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px]"
+              src="/Images/transferImages/close-circle.png"
+              alt=""
+            />
+            <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
+            <div className="bg-[#04177f] text-[#fff] text-[10px] my-[20%] h-[20px] flex justify-center items-center rounded-[2px] lg:text-[16px] lg:h-[38px] lg:w-[50%]">
+              Real-time International Transfer Check Rate
+            </div>
+            <div className="mx-[5%]">
+              <div className="font-extrabold flex text-[#000] text-[10px] leading-[130%] items-center my-[7%] gap-[8px] md:my-[5%] md:text-[18px] lg:text-[20px]">
+                <p>Sender</p>
+                <img
+                  className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
+                  src="./Images/Dashboardimages/arrowright.png"
+                  alt="/"
+                />
+              </div>
+              <div className={``}>
+                <div className="border h-[25px] flex justify-between pl-[2%] lg:h-[45px] lg:border-[1px] lg:border-[#000]">
+                  {" "}
+                  <input
+                    onChange={transferHandler}
+                    type="number"
+                    placeholder="Amount to Transfer"
+                    className="text-[10px] text-[#000] w-[90%] h-[100%] outline-none lg:text-[16px]"
+                  />
+                  <div className="h-[23.5px] w-[50px] flex justify-center gap-[20%] items-center bg-[#04177f] lg:w-[180px] lg:h-[44px]">
+                    {" "}
+                    <img
+                      className="w-[11px] h-[11px] lg:w-[29px] lg:h-[29px]"
+                      src="./Images/otherBanksImages/NAIJAFLAG.png"
+                      alt=""
+                    />
+                    <img
+                      className=" h-[8.3px] w-[8.3px] lg:w-[24px] lg:h-[24px]"
+                      src="./Images/dashboardImages/arrow-down2.png"
+                      alt="dropdown"
+                    />
+                  </div>
+                </div>
+
+                {errors.transfer && (
+                  <div className="text-[12px] text-red-500 italic lg:text-[14px]">
+                    {errors.transfer}
+                  </div>
+                )}
+              </div>
+              <div className="text-[9px] text-[#29B8FC] border-[0.9px] drop-shadow-3xl border-[#0003] rounded-[7px] w-[55%] mx-auto my-[3%] flex justify-center items-center py-[7px] gap-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
+                <img
+                  className="w-[14px] h-[14px] lg:w-[24px] lg:h-[24px]"
+                  src="./Images/transferImages/ticket-discount.png"
+                  alt="conversion"
+                />
+                {exchangeRate !== null ? (
+                  <p>1 NGN ~ {exchangeRate} USD</p>
+                ) : (
+                  <p>Loading exchange rate...</p>
+                )}
+              </div>
+              <div className="font-extrabold flex text-[#000] text-[10px] leading-[130%] items-center my-[7%] gap-[8px] md:my-[5%] md:text-[18px] lg:text-[20px]">
+                <p>To Recipient</p>
+                <img
+                  className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
+                  src="./Images/Dashboardimages/arrowright.png"
+                  alt="/"
+                />
+              </div>
+              <div className={``}>
+                <div className="border rounded-[px] h-[25px] flex justify-between pl-[2%] lg:h-[45px] lg:border-[1px] lg:border-[#0003]">
+                  {" "}
+                  <input
+                    onChange={receiveHandler}
+                    type="number"
+                    placeholder="Recipient will Receive"
+                    className="text-[10px] w-[90%] h-[100%] outline-none lg:text-[16px]"
+                  />
+                  <CountrySelector
+                    onSelect={handleCountrySelect}
+                    selectedCountry={selectedCountry}
+                  />
+                </div>
+
+                {errors.receive && (
+                  <div className="text-[12px] text-red-500 italic lg:text-[14px]">
+                    {errors.receive}
+                  </div>
+                )}
+              </div>
+              <button
+                onClick={() => setCheckrate(false)}
+                className="bg-[#04177f] mt-[25%] w-full flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:mt-[10%]"
+              >
+                Okay
+              </button>
+            </div>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 };
