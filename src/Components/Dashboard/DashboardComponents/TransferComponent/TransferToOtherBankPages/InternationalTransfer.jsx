@@ -163,11 +163,10 @@ export const InternationalTransfer = () => {
           </div>
         )}
       </div>
-
-      <div className="my-[5%] flex text-[7px] gap-[6%] text-[#7C7C7C] lg:text-[16px] lg:gap-[21%]">
+      <div className="my-[5%] flex text-[6px] gap-[6%] text-[#7C7C7C] lg:text-[16px] lg:justify-between">
         <div className="flex gap-[2px] items-center lg:gap-[6px]">
           <img
-            className="w-[10px] h-[10px] lg:w-[24px] lg:h-[24px]"
+            className="w-[8px] h-[8px] lg:w-[24px] lg:h-[24px]"
             src="./Images/transferImages/ticket.png"
             alt="conversion"
           />
@@ -179,22 +178,21 @@ export const InternationalTransfer = () => {
         </div>
         <div className="flex gap-[2px] items-center lg:gap-[6px]">
           <img
-            className="w-[10px] h-[10px] lg:w-[24px] lg:h-[24px]"
-            src="./Images/transferImages/ticket.png"
+            className="w-[8px] h-[8px] lg:w-[24px] lg:h-[24px]"
+            src="./Images/transferImages/convert-card.png"
             alt="conversion"
           />
           <p>Transaction Fee - &#8358;50.00</p>
         </div>
         <div className="flex gap-[2px] items-center lg:gap-[6px]">
           <img
-            className="w-[10px] h-[10px] lg:w-[24px] lg:h-[24px]"
-            src="./Images/transferImages/ticket.png"
+            className="w-[8px] h-[8px] lg:w-[24px] lg:h-[24px]"
+            src="./Images/transferImages/clock.png"
             alt="conversion"
           />
           <p>Completion Time - 5-15 minutes</p>
         </div>
       </div>
-
       <button
         onClick={handleProceed}
         className={`${
