@@ -23,8 +23,6 @@ export const InternationalTransactionSuccessPopUp = ({
     accountName,
     transfer,
   } = useContext(ContextProvider);
-  //   const [receipt] = useState(false);
-  //   const navigate = useNavigate();
 
   const handleTransactionSuccessClose = () => {
     setInternationalTransactSuccess(false);
@@ -83,6 +81,18 @@ export const InternationalTransactionSuccessPopUp = ({
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                 <p className="text-[#0008]">Account Number</p>
+                <span>{accountNumber}</span>
+              </div>
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[14px]">
+                <p className="text-[#0008]">Amount Transferred</p>
+                <span>{accountNumber}</span>
+              </div>
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[14px]">
+                <p className="text-[#0008]">Recipient Received</p>
+                <span>{accountNumber}</span>
+              </div>
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[14px]">
+                <p className="text-[#0008]">Conversion Rate</p>
                 <span>{accountNumber}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
