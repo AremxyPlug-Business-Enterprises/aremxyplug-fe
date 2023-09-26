@@ -235,10 +235,10 @@ const AirtimeVtu = () => {
          } 
       }
 
-      const handleConfirm =()=> {
-        setProceed(false);
-        setConfirm(true)
-      }
+    //   const handleConfirm =()=> {
+    //     setProceed(false);
+    //     setConfirm(true)
+    //   }
 
       console.log(confirm)
 
@@ -249,13 +249,7 @@ const AirtimeVtu = () => {
       <div className="">
         <div className={styles.airtimeTop}>
             <div className={styles.banner}>
-                <div className={styles.globalAir}>
-                    <h3>AIRTIME VTU, FAST AND AUTOMATED.</h3>
-                    <p>Top up your mobile sim using our automated airtime vending directly from network providers, enjoy discounts without any hassle or hidden fee.</p>
-                </div>
-                <div className={styles.young}>
-                    <img src="./Images/airtimeTopUp/young.png" alt="" />
-                </div>
+            <img src="./Images/airtimeTopUp/green_banner2.png" alt="" />
             </div>
             <div className={styles.containFlex}>
                 <div className={styles.FlexPut}>
@@ -299,7 +293,7 @@ const AirtimeVtu = () => {
                                         <h2 className={styles.head2}>{networkName}</h2>
                                     </li>
                                 : 
-                                    <h2>Select Network</h2>
+                                    <h2 className={styles.head6}>Select Network</h2>
                                 }
                                 <button className={styles.btnDrop} onClick={handleShowList}>
                                     <img src={arrowDown} alt=""/>
@@ -319,7 +313,7 @@ const AirtimeVtu = () => {
                     <h2 className={styles.head3}>Select Product</h2>
                     <div className={styles.input1}>
                         {selectedProduct ?
-                            <h2 className={styles.span2}>{selectedProduct}</h2>
+                            <h2 className={styles.span2} required>{selectedProduct}</h2>
                         :
                             <span>Select Product</span>
                         }
@@ -348,7 +342,7 @@ const AirtimeVtu = () => {
                     <h2 className={styles.head3}>Phone Number <span className={styles.span3}>(Select Recipient)</span></h2>
                     <div className={styles.input}>
                         <div className={styles.output}>
-                            <input type='text' className={styles.phone} placeholder='Add recipient phone number' onChange={(event)=>setRecipientNumber(event.target.value)} value={recipientNumber}/>
+                            <input type='text' className={styles.phone} required placeholder='Add recipient phone number' onChange={(event)=>setRecipientNumber(event.target.value)} value={recipientNumber}/>
                             <div className={styles.call}>
                                 <img src={call} alt=""/>
                             </div>
@@ -359,7 +353,7 @@ const AirtimeVtu = () => {
                     <h2 className={styles.head3}>Recipient Name <span className={styles.span4}>(optional)</span></h2>
                     <div className={styles.input}>
                         <div className={styles.output}>
-                            <input type='text' className={styles.phone} placeholder='Add recipient name' onChange={(event)=>setRecipientName(event.target.value)} value={recipientName}/>
+                            <input type='text' className={styles.phone} required placeholder='Add recipient name' onChange={(event)=>setRecipientName(event.target.value)} value={recipientName}/>
                             <div className={styles.call}>
                                 <img src={user} alt=""/>
                             </div>
@@ -370,7 +364,7 @@ const AirtimeVtu = () => {
                     <h2 className={styles.head3}>Type Amount</h2>
                     <div className={styles.input}>
                         <div className={styles.output}>
-                            <input type='text' placeholder='Type amount' className={styles.phone} onChange={(event)=>setAmount(event.target.value)} value={amount.toLocaleString()}/>
+                            <input type='text' placeholder='Type amount' required className={styles.phone} onChange={(event)=>setAmount(event.target.value)} value={amount.toLocaleString()}/>
                             <div className={styles.call}>
                                 <img src={money} alt=""/>                            
                             </div>
@@ -430,83 +424,85 @@ const AirtimeVtu = () => {
                 </div>
             </div>
             { proceed && 
-                <div className='fixed top-0 left-0 w-full h-full bg-black/[0.3] z-[300] flex justify-center items-center'>
-                    <div className={` mx-[5%] ${ isDarkMode ? "border bg-[#000]" : "bg-[#fff]"} lg:ml-[25%] lg:mr-[10%] md:mx-[25%] grow pt-[20px] pb-[20px] rounded-[8px] relative md:rounded-[11.5px]`}>
-                        <div className='w-full flex justify-end border-b-[6px] border-primary px-[12px]'>
-                            <button onClick={()=> setProceed(false)} className='lg:w-6 lg:h-6 h-[11px] w-[11px] rounded-full border flex items-center justify-center'>
+                <div className={styles.confirmPro}>  
+                    <div className={styles.processFirm}>
+                        <div className={styles.modalHeader}>
+                            <button onClick={()=> setProceed(false)} className={styles.closeBtn}>
                                 x
                             </button>
                         </div>
-                        <div className='p-[15px] px-[12px]'>
-                            <h2 className='lg:text-[16px] lg:leading-[24px] text-center mb-1 text-[8px] leading-[12px]'>Confirm Transaction</h2>
-                            <h2 className='lg:text-[16px] lg:leading-[24px] text-[8px] leading-[12px] text-center mt-[26px] mx-[10px] mb-[20px]'>You are about to purchase {networkName + ' ' + selectedProduct} Airtime {name+amount.toLocaleString()} from your {name} Wallet to</h2>
-                            <div className="flex flex-col gap-[20px]">
-                                <div className='flex items-center justify-between'>
-                                    <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">Network</h2>
-                                    <div className='flex gap-1'>
+                        <div className={styles.modalContent}>
+                            <div className={styles.Tran}>
+                                <h2>Confirm Transaction</h2>
+                                <h2>You are about to purchase {networkName + ' ' + selectedProduct} Airtime {name+amount.toLocaleString()} from your {name} Wallet to</h2>
+                            </div>
+                            <div className={styles.flexWide}>
+                                <div className={styles.section}>
+                                    <h2 className={styles.head2}>Network</h2>
+                                    <div className={styles.flexGap}>
                                         <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
                                             <img src={networkImage} alt="" className='w-full h-full object-cover'/>
                                         </div> 
                                         <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">{networkName}</h2>
                                     </div>
                                 </div>
-                                <div className='flex items-center justify-between'>
-                                    <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">Product</h2>
-                                    <div className='flex gap-1'> 
+                                <div className={styles.section}>
+                                    <h2 className={styles.head2}>Product</h2>
+                                    <div className={styles.flexGap}> 
                                         <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">{networkName + ' ' + selectedProduct}</h2>
                                     </div>
                                 </div>
-                                <div className='flex items-center justify-between'>
-                                    <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">Discount</h2>
-                                    <div className='flex gap-1'> 
-                                        <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">{discount}%</h2>
+                                <div className={styles.section}>
+                                    <h2 className={styles.head2}>Discount</h2>
+                                    <div className={styles.flexGap}> 
+                                        <h2>{discount}%</h2>
                                     </div>
                                 </div>
-                                <div className='flex items-center justify-between'>
-                                    <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">Phone Number</h2>
-                                    <div className='flex gap-1'> 
-                                        <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">{recipientNumber}</h2>
+                                <div className={styles.section}>
+                                    <h2 className={styles.head2}>Phone Number</h2>
+                                    <div className={styles.flexGap}> 
+                                        <h2>{recipientNumber}</h2>
                                     </div>
                                 </div>
-                                <div className='flex items-center justify-between'>
-                                    <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">Recipient Name</h2>
-                                    <div className='flex gap-1'> 
-                                        <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">{recipientName}</h2>
+                                <div className={styles.section}>
+                                    <h2 className={styles.head2}>Recipient Name</h2>
+                                    <div className={styles.flexGap}> 
+                                        <h2>{recipientName}</h2>
                                     </div>
                                 </div>
-                                <div className='flex items-center justify-between'>
-                                    <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">Payment Method</h2>
-                                    <div className='flex gap-1'> 
-                                        <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">{factorWalletName(name)}</h2>
+                                <div className={styles.section}>
+                                    <h2 className={styles.head2}>Payment Method</h2>
+                                    <div className={styles.flexGap}> 
+                                        <h2>{factorWalletName(name)}</h2>
                                     </div>
                                 </div>
-                                <div className='flex items-center justify-between'>
-                                    <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">Total Amount</h2>
-                                    <div className='flex gap-1'> 
-                                        <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">{name + ' ' + newAmount}</h2>
+                                <div className={styles.section}>
+                                    <h2 className={styles.head2}>Total Amount</h2>
+                                    <div className={styles.flexGap}> 
+                                        <h2>{name + ' ' + newAmount}</h2>
                                     </div>
                                 </div>
-                                <div className='flex items-center justify-between'>
-                                    <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">Transaction Fee</h2>
-                                    <div className='flex gap-1'> 
-                                        <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">{name + ' ' + tFee}.00</h2>
+                                <div className={styles.section}>
+                                    <h2 className={styles.head2}>Transaction Fee</h2>
+                                    <div className={styles.flexGap}> 
+                                        <h2>{name + ' ' + tFee}.00</h2>
                                     </div>
                                 </div>
-                                <div className='flex items-center justify-between'>
-                                    <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">Points Earned</h2>
-                                    <div className='flex gap-1'> 
+                                <div className={styles.section}>
+                                    <h2 className={styles.head2}>Points Earned</h2>
+                                    <div className={styles.flexGap}> 
                                         <h2 className="text-[#2ED173] text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">{points}</h2>
                                     </div>
                                 </div>
                             </div>
-                            <div className='my-[60px] flex items-center gap-2 bg-slate-200 -mx-[12px] px-[12px] h-[59px]'>
+                            <div className={styles.nairaFlex}>
                                 <div className='w-[41px] h-[41px] rounded-full overflow-hidden p-2 bg-white'>
                                     <img src={image} alt="" className='w-full h-full object-cover rounded-full'/>
                                 </div>
                                 <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">Available Balance ( {name+paymentAmount}.00 )</h2>
                             </div>
-                            <div className='flex items-center justify-center'>
-                                <button className='w-full md:w-fit bg-primary text-white rounded-md px-[28px] text-[10px] leading-[15px] lg:text-[16px] lg:leading-[24px] py-[6px]' onClick={handleConfirm}>Confirm</button> 
+                            <div className={styles.flexBtn}>
+                                <button onClick={()=> setProceed(false)}>Confirmed</button> 
                             </div>
                         </div>
                     </div>
@@ -524,10 +520,10 @@ const AirtimeVtu = () => {
             <div className={styles.containFlex2}>
                 <button className={styles.FlexPut2} onClick={handleProceed}>Proceed</button>
             </div>
-        </div>
-        <div className={styles.help}>
+            <div className={styles.help}>
                 <h2>You need help?</h2>
                 <Link to={`/ContactUs`} className={styles.btnContact}>Contact Us</Link>
+            </div>
         </div>
       </div>
     </DashBoardLayout>
