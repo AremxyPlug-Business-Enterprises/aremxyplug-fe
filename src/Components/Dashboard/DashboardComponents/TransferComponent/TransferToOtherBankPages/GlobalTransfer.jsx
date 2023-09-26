@@ -149,7 +149,7 @@ export default function GlobalTransfer() {
       <div className="flex flex-col gap-[15px] md:flex-row lg:gap-[30px]">
         {/* =====================Country========================= */}
         <div className={styles.inputBox}>
-          <p className="text-[10px] font-extrabold lg:text-[20px]">
+          <p className="text-[10px] font-extrabold md:text-[14px] lg:text-[20px]">
             Select Country
           </p>
           <div
@@ -220,7 +220,7 @@ export default function GlobalTransfer() {
 
         {/* =======================Currency============================ */}
         <div className={styles.inputBox}>
-          <p className="text-[10px] font-extrabold lg:text-[20px]">
+          <p className="text-[10px] font-extrabold md:text-[14px] lg:text-[20px]">
             Select Currency
           </p>
           <div className="border text-[10px]  rounded-[5px] h-[25px] p-1 lg:h-[45px] lg:text-[14px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
@@ -247,7 +247,7 @@ export default function GlobalTransfer() {
       </div>
       {/* ==========================Select/Add Recipient====================== */}
       <div className="flex gap-[10%] lg:gap-[3%]">
-        <div className="w-full flex items-center justify-between border text-[10px]  rounded-[5px] h-[25px] p-1 lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
+        <div className="w-full flex items-center justify-between border text-[10px] rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
           <p>Select Recipient</p>
           <img
             className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
@@ -255,7 +255,7 @@ export default function GlobalTransfer() {
             alt=""
           />
         </div>
-        <div className="w-full flex items-center justify-between border text-[10px]  rounded-[5px] h-[25px] p-1 lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
+        <div className="w-full flex items-center justify-between border text-[10px]  rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
           <p>Add Recipient</p>
           <img
             className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
@@ -271,7 +271,7 @@ export default function GlobalTransfer() {
         {/* =====================Bank Name=================== */}
 
         <div className={` ${styles.inputBox}`}>
-          <p className="text-[10px] font-extrabold lg:text-[20px]">Bank Name</p>
+          <p className="text-[10px] font-extrabold md:text-[14px] lg:text-[20px]">Bank Name</p>
           <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
             <input
               onChange={handleInputChange}
@@ -295,7 +295,7 @@ export default function GlobalTransfer() {
 
         {/* ======================Account Number================== */}
         <div className={styles.inputBox}>
-          <p className="text-[10px] font-extrabold lg:text-[20px]">
+          <p className="text-[10px] font-extrabold md:text-[14px] lg:text-[20px]">
             Account Number
           </p>
           <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
@@ -316,7 +316,7 @@ export default function GlobalTransfer() {
 
         {/* =======================Account Name==================== */}
         <div className={` ${styles.inputBox}`}>
-          <p className="text-[10px] font-extrabold lg:text-[20px]">
+          <p className="text-[10px] font-extrabold md:text-[14px] lg:text-[20px]">
             Account Name
           </p>
           <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">

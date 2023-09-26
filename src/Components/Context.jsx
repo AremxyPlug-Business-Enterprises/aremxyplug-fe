@@ -374,9 +374,7 @@ export const Context = ({ children }) => {
   const [transactSuccessPopUp, setTransactSuccessPopUp] = useState(false);
   const [tfPopUp, setTfPopUp] = useState(false);
   const [deletePopUp, setDeletePopUp] = useState(false);
-  const [deleteSuccess, setDeleteSuccess] = useState(false);
-  const [withrawalDeletePopUp, setWithdrawlDeletePopUp] = useState(false);
-  const [withdrawDeleteSuccess, setWithdrawalDeleteSuccess] = useState(false);
+  const [deleteSuccess, setDeleteSuccess] = useState(false)
   const [inputPin, setInputPin] = useState("");
   const textRef = useRef(null);
   const transferFee = 50;
@@ -496,6 +494,18 @@ export const Context = ({ children }) => {
   const purposeOfPayment = internationalDetails.purposeOfPayment;
 
   // ================End of Transfer To International Banks =======================
+
+  // =======================Start of WithdrawalPage=========================
+  const [withrawalDeletePopUp, setWithdrawlDeletePopUp] = useState(false);
+  const [withdrawDeleteSuccess, setWithdrawalDeleteSuccess] = useState(false);
+  const [wthPopUp, setWthPopUp] = useState(false);
+  const [withdrawPinPopUp, setWithdrawPinPopUp] = useState(false);
+  const [withdrawalPin, setWithdrawalPin] = useState("");
+  const withdrawPinHandler = (e) => {
+    setWithdrawalPin(e.target.value);
+    setWithdrawPinPopUp(false);
+    setTransactSuccessPopUp(true);
+  };
 
   const hold = {
     firstDrop,
@@ -656,11 +666,8 @@ export const Context = ({ children }) => {
     setTfPopUp,
     deletePopUp,
     setDeletePopUp,
-    withrawalDeletePopUp, setWithdrawlDeletePopUp,
     deleteSuccess,
     setDeleteSuccess,
-    withdrawDeleteSuccess,
-    setWithdrawalDeleteSuccess,
     inputPin,
     setInputPin,
     inputPinHandler,
@@ -689,6 +696,19 @@ export const Context = ({ children }) => {
     swiftCode,
     recipientAddress,
     purposeOfPayment,
+
+    // ============withdrawal=============
+    withdrawalPin,
+    setWithdrawalPin,
+    withrawalDeletePopUp,
+    setWithdrawlDeletePopUp,
+    wthPopUp,
+    setWthPopUp,
+    withdrawDeleteSuccess,
+    setWithdrawalDeleteSuccess,
+    withdrawPinPopUp,
+    setWithdrawPinPopUp,
+    withdrawPinHandler
   };
 
   return (
