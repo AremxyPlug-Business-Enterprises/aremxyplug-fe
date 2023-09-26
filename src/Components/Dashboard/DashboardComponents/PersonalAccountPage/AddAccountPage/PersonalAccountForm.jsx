@@ -598,7 +598,13 @@ export const PersonalAccountForm = () => {
 
         {successful && (
           <Modal>
-            <div className={styles.successful}>
+            <div
+              className={`${styles.successful} ${
+                toggleSideBar
+                  ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]"
+                  : "lg:w-[40%]"
+              } md:w-[45%] w-[90%]`}
+            >
               <img
                 className="m-2 w-[19.9px] h-[11.81px] lg:w-[41px] lg:h-[25px]"
                 src="/Images/addAccountImages/aremxyAddLogo.png"
@@ -614,6 +620,11 @@ export const PersonalAccountForm = () => {
                     Your Account has been added successfully.
                   </p>
                 </div>
+                <img
+              className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[60px] lg:h-[60px]"
+              src="./Gif/checkMarkGif.gif"
+              alt="/"
+            />
                 <div
                   onClick={() => navigate("/to-my-account")}
                   className={` ${
