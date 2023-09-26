@@ -1,7 +1,7 @@
 import React from 'react';
 import { DashBoardLayout } from '../Dashboard/Layout/DashBoardLayout';
 import cloud from '../PointRedeem/images/cloud storage convert.svg'
-import icon from '../PointRedeem/images/Vector.svg'
+import icon from '../PointRedeem/images/receipt-add.svg'
 import arrowdown from '../PointRedeem/images/arrow-down.svg'
 import flag from '../PointRedeem/images/Country Flags.svg'
 import icon1 from '../PointRedeem/images/Group.svg'
@@ -27,7 +27,7 @@ const PointRedeem = () => {
                 
                 {/* Section with input boxes */}
                 <div className='mt-[20px] md:mt-[30px] lg:mt-[50px] flex flex-row '>
-                    <div className='border-[1px] w-[85%] md:w-[92%] h-[30px] md:h-[40px] lg:h-[60px] px-2 py-0 md:pt-1 lg:pt-4 border-slate-200'><input type="text" className='  text-[7px] lg:text-[16px] leading-[20.8px md:text-[9.2px] font-[600]  text-[#7C7C7C]' placeholder='Amount to Redeem' /> </div>
+                    <div className='border-[1px] w-[85%] md:w-[92%] h-[30px] md:h-[40px] lg:h-[60px] px-2 py-0 md:pt-1 lg:pt-4 border-slate-200'><input type="text" className=' border-[0px] text-[7px] lg:text-[16px] leading-[20.8px md:text-[9.2px] font-[600]  text-[#7C7C7C]' placeholder='Amount to Redeem' /> </div>
                     <div className='h-[30px] md:h-[40px] lg:h-[60px] w-[15%] md:w-[8%] gap-2 lg:gap-4 flex flex-row px-3 py-2 bg-primary items-center   '>
                         <div> <img src= {icon} className='md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]'  alt="" /> </div>
                         <div> <img src= {arrowdown} className='md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px] '  alt="" /> </div>

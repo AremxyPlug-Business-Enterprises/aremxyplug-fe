@@ -1,11 +1,13 @@
 import "./App.css";
-// import { Layout } from "./Components/Layout/Layout";
-import  PointRedeem  from "./Components/PointRedeem/PointRedeem"
+import { Layout } from "./Components/Layout/Layout";
+// import  PointRedeem  from "./Components/PointRedeem/PointRedeem"
+
 function App() {
   return (
     <>
       <Layout />
       {/* <PointRedeem /> */}
+      
     </>
   );
 }
