@@ -463,7 +463,8 @@ export const MainDashboard = () => {
               toggleSideBar ? "lg:gap-[63px]" : "lg:gap-[80px]"
             } flex mt-[7%] gap-[30px] md:gap-[90px] `}
           >
-            <div
+            <Link
+              to="/top-up"
               className={`${
                 isDarkMode ? " border bg-[#000]" : "bg-[#04177f]"
               } ${styles.button}`}
@@ -474,7 +475,7 @@ export const MainDashboard = () => {
                 alt="topup"
               />
               <p>Topup</p>
-            </div>
+            </Link>
             <Link
               to="/money-transfer"
               className={`${
