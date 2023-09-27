@@ -32,20 +32,22 @@ const QuickFeatures = () => {
             <p>Airtime Topup</p>
           </div>
         </Link>
-        <Link to="/data-top-up">
-          <div
-            className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
-              styles.feature
-            }`}
-          >
-            <img
-              className=" h-[25px] w-[25px] md:w-[] md:h-[] lg:h-[79px] lg:w-[79px]"
-              src="./Images/Dashboardimages/feature2.png"
-              alt="/"
-            />
-            <p>Data Topup</p>
-          </div>
+
+        <Link
+          to="/data-top-up"
+          className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
+            styles.feature
+          }`}
+        >
+          {" "}
+          <img
+            className=" h-[25px] w-[25px] md:w-[] md:h-[] lg:h-[79px] lg:w-[79px]"
+            src="./Images/Dashboardimages/feature2.png"
+            alt="/"
+          />{" "}
+          <p>Data Topup</p>
         </Link>
+
         <div
           className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
             styles.feature
