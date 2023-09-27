@@ -1,12 +1,11 @@
 import "./App.css";
-// import { Layout } from "./Components/Layout/Layout";
-// import { TransferPage } from "./Components/Dashboard/DashboardComponents/TransferComponent/TransferPage"
-import PointRedeem from "./Components/Dashboard/DashboardComponents/PointRedeem/PointRedeem";
+import { Layout } from "./Components/Layout/Layout";
+
 function App() {
   return (
     <>
-      {/* <Layout /> */}
-      <PointRedeem/>
+      <Layout />
+      
     </>
   );
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { Link } from "react-router-dom";
 import { DashBoardLayout } from "../Dashboard/Layout/DashBoardLayout";
 import creditCard from "./Images/credit.svg"
@@ -13,11 +13,28 @@ import fee from "./Images/fee.svg"
 
 
 const FiatConversion = () => {
-    
+    const [numeric, setNumeric] = useState('');
+
+    const NumericChange = (event) => {
+      const inputValue = event.target.value;
+      // Use a regular expression to remove non-numeric characters
+      const numericInput = inputValue.replace(/[^0-9]/g, '');
+      setNumeric(numericInput);
+    };
+    const [numeric2, setNumeric2] = useState('');
+
+    const NumericChange2 = (event) => {
+      const inputValue = event.target.value;
+      // Use a regular expression to remove non-numeric characters
+      const numericInput2 = inputValue.replace(/[^0-9]/g, '');
+      setNumeric2(numericInput2);
+    };
+
+
     return(
         <DashBoardLayout>
-            <div className="w-[360px] lg:w-[1160px] md:w-[825px]">
-                <div id='fiatBackground' className="h-[64.71px] lg:h-[196px] md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] lg:rounded-[20px] mx-auto w-[312px] md:w-[536.25px] lg:w-[1100px] flex gap-6 lg:justify-between px-[16.51px] md:px-[28.65px] lg:px-[50px]">
+            <div className="">
+                <div id='fiatBackground' className="h-[64.71px] lg:h-[196px] md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] lg:rounded-[20px] mx-auto  flex gap-6 justify-between px-[16.51px] md:px-[28.65px] lg:px-[50px]">
                     <div className="py-[9.57px] md:py-[16.61px] lg:py-[29px] align-middle flex flex-col gap-1.5">
                         <p className="text-[8px] lg:text-[24px] md:text-[13.75px] font-semibold w-[194.12px] lg:w-[588px] md:w-[336.86px]">CONVERT FIAT CURRENCY WITH AREMXYPLUG.</p>
                         <p className="text-[5px] lg:text-[20px] md:text-[11.46px] w-[177.94px] lg:w-[539px] md:w-[308.8px]">Convert from one fiat currency to another without any hassle, enjoy competitive exchange rate with no any hidden fee.</p>
@@ -26,26 +43,27 @@ const FiatConversion = () => {
                         <img src={creditCard} alt="" className="h-full w-full " />
                     </div>
                 </div>
-                <div className="w-[312px] md:w-[536.25px] lg:w-[1100px] mx-auto flex gap-3 py-[25.29px] lg:py-[50px] md:py-[28.64px]">
+                <div className=" mx-auto flex gap-3 py-[25.29px] lg:py-[50px] md:py-[28.64px]">
                    <div className="text-[8px] lg:text-xl md:text-[11.46px] font-medium text-[#7C7C7C]">Select the below fiat currency to convert</div>
                    <div>
                       <img src={right} alt="" className="lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px]" />
                    </div>
                 </div>
 
-                <div className="flex mx-auto w-[312px] md:w-[536.25px] lg:w-[1100px]">
+                <div className="flex mx-auto ">
                     <div className="bg-[#04177F] text-white text-[7px] md:text-[10px] lg:text-[16px] text-center font-semibold w-[312px] md:w-[210.83px] lg:w-[368px] py-[4px] lg:py-[10px] md:py-[6px]">
                         Real-time Fiat Conversion Check Rate
                     </div>
                 </div>
 
-                <div className="mx-auto w-[312px] md:w-[536.25px] lg:w-[1100px]">
+                <div className="mx-auto ">
                     <div className="flex gap-1 lg:gap-2 lg:my-[40px] md:my-[30px] my-[20px]">
                         <p className="text-[8px] md:text-[11.46px] lg:text-xl font-medium">From</p>
                         <img src={right} alt="" className="lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px]" />
                     </div>
-                   <div className="flex">
-                    <input type="text" numeric placeholder="Amount To Transfer" className="input text-[8px] md:text-[12px] lg:text-[16px] pl-[5px] md:pl-[12px] lg:pl-[20px] font-semibold w-[262.97px] md:w-[523.65px] lg:w-[792px] h-[24.24px] md:h-[41.82px] lg:h-[70px]" />
+                
+                   <div className="flex ">
+                    <input type="number" value={numeric} onChange={NumericChange} placeholder="Amount To Transfer" className="input text-[8px] flex md:text-[12px] lg:text-[16px] pl-[5px] md:pl-[12px] lg:pl-[20px] font-semibold w-full md:h-[41.82px] lg:h-[70px]" />
                     <button class="dropdown bg-[#04177F]">
                         <div class="dropbtn flex gap-[7.2px] lg:gap-[18px] justify-center w-[40px] md:w-[63px] lg:w-[123px]">
                             <img src={nigeria} alt=""  className="lg:h-[32px] lg:w-[32px] md:h-[18px] md:w-[18px]" />
@@ -68,7 +86,7 @@ const FiatConversion = () => {
                         <img src={right} alt="" className="lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px]" />
                     </div>
                    <div className="flex">
-                    <input type="text" numeric placeholder="Amount To Recieve" className="input text-[8px] md:text-[12px] lg:text-[16px] pl-[5px] md:pl-[12px] lg:pl-[20px] font-semibold w-[262.97px] md:w-[523.65px] lg:w-[792px] h-[24.24px] md:h-[41.82px] lg:h-[70px]" />
+                    <input type="number" value={numeric2} onChange={NumericChange2} placeholder="Amount To Recieve" className="input text-[8px] md:text-[12px] lg:text-[16px] pl-[5px] md:pl-[12px] lg:pl-[20px] font-semibold w-full h-[24.24px] md:h-[41.82px] lg:h-[70px]" />
                     <button class="dropdown bg-[#04177F]">
                         <div class="dropbtn flex gap-[7.2px] lg:gap-[18px] w-[40px] md:w-[63px] justify-center  lg:w-[123px]">
                             <img src={usd} alt=""  className="lg:h-[32px] lg:w-[32px] md:h-[13.75px] md:w-[13.75px]" />
@@ -81,7 +99,7 @@ const FiatConversion = () => {
                     </button>
                    </div> 
 
-                   <div className="flex justify-between w-[290px] lg:w-[892px] md:w-[511.34px] gap-3 my-6 px-2">
+                   <div className="flex justify-between gap-3 my-6 px-2">
                        <div className="flex gap-[2px]">
                         <img src={rate} alt="" className="lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px]" />
                         <span className="text-[6px] lg:text-[16px] md:text-[10px] font-semibold text-[#7C7C7C]"> 1 NGN ~ 0.001 USD</span>
@@ -96,7 +114,7 @@ const FiatConversion = () => {
                        </div>
                    </div>
 
-                   <div className="flex mx-auto w-[312px] md:w-[536.25px] lg:w-[1100px]">
+                   <div className="flex mx-auto ">
                     <button className="bg-[#04177F] my-[40px] lg:my-[80px] md:my-[55px] mx-auto text-white text-[7px] md:text-[10px] lg:text-[16px] rounded md:rounded-[7px] lg:rounded-[12px] text-center font-semibold w-[312px] md:w-[210.83px] lg:w-[163px] h-[40px] lg:h-[38px] md:h-[25px]">
                         Proceed
                     </button>
