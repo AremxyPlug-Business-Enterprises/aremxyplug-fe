@@ -366,13 +366,16 @@ export const MainDashboard = () => {
                 isDarkMode ? "bg-[#000] border border-[#fff]" : "bg-[#e9edfb]"
               } ${styles.balance2}`}
             >
-              <button
-                className={`${
-                  isDarkMode ? "border bg-black" : "bg-[#04177f]"
-                } ${styles.viewWallet}`}
-              >
-                View Accounts
-              </button>
+              <Link to="/virtual-account">
+                {" "}
+                <button
+                  className={`${
+                    isDarkMode ? "border bg-black" : "bg-[#04177f]"
+                  } ${styles.viewWallet}`}
+                >
+                  View Accounts
+                </button>
+              </Link>
               <div>
                 <div className="flex mt-[8%] gap-[30px] md:mt-[5%] lg:mt-[9%]">
                   <p
