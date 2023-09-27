@@ -15,7 +15,7 @@ export const SideBar = () => {
     dropdown5: false,
     dropdown6: false,
   });
-  
+
   const dropHandler = (dropdownName) => {
     setDropDownOpen((prevState) => ({
       dropdown1: dropdownName === "dropdown1" ? !prevState.dropdown1 : false,
@@ -218,16 +218,16 @@ export const SideBar = () => {
                     </li>
 
                     <Link to="/data-top-up">
-                    <li className="flex gap-[5%] hover:underline text-[#fff] pt-1 pb-1 font-medium md:text-[11px] lg:pt-[6%] lg:pb-[6%] lg:pl-[%] lg:text-[14px] ">
-                      <img
-                        className="w-[8.5px] h-[8.5px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
-                        src="./Images/dashboardImages/sideArrow.png"
-                        alt="/"
-                      />
-                      <div>Data Top-up</div>
-                    </li>
+                      <li className="flex gap-[5%] hover:underline text-[#fff] pt-1 pb-1 font-medium md:text-[11px] lg:pt-[6%] lg:pb-[6%] lg:pl-[%] lg:text-[14px] ">
+                        <img
+                          className="w-[8.5px] h-[8.5px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
+                          src="./Images/dashboardImages/sideArrow.png"
+                          alt="/"
+                        />
+                        <div>Data Top-up</div>
+                      </li>
                     </Link>
-                    
+
                     <li className="flex gap-[5%] hover:underline text-[#fff] pt-1 pb-1  font-medium md:text-[11px] lg:pt-[6%] lg:pb-[6%] lg:pl-[%] lg:text-[14px] ">
                       <img
                         className="w-[8.5px] h-[8.5px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
@@ -307,14 +307,16 @@ export const SideBar = () => {
                 </div>
                 {dropDownOpen.dropdown3 && (
                   <ul className=" mt-[px] rounded-[2.5px]  bg-[#f2faff19] w-[100px] md:top-[42%] md:w-[100%] lg:rounded-[6px] lg:top-[41.5%] lg:w-[220px]">
-                    <li className="flex gap-[5%] hover:underline text-[#fff] pt-1 pb-1 font-medium md:text-[11px] lg:pt-[6%] lg:pb-[6%] lg:pl-[%] lg:text-[14px] ">
-                      <img
-                        className="w-[8.5px] h-[8.5px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
-                        src="./Images/dashboardImages/sideArrow.png"
-                        alt="/"
-                      />
-                      <div>Wallets</div>
-                    </li>
+                    <Link to="/wallet">
+                      <li className="flex gap-[5%] hover:underline text-[#fff] pt-1 pb-1 font-medium md:text-[11px] lg:pt-[6%] lg:pb-[6%] lg:pl-[%] lg:text-[14px] ">
+                        <img
+                          className="w-[8.5px] h-[8.5px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
+                          src="./Images/dashboardImages/sideArrow.png"
+                          alt="/"
+                        />
+                        <div>Wallets</div>
+                      </li>
+                    </Link>
                     <li className="flex gap-[5%] hover:underline text-[#fff] pt-1 pb-1 font-medium md:text-[11px] lg:pt-[6%] lg:pb-[6%] lg:pl-[%] lg:text-[14px] ">
                       <img
                         className="w-[8.5px] h-[8.5px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
