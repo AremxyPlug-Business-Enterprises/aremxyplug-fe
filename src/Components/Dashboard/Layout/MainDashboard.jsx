@@ -18,7 +18,7 @@ import { RecentTransaction } from "../DashboardComponents/RecentTransaction";
 import { Link } from "react-router-dom";
 
 export const MainDashboard = () => {
-  const { setHideNavbar, toggleSideBar, isDarkMode, } =
+  const { setHideNavbar, toggleSideBar, isDarkMode } =
     useContext(ContextProvider);
   const [visible, setVisibility] = useState(true);
   const [activeButtons, setActiveButtons] = useState([false, false, false]);
@@ -188,13 +188,15 @@ export const MainDashboard = () => {
                 isDarkMode ? "bg-[#000] border border-[#fff]" : "bg-[#e9edfb]"
               } ${styles.balance1}`}
             >
-              <button
-                className={`${
-                  isDarkMode ? "border bg-black" : "bg-[#04177f]"
-                } ${styles.viewWallet}`}
-              >
-                View Wallets
-              </button>
+              <Link to="/wallet">
+                <button
+                  className={`${
+                    isDarkMode ? "border bg-black" : "bg-[#04177f]"
+                  } ${styles.viewWallet}`}
+                >
+                  View Wallets
+                </button>
+              </Link>
               <p
                 className={`${
                   toggleSideBar ? "lg:text-[18px]" : "lg:text-[23px]"
@@ -461,7 +463,8 @@ export const MainDashboard = () => {
               toggleSideBar ? "lg:gap-[63px]" : "lg:gap-[80px]"
             } flex mt-[7%] gap-[30px] md:gap-[90px] `}
           >
-            <div
+            <Link
+              to="/top-up"
               className={`${
                 isDarkMode ? " border bg-[#000]" : "bg-[#04177f]"
               } ${styles.button}`}
@@ -472,7 +475,7 @@ export const MainDashboard = () => {
                 alt="topup"
               />
               <p>Topup</p>
-            </div>
+            </Link>
             <Link
               to="/money-transfer"
               className={`${
@@ -492,7 +495,7 @@ export const MainDashboard = () => {
               to="/withdraw"
               className={`${
                 isDarkMode ? " border bg-[#000]" : "bg-[#04177f]"
-                } ${styles.button} pr-3`}
+              } ${styles.button} pr-3`}
             >
               {" "}
               <div className="flex items-center gap-[10%]">

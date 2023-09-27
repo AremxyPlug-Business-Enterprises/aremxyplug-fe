@@ -86,8 +86,9 @@ const PointBalance = () => {
                             {earnPoints ? <h2 className='text-[8.5px] leading-[13.5px] lg:text-[16px] lg:leading-[24px]'>10,000.00</h2> : <h2 className='text-[8.5px] leading-[13.5px] lg:text-[16px] lg:leading-[24px] mt-1'>******</h2>}
                             <BsEyeFill className='text-[10px] text-[#92abfe] lg:text-[17px] lg:leading-[25.5px] cursor-pointer' onClick={()=>setEarnPoints(!earnPoints)}/>
                         </div>
+
                         <div className='text-center mt-2 lg:mt-7'>
-                            <Link className='inline-block py-[2px] px-1 rounded-[3px] bg-primary text-white text-[8px] leading-[12px] lg:text-[12px] lg:leading-[18px] lg:px-2 md:rounded-[6px]'>Redeem Points</Link>
+                            <Link to="/point-redeem" className='inline-block py-[2px] px-1 rounded-[3px] bg-primary text-white text-[8px] leading-[12px] lg:text-[12px] lg:leading-[18px] lg:px-2 md:rounded-[6px]'>Redeem Points</Link>
                         </div>
                     </div>
                 </div>
