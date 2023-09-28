@@ -50,6 +50,7 @@ import { ToOtherBanks } from "./Components/Dashboard/DashboardComponents/Transfe
 import { OtherBankReceipt } from "./Components/Dashboard/DashboardComponents/TransferComponent/TransferToOtherBankPages/OtherBankPopUp/OtherBankPopUp/OtherBankReceipt";
 import GlobalTransfer from "./Components/Dashboard/DashboardComponents/TransferComponent/TransferToOtherBankPages/GlobalTransfer";
 import { InternationalReceipt } from "./Components/Dashboard/DashboardComponents/TransferComponent/TransferToOtherBankPages/OtherBankPopUp/InternationalPopUp/InternationalReceipt";
+import Referral from "./Components/Referrals/Referral";
 
 export const Router = () => {
   return (
@@ -118,7 +119,9 @@ export const Router = () => {
         <Route path="/other-bank-receipt" element={<OtherBankReceipt />} />
         <Route path="/international-bank-receipt" element={<InternationalReceipt />} />
         <Route path="/global-transfer" element={<GlobalTransfer />} />
-      </Routes>
+        <Route path="/My-Referral" element={<Referral/>} />
+
+  </Routes>
     </div>
   );
 };
