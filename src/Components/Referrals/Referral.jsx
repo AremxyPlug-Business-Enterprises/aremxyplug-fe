@@ -23,7 +23,7 @@ export default function Referral() {
   lg:py-[8px] lg:pl-[60px] lg:pr-[50px] lg:gap-[55px] lg:h-[196px] lg:rounded-[20px]"
         >
           {/* Container CONTENT_ONE LEFT_SIDE  */}
-          <div className="flex flex-col gap-[5px] w-[65%] lg:gap-[15px] md:gap-[8.594px]">
+          <div className="flex flex-col gap-[5px] w-[70%] lg:gap-[15px] md:gap-[8.594px] ">
             {/* header */}
             <h2
               className="font-[600] leading-[12px] text-[8px] text-[#000] mt-[15px] 
@@ -41,9 +41,9 @@ export default function Referral() {
       lg:text-[16px] lg:leading-[20.8px] "
             >
               <span className="md:block">
-                {" "}
+                
                 Refer your friends and family with your referral link / code and
-                earn free{" "}
+                earn free
               </span>
               <span className="md:block">
                 points,redeem to real money, withdrawn to your bank account
@@ -51,7 +51,7 @@ export default function Referral() {
               </span>
             </p>
           </div>
-          <div className="w-[35%]">
+          <div className="w-[25%] flex items-center">
             <img
               src={Refer1}
               className="w-[100%] md:h-[100%] h-[60px]"
@@ -217,7 +217,7 @@ lg:text-[16px] lg:leading-[24px]"
         </div>
 
         {/* REFERRAL ANALYSIS */}
-        <div className="flex flex-col mb-[20px]">
+        <div className="flex flex-col mb-[20px] ">
           {/* Referral heading */}
           <div className="flex gap-[3px] mb-[2px] lg:mb-[15px]">
             <p
@@ -601,9 +601,9 @@ lg:text-[20px] lg:leading-[30px]"
           {/* TABLE FOR LARGE SCREENS */}
           {/* <div className='Refer hidden md:flex md:flex-row 
    justify-start'> */}
-          <table
+         <table
             className="Refer hidden md:flex md:flex-col  lg:h-[700px] md:h-[401.04px]  
-     md:shadow-lg border-collapse font-[inter]"
+     md:shadow-lg border-collapse font-[inter] "
           >
             {/* ROW ONE */}
             <tr
@@ -1006,7 +1006,7 @@ lg:text-[20px] lg:leading-[30px]"
                 Contact Us
               </a>
             </div>
-          </table>
+          </table> 
         </div>
       </div>
       {/* </div> */}
