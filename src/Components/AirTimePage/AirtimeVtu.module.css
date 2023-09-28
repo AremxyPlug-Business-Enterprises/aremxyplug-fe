@@ -6,41 +6,87 @@
 
 /* Banner Section */
 
-.airtimeTop .banner img {
+.AirtimeTops {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 300px;
+    height: 100%;
+}
+
+.airtimeTop {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+}
+
+.airtimeTop .banner {
     width: 100%;
     margin: 0 auto;
-    position: relative;
+    background: linear-gradient(92.3deg, #73FF9A 26.51%, #6EDCFF 82.31%);
     height: 196px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 50px 40px;
+}
+.banner .bannerText {
+    width: 70%;
+    margin: auto 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.bannerText h2 {
+    width: 100%;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 26px;
+    letter-spacing: 0em;    
+    color: #000000;
+}
+.bannerText p {
+    width: 100%;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 19px;
+    letter-spacing: 0em;
+    color: #000000;
+}
+.banner .bannerImage {
+    margin: auto 0;
+}
+.banner .bannerImage img {
+    width: 100%;
+    position: relative;
+    bottom: 5px;
 }
 
 /* Previous Recipients */
 
 .airtimeTop .containFlex {
-    padding-top: 3%;
     width: 100%;
     height: 51px;
-    display: grid;
-    grid-template-columns: 500px 500px;
-    grid-template-rows: 100px;
+    display: flex;
+    gap: 60px;
     position: relative;
-    margin: 0 auto;
+    margin: 0;
 }
 .FlexPut {
     margin: auto 0;
     border-radius: 10px;
-    width: 375px;
+    width: 40%;
     height: 51px;
     border: none;
     box-shadow: 0px 0px 4px 0px #00000040;
 }
 .FlexPut .conPut {
-    width: 349px;
-    height: 24px;
+    width: 95%;
     position: relative;
     top: 13px;
     left: 10px;
     display: flex;
-    gap: 200px;
+    justify-content: space-between;
 }
 .conPut h2 {
     width: 177px;
@@ -59,12 +105,12 @@
     width: 100%;
     position: relative;
     margin: 0 auto;
-    top: 90px;
+    top: 0;
 }
 .FlexPut1 {
     margin: auto 0;
     border-radius: 10px;
-    width: 375px;
+    width: 40%;
     height: 51px;
     border: none;
     background: #04177F;
@@ -72,22 +118,20 @@
     color: #FFF;
 }
 .FlexPut1 .conPut1 {
-    width: 349px;
+    width: 95%;
     height: 24px;
     position: relative;
     top: 13px;
     left: 10px;
     display: flex;
-    gap: 75px;
 }
 .FlexPut1 .conPut1 h2 {
-    width: 250px;
-    height: 22px;
     font-size: 16px;
     font-weight: 600;
     line-height: 21px;
     letter-spacing: 0em;
     text-align: left;
+    width: 100%;
 }
 .FlexPut1 .FlexImg1 img {
     width: 24px;
@@ -97,61 +141,76 @@
 /* Main input section */
 
 .airtimeTop .mainGrid {
-    margin: 10% auto 10%;
+    margin: 0 auto;
     width: 100%;
     height: 403px;
     position: relative;
-    top: 52px;
-    display: grid;
-    grid-template-columns: 500px 500px;
-    row-gap: 25px;
+    top: 0;
+    display: flex;
+    gap: 60px;
+}
+.mainGrid .mainGridCol {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 40%;
 }
 .input {
     margin: auto 0;
     border-radius: 10px;
-    width: 375px;
+    width: 100%;
     height: 51px;
     border: none;
     box-shadow: 0px 0px 4px 0px #00000040;
 }
 .input .output {
-    width: 355px;
+    width: 95%;
     height: 24px;
     position: relative;
     top: 14px;
+    padding-right: 5px;
     left: 10px;
     display: flex;
-    gap: 100px;
+    justify-content: space-between;
 }
 .output input {
-    width: 220px;
+    width: 100%;
 }
 .input .output1 {
-    width: 355px;
+    width: 95%;
     height: 24px;
     position: relative;
     top: 14px;
     left: 10px;
     display: flex;
-    gap: 165px;
+    justify-content: space-between;
 }
 .output1 input {
-    width: 177px;
+    width: 100%;
 }
 .output1 h2 {
-    width: 150px;
+    width: 100%;
+    color: #7C7C7C;
 }
 .input .output2 {
-    width: 355px;
+    width: 95%;
     height: 24px;
     position: relative;
     top: 14px;
     left: 10px;
     display: flex;
-    gap: 200px;
+    justify-content: space-between;
+    cursor: pointer;
+}
+.output2 h2 {
+    width: 100%;
+    color: #7C7C7C;
+}
+.output2 .labelInput {
+    width: 100%;
 }
 .output2 input {
-    width: 177px;
+    width: 100%;
 }
 .input .head2 {
     font-weight: 800;
@@ -228,28 +287,44 @@
 .input1 {
     display: flex;
     justify-content: space-between;
-    padding: 14px 20px 12px;
+    padding: 14px 15px 12px 13px;
     margin: auto 0;
     border-radius: 10px;
-    width: 375px;
+    width: 100%;
     height: 51px;
     border: none;
     box-shadow: 0px 0px 4px 0px #00000040;
+    cursor: pointer;
+}
+.input1 span {
+    width: 100%;
+    color: #7C7C7C;
 }
 .input1 .span2 {
     color: #219250;
     font-weight: 800;
+    width: 100%;
+}
+.input1 .labelInput {
+    width: 100%;
+}
+.input1 .head9 {
+    width: 100%;
+    color: #7C7C7C;
 }
 .input2 {
     display: flex;
     justify-content: space-between;
-    padding: 14px 20px 12px;
+    padding: 14px 10px 12px;
     margin: auto 0;
     border-radius: 10px;
-    width: 375px;
+    width: 100%;
     height: 51px;
     border: none;
     box-shadow: 0px 0px 4px 0px #00000040;
+}
+.input2 h2 {
+    width: 100%;
 }
 .disc img {
     margin: auto 0;
@@ -307,7 +382,7 @@
     gap: 20px;
     width: 100%;
     height: 22.23px;
-    margin: 5% auto 0;
+    margin: 0 auto;
     position: relative;
 }
 .add h2 {
@@ -321,7 +396,7 @@
     width: 100%;
     height: 38px;
     position: relative;
-    margin: 5% auto 0;
+    margin: 0 auto 0;
 }
 .FlexPut2 {
     padding: 8px 16px;
@@ -340,7 +415,7 @@
 /* Contact aspect of the airtime page */
 
 .help {
-    margin: 200px auto 15px;
+    margin: 0 auto;
     width: 100%;
     justify-content: center;
     height: 20px;
@@ -401,6 +476,26 @@
     padding-top: 10px;
 }
 .closeBtn {
+    width: 20px;
+    height: 20px;
+    padding-bottom: 5px;
+    border-radius: 50%;
+    border: 1px solid #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #92ABFE;
+    color: #7C7C7C;
+    border: none;
+}
+.modalHeaderX {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 12px;
+    padding-top: 10px;
+}
+.closeBtnX {
     width: 20px;
     height: 20px;
     padding-bottom: 5px;
@@ -480,40 +575,71 @@
 }
 
 @media (max-width: 768px) {
-    .airtimeTop .banner img {
+    .airtimeTop .banner {
         width: 100%;
-        height: 115px;
         margin: 0 auto;
-        top: -40px;
+        background: linear-gradient(92.3deg, #73FF9A 26.51%, #6EDCFF 82.31%);
+        height: 112.29px;
+        border-radius: 11.5px;
+        display: flex;
+        justify-content: space-between;
+        padding: 15px 20px;
+    }
+    .banner .bannerText {
+        width: 100%;
+        margin: auto 0;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+    .bannerText h2 {
+        width: 100%;
+        font-size: 13.75px;
+        font-weight: 600;
+        line-height: 21px;
+        letter-spacing: 0em;    
+        color: #000000;
+    }
+    .bannerText p {
+        width: 100%;
+        font-size: 11.46px;
+        font-weight: 400;
+        line-height: 12px;
+        letter-spacing: 0em;
+        color: #000000;
+    }
+    .banner .bannerImage {
+        margin: auto 0;
+    }
+    .banner .bannerImage img {
+        width: 80%;
+        position: relative;
+        bottom: 0;
+        left: 10px;
     }
     .airtimeTop .containFlex {
-        width: 95%;
+        width: 100%;
         height: 51px;
-        display: grid;
-        grid-template-columns: min-content min-content;
-        justify-content: left;
-        column-gap: .8cm;
-        left: -15px;
-        grid-template-rows: 100px;
+        display: flex;
+        gap: 60px;
         position: relative;
-        top: -40px;
+        top: 0;
         margin: 0 auto;
-        text-align: left;
     }
     .FlexPut {
         margin: auto 0;
         border-radius: 6px;
-        width: 220px;
+        width: 40%;
         height: 30px;
         border: none;
         box-shadow: 0px 0px 4px 0px #00000040;
     }
     .FlexPut .conPut {
-        width: 204px;
+        width: 95%;
         height: 15px;
         position: relative;
         top: 8px;
-        left: 10px;
+        left: 5px;
         display: flex;
         justify-content: space-between;
         gap: 0;
@@ -533,13 +659,13 @@
         width: 100%;
         position: relative;
         margin: 0 auto;
-        top: 10px;
+        top: -10px;
         left: 0;
     }
     .FlexPut1 {
         margin: auto 0;
         border-radius: 6px;
-        width: 220px;
+        width: 40%;
         height: 30px;
         border: none;
         background: #04177F;
@@ -547,11 +673,11 @@
         color: #FFF;
     }
     .FlexPut1 .conPut1 {
-        width: 204px;
+        width: 95%;
         height: 12px;
         position: relative;
         top: 9px;
-        left: 10px;
+        left: 5px;
         display: flex;
         justify-content: space-between;
     }
@@ -564,57 +690,58 @@
         text-align: left;
     }
     .FlexPut1 .FlexImg1 img {
-        width: 24px;
-        height: 24px;
+        width: 14px;
         position: relative;
         bottom: 5px;
     }
     .airtimeTop .mainGrid {
         margin: 0 auto;
         width: 100%;
-        height: 235px;
+        height: 260px;
         position: relative;
-        top: 40px;
-        grid-template-columns: min-content min-content;
-        justify-content: left;
-        column-gap: .8cm;
-        left: 0;
-        row-gap: 15px;
+        top: 0;
+        display: flex;
+        gap: 60px;
     }
-    .input {
+    .mainGrid .mainGridCol {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 40%;
+    }
+    .mainGridCol .input {
         margin: auto 0;
         border-radius: 6px;
-        width: 220px;
+        width: 100%;
         height: 30px;
         border: none;
         box-shadow: 0px 0px 4px 0px #00000040;
     }
     .input .output {
-        width: 204px;
+        width: 95%;
         height: 15px;
         position: relative;
         top: 8px;
-        left: 10px;
+        left: 5px;
         display: flex;
-        gap: 35px;
+        justify-content: space-between;
     }
     .output input {
-        width: 150px;
+        width: 100%;
     }
     .input .output1 {
-        width: 204px;
+        width: 95%;
         height: 15px;
         position: relative;
-        top: 10px;
-        left: 10px;
+        top: 9px;
+        left: 5px;
         display: flex;
-        gap: 20px;
+        justify-content: space-between;
     }
     .output1 input {
-        width: 177px;
+        width: 100%;
     }
     .output1 h2 {
-        width: 150px;
         font-size: 10px;
         font-weight: 600;
         line-height: 12px;
@@ -624,16 +751,16 @@
     .output1 .disc {
         position: relative;
         top: 4px;
-        left: 5px;
+        left: 0;
     }
     .input .output2 {
-        width: 204px;
+        width: 95%;
         height: 15px;
         position: relative;
         top: 10px;
-        left: 10px;
+        left: 5px;
         display: flex;
-        gap: 115px;
+        justify-content: space-between;
     }
     .output2 h2 {
         font-size: 10px;
@@ -642,7 +769,11 @@
         letter-spacing: 0em;
     }
     .output2 input {
-        width: 177px;
+        width: 100%;
+    }
+    .output2 .btnDrop {
+        position: relative;
+        top: -3px;
     }
     .input .head2 {
         font-weight: 800;
@@ -723,10 +854,19 @@
         justify-content: space-between;
         margin: auto 0;
         border-radius: 6px;
-        width: 220px;
+        width: 100%;
         height: 30px;
         border: none;
         box-shadow: 0px 0px 4px 0px #00000040;
+    }
+    .input1 .head9 {
+        font-size: 10px;
+        font-weight: 500;
+        line-height: 10px;
+        letter-spacing: 0em;
+        color: #7C7C7C;
+        position: relative;
+        top: -3px;
     }
     .input1 .head4 {
         position: relative;
@@ -767,7 +907,7 @@
         justify-content: space-between;
         margin: auto 0;
         border-radius: 6px;
-        width: 220px;
+        width: 100%;
         height: 30px;
         border: none;
         box-shadow: 0px 0px 4px 0px #00000040;
@@ -786,7 +926,7 @@
         width: 14px;
         position: relative;
         top: -4px;
-        left: 10px;
+        left: 0;
     }
     .input .phone {
         outline: none;
@@ -847,9 +987,9 @@
         gap: 11px;
         width: 100%;
         height: 13.23px;
-        margin: 10% auto 0;
+        margin: 0 auto;
         position: relative;
-        top: 30px;
+        top: 0;
     }
     .add h2 {
         font-size: 10px;
@@ -862,8 +1002,8 @@
         width: 100%;
         height: 38px;
         position: relative;
-        top: 40px;
-        margin: 5% auto 0;
+        top: 0;
+        margin: 0 auto;
     }
     .FlexPut2 {
         margin: auto 0;
@@ -878,12 +1018,13 @@
         color: #FFF;
     }
     .help {
-        margin: 150px auto 15px;
+        margin: 0 auto;
         width: 100%;
         justify-content: center;
         height: 20px;
         display: flex;
         gap: 15px;
+        padding-bottom: 10%;
     }
     .help h2 {
         font-size: 10px;
@@ -906,6 +1047,9 @@
     }
     .airtimeTop {
         padding-bottom: 5%;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
     }
     .confirmPro {
         position: fixed;
@@ -1019,15 +1163,53 @@
 }
 
 @media (max-width: 425px) {
-    .airtimeTop .banner img {
-        width: 95%;
-        height: 70px;
-        border-radius: 6.58px;
+    .airtimeTop .banner {
+        width: 100%;
         margin: 0 auto;
+        background: linear-gradient(92.3deg, #73FF9A 26.51%, #6EDCFF 82.31%);
+        height: 90px;
+        padding: 0;
+        border-radius: 7px;
+        display: flex;
+        justify-content: space-between;
+    }
+    .banner .bannerText {
+        width: 80%;
+        position: relative;
         top: 0;
+        margin: auto 0;
+        left: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    .bannerText h2 {
+        width: 100%;
+        font-size: 10px;
+        font-weight: 600;
+        line-height: 12px;
+        letter-spacing: 0em;    
+        color: #000000;
+    }
+    .bannerText p {
+        width: 91%;
+        font-size: 7px;
+        font-weight: 400;
+        line-height: 12px;
+        letter-spacing: 0em;
+        color: #000000;
+    }
+    .banner .bannerImage {
+        margin: auto 0;
+    }
+    .banner .bannerImage img {
+        position: relative;
+        top: 0;
+        right: 10px;
+        height: 50px;
     }
     .airtimeTop .containFlex {
-        width: 95%;
+        width: 100%;
         display: grid;
         grid-template-columns: min-content min-content;
         justify-content: space-between;
@@ -1035,7 +1217,8 @@
         position: relative;
         top: 0;
         left: 0;
-        margin: 1% auto 0;
+        margin: 0 auto;
+        padding-top: 0%;
     }
     .FlexPut {
         margin: auto 0;
@@ -1068,7 +1251,7 @@
         height: 8.81px;
     }
     .containFlex1 {
-        width: 95%;
+        width: 100%;
         height: 19px;
         position: relative;
         margin: 0 auto;
@@ -1117,10 +1300,15 @@
         position: relative;
         top: 52px;
         right: 0;
-        display: grid;
-        grid-template-columns: auto;
-        justify-content: stretch;
-        row-gap: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    .mainGrid .mainGridCol {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
     }
     .input {
         margin: auto 0;
@@ -1137,10 +1325,12 @@
         letter-spacing: 0em;
         position: relative;
         bottom: 4px;
-        right: 3px;
+        right: 5px;
+        color: #7C7C7C;
+        width: 100%;
     }
     .input .output {
-        width: 92%;
+        width: 95%;
         margin: 0 auto;
         height: 24px;
         position: relative;
@@ -1157,36 +1347,37 @@
         top: 5px;
     }
     .input .output1 {
-        width: 90%;
+        width: 95%;
         height: 24px;
         position: relative;
         top: 10px;
-        left: 10px;
+        left: 5px;
         display: flex;
         justify-content: space-between;
     }
     .output1 .disc {
         position: relative;
         top: -3px;
-        left: 10px;
+        left: 6px;
     }
     .output1 input {
-        width: 100px;
+        width: 100%;
     }
     .input .output2 {
-        width: 90%;
+        width: 95%;
         margin: 0 auto;
         height: 24px;
         position: relative;
         top: 10px;
-        left: -5px;
+        left: 3px;
         display: flex;
         justify-content: space-between;
     }
     .output2 .btnDrop {
         position: relative;
-        bottom: 5px;
-        left: 10px;
+        bottom: 6px;
+        left: 0;
+        width: 24px;
     }
     .output1 h2 {
         font-size: 8px;
@@ -1199,6 +1390,11 @@
         font-weight: 600;
         line-height: 10px;
         letter-spacing: 0em;
+        color: #7C7C7C;
+        width: 100%;
+    }
+    .output2 .labelInput {
+        width: 100%;
     }
     .output2 input {
         width: 100px;
@@ -1313,11 +1509,22 @@
         position: relative;
         top: -5px;
         left: -5px;
+        width: 100%;
     }
     .input1 img {
         position: relative;
         top: 0;
         left: 0;
+    }
+    .input1 .head9 {
+        width: 100%;
+        font-size: 8px;
+        font-weight: 500;
+        line-height: 10px;
+        letter-spacing: 0em;
+        color: #7C7C7C;
+        position: relative;
+        top: -4px;
     }
     .input2 {
         display: flex;
@@ -1332,7 +1539,7 @@
     .input2 h2 {
         position: relative;
         bottom: 4px;
-        left: -5px;
+        left: 3px;
         font-size: 8px;
         font-weight: 600;
         line-height: 10px;
@@ -1340,10 +1547,10 @@
     }
     .disc img {
         margin: auto 0;
-        width: 12px;
+        width: 14px;
         position: relative;
         bottom: 0;
-        left: 7px;
+        left: 0;
     }
     .input .phone {
         outline: none;
@@ -1412,7 +1619,7 @@
         gap: 10px;
         width: 100%;
         height: 14px;
-        margin: 20% auto 0;
+        margin: 0 auto;
         position: relative;
         left: 0;
         top: 30px;
@@ -1430,7 +1637,7 @@
         width: 100%;
         height: 38px;
         position: relative;
-        top: 100px;
+        top: 60px;
         margin: 0 auto;
     }
     .FlexPut2 {
@@ -1446,36 +1653,46 @@
         color: #FFF;
     }
     .help {
-        margin: 150px auto 20px;
-        width: 129.08px;
+        margin: 0 auto;
+        width: 100%;
         height: 14.73px;
         display: flex;
+        justify-content: center;
         gap: 14.9px;
+        position: relative;
+        top: 0;
+        padding-bottom: 20%;
     }
     .help h2 {
-        font-size: 8px;
+        font-size: 10px;
         font-weight: 500;
         line-height: 10px;
         letter-spacing: 0em;       
-        width: 59px;
     }
     .help .btnContact {
         background: #04177F;
-        width: 55.19px;
-        padding: 2.86px 8.59px;
+        padding: 2.865px 8.594px;
         height: 14.73px;
-        border-radius: 9px;
+        border-radius: 5.156px;
         color: #fff;
-        font-size: 7px;
+        font-size: 8px;
         font-weight: 500;
         line-height: 9px;
         letter-spacing: 0em;
         text-align: left;
         position: relative;
-        bottom: 3px;
+        bottom: 1px;
     }
     .airtimeTop {
         padding-bottom: 15%;
+        gap: 0;
+    }
+    .AirtimeTops {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 200px;
+        height: 100%;
     }
     .confirmPro {
         position: fixed;
