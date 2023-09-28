@@ -507,11 +507,12 @@ export const MainDashboard = () => {
                 <p>Withdraw</p>
               </div>
             </Link>
-            <div
+            <Link to="/currencyConversion"
               className={`${
                 isDarkMode ? " border bg-[#000]" : "bg-[#04177f]"
               } ${styles.button}`}
             >
+            <div className="flex items-center gap-[10%]">
               <img
                 className="w-[11px] h-[11px] md:h-[20px] md:w-[20px] lg:w-[51px] lg:h-[51px]"
                 src="./Images/dashboardImages/convert.png"
@@ -519,6 +520,7 @@ export const MainDashboard = () => {
               />
               <p>Convert</p>
             </div>
+            </Link>
           </div>
 
           <QuickFeatures />
