@@ -93,36 +93,6 @@ const DataTopUpPage = () => {
           </div>
 
           <section className="md:mt-[30px] mt-[30px] lg:mt-[50px]">
-            {/* <div className="flex gap-[30px] mt-[10px] text-[8px] font-[700] text-center border-b-[1px]">
-              <p
-                className={`
-                text-[px] px-[50px] rounded-[5px] py-[5px] ${
-                  activeBtn[0]
-                    ? "bg-[#E2F3FF] border-b-[4px] border-b-[#04177F]"
-                    : ""
-                } md:text-[11.736px] font-[500] lg:text-[20px]`}
-                onClick={() => {
-                  handleClick(0);
-                }}
-              >
-                Local Data
-              </p>
-
-              <p
-                className={`py-[5px] md:text-[11.736px] font-[500] text-[8px] ${
-                  activeBtn[1]
-                    ? "bg-[#E2F3FF] border-b-[4px] border-b-[#04177F]"
-                    : ""
-                } px-[50px] rounded-[5px] lg:text-[20px]`}
-                onClick={() => {
-                  handleClick(1);
-                  showPopup();
-                }}
-              >
-                International Data
-              </p>
-            </div> */}
-
             <div className="text-[8px] flex gap-[9%] md:text-[18px] lg:text-[20px] justify-between md:justify-start md:gap-[28%]">
               <div
                 onClick={() => {
@@ -153,8 +123,8 @@ const DataTopUpPage = () => {
             <hr />
 
             <div className="mt-[10%] flex flex-col gap-[20px] md:mt-[2%] md:gap-[0px] 2xl:mt-[5%]">
-            <div className="Datatopup flex justify-between md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[10px] gap-[8px] md:mt-[30px]">
-              <div className="flex gap-[10px]">
+              <div className="Datatopup flex justify-between md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[10px] gap-[8px] md:mt-[30px]">
+                <div className="flex gap-[10px]">
                   <img
                     src={DataBundles}
                     alt=""
@@ -170,118 +140,118 @@ const DataTopUpPage = () => {
                       directly from network providers.
                     </p>
                   </div>
-              </div>
-
-              <img
-                src={DataType}
-                alt=""
-                className="w-[12px] h-[12px] mb-[10px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px] "
-              />
-            </div>
-
-            <div className="Datatopup flex justify-between md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[10px] gap-[8px] md:mt-[30px]">
-              <div className="flex gap-[10px]">
-                <img
-                  src={DataRoll}
-                  alt=""
-                  className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px] 2xl:mt-[25px]"
-                />
-
-                <div className="">
-                  <p className="text-[10px] md:text-[13px] font-[500] lg:text-[18px] 2xl:text-[22px]">
-                    Data Roll
-                  </p>
-                  <p className="text-[8px] text-[#7c7c7c] md:text-[10px] lg:text-[15px] font-[500] w-[80%] mt-[3px] md:w-[100%] 2xl:text-[20px]">
-                    Add, manage, and send data to your team or employees without
-                    any hassle.
-                  </p>
                 </div>
-              </div>
 
-              <img
-                src={DataType}
-                alt=""
-                className="w-[12px] h-[12px] mb-[10px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px]"
-              />
-            </div>
-
-            <div className="Datatopup flex justify-between md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[10px] gap-[8px] md:mt-[30px]">
-              <div className="flex gap-[10px]">
                 <img
-                  src={DataVoucher}
+                  src={DataType}
                   alt=""
-                  className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px] 2xl:mt-[25px]"
+                  className="w-[12px] h-[12px] mb-[10px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px] "
                 />
-
-                <div className="">
-                  <p className="text-[10px] md:text-[13px] font-[500] lg:text-[18px] 2xl:text-[22px]">
-                    Data Voucher
-                  </p>
-                  <p className="text-[8px] text-[#7c7c7c] md:text-[10px] font-[500] lg:text-[15px] w-[80%] mt-[3px] md:w-[100%] 2xl:text-[20px]">
-                    Generate all networks data token / pins and recharge your
-                    mobile sim directly using ussd codes.
-                  </p>
-                </div>
               </div>
 
-              <img
-                src={DataType}
-                alt=""
-                className="w-[12px] h-[12px] mb-[10px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px]"
-              />
-            </div>
+              <div className="Datatopup flex justify-between md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[10px] gap-[8px] md:mt-[30px]">
+                <div className="flex gap-[10px]">
+                  <img
+                    src={DataRoll}
+                    alt=""
+                    className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px] 2xl:mt-[25px]"
+                  />
 
-            <div className="Datatopup flex justify-between md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[10px] gap-[8px] md:mt-[30px]">
-              <div className="flex gap-[10px]">
+                  <div className="">
+                    <p className="text-[10px] md:text-[13px] font-[500] lg:text-[18px] 2xl:text-[22px]">
+                      Data Roll
+                    </p>
+                    <p className="text-[8px] text-[#7c7c7c] md:text-[10px] lg:text-[15px] font-[500] w-[80%] mt-[3px] md:w-[100%] 2xl:text-[20px]">
+                      Add, manage, and send data to your team or employees
+                      without any hassle.
+                    </p>
+                  </div>
+                </div>
+
                 <img
-                  src={DataSchedule}
+                  src={DataType}
                   alt=""
-                  className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px] 2xl:mt-[25px]"
+                  className="w-[12px] h-[12px] mb-[10px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px]"
                 />
-
-                <div className="">
-                  <p className="text-[10px] md:text-[13px] font-[500] lg:text-[18px] 2xl:text-[22px]" >
-                    Data Schedule
-                  </p>
-                  <p className="text-[8px] text-[#7c7c7c] md:text-[10px] font-[500] lg:text-[15px] w-[80%] mt-[3px] md:w-[100%] 2xl:text-[20px]">
-                    Schedule sending of data for automatic vending to recipients
-                    at your specified date and time.
-                  </p>
-                </div>
               </div>
 
-              <img
-                src={DataType}
-                alt=""
-                className="w-[12px] h-[12px] mb-[10px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px]"
-              />
-            </div>
+              <div className="Datatopup flex justify-between md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[10px] gap-[8px] md:mt-[30px]">
+                <div className="flex gap-[10px]">
+                  <img
+                    src={DataVoucher}
+                    alt=""
+                    className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px] 2xl:mt-[25px]"
+                  />
 
-            <div className="Datatopup flex justify-between md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[10px] gap-[8px] md:mt-[30px]">
-              <div className="flex gap-[10px]">
+                  <div className="">
+                    <p className="text-[10px] md:text-[13px] font-[500] lg:text-[18px] 2xl:text-[22px]">
+                      Data Voucher
+                    </p>
+                    <p className="text-[8px] text-[#7c7c7c] md:text-[10px] font-[500] lg:text-[15px] w-[80%] mt-[3px] md:w-[100%] 2xl:text-[20px]">
+                      Generate all networks data token / pins and recharge your
+                      mobile sim directly using ussd codes.
+                    </p>
+                  </div>
+                </div>
+
                 <img
-                  src={BulkData}
+                  src={DataType}
                   alt=""
-                  className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px] 2xl:mt-[25px]"
+                  className="w-[12px] h-[12px] mb-[10px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px]"
                 />
-
-                <div className="">
-                  <p className="text-[10px] md:text-[13px] font-[500] lg:text-[18px] 2xl:text-[22px]">
-                    Bulk Data
-                  </p>
-                  <p className="text-[8px] text-[#7c7c7c] md:text-[10px] font-[500] lg:text-[15px] w-[80%] mt-[3px] md:w-[100%] 2xl:text-[20px]">
-                    Send data to multiple recipients at a time and receive
-                    instantly without any hassle.
-                  </p>
-                </div>
               </div>
 
-              <img
-                src={DataType}
-                alt=""
-                className="w-[12px] h-[12px] mb-[10px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px]"
-              />
-            </div>
+              <div className="Datatopup flex justify-between md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[10px] gap-[8px] md:mt-[30px]">
+                <div className="flex gap-[10px]">
+                  <img
+                    src={DataSchedule}
+                    alt=""
+                    className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px] 2xl:mt-[25px]"
+                  />
+
+                  <div className="">
+                    <p className="text-[10px] md:text-[13px] font-[500] lg:text-[18px] 2xl:text-[22px]">
+                      Data Schedule
+                    </p>
+                    <p className="text-[8px] text-[#7c7c7c] md:text-[10px] font-[500] lg:text-[15px] w-[80%] mt-[3px] md:w-[100%] 2xl:text-[20px]">
+                      Schedule sending of data for automatic vending to
+                      recipients at your specified date and time.
+                    </p>
+                  </div>
+                </div>
+
+                <img
+                  src={DataType}
+                  alt=""
+                  className="w-[12px] h-[12px] mb-[10px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px]"
+                />
+              </div>
+
+              <div className="Datatopup flex justify-between md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[10px] gap-[8px] md:mt-[30px]">
+                <div className="flex gap-[10px]">
+                  <img
+                    src={BulkData}
+                    alt=""
+                    className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px] 2xl:mt-[25px]"
+                  />
+
+                  <div className="">
+                    <p className="text-[10px] md:text-[13px] font-[500] lg:text-[18px] 2xl:text-[22px]">
+                      Bulk Data
+                    </p>
+                    <p className="text-[8px] text-[#7c7c7c] md:text-[10px] font-[500] lg:text-[15px] w-[80%] mt-[3px] md:w-[100%] 2xl:text-[20px]">
+                      Send data to multiple recipients at a time and receive
+                      instantly without any hassle.
+                    </p>
+                  </div>
+                </div>
+
+                <img
+                  src={DataType}
+                  alt=""
+                  className="w-[12px] h-[12px] mb-[10px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px]"
+                />
+              </div>
             </div>
           </section>
 
@@ -291,14 +261,14 @@ const DataTopUpPage = () => {
             </p>
 
             <Link to="/ContactUs">
-            <div
-              className={`${
-                isDarkMode ? "border " : "bg-[#04177f]"
-              } text-[8px] p-1 text-white rounded-[8px] lg:text-[14px]`}
-            >
-              Contact Us
-            </div>
-          </Link>
+              <div
+                className={`${
+                  isDarkMode ? "border " : "bg-[#04177f]"
+                } text-[8px] p-1 text-white rounded-[8px] lg:text-[14px]`}
+              >
+                Contact Us
+              </div>
+            </Link>
           </footer>
 
           {/* ================Popup======================= */}
