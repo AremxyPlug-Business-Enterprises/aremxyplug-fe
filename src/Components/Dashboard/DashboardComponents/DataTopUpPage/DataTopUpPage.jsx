@@ -14,6 +14,7 @@ import { ContextProvider } from "../../../Context";
 import { Modal } from "../../../Screens/Modal/Modal";
 import { Link } from "react-router-dom";
 
+
 const DataTopUpPage = () => {
   const [popupVisible, setPopupVisible] = useState(false);
   const showPopup = () => {
@@ -60,11 +61,11 @@ const DataTopUpPage = () => {
             id="DataTopUp"
             className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] md:rounded-[11.5px] rounded-[7px] md:mt-[-1px] px-[10px] lg:gap-[50px] pt-[10px] lg:px-[30px] lg:rounded-[20px] lg:py-[20px] pb-[16px] flex justify-between items-center"
           >
-            <div className="w-[70%] pt-[19px] lg:pt-[20px]">
-              <p className="text-[10px] mb-3 font-bold uppercase md:text-[14px] md:w-[90%] lg:w-[90%] lg:text-[24px] 2xl:w-[80%] 2xl:text-[28px] lg:mb-4">
+            <div className="w-[100%] pt-[19px] lg:pt-[20px]">
+              <p className="text-[10px] mb-2 font-bold uppercase w-[110%] md:text-[12px] md:w-[70%] lg:w-[70%] lg:text-[20px] 2xl:w-[80%] 2xl:text-[24px] lg:mb-4">
                 TOP UP DATA BUNDLES, UNLOCK GLOBAL CONNECTIVITY WITH AREMXYPLUG.
               </p>
-              <p className="text-[7px] font-[400] leading-[9px] mb-3 md:text-[9.4px] md:leading-[12.2px] w-[87%] md:w-[95%] lg:w-[100%] 2xl:w-[90%] 2xl:mt-[5px] lg:mt-[20px] lg:text-[20px] lg:leading-[26px] lg:mb-[20px]">
+              <p className="text-[7px] font-[400] leading-[9px] mb-3 md:text-[9px] md:leading-[12.2px] w-[90%] md:w-[65%] lg:w-[75%] 2xl:w-[85%] 2xl:mt-[5px] lg:mt-[20px] lg:text-[16px] lg:leading-[26px] 2xl:text-[20px] lg:mb-[20px]">
                 Top up your mobile sim with our automated data bundles, receive
                 instantly, enjoy discount, purchase in bulk, send to friends,
                 family, team, employees, and your loved ones without any hassle
@@ -76,7 +77,7 @@ const DataTopUpPage = () => {
               <img
                 src={DataTopUp}
                 alt=""
-                className="w-[55.482px] h-full md:w-[98px] md:h-[88px] lg:w-[166.447px] lg:h-[150px]"
+                className="w-[55.482px] h-full md:w-[98px] md:h-[px] lg:w-[166.447px] lg:h-[150px]"
               />
             </div>
           </div>
@@ -93,14 +94,14 @@ const DataTopUpPage = () => {
           </div>
 
           <section className="md:mt-[30px] mt-[30px] lg:mt-[50px]">
-            <div className="text-[8px] flex gap-[9%] md:text-[18px] lg:text-[20px] justify-between md:justify-start md:gap-[28%]">
+            <div className="text-[8px] flex gap-[9%] md:text-[18px] lg:text-[20px] justify-between md:justify-start md:gap-[10%]">
               <div
                 onClick={() => {
                   handleClick(0);
                 }}
                 className={`${
                   activeBtn[0]
-                    ? "bg-[#E2F3FF] rounded-[2px] border-b-[2px] border-b-[#04177f] h-[16px] flex items-center p-[5px] md:h-[35px] lg:rounded-[6px] lg:border-b-[4px] lg:h-[50px]"
+                    ? "bg-[#E2F3FF] rounded-[2px] border-b-[2px] border-b-[#04177f] h-[25px] flex items-center p-[5px] md:h-[35px] lg:rounded-[6px] lg:border-b-[4px] lg:h-[60px]"
                     : ""
                 } cursor-pointer w-[144px] justify-center rounded-[2px] md:w-[180px] md:rounded-[3px] md:justify-center md:items-center flex lg:w-[248px] lg:rounded-[6px] 2xl:text-[24px]`}
               >
@@ -113,7 +114,7 @@ const DataTopUpPage = () => {
                 }}
                 className={`${
                   activeBtn[1]
-                    ? "bg-[#E2F3FF] rounded-[2px] border-b-[2px] border-b-[#04177f] h-[16px] flex items-center p-[5px]  md:h-[35px] lg:rounded-[6px] lg:border-b-[4px] lg:h-[50px]"
+                    ? "bg-[#E2F3FF] rounded-[2px] border-b-[2px] border-b-[#04177f] h-[25px] flex items-center p-[5px]  md:h-[35px] lg:rounded-[6px] lg:border-b-[4px] lg:h-[60px] lg:py-[40px]"
                     : ""
                 }cursor-pointer w-[144px] justify-center rounded-[2px] md:w-[180px] md:rounded-[3px] md:justify-center md:items-center flex lg:w-[248px] lg:rounded-[6px] 2xl:text-[24px]`}
               >
@@ -123,19 +124,19 @@ const DataTopUpPage = () => {
             <hr />
 
             <div className="mt-[10%] flex flex-col gap-[20px] md:mt-[2%] md:gap-[0px] 2xl:mt-[5%]">
-              <div className="Datatopup flex justify-between md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[10px] gap-[8px] md:mt-[30px]">
+              <div className="Datatopup flex justify-between h-[50px] lg:h-[80px] md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[5px] gap-[8px] md:mt-[30px]">
                 <div className="flex gap-[10px]">
                   <img
                     src={DataBundles}
                     alt=""
-                    className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px] 2xl:mt-[25px]"
+                    className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:mt-[20px] lg:h-[20px] 2xl:mt-[25px]"
                   />
 
                   <div className="">
                     <p className="text-[10px] md:text-[13px] font-[500] lg:text-[18px] 2xl:text-[22px]">
                       Data Bundles
                     </p>
-                    <p className="text-[8px] text-[#7c7c7c] md:text-[10px] lg:text-[15px] font-[500] w-[80%] mt-[3px] md:w-[100%] 2xl:text-[20px]">
+                    <p className="text-[8px] text-[#7c7c7c] md:text-[10px] lg:text-[15px] font-[500] w-[95%] lg:w-[130%] mt-[3px] md:w-[100%] 2xl:text-[20px]">
                       Top up your mobile sim with our automated data bundles
                       directly from network providers.
                     </p>
@@ -149,7 +150,7 @@ const DataTopUpPage = () => {
                 />
               </div>
 
-              <div className="Datatopup flex justify-between md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[10px] gap-[8px] md:mt-[30px]">
+              <div className="Datatopup flex justify-between h-[50px] lg:h-[80px] md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[5px] gap-[8px] md:mt-[30px]">
                 <div className="flex gap-[10px]">
                   <img
                     src={DataRoll}
@@ -161,7 +162,7 @@ const DataTopUpPage = () => {
                     <p className="text-[10px] md:text-[13px] font-[500] lg:text-[18px] 2xl:text-[22px]">
                       Data Roll
                     </p>
-                    <p className="text-[8px] text-[#7c7c7c] md:text-[10px] lg:text-[15px] font-[500] w-[80%] mt-[3px] md:w-[100%] 2xl:text-[20px]">
+                    <p className="text-[8px] text-[#7c7c7c] md:text-[10px] lg:text-[15px] font-[500] w-[95%] mt-[3px] md:w-[100%] lg:w-[130%] 2xl:text-[20px]">
                       Add, manage, and send data to your team or employees
                       without any hassle.
                     </p>
@@ -175,7 +176,7 @@ const DataTopUpPage = () => {
                 />
               </div>
 
-              <div className="Datatopup flex justify-between md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[10px] gap-[8px] md:mt-[30px]">
+              <div className="Datatopup flex justify-between h-[50px] lg:h-[80px] md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[5px] gap-[8px] md:mt-[30px]">
                 <div className="flex gap-[10px]">
                   <img
                     src={DataVoucher}
@@ -187,7 +188,7 @@ const DataTopUpPage = () => {
                     <p className="text-[10px] md:text-[13px] font-[500] lg:text-[18px] 2xl:text-[22px]">
                       Data Voucher
                     </p>
-                    <p className="text-[8px] text-[#7c7c7c] md:text-[10px] font-[500] lg:text-[15px] w-[80%] mt-[3px] md:w-[100%] 2xl:text-[20px]">
+                    <p className="text-[8px] text-[#7c7c7c] md:text-[10px] font-[500] lg:text-[15px] w-[95%] lg:w-[130%] mt-[3px] md:w-[100%] 2xl:text-[20px]">
                       Generate all networks data token / pins and recharge your
                       mobile sim directly using ussd codes.
                     </p>
@@ -201,7 +202,7 @@ const DataTopUpPage = () => {
                 />
               </div>
 
-              <div className="Datatopup flex justify-between md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[10px] gap-[8px] md:mt-[30px]">
+              <div className="Datatopup flex justify-between h-[50px] lg:h-[80px] md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[5px] gap-[8px] md:mt-[30px]">
                 <div className="flex gap-[10px]">
                   <img
                     src={DataSchedule}
@@ -213,7 +214,7 @@ const DataTopUpPage = () => {
                     <p className="text-[10px] md:text-[13px] font-[500] lg:text-[18px] 2xl:text-[22px]">
                       Data Schedule
                     </p>
-                    <p className="text-[8px] text-[#7c7c7c] md:text-[10px] font-[500] lg:text-[15px] w-[80%] mt-[3px] md:w-[100%] 2xl:text-[20px]">
+                    <p className="text-[8px] text-[#7c7c7c] md:text-[10px] font-[500] lg:text-[15px] w-[95%] lg:w-[130%] mt-[3px] md:w-[100%] 2xl:text-[20px]">
                       Schedule sending of data for automatic vending to
                       recipients at your specified date and time.
                     </p>
@@ -227,7 +228,7 @@ const DataTopUpPage = () => {
                 />
               </div>
 
-              <div className="Datatopup flex justify-between md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[10px] gap-[8px] md:mt-[30px]">
+              <div className="Datatopup flex justify-between h-[50px] lg:h-[80px] md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[5px] gap-[8px] md:mt-[30px]">
                 <div className="flex gap-[10px]">
                   <img
                     src={BulkData}
@@ -239,7 +240,7 @@ const DataTopUpPage = () => {
                     <p className="text-[10px] md:text-[13px] font-[500] lg:text-[18px] 2xl:text-[22px]">
                       Bulk Data
                     </p>
-                    <p className="text-[8px] text-[#7c7c7c] md:text-[10px] font-[500] lg:text-[15px] w-[80%] mt-[3px] md:w-[100%] 2xl:text-[20px]">
+                    <p className="text-[8px] text-[#7c7c7c] md:text-[10px] font-[500] lg:text-[15px] w-[95%] lg:w-[130%] mt-[3px] md:w-[100%] 2xl:text-[20px]">
                       Send data to multiple recipients at a time and receive
                       instantly without any hassle.
                     </p>
@@ -255,8 +256,8 @@ const DataTopUpPage = () => {
             </div>
           </section>
 
-          <footer className="flex justify-center text-center gap-[15px] mt-[217px]">
-            <p className="text-[8px] md:text-[12px] lg:text-[16px]  font-[500] leading-[9.1px] mt-[5px]">
+          <footer className="flex justify-center text-center gap-[20px] mt-[150px] mb-[50px]">
+            <p className="text-[8px] md:text-[12px] lg:text-[20px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
               You need help?
             </p>
 
@@ -264,7 +265,7 @@ const DataTopUpPage = () => {
               <div
                 className={`${
                   isDarkMode ? "border " : "bg-[#04177f]"
-                } text-[8px] p-1 text-white rounded-[8px] lg:text-[14px]`}
+                } text-[8px] p-1 text-white rounded-[8px] lg:text-[18px]`}
               >
                 Contact Us
               </div>
@@ -295,7 +296,7 @@ const DataTopUpPage = () => {
                       className={`${
                         isDarkMode ? "bg-[#000]" : "bg-[#ffffff]"
                       } Datapopup
-                    flex flex-col justify-between z-[100] lg:mt-[446px] lg:ml-[350px] md:mt-[13px] md:w-[35%] md:ml-[190px] 2xl:mt-[365px] 2xl:ml-[]`}
+                    flex flex-col justify-between z-[100] lg:mt-[495px] lg:mtl-[px] md:mt-[30px] md:w-[35%] md:ml-[50px] 2xl:mt-[350px] 2xl:ml-[]`}
                     >
                       <div>
                         <p className="text-[10px] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[3%]">
