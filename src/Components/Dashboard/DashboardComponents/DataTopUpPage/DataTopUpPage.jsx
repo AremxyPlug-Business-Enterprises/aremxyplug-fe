@@ -61,7 +61,7 @@ const DataTopUpPage = () => {
             id="DataTopUp"
             className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] md:rounded-[11.5px] rounded-[7px] md:mt-[-1px] px-[10px] lg:gap-[50px] pt-[10px] lg:px-[30px] lg:rounded-[20px] lg:py-[20px] pb-[16px] flex justify-between items-center"
           >
-            <div className="w-[100%] pt-[19px] lg:pt-[20px]">
+            <div className="w-[100%] pt-[19px] lg:pt-[20px] pl-[8.5px] md:pl-[9px]">
               <p className="text-[10px] mb-2 font-bold uppercase w-[110%] md:text-[12px] md:w-[70%] lg:w-[70%] lg:text-[20px] 2xl:w-[80%] 2xl:text-[24px] lg:mb-4">
                 TOP UP DATA BUNDLES, UNLOCK GLOBAL CONNECTIVITY WITH AREMXYPLUG.
               </p>
@@ -296,7 +296,7 @@ const DataTopUpPage = () => {
                       className={`${
                         isDarkMode ? "bg-[#000]" : "bg-[#ffffff]"
                       } Datapopup
-                    flex flex-col justify-between z-[100] lg:mt-[495px] lg:mtl-[px] md:mt-[30px] md:w-[35%] md:ml-[50px] 2xl:mt-[350px] 2xl:ml-[]`}
+                    flex flex-col justify-between z-[100] lg:mt-[495px] lg:mtl-[px] md:mt-[30px] md:w-[35%] md:ml-[50px] 2xl:mt-[270px] 2xl:ml-[]`}
                     >
                       <div>
                         <p className="text-[10px] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[3%]">

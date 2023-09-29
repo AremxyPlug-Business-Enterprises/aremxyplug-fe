@@ -177,7 +177,7 @@ export const InternationalTransfer = () => {
             alt="conversion"
           />
           {exchangeRate !== null ? (
-            <p>1 NGN ~ {exchangeRate} USD</p>
+            <p>{exchangeRate} NGN ~ 1 USD</p>
           ) : (
             <p>Loading exchange rate...</p>
           )}
