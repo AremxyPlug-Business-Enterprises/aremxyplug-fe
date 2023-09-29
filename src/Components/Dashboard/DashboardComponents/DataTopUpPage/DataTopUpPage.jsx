@@ -124,6 +124,7 @@ const DataTopUpPage = () => {
             <hr />
 
             <div className="mt-[10%] flex flex-col gap-[20px] md:mt-[2%] md:gap-[0px] 2xl:mt-[5%]">
+              <Link to="/data-bundles">
               <div className="Datatopup flex justify-between h-[50px] lg:h-[80px] md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[5px] gap-[8px] md:mt-[30px]">
                 <div className="flex gap-[10px]">
                   <img
@@ -149,6 +150,7 @@ const DataTopUpPage = () => {
                   className="w-[12px] h-[12px] mb-[10px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px] "
                 />
               </div>
+              </Link>
 
               <div className="Datatopup flex justify-between h-[50px] lg:h-[80px] md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[5px] gap-[8px] md:mt-[30px]">
                 <div className="flex gap-[10px]">
@@ -256,7 +258,7 @@ const DataTopUpPage = () => {
             </div>
           </section>
 
-          <footer className="flex justify-center text-center gap-[20px] mt-[150px] mb-[50px]">
+          <footer className="flex justify-center text-center gap-[20px] mt-[150px] mb-[50px] lg:mt-[500px]">
             <p className="text-[8px] md:text-[12px] lg:text-[20px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
               You need help?
             </p>
@@ -296,7 +298,7 @@ const DataTopUpPage = () => {
                       className={`${
                         isDarkMode ? "bg-[#000]" : "bg-[#ffffff]"
                       } Datapopup
-                    flex flex-col justify-between z-[100] lg:mt-[495px] lg:mtl-[px] md:mt-[30px] md:w-[35%] md:ml-[50px] 2xl:mt-[270px] 2xl:ml-[]`}
+                    flex flex-col justify-between z-[100] lg:mt-[200px] lg:ml-[px] md:mt-[30px] md:w-[35%] md:ml-[50px] 2xl:mt-[270px] 2xl:ml-[]`}
                     >
                       <div>
                         <p className="text-[10px] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[3%]">
