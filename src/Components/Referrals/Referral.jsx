@@ -9,6 +9,7 @@ import twitter from "../Referrals/referralImage/twitterRefer.svg";
 import rightArrow from "../Referrals/referralImage/rightArrowRefer.svg";
 import walletRefer from "../Referrals/referralImage/walletRefer.svg";
 import arrowDown from "../Referrals/referralImage/arrow-down.svg";
+import { Link } from "react-router-dom/dist/react-router-dom.development";
 
 export default function Referral() {
   return (
@@ -154,9 +155,8 @@ lg:text-[16px] lg:leading-[24px]"
           <div className="flex flex-col md:flex md:flex-row md:justify-between">
             {/* CHECK POINT BALANCE BUTTON */}
 
-            <a
-              href="#"
-              className="md:self-center text-center font-[600] leading-[10.4px] text-[8px] 
+            <p
+             className="md:self-center text-center font-[600] leading-[10.4px] text-[8px] 
     shadow-[2.29167px]
      text-white rounded-[5.729px]  py-[5px] bg-[#04177F]  lg:px-[104px] lg:py-[15px]
      md:pt-[9.394px] md:pr-[59.579px] md:pb-[8.824px] md:pl-[59.888px]
@@ -164,7 +164,7 @@ lg:text-[16px] lg:leading-[24px]"
      "
             >
               Check Point Balance
-            </a>
+            </p>
 
             {/* SHARE AND ICON CONTENT */}
             {/*  */}
@@ -180,37 +180,37 @@ lg:text-[16px] lg:leading-[24px]"
               {/* ICONS LINKS TO SOCIAL MEDIA */}
               <div className="flex gap-[35.52px]  justify-center">
                 {/* facebook */}
-                <a href="#" className="cursor-pointer">
+               
                   <img
                     src={facebook}
-                    className="lg:h-[60px] lg:w-[60px]"
+                    className="cursor-pointer lg:h-[60px] lg:w-[60px]"
                     alt="facebook-icon"
                   />
-                </a>
+               
                 {/* twitter */}
-                <a href="#" className="cursor-pointer">
+                
                   <img
                     src={twitter}
-                    className="lg:h-[60px] lg:w-[60px]"
+                    className="cursor-pointer lg:h-[60px] lg:w-[60px]"
                     alt="twitter-icon"
                   />
-                </a>
+                
                 {/* instagram */}
-                <a href="#" className="cursor-pointer">
+                
                   <img
                     src={instagram}
-                    className="lg:h-[60px] lg:w-[60px]"
+                    className="cursor-pointer lg:h-[60px] lg:w-[60px]"
                     alt="instagram-icon"
                   />
-                </a>
+                
                 {/* whatsapp */}
-                <a href="#" className="cursor-pointer">
+              
                   <img
                     src={whatSapp}
-                    className="lg:h-[60px] lg:w-[60px]"
+                    className="cursor-pointer lg:h-[60px] lg:w-[60px]"
                     alt="Whatsapp-icon"
                   />
-                </a>
+               
               </div>
             </div>
           </div>
@@ -588,13 +588,12 @@ lg:text-[20px] lg:leading-[30px]"
               <p className="font-[500] text-[8px] text-[#707070] leading-[10.4px]">
                 You need help?
               </p>
-              <a
-                href="/contactUs"
+              <Link to ="/contactUs"
                 className="font-[500] text-white text-[8px]  py-[2.865px] 
  px-[8.594px] leading-[10.4px] rounded-[5.156px] bg-[#04177F]"
               >
                 Contact Us
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -996,15 +995,15 @@ lg:text-[20px] lg:leading-[30px]"
               >
                 You need help?
               </p>
-              <a
-                href="/contactUs"
+              <Link to = "/contactUs"
+               
                 className="font-[500] text-white lg:text-[8px] lg:leading-[10.4px] 
   md:text-[4.583px]  py-[2.865px] 
  px-[8.594px] md:leading-[5.985px] rounded-[5.156px] lg:py-[5px]
  lg:px-[15px] lg:rounded-  bg-[#04177F]"
               >
                 Contact Us
-              </a>
+              </Link>
             </div>
           </table> 
         </div>
