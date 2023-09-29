@@ -178,12 +178,12 @@ lg:text-[16px] lg:leading-[24px]"
               </p>
 
               {/* ICONS LINKS TO SOCIAL MEDIA */}
-              <div className="flex gap-[35.52px]  justify-center">
+              <div className="flex md:gap-[35.521px] gap-[35.32px] justify-center">
                 {/* facebook */}
                
                   <img
                     src={facebook}
-                    className="cursor-pointer lg:h-[60px] lg:w-[60px]"
+                    className="cursor-pointer lg:h-[60px] lg:w-[60px] h-[34.375px] w-[34.375px]"
                     alt="facebook-icon"
                   />
                
@@ -191,7 +191,7 @@ lg:text-[16px] lg:leading-[24px]"
                 
                   <img
                     src={twitter}
-                    className="cursor-pointer lg:h-[60px] lg:w-[60px]"
+                    className="cursor-pointer lg:h-[60px] lg:w-[60px] h-[34.375px] w-[34.375px]"
                     alt="twitter-icon"
                   />
                 
@@ -199,7 +199,7 @@ lg:text-[16px] lg:leading-[24px]"
                 
                   <img
                     src={instagram}
-                    className="cursor-pointer lg:h-[60px] lg:w-[60px]"
+                    className="cursor-pointer lg:h-[60px] lg:w-[60px] h-[34.375px] w-[34.375px]"
                     alt="instagram-icon"
                   />
                 
@@ -207,7 +207,7 @@ lg:text-[16px] lg:leading-[24px]"
               
                   <img
                     src={whatSapp}
-                    className="cursor-pointer lg:h-[60px] lg:w-[60px]"
+                    className="cursor-pointer lg:h-[60px] lg:w-[60px] h-[34.375px] w-[34.375px]"
                     alt="Whatsapp-icon"
                   />
                
