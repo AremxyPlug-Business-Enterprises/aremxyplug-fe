@@ -54,7 +54,7 @@ import FiatConversion from "./Components/CurrencyConversion/FiatConversion";
 import DataTopUpPage from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataTopUpPage";
 import CurrencyConversion from "./Components/CurrencyConversion/currencyConversion";
 import PointRedeem from "./Components/Dashboard/DashboardComponents/PointRedeem/PointRedeem"
-
+import Referral from "./Components/Referrals/Referral"
 export const Router = () => {
   return (
     <div>
@@ -126,6 +126,7 @@ export const Router = () => {
         <Route path="/fiat" element={<FiatConversion/>}/>
         <Route path="/currencyConversion" element={<CurrencyConversion/>} />
         <Route path="/data-top-up" element={<DataTopUpPage/>} />
+        <Route path="/My-Referral" element={<Referral/>} />
       </Routes>
     </div>
   );
