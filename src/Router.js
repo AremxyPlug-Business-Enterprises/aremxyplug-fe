@@ -54,12 +54,9 @@ import FiatConversion from "./Components/CurrencyConversion/FiatConversion";
 import DataTopUpPage from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataTopUpPage";
 import CurrencyConversion from "./Components/CurrencyConversion/currencyConversion";
 import PointRedeem from "./Components/Dashboard/DashboardComponents/PointRedeem/PointRedeem"
-<<<<<<< HEAD
 import DataBundlesPage from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundlesPage";
 
-=======
 import Referral from "./Components/Referrals/Referral"
->>>>>>> 3876582fed8d7b8facd6ff97589ad2f49e2bd0f2
 export const Router = () => {
   return (
     <div>
