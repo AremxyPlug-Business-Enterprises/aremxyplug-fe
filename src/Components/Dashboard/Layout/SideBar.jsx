@@ -484,14 +484,16 @@ export const SideBar = () => {
                   onClick={() => dropHandler("dropdown6")}
                   className="flex justify-between"
                 >
+                  <Link to="/My-Referral">
                   <div className="flex gap-[3.4px] items-center cursor-pointer lg:gap-[11px]">
                     <img
                       className="w-[8.3px] h-[8.3px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
                       src="./Images/dashboardImages/referrals.png"
                       alt="icon"
                     />
-                    <p>My Referrals</p>
+                  <p>My Referrals</p>
                   </div>
+                  </Link>
                 </div>
                 <div className="flex gap-[3.4px] cursor-pointer lg:gap-[11px]">
                   <img
