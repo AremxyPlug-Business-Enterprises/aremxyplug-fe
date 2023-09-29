@@ -491,7 +491,7 @@ export const SideBar = () => {
                       src="./Images/dashboardImages/referrals.png"
                       alt="icon"
                     />
-                    <p>My Referrals</p>
+                  <p>My Referrals</p>
                   </div>
                   </Link>
                 </div>
