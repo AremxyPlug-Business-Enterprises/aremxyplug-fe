@@ -3,6 +3,8 @@ import { Modal } from "../../../../Screens/Modal/Modal";
 import OtpInput from "react-otp-input";
 import { useContext } from "react";
 import { ContextProvider } from "../../../../Context";
+import { AiFillEyeInvisible } from "react-icons/ai";
+import { AiFillEye } from "react-icons/ai";
 import styles from "../../TransferComponent/transfer.module.css";
 
 export const InputPinPopUp = () => {
@@ -13,7 +15,10 @@ export const InputPinPopUp = () => {
     inputPinPopUp,
     setInputPinPopUp,
     inputPinHandler,
+    toggleVisibility,
+    isVisible,
   } = useContext(ContextProvider);
+
   return (
     <div>
       {" "}
@@ -31,26 +36,41 @@ export const InputPinPopUp = () => {
               alt=""
             />
             <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
-            <p className="text-[9px] md:text-[16px] font-extrabold text-center my-[10%] lg:my-[%]">
+            <p className="text-[9px] md:text-[16px] font-extrabold text-center my-[8%] lg:my-[%]">
               Input PIN to complete transaction
             </p>
-            <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[8%]">
-              <OtpInput
-                value={inputPin}
-                inputType="tel"
-                onChange={setInputPin}
-                numInputs={4}
-                shouldAutoFocus={true}
-                inputStyle={{
-                  color: "#403f3f",
-                  width: 30,
-                  height: 30,
-                  borderRadius: 3,
-                }}
-                renderInput={(props) => (
-                  <input {...props} className="inputOTP mx-[3px]" />
+            <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
+              <div className=" flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
+                {" "}
+                {isVisible ? (
+                  <OtpInput
+                    value={inputPin}
+                    inputType="tel"
+                    onChange={setInputPin}
+                    numInputs={4}
+                    shouldAutoFocus={true}
+                    inputStyle={{
+                      color: "#403f3f",
+                      width: 30,
+                      height: 30,
+                      borderRadius: 3,
+                    }}
+                    renderInput={(props) => (
+                      <input {...props} className="inputOTP mx-[3px]" />
+                    )}
+                  />
+                ) : (
+                  <div className="text-[24px] md:text-[24px] mt-1">
+                    * * * *{" "}
+                  </div>
                 )}
-              />
+                <div
+                  className="text-[#0003] text-xl md:text-3xl"
+                  onClick={toggleVisibility}
+                >
+                  {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
+                </div>
+              </div>
               <p className="text-[8px] md:text-[12px] text-[#04177f]">
                 Forgot Pin ?
               </p>

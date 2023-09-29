@@ -374,10 +374,16 @@ export const Context = ({ children }) => {
   const [transactSuccessPopUp, setTransactSuccessPopUp] = useState(false);
   const [tfPopUp, setTfPopUp] = useState(false);
   const [deletePopUp, setDeletePopUp] = useState(false);
-  const [deleteSuccess, setDeleteSuccess] = useState(false)
+  const [deleteSuccess, setDeleteSuccess] = useState(false);
   const [inputPin, setInputPin] = useState("");
   const textRef = useRef(null);
   const transferFee = 50;
+
+  const [isVisible, setIsVisible] = useState(true);
+
+  const toggleVisibility = () => {
+    setIsVisible(!isVisible);
+  };
 
   // =============Copy to Clipboard function=============
   const handleCopyClick = () => {
@@ -672,6 +678,8 @@ export const Context = ({ children }) => {
     setInputPin,
     inputPinHandler,
     handleClickOutside,
+    toggleVisibility,
+    isVisible,
 
     // ===========International transfer ==============
     internationalBankConfirmation,
@@ -708,7 +716,7 @@ export const Context = ({ children }) => {
     setWithdrawalDeleteSuccess,
     withdrawPinPopUp,
     setWithdrawPinPopUp,
-    withdrawPinHandler
+    withdrawPinHandler,
   };
 
   return (
