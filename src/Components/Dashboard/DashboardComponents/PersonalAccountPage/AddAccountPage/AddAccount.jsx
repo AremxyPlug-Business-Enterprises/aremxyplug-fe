@@ -5,6 +5,7 @@ import { ContextProvider } from "../../../../Context";
 import { DashBoardLayout } from "../../../Layout/DashBoardLayout";
 import { BusinessAccountForm } from "./BusinessAccountForm";
 import { PersonalAccountForm } from "./PersonalAccountForm";
+import styles from "../../../DashboardComponents/component.module.css";
 import { Link } from "react-router-dom";
 
 export const AddAccount = () => {
@@ -84,15 +85,19 @@ export const AddAccount = () => {
           {personalAcc && <PersonalAccountForm />}
           {businessAcc && <BusinessAccountForm />}
         </div>
-        <div className=" flex gap-[15px] justify-center items-center mb-[5%] ">
-          <div className="text-[8px] md:text-[12px] lg:text-[16px]">
+        <div
+          className={`${
+            isDarkMode ? "" : ""
+          } flex gap-[15px] justify-center items-center my-[15%] md:mt-[38%] lg:mt-[26%] lg:mb-[%]`}
+        >
+          <div className="text-[10px] md:text-[12px] lg:text-[14px]">
             You need help ?
           </div>
           <Link to="/ContactUs">
             <div
-              className={`${
-                isDarkMode ? "border " : "bg-[#04177f]"
-              } text-[8px] p-1 text-white rounded-[8px] lg:text-[14px]`}
+              className={`${isDarkMode ? "border" : "bg-[#04177f]"} ${
+                styles.contactus
+              }`}
             >
               Contact Us
             </div>

@@ -49,13 +49,12 @@ export const PersonalAccountPage = () => {
                 bank accounts without any hassle or hidden fee.
               </h2>
             </div>
-            <div className="w-[91px] h-[66px] lg:w-[199px] lg:h-[199px]">
-              <img
-                src="./Images/transferImages/ToMyAcc.png"
-                alt=""
-                className="h-full"
-              />
-            </div>
+
+            <img
+              src="./Images/transferImages/ToMyAcc.png"
+              alt=""
+              className="w-[91px] h-[66px] md:h-[120px] md:w-[90px] lg:w-[199px] lg:h-[199px]"
+            />
           </div>
           <div className="flex my-[5%] gap-11 font-extrabold md:w-[80%]">
             <button
@@ -328,17 +327,17 @@ export const PersonalAccountPage = () => {
         </div>
         <div
           className={`${
-            isDarkMode ? "mb-[1%]" : "mb-[5%]"
-          } flex gap-[15px] justify-center items-center `}
+            isDarkMode ? "" : ""
+          } flex gap-[15px] justify-center items-center my-[15%] md:mt-[38%] lg:mt-[26%] lg:mb-[%]`}
         >
           <div className="text-[10px] md:text-[12px] lg:text-[14px]">
             You need help ?
           </div>
           <Link to="/ContactUs">
             <div
-              className={`${isDarkMode ? "" : "bg-[#04177f]"} ${
+              className={`${isDarkMode ? "border" : "bg-[#04177f]"} ${
                 styles.contactus
-              } text-[8px] p-1 text-white rounded-[8px]`}
+              }`}
             >
               Contact Us
             </div>
