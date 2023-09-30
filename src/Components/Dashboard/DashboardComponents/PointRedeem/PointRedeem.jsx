@@ -8,7 +8,7 @@ import icon1 from '../PointRedeem/images/Group.svg'
 import icon2 from '../PointRedeem/images/convert-card.svg'
 import icon3 from '../PointRedeem/images/clock.svg'
 import flag from '../PointRedeem/images/Country Flags.svg'
-import Joi from "joi";
+
 import { useContext } from "react";
 import { ContextProvider } from "../../../Context";
 const PointRedeem = () => {
@@ -17,7 +17,7 @@ const PointRedeem = () => {
         setTransfer,
         receive,
         setReceive,
-        setInternationalDetailPopUp,
+        
       } = useContext(ContextProvider);
     
       const transferHandler = (e) => {
@@ -27,40 +27,22 @@ const PointRedeem = () => {
         setReceive(e.target.value);
       };
     
-      const schema = Joi.object({
-        transfer: Joi.string()
-          .pattern(new RegExp(/\d{4,}/))
-          .required()
-          .messages({
-            "string.pattern.base": "Amount can not be less than 1000",
-          }),
-        receive: Joi.string()
-          .pattern(new RegExp(/\d{4,}/))
-          .required()
-          .messages({
-            "string.pattern.base": "Amount can not be less than 1000",
-          }),
-      });
+    //   const schema = Joi.object({
+    //     transfer: Joi.string()
+    //       .pattern(new RegExp(/\d{4,}/))
+    //       .required()
+    //       .messages({
+    //         "string.pattern.base": "Amount can not be less than 1000",
+    //       }),
+    //     receive: Joi.string()
+    //       .pattern(new RegExp(/\d{4,}/))
+    //       .required()
+    //       .messages({
+    //         "string.pattern.base": "Amount can not be less than 1000",
+    //       }),
+    //   });
     
-      const handleProceed = (e) => {
-        e.preventDefault();
-    
-        const { error } = schema.validate({
-          transfer,
-          receive,
-        });
-        // if (error) {
-        //     setErrors(
-        //       error.details.reduce((acc, curr) => {
-        //         acc[curr.path[0]] = curr.message;
-        //         return acc;
-        //       }, {})
-        //     );
-        //   } else {
-        //     setErrors({});
-        //     setInternationalDetailPopUp(true);
-        //   }
-        };
+      
     
     return ( 
 
