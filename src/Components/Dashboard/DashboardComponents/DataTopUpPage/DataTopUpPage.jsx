@@ -35,8 +35,8 @@ const DataTopUpPage = () => {
   };
 
   const resetActiveButton = () => {
-    handleClick(0);
     hidePopup();
+    handleClick(0);
   };
 
   const { isDarkMode } = useContext(ContextProvider);
@@ -258,7 +258,7 @@ const DataTopUpPage = () => {
             </div>
           </section>
 
-          <footer className="flex justify-center text-center gap-[20px] mt-[150px] mb-[50px] lg:mt-[500px]">
+          <footer className="flex justify-center text-center gap-[20px] mt-[220px] mb-[50px] lg:mb-[30px] lg:mt-[400px] 2xl:mt-[500px]">
             <p className="text-[8px] md:text-[12px] lg:text-[20px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
               You need help?
             </p>
@@ -279,7 +279,7 @@ const DataTopUpPage = () => {
             <Modal>
               <div className={`md:px-[px]`}>
                 <div id="PopUp" className="popup">
-                  <section className="text-center flex justify-center item-center z-100">
+                  <section className="text-center flex justify-center item-center z-1000">
                     <div
                       className="absolute inset-0 top-0 bottom-0 bg-[#454545] opacity-[0.15] z-100 "
                       style={{
@@ -292,13 +292,13 @@ const DataTopUpPage = () => {
                         opacity: 0.15,
                         zIndex: 100,
                       }}
-                      onClick={hidePopup}
+                      onClick={resetActiveButton}
                     ></div>
                     <div
                       className={`${
                         isDarkMode ? "bg-[#000]" : "bg-[#ffffff]"
                       } Datapopup
-                    flex flex-col justify-between z-[100] lg:mt-[200px] lg:ml-[px] md:mt-[30px] md:w-[35%] md:ml-[50px] 2xl:mt-[270px] 2xl:ml-[]`}
+                    flex flex-col justify-between z-[100] lg:mt-[230px] lg:ml-[10px] md:mt-[30px] md:w-[35%] md:ml-[50px] 2xl:mt-[270px] 2xl:ml-[]`}
                     >
                       <div>
                         <p className="text-[10px] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[3%]">
