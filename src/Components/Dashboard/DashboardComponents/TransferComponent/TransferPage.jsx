@@ -34,7 +34,7 @@ export const TransferPage = () => {
                 Send, Receive, and Store Money Securely without any Hassle.
               </h2>
             </div>
-            <div className="w-[91px] h-[66px] lg:w-[199px] lg:h-[199px]">
+            <div className="w-[91px] h-[66px]  lg:w-[199px] lg:h-[199px]">
               <img
                 src="./Images/transferImages/transferHero.png"
                 alt=""
@@ -232,8 +232,8 @@ export const TransferPage = () => {
         {/* ===========Contact Us==================== */}
         <div
           className={`${
-            isDarkMode ? "mb-[1%]" : ""
-          } flex gap-[15px] justify-center items-center mt-[] md:mt-[38%] lg:mt-[26%] lg:mb-[%]`}
+            isDarkMode ? "" : ""
+          } flex gap-[15px] justify-center items-center md:mt-[38%] lg:mt-[26%] lg:mb-[%]`}
         >
           <div className="text-[10px] md:text-[12px] lg:text-[14px]">
             You need help ?

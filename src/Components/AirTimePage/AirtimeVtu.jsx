@@ -2,6 +2,8 @@ import React from 'react';
 import { useState } from 'react';
 import styles from './AirtimeVtu.module.css'
 import { DashBoardLayout } from '../Dashboard/Layout/DashBoardLayout';
+import { Modal } from "../Screens/Modal/Modal";
+import OtpInput from "react-otp-input";
 import weight from './Images/weight.svg';
 import add from './Images/add-square.svg';
 import data from './Images/data.svg';
@@ -15,7 +17,6 @@ import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 const AirtimeVtu = () => {
-    const {  isDarkMode } = useContext(ContextProvider);
     const tFee = 0;
     const points = '+2.00';
 
@@ -235,8 +236,20 @@ const AirtimeVtu = () => {
          } 
       }
 
-    //   const handleConfirm =()=> {
-    //     setProceed(false);
+      const {
+        toggleSideBar,
+        inputPin,
+        setInputPin,
+        inputPinHandler,
+      } = useContext(ContextProvider);
+
+      const handleConfirm =()=> {
+        setProceed(false);
+        setConfirm(true)
+      }
+
+    //   const handlePin =()=> {
+    //     setConfirm(false);
     //     setConfirm(true)
     //   }
 
@@ -246,11 +259,18 @@ const AirtimeVtu = () => {
 
   return (
     <DashBoardLayout>
-      <div className="">
+      <div className={styles.AirtimeTops}>
         <div className={styles.airtimeTop}>
             <div className={styles.banner}>
-            <img src="./Images/airtimeTopUp/green_banner2.png" alt="" />
-            </div>
+                <div className={styles.bannerText}>
+                    <h2>AIRTIME VTU, FAST AND AUTOMATED.</h2>
+                    <p>Top up your mobile sim using our automated airtime vending directly from network providers, enjoy discounts without any hassle or hidden fee.
+                    </p>
+                </div>
+                <div className={styles.bannerImage}>
+                    <img src="./Images/airtimeTopUp/young.png" alt="" />
+                </div>
+                </div>
             <div className={styles.containFlex}>
                 <div className={styles.FlexPut}>
                     <div className={styles.conPut}>
@@ -280,20 +300,21 @@ const AirtimeVtu = () => {
                 </div>
             </div>
             <div className={styles.mainGrid}>
-                <div>
+                <div className={styles.mainGridCol}>
+                    <div>
                     <div className={styles.NetworkFlex}>
                         <h2 className={styles.head3}>Select Network</h2>
                         <div className={styles.input}>
                             <div className={styles.output2}>
                                 { selected ? 
-                                    <li className={styles.labelInput}>
+                                    <li onClick={handleShowList} className={styles.labelInput}>
                                         <div className={styles.network}>
                                             { networkImage && <img src={networkImage} alt=""/>}
                                         </div> 
                                         <h2 className={styles.head2}>{networkName}</h2>
                                     </li>
                                 : 
-                                    <h2 className={styles.head6}>Select Network</h2>
+                                    <h2 onClick={handleShowList} className={styles.head6}>Select Network</h2>
                                 }
                                 <button className={styles.btnDrop} onClick={handleShowList}>
                                     <img src={arrowDown} alt=""/>
@@ -308,14 +329,47 @@ const AirtimeVtu = () => {
                             ))}
                         </div> 
                     }
+                    </div>
+                    <div>
+                        <h2 className={styles.head3}>Discount</h2>
+                        <div className={styles.input2}>
+                            <h2 className=''>{discount ? `${networkName + ' ' +  discount}%` : ''}</h2>
+                            <div className={styles.disc}>
+                                <img src={discountImg} alt=""/>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h2 className={styles.head3}>Recipient Name <span className={styles.span4}>(optional)</span></h2>
+                        <div className={styles.input}>
+                            <div className={styles.output}>
+                                <input type='text' className={styles.phone} required placeholder='Add recipient name' onChange={(event)=>setRecipientName(event.target.value)} value={recipientName}/>
+                                <div className={styles.call}>
+                                    <img src={user} alt=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h2 className={styles.head3}>Total Amount</h2>
+                        <div className={styles.input}>
+                            <div className={styles.output1}>
+                                <h2>{newAmount ? `NGN${newAmount}` : `Total Amount`}</h2>
+                                <div className={styles.disc}>
+                                    <img src={money} alt="" className='w-full h-full'/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div>
+                <div className={styles.mainGridCol}>
+                    <div>
                     <h2 className={styles.head3}>Select Product</h2>
                     <div className={styles.input1}>
                         {selectedProduct ?
-                            <h2 className={styles.span2} required>{selectedProduct}</h2>
+                            <h2 onClick={handleShowProduct} className={styles.span2} required>{selectedProduct}</h2>
                         :
-                            <span>Select Product</span>
+                            <span onClick={handleShowProduct}>Select Product</span>
                         }
                         <button className={styles.btnDrop} onClick={handleShowProduct}>
                             <img src={arrowDown} alt="" />
@@ -328,89 +382,59 @@ const AirtimeVtu = () => {
                             ))}
                         </div>
                     }
-                </div>
-                <div>
-                    <h2 className={styles.head3}>Discount</h2>
-                    <div className={styles.input2}>
-                        <h2 className=''>{discount ? `${networkName + ' ' +  discount}%` : ''}</h2>
-                        <div className={styles.disc}>
-                            <img src={discountImg} alt=""/>
-                        </div>
                     </div>
-                </div>
-                <div>
-                    <h2 className={styles.head3}>Phone Number <span className={styles.span3}>(Select Recipient)</span></h2>
-                    <div className={styles.input}>
-                        <div className={styles.output}>
-                            <input type='text' className={styles.phone} required placeholder='Add recipient phone number' onChange={(event)=>setRecipientNumber(event.target.value)} value={recipientNumber}/>
-                            <div className={styles.call}>
-                                <img src={call} alt=""/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <h2 className={styles.head3}>Recipient Name <span className={styles.span4}>(optional)</span></h2>
-                    <div className={styles.input}>
-                        <div className={styles.output}>
-                            <input type='text' className={styles.phone} required placeholder='Add recipient name' onChange={(event)=>setRecipientName(event.target.value)} value={recipientName}/>
-                            <div className={styles.call}>
-                                <img src={user} alt=""/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <h2 className={styles.head3}>Type Amount</h2>
-                    <div className={styles.input}>
-                        <div className={styles.output}>
-                            <input type='text' placeholder='Type amount' required className={styles.phone} onChange={(event)=>setAmount(event.target.value)} value={amount.toLocaleString()}/>
-                            <div className={styles.call}>
-                                <img src={money} alt=""/>                            
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <h2 className={styles.head3}>Total Amount</h2>
-                    <div className={styles.input}>
-                        <div className={styles.output1}>
-                            <h2>{newAmount ? `NGN${newAmount}` : `Total Amount`}</h2>
-                            <div className={styles.disc}>
-                                <img src={money} alt="" className='w-full h-full'/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div>
                     <div>
-                        <h2 className={styles.head3}>Payment Method</h2>
-                        <div className={styles.input1}>
-                                { paymentSelected ? 
-                                    <li className={styles.labelInput}> 
-                                        <h2 className={styles.head4}>{name}</h2>
-                                        <h2 className={styles.head4}>Wallet({paymentAmount.toLocaleString()}.00)</h2>
-                                    </li> 
-                                    :
-                                    <h2 className={styles.head4}>Select Payment Method</h2>}
-                                    { paymentSelected ? 
-                                        <button className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]" onClick={handleShowPayment}>
-                                            <img src={image} alt="" className='w-full h-full object-cover'/>
-                                        </button>
-                                    : 
-                                    <button className='lg:w-6 lg:h-6 h-[11px] w-[11px]' onClick={handleShowPayment}>
-                                        <img src={arrowDown} alt="" className='w-full h-full'/>
-                                    </button>
-                                }
+                        <h2 className={styles.head3}>Phone Number <span className={styles.span3}>(Select Recipient)</span></h2>
+                        <div className={styles.input}>
+                            <div className={styles.output}>
+                                <input type='text' className={styles.phone} required placeholder='Add recipient phone number' onChange={(event)=>setRecipientNumber(event.target.value)} value={recipientNumber}/>
+                                <div className={styles.call}>
+                                    <img src={call} alt=""/>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    { showPayment && 
-                        <div className={styles.colDown}>
-                            {countryList.map((country) => (
-                                <Payment key={country.id} flag={country.flag} code={country.code} amount={country.amount} onClick={()=> handleSelectPayment(country.code, country.flag, country.amount)}/>
-                            ))}
+                    <div>
+                        <h2 className={styles.head3}>Type Amount</h2>
+                        <div className={styles.input}>
+                            <div className={styles.output}>
+                                <input type='text' placeholder='Type amount' required className={styles.phone} onChange={(event)=>setAmount(event.target.value)} value={amount.toLocaleString()}/>
+                                <div className={styles.call}>
+                                    <img src={money} alt=""/>                            
+                                </div>
+                            </div>
                         </div>
-                    }
+                    </div>
+                    <div>
+                        <div>
+                            <h2 className={styles.head3}>Payment Method</h2>
+                            <div className={styles.input1}>
+                                    { paymentSelected ? 
+                                        <li onClick={handleShowPayment} className={styles.labelInput}> 
+                                            <h2 className={styles.head4}>{name}</h2>
+                                            <h2 className={styles.head4}>Wallet({paymentAmount.toLocaleString()}.00)</h2>
+                                        </li> 
+                                        :
+                                        <h2 onClick={handleShowPayment} className={styles.head9}>Select Payment Method</h2>}
+                                        { paymentSelected ? 
+                                            <button className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]" onClick={handleShowPayment}>
+                                                <img src={image} alt="" className='w-full h-full object-cover'/>
+                                            </button>
+                                        : 
+                                        <button className='lg:w-6 lg:h-6 h-[11px] w-[11px]' onClick={handleShowPayment}>
+                                            <img src={arrowDown} alt="" className='w-full h-full'/>
+                                        </button>
+                                    }
+                            </div>
+                        </div>
+                        { showPayment && 
+                            <div className={styles.colDown}>
+                                {countryList.map((country) => (
+                                    <Payment key={country.id} flag={country.flag} code={country.code} amount={country.amount} onClick={()=> handleSelectPayment(country.code, country.flag, country.amount)}/>
+                                ))}
+                            </div>
+                        }
+                    </div>
                 </div>
             </div>
             <div className={styles.add}>
@@ -502,7 +526,7 @@ const AirtimeVtu = () => {
                                 <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">Available Balance ( {name+paymentAmount}.00 )</h2>
                             </div>
                             <div className={styles.flexBtn}>
-                                <button onClick={()=> setProceed(false)}>Confirmed</button> 
+                                <button onClick={handleConfirm}>Confirmed</button> 
                             </div>
                         </div>
                     </div>
@@ -510,21 +534,63 @@ const AirtimeVtu = () => {
             }
             {
                 confirm && 
-                    <div className='fixed top-0 left-0 w-full h-full bg-black/[0.3] z-[300] flex justify-center items-center'>
-                        <div className={` mx-[5%] ${ isDarkMode ? "border bg-[#000]" : "bg-[#fff]"} lg:ml-[25%] lg:mr-[10%] md:mx-[25%] grow pt-[20px] pb-[20px] rounded-[8px] relative md:rounded-[11.5px]`}>
-                            confirmation
-                            <button onClick={() =>setConfirm(false)}>close</button>
+                    <Modal>
+                        <div
+                            className={`${styles.inputPin} ${
+                            toggleSideBar ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
+                            } md:w-[55%] w-[90%] h-[60%] bg-white z-50 rounded-xl`}
+                        >
+                            <img
+                            onClick={()=> setProceed(false)}
+                            className="left-80 ml-44 relative w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px]"
+                            src="/Images/transferImages/close-circle.png"
+                            alt=""
+                            />
+                            <hr className="h-[6px] bg-[#04177f] border-none mt-[1%] md:mt-[1%] md:h-[10px]" />
+                            <p className="text-[9px] md:text-[16px] font-extrabold text-center mt-4 mb-20 lg:my-[%]">
+                            Input PIN to complete transaction
+                            </p>
+                            <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[8%]">
+                            <OtpInput
+                                value={inputPin}
+                                inputType="tel"
+                                onChange={setInputPin}
+                                numInputs={4}
+                                shouldAutoFocus={true}
+                                inputStyle={{
+                                color: "#403f3f",
+                                width: 30,
+                                height: 30,
+                                borderRadius: 3,
+                                }}
+                                renderInput={(props) => (
+                                <input {...props} className="inputOTP mx-[3px]" />
+                                )}
+                            />
+                            <p className="text-[8px] md:text-[12px] text-[#04177f]">
+                                Forgot Pin ?
+                            </p>
+                            </div>
+                            <button
+                            onClick={inputPinHandler}
+                            disabled={inputPin.length !== 4 ? true : false}
+                            className={`${
+                                inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
+                            } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                            >
+                            Purchase
+                            </button>
                         </div>
-                    </div>
+                    </Modal>
             }
             <div className={styles.containFlex2}>
                 <button className={styles.FlexPut2} onClick={handleProceed}>Proceed</button>
             </div>
-            <div className={styles.help}>
+        </div>
+        <div className={styles.help}>
                 <h2>You need help?</h2>
                 <Link to={`/ContactUs`} className={styles.btnContact}>Contact Us</Link>
             </div>
-        </div>
       </div>
     </DashBoardLayout>
   );

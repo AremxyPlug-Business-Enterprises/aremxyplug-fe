@@ -127,6 +127,19 @@
   box-shadow: 0px 0px 5.952381610870361px 0px rgba(0, 0, 0, 0.25);
 }
 
+.contactus {
+  display: flex;
+  padding: 2.865px 8.594px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5.156px;
+  color: #fff;
+  font-size: 8px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 130%; /* 10.4px */
+}
+
 /* =====================Tablet View ====================== */
 @media (min-width: 820px) and (max-width: 1180px) {
   .detailsBox {

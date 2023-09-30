@@ -1,4 +1,4 @@
-import React, { createContext, useState, useRef } from "react";
+import React, { createContext, useState, useRef, useEffect } from "react";
 import Joi from "joi";
 import axios from "axios";
 // import { BASE_URL } from "../config";
@@ -374,10 +374,16 @@ export const Context = ({ children }) => {
   const [transactSuccessPopUp, setTransactSuccessPopUp] = useState(false);
   const [tfPopUp, setTfPopUp] = useState(false);
   const [deletePopUp, setDeletePopUp] = useState(false);
-  const [deleteSuccess, setDeleteSuccess] = useState(false)
+  const [deleteSuccess, setDeleteSuccess] = useState(false);
   const [inputPin, setInputPin] = useState("");
   const textRef = useRef(null);
   const transferFee = 50;
+
+  const [isVisible, setIsVisible] = useState(true);
+
+  const toggleVisibility = () => {
+    setIsVisible(!isVisible);
+  };
 
   // =============Copy to Clipboard function=============
   const handleCopyClick = () => {
@@ -487,8 +493,8 @@ export const Context = ({ children }) => {
   };
 
   const bankName = internationalDetails.bankName;
-  const accountNumber = internationalDetails.accountName;
-  const accountName = internationalDetails.accountNumber;
+  const accountNumber = internationalDetails.accountNumber;
+  const accountName = internationalDetails.accountName;
   const swiftCode = internationalDetails.swiftCode;
   const recipientAddress = internationalDetails.recipientAddress;
   const purposeOfPayment = internationalDetails.purposeOfPayment;
@@ -506,6 +512,24 @@ export const Context = ({ children }) => {
     setWithdrawPinPopUp(false);
     setTransactSuccessPopUp(true);
   };
+
+  // ========================End of Withdrawal page=========================
+
+  // ======================ExchangeRate===============================
+  const [exchangeRate, setExchangeRate] = useState(null);
+
+  useEffect(() => {
+    // Replace 'YOUR_API_KEY' with your actual API key or use a different exchange rate API.
+    const apiUrl = `https://api.exchangerate-api.com/v4/latest/USD`;
+
+    fetch(apiUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        const nairaToDollarRate = data.rates["NGN"];
+        setExchangeRate(nairaToDollarRate);
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []);
 
   const hold = {
     firstDrop,
@@ -672,6 +696,8 @@ export const Context = ({ children }) => {
     setInputPin,
     inputPinHandler,
     handleClickOutside,
+    toggleVisibility,
+    isVisible,
 
     // ===========International transfer ==============
     internationalBankConfirmation,
@@ -708,7 +734,12 @@ export const Context = ({ children }) => {
     setWithdrawalDeleteSuccess,
     withdrawPinPopUp,
     setWithdrawPinPopUp,
-    withdrawPinHandler
+    withdrawPinHandler,
+
+    // ====exchangeRate====
+    exchangeRate,
+
+    
   };
 
   return (

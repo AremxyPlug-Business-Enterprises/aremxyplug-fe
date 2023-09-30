@@ -2,7 +2,7 @@ import React from 'react'
 import { DashBoardLayout } from '../Dashboard/Layout/DashBoardLayout'
 import styles from './AirTime.module.css'
 import { useState } from 'react'
-import WalletModal from '../Wallet/WalletModal'
+import { Modal } from "../Screens/Modal/Modal";
 import { Link } from 'react-router-dom'
 
 
@@ -44,10 +44,16 @@ const AirTime = () => {
 
   return (
     <DashBoardLayout>
-        <div>
+        <div className={styles.AirtimeTops}>
             <div className={styles.airtimeTop}>
                 <div className={styles.banner}>
-                    <img src="./Images/airtimeTopUp/blue_banners.png" alt="" />
+                    <div className={styles.bannerText}>
+                        <h2>TOP UP AIRTIME GLOBALLY WITH AREMXYPLUG.</h2>
+                        <p>Top up your mobile sim with our automated airtime vending, receive instantly, enjoy discount, purchase in bulk, send to friends, family, team, employees, and your loved ones without any hassle or hidden fee.</p>
+                    </div>
+                    <div className={styles.bannerImage}>
+                        <img src="./Images/airtimeTopUp/young.png" alt="" />
+                    </div>
                 </div>
                 <div className={styles.airType}>
                     <div>
@@ -139,7 +145,7 @@ const AirTime = () => {
                         </div>
                     }
                     { activeTab === 'tab_2' &&
-                        <WalletModal>
+                        <Modal>
                             <div className={styles.NotInter}>
                                 <div className={styles.timeAble}>
                                     <h2>International Airtime.</h2>
@@ -153,10 +159,10 @@ const AirTime = () => {
                                     <button className={styles.btnOk} onClick={handleTab1}>Okay</button>
                                 </div>
                             </div>
-                        </WalletModal>
+                        </Modal>
                     }
                     { showVoucher && 
-                        <WalletModal>
+                        <Modal>
                             <div className={styles.NotInterX} >
                                 <div className={styles.timeAbleX}>
                                     <h2>Airtime Voucher.</h2>
@@ -170,10 +176,10 @@ const AirTime = () => {
                                     <button className={styles.btnOkX} onClick={()=>setShowVoucher(false)}>Okay</button>
                                 </div>
                             </div>
-                        </WalletModal>
+                        </Modal>
                     }
                     { showSchedule && 
-                        <WalletModal>
+                        <Modal>
                             <div className={styles.NotInterX} >
                                 <div className={styles.timeAbleX}>
                                     <h2>Airtime Schedule.</h2>
@@ -187,10 +193,10 @@ const AirTime = () => {
                                     <button className={styles.btnOkX} onClick={()=>setShowSchedule(false)}>Okay</button>
                                 </div>
                             </div>
-                        </WalletModal>
+                        </Modal>
                     }
                     { showBulk && 
-                        <WalletModal>
+                        <Modal>
                             <div className={styles.NotInterX} >
                                 <div className={styles.timeAbleX}>
                                     <h2>Bulk Airtime.</h2>
@@ -204,10 +210,10 @@ const AirTime = () => {
                                     <button className={styles.btnOkX} onClick={()=>setShowBulk(false)}>Okay</button>
                                 </div>
                             </div>
-                        </WalletModal>
+                        </Modal>
                     }
                     { showRoll && 
-                        <WalletModal>
+                        <Modal>
                             <div className={styles.NotInterX} >
                                 <div className={styles.timeAbleX}>
                                     <h2>Airtime Roll.</h2>
@@ -221,7 +227,7 @@ const AirTime = () => {
                                     <button className={styles.btnOkX} onClick={()=>setShowRoll(false)}>Okay</button>
                                 </div>
                             </div>
-                        </WalletModal>
+                        </Modal>
                     }
                 </div>
             </div>

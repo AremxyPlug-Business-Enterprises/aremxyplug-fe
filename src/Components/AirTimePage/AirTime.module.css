@@ -6,13 +6,61 @@
 
 /* First section */
 
-.airtimeTop .banner img {
+.AirtimeTops {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 300px;
+    height: 100%;
+}
+.airtimeTop {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+.airtimeTop .banner {
     width: 100%;
     margin: 0 auto;
-    height: 220px;
+    background: linear-gradient(92.3deg, #6EDCFF 31.38%, rgba(65, 107, 255, 0.79) 98.66%);
+    height: 196px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 50px 40px;
+}
+.banner .bannerText {
+    width: 70%;
+    margin: auto 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.bannerText h2 {
+    width: 100%;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 26px;
+    letter-spacing: 0em;    
+    color: #000000;
+}
+.bannerText p {
+    width: 100%;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 19px;
+    letter-spacing: 0em;
+    color: #000000;
+}
+.banner .bannerImage {
+    margin: auto 0;
+}
+.banner .bannerImage img {
+    width: 100%;
+    position: relative;
+    bottom: 5px;
 }
 .airType {
-    margin: 60px auto;
+    margin: 0 auto;
     width: 100%;
     height: 27px;
     cursor: pointer;
@@ -40,7 +88,6 @@
     display: flex;
     gap: 25px;
     align-items: center;
-    margin-bottom: 60px;
     border-bottom-width: 2px;
 }
 .localInter li {
@@ -66,16 +113,21 @@
 }
 .NotInter {
     margin: 0 auto;
+    padding-top: 2%;
     width: 562px;
     height: 500px;
-    position: absolute;
-    top: 5%;
+    position: relative;
+    top: 3%;
+    display: flex;
+    flex-direction: column;
+    gap: 70px;
+    background-color: #fff;
+    border-radius: 12px;
 }
 .NotInter .timeAble {
     text-align: center;
-    margin: 1% auto 15%;
+    margin: 0 auto;
     position: relative;
-    right: 30px;
 }  
 .timeAble h2 {
     font-size: 16px;
@@ -83,7 +135,8 @@
     line-height: 24px;
     letter-spacing: 0em;
     color: #000000;
-    width: 170px;
+    width: 100%;
+    text-align: center;
     margin: 0 auto 10px;
 }
 .timeAble h3 {
@@ -92,14 +145,13 @@
     line-height: 24px;
     letter-spacing: 0em;
     color: #04177F;
-    width: 314px;
+    width: 100%;
+    text-align: center;
     margin: 0 auto;
 }
 .NotInter .InterAirtime {
     margin: 0 auto;
-    margin-bottom: 13%;
     position: relative;
-    right: 30px;
 }
 .InterAirtime img {
     width: 250px;
@@ -107,11 +159,9 @@
     margin: 0 auto;
 }
 .NotInter .coming {
-    width: fit-content;
     text-align: center;
     margin: 0 auto;
     position: relative;
-    right: 60px;
 }
 .coming h2 {
     position: relative;
@@ -125,9 +175,8 @@
 }
 .coming .btnOk {
     border-radius: 5px;
-    width: 150%;
-    height: 40%;   
-    padding: 5px 25px;
+    width: 100%;   
+    padding: 5px 20px;
     background: #04177F;
     color: #fff;
     font-size: 20px;
@@ -137,16 +186,21 @@
 
 .NotInterX {
     margin: 0 auto;
+    padding-top: 2%;
     width: 562px;
     height: 500px;
-    position: absolute;
-    top: 5%;
+    position: relative;
+    top: 3%;
+    display: flex;
+    flex-direction: column;
+    gap: 70px;
+    background-color: #fff;
+    border-radius: 12px;
 }
 .NotInterX .timeAble {
     text-align: center;
-    margin: 1% auto 0;
+    margin: 0 auto;
     position: relative;
-    right: 30px;
 }  
 .timeAbleX h2 {
     font-size: 16px;
@@ -154,7 +208,8 @@
     line-height: 24px;
     letter-spacing: 0em;
     color: #000000;
-    width: 170px;
+    width: 100%;
+    text-align: center;
     margin: 0 auto 10px;
 }
 .timeAbleX h3 {
@@ -163,14 +218,13 @@
     line-height: 24px;
     letter-spacing: 0em;
     color: #04177F;
-    width: 314px;
+    width: 100%;
+    text-align: center;
     margin: 0 auto;
 }
 .NotInterX .InterAirtimeX {
-    margin: 0 auto 160px;
+    margin: 0 auto;
     position: relative;
-    top: 80px;
-    right: 30px;
 }
 .InterAirtimeX img {
     width: 150px;
@@ -178,11 +232,9 @@
     margin: 0 auto;
 }
 .NotInterX .comingX {
-    width: fit-content;
     text-align: center;
     margin: 0 auto;
     position: relative;
-    right: 60px;
 }
 .comingX h2 {
     position: relative;
@@ -196,9 +248,8 @@
 }
 .comingX .btnOkX {
     border-radius: 5px;
-    width: 150%;
-    height: 40%;   
-    padding: 5px 25px;
+    width: 100%;  
+    padding: 5px 20px;
     background: #04177F;
     color: #fff;
     font-size: 20px;
@@ -219,7 +270,7 @@
 
 .airtimeCol {
     width: 100%;
-    height: 80px;
+    height: 120px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
@@ -230,12 +281,12 @@
 }
 .airtimeCol .airCol {
     position: relative;
-    top: 12px;
+    margin: auto 0;
+    top: 0;
     left: 15px;
     display: flex;
     gap: 10px;
     width: 75%;
-    height: 50px;
 }
 .airtimeCol .airImg {
     position: relative;
@@ -256,14 +307,14 @@
     gap: 1px;
 }
 .airText h2 {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 500;
     line-height: 24px;
     letter-spacing: 0em;
     color: #000000;
 }
 .airText p {
-    font-size: 14.05px;
+    font-size: 16px;
     font-weight: 500;
     line-height: 21.07px;
     letter-spacing: 0em;
@@ -273,7 +324,7 @@
 /* Contact aspect of the airtime page */
 
 .help {
-    margin: 200px auto 15px;
+    margin: 0 auto;
     width: 100%;
     justify-content: center;
     height: 20px;
@@ -301,12 +352,47 @@
 }
 
 @media (max-width: 768px) {
-    .airtimeTop .banner img {
+    .airtimeTop .banner {
         width: 100%;
         margin: 0 auto;
-        height: 115px;
+        background: linear-gradient(92.3deg, #6EDCFF 31.38%, rgba(65, 107, 255, 0.79) 98.66%);
+        height: 112.29px;
+        border-radius: 11.5px;
+        display: flex;
+        justify-content: space-between;
+        padding: 15px 20px;
+    }
+    .banner .bannerText {
+        width: 100%;
+        margin: auto 0;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+    .bannerText h2 {
+        width: 100%;
+        font-size: 13.75px;
+        font-weight: 600;
+        line-height: 21px;
+        letter-spacing: 0em;    
+        color: #000000;
+    }
+    .bannerText p {
+        width: 100%;
+        font-size: 11.46px;
+        font-weight: 400;
+        line-height: 12px;
+        letter-spacing: 0em;
+        color: #000000;
+    }
+    .banner .bannerImage {
+        margin: auto 0;
+    }
+    .banner .bannerImage img {
+        width: 80%;
         position: relative;
-        top: -40px;
+        bottom: 0;
+        left: 10px;
     }
     .airType {
         margin: 0 auto;
@@ -316,7 +402,7 @@
         display: flex;
         gap: 5.87px;
         position: relative;
-        top: -10px;
+        top: 0;
     }
     .airType h2 {
         font-size: 12px;
@@ -339,10 +425,10 @@
         display: flex;
         gap: 14.67px;   
         align-items: center;
-        margin-bottom: 60px;
+        margin-bottom: 0;
         border-bottom-width: 2px;
         position: relative;
-        top: 20px;
+        top: 0;
     }
     .localInter li {
         cursor: pointer;
@@ -371,10 +457,11 @@
         position: relative;
         top: 0;
         left: 0;
+        gap: 25px;
     }
     .NotInter .timeAble {
         text-align: center;
-        margin: 1% auto 15%;
+        margin: 0 auto;
         position: relative;
         left: 0;
     }  
@@ -384,7 +471,7 @@
         line-height: 14px;
         letter-spacing: 0em;
         color: #000000;
-        width: 100px;
+        width: 100%;
         margin: 0 auto 10px;
     }
     .timeAble h3 {
@@ -393,12 +480,11 @@
         line-height: 14px;
         letter-spacing: 0em;
         color: #04177F;
-        width: 184px;
+        width: 100%;
         margin: 0 auto;
     }
     .NotInter .InterAirtime {
         margin: 0 auto;
-        margin-bottom: 15%;
         position: relative;
         left: 0;
     }
@@ -408,7 +494,7 @@
         margin: 0 auto;
     }
     .NotInter .coming {
-        width: fit-content;
+        width: 100%;
         text-align: center;
         margin: 0 auto;
         position: relative;
@@ -416,19 +502,18 @@
     }
     .coming h2 {
         position: relative;
-        left: 100px;
+        left: -10px;
         top: 0;
         font-size: 6px;
         font-weight: 600;
         line-height: 9px;
         letter-spacing: 0em;
-        text-align: left;
+        text-align: right;
         color: #000000;
-        width: 45px;
     }
     .coming .btnOk {
         border-radius: 5.87px;
-        width: 100%;
+        width: 25%;
         height: 20px;   
         padding: 2.93px 14.67px;
         background: #04177F;
@@ -443,10 +528,11 @@
         position: relative;
         top: 0;
         left: 0;
+        gap: 20px;
     }
     .NotInterX .timeAbleX {
         text-align: center;
-        margin: 1% auto 10%;
+        margin: 0 auto;
         left: 0;
     }  
     .timeAbleX h2 {
@@ -455,7 +541,7 @@
         line-height: 14px;
         letter-spacing: 0em;
         color: #000000;
-        width: 100px;
+        width: 100%;
         margin: 0 auto 10px;
     }
     .timeAbleX h3 {
@@ -464,41 +550,40 @@
         line-height: 14px;
         letter-spacing: 0em;
         color: #04177F;
-        width: 184px;
+        width: 100%;
         margin: 0 auto;
     }
     .NotInterX .InterAirtimeX {
         margin: 0 auto;
-        margin-bottom: 10%;
         top: 0;
         left: 0;
     }
     .InterAirtimeX img {
-        width: 123px;
-        height: 123px;
+        width: 100px;
+        height: 100px;
         margin: 0 auto;
     }
     .NotInterX .comingX {
-        width: fit-content;
+        width: 100%;
         text-align: center;
         margin: 0 auto;
         left: 0;
     }
     .comingX h2 {
         position: relative;
-        left: 100px;
+        left: -10px;
         top: 0;
         font-size: 6px;
         font-weight: 600;
         line-height: 9px;
         letter-spacing: 0em;
-        text-align: left;
+        text-align: right;
         color: #000000;
-        width: 45px;
+        width: 100%;
     }
     .comingX .btnOkX {
         border-radius: 5.87px;
-        width: 100%;
+        width: 25%;
         height: 20px;   
         padding: 2.93px 14.67px;
         background: #04177F;
@@ -526,7 +611,7 @@
     }
     .airtimeCol .airCol {
         position: relative;
-        top: 8.8px;
+        top: 0;
         left: 8.8px;
         display: flex;
         gap: 5.87px;
@@ -569,8 +654,9 @@
         color: #7C7C7C;
     }
     .help {
-        margin: 100px auto 15px;
+        margin: 0 auto;
         width: 100%;
+        padding-bottom: 10%;
         justify-content: center;
         height: 20px;
         display: flex;
@@ -598,22 +684,60 @@
 }
 
 @media (max-width: 425px) {
-    .airtimeTop .banner img {
-        width: 95%;
-        height: 85px;
+    .airtimeTop .banner {
+        width: 100%;
         margin: 0 auto;
+        background: linear-gradient(92.3deg, #6EDCFF 31.38%, rgba(65, 107, 255, 0.79) 98.66%);
+        height: 90px;
+        padding: 0;
+        border-radius: 7px;
+        display: flex;
+        justify-content: space-between;
+    }
+    .banner .bannerText {
+        width: 80%;
         position: relative;
-        top: -6px;
+        top: 0;
+        margin: auto 0;
+        left: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+    }
+    .bannerText h2 {
+        width: 100%;
+        font-size: 10px;
+        font-weight: 600;
+        line-height: 12px;
+        letter-spacing: 0em;    
+        color: #000000;
+    }
+    .bannerText p {
+        width: 91%;
+        font-size: 7px;
+        font-weight: 400;
+        line-height: 12px;
+        letter-spacing: 0em;
+        color: #000000;
+    }
+    .banner .bannerImage {
+        margin: auto 0;
+    }
+    .banner .bannerImage img {
+        position: relative;
+        top: 0;
+        right: 10px;
+        height: 50px;
     }
     .airType {
-        width: 95%;
+        width: 100%;
         height: 12px;
         display: flex;
-        gap: 3.33px;
+        gap: 8px;
         margin: 20px auto 0;
     }
     .airType h2 {
-        font-size: 7px;
+        font-size: 10px;
         font-weight: 500;
         line-height: 9px;
         letter-spacing: 0em;
@@ -626,11 +750,11 @@
         top: -1px;
     }
     .localInter {
-        width: 95%;
+        width: 100%;
         height: 16px;
         display: flex;
         gap: 8.09px;
-        margin-bottom: 30px;
+        margin-bottom: 25px;
         border-bottom-width: 2px;
         position: relative;
         top: 3px;
@@ -654,13 +778,13 @@
         position: relative;  
     }
     .containAir {
-        width: 95%;
+        width: 100%;
         height: 280px;
         gap: 20px;
     }
     .airtimeCol {
         width: 100%;
-        height: 40px;
+        height: 80px;
         margin: 0 auto;
         display: flex;
         justify-content: space-between;
@@ -671,7 +795,8 @@
     }
     .airtimeCol .airCol {
         position: relative;
-        top: 3px;
+        top: 0;
+        margin: auto 0;
         left: 5px;
         display: flex;
         gap: 3.33px;
@@ -699,14 +824,15 @@
         height: 33px;
     }
     .airText h2 {
-        font-size: 8px;
+        font-size: 9px;
         font-weight: 600;
         line-height: 12px;
         letter-spacing: 0em;
         text-align: left;
+        color: #000000;
     }
     .airText p {
-        font-size: 7px;
+        font-size: 8px;
         font-weight: 500;
         line-height: 11px;
         letter-spacing: 0em;
@@ -716,30 +842,29 @@
         height: 7px;
     }
     .help {
-        margin: 50px auto 20px;
-        width: 95%;
+        margin: 0 auto;
+        width: 100%;
         height: 14.73px;
         display: flex;
         justify-content: center;
         gap: 14.9px;
         position: relative;
         top: 0;
+        padding-bottom: 20%;
     }
     .help h2 {
-        font-size: 8px;
+        font-size: 10px;
         font-weight: 500;
         line-height: 10px;
         letter-spacing: 0em;       
-        width: 59px;
     }
     .help .btnContact {
         background: #04177F;
-        width: 55.19px;
-        padding: 2.86px 8.59px;
+        padding: 2.865px 8.594px;
         height: 14.73px;
-        border-radius: 9px;
+        border-radius: 5.156px;
         color: #fff;
-        font-size: 7px;
+        font-size: 8px;
         font-weight: 500;
         line-height: 9px;
         letter-spacing: 0em;
@@ -747,16 +872,27 @@
         position: relative;
         bottom: 1px;
     }
+    .airtimeTop {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    .AirtimeTops {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+    }
     .NotInter {
         margin: 0 auto;
         width: 90%;
-        height: 250px;
-        border-radius: 5px;
+        height: 269px;
+        border-radius: 8px;
+        gap: 40px;
     }
     .NotInter .timeAble {
         text-align: center;
-        margin-top: 1%; 
-        margin-bottom: 10%;
+        margin: 0 auto; 
         width: 100%;
         position: relative;
         left: 0;
@@ -767,7 +903,7 @@
         line-height: 12px;
         letter-spacing: 0em;
         color: #000000;
-        margin: 0 auto 18px;
+        margin: 0 auto 10px;
     }
     .timeAble h3 {
         font-size: 10px;
@@ -779,7 +915,6 @@
     }
     .NotInter .InterAirtime {
         margin: 0 auto;
-        margin-bottom: 15%;
         position: relative;
         left: 0;
     }
@@ -798,7 +933,7 @@
     .coming h2 {
         position: relative;
         text-align: right;
-        left: 5px;
+        left: -10px;
         top: -12px;
         width: 100%;
         font-size: 8px;
@@ -809,9 +944,9 @@
     }
     .coming .btnOk {
         position: relative;
-        left: -13px;
+        left: 0;
         border-radius: 5px;
-        width: 110%;
+        width: 90%;
         height: 40px;   
         padding: 2.93px 14.67px;
         background: #04177F;
@@ -822,13 +957,13 @@
     .NotInterX {
         margin: 0 auto;
         width: 90%;
-        height: 250px;
-        border-radius: 5px;
+        height: 269px;
+        border-radius: 8px;
+        gap: 10px;
     }
     .NotInterX .timeAbleX {
         text-align: center;
-        margin-top: 1%; 
-        margin-bottom: 10%;
+        margin-top: 0 auto; 
         width: 100%;
         position: relative;
         left: 0;
@@ -839,7 +974,7 @@
         line-height: 12px;
         letter-spacing: 0em;
         color: #000000;
-        margin: 0 auto 18px;
+        margin: 0 auto 10px;
     }
     .timeAbleX h3 {
         font-size: 10px;
@@ -851,7 +986,6 @@
     }
     .NotInterX .InterAirtimeX {
         margin: 0 auto;
-        margin-bottom: 13%;
         position: relative;
         left: 0;
         top: 0;
@@ -871,7 +1005,7 @@
     .comingX h2 {
         position: relative;
         text-align: right;
-        left: 5px;
+        left: -10px;
         top: -12px;
         width: 100%;
         font-size: 8px;
@@ -882,9 +1016,9 @@
     }
     .comingX .btnOkX {
         position: relative;
-        left: -13px;
+        left: 0;
         border-radius: 5px;
-        width: 110%;
+        width: 90%;
         height: 40px;   
         padding: 2.93px 14.67px;
         background: #04177F;
