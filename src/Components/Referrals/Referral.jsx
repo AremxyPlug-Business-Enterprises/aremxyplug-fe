@@ -14,7 +14,7 @@ import { Link } from "react-router-dom/dist/react-router-dom.development";
 export default function Referral() {
   return (
     <DashBoardLayout>
-      <div className="h-[100%] px-[19px] ">
+      <div className="h-[100%]">
         {/* RECTANGLE1 // CONTENT ONE CONTAINER */}
 
         <div
@@ -101,7 +101,7 @@ export default function Referral() {
                   className="  font-[500] text-[7px] leading-[11px] text-white 
        lg:text-[16px] lg:leading-[24px] md:text-[9.147px] md:leading-[14px] cursor-pointer"
                 >
-                  Copy link
+                  Copy code
                 </p>
               </div>
             </div>
@@ -127,7 +127,7 @@ lg:text-[16px] lg:leading-[24px]"
                 className="w-[75%] font-[600]  text-[#7C7C7C] text-[7px] leading-[11px]
        lg:text-[16px]   md:text-[9.167px] md:leading-[14px] lg:leading-[24px] md:pl-[10px]"
               >
-                aremxyplug.com
+                aremxyplug
               </p>
               {/* COPY LINK */}
               <div
