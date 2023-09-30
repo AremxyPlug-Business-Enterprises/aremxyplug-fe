@@ -21,7 +21,7 @@ import Glo1 from "../DataBundles/DataBundles-Images/Glo1.svg";
 import Mobile1 from "../DataBundles/DataBundles-Images/9Mobile1.svg";
 import Smile1 from "../DataBundles/DataBundles-Images/Smile1.svg";
 import Spectranet1 from "../DataBundles/DataBundles-Images/Spectranet1.svg";
-import DataBalance2 from "../DataBundles/DataBundles-Images/DataBalance2.svg"
+import DataBalance2 from "../DataBundles/DataBundles-Images/DataBalance2.svg";
 
 const DataBundlesPage = () => {
   const { isDarkMode } = useContext(ContextProvider);
@@ -85,16 +85,23 @@ const DataBundlesPage = () => {
               />
             </div>
           </div>
-       
 
           <div className="flex mt-[35px] md:gap-[58.68px] lg:gap-[100px] lg:mt-[60px] my-[30px]">
             <div className="rounded-[4px] w-full bg-primary text-white md:w-[50%] h-[30px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-center md:justify-between gap-[10px] px-[5px]">
               <h2 className="lg:text-[16px] lg:leading-[24px] text-[10px] md:text-[12px] leading-[12px]">
-              Data Balance USSD Codes
+                Data Balance USSD Codes
               </h2>
               <div className="lg:w-6 lg:h-6 w-[11px] h-[11px]">
-                <img src={DataBalance} alt="" className="w-full h-full md:hidden" />
-                <img src={DataBalance2} alt="" className="w-full h-full hidden md:block"/>
+                <img
+                  src={DataBalance}
+                  alt=""
+                  className="w-full h-full md:hidden"
+                />
+                <img
+                  src={DataBalance2}
+                  alt=""
+                  className="w-full h-full hidden md:block"
+                />
               </div>
             </div>
             <div className="hidden md:w-1/2 md:block"></div>
@@ -119,7 +126,11 @@ const DataBundlesPage = () => {
               className="rounded-[4px] relative flex flex-col justify-center items-center"
             >
               <img src={MTN} alt="" className="w-full" />
-              <img src={Mtn1} alt="" className="absolute self-center md:w-[20%] lg:w-[25%]" />
+              <img
+                src={Mtn1}
+                alt=""
+                className="absolute self-center md:w-[20%] lg:w-[25%]"
+              />
             </div>
 
             <div
@@ -127,7 +138,11 @@ const DataBundlesPage = () => {
               className="rounded-[4px] relative flex flex-col justify-center items-center"
             >
               <img src={Airtel} alt="" className="w-full" />
-              <img src={Airtel1} alt="" className="absolute self-center md:w-[20%] lg:w-[25%]" />
+              <img
+                src={Airtel1}
+                alt=""
+                className="absolute self-center md:w-[20%] lg:w-[25%]"
+              />
             </div>
 
             <div
@@ -135,7 +150,11 @@ const DataBundlesPage = () => {
               className="rounded-[4px] relative flex flex-col justify-center items-center"
             >
               <img src={Glo} alt="" className="w-full" />
-              <img src={Glo1} alt="" className="absolute self-center md:w-[20%] lg:w-[25%]" />
+              <img
+                src={Glo1}
+                alt=""
+                className="absolute self-center md:w-[20%] lg:w-[25%]"
+              />
             </div>
 
             <div
@@ -143,7 +162,11 @@ const DataBundlesPage = () => {
               className="rounded-[4px] relative flex flex-col justify-center items-center"
             >
               <img src={Mobile} alt="" className="w-full" />
-              <img src={Mobile1} alt="" className="absolute self-center md:w-[20%] lg:w-[25%]" />
+              <img
+                src={Mobile1}
+                alt=""
+                className="absolute self-center md:w-[20%] lg:w-[25%]"
+              />
             </div>
 
             <div
@@ -151,7 +174,11 @@ const DataBundlesPage = () => {
               className="rounded-[4px] relative flex flex-col justify-center items-center"
             >
               <img src={Smile} alt="" className="w-full" />
-              <img src={Smile1} alt="" className="absolute self-center md:w-[20%] lg:w-[25%]" />
+              <img
+                src={Smile1}
+                alt=""
+                className="absolute self-center md:w-[20%] lg:w-[25%]"
+              />
             </div>
 
             <div
@@ -159,7 +186,11 @@ const DataBundlesPage = () => {
               className="rounded-[4px] relative flex flex-col justify-center items-center"
             >
               <img src={Spectranet} alt="" className="w-full" />
-              <img src={Spectranet1} alt="" className="absolute self-center md:w-[20%] lg:w-[25%]" />
+              <img
+                src={Spectranet1}
+                alt=""
+                className="absolute self-center md:w-[20%] lg:w-[25%]"
+              />
             </div>
           </div>
 
