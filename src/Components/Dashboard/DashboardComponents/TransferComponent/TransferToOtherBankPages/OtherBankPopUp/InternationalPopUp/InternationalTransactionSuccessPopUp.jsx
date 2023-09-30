@@ -1,5 +1,5 @@
 import React from "react";
-import { useContext } from "react";
+import { useContext,} from "react";
 import { ContextProvider } from "../../../../../../Context";
 import { RiFileCopyFill } from "react-icons/ri";
 import { Modal } from "../../../../../../Screens/Modal/Modal";
@@ -22,6 +22,8 @@ export const InternationalTransactionSuccessPopUp = ({
     accountNumber,
     accountName,
     transfer,
+    receive,
+    exchangeRate
   } = useContext(ContextProvider);
 
   const handleTransactionSuccessClose = () => {
@@ -85,15 +87,22 @@ export const InternationalTransactionSuccessPopUp = ({
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                 <p className="text-[#0008]">Amount Transferred</p>
-                <span>{accountNumber}</span>
+                <span>&#8358;{transfer}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                 <p className="text-[#0008]">Recipient Received</p>
-                <span>{accountNumber}</span>
+                <span>&#36;{receive}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                 <p className="text-[#0008]">Conversion Rate</p>
-                <span>{accountNumber}</span>
+                <span>
+                  {" "}
+                  {exchangeRate !== null ? (
+                    <p>{exchangeRate} NGN ~ 1 USD</p>
+                  ) : (
+                    <p>Loading exchange rate...</p>
+                  )}
+                </span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#0008]">Transfaction fee</p>
