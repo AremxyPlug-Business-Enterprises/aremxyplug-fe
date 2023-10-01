@@ -561,7 +561,7 @@ export const PersonalAccountForm = () => {
               Add Account
             </button>
             <Link
-              to="/money-transfer"
+              to="/dashboard"
               type="submit"
               className="hover:cursor-pointer font-extrabold px-[35px] flex justify-center item-center mb-[5%] lg:mb-[2%]  text-[#F95252] mx-auto text-center mt-[7%] text-[12px] lg:mt-[3%] lg:w-[140px] lg:h-[42px] lg:text-[16px] lg:rounded-lg"
             >

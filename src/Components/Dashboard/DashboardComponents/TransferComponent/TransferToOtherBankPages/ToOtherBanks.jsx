@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { useState } from "react";
 import { ContextProvider } from "../../../../Context";
 import { DashBoardLayout } from "../../../Layout/DashBoardLayout";
+import styles from "../../../DashboardComponents/component.module.css";
 import GlobalTransfer from "./GlobalTransfer";
 import { InternationalTransfer } from "./InternationalTransfer";
 import { Link } from "react-router-dom";
@@ -15,8 +16,8 @@ export const ToOtherBanks = () => {
 
   return (
     <DashBoardLayout>
-      <div className="flex flex-col h-full justify-between md:h-full lg:gap-[200px] lg:h-full ">
-        <div className="lg:h-[100%]">
+      <div className="flex flex-col justify-between md:h-full lg:gap-[200px] lg:h-full ">
+        <div className="">
           <div
             style={{
               background:
@@ -84,15 +85,19 @@ export const ToOtherBanks = () => {
           {globalTransfer && <GlobalTransfer />}
           {internationalTransfer && <InternationalTransfer />}
         </div>
-        <div className=" flex gap-[15px] justify-center items-center mt-[5%] pb-[5%] ">
-          <div className="text-[8px] md:text-[12px] lg:text-[16px]">
+        <div
+          className={`${
+            isDarkMode ? "" : ""
+          } flex gap-[15px] justify-center items-center my-[15%] md:mt-[38%] lg:mt-[26%] lg:mb-[%]`}
+        >
+          <div className="text-[10px] md:text-[12px] lg:text-[14px]">
             You need help ?
           </div>
           <Link to="/ContactUs">
             <div
-              className={`${
-                isDarkMode ? "border " : "bg-[#04177f]"
-              } text-[8px] p-1 text-white rounded-[8px] lg:text-[14px]`}
+              className={`${isDarkMode ? "border" : "bg-[#04177f]"} ${
+                styles.contactus
+              }`}
             >
               Contact Us
             </div>
