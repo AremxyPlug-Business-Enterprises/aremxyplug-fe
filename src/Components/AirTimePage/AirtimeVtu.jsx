@@ -3,6 +3,7 @@ import { useState } from 'react';
 import styles from './AirtimeVtu.module.css'
 import { DashBoardLayout } from '../Dashboard/Layout/DashBoardLayout';
 import { Modal } from "../Screens/Modal/Modal";
+import Joi from "joi";
 import OtpInput from "react-otp-input";
 import weight from './Images/weight.svg';
 import add from './Images/add-square.svg';
@@ -17,6 +18,7 @@ import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 const AirtimeVtu = () => {
+    // const {  isDarkMode } = useContext(ContextProvider);
     const tFee = 0;
     const points = '+2.00';
 
@@ -38,6 +40,7 @@ const AirtimeVtu = () => {
     const [recipientNumber, setRecipientNumber] = useState('');
     const [selectedProduct, setSelectedProduct] = useState('');
     const [confirm, setConfirm] = useState(false);
+    const [errors, setErrors] = useState({});
 
 
 
@@ -205,9 +208,43 @@ const AirtimeVtu = () => {
         setPaymentSelected(false);
       }
 
-      const handleProceed =()=> {
-        setProceed(true)
-      }
+      const schema = Joi.object({
+        recipientNumber: Joi.string()
+          .pattern(new RegExp(/^\d{11,}/))
+          .required()
+          .messages({
+            "string.pattern.base": "Phone number should be 11 digits ",
+          }),
+        amount: Joi.string()
+          .pattern(new RegExp(/\d{4,}/))
+          .required()
+          .messages({
+            "string.pattern.base": "Amount can not be less than 1000",
+          }),
+      });
+
+      const handleProceed = (e) => {
+        e.preventDefault();
+
+        const { error } = schema.validate({
+        recipientNumber,
+        amount,
+        });
+
+        if (error) {
+        setErrors(
+            error.details.reduce((acc, curr) => {
+            acc[curr.path[0]] = curr.message;
+            return acc;
+            }, {})
+        );
+        } else {
+        setProceed(true);
+        setErrors({});
+        }
+
+    // console.log(successful);
+  };
 
       const factorWalletName = (value)=> {
 
@@ -261,15 +298,17 @@ const AirtimeVtu = () => {
     <DashBoardLayout>
       <div className={styles.AirtimeTops}>
         <div className={styles.airtimeTop}>
-            <div className={styles.banner}>
-                <div className={styles.bannerText}>
-                    <h2>AIRTIME VTU, FAST AND AUTOMATED.</h2>
-                    <p>Top up your mobile sim using our automated airtime vending directly from network providers, enjoy discounts without any hassle or hidden fee.
-                    </p>
-                </div>
-                <div className={styles.bannerImage}>
-                    <img src="./Images/airtimeTopUp/young.png" alt="" />
-                </div>
+                <div className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] bg-gradient-to-r from-[#73FF9A] to-[#6EDCFF] flex px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px]">
+                    <div className="w-[80%] pt-[19px] lg:pt-[20px]">
+                        <h2 className="text-[10px] md:text-[13.75px] font-bold mb-2 lg:text-[24px] lg:mb-4">
+                        AIRTIME VTU, FAST AND AUTOMATED.</h2>
+                        <h2 className="text-[7px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3">
+                        Top up your mobile sim using our automated airtime vending directly from network providers, enjoy discounts without any hassle or hidden fee.
+                    </h2>
+                    </div>
+                    <div className="w-[91px] h-[66px] lg:w-[170px] lg:h-[150px]">
+                        <img src="./Images/airtimeTopUp/young.png" className="h-full" alt="" />
+                    </div>
                 </div>
             <div className={styles.containFlex}>
                 <div className={styles.FlexPut}>
@@ -302,34 +341,56 @@ const AirtimeVtu = () => {
             <div className={styles.mainGrid}>
                 <div className={styles.mainGridCol}>
                     <div>
-                    <div className={styles.NetworkFlex}>
-                        <h2 className={styles.head3}>Select Network</h2>
-                        <div className={styles.input}>
-                            <div className={styles.output2}>
-                                { selected ? 
-                                    <li onClick={handleShowList} className={styles.labelInput}>
-                                        <div className={styles.network}>
-                                            { networkImage && <img src={networkImage} alt=""/>}
-                                        </div> 
-                                        <h2 className={styles.head2}>{networkName}</h2>
-                                    </li>
-                                : 
-                                    <h2 onClick={handleShowList} className={styles.head6}>Select Network</h2>
-                                }
-                                <button className={styles.btnDrop} onClick={handleShowList}>
-                                    <img src={arrowDown} alt=""/>
-                                </button>
+                        <div className={styles.NetworkFlex}>
+                            <h2 className={styles.head3}>Select Network</h2>
+                            <div className={styles.input}>
+                                <div className={styles.output2}>
+                                    { selected ? 
+                                        <li onClick={handleShowList} className={styles.labelInput}>
+                                            <div className={styles.network}>
+                                                { networkImage && <img src={networkImage} alt=""/>}
+                                            </div> 
+                                            <h2 className={styles.head2}>{networkName}</h2>
+                                        </li>
+                                    : 
+                                        <h2 onClick={handleShowList} className={styles.head6}>Select Network</h2>
+                                    }
+                                    <button className={styles.btnDrop} onClick={handleShowList}>
+                                        <img src={arrowDown} alt=""/>
+                                    </button>
+                                </div>
                             </div>
                         </div>
+                        { showList && 
+                            <div className={styles.colDown}>
+                                {networkList.map((item) => (
+                                    <Network key={item.id} image={item.image} name={item.name} onClick={()=>handleSelectNetwork(item.name, item.image, item.discount)}/>
+                                ))}
+                            </div> 
+                        }
                     </div>
-                    { showList && 
-                        <div className={styles.colDown}>
-                            {networkList.map((item) => (
-                                <Network key={item.id} image={item.image} name={item.name} onClick={()=>handleSelectNetwork(item.name, item.image, item.discount)}/>
-                            ))}
-                        </div> 
-                    }
+                    <div>
+                        <h2 className={styles.head3}>Select Product</h2>
+                        <div className={styles.input1}>
+                            {selectedProduct ?
+                                <h2 onClick={handleShowProduct} className={styles.span2} required>{selectedProduct}</h2>
+                            :
+                                <span onClick={handleShowProduct}>Select Product</span>
+                            }
+                            <button className={styles.btnDrop} onClick={handleShowProduct}>
+                                <img src={arrowDown} alt="" />
+                            </button>
+                        </div>
+                        { showProduct && 
+                            <div className={styles.colDown}>
+                                { productList.map((item, index) => (
+                                    <Product key={index} product={item} onClick={() => handleSelectProduct(item)}/>
+                                ))}
+                            </div>
+                        }
                     </div>
+                </div>
+                <div className={styles.mainGridCol}>
                     <div>
                         <h2 className={styles.head3}>Discount</h2>
                         <div className={styles.input2}>
@@ -339,6 +400,24 @@ const AirtimeVtu = () => {
                             </div>
                         </div>
                     </div>
+                    <div>
+                        <h2 className={styles.head3}>Phone Number <span className={styles.span3}>(Select Recipient)</span></h2>
+                        <div className={styles.input}>
+                            <div className={styles.output}>
+                                <input type='number' className={styles.phone} required placeholder='Add recipient phone number' onChange={(event)=>setRecipientNumber(event.target.value)} value={recipientNumber}/>
+                                <div className={styles.call}>
+                                    <img src={call} alt=""/>
+                                </div>
+                            </div>
+                        </div>
+                        {errors.recipientNumber && (
+                            <div className="text-[12px] text-red-500 italic lg:text-[14px]">
+                            {errors.recipientNumber}
+                            </div>
+                        )}
+                    </div>
+                </div>
+                <div className={styles.mainGridCol}>
                     <div>
                         <h2 className={styles.head3}>Recipient Name <span className={styles.span4}>(optional)</span></h2>
                         <div className={styles.input}>
@@ -351,56 +430,30 @@ const AirtimeVtu = () => {
                         </div>
                     </div>
                     <div>
+                        <h2 className={styles.head3}>Type Amount</h2>
+                        <div className={styles.input}>
+                            <div className={styles.output}>
+                                <input type='number' placeholder='Type amount' required className={styles.phone} onChange={(event)=>setAmount(event.target.value)} value={amount.toLocaleString()}/>
+                                <div className={styles.call}>
+                                    <img src={money} alt=""/>                            
+                                </div>
+                            </div>
+                        </div>
+                        {errors.amount && (
+                            <div className="text-[12px] text-red-500 italic lg:text-[14px]">
+                            {errors.amount}
+                            </div>
+                        )}
+                    </div>
+                </div>
+                <div className={styles.mainGridCol}>
+                    <div>
                         <h2 className={styles.head3}>Total Amount</h2>
                         <div className={styles.input}>
                             <div className={styles.output1}>
                                 <h2>{newAmount ? `NGN${newAmount}` : `Total Amount`}</h2>
                                 <div className={styles.disc}>
                                     <img src={money} alt="" className='w-full h-full'/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className={styles.mainGridCol}>
-                    <div>
-                    <h2 className={styles.head3}>Select Product</h2>
-                    <div className={styles.input1}>
-                        {selectedProduct ?
-                            <h2 onClick={handleShowProduct} className={styles.span2} required>{selectedProduct}</h2>
-                        :
-                            <span onClick={handleShowProduct}>Select Product</span>
-                        }
-                        <button className={styles.btnDrop} onClick={handleShowProduct}>
-                            <img src={arrowDown} alt="" />
-                        </button>
-                    </div>
-                    { showProduct && 
-                        <div className={styles.colDown}>
-                            { productList.map((item, index) => (
-                                <Product key={index} product={item} onClick={() => handleSelectProduct(item)}/>
-                            ))}
-                        </div>
-                    }
-                    </div>
-                    <div>
-                        <h2 className={styles.head3}>Phone Number <span className={styles.span3}>(Select Recipient)</span></h2>
-                        <div className={styles.input}>
-                            <div className={styles.output}>
-                                <input type='text' className={styles.phone} required placeholder='Add recipient phone number' onChange={(event)=>setRecipientNumber(event.target.value)} value={recipientNumber}/>
-                                <div className={styles.call}>
-                                    <img src={call} alt=""/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <h2 className={styles.head3}>Type Amount</h2>
-                        <div className={styles.input}>
-                            <div className={styles.output}>
-                                <input type='text' placeholder='Type amount' required className={styles.phone} onChange={(event)=>setAmount(event.target.value)} value={amount.toLocaleString()}/>
-                                <div className={styles.call}>
-                                    <img src={money} alt=""/>                            
                                 </div>
                             </div>
                         </div>
@@ -447,107 +500,118 @@ const AirtimeVtu = () => {
                     </div>
                 </div>
             </div>
-            { proceed && 
-                <div className={styles.confirmPro}>  
-                    <div className={styles.processFirm}>
-                        <div className={styles.modalHeader}>
-                            <button onClick={()=> setProceed(false)} className={styles.closeBtn}>
-                                x
-                            </button>
-                        </div>
-                        <div className={styles.modalContent}>
-                            <div className={styles.Tran}>
-                                <h2>Confirm Transaction</h2>
-                                <h2>You are about to purchase {networkName + ' ' + selectedProduct} Airtime {name+amount.toLocaleString()} from your {name} Wallet to</h2>
-                            </div>
-                            <div className={styles.flexWide}>
-                                <div className={styles.section}>
-                                    <h2 className={styles.head2}>Network</h2>
-                                    <div className={styles.flexGap}>
-                                        <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
-                                            <img src={networkImage} alt="" className='w-full h-full object-cover'/>
-                                        </div> 
-                                        <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">{networkName}</h2>
-                                    </div>
-                                </div>
-                                <div className={styles.section}>
-                                    <h2 className={styles.head2}>Product</h2>
-                                    <div className={styles.flexGap}> 
-                                        <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">{networkName + ' ' + selectedProduct}</h2>
-                                    </div>
-                                </div>
-                                <div className={styles.section}>
-                                    <h2 className={styles.head2}>Discount</h2>
-                                    <div className={styles.flexGap}> 
-                                        <h2>{discount}%</h2>
-                                    </div>
-                                </div>
-                                <div className={styles.section}>
-                                    <h2 className={styles.head2}>Phone Number</h2>
-                                    <div className={styles.flexGap}> 
-                                        <h2>{recipientNumber}</h2>
-                                    </div>
-                                </div>
-                                <div className={styles.section}>
-                                    <h2 className={styles.head2}>Recipient Name</h2>
-                                    <div className={styles.flexGap}> 
-                                        <h2>{recipientName}</h2>
-                                    </div>
-                                </div>
-                                <div className={styles.section}>
-                                    <h2 className={styles.head2}>Payment Method</h2>
-                                    <div className={styles.flexGap}> 
-                                        <h2>{factorWalletName(name)}</h2>
-                                    </div>
-                                </div>
-                                <div className={styles.section}>
-                                    <h2 className={styles.head2}>Total Amount</h2>
-                                    <div className={styles.flexGap}> 
-                                        <h2>{name + ' ' + newAmount}</h2>
-                                    </div>
-                                </div>
-                                <div className={styles.section}>
-                                    <h2 className={styles.head2}>Transaction Fee</h2>
-                                    <div className={styles.flexGap}> 
-                                        <h2>{name + ' ' + tFee}.00</h2>
-                                    </div>
-                                </div>
-                                <div className={styles.section}>
-                                    <h2 className={styles.head2}>Points Earned</h2>
-                                    <div className={styles.flexGap}> 
-                                        <h2 className="text-[#2ED173] text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">{points}</h2>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className={styles.nairaFlex}>
-                                <div className='w-[41px] h-[41px] rounded-full overflow-hidden p-2 bg-white'>
-                                    <img src={image} alt="" className='w-full h-full object-cover rounded-full'/>
-                                </div>
-                                <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">Available Balance ( {name+paymentAmount}.00 )</h2>
-                            </div>
-                            <div className={styles.flexBtn}>
-                                <button onClick={handleConfirm}>Confirmed</button> 
-                            </div>
-                        </div>
+            {proceed && (
+                <Modal>
+                (
+                <div
+                    className={`${styles.transferMoneyPop} ${
+                    toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+                    } w-[90%] overflow-auto`}
+                >
+                    <img
+                    onClick={()=> setProceed(false)}
+                    className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px]"
+                    src="/Images/transferImages/close-circle.png"
+                    alt=""
+                    />
+                    <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
+                    <h2 className="text-[12px] my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
+                    Confirm Transaction
+                    </h2>
+                    <p className="text-[8px] text-[#0008] text-center mb-2 md:text-[12px] lg:text-[14px]">
+                    You are about to purchase{" "}
+                    <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">
+                        &#8358;{amount}.00{" "}
+                    </span>
+                    from your NGN wallet to{" "}
+                    </p>
+
+                    <div className="flex flex-col gap-3">
+                    <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                        <p className="text-[#0008]">Network</p>
+                        <span className='flex gap-1'>
+                            <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
+                            <img src={networkImage} alt="" className='w-full h-full object-cover'/>
+                            </div> 
+                            <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">{networkName}</h2>
+                        </span>
                     </div>
+                    <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                        <p className="text-[#0008]">Product</p>
+                        <span>{networkName + ' ' + selectedProduct}</span>
+                    </div>
+                    <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                        <p className="text-[#0008]">Discount</p>
+                        <span>{discount}%</span>
+                    </div>
+                    <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                        <p className="text-[#0008]">Phone Number</p>
+                        <span>{recipientNumber}</span>
+                    </div>
+                    <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                        <p className="text-[#0008]">Recipient Name</p>
+                        <span>{recipientName}</span>
+                    </div>
+                    <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                        <p className="text-[#0008]">Payment Method</p>
+                        <span>{factorWalletName(name)}</span>
+                    </div>
+                    <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                        <p className="text-[#0008]">Total Amount</p>
+                        <span>&#8358;{newAmount}</span>
+                    </div>
+                    <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                        <p className="text-[#0008]">Transaction Fee</p>
+                        <span>&#8358;{tFee}.00</span>
+                    </div>
+                    <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                        <p className="text-[#0008]">Points Earned</p>
+                        <span className="text-[#00AA48]">{points}</span>
+                    </div>
+                    </div>
+
+                    <div className="bg-[#0001] h-[45px] my-5 flex justify-between items-center px-[4%]">
+                    <div className="flex gap-2 items-center">
+                        <div className="bg-white rounded-full h-[27px] w-[27px] flex justify-center items-center">
+                        <img className="w-[16px] h-[16px]" src={image} alt="/" />
+                        </div>
+                        <p className="text-[10px] md:text-[14px]  lg:text-[16px]">
+                        Available Balance{" "}
+                        <span className="text-[#0003]">( {name+paymentAmount}.00 )</span>
+                        </p>
+                    </div>
+                    <img
+                        className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
+                        src="./Images/Dashboardimages/arrowright.png"
+                        alt="/"
+                    />
+                    </div>
+                    <button
+                    onClick={handleConfirm}
+                    className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                    >
+                    Confirmed
+                    </button>
                 </div>
-            }
+                )
+                </Modal>
+            )}
             {
                 confirm && 
                     <Modal>
                         <div
                             className={`${styles.inputPin} ${
                             toggleSideBar ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
-                            } md:w-[55%] w-[90%] h-[60%] bg-white z-50 rounded-xl`}
+                            } md:w-[55%] w-[90%]`}
                         >
                             <img
-                            onClick={()=> setProceed(false)}
-                            className="left-80 ml-44 relative w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px]"
+                            onClick={() => setConfirm(false)}
+                            className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px]"
                             src="/Images/transferImages/close-circle.png"
                             alt=""
                             />
-                            <hr className="h-[6px] bg-[#04177f] border-none mt-[1%] md:mt-[1%] md:h-[10px]" />
-                            <p className="text-[9px] md:text-[16px] font-extrabold text-center mt-4 mb-20 lg:my-[%]">
+                            <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
+                            <p className="text-[9px] md:text-[16px] font-extrabold text-center my-[10%] lg:my-[%]">
                             Input PIN to complete transaction
                             </p>
                             <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[8%]">
@@ -578,13 +642,16 @@ const AirtimeVtu = () => {
                                 inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
                             } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
                             >
-                            Purchase
+                            Send
                             </button>
                         </div>
                     </Modal>
             }
             <div className={styles.containFlex2}>
-                <button className={styles.FlexPut2} onClick={handleProceed}>Proceed</button>
+                <button className={`${
+                amount.length < 4 ? "bg-[#0008]" : "bg-[#04177f]"
+                } w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`} onClick={handleProceed}>Proceed
+                </button>
             </div>
         </div>
         <div className={styles.help}>
