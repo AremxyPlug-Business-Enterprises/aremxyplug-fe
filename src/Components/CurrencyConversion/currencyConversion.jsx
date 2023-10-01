@@ -41,38 +41,34 @@ const CurrencyConversion = () =>{
         {/* <Nav/> */}
         <div className="">
         
-          <div id='background' className="h-[64.71px] justify-between lg:h-[196px] md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] lg:rounded-[20px] mx-auto  flex gap-5 px-[16.51px] md:px-[28.65px] lg:px-[50px]">
+          <div id='background' className="h-[90px] justify-between lg:h-[196px] md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] lg:rounded-[20px] mx-auto  flex gap-5 px-[14px] md:px-[28.65px] lg:px-[50px]">
             <div className="py-[9.57px] md:py-[16.61px] lg:py-[29px] align-middle flex flex-col gap-1.5">
-                <p className="text-[8px] lg:text-[24px] md:text-[13.75px] font-semibold w-[194.12px] lg:w-[588px] md:w-[336.86px]">CONVERT CURRENCY, AIRTIME, AND POINTS WITH AREMXYPLUG!</p>
-                <p className="text-[5px] lg:text-[20px] md:text-[11.46px] w-[177.94px] lg:w-[539px] md:w-[308.8px]">Accept payments in any currency, convert and transfer money internationally without any hassle.</p>
+                <p className="text-[9px] lg:text-[24px] md:text-[13.75px] font-semibold w-[230px] lg:w-[750px] md:w-[430px]">CONVERT CURRENCY, AIRTIME, AND POINTS WITH AREMXYPLUG!</p>
+                <p className="text-[7.5px] lg:text-[20px] md:text-[11.46px] w-[177.94px] lg:w-[539px] md:w-[308.8px]">Accept payments in any currency, convert and transfer money internationally without any hassle.</p>
             </div>
-            <div className="">
-                <img src={creditCard} alt="" className="h-full w-full " />
+            <div className="flex h-[97%] w-full pt-2">
+                <img src={creditCard} alt="" className="w-full shrink-0" />
             </div>
           </div>
 
-          <div className="mx-auto flex gap-3 py-[5px] lg:py-[50px] md:py-[28.64px]">
-                   <div className="text-[8px] lg:text-lg md:text-[11.46px] font-medium text-[#7C7C7C]">
-                <div className=" mx-auto flex gap-3 py-[25.29px] lg:py-[20px] md:py-[15px]">
-                   <div className="text-[8px] lg:text-xl md:text-[11.46px] font-medium text-[#7C7C7C]">Select the below fiat currency to convert</div>
+          <div className=" flex gap-1.5 py-[25px] lg:py-[50px] md:py-[28.64px]">
+                   <div className="text-[10px] lg:text-xl md:text-[14px] font-medium text-[#7C7C7C]">Select Conversion type</div>
                    <div>
                       <img src={right} alt="" className="lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px]" />
                    </div>
                 </div>
-                </div>
-                </div>
 
      {/* select conversion */}
-         <div id="lists" className="flex flex-col gap-[8.6px] lg:gap-[25px] md:gap-[14.32px]">
+         <div id="lists" className="flex flex-col gap-[20px] lg:gap-[36px] md:gap-[27px]">
 
             {/* fiat conversion */}
               <Link to= '/fiat'>
-              <div className="conversionLists cursor-pointer flex pl-[5px] pr-[25px] md:pr-[36px] lg:pr-[60px] md:pl-[8.59px] lg:pl-[15px] justify-between  mx-auto py-[7px] md:py-[9px] lg:py-[15px] rounded-[4px] md:rounded-[6.88px] lg:rounded-[12px]">
+              <div className="conversionLists cursor-pointer flex pl-[5px] pr-[14px] md:pr-[28px] lg:pr-[45px] md:pl-[8.59px] lg:pl-[15px] justify-between  mx-auto py-[7px] md:py-[9px] lg:py-[15px] rounded-[4px] md:rounded-[6.88px] lg:rounded-[12px]">
             <div className="flex gap-2">
                 <img src={fiat} alt="fiat.svg" className="flex self-center lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px]" />
-                <div className="flex flex-col">
-                    <p className="text-[8px] lg:text-[16px] md:text-[9.17px] font-semibold">Fiat Conversion</p>
-                    <p className="text-[7px] lg:text-[14.05px] md:text-[8.05px] font-medium text-[#7C7C7C]">Convert from one fiat currency to another.</p>
+                <div className="flex flex-col gap-[2px]">
+                    <p className="text-[9.2px] lg:text-[18px] md:text-[13px] font-medium">Fiat Conversion</p>
+                    <p className="text-[9px] lg:text-[15px] md:text-[10px] font-medium text-[#7C7C7C]">Convert from one fiat currency to another.</p>
                 </div>
             </div>
             <div className="flex self-center">
@@ -82,12 +78,12 @@ const CurrencyConversion = () =>{
             </Link>
           {/* crypto conversion */}
           <div>
-          <div onClick={openModal1} className="conversionLists cursor-pointer flex pl-[5px] pr-[25px] md:pr-[36px] lg:pr-[60px] md:pl-[8.59px] lg:pl-[15px] justify-between  mx-auto py-[7px] md:py-[9px] lg:py-[15px] rounded-[4px] md:rounded-[6.88px] lg:rounded-[12px]">
+          <div onClick={openModal1} className="conversionLists cursor-pointer flex pl-[5px] pr-[14px] md:pr-[28px] lg:pr-[45px] md:pl-[8.59px] lg:pl-[15px] justify-between  mx-auto py-[7px] md:py-[9px] lg:py-[15px] rounded-[4px] md:rounded-[6.88px] lg:rounded-[12px]">
             <div className="flex gap-2">
                 <img src={crypto} alt="fiat.svg" className="flex self-center lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px]" />
-                <div className="flex flex-col">
-                    <p className="text-[8px] lg:text-[16px] md:text-[9.17px] font-semibold">Crypto Conversion</p>
-                    <p className="text-[7px] lg:text-[14.05px] md:text-[8.05px] font-medium text-[#7C7C7C]">Convert from one crypto currency to another.</p>
+                <div className="flex flex-col gap-[2px]">
+                    <p className="text-[9.2px] lg:text-[18px] md:text-[13px] font-medium">Crypto Conversion</p>
+                    <p className="text-[9px] lg:text-[15px] md:text-[10px] font-medium text-[#7C7C7C]">Convert from one crypto currency to another.</p>
                 </div>
             </div>
             <div className="flex self-center">
@@ -113,12 +109,12 @@ const CurrencyConversion = () =>{
 
           {/* multi-wallet conversion */}
           <div>
-          <div onClick={openModal}  className="conversionLists cursor-pointer flex pl-[5px] pr-[25px] md:pr-[36px] lg:pr-[60px] md:pl-[8.59px] lg:pl-[15px] justify-between  mx-auto py-[7px] md:py-[9px] lg:py-[15px] rounded-[4px] md:rounded-[6.88px] lg:rounded-[12px]">
+          <div onClick={openModal}  className="conversionLists cursor-pointer flex pl-[5px] pr-[14px] md:pr-[28px] lg:pr-[45px] md:pl-[8.59px] lg:pl-[15px] justify-between  mx-auto py-[7px] md:py-[9px] lg:py-[15px] rounded-[4px] md:rounded-[6.88px] lg:rounded-[12px]">
             <div className="flex gap-2">
                 <img src={multiwallet} alt="fiat.svg" className="flex self-center lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px]" />
-                <div className="flex flex-col">
-                    <p className="text-[8px] lg:text-[16px] md:text-[9.17px] font-semibold">Multi-Wallet Conversion</p>
-                    <p className="text-[7px] lg:text-[14.05px] md:text-[8.05px] font-medium text-[#7C7C7C]">Convert between fiat and crypto currency.</p>
+                <div className="flex flex-col gap-[2px]">
+                    <p className="text-[9.2px] lg:text-[18px] md:text-[13px] font-medium">Multi-Wallet Conversion</p>
+                    <p className="text-[9px] lg:text-[15px] md:text-[10px] font-medium text-[#7C7C7C]">Convert between fiat and crypto currency.</p>
                 </div>
             </div>
             <div className="flex self-center">
@@ -143,12 +139,12 @@ const CurrencyConversion = () =>{
           </Modal>
                {/* airtime conversion */}
           <div>
-          <div className="conversionLists cursor-pointer flex pl-[5px] pr-[25px] md:pr-[36px] lg:pr-[60px] md:pl-[8.59px] lg:pl-[15px] justify-between  mx-auto py-[7px] md:py-[9px] lg:py-[15px] rounded-[4px] md:rounded-[6.88px] lg:rounded-[12px]">
+          <div className="conversionLists cursor-pointer flex pl-[5px] pr-[14px] md:pr-[28px] lg:pr-[45px] md:pl-[8.59px] lg:pl-[15px] justify-between  mx-auto py-[7px] md:py-[9px] lg:py-[15px] rounded-[4px] md:rounded-[6.88px] lg:rounded-[12px]">
             <div className="flex gap-2">
                 <img src={airtime} alt="fiat.svg" className="flex self-center lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px]" />
-                <div className="flex flex-col">
-                    <p className="text-[8px] lg:text-[16px] md:text-[9.17px] font-semibold">Airtime Conversion</p>
-                    <p className="text-[7px] lg:text-[14.05px] md:text-[8.05px] font-medium text-[#7C7C7C]">Convert your bulk airtime to real money, withdrawn to your bank account.</p>
+                <div className="flex flex-col gap-[2px]">
+                    <p className="text-[9.2px] lg:text-[18px] md:text-[13px] font-medium">Airtime Conversion</p>
+                    <p className="text-[9px] lg:text-[15px] md:text-[10px] font-medium text-[#7C7C7C]">Convert your bulk airtime to real money, withdrawn to your bank account.</p>
                 </div>
             </div>
             <div className="flex self-center">
@@ -158,12 +154,12 @@ const CurrencyConversion = () =>{
           </div>
            {/* points redeemed */}
            <div>
-          <div className="conversionLists cursor-pointer flex pl-[5px] pr-[25px] md:pr-[36px] lg:pr-[60px] md:pl-[8.59px] lg:pl-[15px] justify-between  mx-auto py-[7px] md:py-[9px] lg:py-[15px] rounded-[4px] md:rounded-[6.88px] lg:rounded-[12px]">
+          <div className="conversionLists cursor-pointer flex pl-[5px] pr-[14px] md:pr-[28px] lg:pr-[45px] md:pl-[8.59px] lg:pl-[15px] justify-between  mx-auto py-[7px] md:py-[9px] lg:py-[15px] rounded-[4px] md:rounded-[6.88px] lg:rounded-[12px]">
             <div className="flex gap-2">
                 <img src={points} alt="fiat.svg" className="flex self-center lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px]" />
-                <div className="flex flex-col">
-                    <p className="text-[8px] lg:text-[16px] md:text-[9.17px] font-semibold">Points Redeemed</p>
-                    <p className="text-[7px] lg:text-[14.05px] md:text-[8.05px] font-medium text-[#7C7C7C]">Redeem your earned points to real money, withdrawn to your bank account.</p>
+                <div className="flex flex-col gap-[2px]">
+                    <p className="text-[9.2px] lg:text-[18px] md:text-[13px] font-medium">Points Redeemed</p>
+                    <p className="text-[9px] lg:text-[15px] md:text-[10px] font-medium text-[#7C7C7C]">Redeem your earned points to real money, withdrawn to your bank account.</p>
                 </div>
             </div>
             <div className="flex self-center">
@@ -173,7 +169,7 @@ const CurrencyConversion = () =>{
           </div>
          </div>
 
-         <div className="flex justify-center pt-[90px] pb-3 md:pt-[120px] md:pb-4 lg:pt-[160px] lg:pb-6 gap-2">
+         <div className="flex justify-center pt-[300px] pb-3 md:pt-[200px] md:pb-4 lg:pt-[290px] lg:pb-6 gap-2">
             <div className="font-medium text-[10px] md:text-[12px] lg:text-[16px] self-center">You need help ?</div>
             <Link to="/ContactUs">
                 <div className="bluebutton bg-[#04177f] text-center text-[8px] md:text-[10px] lg:text-[12px] text-white"> Contact Us</div>
