@@ -205,7 +205,7 @@ html {
   background: linear-gradient(92deg, #92ABFE 4.68%, #404EDE 55.04%);
 
 }
- table td{
+ .Refer table td,th{
   border: none;
-}
+} 
 /* and ends here */

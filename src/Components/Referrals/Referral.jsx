@@ -7,7 +7,6 @@ import instagram from "../Referrals/referralImage/InstagramRefer.svg";
 import facebook from "../Referrals/referralImage/facebookRefer.svg";
 import twitter from "../Referrals/referralImage/twitterRefer.svg";
 import rightArrow from "../Referrals/referralImage/rightArrowRefer.svg";
-import walletRefer from "../Referrals/referralImage/walletRefer.svg";
 import arrowDown from "../Referrals/referralImage/arrow-down.svg";
 import { Link } from "react-router-dom/dist/react-router-dom.development";
 
@@ -19,9 +18,10 @@ export default function Referral() {
 
         <div
           className="rectangle1 flex justify-between  gap-[18.34px]  min-h-[65.33px] w-[100%]  
-   pt-[2.665px] pr-[19.996px] pb-[2.668px] pl-[16.664px]  lg:mt-[50px] lg:mb-[60px] mb-[30px] rounded-[6.667px] 
+   pt-[2.665px] pr-[19.996px] pb-[2.668px] pl-[16.664px] lg:mb-[60px] mb-[30px] rounded-[6.667px] 
    md:pt-[5.581px] md:pb-[4.586px] md:pr-[34.371px] md:pl-[28.646px] md:gap-[31.514px] md:h-[112.29px]
-  lg:py-[8px] lg:pl-[60px] lg:pr-[50px] lg:gap-[55px] lg:h-[196px] lg:rounded-[20px]"
+   md:rounded-[11.458px] lg:py-[8px] lg:pl-[60px] lg:pr-[50px] lg:gap-[55px] lg:h-[196px]
+      lg:rounded-[20px]"
         >
           {/* Container CONTENT_ONE LEFT_SIDE  */}
           <div className="flex flex-col gap-[5px] w-[70%] lg:gap-[15px] md:gap-[8.594px] ">
@@ -72,20 +72,23 @@ export default function Referral() {
               Your Referral Link is:
             </h2>
             <div
-              className="flex pl-[5px]  gap-[16.33px]  
-   border-[0.333px] rounded-[7.333px] h-[18px] items-center
-    border-[#7C7C7C] w-[100%] md:h-[30.94px] md:rounded-[12.607px] 
-    lg:h-[54px] lg:rounded-[22px]  "
+              className="flex  h-[18px] items-center
+          w-[100%] md:h-[30.94px]  
+    lg:h-[54px] "
             >
               {/* THE REFER LINK */}
 
+              <div className="flex items-center  w-[75%] h-[100%]  border-l-[1px] border-y-[1px] 
+          border-[#7C7C7C] pl-[5px]  lg:pl-[18px]  md:pl-[13px]
+         lg:rounded-s-[22px] rounded-s-[7.333px] md:rounded-s-[12.607px]">
               <p
-                className="w-[75%] font-[600]  text-[#7C7C7C] text-[7px] leading-[11px]
-       lg:text-[16px] lg:leading-[24px]
-        md:text-[9.167px] md:leading-[14px] md:pl-[10px] md:overflow-auto overflow-x-scroll"
+                className="font-[600]  text-[#7C7C7C] text-[7px] leading-[11px]
+       lg:text-[16px] lg:leading-[24px] 
+        md:text-[9.167px] md:leading-[14px] md:overflow-auto overflow-x-scroll"
               >
                 https://aremxyplug.com/app/register?referral=aremxyplug
               </p>
+              </div>
               {/* COPY LINK */}
               <div
                 className="flex justify-center 
@@ -101,7 +104,7 @@ export default function Referral() {
                   className="  font-[500] text-[7px] leading-[11px] text-white 
        lg:text-[16px] lg:leading-[24px] md:text-[9.147px] md:leading-[14px] cursor-pointer"
                 >
-                  Copy code
+                  Copy link
                 </p>
               </div>
             </div>
@@ -113,22 +116,25 @@ export default function Referral() {
  md:text-[9.167px] md:leading-[14px]
 lg:text-[16px] lg:leading-[24px]"
             >
-              Your Referral Link is:
+              Your Referral code is:
             </h2>
             <div
-              className="flex  pl-[5px]  gap-[16.33px]  
-   border-[0.333px] rounded-[7.333px] h-[18px] items-center
-    border-[#7C7C7C] w-[100%] md:h-[30.94px] md:rounded-[12.607px] 
-    lg:h-[54px] lg:rounded-[22px]"
+              className="flex  h-[18px] items-center
+              w-[100%] md:h-[30.94px]  
+        lg:h-[54px] "
             >
               {/* THE REFER LINK 2*/}
-
+         <div className="flex items-center  w-[75%] h-[100%]  border-l-[1px] border-y-[1px] 
+          border-[#7C7C7C] pl-[5px] lg:pl-[18px] md:pl-[13px]
+         lg:rounded-s-[22px] rounded-s-[7.333px] md:rounded-s-[12.607px]">
               <p
-                className="w-[75%] font-[600]  text-[#7C7C7C] text-[7px] leading-[11px]
-       lg:text-[16px]   md:text-[9.167px] md:leading-[14px] lg:leading-[24px] md:pl-[10px]"
+                className="font-[600]  text-[#7C7C7C] text-[7px] leading-[11px]
+       lg:text-[16px] lg:leading-[24px] 
+        md:text-[9.167px] md:leading-[14px]  md:overflow-auto overflow-x-scroll"
               >
                 aremxyplug
               </p>
+              </div>
               {/* COPY LINK */}
               <div
                 className="flex justify-center 
@@ -145,7 +151,7 @@ lg:text-[16px] lg:leading-[24px]"
        md:text-[9.147px] md:leading-[14px]
        lg:text-[16px] lg:leading-[24px] cursor-pointer"
                 >
-                  Copy link
+                  Copy code
                 </p>
               </div>
             </div>
@@ -155,7 +161,7 @@ lg:text-[16px] lg:leading-[24px]"
           <div className="flex flex-col md:flex md:flex-row md:justify-between">
             {/* CHECK POINT BALANCE BUTTON */}
 
-            <p
+            <Link to ="/point-balance"
              className="md:self-center text-center font-[600] leading-[10.4px] text-[8px] 
     shadow-[2.29167px]
      text-white rounded-[5.729px]  py-[5px] bg-[#04177F]  lg:px-[104px] lg:py-[15px]
@@ -164,7 +170,7 @@ lg:text-[16px] lg:leading-[24px]"
      "
             >
               Check Point Balance
-            </p>
+            </Link>
 
             {/* SHARE AND ICON CONTENT */}
             {/*  */}
@@ -217,9 +223,9 @@ lg:text-[16px] lg:leading-[24px]"
         </div>
 
         {/* REFERRAL ANALYSIS */}
-        <div className="flex flex-col mb-[20px] ">
+        <div className="flex flex-col mb-[30px]">
           {/* Referral heading */}
-          <div className="flex gap-[3px] mb-[2px] lg:mb-[15px]">
+          <div className="flex gap-[3px] mb-[8px] lg:mb-[15px]">
             <p
               className="font-[600] text-[8px] text-[#7C7C7C] leading-[12px]
 md:text-[11.458px] md:leading-[17px]
@@ -236,7 +242,8 @@ lg:text-[20px] lg:leading-[30px]"
           </div>
 
           {/* Referral boxes */}
-          <div className="flex gap-[21px] md:gap-[51.849px] lg:gap-[90.5px] lg:mb-[15px]">
+          <div className="flex gap-[21px] mb-[20px] md:gap-[51.849px] 
+          lg:gap-[90.5px] lg:mb-[15px]">
             {/* box-1 */}
             <div
               className="flex flex-col w-1/3 md:w-auto rounded-[1.97px] justify-center
@@ -246,7 +253,8 @@ lg:text-[20px] lg:leading-[30px]"
               {/* TOTAL REFERRAL */}
               <div className="flex justify-center gap-[5px]">
                 <h2
-                  className="font-style text-[#000000] font-[500] text-center text-[10px] leading-[15px]
+                  className="font-style text-[#000000] 
+                  font-[500] text-center text-[10px] leading-[15px]
   lg:text-[16px] lg:leading-[24px]"
                 >
                   Total Referrals
@@ -327,7 +335,7 @@ lg:text-[20px] lg:leading-[30px]"
           {/* ANALYSIS STATUS FOR MOBILE SCREENS */}
           <div
             className="md:hidden flex flex-col p-[20px] border-x-[1.2px]
- border-[#7C7C7C] border-opacity-[25%]"
+ border-[#7C7C7C] border-opacity-[25%] mb-[50px]  shadow-md"
           >
             {/* analysis 1 */}
             <div
@@ -395,8 +403,8 @@ lg:text-[20px] lg:leading-[30px]"
 
             {/* analysis3 */}
             <div
-              className=" flex justify-between py-[31.5px] border-b-[1px] border-b-[black]
-   border-opacity-[20%]"
+              className=" flex justify-between py-[31.5px] border-b-[1px]
+               border-b-[black]   border-opacity-[20%]"
             >
               {/* left */}
               <div className="flex flex-col gap-[7.648px]">
@@ -549,7 +557,7 @@ lg:text-[20px] lg:leading-[30px]"
               </div>
             </div>
             {/* analysis8 */}
-            <div className="flex justify-between pt-[31.5px]">
+            <div className="flex justify-between pt-[31.5px] mb-[50px]">
               {/* left */}
               <div className="flex flex-col gap-[7.648px]">
                 <h2 className="font-[600] text-[9.167px] leading-[11.167px]">
@@ -577,14 +585,14 @@ lg:text-[20px] lg:leading-[30px]"
               </div>
             </div>
             {/* VIEW ALL TRANSACTIONS */}
-            <div className="flex py-[21px] justify-center">
+            {/* <div className="flex py-[21px] justify-center">
               <p className="font-[500] text-[10px] text-[#707070] leading-[13px] ">
                 View All Transactions
               </p>
               <img src={walletRefer} alt="View transaction icon" />
-            </div>
+            </div> */}
             {/* CONTACT US */}
-            <div className="flex gap-[5.729px] py-[2.865px] justify-center px-[8.594px]">
+            <div className="flex gap-[5.729px] py-[2.865px] justify-center px-[8.594px] ">
               <p className="font-[500] text-[8px] text-[#707070] leading-[10.4px]">
                 You need help?
               </p>
@@ -598,60 +606,63 @@ lg:text-[20px] lg:leading-[30px]"
           </div>
 
           {/* TABLE FOR LARGE SCREENS */}
-          {/* <div className='Refer hidden md:flex md:flex-row 
-   justify-start'> */}
+          <div className='Refer hidden md:flex 
+   '>
          <table
-            className="Refer hidden md:flex md:flex-col  lg:h-[700px] md:h-[501.04px]  
+            className="mt-[0px] lg:h-[700px] md:h-[401.04px]  
      md:shadow-lg border-collapse font-[inter] "
           >
             {/* ROW ONE */}
             <tr
-              className="flex w-[100%] md:pt-[6.312px]   md:pr-[15.473px] md:pb-[5.746px] md:pl-[16.308px]
-   lg:pr-[27px] lg:gap-[8px] lg:pl-[28px] lg:pt-[11px]  lg:pb-[10px]
-    bg-[#CED9FF] "
+              className="flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]  
+              md:pt-[6.316px] md:pb-[5.746px] lg:pl-[28px] lg:pr-[27px] lg:gap-[64px] 
+              lg:pt-[11px] lg:pb-[10px]
+               bg-[#CED9FF]"
             >
-              <th className="text-left lg:text-[16px] lg:leading-[20.8px]  w-1/5 border-none md:text-[9.167px] md:leading-[11.917px]">
+              <th className="text-left lg:text-[16px] lg:leading-[20.8px]  
+              w-1/5  md:text-[9.167px] md:leading-[11.917px] border-none">
                 Date/Time
               </th>
               <th
-                className="text-left w-1/5 md:text-[9.167px] md:leading-[11.917px] border-none
-        lg:text-[16px] lg:leading-[20.8px]"
+                className="text-left w-1/5 md:text-[9.167px] md:leading-[11.917px] 
+        lg:text-[16px] lg:leading-[20.8px] border-none"
               >
                 Name
               </th>
               <th
-                className="text-left w-1/5 md:text-[9.167px] md:leading-[11.917px] border-none
-        lg:text-[16px] lg:leading-[20.8px]"
+                className="text-left w-1/5 md:text-[9.167px] md:leading-[11.917px] 
+        lg:text-[16px] lg:leading-[20.8px] border-none"
               >
                 UserName
               </th>
               <th
-                className="text-left w-1/5 md:text-[9.167px] md:leading-[11.917px] border-none
-        lg:text-[16px] lg:leading-[20.8px]"
+                className="text-left w-1/5 md:text-[9.167px] md:leading-[11.917px] 
+        lg:text-[16px] lg:leading-[20.8px] border-none"
               >
                 ReferralID
               </th>
               <th
-                className="text-left w-1/5 border-none md:text-[9.167px] md:leading-[11.917px]
-        lg:text-[16px] lg:leading-[20.8px]"
+                className="text-left w-1/5  md:text-[9.167px] md:leading-[11.917px]
+        lg:text-[16px] lg:leading-[20.8px] border-none"
               >
                 Status
               </th>
             </tr>
-            <tr className="flex w-[100%] ">
+            <tr className="flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
+            lg:pl-[28px] lg:pr-[27px] lg:gap-[64px]">
               <td
-                className="w-1/5 lg:pt-[30.5px] lg:pb-[28.5px]  pt-[30.5px] pb-[28.5px]  
-    md:pt-[17.51px] md:pb-[16.36px]"
+                className="w-1/5 lg:pt-[30.5px] lg:pb-[28.5px]    
+    md:pt-[17.51px] md:pb-[16.36px] p-[0px]"
               >
                 <p
-                  className="lg:text-[16px] text-left font-[600] leading-[20.8px] border-none
-      md:text-[9.167px] md:leading-[11.917px]lg:text-[16px] lg:leading-[20.8px]"
+                  className=" text-left font-[600] leading-[20.8px] border-none
+      md:text-[9.167px] md:leading-[11.917px] lg:text-[16px] lg:leading-[20.8px]"
                 >
                   <span className="md:block">May 21, 2023,</span>
                   <span className="md:block">07:21:00pm</span>
                 </p>
               </td>
-              <td className="w-1/5 lg:pt-[30.5px] lg:pb-[28.5px]  md:pt-[17.51px] md:pb-[16.36px]">
+              <td className="w-1/5 lg:pt-[30.5px] lg:pb-[28.5px]  md:pt-[17.51px] md:pb-[16.36px] p-[0px]">
                 <p
                   className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px] 
     md:text-[9.167px] md:leading-[11.917px] "
@@ -661,8 +672,8 @@ lg:text-[20px] lg:leading-[30px]"
                 </p>
               </td>
               <td
-                className="w-1/5 pt-[30.5px]  pb-[28.5px] lg:pt-[30.5px] lg:pb-[28.5px] 
-    md:pt-[17.51px] md:pb-[16.36px]"
+                className="w-1/5 pt-[30.5px]   lg:pt-[30.5px] lg:pb-[28.5px] 
+    md:pt-[17.51px] md:pb-[16.36px] p-[0px]"
               >
                 <p
                   className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px]
@@ -672,8 +683,8 @@ lg:text-[20px] lg:leading-[30px]"
                 </p>
               </td>
               <td
-                className="w-1/5 flex-start pt-[30.5px] pb-[28.5px]  md:pt-[17.51px] md:pb-[16.36px]
-    lg:pt-[30.5px] lg:pb-[28.5px]"
+                className="w-1/5 flex-start   md:pt-[17.51px] md:pb-[16.36px]
+    lg:pt-[30.5px] lg:pb-[28.5px] p-[0px]"
               >
                 <p
                   className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px] 
@@ -683,8 +694,8 @@ lg:text-[20px] lg:leading-[30px]"
                 </p>
               </td>
               <td
-                className="w-1/5 flex justify-start items-start pt-[30.5px]
-      pb-[28.5px]  md:pt-[17.51px] md:pb-[16.36px] lg:pt-[30.5px] lg:pb-[28.5px]"
+                className="w-1/5 flex justify-start items-start
+        md:pt-[17.51px] md:pb-[16.36px] lg:pt-[30.5px] lg:pb-[28.5px] p-[0px]"
               >
                 <p
                   className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px]
@@ -696,10 +707,11 @@ lg:text-[20px] lg:leading-[30px]"
             </tr>
             {/* ROW TWO */}
 
-            <tr className="flex w-[100%] ">
+            <tr className="flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
+            lg:pl-[28px] lg:pr-[27px] lg:gap-[64px]">
               <td
-                className="w-1/5  pt-[30.5px] pb-[28.5px]   md:pt-[17.51px] md:pb-[16.36px]
-    lg:pt-[30.5px] lg:pb-[28.5px]"
+                className="w-1/5    md:pt-[17.51px] md:pb-[16.36px]
+    lg:pt-[30.5px] lg:pb-[28.5px] p-[0px]"
               >
                 <p
                   className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px]
@@ -710,8 +722,8 @@ lg:text-[20px] lg:leading-[30px]"
                 </p>
               </td>
               <td
-                className="w-1/5 pt-[30.5px] pb-[28.5px]  md:pt-[17.51px] md:pb-[16.36]
-    lg:pt-[30.5px] lg:pb-[28.5px]"
+                className="w-1/5 md:pt-[17.51px] md:pb-[16.36]
+    lg:pt-[30.5px] lg:pb-[28.5px] p-[0px]"
               >
                 <p
                   className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px]
@@ -722,8 +734,8 @@ lg:text-[20px] lg:leading-[30px]"
                 </p>
               </td>
               <td
-                className="w-1/5 pt-[30.5px] pb-[28.5px]  md:pt-[17.51px] md:pb-[16.36px]
-    lg:pt-[30.5px] lg:pb-[28.5px]"
+                className="w-1/5   md:pt-[17.51px] md:pb-[16.36px]
+    lg:pt-[30.5px] lg:pb-[28.5px] p-[0px]"
               >
                 <p
                   className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px]
@@ -733,8 +745,8 @@ lg:text-[20px] lg:leading-[30px]"
                 </p>
               </td>
               <td
-                className="w-1/5 flex-start pt-[30.5px] pb-[28.5px]  md:pt-[17.51px] md:pb-[16.36px]
-    lg:pt-[30.5px] lg:pb-[28.5px]"
+                className="w-1/5 flex-start   md:pt-[17.51px] md:pb-[16.36px]
+    lg:pt-[30.5px] lg:pb-[28.5px] p-[0px]"
               >
                 <p
                   className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px] 
@@ -744,8 +756,8 @@ lg:text-[20px] lg:leading-[30px]"
                 </p>
               </td>
               <td
-                className="w-1/5 flex justify-start items-start pt-[30.5px] pb-[28.5px]
-      md:pt-[17.51px] md:pb-[16.36px] lg:pt-[30.5px] lg:pb-[28.5px]"
+                className="w-1/5 flex justify-start items-start 
+      md:pt-[17.51px] md:pb-[16.36px] lg:pt-[30.5px] lg:pb-[28.5px] p-[0px]"
               >
                 <p
                   className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px]
@@ -757,8 +769,10 @@ lg:text-[20px] lg:leading-[30px]"
             </tr>
             {/* ROW THREE */}
 
-            <tr className="flex w-[100%] ">
-              <td className="w-1/5  pt-[30.5px] pb-[28.5px]  md:pt-[17.51px] md:pb-[16.36px]">
+            <tr className="flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
+            lg:pl-[28px] lg:pr-[27px] lg:gap-[64px]">
+              <td className="w-1/5  lg:pt-[30.5px] lg:pb-[28.5px]  md:pt-[17.51px] md:pb-[16.36px]
+              p-[0px]">
                 <p
                   className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px]
       md:text-[9.167px] md:leading-[11.917px]"
@@ -767,7 +781,8 @@ lg:text-[20px] lg:leading-[30px]"
                   <span className="md:block">07:21:00pm</span>
                 </p>
               </td>
-              <td className="w-1/5 pt-[30.5px] pb-[28.5px]  md:pt-[17.51px] md:pb-[16.36px]">
+              <td className="w-1/5 lg:pt-[30.5px] lg:pb-[28.5px]   md:pt-[17.51px] md:pb-[16.36px]
+              p-[0px]">
                 <p
                   className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px]
     md:text-[9.167px] md:leading-[11.917px]"
@@ -777,8 +792,8 @@ lg:text-[20px] lg:leading-[30px]"
                 </p>
               </td>
               <td
-                className="w-1/5 pt-[30.5px] pb-[28.5px]  md:pt-[17.51px] md:pb-[16.36px]
-    lg:pt-[30.5px] lg:pb-[28.5px]"
+                className="w-1/5 md:pt-[17.51px] md:pb-[16.36px]
+    lg:pt-[30.5px] lg:pb-[28.5px] p-[0px]"
               >
                 <p
                   className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px]
@@ -788,8 +803,8 @@ lg:text-[20px] lg:leading-[30px]"
                 </p>
               </td>
               <td
-                className="w-1/5 flex-start pt-[30.5px] pb-[28.5px]  md:pt-[17.51px] md:pb-[16.36px]
-    lg:pt-[30.5px] lg:pb-[28.5px]"
+                className="w-1/5 flex-start   md:pt-[17.51px] md:pb-[16.36px]
+    lg:pt-[30.5px] lg:pb-[28.5px] p-[0px]"
               >
                 <p
                   className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px] 
@@ -799,8 +814,8 @@ lg:text-[20px] lg:leading-[30px]"
                 </p>
               </td>
               <td
-                className="w-1/5 flex justify-start items-start pt-[30.5px] pb-[28.5px]  
-     md:pt-[17.51px] md:pb-[16.36] lg:pt-[30.5px] lg:pb-[28.5px]"
+                className="w-1/5 flex justify-start items-start   
+     md:pt-[17.51px] md:pb-[16.36] lg:pt-[30.5px] lg:pb-[28.5px] p-[0px]"
               >
                 <p
                   className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px]
@@ -812,10 +827,11 @@ lg:text-[20px] lg:leading-[30px]"
             </tr>
             {/* ROW FOUR */}
 
-            <tr className="flex w-[100%] ">
+            <tr className="flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
+            lg:pl-[28px] lg:pr-[27px] lg:gap-[64px]">
               <td
-                className="w-1/5  pt-[30.5px] pb-[28.5px]  md:pt-[17.51px] md:pb-[16.36px]
-    lg:pt-[30.5px] lg:pb-[28.5px]"
+                className="w-1/5 md:pt-[17.51px] md:pb-[16.36px]
+    lg:pt-[30.5px] lg:pb-[28.5px] p-[0px]"
               >
                 <p
                   className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px]
@@ -825,7 +841,8 @@ lg:text-[20px] lg:leading-[30px]"
                   <span className="md:block">07:21:00pm</span>
                 </p>
               </td>
-              <td className="w-1/5 pt-[30.5px] pb-[28.5px]  md:pt-[17.51px] md:pb-[16.36px]">
+              <td className="w-1/5   md:pt-[17.51px] md:pb-[16.36px] 
+              lg:pt-[30.5px] lg:pb-[28.5px] p-[0px]">
                 <p
                   className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px]
     md:text-[9.167px] md:leading-[11.917px]"
@@ -835,8 +852,8 @@ lg:text-[20px] lg:leading-[30px]"
                 </p>
               </td>
               <td
-                className="w-1/5 pt-[30.5px] pb-[28.5px]  md:pt-[17.51px] md:pb-[16.36px]
-    lg:pt-[30.5px] lg:pb-[28.5px]"
+                className="w-1/5   md:pt-[17.51px] md:pb-[16.36px]
+    lg:pt-[30.5px] lg:pb-[28.5px] p-[0px]"
               >
                 <p
                   className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px]
@@ -846,8 +863,8 @@ lg:text-[20px] lg:leading-[30px]"
                 </p>
               </td>
               <td
-                className="w-1/5 flex-start pt-[30.5px] pb-[28.5px]  md:pt-[17.51px] md:pb-[16.36px]
-    lg:pt-[30.5px] lg:pb-[28.5px]"
+                className="w-1/5 flex-start   md:pt-[17.51px] md:pb-[16.36px]
+    lg:pt-[30.5px] lg:pb-[28.5px] p-[0px]"
               >
                 <p
                   className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px] 
@@ -857,8 +874,8 @@ lg:text-[20px] lg:leading-[30px]"
                 </p>
               </td>
               <td
-                className="w-1/5 flex justify-start items-start pt-[30.5px] pb-[28.5px]  
-     md:pt-[17.51px] md:pb-[16.36px] lg:pt-[30.5px] lg:pb-[28.5px]"
+                className="w-1/5 flex  items-start
+     md:pt-[17.51px] md:pb-[16.36px] lg:pt-[30.5px] lg:pb-[28.5px] p-[0px]"
               >
                 <p
                   className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px]
@@ -870,8 +887,10 @@ lg:text-[20px] lg:leading-[30px]"
             </tr>
             {/* ROW FIVE */}
 
-            <tr className="flex w-[100%] ">
-              <td className="w-1/5     md:pt-[17.51px] md:pb-[16.36px] lg:pt-[30.5px] lg:pb-[28.5px]">
+            <tr className="flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
+            lg:pl-[28px] lg:pr-[27px] lg:gap-[64px]">
+              <td className="w-1/5     md:pt-[17.51px] md:pb-[16.36px] lg:pt-[30.5px] lg:pb-[28.5px]
+              p-[0px]">
                 <p
                   className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px]
       md:text-[9.167px] md:leading-[11.917px]"
@@ -881,8 +900,8 @@ lg:text-[20px] lg:leading-[30px]"
                 </p>
               </td>
               <td
-                className="w-1/5 lg:pt-[30.5px] lg:pb-[28.5px]  md:pb-[16.36px] md:pt-[17.51px]
-    "
+                className="w-1/5 flex justify-start lg:pt-[30.5px] lg:pb-[28.5px]  md:pb-[16.36px] md:pt-[17.51px]
+    p-[0px]"
               >
                 <p
                   className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px]
@@ -894,7 +913,7 @@ lg:text-[20px] lg:leading-[30px]"
               </td>
               <td
                 className="w-1/5 lg:pt-[30.5px] lg:pb-[28.5px] md:pt-[17.51px] md:pb-[16.36px]
-    "
+    p-[0px]"
               >
                 <p
                   className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px]
@@ -905,7 +924,7 @@ lg:text-[20px] lg:leading-[30px]"
               </td>
               <td
                 className="w-1/5 flex-start  md:pt-[17.51px] md:pb-[16.36px]
-    lg:pt-[30.5px] lg:pb-[28.5px]"
+    lg:pt-[30.5px] lg:pb-[28.5px] p-[0px]"
               >
                 <p
                   className="lg:text-[16px] text-left font-[600] leading-[20.8px] 
@@ -916,7 +935,7 @@ lg:text-[20px] lg:leading-[30px]"
               </td>
               <td
                 className="w-1/5 flex justify-start items-start md:pt-[17.51px] md:pb-[16.36px]
-      lg:pt-[30.5px] lg:pb-[28.5px]"
+      lg:pt-[30.5px] lg:pb-[28.5px] p-[0px]"
               >
                 <p
                   className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px]
@@ -928,14 +947,15 @@ lg:text-[20px] lg:leading-[30px]"
             </tr>
             {/* ROW SIX */}
 
-            <tr className="flex w-[100%] ">
+            <tr className="flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
+            lg:pl-[28px] lg:pr-[27px] lg:gap-[64px]">
               <td
                 className="w-1/5  md:pb-[16.36px] md:pt-[17.51px]
-    lg:pt-[30.5px] lg:pb-[28.5px]"
+    lg:pt-[30.5px] lg:pb-[28.5px] p-[0px]"
               >
                 <p
                   className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px]
-      md:text-[9.167px] md:leading-[11.917px] md:pb-[16.36px]"
+      md:text-[9.167px] md:leading-[11.917px] "
                 >
                   <span className="md:block">May 21, 2023,</span>
                   <span className="md:block">07:21:00pm</span>
@@ -943,7 +963,7 @@ lg:text-[20px] lg:leading-[30px]"
               </td>
               <td
                 className="w-1/5 md:pb-[16.36px] md:pt-[17.51px]
-    lg:pt-[30.5px] lg:pb-[28.5px]"
+    lg:pt-[30.5px] lg:pb-[28.5px] p-[0px]"
               >
                 <p
                   className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px]
@@ -953,7 +973,7 @@ lg:text-[20px] lg:leading-[30px]"
                   <span className="md:block">Kamaldeen</span>
                 </p>
               </td>
-              <td className="w-1/5 lg:pt-[30.5px] lg:pb-[28.5px] md:pb-[16.36px] md:pt-[17.51px]">
+              <td className="w-1/5 lg:pt-[30.5px] lg:pb-[28.5px] md:pb-[16.36px] md:pt-[17.51px] p-[0px]">
                 <p
                   className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px]
     md:text-[9.167px] md:leading-[11.917px] "
@@ -962,8 +982,8 @@ lg:text-[20px] lg:leading-[30px]"
                 </p>
               </td>
               <td
-                className="w-1/5 flex-start md:pb-[16.36px] md:pt-[17.51px]
-    lg:pt-[30.5px] lg:pb-[28.5px]"
+                className="w-1/5  md:pb-[16.36px] md:pt-[17.51px]
+    lg:pt-[30.5px] lg:pb-[28.5px] p-[0px]"
               >
                 <p
                   className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px] 
@@ -973,8 +993,8 @@ lg:text-[20px] lg:leading-[30px]"
                 </p>
               </td>
               <td
-                className="w-1/5 flex justify-start items-start md:pb-[16.36px]
-     lg:pt-[30.5px] lg:pb-[28.5px]"
+                className="w-1/5 flex justify-start items-start md:pt-[17.51px] md:pb-[16.36px]
+     lg:pt-[30.5px] lg:pb-[28.5px] p-[0px]"
               >
                 <p
                   className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px]
@@ -985,7 +1005,7 @@ lg:text-[20px] lg:leading-[30px]"
               </td>
             </tr>
 
-            {/* VIEW ALL TRANSACTIONS FOR TABLET AND DESKTOP*/}
+         
 
             {/* CONTACT US */}
             <div className="flex md:gap-[14.896px] py-[10.865px] justify-center px-[8.594px]">
@@ -1006,9 +1026,10 @@ lg:text-[20px] lg:leading-[30px]"
               </Link>
             </div>
           </table> 
+        
         </div>
       </div>
-      {/* </div> */}
+      </div>
     </DashBoardLayout>
   );
 }
