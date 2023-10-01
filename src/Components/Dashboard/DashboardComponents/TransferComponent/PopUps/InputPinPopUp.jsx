@@ -31,7 +31,7 @@ export const InputPinPopUp = () => {
           >
             <img
               onClick={() => setInputPinPopUp(false)}
-              className="absolute right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px]"
+              className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px]"
               src="/Images/transferImages/close-circle.png"
               alt=""
             />
