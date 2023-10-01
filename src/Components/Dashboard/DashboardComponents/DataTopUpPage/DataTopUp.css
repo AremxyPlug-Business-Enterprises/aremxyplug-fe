@@ -8,7 +8,7 @@
 
 .Datatopup {
     display: flex;
-    /* padding: 6.968px 12.508px 10.376px 6.968px; */
+    padding: 6.968px 12.508px 4.5px 6.968px;
     align-items: flex-end;
     justify-content: space-between;
     border-radius: 3.974px;

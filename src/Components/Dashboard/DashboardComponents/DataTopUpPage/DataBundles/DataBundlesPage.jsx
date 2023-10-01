@@ -121,6 +121,8 @@ const DataBundlesPage = () => {
           {/* ======================NETWORK============================ */}
 
           <div className="grid grid-cols-2 gap-[30px] md:gap-[50px] sm:grid-cols-2 lg:gap-[90px] ">
+
+            {/* <Link to="/MtnDataTopUpBundle"></Link> */}
             <div
               id="Network"
               className="rounded-[4px] relative flex flex-col justify-center items-center"
@@ -132,6 +134,7 @@ const DataBundlesPage = () => {
                 className="absolute self-center md:w-[20%] lg:w-[25%]"
               />
             </div>
+            
 
             <div
               id="Network"

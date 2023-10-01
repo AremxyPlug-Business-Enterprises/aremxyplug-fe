@@ -11,9 +11,8 @@ import InternationalData from "./DataTopUp-Images/InternationalData.svg";
 import { DashBoardLayout } from "../../Layout/DashBoardLayout";
 import { useContext } from "react";
 import { ContextProvider } from "../../../Context";
-import { Modal } from "../../../Screens/Modal/Modal";
 import { Link } from "react-router-dom";
-
+import WalletModal from "../../../Wallet/WalletModal";
 
 const DataTopUpPage = () => {
   const [popupVisible, setPopupVisible] = useState(false);
@@ -94,7 +93,7 @@ const DataTopUpPage = () => {
           </div>
 
           <section className="md:mt-[30px] mt-[30px] lg:mt-[50px]">
-            <div className="text-[8px] flex gap-[9%] md:text-[18px] lg:text-[20px] justify-between md:justify-start md:gap-[10%]">
+            <div className="text-[8px] flex gap-[2.5%] md:text-[18px] lg:text-[20px] justify-between md:justify-start md:gap-[5%]">
               <div
                 onClick={() => {
                   handleClick(0);
@@ -125,31 +124,31 @@ const DataTopUpPage = () => {
 
             <div className="mt-[10%] flex flex-col gap-[20px] md:mt-[2%] md:gap-[0px] 2xl:mt-[5%]">
               <Link to="/data-bundles">
-              <div className="Datatopup flex justify-between h-[50px] lg:h-[80px] md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[5px] gap-[8px] md:mt-[30px]">
-                <div className="flex gap-[10px]">
-                  <img
-                    src={DataBundles}
-                    alt=""
-                    className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:mt-[20px] lg:h-[20px] 2xl:mt-[25px]"
-                  />
+                <div className="Datatopup flex justify-between h-[50px] lg:h-[80px] md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[5px] gap-[8px] md:mt-[30px]">
+                  <div className="flex gap-[10px]">
+                    <img
+                      src={DataBundles}
+                      alt=""
+                      className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:mt-[20px] lg:h-[20px] 2xl:mt-[25px]"
+                    />
 
-                  <div className="">
-                    <p className="text-[10px] md:text-[13px] font-[500] lg:text-[18px] 2xl:text-[22px]">
-                      Data Bundles
-                    </p>
-                    <p className="text-[8px] text-[#7c7c7c] md:text-[10px] lg:text-[15px] font-[500] w-[95%] lg:w-[130%] mt-[3px] md:w-[100%] 2xl:text-[20px]">
-                      Top up your mobile sim with our automated data bundles
-                      directly from network providers.
-                    </p>
+                    <div className="">
+                      <p className="text-[10px] md:text-[13px] font-[500] lg:text-[18px] 2xl:text-[22px]">
+                        Data Bundles
+                      </p>
+                      <p className="text-[8px] text-[#7c7c7c] md:text-[10px] lg:text-[15px] font-[500] w-[95%] lg:w-[130%] mt-[3px] md:w-[100%] 2xl:text-[20px]">
+                        Top up your mobile sim with our automated data bundles
+                        directly from network providers.
+                      </p>
+                    </div>
                   </div>
-                </div>
 
-                <img
-                  src={DataType}
-                  alt=""
-                  className="w-[12px] h-[12px] mb-[10px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px] "
-                />
-              </div>
+                  <img
+                    src={DataType}
+                    alt=""
+                    className="w-[12px] h-[12px] mb-[12.5px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px] "
+                  />
+                </div>
               </Link>
 
               <div className="Datatopup flex justify-between h-[50px] lg:h-[80px] md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[5px] gap-[8px] md:mt-[30px]">
@@ -174,7 +173,7 @@ const DataTopUpPage = () => {
                 <img
                   src={DataType}
                   alt=""
-                  className="w-[12px] h-[12px] mb-[10px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px]"
+                  className="w-[12px] h-[12px] mb-[12.5px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px]"
                 />
               </div>
 
@@ -200,7 +199,7 @@ const DataTopUpPage = () => {
                 <img
                   src={DataType}
                   alt=""
-                  className="w-[12px] h-[12px] mb-[10px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px]"
+                  className="w-[12px] h-[12px] mb-[12.5px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px]"
                 />
               </div>
 
@@ -226,7 +225,7 @@ const DataTopUpPage = () => {
                 <img
                   src={DataType}
                   alt=""
-                  className="w-[12px] h-[12px] mb-[10px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px]"
+                  className="w-[12px] h-[12px] mb-[12.5px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px]"
                 />
               </div>
 
@@ -252,7 +251,7 @@ const DataTopUpPage = () => {
                 <img
                   src={DataType}
                   alt=""
-                  className="w-[12px] h-[12px] mb-[10px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px]"
+                  className="w-[12px] h-[12px] mb-[12.5px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px]"
                 />
               </div>
             </div>
@@ -275,63 +274,44 @@ const DataTopUpPage = () => {
           </footer>
 
           {/* ================Popup======================= */}
+
           {popupVisible && (
-            <Modal>
-              <div className={`md:px-[px]`}>
-                <div id="PopUp" className="popup">
-                  <section className="text-center flex justify-center item-center z-1000">
-                    <div
-                      className="absolute inset-0 top-0 bottom-0 bg-[#454545] opacity-[0.15] z-100 "
-                      style={{
-                        position: "absolute",
-                        top: -200,
-                        left: -75,
-                        right: -75,
-                        bottom: -200,
-                        backgroundColor: "#454545",
-                        opacity: 0.15,
-                        zIndex: 100,
-                      }}
-                      onClick={resetActiveButton}
-                    ></div>
-                    <div
-                      className={`${
-                        isDarkMode ? "bg-[#000]" : "bg-[#ffffff]"
-                      } Datapopup
-                    flex flex-col justify-between z-[100] lg:mt-[230px] lg:ml-[10px] md:mt-[30px] md:w-[35%] md:ml-[50px] 2xl:mt-[270px] 2xl:ml-[]`}
-                    >
-                      <div>
-                        <p className="text-[10px] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[3%]">
-                          International Data
-                        </p>
-                        <p className="text-[10px] md:text-[16px] font-[600] text-[#04177F] lg:text-[16px]">
-                          This Feature is Currently Not Available.
-                        </p>
-                      </div>
-                      <img
-                        src={InternationalData}
-                        alt=""
-                        className="mx-auto mt-[40px] md:w-[220px] md:h-[200px] md:mt-[5%] w-[143px] h-[67px] lg:w-[237.171px] lg:h-[150px]"
-                      />
-                      <div className="mx-[6%] flex flex-col gap-[5px] pb-[5%]">
-                        <p className="text-[8px] font-extrabold text-end float-right ml-[70%] md:ml-[70%] md:text-[12px] mt-[10px] lg:text-[10px]">
-                          Coming Soon...
-                        </p>
-                        <button
-                          className={` ${
-                            isDarkMode ? "border" : "bg-[#04177f] "
-                          } cursor-pointer text-white text-[10px] h-[40px] rounded-[5px] flex items-center justify-center md:mx-auto md:w-[20%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[30%] lg:mx-auto`}
-                          onClick={resetActiveButton}
-                          handleClick={activeIndex}
-                        >
-                          Okay
-                        </button>
-                      </div>
-                    </div>
-                  </section>
+            <WalletModal>
+              <div className="text-center flex justify-center item-center">
+                <div
+                  className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
+                    flex flex-col justify-center z-[100] lg:ml-[10px] md:w-full`}
+                >
+                  <div>
+                    <p className="text-[10px] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[3%]">
+                      International Data
+                    </p>
+                    <p className="text-[10px] md:text-[16px] font-[600] text-[#04177F] lg:text-[16px]">
+                      This Feature is Currently Not Available.
+                    </p>
+                  </div>
+                  <img
+                    src={InternationalData}
+                    alt=""
+                    className="mx-auto mt-[60px] md:mt-[15%] md:w-[220px] md:mx-[75px] w-[143px] h-[67px] lg:w-[300px] lg:h-[200px] lg:mx-[150px] lg:mt-[10%] 2xl:mt-[10%] 2xl:mx-[180px]"
+                  />
                 </div>
               </div>
-            </Modal>
+              <div className="mt-[40px] flex flex-col gap-[5px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
+                <p className="text-[8px] font-extrabold text-end float-right ml-[60%] md:ml-[70%] md:text-[12px] mt-[10px] lg:text-[13px] 2xl:text-[15px]">
+                  Coming Soon...
+                </p>
+                <button
+                  className={` ${
+                    isDarkMode ? "border" : "bg-[#04177f] "
+                  } cursor-pointer text-white text-[10px] h-[40px] rounded-[5px] md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[25%] lg:mx-auto`}
+                  onClick={resetActiveButton}
+                  handleClick={activeIndex}
+                >
+                  Okay
+                </button>
+              </div>
+            </WalletModal>
           )}
         </section>
       </div>
