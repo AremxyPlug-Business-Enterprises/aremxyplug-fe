@@ -1,11 +1,11 @@
-@font-face {
+/* @font-face {
   font-family: interFont;
   src: url(./font/Inter/static/Inter-Regular.ttf);
-}
-body,
+} */
+/* body,
 html {
   font-family: interFont;
-}
+} */
 
 .react-calendar {
   width: 750px;
