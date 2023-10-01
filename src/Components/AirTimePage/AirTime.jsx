@@ -46,13 +46,15 @@ const AirTime = () => {
     <DashBoardLayout>
         <div className={styles.AirtimeTops}>
             <div className={styles.airtimeTop}>
-                <div className={styles.banner}>
-                    <div className={styles.bannerText}>
-                        <h2>TOP UP AIRTIME GLOBALLY WITH AREMXYPLUG.</h2>
-                        <p>Top up your mobile sim with our automated airtime vending, receive instantly, enjoy discount, purchase in bulk, send to friends, family, team, employees, and your loved ones without any hassle or hidden fee.</p>
+                <div className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] bg-gradient-to-r from-[#6EDCFF] to-[#416BFF] flex px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px]">
+                    <div className="w-[80%] pt-[19px] lg:pt-[20px]">
+                        <h2 className="text-[10px] md:text-[13.75px] font-bold mb-2 lg:text-[24px] lg:mb-4">
+                            TOP UP AIRTIME GLOBALLY WITH AREMXYPLUG.</h2>
+                        <h2 className="text-[7px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3">
+                            Top up your mobile sim with our automated airtime vending, receive instantly, enjoy discount, purchase in bulk, send to friends, family, team, employees, and your loved ones without any hassle or hidden fee.</h2>
                     </div>
-                    <div className={styles.bannerImage}>
-                        <img src="./Images/airtimeTopUp/young.png" alt="" />
+                    <div className="w-[91px] h-[66px] lg:w-[170px] lg:h-[150px]">
+                        <img src="./Images/airtimeTopUp/young.png" className="h-full" alt="" />
                     </div>
                 </div>
                 <div className={styles.airType}>

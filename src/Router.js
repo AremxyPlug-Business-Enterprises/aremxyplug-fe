@@ -54,7 +54,9 @@ import FiatConversion from "./Components/CurrencyConversion/FiatConversion";
 import DataTopUpPage from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataTopUpPage";
 import CurrencyConversion from "./Components/CurrencyConversion/currencyConversion";
 import PointRedeem from "./Components/Dashboard/DashboardComponents/PointRedeem/PointRedeem"
+import DataBundlesPage from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundlesPage";
 import Referral from "./Components/Referrals/Referral"
+import MtnDataTopUpBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/MtnDataTopUpBundle/MtnDataTopUpBundle"
 export const Router = () => {
   return (
     <div>
@@ -126,7 +128,9 @@ export const Router = () => {
         <Route path="/fiat" element={<FiatConversion/>}/>
         <Route path="/currencyConversion" element={<CurrencyConversion/>} />
         <Route path="/data-top-up" element={<DataTopUpPage/>} />
+        <Route path="/data-bundles" element={<DataBundlesPage/>} />
         <Route path="/My-Referral" element={<Referral/>} />
+        <Route path="/MtnDataTopUpBundle" element={<MtnDataTopUpBundle/>} />
       </Routes>
     </div>
   );
