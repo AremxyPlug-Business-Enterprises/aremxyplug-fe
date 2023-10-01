@@ -17,7 +17,12 @@ export const InternationalReceipt = () => {
     accountName,
     accountNumber,
     transfer,
+    receive,
     bankName,
+    swiftCode,
+    recipientAddress,
+    purposeOfPayment,
+    exchangeRate,
   } = useContext(ContextProvider);
 
   const contentRef = useRef(null);
@@ -146,6 +151,20 @@ export const InternationalReceipt = () => {
                   <p className="text-[#0008]">Account Number</p>
                   <span>{accountNumber}</span>
                 </div>
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                  <p className="text-[#0008]">
+                    Swift Code / Sort Code / Routine Number
+                  </p>
+                  <span>{swiftCode}</span>
+                </div>
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                  <p className="text-[#0008]">Recipient Address</p>
+                  <span>{recipientAddress}</span>
+                </div>
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                  <p className="text-[#0008]">Purpose of Payment</p>
+                  <span>{purposeOfPayment}</span>
+                </div>
               </div>
 
               {/* ===================Sender Info====================== */}
@@ -180,11 +199,30 @@ export const InternationalReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Product</p>
-                  <span>Money Transfer</span>
+                  <span>International Transfer</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Description</p>
                   <span>From NGN Wallet</span>
+                </div>
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                  <p className="text-[#0008]">Amount Transferred</p>
+                  <span>&#8358;{transfer}</span>
+                </div>
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                  <p className="text-[#0008]">Recipient Received</p>
+                  <span>&#8358;{receive}</span>
+                </div>
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                  <p className="text-[#0008]">Conversion Rate</p>
+                  <span>
+                    {" "}
+                    {exchangeRate !== null ? (
+                      <p>{exchangeRate} NGN ~ 1 USD</p>
+                    ) : (
+                      <p>Loading exchange rate...</p>
+                    )}
+                  </span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Message</p>

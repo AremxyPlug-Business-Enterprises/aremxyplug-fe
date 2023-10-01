@@ -27,13 +27,12 @@ export const ToMyAccountPage = () => {
                 bank accounts without any hassle or hidden fee.
               </h2>
             </div>
-            <div className="w-[91px] h-[66px] lg:w-[199px] lg:h-[199px]">
-              <img
-                src="./Images/transferImages/ToMyAcc.png"
-                alt=""
-                className="h-full"
-              />
-            </div>
+
+            <img
+              src="./Images/transferImages/ToMyAcc.png"
+              alt=""
+              className="w-[91px] h-[66px] md:h-[120px] md:w-[90px] lg:w-[199px] lg:h-[199px]"
+            />
           </div>
 
           {/* ===================Mobile view====================== */}
