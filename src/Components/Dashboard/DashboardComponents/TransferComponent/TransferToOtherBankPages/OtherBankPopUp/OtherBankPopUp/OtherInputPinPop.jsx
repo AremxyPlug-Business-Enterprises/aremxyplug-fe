@@ -5,6 +5,8 @@ import { useContext } from "react";
 import { ContextProvider } from "../../../../../../Context";
 import styles from "../../../../TransferComponent/transfer.module.css";
 import { useState } from "react";
+import { AiFillEyeInvisible } from "react-icons/ai";
+import { AiFillEye } from "react-icons/ai";
 import { TransactionSuccessToOtherBank } from "./TransactionSuccessToOtherBank";
 
 export const OtherInputPinPopUp = ({
@@ -15,7 +17,8 @@ export const OtherInputPinPopUp = ({
   transferamount,
   bankname,
 }) => {
-  const { toggleSideBar } = useContext(ContextProvider);
+  const { toggleSideBar, toggleVisibility, isVisible } =
+    useContext(ContextProvider);
 
   const [inputPin, setInputPin] = useState("");
   const [transactSuccessToOtherBank, setTransactSuccessToOtherBank] =
@@ -48,22 +51,37 @@ export const OtherInputPinPopUp = ({
               Input PIN to complete transaction
             </p>
             <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[8%]">
-              <OtpInput
-                value={inputPin}
-                inputType="tel"
-                onChange={setInputPin}
-                numInputs={4}
-                shouldAutoFocus={true}
-                inputStyle={{
-                  color: "#403f3f",
-                  width: 30,
-                  height: 30,
-                  borderRadius: 3,
-                }}
-                renderInput={(props) => (
-                  <input {...props} className="inputOTP mx-[3px]" />
+              <div className=" flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
+                {" "}
+                {isVisible ? (
+                  <OtpInput
+                    value={inputPin}
+                    inputType="tel"
+                    onChange={setInputPin}
+                    numInputs={4}
+                    shouldAutoFocus={true}
+                    inputStyle={{
+                      color: "#403f3f",
+                      width: 30,
+                      height: 30,
+                      borderRadius: 3,
+                    }}
+                    renderInput={(props) => (
+                      <input {...props} className="inputOTP mx-[3px]" />
+                    )}
+                  />
+                ) : (
+                  <div className="text-[24px] md:text-[24px] mt-1">
+                    * * * *{" "}
+                  </div>
                 )}
-              />
+                <div
+                  className="text-[#0003] text-xl md:text-3xl"
+                  onClick={toggleVisibility}
+                >
+                  {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
+                </div>
+              </div>
               <p className="text-[8px] md:text-[12px] text-[#04177f]">
                 Forgot Pin ?
               </p>

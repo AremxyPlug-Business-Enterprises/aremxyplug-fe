@@ -309,17 +309,17 @@ export const WithdrawToBusinessAccountPage = () => {
         </div>
         <div
           className={`${
-            isDarkMode ? "mb-[1%]" : "mb-[5%]"
-          } flex gap-[15px] justify-center items-center `}
+            isDarkMode ? "" : ""
+          } flex gap-[15px] justify-center items-center my-[15%] md:mt-[38%] lg:mt-[26%] lg:mb-[%]`}
         >
           <div className="text-[10px] md:text-[12px] lg:text-[14px]">
             You need help ?
           </div>
           <Link to="/ContactUs">
             <div
-              className={`${isDarkMode ? "" : "bg-[#04177f]"} ${
+              className={`${isDarkMode ? "border" : "bg-[#04177f]"} ${
                 styles.contactus
-              } text-[8px] p-1 text-white rounded-[8px]`}
+              }`}
             >
               Contact Us
             </div>

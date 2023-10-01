@@ -2,6 +2,8 @@ import React from "react";
 import { Modal } from "../../../../Screens/Modal/Modal";
 import OtpInput from "react-otp-input";
 import { useContext } from "react";
+import { AiFillEyeInvisible } from "react-icons/ai";
+import { AiFillEye } from "react-icons/ai";
 import { ContextProvider } from "../../../../Context";
 import styles from "../../TransferComponent/transfer.module.css";
 
@@ -13,6 +15,8 @@ export const WithdrawalPinPopUp = () => {
     withdrawPinPopUp,
     setWithdrawPinPopUp,
     withdrawPinHandler,
+    toggleVisibility,
+    isVisible,
   } = useContext(ContextProvider);
   return (
     <div>
@@ -35,22 +39,37 @@ export const WithdrawalPinPopUp = () => {
               Input PIN to complete transaction
             </p>
             <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[8%]">
-              <OtpInput
-                value={inputPin}
-                inputType="tel"
-                onChange={setInputPin}
-                numInputs={4}
-                shouldAutoFocus={true}
-                inputStyle={{
-                  color: "#403f3f",
-                  width: 30,
-                  height: 30,
-                  borderRadius: 3,
-                }}
-                renderInput={(props) => (
-                  <input {...props} className="inputOTP mx-[3px]" />
+              <div className=" flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
+                {" "}
+                {isVisible ? (
+                  <OtpInput
+                    value={inputPin}
+                    inputType="tel"
+                    onChange={setInputPin}
+                    numInputs={4}
+                    shouldAutoFocus={true}
+                    inputStyle={{
+                      color: "#403f3f",
+                      width: 30,
+                      height: 30,
+                      borderRadius: 3,
+                    }}
+                    renderInput={(props) => (
+                      <input {...props} className="inputOTP mx-[3px]" />
+                    )}
+                  />
+                ) : (
+                  <div className="text-[24px] md:text-[24px] mt-1">
+                    * * * *{" "}
+                  </div>
                 )}
-              />
+                <div
+                  className="text-[#0003] text-xl md:text-3xl"
+                  onClick={toggleVisibility}
+                >
+                  {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
+                </div>
+              </div>
               <p className="text-[8px] md:text-[12px] text-[#04177f]">
                 Forgot Pin ?
               </p>

@@ -11,8 +11,8 @@ import InternationalData from "./DataTopUp-Images/InternationalData.svg";
 import { DashBoardLayout } from "../../Layout/DashBoardLayout";
 import { useContext } from "react";
 import { ContextProvider } from "../../../Context";
-import styles from "../../DashboardComponents/component.module.css";
 import { Modal } from "../../../Screens/Modal/Modal";
+import { Link } from "react-router-dom";
 
 const DataTopUpPage = () => {
   const [popupVisible, setPopupVisible] = useState(false);
@@ -58,13 +58,13 @@ const DataTopUpPage = () => {
         >
           <div
             id="DataTopUp"
-            className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] md:rounded-[11.5px] rounded-[7px] md:mt-[-1px] px-[15px] lg:gap-[50px] pt-[10px] lg:px-[50px] lg:rounded-[20px] lg:py-[20px] pb-[16px] flex justify-between items-center"
+            className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] md:rounded-[11.5px] rounded-[7px] md:mt-[-1px] px-[10px] lg:gap-[50px] pt-[10px] lg:px-[30px] lg:rounded-[20px] lg:py-[20px] pb-[16px] flex justify-between items-center"
           >
             <div className="w-[70%] pt-[19px] lg:pt-[20px]">
-              <p className="text-[10px] mb-3 font-bold uppercase md:text-[14px] md:w-[90%] lg:w-[80%] lg:text-[24px] lg:mb-4">
+              <p className="text-[10px] mb-3 font-bold uppercase md:text-[14px] md:w-[90%] lg:w-[90%] lg:text-[24px] 2xl:w-[80%] 2xl:text-[28px] lg:mb-4">
                 TOP UP DATA BUNDLES, UNLOCK GLOBAL CONNECTIVITY WITH AREMXYPLUG.
               </p>
-              <p className="text-[7px] font-[400] leading-[9px] mb-3 md:text-[9.4px] md:leading-[12.2px] w-[87%] md:w-[95%] lg:w-[105%] 2xl:w-[90%] lg:mt-[20px] lg:text-[20px] lg:leading-[26px]">
+              <p className="text-[7px] font-[400] leading-[9px] mb-3 md:text-[9.4px] md:leading-[12.2px] w-[87%] md:w-[95%] lg:w-[100%] 2xl:w-[90%] 2xl:mt-[5px] lg:mt-[20px] lg:text-[20px] lg:leading-[26px] lg:mb-[20px]">
                 Top up your mobile sim with our automated data bundles, receive
                 instantly, enjoy discount, purchase in bulk, send to friends,
                 family, team, employees, and your loved ones without any hassle
@@ -81,8 +81,8 @@ const DataTopUpPage = () => {
             </div>
           </div>
 
-          <div className="flex gap-[10px] mt-[40px] lg:mt-[50px]">
-            <p className="text-[#7C7C7C] text-[8px] font-[500] leading-[10px] md:text-[12px] md:leading-[15px] lg:text-[20px] lg:mt-[5px]">
+          <div className="flex items-center my-[10%] gap-[8px] md:my-[5%] md:text-[18px] lg:text-[20px]">
+            <p className="text-[#7c7c7c] text-[10px] leading-[130%] md:text-[18px] lg:text-[20px] 2xl:text-[28px]">
               Select Data Type
             </p>
             <img
@@ -93,179 +93,182 @@ const DataTopUpPage = () => {
           </div>
 
           <section className="md:mt-[30px] mt-[30px] lg:mt-[50px]">
-            <div className="flex gap-[30px] mt-[10px] text-[8px] font-[700] text-center border-b-[1px]">
-              <p
-                className={`
-                text-[8px] px-[50px] rounded-[5px] py-[5px] ${
-                  activeBtn[0]
-                    ? "bg-[#E2F3FF] border-b-[4px] border-b-[#04177F]"
-                    : ""
-                } md:text-[11.736px] font-[500] lg:text-[20px]`}
+            <div className="text-[8px] flex gap-[9%] md:text-[18px] lg:text-[20px] justify-between md:justify-start md:gap-[28%]">
+              <div
                 onClick={() => {
                   handleClick(0);
                 }}
+                className={`${
+                  activeBtn[0]
+                    ? "bg-[#E2F3FF] rounded-[2px] border-b-[2px] border-b-[#04177f] h-[16px] flex items-center p-[5px] md:h-[35px] lg:rounded-[6px] lg:border-b-[4px] lg:h-[50px]"
+                    : ""
+                } cursor-pointer w-[144px] justify-center rounded-[2px] md:w-[180px] md:rounded-[3px] md:justify-center md:items-center flex lg:w-[248px] lg:rounded-[6px] 2xl:text-[24px]`}
               >
                 Local Data
-              </p>
-
-              <p
-                className={`py-[5px] md:text-[11.736px] font-[500] text-[8px] ${
-                  activeBtn[1]
-                    ? "bg-[#E2F3FF] border-b-[4px] border-b-[#04177F]"
-                    : ""
-                } px-[50px] rounded-[5px] lg:text-[20px]`}
+              </div>
+              <div
                 onClick={() => {
                   handleClick(1);
                   showPopup();
                 }}
+                className={`${
+                  activeBtn[1]
+                    ? "bg-[#E2F3FF] rounded-[2px] border-b-[2px] border-b-[#04177f] h-[16px] flex items-center p-[5px]  md:h-[35px] lg:rounded-[6px] lg:border-b-[4px] lg:h-[50px]"
+                    : ""
+                }cursor-pointer w-[144px] justify-center rounded-[2px] md:w-[180px] md:rounded-[3px] md:justify-center md:items-center flex lg:w-[248px] lg:rounded-[6px] 2xl:text-[24px]`}
               >
                 International Data
-              </p>
+              </div>
             </div>
+            <hr />
 
-            <div className="flex justify-between md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[10px] gap-[8px] shadow-sm mt-[20px] md:mt-[30px]">
-              <div className="flex gap-[10px]">
-                <img
-                  src={DataBundles}
-                  alt=""
-                  className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px]"
-                />
+            <div className="mt-[10%] flex flex-col gap-[20px] md:mt-[2%] md:gap-[0px] 2xl:mt-[5%]">
+              <div className="Datatopup flex justify-between md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[10px] gap-[8px] md:mt-[30px]">
+                <div className="flex gap-[10px]">
+                  <img
+                    src={DataBundles}
+                    alt=""
+                    className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px] 2xl:mt-[25px]"
+                  />
 
-                <div className="">
-                  <p className="text-[8px] font-[500] md:text-[9.389px] lg:text-[16px]">
-                    Data Bundles
-                  </p>
-                  <p className="text-[7px] font-[500] text-[#7C7C7C] w-[80%] mt-[3px] md:text-[8.244px] md:w-[100%] lg:text-[14.05px]">
-                    Top up your mobile sim with our automated data bundles
-                    directly from network providers.
-                  </p>
+                  <div className="">
+                    <p className="text-[10px] md:text-[13px] font-[500] lg:text-[18px] 2xl:text-[22px]">
+                      Data Bundles
+                    </p>
+                    <p className="text-[8px] text-[#7c7c7c] md:text-[10px] lg:text-[15px] font-[500] w-[80%] mt-[3px] md:w-[100%] 2xl:text-[20px]">
+                      Top up your mobile sim with our automated data bundles
+                      directly from network providers.
+                    </p>
+                  </div>
                 </div>
+
+                <img
+                  src={DataType}
+                  alt=""
+                  className="w-[12px] h-[12px] mb-[10px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px] "
+                />
               </div>
 
-              <img
-                src={DataType}
-                alt=""
-                className="w-[12px] h-[12px] mt-[15px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px]"
-              />
-            </div>
+              <div className="Datatopup flex justify-between md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[10px] gap-[8px] md:mt-[30px]">
+                <div className="flex gap-[10px]">
+                  <img
+                    src={DataRoll}
+                    alt=""
+                    className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px] 2xl:mt-[25px]"
+                  />
 
-            <div className="flex justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[10px] gap-[px] shadow-sm mt-[20px]">
-              <div className="flex gap-[10px]">
-                <img
-                  src={DataRoll}
-                  alt=""
-                  className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px]"
-                />
-
-                <div className="">
-                  <p className="text-[8px] font-[500] md:text-[9.389px] lg:text-[16px]">
-                    Data Roll
-                  </p>
-                  <p className="text-[7px] font-[500] text-[#7C7C7C] w-[90%] mt-[3px] md:text-[8.244px] md:w-[100%] lg:text-[14.05px]">
-                    Add, manage, and send data to your team or employees without
-                    any hassle.
-                  </p>
+                  <div className="">
+                    <p className="text-[10px] md:text-[13px] font-[500] lg:text-[18px] 2xl:text-[22px]">
+                      Data Roll
+                    </p>
+                    <p className="text-[8px] text-[#7c7c7c] md:text-[10px] lg:text-[15px] font-[500] w-[80%] mt-[3px] md:w-[100%] 2xl:text-[20px]">
+                      Add, manage, and send data to your team or employees
+                      without any hassle.
+                    </p>
+                  </div>
                 </div>
+
+                <img
+                  src={DataType}
+                  alt=""
+                  className="w-[12px] h-[12px] mb-[10px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px]"
+                />
               </div>
 
-              <img
-                src={DataType}
-                alt=""
-                className="w-[12px] h-[12px] mt-[15px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px]"
-              />
-            </div>
+              <div className="Datatopup flex justify-between md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[10px] gap-[8px] md:mt-[30px]">
+                <div className="flex gap-[10px]">
+                  <img
+                    src={DataVoucher}
+                    alt=""
+                    className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px] 2xl:mt-[25px]"
+                  />
 
-            <div className="flex justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[10px] gap-[8px] shadow-sm mt-[20px]">
-              <div className="flex gap-[10px]">
-                <img
-                  src={DataVoucher}
-                  alt=""
-                  className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px]"
-                />
-
-                <div className="">
-                  <p className="text-[8px] font-[500] md:text-[9.389px] lg:text-[16px]">
-                    Data Voucher
-                  </p>
-                  <p className="text-[7px] font-[500] text-[#7C7C7C] w-[90%] mt-[3px] md:text-[8.244px] md:w-[100%] lg:text-[14.05px]">
-                    Generate all networks data token / pins and recharge your
-                    mobile sim directly using ussd codes.
-                  </p>
+                  <div className="">
+                    <p className="text-[10px] md:text-[13px] font-[500] lg:text-[18px] 2xl:text-[22px]">
+                      Data Voucher
+                    </p>
+                    <p className="text-[8px] text-[#7c7c7c] md:text-[10px] font-[500] lg:text-[15px] w-[80%] mt-[3px] md:w-[100%] 2xl:text-[20px]">
+                      Generate all networks data token / pins and recharge your
+                      mobile sim directly using ussd codes.
+                    </p>
+                  </div>
                 </div>
+
+                <img
+                  src={DataType}
+                  alt=""
+                  className="w-[12px] h-[12px] mb-[10px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px]"
+                />
               </div>
 
-              <img
-                src={DataType}
-                alt=""
-                className="w-[12px] h-[12px] mt-[15px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px]"
-              />
-            </div>
+              <div className="Datatopup flex justify-between md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[10px] gap-[8px] md:mt-[30px]">
+                <div className="flex gap-[10px]">
+                  <img
+                    src={DataSchedule}
+                    alt=""
+                    className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px] 2xl:mt-[25px]"
+                  />
 
-            <div className="flex justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[10px] gap-[8px] shadow-sm mt-[20px]">
-              <div className="flex gap-[10px]">
-                <img
-                  src={DataSchedule}
-                  alt=""
-                  className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px]"
-                />
-
-                <div className="">
-                  <p className="text-[8px] font-[500] md:text-[9.389px] lg:text-[16px]">
-                    Data Schedule
-                  </p>
-                  <p className="text-[7px] font-[500] text-[#7C7C7C] w-[85%] mt-[3px] md:text-[8.244px] md:w-[100%] lg:text-[14.05px]">
-                    Schedule sending of data for automatic vending to recipients
-                    at your specified date and time.
-                  </p>
+                  <div className="">
+                    <p className="text-[10px] md:text-[13px] font-[500] lg:text-[18px] 2xl:text-[22px]">
+                      Data Schedule
+                    </p>
+                    <p className="text-[8px] text-[#7c7c7c] md:text-[10px] font-[500] lg:text-[15px] w-[80%] mt-[3px] md:w-[100%] 2xl:text-[20px]">
+                      Schedule sending of data for automatic vending to
+                      recipients at your specified date and time.
+                    </p>
+                  </div>
                 </div>
+
+                <img
+                  src={DataType}
+                  alt=""
+                  className="w-[12px] h-[12px] mb-[10px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px]"
+                />
               </div>
 
-              <img
-                src={DataType}
-                alt=""
-                className="w-[12px] h-[12px] mt-[15px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px]"
-              />
-            </div>
+              <div className="Datatopup flex justify-between md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[10px] gap-[8px] md:mt-[30px]">
+                <div className="flex gap-[10px]">
+                  <img
+                    src={BulkData}
+                    alt=""
+                    className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px] 2xl:mt-[25px]"
+                  />
 
-            <div className="flex justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[10px] gap-[8px] shadow-sm mt-[20px]">
-              <div className="flex gap-[10px]">
-                <img
-                  src={BulkData}
-                  alt=""
-                  className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px]"
-                />
-
-                <div className="">
-                  <p className="text-[8px] font-[500] md:text-[9.389px] lg:text-[16px]">
-                    Bulk Data
-                  </p>
-                  <p className="text-[7px] font-[500] text-[#7C7C7C] w-[80%] mt-[3px] md:text-[8.244px] md:w-[100%] lg:text-[14.05px]">
-                    Send data to multiple recipients at a time and receive
-                    instantly without any hassle.
-                  </p>
+                  <div className="">
+                    <p className="text-[10px] md:text-[13px] font-[500] lg:text-[18px] 2xl:text-[22px]">
+                      Bulk Data
+                    </p>
+                    <p className="text-[8px] text-[#7c7c7c] md:text-[10px] font-[500] lg:text-[15px] w-[80%] mt-[3px] md:w-[100%] 2xl:text-[20px]">
+                      Send data to multiple recipients at a time and receive
+                      instantly without any hassle.
+                    </p>
+                  </div>
                 </div>
-              </div>
 
-              <img
-                src={DataType}
-                alt=""
-                className="w-[12px] h-[12px] mt-[15px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px]"
-              />
+                <img
+                  src={DataType}
+                  alt=""
+                  className="w-[12px] h-[12px] mb-[10px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px]"
+                />
+              </div>
             </div>
           </section>
 
-          <footer className="flex justify-center text-center gap-[15px] mt-[150px]">
-            <p className="text-[7.042px] font-[500] leading-[9.1px] mt-[2px] lg:text-[12px]">
+          <footer className="flex justify-center text-center gap-[15px] mt-[217px]">
+            <p className="text-[8px] md:text-[12px] lg:text-[16px]  font-[500] leading-[9.1px] mt-[5px]">
               You need help?
             </p>
 
-            <p
-              className={`bg-[#04177F] rounded-[5.1px] lg:rounded-[9px] text-white text-[4.694px] font-[500] leading-[8px] px-[9px] py-[3px] lg:text-[8px] lg:px-[15px] lg:py-[5px] ${
-                isDarkMode ? "border" : "bg-[#04177f]"
-              }`}
-            >
-              Contact Us
-            </p>
+            <Link to="/ContactUs">
+              <div
+                className={`${
+                  isDarkMode ? "border " : "bg-[#04177f]"
+                } text-[8px] p-1 text-white rounded-[8px] lg:text-[14px]`}
+              >
+                Contact Us
+              </div>
+            </Link>
           </footer>
 
           {/* ================Popup======================= */}
@@ -291,16 +294,16 @@ const DataTopUpPage = () => {
                     <div
                       className={`${
                         isDarkMode ? "bg-[#000]" : "bg-[#ffffff]"
-                      } ${styles.cryptoTopUp}
-                    flex flex-col justify-between z-[100] lg:mt-[446px] lg:ml-[350px] md:mt-[10px] md:ml-[200px] 2xl:mt-[350px]`}
+                      } Datapopup
+                    flex flex-col justify-between z-[100] lg:mt-[446px] lg:ml-[350px] md:mt-[13px] md:w-[35%] md:ml-[190px] 2xl:mt-[365px] 2xl:ml-[]`}
                     >
                       <div>
-                      <p className="text-[10px] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[3%]">
-                        International Data
-                      </p>
-                      <p className="text-[10px] md:text-[16px] font-[600] text-[#04177F] lg:text-[16px]">
-                        This Feature is Currently Not Available.
-                      </p>
+                        <p className="text-[10px] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[3%]">
+                          International Data
+                        </p>
+                        <p className="text-[10px] md:text-[16px] font-[600] text-[#04177F] lg:text-[16px]">
+                          This Feature is Currently Not Available.
+                        </p>
                       </div>
                       <img
                         src={InternationalData}
@@ -308,7 +311,7 @@ const DataTopUpPage = () => {
                         className="mx-auto mt-[40px] md:w-[220px] md:h-[200px] md:mt-[5%] w-[143px] h-[67px] lg:w-[237.171px] lg:h-[150px]"
                       />
                       <div className="mx-[6%] flex flex-col gap-[5px] pb-[5%]">
-                        <p className="text-[8px] font-extrabold text-end float-right ml-[80%] md:ml-[70%] md:text-[12px] mt-[10px] lg:text-[10px] lg:font-extrabold">
+                        <p className="text-[8px] font-extrabold text-end float-right ml-[70%] md:ml-[70%] md:text-[12px] mt-[10px] lg:text-[10px]">
                           Coming Soon...
                         </p>
                         <button
@@ -321,7 +324,7 @@ const DataTopUpPage = () => {
                           Okay
                         </button>
                       </div>
-                      </div>
+                    </div>
                   </section>
                 </div>
               </div>

@@ -67,7 +67,7 @@ const CurrencyConversion = () =>{
 
             {/* fiat conversion */}
               <Link to= '/fiat'>
-              <div className="conversionLists cursor-pointer hover:bg-[#7C7C7C] hover:bg-opacity-10 flex pl-[5px] pr-[25px] md:pr-[36px] lg:pr-[60px] md:pl-[8.59px] lg:pl-[15px] justify-between  mx-auto py-[7px] md:py-[9px] lg:py-[15px] rounded-[4px] md:rounded-[6.88px] lg:rounded-[12px]">
+              <div className="conversionLists cursor-pointer flex pl-[5px] pr-[25px] md:pr-[36px] lg:pr-[60px] md:pl-[8.59px] lg:pl-[15px] justify-between  mx-auto py-[7px] md:py-[9px] lg:py-[15px] rounded-[4px] md:rounded-[6.88px] lg:rounded-[12px]">
             <div className="flex gap-2">
                 <img src={fiat} alt="fiat.svg" className="flex self-center lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px]" />
                 <div className="flex flex-col">
@@ -82,7 +82,7 @@ const CurrencyConversion = () =>{
             </Link>
           {/* crypto conversion */}
           <div>
-          <div onClick={openModal1} className="conversionLists cursor-pointer hover:bg-[#7C7C7C] hover:bg-opacity-10 flex pl-[5px] pr-[25px] md:pr-[36px] lg:pr-[60px] md:pl-[8.59px] lg:pl-[15px] justify-between  mx-auto py-[7px] md:py-[9px] lg:py-[15px] rounded-[4px] md:rounded-[6.88px] lg:rounded-[12px]">
+          <div onClick={openModal1} className="conversionLists cursor-pointer flex pl-[5px] pr-[25px] md:pr-[36px] lg:pr-[60px] md:pl-[8.59px] lg:pl-[15px] justify-between  mx-auto py-[7px] md:py-[9px] lg:py-[15px] rounded-[4px] md:rounded-[6.88px] lg:rounded-[12px]">
             <div className="flex gap-2">
                 <img src={crypto} alt="fiat.svg" className="flex self-center lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px]" />
                 <div className="flex flex-col">
@@ -113,7 +113,7 @@ const CurrencyConversion = () =>{
 
           {/* multi-wallet conversion */}
           <div>
-          <div onClick={openModal}  className="conversionLists cursor-pointer hover:bg-[#7C7C7C] hover:bg-opacity-10 flex pl-[5px] pr-[25px] md:pr-[36px] lg:pr-[60px] md:pl-[8.59px] lg:pl-[15px] justify-between  mx-auto py-[7px] md:py-[9px] lg:py-[15px] rounded-[4px] md:rounded-[6.88px] lg:rounded-[12px]">
+          <div onClick={openModal}  className="conversionLists cursor-pointer flex pl-[5px] pr-[25px] md:pr-[36px] lg:pr-[60px] md:pl-[8.59px] lg:pl-[15px] justify-between  mx-auto py-[7px] md:py-[9px] lg:py-[15px] rounded-[4px] md:rounded-[6.88px] lg:rounded-[12px]">
             <div className="flex gap-2">
                 <img src={multiwallet} alt="fiat.svg" className="flex self-center lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px]" />
                 <div className="flex flex-col">
@@ -143,7 +143,7 @@ const CurrencyConversion = () =>{
           </Modal>
                {/* airtime conversion */}
           <div>
-          <div className="conversionLists cursor-pointer hover:bg-[#7C7C7C] hover:bg-opacity-10 flex pl-[5px] pr-[25px] md:pr-[36px] lg:pr-[60px] md:pl-[8.59px] lg:pl-[15px] justify-between  mx-auto py-[7px] md:py-[9px] lg:py-[15px] rounded-[4px] md:rounded-[6.88px] lg:rounded-[12px]">
+          <div className="conversionLists cursor-pointer flex pl-[5px] pr-[25px] md:pr-[36px] lg:pr-[60px] md:pl-[8.59px] lg:pl-[15px] justify-between  mx-auto py-[7px] md:py-[9px] lg:py-[15px] rounded-[4px] md:rounded-[6.88px] lg:rounded-[12px]">
             <div className="flex gap-2">
                 <img src={airtime} alt="fiat.svg" className="flex self-center lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px]" />
                 <div className="flex flex-col">
@@ -158,7 +158,7 @@ const CurrencyConversion = () =>{
           </div>
            {/* points redeemed */}
            <div>
-          <div className="conversionLists cursor-pointer hover:bg-[#7C7C7C] hover:bg-opacity-10 flex pl-[5px] pr-[25px] md:pr-[36px] lg:pr-[60px] md:pl-[8.59px] lg:pl-[15px] justify-between  mx-auto py-[7px] md:py-[9px] lg:py-[15px] rounded-[4px] md:rounded-[6.88px] lg:rounded-[12px]">
+          <div className="conversionLists cursor-pointer flex pl-[5px] pr-[25px] md:pr-[36px] lg:pr-[60px] md:pl-[8.59px] lg:pl-[15px] justify-between  mx-auto py-[7px] md:py-[9px] lg:py-[15px] rounded-[4px] md:rounded-[6.88px] lg:rounded-[12px]">
             <div className="flex gap-2">
                 <img src={points} alt="fiat.svg" className="flex self-center lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px]" />
                 <div className="flex flex-col">
