@@ -521,7 +521,7 @@ const AirtimeVtu = () => {
                     <p className="text-[8px] text-[#0008] text-center mb-2 md:text-[12px] lg:text-[14px]">
                     You are about to purchase{" "}
                     <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">
-                        &#8358;{amount}.00{" "}
+                    {networkName + ' ' + selectedProduct} Airtime &#8358;{amount}.00{" "}
                     </span>
                     from your NGN wallet to{" "}
                     </p>
@@ -615,25 +615,30 @@ const AirtimeVtu = () => {
                             Input PIN to complete transaction
                             </p>
                             <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[8%]">
-                            <OtpInput
-                                value={inputPin}
-                                inputType="tel"
-                                onChange={setInputPin}
-                                numInputs={4}
-                                shouldAutoFocus={true}
-                                inputStyle={{
-                                color: "#403f3f",
-                                width: 30,
-                                height: 30,
-                                borderRadius: 3,
-                                }}
-                                renderInput={(props) => (
-                                <input {...props} className="inputOTP mx-[3px]" />
-                                )}
-                            />
-                            <p className="text-[8px] md:text-[12px] text-[#04177f]">
-                                Forgot Pin ?
-                            </p>
+                                <div className='flex gap-2'>
+                                <OtpInput
+                                    value={inputPin}
+                                    inputType="tel"
+                                    onChange={setInputPin}
+                                    numInputs={4}
+                                    shouldAutoFocus={true}
+                                    inputStyle={{
+                                    color: "#403f3f",
+                                    width: 30,
+                                    height: 30,
+                                    borderRadius: 3,
+                                    }}
+                                    renderInput={(props) => (
+                                    <input {...props} className="inputOTP mx-[3px]" />
+                                    )}
+                                />
+                                <img 
+                                src="/Images/airtimeTopUp/eye.png"
+                                className='w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px]' alt="" />
+                                </div>
+                                <p className="text-[8px] md:text-[12px] text-[#04177f]">
+                                    Forgot Pin ?
+                                </p>
                             </div>
                             <button
                             onClick={inputPinHandler}
@@ -642,7 +647,7 @@ const AirtimeVtu = () => {
                                 inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
                             } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
                             >
-                            Send
+                            Purchase
                             </button>
                         </div>
                     </Modal>
