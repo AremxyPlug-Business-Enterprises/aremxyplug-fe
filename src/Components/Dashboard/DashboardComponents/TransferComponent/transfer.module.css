@@ -10,6 +10,9 @@
 .successfulTwo::-webkit-scrollbar {
   display: none;
 }
+.checkrate::-webkit-scrollbar {
+  display: none;
+}
 
 .transferMoneyBtn {
   border-radius: 4.763px;
@@ -49,7 +52,7 @@
 }
 .checkrate {
   height: 600px;
-  width: 90%;
+  /* width: 90%; */
   flex-shrink: 0;
   border-radius: 11px;
   background: #fff;
@@ -286,5 +289,12 @@
 
   .receipt {
     border-radius: 20px;
+  }
+
+  .checkrate {
+    height: 550px;
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
   }
 }
