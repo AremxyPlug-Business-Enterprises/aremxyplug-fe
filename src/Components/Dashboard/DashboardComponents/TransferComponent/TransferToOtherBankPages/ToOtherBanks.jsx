@@ -88,7 +88,7 @@ export const ToOtherBanks = () => {
         <div
           className={`${
             isDarkMode ? "" : ""
-          } flex gap-[15px] justify-center items-center md:mt-[38%] lg:my-[10%] lg:mb-[%]`}
+          } flex gap-[15px] justify-center items-center md:mt-[38%] lg:mt-[26%] lg:mb-[%]`}
         >
           <div className="text-[10px] md:text-[12px] lg:text-[14px]">
             You need help ?
