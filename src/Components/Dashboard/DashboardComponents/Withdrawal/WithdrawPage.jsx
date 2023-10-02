@@ -121,30 +121,35 @@ export const WithdrawPage = () => {
                   />
                 </div>
               </Link>
-              <div
-                className={`${isDarkMode ? "border" : "bg-[#fff]"} ${
-                  styles.toMyAcct
-                }`}
-              >
-                <div className="flex gap-[5px] items-center">
+              <Link to="/withdraw-to-other-banks">
+                {" "}
+                <div
+                  className={`${isDarkMode ? "border" : "bg-[#fff]"} ${
+                    styles.toMyAcct
+                  }`}
+                >
+                  <div className="flex gap-[5px] items-center">
+                    <img
+                      className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
+                      src="Images/Dashboardimages/tf2.png"
+                      alt="/"
+                    />
+                    <div>
+                      <p className="text-[10px] md:text-[18px]">
+                        To Other Banks
+                      </p>
+                      <p className="text-[8px] text-[#7c7c7c] md:text-[16px]">
+                        Withdraw money from your wallets to any bank accounts.
+                      </p>
+                    </div>
+                  </div>
                   <img
                     className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                    src="Images/Dashboardimages/tf2.png"
+                    src="./Images/Dashboardimages/arrowright.png"
                     alt="/"
                   />
-                  <div>
-                    <p className="text-[10px] md:text-[18px]">To Other Banks</p>
-                    <p className="text-[8px] text-[#7c7c7c] md:text-[16px]">
-                      Withdraw money from your wallets to any bank accounts.
-                    </p>
-                  </div>
                 </div>
-                <img
-                  className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                  src="./Images/Dashboardimages/arrowright.png"
-                  alt="/"
-                />
-              </div>
+              </Link>
               <div
                 onClick={() => {
                   setPaymentLink(true);
