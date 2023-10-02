@@ -438,16 +438,16 @@ export default function GlobalTransfer() {
       </button>
       {currencyAvailable && (
         <Modal>
-          <div className="bg-white shadow-lg w-[90%] rounded-[8px] h-[269px] flex flex-col items-center py-[4%] gap-[40px] md:h-[360px] lg:w-[562px] lg:h-[500px] lg:py-[3%] lg:rounded-[px]">
+          <div className="bg-white shadow-lg w-[90%] rounded-[8px] h-[269px] flex flex-col items-center py-[4%] gap-[40px] md:h-[360px] lg:w-[562px] lg:gap-[60px] lg:h-[500px] lg:py-[3%] lg:rounded-[px]">
             <p className="text-[10px] text-[#04177f] font-extrabold md:text-[16px] lg:text-[25px]">
               This Currency is Currently Not Available.
             </p>
             <img
-              className="w-[135px] h-[96px]"
+              className="w-[135px] h-[96px] lg:w-[217px] lg:h-[187px]"
               src="/Images/addAccountImages/account-unavailable.png"
               alt=""
             />
-            <p className="absolute top-[58%] right-[15%] text-[8px] md:text-[12px] md:ml-[70%] lg:text-[13px] lg:right-[35%] lg:ml-[80%]">
+            <p className="absolute top-[58%] right-[15%] text-[8px] md:text-[12px] md:ml-[70%] lg:text-[14px] lg:top-[73%] lg:right-[33%] lg:ml-[40%] lg:w-[8%]">
               Coming Soon...
             </p>
 

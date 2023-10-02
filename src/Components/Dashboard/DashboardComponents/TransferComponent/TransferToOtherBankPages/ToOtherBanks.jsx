@@ -16,7 +16,7 @@ export const ToOtherBanks = () => {
 
   return (
     <DashBoardLayout>
-      <div className="flex flex-col justify-between md:h-full lg:gap-[200px] lg:h-full ">
+      <div className="flex flex-col justify-between lg:gap-[200px] lg:h-full">
         <div className="">
           <div
             style={{
@@ -88,7 +88,7 @@ export const ToOtherBanks = () => {
         <div
           className={`${
             isDarkMode ? "" : ""
-          } flex gap-[15px] justify-center items-center my-[15%] md:mt-[38%] lg:mt-[26%] lg:mb-[%]`}
+          } flex gap-[15px] justify-center items-center md:mt-[38%] lg:my-[10%] lg:mb-[%]`}
         >
           <div className="text-[10px] md:text-[12px] lg:text-[14px]">
             You need help ?
