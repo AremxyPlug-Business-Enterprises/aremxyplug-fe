@@ -257,7 +257,7 @@ const DataTopUpPage = () => {
             </div>
           </section>
 
-          <footer className="flex justify-center text-center gap-[20px] mt-[220px] mb-[50px] lg:mb-[30px] lg:mt-[400px] 2xl:mt-[500px]">
+          <footer className="flex justify-center text-center gap-[20px] mt-[220px] mb-[50px] md:mt-[750px] lg:mb-[30px] 2xl:mt-[800px]">
             <p className="text-[8px] md:text-[12px] lg:text-[20px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
               You need help?
             </p>
@@ -277,7 +277,7 @@ const DataTopUpPage = () => {
 
           {popupVisible && (
             <WalletModal>
-              <div className="text-center flex justify-center item-center">
+              <div className="text-center flex justify-center item-center md:mt-[-20px] lg:mt-[15px] 2xl:mt-[-15px]">
                 <div
                   className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
                     flex flex-col justify-center z-[100] lg:ml-[10px] md:w-full`}

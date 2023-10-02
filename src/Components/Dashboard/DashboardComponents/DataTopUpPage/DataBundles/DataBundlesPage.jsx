@@ -197,7 +197,7 @@ const DataBundlesPage = () => {
             </div>
           </div>
 
-          <footer className="flex justify-center text-center gap-[20px] mt-[265px] mb-[50px] lg:mt-[500px]">
+          <footer className="flex justify-center text-center gap-[20px] mt-[320px] mb-[50px] md:mt-[750px] lg:mb-[30px] 2xl:mt-[500px]">
             <p className="text-[8px] md:text-[12px] lg:text-[20px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
               You need help?
             </p>
