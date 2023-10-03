@@ -5,22 +5,22 @@ import { RiFileCopyFill } from "react-icons/ri";
 import { Modal } from "../../../../../../Screens/Modal/Modal";
 import { Link } from "react-router-dom";
 import styles from "../../../../TransferComponent/transfer.module.css";
-import { OtherBankReceipt } from "./OtherBankReceipt";
-import { useState } from "react";
 // import { TransactFailedPopUp } from "./TransactionFailedPopUp";
 
 export const TransactionSuccessToOtherBank = ({
   transactSuccessToOtherBank,
   setTransactSuccessToOtherBank,
-  accountname,
-  accountnumber,
-  transferamount,
-  bankname,
 }) => {
-  const { toggleSideBar, transferFee, textRef, handleCopyClick } =
-    useContext(ContextProvider);
-  const [receipt] = useState(false);
-  //   const navigate = useNavigate();
+  const {
+    toggleSideBar,
+    transferFee,
+    textRef,
+    handleCopyClick,
+    amtToTransfer,
+    globalBankName,
+    globalAccountNumber,
+    globalAccountName,
+  } = useContext(ContextProvider);
 
   const handleTransactionSuccessClose = () => {
     setTransactSuccessToOtherBank(false);
@@ -63,7 +63,7 @@ export const TransactionSuccessToOtherBank = ({
             <p className="text-[8px] text-[#0008] text-center mb-2 md:text-[14px] lg:text-[12px]">
               You have successfully transferred{" "}
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
-                &#8358;{transferamount}.00{" "}
+                &#8358;{amtToTransfer}.00{" "}
               </span>
               from your NGN wallet to{" "}
             </p>
@@ -71,15 +71,15 @@ export const TransactionSuccessToOtherBank = ({
             <div className="flex flex-col gap-2 lg:gap-4">
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                 <p className="text-[#0008]">Bank Name</p>
-                <span>{bankname}</span>
+                <span>{globalBankName}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                 <p className="text-[#0008]">Account Name</p>
-                <span>{accountname}</span>
+                <span>{globalAccountName}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                 <p className="text-[#0008]">Account Number</p>
-                <span>{accountnumber}</span>
+                <span>{globalAccountNumber}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#0008]">Transfaction fee</p>
@@ -130,14 +130,6 @@ export const TransactionSuccessToOtherBank = ({
             </div>
           </div>
         </Modal>
-      )}
-      {receipt && (
-        <OtherBankReceipt
-          accountname={accountname}
-          accountnumber={accountnumber}
-          transferamount={transferamount}
-          bankname={bankname}
-        />
       )}
     </div>
   );

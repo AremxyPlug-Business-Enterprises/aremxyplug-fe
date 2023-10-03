@@ -17,6 +17,7 @@ export const InternationalTransfer = () => {
     receive,
     setReceive,
     setInternationalDetailPopUp,
+    toggleSideBar,  
   } = useContext(ContextProvider);
 
   const transferHandler = (e) => {
@@ -211,20 +212,26 @@ export const InternationalTransfer = () => {
       <InternationalDetail />
       {checkrate && (
         <Modal>
-          <div className={`${styles.checkrate}`}>
+          <div
+            className={`${styles.checkrate} ${
+              toggleSideBar
+                ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]"
+                : "md:w-[80%] lg:w-[562px]"
+            } w-[90%] overflow-auto bg-red-500`}
+          >
             {" "}
             <img
               onClick={() => setCheckrate(false)}
-              className="absolute left-[87%] w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px]"
+              className="absolute left-[87%] w-[18px] h-[18px] my-[1%] md:w-[40px] md:h-[40px] lg:h-[35px] lg:w-[35px] md:left-[88%]"
               src="/Images/transferImages/close-circle.png"
               alt=""
             />
-            <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
-            <div className="bg-[#04177f] text-[#fff] text-[10px] my-[20%] h-[20px] flex justify-center items-center rounded-[2px] lg:text-[16px] lg:h-[38px] lg:w-[50%]">
+            <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[8%] md:h-[15px]" />
+            <div className="bg-[#04177f] text-[#fff] text-[10px] my-[20%] h-[20px] flex justify-center items-center rounded-[2px] md:my-[15%] md:h-[30px] md:text-[15px] lg:text-[16px] lg:mx-auto lg:my-[5%] lg:h-[38px] lg:w-[60%]">
               Real-time International Transfer Check Rate
             </div>
             <div className="mx-[5%]">
-              <div className="font-extrabold flex text-[#000] text-[10px] leading-[130%] items-center my-[7%] gap-[8px] md:my-[5%] md:text-[18px] lg:text-[20px]">
+              <div className="font-extrabold flex text-[#000] text-[10px] leading-[130%] items-center my-[7%] gap-[8px] md:my-[3%] md:text-[18px] lg:text-[20px]">
                 <p>Sender</p>
                 <img
                   className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
@@ -233,23 +240,23 @@ export const InternationalTransfer = () => {
                 />
               </div>
               <div className={``}>
-                <div className="border h-[25px] flex justify-between pl-[2%] lg:h-[45px] lg:border-[1px] lg:border-[#000]">
+                <div className="border h-[25px] flex justify-between pl-[2%] md:h-[40px] lg:h-[45px] lg:border-[1px] lg:border-[#0003]">
                   {" "}
                   <input
                     onChange={transferHandler}
                     type="number"
                     placeholder="Amount to Transfer"
-                    className="text-[10px] text-[#000] w-[90%] h-[100%] outline-none lg:text-[16px]"
+                    className="text-[10px] text-[#000] w-[90%] h-[100%] outline-none md:text-[15px] lg:text-[16px]"
                   />
-                  <div className="h-[23.5px] w-[50px] flex justify-center gap-[20%] items-center bg-[#04177f] lg:w-[180px] lg:h-[44px]">
+                  <div className="h-[23.5px] w-[50px] flex justify-center gap-[20%] items-center bg-[#04177f] md:h-[40px] md:w-[180px] lg:w-[180px] lg:h-[44px]">
                     {" "}
                     <img
-                      className="w-[11px] h-[11px] lg:w-[29px] lg:h-[29px]"
+                      className="w-[11px] h-[11px] md:h-[24px] md:w-[24px] lg:w-[29px] lg:h-[29px]"
                       src="./Images/otherBanksImages/NAIJAFLAG.png"
                       alt=""
                     />
                     <img
-                      className=" h-[8.3px] w-[8.3px] lg:w-[24px] lg:h-[24px]"
+                      className=" h-[8.3px] w-[8.3px] md:h-[25px] md:w-[25px] lg:w-[24px] lg:h-[24px]"
                       src="./Images/dashboardImages/arrow-down2.png"
                       alt="dropdown"
                     />
@@ -262,9 +269,9 @@ export const InternationalTransfer = () => {
                   </div>
                 )}
               </div>
-              <div className="text-[9px] text-[#29B8FC] border-[0.9px] drop-shadow-3xl border-[#0003] rounded-[7px] w-[55%] mx-auto my-[3%] flex justify-center items-center py-[7px] gap-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
+              <div className="text-[9px] text-[#29B8FC] border-[0.9px] drop-shadow-3xl border-[#0003] rounded-[7px] w-[55%] mx-auto my-[3%] flex justify-center items-center py-[7px] gap-1 md:my-[5%] md:h-[40px] md:text-[14px] md:gap-2 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
                 <img
-                  className="w-[14px] h-[14px] lg:w-[24px] lg:h-[24px]"
+                  className="w-[14px] h-[14px] md:w-[20px] md:h-[20px] lg:w-[24px] lg:h-[24px]"
                   src="./Images/transferImages/ticket-discount.png"
                   alt="conversion"
                 />
@@ -277,19 +284,19 @@ export const InternationalTransfer = () => {
               <div className="font-extrabold flex text-[#000] text-[10px] leading-[130%] items-center my-[7%] gap-[8px] md:my-[5%] md:text-[18px] lg:text-[20px]">
                 <p>To Recipient</p>
                 <img
-                  className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
+                  className="w-[15px] h-[15px] md:h-[24px] md:w-[24px] lg:w-[20px] lg:h-[20px]"
                   src="./Images/Dashboardimages/arrowright.png"
                   alt="/"
                 />
               </div>
               <div className={``}>
-                <div className="border rounded-[px] h-[25px] flex justify-between pl-[2%] lg:h-[45px] lg:border-[1px] lg:border-[#0003]">
+                <div className="border rounded-[px] h-[25px] flex justify-between pl-[2%] md:h-[45px] lg:h-[45px] lg:border-[1px] lg:border-[#0003]">
                   {" "}
                   <input
                     onChange={receiveHandler}
                     type="number"
                     placeholder="Recipient will Receive"
-                    className="text-[10px] w-[90%] h-[100%] outline-none lg:text-[16px]"
+                    className="text-[10px] w-[90%] h-[100%] outline-none md:text-[15px] lg:text-[16px]"
                   />
                   <CountrySelector
                     onSelect={handleCountrySelect}
@@ -305,7 +312,7 @@ export const InternationalTransfer = () => {
               </div>
               <button
                 onClick={() => setCheckrate(false)}
-                className="bg-[#04177f] mt-[25%] w-full flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:mt-[10%]"
+                className="bg-[#04177f] mt-[25%] w-full flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:my-[10%] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:mt-[10%]"
               >
                 Okay
               </button>
