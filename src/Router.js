@@ -58,6 +58,7 @@ import DataBundlesPage from "./Components/Dashboard/DashboardComponents/DataTopU
 import Referral from "./Components/Referrals/Referral";
 import MtnDataTopUpBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/MtnDataTopUpBundle/MtnDataTopUpBundle";
 import WithdrawToOtherBanks from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToOtherBanks";
+import { WithdrawToOtherBankReceipt } from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToOtherBanksPopUp/WithdrawToOtherBankReceipt";
 export const Router = () => {
   return (
     <div>
@@ -127,6 +128,10 @@ export const Router = () => {
           element={<WithdrawToOtherBanks />}
         />
         <Route path="/other-bank-receipt" element={<OtherBankReceipt />} />
+        <Route
+          path="/other-bank-withdrawalreceipt"
+          element={<WithdrawToOtherBankReceipt />}
+        />
         <Route
           path="/international-bank-receipt"
           element={<InternationalReceipt />}

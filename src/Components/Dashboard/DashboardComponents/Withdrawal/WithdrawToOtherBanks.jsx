@@ -2,10 +2,9 @@ import React, { useContext, useState } from "react";
 import { ContextProvider } from "../../../Context";
 import { Link } from "react-router-dom";
 import styles from "../TransferComponent/transfer.module.css";
-import Joi from "joi";
 import { Modal } from "../../../Screens/Modal/Modal";
-import { ConfirmOtherTransaction } from "../TransferComponent/TransferToOtherBankPages/OtherBankPopUp/OtherBankPopUp/ConfirmOtherTransaction";
 import { DashBoardLayout } from "../../Layout/DashBoardLayout";
+import { ConfirmOtherWithdrawalPopUp } from "./WithdrawToOtherBanksPopUp/ConfirmOtherWithdrawalPopUp";
 // import { useNavigate } from "react-router-dom";
 
 export default function WithdrawToOtherBanks() {
@@ -16,8 +15,16 @@ export default function WithdrawToOtherBanks() {
     setSelected,
     isDarkMode,
     toggleSideBar,
-    amtToTransfer,
-    setAmtToTransfer,
+    amtToWithdraw,
+    setAmtToWithdraw,
+    wGlobalCountry,
+    setWGlobalCountry,
+    wGlobalBankName,
+    wGlobalAccountNumber,
+    wGlobalAccountName,
+    wGlobalWithdrawErrors,
+    handleWithdrawGlobalInputChange,
+    ProceedToGlobalWithdrawal,
   } = useContext(ContextProvider);
 
   const [addToRecipient, SetAddToRecipient] = useState(false);
@@ -64,83 +71,19 @@ export default function WithdrawToOtherBanks() {
 
   const [flag, setFlag] = useState("");
   const [countryCode, setCountryCode] = useState("");
-  const [country, setCountry] = useState("");
-  const [errors, setErrors] = useState({});
-  const [state, setState] = useState({
-    accountName: "",
-    accountNumber: "",
-    bankName: "",
-  });
-  const [otherBanksConfirmation, setOtherBankConfirmation] = useState(false);
   const [currencyAvailable, setCurrencyAvailable] = useState(false);
-  // const navigate = useNavigate();
-
-  const schema = Joi.object({
-    country: Joi.string().required(),
-    bankName: Joi.string().required(),
-    accountNumber: Joi.string()
-      .pattern(new RegExp(/^\d{10,}/))
-      .required()
-      .messages({
-        "string.pattern.base": "Account number should be 10 digits ",
-      }),
-    accountName: Joi.string().required(),
-    amtToTransfer: Joi.string()
-      .pattern(new RegExp(/\d{4,}/))
-      .required()
-      .messages({
-        "string.pattern.base": "Amount can not be less than 1000",
-      }),
-  });
-
-  const handleProceed = (e) => {
-    e.preventDefault();
-
-    const { accountNumber, accountName, bankName } = state;
-
-    const { error } = schema.validate({
-      country,
-      bankName,
-      accountNumber,
-      accountName,
-      amtToTransfer,
-    });
-
-    if (error) {
-      setErrors(
-        error.details.reduce((acc, curr) => {
-          acc[curr.path[0]] = curr.message;
-          return acc;
-        }, {})
-      );
-    } else {
-      setOtherBankConfirmation(true);
-      setErrors({});
-    }
-
-    // console.log(successful);
-  };
 
   const amountHandler = (e) => {
-    setAmtToTransfer(e.target.value);
+    setAmtToWithdraw(e.target.value);
   };
 
   const handleCountryClick = (name, flag, id, code) => {
     setFlag(flag);
     setShowList(false);
-    setCountry(name);
+    setWGlobalCountry(name);
     setSelected(true);
     setCountryCode(code);
     setCurrencyAvailable(id !== 1);
-  };
-
-  const handleInputChange = (event) => {
-    const { name, value, type, checked } = event.target;
-    const inputValue = type === "checkbox" ? checked : value;
-    setState({
-      ...state,
-      [name]: inputValue,
-    });
   };
 
   const refresh = () => window.location.reload(true);
@@ -199,7 +142,7 @@ export default function WithdrawToOtherBanks() {
                   />
                   <p className="text-[10px] font-extrabold lg:text-[14px]">
                     {" "}
-                    {country}
+                    {wGlobalCountry}
                   </p>
                 </div>
               ) : (
@@ -211,9 +154,9 @@ export default function WithdrawToOtherBanks() {
                 alt="dropdown"
               />
             </div>
-            {errors.country && (
+            {wGlobalWithdrawErrors.country && (
               <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                {errors.country}
+                {wGlobalWithdrawErrors.country}
               </div>
             )}
             {showList && (
@@ -272,9 +215,9 @@ export default function WithdrawToOtherBanks() {
                 ""
               )}
             </div>
-            {errors.currency && (
+            {wGlobalWithdrawErrors.currency && (
               <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                {errors.currency}
+                {wGlobalWithdrawErrors.currency}
               </div>
             )}
           </div>
@@ -310,9 +253,9 @@ export default function WithdrawToOtherBanks() {
             </p>
             <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
               <input
-                onChange={handleInputChange}
+                onChange={handleWithdrawGlobalInputChange}
                 name="bankName"
-                value={state.bankName}
+                value={wGlobalBankName}
                 className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
                 type="text"
               />
@@ -322,9 +265,9 @@ export default function WithdrawToOtherBanks() {
                 alt="dropdown"
               />
             </div>
-            {errors.bankName && (
+            {wGlobalWithdrawErrors.bankName && (
               <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                {errors.bankName}
+                {wGlobalWithdrawErrors.bankName}
               </div>
             )}
           </div>
@@ -336,16 +279,16 @@ export default function WithdrawToOtherBanks() {
             </p>
             <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
               <input
-                onChange={handleInputChange}
+                onChange={handleWithdrawGlobalInputChange}
                 name="accountNumber"
-                value={state.accountNumber}
+                value={wGlobalAccountNumber}
                 className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
                 type="number"
               />
             </div>
-            {errors.accountNumber && (
+            {wGlobalWithdrawErrors.accountNumber && (
               <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                {errors.accountNumber}
+                {wGlobalWithdrawErrors.accountNumber}
               </div>
             )}
           </div>
@@ -357,16 +300,16 @@ export default function WithdrawToOtherBanks() {
             </p>
             <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
               <input
-                onChange={handleInputChange}
+                onChange={handleWithdrawGlobalInputChange}
                 name="accountName"
-                value={state.accountName}
+                value={wGlobalAccountName}
                 className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
                 type="text"
               />
             </div>
-            {errors.accountName && (
+            {wGlobalWithdrawErrors.accountName && (
               <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                {errors.accountName}
+                {wGlobalWithdrawErrors.accountName}
               </div>
             )}
           </div>
@@ -387,9 +330,9 @@ export default function WithdrawToOtherBanks() {
               />
             </div>
 
-            {errors.amtToTransfer && (
+            {wGlobalWithdrawErrors.amtToTransfer && (
               <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                {errors.amtToTransfer}
+                {wGlobalWithdrawErrors.amtToTransfer}
               </div>
             )}
           </div>
@@ -462,14 +405,13 @@ export default function WithdrawToOtherBanks() {
           </div>
         </div>
         <button
-          onClick={handleProceed}
+          onClick={ProceedToGlobalWithdrawal}
           className={`${
-            amtToTransfer.length < 4 ? "bg-[#0008]" : "bg-[#04177f]"
+            amtToWithdraw.length < 4 ? "bg-[#0008]" : "bg-[#04177f]"
           } my-[5%] w-full flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
         >
           Proceed
         </button>
-
         <div
           className={`${
             isDarkMode ? "mb-[1%]" : ""
@@ -488,7 +430,6 @@ export default function WithdrawToOtherBanks() {
             </div>
           </Link>
         </div>
-
         {currencyAvailable && (
           <Modal>
             <div className="bg-white shadow-lg w-[90%] rounded-[8px] h-[269px] flex flex-col items-center py-[4%] gap-[40px] md:h-[360px] lg:w-[562px] lg:gap-[60px] lg:h-[500px] lg:py-[3%] lg:rounded-[px]">
@@ -515,14 +456,7 @@ export default function WithdrawToOtherBanks() {
             </div>
           </Modal>
         )}
-        <ConfirmOtherTransaction
-          otherBanksConfirmation={otherBanksConfirmation}
-          setOtherBankConfirmation={setOtherBankConfirmation}
-          bankname={state.bankName}
-          accountname={state.accountName}
-          accountnumber={state.accountNumber}
-          transferamount={amtToTransfer}
-        />
+        <ConfirmOtherWithdrawalPopUp />
       </div>
     </DashBoardLayout>
   );

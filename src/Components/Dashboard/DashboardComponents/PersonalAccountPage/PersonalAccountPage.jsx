@@ -325,17 +325,13 @@ export const PersonalAccountPage = () => {
             </button>
           </div>
         </div>
-        <div
-          className={`${
-            isDarkMode ? "" : ""
-          } flex gap-[15px] justify-center items-center my-[15%] md:mt-[38%] lg:mt-[26%] lg:mb-[%]`}
-        >
-          <div className="text-[10px] md:text-[12px] lg:text-[14px]">
+        <div className="flex gap-[15px] justify-center items-center lg:my-10">
+          <div className="text-[8px] md:text-[12px] lg:text-[16px]">
             You need help ?
           </div>
           <Link to="/ContactUs">
             <div
-              className={`${isDarkMode ? "border" : "bg-[#04177f]"} ${
+              className={`${isDarkMode ? "border " : "bg-[#04177f]"} ${
                 styles.contactus
               }`}
             >
