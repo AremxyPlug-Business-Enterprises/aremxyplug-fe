@@ -42,7 +42,7 @@ export const RecentTransaction = () => {
             alt=""
           />
         </div>
-
+        <Link to="/wallet-summary">
         <div
           className={`${
             isDarkMode ? "border" : "bg-[#04177f]"
@@ -50,6 +50,8 @@ export const RecentTransaction = () => {
         >
           Wallet Summary
         </div>
+        </Link>
+        <Link to="/sales-summary">
         <div
           className={`${
             isDarkMode ? "border" : "bg-[#04177f]"
@@ -57,6 +59,7 @@ export const RecentTransaction = () => {
         >
           Sales Summary
         </div>
+        </Link>
         <div
           className={`${
             isDarkMode ? "border" : "bg-[#04177f]"
