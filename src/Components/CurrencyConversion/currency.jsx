@@ -95,13 +95,13 @@ const CurrencyConversion = () =>{
             <div className="modal-animation">
             <p className="text-center font-semibold text-[8px] md:text-[14px] lg:text-[16px] lg:py-7 md:py-4 py-3">Crypto Conversion</p>
             <p className="text-[#04177F] text-[8px] md:text-[10px] lg:text-[16px] text-center font-semibold">This Feature is Currently Not Available.</p>
-            <div className="relative my-[25px]">
+            <div className="relative my-[20px]">
               <div className="flex justify-center">
                 <img src={cryptoFeature} alt="" className="lg:h-[200px] md:w-[120px] lg:w-[204.4px] md:h-[120px]"/>
               </div>
               <span className="text-[7px] md:text-[10px] lg:text-[12px] font-semibold absolute right-12">Coming soon...</span>
             </div>
-            <button onClick={closeModal1} className="bg-[#04177F] flex mx-auto mt-[43px] md:mt-[30px] lg:mt-[50px] rounded-[4.6px] md:rounded-[7px] lg:rounded-[12px] w-[255px] md:w-[58px] lg:w-[93px] h-[30px] lg:h-[34px] md:h-[23px]">
+            <button onClick={closeModal1} className="bg-[#04177F] flex mx-auto rounded-[4.6px] md:rounded-[7px] lg:rounded-[12px] w-[255px] md:w-[58px] lg:w-[93px] h-[30px] lg:h-[34px] md:h-[23px]">
                       <p className="text-white text-[12px] md:text-[9px] lg:text-[13px] font-semibold flex mx-auto self-center">Okay</p>
             </button>
             </div>
