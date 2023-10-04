@@ -8,14 +8,17 @@ import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
-export const OtherBankReceipt = ({
-  accountname,
-  accountnumber,
-  transferamount,
-  bankname,
-}) => {
-  const { toggleSideBar, textRef, isDarkMode, date } =
-    useContext(ContextProvider);
+export const OtherBankReceipt = () => {
+  const {
+    toggleSideBar,
+    textRef,
+    isDarkMode,
+    date,
+    globalBankName,
+    globalAccountNumber,
+    globalAccountName,
+    amtToTransfer,
+  } = useContext(ContextProvider);
 
   const contentRef = useRef(null);
 
@@ -116,7 +119,7 @@ export const OtherBankReceipt = ({
             <p className="text-[9px] text-[#0008] text-center my-2 md:text-[14px] lg:text-[14px]">
               You have successfully transferred{" "}
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[16px]">
-                &#8358;{transferamount}.00{" "}
+                &#8358;{amtToTransfer}.00{" "}
               </span>
               from your NGN wallet to{" "}
             </p>
@@ -133,15 +136,15 @@ export const OtherBankReceipt = ({
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Bank Name</p>
-                  <span>{bankname}</span>
+                  <span>{globalBankName}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Account Name</p>
-                  <span>{accountname}</span>
+                  <span>{globalAccountName}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Account Number</p>
-                  <span>{accountnumber}</span>
+                  <span>{globalAccountNumber}</span>
                 </div>
               </div>
 
@@ -157,7 +160,7 @@ export const OtherBankReceipt = ({
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Customer Name</p>
-                  <span>{accountname}</span>
+                  <span>{globalAccountName}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Wallet Type</p>

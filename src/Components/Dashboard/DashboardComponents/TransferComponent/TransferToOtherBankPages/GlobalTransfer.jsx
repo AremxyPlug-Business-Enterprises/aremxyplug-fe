@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { ContextProvider } from "../../../../Context";
 import styles from "../../TransferComponent/transfer.module.css";
-import Joi from "joi";
+// import Joi from "joi";
 import { ConfirmOtherTransaction } from "./OtherBankPopUp/OtherBankPopUp/ConfirmOtherTransaction";
 import { Modal } from "../../../../Screens/Modal/Modal";
 // import { useNavigate } from "react-router-dom";
@@ -16,6 +16,11 @@ export default function GlobalTransfer() {
     toggleSideBar,
     amtToTransfer,
     setAmtToTransfer,
+    globalCountry,
+    setGlobalCountry,
+    globalTransferErrors,
+    handleGlobalInputChange,
+    ProceedToGlobalTransfer,
   } = useContext(ContextProvider);
 
   const [addToRecipient, SetAddToRecipient] = useState(false);
@@ -62,62 +67,7 @@ export default function GlobalTransfer() {
 
   const [flag, setFlag] = useState("");
   const [countryCode, setCountryCode] = useState("");
-  const [country, setCountry] = useState("");
-  const [errors, setErrors] = useState({});
-  const [state, setState] = useState({
-    accountName: "",
-    accountNumber: "",
-    bankName: "",
-  });
-  const [otherBanksConfirmation, setOtherBankConfirmation] = useState(false);
   const [currencyAvailable, setCurrencyAvailable] = useState(false);
-  // const navigate = useNavigate();
-
-  const schema = Joi.object({
-    country: Joi.string().required(),
-    bankName: Joi.string().required(),
-    accountNumber: Joi.string()
-      .pattern(new RegExp(/^\d{10,}/))
-      .required()
-      .messages({
-        "string.pattern.base": "Account number should be 10 digits ",
-      }),
-    accountName: Joi.string().required(),
-    amtToTransfer: Joi.string()
-      .pattern(new RegExp(/\d{4,}/))
-      .required()
-      .messages({
-        "string.pattern.base": "Amount can not be less than 1000",
-      }),
-  });
-
-  const handleProceed = (e) => {
-    e.preventDefault();
-
-    const { accountNumber, accountName, bankName } = state;
-
-    const { error } = schema.validate({
-      country,
-      bankName,
-      accountNumber,
-      accountName,
-      amtToTransfer,
-    });
-
-    if (error) {
-      setErrors(
-        error.details.reduce((acc, curr) => {
-          acc[curr.path[0]] = curr.message;
-          return acc;
-        }, {})
-      );
-    } else {
-      setOtherBankConfirmation(true);
-      setErrors({});
-    }
-
-    // console.log(successful);
-  };
 
   const amountHandler = (e) => {
     setAmtToTransfer(e.target.value);
@@ -126,19 +76,10 @@ export default function GlobalTransfer() {
   const handleCountryClick = (name, flag, id, code) => {
     setFlag(flag);
     setShowList(false);
-    setCountry(name);
+    setGlobalCountry(name);
     setSelected(true);
     setCountryCode(code);
     setCurrencyAvailable(id !== 1);
-  };
-
-  const handleInputChange = (event) => {
-    const { name, value, type, checked } = event.target;
-    const inputValue = type === "checkbox" ? checked : value;
-    setState({
-      ...state,
-      [name]: inputValue,
-    });
   };
 
   const refresh = () => window.location.reload(true);
@@ -165,7 +106,7 @@ export default function GlobalTransfer() {
                 />
                 <p className="text-[10px] font-extrabold lg:text-[14px]">
                   {" "}
-                  {country}
+                  {globalCountry}
                 </p>
               </div>
             ) : (
@@ -177,9 +118,9 @@ export default function GlobalTransfer() {
               alt="dropdown"
             />
           </div>
-          {errors.country && (
+          {globalTransferErrors.country && (
             <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-              {errors.country}
+              {globalTransferErrors.country}
             </div>
           )}
           {showList && (
@@ -238,9 +179,9 @@ export default function GlobalTransfer() {
               ""
             )}
           </div>
-          {errors.currency && (
+          {globalTransferErrors.currency && (
             <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-              {errors.currency}
+              {globalTransferErrors.currency}
             </div>
           )}
         </div>
@@ -271,12 +212,14 @@ export default function GlobalTransfer() {
         {/* =====================Bank Name=================== */}
 
         <div className={` ${styles.inputBox}`}>
-          <p className="text-[10px] font-extrabold md:text-[14px] lg:text-[20px]">Bank Name</p>
+          <p className="text-[10px] font-extrabold md:text-[14px] lg:text-[20px]">
+            Bank Name
+          </p>
           <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
             <input
-              onChange={handleInputChange}
+              onChange={handleGlobalInputChange}
               name="bankName"
-              value={state.bankName}
+              value={setGlobalCountry.bankName}
               className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
               type="text"
             />
@@ -286,9 +229,9 @@ export default function GlobalTransfer() {
               alt="dropdown"
             />
           </div>
-          {errors.bankName && (
+          {globalTransferErrors.bankName && (
             <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-              {errors.bankName}
+              {globalTransferErrors.bankName}
             </div>
           )}
         </div>
@@ -300,16 +243,16 @@ export default function GlobalTransfer() {
           </p>
           <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
             <input
-              onChange={handleInputChange}
+              onChange={handleGlobalInputChange}
               name="accountNumber"
-              value={state.accountNumber}
+              value={setGlobalCountry.accountNumber}
               className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
               type="number"
             />
           </div>
-          {errors.accountNumber && (
+          {globalTransferErrors.accountNumber && (
             <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-              {errors.accountNumber}
+              {globalTransferErrors.accountNumber}
             </div>
           )}
         </div>
@@ -321,16 +264,16 @@ export default function GlobalTransfer() {
           </p>
           <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
             <input
-              onChange={handleInputChange}
+              onChange={handleGlobalInputChange}
               name="accountName"
-              value={state.accountName}
+              value={setGlobalCountry.accountName}
               className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
               type="text"
             />
           </div>
-          {errors.accountName && (
+          {globalTransferErrors.accountName && (
             <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-              {errors.accountName}
+              {globalTransferErrors.accountName}
             </div>
           )}
         </div>
@@ -351,9 +294,9 @@ export default function GlobalTransfer() {
             />
           </div>
 
-          {errors.amtToTransfer && (
+          {globalTransferErrors.amtToTransfer && (
             <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-              {errors.amtToTransfer}
+              {globalTransferErrors.amtToTransfer}
             </div>
           )}
         </div>
@@ -386,50 +329,47 @@ export default function GlobalTransfer() {
           ></textarea>
         </div>
       </div>
-
-
-        {/* =========================Add to recipient ? ======================= */}
-        <div className="flex gap-[10px]">
-          <div className="flex items-center gap-[10px]">
-            <div className="text-[11px] lg:text-[16px]">Add to recipient ?</div>
+      {/* =========================Add to recipient ? ======================= */}
+      <div className="flex gap-[10px]">
+        <div className="flex items-center gap-[10px]">
+          <div className="text-[11px] lg:text-[16px]">Add to recipient ?</div>
+          <div
+            onClick={() => {
+              SetAddToRecipient(!addToRecipient);
+              // handleButtonClick();
+            }}
+            className={` w-[17px] h-[8.4px] md:w-[30px] md:h-[12px] lg:w-[50px] lg:h-[22px] lg:rounded-full rounded ${
+              addToRecipient ? "bg-[#58DA8F]" : "bg-[#b1b0b0]"
+            }`}
+          >
             <div
-              onClick={() => {
-                SetAddToRecipient(!addToRecipient);
-                // handleButtonClick();
-              }}
-              className={` w-[17px] h-[8.4px] md:w-[30px] md:h-[12px] lg:w-[50px] lg:h-[22px] lg:rounded-full rounded ${
-                addToRecipient ? "bg-[#58DA8F]" : "bg-[#b1b0b0]"
+              className={`rounded-full w-[9.5px] h-[8.4px] md:w-[14px] md:h-[12px] lg:h-[22px] lg:w-[21px] lg:drop-shadow-md bg-[#fff] ${
+                addToRecipient ? "float-right" : "float-left"
               }`}
-            >
-              <div
-                className={`rounded-full w-[9.5px] h-[8.4px] md:w-[14px] md:h-[12px] lg:h-[22px] lg:w-[21px] lg:drop-shadow-md bg-[#fff] ${
-                  addToRecipient ? "float-right" : "float-left"
-                }`}
-              ></div>
-            </div>
-          </div>
-          <div className="flex items-center gap-[10px]">
-            <div className="text-[11px] lg:text-[16px]">Save to favorities</div>
-            <div
-              onClick={() => {
-                setSaveTofavorite(!saveToFavorite);
-                // handleButtonClick();
-              }}
-              className={` w-[17px] h-[8.4px] md:w-[30px] md:h-[12px] lg:w-[50px] lg:h-[22px] lg:rounded-full rounded ${
-                saveToFavorite ? "bg-[#58DA8F]" : "bg-[#b1b0b0]"
-              }`}
-            >
-              <div
-                className={`rounded-full w-[9.5px] h-[8.4px] md:w-[14px] md:h-[12px] lg:h-[22px] lg:w-[21px] lg:drop-shadow-md bg-[#fff] ${
-                  saveToFavorite ? "float-right" : "float-left"
-                }`}
-              ></div>
-            </div>
+            ></div>
           </div>
         </div>
-
+        <div className="flex items-center gap-[10px]">
+          <div className="text-[11px] lg:text-[16px]">Save to favorities</div>
+          <div
+            onClick={() => {
+              setSaveTofavorite(!saveToFavorite);
+              // handleButtonClick();
+            }}
+            className={` w-[17px] h-[8.4px] md:w-[30px] md:h-[12px] lg:w-[50px] lg:h-[22px] lg:rounded-full rounded ${
+              saveToFavorite ? "bg-[#58DA8F]" : "bg-[#b1b0b0]"
+            }`}
+          >
+            <div
+              className={`rounded-full w-[9.5px] h-[8.4px] md:w-[14px] md:h-[12px] lg:h-[22px] lg:w-[21px] lg:drop-shadow-md bg-[#fff] ${
+                saveToFavorite ? "float-right" : "float-left"
+              }`}
+            ></div>
+          </div>
+        </div>
+      </div>
       <button
-        onClick={handleProceed}
+        onClick={ProceedToGlobalTransfer}
         className={`${
           amtToTransfer.length < 4 ? "bg-[#0008]" : "bg-[#04177f]"
         } my-[5%] w-full flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
@@ -462,14 +402,7 @@ export default function GlobalTransfer() {
           </div>
         </Modal>
       )}
-      <ConfirmOtherTransaction
-        otherBanksConfirmation={otherBanksConfirmation}
-        setOtherBankConfirmation={setOtherBankConfirmation}
-        bankname={state.bankName}
-        accountname={state.accountName}
-        accountnumber={state.accountNumber}
-        transferamount={amtToTransfer}
-      />
+      <ConfirmOtherTransaction />
     </div>
   );
 }

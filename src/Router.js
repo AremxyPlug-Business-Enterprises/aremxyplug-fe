@@ -53,10 +53,11 @@ import { InternationalReceipt } from "./Components/Dashboard/DashboardComponents
 import FiatConversion from "./Components/CurrencyConversion/FiatConversion";
 import DataTopUpPage from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataTopUpPage";
 import CurrencyConversion from "./Components/CurrencyConversion/currencyConversion";
-import PointRedeem from "./Components/Dashboard/DashboardComponents/PointRedeem/PointRedeem"
+import PointRedeem from "./Components/Dashboard/DashboardComponents/PointRedeem/PointRedeem";
 import DataBundlesPage from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundlesPage";
-import Referral from "./Components/Referrals/Referral"
-import MtnDataTopUpBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/MtnDataTopUpBundle/MtnDataTopUpBundle"
+import Referral from "./Components/Referrals/Referral";
+import MtnDataTopUpBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/MtnDataTopUpBundle/MtnDataTopUpBundle";
+import WithdrawToOtherBanks from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToOtherBanks";
 export const Router = () => {
   return (
     <div>
@@ -121,16 +122,23 @@ export const Router = () => {
         />
         <Route path="/withdrawal-receipt" element={<WithdrawalReceipt />} />
         <Route path="/To-other-banks" element={<ToOtherBanks />} />
+        <Route
+          path="/withdraw-to-other-banks"
+          element={<WithdrawToOtherBanks />}
+        />
         <Route path="/other-bank-receipt" element={<OtherBankReceipt />} />
-        <Route path="/international-bank-receipt" element={<InternationalReceipt />} />
+        <Route
+          path="/international-bank-receipt"
+          element={<InternationalReceipt />}
+        />
         <Route path="/global-transfer" element={<GlobalTransfer />} />
         <Route path="/point-redeem" element={<PointRedeem />} />
-        <Route path="/fiat" element={<FiatConversion/>}/>
-        <Route path="/currencyConversion" element={<CurrencyConversion/>} />
-        <Route path="/data-top-up" element={<DataTopUpPage/>} />
-        <Route path="/data-bundles" element={<DataBundlesPage/>} />
-        <Route path="/My-Referral" element={<Referral/>} />
-        <Route path="/MtnDataTopUpBundle" element={<MtnDataTopUpBundle/>} />
+        <Route path="/fiat" element={<FiatConversion />} />
+        <Route path="/currencyConversion" element={<CurrencyConversion />} />
+        <Route path="/data-top-up" element={<DataTopUpPage />} />
+        <Route path="/data-bundles" element={<DataBundlesPage />} />
+        <Route path="/My-Referral" element={<Referral />} />
+        <Route path="/MtnDataTopUpBundle" element={<MtnDataTopUpBundle />} />
       </Routes>
     </div>
   );
