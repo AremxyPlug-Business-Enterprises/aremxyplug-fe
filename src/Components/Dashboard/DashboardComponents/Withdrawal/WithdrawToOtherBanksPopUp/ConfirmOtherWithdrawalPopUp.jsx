@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { ContextProvider } from "../../../../Context";
 import { Modal } from "../../../../Screens/Modal/Modal";
 import styles from "../../TransferComponent/transfer.module.css";
-// import { OtherWithdrawInputPinPopUp } from "./OtherWithdrawInputPinPopUp";
+import { OtherWithdrawInputPinPopUp } from "./OtherWithdrawInputPinPopUp";
 
 export const ConfirmOtherWithdrawalPopUp = () => {
   const {
@@ -119,7 +119,7 @@ export const ConfirmOtherWithdrawalPopUp = () => {
           )
         </Modal>
       )}
-      {/* <OtherWithdrawInputPinPopUp /> */}
+      <OtherWithdrawInputPinPopUp />
     </div>
   );
 };

@@ -577,14 +577,16 @@ export const Context = ({ children }) => {
   };
   // ========================End of Withdrawal page=========================
 
-  // ==================Start for withdraw to other banks====================
+  // ==================Start for withdraw To Other Banks====================
   const [wOtherBanksConfirmation, setWOtherBankConfirmation] = useState(false);
   const [wGlobalCountry, setWGlobalCountry] = useState("");
   const [wGlobalWithdrawErrors, setWGlobalWithdrawErrors] = useState({});
   const [amtToWithdraw, setAmtToWithdraw] = useState("");
-  const [withdrawalInputPin, setWithdrawalInputPin] = useState("");
+  const [withdrawalInputPin, setWithdrawalInputPin] = useState(false);
   const [otherWithdrawalConfirmation, setOtherWithdrawalConfirmation] =
     useState("");
+  const [OtherBankWithdrawalSuccess, setOtherBankWithdrawalSuccess] =
+    useState(false);
   const [wGlobalWithdrawState, setWGlobalWithdrawState] = useState({
     accountName: "",
     accountNumber: "",
@@ -898,6 +900,8 @@ export const Context = ({ children }) => {
     setOtherWithdrawalConfirmation,
     withdrawalInputPin,
     setWithdrawalInputPin,
+    OtherBankWithdrawalSuccess,
+    setOtherBankWithdrawalSuccess,
     // ==============exchangeRate=============
     exchangeRate,
   };
