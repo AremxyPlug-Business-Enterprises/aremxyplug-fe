@@ -58,6 +58,8 @@ import DataBundlesPage from "./Components/Dashboard/DashboardComponents/DataTopU
 import Referral from "./Components/Referrals/Referral";
 import MtnDataTopUpBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/MtnDataTopUpBundle/MtnDataTopUpBundle";
 import WithdrawToOtherBanks from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToOtherBanks";
+import WalletSummaryPage from "./Components/WalletSummaryPage/WalletSummary";
+import SalesSummaryPage from "./Components/SalesSummaryPage/SalesSummary";
 export const Router = () => {
   return (
     <div>
@@ -108,6 +110,8 @@ export const Router = () => {
         <Route path="/cookie-settings" element={<CookiesSettings />} />
         <Route path="/Receipt" element={<Receipt />} />
         <Route path="/withdraw" element={<WithdrawPage />} />
+        <Route path="/wallet-summary" element={<WalletSummaryPage/>} />
+        <Route path="/sales-summary" element={<SalesSummaryPage />} />
         <Route
           path="/withdraw-to-account"
           element={<WithdrawToMyAccountPage />}
