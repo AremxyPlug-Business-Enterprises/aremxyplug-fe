@@ -136,7 +136,7 @@ const DataTopUpPage = () => {
                       <p className="text-[10px] md:text-[13px] font-[500] lg:text-[18px] 2xl:text-[22px]">
                         Data Bundles
                       </p>
-                      <p className="text-[8px] text-[#7c7c7c] md:text-[10px] lg:text-[15px] font-[500] w-[95%] lg:w-[130%] mt-[3px] md:w-[100%] 2xl:text-[20px]">
+                      <p className="text-[8px] text-[#7c7c7c] md:text-[10px] lg:text-[15px] font-[500] w-[95%] lg:w-[130%] mt-[3px] md:w-[110%] 2xl:text-[20px]">
                         Top up your mobile sim with our automated data bundles
                         directly from network providers.
                       </p>
@@ -293,7 +293,7 @@ const DataTopUpPage = () => {
                   <img
                     src={InternationalData}
                     alt=""
-                    className="mx-auto mt-[60px] md:mt-[15%] md:w-[220px] md:mx-[75px] w-[143px] h-[67px] lg:w-[300px] lg:h-[200px] lg:mx-[150px] lg:mt-[10%] 2xl:mt-[10%] 2xl:mx-[180px]"
+                    className="img mx-auto mt-[60px] md:mt-[15%] md:w-[220px] md:mx-[100px] w-[143px] h-[67px] lg:w-[300px] lg:h-[200px] lg:mx-[150px] lg:mt-[10%] 2xl:mt-[10%] 2xl:mx-[180px]"
                   />
                 </div>
               </div>
