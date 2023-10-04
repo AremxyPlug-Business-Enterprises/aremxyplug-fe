@@ -1,23 +1,23 @@
 import React from "react";
 import { useContext, useRef } from "react";
-import { ContextProvider } from "../../../../../../Context";
+import { ContextProvider } from "../../../../Context";
 import { RiFileCopyFill } from "react-icons/ri";
-import styles from "../../../../TransferComponent/transfer.module.css";
-import { DashBoardLayout } from "../../../../../Layout/DashBoardLayout";
+import styles from "../../TransferComponent/transfer.module.css";
+import { DashBoardLayout } from "../../../Layout/DashBoardLayout";
 import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
-export const OtherBankReceipt = () => {
+export const WithdrawToOtherBankReceipt = () => {
   const {
     toggleSideBar,
     textRef,
     isDarkMode,
     date,
-    globalBankName,
-    globalAccountNumber,
-    globalAccountName,
-    amtToTransfer,
+    wGlobalBankName,
+    wGlobalAccountNumber,
+    wGlobalAccountName,
+    amtToWithdraw,
   } = useContext(ContextProvider);
 
   const contentRef = useRef(null);
@@ -80,7 +80,7 @@ export const OtherBankReceipt = () => {
                 alt=""
               />
             </Link>
-            <Link to="/money-transfer">
+            <Link to="/withdraw">
               {" "}
               <img
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
@@ -119,7 +119,7 @@ export const OtherBankReceipt = () => {
             <p className="text-[9px] text-[#0008] text-center my-2 md:text-[14px] lg:text-[14px]">
               You have successfully transferred{" "}
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[16px]">
-                &#8358;{amtToTransfer}.00{" "}
+                &#8358;{amtToWithdraw}.00{" "}
               </span>
               from your NGN wallet to{" "}
             </p>
@@ -136,15 +136,15 @@ export const OtherBankReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Bank Name</p>
-                  <span>{globalBankName}</span>
+                  <span>{wGlobalBankName}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Account Name</p>
-                  <span>{globalAccountName}</span>
+                  <span>{wGlobalAccountName}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Account Number</p>
-                  <span>{globalAccountNumber}</span>
+                  <span>{wGlobalAccountNumber}</span>
                 </div>
               </div>
 
@@ -160,7 +160,7 @@ export const OtherBankReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Customer Name</p>
-                  <span>{globalAccountName}</span>
+                  <span>{wGlobalAccountName}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Wallet Type</p>
@@ -180,7 +180,7 @@ export const OtherBankReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Product</p>
-                  <span>Money Transfer</span>
+                  <span>Money Withdrawal</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Description</p>

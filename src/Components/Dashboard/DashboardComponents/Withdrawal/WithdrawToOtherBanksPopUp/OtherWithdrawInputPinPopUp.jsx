@@ -3,26 +3,34 @@ import { Modal } from "../../../../Screens/Modal/Modal";
 import OtpInput from "react-otp-input";
 import { useContext } from "react";
 import { ContextProvider } from "../../../../Context";
+import styles from "../../TransferComponent/transfer.module.css";
+import { useState } from "react";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
-import styles from "../../TransferComponent/transfer.module.css";
+import { WithdrawSuccessToOtherBanks } from "./WithdrawSuccessToOtherBanks";
 
-export const InputPinPopUp = () => {
+export const OtherWithdrawInputPinPopUp = () => {
   const {
     toggleSideBar,
-    inputPin,
-    setInputPin,
-    inputPinPopUp,
-    setInputPinPopUp,
-    inputPinHandler,
     toggleVisibility,
     isVisible,
+    withdrawalInputPin,
+    setWithdrawalInputPin,
+    setOtherBankWithdrawalSuccess,
   } = useContext(ContextProvider);
+
+  const [inputPin, setInputPin] = useState("");
+
+  const inputPinHandler = (e) => {
+    setInputPin(e.target.value);
+    setOtherBankWithdrawalSuccess(true);
+    setWithdrawalInputPin(false);
+  };
 
   return (
     <div>
       {" "}
-      {inputPinPopUp && (
+      {withdrawalInputPin && (
         <Modal>
           <div
             className={`${styles.inputPin} ${
@@ -30,40 +38,40 @@ export const InputPinPopUp = () => {
             } md:w-[55%] w-[90%]`}
           >
             <img
-              onClick={() => setInputPinPopUp(false)}
-              className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px]"
+              onClick={() => setWithdrawalInputPin(false)}
+              className="absolute right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px]"
               src="/Images/transferImages/close-circle.png"
               alt=""
             />
             <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
-            <p className="text-[9px] md:text-[16px] font-extrabold text-center my-[8%] lg:my-[%]">
+            <p className="text-[9px] md:text-[16px] font-extrabold text-center my-[10%] lg:my-[%]">
               Input PIN to complete transaction
             </p>
-            <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
+            <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[8%]">
               <div className=" flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
                 {" "}
-                {/* {isVisible ? ( */}
-                <OtpInput
-                  value={isVisible ? inputPin : "****"}
-                  inputType="tel"
-                  onChange={setInputPin}
-                  numInputs={4}
-                  shouldAutoFocus={true}
-                  inputStyle={{
-                    color: "#403f3f",
-                    width: 30,
-                    height: 30,
-                    borderRadius: 3,
-                  }}
-                  renderInput={(props) => (
-                    <input {...props} className="inputOTP mx-[3px]" />
-                  )}
-                />
-                {/* ) : ( */}
-                {/* <div className="text-[24px] md:text-[24px] mt-1">
+                {isVisible ? (
+                  <OtpInput
+                    value={inputPin}
+                    inputType="tel"
+                    onChange={setInputPin}
+                    numInputs={4}
+                    shouldAutoFocus={true}
+                    inputStyle={{
+                      color: "#403f3f",
+                      width: 30,
+                      height: 30,
+                      borderRadius: 3,
+                    }}
+                    renderInput={(props) => (
+                      <input {...props} className="inputOTP mx-[3px]" />
+                    )}
+                  />
+                ) : (
+                  <div className="text-[24px] md:text-[24px] mt-1">
                     * * * *{" "}
-                  </div> */}
-                {/* )} */}
+                  </div>
+                )}
                 <div
                   className="text-[#0003] text-xl md:text-3xl"
                   onClick={toggleVisibility}
@@ -87,6 +95,8 @@ export const InputPinPopUp = () => {
           </div>
         </Modal>
       )}
+    
+      <WithdrawSuccessToOtherBanks/>
     </div>
   );
 };
