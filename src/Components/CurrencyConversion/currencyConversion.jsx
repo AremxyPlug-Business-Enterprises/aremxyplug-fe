@@ -36,9 +36,9 @@ const CurrencyConversion = () =>{
   };
 
     return(
-      
+      <>
         <DashBoardLayout>
-        {/* <Nav/> */}
+        
         <div className="">
         
           <div id='background' className="h-[90px] justify-between lg:h-[196px] md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] lg:rounded-[20px] mx-auto  flex gap-5 px-[14px] md:px-[28.65px] lg:px-[50px]">
@@ -54,12 +54,12 @@ const CurrencyConversion = () =>{
           <div className=" flex gap-1.5 py-[25px] lg:py-[50px] md:py-[28.64px]">
                    <div className="text-[10px] lg:text-xl md:text-[14px] font-medium text-[#7C7C7C]">Select Conversion type</div>
                    <div>
-                      <img src={right} alt="" className="lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px]" />
+                      <img src={right} alt="" className="lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px] mt-[1.2px] md:mt-[4.1px] lg:mt-[2.5px]" />
                    </div>
                 </div>
 
      {/* select conversion */}
-         <div id="lists" className="flex flex-col gap-[20px] lg:gap-[36px] md:gap-[27px]">
+         <div id="lists" className="flex flex-col gap-[24px] lg:gap-[42px] md:gap-[30px]">
 
             {/* fiat conversion */}
               <Link to= '/fiat'>
@@ -95,13 +95,13 @@ const CurrencyConversion = () =>{
             <div className="modal-animation">
             <p className="text-center font-semibold text-[8px] md:text-[14px] lg:text-[16px] lg:py-7 md:py-4 py-3">Crypto Conversion</p>
             <p className="text-[#04177F] text-[8px] md:text-[10px] lg:text-[16px] text-center font-semibold">This Feature is Currently Not Available.</p>
-            <div className="relative my-[20px]">
+            <div className="relative my-[25px]">
               <div className="flex justify-center">
                 <img src={cryptoFeature} alt="" className="lg:h-[200px] md:w-[120px] lg:w-[204.4px] md:h-[120px]"/>
               </div>
               <span className="text-[7px] md:text-[10px] lg:text-[12px] font-semibold absolute right-12">Coming soon...</span>
             </div>
-            <button onClick={closeModal1} className="bg-[#04177F] flex mx-auto rounded-[4.6px] md:rounded-[7px] lg:rounded-[12px] w-[255px] md:w-[58px] lg:w-[93px] h-[30px] lg:h-[34px] md:h-[23px]">
+            <button onClick={closeModal1} className="bg-[#04177F] flex mx-auto mt-[43px] md:mt-[30px] lg:mt-[50px] rounded-[4.6px] md:rounded-[7px] lg:rounded-[12px] w-[255px] md:w-[58px] lg:w-[93px] h-[30px] lg:h-[34px] md:h-[23px]">
                       <p className="text-white text-[12px] md:text-[9px] lg:text-[13px] font-semibold flex mx-auto self-center">Okay</p>
             </button>
             </div>
@@ -169,17 +169,18 @@ const CurrencyConversion = () =>{
           </div>
          </div>
 
-         <div className="flex justify-center pt-[300px] pb-3 md:pt-[200px] md:pb-4 lg:pt-[290px] lg:pb-6 gap-2">
-            <div className="font-medium text-[10px] md:text-[12px] lg:text-[16px] self-center">You need help ?</div>
+         <div className="flex justify-center pt-[342px] pb-3 md:pt-[200px] md:pb-4 lg:pt-[290px] lg:pb-6 gap-2">
+           <div className="font-medium text-[9px] md:text-[7px] lg:text-[12px] self-center">You need help ?</div>
             <Link to="/ContactUs">
-                <div className="bluebutton bg-[#04177f] text-center text-[8px] md:text-[10px] lg:text-[12px] text-white"> Contact Us</div>
+                <div className="bluebutton bg-[#04177f] text-center text-[7px] md:text-[5.5px] lg:text-[8px] text-white"> Contact Us</div>
             </Link>
-        </div>
+         </div>
         
         </div>
 
         
         </DashBoardLayout>
+        </>
 
     );
 }

@@ -59,6 +59,9 @@ import Referral from "./Components/Referrals/Referral";
 import MtnDataTopUpBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/MtnDataTopUpBundle/MtnDataTopUpBundle";
 import WithdrawToOtherBanks from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToOtherBanks";
 import  { DataReceipt }  from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/MtnDataTopUpBundle/DataReceipt";
+import WalletSummaryPage from "./Components/WalletSummaryPage/WalletSummary";
+import SalesSummaryPage from "./Components/SalesSummaryPage/SalesSummary";
+import { WithdrawToOtherBankReceipt } from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToOtherBanksPopUp/WithdrawToOtherBankReceipt";
 export const Router = () => {
   return (
     <div>
@@ -109,6 +112,8 @@ export const Router = () => {
         <Route path="/cookie-settings" element={<CookiesSettings />} />
         <Route path="/Receipt" element={<Receipt />} />
         <Route path="/withdraw" element={<WithdrawPage />} />
+        <Route path="/wallet-summary" element={<WalletSummaryPage/>} />
+        <Route path="/sales-summary" element={<SalesSummaryPage />} />
         <Route
           path="/withdraw-to-account"
           element={<WithdrawToMyAccountPage />}
@@ -128,6 +133,10 @@ export const Router = () => {
           element={<WithdrawToOtherBanks />}
         />
         <Route path="/other-bank-receipt" element={<OtherBankReceipt />} />
+        <Route
+          path="/other-bank-withdrawalreceipt"
+          element={<WithdrawToOtherBankReceipt />}
+        />
         <Route
           path="/international-bank-receipt"
           element={<InternationalReceipt />}

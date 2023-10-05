@@ -15,29 +15,48 @@ import cash from "./Images/cash.svg"
 const FiatConversion = () => {
     const [numeric, setNumeric] = useState('');
 
+    const [numeric2, setInputValue1] = useState('');
+  const [buttonColor, setButtonColor] = useState('#0008'); // Default color
+  
+
+  const NumericChange2 = (e) => {
+    const value = e.target.value;
+    setInputValue1(value);
+
+    if (parseInt(value) > 4) {
+      setButtonColor('#04177f'); // Change color if input is greater than 4
+      document.querySelector('#button').disabled = false;
+    } else {
+      setButtonColor('#0008'); // Reset to default color if input is 4 or less
+      document.querySelector('#button').disabled = true;
+    }
+  };
+
+
     const NumericChange = (event) => {
       const inputValue = event.target.value;
       // Use a regular expression to remove non-numeric characters
       const numericInput = inputValue.replace(/[^0-9]/g, '');
       setNumeric(numericInput);
     };
-    const [numeric2, setNumeric2] = useState('');
+    // const [numeric2, setNumeric2] = useState('');
 
-    const NumericChange2 = (event) => {
-      const inputValue = event.target.value;
-      // Use a regular expression to remove non-numeric characters
-      const numericInput2 = inputValue.replace(/[^0-9]/g, '');
-      setNumeric2(numericInput2);
-    };
+    // const NumericChange2 = (event) => {
+    //   const inputValue = event.target.value;
+    //   // Use a regular expression to remove non-numeric characters
+    //   const numericInput2 = inputValue.replace(/[^0-9]/g, '');
+    //   setNumeric2(numericInput2);
+    // };
+  
 
 
     return(
         <DashBoardLayout>
             <div className="">
-                <div id='fiatBackground' className="h-[68px] lg:h-[196px] md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] lg:rounded-[20px] mx-auto  flex gap-6 justify-between px-[16.51px] md:px-[28.65px] lg:px-[50px]">
+                <div id='fiatBackground' className="h-[90px] lg:h-[196px] md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] lg:rounded-[20px] mx-auto  flex gap-6 justify-between px-[16.51px] md:px-[28.65px] lg:px-[50px]">
                     <div className="py-[9.57px] md:py-[16.61px] lg:py-[29px] align-middle flex flex-col gap-1.5">
-                        <p className="text-[8px] lg:text-[24px] md:text-[13.75px] font-semibold w-[194.12px] lg:w-[790px] md:w-[450px]">CONVERT FIAT CURRENCY WITH AREMXYPLUG.</p>
-                        <p className="text-[7px] lg:text-[20px] md:text-[11.46px] w-[180px] lg:w-[539px] md:w-[350.8px]">Convert from one fiat currency to another without any hassle, enjoy competitive exchange rate with no any hidden fee.</p>
+                        <p className="text-[9px] lg:text-[24px] md:text-[13.75px] font-semibold w-[194.12px] lg:w-[790px] md:w-[450px]">CONVERT FIAT CURRENCY WITH AREMXYPLUG.</p>
+                        <p className="text-[7.5px] lg:text-[20px] md:text-[11.46px] w-[180px] lg:w-[539px] md:w-[350.8px]">Convert from one fiat currency to another without any hassle, enjoy competitive exchange rate with no any hidden fee.</p>
                     </div>
                     <div className="flex h-[97%] w-full pt-2 ">
                         <img src={cash} alt="" className="w-full shrink-0" />
@@ -51,7 +70,7 @@ const FiatConversion = () => {
                 </div>
 
                 <div className="flex mx-auto ">
-                    <div className="bg-[#04177F] text-white text-[7px] md:text-[10px] lg:text-[16px] text-center font-semibold w-full md:w-[210.83px] lg:w-[368px] py-[5px] lg:py-[11px] md:py-[8px]">
+                    <div className="bg-[#04177F] text-white rounded-[2px] md:rounded-[3.5px] lg:rounded-[6px] text-[7px] md:text-[10px] lg:text-[16px] text-center font-semibold w-full md:w-[210.83px] lg:w-[368px] py-[5px] lg:py-[11px] md:py-[8px]">
                         Real-time Fiat Conversion Check Rate
                     </div>
                 </div>
@@ -115,17 +134,17 @@ const FiatConversion = () => {
                    </div>
 
                    <div className="flex mx-auto ">
-                    <button className="bg-[#04177F] my-[40px] lg:my-[80px] md:my-[55px] mx-auto text-white text-[12px] md:text-[12px] lg:text-[16px] rounded md:rounded-[7px] lg:rounded-[12px] text-center font-semibold w-[312px] md:w-[210.83px] lg:w-[163px] h-[40px] lg:h-[38px] md:h-[25px]">
+                    <button style={{ backgroundColor: buttonColor }} id="button" className="bg-[#04177F] my-[40px] lg:my-[80px] md:my-[55px] mx-auto text-white text-[12px] md:text-[12px] lg:text-[16px] rounded md:rounded-[7px] lg:rounded-[12px] text-center font-semibold w-full md:w-[210.83px] lg:w-[163px] h-[40px] lg:h-[38px] md:h-[25px]">
                         Proceed
                     </button>
                 </div>
                 </div>
 
                 
-         <div className="flex justify-center pt-[90px] pb-3 md:pt-[120px] md:pb-4 lg:pt-[160px] lg:pb-6 gap-2">
-            <div className="font-medium text-[10px] md:text-[12px] lg:text-[16px] self-center">You need help ?</div>
+         <div className="flex justify-center pt-[240px] pb-3 md:pt-[120px] md:pb-4 lg:pt-[160px] lg:pb-6 gap-2">
+            <div className="font-medium text-[9px] md:text-[7px] lg:text-[12px] self-center">You need help ?</div>
             <Link to="/ContactUs">
-                <div className="bluebutton bg-[#04177f] text-center text-[8px] md:text-[10px] lg:text-[12px] text-white"> Contact Us</div>
+                <div className="bluebutton bg-[#04177f] text-center text-[7px] md:text-[5.5px] lg:text-[8px] text-white"> Contact Us</div>
             </Link>
         </div>
         </div>

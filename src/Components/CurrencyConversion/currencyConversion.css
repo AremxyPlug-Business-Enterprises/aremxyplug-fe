@@ -6,7 +6,7 @@
 }
 
 .conversionLists{
-    box-shadow: 0px 0px 5.3333334922790527px 0px #00000040;
+    box-shadow: 0px 0px 11.495177268981934px 0px #00000040;
 }
 
 .switch{
@@ -17,14 +17,13 @@
 }
 
 .bluebutton{
-    width: 70px;
-    height: 18px;
-    border-radius: 8px;
+    width: 55px;
+    height: 15px;
+    border-radius: 9px;
     display: flex;
     align-items: center;
-    vertical-align: middle;
     text-align: center;
-    padding: 0 12px;
+    padding: 10px 8px;
 }
 
 .input, .available{
@@ -87,12 +86,12 @@
     width: 350px;
     height: 245px;
     margin: auto;
-    box-shadow: 0px 0px 9.217082977294922px 0px #00000040;
+    box-shadow: 0px 0px 10px 0px #00000040;
     border-radius: 8px;
   }
         
 .conversionLists{
-  box-shadow: 0px 0px 7px #00000040;
+  box-shadow: 0px 0px 7px 6px #00000040;
 }
 
   /* Close Button */
@@ -107,10 +106,10 @@
 
 @media only screen and (min-width: 768px) {
     .bluebutton{
-        width: 80px;
-        height: 30px;
-        padding: 7px 12px;
-        border-radius: 12px;
+        width: 45px;
+        height: 12px;
+        padding: 9px 7px;
+        border-radius: 8px;
     }
     .modal-content {
         width: 360px;
@@ -123,10 +122,10 @@
 }
 @media only screen and (min-width: 1024px) {
     .bluebutton{
-        width: 100px;
-        height: 38px;
-        padding: 9px 15px;
-        border-radius: 15px;
+        width: 70px;
+        height: 20px;
+        border-radius: 9px;
+        padding: 4px 13px;
     }
     .modal-content {
         width: 562px;
@@ -138,6 +137,6 @@
 
       
 .conversionLists{
-  box-shadow: 0px 0px 10px #00000040;
+  box-shadow: 0px 0px 6px 6.5px #00000040;
 }
 }
