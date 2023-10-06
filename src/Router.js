@@ -53,9 +53,10 @@ import { InternationalReceipt } from "./Components/Dashboard/DashboardComponents
 import FiatConversion from "./Components/CurrencyConversion/FiatConversion";
 import DataTopUpPage from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataTopUpPage";
 import CurrencyConversion from "./Components/CurrencyConversion/currencyConversion";
-import PointRedeem from "./Components/Dashboard/DashboardComponents/PointRedeem/PointRedeem";
+import PointRedeem from "./Components/Dashboard/DashboardComponents/PointRedeem/PointRedeem"
+import Referral from "./Components/Referrals/Referral"
+import { AirtimeVtuReceipt } from "./Components/AirTimePage/AirtimeVtuReceipt"
 import DataBundlesPage from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundlesPage";
-import Referral from "./Components/Referrals/Referral";
 import MtnDataTopUpBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/MtnDataTopUpBundle/MtnDataTopUpBundle";
 import WithdrawToOtherBanks from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToOtherBanks";
 import  { DataReceipt }  from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/MtnDataTopUpBundle/DataReceipt";
@@ -110,6 +111,7 @@ export const Router = () => {
         <Route path="/business-account" element={<BusinessAccountPage />} />
         <Route path="/airtime-topup" element={<AirTime />} />
         <Route path="/airtime-vtu" element={<AirtimeVtu />} />
+        <Route path="/airtime-vtu-receipt" element={<AirtimeVtuReceipt />} />
         <Route path="/add-account" element={<AddAccount />} />
         <Route path="/ngn-virtual-account" element={<NgnVirtualAccount />} />
         <Route path="/cookie-settings" element={<CookiesSettings />} />
