@@ -15,7 +15,10 @@ import user from './Images/user.svg';
 import money from './Images/moneys.svg';
 import { ContextProvider } from '../Context';
 import { useContext } from 'react';
+import { AiFillEyeInvisible } from "react-icons/ai";
+import { AiFillEye } from "react-icons/ai";
 import { Link } from 'react-router-dom';
+import { AirtimeVtuReceipt } from "./AirtimeVtuReceipt";
 
 const AirtimeVtu = () => {
     // const {  isDarkMode } = useContext(ContextProvider);
@@ -41,7 +44,7 @@ const AirtimeVtu = () => {
     const [selectedProduct, setSelectedProduct] = useState('');
     const [confirm, setConfirm] = useState(false);
     const [errors, setErrors] = useState({});
-
+    const [codes, setCodes] = useState(false);
 
 
     if (addRecipient) {
@@ -277,22 +280,40 @@ const AirtimeVtu = () => {
         toggleSideBar,
         inputPin,
         setInputPin,
-        inputPinHandler,
+        toggleVisibility,
+        isVisible,
       } = useContext(ContextProvider);
 
       const handleConfirm =()=> {
         setProceed(false);
-        setConfirm(true)
+        setConfirm(true);
+        setInputPin('')
       }
-
-    //   const handlePin =()=> {
-    //     setConfirm(false);
-    //     setConfirm(true)
-    //   }
 
       console.log(confirm)
 
       console.log(recipientName, discount, newAmount, networkImage, selectedProduct, networkName, recipientNumber, name, image)
+
+      const {
+        transactSuccessPopUp,
+        setTransactSuccessPopUp,
+      } = useContext(ContextProvider);
+    
+      const handleTransactionSuccessClose =()=> {
+        setConfirm(false);
+        setTransactSuccessPopUp(true);
+      }; 
+
+      const [receipt] = useState(false);
+
+      const handleReceipt =()=> {
+        setTransactSuccessPopUp(false);
+      }
+
+      const handleCodes =()=> {
+        setCodes(false);
+        setCodes(true);
+      }
 
   return (
     <DashBoardLayout>
@@ -330,7 +351,7 @@ const AirtimeVtu = () => {
             </div>
             <div className={styles.containFlex1}>
                 <div className={styles.FlexPut1}>
-                        <div className={styles.conPut1}>
+                        <div className={styles.conPut1} onClick={handleCodes} >
                             <h2>Airtime Balance USSD Codes</h2>
                             <div className={styles.FlexImg1}>
                                 <img src={data} alt="" className=''/>
@@ -500,6 +521,66 @@ const AirtimeVtu = () => {
                     </div>
                 </div>
             </div>
+            {codes && (
+                <Modal>
+                (
+                <div
+                    className={`${styles.transferMoneyPop} ${
+                    toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+                    } w-[90%] overflow-auto`}
+                >
+                    <img
+                    onClick={()=> setCodes(false)}
+                    className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px]"
+                    src="/Images/transferImages/close-circle.png"
+                    alt=""
+                    />
+                    <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
+
+                    <button
+                    className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[50%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[350px] lg:h-[38px] lg:my-[2%]`}
+                    >
+                    Airtime Balace USSD Codes
+                    </button>
+                    <h2 className="text-[12px] my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
+                    Airtime Balance check ussd codes.
+                    </h2>
+                    <h2 className="text-[12px] my-[5%] text-blue-600 text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
+                    Tap the network Dial button to check airtime balance:
+                    </h2>
+                    <div className='flex flex-col gap-1 mb-5'>
+                        <button
+                            className={`bg-[#FAF8F8] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%]`}
+                            >
+                            MTN Airtime Balance Code - *310#
+                        </button>
+                        <button
+                            className={`bg-[#FAF8F8] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%]`}
+                            >
+                            AIRTEL Airtime Balance Code - *310#
+                        </button>
+                        <button
+                            className={`bg-[#FAF8F8] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%]`}
+                            >
+                            GLO Airtime Balance Code - *310#
+                        </button>
+                        <button
+                            className={`bg-[#FAF8F8] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%]`}
+                            >
+                            9MOBILE Airtime Balance Code - *310#
+                        </button>
+                    </div>
+
+                    <button
+                    onClick={()=> setCodes(false)}
+                    className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                    >
+                    Okay
+                    </button>
+                </div>
+                )
+                </Modal>
+            )}
             {proceed && (
                 <Modal>
                 (
@@ -521,53 +602,53 @@ const AirtimeVtu = () => {
                     <p className="text-[8px] text-[#0008] text-center mb-2 md:text-[12px] lg:text-[14px]">
                     You are about to purchase{" "}
                     <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">
-                        &#8358;{amount}.00{" "}
+                    {networkName + ' ' + selectedProduct} Airtime &#8358;{amount}.00{" "}
                     </span>
                     from your NGN wallet to{" "}
                     </p>
 
-                    <div className="flex flex-col gap-3">
-                    <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                        <p className="text-[#0008]">Network</p>
-                        <span className='flex gap-1'>
-                            <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
-                            <img src={networkImage} alt="" className='w-full h-full object-cover'/>
-                            </div> 
-                            <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">{networkName}</h2>
-                        </span>
-                    </div>
-                    <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                        <p className="text-[#0008]">Product</p>
-                        <span>{networkName + ' ' + selectedProduct}</span>
-                    </div>
-                    <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                        <p className="text-[#0008]">Discount</p>
-                        <span>{discount}%</span>
-                    </div>
-                    <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                        <p className="text-[#0008]">Phone Number</p>
-                        <span>{recipientNumber}</span>
-                    </div>
-                    <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                        <p className="text-[#0008]">Recipient Name</p>
-                        <span>{recipientName}</span>
-                    </div>
-                    <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                        <p className="text-[#0008]">Payment Method</p>
-                        <span>{factorWalletName(name)}</span>
-                    </div>
-                    <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                        <p className="text-[#0008]">Total Amount</p>
-                        <span>&#8358;{newAmount}</span>
-                    </div>
-                    <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                        <p className="text-[#0008]">Transaction Fee</p>
-                        <span>&#8358;{tFee}.00</span>
-                    </div>
-                    <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                        <p className="text-[#0008]">Points Earned</p>
-                        <span className="text-[#00AA48]">{points}</span>
-                    </div>
+                    <div className="flex flex-col gap-3 mt-3">
+                        <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                            <p className="text-[#0008]">Network</p>
+                            <span className='flex gap-1'>
+                                <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
+                                <img src={networkImage} alt="" className='w-full h-full object-cover'/>
+                                </div> 
+                                <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">{networkName}</h2>
+                            </span>
+                        </div>
+                        <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                            <p className="text-[#0008]">Product</p>
+                            <span>{networkName + ' ' + selectedProduct}</span>
+                        </div>
+                        <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                            <p className="text-[#0008]">Discount</p>
+                            <span>{discount}%</span>
+                        </div>
+                        <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                            <p className="text-[#0008]">Phone Number</p>
+                            <span>{recipientNumber}</span>
+                        </div>
+                        <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                            <p className="text-[#0008]">Recipient Name</p>
+                            <span>{recipientName}</span>
+                        </div>
+                        <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                            <p className="text-[#0008]">Payment Method</p>
+                            <span>{factorWalletName(name)}</span>
+                        </div>
+                        <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                            <p className="text-[#0008]">Total Amount</p>
+                            <span>&#8358;{newAmount}</span>
+                        </div>
+                        <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                            <p className="text-[#0008]">Transaction Fee</p>
+                            <span>&#8358;{tFee}.00</span>
+                        </div>
+                        <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                            <p className="text-[#0008]">Points Earned</p>
+                            <span className="text-[#00AA48]">{points}</span>
+                        </div>
                     </div>
 
                     <div className="bg-[#0001] h-[45px] my-5 flex justify-between items-center px-[4%]">
@@ -597,7 +678,7 @@ const AirtimeVtu = () => {
                 </Modal>
             )}
             {
-                confirm && 
+                confirm && (
                     <Modal>
                         <div
                             className={`${styles.inputPin} ${
@@ -611,42 +692,167 @@ const AirtimeVtu = () => {
                             alt=""
                             />
                             <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
-                            <p className="text-[9px] md:text-[16px] font-extrabold text-center my-[10%] lg:my-[%]">
+                            <p className="text-[9px] md:text-[16px] font-extrabold text-center my-[8%] lg:my-[%]">
                             Input PIN to complete transaction
                             </p>
-                            <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[8%]">
-                            <OtpInput
-                                value={inputPin}
-                                inputType="tel"
-                                onChange={setInputPin}
-                                numInputs={4}
-                                shouldAutoFocus={true}
-                                inputStyle={{
-                                color: "#403f3f",
-                                width: 30,
-                                height: 30,
-                                borderRadius: 3,
-                                }}
-                                renderInput={(props) => (
-                                <input {...props} className="inputOTP mx-[3px]" />
+                            <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
+                            <div className=" flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
+                                {" "}
+                                {isVisible ? (
+                                <OtpInput
+                                    value={inputPin}
+                                    inputType="tel"
+                                    onChange={setInputPin}
+                                    numInputs={4}
+                                    shouldAutoFocus={true}
+                                    inputStyle={{
+                                    color: "#403f3f",
+                                    width: 30,
+                                    height: 30,
+                                    borderRadius: 3,
+                                    }}
+                                    renderInput={(props) => (
+                                    <input {...props} className="inputOTP mx-[3px]" />
+                                    )}
+                                />
+                                ) : (
+                                <div className="text-[24px] md:text-[24px] mt-1">
+                                    * * * *{" "}
+                                </div>
                                 )}
-                            />
+                                <div
+                                className="text-[#0003] text-xl md:text-3xl"
+                                onClick={toggleVisibility}
+                                >
+                                {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
+                                </div>
+                            </div>
                             <p className="text-[8px] md:text-[12px] text-[#04177f]">
                                 Forgot Pin ?
                             </p>
                             </div>
                             <button
-                            onClick={inputPinHandler}
+                            onClick={handleTransactionSuccessClose}
                             disabled={inputPin.length !== 4 ? true : false}
                             className={`${
                                 inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
                             } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
                             >
-                            Send
+                            Purchase
                             </button>
                         </div>
                     </Modal>
+                )
             }
+            {transactSuccessPopUp && (
+                <Modal>
+                {/* <TransactFailedPopUp/> */}
+                <div
+                    className={`${styles.successfulTwo} ${
+                    toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+                    } md:w-[45%] w-[90%] overflow-auto`}
+                >
+                    <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
+                    <img
+                        onClick={() => setTransactSuccessPopUp(false)}
+                        className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[25px]"
+                        src="/Images/login/arpLogo.png"
+                        alt=""
+                    />
+
+                    <img
+                        onClick={() => setTransactSuccessPopUp(false)}
+                        className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
+                        src="/Images/transferImages/close-circle.png"
+                        alt=""
+                    />
+                    </div>
+                    <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
+                    <h2 className="text-[12px] my-[4%] text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%]">
+                    Transaction Successful
+                    </h2>
+                    <img
+                    className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[70px] lg:h-[70px]"
+                    src="./Gif/checkMarkGif.gif"
+                    alt="/"
+                    />
+                    <p className="text-[8px] text-[#0008] text-center mb-10 md:text-[14px] lg:text-[12px]">
+                    You have successfully purchased{" "}
+                    <span className="text-[#000] font-extrabold text-[8px] md:text-[14px] lg:text-[12px]">
+                    {networkName + ' ' + selectedProduct} Airtime &#8358;{amount}.00{" "}
+                    </span>
+                    from your NGN wallet to{" "}
+                    </p>
+
+                    <div className="flex flex-col gap-2 lg:gap-4">
+                    <div className="flex text-[8px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
+                            <p className="text-[#0008]">Network</p>
+                            <span className='flex gap-1'>
+                                <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
+                                <img src={networkImage} alt="" className='w-full h-full object-cover'/>
+                                </div> 
+                                <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">{networkName}</h2>
+                            </span>
+                        </div>
+                        <div className="flex text-[8px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
+                            <p className="text-[#0008]">Product</p>
+                            <span>{networkName + ' ' + selectedProduct}</span>
+                        </div>
+                        <div className="flex text-[8px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
+                            <p className="text-[#0008]">Phone Number</p>
+                            <span>{recipientNumber}</span>
+                        </div>
+                        <div className="flex text-[8px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
+                            <p className="text-[#0008]">Recipient Name</p>
+                            <span>{recipientName}</span>
+                        </div>
+                        <div className="flex text-[8px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
+                            <p className="text-[#0008]">Payment Method</p>
+                            <span>{factorWalletName(name)}</span>
+                        </div>
+                        <div className="flex text-[8px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
+                            <p className="text-[#0008]">Amount</p>
+                            <span>&#8358;{amount}</span>
+                        </div>
+                        <div className="flex text-[8px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[12px]">
+                            <p className="text-[#0008]">Order Number</p>
+                            <span>122555556464564</span>
+                        </div>
+                    </div>
+
+                    <div className="bg-[#F2FAFF] mx-5 rounded-md h-[55px] my-5 flex justify-between items-center px-[4%] md:h-[75px] lg:h-[85px]">
+                    <p className="text-[8px] text-center mx-auto w-[201px] md:text-[14px] md:w-[92%] lg:text-[14px]">
+                    The airtime purchase has been sent successfully to the recipient phone number. Please kindly engage the recipient to check his/her balance to confirm the value. You can contact us for any further assistance.
+                    </p>
+                    </div>
+                    <div className="flex w-[70%] mx-auto items-center gap-[5%] md:w-[60%] lg:my-[5%]">
+                    <button
+                        onClick={() => setTransactSuccessPopUp(false)}
+                        className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                    >
+                        Done
+                    </button>
+                    <Link to="/airtime-vtu-receipt">
+                        <button
+                        onClick={handleReceipt}
+                        className={`border-[1px] w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                        >
+                        Receipt
+                        </button>
+                    </Link>
+                    </div>
+                </div>
+                </Modal>
+            )}
+            {receipt && (
+                <AirtimeVtuReceipt
+                networkName={networkName}
+                selectedProduct={selectedProduct}
+                recipientNumber={recipientNumber}
+                recipientName={recipientName}
+                amount={amount}
+                />
+            )}
             <div className={styles.containFlex2}>
                 <button className={`${
                 amount.length < 4 ? "bg-[#0008]" : "bg-[#04177f]"
@@ -657,7 +863,7 @@ const AirtimeVtu = () => {
         <div className={styles.help}>
                 <h2>You need help?</h2>
                 <Link to={`/ContactUs`} className={styles.btnContact}>Contact Us</Link>
-            </div>
+        </div>
       </div>
     </DashBoardLayout>
   );
