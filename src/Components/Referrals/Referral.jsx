@@ -43,8 +43,8 @@ export default function Referral() {
         {/* RECTANGLE1 // CONTENT ONE CONTAINER */}
 
         <div
-          className="rectangle1 flex justify-between items-center gap-[18.34px] min-h-[75px] w-[100%]  
-    pr-[19.996px] pb-[2.668px] pl-[16.664px] lg:mb-[60px] mb-[30px] rounded-[6.667px] 
+          className="rectangle1 flex justify-between items-center gap-[18.34px] min-h-[75.53px] w-[100%]  
+   pt-[2.665px] pr-[20px] pb-[2.668px] pl-[16.664px] lg:mb-[60px] mb-[30px] rounded-[6.667px] 
    md:pt-[5.581px] md:pb-[4.586px] md:pr-[34.371px] md:pl-[28.646px] md:gap-[31.514px] md:h-[112.29px]
    md:rounded-[11.458px] lg:py-[8px] lg:pl-[60px] lg:pr-[50px] lg:gap-[55px] lg:h-[196px]
       lg:rounded-[20px] "
@@ -78,7 +78,7 @@ export default function Referral() {
               </span>
             </p>
           </div>
-          <div className="w-[25%] h-[100%] flex items-center">
+          <div className="w-[25%] md:h-[100%] flex items-center">
             <img
               src={Refer1}
               className="w-[100%] md:h-[100%] h-[60px] "
@@ -106,12 +106,12 @@ export default function Referral() {
 
               <div className="copy-content1 flex items-center  w-[75%] h-[100%]  border-l-[1px] border-y-[1px] 
           border-[#7C7C7C] pl-[5px]  lg:pl-[18px]  md:pl-[13px]
-         lg:rounded-s-[22px] rounded-s-[7.333px] md:rounded-s-[12.607px]">
+         lg:rounded-s-[22px] rounded-s-[7.333px] md:rounded-s-[12.607px] overflow-x-scroll md:overflow-auto">
               <p
               onChange={handleCopyTextOne}
                 className="font-[600]  text-[#7C7C7C] text-[7px] leading-[11px]
        lg:text-[16px] lg:leading-[24px] 
-        md:text-[9.167px] md:leading-[14px] md:overflow-auto overflow-x-scroll"
+        md:text-[9.167px] md:leading-[14px] flex-nowrap shrink-0"
               >
                 {copyTextOne}
               </p>
