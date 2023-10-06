@@ -7,9 +7,11 @@ import { DashBoardLayout } from "../../../../Layout/DashBoardLayout";
 import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+// import { ContextProvider } from "./MtnDataTopUpBundle";
+// import { selectedProduct } from "../MtnDataTopUpBundle/MtnDataTopUpBundle"
 
 export const DataReceipt = (receipt) => {
-  const { toggleSideBar, textRef, amtToTransfer, isDarkMode, date } =
+  const { toggleSideBar, textRef, isDarkMode, date} =
     useContext(ContextProvider);
 
   const contentRef = useRef(null);
@@ -43,7 +45,7 @@ export const DataReceipt = (receipt) => {
       // Handle sharing fallback for unsupported browsers
     }
   };
-
+  
   // ==============Save Pdf Function==============
   const handleSaveAsPDFClick = () => {
     const content = contentRef.current;
@@ -95,7 +97,7 @@ export const DataReceipt = (receipt) => {
               />
             </div>
             <h3 className="font-extrabold text-[12px] mt-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
-              Transaction Successful on
+              Purchase Successful on
             </h3>
             <span className="text-[11px] text-[#0008] font-extrabold flex justify-center items-center">
               {date.toLocaleDateString(undefined, {
@@ -109,9 +111,9 @@ export const DataReceipt = (receipt) => {
               })}
             </span>
             <p className="text-[9px] text-[#0008] text-center my-2 md:text-[14px] lg:text-[14px]">
-              You have successfully transferred{" "}
+              You have successfully purchased{" "}
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[16px]">
-                &#8358;{amtToTransfer}.00{" "}
+              {/* {selectedProduct} */}
               </span>
               from your NGN wallet to{" "}
             </p>

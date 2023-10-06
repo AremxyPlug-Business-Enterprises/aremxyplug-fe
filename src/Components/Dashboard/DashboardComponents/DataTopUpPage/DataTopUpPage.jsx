@@ -16,14 +16,39 @@ import WalletModal from "../../../Wallet/WalletModal";
 
 const DataTopUpPage = () => {
   const [popupVisible, setPopupVisible] = useState(false);
+  const [dataRoll, setDataRoll] = useState(false);
+  const [dataVoucher, setDataVoucher] = useState(false);
+  const [dataSchedlue, setDataSchedule] = useState(false);
+  const [bulkData, setBulkData] = useState(false);
+
   const showPopup = () => {
     setPopupVisible(true);
   };
 
+  const showDataRoll = () => {
+    setDataRoll(true);
+  };
+
+  const showDataVoucher = () => {
+    setDataVoucher(true);
+  };
+
+  const showDataSchedule = () => {
+    setDataSchedule(true);
+  };
+
+  const showBulkData = () => {
+    setBulkData(true);
+  };
+
   const hidePopup = () => {
     setPopupVisible(false);
+    setDataRoll(false);
+    setDataVoucher(false);
+    setDataSchedule(false);
+    setBulkData(false);
   };
-  
+
   const [activeBtn, setActiveBtn] = useState([true, false]);
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -39,7 +64,7 @@ const DataTopUpPage = () => {
   };
 
   const { isDarkMode } = useContext(ContextProvider);
-  
+
   return (
     <DashBoardLayout>
       <div
@@ -151,7 +176,12 @@ const DataTopUpPage = () => {
                 </div>
               </Link>
 
-              <div className="Datatopup flex justify-between h-[50px] lg:h-[80px] md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[5px] gap-[8px] md:mt-[30px]">
+              <div
+                onClick={() => {
+                  showDataRoll();
+                }}
+                className="Datatopup flex justify-between h-[50px] lg:h-[80px] md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[5px] gap-[8px] md:mt-[30px]"
+              >
                 <div className="flex gap-[10px]">
                   <img
                     src={DataRoll}
@@ -177,7 +207,12 @@ const DataTopUpPage = () => {
                 />
               </div>
 
-              <div className="Datatopup flex justify-between h-[50px] lg:h-[80px] md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[5px] gap-[8px] md:mt-[30px]">
+              <div
+                onClick={() => {
+                  showDataVoucher();
+                }}
+                className="Datatopup flex justify-between h-[50px] lg:h-[80px] md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[5px] gap-[8px] md:mt-[30px]"
+              >
                 <div className="flex gap-[10px]">
                   <img
                     src={DataVoucher}
@@ -203,7 +238,12 @@ const DataTopUpPage = () => {
                 />
               </div>
 
-              <div className="Datatopup flex justify-between h-[50px] lg:h-[80px] md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[5px] gap-[8px] md:mt-[30px]">
+              <div
+                onClick={() => {
+                  showDataSchedule();
+                }}
+                className="Datatopup flex justify-between h-[50px] lg:h-[80px] md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[5px] gap-[8px] md:mt-[30px]"
+              >
                 <div className="flex gap-[10px]">
                   <img
                     src={DataSchedule}
@@ -229,7 +269,12 @@ const DataTopUpPage = () => {
                 />
               </div>
 
-              <div className="Datatopup flex justify-between h-[50px] lg:h-[80px] md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[5px] gap-[8px] md:mt-[30px]">
+              <div
+                onClick={() => {
+                  showBulkData();
+                }}
+                className="Datatopup flex justify-between h-[50px] lg:h-[80px] md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[5px] gap-[8px] md:mt-[30px]"
+              >
                 <div className="flex gap-[10px]">
                   <img
                     src={BulkData}
@@ -285,6 +330,162 @@ const DataTopUpPage = () => {
                   <div>
                     <p className="text-[10px] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[3%]">
                       International Data
+                    </p>
+                    <p className="text-[10px] md:text-[16px] font-[600] text-[#04177F] lg:text-[16px]">
+                      This Feature is Currently Not Available.
+                    </p>
+                  </div>
+                  <img
+                    src={InternationalData}
+                    alt=""
+                    className="img mx-auto mt-[60px] md:mt-[15%] md:w-[220px] md:mx-[100px] w-[143px] h-[67px] lg:w-[300px] lg:h-[200px] lg:mx-[150px] lg:mt-[10%] 2xl:mt-[10%] 2xl:mx-[180px]"
+                  />
+                </div>
+              </div>
+              <div className="mt-[40px] flex flex-col gap-[5px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
+                <p className="text-[8px] font-extrabold text-end float-right ml-[60%] md:ml-[70%] md:text-[12px] mt-[10px] lg:text-[13px] 2xl:text-[15px]">
+                  Coming Soon...
+                </p>
+                <button
+                  className={` ${
+                    isDarkMode ? "border" : "bg-[#04177f] "
+                  } cursor-pointer text-white text-[10px] h-[40px] rounded-[5px] md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[25%] lg:mx-auto`}
+                  onClick={resetActiveButton}
+                  handleClick={activeIndex}
+                >
+                  Okay
+                </button>
+              </div>
+            </WalletModal>
+          )}
+
+          {dataRoll && (
+            <WalletModal>
+              <div className="text-center flex justify-center item-center md:mt-[-20px] lg:mt-[15px] 2xl:mt-[-15px]">
+                <div
+                  className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
+                    flex flex-col justify-center z-[100] lg:ml-[10px] md:w-full`}
+                >
+                  <div>
+                    <p className="text-[10px] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[3%]">
+                      Data Roll
+                    </p>
+                    <p className="text-[10px] md:text-[16px] font-[600] text-[#04177F] lg:text-[16px]">
+                      This Feature is Currently Not Available.
+                    </p>
+                  </div>
+                  <img
+                    src={InternationalData}
+                    alt=""
+                    className="img mx-auto mt-[60px] md:mt-[15%] md:w-[220px] md:mx-[100px] w-[143px] h-[67px] lg:w-[300px] lg:h-[200px] lg:mx-[150px] lg:mt-[10%] 2xl:mt-[10%] 2xl:mx-[180px]"
+                  />
+                </div>
+              </div>
+              <div className="mt-[40px] flex flex-col gap-[5px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
+                <p className="text-[8px] font-extrabold text-end float-right ml-[60%] md:ml-[70%] md:text-[12px] mt-[10px] lg:text-[13px] 2xl:text-[15px]">
+                  Coming Soon...
+                </p>
+                <button
+                  className={` ${
+                    isDarkMode ? "border" : "bg-[#04177f] "
+                  } cursor-pointer text-white text-[10px] h-[40px] rounded-[5px] md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[25%] lg:mx-auto`}
+                  onClick={resetActiveButton}
+                  handleClick={activeIndex}
+                >
+                  Okay
+                </button>
+              </div>
+            </WalletModal>
+          )}
+
+          {dataVoucher && (
+            <WalletModal>
+              <div className="text-center flex justify-center item-center md:mt-[-20px] lg:mt-[15px] 2xl:mt-[-15px]">
+                <div
+                  className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
+                    flex flex-col justify-center z-[100] lg:ml-[10px] md:w-full`}
+                >
+                  <div>
+                    <p className="text-[10px] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[3%]">
+                      Data Voucher
+                    </p>
+                    <p className="text-[10px] md:text-[16px] font-[600] text-[#04177F] lg:text-[16px]">
+                      This Feature is Currently Not Available.
+                    </p>
+                  </div>
+                  <img
+                    src={InternationalData}
+                    alt=""
+                    className="img mx-auto mt-[60px] md:mt-[15%] md:w-[220px] md:mx-[100px] w-[143px] h-[67px] lg:w-[300px] lg:h-[200px] lg:mx-[150px] lg:mt-[10%] 2xl:mt-[10%] 2xl:mx-[180px]"
+                  />
+                </div>
+              </div>
+              <div className="mt-[40px] flex flex-col gap-[5px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
+                <p className="text-[8px] font-extrabold text-end float-right ml-[60%] md:ml-[70%] md:text-[12px] mt-[10px] lg:text-[13px] 2xl:text-[15px]">
+                  Coming Soon...
+                </p>
+                <button
+                  className={` ${
+                    isDarkMode ? "border" : "bg-[#04177f] "
+                  } cursor-pointer text-white text-[10px] h-[40px] rounded-[5px] md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[25%] lg:mx-auto`}
+                  onClick={resetActiveButton}
+                  handleClick={activeIndex}
+                >
+                  Okay
+                </button>
+              </div>
+            </WalletModal>
+          )}
+
+          {dataSchedlue && (
+            <WalletModal>
+              <div className="text-center flex justify-center item-center md:mt-[-20px] lg:mt-[15px] 2xl:mt-[-15px]">
+                <div
+                  className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
+                    flex flex-col justify-center z-[100] lg:ml-[10px] md:w-full`}
+                >
+                  <div>
+                    <p className="text-[10px] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[3%]">
+                      Data Schedule
+                    </p>
+                    <p className="text-[10px] md:text-[16px] font-[600] text-[#04177F] lg:text-[16px]">
+                      This Feature is Currently Not Available.
+                    </p>
+                  </div>
+                  <img
+                    src={InternationalData}
+                    alt=""
+                    className="img mx-auto mt-[60px] md:mt-[15%] md:w-[220px] md:mx-[100px] w-[143px] h-[67px] lg:w-[300px] lg:h-[200px] lg:mx-[150px] lg:mt-[10%] 2xl:mt-[10%] 2xl:mx-[180px]"
+                  />
+                </div>
+              </div>
+              <div className="mt-[40px] flex flex-col gap-[5px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
+                <p className="text-[8px] font-extrabold text-end float-right ml-[60%] md:ml-[70%] md:text-[12px] mt-[10px] lg:text-[13px] 2xl:text-[15px]">
+                  Coming Soon...
+                </p>
+                <button
+                  className={` ${
+                    isDarkMode ? "border" : "bg-[#04177f] "
+                  } cursor-pointer text-white text-[10px] h-[40px] rounded-[5px] md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[25%] lg:mx-auto`}
+                  onClick={resetActiveButton}
+                  handleClick={activeIndex}
+                >
+                  Okay
+                </button>
+              </div>
+            </WalletModal>
+          )}
+
+          {bulkData && (
+            <WalletModal>
+              <div className="text-center flex justify-center item-center md:mt-[-20px] lg:mt-[15px] 2xl:mt-[-15px]">
+                <div
+                  className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
+                    flex flex-col justify-center z-[100] lg:ml-[10px] md:w-full`}
+                >
+                  <div>
+                    <p className="text-[10px] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[3%]">
+                      Bulk Data
                     </p>
                     <p className="text-[10px] md:text-[16px] font-[600] text-[#04177F] lg:text-[16px]">
                       This Feature is Currently Not Available.

@@ -136,7 +136,7 @@ const DataBundlesPage = () => {
             </div>
             </Link>
             
-
+            <Link to="/AirtelDataBundle">
             <div
               id="Network"
               className="rounded-[4px] relative flex flex-col justify-center items-center"
@@ -148,7 +148,9 @@ const DataBundlesPage = () => {
                 className="absolute self-center md:w-[20%] lg:w-[25%]"
               />
             </div>
+            </Link>
 
+            <Link to="/GloDataBundle">
             <div
               id="Network"
               className="rounded-[4px] relative flex flex-col justify-center items-center"
@@ -160,7 +162,9 @@ const DataBundlesPage = () => {
                 className="absolute self-center md:w-[20%] lg:w-[25%]"
               />
             </div>
+            </Link>
 
+            <Link to="/EtisalatDataBundle">
             <div
               id="Network"
               className="rounded-[4px] relative flex flex-col justify-center items-center"
@@ -172,6 +176,7 @@ const DataBundlesPage = () => {
                 className="absolute self-center md:w-[20%] lg:w-[25%]"
               />
             </div>
+            </Link>
 
             <div
               id="Network"

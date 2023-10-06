@@ -62,6 +62,9 @@ import  { DataReceipt }  from "./Components/Dashboard/DashboardComponents/DataTo
 import WalletSummaryPage from "./Components/WalletSummaryPage/WalletSummary";
 import SalesSummaryPage from "./Components/SalesSummaryPage/SalesSummary";
 import { WithdrawToOtherBankReceipt } from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToOtherBanksPopUp/WithdrawToOtherBankReceipt";
+import AirtelDataBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/AirtelDataBundle/AirtelDataBundle";
+import GloDataBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/GloDataBundle/GloDataBundle";
+import EtisalatDataBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/EtisalatDataBundle/EtisalatDataBundle";
 export const Router = () => {
   return (
     <div>
@@ -150,6 +153,9 @@ export const Router = () => {
         <Route path="/My-Referral" element={<Referral />} />
         <Route path="/MtnDataTopUpBundle" element={<MtnDataTopUpBundle />} />
         <Route path="/DataReceipt" element={<DataReceipt/>} />
+        <Route path="/AirtelDataBundle" element={<AirtelDataBundle/>} />
+        <Route path="/GloDataBundle" element={<GloDataBundle/>} />
+        <Route path="/EtisalatDataBundle" element={<EtisalatDataBundle/>} />
       </Routes>
     </div>
   );
