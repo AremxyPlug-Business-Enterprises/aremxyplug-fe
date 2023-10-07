@@ -24,6 +24,9 @@ import OtpInput from "react-otp-input";
 import styles from "../../../TransferComponent/transfer.module.css";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
+import { GloReceipt } from "./GloReceipt";
+import Joi from "joi";
+
 // import TransactFailedPopUp from "../../../TransferComponent/PopUps/TransactionFailedPopUp"
 // import WalletModal from "../../../../../Wallet/WalletModal"
 // import { RiFileCopyFill } from "react-icons/ri";
@@ -39,6 +42,9 @@ const GloDataBundle = () => {
   const [proceed, setProceed] = useState(false);
   const [recipientName, setRecipientName] = useState("");
   const [confirm, setConfirm] = useState(false);
+  const [receipt] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [recipientNumber, setRecipientNumber] = useState('');
   // const [showInputPinPopup, setShowInputPinPopup] = useState(false);
 
   const {
@@ -112,8 +118,34 @@ const GloDataBundle = () => {
   ];
 
   const handleProceed = () => {
-    setProceed(true);
+    // setProceed(true);
+
+    const { error } = schema.validate({
+        recipientNumber,
+        });
+  
+        if (error) {
+        setErrors(
+            error.details.reduce((acc, curr) => {
+            acc[curr.path[0]] = curr.message;
+            return acc;
+            }, {})
+        );
+        } else {
+        setProceed(true);
+        setErrors({});
+        }
   };
+
+  const schema = Joi.object({
+    recipientNumber: Joi.string()
+      .pattern(new RegExp(/^\d{11,}/))
+      .required()
+      .messages({
+        "string.pattern.base": "Phone number should be 11 digits ",
+      }),
+    
+  });
 
   const handleSelectProduct = (productName) => {
     setSelectedProduct(productName);
@@ -348,7 +380,10 @@ const GloDataBundle = () => {
                   className="border w-full h-8 px-4 rounded-md text-[10px] lg:text-[16px] font-[600] focus:outline-none lg:h-[51px]"
                   placeholder="7745631289"
                   value={inputValue}
-                  onChange={handleChange}
+                  onChange={(event) => {
+                    handleChange(event); 
+                    setRecipientNumber(event.target.value); 
+                  }}
                 />
                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                   <img
@@ -359,6 +394,12 @@ const GloDataBundle = () => {
                 </div>
               </div>
             </div>
+
+            {errors.recipientNumber && (
+                            <div className="text-[12px] text-red-500 italic lg:text-[14px]">
+                            {errors.recipientNumber}
+                            </div>
+                        )}
 
             <div className="">
               <h2 className="text-[10px] font-[600] md:text-[12px] lg:text-[18px]">
@@ -823,7 +864,7 @@ const GloDataBundle = () => {
                   </p>
                 </div>
                 <div className="flex w-full justify-center mx-auto px-[50px] items-center gap-[5%] md:gap-0 mt-[50px] md:w-[50%] lg:gap-[10%] lg:mx-auto  lg:my-[5%] md:mt-[40px]">
-                  {/* <Link to="/GloDataBundle"> */}
+                  <Link to="/GloDataBundle">
                     <button
                       onClick={() => {
                         handleTransactionSuccessClose(); 
@@ -833,19 +874,30 @@ const GloDataBundle = () => {
                     >
                       Done
                     </button>
-                  {/* </Link> */}
-                  {/* <Link to="/DataReceipt"> */}
+                  </Link>
+                  <Link to="/GloReceipt">
                     <button
                       onClick={handleTransactionSuccessClose}
                       className={`border-[1px] w-[100px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-[600] h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[12px] lg:w-[163px] lg:h-[38px] lg:my-[2%] md:px-[60px] md:h-[30px]`}
                     >
                       Receipt
                     </button>
-                  {/* </Link> */}
+                  </Link>
                 </div>
               </div>
             </Modal>
           )}
+
+{receipt && (
+                <GloReceipt
+                networkName="9MOBILE"
+                selectedProduct={selectedProduct}
+                selectedOption={selectedOption}
+                recipientNumber={inputValue}
+                amount={amountValue}
+                recipientName={recipientName}
+                />
+            )}
 
           <div className="py-[30px] lg:py-[60px] mt-10">
             <button
