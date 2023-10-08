@@ -18,7 +18,7 @@ const AddRecipient = () => {
     const {networkImage, setNetworkImage} = useContext(ContextProvider);
 
     const [errors, setErrors] = useState({});
-    const [save, setSave] = useState(false);
+    // const [save, setSave] = useState(false);
     const [showList, setShowList] = useState(false);
     const [selected, setSelected] = useState(false);
 
@@ -97,7 +97,7 @@ const AddRecipient = () => {
             }, {})
         );
         } else {
-        setSave(true);
+        // setSave(true);
         setErrors({});
         }
     };
