@@ -7,15 +7,21 @@ import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
-export const AirtimeVtuReceipt = ({
-  networkName,
-  selectedProduct,
-  amount,
-  recipientName,
-  recipientNumber,
-}) => {
-  const { toggleSideBar, isDarkMode, date } =
-    useContext(ContextProvider);
+const AirtimeVtuReceipt = () => {  
+
+  const {
+    networkName,
+    selectedProduct,
+    recipientName,
+    recipientNumber,
+    amount}
+   = useContext(ContextProvider);
+
+  const { 
+    toggleSideBar,
+    isDarkMode,
+    date, } =
+    useContext(ContextProvider);  
 
   const contentRef = useRef(null);
 
@@ -244,4 +250,6 @@ export const AirtimeVtuReceipt = ({
       </div>
     </DashBoardLayout>
   );
-};
+}
+
+export default AirtimeVtuReceipt;

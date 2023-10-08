@@ -18,30 +18,32 @@ import { useContext } from 'react';
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import { Link } from 'react-router-dom';
-import { AirtimeVtuReceipt } from "./AirtimeVtuReceipt";
+import AirtimeVtuReceipt from "./AirtimeVtuReceipt";
 
 const AirtimeVtu = () => {
     // const {  isDarkMode } = useContext(ContextProvider);
     const tFee = 0;
     const points = '+2.00';
 
-    const [networkName, setNetworkName] = useState('');
+    const {networkName, setNetworkName} = useContext(ContextProvider);
+    const {selectedProduct, setSelectedProduct} = useContext(ContextProvider);
+    const {recipientName, setRecipientName} = useContext(ContextProvider);
+    const {recipientNumber, setRecipientNumber} = useContext(ContextProvider);
+    const {amount, setAmount} = useContext(ContextProvider);
+
+
     const [addRecipient, setAddRecipient] = useState(false);
     const [networkImage, setNetworkImage] = useState('');
     const [discount, setDiscount] = useState('');
     const [proceed, setProceed] = useState(false);
     const [selected, setSelected] = useState(false);
     const [paymentSelected, setPaymentSelected] = useState(false);
-    const [amount, setAmount] = useState('');
     const [showList, setShowList] = useState(false);
     const [showPayment, setShowPayment] = useState(false);
     const [showProduct, setShowProduct] = useState(false);
     const [name, setName] = useState('');
     const [image, setImage] = useState('');
     const [paymentAmount, setPaymentAmount] = useState('');
-    const [recipientName, setRecipientName] = useState('');
-    const [recipientNumber, setRecipientNumber] = useState('');
-    const [selectedProduct, setSelectedProduct] = useState('');
     const [confirm, setConfirm] = useState(false);
     const [errors, setErrors] = useState({});
     const [codes, setCodes] = useState(false);

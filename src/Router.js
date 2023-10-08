@@ -55,7 +55,7 @@ import DataTopUpPage from "./Components/Dashboard/DashboardComponents/DataTopUpP
 import CurrencyConversion from "./Components/CurrencyConversion/currencyConversion";
 import PointRedeem from "./Components/Dashboard/DashboardComponents/PointRedeem/PointRedeem"
 import Referral from "./Components/Referrals/Referral"
-import { AirtimeVtuReceipt } from "./Components/AirTimePage/AirtimeVtuReceipt"
+import AirtimeVtuReceipt from "./Components/AirTimePage/AirtimeVtuReceipt"
 import DataBundlesPage from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundlesPage";
 import MtnDataTopUpBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/MtnDataTopUpBundle/MtnDataTopUpBundle";
 import WithdrawToOtherBanks from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToOtherBanks";
