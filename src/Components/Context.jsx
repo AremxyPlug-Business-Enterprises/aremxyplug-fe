@@ -671,7 +671,7 @@ export const Context = ({ children }) => {
   const [recipientName, setRecipientName] = useState('');
   const [recipientNumber, setRecipientNumber] = useState('');
   const [amount, setAmount] = useState('');
-
+  const [networkImage, setNetworkImage] = useState('');
 
 
   const hold = {
@@ -924,6 +924,8 @@ export const Context = ({ children }) => {
     setRecipientNumber,
     amount,
     setAmount,
+    networkImage, 
+    setNetworkImage,
   };
 
   return (

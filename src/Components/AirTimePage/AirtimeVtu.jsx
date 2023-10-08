@@ -30,10 +30,10 @@ const AirtimeVtu = () => {
     const {recipientName, setRecipientName} = useContext(ContextProvider);
     const {recipientNumber, setRecipientNumber} = useContext(ContextProvider);
     const {amount, setAmount} = useContext(ContextProvider);
+    const {networkImage, setNetworkImage} = useContext(ContextProvider);
 
 
     const [addRecipient, setAddRecipient] = useState(false);
-    const [networkImage, setNetworkImage] = useState('');
     const [discount, setDiscount] = useState('');
     const [proceed, setProceed] = useState(false);
     const [selected, setSelected] = useState(false);
@@ -343,12 +343,14 @@ const AirtimeVtu = () => {
                     </div>
                 </div>
                 <div className={styles.FlexPut}>
-                    <div className={styles.conPut}>
-                        <h2>Add Recipient</h2>
-                        <div className={styles.FlexImg}>
-                            <img src={add} alt="" className=''/>
+                    <Link to="/add-vtu-recipient">
+                        <div className={styles.conPut}>
+                            <h2>Add Recipient</h2>
+                            <div className={styles.FlexImg}>
+                                <img src={add} alt="" className=''/>
+                            </div>
                         </div>
-                    </div>
+                    </Link>
                 </div>
             </div>
             <div className={styles.containFlex1}>
