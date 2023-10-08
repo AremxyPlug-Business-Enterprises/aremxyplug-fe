@@ -62,6 +62,13 @@ import WithdrawToOtherBanks from "./Components/Dashboard/DashboardComponents/Wit
 import WalletSummaryPage from "./Components/WalletSummaryPage/WalletSummary";
 import SalesSummaryPage from "./Components/SalesSummaryPage/SalesSummary";
 import { WithdrawToOtherBankReceipt } from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToOtherBanksPopUp/WithdrawToOtherBankReceipt";
+import AirtelDataBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/AirtelDataBundle/AirtelDataBundle";
+import GloDataBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/GloDataBundle/GloDataBundle";
+import EtisalatDataBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/EtisalatDataBundle/EtisalatDataBundle";
+import { MtnReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/MtnDataTopUpBundle/MtnReceipt";
+import { AirtelReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/AirtelDataBundle/AirtelReceipt";
+import { EtisalatReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/EtisalatDataBundle/9MobileReceipt";
+import { GloReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/GloDataBundle/GloReceipt";
 export const Router = () => {
   return (
     <div>
@@ -150,6 +157,13 @@ export const Router = () => {
         <Route path="/data-bundles" element={<DataBundlesPage />} />
         <Route path="/My-Referral" element={<Referral />} />
         <Route path="/MtnDataTopUpBundle" element={<MtnDataTopUpBundle />} />
+        <Route path="/MtnReceipt" element={<MtnReceipt/>} />
+        <Route path="/AirtelDataBundle" element={<AirtelDataBundle/>} />
+        <Route path="/GloDataBundle" element={<GloDataBundle/>} />
+        <Route path="/EtisalatDataBundle" element={<EtisalatDataBundle/>} />
+        <Route path="/AirtelReceipt" element={<AirtelReceipt/>} />
+        <Route path="/EtisalatReceipt" element={<EtisalatReceipt/>} />
+        <Route path="/GloReceipt" element={<GloReceipt/>} />
       </Routes>
     </div>
   );
