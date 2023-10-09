@@ -665,6 +665,15 @@ export const Context = ({ children }) => {
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
+  // =====================AirtimeVTU========================
+  const [networkName, setNetworkName] = useState('');
+  const [selectedProduct, setSelectedProduct] = useState('');
+  const [recipientName, setRecipientName] = useState('');
+  const [recipientNumber, setRecipientNumber] = useState('');
+  const [amount, setAmount] = useState('');
+  const [networkImage, setNetworkImage] = useState('');
+
+
   const hold = {
     firstDrop,
     secondDrop,
@@ -904,6 +913,19 @@ export const Context = ({ children }) => {
     setOtherBankWithdrawalSuccess,
     // ==============exchangeRate=============
     exchangeRate,
+    // ==============AirtimeVTU===============
+    networkName,
+    setNetworkName,
+    selectedProduct,
+    setSelectedProduct,
+    recipientName,
+    setRecipientName,
+    recipientNumber,
+    setRecipientNumber,
+    amount,
+    setAmount,
+    networkImage, 
+    setNetworkImage,
   };
 
   return (

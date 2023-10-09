@@ -1,6 +1,6 @@
 {
   "name": "yes",
-  "version": "v1.22.19",
+  "version": "yes",
   "private": true,
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",
@@ -11,6 +11,7 @@
     "axios": "^1.4.0",
     "chart.js": "^4.3.0",
     "chima-flags-select": "^1.0.2",
+    "copy-to-clipboard": "^3.3.3",
     "dees-verification-code-input": "^1.0.6",
     "html2canvas": "^1.4.1",
     "install": "^0.13.0",

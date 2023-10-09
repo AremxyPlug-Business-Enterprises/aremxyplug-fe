@@ -10,7 +10,7 @@ import Recipient from "../DataBundles-Images/Recipient.svg";
 import Recipient2 from "../DataBundles-Images/Recipient2.svg";
 import DataBalance from "../DataBundles-Images/DataBalance.svg";
 import DataBalance2 from "../DataBundles-Images/DataBalance2.svg";
-import MtnLogo from "..//MtnDataTopUpBundle/MtnDataTopUpBundleImages/MtnLogo.svg";
+import GloLogo from "./GloLogo.svg";
 import arrowDown from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/ArrowDown.svg";
 import PhoneNumber from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/PhoneNumber.svg";
 import Recipient3 from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/Recipient.svg";
@@ -24,16 +24,14 @@ import OtpInput from "react-otp-input";
 import styles from "../../../TransferComponent/transfer.module.css";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
-import { MtnReceipt } from "./MtnReceipt";
+import { GloReceipt } from "./GloReceipt";
 import Joi from "joi";
 
 // import TransactFailedPopUp from "../../../TransferComponent/PopUps/TransactionFailedPopUp"
 // import WalletModal from "../../../../../Wallet/WalletModal"
 // import { RiFileCopyFill } from "react-icons/ri";
-// import { createContext } from 'react';
 
-
-const MtnDataTopUpBundle = () => {
+const GloDataBundle = () => {
   const { isDarkMode } = useContext(ContextProvider);
 
   const [selectedProduct, setSelectedProduct] = useState("");
@@ -47,13 +45,8 @@ const MtnDataTopUpBundle = () => {
   const [receipt] = useState(false);
   const [errors, setErrors] = useState({});
   const [recipientNumber, setRecipientNumber] = useState('');
-
-
-
   // const [showInputPinPopup, setShowInputPinPopup] = useState(false);
 
-
-  
   const {
     toggleSideBar,
     inputPin,
@@ -84,108 +77,64 @@ const MtnDataTopUpBundle = () => {
   const productList = [
     {
       id: 1,
-      name: "MTN SME",
+      name: "GLO CG",
       options: [
-        "MTN SME 500MB (₦100) ~ 1 MONTH",
-        "MTN SME 1GB (₦100) ~ 1 MONTH",
-        "MTN SME 2GB (₦100) ~ 1 MONTH",
-        "MTN SME 3GB (₦100) ~ 1 MONTH",
-        "MTN SME 4GB (₦100) ~ 1 MONTH",
-        "MTN SME 5GB (₦100) ~ 1 MONTH",
-        "MTN SME 10GB (₦100) ~ 1 MONTH",
+        "GLO CG 100MB (₦100) ~ 1 MONTH",
+        "GLO CG 200MB (₦100) ~ 1 MONTH",
+        "GLO CG 300MB (₦100) ~ 1 MONTH",
+        "GLO CG 500MB (₦100) ~ 1 MONTH",
+        "GLO CG 1GB (₦100) ~ 1 MONTH",
+        "GLO CG 2GB (₦100) ~ 1 MONTH",
+        "GLO CG 3GB (₦100) ~ 1 MONTH",
+        "GLO CG 5GB (₦100) ~ 1 MONTH",
+        "GLO CG 10GB (₦100) ~ 1 MONTH",
       ],
     },
     {
       id: 2,
-      name: "MTN SME2",
+      name: "GLO GIFTING",
       options: [
-        "MTN SME2 500MB (₦100) ~ 1 MONTH",
-        "MTN SME2 1GB (₦100) ~ 1 MONTH",
-        "MTN SME2 2GB (₦100) ~ 1 MONTH",
-        "MTN SME2 3GB (₦100) ~ 1 MONTH",
-        "MTN SME2 4GB (₦100) ~ 1 MONTH",
-        "MTN SME2 5GB (₦100) ~ 1 MONTH",
-        "MTN SME2 10GB (₦100) ~ 1 MONTH",
+        "GLO GIFTING 1.05GB (₦100) ~ 1 MONTH",
+        "GLO GIFTING 2.9GB (₦100) ~ 1 MONTH",
+        "GLO GIFTING 4.1GB (₦100) ~ 1 MONTH",
+        "GLO GIFTING 5.8GB (₦100) ~ 1 MONTH",
+        "GLO GIFTING 7.7GB (₦100) ~ 1 MONTH",
+        "GLO GIFTING 10GB (₦100) ~ 1 MONTH",
+        "GLO GIFTING 13.25GB (₦100) ~ 1 MONTH",
+        "GLO GIFTING 18.25GB (₦100) ~ 1 MONTH",
+        "GLO GIFTING 29.5GB (₦100) ~ 1 MONTH",
+        "GLO GIFTING 50GB (₦100) ~ 1 MONTH",
+        "GLO GIFTING 93GB (₦100) ~ 1 MONTH",
       ],
     },
     {
       id: 3,
-      name: "MTN CG",
+      name: "GLO GENERAL BUNDLES ---",
       options: [
-        "MTN CG 500MB (₦100) ~ 1 MONTH",
-        "MTN CG 1GB (₦100) ~ 1 MONTH",
-        "MTN CG 2GB (₦100) ~ 1 MONTH",
-        "MTN CG 3GB (₦100) ~ 1 MONTH",
-        "MTN CG 5GB (₦100) ~ 1 MONTH",
-        "MTN CG 10GB (₦100) ~ 1 MONTH",
+        
       ],
     },
-
-    {
-      id: 4,
-      name: "MTN GIFTING",
-      options: [
-        "MTN 100MB (₦100) ~ 1 MONTH",
-        "MTN 200MB (₦100) ~ 1 MONTH",
-        "MTN 300MB (₦100) ~ 1 MONTH",
-        "MTN 500MB (₦100) ~ 1 MONTH",
-        "MTN 1GB (₦100) ~ 1 MONTH",
-        "MTN 2GB (₦100) ~ 1 MONTH",
-        "MTN 3GB (₦100) ~ 1 MONTH",
-        "MTN 5GB (₦100) ~ 1 MONTH",
-        "MTN 10GB (₦100) ~ 1 MONTH",
-        "MTN 15GB (₦100) ~ 1 MONTH",
-        "MTN 20GB (₦100) ~ 1 MONTH",
-        "MTN 50GB (₦100) ~ 1 MONTH",
-        "MTN 75GB (₦100) ~ 1 MONTH",
-        "MTN 120GB (₦100) ~ 1 MONTH",
-      ],
-    },
-
-    {
-      id: 4,
-      name: "MTN DIRECT COUPON",
-      options: [
-        "MTN DIRECT COUPON 500MB (₦100) ~ 1 MONTH",
-        "MTN DIRECT COUPON 750MB (₦100) ~ 1 MONTH",
-        "MTN DIRECT COUPON 1GB (₦100) ~ 1 MONTH",
-        "MTN DIRECT COUPON 1.5GB (₦100) ~ 1 MONTH ",
-        "MTN DIRECT COUPON 2GB (₦100) ~ 1 MONTH ",
-        "MTN DIRECT COUPON 3GB (₦100) ~ 1 MONTH ",
-        "MTN DIRECT COUPON 5GB (₦100) ~ 1 MONTH",
-        "MTN DIRECT COUPON 10GB (₦100) ~ 1 MONTH",
-      ],
-    },
-
-    {
-      id: 3,
-      name: "AIRTEL GENERAL BUNDLES ---",
-      options: [
-       
-      ],
-  },
 
   ];
 
-  const handleProceed = (e) => {
+  const handleProceed = () => {
     // setProceed(true);
-    // e.preventDefault();
 
     const { error } = schema.validate({
-      recipientNumber,
-      });
-
-      if (error) {
-      setErrors(
-          error.details.reduce((acc, curr) => {
-          acc[curr.path[0]] = curr.message;
-          return acc;
-          }, {})
-      );
-      } else {
-      setProceed(true);
-      setErrors({});
-      }
+        recipientNumber,
+        });
+  
+        if (error) {
+        setErrors(
+            error.details.reduce((acc, curr) => {
+            acc[curr.path[0]] = curr.message;
+            return acc;
+            }, {})
+        );
+        } else {
+        setProceed(true);
+        setErrors({});
+        }
   };
 
   const schema = Joi.object({
@@ -195,6 +144,7 @@ const MtnDataTopUpBundle = () => {
       .messages({
         "string.pattern.base": "Phone number should be 11 digits ",
       }),
+    
   });
 
   const handleSelectProduct = (productName) => {
@@ -232,10 +182,6 @@ const MtnDataTopUpBundle = () => {
   const handleRecipientNameChange = (e) => {
     setRecipientName(e.target.value);
   };
-
-  const handleReceipt =()=> {
-    setTransactSuccessPopUp(false);
-  }
 
   console.log("confirm:", confirm);
 
@@ -338,12 +284,12 @@ const MtnDataTopUpBundle = () => {
                 Purchase
                 <span>
                   <img
-                    src={MtnLogo}
+                    src={GloLogo}
                     alt=""
                     className="md:w-[20px] md:h-[15px] mt-[px] lg:w-[30px] lg:h-[25px] 2xl:mt-[5px]"
                   />
                 </span>{" "}
-                MTN Data Instantly
+                GLO Data Instantly
               </p>
               <img
                 src={Select}
@@ -487,9 +433,7 @@ const MtnDataTopUpBundle = () => {
                   className="border w-full h-8 px-4 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px]"
                   placeholder="&#8358;100"
                   value={amountValue}
-                  onChange={(event) => {
-                    handleChanges(event); 
-                  }}
+                  onChange={handleChanges}
                 />
                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                   <img src={Amount} alt="" className="lg:w-[100%] lg:h-[50%]" />
@@ -540,8 +484,8 @@ const MtnDataTopUpBundle = () => {
                 className={`confirm mx-[5%] ${
                   isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
                 } ${
-                  toggleSideBar ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
-                } lg:ml-[10%] lg:mr-[10%] grow pt-[10px] md:mt-[1%] mb-0 pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:mb-[18%] md:overflow-auto`}
+                  toggleSideBar ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
+                } lg:ml-[10%] lg:mr-[10%] grow pt-[10px] mb-0 pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:mb-[18%] md:overflow-auto`}
               >
                 <div className="w-full flex justify-end border-b-[6px] border-primary px-[12px] md:h-[25px] lg:border-b-[10px] lg:mt-[20px]">
                   <img src={Cancel} alt="" onClick={() => setProceed(false)}  className="md:h-[120%] lg:h-[400%] lg:mt-[-25px] lg:pb-[20px]"/>
@@ -565,13 +509,13 @@ const MtnDataTopUpBundle = () => {
                       <div className="flex gap-1">
                         <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
                           <img
-                            src={MtnLogo}
+                            src={GloLogo}
                             alt=""
                             className="w-full h-full object-cover md:h-[15px]"
                           />
                         </div>
                         <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          MTN
+                          GLO
                         </h2>
                       </div>
                     </div>
@@ -695,7 +639,7 @@ const MtnDataTopUpBundle = () => {
               <div
                 className={`confirm2 ${styles.inputPin} ${
                   toggleSideBar
-                    ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
+                    ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]"
                     : "lg:w-[40%]"
                 } md:w-[55%] w-[90%] md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
               >
@@ -771,9 +715,9 @@ const MtnDataTopUpBundle = () => {
               <div
                 className={`confirm ${styles.successfulTwo} ${
                   toggleSideBar
-                    ? "md:w-[45%] md:ml-[20%] lg:ml-[20%] lg:w-[40%]"
+                    ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]"
                     : "lg:w-[40%]"
-                } md:w-[45%] w-[90%] md:my-auto md:mt-[.5%] mx-auto overflow-auto md:mb-[18%] lg:mx-auto lg:my-auto`}
+                } md:w-[45%] w-[90%] overflow-auto md:mb-[18%] lg:mx-auto lg:my-auto`}
               >
                 <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
                   <img
@@ -822,13 +766,13 @@ const MtnDataTopUpBundle = () => {
                     <div className="flex gap-1">
                       <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
                         <img
-                          src={MtnLogo}
+                          src={GloLogo}
                           alt=""
                           className="w-full h-full object-cover"
                         />
                       </div>
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        MTN
+                        GLO
                       </h2>
                     </div>
                   </div>
@@ -910,7 +854,7 @@ const MtnDataTopUpBundle = () => {
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="bg-[#F2FAFF] mx-10 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[75px] md:mx-[20px] md:rounded-[15px] lg:h-[75px]">
                   <p className="text-[6px] text-center mx-auto w-[171px] md:text-[9px] md:w-full lg:text-[14px]">
                     The data purchase has been sent successfully to the
@@ -919,8 +863,8 @@ const MtnDataTopUpBundle = () => {
                     contact us for any further assistance.
                   </p>
                 </div>
-                <div className="flex w-full justify-center mx-auto px-[50px] items-center gap-[5%] md:gap-[10%] mt-[50px] md:w-[50%] lg:gap-[10%] lg:mx-auto  lg:my-[5%] md:mt-[40px]">
-                  <Link to="/MtnDataTopUpBundle">
+                <div className="flex w-full justify-center mx-auto px-[50px] items-center gap-[5%] md:gap-0 mt-[50px] md:w-[50%] lg:gap-[10%] lg:mx-auto  lg:my-[5%] md:mt-[40px]">
+                  <Link to="/GloDataBundle">
                     <button
                       onClick={() => {
                         handleTransactionSuccessClose(); 
@@ -931,10 +875,9 @@ const MtnDataTopUpBundle = () => {
                       Done
                     </button>
                   </Link>
-
-                  <Link to="/MtnReceipt">
+                  <Link to="/GloReceipt">
                     <button
-                      onClick={handleReceipt}
+                      onClick={handleTransactionSuccessClose}
                       className={`border-[1px] w-[100px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-[600] h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[12px] lg:w-[163px] lg:h-[38px] lg:my-[2%] md:px-[60px] md:h-[30px]`}
                     >
                       Receipt
@@ -945,10 +888,9 @@ const MtnDataTopUpBundle = () => {
             </Modal>
           )}
 
-
 {receipt && (
-                <MtnReceipt
-                networkName="MTN"
+                <GloReceipt
+                networkName="9MOBILE"
                 selectedProduct={selectedProduct}
                 selectedOption={selectedOption}
                 recipientNumber={inputValue}
@@ -956,12 +898,10 @@ const MtnDataTopUpBundle = () => {
                 recipientName={recipientName}
                 />
             )}
-      
-
 
           <div className="py-[30px] lg:py-[60px] mt-10">
             <button
-              className={`w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[600] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px] ${
+              className={`w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[600] leading-[15px] lg:text-[16px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px] ${
                 !selectedProduct ||
                 !selectedOption ||
                 !inputValue ||
@@ -999,6 +939,4 @@ const MtnDataTopUpBundle = () => {
   );
 };
 
-
-export default MtnDataTopUpBundle;
-
+export default GloDataBundle;
