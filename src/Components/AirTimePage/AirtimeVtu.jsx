@@ -335,12 +335,14 @@ const AirtimeVtu = () => {
                 </div>
             <div className={styles.containFlex}>
                 <div className={styles.FlexPut}>
-                    <div className={styles.conPut}>
-                        <h2>Select Recipient</h2>
-                        <div className={styles.FlexImg}>
-                            <img src={weight} alt="" className=''/>
+                    <Link to="/select-vtu-recipient"> 
+                        <div className={styles.conPut}>
+                            <h2>Select Recipient</h2>
+                            <div className={styles.FlexImg}>
+                                <img src={weight} alt="" className=''/>
+                            </div>
                         </div>
-                    </div>
+                    </Link>
                 </div>
                 <div className={styles.FlexPut}>
                     <Link to="/add-vtu-recipient">
