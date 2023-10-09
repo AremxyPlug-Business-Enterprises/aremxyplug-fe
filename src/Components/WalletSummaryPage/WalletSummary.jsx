@@ -70,7 +70,7 @@ import normal from "./assets/search-normal.png";
 import refresh from "./assets/refresh-2.svg";
 import { DashBoardLayout } from '../Dashboard/Layout/DashBoardLayout';
 import cash from "./assets/cash receipt from online shopping on mobile phone (1).png"
-import desk from "./assets/arrow-square-rightdesk.png";
+// import desk from "./assets/arrow-square-rightdesk.png";
 
 
 
