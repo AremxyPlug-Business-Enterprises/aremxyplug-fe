@@ -20,7 +20,7 @@ const AirtimeTopUp = () => {
     const handleTab2 =()=> {
         setActiveTab('tab_2')
     }
-
+    
     const TabOneItem =({title,text, icon, link, onClick})=> {
         return (
             <Link className=' lg:h-[90px] border flex justify-between items-center py-[3px] md:py-[8px] md:pl-[8px] pl-[3px] lg:pl-[15px] pr-4 rounded-[7px]' to={link} onClick={onClick} style={{boxShadow: `0px 0px 2.347222328186035px 0px rgba(0, 0, 0, 0.25)`}}>

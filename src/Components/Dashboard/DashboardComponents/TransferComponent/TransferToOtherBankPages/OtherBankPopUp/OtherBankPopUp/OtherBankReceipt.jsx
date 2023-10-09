@@ -254,7 +254,7 @@ export const OtherBankReceipt = () => {
             <div
               className={`${isDarkMode ? "" : "bg-[#04177f]"} ${
                 styles.contactus
-              } text-[8px] p-1 text-white rounded-[8px] lg:text-[14px]`}
+              } text-[8px] p-1 text-white rounded-[8px] lg:p-[10%] lg:text-[14px]`}
             >
               Contact Us
             </div>

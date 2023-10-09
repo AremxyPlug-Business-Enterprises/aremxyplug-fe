@@ -53,15 +53,28 @@ import { InternationalReceipt } from "./Components/Dashboard/DashboardComponents
 import FiatConversion from "./Components/CurrencyConversion/FiatConversion";
 import DataTopUpPage from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataTopUpPage";
 import CurrencyConversion from "./Components/CurrencyConversion/currencyConversion";
-import PointRedeem from "./Components/Dashboard/DashboardComponents/PointRedeem/PointRedeem";
+import PointRedeem from "./Components/Dashboard/DashboardComponents/PointRedeem/PointRedeem"
+import Referral from "./Components/Referrals/Referral"
+import AirtimeVtuReceipt from "./Components/AirTimePage/AirtimeVtuReceipt"
 import DataBundlesPage from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundlesPage";
-import Referral from "./Components/Referrals/Referral";
 import MtnDataTopUpBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/MtnDataTopUpBundle/MtnDataTopUpBundle";
 import WithdrawToOtherBanks from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToOtherBanks";
 import ConfirmConversion from "./Components/CurrencyConversion/currencyPopups/confirmConversion";
 import { SuccessfulReceipt } from "./Components/CurrencyConversion/ConversionReceipts/SuccessConversionReceipt";
 
 
+import WalletSummaryPage from "./Components/WalletSummaryPage/WalletSummary";
+import SalesSummaryPage from "./Components/SalesSummaryPage/SalesSummary";
+import { WithdrawToOtherBankReceipt } from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToOtherBanksPopUp/WithdrawToOtherBankReceipt";
+import AirtelDataBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/AirtelDataBundle/AirtelDataBundle";
+import GloDataBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/GloDataBundle/GloDataBundle";
+import EtisalatDataBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/EtisalatDataBundle/EtisalatDataBundle";
+import { MtnReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/MtnDataTopUpBundle/MtnReceipt";
+import { AirtelReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/AirtelDataBundle/AirtelReceipt";
+import { EtisalatReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/EtisalatDataBundle/9MobileReceipt";
+import { GloReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/GloDataBundle/GloReceipt";
+import AddRecipient from "./Components/AirTimePage/AddRecipient";
+import SelectRecipient from "./Components/AirTimePage/SelectRecipient";
 export const Router = () => {
   return (
     <div>
@@ -107,11 +120,16 @@ export const Router = () => {
         <Route path="/business-account" element={<BusinessAccountPage />} />
         <Route path="/airtime-topup" element={<AirTime />} />
         <Route path="/airtime-vtu" element={<AirtimeVtu />} />
+        <Route path="/airtime-vtu-receipt" element={<AirtimeVtuReceipt />} />
+        <Route path="/add-vtu-recipient" element={<AddRecipient />} />
+        <Route path="/select-vtu-recipient" element={<SelectRecipient />} />
         <Route path="/add-account" element={<AddAccount />} />
         <Route path="/ngn-virtual-account" element={<NgnVirtualAccount />} />
         <Route path="/cookie-settings" element={<CookiesSettings />} />
         <Route path="/Receipt" element={<Receipt />} />
         <Route path="/withdraw" element={<WithdrawPage />} />
+        <Route path="/wallet-summary" element={<WalletSummaryPage/>} />
+        <Route path="/sales-summary" element={<SalesSummaryPage />} />
         <Route
           path="/withdraw-to-account"
           element={<WithdrawToMyAccountPage />}
@@ -132,6 +150,10 @@ export const Router = () => {
         />
         <Route path="/other-bank-receipt" element={<OtherBankReceipt />} />
         <Route
+          path="/other-bank-withdrawalreceipt"
+          element={<WithdrawToOtherBankReceipt />}
+        />
+        <Route
           path="/international-bank-receipt"
           element={<InternationalReceipt />}
         />
@@ -145,6 +167,13 @@ export const Router = () => {
         <Route path="/MtnDataTopUpBundle" element={<MtnDataTopUpBundle />} />
         <Route path="/ConfirmConversion" element={<ConfirmConversion/>}/>
         <Route path="/SuccessfulConversion" element={<SuccessfulReceipt/>}/>
+        <Route path="/MtnReceipt" element={<MtnReceipt/>} />
+        <Route path="/AirtelDataBundle" element={<AirtelDataBundle/>} />
+        <Route path="/GloDataBundle" element={<GloDataBundle/>} />
+        <Route path="/EtisalatDataBundle" element={<EtisalatDataBundle/>} />
+        <Route path="/AirtelReceipt" element={<AirtelReceipt/>} />
+        <Route path="/EtisalatReceipt" element={<EtisalatReceipt/>} />
+        <Route path="/GloReceipt" element={<GloReceipt/>} />
       </Routes>
     </div>
   );

@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import { ContextProvider } from "../../../../Context";
 import styles from "../../TransferComponent/transfer.module.css";
-// import Joi from "joi";
 import { ConfirmOtherTransaction } from "./OtherBankPopUp/OtherBankPopUp/ConfirmOtherTransaction";
 import { Modal } from "../../../../Screens/Modal/Modal";
 // import { useNavigate } from "react-router-dom";
@@ -16,7 +15,10 @@ export default function GlobalTransfer() {
     toggleSideBar,
     amtToTransfer,
     setAmtToTransfer,
+    globalBankName,
+    globalAccountNumber,
     globalCountry,
+    globalAccountName,
     setGlobalCountry,
     globalTransferErrors,
     handleGlobalInputChange,
@@ -25,7 +27,7 @@ export default function GlobalTransfer() {
 
   const [addToRecipient, SetAddToRecipient] = useState(false);
   const [saveToFavorite, setSaveTofavorite] = useState(false);
-
+  
   const countryList = [
     {
       id: 1,
@@ -219,7 +221,7 @@ export default function GlobalTransfer() {
             <input
               onChange={handleGlobalInputChange}
               name="bankName"
-              value={setGlobalCountry.bankName}
+              value={globalBankName}
               className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
               type="text"
             />
@@ -245,7 +247,7 @@ export default function GlobalTransfer() {
             <input
               onChange={handleGlobalInputChange}
               name="accountNumber"
-              value={setGlobalCountry.accountNumber}
+              value={globalAccountNumber}
               className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
               type="number"
             />
@@ -266,7 +268,7 @@ export default function GlobalTransfer() {
             <input
               onChange={handleGlobalInputChange}
               name="accountName"
-              value={setGlobalCountry.accountName}
+              value={globalAccountName}
               className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
               type="text"
             />
