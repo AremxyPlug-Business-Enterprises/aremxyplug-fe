@@ -1,5 +1,5 @@
 import React  from "react";
-import ConversionModal from "../../../Components/CurrencyConversion/ConversionModal";
+
 import "../../CurrencyConversion/currencyConversion.css";
 // import overlay from "../Images/whiteoverlay.svg"
 import nigeria from "../Images/nigeria.svg"
