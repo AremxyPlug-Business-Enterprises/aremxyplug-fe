@@ -1,18 +1,14 @@
 import React  from "react";
 
 import "../../CurrencyConversion/currencyConversion.css";
-// import overlay from "../Images/whiteoverlay.svg"
-import nigeria from "../Images/nigeria.svg"
-import right from "../Images/right.svg"
-import { useState } from "react";
-import { ContextProvider } from "../../Context";
+
+// import { useState } from "react";
+
 
 
 
 const ConfirmConversion = () => {
-    const amtToConvert = (`${10},000`);
-    const amtToReceive = 10;
-    const availableBalance = (`${50},000`);
+  
 
 
     //    const handleConfirmationPopupClose = () => {
@@ -27,10 +23,10 @@ const ConfirmConversion = () => {
     //     setConversionPopUp(false);
     //   };
 
-    const [confirm, setConfirm] = useState(false);
-    const handleConfirm = () => {
-      setConfirm(true)
-    }
+    // const [confirm, setConfirm] = useState(false);
+    // const handleConfirm = () => {
+    //   setConfirm(true)
+    // }
 
     return(
         <div>

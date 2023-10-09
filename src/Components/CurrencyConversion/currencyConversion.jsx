@@ -1,5 +1,5 @@
-import React, {useState, useContext, useEffect} from "react";
-import { ContextProvider } from "../Context";
+import React, {useState} from "react";
+// import { ContextProvider } from "../Context";
 import { Link } from "react-router-dom";
 import "../CurrencyConversion/currencyConversion.css";
 import creditCard from "../CurrencyConversion/Images/credit.svg";

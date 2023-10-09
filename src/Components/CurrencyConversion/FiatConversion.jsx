@@ -112,6 +112,7 @@ const FiatConversion = () => {
         setPinInput(true);
         setConfirm(false);
       }
+
       const [conversionSuccessful, setConversionSuccessful] = useState(false)
        const handleConversionSuccessful = () =>{
         setPinInput(false);
@@ -123,6 +124,24 @@ const FiatConversion = () => {
     const amtToReceive = 10;
     const availableBalance = (`${50},000`);
 
+    const [conversionAmount, setConversionAmount] = useState("");
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    alert(`The name you entered was: ${conversionAmount}`)
+  }
+
+  // return (
+  //   <form onSubmit={handleSubmit}>
+  //     <label>Enter your name:
+  //       <input 
+  //         type="text" 
+  //         value={name}
+  //         onChange={(e) => setName(e.target.value)}
+  //       />
+  //     </label>
+  //     <input type="submit" />
+  //   </form>)
 
       const [isFocused, setIsFocused] = useState(false);
       const handleFocus = () => {
@@ -332,8 +351,8 @@ const FiatConversion = () => {
                       fontSize: '10px',
                       fontWeight: 600,
                       borderRadius: 4,
-                      height: '27px',
-                      width: '27px',
+                      height: '35px',
+                      width: '35px',
                     }
                 }
                     
