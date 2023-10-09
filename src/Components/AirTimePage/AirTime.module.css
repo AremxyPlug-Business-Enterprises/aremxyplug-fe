@@ -18,47 +18,6 @@
     flex-direction: column;
     gap: 50px;
 }
-.airtimeTop .banner {
-    width: 100%;
-    margin: 0 auto;
-    background: linear-gradient(92.3deg, #6EDCFF 31.38%, rgba(65, 107, 255, 0.79) 98.66%);
-    height: 196px;
-    border-radius: 20px;
-    display: flex;
-    justify-content: space-between;
-    padding: 20px 50px 40px;
-}
-.banner .bannerText {
-    width: 70%;
-    margin: auto 0;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-.bannerText h2 {
-    width: 100%;
-    font-size: 24px;
-    font-weight: 600;
-    line-height: 26px;
-    letter-spacing: 0em;    
-    color: #000000;
-}
-.bannerText p {
-    width: 100%;
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 19px;
-    letter-spacing: 0em;
-    color: #000000;
-}
-.banner .bannerImage {
-    margin: auto 0;
-}
-.banner .bannerImage img {
-    width: 100%;
-    position: relative;
-    bottom: 5px;
-}
 .airType {
     margin: 0 auto;
     width: 100%;
@@ -262,7 +221,6 @@
     flex-direction: column;
     gap: 30px;
     width: 100%;
-    height: 500px;
     margin: 0 auto;
 }
 
@@ -270,11 +228,10 @@
 
 .airtimeCol {
     width: 100%;
-    height: 120px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
-    padding: 0 50px 0 0;
+    padding: 15px 50px 15px 0;
     border: none;
     border-radius: 12px;
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.65);
@@ -286,13 +243,12 @@
     left: 15px;
     display: flex;
     gap: 10px;
-    width: 75%;
 }
 .airtimeCol .airImg {
     position: relative;
     width: 24px;
     height: 24px;
-    top: 25px;
+    margin: auto 0;
 }
 .airCol .airCon {
     position: relative;
@@ -307,14 +263,14 @@
     gap: 1px;
 }
 .airText h2 {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 500;
     line-height: 24px;
     letter-spacing: 0em;
     color: #000000;
 }
 .airText p {
-    font-size: 16px;
+    font-size: 14.05px;
     font-weight: 500;
     line-height: 21.07px;
     letter-spacing: 0em;
@@ -351,49 +307,14 @@
     bottom: 3px;
 }
 
+@media (max-width: 1024px) {
+    .airtimeCol {
+        box-shadow: 0px 0px 3.3119657039642334px 0px rgba(0, 0, 0, 0.25);
+        border-width: 1px;
+    }
+}
+
 @media (max-width: 768px) {
-    .airtimeTop .banner {
-        width: 100%;
-        margin: 0 auto;
-        background: linear-gradient(92.3deg, #6EDCFF 31.38%, rgba(65, 107, 255, 0.79) 98.66%);
-        height: 112.29px;
-        border-radius: 11.5px;
-        display: flex;
-        justify-content: space-between;
-        padding: 15px 20px;
-    }
-    .banner .bannerText {
-        width: 100%;
-        margin: auto 0;
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-    }
-    .bannerText h2 {
-        width: 100%;
-        font-size: 13.75px;
-        font-weight: 600;
-        line-height: 21px;
-        letter-spacing: 0em;    
-        color: #000000;
-    }
-    .bannerText p {
-        width: 100%;
-        font-size: 11.46px;
-        font-weight: 400;
-        line-height: 12px;
-        letter-spacing: 0em;
-        color: #000000;
-    }
-    .banner .bannerImage {
-        margin: auto 0;
-    }
-    .banner .bannerImage img {
-        width: 80%;
-        position: relative;
-        bottom: 0;
-        left: 10px;
-    }
     .airType {
         margin: 0 auto;
         width: 100%;
@@ -442,10 +363,10 @@
         width: 145px;
         height: 29px;
         padding: 5.87px 10.6px;
+        border-radius: 3.52px;
     }
     .active {
-        border-bottom: 2.35px solid #04177F;
-        border-radius: 3.52px;
+        border-bottom: 3.5px solid #04177F;
         background: linear-gradient(0deg, #E2F3FF, #E2F3FF), linear-gradient(0deg, #04177F, #04177F);
         position: relative;  
     }
@@ -607,7 +528,7 @@
         justify-content: space-between;
         border: none;
         border-radius: 7px;
-        box-shadow: 0px 0px 4px 0px #00000040;
+        box-shadow: 0px 0px 3.3119657039642334px 0px rgba(0, 0, 0, 0.25);
     }
     .airtimeCol .airCol {
         position: relative;
@@ -622,7 +543,7 @@
         position: relative;
         width: 14px;
         height: 14px;
-        top: 17px;
+        top: 0;
     }
     .airCol .airCon {
         position: relative;
@@ -684,57 +605,25 @@
 }
 
 @media (max-width: 425px) {
-    .airtimeTop .banner {
-        width: 100%;
-        margin: 0 auto;
-        background: linear-gradient(92.3deg, #6EDCFF 31.38%, rgba(65, 107, 255, 0.79) 98.66%);
-        height: 90px;
-        padding: 0;
-        border-radius: 7px;
-        display: flex;
-        justify-content: space-between;
-    }
-    .banner .bannerText {
-        width: 80%;
-        position: relative;
-        top: 0;
-        margin: auto 0;
-        left: 20px;
+    .airtimeTop {
         display: flex;
         flex-direction: column;
-        gap: 3px;
+        gap: 40px;
     }
-    .bannerText h2 {
-        width: 100%;
-        font-size: 10px;
-        font-weight: 600;
-        line-height: 12px;
-        letter-spacing: 0em;    
-        color: #000000;
-    }
-    .bannerText p {
-        width: 91%;
-        font-size: 7px;
-        font-weight: 400;
-        line-height: 12px;
-        letter-spacing: 0em;
-        color: #000000;
-    }
-    .banner .bannerImage {
-        margin: auto 0;
-    }
-    .banner .bannerImage img {
-        position: relative;
-        top: 0;
-        right: 10px;
-        height: 50px;
+    .AirtimeTops {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
     }
     .airType {
         width: 100%;
         height: 12px;
         display: flex;
         gap: 8px;
-        margin: 20px auto 0;
+        margin: 0 auto;
+        top: 0;
+        bottom: 0;
     }
     .airType h2 {
         font-size: 10px;
@@ -754,15 +643,15 @@
         height: 16px;
         display: flex;
         gap: 8.09px;
-        margin-bottom: 25px;
+        margin: 0 auto;
         border-bottom-width: 2px;
         position: relative;
-        top: 3px;
+        top: 0;
+        bottom: 0;
     }
     .localInter li {
         width: 100%;
-        height: 16px;
-        border-radius: 1.94px;
+        height: 20px;
         font-size: 8px;
         font-weight: 600;
         line-height: 12px;
@@ -770,36 +659,37 @@
         padding: 3.24px 9.71px;
         text-align: center;
         margin: 0 auto;
+        border-radius: 5px;
     }
     .active {
-        border-bottom: 1.29px solid #04177F;
-        border-radius: 1.94px;
+        border-bottom: 3px solid #04177F;
         background: linear-gradient(0deg, #E2F3FF, #E2F3FF), linear-gradient(0deg, #04177F, #04177F);
         position: relative;  
     }
     .containAir {
         width: 100%;
-        height: 280px;
         gap: 20px;
+        position: relative;
+        bottom: 10px;
     }
     .airtimeCol {
         width: 100%;
-        height: 80px;
+        height: 100%;
         margin: 0 auto;
         display: flex;
         justify-content: space-between;
-        padding: 0 20px 0 0;
+        padding: 10px 20px 10px 0;
         border: none;
         border-radius: 4px;
-        box-shadow: 0px 0px 4px 0px #00000040;
+        box-shadow: 0px 0px 3.3119657039642334px 0px rgba(0, 0, 0, 0.25);
     }
     .airtimeCol .airCol {
         position: relative;
         top: 0;
         margin: auto 0;
-        left: 5px;
+        left: 10px;
         display: flex;
-        gap: 3.33px;
+        gap: 10px;
         width: 80%;
         height: 33px;
     }
@@ -807,13 +697,13 @@
         position: relative;
         width: 12px;
         height: 12px;
-        top: 16.33px;
+        top: 0;
     }
     .airCol .airCon {
         position: relative;
         margin: auto 0;
-        width: 12px;
-        height: 12px;
+        width: 20px;
+        height: 20px;
     }
     .airText {
         display: flex;
@@ -871,17 +761,6 @@
         text-align: left;
         position: relative;
         bottom: 1px;
-    }
-    .airtimeTop {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
-    .AirtimeTops {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        height: 100%;
     }
     .NotInter {
         margin: 0 auto;
@@ -959,7 +838,7 @@
         width: 90%;
         height: 269px;
         border-radius: 8px;
-        gap: 10px;
+        gap: 30px;
     }
     .NotInterX .timeAbleX {
         text-align: center;

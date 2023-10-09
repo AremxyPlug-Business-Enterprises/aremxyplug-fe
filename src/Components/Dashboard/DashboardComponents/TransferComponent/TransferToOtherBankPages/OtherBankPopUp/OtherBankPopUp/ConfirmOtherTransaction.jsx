@@ -5,19 +5,26 @@ import { Modal } from "../../../../../../Screens/Modal/Modal";
 import styles from "../../../../TransferComponent/transfer.module.css";
 import { OtherInputPinPopUp } from "./OtherInputPinPop";
 
-export const ConfirmOtherTransaction = ({
-  otherBanksConfirmation,
-  setOtherBankConfirmation,
-  accountname,
-  accountnumber,
-  transferamount,
-  bankname,
-}) => {
-  const { toggleSideBar, transferFee, image } = useContext(ContextProvider);
+export const ConfirmOtherTransaction = () => {
+  const {
+    toggleSideBar,
+    transferFee,
+    image,
+    otherBanksConfirmation,
+    setOtherBankConfirmation,
+    amtToTransfer,
+    globalBankName,
+    globalAccountNumber,
+    globalAccountName,
+  } = useContext(ContextProvider);
 
   const [otherInputPinPopUp, setOtherInputPinPopUp] = useState(false);
 
-  const TotalAmount = transferamount;
+  const totalAmount = (a, b) => {
+    const sum = parseInt(a + b);
+    return sum;
+  };
+
   const pointsEarned = "+2.00";
 
   const handleSwitch = () => {
@@ -47,7 +54,7 @@ export const ConfirmOtherTransaction = ({
             <p className="text-[8px] text-[#0008] text-center mb-2 md:text-[12px] lg:text-[14px]">
               You are about to transfer{" "}
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">
-                &#8358;{transferamount}.00{" "}
+                &#8358;{amtToTransfer}.00{" "}
               </span>
               from your NGN wallet to{" "}
             </p>
@@ -55,19 +62,19 @@ export const ConfirmOtherTransaction = ({
             <div className="flex flex-col gap-3">
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#0008]">Bank Name</p>
-                <span>{bankname}</span>
+                <span>{globalBankName}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#0008]">Account Name</p>
-                <span>{accountname}</span>
+                <span>{globalAccountName}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#0008]">Account Number</p>
-                <span>{accountnumber}</span>
+                <span>{globalAccountNumber}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#0008]">Amount to Transfer</p>
-                <span>&#8358;{transferamount}.00</span>
+                <span>&#8358;{amtToTransfer}.00</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#0008]">Transfaction fee</p>
@@ -79,7 +86,7 @@ export const ConfirmOtherTransaction = ({
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#0008]">Total Amount</p>
-                <span>&#8358;{TotalAmount.toLocaleString()}.00</span>
+                <span>&#8358;{totalAmount(amtToTransfer, transferFee)}.00</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#0008]">Points Earned</p>
@@ -117,10 +124,6 @@ export const ConfirmOtherTransaction = ({
       <OtherInputPinPopUp
         otherInputPinPopUp={otherInputPinPopUp}
         setOtherInputPinPopUp={setOtherInputPinPopUp}
-        accountname={accountname}
-        accountnumber={accountnumber}
-        transferamount={transferamount}
-        bankname={bankname}
       />
     </div>
   );

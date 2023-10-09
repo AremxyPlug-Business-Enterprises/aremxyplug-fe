@@ -408,7 +408,74 @@ export const Context = ({ children }) => {
     const updatedButtons = activeButton.map((isActive, i) => i === index);
     setActiveButtons(updatedButtons);
   };
-  // ==========End Transfer page=============
+  // ========================End Transfer page==========================
+
+  // ===================Start of Global Transfer====================
+  const [otherBanksConfirmation, setOtherBankConfirmation] = useState(false);
+  const [globalCountry, setGlobalCountry] = useState("");
+  const [globalTransferErrors, setGlobalTransferErrors] = useState({});
+  const [globalTransferState, setGlobalTransferState] = useState({
+    accountName: "",
+    accountNumber: "",
+    bankName: "",
+  });
+
+  const handleGlobalInputChange = (e) => {
+    const { name, value } = e.target;
+    setGlobalTransferState({
+      ...globalTransferState,
+      [name]: value,
+    });
+  };
+
+  const globalTransferSchema = Joi.object({
+    globalCountry: Joi.string().required(),
+    bankName: Joi.string().required(),
+    accountNumber: Joi.string()
+      .pattern(new RegExp(/^\d{10,}/))
+      .required()
+      .messages({
+        "string.pattern.base": "Account number should be 10 digits ",
+      }),
+    accountName: Joi.string().required(),
+    amtToTransfer: Joi.string()
+      .pattern(new RegExp(/\d{4,}/))
+      .required()
+      .messages({
+        "string.pattern.base": "Amount can not be less than 1000",
+      }),
+  });
+
+  const ProceedToGlobalTransfer = (e) => {
+    e.preventDefault();
+    const { accountNumber, accountName, bankName } = globalTransferState;
+
+    const { error } = globalTransferSchema.validate({
+      globalCountry,
+      bankName,
+      accountNumber,
+      accountName,
+      amtToTransfer,
+    });
+
+    if (error) {
+      setGlobalTransferErrors(
+        error.details.reduce((acc, curr) => {
+          acc[curr.path[0]] = curr.message;
+          return acc;
+        }, {})
+      );
+    } else {
+      setOtherBankConfirmation(true);
+      setGlobalTransferErrors({});
+    }
+  };
+
+  const globalBankName = globalTransferState.bankName;
+  const globalAccountNumber = globalTransferState.accountNumber;
+  const globalAccountName = globalTransferState.accountName;
+
+  // ===================End of Global Transfer======================
 
   // ================Start of Transfer To International Banks =====================
   const [internationalBankConfirmation, setInternationalBankConfirmation] =
@@ -417,7 +484,6 @@ export const Context = ({ children }) => {
     useState(false);
   const [transfer, setTransfer] = useState("");
   const [receive, setReceive] = useState("");
-
   const [internationalDetails, setInternationalDetails] = useState({
     bankName: "",
     accountNumber: "",
@@ -427,7 +493,6 @@ export const Context = ({ children }) => {
     purposeOfPayment: "",
     message: "",
   });
-
   const [purpose, setPurpose] = useState(false);
   const [internErrors, setInternErrors] = useState({});
 
@@ -488,8 +553,6 @@ export const Context = ({ children }) => {
       setInternationalDetailPopUp(false);
       setInternationalBankConfirmation(true);
     }
-
-    // console.log(successful);
   };
 
   const bankName = internationalDetails.bankName;
@@ -512,8 +575,79 @@ export const Context = ({ children }) => {
     setWithdrawPinPopUp(false);
     setTransactSuccessPopUp(true);
   };
-
   // ========================End of Withdrawal page=========================
+
+  // ==================Start for withdraw To Other Banks====================
+  const [wOtherBanksConfirmation, setWOtherBankConfirmation] = useState(false);
+  const [wGlobalCountry, setWGlobalCountry] = useState("");
+  const [wGlobalWithdrawErrors, setWGlobalWithdrawErrors] = useState({});
+  const [amtToWithdraw, setAmtToWithdraw] = useState("");
+  const [withdrawalInputPin, setWithdrawalInputPin] = useState(false);
+  const [otherWithdrawalConfirmation, setOtherWithdrawalConfirmation] =
+    useState("");
+  const [OtherBankWithdrawalSuccess, setOtherBankWithdrawalSuccess] =
+    useState(false);
+  const [wGlobalWithdrawState, setWGlobalWithdrawState] = useState({
+    accountName: "",
+    accountNumber: "",
+    bankName: "",
+  });
+
+  const handleWithdrawGlobalInputChange = (e) => {
+    const { name, value } = e.target;
+    setWGlobalWithdrawState({
+      ...wGlobalWithdrawState,
+      [name]: value,
+    });
+  };
+
+  const wGlobalWithdrawSchema = Joi.object({
+    wGlobalCountry: Joi.string().required(),
+    bankName: Joi.string().required(),
+    accountNumber: Joi.string()
+      .pattern(new RegExp(/^\d{10,}/))
+      .required()
+      .messages({
+        "string.pattern.base": "Account number should be 10 digits ",
+      }),
+    accountName: Joi.string().required(),
+    amtToWithdraw: Joi.string()
+      .pattern(new RegExp(/\d{4,}/))
+      .required()
+      .messages({
+        "string.pattern.base": "Amount can not be less than 1000",
+      }),
+  });
+
+  const ProceedToGlobalWithdrawal = (e) => {
+    e.preventDefault();
+    const { accountNumber, accountName, bankName } = wGlobalWithdrawState;
+
+    const { error } = wGlobalWithdrawSchema.validate({
+      wGlobalCountry,
+      bankName,
+      accountNumber,
+      accountName,
+      amtToWithdraw,
+    });
+
+    if (error) {
+      setWGlobalWithdrawErrors(
+        error.details.reduce((acc, curr) => {
+          acc[curr.path[0]] = curr.message;
+          return acc;
+        }, {})
+      );
+    } else {
+      setOtherWithdrawalConfirmation(true);
+      setWGlobalWithdrawErrors({});
+    }
+  };
+
+  const wGlobalBankName = wGlobalWithdrawState.bankName;
+  const wGlobalAccountNumber = wGlobalWithdrawState.accountNumber;
+  const wGlobalAccountName = wGlobalWithdrawState.accountName;
+  // ==================End for withdraw to other banks====================
 
   // ======================ExchangeRate===============================
   const [exchangeRate, setExchangeRate] = useState(null);
@@ -643,7 +777,7 @@ export const Context = ({ children }) => {
     resetNumber,
     setResetNumber,
 
-    // =========Dashboard=========
+    // ============Dashboard=============
     toggleSideBar,
     setToggleSideBar,
     isDarkMode,
@@ -699,6 +833,18 @@ export const Context = ({ children }) => {
     toggleVisibility,
     isVisible,
 
+    // ==================GLobal Transfer==============
+    otherBanksConfirmation,
+    setOtherBankConfirmation,
+    globalTransferErrors,
+    globalCountry,
+    setGlobalCountry,
+    ProceedToGlobalTransfer,
+    globalBankName,
+    globalAccountNumber,
+    globalAccountName,
+    handleGlobalInputChange,
+
     // ===========International transfer ==============
     internationalBankConfirmation,
     setInternationalBankConfirmation,
@@ -736,10 +882,28 @@ export const Context = ({ children }) => {
     setWithdrawPinPopUp,
     withdrawPinHandler,
 
-    // ====exchangeRate====
+    // ===============withdraw to other banks=========
+    wOtherBanksConfirmation,
+    setWOtherBankConfirmation,
+    wGlobalWithdrawErrors,
+    wGlobalCountry,
+    setWGlobalCountry,
+    wGlobalWithdrawState,
+    ProceedToGlobalWithdrawal,
+    wGlobalBankName,
+    wGlobalAccountNumber,
+    wGlobalAccountName,
+    handleWithdrawGlobalInputChange,
+    amtToWithdraw,
+    setAmtToWithdraw,
+    otherWithdrawalConfirmation,
+    setOtherWithdrawalConfirmation,
+    withdrawalInputPin,
+    setWithdrawalInputPin,
+    OtherBankWithdrawalSuccess,
+    setOtherBankWithdrawalSuccess,
+    // ==============exchangeRate=============
     exchangeRate,
-
-    
   };
 
   return (

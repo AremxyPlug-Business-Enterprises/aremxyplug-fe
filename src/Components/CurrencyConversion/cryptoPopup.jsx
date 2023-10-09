@@ -7,14 +7,12 @@ function Modal({ isOpen, onClose, children }) {
   }
 
   return (
-    <div className="modal bg-[#454545] bg-opacity-20">
-      <div className="modal-overlay bg-[#454545] bg-opacity-20" onClick={onClose}>
+    <div className="modal bg-[#454545] bg-opacity-[15%]">
       <div className="modal-content">
         <span className="close" onClick={onClose}>
           &times;
         </span>
         {children}
-      </div>
     </div>
     </div>
   );
