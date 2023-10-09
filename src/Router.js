@@ -70,6 +70,7 @@ import { AirtelReceipt } from "./Components/Dashboard/DashboardComponents/DataTo
 import { EtisalatReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/EtisalatDataBundle/9MobileReceipt";
 import { GloReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/GloDataBundle/GloReceipt";
 import AddRecipient from "./Components/AirTimePage/AddRecipient";
+import SelectRecipient from "./Components/AirTimePage/SelectRecipient";
 export const Router = () => {
   return (
     <div>
@@ -117,6 +118,7 @@ export const Router = () => {
         <Route path="/airtime-vtu" element={<AirtimeVtu />} />
         <Route path="/airtime-vtu-receipt" element={<AirtimeVtuReceipt />} />
         <Route path="/add-vtu-recipient" element={<AddRecipient />} />
+        <Route path="/select-vtu-recipient" element={<SelectRecipient />} />
         <Route path="/add-account" element={<AddAccount />} />
         <Route path="/ngn-virtual-account" element={<NgnVirtualAccount />} />
         <Route path="/cookie-settings" element={<CookiesSettings />} />

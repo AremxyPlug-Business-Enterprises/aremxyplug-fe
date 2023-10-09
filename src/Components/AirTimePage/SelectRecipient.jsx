@@ -1,119 +1,15 @@
-import React, { useContext, useState } from 'react'
+import React from 'react'
+// import { ContextProvider } from '../Context';
 import styles from './AirtimeVtu.module.css'
 import { DashBoardLayout } from '../Dashboard/Layout/DashBoardLayout';
 import { Link } from 'react-router-dom';
-import { ContextProvider } from '../Context';
-import arrowDown from './Images/arrow-down.svg';
-import Joi from "joi";
-import call from './Images/call.svg';
-import user from './Images/user.svg';
-import { Modal } from "../Screens/Modal/Modal";
 
-const AddRecipient = () => {
+const SelectRecipient = () => {
 
-    const {networkName, setNetworkName} = useContext(ContextProvider);
-    const {recipientName, setRecipientName} = useContext(ContextProvider);
-    const {recipientNumber, setRecipientNumber} = useContext(ContextProvider);
-    const {networkImage, setNetworkImage} = useContext(ContextProvider);
-
-    const [errors, setErrors] = useState({});
-    const [save, setSave] = useState(false);
-    const [showList, setShowList] = useState(false);
-    const [selected, setSelected] = useState(false);
-    const [confirm, setConfirm] = useState(false);
-
-    const networkList = [
-        {
-            id:1,
-            name:'MTN',
-            image: require('./Images/mtn.svg').default,
-            discount: 3,
-        },
-        {
-            id:2,
-            name:'AIRTEL',
-            image: require('./Images/airtel.png'),
-            discount: 4,
-        },
-        {
-            id:3,
-            name:'GLO',
-            image: require('./Images/glo.png'),
-            discount: 3,
-        },
-        {
-            id:4,
-            name:'9MOBILE',
-            image: require('./Images/9mobile.svg').default,
-            discount: 3,
-        }
-    ];
-
-    const Network =({name, image, onClick})=> {
-        return (
-          <li className={styles.netList} onClick={onClick}>
-            <div className={styles.netImage}>
-              <img src={image} alt="" className={styles.NoImage}/>
-            </div> 
-            <h2 className={styles.netName}>{name}</h2>
-          </li>
-        )
-      }
-
-    const handleSelectNetwork =(name, image, val)=> {
-        setNetworkName(name);
-        setNetworkImage(image);
-        setShowList(false);
-        setSelected(true);
-    }
-
-    const handleShowList =()=> {
-        setShowList(!showList);
-        setNetworkName('');
-        setNetworkImage('');
-    }
-
-    const schema = Joi.object({
-        recipientNumber: Joi.string()
-          .pattern(new RegExp(/^\d{11,}/))
-          .required()
-          .messages({
-            "string.pattern.base": "Phone number should be 11 digits ",
-          })
-      });
-
-      const handleSave = (e) => {
-        e.preventDefault();
-
-        const { error } = schema.validate({
-        recipientNumber,
-        });
-
-        if (error) {
-        setErrors(
-            error.details.reduce((acc, curr) => {
-            acc[curr.path[0]] = curr.message;
-            return acc;
-            }, {})
-        );
-        } else {
-        setSave(true);
-        setErrors({});
-        }
-    };
-
-    const {
-        toggleSideBar,
-        // inputPin,
-        // setInputPin,
-        // toggleVisibility,
-        // isVisible,
-      } = useContext(ContextProvider);
-
-      const handleConfirm =()=> {
-        setSave(false);
-        setConfirm(true);
-      }
+    // const {networkName, setNetworkName} = useContext(ContextProvider);
+    // const {recipientName, setRecipientName} = useContext(ContextProvider);
+    // const {recipientNumber, setRecipientNumber} = useContext(ContextProvider);
+    // const {networkImage, setNetworkImage} = useContext(ContextProvider);
 
   return (
     <DashBoardLayout>
@@ -141,67 +37,66 @@ const AddRecipient = () => {
                 </div>
                 <div className={styles.mainGrid}>
                     <div className={styles.mainGridCol}>
-                        <div>
-                            <div className={styles.NetworkFlex}>
-                                <h2 className={styles.head3}>Select Network</h2>
-                                <div className={styles.input}>
-                                    <div className={styles.output2}>
-                                        { selected ? 
-                                            <li onClick={handleShowList} className={styles.labelInput}>
-                                                <div className={styles.network}>
-                                                    { networkImage && <img src={networkImage} alt=""/>}
-                                                </div> 
-                                                <h2 className={styles.head2}>{networkName}</h2>
-                                            </li>
-                                        : 
-                                            <h2 onClick={handleShowList} className={styles.head6}>Select Network</h2>
-                                        }
-                                        <button className={styles.btnDrop} onClick={handleShowList}>
-                                            <img src={arrowDown} alt=""/>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            { showList && 
-                                <div className={styles.colDown}>
-                                    {networkList.map((item) => (
-                                        <Network key={item.id} image={item.image} name={item.name} onClick={()=>handleSelectNetwork(item.name, item.image, item.discount)}/>
-                                    ))}
-                                </div> 
-                            }
-                        </div>
-                        <div>
-                            <h2 className={styles.head3}>Phone Number <span className={styles.span3}>(Select Recipient)</span></h2>
-                            <div className={styles.input}>
-                                <div className={styles.output}>
-                                    <input type='number' className={styles.phone} required placeholder='Add recipient phone number' onChange={(event)=>setRecipientNumber(event.target.value)} value={recipientNumber}/>
-                                    <div className={styles.call}>
-                                        <img src={call} alt=""/>
-                                    </div>
-                                </div>
-                            </div>
-                            {errors.recipientNumber && (
-                                <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                                {errors.recipientNumber}
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                    <div className={styles.mainGridCol}>
-                        <div>
-                            <h2 className={styles.head3}>Recipient Name <span className={styles.span4}>(optional)</span></h2>
-                            <div className={styles.input}>
-                                <div className={styles.output}>
-                                    <input type='text' className={styles.phone} required placeholder='Add recipient name' onChange={(event)=>setRecipientName(event.target.value)} value={recipientName}/>
-                                    <div className={styles.call}>
-                                        <img src={user} alt=""/>
-                                    </div>
-                                </div>
-                            </div>
+                        <div className="border rounded-[5px] h-[25px] flex justify-between items-center py-1 px-3 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
+                            <input
+                            className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
+                            type="text" placeholder='Name Or Phone Number'
+                            />
+                            <img
+                            className=" h-[13.3px] w-[13.3px] lg:w-[24px] lg:h-[24px] "
+                            src="./Images/dashboardImages/search-status.png"
+                            alt="dropdown"
+                            />
                         </div>
                     </div>
                 </div>
-                {save && (
+                <div className='flex flex-col gap-5'>
+                    <div className='w-[100%] mx-auto flex justify-between border py-2 px-2 rounded-[7px] md:rounded-[7px] lg:py-2 lg:px-5'>
+                        <div className='flex flex-col my-auto gap-[1.67px] md:gap-[2.93px]'>
+                            <h2 className='lg:text-[16px] font-medium lg:leading-6 md:text-[9px] text-[9px]'>
+                                MTN(08160955592)</h2>
+                            <p className='lg:text-[14.05px] lg:font-medium lg:leading-[21.07px] text-[#7C7C7C] text-[9px] font-semibold leading-3 md:text-[8px]'>
+                                Aremxyplug</p>
+                        </div>
+                        <div className='h-[16px] w-[16px] my-auto lg:w-[50px] lg:h-[25px]'>
+                            <img src='./Images/airtimeTopUp/Frame.png' alt="" className='h-full'/>
+                        </div>
+                    </div>
+                    <div className='w-[100%] mx-auto flex justify-between border py-2 px-2 rounded-[7px] md:rounded-[7px] lg:py-2 lg:px-5'>
+                        <div className='flex flex-col my-auto gap-[1.67px] md:gap-[2.93px]'>
+                            <h2 className='lg:text-[16px] font-medium lg:leading-6 md:text-[9px] text-[9px]'>
+                                MTN(08160955592)</h2>
+                            <p className='lg:text-[14.05px] lg:font-medium lg:leading-[21.07px] text-[#7C7C7C] text-[9px] font-semibold leading-3 md:text-[8px]'>
+                                Aremxyplug</p>
+                        </div>
+                        <div className='h-[16px] w-[16px] my-auto lg:w-[50px] lg:h-[25px]'>
+                            <img src='./Images/airtimeTopUp/Frame.png' alt="" className='h-full'/>
+                        </div>
+                    </div>
+                    <div className='w-[100%] mx-auto flex justify-between border py-2 px-2 rounded-[7px] md:rounded-[7px] lg:py-2 lg:px-5'>
+                        <div className='flex flex-col my-auto gap-[1.67px] md:gap-[2.93px]'>
+                            <h2 className='lg:text-[16px] font-medium lg:leading-6 md:text-[9px] text-[9px]'>
+                                MTN(08160955592)</h2>
+                            <p className='lg:text-[14.05px] lg:font-medium lg:leading-[21.07px] text-[#7C7C7C] text-[9px] font-semibold leading-3 md:text-[8px]'>
+                                Aremxyplug</p>
+                        </div>
+                        <div className='h-[16px] w-[16px] my-auto lg:w-[50px] lg:h-[25px]'>
+                            <img src='./Images/airtimeTopUp/Frame.png' alt="" className='h-full'/>
+                        </div>
+                    </div>
+                    <div className='w-[100%] mx-auto flex justify-between border py-2 px-2 rounded-[7px] md:rounded-[7px] lg:py-2 lg:px-5'>
+                        <div className='flex flex-col my-auto gap-[1.67px] md:gap-[2.93px]'>
+                            <h2 className='lg:text-[16px] font-medium lg:leading-6 md:text-[9px] text-[9px]'>
+                                MTN(08160955592)</h2>
+                            <p className='lg:text-[14.05px] lg:font-medium lg:leading-[21.07px] text-[#7C7C7C] text-[9px] font-semibold leading-3 md:text-[8px]'>
+                                Aremxyplug</p>
+                        </div>
+                        <div className='h-[16px] w-[16px] my-auto lg:w-[50px] lg:h-[25px]'>
+                            <img src='./Images/airtimeTopUp/Frame.png' alt="" className='h-full'/>
+                        </div>
+                    </div>
+                </div>
+                {/* {save && (
                     <Modal>
                         <div
                             className={`${styles.successfulThree} ${
@@ -260,8 +155,8 @@ const AddRecipient = () => {
                             </button>
                         </div>
                     </Modal>
-                )}
-                {
+                )} */}
+                {/* {
                 confirm && (
                     <Modal>
                         <div
@@ -299,13 +194,13 @@ const AddRecipient = () => {
                         </div>
                     </Modal>
                     )
-                }
-                <div className={styles.containFlex3}>
+                } */}
+                {/* <div className={styles.containFlex3}>
                     <button className={`${
                     recipientNumber.length < 11 ? "bg-[#0008]" : "bg-[#04177f]"
                     } w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`} onClick={handleSave}>Save
                     </button>
-                </div>
+                </div> */}
             </div>
             <div className={styles.help}>
                 <h2>You need help?</h2>
@@ -316,4 +211,4 @@ const AddRecipient = () => {
   )
 }
 
-export default AddRecipient
+export default SelectRecipient
