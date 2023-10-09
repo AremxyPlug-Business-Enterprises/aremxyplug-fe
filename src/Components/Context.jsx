@@ -816,6 +816,8 @@ export const Context = ({ children }) => {
     // ====exchangeRate====
     exchangeRate,
     handleGlobalInputChange,
+
+    
   };
 
   return (

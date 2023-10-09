@@ -58,6 +58,10 @@ import DataBundlesPage from "./Components/Dashboard/DashboardComponents/DataTopU
 import Referral from "./Components/Referrals/Referral";
 import MtnDataTopUpBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/MtnDataTopUpBundle/MtnDataTopUpBundle";
 import WithdrawToOtherBanks from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToOtherBanks";
+import ConfirmConversion from "./Components/CurrencyConversion/currencyPopups/confirmConversion";
+import { SuccessfulReceipt } from "./Components/CurrencyConversion/ConversionReceipts/SuccessConversionReceipt";
+
+
 export const Router = () => {
   return (
     <div>
@@ -139,6 +143,8 @@ export const Router = () => {
         <Route path="/data-bundles" element={<DataBundlesPage />} />
         <Route path="/My-Referral" element={<Referral />} />
         <Route path="/MtnDataTopUpBundle" element={<MtnDataTopUpBundle />} />
+        <Route path="/ConfirmConversion" element={<ConfirmConversion/>}/>
+        <Route path="/SuccessfulConversion" element={<SuccessfulReceipt/>}/>
       </Routes>
     </div>
   );
