@@ -14,7 +14,7 @@ import copy from "copy-to-clipboard";
 
 export default function Referral() {
   
- 
+
   const [copyTextOne, setCopyTextOne] = useState('https://aremxyplug.com/app/register?referral=aremxyplug');
   const [copyTextTwo, setCopyTextTwo] = useState('aremxyplug');
 
