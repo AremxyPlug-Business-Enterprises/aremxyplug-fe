@@ -69,7 +69,7 @@ export const MtnReceipt = () => {
       console.log("Web Share API not supported.");
     }
   };
-
+  
   // ==============Save Pdf Function==============
   const handleSaveAsPDFClick = () => {
     const content = contentRef.current;
@@ -140,7 +140,7 @@ export const MtnReceipt = () => {
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[16px]">
               {selectedOption} {" "}
               </span>
-              from your NGN wallet to{" "}
+              from your {walletName + " Wallet"} to{" "}
             </p>
             <div className="flex flex-col gap-3">
               {/* ========================Recipient Info================== */}

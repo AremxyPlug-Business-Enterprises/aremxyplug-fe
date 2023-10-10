@@ -15,9 +15,7 @@ import arrowDown from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/ArrowDown.
 import PhoneNumber from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/PhoneNumber.svg";
 import Recipient3 from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/Recipient.svg";
 import Amount from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/Amount.svg";
-// import Flag from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/NaijaFlag.svg";
 import Cancel from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/Cancel.svg";
-// import NaijaFlag from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/NaijaFlag.svg";
 import "../../../DataTopUpPage/DataTopUp.css";
 import { Modal } from "../../../../../Screens/Modal/Modal";
 import OtpInput from "react-otp-input";
@@ -28,9 +26,6 @@ import { EtisalatReceipt } from "./9MobileReceipt";
 import Joi from "joi";
 import airtimestyles from "../../../../../AirTimePage/AirtimeVtu.module.css";
 
-// import TransactFailedPopUp from "../../../TransferComponent/PopUps/TransactionFailedPopUp"
-// import WalletModal from "../../../../../Wallet/WalletModal"
-// import { RiFileCopyFill } from "react-icons/ri";
 
 const EtisalatDataBundle = () => {
   const { isDarkMode } = useContext(ContextProvider);
@@ -40,10 +35,6 @@ const EtisalatDataBundle = () => {
   const {selectedAmount, setSelectedAmount} = useContext(ContextProvider);
   const {recipientNames, setRecipientNames} = useContext(ContextProvider);
   const {walletName, setWalletName} = useContext(ContextProvider);
-
-
-
-
 
 
   const [showProductList, setShowProductList] = useState(false);
@@ -57,17 +48,6 @@ const EtisalatDataBundle = () => {
   const [showPayment, setShowPayment] = useState(false);
   const [image, setImage] = useState("");
   const [paymentAmount, setPaymentAmount] = useState("");
-
-  // const [duration, setDuration] = useState('')
-
-  // const [showInputPinPopup, setShowInputPinPopup] = useState(false);
-
-  // setAmount(selectedAmount);
-
-
- 
-
-
 
 
   const handleShowPayment = () => {
@@ -294,15 +274,7 @@ const EtisalatDataBundle = () => {
     setInputValue(numericValue);
   };
 
-  // const [amountValue, setAmountValue] = useState("");
 
-  // const handleChanges = (e) => {
-  //   const value = e.target.value;
-
-  //   const numericAmountValue = value.replace(/\D/g, "").slice(0, 50);
-
-  //   setAmountValue(`₦${numericAmountValue}`);
-  // };
 
   const handleRecipientNameChange = (e) => {
     setRecipientNames(e.target.value);
@@ -682,7 +654,6 @@ const EtisalatDataBundle = () => {
 
           {proceed && (
             <Modal>
-              {/* <div className="fixed top-0 left-0 w-full h-full bg-black/[0.3] z-[300] flex justify-center items-center"> */}
               <div
                 className={`confirm mx-[5%] ${
                   isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
@@ -708,7 +679,7 @@ const EtisalatDataBundle = () => {
                   <h2 className="lg:text-[16px] md:text-[12px] md:px-[30px] lg:leading-[24px] text-[10px] leading-[12px] text-center mt-[26px] mx-[10px] mb-[20px]">
                     You are about to purchase{" "}
                     <span className="font-[600]">{selectedOption}</span> from
-                    your NGN Wallet to
+                    your {walletName + " Wallet"} to
                   </h2>
 
                   <div className="flex flex-col gap-[15px] px-[20px] mt-[50px] md:gap-[25px]">
@@ -837,7 +808,6 @@ const EtisalatDataBundle = () => {
                   </div>
                 </div>
               </div>
-              {/* </div> */}
             </Modal>
           )}
 
@@ -962,7 +932,7 @@ const EtisalatDataBundle = () => {
                     <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
                       {selectedOption}{" "}
                     </span>
-                    from your NGN wallet to{" "}
+                    from your{walletName + " Wallet"} to{" "}
                   </p>
 
                   <div className="flex items-center justify-between">

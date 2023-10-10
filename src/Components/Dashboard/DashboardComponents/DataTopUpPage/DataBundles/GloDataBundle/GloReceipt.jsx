@@ -140,7 +140,7 @@ export const GloReceipt = () => {
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[16px]">
               {selectedOption} {" "}
               </span>
-              from your NGN wallet to{" "}
+              from your {walletName + " Wallet"} to{" "}
             </p>
             <div className="flex flex-col gap-3">
               {/* ========================Recipient Info================== */}
@@ -198,7 +198,7 @@ export const GloReceipt = () => {
                   <span>{walletName + " Wallet"}</span>
                 </div>
               </div>
-
+              
               {/* ===================Transaction Info==================== */}
               <div className="flex flex-col gap-[3px] w-[90%] mx-auto lg:gap-[5px]">
                 <div className="flex gap-[5px] items-center text-[10px] lg:text-[16px] font-extrabold">
