@@ -79,18 +79,20 @@ import cash from "./assets/cash receipt from online shopping on mobile phone (1)
 
 export default function WalletSummaryPage () {
 
-    const [isOpen1, setIsOpen1] = useState(false); 
+    const [isOpen1, setIsOpen1] = useState(""); 
 
-    const [isOpen2, setIsOpen2] = useState(false);
+    const [isOpen2, setIsOpen2] = useState("");
 
     const toggleDropdown1 = () => {
         
-        setIsOpen1(!isOpen1);
+        setIsOpen1(true);
+        setIsOpen2(false);
       };
 
 
       const toggleDropdown2 = () => {
-        setIsOpen2(!isOpen2);
+        setIsOpen2(true);
+        setIsOpen1(false);
         
       };  
 
