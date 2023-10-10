@@ -50,7 +50,7 @@ export default function SalesSummaryPage ()  {
     <div class="w-[312px] h-[65.54px] pl-[16.72px] pr-[19.33px] py-[7.36px] md:w-full md:h-[112.29px] md:pl-[28.65px] md:pr-[34.82px] md:py-[12.60px] lg:w-full lg:h-[196px] lg:pl-[50px] lg:pr-[60.79px] lg:rounded-[20px] lg:gap-[75px] lg:py-[22px] bg-gradient-to-r from-yellow-300 to-rose-400 rounded-md justify-center items-start gap-[25.08px] md:gap-[42.97px] inline-flex">
         <div class="w-[197.63px] lg:w-full md:w-full lg:gap-[15px] self-stretch flex-col justify-start items-start md:gap-[8.59px] gap-[5.02px] flex">
             <div class="w-[160.85px] md:w-[275.57px] lg:w-[481px] text-black text-[8.08px] md:text-sm lg:text-2xl font-semibold whitespace-nowrap  uppercase">MANAGE ALL YOUR TRANSACTIONS AT A <br /> TIME WITHOUT ANY HASSLE.</div>
-            <div class="w-[209px] h-[21px] md:w-full md:h-[37.24px] lg:w-[588px] lg:h-[65px] text-black text-[7px] lg:text-lg md:text-[9.17px] font-normal  lg:leading-tight md:leading-3 leading-[9.10px]">Select, filter, and manage all your transactions at a time, download all <br /> transactions stats and keep a record track.</div>
+            <div class="w-[209px] h-[21px] md:w-full md:h-[37.24px] lg:w-[588px] lg:h-[65px] text-black text-[7px] lg:text-lg md:text-[9.17px] font-normal whitespace-nowrap  lg:leading-tight md:leading-3 leading-[9.10px]">Select, filter, and manage all your transactions at a time, download all <br /> transactions stats and keep a record track.</div>
         </div>
         <img className="w-[53.24px] h-[50.16px] md:w-[91.21px] md:h-[85.94px] lg:w-[159.21px] lg:h-[150px]  " src={receiptA}  alt="" />
     </div>

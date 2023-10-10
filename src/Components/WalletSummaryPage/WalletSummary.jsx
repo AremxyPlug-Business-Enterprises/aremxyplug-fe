@@ -336,18 +336,18 @@ export default function WalletSummaryPage () {
  </div>
 
  {/* table for desktop and tab screen */}
- <div className="hidden md:block lg:block md:w-full shadow-black shadow-lg lg:w-full lg:mt-[-50px] ">
+ <div className="hidden md:block lg:block  shadow-black shadow-lg lg:w-full lg:mt-[-50px] ">
     
-        <table className="lg:w-full justify-between md:h-[517.15px] lg:h-[892px] items-center md:w-full  bg-white shadow ">
+        <table className="lg:w-full justify-start md:h-[517.15px] lg:h-[892px] items-start   bg-white shadow ">
             
-               <div className=" "> <thead class="flex lg:w-full md:w-full md:justify-around  md:items-center  bg-indigo-200">
+               <div className=" "> <thead class="flex flex-row lg:w-full md:w-full md:justify-start md:items-start  bg-indigo-200">
                <div> <tr className=" flex  border-none flex-row ">
-                   <div><th className="lg:px-6 lg:py-3 md:px-3 md:py-2 md:w-[86.19px] md:text-[9.17px]  md:leading-3 lg:w-[202px] border-none  text-black lg:text-base font-semibold  lg:leading-tight">Products</th></div> 
-                    <div><th className="lg:px-6 lg:py-3 md:px-3 md:py-2 md:w-[86.19px] md:text-[9.17px]  md:leading-3 lg:w-[202px] border-none text-black lg:text-base font-semibold  lg:leading-tight">Description</th></div>
-                    <div><th className="lg:px-6 lg:py-3 md:px-3 md:py-2 md:w-[86.19px] md:text-[9.17px]  md:leading-3 lg:w-[202px] border-none text-black lg:text-base font-semibold  lg:leading-tight">Order No</th></div>
-                    <div><th className="lg:px-6 lg:py-3 md:px-3 md:py-2 md:w-[86.19px] md:text-[9.17px]  md:leading-3 lg:w-[202px] border-none  text-black lg:text-base font-semibold lg:leading-tight">Amount</th></div>
-                   <div><th className="lg:px-6 lg:py-3 md:px-3 md:py-2 md:w-[86.19px] md:text-[9.17px]  md:leading-3 lg:w-[202px] text-black border-none lg:text-base font-semibold  lg:leading-tight">Date & Time</th></div> 
-                    <div><th className="lg:px-6 lg:py-3 md:px-3 md:py-2 md:w-[86.19px] md:text-[9.17px]  md:leading-3 lg:w-[202px] text-black lg:text-base border-none  font-semibold lg:leading-tight">Status</th></div>
+                   <div><th className="lg:px-6 lg:py-3 md:px-3 md:py-2 md:w-[200px] md:text-[9.17px]  md:leading-3 lg:w-[202px] border-none  text-black lg:text-base font-semibold  lg:leading-tight">Products</th></div> 
+                    <div><th className="lg:px-6 lg:py-3 md:px-3 md:py-2 md:w-[200px] md:text-[9.17px]  md:leading-3 lg:w-[202px] border-none text-black lg:text-base font-semibold  lg:leading-tight">Description</th></div>
+                    <div><th className="lg:px-6 lg:py-3 md:px-3 md:py-2 md:w-[200px] md:text-[9.17px]  md:leading-3 lg:w-[202px] border-none text-black lg:text-base font-semibold  lg:leading-tight">Order No</th></div>
+                    <div><th className="lg:px-6 lg:py-3 md:px-3 md:py-2 md:w-[200px] md:text-[9.17px]  md:leading-3 lg:w-[202px] border-none  text-black lg:text-base font-semibold lg:leading-tight">Amount</th></div>
+                   <div><th className="lg:px-6 lg:py-3 md:px-3 md:py-2 md:w-[200px] md:text-[9.17px]  md:leading-3 lg:w-[202px] text-black border-none lg:text-base font-semibold  lg:leading-tight">Date & Time</th></div> 
+                    <div><th className="lg:px-6 lg:py-3 md:px-3 md:py-2 md:w-[200px] md:text-[9.17px]  md:leading-3 lg:w-[202px] text-black lg:text-base border-none  font-semibold lg:leading-tight">Status</th></div>
                 </tr></div>
             </thead>
                </div>
@@ -355,43 +355,43 @@ export default function WalletSummaryPage () {
                
                
         
-            <tbody className="lg:h-[708px] lg:items-start lg:justify-start relative md:items-center md:justify-between flex flex-col bg-white ">
-                <tr className="">
-                    <td className="lg:px-6 lg:py-4 border-none md:w-[87.08px] md:text-[9.17px] md:leading-3 lg:w-[205px] text-black lg:text-base font-medium  lg:leading-tight">
+            <tbody className="lg:h-[708px] items-start justify-start flex flex-col bg-white ">
+                <tr className="justify-start items-start md:gap-[300px">
+                    <td className="lg:px-6 lg:py-4 border-none md:w-[205px] md:text-[9.17px] md:leading-3 lg:w-[205px] text-black lg:text-base font-medium  lg:leading-tight">
                         Virtual Account
                     </td>
-                    <td className="lg:px-6 lg:py-4 border-none md:w-[88.23px] md:text-[9.17px] md:leading-3 whitespace-nowrap lg:w-[205px] text-neutral-500 lg:text-base font-medium  lg:leading-tight"  >
+                    <td className="lg:px-6 lg:py-4 border-none md:w-[205px] md:text-[9.17px] md:leading-3 whitespace-nowrap lg:w-[205px] text-neutral-500 lg:text-base font-medium  lg:leading-tight"  >
                         NGN Wallet Top-up
                     </td>
-                    <td className="lg:px-6 lg:py-4 md:text-[9.17px] md:leading-3 lg:w-[205px] border-none  text-neutral-500 lg:text-base font-medium  lg:leading-tight">
+                    <td className="lg:px-6 lg:py-4 md:w-[205px] md:text-[9.17px] md:leading-3 lg:w-[205px] border-none  text-neutral-500 lg:text-base font-medium  lg:leading-tight">
                         0000000
                     </td>
-                    <td className="lg:px-6 lg:py-4 lg:w-[205px] md:w-[48.70px] md:text-[9.17px] md:leading-3 border-none text-neutral-500 lg:text-base font-medium  lg:leading-tight">₦1,000.00</td>
-                    <td className="lg:px-6 lg:py-4 border-none whitespace-nowrap md:w-[88.23px] md:text-[9.17px] md:leading-3 lg:w-[205px] text-neutral-500 lg:text-base font-medium  lg:leading-tight ">May 21st, 2023,<br/>07:21:00pm</td>
+                    <td className="lg:px-6 lg:py-4 lg:w-[205px] md:w-[205px] md:text-[9.17px] md:leading-3 border-none text-neutral-500 lg:text-base font-medium  lg:leading-tight">₦1,000.00</td>
+                    <td className="lg:px-6 lg:py-4 border-none whitespace-nowrap md:w-[205px] md:text-[9.17px] md:leading-3 lg:w-[205px] text-neutral-500 lg:text-base font-medium  lg:leading-tight ">May 21st, 2023,<br/>07:21:00pm</td>
                     <td className="border-none"> <div class=" bg-white gap-5 flex-row justify-start items-center flex"> <div className="md:w-[60.46px] md:h-[17.73px] md:px-[5.73px] md:py-[2.86px] md:rounded-[2.86px] md:gap-[5.73px] md:text-[9.17px] md:leading-3 whitespace-nowrap text-white border-b lg:px-2.5 lg:py-[5px]  lg:h-[31px] lg:w-[120px]  bg-green-300 lg:rounded-[5px] lg:text-base font-medium  flex justify-center items-center lg:gap-2.5 lg:leading-tight ">Successful</div>
                     <div className="lg:w-[15px] lg:h-[15px] md:w-[8.59px] md:h-[8.59px] justify-center items-center flex"><img src= {arrows} alt="" /></div></div>
                     </td>
                 </tr>
-                
-                <hr className='bg-[#7c7c7c] lg:w-full lg:h-[1.1px]'></hr>
-                <tr>
-                    <td className="whitespace-nowrap border-none md:w-[87.08px] md:text-[9.17px] md:leading-3  lg:w-[205px] text-black px-6 py-4 lg:text-base font-medium lg:leading-tight">Withdrawal</td>
-                    <td className=" text-neutral-500 border-none md:w-[88.23px] md:text-[9.17px] md:leading-3 lg:w-[205px] px-6 py-4 lg:text-base font-medium lg:leading-tight">From USD Wallet to Bank</td>
-                    <td className="text-neutral-500 lg:w-[205px] md:text-[9.17px] md:leading-3 border-none lg:text-base px-6 py-4  font-medium lg:leading-tight">0000000</td>
-                    <td className="text-neutral-500 lg:w-[205px] border-none md:w-[48.70px] md:text-[9.17px] md:leading-3 px-6 py-4 lg:text-base font-medium lg:leading-tight">₦25,000.00</td>
-                    <td className="md:w-[88.23px] md:text-[9.17px] md:leading-3 px-6 py-4 lg:w-[205px] text-neutral-500 border-none lg:text-base font-medium lg:leading-tight">May 21st, 2023,<br/>07:21:00pm</td>
+                 <hr className='bg-[#7c7c7c] w-full h-[1.1px]'></hr>
+
+                <tr className='justify-start items-start md:gap-[300px'>
+                    <td className="whitespace-nowrap border-none md:w-[205px] md:text-[9.17px] md:leading-3  lg:w-[205px] text-black px-6 py-4 lg:text-base font-medium lg:leading-tight">Withdrawal</td>
+                    <td className=" text-neutral-500 border-none md:w-[205px] md:text-[9.17px] md:leading-3 lg:w-[205px] px-6 py-4 lg:text-base font-medium md:whitespace-nowrap lg:leading-tight">From USD Wallet to <br/> Bank</td>
+                    <td className="text-neutral-500 lg:w-[205px] md:text-[9.17px] md:w-[205px] md:leading-3 border-none lg:text-base px-6 py-4  font-medium lg:leading-tight">0000000</td>
+                    <td className="text-neutral-500 lg:w-[205px] border-none md:w-[205px] md:text-[9.17px] md:leading-3 px-6 py-4 lg:text-base font-medium lg:leading-tight">₦25,000.00</td>
+                    <td className="md:w-[205px] md:text-[9.17px] md:leading-3 px-6 py-4 lg:w-[205px] text-neutral-500 border-none lg:text-base font-medium lg:leading-tight">May 21st, 2023,<br/>07:21:00pm</td>
                     <td className='border-none'><div className=" bg-white gap-5 flex-row justify-start items-center flex"><div className="md:w-[60.46px] md:h-[17.73px] md:px-[5.73px] md:py-[2.86px] md:rounded-[2.86px] md:gap-[5.73px] md:text-[9.17px] md:leading-3 text-white whitespace-nowrap lg:text-base font-medium  lg:px-2.5 lg:py-[5px]  lg:h-[31px] lg:w-[120px] bg-green-300 lg:rounded-[5px] justify-center items-center lg:gap-2.5 flex lg:leading-tight">Successful</div>
                      <div className="lg:w-[15px] lg:h-[15px] md:w-[8.59px] md:h-[8.59px] justify-center items-center flex "><img src= {arrows2} alt="" /></div></div>
                     </td>
                     </tr>
                     <hr className='bg-[#7c7c7c] w-full h-[1.1px]'></hr>
                     
-                <tr>
-                    <td className="md:w-[87.08px] md:text-[9.17px] md:leading-3 lg:w-[205px] border-none  text-black lg:text-base px-6 py-4 font-medium  lg:leading-tight">Card Payment</td>
-                    <td className="lg:w-[205px] md:w-[88.23px] md:text-[9.17px] md:leading-3 border-none text-neutral-500 lg:text-base px-6 py-4 font-medium  lg:leading-tight">NGN Wallet Top-up</td>
-                    <td className="text-neutral-500 lg:w-[205px] md:text-[9.17px] md:leading-3 border-none lg:text-base px-6 py-4 font-medium  lg:leading-tight">0000000</td>
-                    <td className="text-neutral-500 lg:w-[205px] md:w-[48.70px] md:text-[9.17px] md:leading-3 border-none lg:text-base px-6 py-4 font-medium  lg:leading-tight">₦25,000.00</td>
-                    <td className="md:w-[88.23px] md:text-[9.17px] md:leading-3 text-neutral-500 lg:w-[205px] px-6 py-4 border-none lg:text-base font-medium  lg:leading-tight">May 21st, 2023,<br/>07:21:00pm</td>
+                <tr className='justify-start items-start md:gap-[300px'>
+                    <td className="md:w-[205px] md:text-[9.17px] md:leading-3 lg:w-[205px] border-none  text-black lg:text-base px-6 py-4 font-medium  lg:leading-tight">Card Payment</td>
+                    <td className="lg:w-[205px] md:w-[205px] md:text-[9.17px] md:leading-3 border-none text-neutral-500 lg:text-base px-6 py-4 font-medium md:whitespace-nowrap  lg:leading-tight">NGN Wallet Top-up</td>
+                    <td className="text-neutral-500 md:w-[205px] lg:w-[205px] md:text-[9.17px] md:leading-3 border-none lg:text-base px-6 py-4 font-medium  lg:leading-tight">0000000</td>
+                    <td className="text-neutral-500 lg:w-[205px] md:w-[205px] md:text-[9.17px] md:leading-3 border-none lg:text-base px-6 py-4 font-medium  lg:leading-tight">₦25,000.00</td>
+                    <td className="md:w-[205px] md:text-[9.17px] md:leading-3 text-neutral-500 lg:w-[205px] px-6 py-4 border-none lg:text-base font-medium  lg:leading-tight">May 21st, 2023,<br/>07:21:00pm</td>
                     <td className='border-none'><div className=" bg-white gap-5 flex-row justify-start items-center flex"><div class="md:w-[60.46px] md:h-[17.73px] md:px-[5.73px] md:py-[2.86px] md:rounded-[2.86px] md:gap-[5.73px] md:text-[9.17px] md:leading-3 text-white whitespace-nowrap lg:text-base font-medium lg:px-2.5 lg:py-[5px]  lg:h-[31px] lg:w-[120px] bg-green-300 lg:rounded-[5px] justify-center items-center lg:gap-2.5 flex lg:leading-tight">Successful</div>
                         <div className="lg:w-[15px] lg:h-[15px] md:w-[8.59px] md:h-[8.59px] justify-center items-center flex "><img src= {arrows3} alt="" /></div></div>
 
@@ -402,12 +402,12 @@ export default function WalletSummaryPage () {
                 <hr className='bg-[#7c7c7c] w-full h-[1px]'></hr>
 
                   
-                <tr>
-                    <td className="md:w-[87.08px] md:text-[9.17px] md:leading-3 lg:w-[205px] border-none text-black px-6 py-4 lg:text-base font-medium lg:leading-tight">Money Transfer</td>
-                    <td className="lg:w-[205px] md:w-[88.23px] md:text-[9.17px] md:leading-3 border-none text-neutral-500 px-6 py-4 lg:text-base font-medium  lg:leading-tight">From NGN Wallet to AremxyPlug</td>
-                    <td className="text-neutral-500 md:text-[9.17px] md:leading-3 border-none lg:text-base lg:w-[205px] px-6 py-4 font-medium  lg:leading-tight">0000000</td>
-                    <td className="text-neutral-500 md:w-[48.70px] md:text-[9.17px] md:leading-3 border-none lg:text-base font-medium lg:w-[205px] px-6 py-4  lg:leading-tight">₦25,000.00</td>
-                    <td className="md:w-[88.23px] md:text-[9.17px] md:leading-3 lg:w-[205px] border-none text-neutral-500 px-6 py-4 lg:text-base font-medium  lg:leading-tight">May 21st, 2023,<br/>07:21:00pm</td>
+                <tr className='justify-start items-start md:gap-[300px'>
+                    <td className="md:w-[205px] md:text-[9.17px] md:leading-3 lg:w-[205px] border-none text-black px-6 py-4 lg:text-base font-medium lg:leading-tight">Money Transfer</td>
+                    <td className="lg:w-[205px] md:w-[205px] md:text-[9.17px] md:leading-3 border-none text-neutral-500 px-6 py-4 lg:text-base font-medium md:whitespace-nowrap  lg:leading-tight">From NGN Wallet to <br /> AremxyPlug</td>
+                    <td className="text-neutral-500 md:text-[9.17px] md:leading-3 border-none md:w-[205px] lg:text-base lg:w-[205px] px-6 py-4 font-medium  lg:leading-tight">0000000</td>
+                    <td className="text-neutral-500 md:w-[205px] md:text-[9.17px] md:leading-3 border-none lg:text-base font-medium lg:w-[205px] px-6 py-4  lg:leading-tight">₦25,000.00</td>
+                    <td className="md:w-[205px] md:text-[9.17px] md:leading-3 lg:w-[205px] border-none text-neutral-500 px-6 py-4 lg:text-base font-medium  lg:leading-tight">May 21st, 2023,<br/>07:21:00pm</td>
                     <td className='border-none'><div className=" bg-white gap-5 flex-row justify-start items-center flex"><div className="md:w-[60.46px] md:h-[17.73px] md:px-[5.73px] md:py-[2.86px] md:rounded-[2.86px] md:gap-[5.73px] md:text-[9.17px] md:leading-3 text-white whitespace-nowrap lg:text-base font-medium lg:px-2.5 lg:py-[5px]  lg:h-[31px] lg:w-[120px] bg-green-300 lg:rounded-[5px] justify-center items-center lg:gap-2.5 flex lg:leading-tight">Successful</div>
                         <div className="lg:w-[15px] lg:h-[15px] md:w-[8.59px] md:h-[8.59px] justify-center items-center flex "><img src= {arrows4} alt="" /></div></div>
                     </td>
@@ -415,12 +415,12 @@ export default function WalletSummaryPage () {
                 </tr>
                 <hr className='bg-[#7c7c7c] w-full h-[1px]'></hr>
                 
-                <tr>
-                    <td className="md:w-[87.08px] md:text-[9.17px] md:leading-3 px-6 py-4 lg:w-[205px] text-black border-none lg:text-base font-medium lg:leading-tight">Money Transfer</td>
-                    <td className="px-6 py-4 md:w-[88.23px] md:text-[9.17px] md:leading-3 lg:w-[205px] text-neutral-500 border-none lg:text-base font-medium  lg:leading-tight">From NGN Wallet to Bank</td>
-                    <td className="text-neutral-500 px-6 py-4 md:text-[9.17px] md:leading-3 lg:w-[205px] border-none lg:text-base font-medium  lg:leading-tight">0000000</td>
-                    <td className="text-neutral-500 md:w-[48.70px] md:text-[9.17px] md:leading-3 border-none lg:text-base lg:w-[205px] px-6 py-4 font-medium  lg:leading-tight">₦50,000.00</td>
-                    <td className="md:w-[88.23px] md:text-[9.17px] md:leading-3 lg:w-[205px] text-neutral-500 px-6 py-4 border-none lg:text-base font-medium  lg:leading-tight">May 21st, 2023,<br/>07:21:00pm</td>
+                <tr className='justify-start items-start md:gap-[300px'>
+                    <td className="md:w-[205px] md:text-[9.17px] md:leading-3 px-6 py-4 lg:w-[205px] text-black border-none lg:text-base font-medium lg:leading-tight">Money Transfer</td>
+                    <td className="px-6 py-4 md:w-[205px] md:text-[9.17px] md:leading-3 lg:w-[205px] text-neutral-500 border-none lg:text-base font-medium md:whitespace-nowrap lg:leading-tight">From NGN Wallet to <br /> Bank</td>
+                    <td className="text-neutral-500 md:w-[205px] px-6 py-4 md:text-[9.17px] md:leading-3 lg:w-[205px] border-none lg:text-base font-medium  lg:leading-tight">0000000</td>
+                    <td className="text-neutral-500 md:w-[205px] md:text-[9.17px] md:leading-3 border-none lg:text-base lg:w-[205px] px-6 py-4 font-medium  lg:leading-tight">₦50,000.00</td>
+                    <td className="md:w-[205px] md:text-[9.17px] md:leading-3 lg:w-[205px] text-neutral-500 px-6 py-4 border-none lg:text-base font-medium  lg:leading-tight">May 21st, 2023,<br/>07:21:00pm</td>
                     <td className='border-none'><div className=" bg-white gap-5 flex-row lg:justify-start lg:items-center flex"> <div className="md:w-[60.46px] md:h-[17.73px] md:px-[5.73px] md:py-[2.86px] md:rounded-[2.86px] md:gap-[5.73px] md:text-[9.17px] md:leading-3 text-white lg:text-base font-medium  lg:leading-tight lg:w-[120px] lg:h-[31px] p-2.5 bg-amber-200 lg:rounded-[5px] justify-center items-center lg:gap-2.5  flex">Pending</div>
                         <div className="lg:w-[15px] lg:h-[15px] md:w-[8.59px] md:h-[8.59px] justify-center items-center flex "><img src= {arrows5} alt="" /></div></div>
                     </td>
@@ -430,12 +430,12 @@ export default function WalletSummaryPage () {
                 </tr>
                 <hr className='bg-[#7c7c7c] w-full h-[1px]'></hr>
                 
-                <tr>
-                    <td className="md:w-[87.08px] md:text-[9.17px] md:leading-3 lg:w-[205px]  text-black px-6 py-4 border-none lg:text-base font-medium lg:leading-tight">Money Transfer</td>
-                    <td className="lg:w-[205px] md:w-[88.23px] md:text-[9.17px] md:leading-3 px-6 py-4 text-neutral-500 border-none  lg:text-base font-medium  lg:leading-tight">From NGN Wallet to AremxyPlug</td>
-                    <td className="text-neutral-500 border-none  md:text-[9.17px] md:leading-3 px-6 py-4 lg:w-[205px] lg:text-base font-medium  lg:leading-tight">0000000</td>
-                    <td className="text-neutral-500 border-none md:w-[48.70px] md:text-[9.17px] md:leading-3 lg:text-base px-6 py-4 lg:w-[205px] font-medium  lg:leading-tight">$60,000.00</td>
-                    <td className="md:w-[88.23px] md:text-[9.17px] md:leading-3 text-neutral-500 border-none lg:text-base px-6 py-4 lg:w-[205px] font-medium  lg:leading-tight">May 21st, 2023,<br/>07:21:00pm</td>
+                <tr className='justify-start items-start md:gap-[300px'>
+                    <td className="md:w-[205px] md:text-[9.17px] md:leading-3 lg:w-[205px]  text-black px-6 py-4 border-none lg:text-base font-medium lg:leading-tight">Money Transfer</td>
+                    <td className="lg:w-[205px] md:w-[205px] md:text-[9.17px] md:leading-3 px-6 py-4 text-neutral-500 border-none  lg:text-base font-medium md:whitespace-nowrap lg:leading-tight">From NGN Wallet to <br /> AremxyPlug</td>
+                    <td className="text-neutral-500 border-none md:w-[205px]  md:text-[9.17px] md:leading-3 px-6 py-4 lg:w-[205px] lg:text-base font-medium  lg:leading-tight">0000000</td>
+                    <td className="text-neutral-500 border-none md:w-[205px] md:text-[9.17px] md:leading-3 lg:text-base px-6 py-4 lg:w-[205px] font-medium  lg:leading-tight">$60,000.00</td>
+                    <td className="md:w-[205px] md:text-[9.17px] md:leading-3 text-neutral-500 border-none lg:text-base px-6 py-4 lg:w-[205px] font-medium  lg:leading-tight">May 21st, 2023,<br/>07:21:00pm</td>
                     
                     <td className='border-none'><div className=" bg-white gap-5 flex-row lg:justify-start lg:items-center flex"> <div className="md:w-[60.46px] md:h-[17.73px] md:px-[5.73px] md:py-[2.86px] md:rounded-[2.86px] md:gap-[5.73px] md:text-[9.17px] md:leading-3 text-white lg:text-base font-medium lg:leading-tight lg:w-[120px] lg:h-[31px] lg:p-2.5 bg-red-300 lg:rounded-[5px] justify-center items-center lg:gap-2.5  flex">Pending</div>
                         <div className="lg:w-[15px] lg:h-[15px] md:w-[8.59px] md:h-[8.59px] justify-center items-center flex "><img src= {arrows6} alt="" /></div></div>
@@ -447,12 +447,12 @@ export default function WalletSummaryPage () {
                 
                 <hr className= 'bg-[#7c7c7c] w-full h-[1px]'></hr>
 
-                <tr>
-                    <td className="md:w-[87.08px] md:text-[9.17px] md:leading-3 px-6 py-4 lg:w-[205px] border-none text-black lg:text-base font-medium  lg:leading-tight">International Transfer</td>
-                    <td className=" md:w-[88.23px] md:text-[9.17px] md:leading-3 lg:w-[205px] px-6 py-4 text-neutral-500 border-none lg:text-base font-medium  lg:leading-tight">From USD Wallet to Bank</td>
-                    <td className="text-neutral-500 md:text-[9.17px] md:leading-3 px-6 py-4 lg:w-[205px] lg:text-base border-none font-medium  lg:leading-tight">0000000</td>
-                    <td className="text-neutral-500 md:w-[48.70px] md:text-[9.17px] md:leading-3 lg:text-base px-6 py-4 lg:w-[205px] border-none font-medium  lg:leading-tight" >₦10,000.00</td>
-                    <td className="md:w-[88.23px] md:text-[9.17px] md:leading-3 lg:w-[205px] text-neutral-500 lg:text-base px-6 py-4 font-medium border-none  lg:leading-tight">May 21st, 2023,<br/>07:21:00pm</td>
+                <tr className='justify-start items-start md:gap-[300px'>
+                    <td className="md:w-[205px] md:text-[9.17px] md:leading-3 px-6 py-4 lg:w-[205px] border-none text-black lg:text-base font-medium  lg:leading-tight">International Transfer</td>
+                    <td className=" md:w-[205px] md:text-[9.17px] md:leading-3 lg:w-[205px] px-6 py-4 text-neutral-500 border-none lg:text-base font-medium md:whitespace-nowrap lg:leading-tight">From USD Wallet to <br /> Bank</td>
+                    <td className="text-neutral-500 md:text-[9.17px] md:w-[205px] md:leading-3 px-6 py-4 lg:w-[205px] lg:text-base border-none font-medium  lg:leading-tight">0000000</td>
+                    <td className="text-neutral-500 md:w-[205px] md:text-[9.17px] md:leading-3 lg:text-base px-6 py-4 lg:w-[205px] border-none font-medium  lg:leading-tight" >₦10,000.00</td>
+                    <td className="md:w-[205px] md:text-[9.17px] md:leading-3 lg:w-[205px] text-neutral-500 lg:text-base px-6 py-4 font-medium border-none  lg:leading-tight">May 21st, 2023,<br/>07:21:00pm</td>
                    
                    <td className='border-none'><div className=" bg-white gap-5 flex-row justify-start items-center flex"> <div className="md:w-[60.46px] md:h-[17.73px] md:px-[5.73px] md:py-[2.86px] md:rounded-[2.86px] md:gap-[5.73px] md:text-[9.17px] md:leading-3 text-white lg:text-base font-medium lg:leading-tight lg:w-[120px] lg:h-[31px] lg:p-2.5 bg-amber-200 lg:rounded-[5px] justify-center items-center lg:gap-2.5  flex">Pending</div>
                     <div className="lg:w-[15px] lg:h-[15px] md:w-[8.59px] md:h-[8.59px] justify-center items-center flex "><img src= {arrows7} alt="" /></div></div>
@@ -466,7 +466,7 @@ export default function WalletSummaryPage () {
                 
 
             </tbody>
-            <div className="flex lg:h-10 lg:w-[100%] flex-col lg:gap-5 md:gap-3  items-center justify-center lg:mt-[30px]">
+            <div className="flex lg:h-10 lg:w-[100%] flex-col lg:gap-5 md:gap-3 md:mt-[10px]  items-center justify-center lg:mt-[30px]">
     <div className="md:w-[52.88px] lg:h-10 md:h-[15.44px] md:px-[3.44px] md:py-[1.72px] lg:ml-[-70px] lg:w-[100px] md:gap-[2.86px] lg:px-1.5 lg:py-[3px] bg-white shadow border border-black border-opacity-30 justify-start items-center lg:gap-[5px] inline-flex">
      <div className="text-neutral-500 lg:text-xs md:text-[6.88px] md:leading-[8.94px] md:mt-[10px] font-medium lg:leading-none">---The End---</div>
     </div>
