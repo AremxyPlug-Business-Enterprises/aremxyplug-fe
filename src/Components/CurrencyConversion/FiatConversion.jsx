@@ -124,12 +124,12 @@ const FiatConversion = () => {
     const amtToReceive = 10;
     const availableBalance = (`${50},000`);
 
-    const [conversionAmount, setConversionAmount] = useState("");
+  //   const [conversionAmount, setConversionAmount] = useState("");
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    alert(`The name you entered was: ${conversionAmount}`)
-  }
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   alert(`The name you entered was: ${conversionAmount}`)
+  // }
 
   // return (
   //   <form onSubmit={handleSubmit}>

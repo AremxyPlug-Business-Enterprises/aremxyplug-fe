@@ -913,7 +913,7 @@ export const Context = ({ children }) => {
     setOtherBankWithdrawalSuccess,
     // ==============exchangeRate=============
     exchangeRate,
-    handleGlobalInputChange,
+    
 
     
     // ==============AirtimeVTU===============
