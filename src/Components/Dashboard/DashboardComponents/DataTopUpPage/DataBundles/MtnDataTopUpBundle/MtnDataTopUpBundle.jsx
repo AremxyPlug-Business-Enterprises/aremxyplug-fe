@@ -26,20 +26,16 @@ import { MtnReceipt } from "./MtnReceipt";
 import Joi from "joi";
 import airtimestyles from "../../../../../AirTimePage/AirtimeVtu.module.css";
 
-
 const MtnDataTopUpBundle = () => {
   const { isDarkMode } = useContext(ContextProvider);
-  const {selectedOption, setSelectedOption} = useContext(ContextProvider);
-  const {selectedNetworkProduct, setSelectedNetworkProduct} = useContext(ContextProvider);
-  const {recipientPhoneNumber, setRecipientPhoneNumber} = useContext(ContextProvider);
-  const {selectedAmount, setSelectedAmount} = useContext(ContextProvider);
-  const {recipientNames, setRecipientNames} = useContext(ContextProvider);
-  const {walletName, setWalletName} = useContext(ContextProvider);
-
-
-
-
-
+  const { selectedOption, setSelectedOption } = useContext(ContextProvider);
+  const { selectedNetworkProduct, setSelectedNetworkProduct } =
+    useContext(ContextProvider);
+  const { recipientPhoneNumber, setRecipientPhoneNumber } =
+    useContext(ContextProvider);
+  const { selectedAmount, setSelectedAmount } = useContext(ContextProvider);
+  const { recipientNames, setRecipientNames } = useContext(ContextProvider);
+  const { walletName, setWalletName } = useContext(ContextProvider);
 
   const [showProductList, setShowProductList] = useState(false);
   const [showOptionList, setShowOptionList] = useState(false);
@@ -52,7 +48,6 @@ const MtnDataTopUpBundle = () => {
   const [showPayment, setShowPayment] = useState(false);
   const [image, setImage] = useState("");
   const [paymentAmount, setPaymentAmount] = useState("");
-
 
   const handleShowPayment = () => {
     setShowPayment(!showPayment);
@@ -336,7 +331,6 @@ const MtnDataTopUpBundle = () => {
   const handleProceed = (e) => {
     // setProceed(true);
     // e.preventDefault();
-    
 
     const { error } = schema.validate({
       recipientPhoneNumber,
@@ -387,7 +381,6 @@ const MtnDataTopUpBundle = () => {
 
     setInputValue(numericValue);
   };
-
 
   const handleRecipientNameChange = (e) => {
     setRecipientNames(e.target.value);
@@ -784,7 +777,7 @@ const MtnDataTopUpBundle = () => {
                     className="md:h-[120%] lg:h-[400%] lg:mt-[-25px] lg:pb-[20px]"
                   />
                 </div>
-                
+
                 <div>
                   <h2 className="lg:text-[16px] lg:leading-[24px] text-center mb-1 text-[10px] md:text-[13px] font-[600] mt-[20px] leading-[12px]">
                     Confirm Transaction
@@ -864,7 +857,7 @@ const MtnDataTopUpBundle = () => {
                       </h2>
                       <div className="flex gap-1">
                         <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        {walletName + " Wallet"}
+                          {walletName + " Wallet"}
                         </h2>
                       </div>
                     </div>
@@ -894,13 +887,19 @@ const MtnDataTopUpBundle = () => {
                     <div className="my-[5px] flex justify-between items-center gap-2 bg-slate-200 -mx-[20px] px-[15px] h-[49px] py-[20px]">
                       <div className="flex gap-2 items-center">
                         <div className="bg-white rounded-full h-[27px] w-[27px] flex justify-center items-center">
-                        <img className="w-[16px] h-[16px]" src={image} alt="/" />
+                          <img
+                            className="w-[16px] h-[16px]"
+                            src={image}
+                            alt="/"
+                          />
                         </div>
                         <p className="text-[10px] md:text-[14px]  lg:text-[16px]">
-                        Available Balance{" "}
-                        <span className="text-[#0003]">( {walletName+paymentAmount}.00 )</span>
+                          Available Balance{" "}
+                          <span className="text-[#0003]">
+                            ( {walletName + paymentAmount}.00 )
+                          </span>
                         </p>
-                    </div>
+                      </div>
                       <img
                         src={Select}
                         alt=""
@@ -1127,7 +1126,7 @@ const MtnDataTopUpBundle = () => {
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                      {walletName + " Wallet"}
+                        {walletName + " Wallet"}
                       </h2>
                     </div>
                   </div>

@@ -26,16 +26,16 @@ import { EtisalatReceipt } from "./9MobileReceipt";
 import Joi from "joi";
 import airtimestyles from "../../../../../AirTimePage/AirtimeVtu.module.css";
 
-
 const EtisalatDataBundle = () => {
   const { isDarkMode } = useContext(ContextProvider);
-  const {selectedOption, setSelectedOption} = useContext(ContextProvider);
-  const {selectedNetworkProduct, setSelectedNetworkProduct} = useContext(ContextProvider);
-  const {recipientPhoneNumber, setRecipientPhoneNumber} = useContext(ContextProvider);
-  const {selectedAmount, setSelectedAmount} = useContext(ContextProvider);
-  const {recipientNames, setRecipientNames} = useContext(ContextProvider);
-  const {walletName, setWalletName} = useContext(ContextProvider);
-
+  const { selectedOption, setSelectedOption } = useContext(ContextProvider);
+  const { selectedNetworkProduct, setSelectedNetworkProduct } =
+    useContext(ContextProvider);
+  const { recipientPhoneNumber, setRecipientPhoneNumber } =
+    useContext(ContextProvider);
+  const { selectedAmount, setSelectedAmount } = useContext(ContextProvider);
+  const { recipientNames, setRecipientNames } = useContext(ContextProvider);
+  const { walletName, setWalletName } = useContext(ContextProvider);
 
   const [showProductList, setShowProductList] = useState(false);
   const [showOptionList, setShowOptionList] = useState(false);
@@ -48,7 +48,6 @@ const EtisalatDataBundle = () => {
   const [showPayment, setShowPayment] = useState(false);
   const [image, setImage] = useState("");
   const [paymentAmount, setPaymentAmount] = useState("");
-
 
   const handleShowPayment = () => {
     setShowPayment(!showPayment);
@@ -174,7 +173,23 @@ const EtisalatDataBundle = () => {
         "9MOBILE SME 75GB",
       ],
 
-      amount: ["₦100", "₦200", "₦300", "₦500", "₦500", "₦800", "₦900", "₦900", "₦900", "₦900", "₦500", "₦500", "₦800", "₦900", "₦900",],
+      amount: [
+        "₦100",
+        "₦200",
+        "₦300",
+        "₦500",
+        "₦500",
+        "₦800",
+        "₦900",
+        "₦900",
+        "₦900",
+        "₦900",
+        "₦500",
+        "₦500",
+        "₦800",
+        "₦900",
+        "₦900",
+      ],
 
       duration: [
         "1 MONTH",
@@ -198,15 +213,11 @@ const EtisalatDataBundle = () => {
     {
       id: 2,
       name: "9MOBILE CG ---",
-      options: [
-        
-      ],
+      options: [],
 
       amount: [],
 
-      duration: [
-        
-      ],
+      duration: [],
     },
 
     {
@@ -222,7 +233,6 @@ const EtisalatDataBundle = () => {
   const handleProceed = (e) => {
     // setProceed(true);
     // e.preventDefault();
-    
 
     const { error } = schema.validate({
       recipientPhoneNumber,
@@ -273,8 +283,6 @@ const EtisalatDataBundle = () => {
 
     setInputValue(numericValue);
   };
-
-
 
   const handleRecipientNameChange = (e) => {
     setRecipientNames(e.target.value);
@@ -751,7 +759,7 @@ const EtisalatDataBundle = () => {
                       </h2>
                       <div className="flex gap-1">
                         <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        {walletName + " Wallet"}
+                          {walletName + " Wallet"}
                         </h2>
                       </div>
                     </div>
@@ -781,13 +789,19 @@ const EtisalatDataBundle = () => {
                     <div className="my-[5px] flex justify-between items-center gap-2 bg-slate-200 -mx-[20px] px-[15px] h-[49px] py-[20px]">
                       <div className="flex gap-2 items-center">
                         <div className="bg-white rounded-full h-[27px] w-[27px] flex justify-center items-center">
-                        <img className="w-[16px] h-[16px]" src={image} alt="/" />
+                          <img
+                            className="w-[16px] h-[16px]"
+                            src={image}
+                            alt="/"
+                          />
                         </div>
                         <p className="text-[10px] md:text-[14px]  lg:text-[16px]">
-                        Available Balance{" "}
-                        <span className="text-[#0003]">( {walletName+paymentAmount}.00 )</span>
+                          Available Balance{" "}
+                          <span className="text-[#0003]">
+                            ( {walletName + paymentAmount}.00 )
+                          </span>
                         </p>
-                    </div>
+                      </div>
                       <img
                         src={Select}
                         alt=""
@@ -1014,7 +1028,7 @@ const EtisalatDataBundle = () => {
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                      {walletName + " Wallet"}
+                        {walletName + " Wallet"}
                       </h2>
                     </div>
                   </div>
@@ -1051,7 +1065,6 @@ const EtisalatDataBundle = () => {
                       Done
                     </button>
                   </Link>
-
 
                   <Link to="/EtisalatReceipt">
                     <button

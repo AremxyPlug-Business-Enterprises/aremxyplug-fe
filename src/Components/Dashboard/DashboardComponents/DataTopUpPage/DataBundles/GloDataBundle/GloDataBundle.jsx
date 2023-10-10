@@ -26,16 +26,16 @@ import { GloReceipt } from "./GloReceipt";
 import Joi from "joi";
 import airtimestyles from "../../../../../AirTimePage/AirtimeVtu.module.css";
 
-
 const GloDataBundle = () => {
   const { isDarkMode } = useContext(ContextProvider);
-  const {selectedOption, setSelectedOption} = useContext(ContextProvider);
-  const {selectedNetworkProduct, setSelectedNetworkProduct} = useContext(ContextProvider);
-  const {recipientPhoneNumber, setRecipientPhoneNumber} = useContext(ContextProvider);
-  const {selectedAmount, setSelectedAmount} = useContext(ContextProvider);
-  const {recipientNames, setRecipientNames} = useContext(ContextProvider);
-  const {walletName, setWalletName} = useContext(ContextProvider);
-
+  const { selectedOption, setSelectedOption } = useContext(ContextProvider);
+  const { selectedNetworkProduct, setSelectedNetworkProduct } =
+    useContext(ContextProvider);
+  const { recipientPhoneNumber, setRecipientPhoneNumber } =
+    useContext(ContextProvider);
+  const { selectedAmount, setSelectedAmount } = useContext(ContextProvider);
+  const { recipientNames, setRecipientNames } = useContext(ContextProvider);
+  const { walletName, setWalletName } = useContext(ContextProvider);
 
   const [showProductList, setShowProductList] = useState(false);
   const [showOptionList, setShowOptionList] = useState(false);
@@ -48,7 +48,6 @@ const GloDataBundle = () => {
   const [showPayment, setShowPayment] = useState(false);
   const [image, setImage] = useState("");
   const [paymentAmount, setPaymentAmount] = useState("");
-
 
   const handleShowPayment = () => {
     setShowPayment(!showPayment);
@@ -168,7 +167,17 @@ const GloDataBundle = () => {
         "GLO CG 10GB",
       ],
 
-      amount: ["₦100", "₦200", "₦300", "₦500", "₦500", "₦800", "₦900", "₦900", "₦900", ],
+      amount: [
+        "₦100",
+        "₦200",
+        "₦300",
+        "₦500",
+        "₦500",
+        "₦800",
+        "₦900",
+        "₦900",
+        "₦900",
+      ],
 
       duration: [
         "1 MONTH",
@@ -200,7 +209,19 @@ const GloDataBundle = () => {
         "GLO GIFTING 93GB",
       ],
 
-      amount: ["₦1050", "₦2500", "₦3500", "₦5800", "₦5300", "₦8100", "₦9500", "₦5800", "₦5300", "₦8100", "₦9500"],
+      amount: [
+        "₦1050",
+        "₦2500",
+        "₦3500",
+        "₦5800",
+        "₦5300",
+        "₦8100",
+        "₦9500",
+        "₦5800",
+        "₦5300",
+        "₦8100",
+        "₦9500",
+      ],
 
       duration: [
         "1 MONTH",
@@ -230,7 +251,6 @@ const GloDataBundle = () => {
   const handleProceed = (e) => {
     // setProceed(true);
     // e.preventDefault();
-    
 
     const { error } = schema.validate({
       recipientPhoneNumber,
@@ -282,8 +302,6 @@ const GloDataBundle = () => {
     setInputValue(numericValue);
   };
 
-
-
   const handleRecipientNameChange = (e) => {
     setRecipientNames(e.target.value);
   };
@@ -293,7 +311,6 @@ const GloDataBundle = () => {
   };
 
   console.log("confirm:", confirm);
-
 
   return (
     <DashBoardLayout>
@@ -680,7 +697,7 @@ const GloDataBundle = () => {
                     className="md:h-[120%] lg:h-[400%] lg:mt-[-25px] lg:pb-[20px]"
                   />
                 </div>
-                
+
                 <div>
                   <h2 className="lg:text-[16px] lg:leading-[24px] text-center mb-1 text-[10px] md:text-[13px] font-[600] mt-[20px] leading-[12px]">
                     Confirm Transaction
@@ -760,7 +777,7 @@ const GloDataBundle = () => {
                       </h2>
                       <div className="flex gap-1">
                         <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        {walletName + " Wallet"}
+                          {walletName + " Wallet"}
                         </h2>
                       </div>
                     </div>
@@ -790,13 +807,19 @@ const GloDataBundle = () => {
                     <div className="my-[5px] flex justify-between items-center gap-2 bg-slate-200 -mx-[20px] px-[15px] h-[49px] py-[20px]">
                       <div className="flex gap-2 items-center">
                         <div className="bg-white rounded-full h-[27px] w-[27px] flex justify-center items-center">
-                        <img className="w-[16px] h-[16px]" src={image} alt="/" />
+                          <img
+                            className="w-[16px] h-[16px]"
+                            src={image}
+                            alt="/"
+                          />
                         </div>
                         <p className="text-[10px] md:text-[14px]  lg:text-[16px]">
-                        Available Balance{" "}
-                        <span className="text-[#0003]">( {walletName+paymentAmount}.00 )</span>
+                          Available Balance{" "}
+                          <span className="text-[#0003]">
+                            ( {walletName + paymentAmount}.00 )
+                          </span>
                         </p>
-                    </div>
+                      </div>
                       <img
                         src={Select}
                         alt=""
@@ -1023,7 +1046,7 @@ const GloDataBundle = () => {
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                      {walletName + " Wallet"}
+                        {walletName + " Wallet"}
                       </h2>
                     </div>
                   </div>
@@ -1039,7 +1062,7 @@ const GloDataBundle = () => {
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="bg-[#F2FAFF] mx-10 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[75px] md:mx-[20px] md:rounded-[15px] lg:h-[75px]">
                   <p className="text-[6px] text-center mx-auto w-[171px] md:text-[9px] md:w-full lg:text-[14px]">
                     The data purchase has been sent successfully to the
