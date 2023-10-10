@@ -10,54 +10,50 @@ import Recipient from "../DataBundles-Images/Recipient.svg";
 import Recipient2 from "../DataBundles-Images/Recipient2.svg";
 import DataBalance from "../DataBundles-Images/DataBalance.svg";
 import DataBalance2 from "../DataBundles-Images/DataBalance2.svg";
-import AirtelLogo from "./AirtelLogo.svg";
+import MtnLogo from "..//MtnDataTopUpBundle/MtnDataTopUpBundleImages/MtnLogo.svg";
 import arrowDown from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/ArrowDown.svg";
 import PhoneNumber from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/PhoneNumber.svg";
 import Recipient3 from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/Recipient.svg";
 import Amount from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/Amount.svg";
-// import Flag from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/NaijaFlag.svg";
+import Flag from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/NaijaFlag.svg";
 import Cancel from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/Cancel.svg";
-// import NaijaFlag from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/NaijaFlag.svg";
+import NaijaFlag from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/NaijaFlag.svg";
 import "../../../DataTopUpPage/DataTopUp.css";
 import { Modal } from "../../../../../Screens/Modal/Modal";
 import OtpInput from "react-otp-input";
 import styles from "../../../TransferComponent/transfer.module.css";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
-import { AirtelReceipt } from "./AirtelReceipt";
+import { MtnReceipt } from "./MtnReceipt";
 import Joi from "joi";
-import airtimestyles from "../../../../../AirTimePage/AirtimeVtu.module.css";
-
+// import styles from "../../../../../AirTimePage/AirtimeVtu.module.css"
 
 // import TransactFailedPopUp from "../../../TransferComponent/PopUps/TransactionFailedPopUp"
 // import WalletModal from "../../../../../Wallet/WalletModal"
 // import { RiFileCopyFill } from "react-icons/ri";
+// import { createContext } from 'react';
 
-const AirtelDataBundle = () => {
+const MtnDataTopUpBundle = () => {
   const { isDarkMode } = useContext(ContextProvider);
-  const {selectedOption, setSelectedOption} = useContext(ContextProvider);
-  const {selectedNetworkProduct, setSelectedNetworkProduct} = useContext(ContextProvider);
-  const {recipientPhoneNumber, setRecipientPhoneNumber} = useContext(ContextProvider);
-  const {selectedAmount, setSelectedAmount} = useContext(ContextProvider);
-  const {recipientNames, setRecipientNames} = useContext(ContextProvider);
-  const {walletName, setWalletName} = useContext(ContextProvider);
 
-
-
-
-
-
+  const [selectedProduct, setSelectedProduct] = useState("");
+  const [selectedOption, setSelectedOption] = useState("");
   const [showProductList, setShowProductList] = useState(false);
   const [showOptionList, setShowOptionList] = useState(false);
   const [addRecipient, setAddRecipient] = useState(false);
   const [proceed, setProceed] = useState(false);
+  const [recipientName, setRecipientName] = useState("");
   const [confirm, setConfirm] = useState(false);
   const [receipt] = useState(false);
   const [errors, setErrors] = useState({});
+  const [recipientNumber, setRecipientNumber] = useState("");
+  const [selectedAmount, setSelectedAmount] = useState('');
   const [paymentSelected, setPaymentSelected] = useState(false);
   const [showPayment, setShowPayment] = useState(false);
-  const [image, setImage] = useState("");
-  const [paymentAmount, setPaymentAmount] = useState("");
+  const [name, setName] = useState('');
+  const [image, setImage] = useState('');
+  const [paymentAmount, setPaymentAmount] = useState('');
+
 
   // const [duration, setDuration] = useState('')
 
@@ -65,86 +61,67 @@ const AirtelDataBundle = () => {
 
   // setAmount(selectedAmount);
 
-
- 
-
-
-
-
-  const handleShowPayment = () => {
-    setShowPayment(!showPayment);
-    setWalletName("");
-    setImage("");
-    setPaymentAmount("");
+  const handleShowPayment = ()=> {
+    setShowPayment(!showPayment)
+    setName('');
+    setImage('');
+    setPaymentAmount('');
     setPaymentSelected(false);
-  };
+  }
 
-  const handleSelectPayment = (code, flag, amount) => {
-    setWalletName(code);
+
+  const handleSelectPayment =(code, flag, amount)=> {
+    setName(code);
     setImage(flag);
     setPaymentAmount(amount);
     setShowPayment(false);
     setPaymentSelected(true);
-  };
+  }
 
   const countryList = [
     {
-      id: 1,
-      name: "Nigeria",
-      code: "NGN",
-      flag: require("../DataBundles-Images/ng.svg").default,
-      amount: 50000,
+      id:1,
+      name: 'Nigeria',
+      code: 'NGN',
+      flag: require('./Images/ng.svg').default,
+      amount: 50000
     },
     {
-      id: 2,
-      name: "United States",
-      code: "USD",
-      flag: require("../DataBundles-Images/us.svg").default,
-      amount: 0,
+      id:2,
+      name: 'United States',
+      code: 'USD',
+      flag: require('./Images/us.svg').default,
+      amount: 0
     },
     {
-      id: 3,
-      name: "United Kingdom",
-      code: "GBP",
-      flag: require("../DataBundles-Images/gb.svg").default,
-      amount: 0,
+      id:3,
+      name: 'United Kingdom',
+      code: 'GBP',
+      flag: require('./Images/gb.svg').default, 
+      amount: 0
     },
     {
-      id: 4,
-      name: "European Union",
-      code: "EUR",
-      flag: require("../DataBundles-Images/eu.svg").default,
-      amount: 0,
+      id:4,
+      name: 'European Union',
+      code: 'EUR',
+      flag: require('./Images/eu.svg').default,
+      amount: 0
     },
     {
-      id: 5,
-      name: "Australia",
-      code: "AUD",
-      flag: require("../DataBundles-Images/au.svg").default,
-      amount: 0,
+      id:5,
+      name: 'Australia',
+      code: 'AUD',
+      flag: require('./Images/au.svg').default,
+      amount: 0
     },
     {
-      id: 6,
-      name: "Kenya",
-      code: "KSH",
-      flag: require("../DataBundles-Images/ke.svg").default,
-      amount: 0,
-    },
+      id:6,
+      name: 'Kenya',
+      code: 'KSH',
+      flag: require('./Images/ke.svg').default,
+      amount: 0
+    }
   ];
-
-  const Payment = ({ code, flag, amount, onClick }) => {
-    return (
-      <li className={airtimestyles.netList} onClick={onClick}>
-        <div className={airtimestyles.netImage}>
-          <img src={flag} alt="" className={airtimestyles.NoImage} />
-        </div>
-        <h2 className={airtimestyles.netName}>{code}</h2>
-        <h2 className={airtimestyles.netName}>
-          Wallet({amount.toLocaleString()}.00)
-        </h2>
-      </li>
-    );
-  };
 
   const {
     toggleSideBar,
@@ -176,26 +153,20 @@ const AirtelDataBundle = () => {
   const productList = [
     {
       id: 1,
-      name: "AIRTEL CG",
+      name: "MTN SME",
       options: [
-        "AIRTEL CG 100MB",
-        "AIRTEL CG 200MB",
-        "AIRTEL CG 300MB",
-        "AIRTEL CG 1GB",
-        "AIRTEL CG 2GB",
-        "AIRTEL CG 3GB",
-        "AIRTEL CG 5GB",
-        "AIRTEL CG 10GB",
-        "AIRTEL CG 15GB",
-        "AIRTEL CG 20GB",
+        "MTN SME 500MB",
+        "MTN SME 1GB",
+        "MTN SME 2GB",
+        "MTN SME 3GB",
+        "MTN SME 4GB",
+        "MTN SME 5GB",
+        "MTN SME 10GB",
       ],
 
-      amount: ["₦100", "₦200", "₦300", "₦500", "₦500", "₦800", "₦900", "₦900", "₦900", "₦900"],
+      amount: ["₦100", "₦200", "₦300", "₦500", "₦500", "₦800", "₦900"],
 
       duration: [
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
         "1 MONTH",
         "1 MONTH",
         "1 MONTH",
@@ -208,24 +179,78 @@ const AirtelDataBundle = () => {
 
     {
       id: 2,
-      name: "AIRTEL GIFTING",
+      name: "MTN SME2",
       options: [
-        "AIRTEL GIFTING 1.5GB",
-        "AIRTEL GIFTING 2GB",
-        "AIRTEL GIFTING 3GB",
-        "AIRTEL GIFTING 4.5GB",
-        "AIRTEL GIFTING 6GB",
-        "AIRTEL GIFTING 10GB",
-        "AIRTEL GIFTING 11GB",
-        "AIRTEL GIFTING 15GB",
-        "AIRTEL GIFTING 40GB",
-        "AIRTEL GIFTING 75GB",
-        "AIRTEL GIFTING 120GB",
+        "MTN SME2 500MB",
+        "MTN SME2 1GB",
+        "MTN SME2 2GB",
+        "MTN SME2 3GB",
+        "MTN SME2 4GB",
+        "MTN SME2 5GB",
+        "MTN SME2 10GB",
       ],
-
-      amount: ["₦1050", "₦2500", "₦3500", "₦5800", "₦5300", "₦8100", "₦9500", "₦5800", "₦5300", "₦8100", "₦9500"],
+      amount: ["₦1050", "₦2500", "₦3500", "₦5800", "₦5300", "₦8100", "₦9500"],
 
       duration: [
+        "1 MONTH",
+        "1 MONTH",
+        "1 MONTH",
+        "1 MONTH",
+        "1 MONTH",
+        "1 MONTH",
+        "1 MONTH",
+      ],
+    },
+    {
+      id: 3,
+      name: "MTN CG",
+      options: [
+        "MTN CG 500MB",
+        "MTN CG 1GB",
+        "MTN CG 2GB",
+        "MTN CG 3GB",
+        "MTN CG 5GB",
+        "MTN CG 10GB",
+      ],
+
+      amount: ["₦1000", "₦2050", "₦3030", "₦5600", "₦8900", "₦1900"],
+
+      duration: [
+        "1 MONTH",
+        "1 MONTH",
+        "1 MONTH",
+        "1 MONTH",
+        "1 MONTH",
+        "1 MONTH",
+      ],
+    },
+
+    {
+      id: 4,
+      name: "MTN GIFTING",
+      options: [
+        "MTN 100MB",
+        "MTN 200MB",
+        "MTN 300MB",
+        "MTN 500MB",
+        "MTN 1GB",
+        "MTN 2GB",
+        "MTN 3GB",
+        "MTN 5GB",
+        "MTN 10GB",
+        "MTN 15GB",
+        "MTN 20GB",
+        "MTN 50GB",
+        "MTN 75GB",
+        "MTN 120GB",
+      ],
+
+      amount: ["₦1500", "₦2200", "₦3800", "₦5200", "₦5800", "₦8500", "₦9900", "₦1060", "₦2300", "₦3800", "₦5900", "₦5300", "₦8400", "₦9000"],
+
+      duration: [
+        "1 MONTH",
+        "1 MONTH",
+        "1 MONTH",
         "1 MONTH",
         "1 MONTH",
         "1 MONTH",
@@ -241,22 +266,54 @@ const AirtelDataBundle = () => {
     },
 
     {
+      id: 4,
+      name: "MTN DIRECT COUPON",
+      options: [
+        "MTN DIRECT COUPON 500MB",
+        "MTN DIRECT COUPON 750MB",
+        "MTN DIRECT COUPON 1GB",
+        "MTN DIRECT COUPON 1.5GB",
+        "MTN DIRECT COUPON 2GB",
+        "MTN DIRECT COUPON 3GB",
+        "MTN DIRECT COUPON 5GB",
+        "MTN DIRECT COUPON 10GB",
+      ],
+
+      amount: ["₦1200", "₦2200", "₦3200", "₦5200", "₦5200", "₦8200", "₦9200", "₦9000"],
+
+      duration: [
+        "1 MONTH",
+        "1 MONTH",
+        "1 MONTH",
+        "1 MONTH",
+        "1 MONTH",
+        "1 MONTH",
+        "1 MONTH",
+        "1 MONTH",
+
+      ],
+    },
+
+    {
       id: 3,
       name: "AIRTEL GENERAL BUNDLES ---",
       options: [],
-      amount: [],
+      amount: [
 
-      duration: [],
+      ],
+
+      duration: [
+       
+      ],
     },
   ];
 
   const handleProceed = (e) => {
     // setProceed(true);
     // e.preventDefault();
-    
 
     const { error } = schema.validate({
-      recipientPhoneNumber,
+      recipientNumber,
     });
 
     if (error) {
@@ -273,7 +330,7 @@ const AirtelDataBundle = () => {
   };
 
   const schema = Joi.object({
-    recipientPhoneNumber: Joi.string()
+    recipientNumber: Joi.string()
       .pattern(new RegExp(/^\d{11,}/))
       .required()
       .messages({
@@ -282,7 +339,7 @@ const AirtelDataBundle = () => {
   });
 
   const handleSelectProduct = (productName) => {
-    setSelectedNetworkProduct(productName);
+    setSelectedProduct(productName);
     setSelectedOption("");
     setShowProductList(false);
     setShowOptionList(true);
@@ -316,7 +373,7 @@ const AirtelDataBundle = () => {
   // };
 
   const handleRecipientNameChange = (e) => {
-    setRecipientNames(e.target.value);
+    setRecipientName(e.target.value);
   };
 
   const handleReceipt = () => {
@@ -325,9 +382,8 @@ const AirtelDataBundle = () => {
 
   console.log("confirm:", confirm);
 
-
   return (
-      <DashBoardLayout>
+    <DashBoardLayout>
       <div
         className={`bg-[#FFF] relative lg:ml-[20px] 2xl:ml-0 ${
           isDarkMode
@@ -425,12 +481,12 @@ const AirtelDataBundle = () => {
                 Purchase
                 <span>
                   <img
-                    src={AirtelLogo}
+                    src={MtnLogo}
                     alt=""
                     className="md:w-[20px] md:h-[15px] mt-[px] lg:w-[30px] lg:h-[25px] 2xl:mt-[5px]"
                   />
                 </span>{" "}
-                AIRTEL Data Instantly
+                MTN Data Instantly
               </p>
               <img
                 src={Select}
@@ -449,11 +505,11 @@ const AirtelDataBundle = () => {
                 Select Product
               </h2>
               <div
-                className="input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between"
+                className="border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between"
                 onClick={() => setShowProductList(!showProductList)}
               >
                 <h2 className="text-[10px] font-[600] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                  {selectedNetworkProduct}
+                  {selectedProduct}
                 </h2>
                 <button className="lg:w-6 lg:h-6 w-[11px] h-[11px]">
                   <img src={arrowDown} alt="" className="w-full h-full" />
@@ -465,7 +521,7 @@ const AirtelDataBundle = () => {
                     <div
                       key={item.name}
                       className={`cursor-pointer border-b-[0.5px] text-[#7C7C7C] md:text-[12px] lg:text-[16px]  md:rounded-[0px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
-                        selectedNetworkProduct === item.name ? "bg-white" : ""
+                        selectedProduct === item.name ? "bg-white" : ""
                       }`}
                       onClick={() => handleSelectProduct(item.name)}
                     >
@@ -477,61 +533,61 @@ const AirtelDataBundle = () => {
             </div>
 
             <div className="relative">
-              <h2 className="lg:text-[18px] md:text-[12px] lg:leading-[24px] mb-1 text-[10px] font-[600] leading-[12px]">
-                Select Plan
-              </h2>
-              <div
-                className="input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between"
-                onClick={() => setShowOptionList(!showOptionList)}
-              >
-                <h2 className="text-[10px] font-[600] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                  {selectedOption}
-                </h2>
-                <button className="lg:w-6 lg:h-6 w-[11px] h-[11px]">
-                  <img src={arrowDown} alt="" className="w-full h-full" />
-                </button>
-              </div>
+  <h2 className="lg:text-[18px] md:text-[12px] lg:leading-[24px] mb-1 text-[10px] font-[600] leading-[12px]">
+    Select Plan
+  </h2>
+  <div
+    className="border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between"
+    onClick={() => setShowOptionList(!showOptionList)}
+  >
+    <h2 className="text-[10px] font-[600] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+    {selectedOption}
+    </h2>
+    <button className="lg:w-6 lg:h-6 w-[11px] h-[11px]">
+      <img src={arrowDown} alt="" className="w-full h-full" />
+    </button>
+  </div>
 
-              {showOptionList && (
-                <div className="border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[100]">
-                  {productList
-                    .find((item) => item.name === selectedNetworkProduct)
-                    ?.options.map((optionItem, index) => {
-                      const optionIndex = productList
-                        .find((item) => item.name === selectedNetworkProduct)
-                        ?.options.indexOf(optionItem);
+  {showOptionList && (
+        <div className="border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[100]">
+          {productList
+            .find((item) => item.name === selectedProduct)
+            ?.options.map((optionItem, index) => {
+              const optionIndex = productList
+                .find((item) => item.name === selectedProduct)
+                ?.options.indexOf(optionItem);
 
-                      if (optionIndex !== -1) {
-                        const amount = productList.find(
-                          (item) => item.name === selectedNetworkProduct
-                        )?.amount[optionIndex];
-                        const duration = productList.find(
-                          (item) => item.name === selectedNetworkProduct
-                        )?.duration[optionIndex];
+              if (optionIndex !== -1) {
+                const amount = productList
+                  .find((item) => item.name === selectedProduct)
+                  ?.amount[optionIndex];
+                const duration = productList
+                  .find((item) => item.name === selectedProduct)
+                  ?.duration[optionIndex];
 
-                        return (
-                          <div
-                            key={index}
-                            className={`cursor-pointer border-b-[0.5px] md:rounded-[0px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
-                              selectedOption === optionItem ? "bg-gray-200" : ""
-                            }`}
-                            onClick={() =>
-                              handleSelectOption(
-                                `${optionItem} (${amount}) ~ ${duration}`,
-                                amount
-                              )
-                            }
-                          >
-                            {`${optionItem} (${amount}) ~ ${duration}`}
-                          </div>
-                        );
-                      }
+                return (
+                  <div
+                    key={index}
+                    className={`cursor-pointer border-b-[0.5px] md:rounded-[0px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
+                      selectedOption === optionItem ? "bg-gray-200" : ""
+                    }`}
+                    onClick={() =>
+                      handleSelectOption(
+                        `${optionItem} (${amount}) ~ ${duration}`,
+                        amount
+                      )
+                    }
+                  >
+                    {`${optionItem} (${amount}) ~ ${duration}`}
+                  </div>
+                );
+              }
 
-                      return null;
-                    })}
-                </div>
-              )}
-            </div>
+              return null;
+            })}
+        </div>
+      )}
+</div>
 
             <div className="">
               <h2 className="text-[10px] font-[600] md:text-[12px] lg:text-[18px]">
@@ -541,12 +597,12 @@ const AirtelDataBundle = () => {
               <div className="relative mt-[5px]">
                 <input
                   type="number"
-                  className="input border w-full h-8 px-4 rounded-md text-[10px] lg:text-[16px] font-[600] focus:outline-none lg:h-[51px]"
-                  placeholder=""
+                  className="border w-full h-8 px-4 rounded-md text-[10px] lg:text-[16px] font-[600] focus:outline-none lg:h-[51px]"
+                  placeholder="7745631289"
                   value={inputValue}
                   onChange={(event) => {
                     handleChange(event);
-                    setRecipientPhoneNumber(event.target.value);
+                    setRecipientNumber(event.target.value);
                   }}
                 />
                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
@@ -559,9 +615,9 @@ const AirtelDataBundle = () => {
               </div>
             </div>
 
-            {errors.recipientPhoneNumber && (
+            {errors.recipientNumber && (
               <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                {errors.recipientPhoneNumber}
+                {errors.recipientNumber}
               </div>
             )}
 
@@ -572,9 +628,9 @@ const AirtelDataBundle = () => {
               <div className="relative mt-[5px]">
                 <input
                   type="text"
-                  className="input border w-full h-8 px-4 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px]"
+                  className="border w-full h-8 px-4 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px]"
                   placeholder=""
-                  value={recipientNames}
+                  value={recipientName}
                   onChange={handleRecipientNameChange}
                 />
                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
@@ -594,7 +650,7 @@ const AirtelDataBundle = () => {
               <div className="relative mt-[5px]">
                 <input
                   type="text"
-                  className="input border w-full h-8 px-4 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px]"
+                  className="border w-full h-8 px-4 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px]"
                   // placeholder="&#8358;100"
                   value={`${selectedAmount}`}
                   onChange={(event) => {
@@ -609,69 +665,58 @@ const AirtelDataBundle = () => {
               </div>
             </div>
 
-            <div>
-              <div onClick={handleShowPayment}>
-                <h2 className={airtimestyles.head3}>Payment Method</h2>
-                <div className={airtimestyles.input1}>
-                  {paymentSelected ? (
-                    <li
-                      onClick={handleShowPayment}
-                      className={airtimestyles.labelInput}
-                    >
-                      <h2 className={airtimestyles.head4}>{walletName}</h2>
-                      <h2 className={airtimestyles.head4}>
-                        Wallet({paymentAmount.toLocaleString()}.00)
-                      </h2>
-                    </li>
-                  ) : (
-                    <h2
-                      onClick={handleShowPayment}
-                      className={airtimestyles.head9}
-                    >
-                      Select Payment Method
-                    </h2>
-                  )}
-                  {paymentSelected ? (
-                    <button
-                      className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]"
-                      onClick={handleShowPayment}
-                    >
-                      <img
-                        src={image}
-                        alt=""
-                        className="w-full h-full object-cover"
-                      />
-                    </button>
-                  ) : (
-                    <button
-                      className="lg:w-6 lg:h-6 h-[11px] w-[11px]"
-                      onClick={handleShowPayment}
-                    >
-                      <img src={arrowDown} alt="" className="w-full h-full" />
-                    </button>
-                  )}
+            {/* <div className="">
+              <h2 className="text-[10px] font-[600] md:text-[12px] lg:text-[18px]">
+                Payment Method
+              </h2>
+              <div className="relative mt-[5px]">
+                <input
+                  type="text"
+                  className="border w-full h-8 px-4 text-[#7C7C7C] rounded-md text-[10px] lg:text-[16px] font-[600] focus:outline-none lg:h-[51px]"
+                  placeholder=""
+                  value="NGN Wallet (50,000.00)"
+                />
+                <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                  <img src={Flag} alt="" className="lg:w-[100%] lg:h-[50%]" />
                 </div>
               </div>
-              {showPayment && (
-                <div className={airtimestyles.colDown}>
-                  {countryList.map((country) => (
-                    <Payment
-                      key={country.id}
-                      flag={country.flag}
-                      code={country.code}
-                      amount={country.amount}
-                      onClick={() =>
-                        handleSelectPayment(
-                          country.code,
-                          country.flag,
-                          country.amount
-                        )
-                      }
-                    />
-                  ))}
-                </div>
-              )}
-            </div>
+            </div> */}
+
+
+<div>
+                        <div>
+                            <h2 className={styles.head3}>Payment Method</h2>
+                            <div className={styles.input1}>
+                                    { paymentSelected ? 
+                                        <li onClick={handleShowPayment} className={styles.labelInput}> 
+                                            <h2 className={styles.head4}>{name}</h2>
+                                            <h2 className={styles.head4}>Wallet({paymentAmount.toLocaleString()}.00)</h2>
+                                        </li> 
+                                        :
+                                        <h2 onClick={handleShowPayment} className={styles.head9}>Select Payment Method</h2>}
+                                        { paymentSelected ? 
+                                            <button className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]" onClick={handleShowPayment}>
+                                                <img src={image} alt="" className='w-full h-full object-cover'/>
+                                            </button>
+                                        : 
+                                        <button className='lg:w-6 lg:h-6 h-[11px] w-[11px]' onClick={handleShowPayment}>
+                                            <img src={arrowDown} alt="" className='w-full h-full'/>
+                                        </button>
+                                    }
+                            </div>
+                        </div>
+                        { showPayment && 
+                            <div className={styles.colDown}>
+                                {countryList.map((country) => (
+                                    <Payment key={country.id} flag={country.flag} code={country.code} amount={country.amount} onClick={()=> handleSelectPayment(country.code, country.flag, country.amount)}/>
+                                ))}
+                            </div>
+                        }
+                    </div>
+
+
+
+
           </div>
 
           <div className="flex items-center gap-2 lg:mt-[30px]">
@@ -731,13 +776,13 @@ const AirtelDataBundle = () => {
                       <div className="flex gap-1">
                         <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
                           <img
-                            src={AirtelLogo}
+                            src={MtnLogo}
                             alt=""
                             className="w-full h-full object-cover md:h-[15px]"
                           />
                         </div>
                         <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          AIRTEL
+                          MTN
                         </h2>
                       </div>
                     </div>
@@ -748,7 +793,7 @@ const AirtelDataBundle = () => {
                       </h2>
                       <div className="flex gap-1">
                         <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          {selectedNetworkProduct}
+                          {selectedProduct}
                         </h2>
                       </div>
                     </div>
@@ -781,7 +826,7 @@ const AirtelDataBundle = () => {
                       </h2>
                       <div className="flex gap-1">
                         <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          {recipientNames}
+                          {recipientName}
                         </h2>
                       </div>
                     </div>
@@ -792,7 +837,7 @@ const AirtelDataBundle = () => {
                       </h2>
                       <div className="flex gap-1">
                         <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        {walletName + " Wallet"}
+                          Nigerian NGN Wallet
                         </h2>
                       </div>
                     </div>
@@ -820,15 +865,18 @@ const AirtelDataBundle = () => {
                     </div>
 
                     <div className="my-[5px] flex justify-between items-center gap-2 bg-slate-200 -mx-[20px] px-[15px] h-[49px] py-[20px]">
-                      <div className="flex gap-2 items-center">
-                        <div className="bg-white rounded-full h-[27px] w-[27px] flex justify-center items-center">
-                        <img className="w-[16px] h-[16px]" src={image} alt="/" />
+                      <div className="flex items-center gap-[10px]">
+                        <div className="w-[31px] h-[31px] rounded-full overflow-hidden p-2 bg-white">
+                          <img
+                            src={NaijaFlag}
+                            alt=""
+                            className="w-full h-full object-cover rounded-full"
+                          />
                         </div>
-                        <p className="text-[10px] md:text-[14px]  lg:text-[16px]">
-                        Available Balance{" "}
-                        <span className="text-[#0003]">( {walletName+paymentAmount}.00 )</span>
-                        </p>
-                    </div>
+                        <h2 className="text-[10px] font-[600] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                          Available Balance (₦50,000.00)
+                        </h2>
+                      </div>
                       <img
                         src={Select}
                         alt=""
@@ -984,13 +1032,13 @@ const AirtelDataBundle = () => {
                     <div className="flex gap-1">
                       <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
                         <img
-                          src={AirtelLogo}
+                          src={MtnLogo}
                           alt=""
                           className="w-full h-full object-cover"
                         />
                       </div>
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        AIRTEL
+                        MTN
                       </h2>
                     </div>
                   </div>
@@ -1001,7 +1049,7 @@ const AirtelDataBundle = () => {
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        {selectedNetworkProduct}
+                        {selectedProduct}
                       </h2>
                     </div>
                   </div>
@@ -1034,7 +1082,7 @@ const AirtelDataBundle = () => {
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        {recipientNames}
+                        {recipientName}
                       </h2>
                     </div>
                   </div>
@@ -1056,7 +1104,7 @@ const AirtelDataBundle = () => {
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                      {walletName + " Wallet"}
+                        Nigerian NGN Wallet
                       </h2>
                     </div>
                   </div>
@@ -1082,7 +1130,7 @@ const AirtelDataBundle = () => {
                   </p>
                 </div>
                 <div className="flex w-full justify-center mx-auto px-[50px] items-center gap-[5%] md:gap-[10%] mt-[50px] md:w-[50%] lg:gap-[10%] lg:mx-auto  lg:my-[5%] md:mt-[40px]">
-                  <Link to="/AirtelDataBundle">
+                  <Link to="/MtnDataTopUpBundle">
                     <button
                       onClick={() => {
                         handleTransactionSuccessClose();
@@ -1094,7 +1142,7 @@ const AirtelDataBundle = () => {
                     </button>
                   </Link>
 
-                  <Link to="/AirtelReceipt">
+                  <Link to="/MtnReceipt">
                     <button
                       onClick={handleReceipt}
                       className={`border-[1px] w-[100px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-[600] h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[12px] lg:w-[163px] lg:h-[38px] lg:my-[2%] md:px-[60px] md:h-[30px]`}
@@ -1108,35 +1156,32 @@ const AirtelDataBundle = () => {
           )}
 
           {receipt && (
-            <AirtelReceipt
-              networkName="AIRTEL"
+            <MtnReceipt
+              networkName="MTN"
+              selectedProduct={selectedProduct}
               selectedOption={selectedOption}
-              selectedNetworkProduct={selectedNetworkProduct}
               recipientNumber={inputValue}
-              selectedAmount={selectedAmount}
-              recipientNames={recipientNames}
-              walletName={walletName}
+              amount={selectedAmount}
+              recipientName={recipientName}
             />
           )}
 
           <div className="py-[30px] lg:py-[60px] mt-10">
             <button
               className={`w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[600] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px] ${
-                !selectedNetworkProduct ||
+                !selectedProduct ||
                 !selectedOption ||
                 !inputValue ||
-                !selectedAmount ||
-                !paymentSelected
+                !selectedAmount
                   ? "bg-[#63616188] cursor-not-allowed"
                   : "bg-primary"
               }`}
               onClick={handleProceed}
               disabled={
-                !selectedNetworkProduct ||
+                !selectedProduct ||
                 !selectedOption ||
                 !inputValue ||
-                !selectedAmount ||
-                !paymentSelected
+                !selectedAmount
               }
             >
               Proceed
@@ -1161,4 +1206,4 @@ const AirtelDataBundle = () => {
   );
 };
 
-export default AirtelDataBundle;
+export default MtnDataTopUpBundle;

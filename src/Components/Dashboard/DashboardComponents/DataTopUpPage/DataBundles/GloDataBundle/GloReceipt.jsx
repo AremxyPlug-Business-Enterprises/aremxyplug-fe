@@ -7,16 +7,39 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
 
-export const GloReceipt = ({
-    selectedProduct,
+export const GloReceipt = () => { 
+
+  const {
+    selectedNetworkProduct,
     selectedOption,
-    recipientNumber,
-    amount,
-}) => {
-  const { toggleSideBar, isDarkMode, date } =
-    useContext(ContextProvider);
+    recipientPhoneNumber,
+    recipientNames,
+    selectedAmount,
+    walletName,
+    setSelectedNetworkProduct,
+    setSelectedOption,
+    setSelectedAmount,
+    setRecipientNames,
+  }
+   = useContext(ContextProvider);
+
+  const { 
+    toggleSideBar,
+    isDarkMode,
+    date, } =
+    useContext(ContextProvider);  
 
   const contentRef = useRef(null);
+
+  const handleChange = () => {
+    setSelectedNetworkProduct(false);
+    setSelectedOption(false);
+    setSelectedAmount('');
+    setRecipientNames('');
+  }
+
+
+
 
   // ===============Copy to Clipboard Function============
 //   const handleCopyClick = () => {
@@ -38,13 +61,12 @@ export const GloReceipt = ({
         .share({
           title: "Receipt",
           text: "Check out this receipt!",
-          url: "https://example.com", // Replace with the actual URL of your receipt
+          url: "https://example.com",
         })
         .then(() => console.log("Shared successfully"))
         .catch((error) => console.error("Error sharing:", error));
     } else {
       console.log("Web Share API not supported.");
-      // Handle sharing fallback for unsupported browsers
     }
   };
 
@@ -82,6 +104,7 @@ export const GloReceipt = ({
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
+                onClick={handleChange}
               />
             </Link>
           </div>
@@ -112,10 +135,10 @@ export const GloReceipt = ({
                 hour12: true,
               })}
             </span>
-            <p className="text-[9px] text-[#0008] text-center my-2 md:text-[14px] lg:text-[14px]">
+            <p className="text-[9px] text-[#0008] px-[20px] text-center my-2 md:text-[14px] lg:text-[14px]">
               You have successfully purchased{" "}
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[16px]">
-              {selectedOption}
+              {selectedOption} {" "}
               </span>
               from your NGN wallet to{" "}
             </p>
@@ -136,19 +159,23 @@ export const GloReceipt = ({
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Product</p>
-                  <span>{selectedProduct}</span>
+                  <span>{selectedNetworkProduct}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Plan</p>
                   <span>{selectedOption}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                  <p className="text-[#0008]">Recipient Name</p>
+                  <span>{recipientNames}</span>
+                </div>
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Phone Number</p>
-                  <span>{recipientNumber}</span>
+                  <span>{recipientPhoneNumber}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Amount</p>
-                  <span>&#8358;{amount}</span>
+                  <span>{selectedAmount}</span>
                 </div>            
               </div>
 
@@ -168,7 +195,7 @@ export const GloReceipt = ({
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Wallet Type</p>
-                  <span>Nigerian NGN Wallet</span>
+                  <span>{walletName + " Wallet"}</span>
                 </div>
               </div>
 
@@ -184,11 +211,11 @@ export const GloReceipt = ({
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Product</p>
-                  <span>Data  Top-up</span>
+                  <span>{selectedNetworkProduct}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Description</p>
-                  <span>{selectedProduct}</span>
+                  <span>Data  Top-up</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Order Number</p>
@@ -231,10 +258,19 @@ export const GloReceipt = ({
             isDarkMode ? "mb-[1%]" : "mb-[5%]"
           } flex gap-[15px] justify-center items-center lg:mb-[%]`}
         >
-          {/* <div className={styles.help}>
-                <h2>You need help?</h2>
-                <Link to={`/ContactUs`} className={styles.btnContact}>Contact Us</Link>
-          </div> */}
+         
+         {/* ===============FOOTER=========== */}
+         <div className="flex gap-2 justify-center items-center mb-[15%] md:mt-40 mt-[50%] lg:mt-[50%]">
+            <h2 className="text-[8px] leading-[12px] lg:text-[16px]">
+              You need help?
+            </h2>
+            <Link
+              to={`/ContactUs`}
+              className="text-[8px] leading-[12px] text-white bg-primary px-2 py-1 rounded-full lg:text-[16px] lg:px-[10px] lg:py-[10px]"
+            >
+              Contact Us
+            </Link>
+          </div>
         </div>
       </div>
     </DashBoardLayout>

@@ -15,9 +15,9 @@ import arrowDown from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/ArrowDown.
 import PhoneNumber from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/PhoneNumber.svg";
 import Recipient3 from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/Recipient.svg";
 import Amount from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/Amount.svg";
-import Flag from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/NaijaFlag.svg";
+// import Flag from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/NaijaFlag.svg";
 import Cancel from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/Cancel.svg";
-import NaijaFlag from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/NaijaFlag.svg";
+// import NaijaFlag from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/NaijaFlag.svg";
 import "../../../DataTopUpPage/DataTopUp.css";
 import { Modal } from "../../../../../Screens/Modal/Modal";
 import OtpInput from "react-otp-input";
@@ -26,6 +26,8 @@ import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import { GloReceipt } from "./GloReceipt";
 import Joi from "joi";
+import airtimestyles from "../../../../../AirTimePage/AirtimeVtu.module.css";
+
 
 // import TransactFailedPopUp from "../../../TransferComponent/PopUps/TransactionFailedPopUp"
 // import WalletModal from "../../../../../Wallet/WalletModal"
@@ -33,19 +35,116 @@ import Joi from "joi";
 
 const GloDataBundle = () => {
   const { isDarkMode } = useContext(ContextProvider);
+  const {selectedOption, setSelectedOption} = useContext(ContextProvider);
+  const {selectedNetworkProduct, setSelectedNetworkProduct} = useContext(ContextProvider);
+  const {recipientPhoneNumber, setRecipientPhoneNumber} = useContext(ContextProvider);
+  const {selectedAmount, setSelectedAmount} = useContext(ContextProvider);
+  const {recipientNames, setRecipientNames} = useContext(ContextProvider);
+  const {walletName, setWalletName} = useContext(ContextProvider);
 
-  const [selectedProduct, setSelectedProduct] = useState("");
-  const [selectedOption, setSelectedOption] = useState("");
+
+
+
+
+
   const [showProductList, setShowProductList] = useState(false);
   const [showOptionList, setShowOptionList] = useState(false);
   const [addRecipient, setAddRecipient] = useState(false);
   const [proceed, setProceed] = useState(false);
-  const [recipientName, setRecipientName] = useState("");
   const [confirm, setConfirm] = useState(false);
   const [receipt] = useState(false);
   const [errors, setErrors] = useState({});
-  const [recipientNumber, setRecipientNumber] = useState('');
+  const [paymentSelected, setPaymentSelected] = useState(false);
+  const [showPayment, setShowPayment] = useState(false);
+  const [image, setImage] = useState("");
+  const [paymentAmount, setPaymentAmount] = useState("");
+
+  // const [duration, setDuration] = useState('')
+
   // const [showInputPinPopup, setShowInputPinPopup] = useState(false);
+
+  // setAmount(selectedAmount);
+
+
+ 
+
+
+
+
+  const handleShowPayment = () => {
+    setShowPayment(!showPayment);
+    setWalletName("");
+    setImage("");
+    setPaymentAmount("");
+    setPaymentSelected(false);
+  };
+
+  const handleSelectPayment = (code, flag, amount) => {
+    setWalletName(code);
+    setImage(flag);
+    setPaymentAmount(amount);
+    setShowPayment(false);
+    setPaymentSelected(true);
+  };
+
+  const countryList = [
+    {
+      id: 1,
+      name: "Nigeria",
+      code: "NGN",
+      flag: require("../DataBundles-Images/ng.svg").default,
+      amount: 50000,
+    },
+    {
+      id: 2,
+      name: "United States",
+      code: "USD",
+      flag: require("../DataBundles-Images/us.svg").default,
+      amount: 0,
+    },
+    {
+      id: 3,
+      name: "United Kingdom",
+      code: "GBP",
+      flag: require("../DataBundles-Images/gb.svg").default,
+      amount: 0,
+    },
+    {
+      id: 4,
+      name: "European Union",
+      code: "EUR",
+      flag: require("../DataBundles-Images/eu.svg").default,
+      amount: 0,
+    },
+    {
+      id: 5,
+      name: "Australia",
+      code: "AUD",
+      flag: require("../DataBundles-Images/au.svg").default,
+      amount: 0,
+    },
+    {
+      id: 6,
+      name: "Kenya",
+      code: "KSH",
+      flag: require("../DataBundles-Images/ke.svg").default,
+      amount: 0,
+    },
+  ];
+
+  const Payment = ({ code, flag, amount, onClick }) => {
+    return (
+      <li className={airtimestyles.netList} onClick={onClick}>
+        <div className={airtimestyles.netImage}>
+          <img src={flag} alt="" className={airtimestyles.NoImage} />
+        </div>
+        <h2 className={airtimestyles.netName}>{code}</h2>
+        <h2 className={airtimestyles.netName}>
+          Wallet({amount.toLocaleString()}.00)
+        </h2>
+      </li>
+    );
+  };
 
   const {
     toggleSideBar,
@@ -79,84 +178,119 @@ const GloDataBundle = () => {
       id: 1,
       name: "GLO CG",
       options: [
-        "GLO CG 100MB (₦100) ~ 1 MONTH",
-        "GLO CG 200MB (₦100) ~ 1 MONTH",
-        "GLO CG 300MB (₦100) ~ 1 MONTH",
-        "GLO CG 500MB (₦100) ~ 1 MONTH",
-        "GLO CG 1GB (₦100) ~ 1 MONTH",
-        "GLO CG 2GB (₦100) ~ 1 MONTH",
-        "GLO CG 3GB (₦100) ~ 1 MONTH",
-        "GLO CG 5GB (₦100) ~ 1 MONTH",
-        "GLO CG 10GB (₦100) ~ 1 MONTH",
+        "GLO CG 100MB",
+        "GLO CG 200MB",
+        "GLO CG 300MB",
+        "GLO CG 500MB",
+        "GLO CG 1GB",
+        "GLO CG 2GB",
+        "GLO CG 3GB",
+        "GLO CG 5GB",
+        "GLO CG 10GB",
+      ],
+
+      amount: ["₦100", "₦200", "₦300", "₦500", "₦500", "₦800", "₦900", "₦900", "₦900", ],
+
+      duration: [
+        "1 MONTH",
+        "1 MONTH",
+        "1 MONTH",
+        "1 MONTH",
+        "1 MONTH",
+        "1 MONTH",
+        "1 MONTH",
+        "1 MONTH",
+        "1 MONTH",
       ],
     },
+
     {
       id: 2,
       name: "GLO GIFTING",
       options: [
-        "GLO GIFTING 1.05GB (₦100) ~ 1 MONTH",
-        "GLO GIFTING 2.9GB (₦100) ~ 1 MONTH",
-        "GLO GIFTING 4.1GB (₦100) ~ 1 MONTH",
-        "GLO GIFTING 5.8GB (₦100) ~ 1 MONTH",
-        "GLO GIFTING 7.7GB (₦100) ~ 1 MONTH",
-        "GLO GIFTING 10GB (₦100) ~ 1 MONTH",
-        "GLO GIFTING 13.25GB (₦100) ~ 1 MONTH",
-        "GLO GIFTING 18.25GB (₦100) ~ 1 MONTH",
-        "GLO GIFTING 29.5GB (₦100) ~ 1 MONTH",
-        "GLO GIFTING 50GB (₦100) ~ 1 MONTH",
-        "GLO GIFTING 93GB (₦100) ~ 1 MONTH",
+        "GLO GIFTING 1.05GB",
+        "GLO GIFTING 2.9GB",
+        "GLO GIFTING 4.1GB",
+        "GLO GIFTING 5.8GB",
+        "GLO GIFTING 7.7GB",
+        "GLO GIFTING 10GB",
+        "GLO GIFTING 13.25GB",
+        "GLO GIFTING 18.25GB",
+        "GLO GIFTING 29.5GB",
+        "GLO GIFTING 50GB",
+        "GLO GIFTING 93GB",
+      ],
+
+      amount: ["₦1050", "₦2500", "₦3500", "₦5800", "₦5300", "₦8100", "₦9500", "₦5800", "₦5300", "₦8100", "₦9500"],
+
+      duration: [
+        "1 MONTH",
+        "1 MONTH",
+        "1 MONTH",
+        "1 MONTH",
+        "1 MONTH",
+        "1 MONTH",
+        "1 MONTH",
+        "1 MONTH",
+        "1 MONTH",
+        "1 MONTH",
+        "1 MONTH",
       ],
     },
+
     {
       id: 3,
       name: "GLO GENERAL BUNDLES ---",
-      options: [
-        
-      ],
-    },
+      options: [],
+      amount: [],
 
+      duration: [],
+    },
   ];
 
-  const handleProceed = () => {
+  const handleProceed = (e) => {
     // setProceed(true);
+    // e.preventDefault();
+    
 
     const { error } = schema.validate({
-        recipientNumber,
-        });
-  
-        if (error) {
-        setErrors(
-            error.details.reduce((acc, curr) => {
-            acc[curr.path[0]] = curr.message;
-            return acc;
-            }, {})
-        );
-        } else {
-        setProceed(true);
-        setErrors({});
-        }
+      recipientPhoneNumber,
+    });
+
+    if (error) {
+      setErrors(
+        error.details.reduce((acc, curr) => {
+          acc[curr.path[0]] = curr.message;
+          return acc;
+        }, {})
+      );
+    } else {
+      setProceed(true);
+      setErrors({});
+    }
   };
 
   const schema = Joi.object({
-    recipientNumber: Joi.string()
+    recipientPhoneNumber: Joi.string()
       .pattern(new RegExp(/^\d{11,}/))
       .required()
       .messages({
         "string.pattern.base": "Phone number should be 11 digits ",
       }),
-    
   });
 
   const handleSelectProduct = (productName) => {
-    setSelectedProduct(productName);
+    setSelectedNetworkProduct(productName);
     setSelectedOption("");
     setShowProductList(false);
     setShowOptionList(true);
   };
 
-  const handleSelectOption = (option) => {
-    setSelectedOption(option);
+  const handleSelectOption = (selectedOption, selectedAmount, duration) => {
+    setSelectedOption(selectedOption);
     setShowOptionList(false);
+    setSelectedAmount(selectedAmount);
+    // setDuration(duration);
   };
 
   const [inputValue, setInputValue] = useState("");
@@ -169,21 +303,26 @@ const GloDataBundle = () => {
     setInputValue(numericValue);
   };
 
-  const [amountValue, setAmountValue] = useState("");
+  // const [amountValue, setAmountValue] = useState("");
 
-  const handleChanges = (e) => {
-    const value = e.target.value;
+  // const handleChanges = (e) => {
+  //   const value = e.target.value;
 
-    const numericAmountValue = value.replace(/\D/g, "").slice(0, 50);
+  //   const numericAmountValue = value.replace(/\D/g, "").slice(0, 50);
 
-    setAmountValue(`₦${numericAmountValue}`);
-  };
+  //   setAmountValue(`₦${numericAmountValue}`);
+  // };
 
   const handleRecipientNameChange = (e) => {
-    setRecipientName(e.target.value);
+    setRecipientNames(e.target.value);
+  };
+
+  const handleReceipt = () => {
+    setTransactSuccessPopUp(false);
   };
 
   console.log("confirm:", confirm);
+
 
   return (
     <DashBoardLayout>
@@ -308,11 +447,11 @@ const GloDataBundle = () => {
                 Select Product
               </h2>
               <div
-                className="border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between"
+                className="input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between"
                 onClick={() => setShowProductList(!showProductList)}
               >
                 <h2 className="text-[10px] font-[600] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                  {selectedProduct}
+                  {selectedNetworkProduct}
                 </h2>
                 <button className="lg:w-6 lg:h-6 w-[11px] h-[11px]">
                   <img src={arrowDown} alt="" className="w-full h-full" />
@@ -324,7 +463,7 @@ const GloDataBundle = () => {
                     <div
                       key={item.name}
                       className={`cursor-pointer border-b-[0.5px] text-[#7C7C7C] md:text-[12px] lg:text-[16px]  md:rounded-[0px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
-                        selectedProduct === item.name ? "bg-white" : ""
+                        selectedNetworkProduct === item.name ? "bg-white" : ""
                       }`}
                       onClick={() => handleSelectProduct(item.name)}
                     >
@@ -337,10 +476,10 @@ const GloDataBundle = () => {
 
             <div className="relative">
               <h2 className="lg:text-[18px] md:text-[12px] lg:leading-[24px] mb-1 text-[10px] font-[600] leading-[12px]">
-                Select Network
+                Select Plan
               </h2>
               <div
-                className="border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between"
+                className="input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between"
                 onClick={() => setShowOptionList(!showOptionList)}
               >
                 <h2 className="text-[10px] font-[600] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
@@ -350,21 +489,44 @@ const GloDataBundle = () => {
                   <img src={arrowDown} alt="" className="w-full h-full" />
                 </button>
               </div>
+
               {showOptionList && (
                 <div className="border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[100]">
                   {productList
-                    .find((item) => item.name === selectedProduct)
-                    ?.options.map((option, index) => (
-                      <div
-                        key={index}
-                        className={`cursor-pointer border-b-[0.5px] md:rounded-[0px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
-                          selectedOption === option ? "bg-gray-200" : ""
-                        }`}
-                        onClick={() => handleSelectOption(option)}
-                      >
-                        {option}
-                      </div>
-                    ))}
+                    .find((item) => item.name === selectedNetworkProduct)
+                    ?.options.map((optionItem, index) => {
+                      const optionIndex = productList
+                        .find((item) => item.name === selectedNetworkProduct)
+                        ?.options.indexOf(optionItem);
+
+                      if (optionIndex !== -1) {
+                        const amount = productList.find(
+                          (item) => item.name === selectedNetworkProduct
+                        )?.amount[optionIndex];
+                        const duration = productList.find(
+                          (item) => item.name === selectedNetworkProduct
+                        )?.duration[optionIndex];
+
+                        return (
+                          <div
+                            key={index}
+                            className={`cursor-pointer border-b-[0.5px] md:rounded-[0px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
+                              selectedOption === optionItem ? "bg-gray-200" : ""
+                            }`}
+                            onClick={() =>
+                              handleSelectOption(
+                                `${optionItem} (${amount}) ~ ${duration}`,
+                                amount
+                              )
+                            }
+                          >
+                            {`${optionItem} (${amount}) ~ ${duration}`}
+                          </div>
+                        );
+                      }
+
+                      return null;
+                    })}
                 </div>
               )}
             </div>
@@ -377,12 +539,12 @@ const GloDataBundle = () => {
               <div className="relative mt-[5px]">
                 <input
                   type="number"
-                  className="border w-full h-8 px-4 rounded-md text-[10px] lg:text-[16px] font-[600] focus:outline-none lg:h-[51px]"
-                  placeholder="7745631289"
+                  className="input border w-full h-8 px-4 rounded-md text-[10px] lg:text-[16px] font-[600] focus:outline-none lg:h-[51px]"
+                  placeholder=""
                   value={inputValue}
                   onChange={(event) => {
-                    handleChange(event); 
-                    setRecipientNumber(event.target.value); 
+                    handleChange(event);
+                    setRecipientPhoneNumber(event.target.value);
                   }}
                 />
                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
@@ -395,11 +557,11 @@ const GloDataBundle = () => {
               </div>
             </div>
 
-            {errors.recipientNumber && (
-                            <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                            {errors.recipientNumber}
-                            </div>
-                        )}
+            {errors.recipientPhoneNumber && (
+              <div className="text-[12px] text-red-500 italic lg:text-[14px]">
+                {errors.recipientPhoneNumber}
+              </div>
+            )}
 
             <div className="">
               <h2 className="text-[10px] font-[600] md:text-[12px] lg:text-[18px]">
@@ -408,9 +570,9 @@ const GloDataBundle = () => {
               <div className="relative mt-[5px]">
                 <input
                   type="text"
-                  className="border w-full h-8 px-4 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px]"
+                  className="input border w-full h-8 px-4 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px]"
                   placeholder=""
-                  value={recipientName}
+                  value={recipientNames}
                   onChange={handleRecipientNameChange}
                 />
                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
@@ -425,15 +587,19 @@ const GloDataBundle = () => {
 
             <div className="">
               <h2 className="text-[10px] font-[600] md:text-[12px] lg:text-[18px]">
-                Amount{" "}
+                Amount
               </h2>
               <div className="relative mt-[5px]">
                 <input
                   type="text"
-                  className="border w-full h-8 px-4 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px]"
-                  placeholder="&#8358;100"
-                  value={amountValue}
-                  onChange={handleChanges}
+                  className="input border w-full h-8 px-4 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px]"
+                  // placeholder="&#8358;100"
+                  value={`${selectedAmount}`}
+                  onChange={(event) => {
+                    // handleChanges(event);
+                    // handleSelectOption({};
+                    // setSelectedAmount(event.target.value);
+                  }}
                 />
                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                   <img src={Amount} alt="" className="lg:w-[100%] lg:h-[50%]" />
@@ -441,21 +607,68 @@ const GloDataBundle = () => {
               </div>
             </div>
 
-            <div className="">
-              <h2 className="text-[10px] font-[600] md:text-[12px] lg:text-[18px]">
-                Payment Method
-              </h2>
-              <div className="relative mt-[5px]">
-                <input
-                  type="text"
-                  className="border w-full h-8 px-4 text-[#7C7C7C] rounded-md text-[10px] lg:text-[16px] font-[600] focus:outline-none lg:h-[51px]"
-                  placeholder=""
-                  value="NGN Wallet (50,000.00)"
-                />
-                <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                  <img src={Flag} alt="" className="lg:w-[100%] lg:h-[50%]" />
+            <div>
+              <div onClick={handleShowPayment}>
+                <h2 className={airtimestyles.head3}>Payment Method</h2>
+                <div className={airtimestyles.input1}>
+                  {paymentSelected ? (
+                    <li
+                      onClick={handleShowPayment}
+                      className={airtimestyles.labelInput}
+                    >
+                      <h2 className={airtimestyles.head4}>{walletName}</h2>
+                      <h2 className={airtimestyles.head4}>
+                        Wallet({paymentAmount.toLocaleString()}.00)
+                      </h2>
+                    </li>
+                  ) : (
+                    <h2
+                      onClick={handleShowPayment}
+                      className={airtimestyles.head9}
+                    >
+                      Select Payment Method
+                    </h2>
+                  )}
+                  {paymentSelected ? (
+                    <button
+                      className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]"
+                      onClick={handleShowPayment}
+                    >
+                      <img
+                        src={image}
+                        alt=""
+                        className="w-full h-full object-cover"
+                      />
+                    </button>
+                  ) : (
+                    <button
+                      className="lg:w-6 lg:h-6 h-[11px] w-[11px]"
+                      onClick={handleShowPayment}
+                    >
+                      <img src={arrowDown} alt="" className="w-full h-full" />
+                    </button>
+                  )}
                 </div>
               </div>
+              {showPayment && (
+                <div className={airtimestyles.colDown}>
+                  {countryList.map((country) => (
+                    <Payment
+                      key={country.id}
+                      flag={country.flag}
+                      code={country.code}
+                      amount={country.amount}
+                      onClick={() =>
+                        handleSelectPayment(
+                          country.code,
+                          country.flag,
+                          country.amount
+                        )
+                      }
+                    />
+                  ))}
+                </div>
+              )}
             </div>
           </div>
 
@@ -484,11 +697,18 @@ const GloDataBundle = () => {
                 className={`confirm mx-[5%] ${
                   isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
                 } ${
-                  toggleSideBar ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
-                } lg:ml-[10%] lg:mr-[10%] grow pt-[10px] mb-0 pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:mb-[18%] md:overflow-auto`}
+                  toggleSideBar
+                    ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
+                    : "lg:w-[40%]"
+                } lg:ml-[10%] lg:mr-[10%] grow pt-[10px] md:mt-[1%] mb-0 pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:mb-[18%] md:overflow-auto`}
               >
                 <div className="w-full flex justify-end border-b-[6px] border-primary px-[12px] md:h-[25px] lg:border-b-[10px] lg:mt-[20px]">
-                  <img src={Cancel} alt="" onClick={() => setProceed(false)}  className="md:h-[120%] lg:h-[400%] lg:mt-[-25px] lg:pb-[20px]"/>
+                  <img
+                    src={Cancel}
+                    alt=""
+                    onClick={() => setProceed(false)}
+                    className="md:h-[120%] lg:h-[400%] lg:mt-[-25px] lg:pb-[20px]"
+                  />
                 </div>
 
                 <div>
@@ -526,7 +746,7 @@ const GloDataBundle = () => {
                       </h2>
                       <div className="flex gap-1">
                         <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          {selectedProduct}
+                          {selectedNetworkProduct}
                         </h2>
                       </div>
                     </div>
@@ -559,7 +779,7 @@ const GloDataBundle = () => {
                       </h2>
                       <div className="flex gap-1">
                         <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          {recipientName}
+                          {recipientNames}
                         </h2>
                       </div>
                     </div>
@@ -570,7 +790,7 @@ const GloDataBundle = () => {
                       </h2>
                       <div className="flex gap-1">
                         <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          Nigerian NGN Wallet
+                        {walletName + " Wallet"}
                         </h2>
                       </div>
                     </div>
@@ -581,7 +801,7 @@ const GloDataBundle = () => {
                       </h2>
                       <div className="flex gap-1">
                         <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          {amountValue}
+                          {selectedAmount}
                         </h2>
                       </div>
                     </div>
@@ -598,18 +818,15 @@ const GloDataBundle = () => {
                     </div>
 
                     <div className="my-[5px] flex justify-between items-center gap-2 bg-slate-200 -mx-[20px] px-[15px] h-[49px] py-[20px]">
-                      <div className="flex items-center gap-[10px]">
-                        <div className="w-[31px] h-[31px] rounded-full overflow-hidden p-2 bg-white">
-                          <img
-                            src={NaijaFlag}
-                            alt=""
-                            className="w-full h-full object-cover rounded-full"
-                          />
+                      <div className="flex gap-2 items-center">
+                        <div className="bg-white rounded-full h-[27px] w-[27px] flex justify-center items-center">
+                        <img className="w-[16px] h-[16px]" src={image} alt="/" />
                         </div>
-                        <h2 className="text-[10px] font-[600] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          Available Balance (₦50,000.00)
-                        </h2>
-                      </div>
+                        <p className="text-[10px] md:text-[14px]  lg:text-[16px]">
+                        Available Balance{" "}
+                        <span className="text-[#0003]">( {walletName+paymentAmount}.00 )</span>
+                        </p>
+                    </div>
                       <img
                         src={Select}
                         alt=""
@@ -639,7 +856,7 @@ const GloDataBundle = () => {
               <div
                 className={`confirm2 ${styles.inputPin} ${
                   toggleSideBar
-                    ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]"
+                    ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
                     : "lg:w-[40%]"
                 } md:w-[55%] w-[90%] md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
               >
@@ -648,7 +865,6 @@ const GloDataBundle = () => {
                   className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[45px] lg:h-[45px] "
                   src={Cancel}
                   alt=""
-                
                 />
 
                 <hr className="h-[6px] bg-[#04177f] lg:mt-[10%] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
@@ -715,15 +931,15 @@ const GloDataBundle = () => {
               <div
                 className={`confirm ${styles.successfulTwo} ${
                   toggleSideBar
-                    ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]"
+                    ? "md:w-[45%] md:ml-[20%] lg:ml-[20%] lg:w-[40%]"
                     : "lg:w-[40%]"
-                } md:w-[45%] w-[90%] overflow-auto md:mb-[18%] lg:mx-auto lg:my-auto`}
+                } md:w-[45%] w-[90%] md:my-auto md:mt-[.5%] mx-auto overflow-auto md:mb-[18%] lg:mx-auto lg:my-auto`}
               >
                 <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
                   <img
                     onClick={() => {
                       setTransactSuccessPopUp(false);
-                      window.location.reload(); 
+                      window.location.reload();
                     }}
                     className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[25px]"
                     src="/Images/login/arpLogo.png"
@@ -731,9 +947,9 @@ const GloDataBundle = () => {
                   />
 
                   <img
-                  onClick={() => {
+                    onClick={() => {
                       setTransactSuccessPopUp(false);
-                      window.location.reload(); 
+                      window.location.reload();
                     }}
                     className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                     src="/Images/transferImages/close-circle.png"
@@ -783,7 +999,7 @@ const GloDataBundle = () => {
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        {selectedProduct}
+                        {selectedNetworkProduct}
                       </h2>
                     </div>
                   </div>
@@ -816,7 +1032,7 @@ const GloDataBundle = () => {
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        {recipientName}
+                        {recipientNames}
                       </h2>
                     </div>
                   </div>
@@ -827,7 +1043,7 @@ const GloDataBundle = () => {
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        {amountValue}
+                        {selectedAmount}
                       </h2>
                     </div>
                   </div>
@@ -838,7 +1054,7 @@ const GloDataBundle = () => {
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        Nigerian NGN Wallet
+                      {walletName + " Wallet"}
                       </h2>
                     </div>
                   </div>
@@ -854,7 +1070,7 @@ const GloDataBundle = () => {
                     </div>
                   </div>
                 </div>
-
+                
                 <div className="bg-[#F2FAFF] mx-10 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[75px] md:mx-[20px] md:rounded-[15px] lg:h-[75px]">
                   <p className="text-[6px] text-center mx-auto w-[171px] md:text-[9px] md:w-full lg:text-[14px]">
                     The data purchase has been sent successfully to the
@@ -863,21 +1079,22 @@ const GloDataBundle = () => {
                     contact us for any further assistance.
                   </p>
                 </div>
-                <div className="flex w-full justify-center mx-auto px-[50px] items-center gap-[5%] md:gap-0 mt-[50px] md:w-[50%] lg:gap-[10%] lg:mx-auto  lg:my-[5%] md:mt-[40px]">
+                <div className="flex w-full justify-center mx-auto px-[50px] items-center gap-[5%] md:gap-[10%] mt-[50px] md:w-[50%] lg:gap-[10%] lg:mx-auto  lg:my-[5%] md:mt-[40px]">
                   <Link to="/GloDataBundle">
                     <button
                       onClick={() => {
-                        handleTransactionSuccessClose(); 
-                        window.location.reload(); 
+                        handleTransactionSuccessClose();
+                        window.location.reload();
                       }}
                       className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-[600] h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[12px] lg:w-[163px] lg:h-[38px] lg:my-[2%] md:px-[60px] md:h-[30px]`}
                     >
                       Done
                     </button>
                   </Link>
+
                   <Link to="/GloReceipt">
                     <button
-                      onClick={handleTransactionSuccessClose}
+                      onClick={handleReceipt}
                       className={`border-[1px] w-[100px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-[600] h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[12px] lg:w-[163px] lg:h-[38px] lg:my-[2%] md:px-[60px] md:h-[30px]`}
                     >
                       Receipt
@@ -888,33 +1105,36 @@ const GloDataBundle = () => {
             </Modal>
           )}
 
-{receipt && (
-                <GloReceipt
-                networkName="9MOBILE"
-                selectedProduct={selectedProduct}
-                selectedOption={selectedOption}
-                recipientNumber={inputValue}
-                amount={amountValue}
-                recipientName={recipientName}
-                />
-            )}
+          {receipt && (
+            <GloReceipt
+              networkName="GLO"
+              selectedOption={selectedOption}
+              selectedNetworkProduct={selectedNetworkProduct}
+              recipientNumber={inputValue}
+              selectedAmount={selectedAmount}
+              recipientNames={recipientNames}
+              walletName={walletName}
+            />
+          )}
 
           <div className="py-[30px] lg:py-[60px] mt-10">
             <button
-              className={`w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[600] leading-[15px] lg:text-[16px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px] ${
-                !selectedProduct ||
+              className={`w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[600] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px] ${
+                !selectedNetworkProduct ||
                 !selectedOption ||
                 !inputValue ||
-                !amountValue
+                !selectedAmount ||
+                !paymentSelected
                   ? "bg-[#63616188] cursor-not-allowed"
                   : "bg-primary"
               }`}
               onClick={handleProceed}
               disabled={
-                !selectedProduct ||
+                !selectedNetworkProduct ||
                 !selectedOption ||
                 !inputValue ||
-                !amountValue
+                !selectedAmount ||
+                !paymentSelected
               }
             >
               Proceed
