@@ -1,14 +1,14 @@
 import React from "react";
 import { useContext, useRef } from "react";
-import { ContextProvider } from "../../../../../../Context";
+import { ContextProvider } from "../../../Context";
 import { RiFileCopyFill } from "react-icons/ri";
-import styles from "../../../../TransferComponent/transfer.module.css";
-import { DashBoardLayout } from "../../../../../Layout/DashBoardLayout";
+import styles from "../TransferComponent/transfer.module.css"
+import { DashBoardLayout } from "../../Layout/DashBoardLayout";
 import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
-export const InternationalReceipt = () => {
+export const RedeemReceipt = () => {
   const {
     toggleSideBar,
     textRef,
@@ -26,6 +26,10 @@ export const InternationalReceipt = () => {
   } = useContext(ContextProvider);
 
   const contentRef = useRef(null);
+
+
+
+  
 
   // ===============Copy to Clipboard Function============
   const handleCopyClick = () => {
@@ -108,7 +112,7 @@ export const InternationalReceipt = () => {
               />
             </div>
             <h3 className="font-extrabold text-[12px] mt-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
-              Transaction Successful on
+              Redeem Successful on
             </h3>
             <span className="text-[11px] text-[#0008] font-extrabold flex justify-center items-center">
               {date.toLocaleDateString(undefined, {
