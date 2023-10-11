@@ -665,6 +665,26 @@ export const Context = ({ children }) => {
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
+  // =====================AirtimeVTU========================
+  const [networkName, setNetworkName] = useState('');
+  const [selectedProduct, setSelectedProduct] = useState('');
+  const [recipientName, setRecipientName] = useState('');
+  const [recipientNumber, setRecipientNumber] = useState('');
+  const [amount, setAmount] = useState('');
+  const [networkImage, setNetworkImage] = useState('');
+
+
+
+  // =====================DATABUNDLE========================
+  const [selectedOption, setSelectedOption] = useState('');
+  const [selectedNetworkProduct, setSelectedNetworkProduct] = useState('');
+  const [recipientPhoneNumber, setRecipientPhoneNumber] = useState('');
+  const [selectedAmount, setSelectedAmount] = useState('');
+  const [recipientNames, setRecipientNames] = useState('');
+  const [walletName, setWalletName] = useState("");
+
+  
+
   const hold = {
     firstDrop,
     secondDrop,
@@ -904,6 +924,36 @@ export const Context = ({ children }) => {
     setOtherBankWithdrawalSuccess,
     // ==============exchangeRate=============
     exchangeRate,
+    
+
+    
+    // ==============AirtimeVTU===============
+    networkName,
+    setNetworkName,
+    selectedProduct,
+    setSelectedProduct,
+    recipientName,
+    setRecipientName,
+    recipientNumber,
+    setRecipientNumber,
+    amount,
+    setAmount,
+    networkImage, 
+    setNetworkImage,
+
+    // ==============DataBundle===============
+    selectedOption, 
+    setSelectedOption,
+    selectedNetworkProduct, 
+    setSelectedNetworkProduct,
+    recipientPhoneNumber, 
+    setRecipientPhoneNumber,
+    selectedAmount, 
+    setSelectedAmount,
+    recipientNames, 
+    setRecipientNames,
+    walletName, 
+    setWalletName,
   };
 
   return (

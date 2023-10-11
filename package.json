@@ -11,6 +11,7 @@
     "axios": "^1.4.0",
     "chart.js": "^4.3.0",
     "chima-flags-select": "^1.0.2",
+    "clipboard-copy": "^4.0.1",
     "copy-to-clipboard": "^3.3.3",
     "dees-verification-code-input": "^1.0.6",
     "html2canvas": "^1.4.1",
