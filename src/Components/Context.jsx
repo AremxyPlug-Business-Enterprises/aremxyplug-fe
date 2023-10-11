@@ -674,6 +674,17 @@ export const Context = ({ children }) => {
   const [networkImage, setNetworkImage] = useState('');
 
 
+
+  // =====================DATABUNDLE========================
+  const [selectedOption, setSelectedOption] = useState('');
+  const [selectedNetworkProduct, setSelectedNetworkProduct] = useState('');
+  const [recipientPhoneNumber, setRecipientPhoneNumber] = useState('');
+  const [selectedAmount, setSelectedAmount] = useState('');
+  const [recipientNames, setRecipientNames] = useState('');
+  const [walletName, setWalletName] = useState("");
+
+  
+
   const hold = {
     firstDrop,
     secondDrop,
@@ -929,6 +940,20 @@ export const Context = ({ children }) => {
     setAmount,
     networkImage, 
     setNetworkImage,
+
+    // ==============DataBundle===============
+    selectedOption, 
+    setSelectedOption,
+    selectedNetworkProduct, 
+    setSelectedNetworkProduct,
+    recipientPhoneNumber, 
+    setRecipientPhoneNumber,
+    selectedAmount, 
+    setSelectedAmount,
+    recipientNames, 
+    setRecipientNames,
+    walletName, 
+    setWalletName,
   };
 
   return (
