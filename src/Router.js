@@ -69,6 +69,13 @@ import { MtnReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUp
 import { AirtelReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/AirtelDataBundle/AirtelReceipt";
 import { EtisalatReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/EtisalatDataBundle/9MobileReceipt";
 import { GloReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/GloDataBundle/GloReceipt";
+import EducationMain from "./Components/EducationPins/educationMain";
+import WaecEducationPins from "./Components/EducationPins/waecEducationPin";
+import JambEducationPins from "./Components/EducationPins/jambEducationPin";
+import NecoEducationPins from "./Components/EducationPins/NecoEducationPins";
+import NabtebEducationPins from "./Components/EducationPins/nabtebEducationPins";
+
+
 export const Router = () => {
   return (
     <div>
@@ -164,7 +171,13 @@ export const Router = () => {
         <Route path="/AirtelReceipt" element={<AirtelReceipt/>} />
         <Route path="/EtisalatReceipt" element={<EtisalatReceipt/>} />
         <Route path="/GloReceipt" element={<GloReceipt/>} />
-      </Routes>
+     
+     <Route path="/EducationPins" element={<EducationMain/>}/>
+     <Route path = "/WaecEducationPin" element ={<WaecEducationPins/>}/>
+     <Route path = "/NecoEducationPin" element = {<NecoEducationPins/>}/>
+     <Route path="/NabtebEducationPin" element = {<NabtebEducationPins/>}/>
+     <Route path = "/JambEducationPin" element ={<JambEducationPins/>}/>
+      </Routes> 
     </div>
   );
 };
