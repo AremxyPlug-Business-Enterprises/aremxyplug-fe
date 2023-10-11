@@ -683,6 +683,9 @@ export const Context = ({ children }) => {
   const [recipientNames, setRecipientNames] = useState('');
   const [walletName, setWalletName] = useState("");
 
+  //=============point redeem==============
+  const [inputValue, setInputValue] = useState('');
+  const [outputValue, setOutputValue] = useState('');
   
 
   const hold = {
@@ -954,6 +957,13 @@ export const Context = ({ children }) => {
     setRecipientNames,
     walletName, 
     setWalletName,
+
+
+    //point redeem
+    inputValue,
+    setInputValue,
+    outputValue,
+    setOutputValue,
   };
 
   return (

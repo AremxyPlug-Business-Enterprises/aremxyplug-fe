@@ -27,8 +27,9 @@ const PointRedeem = () => {
    
       } = useContext(ContextProvider);
 
-      const [inputValue, setInputValue] = useState('');
-      const [outputValue, setOutputValue] = useState('');
+      const {inputValue, setInputValue} = useContext(ContextProvider);
+      const {outputValue, setOutputValue} = useContext(ContextProvider);
+
       const handleInputChange = (event) => {
           const newValue = event.target.value;
 
@@ -312,7 +313,7 @@ const PointRedeem = () => {
             <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
               <img
                 onClick={() => setSuccessPopup(false)}
-                className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[25px]"
+                className=" w-[18px]  md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[25px]"
                 src="/Images/login/arpLogo.png"
                 alt=""
               />
