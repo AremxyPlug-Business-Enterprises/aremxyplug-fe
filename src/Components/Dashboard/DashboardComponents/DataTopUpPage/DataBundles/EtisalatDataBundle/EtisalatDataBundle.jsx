@@ -338,7 +338,7 @@ const EtisalatDataBundle = () => {
 
           <div className="flex gap-[10%] mt-[40px] md:w-full md:justify-between md:gap-[10%] ">
             <div className="w-full flex items-center justify-between border text-[10px] md:py-[15px] md:w-[50%] rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
-              <p className="font-extrabold">Select Recipient</p>
+              <p className="font-semibold">Select Recipient</p>
               <img
                 className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
                 src={Recipient}
@@ -346,7 +346,7 @@ const EtisalatDataBundle = () => {
               />
             </div>
             <div className="w-full flex items-center justify-between border text-[10px] md:py-[15px] md:w-[40%] md:mr-[9%]  rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
-              <p className="font-extrabold">Add Recipient</p>
+              <p className="font-semibold">Add Recipient</p>
               <img
                 className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
                 src={Recipient2}
@@ -915,7 +915,7 @@ const EtisalatDataBundle = () => {
                       setTransactSuccessPopUp(false);
                       window.location.reload();
                     }}
-                    className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[25px]"
+                    className=" w-[18px] h-[15px] md:w-[35px] md:h-[32px] lg:w-[35px] lg:h-[22px]"
                     src="/Images/login/arpLogo.png"
                     alt=""
                   />

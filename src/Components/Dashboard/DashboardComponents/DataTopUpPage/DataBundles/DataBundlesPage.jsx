@@ -65,11 +65,11 @@ const DataBundlesPage = () => {
               />
             </div>
           </div>
-
+          
           {/* =========================Select/Add Recipient===================== */}
           <div className="flex gap-[10%] md:gap-[8%] lg:gap-[7%] mt-[40px] lg:mt-[60px]">
             <div className="w-full flex items-center justify-between border text-[10px] md:w-[117%] lg:w-[132.5%] rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
-              <p className="font-extrabold">Select Recipient</p>
+              <p className="font-semibold">Select Recipient</p>
               <img
                 className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
                 src={Recipient}
@@ -77,7 +77,7 @@ const DataBundlesPage = () => {
               />
             </div>
             <div className="w-full flex items-center justify-between border text-[10px] md:mr-[50px] lg:mr-[150px] rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
-              <p className="font-extrabold">Add Recipient</p>
+              <p className="font-semibold">Add Recipient</p>
               <img
                 className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
                 src={Recipient2}
