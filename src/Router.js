@@ -59,6 +59,10 @@ import AirtimeVtuReceipt from "./Components/AirTimePage/AirtimeVtuReceipt"
 import DataBundlesPage from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundlesPage";
 import MtnDataTopUpBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/MtnDataTopUpBundle/MtnDataTopUpBundle";
 import WithdrawToOtherBanks from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToOtherBanks";
+import ConfirmConversion from "./Components/CurrencyConversion/currencyPopups/confirmConversion";
+import { SuccessfulReceipt } from "./Components/CurrencyConversion/ConversionReceipts/SuccessConversionReceipt";
+
+
 import WalletSummaryPage from "./Components/WalletSummaryPage/WalletSummary";
 import SalesSummaryPage from "./Components/SalesSummaryPage/SalesSummary";
 import { WithdrawToOtherBankReceipt } from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToOtherBanksPopUp/WithdrawToOtherBankReceipt";
@@ -71,6 +75,7 @@ import { EtisalatReceipt } from "./Components/Dashboard/DashboardComponents/Data
 import { GloReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/GloDataBundle/GloReceipt";
 import AddRecipient from "./Components/AirTimePage/AddRecipient";
 import SelectRecipient from "./Components/AirTimePage/SelectRecipient";
+import { RedeemReceipt } from "./Components/Dashboard/DashboardComponents/PointRedeem/RedeemReceipt";
 export const Router = () => {
   return (
     <div>
@@ -153,6 +158,7 @@ export const Router = () => {
           path="/international-bank-receipt"
           element={<InternationalReceipt />}
         />
+        <Route path="/redeem-receipt" element={<RedeemReceipt />} />
         <Route path="/global-transfer" element={<GlobalTransfer />} />
         <Route path="/point-redeem" element={<PointRedeem />} />
         <Route path="/fiat" element={<FiatConversion />} />
@@ -161,6 +167,8 @@ export const Router = () => {
         <Route path="/data-bundles" element={<DataBundlesPage />} />
         <Route path="/My-Referral" element={<Referral />} />
         <Route path="/MtnDataTopUpBundle" element={<MtnDataTopUpBundle />} />
+        <Route path="/ConfirmConversion" element={<ConfirmConversion/>}/>
+        <Route path="/SuccessfulConversion" element={<SuccessfulReceipt/>}/>
         <Route path="/MtnReceipt" element={<MtnReceipt/>} />
         <Route path="/AirtelDataBundle" element={<AirtelDataBundle/>} />
         <Route path="/GloDataBundle" element={<GloDataBundle/>} />
@@ -168,6 +176,7 @@ export const Router = () => {
         <Route path="/AirtelReceipt" element={<AirtelReceipt/>} />
         <Route path="/EtisalatReceipt" element={<EtisalatReceipt/>} />
         <Route path="/GloReceipt" element={<GloReceipt/>} />
+        
       </Routes>
     </div>
   );
