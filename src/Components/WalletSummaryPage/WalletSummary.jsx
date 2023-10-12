@@ -365,7 +365,7 @@ export default function WalletSummaryPage() {
         </div>
 
 
-        <table className=" md:text-[12px] md:block hidden  lg:text-[16px]">
+        <table className= {`${toggleSideBar ? "md:w-[50%]" : "md:w-[50%]"}  md:text-[12px] md:block hidden  lg:text-[16px] `}>
           <thead className="w-[600px]">
             <tr className="bg-[#c3d9ff] lg:h-[47px]">
               <th className="border-none">Products</th>
