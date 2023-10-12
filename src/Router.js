@@ -75,6 +75,7 @@ import { EtisalatReceipt } from "./Components/Dashboard/DashboardComponents/Data
 import { GloReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/GloDataBundle/GloReceipt";
 import AddRecipient from "./Components/AirTimePage/AddRecipient";
 import SelectRecipient from "./Components/AirTimePage/SelectRecipient";
+import { RedeemReceipt } from "./Components/Dashboard/DashboardComponents/PointRedeem/RedeemReceipt";
 export const Router = () => {
   return (
     <div>
@@ -157,6 +158,7 @@ export const Router = () => {
           path="/international-bank-receipt"
           element={<InternationalReceipt />}
         />
+        <Route path="/redeem-receipt" element={<RedeemReceipt />} />
         <Route path="/global-transfer" element={<GlobalTransfer />} />
         <Route path="/point-redeem" element={<PointRedeem />} />
         <Route path="/fiat" element={<FiatConversion />} />
@@ -174,6 +176,7 @@ export const Router = () => {
         <Route path="/AirtelReceipt" element={<AirtelReceipt/>} />
         <Route path="/EtisalatReceipt" element={<EtisalatReceipt/>} />
         <Route path="/GloReceipt" element={<GloReceipt/>} />
+        
       </Routes>
     </div>
   );
