@@ -5,13 +5,7 @@ import { DashBoardLayout } from '../../../../Layout/DashBoardLayout';
 import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-import { useState } from "react";
-import {
-  EmailShareButton,
-  FacebookShareButton,
-  TwitterShareButton,
-  WhatsappShareButton,
-} from "react-share";
+
 
 
 
@@ -46,7 +40,6 @@ export const MtnReceipt = () => {
     setRecipientNames('');
   }
 
-  const [showSharingOptions, setShowSharingOptions] = useState(false);
 
 
 
@@ -64,22 +57,6 @@ export const MtnReceipt = () => {
 //   };
 
   // ==============Share pdf Function=============
-  // const handleShareClick = () => {
-  //   if (navigator.share) {
-  //     navigator
-  //       .share({
-  //         title: "Receipt",
-  //         text: "Check out this receipt!",
-  //         url: "https://example.com",
-  //       })
-  //       .then(() => console.log("Shared successfully"))
-  //       .catch((error) => console.error("Error sharing:", error));
-  //   } else {
-  //     console.log("Web Share API not supported.");
-  //   }
-  // };
-
-
   const handleShareClick = () => {
     if (navigator.share) {
       navigator
@@ -92,11 +69,10 @@ export const MtnReceipt = () => {
         .catch((error) => console.error("Error sharing:", error));
     } else {
       console.log("Web Share API not supported.");
-      // You can provide a fallback UI for sharing options here.
-      // For example, display sharing buttons.
-      setShowSharingOptions(true); // Set a state variable to show sharing options.
     }
   };
+
+
   
   // ==============Save Pdf Function==============
   const handleSaveAsPDFClick = () => {
@@ -283,38 +259,6 @@ export const MtnReceipt = () => {
         </div>
 
 
-        {showSharingOptions && (
-        <div className="text-center">
-          <h3>Share this receipt</h3>
-          <div className="share-buttons">
-            <EmailShareButton
-              url="https://example.com"
-              subject="Receipt"
-            >
-              Email
-            </EmailShareButton>
-            <FacebookShareButton
-              url="https://example.com"
-            >
-              Facebook
-            </FacebookShareButton>
-            <TwitterShareButton
-              url="https://example.com"
-              title="Receipt"
-            >
-              Twitter
-            </TwitterShareButton>
-            <WhatsappShareButton
-              url="https://example.com"
-              title="Receipt"
-            >
-              WhatsApp
-            </WhatsappShareButton>
-          </div>
-        </div>
-      )}
-
-      
         <div
           className={`${
             isDarkMode ? "mb-[1%]" : "mb-[5%]"

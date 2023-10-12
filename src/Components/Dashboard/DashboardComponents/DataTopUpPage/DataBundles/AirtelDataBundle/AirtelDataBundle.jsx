@@ -48,6 +48,12 @@ const AirtelDataBundle = () => {
   const [showPayment, setShowPayment] = useState(false);
   const [image, setImage] = useState("");
   const [paymentAmount, setPaymentAmount] = useState("");
+  const [codes, setCodes] = useState(false);
+
+  const handleCodes =()=> {
+    setCodes(false);
+    setCodes(true);
+  }
 
   const handleShowPayment = () => {
     setShowPayment(!showPayment);
@@ -285,7 +291,7 @@ const AirtelDataBundle = () => {
     setSelectedNetworkProduct(productName);
     setSelectedOption("");
     setShowProductList(false);
-    setShowOptionList(true);
+    setShowOptionList(false);
   };
 
   const handleSelectOption = (selectedOption, selectedAmount, duration) => {
@@ -376,7 +382,7 @@ const AirtelDataBundle = () => {
             </div>
           </div>
 
-          <div className="flex mt-[35px] my-[30px] md:w-[100%] md:gap-[10%]">
+          <div onClick={handleCodes} className="flex mt-[35px] my-[30px] md:w-[100%] md:gap-[10%]">
             <div className="rounded-[4px] w-full bg-primary text-white md:w-[50%] h-[30px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-center md:justify-between gap-[10px] px-[5px]">
               <h2 className="lg:text-[16px] lg:leading-[24px] text-[10px] md:text-[12px] leading-[12px]">
                 Data Balance USSD Codes
@@ -429,6 +435,59 @@ const AirtelDataBundle = () => {
             </div>
             <div className="md:w-[50%]"></div>
           </div>
+
+          {codes && (
+                <Modal>
+                (
+                <div
+                    className={`code ${
+                    toggleSideBar ? "xl:w-[65%] xl:ml-[17%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+                    } w-[90%] xl:w-[80%] overflow-auto`}
+                >
+                    <img
+                    onClick={()=> setCodes(false)}
+                    className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px] xl:h-[35px] xl:w-[35px]"
+                    src="/Images/transferImages/close-circle.png"
+                    alt=""
+                    />
+                    <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
+
+                    <button
+                    className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[50%] md:rounded-[8px] md:text-[16px] lg:text-[14px] xl:text-[20px] lg:w-[350px] lg:h-[38px] lg:my-[2%]`}
+                    >
+                    Data Balance USSD Codes
+                    </button>
+                    <h2 className="text-[12px] my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
+                    Data balance / share ussd codes.
+                    </h2>
+                    <h2 className="text-[12px] px-[2%] my-[5%] text-blue-600 text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
+                    Tap the network Dial button to check data balance:
+                    </h2>
+                    <div className='flex flex-col gap-1 mb-5'>
+                        
+                        <button
+                            className={`bg-[#FAF8F8] mt-[10%] mb-[2%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:mt-[5%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:mt-[0%] xl:mb-[1%]`}
+                            >
+                            AIRTEL Data Balance Code - *323#
+                        </button>
+                        <button
+                            className={`bg-[#FAF8F8] my-[2%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:my-[1%]`}
+                            >
+                            AIRTEL Data Share Code - *321#
+                        </button>
+                        
+                    </div>
+
+                    <button
+                    onClick={()=> setCodes(false)}
+                    className={`bg-[#04177f] my-[5%] mt-[40%] md:mt-[10%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:my-[2%] xl:mt-[15%]`}
+                    >
+                    Okay
+                    </button>
+                </div>
+                )
+                </Modal>
+            )}
 
           {/* =========================PRODUCTS============================== */}
 
@@ -688,7 +747,7 @@ const AirtelDataBundle = () => {
                   isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
                 } ${
                   toggleSideBar
-                    ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
+                    ? "md:w-[40%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
                     : "lg:w-[40%]"
                 } lg:ml-[10%] lg:mr-[10%] grow pt-[10px] md:mt-[1%] mb-0 pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:mb-[18%] md:overflow-auto`}
               >

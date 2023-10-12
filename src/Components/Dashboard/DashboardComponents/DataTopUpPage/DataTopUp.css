@@ -9,6 +9,20 @@
 .input {
   box-shadow: 0px 0px 4px 0px #00000040
 }
+.code::-webkit-scrollbar {
+  display: none;
+}
+
+
+.code {
+  position: absolute;
+  height: 505px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+}
+
 
 .Datatopup {
     display: flex;
@@ -149,6 +163,13 @@
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
   
     }
+
+    .code {
+      height: 620px;
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+    }
 }
 
 
@@ -181,6 +202,13 @@
       background: #fff;
       box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
     
+      }
+
+      .code {
+        height: 560px;
+        border-radius: 20px;
+        background: #fff;
+        box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
       }
 
     }

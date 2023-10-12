@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import { DashBoardLayout } from "../../../Layout/DashBoardLayout";
 import "../DataTopUp.css";
 import { useContext } from "react";
@@ -22,9 +23,34 @@ import Mobile1 from "../DataBundles/DataBundles-Images/9Mobile1.svg";
 import Smile1 from "../DataBundles/DataBundles-Images/Smile1.svg";
 import Spectranet1 from "../DataBundles/DataBundles-Images/Spectranet1.svg";
 import DataBalance2 from "../DataBundles/DataBundles-Images/DataBalance2.svg";
+import { Modal } from "../../../../Screens/Modal/Modal";
 
 const DataBundlesPage = () => {
   const { isDarkMode } = useContext(ContextProvider);
+
+  const [codes, setCodes] = useState(false);
+
+  const {
+    setSelectedNetworkProduct,
+    setSelectedOption,
+    setSelectedAmount,
+    setRecipientNames,
+    toggleSideBar,
+  }
+   = useContext(ContextProvider);
+
+
+  const handleChange = () => {
+    setSelectedNetworkProduct(false);
+    setSelectedOption(false);
+    setSelectedAmount('');
+    setRecipientNames('');
+  }
+
+  const handleCodes =()=> {
+    setCodes(false);
+    setCodes(true);
+  }
   
   return (
     <DashBoardLayout>
@@ -86,7 +112,7 @@ const DataBundlesPage = () => {
             </div>
           </div>
 
-          <div className="flex mt-[35px] md:gap-[58.68px] lg:gap-[100px] lg:mt-[60px] my-[30px]">
+          <div onClick={handleCodes} className="flex mt-[35px] md:gap-[58.68px] lg:gap-[100px] lg:mt-[60px] my-[30px]">
             <div className="rounded-[4px] w-full bg-primary text-white md:w-[50%] h-[30px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-center md:justify-between gap-[10px] px-[5px]">
               <h2 className="lg:text-[16px] lg:leading-[24px] text-[10px] md:text-[12px] leading-[12px]">
                 Data Balance USSD Codes
@@ -126,7 +152,9 @@ const DataBundlesPage = () => {
             <div
               id="Network"
               className="rounded-[4px] relative flex flex-col justify-center items-center"
-            >
+              onClick={() => {
+                handleChange();
+              }}            >
               <img src={MTN} alt="" className="w-full" />
               <img
                 src={Mtn1}
@@ -140,6 +168,9 @@ const DataBundlesPage = () => {
             <div
               id="Network"
               className="rounded-[4px] relative flex flex-col justify-center items-center"
+              onClick={() => {
+                handleChange();
+              }}
             >
               <img src={Airtel} alt="" className="w-full" />
               <img
@@ -154,6 +185,9 @@ const DataBundlesPage = () => {
             <div
               id="Network"
               className="rounded-[4px] relative flex flex-col justify-center items-center"
+              onClick={() => {
+                handleChange();
+              }}
             >
               <img src={Glo} alt="" className="w-full" />
               <img
@@ -168,6 +202,9 @@ const DataBundlesPage = () => {
             <div
               id="Network"
               className="rounded-[4px] relative flex flex-col justify-center items-center"
+              onClick={() => {
+                handleChange();
+              }}
             >
               <img src={Mobile} alt="" className="w-full" />
               <img
@@ -202,6 +239,107 @@ const DataBundlesPage = () => {
               />
             </div>
           </div>
+
+          {codes && (
+                <Modal>
+                (
+                <div
+                    className={`code ${
+                    toggleSideBar ? "xl:w-[65%] xl:ml-[17%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+                    } w-[90%] xl:w-[80%] overflow-auto`}
+                >
+                    <img
+                    onClick={()=> setCodes(false)}
+                    className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px] xl:h-[35px] xl:w-[35px]"
+                    src="/Images/transferImages/close-circle.png"
+                    alt=""
+                    />
+                    <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
+
+                    <button
+                    className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[50%] md:rounded-[8px] md:text-[16px] lg:text-[14px] xl:text-[20px] lg:w-[350px] lg:h-[38px] lg:my-[2%]`}
+                    >
+                    Data Balance USSD Codes
+                    </button>
+                    <h2 className="text-[12px] my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
+                    Data balance / share ussd codes.
+                    </h2>
+                    <h2 className="text-[12px] px-[2%] my-[5%] text-blue-600 text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
+                    Tap the network Dial button to check data balance:
+                    </h2>
+                    <div className='flex flex-col gap-1 mb-5'>
+                        <button
+                            className={`bg-[#FAF8F8] my-[2%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:my-[1%]`}
+                            >
+                            MTN Data Balance Code - *323#
+                        </button>
+                        <button
+                            className={`bg-[#FAF8F8] my-[2%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:my-[1%]`}
+                            >
+                            MTN SME Data Balance Code - *461*4#
+                        </button>
+                        <button
+                            className={`bg-[#FAF8F8] my-[2%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:my-[1%]`}
+                            >
+                            MTN CG Data Balance Code - *460*260#
+                        </button>
+                        <button
+                            className={`bg-[#FAF8F8] my-[2%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:my-[1%]`}
+                            >
+                            MTN Direct Coupon Balance Code - *323*4#
+                        </button>
+                        <button
+                            className={`bg-[#FAF8F8] my-[2%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:my-[1%]`}
+                            >
+                            MTN Data Share Code - *321#
+                        </button>
+                        <button
+                            className={`bg-[#FAF8F8] mt-[10%] mb-[2%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:mt-[5%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:mt-[5%] xl:mb-[1%]`}
+                            >
+                            AIRTEL Data Balance Code - *323#
+                        </button>
+                        <button
+                            className={`bg-[#FAF8F8] my-[2%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:my-[1%]`}
+                            >
+                            AIRTEL Data Share Code - *321#
+                        </button>
+                        <button
+                            className={`bg-[#FAF8F8] mt-[10%] mb-[2%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:mt-[5%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:mt-[5%] xl:mb-[1%]`}
+                            >
+                            GLO Data Balance Code - *323#
+                        </button>
+                        <button
+                            className={`bg-[#FAF8F8] my-[2%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:my-[1%]`}
+                            >
+                            GLO Data Share Code - *321#
+                        </button>
+                        <button
+                            className={`bg-[#FAF8F8] mt-[10%] mb-[2%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:mt-[5%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:mt-[5%] xl:mb-[1%]`}
+                            >
+                            9MOBILE Data Balance Code - *323#
+                        </button>
+                        <button
+                            className={`bg-[#FAF8F8] my-[2%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:mt-[1%]`}
+                            >
+                            9MOBILE Data Share Code - *321#
+                        </button>
+                        <button
+                            className={`bg-[#FAF8F8] mt-[10%] mb-[2%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:mt-[5%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:mt-[5%] xl:mb-[1%]`}
+                            >
+                            SMILE Mobile USSD Code - *4504#
+                        </button>
+                    </div>
+
+                    <button
+                    onClick={()=> setCodes(false)}
+                    className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                    >
+                    Okay
+                    </button>
+                </div>
+                )
+                </Modal>
+            )}
 
           <footer className="flex justify-center text-center gap-[20px] mt-[320px] mb-[50px] md:mt-[750px] lg:mb-[30px] 2xl:mt-[500px]">
             <p className="text-[8px] md:text-[12px] lg:text-[20px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
