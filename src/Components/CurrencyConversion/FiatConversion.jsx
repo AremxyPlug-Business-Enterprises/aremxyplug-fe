@@ -38,7 +38,7 @@ const FiatConversion = () => {
         .catch((error) => console.error("Error fetching data:", error));
     }, []);
 
-    const [errors, setErrors] = useState({});
+    const [errors] = useState({});
     const [conversionRate, setConversionRate] = useState(false);
 
     const transferHandler = (e) => {
