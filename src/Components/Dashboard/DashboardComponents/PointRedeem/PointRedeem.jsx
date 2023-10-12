@@ -7,6 +7,7 @@ import arrowdown from '../PointRedeem/images/arrow-down.svg'
 import icon1 from '../PointRedeem/images/Group.svg'
 import icon2 from '../PointRedeem/images/convert-card.svg'
 import icon3 from '../PointRedeem/images/clock.svg'
+import icon5 from '../PointRedeem/images/main-component.png'
 import flag from '../PointRedeem/images/Country Flags.svg'
 import { Modal } from "../../../Screens/Modal/Modal";
 import { useContext } from "react";
@@ -16,6 +17,9 @@ import icon4 from "../PointRedeem/images/Group 13102.png";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import OtpInput from "react-otp-input";
+import Joi from "joi";
+
+
 const PointRedeem = () => {
 
     const {
@@ -27,8 +31,9 @@ const PointRedeem = () => {
    
       } = useContext(ContextProvider);
 
-      const [inputValue, setInputValue] = useState('');
-      const [outputValue, setOutputValue] = useState('');
+      const {inputValue, setInputValue} = useContext(ContextProvider);
+      const {outputValue, setOutputValue} = useContext(ContextProvider);
+
       const handleInputChange = (event) => {
           const newValue = event.target.value;
 
@@ -54,11 +59,41 @@ const PointRedeem = () => {
     const [proceed, setProceed] = useState(false);
      
 
-    const handleProceed = () => {
+    // const handleProceed = () => {
       
-        setProceed(true);
+    //     setProceed(true);
       
-    };
+    // };
+    const schema = Joi.object({
+      inputValue: Joi.string()
+        .pattern(new RegExp(/\d{3,}/))
+        .required()
+        .messages({
+          "string.pattern.base": "Minimum Point Redeem is 100 and Above",
+        }),
+     
+    });
+    const [errors, setErrors] = useState({}); 
+  const handleProceed = (e) => {
+    e.preventDefault();
+
+    const { error } = schema.validate({
+      inputValue,
+      
+    });
+
+    if (error) {
+      setErrors(
+        error.details.reduce((acc, curr) => {
+          acc[curr.path[0]] = curr.message;
+          return acc;
+        }, {})
+      );
+    } else {
+      setErrors({});
+      setProceed(true);
+    }
+  };
   
     const [successPopup, setSuccessPopup] = useState(false);
 
@@ -68,6 +103,15 @@ const PointRedeem = () => {
       setProceed(false);
     }
       
+    const [realPop, setRealPop] = useState(false);
+
+    const handleRealPop = () =>{
+      setRealPop(true);
+      setSuccessPopup(false);
+      setInputPinPopUp(false);
+      setProceed(false);
+      
+    }
     
       const { isDarkMode } = useContext(ContextProvider);
     return ( 
@@ -90,7 +134,7 @@ const PointRedeem = () => {
 
                 {/* text lines after top part */}
                 <div className='text-[10px] font-[500] mt-[30px] md:mt-[30px] lg:mt-[50px] md:text-[11.46px] md:leading-[14.9px] lg:text-[20px] lg:leading-[26px] text-[#7C7C7C]' >How much points would you like to redeem to real money?</div>
-                <div className='font-[500] text-[10px] py-1 mt-[30px] md:mt-[30px] lg:mt-[50px] text-center px-4 md:text-[9.17px] lg:text-[16px] leading-[20.8px] lg:px-6 lg:w-fit  md:flex md:flex-row md:w-fit md:py-1 lg:py-3 rounded-sm md:rounded-sm lg:rounded-md md:leading-[11.5px] bg-primary text-white'>Real-time Points Redeem Tracker</div>
+                <div onClick={handleRealPop} className='font-[500] text-[10px] py-1 mt-[30px] md:mt-[30px] lg:mt-[50px] text-center px-4 md:text-[9.17px] lg:text-[16px] leading-[20.8px] lg:px-6 lg:w-fit  md:flex md:flex-row md:w-fit md:py-1 lg:py-3 rounded-sm md:rounded-sm lg:rounded-md md:leading-[11.5px] bg-primary text-white'>Real-time Points Redeem Tracker</div>
                 
                 {/* Section with input boxes */}
                 <div className='mt-[20px] md:mt-[30px] lg:mt-[50px] flex flex-row '>
@@ -98,6 +142,7 @@ const PointRedeem = () => {
                     <div className='h-[30px] md:h-[40px] lg:h-[60px] w-[15%] md:w-[8%] gap-2 lg:gap-4 flex flex-row px-3 py-2 bg-primary items-center   '>
                         <div> <img src= {icon} className='md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]'  alt="" /> </div>
                         <div> <img src= {arrowdown} className='md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px] '  alt="" /> </div>
+                        
                     </div>
                 </div>
                 <div className='flex flex-col items-center mt-[8px] md:mt-[8px] lg:mt-[20px] text-[#7C7C7C] lg:text-[16px] leading-[20.8px] gap-2 lg:gap-4 font-[500] text-[7px] md:text-[9.2px] '>
@@ -127,12 +172,17 @@ const PointRedeem = () => {
                         <div>Completion Time - Instantly.</div>
                     </div>
                 </div>
+                {errors.inputValue && (
+          <div className="text-[12px] text-red-500 italic lg:text-[14px]">
+            {errors.inputValue}
+          </div>
+        )}
                 <div className='flex flex-col justify-center md:items-center'>
                     <div
                     onClick = {handleProceed}
                      className={ ` ${
-          (inputValue.length < 4 ? "bg-[#0008]" : "bg-[#04177f]",
-          outputValue.length < 4 ? "bg-[#0008]" : "bg-[#04177f]")
+          (inputValue.length < 3 ? "bg-[#0008]" : "bg-[#04177f]",
+          outputValue.length < 3 ? "bg-[#0008]" : "bg-[#04177f]")
         } text-[12px] mt-[50px] md:mt-[40px] md:w-fit lg:px-12 lg:text-[16px] lg:px md:py-1 md:rounded-md md:px-6   py-3 rounded-md font-[600] text-center text-white`}>Proceed</div>
                 </div>
                 
@@ -145,6 +195,77 @@ const PointRedeem = () => {
                 
             
             </div> 
+            {/* real time tracker pop-up */}
+            {realPop && (<Modal>
+              <div
+            className={`${styles.transferConfirmation} ${
+              toggleSideBar ? " lg:ml-[20%] lg:w-[40%] " : "lg:w-[562px] md:w-[500px]" 
+            } w-[90%] overflow-auto flex flex-col gap-0`}
+          >
+            <img
+                onClick={() => setRealPop(false)}
+              className="absolute right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px]"
+              src="/Images/transferImages/close-circle.png"
+              alt=""
+            />
+            <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
+            <div className='flex flex-col text-center items-center justify-center'>
+                  <div  className='font-[500] flex items-center w-[100%] text-center text-[10px] py-1 mt-[30px] md:mt-[30px] lg:mt-[50px]  pl-[26%] md:text-[9.17px] lg:text-[16px] leading-[20.8px] lg:px-6 lg:w-fit  md:flex md:flex-row md:w-fit md:py-1 lg:py-3 rounded-sm md:rounded-sm lg:rounded-md md:leading-[11.5px] bg-primary text-white'>Real-time Points Redeem Tracker</div>
+                  <div></div>
+              </div>
+            <div className='flex flex-col px-3  md:px-6 '>
+              
+
+
+            <div className=' pt-[30px] md:pt-[70px]'>
+            <div className="font-bold flex text-[#000] text-[10px] leading-[130%] items-center  gap-[8px]  md:text-[12px] lg:text-[15px]">
+        <p>Amount</p>
+        <img
+          className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
+          src="./Images/Dashboardimages/arrowright.png"
+          alt="/"
+        />
+      </div>
+            <div className='mt-[20px] md:mt-[30px] lg:mt-[10px] flex flex-row '>
+                    <div className='border-[1px] w-[85%] md:w-[85%] h-[30px] md:h-[40px] lg:h-[50px] px-2 py-0 md:pt-1 lg:pt-4 border-slate-200'><input type="number" value={inputValue} onChange={handleInputChange} className='w-100%] outline-none text-[10px] lg:text-[16px] leading-[20.8px  font-[600]  text-[#000]' placeholder='Amount to Redeem' /> </div>
+                    <div className='h-[30px] md:h-[40px] lg:h-[50px] w-[15%] md:w-[15%] gap-2 lg:gap-4 flex flex-row px-3 py-2 bg-primary items-center   '>
+                        <div> <img src= {icon} className='md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]'  alt="" /> </div>
+                        <div> <img src= {arrowdown} className='md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px] '  alt="" /> </div>
+                    </div>
+                </div>
+                <div className='flex flex-col items-center mt-[20px] md:mt-[8px] lg:mt-[20px] text-[#7C7C7C] lg:text-[16px] leading-[20.8px] gap-2 lg:gap-4 font-[500] text-[10px] md:text-[9.2px] '>
+                <div className='flex flex-row items-center border-[1px] py-0 px-8 md:py-2 md:px-2 rounded-md md:rounded-xl border-[#29B8FC] text-[#29B8FC] gap-1'>
+                        <div> <img src= {icon5} className='lg:w-[20px] md:w-[11px] ' alt="" /></div>
+                        <div>1 PTS ~ 1 NGN</div>
+                    </div>
+                </div>
+                <div className="font-bold flex mt-8 text-[#000] text-[10px] leading-[130%] items-center  gap-[8px]  md:text-[12px] lg:text-[15px]">
+        <p>To</p>
+        <img
+          className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
+          src="./Images/Dashboardimages/arrowright.png"
+          alt="/"
+        />
+      </div>
+                <div className='mt-[7px] flex flex-row lg:mt-[10px]'>
+                    <div className='border-[1px] w-[85%] md:w-[85%] h-[30px] md:h-[40px] lg:h-[50px] px-2 py-0 md:pt-1 lg:pt-4 border-slate-200'><input type="number" readOnly value={outputValue} className=' w-[100%] outline-none text-[10px] lg:text-[16px] leading-[20.8px] font-[600] text-[#000]' placeholder='Amount to Receive' /> </div>
+                    <div className='h-[30px] md:h-[40px] lg:h-[50px] w-[15%] md:w-[15%] gap-2 lg:gap-4 flex flex-row px-3 py-2 bg-primary items-center   '>
+                        <div> <img src= {flag} className='md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]'   alt="flag" /> </div>
+                        <div> <img src= {arrowdown} className='md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]'  alt="arrow" /> </div>
+                    </div>
+                </div>   
+            </div>
+            <div>
+            <button
+              onClick={() => setRealPop(false)}
+              className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center mt-14 items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:mt-[30px]`}
+            >
+              Okay
+            </button>
+            </div>
+            </div>
+          </div>
+            </Modal>)}
 
 
           {/* Confirmation Transaction Popup */}
@@ -312,7 +433,7 @@ const PointRedeem = () => {
             <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
               <img
                 onClick={() => setSuccessPopup(false)}
-                className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[25px]"
+                className=" w-[18px]  md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[25px]"
                 src="/Images/login/arpLogo.png"
                 alt=""
               />
@@ -352,7 +473,7 @@ const PointRedeem = () => {
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#0008]">Account To Receive</p>
-                <span>{inputValue}</span>
+                <span>&#8358;{inputValue}</span>
               </div>
               
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -378,17 +499,17 @@ const PointRedeem = () => {
                 within 5-15 minutes.
               </p>
             </div>
-            <div className="flex w-[70%] mx-auto items-center gap-[5%] md:w-[60%] lg:my-[5%]">
+            <div className="flex w-[70%] mx-auto items-center gap-[5%] md:gap-[40px] md:w-[20%] lg:my-[5%]">
               <button
                 onClick={() => {setSuccessPopup(false);}}
-                className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:px-[50px] md:w-[70%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
               >
                 Done
               </button>
-              <Link> 
+              <Link to="/redeem-receipt">
                 <button
                   onClick={() => {setSuccessPopup(false);}}
-                  className={`border-[1px] w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                  className={`border-[1px] w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
                 >
                   Receipt
                 </button>
