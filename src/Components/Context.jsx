@@ -686,6 +686,9 @@ export const Context = ({ children }) => {
   //=============point redeem==============
   const [inputValue, setInputValue] = useState('');
   const [outputValue, setOutputValue] = useState('');
+
+  //=============Currency conversion==============
+
   
 
   const hold = {
