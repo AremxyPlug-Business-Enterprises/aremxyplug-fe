@@ -3,11 +3,9 @@ import React, {useState} from "react";
 import { Link } from "react-router-dom";
 import "../CurrencyConversion/currencyConversion.css";
 import creditCard from "../CurrencyConversion/Images/credit.svg";
-import right from "./Images/right.svg"
 import fiat from "./Images/fiat.svg"
 import crypto from "./Images/crypto.svg"
 import multiwallet from "./Images/multiwallet.svg"
-import airtime from "./Images/airtime.svg"
 import points from "./Images/points.svg"
 import { DashBoardLayout } from '../Dashboard/Layout/DashBoardLayout';
 import { Modal } from "../Screens/Modal/Modal";
@@ -50,7 +48,7 @@ const CurrencyConversion = () =>{
           <div className=" flex gap-1.5 py-[25px] lg:py-[50px] md:py-[28.64px]">
                    <div className="text-[10px] lg:text-xl md:text-[14px] font-medium text-[#7C7C7C]">Select Conversion type</div>
                    <div>
-                      <img src={right} alt="" className="lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px] mt-[1.2px] md:mt-[4.1px] lg:mt-[2.5px]" />
+                      <img src="./Images/currencyImages/right.svg" alt="" className="lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px] mt-[1.2px] md:mt-[4.1px] lg:mt-[2.5px]" />
                    </div>
                 </div>
 
@@ -68,7 +66,7 @@ const CurrencyConversion = () =>{
                 </div>
             </div>
             <div className="flex self-center">
-                <img src={right} alt="" className="lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px] h-full" />
+                <img src="./Images/currencyImages/right.svg" alt="" className="lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px] h-full" />
             </div>
               </div>
             </Link>
@@ -83,7 +81,7 @@ const CurrencyConversion = () =>{
                 </div>
             </div>
             <div className="flex self-center">
-                <img src={right} alt="" className="lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px] h-full" />
+                <img src="./Images/currencyImages/right.svg" alt="" className="lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px] h-full" />
             </div>
           </div>
           </div>
@@ -117,7 +115,7 @@ const CurrencyConversion = () =>{
                 </div>
             </div>
             <div className="flex self-center">
-                <img src={right} alt="" className="lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px] h-full" />
+                <img src="./Images/currencyImages/right.svg" alt="" className="lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px] h-full" />
             </div>
           </div>
           </div>
@@ -142,14 +140,14 @@ const CurrencyConversion = () =>{
           <div>
           <div className="conversionLists cursor-pointer flex pl-[5px] pr-[14px] md:pr-[28px] lg:pr-[45px] md:pl-[8.59px] lg:pl-[15px] justify-between  mx-auto py-[7px] md:py-[9px] lg:py-[15px] rounded-[4px] md:rounded-[6.88px] lg:rounded-[12px]">
             <div className="flex gap-2 self-center">
-                <img src={airtime} alt="fiat.svg" className="flex self-center lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px]" />
+                <img src="./Images/currencyImages/airtime.svg" alt="fiat.svg" className="flex self-center lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px]" />
                 <div className="flex flex-col gap-[2px]">
                     <p className="text-[9.2px] lg:text-[18px] md:text-[15px] font-medium">Airtime Conversion</p>
                     <p className="text-[9px] lg:text-[15px] md:text-[12px] font-medium text-[#7C7C7C]">Convert your bulk airtime to real money, withdrawn to your bank account.</p>
                 </div>
             </div>
             <div className="flex self-center">
-                <img src={right} alt="" className="lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px] h-full" />
+                <img src="./Images/currencyImages/right.svg" alt="" className="lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px] h-full" />
             </div>
           </div>
           </div>
@@ -164,7 +162,7 @@ const CurrencyConversion = () =>{
                 </div>
             </div>
             <div className="flex self-center">
-                <img src={right} alt="" className="lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px] h-full" />
+                <img src="./Images/currencyImages/right.svg" alt="" className="lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px] h-full" />
             </div>
           </div>
           </Link>
