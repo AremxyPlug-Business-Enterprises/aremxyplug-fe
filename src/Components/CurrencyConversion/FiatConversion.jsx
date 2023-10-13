@@ -243,7 +243,7 @@ const FiatConversion = () => {
                 />
               </div>
               <div className={``}>
-                <div className="border h-[30px] flex justify-between pl-[2%] md:h-[50px] lg:h-[74px] lg:border-[1px] lg:border-[#0003]">
+                <div className="border h-[24.24px] md:h-[41.82px] lg:h-[70px] flex justify-between pl-[2%] lg:border-[1px] lg:border-[#0003]">
                   {" "}
                   <input
                     onChange={transferHandler}
@@ -293,7 +293,7 @@ const FiatConversion = () => {
                 />
               </div>
               <div className={``}>
-                <div className="border h-[30px] flex justify-between pl-[2%] md:h-[50px] lg:h-[74px] lg:border-[1px] lg:border-[#0003]">
+                <div className="border h-[24.24px] md:h-[41.82px] lg:h-[70px] flex justify-between pl-[2%] lg:border-[1px] lg:border-[#0003]">
                   {" "}
                   <input
                     onChange={receiveHandler}

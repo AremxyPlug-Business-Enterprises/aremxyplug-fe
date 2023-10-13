@@ -79,7 +79,7 @@ export const CountrySelectorFiat = ({ onSelect, selectedCountry }) => {
     <div>
       <button
         onClick={() => setShowList(!showList)}
-        className="border h-[30px] md:h-[50px] lg:h-[74px] w-[50px] flex justify-center gap-[20%] items-center bg-[#04177f] md:w-[120px]"
+        className="border h-[24.24px] md:h-[41.82px] lg:h-[70px] w-[50px] flex justify-center gap-[20%] items-center bg-[#04177f] md:w-[120px]"
       >
         {selected ? (
           <div className="flex gap-[5px] items-center md:gap-[8px]">
