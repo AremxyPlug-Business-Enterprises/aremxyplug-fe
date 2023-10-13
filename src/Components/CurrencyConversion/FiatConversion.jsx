@@ -7,7 +7,6 @@ import { AiFillEye } from "react-icons/ai";
 import right from "./Images/right.svg"
 import nigeria from "./Images/nigeria.svg"
 import down from "./Images/drop.svg"
-import usd from "./Images/usd.svg"
 import clock from './Images/clock.svg'
 import rate from "./Images/rate.svg"
 import fee from "./Images/fee.svg"
@@ -16,13 +15,45 @@ import copy from "./Images/copy.svg"
 import { useContext, useEffect } from "react";
 import { ContextProvider } from "../Context";
 import { Modal } from "../../Components/Screens/Modal/Modal";
-
-// import styles from "../Dashboard/DashboardComponents/TransferComponent/transfer.module.css";
+import styles from "../Dashboard/DashboardComponents/TransferComponent/transfer.module.css";
+import { CountrySelectorFiat } from "./currencyPopups/currencySelectorFiat";
 
 
 
 const FiatConversion = () => {
     // const confirmationPopUp = {ConfirmConversion}
+
+    const [exchangeRate, setExchangeRate] = useState(null);
+
+    useEffect(() => {
+      // Replace 'YOUR_API_KEY' with your actual API key or use a different exchange rate API.
+      const apiUrl = `https://api.exchangerate-api.com/v4/latest/USD`;
+  
+      fetch(apiUrl)
+        .then((response) => response.json())
+        .then((data) => {
+          const nairaToDollarRate = data.rates["NGN"];
+          setExchangeRate(nairaToDollarRate);
+        })
+        .catch((error) => console.error("Error fetching data:", error));
+    }, []);
+
+    const [errors] = useState({});
+    const [conversionRate, setConversionRate] = useState(false);
+
+    const transferHandler = (e) => {
+      setTransfer(e.target.value);
+    };
+    const receiveHandler = (e) => {
+      setReceive(e.target.value);
+    };
+
+    
+  const [selectedCountry, setSelectedCountry] = useState("");
+
+  const handleCountrySelect = (country, id) => {
+    setSelectedCountry(country);
+  };
 
     const [numeric, setNumeric] = useState('');
     const [numeric2, setInputValue1] = useState('');
@@ -83,6 +114,8 @@ const FiatConversion = () => {
         inputPin,
         isDarkMode,
         setHideNavbar,
+        setTransfer,
+        setReceive,
         setInputPin,
         toggleVisibility,
         isVisible,    
@@ -175,11 +208,123 @@ const FiatConversion = () => {
                    </div>
                 </div>
 
-                <div className="flex mx-auto ">
+                <div className="flex mx-auto cursor-pointer" onClick={() => setConversionRate(true)}>
                     <div className="bg-[#04177F] text-white rounded-[2px] md:rounded-[3.5px] lg:rounded-[6px] text-[7px] md:text-[10px] lg:text-[16px] text-center font-semibold w-full md:w-[210.83px] lg:w-[368px] py-[5px] lg:py-[11px] md:py-[8px]">
                         Real-time Fiat Conversion Check Rate
                     </div>
                 </div>
+      {conversionRate && (
+        <Modal>
+          <div
+            className={`${styles.conversionrate} ${
+              toggleSideBar
+                ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]"
+                : "md:w-[80%] lg:w-[562px]"
+            } w-[90%] overflow-auto bg-red-500`}
+          >
+            {" "}
+            <img
+              onClick={() => setConversionRate(false)}
+              className="absolute left-[87%] md:left-[83%] lg:left-[81%] w-[18px] h-[18px] my-[1%] md:w-[40px] md:h-[40px] lg:h-[35px] lg:w-[35px]"
+              src="/Images/transferImages/close-circle.png"
+              alt=""
+            />
+            <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[8%] md:h-[15px]" />
+            <div className="bg-[#04177f] text-[#fff] text-[10px] my-[2%] h-[20px] flex justify-center items-center rounded-[2px] md:my-[5%] md:h-[30px] md:text-[15px] lg:text-[16px] lg:mx-auto lg:my-[5%] lg:h-[38px] lg:w-[60%]">
+              Real-time fiat Transfer Check Rate
+            </div>
+            <div className="mx-[5%]">
+              <div className="font-extrabold flex text-[#000] text-[10px] leading-[130%] items-center my-[7%] gap-[8px] md:my-[3%] md:text-[18px] lg:text-[20px]">
+                <p>Sender</p>
+                <img
+                  className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
+                  src="./Images/Dashboardimages/arrowright.png"
+                  alt="/"
+                />
+              </div>
+              <div className={``}>
+                <div className="border h-[24.24px] md:h-[41.82px] lg:h-[70px] flex justify-between pl-[2%] lg:border-[1px] lg:border-[#0003]">
+                  {" "}
+                  <input
+                    onChange={transferHandler}
+                    type="number"
+                    placeholder="Amount to Transfer"
+                    className="text-[10px] text-[#000] w-[90%] h-[100%] outline-none md:text-[15px] lg:text-[16px]"
+                  />
+                  <div className="h-[100%] w-[50px] flex justify-center gap-[20%] items-center bg-[#04177f] md:w-[120px] lg:w-[130px]">
+                    {" "}
+                    <img
+                      className="w-[11px] h-[11px] md:h-[24px] md:w-[24px] lg:w-[29px] lg:h-[29px]"
+                      src="./Images/otherBanksImages/NAIJAFLAG.png"
+                      alt=""
+                    />
+                    <img
+                      className=" h-[8.3px] w-[8.3px] md:h-[25px] md:w-[25px] lg:w-[24px] lg:h-[24px]"
+                      src="./Images/dashboardImages/arrow-down2.png"
+                      alt="dropdown"
+                    />
+                  </div>
+                </div>
+
+                {errors.transfer && (
+                  <div className="text-[12px] text-red-500 italic lg:text-[14px]">
+                    {errors.transfer}
+                  </div>
+                )}
+              </div>
+              <div className="text-[9px] text-[#29B8FC] border-[0.9px] drop-shadow-3xl border-[#0003] rounded-[7px] w-[55%] mx-auto my-[3%] flex justify-center items-center py-[7px] gap-1 md:my-[5%] md:h-[40px] md:text-[14px] md:gap-2 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
+                <img
+                  className="w-[14px] h-[14px] md:w-[20px] md:h-[20px] lg:w-[24px] lg:h-[24px]"
+                  src="./Images/transferImages/ticket-discount.png"
+                  alt="conversion"
+                />
+                {exchangeRate !== null ? (
+                  <p>{exchangeRate} NGN ~ 1 USD</p>
+                ) : (
+                  <p>Loading exchange rate...</p>
+                )}
+              </div>
+              <div className="font-extrabold flex text-[#000] text-[10px] leading-[130%] items-center my-[7%] gap-[8px] md:my-[5%] md:text-[18px] lg:text-[20px]">
+                <p>To Recipient</p>
+                <img
+                  className="w-[15px] h-[15px] md:h-[24px] md:w-[24px] lg:w-[20px] lg:h-[20px]"
+                  src="./Images/Dashboardimages/arrowright.png"
+                  alt="/"
+                />
+              </div>
+              <div className={``}>
+                <div className="border h-[24.24px] md:h-[41.82px] lg:h-[70px] flex justify-between pl-[2%] lg:border-[1px] lg:border-[#0003]">
+                  {" "}
+                  <input
+                    onChange={receiveHandler}
+                    type="number"
+                    placeholder="Recipient will Receive"
+                    className="text-[10px] w-[90%] h-[100%] outline-none md:text-[15px] lg:text-[16px]"
+                  />
+                  <div className="">
+                    <CountrySelectorFiat
+                      onSelect={handleCountrySelect}
+                      selectedCountry={selectedCountry}
+                    />
+                  </div>
+                </div>
+
+                {errors.receive && (
+                  <div className="text-[12px] text-red-500 italic lg:text-[14px]">
+                    {errors.receive}
+                  </div>
+                )}
+              </div>
+              <button
+                onClick={() => setConversionRate(false)}
+                className="bg-[#04177f] mt-[25%] w-full flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:my-[10%] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:mt-[10%]"
+              >
+                Okay
+              </button>
+            </div>
+          </div>
+        </Modal>
+      )}
 
                 <div className="mx-auto ">
                     <div className="flex gap-1 lg:gap-2 lg:my-[40px] md:my-[30px] my-[20px]">
@@ -188,7 +333,7 @@ const FiatConversion = () => {
                     </div>
                 
                    <div className="flex ">
-                    <input type="number" value={numeric} onChange={NumericChange} placeholder="Amount To Transfer" className="input text-[8px] flex md:text-[12px] lg:text-[16px] pl-[5px] md:pl-[12px] lg:pl-[20px] font-semibold w-full h-[24.24px] md:h-[41.82px] lg:h-[70px]" />
+                    <input type="number" value={numeric} onChange={NumericChange} placeholder="Amount To Convert" className="input text-[8px] flex md:text-[12px] lg:text-[16px] pl-[5px] md:pl-[12px] lg:pl-[20px] font-semibold w-full h-[24.24px] md:h-[41.82px] lg:h-[70px]" />
                     <button class="dropdown bg-[#04177F]">
                         <div class="dropbtn flex gap-[7.2px] lg:gap-[18px] justify-center w-[40px] md:w-[63px] lg:w-[123px]">
                             <img src={nigeria} alt=""  className="lg:h-[32px] lg:w-[32px] md:h-[18px] md:w-[18px]" />
@@ -208,19 +353,25 @@ const FiatConversion = () => {
                     </div>
                    <div className="flex">
                     <input type="number" value={numeric2} placeholder="Amount To Recieve" className="input text-[8px] md:text-[12px] lg:text-[16px] pl-[5px] md:pl-[12px] lg:pl-[20px] font-semibold w-full h-[24.24px] md:h-[41.82px] lg:h-[70px]" />
-                    <button class="dropdown bg-[#04177F]">
-                        <div class="dropbtn flex gap-[7.2px] lg:gap-[18px] w-[40px] md:w-[63px] justify-center  lg:w-[123px]">
-                            <img src={usd} alt=""  className="lg:h-[32px] lg:w-[32px] md:h-[13.75px] md:w-[13.75px]" />
-                            <img src={down} alt=""  className="lg:h-[32px] lg:w-[32px] md:h-[13.75px] md:w-[13.75px]"/>
-                        </div>
-                        
-                    </button>
+                    <div className="">
+                    <div>
+                     <CountrySelectorFiat
+                      onSelect={handleCountrySelect}
+                      selectedCountry={selectedCountry}
+                     />
+                    </div>
+                  </div>
                    </div> 
 
                    <div className="flex justify-between gap-3 my-6 px-2">
                        <div className="flex gap-[2px]">
                         <img src={rate} alt="" className="lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px]" />
-                        <span className="text-[6px] whitespace-nowrap lg:text-[16px] md:text-[10px] font-semibold text-[#7C7C7C]"> 1 NGN ~ 0.001 USD</span>
+                        {exchangeRate !== null ? (
+                        <p className="text-[6px] whitespace-nowrap lg:text-[16px] md:text-[10px] font-semibold text-[#7C7C7C]" >{exchangeRate} NGN ~ 1 USD</p>
+                        ) : (
+                        <p>Loading exchange rate...</p>
+                        )}
+                        {/* <span className="text-[6px] whitespace-nowrap lg:text-[16px] md:text-[10px] font-semibold text-[#7C7C7C]"> 1 NGN ~ 0.001 USD</span> */}
                        </div>
                        <div className="flex gap-[2px]">
                         <img src={fee} alt="" className="lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px]" />
