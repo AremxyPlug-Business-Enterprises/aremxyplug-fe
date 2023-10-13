@@ -208,7 +208,7 @@ const FiatConversion = () => {
                    </div>
                 </div>
 
-                <div className="flex mx-auto " onClick={() => setConversionRate(true)}>
+                <div className="flex mx-auto cursor-pointer" onClick={() => setConversionRate(true)}>
                     <div className="bg-[#04177F] text-white rounded-[2px] md:rounded-[3.5px] lg:rounded-[6px] text-[7px] md:text-[10px] lg:text-[16px] text-center font-semibold w-full md:w-[210.83px] lg:w-[368px] py-[5px] lg:py-[11px] md:py-[8px]">
                         Real-time Fiat Conversion Check Rate
                     </div>
