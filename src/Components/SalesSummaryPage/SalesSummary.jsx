@@ -196,7 +196,7 @@ export default function SalesSummaryPage ()  {
             <div class="w-[60.33px] md:w-[103.70px] lg:w-full text-black text-[8px] md:text-[9.17px] lg:text-[16px] font-semibold md:leading-3 lg:leading-tight leading-[10.40px]">Total Amount</div>
         </div>
     </div>
-    <div class="w-[312px] lg:h-[101px]  h-[33.67px] md:w-full md:h-[57.86px] opacity-70 shadow"></div>
+    <div class="w-[312px] lg:h-[101px]  h-[33.67px] md:w-full md:h-[57.86px] "></div>
   </div>
 
 
@@ -237,7 +237,7 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[8.06px
 
 
 {/* contact us */}
-  <div className="flex justify-center items-center gap-[20px] mt-[300px] md:mt-[200px] flex-row">
+  <div className="lg:flex md:flex justify-center items-center gap-[20px] hidden md:mt-[200px] flex-row">
   <div class="text-black text-[8px] lg:text-[12px] font-medium md:leading-[8.94px]  leading-[10.40px]">You need help?</div>
   <div class="w-[60.19px] h-[15.73px] px-[8.59px] py-[2.86px] md:w-[42.19px] lg:w-[90px] md:h-[11.73px] md:px-[8.59px] md:py-[2.86px] md:rounded-[5.16px] bg-blue-900 rounded-[5.16px] justify-center items-center gap-[5.73px] inline-flex">
     <div class="text-white text-[8px] md:text-[4.58px] lg:text-[8px] md:leading-[5.96px] font-medium leading-[10.40px]">Contact Us</div>
@@ -251,82 +251,81 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[8.06px
 
 {/* airtime top-up dropdown */}
 {isOpen2 && (
-  <div className=" flex w-full md:w-full justify-between md:left-[100px] lg:mt-[-350px] mt-[-390px] md:mt-[-310px] items-center lg:w-full gap-[30px] flex-col">
-    <div className='flex w-full md:w-full lg:w-full flex-col'>
+  <div className=" flex w-full md:w-full justify-between lg:mt-[-350px] mt-[-50px] md:mt-[-310px] items-center lg:w-full gap-[30px] flex-col">
 <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.67px] md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] bg-white justify-between items-center inline-flex">
-    <div class="self-stretch justify-center items-center md:gap-[135px] lg:gap-[250px] gap-[66px] inline-flex">
+    
         <div class="w-[56.33px] text-black text-[8px] font-medium md:w-[96.82px] md:text-[9.17px] lg:w-[169px] lg:text-base lg:leading-tight md:leading-3 leading-[10.40px]">MTN VTU</div>
         <div class="w-[53.33px] text-black text-[8px] font-medium md:w-[91.67px] md:text-[9.17px] md:leading-3 lg:w-40 lg:text-base lg:leading-tight leading-[10.40px]">100</div>
         <div class="w-[60.33px] text-black text-[8px] font-medium md:w-[103.70px] md:text-[9.17px] lg:w-[181px] lg:text-base lg:leading-tight  md:leading-3 leading-[10.40px]">(₦10,000.00)</div>
-    </div>
+    
 </div>
 <div class="w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] md:w-full md:h-[57.86px] lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 md:pl-[14.90px] md:pr-[2.29px] bg-white justify-between items-center inline-flex">
-    <div class="self-stretch justify-center items-center md:gap-[135px] gap-[66px] lg:gap-[250px] inline-flex">
+    
         <div class="w-[56.33px] text-black text-[8px] font-medium md:w-[96.82px] md:text-[9.17px] lg:w-[169px] lg:text-base lg:leading-tight md:leading-3 leading-[10.40px]">MTN SNS</div>
         <div class="w-[53.33px] text-black text-[8px] font-medium md:w-[91.67px] md:text-[9.17px] md:leading-3 leading-[10.40px] lg:w-40 lg:text-base lg:leading-tight ">100</div>
         <div class="w-[60.33px] text-black text-[8px] font-medium md:w-[103.70px] md:text-[9.17px] md:leading-3 leading-[10.40px] lg:w-[181px] lg:text-base lg:leading-tight">(₦10,000.00)</div>
-    </div>
+    
 </div>
 <div class="w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.67px] md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] bg-white lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 justify-between  items-center inline-flex">
-    <div class="self-stretch justify-center items-center gap-[66px] md:gap-[135px] lg:gap-[250px] inline-flex">
+    
         <div class="w-[56.33px] text-black text-[8px] font-medium md:w-[96.82px] md:text-[9.17px] lg:w-[169px] lg:text-base lg:leading-tight md:leading-3 leading-[10.40px]">AIRTEL VTU</div>
         <div class="w-[53.33px] text-black text-[8px] font-medium md:w-[91.67px] md:text-[9.17px] md:leading-3 lg:w-40 lg:text-base lg:leading-tight leading-[10.40px]">100</div>
         <div class="w-[60.33px] text-black text-[8px] font-medium md:w-[103.70px] md:text-[9.17px] md:leading-3 leading-[10.40px] lg:w-[181px] lg:text-base lg:leading-tight ">(₦10,000.00)</div>
-    </div>
+    
 </div>
 <div class="w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.67px] md:w-full md:h-[57.86px] md:pl-[14.90px] lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 md:pr-[2.29px] bg-white justify-between items-center inline-flex">
-    <div class="self-stretch justify-center items-center gap-[66px] md:gap-[135px] lg:gap-[250px] inline-flex">
+    
         <div class="w-[56.33px] text-black text-[8px] font-medium md:w-[96.82px] md:text-[9.17px] lg:w-[169px] lg:text-base lg:leading-tight md:leading-3 leading-[10.40px]">AIRTEL SNS</div>
         <div class="w-[53.33px] text-black text-[8px] font-medium md:w-[91.67px] md:text-[9.17px] md:leading-3 lg:w-40 lg:text-base lg:leading-tight leading-[10.40px]">100</div>
         <div class="w-[60.33px] text-black text-[8px] font-medium md:w-[103.70px] md:text-[9.17px] md:leading-3 lg:w-[181px] lg:text-base lg:leading-tight leading-[10.40px]">(₦10,000.00)</div>
-    </div>
+    
 </div>
 <div class="w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] bg-white justify-between items-center lg:w-full lg:h-[101px]  lg:pl-[26px] lg:pr-1 inline-flex">
-    <div class="self-stretch justify-center items-center gap-[66px] md:gap-[135px] lg:gap-[250px] inline-flex">
+    
         <div class="w-[56.33px] text-black text-[8px] font-medium md:w-[96.82px] md:text-[9.17px] md:leading-3 lg:w-[169px] lg:text-base lg:leading-tight leading-[10.40px]">GLO VTU</div>
         <div class="w-[53.33px] text-black text-[8px] font-medium md:w-[91.67px] md:text-[9.17px] md:leading-3 lg:w-40 lg:text-base lg:leading-tight leading-[10.40px]">100</div>
         <div class="w-[60.33px] text-black text-[8px] md:w-[103.70px] md:text-[9.17px] md:leading-3 font-medium lg:w-[181px] lg:text-base lg:leading-tight leading-[10.40px]">(₦10,000.00)</div>
-    </div>
+    
 </div>
 <div class="w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.67px] md:w-full md:h-[57.86px] md:pl-[14.90px] lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 md:pr-[2.29px] bg-white justify-between items-center inline-flex">
-    <div class="self-stretch justify-center items-center gap-[66px] md:gap-[135px] lg:gap-[250px] inline-flex">
+    
         <div class="w-[56.33px] text-black text-[8px] font-medium md:w-[96.82px] md:text-[9.17px] lg:w-[169px] lg:text-base lg:leading-tight md:leading-3 leading-[10.40px]">GLO SNS</div>
         <div class="w-[53.33px] text-black text-[8px] font-medium md:w-[91.67px] md:text-[9.17px] md:leading-3 lg:w-40 lg:text-base lg:leading-tight leading-[10.40px]">100</div>
         <div class="w-[60.33px] text-black text-[8px] font-medium md:w-[103.70px] md:text-[9.17px] md:leading-3 lg:w-[181px] lg:text-base lg:leading-tight leading-[10.40px]">(₦10,000.00)</div>
-    </div>
+    
 </div>
 <div class="w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.67px] md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] bg-white lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 justify-between items-center inline-flex">
-    <div class="self-stretch justify-center items-center gap-[66px] md:gap-[135px] lg:gap-[250px] inline-flex">
+    
         <div class="w-[56.33px] text-black text-[8px] font-medium md:w-[96.82px] md:text-[9.17px] lg:w-[169px] lg:text-base lg:leading-tight md:leading-3 leading-[10.40px]">9MOBILE VTU</div>
         <div class="w-[53.33px] text-black text-[8px] font-medium md:w-[91.67px] md:text-[9.17px] md:leading-3 lg:w-40 lg:text-base lg:leading-tight leading-[10.40px]">100</div>
         <div class="w-[60.33px] text-black text-[8px] font-medium md:w-[103.70px] md:text-[9.17px] md:leading-3 lg:w-[181px] lg:text-base lg:leading-tight leading-[10.40px]">(₦10,000.00)</div>
-    </div>
+    
 </div>
 <div class="w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.67px] md:w-full md:h-[57.86px] md:pl-[14.90px] lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 md:pr-[2.29px] bg-white justify-between items-center inline-flex">
-    <div class="self-stretch justify-center items-center gap-[66px] md:gap-[135px] lg:gap-[250px] inline-flex">
+    
         <div class="w-[56.33px] text-black text-[8px] md:w-[96.82px] md:text-[9.17px] md:leading-3 lg:w-[169px] lg:text-base lg:leading-tight  font-medium leading-[10.40px]">9MOBILE SNS</div>
         <div class="w-[53.33px] text-black text-[8px] font-medium md:w-[91.67px] md:text-[9.17px] md:leading-3 lg:w-40 lg:text-base lg:leading-tight leading-[10.40px]">100</div>
         <div class="w-[60.33px] text-black text-[8px] md:w-[103.70px] md:text-[9.17px] md:leading-3 font-medium lg:w-[181px] lg:text-base lg:leading-tight  leading-[10.40px]">(₦10,000.00)</div>
-    </div>
+    
 </div>
 <div class="w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.66px] md:w-full md:h-[57.86px] md:pl-[14.90px] lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 md:pr-[2.29px] bg-white justify-between items-center inline-flex">
-    <div class="self-stretch justify-center items-center gap-[66px] md:gap-[135px] lg:gap-[250px] inline-flex">
+    
         <div class="w-[56.33px] text-black text-[8px] font-medium md:w-[96.82px] md:text-[9.17px] md:leading-3 lg:w-[169px] lg:text-base lg:leading-tight leading-[10.40px]">SMILE AIRTIME</div>
         <div class="w-[53.33px] text-black text-[8px] font-medium md:w-[91.67px] md:text-[9.17px] md:leading-3 lg:w-40 lg:text-base lg:leading-tight  leading-[10.40px]">100</div>
         <div class="w-[60.33px] text-black text-[8px] font-medium md:w-[103.70px] md:text-[9.17px] md:leading-3 lg:w-[181px] lg:text-base lg:leading-tight leading-[10.40px]">(₦10,000.00)</div>
-    </div>
+    
 </div>
 <div class="w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.67px] md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] bg-white lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 justify-between items-center inline-flex">
-    <div class="self-stretch justify-around items-center gap-[66px] md:gap-[135px] lg:gap-[250px] inline-flex">
+    
         <div class="w-[56.33px] text-black text-[8px] font-medium md:w-[96.82px] md:text-[9.17px] md:leading-3 lg:w-[169px] lg:text-base lg:leading-tight leading-[10.40px]">INTERNATIONAL AIRTIME</div>
         <div class="w-[53.33px] text-black text-[8px] font-medium md:w-[91.67px] md:text-[9.17px] md:leading-3 lg:w-40 lg:text-base lg:leading-tight leading-[10.40px]">100</div>
         <div class="w-[60.33px] text-black text-[8px] font-medium md:w-[103.70px] md:text-[9.17px] md:leading-3 lg:w-[181px] lg:text-base lg:leading-tight leading-[10.40px]">(₦10,000.00)</div>
-    </div>
+    
 </div>
-</div>
-<div class="lg:w-[187px] lg:h-[52px] lg:py-4 md:ml-[-80px] lg:gap-[26px] md:w-[108.08px]  hidden md:h-[30.06px] md:py-[9.17px] md:gap-[14.90px]  mt-[20px] w-[134.08px] h-[15.73px] lg:ml-[-100px] justify-center ml-[90px] items-center gap-[14.90px] lg:flex md:flex">
+
+<div class="lg:w-[187px] lg:h-[52px] lg:py-4 md:ml-[-80px] lg:gap-[26px] md:w-[108.08px] md:h-[30.06px] md:py-[9.17px] md:gap-[14.90px] ml-[-30px]  mt-[20px] w-[134.08px] h-[15.73px] lg:ml-[-100px] justify-center  items-center gap-[14.90px] flex">
     <div class="text-black lg:text-xs md:text-[6.88px] md:leading-[8.94px]  lg:leading-none text-[8px] font-medium leading-[10.40px]">You need help?</div>
-    <div class="lg:px-[15px] lg:py-[5px] md:px-[8.59px] md:py-[2.86px] md:rounded-[5.16px] md:gap-[5.73px] lg:rounded-[9px] lg:gap-2.5 px-[8.59px] py-[2.86px] bg-blue-900 rounded-[5.16px] justify-center items-center gap-[5.73px] flex">
+    <div class="lg:px-[15px] lg:py-[5px] md:px-[8.59px] md:py-[2.86px] md:rounded-[5.16px] md:gap-[5.73px] lg:rounded-[9px] lg:gap-2.5 px-[8.59px] py-[1.86px] bg-blue-900 rounded-[5.16px] justify-center items-center gap-[5.73px] flex">
         <div class="text-white text-[8px] md:text-[4.58px] md:leading-[5.96px] font-medium leading-[10.40px] lg:text-[8px] lg:leading-[10.40px] ">Contact Us</div>
     </div>
 </div>
@@ -342,179 +341,178 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[8.06px
 {/* data top-up dropdown */}
 {isOpen3 && (
 <div className="flex md:mt-[900px] flex-col">
-<div class="lg:w-full justify-between items-center lg:h-[101px] md:w-[536.25px] md:mt-[-1210px] lg:mt-[-1240px] md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] mt-[-400px] lg:pl-[26px] lg:pr-1 w-[312px]  h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.67px] bg-white flex-row flex">
-    <div class="self-stretch justify-between items-center md:gap-[135px] lg:gap-[250px] flex-row  gap-[66px] inline-flex">
+<div class="lg:w-full justify-between items-center lg:h-[101px] md:w-full md:mt-[-1210px] lg:mt-[-1240px] md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] mt-[-400px] lg:pl-[26px] lg:pr-1 w-[312px]  h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.67px] bg-white flex-row flex">
+    
         <div class=" w-[56.33px] text-black text-[8px] font-medium lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">MTN SME</div>
         <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight leading-[10.40px]">100GB</div>
         <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base  lg:leading-tight md:w-[103.70px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div>
-    </div>
+    
 </div>
 
 
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.67px] bg-white md:w-[536.25px] md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] justify-between items-center inline-flex">
-    <div class="self-stretch justify-center items-center lg:gap-[250px] gap-[66px] md:gap-[135px] inline-flex">
+<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.67px] bg-white md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] justify-between items-center inline-flex">
+    
         <div class="w-[56.33px] text-black text-[8px] font-medium lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">MTN SME2</div>
         <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div>
         <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div>
     </div>
-</div>
 
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between md:w-[536.25px] md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px]  items-center inline-flex">
-    <div class="self-stretch justify-center items-center lg:gap-[250px] gap-[66px]  md:gap-[135px] inline-flex">
+
+<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px]  items-center inline-flex">
+    
         <div class="w-[56.33px] text-black text-[8px] font-medium lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">MTN CG</div>
         <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div>
         <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3  leading-[10.40px]">(₦10,000.00)</div>
     </div>
-</div>
 
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] md:w-[536.25px] md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px]  pt-3 pb-[11.66px] bg-white justify-between items-center inline-flex">
-    <div class="self-stretch justify-center items-center lg:gap-[250px] gap-[66px] md:gap-[135px] inline-flex">
+
+<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px]  pt-3 pb-[11.66px] bg-white justify-between items-center inline-flex">
+    
         <div class="w-[56.33px] text-black text-[8px] font-medium lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">MTN GIFTING</div>
         <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div>
         <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div>
-    </div>
 </div>
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] md:w-[536.25px] md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px]  pt-[7px] pb-[6.66px] bg-white justify-between items-center inline-flex">
-    <div class="self-stretch justify-center items-center lg:gap-[250px] gap-[66px] md:gap-[135px] inline-flex">
+<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px]  pt-[7px] pb-[6.66px] bg-white justify-between items-center inline-flex">
+    
         <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight font-medium md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">MTN DIRECT COUPON</div>
         <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3  leading-[10.40px]">100GB</div>
         <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight leading-[10.40px]">(₦10,000.00)</div>
-    </div>
+    
 </div>
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] justify-between items-center lg:gap-[198px] md:w-[536.25px] pl-[8.67px] pr-[1.33px] md:h-[57.86px] pt-[7px] pb-[6.66px] md:pl-[14.90px] md:pr-[2.29px] gap-[66px] inline-flex">
-<div class="self-stretch justify-center items-center lg:gap-[250px] gap-[66px] md:gap-[135px] inline-flex">
+<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] justify-between items-center lg:gap-[198px] md:w-full pl-[8.67px] pr-[1.33px] md:h-[57.86px] pt-[7px] pb-[6.66px] md:pl-[14.90px] md:pr-[2.29px] gap-[66px] inline-flex">
+
     <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight font-medium md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">MTN GENERAL BUNDLES</div>
     <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div>
     <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div>
+
 </div>
-</div>
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] md:w-[536.25px] md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] pt-3 pb-[11.67px] bg-white justify-between items-center inline-flex">
-    <div class="self-stretch justify-center items-center lg:gap-[250px] gap-[66px] md:gap-[135px] inline-flex">
+<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] pt-3 pb-[11.67px] bg-white justify-between items-center inline-flex">
+    
         <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 font-medium leading-[10.40px]">AIRTEL CG</div>
         <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div>
         <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div>
-    </div>
+    
 </div>
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] md:w-[536.25px] md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] pb-[6.67px] bg-white justify-between items-center inline-flex">
-    <div class="self-stretch justify-center items-center lg:gap-[250px] gap-[66px] md:gap-[135px]  inline-flex">
+<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] pb-[6.67px] bg-white justify-between items-center inline-flex">
+    
         <div class="w-[56.33px] text-black text-[8px] font-medium lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">AIRTEL GIFTING</div>
         <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div>
         <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div>
-    </div>
+    
 </div>
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] justify-between items-center md:w-[536.25px] pl-[8.67px] pr-[1.33px]  md:h-[57.86px] pt-[7px] pb-[6.66px] md:pl-[14.90px] md:pr-[2.29px] gap-[66px] inline-flex">
-<div class="self-stretch justify-center items-center lg:gap-[250px] gap-[66px] md:gap-[135px] inline-flex">
+<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] justify-between items-center md:w-full pl-[8.67px] pr-[1.33px]  md:h-[57.86px] pt-[7px] pb-[6.66px] md:pl-[14.90px] md:pr-[2.29px] gap-[66px] inline-flex">
+
     <div class="w-[56.33px] text-black text-[8px] font-medium lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">AIRTEL GENERAL BUNDLE</div>
     <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div>
     <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div>
+
 </div>
-</div>
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 md:w-[536.25px] md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] pb-[11.67px] bg-white justify-between items-center inline-flex">
-    <div class="self-stretch justify-center items-center  lg:gap-[250px] gap-[66px] md:gap-[135px] inline-flex">
+<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] pb-[11.67px] bg-white justify-between items-center inline-flex">
+    
         <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 font-medium leading-[10.40px]">GLO CG</div>
         <div class="w-[53.33px] text-black text-[8px] lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 font-medium leading-[10.40px]">100GB</div>
         <div class="w-[60.33px] text-black text-[8px] lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 font-medium leading-[10.40px]">(₦10,000.00)</div>
-    </div>
+    
 </div>
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] md:w-[536.25px] md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] pt-3 pb-[11.66px] bg-white justify-between items-center inline-flex">
-    <div class="self-stretch justify-center items-center lg:gap-[250px] gap-[66px] md:gap-[135px] inline-flex">
+<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] pt-3 pb-[11.66px] bg-white justify-between items-center inline-flex">
+    
         <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 font-medium leading-[10.40px]">GLO GIFTING</div>
         <div class="w-[53.33px] text-black text-[8px] lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3  font-medium leading-[10.40px]">100GB</div>
         <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div>
-    </div>
+    
 </div>
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.67px] bg-white  md:w-[536.25px] md:h-[57.86px]  md:pl-[14.90px] md:pr-[2.29px] justify-between items-center inline-flex">
-    <div class="self-stretch justify-center items-center lg:gap-[250px] gap-[66px] md:gap-[135px] inline-flex">
+<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.67px] bg-white  md:w-full md:h-[57.86px]  md:pl-[14.90px] md:pr-[2.29px] justify-between items-center inline-flex">
+    
         <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 font-medium leading-[10.40px]">GLO GENERAL BUNDLES</div>
         <div class="w-[53.33px] text-black text-[8px] lg:w-40 lg:text-base lg:leading-tight font-medium md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div>
         <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div>
-    </div>
+    
 </div>
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between md:w-[536.25px]  md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex">
-    <div class="self-stretch justify-center items-center lg:gap-[250px] gap-[66px] md:gap-[135px] inline-flex">
+<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between md:w-full  md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex">
+    
         <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight font-medium md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">9MOBILE SME</div>
         <div class="w-[53.33px] text-black text-[8px] lg:w-40 lg:text-base lg:leading-tight font-medium md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div>
         <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3  leading-[10.40px]">(₦10,000.00)</div>
-    </div>
+    
 </div>
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between md:w-[536.25px] md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex">
-    <div class="self-stretch justify-center items-center lg:gap-[250px] gap-[66px] md:gap-[135px] inline-flex">
+<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex">
+    
         <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 font-medium leading-[10.40px]">9MOBILE CG</div>
         <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div>
         <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div>
-    </div>
+
 </div>
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] justify-between items-center gap-[66px] md:w-[536.25px] md:h-[57.86px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.66px] md:pl-[14.90px] md:pr-[2.29px] inline-flex">
-<div class="self-stretch justify-center items-center lg:gap-[250px] gap-[66px] md:gap-[135px] inline-flex">
+<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] justify-between items-center gap-[66px] md:w-full md:h-[57.86px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.66px] md:pl-[14.90px] md:pr-[2.29px] inline-flex">
+
     <div class="w-[56.33px] text-black text-[8px] font-medium lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">9MOBILE GENERAL BUNDLES</div>
     <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div>
     <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div>
- </div>
+ 
 </div>
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white md:w-[536.25px] md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] justify-between items-center inline-flex">
-    <div class="self-stretch justify-center items-center lg:gap-[250px] gap-[66px] md:gap-[135px] inline-flex">
+<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] justify-between items-center inline-flex">
+    
         <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight font-medium md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">SMILE BIGGA</div>
         <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div>
         <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div>
-    </div>
+    
 </div>
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.66px] bg-white justify-between md:w-[536.25px] md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex">
-    <div class="self-stretch justify-center items-center lg:gap-[250px] gap-[66px] md:gap-[135px] inline-flex">
+<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.66px] bg-white justify-between md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex">
+    
         <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight font-medium md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">SMILE UNLIMITED</div>
         <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight leading-[10.40px]">100GB</div>
         <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div>
-    </div>
+    
 </div>
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between md:w-[536.25px] md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex">
-    <div class="self-stretch justify-center items-center lg:gap-[250px] gap-[66px] md:gap-[135px] inline-flex">
+<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex">
+    
         <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight font-medium md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">SMILE DAILY</div>
         <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div>
         <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div>
-    </div>
+    
 </div>
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.67px] bg-white justify-between md:w-[536.25px] md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex">
-    <div class="self-stretch justify-center items-center lg:gap-[250px] gap-[66px] md:gap-[135px] inline-flex">
+<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.67px] bg-white justify-between md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex">
+    
         <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight font-medium md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">SMILE WEEKLY</div>
         <div class="w-[53.33px] text-black text-[8px] lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 font-medium leading-[10.40px]">100GB</div>
         <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div>
-    </div>
+    
 </div>
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.67px] bg-white justify-between md:w-[536.25px] md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex">
-    <div class="self-stretch justify-center items-center lg:gap-[250px] gap-[66px] md:gap-[135px] inline-flex">
+<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.67px] bg-white justify-between md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex">
+    
         <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 font-medium leading-[10.40px]">SMILE NIGHT</div>
         <div class="w-[53.33px] text-black text-[8px] lg:w-40 lg:text-base lg:leading-tight font-medium md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div>
         <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3  leading-[10.40px]">(₦10,000.00)</div>
-    </div>
+    
 </div>
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.66px] bg-white justify-between md:w-[536.25px] md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px]  items-center inline-flex">
-    <div class="self-stretch justify-center items-center lg:gap-[250px] gap-[66px] md:gap-[135px] inline-flex">
+<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.66px] bg-white justify-between md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px]  items-center inline-flex">
+    
         <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 font-medium leading-[10.40px]">SMILEVOICE ONLY</div>
         <div class="w-[53.33px] text-black text-[8px] lg:w-40 lg:text-base lg:leading-tight font-medium md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div>
         <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div>
     </div>
-</div>
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.67px] bg-white justify-between md:w-[536.25px] md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex">
-    <div class="self-stretch justify-center items-center lg:gap-[250px] gap-[66px] md:gap-[135px] inline-flex">
+
+<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.67px] bg-white justify-between md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex">
+    
         <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight font-medium md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">SMILE FREEDOM</div>
         <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div>
         <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div>
     </div>
-</div>
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[7px] pr-[3px] pt-[7.02px] pb-[6.64px] bg-white justify-between md:w-[536.25px] md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex">
-    <div class="self-stretch justify-center items-center lg:gap-[250px] gap-[66px] md:gap-[135px] inline-flex">
+
+<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[7px] pr-[3px] pt-[7.02px] pb-[6.64px] bg-white justify-between md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex">
+    
         <div class="w-[56.33px] text-black text-[8px] font-medium lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">SPECTRANET DATA</div>
         <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div>
         <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div>
     </div>
-</div>
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[7px] pr-[3px] pt-[7.02px] pb-[6.64px] bg-white justify-between md:w-[536.25px] md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex">
-    <div class="self-stretch justify-center items-center lg:gap-[250px] gap-[66px] md:gap-[135px] inline-flex">
+
+<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[7px] pr-[3px] pt-[7.02px] pb-[6.64px] bg-white justify-between md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex">
+    
         <div class="w-[56.33px] text-black text-[8px] font-medium lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">SPECTRANET DATA</div>
         <div class="w-[53.33px] text-black text-[8px] font-medium  lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div>
         <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div>
     </div>
-</div>
-<div class=" w-[134.08px] h-[15.73px] justify-start lg:ml-[350px] items-center ml-[75px] mt-[30px] gap-[14.90px] lg:w-[187px] md:ml-[210px] lg:h-[52px] lg:py-4 lg:gap-[26px] md:w-[108.08px] md:h-[30.06px] md:py-[9.17px] md:gap-[14.90px] inline-flex">
+
+<div class=" w-[134.08px] h-[15.73px] justify-start lg:ml-[500px] items-center ml-[75px] mt-[30px] gap-[14.90px] lg:w-[187px] md:ml-[310px] lg:h-[52px] lg:py-4 lg:gap-[26px] md:w-[108.08px] md:h-[30.06px] md:py-[9.17px] md:gap-[14.90px] inline-flex">
     <div class="text-black text-[8px] font-medium leading-[10.40px] lg:text-xs md:text-[6.88px] md:leading-[8.94px] lg:leading-none ">You need help?</div>
     <div class="px-[8.59px] py-[2.86px] bg-blue-900 rounded-[5.16px] justify-center items-center gap-[5.73px]lg:px-[15px] md:px-[8.59px] md:py-[2.86px] md:rounded-[5.16px] md:gap-[5.73px] lg:py-[5px] lg:rounded-[9px] lg:gap-2.5  flex">
         <div class="text-white text-[8px] font-medium leading-[10.40px] lg:text-[8px] md:text-[4.58px] md:leading-[5.96px] lg:leading-[10.40px] ">Contact Us</div>
@@ -527,84 +525,84 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[8.06px
 
 {/* bills payment dropdown */}
 {isOpen4 && (
-<div className="flex  justify-start items-center lg:w-full  md:mt-[-300px]  lg:mt-[-300px] mt-[-390px] flex-col">
-<div class="lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px]  lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.67px] bg-white justify-evenly items-center inline-flex">
-    <div class="self-stretch justify-start items-start md:gap-[150px] lg:gap-[330px] gap-[66px] inline-flex">
+<div className="flex  justify-start items-center lg:w-full  md:mt-[-300px]  lg:mt-[-350px] mt-[-50px] flex-col">
+<div class="lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px]  lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.67px] bg-white justify-between items-center inline-flex">
+    
         <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium leading-[10.40px]">WAEC PIN</div>
         <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100</div>
         <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
-    </div>
+    
 </div>
-<div class="lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-evenly items-center inline-flex">
-    <div class="self-stretch justify-between items-start md:gap-[150px] gap-[66px] lg:gap-[330px] inline-flex">
+<div class="lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between items-center inline-flex">
+    
         <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium leading-[10.40px]">NECO PIN</div>
         <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100</div>
         <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
-    </div>
+    
 </div>
-<div class="lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.67px] bg-white justify-evenly items-center inline-flex">
-    <div class="self-stretch justify-start items-start md:gap-[150px] lg:gap-[330px] gap-[66px] inline-flex">
+<div class="lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.67px] bg-white justify-between items-center inline-flex">
+    
         <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium  leading-[10.40px]">JAMB PIN</div>
         <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium  leading-[10.40px]">100</div>
         <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium  leading-[10.40px]">(₦10,000.00)</div>
     </div>
-</div>
-<div class="lg:w-full md:w-[536.25px] md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.67px] bg-white justify-evenly items-center inline-flex">
-    <div class="self-stretch justify-start items-start md:gap-[150px] lg:gap-[330px] gap-[66px] inline-flex">
+
+<div class="lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.67px] bg-white justify-between items-center inline-flex">
+    
         <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium  leading-[10.40px]">NABTEB PIN</div>
         <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium  leading-[10.40px]">100</div>
         <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium  leading-[10.40px]">(₦10,000.00)</div>
-    </div>
+    
 </div>
-<div class="lg:w-full md:w-[536.25px] md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.66px] bg-white justify-evenly items-center inline-flex">
-    <div class="self-stretch justify-start items-start lg:gap-[330px] md:gap-[150px] gap-[66px] inline-flex">
+<div class="lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.66px] bg-white justify-between items-center inline-flex">
+    
         <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[7px] font-medium  leading-[9.10px]">GOTV SUBSCRIPTION</div>
         <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium  leading-[10.40px]">100</div>
         <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium  leading-[10.40px]">(₦10,000.00)</div>
-    </div>
+    
 </div>
-<div class="lg:w-full md:w-[536.25px] md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.67px] bg-white justify-evenly items-center inline-flex">
-    <div class="self-stretch justify-start items-start lg:gap-[330px] md:gap-[150px] gap-[66px] inline-flex">
+<div class="lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.67px] bg-white justify-between items-center inline-flex">
+    
         <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[7px] font-medium leading-[9.10px]">DSTV SUBSCRIPTION</div>
         <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100</div>
         <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
-    </div>
+    
 </div>
-<div class="lg:w-full md:w-[536.25px] md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.67px] bg-white justify-evenly items-center inline-flex">
-    <div class="self-stretch justify-start items-start lg:gap-[330px] md:gap-[150px] gap-[66px] inline-flex">
+<div class="lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.67px] bg-white justify-between items-center inline-flex">
+    
         <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[7px] font-medium  leading-[9.10px]">STARTIME SUBSCRIPTION</div>
         <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium  leading-[10.40px]">100</div>
         <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium  leading-[10.40px]">(₦10,000.00)</div>
-    </div>
+    
 </div>
-<div class="lg:w-full md:w-[536.25px] md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px] lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.67px] bg-white justify-evenly items-center inline-flex">
-    <div class="self-stretch justify-start items-start lg:gap-[330px] gap-[66px] md:gap-[150px] inline-flex">
+<div class="lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px] lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.67px] bg-white justify-between items-center inline-flex">
+    
         <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[96.82px]  md:text-[9.17px] md:leading-3 w-[56.33px] text-black text-[7px] font-medium leading-[9.10px]">SHOWMAX SUBSCRIPTION</div>
         <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100</div>
         <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
-    </div>
+    
 </div>
-<div class="lg:w-full md:w-[536.25px] md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px] lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.67px] bg-white justify-evenly items-center inline-flex">
-    <div class="self-stretch justify-start items-start lg:gap-[330px] md:gap-[150px]  gap-[66px] inline-flex">
+<div class="lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px] lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.67px] bg-white justify-between items-center inline-flex">
+    
         <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium leading-[10.40px]">ELECTRICITY BILLS</div>
         <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100</div>
         <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
-    </div>
+    
 </div>
-<div class="lg:w-full md:w-[536.25px] md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px] lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-evenly items-center inline-flex">
-    <div class="self-stretch justify-start items-start gap-[66px] md:gap-[150px] lg:gap-[330px] inline-flex">
+<div class="lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px] lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between items-center inline-flex">
+    
         <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium leading-[10.40px]">BULK SMS</div>
         <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100</div>
         <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
     </div>
-</div>
-<div class="lg:w-full md:w-[536.25px] md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.67px] bg-white justify-evenly items-center inline-flex">
-    <div class="self-stretch justify-start items-start lg:gap-[330px] md:gap-[150px] gap-[66px] inline-flex">
+
+<div class="lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.67px] bg-white justify-between items-center inline-flex">
+    
         <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[96.82px]  md:text-[9.17px] md:leading-3 w-[56.33px] text-black text-[7px] font-medium leading-[9.10px]">RECHARGE CARD PRINTING</div>
         <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100</div>
         <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
     </div>
-</div>
+
 <div class="lg:w-full lg:h-[52px] lg:py-4 md:ml-[-80px] lg:gap-[26px] md:w-[108.08px] md:h-[30.06px] md:py-[9.17px] md:gap-[14.90px]  mt-[20px] w-[134.08px] h-[15.73px] lg:ml-[-70px] justify-center ml-[-35px] items-center gap-[14.90px] inline-flex">
     <div class="text-black lg:text-xs md:text-[6.88px] md:leading-[8.94px]  lg:leading-none text-[8px] font-medium leading-[10.40px]">You need help?</div>
     <div class="lg:px-[15px] lg:py-[5px] md:px-[8.59px] md:py-[2.86px] md:rounded-[5.16px] md:gap-[5.73px] lg:rounded-[9px] lg:gap-2.5 px-[8.59px] py-[2.86px] bg-blue-900 rounded-[5.16px] justify-center items-center gap-[5.73px] flex">
