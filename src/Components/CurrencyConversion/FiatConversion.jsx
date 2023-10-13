@@ -33,12 +33,12 @@ const FiatConversion = () => {
     const [conversionRate, setConversionRate] = useState(false);
   
 
-    const transferHandler = (e) => {
-      setTransfer(e.target.value);
-    };
-    const receiveHandler = (e) => {
-      setReceive(e.target.value);
-    };
+    // const transferHandler = (e) => {
+    //   setTransfer(e.target.value);
+    // };
+    // const receiveHandler = (e) => {
+    //   setReceive(e.target.value);
+    // };
 
     
   const [selectedCountry, setSelectedCountry] = useState("");
@@ -48,7 +48,7 @@ const FiatConversion = () => {
   };
 
     const [buttonColor, setButtonColor] = useState('#0008'); // Default color
-    const [isValid] = useState(false);
+    // const [isValid, setIsValid] = useState(false);
   
         
     const CopyButton = ({ textToCopy }) => {
@@ -75,8 +75,8 @@ const FiatConversion = () => {
         inputPin,
         isDarkMode,
         setHideNavbar,
-        setTransfer,
-        setReceive,
+        // setTransfer,
+        // setReceive,
         setInputPin,
         toggleVisibility,
         isVisible,    
@@ -114,12 +114,10 @@ const FiatConversion = () => {
        }
       
 
-      const amtToConvert = (`${10},000`);
-    const amtToReceive = 10;
     const availableBalance = (`${50},000`);
 
 
-  const [nairaAmount, setNairaAmount] = useState(0);
+  const [nairaAmount, setNairaAmount] = useState("");
   const rate = exchangeRate;
 
   const handleAmountChange = (e) => {
@@ -139,6 +137,15 @@ const FiatConversion = () => {
   };
 
   const convertedAmount = (nairaAmount / rate).toFixed(2);
+
+  const [nairaAmountTwo, setNairaAmountTwo] = useState("");
+
+  const handleAmountChangeTwo = (e) => {
+    const inputAmountTwo = parseFloat(e.target.value);
+    setNairaAmountTwo(inputAmountTwo);
+  };
+
+  const convertedAmountTwo = (nairaAmountTwo / rate).toFixed(2);
 
       const [isFocused, setIsFocused] = useState(false);
       const handleFocus = () => {
@@ -207,10 +214,11 @@ const FiatConversion = () => {
                 />
               </div>
               <div className={``}>
-                <div className="border  h-[23.5px] md:h-[45px] lg:h-[44px] flex justify-between pl-[2%] lg:border-[1px] lg:border-[#0003]">
+                <div className="border h-[23.5px] md:h-[45px] lg:h-[44px] flex justify-between pl-[2%] lg:border-[1px] lg:border-[#0003]">
                   {" "}
                   <input
-                    onChange={transferHandler}
+                    value={nairaAmountTwo}
+                    onChange={handleAmountChangeTwo}
                     type="number"
                     placeholder="Amount to Transfer"
                     className="text-[10px] text-[#000] h-[100%] outline-none md:text-[15px] lg:text-[16px]"
@@ -260,7 +268,8 @@ const FiatConversion = () => {
                 <div className="border h-[23.5px] md:h-[45px] lg:h-[44px] flex justify-between pl-[2%] lg:border-[1px] lg:border-[#0003]">
                   {" "}
                   <input
-                    onChange={receiveHandler}
+                    value={convertedAmountTwo}
+                    readOnly
                     type="number"
                     placeholder="Recipient will Receive"
                     className="text-[10px] w-[90%] h-[100%] outline-none md:text-[15px] lg:text-[16px]"
@@ -340,7 +349,7 @@ const FiatConversion = () => {
                        </div>
                        <div className="flex gap-[2px]">
                         <img src="./Images/currencyImages/fee.svg" alt="" className="lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px]" />
-                        <span className="text-[6px] whitespace-nowrap lg:text-[16px] md:text-[10px] font-semibold text-[#7C7C7C]"> Transaction Fee - ₦50.00 </span>
+                        <span className="text-[6px] whitespace-nowrap lg:text-[16px] md:text-[10px] font-semibold text-[#7C7C7C]"> Transaction Fee - ₦00.00 </span>
                        </div>
                        <div className="flex gap-[2px]">
                         <img src="./Images/currencyImages/clock.svg" alt="" className="lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px]" />
@@ -349,7 +358,7 @@ const FiatConversion = () => {
                    </div>
 
                    <div className="flex mx-auto ">
-                    <button onClick={handleConfirm} disabled={!isValid} style={{ backgroundColor: buttonColor }} id="button" className="bg-[#04177F] my-[40px] lg:my-[80px] md:my-[55px] mx-auto text-white text-[12px] md:text-[12px] lg:text-[16px] rounded md:rounded-[7px] lg:rounded-[12px] text-center font-semibold w-full md:w-[210.83px] lg:w-[163px] h-[40px] lg:h-[38px] md:h-[25px]">
+                    <button onClick={handleConfirm} style={{ backgroundColor: buttonColor }} id="button" className="bg-[#04177F] my-[40px] lg:my-[80px] md:my-[55px] mx-auto text-white text-[12px] md:text-[12px] lg:text-[16px] rounded md:rounded-[7px] lg:rounded-[12px] text-center font-semibold w-full md:w-[210.83px] lg:w-[163px] h-[40px] lg:h-[38px] md:h-[25px]">
                         Proceed
                     </button>
                 </div>
@@ -382,7 +391,7 @@ const FiatConversion = () => {
         <div className="mx-auto w-[95%] md:w-[92%] lg:w-[88%]">
             <div className="text-center font-semibold text-[9px] md:text-[9.17px] lg:text-[16px] pt-[23px] md:pt-[13px] lg:pt-[19px]">Confirm Transaction</div>
             <div className="text-[#7C7C7C] text-[6px] md:text-[9.12px] lg:text-[16px] font-medium text-center pt-[22px] lg:pt-[40px] pb-1 md:pb-3">You are about to convert &nbsp;
-               <span className="text-black text-[8px] md:text-[11.46px] lg:text-[20px] font-semibold">{amtToConvert}.00</span>&nbsp;
+               <span className="text-black text-[8px] md:text-[11.46px] lg:text-[20px] font-semibold">{nairaAmount}.00</span>&nbsp;
              from your NGN wallet to
             </div>
             <div className="flex flex-col gap-[8.86px] pt-[9px] md:pt-[15px] lg:pt-[25px] md:gap-[15px] lg:gap-[25px]">
@@ -392,15 +401,15 @@ const FiatConversion = () => {
                 </div>
                 <div className="flex justify-between font-medium text-[8px] md:text-[11.5px] lg:text-[20px]">
                     <span className="text-[#7C7C7C]">Amount To Convert</span>
-                    <span>{amtToConvert}.00</span>
+                    <span>{nairaAmount}.00</span>
                 </div>
                 <div className="flex justify-between font-medium text-[8px] md:text-[11.5px] lg:text-[20px]">
                     <span className="text-[#7C7C7C]">Amount To Receive</span>
-                    <span>${amtToReceive}</span>
+                    <span>${convertedAmount}</span>
                 </div>
                 <div className="flex justify-between font-medium text-[8px] md:text-[11.5px] lg:text-[20px]">
                     <span className="text-[#7C7C7C]">Conversion Rate</span>
-                    <span>1 NGN ~ 0.001 USD</span>
+                    <span>1 NGN ~ {1/exchangeRate} USD</span>
                 </div>
                 <div className="flex justify-between font-medium text-[8px] md:text-[11.5px] lg:text-[20px]">
                     <span className="text-[#7C7C7C]">Transaction Fee</span>
@@ -535,7 +544,7 @@ const FiatConversion = () => {
               alt="/"
             />
             <div className="text-[#7C7C7C] text-[6px] md:text-[9.12px] lg:text-[16px] font-medium text-center  pb-1 md:pb-3">You have successfully converted &nbsp;
-               <span className="text-black text-[8px] md:text-[11.46px] lg:text-[20px] font-semibold">{amtToConvert}.00</span>&nbsp;
+               <span className="text-black text-[8px] md:text-[11.46px] lg:text-[20px] font-semibold">{nairaAmount}.00</span>&nbsp;
                from your NGN wallet to
             </div>
             <div className="flex flex-col gap-[8.86px] pt-[9px] md:pt-[15px] lg:pt-[25px] md:gap-[15px] lg:gap-[25px]">
@@ -545,15 +554,15 @@ const FiatConversion = () => {
                 </div>
                 <div className="flex justify-between font-medium text-[8px] md:text-[11.5px] lg:text-[20px]">
                     <span className="text-[#7C7C7C]">Amount To Convert</span>
-                    <span>{amtToConvert}.00</span>
+                    <span>{nairaAmount}.00</span>
                 </div>
                 <div className="flex justify-between font-medium text-[8px] md:text-[11.5px] lg:text-[20px]">
                     <span className="text-[#7C7C7C]">Amount To Receive</span>
-                    <span>${amtToReceive}</span>
+                    <span>${convertedAmount}</span>
                 </div>
                 <div className="flex justify-between font-medium text-[8px] md:text-[11.5px] lg:text-[20px]">
                     <span className="text-[#7C7C7C]">Conversion Rate</span>
-                    <span>1 NGN ~ 0.001 USD</span>
+                    <span>1 NGN ~ {1/exchangeRate} USD</span>
                 </div>
                 <div className="flex justify-between font-medium text-[8px] md:text-[11.5px] lg:text-[20px]">
                     <span className="text-[#7C7C7C]">Transaction Fee</span>

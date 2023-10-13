@@ -90,16 +90,16 @@ const CurrencyConversion = () =>{
             (
           <Modal >
             <div className="modal-content">
-            <p className="text-center font-semibold text-[8px] md:text-[10px] lg:text-[18px] lg:py-7 md:py-4 py-3">Crypto Conversion</p>
-            <p className="text-[#04177F] text-[8px] md:text-[10px] lg:text-[18px] text-center font-semibold">This Feature is Currently Not Available.</p>
-            <div className="relative my-[20px] lg:my-[35px]">
+            <p className="text-center font-bold text-[10px] md:text-[12px] lg:text-[20px] py-2.5 lg:py-7 md:py-4">Crypto Conversion</p>
+            <p className="text-[#04177F] text-[10px] md:text-[14px] lg:text-[20px] text-center font-bold">This Feature is Currently Not Available.</p>
+            <div className="relative my-[35px]">
               <div className="flex justify-center">
-                <img src={cryptoFeature} alt="" className="lg:h-[200px] md:w-[120px] lg:w-[204.4px] md:h-[120px]"/>
+                <img src={cryptoFeature} alt="" className="lg:h-[200px] md:w-[150px] lg:w-[204.4px] md:h-[150px]"/>
               </div>
-              <span className="text-[7px] md:text-[10px] lg:text-[12px] font-semibold absolute right-12">Coming soon...</span>
+              <span className="text-[8px] md:text-[12px] lg:text-[15px] font-bold absolute right-12">Coming soon...</span>
             </div>
-            <button onClick={()=>setModalOne(false)} className="bg-[#04177F] flex mx-auto mt-[43px] md:mt-[30px] lg:mt-[58px] rounded-[4.6px] md:rounded-[7px] lg:rounded-[12px] w-[255px] md:w-[70px] lg:w-[120px] h-[30px] lg:h-[39px] md:h-[28px]">
-                      <p className="text-white text-[12px] md:text-[11px] lg:text-[16px] font-semibold flex mx-auto self-center">Okay</p>
+            <button onClick={()=>setModalOne(false)} className="bg-[#04177F] flex mx-auto mt-[54px] md:mt-[30px] lg:mt-[58px] rounded-[4.6px] md:rounded-[7px] lg:rounded-[12px] w-[255px] md:w-[80px] lg:w-[120px] h-[30px] lg:h-[39px] md:h-[28px]">
+                      <p className="text-white text-[12px] md:text-[14px] lg:text-[16px] font-semibold flex mx-auto self-center">Okay</p>
             </button>
             </div>
           </Modal>
@@ -123,13 +123,13 @@ const CurrencyConversion = () =>{
             (
           <Modal>
            <div className="modal-content">
-            <p className="text-center font-semibold text-[8px] md:text-[10px] lg:text-[18px] py-3 lg:py-7 md:py-4">Multi-Wallet Conversion</p>
-            <p className="text-[#04177F] text-[8px] md:text-[10px] lg:text-[18px] text-center font-semibold">This Feature is Currently Not Available.</p>
+            <p className="text-center font-semibold text-[10px] md:text-[12px] lg:text-[20px] py-2.5 lg:py-7 md:py-4">Multi-Wallet Conversion</p>
+            <p className="text-[#04177F] text-[10px] md:text-[12px] lg:text-[20px] text-center font-semibold">This Feature is Currently Not Available.</p>
             <div className="relative my-[35px]">
               <div className="flex justify-center">
-                <img src={mwFeature} alt=""  className="lg:h-[200px] md:w-[120px] lg:w-[204.4px] md:h-[120px]"/>
+                <img src={mwFeature} alt=""  className="lg:h-[200px] md:w-[150px] lg:w-[204.4px] md:h-[150px]"/>
               </div>
-              <span className="text-[7px] md:text-[8px] lg:text-[10px] font-semibold absolute right-12">Coming soon...</span>
+              <span className="text-[8px] md:text-[10px] lg:text-[13px] font-bold absolute right-12">Coming soon...</span>
             </div>
             <button onClick={()=>setModalTwo(false)} className="bg-[#04177F] flex mx-auto mt-[43px] md:mt-[30px] lg:mt-[58px] rounded-[4.6px] md:rounded-[7px] lg:rounded-[12px] w-[255px] md:w-[70px] lg:w-[120px] h-[30px] lg:h-[39px] md:h-[28px]">
                       <p className="text-white text-[12px] md:text-[11px] lg:text-[16px] font-semibold flex mx-auto self-center">Okay</p>
