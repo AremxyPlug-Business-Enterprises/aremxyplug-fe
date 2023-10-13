@@ -96,9 +96,9 @@ export default function WalletSummaryPage() {
   return (
     <DashBoardLayout>
       <div className=" w-[360px] h-[1405px] lg:w-full md:w-full  bg-white">
-        <div className="h-[64.71px] lg:h-[196px] md:h-[112.29px] w-[312px]  md:rounded-[11.46px] lg:rounded-[20px] mx-auto md:w-full lg:w-full gap-6 px-[16.51px] md:px-[28.65px]  pl-[50px] pr-[60.79px] py-[22px] ml-[5px] bg-gradient-to-r from-yellow-300 to-rose-400 rounded-[6px] md:gap-[20px] md:items-center  justify-start lg:items-start flex">
-          <div className="py-[11px] md:ml-[40px] md:py-[16.61px] lg:py-[29px] lg:align-middle flex flex-col md:gap-[8.59px] gap-1 lg:gap-1.5">
-            <div className="lg:w-[481px] md:w-[275.57px] lg:ml-[0px] ml-[-35px] md:mt-[10px] mt-[-23px] lg:mt-[0px] w-[160.85px] text-black lg:text-2xl md:text-sm text-[8.08px] font-semibold  uppercase">
+        <div className="h-[64.71px] lg:h-[196px] md:h-[112.29px] w-full  md:rounded-[11.46px] lg:rounded-[20px] flex-row mx-auto md:w-full lg:w-full gap-6 px-[16.51px] md:px-[28.65px] lg:gap-[55px]  pl-[50px] pr-[60.79px] py-[22px] ml-[5px] bg-gradient-to-r from-yellow-300 to-rose-400 rounded-[6px] md:gap-[20px]  justify-start items-start flex">
+          <div className="py-[11px] md:ml-[40px] md:py-[16.61px] lg:py-[29px] md:mt-[-30px]  flex flex-col md:gap-[8.59px] gap-1 lg:gap-4">
+            <div className="lg:w-[490px] md:w-[275.57px] lg:ml-[0px] ml-[-35px] md:mt-[10px] mt-[-23px] lg:mt-[0px] w-[160.85px] text-black lg:text-2xl md:text-sm text-[8.08px] font-semibold  uppercase">
               MANAGE ALL YOUR TRANSACTIONS AT A TIME WITHOUT ANY HASSLE.
             </div>
 
@@ -108,13 +108,15 @@ export default function WalletSummaryPage() {
               <br />
             </div>
           </div>
+          <div>
           <img
-            className="lg:w-[170.21px] mt-[-15px] md:ml-[90px] md:mt-[10px] lg:mt-[0px] ml-[8px] lg:ml-[150px] md:w-[91.21px] w-[53.24px] lg:h-[150px] md:h-[85.94px] h-[50.16px] "
+            className="lg:w-[160px] mt-[-15px] md:ml-[90px] md:mt-[-8px] lg:mt-[0px] ml-[8px]  md:w-[91.21px] w-[80.24px] lg:h-[150px] md:h-[85.94px] h-[50.16px] "
             src={cash}
             alt=""
           />
+          </div>
         </div>
-        <div className=" lg:top-[860px] top-[410px] md:top-[630px] absolute mt-[-30px]  lg:justify-start lg:items-center gap-[5px]  inline-flex">
+        <div className=" lg:top-[880px] top-[410px] md:top-[630px] absolute mt-[-30px]  lg:justify-start lg:items-center gap-[5px]  inline-flex">
           <div className="text-neutral-500 lg:text-xl md:text-xs md:mt-[5px] text-[8px] font-semibold ">
             Wallet History
           </div>
@@ -131,7 +133,7 @@ export default function WalletSummaryPage() {
           </div>
         </div>
         <div className="lg:px-[] lg:py-[25px] lg:h-[120px] py-[10px] lg:gap-2.5 lg:top-[455px] gap-[5px] mt-[15%] lg:mt-[150px] bg-indigo-300 bg-opacity-20 md:rounded-[11.46px] lg:rounded-[20px] rounded-[6px] justify-center lg:w-full w-[312px] md:w-full md:h-[68.75px] md:px-[140.10px] md:py-[14.32px]  items-center inline-flex">
-          <div className="lg:self-stretch lg:justify-start lg:items-center lg:gap-4 md:gap-[9.17px] gap-[10px] inline-flex">
+          
             <div className="lg:justify-start lg:items-center gap-[10px] md:gap-[5.73px] lg:gap-[5.73px] flex">
               <div className="lg:w-[70px] lg:h-[70px] w-6 h-6 md:w-[40.10px] md:h-[40.10px] lg:gap-[5.73px] relative">
                 <div className="lg:w-[70px] lg:h-[70px] left-0 top-0 w-6 h-6 md:w-[40.10px] md:h-[40.10px]  absolute bg-white rounded-full"></div>
@@ -158,9 +160,9 @@ export default function WalletSummaryPage() {
             >
               <img src={arrow7} alt="" />
             </div>
-          </div>
+          
         </div>
-        <div className="lg:pl-[30px] pl-[0.33px] lg:h-[72px] lg:pr-[484.30px] pr-[92.66px] lg:py-[11px] md:h-[41.25px] md:w-full h-6 md:pl-[9.17px] md:pr-[277.40px] md:pt-[6.39px] md:pb-[6.40px] py-[2.67px] lg:top-[632px] top-[243.82px] lg:w-full w-[312px] mt-[25px] bg-white shadow border-t border-b border-black border-opacity-30 lg:justify-start lg:items-center lg:gap-[50.53px]  md:gap-[28.72px] gap-[50px]  inline-flex">
+        <div className="lg:pl-[30px] pl-[0.33px] lg:h-[72px] lg:pr-[484.30px] pr-[92.66px] lg:py-[11px] md:h-[41.25px] md:w-full h-6 md:pl-[9.17px] md:pr-[277.40px] md:pt-[6.39px] md:pb-[6.40px] py-[2.67px] lg:mt-[50px] top-[243.82px] lg:w-full w-[312px] mt-[25px] bg-white shadow border-t border-b border-black border-opacity-30 lg:justify-start lg:items-center lg:gap-[50.53px]  md:gap-[28.72px] gap-[50px]  inline-flex">
           <div className="lg:self-stretch lg:p-2.5 md:h-[29px] md:mt-[2px] lg:h-[50px] lg:mt-[1px] md:p-[5.73px] p-[3.33px] bg-white lg:rounded-[5px] rounded-sm md:rounded-[2.86px] shadow justify-start items-center lg:gap-[6.62px] mt-[5px] gap-[2.21px] md:gap-[4px] inline-flex">
             <div className="text-blue-900 lg:text-xl text-[8px] md:text-xs md:whitespace-nowrap font-semibold ">
               Filter by Date
@@ -249,7 +251,7 @@ export default function WalletSummaryPage() {
         </div>
 
         {isOpen1 && (
-          <div className="lg:ml-[510px]  lg:top-[360px] md:w-[300px] lg:pl-[-500px] left-[65px] mt-[70px] w-[62%] lg:w-full  top-[164px]  absolute flex-col md:mt-[260px] md:ml-[300px] lg:items-start inline-flex">
+          <div className="lg:ml-[510px]  lg:top-[360px] md:w-[300px] lg:pl-[-500px] left-[65px] mt-[70px] w-[62%] lg:w-full  top-[164px] md:top-[175px] absolute flex-col md:mt-[260px] md:ml-[300px] lg:items-start inline-flex">
             <div className="lg:pl-2.5 lg:w-[370px] md:w-[214.84px] lg:pt-[7px] lg:h-[40px] h-[30px] justify-start items-center pt-[3px] pb-[px] bg-white shadow   md:pt-1 md:pb-[4.43px] inline-flex">
               <div className="lg:self-stretch lg:justify-start lg:items-center flex md:gap-[2.86px] md:h-[30px]  flex-row  ">
                 <div className="lg:w-[29.27px] lg:h-[29.27px] h-[16.77px] md:w-[16.77px] md:h-[16.77px] relative bg-white">
@@ -335,67 +337,68 @@ export default function WalletSummaryPage() {
           </div>
         )}
 
-        <div className=" lg:w-full  w-[312px] lg:h-[60px]  lg:mt-[90px] md:mt-[120px] h-5  bg-white mt-[50px] md:w-full md:h-[30.94px] md:pl-[9.17px]   border border-black border-opacity-30 ">
-          <div className="items-center flex-row md:justify-between lg:justify-between  justify-around flex">
-            <div>
+        <div className=" lg:w-full  w-[312px] lg:h-[60px]  lg:mt-[90px] md:mt-[120px] h-5  bg-white mt-[50px] md:w-full md:h-[30.94px] md:pl-[9.17px] flex flex-row justify-between items-center   border border-black border-opacity-30 ">
+          
+            
               <div className="flex lg:gap-3 lg:mt-[-15px] gap-1 mt-[0.1px] md:gap-2 flex-row  ">
-                <div className="lg:w-4 lg:h-4 md:w-[9.17px]  md:h-[9.17px] lg:items-center flex">
-                  <div className="lg:w-4 mt-[5px] md:mt-[7px] lg:mt-[12px] w-3 lg:h-4 md:w-[9.17px] md:h-[9.17px] ">
-                    <img src={normal} alt="" />
+                
+                  <div className=" ">
+                    <img className=" lg:w-4 mt-[3px] md:mt-[7px] lg:mt-[22px] w-3 lg:h-4 md:w-[9.17px] md:h-[9.17px]" src={normal} alt="" />
                   </div>
-                </div>
-                <div className="text-neutral-400 text-[8px] lg:text-base mt-[5px] md:text-xs leading-3 whitespace-nowrap font-medium  lg:leading-tight">
+                
+                <div className="text-neutral-400 text-[8px] lg:mt-[20px] lg:text-base mt-[4px] md:text-xs leading-3 whitespace-nowrap font-medium  lg:leading-tight">
                   Search for Transactions, e.g; Order Number
                 </div>
               </div>
-            </div>
-            <div className=" lg:px-[27.50px] md:pl-[15.59px] md:pr-[15.58px] lg:mt-[15px]  md:mt-[0px] md:py-[8.47px] lg:w-[100px] lg:py-[15px] bg-white shadow border-black border-opacity-50 md:w-[80.78px] md:h-[30.94px] lg:h-[40px] lg:items-center flex">
-              <div className="lg:self-stretch md:gap-[2.86px] gap-1 lg:ml-[-30px] lg:mt-[-3px] md:justify-center md:items-center mt-[1px] lg:items-center lg:gap-[5px] flex">
-                <div className="text-neutral-500 md:text-xs lg:text-base text-[8px] mt-[4px]  font-medium ">
+            
+            <div className="lg:gap-[10px] gap-1 md:pl-[15.59px] justify-end items-center md:pr-[15.58px] lg:mt-[1px] lg:ml-[200px] md:gap-3  md:mt-[0px] md:py-[8.47px] lg:w-[130px] bg-white shadow border-black border-opacity-50 md:w-[80.78px] md:h-[30.94px] lg:h-[60px] lg:items-center flex-row flex">
+              
+                <div className="text-neutral-500 md:text-xs lg:text-base text-[8px] mt-[4px] ml-[-40px] font-medium ">
                   Search
                 </div>
-                <div className="lg:w-6 lg:h-6 md:w-[13.75px] md:h-[13.75px] lg:items-center flex">
-                  <div className="lg:w-6 mt-[5px] md:mt-[3px] w-3 lg:h-6 md:w-[13.75px] md:h-[13.75px] ">
+                <div className="lg:w-6 lg:h-6 md:w-[13.75px] w-3 mt-[2px] md:mt-[3px] md:h-[13.75px] lg:items-center flex">
+                  <div className="lg:w-6 mt-[2px] md:mt-[3px] w-3 lg:h-6 md:w-[13.75px] md:h-[13.75px] ">
                     <img src={refresh} alt="" />
                   </div>
                 </div>
-              </div>
+              
             </div>
-          </div>
+          
         </div>
 
 
-        <table className= {`${toggleSideBar ? "md:w-[50%]" : "md:w-[50%]"}  md:text-[12px] md:block hidden  lg:text-[16px] `} >
+        <table className= {`${toggleSideBar ? "md:w-[100%]" : "md:w-full"}  md:text-[12px] md:block hidden  lg:text-[16px] `} >
+          <div className="">
           <thead className="w-[600px]">
             <tr className="bg-[#c3d9ff] lg:h-[47px]">
-              <th className="border-none">Products</th>
-              <th className="border-none">Description</th>
-              <th className="border-none">Order No</th>
-              <th className="border-none">Amount</th>
-              <th className="border-none">Date & Time</th>
-              <th className="border-none">Status</th>
+              <th className=" w-[200px] border-none">Products</th>
+              <th className="w-[200px] border-none">Description</th>
+              <th className="w-[200px] border-none">Order No</th>
+              <th className="w-[200px] border-none">Amount</th>
+              <th className="w-[200px] border-none">Date & Time</th>
+              <th className="w-[200px] border-none">Status</th>
             </tr>
           </thead>
-
+          </div>
           <tbody className="lg:text-base md:text-[9.17px] font-medium text-neutral-500 md:leading-3 lg:leading-tight ">
             <tr className="">
-              <td className="border-none">
+              <td className="w-[200px] border-none">
               Virtual Account
               </td>
-              <td className="border-none">
+              <td className="w-[200px] border-none">
               NGN Wallet Top-up 
               </td>
-              <td className="border-none">
+              <td className="w-[200px] border-none">
               0000000
               </td>
-              <td className="border-none">
+              <td className="w-[200px] border-none">
               ₦1,000.00 
               </td>
-              <td className="border-none">
+              <td className="w-[200px] border-none">
               May 21st, 2023,<br /> 
               07:21:00pm
               </td>
-              <td className="flex lg:gap-[20px] md:gap-[10px]  border-none ">
+              <td className="w-[200px] flex lg:gap-[20px] md:gap-[10px]  border-none ">
                 <p className="gap-[5px] lg:p-2.5 md:px-[5.73px] md:py-[2.86px] md:rounded-[2.86px] md:text-[9.17px] lg:text-base md:leading-3 lg:leading-tight  font-medium  items-center lg:h-[31px] md:h-[18px] text-white bg-green-300 lg:w-[120px] md:w-[60px ] lg:rounded-[5px]">
                   {" "}
                   Successful 
@@ -519,7 +522,7 @@ export default function WalletSummaryPage() {
               May 21st, 2023,  <br />07:21:00pm 
               </td>
               <td className="flex lg:gap-[20px] md:gap-[10px] border-none">
-                <p className="gap-[5px] lg:p-2.5 md:px-[5.73px] md:py-[2.86px] md:rounded-[2.86px] md:text-[9.17px] lg:text-base md:leading-3 lg:leading-tight  font-medium  items-center lg:h-[31px] md:h-[18px] text-white bg-green-300 lg:w-[120px] md:w-[60px ] lg:rounded-[5px]">
+                <p className="gap-[5px] lg:p-2.5 md:px-[5.73px] md:py-[2.86px] md:rounded-[2.86px] md:text-[9.17px] lg:text-base md:leading-3 lg:leading-tight  font-medium  items-center lg:h-[31px] md:h-[18px] text-white bg-amber-200 lg:w-[120px] md:w-[60px ] lg:rounded-[5px]">
                   {" "}
                   Pending
                 </p>
@@ -529,6 +532,7 @@ export default function WalletSummaryPage() {
                   alt="/"
                 />
               </td>
+              
             </tr>
             <hr className="bg-[#7c7c7c] w-full h-[1px]"></hr>
             <tr>
@@ -548,10 +552,11 @@ export default function WalletSummaryPage() {
               May 21st, 2023,<br />
               07:21:00pm 
               </td>
+              <hr className="bg-[#7c7c7c] w-full h-[1px]"></hr>
               <td className="flex lg:gap-[20px] md:gap-[10px] border-none">
                 <p className="gap-[5px] lg:p-2.5 md:px-[5.73px] md:py-[2.86px] md:rounded-[2.86px] md:text-[9.17px] lg:text-base md:leading-3 lg:leading-tight  font-medium  items-center lg:h-[31px] md:h-[18px] text-white bg-red-300 lg:w-[120px] md:w-[60px ] lg:rounded-[5px]">
                   {" "}
-                  Pending
+                  Failed
                 </p>
                 <img
                   className="w-[10px] h-[10px] md:w-[10px] md:h-[10px] lg:w-[15px] lg:h-[15px]"
@@ -559,6 +564,7 @@ export default function WalletSummaryPage() {
                   alt="/"
                 />
               </td>
+              <hr className="bg-[#7c7c7c] w-full h-[1px]"></hr>
             </tr>
             <hr className="bg-[#7c7c7c] w-full h-[1px]"></hr>
             <tr>
@@ -589,19 +595,20 @@ export default function WalletSummaryPage() {
                   alt="/"
                 />
               </td>
+              <hr className="bg-[#7c7c7c] w-full h-[1px]"></hr>
             </tr>
             <hr className="bg-[#7c7c7c] w-full h-[1px]"></hr>
 
           </tbody>
         </table>
 
-        <div className="flex lg:h-10 lg:w-[100%] flex-col lg:gap-5 md:gap-3 md:mt-[10px]  items-center justify-center lg:mt-[30px]">
-              <div className="md:w-[52.88px] lg:h-10 md:h-[15.44px] md:px-[3.44px] md:py-[1.72px] lg:ml-[-70px] lg:w-[100px] md:gap-[2.86px] lg:px-1.5 lg:py-[3px] bg-white shadow border border-black border-opacity-30 justify-start items-center lg:gap-[5px] inline-flex">
+        <div className="flex lg:h-7 lg:w-[100%] flex-col lg:gap-5 md:gap-3 md:mt-[10px]  items-center justify-center lg:mt-[30px]">
+              <div className="md:w-[52.88px] hidden lg:h-10 md:h-[15.44px] md:px-[3.44px] md:py-[1.72px] lg:ml-[-70px] lg:w-[100px] md:gap-[2.86px] lg:px-1.5 lg:py-[3px] bg-white shadow border border-black border-opacity-30 justify-start items-center lg:gap-[5px]  md:flex lg:flex">
                 <div className="text-neutral-500 lg:text-xs md:text-[6.88px] md:leading-[8.94px] md:mt-[10px] font-medium lg:leading-none">
                   ---The End---
                 </div>
               </div>
-              <div className="justify-start items-center hidden md:block lg:w-[100%] lg:ml-[750px]  lg:gap-[26px] md:w-[108.08px] md:h-[11.73px] md:gap-[14.90px] lg:flex">
+              <div className="justify-start items-center hidden md:block lg:w-[100%] lg:ml-[950px]  lg:gap-[26px] md:w-[108.08px] md:h-[11.73px] md:gap-[14.90px] lg:flex">
                 <div className="text-black lg:text-xs md:text-[6.88px] md:leading-[8.94px]  font-medium lg:leading-none">
                   You need help?
                 </div>
@@ -618,7 +625,7 @@ export default function WalletSummaryPage() {
 
         {/* table for mobile view */}
 
-        <div className="shadow  md:hidden  h-[1000px] mt-[15px] w-[312px] justify-center  border-opacity-20">
+        <div className="shadow  md:hidden  h-[1000px] mt-[-55px] w-[312px] justify-center   border-opacity-20">
           <div className="w-full  h-[868.35px] px-[5px] py-5 bg-white  mt-[120px] flex-col ml-[6px] justify-center items-center gap-[21px] flex">
             <div className="flex-col justify-center items-start gap-11 flex">
               <div className="justify-start items-start gap-[100px] flex">
@@ -937,7 +944,7 @@ export default function WalletSummaryPage() {
 
         {/* filter by status dropdown */}
         {isOpen2 && (
-          <div className="flex absolute lg:top-[700px] top-[280px] md:top-[490px] w-full md:w-full ml-[50px] md:ml-[40px] lg:w-full lg:ml-[60px] flex-col">
+          <div className="flex absolute lg:top-[725px] top-[280px] md:top-[495px] w-full md:w-full ml-[50px] md:ml-[40px] lg:w-full lg:ml-[60px] flex-col">
             <div className="lg:w-[375px] lg:h-[53px] md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px] justify-around items-center flex relative bg-white shadow">
               <div class="lg:w-[325px] text-neutral-500 lg:text-base font-medium lg:leading-tight md:w-[186.20px]  md:text-[14px] md:leading-3 w-[163.80px] text-[8.06px] leading-[10.48px] ">
                 All Transactions
