@@ -73,8 +73,8 @@
   .modal-content {
     background: white;
     width: 350px;
-    height: 245px;
-    margin: auto;
+    height: 280px;
+    margin: auto 20px;
     box-shadow: 0px 0px 10px 0px #00000040;
     border-radius: 8px;
   }
@@ -133,8 +133,8 @@
         border-radius: 9px;
     }
     .modal-content {
-        width: 360px;
-        height: 270px;
+        width: 430px;
+        height: 350px;
         margin: auto;
         position: relative;
         border-radius: 6.88px;
