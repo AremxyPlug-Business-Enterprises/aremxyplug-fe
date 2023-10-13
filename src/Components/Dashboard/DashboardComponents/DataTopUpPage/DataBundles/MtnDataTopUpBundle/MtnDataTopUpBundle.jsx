@@ -440,23 +440,27 @@ const MtnDataTopUpBundle = () => {
           </div>
 
           {/* =========================Select/Add Recipient===================== */}
-
+          
           <div className="flex gap-[10%] mt-[40px] md:w-full md:justify-between md:gap-[10%] ">
             <div className="w-full flex items-center justify-between border text-[10px] md:py-[15px] md:w-[50%] rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
+            <Link to="/DataBundleSelectRecipient" style={{ display: 'inline-flex', width: '100%',}} className="justify-between">
               <p className="font-semibold">Select Recipient</p>
               <img
                 className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
                 src={Recipient}
                 alt=""
               />
+              </Link>
             </div>
             <div className="w-full flex items-center justify-between border text-[10px] md:py-[15px] md:w-[40%] md:mr-[9%]  rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
+            <Link to="/DataBundleAddRecipient" style={{ display: 'inline-flex', width: '100%' }} className="justify-between">
               <p className="font-semibold">Add Recipient</p>
               <img
                 className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
                 src={Recipient2}
                 alt=""
               />
+              </Link>
             </div>
           </div>
 
