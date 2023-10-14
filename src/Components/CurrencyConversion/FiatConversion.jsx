@@ -10,8 +10,8 @@ import { Modal } from "../Screens/Modal/Modal";
 import styles from "../Dashboard/DashboardComponents/TransferComponent/transfer.module.css";
 import { CountrySelectorFiat } from "./currencyPopups/currencySelectorFiat";
 import { CountrySelector } from "../Dashboard/DashboardComponents/CountrySelect/CountrySelector";
-import { PointRedeemSelector } from "../Dashboard/DashboardComponents/CountrySelect/PointRedeemSelector";
-import { FiatSelector } from "./currencyPopups/countryselectorFiat";
+// import { PointRedeemSelector } from "../Dashboard/DashboardComponents/CountrySelect/PointRedeemSelector";
+// import { FiatSelector } from "./currencyPopups/countryselectorFiat";
 
 
 const FiatConversion = () => {
