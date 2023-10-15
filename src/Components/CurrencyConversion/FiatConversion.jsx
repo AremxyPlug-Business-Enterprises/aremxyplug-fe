@@ -10,7 +10,8 @@ import { Modal } from "../Screens/Modal/Modal";
 import styles from "../Dashboard/DashboardComponents/TransferComponent/transfer.module.css";
 import { CountrySelectorFiat } from "./currencyPopups/currencySelectorFiat";
 import { CountrySelector } from "../Dashboard/DashboardComponents/CountrySelect/CountrySelector";
-
+// import { PointRedeemSelector } from "../Dashboard/DashboardComponents/CountrySelect/PointRedeemSelector";
+// import { FiatSelector } from "./currencyPopups/countryselectorFiat";
 
 
 const FiatConversion = () => {
@@ -223,19 +224,13 @@ const FiatConversion = () => {
                     placeholder="Amount to Transfer"
                     className="text-[10px] text-[#000] h-[100%] outline-none md:text-[15px] lg:text-[16px]"
                   />
-                  <div className="h-[100%] w-[50px] flex justify-center gap-[20%] items-center bg-[#04177f] md:w-[160px] lg:w-[180px]">
-                    {" "}
-                    <img
-                      className="w-[11px] h-[11px] md:h-[24px] md:w-[24px] lg:w-[29px] lg:h-[29px]"
-                      src="./Images/otherBanksImages/NAIJAFLAG.png"
-                      alt=""
-                    />
-                    <img
-                      className=" h-[8.3px] w-[8.3px] md:h-[25px] md:w-[25px] lg:w-[24px] lg:h-[24px]"
-                      src="./Images/dashboardImages/arrow-down2.png"
-                      alt="dropdown"
-                    />
-                  </div>
+                  <button class="dropdown bg-[#04177F]">
+                        <div class="dropbtn flex gap-[7.2px] lg:gap-[18px] justify-center w-[50px] md:w-[160px] lg:w-[180px]">
+                            <img src="./Images/currencyImages/nigeria.svg" alt=""  className="lg:h-[32px] lg:w-[32px] md:h-[18px] md:w-[18px]" />
+                            <img src="./Images/currencyImages/drop.svg" alt=""  className="lg:h-[32px] lg:w-[32px] md:h-[18px] md:w-[18px]"/>
+                        </div>
+                    </button>
+                
                 </div>
 
                 {errors.transfer && (
@@ -308,11 +303,12 @@ const FiatConversion = () => {
                    <div className="flex ">
                     <input type="number" value={nairaAmount} onChange={handleAmountChange} placeholder="Amount To Convert" className="input text-[8px] flex md:text-[12px] lg:text-[16px] pl-[5px] md:pl-[12px] lg:pl-[20px] font-semibold w-full h-[24.24px] md:h-[41.82px] lg:h-[70px]" />
                     <button class="dropdown bg-[#04177F]">
-                        <div class="dropbtn flex gap-[7.2px] lg:gap-[18px] justify-center w-[40px] md:w-[63px] lg:w-[123px]">
+                        <div class="dropbtn flex gap-[7.2px] lg:gap-[18px] justify-center w-[50px] md:w-[160px] lg:w-[180px]">
                             <img src="./Images/currencyImages/nigeria.svg" alt=""  className="lg:h-[32px] lg:w-[32px] md:h-[18px] md:w-[18px]" />
                             <img src="./Images/currencyImages/drop.svg" alt=""  className="lg:h-[32px] lg:w-[32px] md:h-[18px] md:w-[18px]"/>
                         </div>
                     </button>
+                    
                    </div>
 
                    <div className="available flex justify-between w-[160px] md:w-[210px] lg:w-[360px] h-[16px] lg:h-[41px] md:h-[20px] border-[#000000] border-opacity-30 rounded-[4px] md:rounded-[6px] lg:rounded-[8px] border-[0.8px] mx-auto my-7 px-2">
@@ -325,7 +321,7 @@ const FiatConversion = () => {
                         <img src="./Images/currencyImages/right.svg" alt="" className="lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px]" />
                     </div>
                     {/* value={numeric2}  */}
-                   <div className="flex">
+                   <div className="flex h-6 md:h-10 lg:h-[74px]">
                     <input type="number" readOnly value={convertedAmount} placeholder="Amount To Recieve" className="input text-[8px] md:text-[12px] lg:text-[16px] pl-[5px] md:pl-[12px] lg:pl-[20px] font-semibold w-full h-[24.24px] md:h-[41.82px] lg:h-[70px]" />
                     <div className="">
                     <div>
@@ -379,69 +375,84 @@ const FiatConversion = () => {
             (
             <Modal >
               
-       <div className="confirmConversion bg-white mx-auto w-[95%] md:w-[92%] lg:w-[85%] h-[392px] md:h-[573px] lg:h-full">
-        <div className="lg:h-[60px] md:h-[35px] h-[18px] flex justify-end pr-2 lg:pr-5">
+       <div 
+            className={`confirmConversion mx-auto  ${
+              toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+            } w-[90%]`}
+          >
+        <div className="flex justify-end pr-2 mt-1 mb-3 md:mt-2 md:mb-2 lg:mb-0 lg:mt-1">
         <img  onClick={()=>setConfirm(false)}
-                className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px] self-center"
+                className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[26px] lg:h-[26px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
               />
         </div>
-        <hr className="h-[6px] bg-[#04177f] border-none md:h-[12px] lg:h-[22px]" />
-        <div className="mx-auto w-[95%] md:w-[92%] lg:w-[88%]">
-            <div className="text-center font-semibold text-[9px] md:text-[9.17px] lg:text-[16px] pt-[23px] md:pt-[13px] lg:pt-[19px]">Confirm Transaction</div>
-            <div className="text-[#7C7C7C] text-[6px] md:text-[9.12px] lg:text-[16px] font-medium text-center pt-[22px] lg:pt-[40px] pb-1 md:pb-3">You are about to convert &nbsp;
-               <span className="text-black text-[8px] md:text-[11.46px] lg:text-[20px] font-semibold">{nairaAmount}.00</span>&nbsp;
+        <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
+        <div className="mx-auto">
+            <div className="text-[12px] my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
+              Confirm Transaction</div>
+            <div className="text-[8px] text-[#0008] text-center mb-2 md:text-[12px] lg:text-[14px]">
+              You are about to convert &nbsp;
+               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">{nairaAmount}.00</span>&nbsp;
              from your NGN wallet to
             </div>
-            <div className="flex flex-col gap-[8.86px] pt-[9px] md:pt-[15px] lg:pt-[25px] md:gap-[15px] lg:gap-[25px]">
-                <div className="flex justify-between font-medium text-[8px] md:text-[11.5px] lg:text-[20px]">
+            
+            <div className="flex flex-col gap-3 mt-4 md:mt-6 lg:mt-7">
+
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <span className="text-[#7C7C7C]">Wallet Type</span>
                     <span>United S. USD Wallet</span>
                 </div>
-                <div className="flex justify-between font-medium text-[8px] md:text-[11.5px] lg:text-[20px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <span className="text-[#7C7C7C]">Amount To Convert</span>
                     <span>{nairaAmount}.00</span>
                 </div>
-                <div className="flex justify-between font-medium text-[8px] md:text-[11.5px] lg:text-[20px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <span className="text-[#7C7C7C]">Amount To Receive</span>
                     <span>${convertedAmount}</span>
                 </div>
-                <div className="flex justify-between font-medium text-[8px] md:text-[11.5px] lg:text-[20px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <span className="text-[#7C7C7C]">Conversion Rate</span>
                     <span>1 NGN ~ {1/exchangeRate} USD</span>
                 </div>
-                <div className="flex justify-between font-medium text-[8px] md:text-[11.5px] lg:text-[20px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <span className="text-[#7C7C7C]">Transaction Fee</span>
                     <span>0.00</span>
                 </div>
-                <div className="flex justify-between font-medium text-[8px] md:text-[11.5px] lg:text-[20px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <span className="text-[#7C7C7C]">Completion Time </span>
                     <span>Instantly</span>
                 </div>
-                <div className="flex justify-between font-medium text-[8px] md:text-[11.5px] lg:text-[20px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <span className="text-[#7C7C7C]">Points Earned</span>
                     <span className="text-[#2ED173]">+2.00</span>
                 </div>
             </div>
         </div>
-        <div className="bg-[#F6F7F7] h-[36px] md:h-[57.29px] lg:h-[100px] flex my-[19px] md:my-[38px] lg:my-[70px]">
-            <div className="mx-auto w-[95%] md:w-[88%] lg:w-[84%] flex justify-between align-middle self-center content-center">
-                <div className="flex gap-[3.5px]">
-                    <div className="relative">
-                        <img src="./Images/currencyImages/nigeria.svg" alt="" className='md:w-[16px] md:h-[16px] lg:w-[24px] lg:h-[24px]'/>
-                    </div>
-                    <div className="font-semibold text-[8px] md:text-[12px] lg:text-[20px]">Available Balance</div>
-                    <div className="text-[#7C7C7C] font-medium text-[8px] md:text-[12px] lg:text-[20px]">(&#x20A6;{availableBalance})</div>
+
+        <div className="bg-[#F6F7F7] h-[45px] my-5 lg:my-8 flex justify-between items-center px-[4%]">
+              <div className="flex gap-2 items-center">
+                <div className="bg-white rounded-full h-[27px] w-[27px] flex justify-center items-center">
+                  <img className="w-[16px] h-[16px]" src="./Images/currencyImages/nigeria.svg" alt="/" />
                 </div>
-                <div>
-                    <img src="./Images/currencyImages/right.svg" alt="" className='md:w-[16px] md:h-[16px] lg:w-[24px] lg:h-[24px]'/>
-                </div>
+                <p className="text-[10px] md:text-[14px]  lg:text-[16px]">
+                  Available Balance{" "}
+                  <span className="text-[#0003]">{availableBalance}</span>
+                </p>
+              </div>
+              <img
+                className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
+                src="./Images/currencyImages/right.svg"
+                alt="/"
+              />
             </div>
-        </div>
-        <div className="bg-[#04177F] md:mt-3 lg:mt-4 h-[40px] md:h-[23px] w-[255px] md:w-[93.39px] lg:w-[163px] lg:h-[38px] mx-auto rounded-[5px] md:rounded-[6.88px] lg:rounded-[12px] flex justify-center">
-            <button onClick={handlePinInput}  className="self-center text-[#fff] font-semibold text-[12px] md:text-[10px] lg:text-[16px]">Confirmed</button>
-        </div>
+       
+        <button
+              onClick={handlePinInput}
+              className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] lg:rounded-[12px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+            >
+              Confirmed
+            </button>
        </div> 
             </Modal>
           )}
@@ -450,18 +461,21 @@ const FiatConversion = () => {
             (
             <Modal>
          
-        <div className="InputPinToConvert bg-white mx-auto w-[312px] md:w-[483px] lg:w-[840px] h-[250px] md:h-[267px] lg:h-[465px]">
-            <div className="lg:h-[60px] md:h-[35px] h-[18px]  pr-3 lg:pr-5 flex justify-end">
+        <div className={`InputPinToConvert ${
+              toggleSideBar ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
+            } md:w-[55%] w-[90%]`}
+            >
+            <div className=" pr-3 lg:pr-5 flex justify-end">
             <img  onClick={()=>setPinInput(false)}
-                className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px] self-center"
+                className="w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px] self-center"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
               />
             </div>
-            <hr className="h-[6px] bg-[#04177f] border-none md:h-[15px] lg:h-[22px]" />
-            <div className="font-semibold text-[8px] md:text-[10px] lg:text-[16px] text-center pt-[33px]
-             md:pt-[16px] lg:pt-[20px] pb-4 lg:pb-[70px]">Input PIN to complete transaction</div>
-            <div className="flex flex-col gap-[20px] items-center lg:gap-[25px] font-extrabold mb-[7%]">
+            <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
+            <div className="font-extrabold text-[8px] md:text-[10px] lg:text-[16px] text-center my-[8%]
+            ">Input PIN to complete transaction</div>
+            <div className="flex flex-col items-center gap-[1px] font-extrabold mb-[7%]">
               <div className=" flex items-center ml-[5%] md:ml-[5%] gap-[10px]">
                 {" "}
                 {isVisible ? (
@@ -495,10 +509,10 @@ const FiatConversion = () => {
                   className="text-[#0003]"
                   onClick={toggleVisibility}
                 >
-                  {isVisible ? <AiFillEye color="#04177F" className="w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]" /> : <AiFillEyeInvisible  className="w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]" color="#04177F"/>}
+                  {isVisible ? <AiFillEye className="w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]" /> : <AiFillEyeInvisible  className="w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]"/>}
                 </div>
               </div>
-              <p className="text-[8px] md:text-[12px] lg:text-[14px] my-3 text-[#04177f]">
+              <p className="text-[8px] md:text-[12px] leading-[5px] my-3 text-[#04177f]">
                 Forgot Pin ?
               </p>
             </div>
@@ -523,12 +537,14 @@ const FiatConversion = () => {
         <div className="flex justify-between items-center mx-[3%] lg:h-[60px] md:h-[35px] h-[18px]">
         <Link to="/">
               <img
+                onClick={()=>setConversionSuccessful(false)}
                 className=" w-[15px] h-[10px] md:w-[24px] md:h-[15px] lg:w-[42px] lg:h-[25px]"
                 src="/Images/login/arpLogo.png"
                 alt=""
               />
             </Link>
-        <img onClick={()=>setConversionSuccessful(false)}
+              <img
+                onClick={()=>setConversionSuccessful(false)}
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
