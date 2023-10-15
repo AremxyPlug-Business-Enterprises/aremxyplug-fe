@@ -58,6 +58,14 @@
   background: #fff;
   box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
 }
+.conversionrate {
+  height: 450px;
+  /* width: 90%; */
+  flex-shrink: 0;
+  border-radius: 11px;
+  background: #fff;
+  box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+}
 
 .inputPin {
   position: absolute;
@@ -296,6 +304,15 @@
     border-radius: 20px;
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+    width: 560px;
+  }
+
+  .conversionrate {
+    height: 569px;
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+    width: 560px;
   }
 
   .contactus {
