@@ -1,4 +1,5 @@
 import React from "react";
+import '../../App.css';
 import { DashBoardLayout } from "../Dashboard/Layout/DashBoardLayout";
 import Refer1 from "../Referrals/referralImage/Excellent Review.svg";
 import copyRefer from "../Referrals/referralImage/copy.svg";
@@ -31,7 +32,7 @@ export default function Referral() {
     const handleCopyTextTwo = (e) => {
       setCopyTextTwo(e.target.value);
     }
- 
+  
     const copyToClipBoardTwo = () => {
         // copy(copyTextTwo);
         alert(`You have copied "${copyTextTwo}"`);
