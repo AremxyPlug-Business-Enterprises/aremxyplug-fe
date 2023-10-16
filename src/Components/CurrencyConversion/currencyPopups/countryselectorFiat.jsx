@@ -1,16 +1,16 @@
 import React from "react";
 import { useContext } from "react";
 import { ContextProvider } from "../../Context";
+import flag from '../../Dashboard/DashboardComponents/flagsImages/nigeriaFlag.png'
 
-
-export const CountrySelectorFiat = ({ onSelect, selectedCountry }) => {
+export const FiatSelector = ({ onSelect, selectedCountry }) => {
   const countryList = [
-    // {
-    //   id: 1,
-    //   name: "Nigeria",
-    //   code: "NGN",
-    //   flag: require("../flagsImages/nigeriaFlag.png"),
-    // },
+    {
+      id: 1,
+      name: "Nigeria",
+      code: "NGN",
+      flag: require("../../Dashboard/DashboardComponents/flagsImages/nigeriaFlag.png"),
+    },
     {
       id: 2,
       name: "United States",
@@ -79,7 +79,7 @@ export const CountrySelectorFiat = ({ onSelect, selectedCountry }) => {
     <div>
       <button
         onClick={() => setShowList(!showList)}
-        className="border h-[24.24px] md:h-[41.82px] lg:h-[70px] w-[50px] md:w-[160px] lg:w-[180px] flex justify-center gap-[20%] items-center bg-[#04177f]"
+        className="text-[8px] text-[#0005] h-[30px] w-[50px] flex justify-center gap-[20%] items-center bg-[#04177f] mb-[4%] md:h-[40px] md:w-[62px] md:text-[12px] lg:w-[130px] lg:h-[60px] lg:text-[16px] "
       >
         {selected ? (
           <div className="flex gap-[5px] items-center md:gap-[8px]">
@@ -93,7 +93,7 @@ export const CountrySelectorFiat = ({ onSelect, selectedCountry }) => {
         ) : (
           <img
               className="w-[11px] h-[11px] md:w-[20px] md:h-[20px] lg:w-[29px] lg:h-[29px]"
-              src="./Images/otherBanksImages/USFLAG.png"
+              src={flag}
               alt=""
             />
         )}
@@ -115,7 +115,7 @@ export const CountrySelectorFiat = ({ onSelect, selectedCountry }) => {
         <div className="" style={{boxShadow:"0px 1.60656px 4.01639px 0px rgba(0, 0, 0, 0.25)",}}>
           {countryList.map((country) => (
             <div
-              className=" cursor-pointer border-b flex items-center p-1 gap-[5px] text-[9px] bg-[#fff] md:text-[14px] lg:text-[16px] lg:justify-between lg:px-[25%]"
+              className="cursor-pointer border-b flex items-center p-1 gap-[5px] text-[9px] bg-[#fff] md:text-[14px] lg:text-[16px] lg:justify-between lg:px-[25%]"
               key={country.id}
               onClick={() =>
                 handleOptionClick(

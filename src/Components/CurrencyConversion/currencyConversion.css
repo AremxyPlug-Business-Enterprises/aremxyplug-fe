@@ -86,16 +86,18 @@
     bottom: 0;
     flex-shrink: 0;
     position: absolute;
-    max-height: 90%;
+    height: 470px;
     overflow-y: auto;
   }
- 
+
   .InputPinToConvert{
+    position: absolute;
     box-shadow: 0px 0px 10px 0px #00000040;
     border-radius: 8px, 8px, 0px, 0px;
     bottom: 0;
     flex-shrink: 0;
-   
+    background: #fff;
+    height: 250px;
   }
         
 .conversionLists{
@@ -150,16 +152,17 @@
 
       .confirmConversion{
         box-shadow: 0px 0px 10px 0px #00000040;
-        border-radius: 8px;
-        top: 54px;
-        position: relative;
+        height: 572px;
+        bottom: 25%;
+        flex-shrink: 0;
+        border-radius: 11px;
       }
-      
+
       .InputPinToConvert{
-        box-shadow: 0px 0px 10px 0px #00000040;
         border-radius: 8px;
-        top: 20px;
-        position: relative;
+        bottom: 30%;
+        width: 481.25px;
+        height: 350px;
       }
 
 }
@@ -187,14 +190,15 @@
       .confirmConversion{
         box-shadow: 0px 0px 10px 0px #00000040;
         border-radius: 20px;
-        top: 5%;
-        position: relative;
+        top: 7%;
+        height: 550px;
       }
+
       .InputPinToConvert{
-        box-shadow: 0px 0px 10px 0px #00000040;
-        border-radius: 8px;
-        margin: auto;
-        position: relative;
+        top: 18%;
+        height: 405px;
+        border-radius: 20px;
+        width: 503px;
       }
 
 
