@@ -9,7 +9,7 @@ import call from "../../../../AirTimePage/Images/call.svg";
 import user from "../../../../AirTimePage/Images/user.svg";
 import { Modal } from "../../../../Screens/Modal/Modal";
 import DataBundle from "../DataBundles/DataBundles-Images/DataBundles.svg";
-import styles from "../../DataTopUpPage/DataTopUp.css"
+import styles from "../../DataTopUpPage/DataTopUp.css";
 
 const DataBundleAddRecipient = () => {
   const { networkName, setNetworkName } = useContext(ContextProvider);
@@ -188,7 +188,10 @@ const DataBundleAddRecipient = () => {
                           <h2 className={airtimestyles.head2}>{networkName}</h2>
                         </li>
                       ) : (
-                        <h2 onClick={handleShowList} className={airtimestyles.head6}>
+                        <h2
+                          onClick={handleShowList}
+                          className={airtimestyles.head6}
+                        >
                           Select Network
                         </h2>
                       )}
@@ -223,7 +226,9 @@ const DataBundleAddRecipient = () => {
               <div>
                 <h2 className={airtimestyles.head3}>
                   Phone Number{" "}
-                  <span className={airtimestyles.span3}>(Select Recipient)</span>
+                  <span className={airtimestyles.span3}>
+                    (Select Recipient)
+                  </span>
                 </h2>
                 <div className={airtimestyles.input}>
                   <div className={airtimestyles.output}>

@@ -1,11 +1,12 @@
 import React from 'react'
 import { ContextProvider } from '../../../../Context';
 import { useContext } from "react";
-
 import styles from './../DataTopUp.css'
 import { DashBoardLayout } from '../../../Layout/DashBoardLayout';
 import { Link } from 'react-router-dom';
 import DataBundle from "../DataBundles/DataBundles-Images/DataBundles.svg"
+import airtimestyles from "../../../../AirTimePage/AirtimeVtu.module.css";
+
 
 const DataBundleSelectRecipient = () => {
 
@@ -234,10 +235,12 @@ const DataBundleSelectRecipient = () => {
                     </button>
                 </div> */}
             </div>
-            <div className={styles.help}>
-                <h2>You need help?</h2>
-                <Link to={`/ContactUs`} className={styles.btnContact}>Contact Us</Link>
-            </div>
+            <div className={airtimestyles.help}>
+          <h2>You need help?</h2>
+          <Link to={`/ContactUs`} className={airtimestyles.btnContact}>
+            Contact Us
+          </Link>
+        </div>
         </div>
     </DashBoardLayout>
   )
