@@ -79,7 +79,7 @@ export const FiatSelector = ({ onSelect, selectedCountry }) => {
     <div>
       <button
         onClick={() => setShowList(!showList)}
-        className="text-[8px] text-[#0005] h-[30px] w-[50px] flex justify-center gap-[20%] items-center bg-[#04177f] mb-[4%] md:h-[40px] md:w-[62px] md:text-[12px] lg:w-[130px] lg:h-[60px] lg:text-[16px] "
+        className="text-[8px] text-[#0005] h-[23.5px] w-[50px] flex justify-center gap-[20%] items-center bg-[#04177f] mb-[4%] md:h-[45px] md:w-[160px] md:text-[12px] lg:w-[180px] lg:h-[44px] lg:text-[16px] "
       >
         {selected ? (
           <div className="flex gap-[5px] items-center md:gap-[8px]">
