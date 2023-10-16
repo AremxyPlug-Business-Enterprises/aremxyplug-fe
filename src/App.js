@@ -1,4 +1,4 @@
-// import "./App.css";
+import "./App.css";
 // import ConversionFailed from "./Components/CurrencyConversion/currencyPopups/ConversionFailed";
 // import { SuccessfulReceipt } from "./Components/CurrencyConversion/ConversionReceipts/SuccessConversionReceipt";
 // import { UnsuccessfulReceipt } from "./Components/CurrencyConversion/ConversionReceipts/UnsuccessfulConversionReceipt";
