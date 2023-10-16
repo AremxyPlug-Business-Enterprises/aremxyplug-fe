@@ -76,6 +76,8 @@ import { GloReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUp
 import AddRecipient from "./Components/AirTimePage/AddRecipient";
 import SelectRecipient from "./Components/AirTimePage/SelectRecipient";
 import { RedeemReceipt } from "./Components/Dashboard/DashboardComponents/PointRedeem/RedeemReceipt";
+import DataBundleSelectRecipient from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundleSelectRecipient";
+import DataBundleAddRecipient from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundleAddRecipient";
 export const Router = () => {
   return (
     <div>
@@ -176,6 +178,8 @@ export const Router = () => {
         <Route path="/AirtelReceipt" element={<AirtelReceipt/>} />
         <Route path="/EtisalatReceipt" element={<EtisalatReceipt/>} />
         <Route path="/GloReceipt" element={<GloReceipt/>} />
+        <Route path="/DataBundleSelectRecipient" element={<DataBundleSelectRecipient/>} />
+        <Route path="/DataBundleAddRecipient" element={<DataBundleAddRecipient/>} />
         
       </Routes>
     </div>

@@ -25,6 +25,7 @@ import { AiFillEye } from "react-icons/ai";
 import { MtnReceipt } from "./MtnReceipt";
 import Joi from "joi";
 import airtimestyles from "../../../../../AirTimePage/AirtimeVtu.module.css";
+// import { DataBundleFailedPopUp } from "../../../TransferComponent/PopUps/TransactionFailedPopUp";
 
 const MtnDataTopUpBundle = () => {
   const { isDarkMode } = useContext(ContextProvider);
@@ -48,6 +49,12 @@ const MtnDataTopUpBundle = () => {
   const [showPayment, setShowPayment] = useState(false);
   const [image, setImage] = useState("");
   const [paymentAmount, setPaymentAmount] = useState("");
+  const [codes, setCodes] = useState(false);
+
+  const handleCodes =()=> {
+    setCodes(false);
+    setCodes(true);
+  }
 
   const handleShowPayment = () => {
     setShowPayment(!showPayment);
@@ -362,7 +369,7 @@ const MtnDataTopUpBundle = () => {
     setSelectedNetworkProduct(productName);
     setSelectedOption("");
     setShowProductList(false);
-    setShowOptionList(true);
+    setShowOptionList(false);
   };
 
   const handleSelectOption = (selectedOption, selectedAmount, duration) => {
@@ -433,27 +440,31 @@ const MtnDataTopUpBundle = () => {
           </div>
 
           {/* =========================Select/Add Recipient===================== */}
-
+          
           <div className="flex gap-[10%] mt-[40px] md:w-full md:justify-between md:gap-[10%] ">
             <div className="w-full flex items-center justify-between border text-[10px] md:py-[15px] md:w-[50%] rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
-              <p className="font-extrabold">Select Recipient</p>
+            <Link to="/DataBundleSelectRecipient" style={{ display: 'inline-flex', width: '100%',}} className="justify-between">
+              <p className="font-semibold">Select Recipient</p>
               <img
                 className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
                 src={Recipient}
                 alt=""
               />
+              </Link>
             </div>
             <div className="w-full flex items-center justify-between border text-[10px] md:py-[15px] md:w-[40%] md:mr-[9%]  rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
-              <p className="font-extrabold">Add Recipient</p>
+            <Link to="/DataBundleAddRecipient" style={{ display: 'inline-flex', width: '100%' }} className="justify-between">
+              <p className="font-semibold">Add Recipient</p>
               <img
                 className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
                 src={Recipient2}
                 alt=""
               />
+              </Link>
             </div>
           </div>
 
-          <div className="flex mt-[35px] my-[30px] md:w-[100%] md:gap-[10%]">
+          <div onClick={handleCodes} className="flex mt-[35px] my-[30px] md:w-[100%] md:gap-[10%]">
             <div className="rounded-[4px] w-full bg-primary text-white md:w-[50%] h-[30px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-center md:justify-between gap-[10px] px-[5px]">
               <h2 className="lg:text-[16px] lg:leading-[24px] text-[10px] md:text-[12px] leading-[12px]">
                 Data Balance USSD Codes
@@ -506,6 +517,73 @@ const MtnDataTopUpBundle = () => {
             </div>
             <div className="md:w-[50%]"></div>
           </div>
+
+          {codes && (
+                <Modal>
+                (
+                <div
+                    className={`code ${
+                    toggleSideBar ? "xl:w-[65%] xl:ml-[17%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+                    } w-[90%] xl:w-[80%] overflow-auto`}
+                >
+                    <img
+                    onClick={()=> setCodes(false)}
+                    className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px] xl:h-[35px] xl:w-[35px]"
+                    src="/Images/transferImages/close-circle.png"
+                    alt=""
+                    />
+                    <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
+
+                    <button
+                    className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[50%] md:rounded-[8px] md:text-[16px] lg:text-[14px] xl:text-[20px] lg:w-[350px] lg:h-[38px] lg:my-[2%]`}
+                    >
+                    Data Balance USSD Codes
+                    </button>
+                    <h2 className="text-[12px] my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
+                    Data balance / share ussd codes.
+                    </h2>
+                    <h2 className="text-[12px] px-[5%] my-[5%] text-blue-600 text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
+                    Tap the network Dial button to check data balance:
+                    </h2>
+                    <div className='flex flex-col gap-1 mb-5'>
+                        <button
+                            className={`bg-[#FAF8F8] my-[2%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:my-[1%]`}
+                            >
+                            MTN Data Balance Code - *323#
+                        </button>
+                        <button
+                            className={`bg-[#FAF8F8] my-[2%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:my-[1%]`}
+                            >
+                            MTN SME Data Balance Code - *461*4#
+                        </button>
+                        <button
+                            className={`bg-[#FAF8F8] my-[2%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:my-[1%]`}
+                            >
+                            MTN CG Data Balance Code - *460*260#
+                        </button>
+                        <button
+                            className={`bg-[#FAF8F8] my-[2%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:my-[1%]`}
+                            >
+                            MTN Direct Coupon Balance Code - *323*4#
+                        </button>
+                        <button
+                            className={`bg-[#FAF8F8] my-[2%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:my-[1%]`}
+                            >
+                            MTN Data Share Code - *321#
+                        </button>
+                        
+                    </div>
+
+                    <button
+                    onClick={()=> setCodes(false)}
+                    className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                    >
+                    Okay
+                    </button>
+                </div>
+                )
+                </Modal>
+            )}
 
           {/* =========================PRODUCTS============================== */}
 
@@ -999,7 +1077,7 @@ const MtnDataTopUpBundle = () => {
 
           {transactSuccessPopUp && (
             <Modal>
-              {/* <TransactFailedPopUp/> */}
+              {/* <DataBundleFailedPopUp/> */}
               <div
                 className={`confirm ${styles.successfulTwo} ${
                   toggleSideBar
@@ -1013,7 +1091,7 @@ const MtnDataTopUpBundle = () => {
                       setTransactSuccessPopUp(false);
                       window.location.reload();
                     }}
-                    className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[25px]"
+                    className=" w-[18px] h-[15px] md:w-[35px] md:h-[32px] lg:w-[35px] lg:h-[22px]"
                     src="/Images/login/arpLogo.png"
                     alt=""
                   />
