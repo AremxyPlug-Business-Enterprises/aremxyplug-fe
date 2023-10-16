@@ -206,7 +206,7 @@ const FiatConversion = () => {
             />
             <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[8%] md:h-[15px]" />
             <div className="bg-[#04177f] text-[#fff] text-[10px] my-[2%] h-[20px] flex justify-center items-center rounded-[2px] md:my-[5%] md:h-[30px] md:text-[15px] lg:text-[16px] lg:mx-auto lg:my-[5%] lg:h-[38px] lg:w-[60%]">
-              Real-time fiat Transfer Check Rate
+              Real-time fiat Conversion Check Rate
             </div>
             <div className="mx-[5%]">
               <div className="font-extrabold flex text-[#000] text-[10px] leading-[130%] items-center my-[7%] gap-[8px] md:my-[3%] md:text-[18px] lg:text-[20px]">
@@ -218,26 +218,20 @@ const FiatConversion = () => {
                 />
               </div>
               <div className={``}>
-                <div className="border h-[23.5px] md:h-[45px] lg:h-[44px] flex justify-between pl-[2%] lg:border-[1px] lg:border-[#0003]">
+                
+                <div className="border h-[25px] flex justify-between pl-[2%] md:h-[40px] lg:h-[45px] lg:border-[1px] lg:border-[#0003]">
                   {" "}
                   <input
                     value={nairaAmountTwo}
                     onChange={handleAmountChangeTwo}
                     type="number"
-                    placeholder="Amount to Transfer"
-                    className="text-[10px] text-[#000] h-[100%] outline-none md:text-[15px] lg:text-[16px]"
+                    placeholder="Amount to Convert"
+                    className="text-[10px] text-[#000] w-[90%] h-[100%] outline-none md:text-[15px] lg:text-[16px]"
                   />
-                  {/* <button class="dropdown bg-[#04177F]">
-                        <div class="dropbtn flex gap-[7.2px] lg:gap-[18px] justify-center w-[50px] md:w-[160px] lg:w-[180px]">
-                            <img src="./Images/currencyImages/nigeria.svg" alt=""  className="lg:h-[32px] lg:w-[32px] md:h-[18px] md:w-[18px]" />
-                            <img src="./Images/currencyImages/drop.svg" alt=""  className="lg:h-[32px] lg:w-[32px] md:h-[18px] md:w-[18px]"/>
-                        </div>
-                    </button> */}
-                    <FiatSelector
+                  <FiatSelector
                       onSelect={handleCountrySelectTwo}
                       selectedCountry={selectedCountryTwo}
                      />
-                
                 </div>
 
                 {errors.transfer && (
@@ -246,6 +240,7 @@ const FiatConversion = () => {
                   </div>
                 )}
               </div>
+              
               <div className="text-[9px] text-[#29B8FC] border-[0.9px] drop-shadow-3xl border-[#0003] rounded-[7px] w-[55%] mx-auto my-[3%] flex justify-center items-center py-[7px] gap-1 md:my-[5%] md:h-[40px] md:text-[14px] md:gap-2 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
                 <img
                   className="w-[14px] h-[14px] md:w-[20px] md:h-[20px] lg:w-[24px] lg:h-[24px]"
@@ -309,12 +304,7 @@ const FiatConversion = () => {
                 {/* value={numeric} onChange={NumericChange} */}
                    <div className="border h-[25px] flex justify-between pl-[2%] md:h-[45px] lg:h-[45px] lg:border-[1px] lg:border-[#0003] ">
                     <input type="number" value={nairaAmount} onChange={handleAmountChange} placeholder="Amount To Convert" className="text-[10px] w-[90%] h-[100%] outline-none md:text-[16px] lg:text-[16px]" />
-                    {/* <button class="dropdown bg-[#04177F]">
-                        <div class="dropbtn flex gap-[7.2px] lg:gap-[18px] justify-center w-[50px] md:w-[160px] lg:w-[180px]">
-                            <img src="./Images/currencyImages/nigeria.svg" alt=""  className="lg:h-[32px] lg:w-[32px] md:h-[18px] md:w-[18px]" />
-                            <img src="./Images/currencyImages/drop.svg" alt=""  className="lg:h-[32px] lg:w-[32px] md:h-[18px] md:w-[18px]"/>
-                        </div>
-                    </button> */}
+                    
                      <FiatSelector
                       onSelect={handleCountrySelectTwo}
                       selectedCountry={selectedCountryTwo}
