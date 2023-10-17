@@ -31,6 +31,10 @@
 
 }
 
+/* .input::-ms-value{
+ display: none;
+} */
+
 .input:focus{
    outline: 0;
 }

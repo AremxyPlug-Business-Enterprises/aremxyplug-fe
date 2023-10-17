@@ -3,8 +3,8 @@ import { useContext } from "react";
 import { ContextProvider } from "../../Context";
 import flag from '../../Dashboard/DashboardComponents/flagsImages/nigeriaFlag.png'
 
-export const FiatSelector = ({ onSelect, selectedCountry }) => {
-  const countryList = [
+export const FiatSelector = ({ onSelectOne, selectedCountryOne }) => {
+  const countryListOne = [
     {
       id: 1,
       name: "Nigeria",
@@ -50,24 +50,24 @@ export const FiatSelector = ({ onSelect, selectedCountry }) => {
     image,
     setImage,
     setCode,
-    showList,
-    setShowList,
-    selected,
-    setSelected,
-    activeButton,
+    showListOne,
+    setShowListOne,
+    selectedOne,
+    setSelectedOne,
+    activeButtonOne,
   } = useContext(ContextProvider);
 
-  const handleOptionClick = (country, flag, id, code) => {
-    onSelect(country);
+  const handleOptionClickOne = (country, flag, id, code) => {
+    onSelectOne(country);
     setImage(flag);
     setCode(code);
-    setShowList(false);
-    setSelected(true);
+    setShowListOne(false);
+    setSelectedOne(true);
     setNoRecord(id !== 1);
-    if (activeButton[0]) {
+    if (activeButtonOne[0]) {
       setPersonalAccount(id === 1);
       // setBusinessAccount(false);
-    } else if (activeButton[1]) {
+    } else if (activeButtonOne[1]) {
       setBusinessAccount(id === 1);
       // setPersonalAccount(false);
     }
@@ -78,10 +78,10 @@ export const FiatSelector = ({ onSelect, selectedCountry }) => {
   return (
     <div>
       <button
-        onClick={() => setShowList(!showList)}
+        onClick={() => setShowListOne(!showListOne)}
         className="text-[8px] text-[#0005] h-[23.5px] w-[50px] flex justify-center gap-[20%] items-center bg-[#04177f] mb-[4%] md:h-[45px] md:w-[160px] md:text-[12px] lg:w-[180px] lg:h-[44px] lg:text-[16px] "
       >
-        {selected ? (
+        {selectedOne ? (
           <div className="flex gap-[5px] items-center md:gap-[8px]">
             <img
               className="w-[11px] h-[11px] md:w-[20px] md:h-[20px] lg:w-[29px] lg:h-[29px]"
@@ -97,7 +97,7 @@ export const FiatSelector = ({ onSelect, selectedCountry }) => {
               alt=""
             />
         )}
-        {selected ? (
+        {selectedOne ? (
           <img
             className=" h-[8.3px] w-[8.3px] md:h-[15px] md:w-[15px] lg:w-[24px] lg:h-[24px]"
             src="./Images/dashboardImages/arrow-down2.png"
@@ -111,14 +111,14 @@ export const FiatSelector = ({ onSelect, selectedCountry }) => {
           />
         )}
       </button>
-      {showList && (
+      {showListOne && (
         <div className="" style={{boxShadow:"0px 1.60656px 4.01639px 0px rgba(0, 0, 0, 0.25)",}}>
-          {countryList.map((country) => (
+          {countryListOne.map((country) => (
             <div
               className="cursor-pointer border-b flex items-center p-1 gap-[5px] text-[9px] bg-[#fff] md:text-[14px] lg:text-[16px] lg:justify-between lg:px-[25%]"
               key={country.id}
               onClick={() =>
-                handleOptionClick(
+                handleOptionClickOne(
                   country.name,
                   country.flag,
                   country.id,
