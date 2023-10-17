@@ -8,8 +8,12 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { ContextProvider } from "../../../../src/Components/Context";
 
+
+
 export const SuccessfulReceipt = (receipt) => {
-  const { toggleSideBar, textRef, amtToTransfer, isDarkMode, date } =
+  const { toggleSideBar, textRef,
+    //  amtToTransfer,
+      isDarkMode, date } =
     useContext(ContextProvider);
 
   const contentRef = useRef(null);
@@ -111,7 +115,7 @@ export const SuccessfulReceipt = (receipt) => {
             <p className="text-[9px] text-[#0008] text-center my-2 md:text-[14px] lg:text-[14px]">
             You have successfully converted {" "}
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[16px]">
-                &#8358;{amtToTransfer}.00{" "}
+                &#8358;10,000.00{" "}
               </span>
               from your NGN wallet to{" "}
             </p>
@@ -132,7 +136,7 @@ export const SuccessfulReceipt = (receipt) => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Amount Converted</p>
-                  <span>{amtToTransfer}</span>
+                  <span>10,000</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Amount Received</p>
