@@ -4,13 +4,16 @@ import receiptA from "./assets/cash receipt from online shopping on mobile phone
 import arrowsales from "./assets/arrow-square-rightsales.png";
 import flagsales from "./assets/Country Flags (5)sales.png";
 import filtersales from "./assets/document-filtersales.png";
-import downsales from "./assets/arrow-downsales.png";
+// import downsales from "./assets/arrow-downsales.png";
 import menusales from "./assets/menusales.png";
 import squaresales from "./assets/arrow-square-rightsalesA.png";
-import salesA from "./assets/arrow-downsalesA.png";
+// import salesA from "./assets/arrow-downsalesA.png";
 import salesB from "./assets/arrow-downsalesB.png";
 import salesC from "./assets/arrow-downsalesC.png";
 import salesD from "./assets/arrow-downsalesD.svg";
+import arrow44 from "./assets/arrow-down@4x.png";
+import arrow11 from "./assets/arrow-down@1x.png";
+import arrow00 from "./assets/arrow-down@0x.png";
 
 
 
@@ -39,6 +42,12 @@ export default function SalesSummaryPage ()  {
         setSelectedProduct(product); };
 
 
+        
+        
+        
+        
+
+
 
 
 
@@ -46,7 +55,7 @@ export default function SalesSummaryPage ()  {
 
         <DashBoardLayout>
         <>
-        <div class="flex gap-[25px] md:w-full ml-[4px] flex-col">
+        <div class="flex gap-[25px] md:w-full w-[312px] flex-col">
     <div class="w-[312px] h-[65.54px] pl-[16.72px] pr-[19.33px] py-[7.36px] md:w-full md:h-[112.29px] md:pl-[28.65px] md:pr-[34.82px] md:py-[12.60px] lg:w-full lg:h-[196px] lg:pl-[50px] lg:pr-[60.79px] lg:rounded-[20px] lg:gap-[75px] lg:py-[22px] bg-gradient-to-r from-yellow-300 to-rose-400 rounded-md justify-center items-start gap-[25.08px] md:gap-[42.97px] inline-flex">
         <div class="w-[197.63px] lg:w-full md:w-full lg:gap-[15px] self-stretch flex-col justify-start items-start md:gap-[8.59px] gap-[5.02px] flex">
             <div class="w-[160.85px] md:w-[275.57px] lg:w-[481px] text-black text-[8.08px] md:text-sm lg:text-2xl font-semibold whitespace-nowrap  uppercase">MANAGE ALL YOUR TRANSACTIONS AT A <br /> TIME WITHOUT ANY HASSLE.</div>
@@ -88,8 +97,8 @@ export default function SalesSummaryPage ()  {
                 </div>
             </div>
             <div class="w-[13.75px] h-[13.75px] lg:w-6 lg:h-6 justify-center items-center flex">
-                <div class="lg:w-[13.75px] lg:h-[13.75px] relative">
-                    <img className='w-3 h-3 md:w-[11.37px] md:h-[11.37px] lg:w-[19.85px] lg:h-[19.85px]' src={downsales} alt="" />
+                <div class=" ">
+                    <img className='w-3 h-3 md:w-[11.37px] md:h-[11.37px] lg:w-[19.85px] lg:h-[19.85px]' src={arrow00} alt="" />
                 </div>
             </div>
         </div>
@@ -106,6 +115,8 @@ export default function SalesSummaryPage ()  {
                 </div>
             </div>
         </div>
+
+        {/* filter by status */}
         <div class="self-stretch relative justify-start items-center gap-[5.73px] lg:gap-2.5 inline-flex">
             <div class="justify-start items-center lg:gap-[5px] gap-[2.86px] flex">
                 <div class="w-[11.37px] h-[11.37px] lg:w-[19.85px] lg:h-[19.85px] justify-center items-center flex">
@@ -116,8 +127,16 @@ export default function SalesSummaryPage ()  {
                 <div   className="text-neutral-500 md:text-xs text-[8px] lg:text-xl md:whitespace-nowrap font-semibold ">{selectedProduct}</div>
             </div>
             <div class="w-[11.37px] h-[11.37px] lg:w-[19.85px] lg:h-[19.85px] justify-center items-center flex">
-                <div onClick={toggleDropdown1} class="w-[11.37px] h-[11.37px] lg:w-[19.85px] lg:h-[19.85px] relative">
-                    <img className='w-[11.37px] h-[11.37px] lg:w-[19.85px] lg:h-[19.85px] ' src={salesA} alt="" />
+                <div onClick={() => {
+  setIsOpen1((prev) => !prev);
+}} class="w-[11.37px] h-[11.37px] lg:w-[19.85px] lg:h-[19.85px] relative">
+                                    {isOpen1 ? (
+   <img src={arrow44} alt="Arrow44" />
+ ) : (
+   <img src={arrow11} alt="arrow11" />
+ )}
+
+                    
                 </div>
             </div>
         </div>
@@ -211,7 +230,7 @@ export default function SalesSummaryPage ()  {
         
         <div class="w-[199.37px] ml-[5px] md:w-[199.37px] justify-start items-center inline-flex">
             <div onClick={() => {
-  toggleDropdown2();
+    setIsOpen2((prev) => !prev);
   handleClick('Airtime Top-up'); }}class="w-[186.20px] text-neutral-500 md:w-[131px] items-center text-[8.06px] md:text-[9.17px] lg:text-[15px] font-medium  md:leading-3 leading-[10.48px]">Airtime Top-up</div>
         </div>
     </div>
@@ -219,7 +238,8 @@ export default function SalesSummaryPage ()  {
     <div class="w-44 h-[29px] md:w-[200px] md:h-[35pxpx] lg:h-[40px] bg-white shadow">
         
         <div class="w-[199.37px] ml-[5px] md:w-[199.37px]  justify-start items-center inline-flex">
-            <div onClick={() => {toggleDropdown3();
+            <div onClick={() => {
+    setIsOpen3((prev) => !prev);
 handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[8.06px] md:text-[9.17px] md:w-[131px] items-center lg:text-[15px] font-medium  md:leading-3 leading-[10.48px]">Data Top-up</div>
         </div>
     </div>
@@ -227,7 +247,9 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[8.06px
     <div class="w-44 h-[29px] md:w-[200px] lg:h-[40px] md:h-[35px] bg-white shadow">
         
         <div class="w-[199.37px] ml-[5px] md:w-[199.37px]  justify-start items-center inline-flex">
-            <div onClick={() => {toggleDropdown4();handleClick('Bills Payment'); }}  class="w-[131.60px] text-neutral-500 text-[8.06px] md:text-[9.17px] md:w-[131px] items-center lg:text-[15px] font-medium  md:leading-3 leading-[10.48px]">Bills Payments</div>
+            <div onClick={() => {
+    setIsOpen4((prev) => !prev);
+                handleClick('Bills Payment'); }}  class="w-[131.60px] text-neutral-500 text-[8.06px] md:text-[9.17px] md:w-[131px] items-center lg:text-[15px] font-medium  md:leading-3 leading-[10.48px]">Bills Payments</div>
         </div>
     </div>
     <hr class="bg-slate-500 h-[1px] w-[175px]"></hr>
@@ -340,8 +362,10 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[8.06px
 
 {/* data top-up dropdown */}
 {isOpen3 && (
-<div className="flex md:mt-[900px] flex-col">
-<div class="lg:w-full justify-between items-center lg:h-[101px] md:w-full md:mt-[-1210px] lg:mt-[-1240px] md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] mt-[-400px] lg:pl-[26px] lg:pr-1 w-[312px]  h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.67px] bg-white flex-row flex">
+<div className="flex md:mt-[900px] mt-[350px] flex-col">
+<div class="lg:w-full justify-between items-center lg:h-[101px] md:w-full md:mt-[-1210px] lg:mt-[-1240px] 
+md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] mt-[-400px] 
+lg:pl-[26px] lg:pr-1 w-[312px]  h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.67px] bg-white flex-row flex">
     
         <div class=" w-[56.33px] text-black text-[8px] font-medium lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">MTN SME</div>
         <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight leading-[10.40px]">100GB</div>
