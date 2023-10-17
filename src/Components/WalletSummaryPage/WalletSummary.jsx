@@ -73,7 +73,6 @@ import cash from "./assets/cash receipt from online shopping on mobile phone (1)
 import { useContext } from "react"; 
 import {ContextProvider} from "../Context";
 import { Link } from "react-router-dom/dist/react-router-dom.development";
-
 import arrowdown33 from "./assets/arrow-down@3x.png";
 import arrowdown22 from "./assets/arrow-down@2x.png";
 
@@ -89,7 +88,7 @@ export default function WalletSummaryPage() {
 
 
 
-  const {toggleSideBar} = useContext(ContextProvider)
+  const {} = useContext(ContextProvider)
   const [isOpen1, setIsOpen1] = useState("");
 
   const [isOpen2, setIsOpen2] = useState("");

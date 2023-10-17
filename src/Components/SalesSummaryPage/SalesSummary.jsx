@@ -26,13 +26,13 @@ export default function SalesSummaryPage ()  {
     const [isOpen4, setIsOpen4] = useState(false);
 
 
-    const toggleDropdown1 = () => { setIsOpen1(true); };
-
-    const toggleDropdown2 = () => { setIsOpen2(true); setIsOpen3(false); setIsOpen4(false);setIsOpen1(false); }; 
-
-     const toggleDropdown3 = () => { setIsOpen3(true); setIsOpen2(false); setIsOpen4(false); setIsOpen1(false); };
-
-      const toggleDropdown4 = () => { setIsOpen4(true); setIsOpen3(false); setIsOpen2(false);setIsOpen1(false); };
+    // const toggleDropdown1 = () => { setIsOpen1(true); };
+// 
+    // const toggleDropdown2 = () => { setIsOpen2(true); setIsOpen3(false); setIsOpen4(false);setIsOpen1(false); }; 
+// 
+    //  const toggleDropdown3 = () => { setIsOpen3(true); setIsOpen2(false); setIsOpen4(false); setIsOpen1(false); };
+// 
+    //   const toggleDropdown4 = () => { setIsOpen4(true); setIsOpen3(false); setIsOpen2(false);setIsOpen1(false); };
 
 
 
