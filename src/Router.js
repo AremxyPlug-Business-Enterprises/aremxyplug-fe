@@ -61,8 +61,7 @@ import MtnDataTopUpBundle from "./Components/Dashboard/DashboardComponents/DataT
 import WithdrawToOtherBanks from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToOtherBanks";
 import ConfirmConversion from "./Components/CurrencyConversion/currencyPopups/confirmConversion";
 import { SuccessfulReceipt } from "./Components/CurrencyConversion/ConversionReceipts/SuccessConversionReceipt";
-
-
+import { TvSubscription } from "./Components/TvSubscription/TvSubscriptionPage";
 import WalletSummaryPage from "./Components/WalletSummaryPage/WalletSummary";
 import SalesSummaryPage from "./Components/SalesSummaryPage/SalesSummary";
 import { WithdrawToOtherBankReceipt } from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToOtherBanksPopUp/WithdrawToOtherBankReceipt";
@@ -78,6 +77,8 @@ import SelectRecipient from "./Components/AirTimePage/SelectRecipient";
 import { RedeemReceipt } from "./Components/Dashboard/DashboardComponents/PointRedeem/RedeemReceipt";
 import DataBundleSelectRecipient from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundleSelectRecipient";
 import DataBundleAddRecipient from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundleAddRecipient";
+import GoTv from "./Components/TvSubscription/TvOne";
+
 export const Router = () => {
   return (
     <div>
@@ -180,7 +181,8 @@ export const Router = () => {
         <Route path="/GloReceipt" element={<GloReceipt/>} />
         <Route path="/DataBundleSelectRecipient" element={<DataBundleSelectRecipient/>} />
         <Route path="/DataBundleAddRecipient" element={<DataBundleAddRecipient/>} />
-        
+        <Route path="/TvSubscription" element={<TvSubscription/>} />
+        <Route path="/GoTv" element={<GoTv/>} />
       </Routes>
     </div>
   );

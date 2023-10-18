@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import { Link } from "react-router-dom";
 import { DashBoardLayout } from "../Dashboard/Layout/DashBoardLayout";
 import { AiFillEyeInvisible } from "react-icons/ai";
+import "../CurrencyConversion/currencyConversion.css";
 import OtpInput from "react-otp-input";
 import { AiFillEye } from "react-icons/ai";
 import { useContext, useEffect } from "react";
@@ -63,7 +64,7 @@ const FiatConversion = () => {
         </button>
       );
     };
-
+    const cvRate = (1/ exchangeRate).toFixed(4)
     const {
         toggleSideBar,
         inputPin,
@@ -175,9 +176,10 @@ const FiatConversion = () => {
               alt=""
             />
             <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[8%] md:h-[15px]" />
-            <div className="bg-[#04177f] text-[#fff] mt-[20%] md:mt-[15%] text-[10px] my-[2%] h-[20px] flex justify-center items-center rounded-[2px] md:my-[5%] md:h-[30px] md:text-[15px] lg:text-[16px] lg:mx-auto lg:my-[5%] lg:h-[38px] lg:w-[60%]">
+            <div className="bg-[#04177f] font-medium py-3 lg:py-5 text-[#fff] mt-[60px] lg:mt-[50px] text-[10px] my-[2%] h-[20px] flex justify-center items-center rounded-[2px] lg:rounded-[8px] md:my-[5%] md:h-[30px] md:text-[15px] lg:text-[16px] lg:mx-auto lg:my-[5%] lg:h-[38px] lg:w-[60%]">
               Real-time fiat Conversion Check Rate
             </div>
+            
             <div className="mx-[5%]">
               <div className="font-extrabold flex text-[#000] text-[10px] leading-[130%] items-center my-[7%] gap-[8px] md:my-[3%] md:text-[18px] lg:text-[20px]">
                 <p>Sender</p>
@@ -243,11 +245,11 @@ const FiatConversion = () => {
                 
               </div>
               <button
-                onClick={() => setConversionRate(false)}
-                className="bg-[#04177f] mt-[25%] w-full flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:my-[10%] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:mt-[10%]"
-              >
-                Okay
-              </button>
+                  onClick={() => setConversionRate(false)}
+                  className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center mt-14 items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:mt-[40px]`}
+                >
+                  Okay
+                </button>
             </div>
           </div>
         </Modal>
@@ -325,14 +327,15 @@ const FiatConversion = () => {
                 </div>
 
                 
-                <div className="flex justify-center items-center mt-[62.3%] md:mt-[38%] lg:mt-[30%] mb-[40px] gap-2">
-           <div className="font-medium text-[10px] md:text-[10px] lg:text-[15px] self-center">You need help ?</div>
-            <Link to="/ContactUs">
-                <div className="bluebutton flex bg-[#04177f] text-[8.5px] md:text-[8.5px] lg:text-[12px] text-white">
-                  <p className="self-center mx-auto align-middle">Contact Us</p>
-                </div>
-            </Link>
-         </div>
+                <div className={`flex gap-[15px] justify-center items-center mt-[68%] md:mt-[38%] lg:mt-[26%] lg:mb-[%]`}>
+                    <div className="font-medium text-[10px] md:text-[12px] lg:text-[14px]">
+                      You need help ?</div>
+                    <Link to="/ContactUs">
+                       <div className="bluebutton flex bg-[#04177f] text-[8.5px] md:text-[8.5px] lg:text-[12px] text-white">
+                         <p className="self-center mx-auto align-middle">Contact Us</p>
+                       </div>
+                    </Link>
+               </div>
         </div>
 
         {confirm &&
@@ -377,7 +380,7 @@ const FiatConversion = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <span className="text-[#7C7C7C]">Conversion Rate</span>
-                    <span>1 NGN ~ {1/exchangeRate} USD</span>
+                    <span>1 NGN ~ {cvRate} USD</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <span className="text-[#7C7C7C]">Transaction Fee</span>
@@ -544,7 +547,7 @@ const FiatConversion = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                     <span className="text-[#7C7C7C]">Conversion Rate</span>
-                    <span>1 NGN ~ {1/exchangeRate} USD</span>
+                    <span>1 NGN ~ {cvRate} USD</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                     <span className="text-[#7C7C7C]">Transaction Fee</span>

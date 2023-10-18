@@ -62,6 +62,9 @@ export const SuccessfulReceipt = (receipt) => {
       });
     }
   };
+
+  const cvRate = (1/ exchangeRate).toFixed(4)
+
   return (
     <DashBoardLayout>
       <div className="flex flex-col gap-[35px] lg:gap-[85px]">
@@ -146,7 +149,7 @@ export const SuccessfulReceipt = (receipt) => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Conversion Rate</p>
-                  <span>1 NGN ~ {1/ exchangeRate} USD</span>
+                  <span>1 NGN ~ {cvRate} USD</span>
                 </div>
               </div>
 
