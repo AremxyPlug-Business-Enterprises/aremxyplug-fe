@@ -106,7 +106,11 @@ export default function WalletSummaryPage() {
   return (
     <DashBoardLayout>
 
+
+<div className='w-full'>
+
 <div
+
             id="cash"
             className="w-full h-[90px] bg-gradient-to-r from-yellow-300 to-rose-400  md:h-[112.29px] lg:h-[196px] md:rounded-[11.5px] rounded-[7px] md:mt-[-1px] px-[10px] lg:ml-[-20px] lg:w-[102%] 2xl:w-full 2xl:ml-0 lg:gap-[50px] pt-[10px] lg:px-[30px] lg:rounded-[20px] lg:py-[20px] pb-[16px] flex justify-between items-center"
           >
@@ -138,7 +142,7 @@ export default function WalletSummaryPage() {
             <img src={arrowsquare} alt="" />
           </div>
         </div>
-        <div className=" lg:top-[400px] md:top-[280px] top-[1.82px] gap-[3px] absolute lg:justify-start md:gap-[5px] lg:items-center lg:gap-[5px] inline-flex">
+        <div className=" lg:top-[400px] md:top-[280px] top-[182px] gap-[3px] absolute lg:justify-start md:gap-[5px] lg:items-center lg:gap-[5px] inline-flex">
           <div className="text-neutral-500 lg:text-xl text-[8px] md:mt-[5px] md:text-xs font-semibold ">
             Wallet Summary
           </div>
@@ -146,7 +150,11 @@ export default function WalletSummaryPage() {
             <img src={arrowsquare1} alt="" />
           </div>
         </div>
-        <div className="lg:px-[] lg:py-[25px] lg:h-[120px] py-[10px] lg:gap-2.5 lg:top-[455px] gap-[5px] mt-[15%] lg:mt-[150px] bg-indigo-300 bg-opacity-20 md:rounded-[11.46px] lg:rounded-[20px] rounded-[6px] justify-center lg:w-full w-[312px] md:w-full md:h-[68.75px] md:px-[140.10px] md:py-[14.32px]  items-center inline-flex">
+        <div className="lg:px-[] lg:py-[25px] lg:h-[120px] py-[10px] lg:gap-2.5 lg:top-[455px] 
+        gap-[5px] mt-[15%] lg:mt-[150px] bg-indigo-300
+         bg-opacity-20 md:rounded-[11.46px] lg:rounded-[20px] rounded-[6px]
+          justify-center lg:w-full w-full md:w-full md:h-[68.75px] 
+          md:px-[140.10px] md:py-[14.32px]  items-center inline-flex">
           
             <div className="lg:justify-start lg:items-center gap-[10px] md:gap-[5.73px] lg:gap-[5.73px] flex">
               <div className="lg:w-[70px] lg:h-[70px] w-6 h-6 md:w-[40.10px] md:h-[40.10px] lg:gap-[5.73px] relative">
@@ -182,7 +190,11 @@ export default function WalletSummaryPage() {
             </div>
           
         </div>
-        <div className="lg:pl-[30px] pl-[0.33px] lg:h-[72px] lg:pr-[484.30px] pr-[92.66px] lg:py-[11px] md:h-[41.25px] md:w-full h-6 md:pl-[9.17px] md:pr-[277.40px] md:pt-[6.39px] md:pb-[6.40px] py-[2.67px] lg:mt-[50px] top-[243.82px] lg:w-full w-[312px] mt-[25px] bg-white shadow border-t border-b border-black border-opacity-30 lg:justify-start lg:items-center lg:gap-[50.53px]  md:gap-[28.72px] gap-[50px]  inline-flex">
+        <div className="lg:pl-[30px] pl-[0.33px] lg:h-[72px] lg:pr-[484.30px] pr-[92.66px] 
+        lg:py-[11px] md:h-[41.25px] md:w-full h-6 md:pl-[9.17px] md:pr-[277.40px]
+         md:pt-[6.39px] md:pb-[6.40px] py-[2.67px] lg:mt-[50px] top-[243.82px]
+          lg:w-full w-full mt-[25px] bg-white shadow border-t border-b border-black
+           border-opacity-30 lg:justify-start lg:items-center lg:gap-[50.53px]  md:gap-[28.72px] gap-[50px]  inline-flex">
           <div className="lg:self-stretch lg:p-2.5 md:h-[29px] md:mt-[2px] lg:h-[50px] lg:mt-[1px] md:p-[5.73px] p-[3.33px] bg-white lg:rounded-[5px] rounded-sm md:rounded-[2.86px] shadow justify-start items-center lg:gap-[6.62px] mt-[5px] gap-[2.21px] md:gap-[4px] inline-flex">
             <div className="text-blue-900 lg:text-xl text-[8px] md:text-xs md:whitespace-nowrap font-semibold ">
               Filter by Date
@@ -216,7 +228,7 @@ export default function WalletSummaryPage() {
         </div>
 
 
-        <div className="flex gap-[5px] mb-[20px] w-[312px] md:w-full md:gap-[51.849px] mt-5 lg:gap-[90.5px] lg:mb-[15px]">
+        <div className="flex gap-[5px] mb-[20px] w-full md:w-full md:gap-[51.849px] mt-5 lg:gap-[90.5px] lg:mb-[15px]">
             
 
                       <div className="lg:p-[5.65px] md:w-auto h-[19px] w-[36px] lg:h-[27.14px] lg:w-[61.45px]
@@ -329,7 +341,7 @@ export default function WalletSummaryPage() {
 
 
         {isOpen1 && (
-          <div className="lg:ml-[510px]  lg:top-[360px] md:w-[300px] lg:pl-[-500px] left-[65px] mt-[90px] w-[62%] lg:w-full  top-[164px] md:top-[175px] absolute flex-col md:mt-[260px] md:ml-[300px] lg:items-start inline-flex">
+          <div className="lg:ml-[510px]  lg:top-[360px] md:w-[300px] lg:pl-[-500px] left-[65px] w-[62%] lg:w-full  top-[265px] md:top-[175px] absolute flex-col md:mt-[260px] md:ml-[300px] lg:items-start inline-flex">
             <div className="lg:pl-2.5 lg:w-[370px] md:w-[214.84px] lg:pt-[7px] lg:h-[40px] h-[30px] justify-start items-center pt-[3px] pb-[px] bg-white shadow   md:pt-1 md:pb-[4.43px] inline-flex">
               <div className="lg:self-stretch lg:justify-start lg:items-center flex md:gap-[2.86px] md:h-[30px]  flex-row  ">
                 <div className="lg:w-[29.27px] lg:h-[29.27px] h-[16.77px] md:w-[16.77px] md:h-[16.77px] relative bg-white">
@@ -342,7 +354,10 @@ export default function WalletSummaryPage() {
                 </div>
               </div>
             </div>
-            <div className="lg:pl-2.5 md:w-[214.84px]  mt-[0.5px] justify-start items-center h-[30px] lg:h-[45px] lg:w-[370px] lg:pb-[7.73px] bg-white shadow lg:justify-start lg:items-center md:h-[30px] lg:mt-[-3px] md:pl-[5.73px] md:mt-[-5px] md:pr-[84.48px] md:pt-1 md:pb-[4.43px]  inline-flex">
+            <div className="lg:pl-2.5 md:w-[214.84px]  mt-[0.0px] justify-start items-center
+             h-[30px] lg:h-[45px] lg:w-[370px] lg:pb-[7.73px] bg-white shadow 
+             lg:justify-start lg:items-center md:h-[30px] lg:mt-[-3px] md:pl-[5.73px]
+              md:mt-[-5px] md:pr-[84.48px] md:pt-1 md:pb-[4.43px]  inline-flex">
               <div className="lg:self-stretch lg:justify-start lg:items-center flex flex-row gap-[5px] md:gap-[2.86px] lg:gap-[5px] lg:flex">
                 <div className="lg:w-[29.27px] lg:h-[29.27px] lg:relative md:w-[16.77px] md:h-[16.77px] bg-white">
                   <div className="lg:w-[28.77px] w-[16.77px] lg:h-[26.09px] h-[16.77px] lg:left-[0.50px] lg:top-[3.18px] md:w-[16.77px] md:h-[16.77px] md:left-0 md:top-[0.52px] lg:absolute">
@@ -415,7 +430,7 @@ export default function WalletSummaryPage() {
           </div>
         )}
 
-<div className="lg:w-full  w-[312px] lg:h-[60px]  lg:mt-[90px] md:mt-[120px] h-5 
+<div className="lg:w-full  w-full lg:h-[60px]  lg:mt-[90px] md:mt-[120px] h-5 
  bg-white mt-[50px] md:w-full md:h-[30.94px] md:pl-[9.17px] flex flex-row
 lg:gap-[120px] justify-between
   items-center gap-[70px] md:gap-[90px] border border-black border-opacity-30 ">
@@ -1160,7 +1175,7 @@ w-3 lg:h-4 md:w-[10px] md:h-[10px]" src={normal} alt="" /> </label>
 
 
         <div
-            className="md:hidden mt-9 flex flex-col w-[312px] p-[20px] border-x-[1.2px]
+            className="md:hidden mt-9 flex flex-col w-full p-[20px] border-x-[1.2px]
  border-[#7C7C7C] border-opacity-[25%] mb-[50px]  shadow-md"
           >
             
@@ -1495,7 +1510,7 @@ w-3 lg:h-4 md:w-[10px] md:h-[10px]" src={normal} alt="" /> </label>
 
         {/* filter by status dropdown */}
         {isOpen2 && (
-          <div className="flex absolute lg:top-[725px] top-[300px] md:top-[495px] w-full md:w-full ml-[50px] md:ml-[40px] lg:w-full lg:ml-[60px] flex-col">
+          <div className="flex absolute lg:top-[725px] top-[320px] md:top-[495px] w-full md:w-full ml-[50px] md:ml-[40px] lg:w-full lg:ml-[60px] flex-col">
             <div className="lg:w-[375px] lg:h-[53px] md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px] justify-around items-center flex relative bg-white shadow">
               <div class="lg:w-[325px] text-neutral-500 lg:text-base font-medium lg:leading-tight md:w-[186.20px]  md:text-[14px] md:leading-3 w-[163.80px] text-[8.06px] leading-[10.48px] ">
                 All Transactions
@@ -1528,8 +1543,9 @@ w-3 lg:h-4 md:w-[10px] md:h-[10px]" src={normal} alt="" /> </label>
               </div>
             </div>
           </div>
+          
         )}
-      
+      </div>
     </DashBoardLayout>
   );
 }
