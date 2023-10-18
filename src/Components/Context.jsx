@@ -976,6 +976,7 @@ export const Context = ({ children }) => {
     outputValue,
     setOutputValue,
 
+
     //currency
     convertedAmount,
     setConvertedAmount,
@@ -991,6 +992,7 @@ export const Context = ({ children }) => {
     setRealInputValue,
     realoutputValue, 
     setRealOutputValue,
+
   };
 
   return (
