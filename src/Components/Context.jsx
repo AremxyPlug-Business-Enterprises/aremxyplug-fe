@@ -686,6 +686,9 @@ export const Context = ({ children }) => {
   //=============point redeem==============
   const [inputValue, setInputValue] = useState('');
   const [outputValue, setOutputValue] = useState('');
+  const [realinputValue, setRealInputValue] = useState('');
+  const [realoutputValue, setRealOutputValue] = useState('');
+  
 
   //=============Currency conversion==============
   const [convertedAmount, setConvertedAmount] = useState('');
@@ -984,6 +987,10 @@ export const Context = ({ children }) => {
     setSelectedOne,
     setActiveButtonsOne,
     activeButtonOne,
+    realinputValue, 
+    setRealInputValue,
+    realoutputValue, 
+    setRealOutputValue,
   };
 
   return (

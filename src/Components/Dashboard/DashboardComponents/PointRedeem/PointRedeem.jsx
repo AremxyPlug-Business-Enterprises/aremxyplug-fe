@@ -23,7 +23,15 @@ const PointRedeem = () => {
   const { toggleSideBar, transferFee, toggleVisibility, isVisible } =
     useContext(ContextProvider);
 
-  const { inputValue, setInputValue, outputValue, setOutputValue } = useContext(ContextProvider);
+  const { inputValue,
+           setInputValue, 
+           outputValue, 
+           setOutputValue, 
+           realinputValue,
+           realoutputValue,
+           setRealInputValue,
+           setRealOutputValue,
+   } = useContext(ContextProvider);
   
 const [text, setText] =useState(false);
   const handleInputChange = (event) => {
@@ -34,6 +42,13 @@ const [text, setText] =useState(false);
     setText(true);
   };
 
+  const handleRealInputChange = (event) => {
+    const newValue = event.target.value;
+
+    setRealInputValue(newValue);
+    setRealOutputValue(newValue);
+    setText(true);
+  };
   const pointsEarned = "+2.00";
 
   const [InputPinPopUp, setInputPinPopUp] = useState(false);
@@ -55,6 +70,12 @@ const [text, setText] =useState(false);
   //     setProceed(true);
 
   // };
+  const handlerealClear = () =>{
+    setRealInputValue('');
+    setRealOutputValue('');
+    setText(true);
+  }
+
   const schema = Joi.object({
     inputValue: Joi.string()
       .pattern(new RegExp(/\d{3,}/))
@@ -183,14 +204,15 @@ const [text, setText] =useState(false);
           </div>
         </div>
         <div className="mt-[7px] flex flex-row lg:mt-[20px]">
-          <div className="border-[1px] w-[85%] md:w-[92%] h-[30px] md:h-[40px] lg:h-[60px] px-2 py-0 md:pt-1 lg:pt-4 border-slate-200">
-            <input
+          <div className="border-[1px] w-[85%] md:w-[85%]  text-[10px] lg:text-[16px] h-[30px] md:h-[40px] font-[600] text-[#7C7C7C] lg:h-[50px] px-2 py-0 pt-2 md:pt-3 lg:pt-4 border-slate-200">
+            {/* <input
               type="number"
               readOnly
               value={outputValue}
               className=" w-[100%] outline-none text-[10px] lg:text-[16px] leading-[20.8px] font-[600] text-[#000]"
               placeholder="Amount to Receive"
-            />{" "}
+            />{" "} */}
+            {!text ? <p>Amount to Receive</p> : <div>&#8358;{outputValue}</div>}
           </div>
           <div className="h-[30px] md:h-[40px] lg:h-[60px] w-[15%] md:w-[8%] gap-2 lg:gap-4 flex flex-row px-3 py-2 bg-primary items-center   ">
             <div>
@@ -283,8 +305,10 @@ const [text, setText] =useState(false);
             } w-[90%] overflow-auto flex flex-col gap-0`}
           >
             <img
-              onClick={() => setRealPop(false)}
-              className="absolute right-6 md:right-[23%] lg:right-[32%] w-[18px] h-[18px] my-[1%] md:w-[30px] md:h-[30px] lg:w-[25px] lg:h-[25px]"
+              onClick={() => {setRealPop(false);
+              handlerealClear(); }
+              
+               } className="absolute right-6 md:right-[23%] lg:right-[32%] w-[18px] h-[18px] my-[1%] md:w-[30px] md:h-[30px] lg:w-[25px] lg:h-[25px]"
               src="/Images/transferImages/close-circle.png"
               alt=""
             />
@@ -309,8 +333,8 @@ const [text, setText] =useState(false);
                   <div className="border-[1px] w-[85%] md:w-[85%] h-[30px] md:h-[40px] lg:h-[50px] px-2 py-0 md:pt-1 lg:pt-4 border-slate-200">
                     <input
                       type="number"
-                      value={inputValue}
-                      onChange={handleInputChange}
+                      value={realinputValue}
+                      onChange={handleRealInputChange}
                       className="w-[100%] outline-none text-[10px] lg:text-[16px] leading-[20.8px  font-[600]  text-[#000]"
                       placeholder="Amount to Redeem"
                     />{" "}
@@ -356,7 +380,7 @@ const [text, setText] =useState(false);
                   />
                 </div>
                 <div className="mt-[7px] flex flex-row lg:mt-[10px]">
-                  <div className="border-[1px] w-[85%] md:w-[85%]  text-[10px] lg:text-[16px] h-[30px] md:h-[40px] font-[600] text-[#7C7C7C] lg:h-[50px] px-2 py-0 md:pt-3 lg:pt-4 border-slate-200">
+                  <div className="border-[1px] w-[85%] md:w-[85%]  text-[10px] lg:text-[16px] h-[30px] md:h-[40px] font-[600] text-[#7C7C7C] lg:h-[50px] px-2 py-0 pt-2 md:pt-3 lg:pt-4 border-slate-200">
                     {/* <input
                       type="number"
                       readOnly
@@ -364,7 +388,7 @@ const [text, setText] =useState(false);
                       className=" w-[100%] outline-none text-[10px] lg:text-[16px] leading-[20.8px] font-[600] text-[#000]"
                       placeholder="Amount to Receive"
                     />{" "} */}
-                    {!text ? <p>Receipient will Receive</p> : <div>&#8358;{inputValue}</div>}
+                    {!text ? <p>Receipient will Receive</p> : <div>&#8358;{realoutputValue}</div>}
                   </div>
                   <div className="h-[30px] md:h-[40px] lg:h-[50px] w-[15%] md:w-[15%] gap-2 lg:gap-4 flex flex-row px-3 py-2 bg-primary items-center   ">
                     <div>
@@ -388,7 +412,7 @@ const [text, setText] =useState(false);
               </div>
               <div>
                 <button
-                  onClick={() => setRealPop(false)}
+                  onClick={() => {setRealPop(false); handlerealClear();}}
                   className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center mt-14 items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:mt-[30px]`}
                 >
                   Okay
