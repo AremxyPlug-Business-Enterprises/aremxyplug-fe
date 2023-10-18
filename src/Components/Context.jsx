@@ -686,10 +686,18 @@ export const Context = ({ children }) => {
   //=============point redeem==============
   const [inputValue, setInputValue] = useState('');
   const [outputValue, setOutputValue] = useState('');
+  const [realinputValue, setRealInputValue] = useState('');
+  const [realoutputValue, setRealOutputValue] = useState('');
+  
 
   //=============Currency conversion==============
+  const [convertedAmount, setConvertedAmount] = useState('');
+  const [initialValue, setInitialValue] = useState('');
+  const [showListOne, setShowListOne] = useState(false);
+  const [selectedOne, setSelectedOne] = useState(false);
+  const [activeButtonOne, setActiveButtonsOne] = useState([true, false]);
 
-  
+
 
   const hold = {
     firstDrop,
@@ -967,6 +975,24 @@ export const Context = ({ children }) => {
     setInputValue,
     outputValue,
     setOutputValue,
+
+
+    //currency
+    convertedAmount,
+    setConvertedAmount,
+    initialValue,
+    setInitialValue,
+    showListOne,
+    setShowListOne,
+    selectedOne,
+    setSelectedOne,
+    setActiveButtonsOne,
+    activeButtonOne,
+    realinputValue, 
+    setRealInputValue,
+    realoutputValue, 
+    setRealOutputValue,
+
   };
 
   return (
