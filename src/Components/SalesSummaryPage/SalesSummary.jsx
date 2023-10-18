@@ -14,7 +14,15 @@ import salesD from "./assets/arrow-downsalesD.svg";
 import arrow44 from "./assets/arrow-down@4x.png";
 import arrow11 from "./assets/arrow-down@1x.png";
 import arrow00 from "./assets/arrow-down@0x.png";
-
+// import flagpage from "./assets/Country Flagspage.png";
+// import flagpage1 from "./assets/Country Flagspage1.png";
+// import flagpage2 from "./assets/Countryflag2.svg";
+// import flagpage3 from "./assets/Countryflag3.svg";
+// import flagpage4 from "./assets/Countryflag4.svg";
+// import flagpage5 from "./assets/Countryflag5.svg";
+// import { useContext } from "react";
+// import { ContextProvider } from  "../Context";
+// import styles from "../Dashboard/DashboardComponents/./component.module.css";
 
 
 
@@ -24,6 +32,7 @@ export default function SalesSummaryPage ()  {
     const [isOpen2, setIsOpen2] = useState(false);
     const [isOpen3, setIsOpen3] = useState(false); 
     const [isOpen4, setIsOpen4] = useState(false);
+    // const [isOpen5, setIsOpen5] = useState(false);
 
 
     // const toggleDropdown1 = () => { setIsOpen1(true); };
@@ -42,9 +51,28 @@ export default function SalesSummaryPage ()  {
         setSelectedProduct(product); };
 
 
+
+        // const [blur, setBlur] = useState(false);
+        // const [selected, setSelected] = useState("");
+        // const { volumeValueToggle, isValue, isDarkMode, toggleSideBar } =
+  // useContext(ContextProvider);
+
+
         
         
-        
+        // const handleSelectedOption = (event) => {
+          // const clickedoption = event.target.value;
+          // setSelected(clickedoption);
+          // setBlur(
+            // clickedoption === "USD" ||
+              // clickedoption === "GBP" ||
+              // clickedoption === "AUD" ||
+              // clickedoption === "KES" ||
+              // clickedoption === "EUR"
+          // );
+          // return;
+        // };
+       
         
 
 
@@ -55,26 +83,41 @@ export default function SalesSummaryPage ()  {
 
         <DashBoardLayout>
         <>
-        <div class="flex gap-[25px] md:w-full w-[312px] flex-col">
-    <div class="w-[312px] h-[65.54px] pl-[16.72px] pr-[19.33px] py-[7.36px] md:w-full md:h-[112.29px] md:pl-[28.65px] md:pr-[34.82px] md:py-[12.60px] lg:w-full lg:h-[196px] lg:pl-[50px] lg:pr-[60.79px] lg:rounded-[20px] lg:gap-[75px] lg:py-[22px] bg-gradient-to-r from-yellow-300 to-rose-400 rounded-md justify-center items-start gap-[25.08px] md:gap-[42.97px] inline-flex">
-        <div class="w-[197.63px] lg:w-full md:w-full lg:gap-[15px] self-stretch flex-col justify-start items-start md:gap-[8.59px] gap-[5.02px] flex">
-            <div class="w-[160.85px] md:w-[275.57px] lg:w-[481px] text-black text-[8.08px] md:text-sm lg:text-2xl font-semibold whitespace-nowrap  uppercase">MANAGE ALL YOUR TRANSACTIONS AT A <br /> TIME WITHOUT ANY HASSLE.</div>
-            <div class="w-[209px] h-[21px] md:w-full md:h-[37.24px] lg:w-[588px] lg:h-[65px] text-black text-[7px] lg:text-lg md:text-[9.17px] font-normal whitespace-nowrap  lg:leading-tight md:leading-3 leading-[9.10px]">Select, filter, and manage all your transactions at a time, download all <br /> transactions stats and keep a record track.</div>
+        <div class="flex gap-[25px] md:w-full w-full flex-col">
+    <div class="w-full h-[88.53px] pl-[16.72px] pr-[19.33px] py-[7.36px] md:w-full md:h-[112.29px] 
+    md:pl-[28.65px] md:pr-[34.82px] md:py-[12.60px] lg:w-full lg:h-[196px] 
+    lg:pl-[50px] lg:pr-[60.79px] lg:rounded-[20px] lg:gap-[75px] lg:py-[22px]
+     bg-gradient-to-r from-yellow-300 to-rose-400 rounded-md justify-center 
+     items-center gap-[20.08px] md:gap-[42.97px] flex-row flex">
+        <div class="w-full lg:w-full md:w-full lg:gap-[15px] self-stretch justify-center items-start
+         flex-col md:gap-[8.59px] gap-[5.02px] flex">
+            <div class="w-[160.85px] md:w-[275.57px] lg:w-[481px]
+             text-black text-[8.08px] md:text-sm lg:text-2xl font-bold  
+              uppercase"><span className='whitespace-nowrap'>MANAGE ALL YOUR TRANSACTIONS AT A</span>
+             <br /> TIME WITHOUT ANY HASSLE.</div>
+            <div class="w-[209px] h-[21px] md:w-full md:h-[37.24px] lg:w-[588px]
+             lg:h-[65px] text-black text-[7px] lg:text-lg md:text-[9.17px]
+              font-normal whitespace-nowrap  lg:leading-tight
+               md:leading-3
+                leading-[9.10px]"><span className='lg:whitespace-nowrap'>Select, filter, and manage all your transactions at a time,
+                <br/> download all</span>  transactions stats and keep a record track.</div>
         </div>
-        <img className="w-[53.24px] h-[50.16px] md:w-[91.21px] md:h-[85.94px] lg:w-[159.21px] lg:h-[150px]  " src={receiptA}  alt="" />
+        <img className="w-[55.24px] h-[53.16px] md:w-[91.21px] md:h-[85.94px] lg:w-[159.21px] lg:h-[150px]  " src={receiptA}  alt="" />
     </div>
 
 
 
-{/* sales summary */}
-    <div class="flex gap-[10px] flex-row">
-        <div class="text-neutral-500 text-[8px] lg:text-xl md:text-xs font-semibold ">Sales Summary</div>
-        <div class="w-3 h-3 md:w-[13.75px] md:h-[13.75px] justify-center items-center inline-flex">
-            <img src={arrowsales} className="w-3 h-3 lg:w-10 lg:h-6 md:w-[13.75px] md:mt-[3px] md:h-[13.75px] lg:mt-[20px] relative"alt="" />
+{/* Wallet summary */}
+    <div class="flex gap-[6px] flex-row">
+        <div class="text-neutral-500 text-[9px] lg:text-[20px] md:text-[12px] font-semibold ">Wallet Summary</div>
+        <div class="w-3 h-3 lg:h-6 lg:mt-1 lg:w-6 md:w-[13.75px] md:h-[13.75px] justify-center items-center inline-flex">
+            <img src={arrowsales} class="w-3 h-3 lg:h-6 lg:w-6 md:mt-[5px] mt-1  md:w-[13.75px] md:h-[13.75px] relative" alt="" />
+
         
         </div>
-    </div>
-    <div class="w-[312px] h-10 pl-[63.15px] pr-[62.90px] pt-[8.38px] pb-[7.62px] lg:w-full lg:h-[120px] lg:px-[245px] lg:py-[25px] md:w-full md:h-[68.75px] md:px-[140.10px] md:py-[14.32px] bg-indigo-300 bg-opacity-20 rounded-[6.88px] md:rounded-[6.88px] justify-center items-center inline-flex">
+
+        </div>
+    <div class="w-full h-10 pl-[63.15px] pr-[62.90px] pt-[8.38px] pb-[7.62px] lg:w-full lg:h-[120px] lg:px-[245px] lg:py-[25px] md:w-full md:h-[68.75px] md:px-[140.10px] md:py-[14.32px] bg-indigo-300 bg-opacity-20 rounded-[6.88px] md:rounded-[6.88px] justify-center items-center inline-flex">
         <div class="self-stretch justify-start items-center gap-[9.17px] md:gap-[9.17px] lg:gap-4 inline-flex">
             <div class="justify-start items-center md:gap-[5.73px] lg:gap-2.5 gap-[5.73px] flex">
                 <div class="w-2.5 h-[9.41px]  md:w-[40.10px] md:mt-[30px] md:h-[40.10px]   ">
@@ -97,7 +140,11 @@ export default function SalesSummaryPage ()  {
                 </div>
             </div>
             <div class="w-[13.75px] h-[13.75px] lg:w-6 lg:h-6 justify-center items-center flex">
-                <div class=" ">
+                <div onClick={() => {
+  // setIsOpen5((prev) => !prev);
+}} 
+
+                  class=" ">
                     <img className='w-3 h-3 md:w-[11.37px] md:h-[11.37px] lg:w-[19.85px] lg:h-[19.85px]' src={arrow00} alt="" />
                 </div>
             </div>
@@ -106,9 +153,9 @@ export default function SalesSummaryPage ()  {
 
 
     {/* filter by date */}
-    <div class="w-[312px] h-6 pl-[0.33px] pr-[86.66px] py-[2.67px] lg:w-full lg:h-[72px] lg:pl-4 lg:pr-[459.30px] lg:gap-[50.53px] lg:py-[11px] md:w-full md:h-[41.25px] md:pl-[9.17px] md:pr-[262.40px] md:pt-[6.39px] md:pb-[6.40px] bg-white shadow border-t border-b border-black border-opacity-30 justify-start items-center gap-[52.80px] inline-flex">
+    <div class="w-full h-6 pl-[0.33px] pr-[86.66px] py-[2.67px] lg:w-full lg:h-[72px] lg:pl-4 lg:pr-[459.30px] lg:gap-[50.53px] lg:py-[11px] md:w-full md:h-[41.25px] md:pl-[9.17px] md:pr-[262.40px] md:pt-[6.39px] md:pb-[6.40px] bg-white shadow border-t border-b border-black border-opacity-30 justify-start items-center gap-[52.80px] inline-flex">
         <div class="self-stretch p-[3.33px] lg:p-2.5 md:p-[5.73px] bg-white rounded-sm lg:rounded-[5px] lg:gap-[6.62px]  shadow justify-start items-center md:rounded-[2.86px] md:gap-[3.79px] gap-[2.21px] inline-flex">
-            <div class="text-blue-900 text-[8px] md:text-xs lg:text-xl whitespace-nowrap font-semibold ">Filter by Date</div>
+            <div class="text-blue-900 text-[9px] md:text-[13px] lg:text-[20px] whitespace-nowrap font-semibold ">Filter by Date</div>
             <div class="w-3 h-3 md:w-[11.37px] md:h-[11.37px] lg:w-[19.85px] lg:h-[19.85px] justify-center items-center flex">
                 <div class="w-3 h-3 md:w-[11.37px] md:h-[11.37px] lg:w-[19.85px] lg:h-[19.85px] relative">
                     <img className='w-3 h-3 md:w-[11.37px] md:h-[11.37px] lg:w-[19.85px] lg:h-[20px]' src={filtersales} alt="" />
@@ -124,7 +171,7 @@ export default function SalesSummaryPage ()  {
                         <img className='w-[11.37px] h-[11.37px] lg:w-[19.85px] lg:h-[19.85px]' src={menusales} alt="" />
                     </div>
                 </div>
-                <div   className="text-neutral-500 md:text-xs text-[8px] lg:text-xl md:whitespace-nowrap font-semibold ">{selectedProduct}</div>
+                <div   className="text-neutral-500 md:text-[13px] text-[9px] lg:text-[20px] md:whitespace-nowrap font-semibold ">{selectedProduct}</div>
             </div>
             <div class="w-[11.37px] h-[11.37px] lg:w-[19.85px] lg:h-[19.85px] justify-center items-center flex">
                 <div onClick={() => {
@@ -143,8 +190,16 @@ export default function SalesSummaryPage ()  {
     </div>
 
 
+
+
+
+
+
+
+
+
     {/* NGN, inflows, transactions and outflows */}
-    <div class="w-[312px] h-[53.49px] md:w-full lg:w-full  lg:h-[78px] md:h-[45.05px] lg:gap-[90.50px] justify-start items-center gap-[5px] md:gap-[51.85px] inline-flex">
+    <div class="w-full h-[53.49px] md:w-full lg:w-full  lg:h-[78px] md:h-[45.05px] lg:gap-[90.50px] justify-start items-center gap-[5px] md:gap-[51.85px] inline-flex">
         <div class="p-[1.86px] lg:p-[5.65px] md:p-[3.24px] bg-indigo-300 bg-opacity-20 lg:rounded-[14.70px] lg:gap-[11.31px] rounded-[4.83px] md:rounded-lg justify-start items-start md:gap-[6.48px] gap-[3.71px] flex">
             <div class="text-black text-[10px] md:text-[5.73px] lg:text-[10px]  font-semibold ">NGN</div>
             <div class="w-[5.20px] h-[5.20px] lg:w-[15.83px] lg:h-[15.83px] md:w-[9.07px] md:h-[9.07px] justify-center items-center flex">
@@ -197,18 +252,18 @@ export default function SalesSummaryPage ()  {
 
 
     {/* sales analysis */}
-    <div class="flex gap-[10px] flex-row">
-        <div class="text-neutral-500 text-[8px] md:text-xs lg:text-xl  font-semibold">Sales Analysis</div>
-        <div class="w-3 h-3 lg:h-6 lg:w-6 md:w-[13.75px] md:h-[13.75px] justify-center items-center inline-flex">
-            <img src={squaresales} class="w-3 h-3 lg:h-6 lg:w-6 md:mt-[5px]  md:w-[13.75px] md:h-[13.75px] relative" alt="" />
+    <div class="flex gap-[6px] flex-row">
+        <div class="text-neutral-500 text-[9px] md:text-[12px] lg:text-[20px]  font-semibold">Sales Analysis</div>
+        <div class="w-3 h-3 lg:h-6 lg:mt-1  lg:w-6 md:w-[13.75px] md:h-[13.75px] justify-center items-center inline-flex">
+            <img src={squaresales} class="w-3 h-3 lg:h-6 lg:w-6 md:mt-1 mt-1  md:w-[13.75px] md:h-[13.75px] " alt="" />
 
         
         </div>
     </div>
 
     {/* product, quality and total amount */}
-    <div class="flex md:w-full  border-opacity-100 lg:w-full shadow border-black flex-col">
-    <div class="w-[312px] h-[25px] lg:pr-0 pl-[8.67px] pr-[1.33px] pt-[8.17px] pb-[6.83px] md:w-full lg:w-full lg:pl-[23px] lg:h-[42px] md:h-[24.06px]  md:pl-[14.90px] md:pr-[2.29px] md:pt-[6.32px] md:pb-[5.74px] bg-indigo-200 justify-end lg:justify-between md:justify-evenly items-center inline-flex">
+    <div class="flex md:w-full w-full border-opacity-100 lg:w-full shadow border-black flex-col">
+    <div class="w-full h-[25px] lg:pr-0 pl-[8.67px] pr-[1.33px] pt-[8.17px] pb-[6.83px] md:w-full lg:w-full lg:pl-[23px] lg:h-[42px] md:h-[24.06px]  md:pl-[14.90px] md:pr-[2.29px] md:pt-[6.32px] md:pb-[5.74px] bg-indigo-200 justify-end lg:justify-between md:justify-evenly items-center inline-flex">
         <div class="self-stretch md:justify-between md:w-full lg:justify-between lg:gap-[300px]  lg:w-full justify-start items-start gap-[66px] md:gap-[113.44px] inline-flex">
             <div class="w-[56.33px] md:w-[96.82px] lg:w-full text-black text-[8px] md:text-[9.17px] lg:text-[16px] font-semibold  md:leading-3 lg:leading-tight  leading-[10.40px]">Products</div>
             <div class="w-[53.33px] md:w-[91.67px] lg:w-full text-black text-[8px] md:text-[9.17px] lg:text-[16px] font-semibold  md:leading-3 lg:leading-tight  leading-[10.40px]">Quality</div>
@@ -266,7 +321,97 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[8.06px
 </div>
   </div>
 
-
+  {/* {isOpen5 && ( */}
+  {/* // <div className="lg:ml-[510px]  lg:top-[360px] md:w-[300px] lg:pl-[-500px] left-[65px] w-[62%] lg:w-full  top-[265px] md:top-[175px] absolute flex-col md:mt-[260px] md:ml-[300px] lg:items-start inline-flex"> */}
+            {/* <div className="lg:pl-2.5 lg:w-[370px] md:w-[214.84px] lg:pt-[7px] lg:h-[40px] h-[30px] justify-start items-center pt-[3px] pb-[px] bg-white shadow   md:pt-1 md:pb-[4.43px] inline-flex"> */}
+              {/* <div className="lg:self-stretch lg:justify-start lg:items-center flex md:gap-[2.86px] md:h-[30px]  flex-row  "> */}
+                {/* <div className="lg:w-[29.27px] lg:h-[29.27px] h-[16.77px] md:w-[16.77px] md:h-[16.77px] relative bg-white"> */}
+                  {/* <div className="lg:w-[29.27px] w-[16.77px] lg:h-[27.45px] h-[16.77px] lg:left-0 lg:top-[0.91px] md:w-[16.77px] md:h-[16.77px] md:left-1 md:top-[0.52px] absolute"> */}
+                    {/* <img src={flagpage} alt="" /> */}
+                  {/* </div> */}
+                {/* </div> */}
+                {/* <div className="text-neutral-500 text-[8px] md:text-[9.17px] lg:text-base lg:font-medium md:ml-1 ml-5  md:leading-3 lg:leading-tight"> */}
+                  {/* NGN Wallet (50,000.00) */}
+                {/* </div> */}
+              {/* </div> */}
+            {/* </div> */}
+            {/* <div className="lg:pl-2.5 md:w-[214.84px]  mt-[0.0px] justify-start items-center */}
+            {/* //  h-[30px] lg:h-[45px] lg:w-[370px] lg:pb-[7.73px] bg-white shadow  */}
+            {/* //  lg:justify-start lg:items-center md:h-[30px] lg:mt-[-3px] md:pl-[5.73px] */}
+              {/* // md:mt-[-5px] md:pr-[84.48px] md:pt-1 md:pb-[4.43px]  inline-flex"> */}
+              {/* <div className="lg:self-stretch lg:justify-start lg:items-center flex flex-row gap-[5px] md:gap-[2.86px] lg:gap-[5px] lg:flex"> */}
+                {/* <div className="lg:w-[29.27px] lg:h-[29.27px] lg:relative md:w-[16.77px] md:h-[16.77px] bg-white"> */}
+                  {/* <div className="lg:w-[28.77px] w-[16.77px] lg:h-[26.09px] h-[16.77px] lg:left-[0.50px] lg:top-[3.18px] md:w-[16.77px] md:h-[16.77px] md:left-0 md:top-[0.52px] lg:absolute"> */}
+                    {/* <img src={flagpage1} alt="" /> */}
+                  {/* </div> */}
+                {/* </div> */}
+                {/* <div className="text-neutral-500 lg:text-base md:text-[9.17px] text-[8px] font-medium  md:leading-3 leading-tight"> */}
+                  {/* USD Wallet (0.00) */}
+                {/* </div> */}
+              {/* </div> */}
+            {/* </div> */}
+            {/* <div className="lg:pl-2.5 lg:h-[45px] md:w-[214.84px] h-[30px] justify-start items-center lg:pt-[7px] lg:w-[370px] lg:pb-[7.73px] bg-white shadow lg:justify-start lg:items-center md:h-[30px]  md:pl-[5.73px] md:pr-[84.48px] md:pt-1 md:pb-[4.43px] inline-flex"> */}
+              {/* <div className="lg:self-stretch lg:justify-start lg:items-center flex flex-row gap-[5px] md:gap-[2.86px] lg:gap-[5px] lg:flex"> */}
+                {/* <div className="lg:w-[29.27px] lg:h-[29.27px] md:w-[16.77px] md:h-[16.77px] relative bg-white"> */}
+                  {/* <img */}
+                    {/* // src={flagpage2} */}
+                    {/* // className="lg:w-[29.27px] w-[16.77px] md:h-[16.77px] md:w-[16.77px] lg:mt-[-1px] lg:h-[29.27px] h-[16.77px] lg:left-0 lg:top-0 " */}
+                    {/* // alt="" */}
+                  {/* // /> */}
+                  {/* <div className="lg:w-[28.26px] lg:h-[28.26px] lg:left-[0.50px] lg:top-[0.51px] md:w-[18px] md:h-[35px] md:left-0 md:top-[0.52px] absolute"></div> */}
+                {/* </div> */}
+                {/* <div className="text-neutral-500 lg:text-base text-[8px] md:text-[9.17px] font-medium  md:leading-3 leading-tight"> */}
+                  {/* EUR Wallet (0.00) */}
+                {/* </div> */}
+              {/* </div> */}
+            {/* </div> */}
+            {/* <div className="lg:pl-2.5 lg:w-[370px] md:w-[214.84px] lg:h-[45px] h-[30px] justify-start items-center lg:pt-[7px] lg:pb-[7.73px] bg-white shadow lg:justify-start lg:items-center md:h-[30px]  md:pl-[5.73px] md:pr-[84.48px] md:pt-1 md:pb-[4.43px] inline-flex"> */}
+              {/* <div className="lg:self-stretch lg:justify-start lg:items-center flex-row gap-[5px] lg:gap-[5px] md:gap-[2.86px] inline-flex"> */}
+                {/* <div className="lg:w-[29.27px] w-[16.77px] lg:h-[29.27px] h-[16.77px] md:w-[16.77px] md:h-[16.77px] relative bg-white"> */}
+                  {/* <img src={flagpage3} alt="" /> */}
+                  {/* <div className="lg:w-[28.26px] lg:h-[28.26px] lg:left-[0.50px] lg:top-[0.51px] md:w-[18px] md:h-[35px] md:left-0 md:top-[0.52px] absolute"></div> */}
+{/*  */}
+                  {/* <div className="lg:w-[17.82px] lg:h-[17.82px] lg:left-[5.72px] lg:top-[5.73px] absolute"></div> */}
+                {/* </div> */}
+                {/* <div className="text-neutral-500 lg:text-base text-[8px] md:text-[9.17px] font-medium  md:leading-3 leading-tight"> */}
+                  {/* GBP Wallet (0.00) */}
+                {/* </div> */}
+              {/* </div> */}
+            {/* </div> */}
+            {/* <div className="lg:pl-2.5 md:w-[214.84px] lg:pt-[7px] lg:pb-[7.73px] lg:h-[45px] h-[30px] justify-start items-center  lg:w-[370px] bg-white shadow lg:justify-start lg:items-center md:h-[30px]  md:pl-[5.73px] md:pr-[84.48px] md:pt-1 md:pb-[4.43px]  inline-flex"> */}
+              {/* <div className="lg:self-stretch lg:justify-start lg:items-center lg:gap-[5px] flex-row gap-[5px] md:gap-[2.86px] inline-flex"> */}
+                {/* <div className="lg:w-[29.27px] w-[16.77px] lg:h-[29.27px] h-[16.77px] md:w-[16.77px] md:h-[16.77px] relative bg-white"> */}
+                  {/* <div className="lg:w-[28.26px] lg:h-[28.26px] lg:left-[0.50px] lg:top-[0.51px] md:w-[18px] md:h-[35px] md:left-0 md:top-[0.52px] absolute"></div> */}
+{/*  */}
+                  {/* <img src={flagpage4} alt="" /> */}
+                  {/* <div className="lg:w-[27.45px] w-[15px] lg:h-[29.27px] lg:left-[0.91px] lg:top-0 absolute"> */}
+                  
+                  </div>
+                {/* </div> */}
+                {/* <div className="text-neutral-500 lg:text-base text-[8px] md:text-[9.17px] font-medium  md:leading-3 leading-tight"> */}
+                  {/* AUD Wallet (0.00) */}
+                {/* </div> */}
+              {/* </div> */}
+            {/* </div> */}
+            {/* <div className="lg:pl-2.5 md:w-[214.84px] lg:pt-[7px] lg:w-[370px] lg:h-[45px] h-[30px] justify-start items-center lg:pb-[7.73px] bg-white shadow lg:justify-start lg:items-center md:h-[30px] md:pl-[5.73px] md:pr-[84.48px] md:pt-1 md:pb-[4.43px] inline-flex"> */}
+              {/* <div className="lg:self-stretch lg:justify-start  lg:items-center lg:gap-[5px] flex-row gap-[5px] md:gap-[2.86px] inline-flex"> */}
+                {/* <div className="lg:w-[29.27px] w-[16.77px] lg:h-[29.27px] h-[16.77px] md:w-[16.77px] md:h-[16.77px] relative bg-white"> */}
+                  {/* <img src={flagpage5} alt="" /> */}
+                  {/* <div className="lg:w-[28.26px] lg:h-[28.26px] lg:left-[0.50px] lg:top-[0.51px] md:w-[18px] md:h-[35px] md:left-0 md:top-[0.52px] absolute"></div> */}
+{/*  */}
+                  {/* <div className="lg:w-[9.11px] lg:h-[17.34px] lg:left-[10.07px] lg:top-[5.96px] absolute"> */}
+                  {/* </div> */}
+                  {/* <div className="lg:w-[6.36px] lg:h-[14.71px] lg:left-[11.46px] lg:top-[7.28px] md:w-[16.77px] md:h-[15.73px] md:left-0 md:top-[0.52px]  absolute"></div> */}
+                {/* </div> */}
+                {/* <div className="text-neutral-500 lg:text-base text-[8px] md:text-[9.17px] font-medium  md:leading-3 leading-tight"> */}
+                  {/* KES Wallet (0.00) */}
+                {/* </div> */}
+              {/* </div> */}
+            {/* </div> */}
+          {/* </div> */}
+{/* // )} */}
+{/*  */}
+{/*  */}
 
 
 
@@ -363,9 +508,9 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[8.06px
 {/* data top-up dropdown */}
 {isOpen3 && (
 <div className="flex md:mt-[900px] mt-[350px] flex-col">
-<div class="lg:w-full justify-between items-center lg:h-[101px] md:w-full md:mt-[-1210px] lg:mt-[-1240px] 
+<div class="lg:w-full justify-between items-center lg:h-[101px] w-full md:w-full md:mt-[-1210px] lg:mt-[-1240px] 
 md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] mt-[-400px] 
-lg:pl-[26px] lg:pr-1 w-[312px]  h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.67px] bg-white flex-row flex">
+lg:pl-[26px] lg:pr-1   h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.67px] bg-white flex-row flex">
     
         <div class=" w-[56.33px] text-black text-[8px] font-medium lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">MTN SME</div>
         <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight leading-[10.40px]">100GB</div>
@@ -635,7 +780,7 @@ lg:pl-[26px] lg:pr-1 w-[312px]  h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.
 </div>
 </div>
 )}
-  </div>
+  {/* </div> */}
 
         </>
         </DashBoardLayout>
