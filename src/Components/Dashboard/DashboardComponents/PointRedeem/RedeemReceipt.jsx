@@ -212,7 +212,7 @@ export const RedeemReceipt = () => {
         <div
           className={`${
             isDarkMode ? "mb-[1%]" : "mb-[5%]"
-          } flex gap-[15px] justify-center items-center lg:mb-[%]`}
+          } flex gap-[15px] justify-center items-center mt-[80px] lg:mb-[%]`}
         >
           <div className="text-[10px] md:text-[12px] lg:text-[16px]">
             You need help ?
