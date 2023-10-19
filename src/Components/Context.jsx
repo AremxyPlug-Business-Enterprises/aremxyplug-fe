@@ -698,7 +698,6 @@ export const Context = ({ children }) => {
   const [activeButtonOne, setActiveButtonsOne] = useState([true, false]);
 
 
-
   const hold = {
     firstDrop,
     secondDrop,
