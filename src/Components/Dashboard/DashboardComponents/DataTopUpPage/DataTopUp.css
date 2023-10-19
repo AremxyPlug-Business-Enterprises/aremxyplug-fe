@@ -6,6 +6,10 @@
     background: linear-gradient(92deg, #0CBC8B 4.68%, #367CFF 55.04%);
 }
 
+.input {
+  box-shadow: 0px 0px 4px 0px #00000040
+}
+
 .Datatopup {
     display: flex;
     padding: 6.968px 12.508px 4.5px 6.968px;
@@ -70,10 +74,12 @@
   @media (min-width: 1020px) and (max-width: 1180px) {
 
     .img{
-        margin-right: 125px;
-        margin-left: 125px;
+        margin-right: auto;
+        margin-left: auto;
+        margin-top: 1%;
+        margin-bottom: -5%;
     }
-
+    
 
     .confirm {
       position: absolute;

@@ -8,7 +8,9 @@
 .conversionLists{
     box-shadow: 0px 0px 11.495177268981934px 0px #00000040;
 }
-
+  .confirmConversion::-webkit-scrollbar {
+    display: none;
+  }
 .switch{
     padding: 4.91px 8.96px 4.91px 2.89px;
     width: 102.02px;
@@ -17,13 +19,10 @@
 }
 
 .bluebutton{
-    width: 55px;
-    height: 15px;
+    width: 70px;
+    height: 23px;
     border-radius: 9px;
     display: flex;
-    align-items: center;
-    text-align: center;
-    padding: 10px 8px;
 }
 
 .input, .available{
@@ -68,30 +67,40 @@
   }
   
 
-/* Modal Container */
-.modal {
-    display: flex;/* Initially hidden */
-    position: fixed;
-    z-index: 2;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;/* Semi-transparent background */
-    overflow: auto;
-  }
-  
+
+
   /* Modal Content */
   .modal-content {
     background: white;
     width: 350px;
-    height: 245px;
-    margin: auto;
+    height: 280px;
+    margin: auto 20px;
     box-shadow: 0px 0px 10px 0px #00000040;
     border-radius: 8px;
   }
+
+  .confirmConversion{
+    background: white;
+    box-shadow: 0px 0px 7.090909481048584px 0px #00000040;
+    border-radius: 8px, 8px, 0px, 0px;
+    bottom: 0;
+    flex-shrink: 0;
+    position: absolute;
+    max-height: 90%;
+    overflow-y: auto;
+  }
+ 
+  .InputPinToConvert{
+    box-shadow: 0px 0px 10px 0px #00000040;
+    border-radius: 8px, 8px, 0px, 0px;
+    bottom: 0;
+    flex-shrink: 0;
+   
+  }
         
 .conversionLists{
-  box-shadow: 0px 0px 7px 6px #00000040;
+  box-shadow: 0px 0px 4px 0px #00000040;
+  height: 55px;
 }
 
   /* Close Button */
@@ -102,41 +111,91 @@
     padding: 10px;
     display: none;
   }
-  
+
+.confirmConversion,.InputPinToConvert{
+  border-radius: 8px 8px 0 0;
+}
+
+.inputOTP {
+  border: 0.7px solid  #0000004D; /* Initial border color */
+  outline: none;          /* Remove the default focus outline */
+  transition: border-color 0.5s; /* Add a transition effect for border-color */
+}
+
+.inputOTP:focus {
+  border-color: #B200FF99;    /* Change the border color when focused */
+}
 
 @media only screen and (min-width: 768px) {
     .bluebutton{
-        width: 45px;
-        height: 12px;
-        padding: 9px 7px;
-        border-radius: 8px;
+        width: 75px;
+        height: 24px;
+        border-radius: 9px;
     }
     .modal-content {
-        width: 360px;
-        height: 270px;
+        width: 430px;
+        height: 350px;
         margin: auto;
         position: relative;
         border-radius: 6.88px;
+      }
+      .confirmConversion,.InputPinToConvert{
+        border-radius: 12px;
+      }
+      
+      .conversionLists{
+        box-shadow: 0px 0px 5.7291669845581055px 0px #00000040;
+        height: 65px;
+      }
+
+      .confirmConversion{
+        box-shadow: 0px 0px 10px 0px #00000040;
+        border-radius: 8px;
+        top: 54px;
+        position: relative;
+      }
+      
+      .InputPinToConvert{
+        box-shadow: 0px 0px 10px 0px #00000040;
+        border-radius: 8px;
+        top: 20px;
+        position: relative;
       }
 
 }
 @media only screen and (min-width: 1024px) {
     .bluebutton{
-        width: 70px;
-        height: 20px;
-        border-radius: 9px;
-        padding: 4px 13px;
+        width: 90px;
+        height: 28px;
+        border-radius: 10px;
     }
     .modal-content {
         width: 562px;
-        height: 434px;
-        margin: 130px auto auto auto;
+        height: 480px;
+        margin: auto;
         position: relative;
         border-radius: 12px;
       }
 
-      
-.conversionLists{
-  box-shadow: 0px 0px 6px 6.5px #00000040;
-}
+      .conversionLists{
+        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.65);
+        height: 90px;
+      }
+      .confirmConversion,.InputPinToConvert{
+        border-radius: 20px;
+      }
+      .confirmConversion{
+        box-shadow: 0px 0px 10px 0px #00000040;
+        border-radius: 20px;
+        top: 5%;
+        position: relative;
+      }
+      .InputPinToConvert{
+        box-shadow: 0px 0px 10px 0px #00000040;
+        border-radius: 8px;
+        margin: auto;
+        position: relative;
+      }
+
+
 }

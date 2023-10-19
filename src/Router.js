@@ -55,10 +55,14 @@ import DataTopUpPage from "./Components/Dashboard/DashboardComponents/DataTopUpP
 import CurrencyConversion from "./Components/CurrencyConversion/currencyConversion";
 import PointRedeem from "./Components/Dashboard/DashboardComponents/PointRedeem/PointRedeem"
 import Referral from "./Components/Referrals/Referral"
-import { AirtimeVtuReceipt } from "./Components/AirTimePage/AirtimeVtuReceipt"
+import AirtimeVtuReceipt from "./Components/AirTimePage/AirtimeVtuReceipt"
 import DataBundlesPage from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundlesPage";
 import MtnDataTopUpBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/MtnDataTopUpBundle/MtnDataTopUpBundle";
 import WithdrawToOtherBanks from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToOtherBanks";
+import ConfirmConversion from "./Components/CurrencyConversion/currencyPopups/confirmConversion";
+import { SuccessfulReceipt } from "./Components/CurrencyConversion/ConversionReceipts/SuccessConversionReceipt";
+
+
 import WalletSummaryPage from "./Components/WalletSummaryPage/WalletSummary";
 import SalesSummaryPage from "./Components/SalesSummaryPage/SalesSummary";
 import { WithdrawToOtherBankReceipt } from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToOtherBanksPopUp/WithdrawToOtherBankReceipt";
@@ -74,8 +78,11 @@ import WaecEducationPins from "./Components/EducationPins/waecEducationPin";
 import JambEducationPins from "./Components/EducationPins/jambEducationPin";
 import NecoEducationPins from "./Components/EducationPins/NecoEducationPins";
 import NabtebEducationPins from "./Components/EducationPins/nabtebEducationPins";
+// import WaecReceipt from "./Components/EducationPins/ReceiptEducationPins/waecReceipt";
 
-
+import AddRecipient from "./Components/AirTimePage/AddRecipient";
+import SelectRecipient from "./Components/AirTimePage/SelectRecipient";
+import { RedeemReceipt } from "./Components/Dashboard/DashboardComponents/PointRedeem/RedeemReceipt";
 export const Router = () => {
   return (
     <div>
@@ -122,6 +129,8 @@ export const Router = () => {
         <Route path="/airtime-topup" element={<AirTime />} />
         <Route path="/airtime-vtu" element={<AirtimeVtu />} />
         <Route path="/airtime-vtu-receipt" element={<AirtimeVtuReceipt />} />
+        <Route path="/add-vtu-recipient" element={<AddRecipient />} />
+        <Route path="/select-vtu-recipient" element={<SelectRecipient />} />
         <Route path="/add-account" element={<AddAccount />} />
         <Route path="/ngn-virtual-account" element={<NgnVirtualAccount />} />
         <Route path="/cookie-settings" element={<CookiesSettings />} />
@@ -156,6 +165,7 @@ export const Router = () => {
           path="/international-bank-receipt"
           element={<InternationalReceipt />}
         />
+        <Route path="/redeem-receipt" element={<RedeemReceipt />} />
         <Route path="/global-transfer" element={<GlobalTransfer />} />
         <Route path="/point-redeem" element={<PointRedeem />} />
         <Route path="/fiat" element={<FiatConversion />} />
@@ -164,6 +174,8 @@ export const Router = () => {
         <Route path="/data-bundles" element={<DataBundlesPage />} />
         <Route path="/My-Referral" element={<Referral />} />
         <Route path="/MtnDataTopUpBundle" element={<MtnDataTopUpBundle />} />
+        <Route path="/ConfirmConversion" element={<ConfirmConversion/>}/>
+        <Route path="/SuccessfulConversion" element={<SuccessfulReceipt/>}/>
         <Route path="/MtnReceipt" element={<MtnReceipt/>} />
         <Route path="/AirtelDataBundle" element={<AirtelDataBundle/>} />
         <Route path="/GloDataBundle" element={<GloDataBundle/>} />
@@ -177,7 +189,10 @@ export const Router = () => {
      <Route path = "/NecoEducationPin" element = {<NecoEducationPins/>}/>
      <Route path="/NabtebEducationPin" element = {<NabtebEducationPins/>}/>
      <Route path = "/JambEducationPin" element ={<JambEducationPins/>}/>
+     {/* <Route path="/WaecReceipt" element = {<WaecEducationPins/>}/> */}
       </Routes> 
+        
+      
     </div>
   );
 };

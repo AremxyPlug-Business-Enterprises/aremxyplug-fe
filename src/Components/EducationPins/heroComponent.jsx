@@ -1,6 +1,6 @@
 import React from 'react'
 import remoteEducation from "../EducationPins/imagesEducation/Remote education.svg";
-
+import '../../App.css';
 export default function HeroComponent() {
   return (
     <div className="educationPinsHero  items-center w-[100%] rectangle1 flex justify-between 

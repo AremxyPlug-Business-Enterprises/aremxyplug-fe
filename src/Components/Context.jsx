@@ -665,6 +665,41 @@ export const Context = ({ children }) => {
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
+  // =====================AirtimeVTU========================
+  const [networkName, setNetworkName] = useState('');
+  const [selectedProduct, setSelectedProduct] = useState('');
+  const [recipientName, setRecipientName] = useState('');
+  const [recipientNumber, setRecipientNumber] = useState('');
+  const [amount, setAmount] = useState('');
+  const [networkImage, setNetworkImage] = useState('');
+
+
+
+  // =====================DATABUNDLE========================
+  const [selectedOption, setSelectedOption] = useState('');
+  const [selectedNetworkProduct, setSelectedNetworkProduct] = useState('');
+  const [recipientPhoneNumber, setRecipientPhoneNumber] = useState('');
+  const [selectedAmount, setSelectedAmount] = useState('');
+  const [recipientNames, setRecipientNames] = useState('');
+  const [walletName, setWalletName] = useState("");
+
+  //=============point redeem==============
+  const [inputValue, setInputValue] = useState('');
+  const [outputValue, setOutputValue] = useState('');
+
+  //=============Currency conversion==============
+
+  // =============EDUCATION PINS ==============
+   const [quantityResult, setQuantityResult] = useState('');
+  const [waecActive, setWaecActive] = useState(false);
+  const [paymentResult, setPaymentResult] = useState('');
+const [methodActive, setMethodActive] = useState(false);
+const [examType, setExamType] = useState('');
+const [examActive, setExamActive] = useState(false);
+const [educationPinPhone, setEducationPinPhone] = useState('');
+const [educationPinEmail, setEducationPinEmail] = useState('');
+
+
   const hold = {
     firstDrop,
     secondDrop,
@@ -904,6 +939,61 @@ export const Context = ({ children }) => {
     setOtherBankWithdrawalSuccess,
     // ==============exchangeRate=============
     exchangeRate,
+    
+
+    
+    // ==============AirtimeVTU===============
+    networkName,
+    setNetworkName,
+    selectedProduct,
+    setSelectedProduct,
+    recipientName,
+    setRecipientName,
+    recipientNumber,
+    setRecipientNumber,
+    amount,
+    setAmount,
+    networkImage, 
+    setNetworkImage,
+
+    // ==============DataBundle===============
+    selectedOption, 
+    setSelectedOption,
+    selectedNetworkProduct, 
+    setSelectedNetworkProduct,
+    recipientPhoneNumber, 
+    setRecipientPhoneNumber,
+    selectedAmount, 
+    setSelectedAmount,
+    recipientNames, 
+    setRecipientNames,
+    walletName, 
+    setWalletName,
+
+
+    //point redeem
+    inputValue,
+    setInputValue,
+    outputValue,
+    setOutputValue,
+
+    // EDUCATION PINS
+    quantityResult,
+    setQuantityResult,
+    waecActive,
+    setWaecActive,
+    paymentResult, 
+    setPaymentResult,
+    methodActive, 
+    setMethodActive,
+    examType, 
+    setExamType,
+    examActive, 
+    setExamActive,
+    educationPinPhone, 
+    setEducationPinPhone,
+    educationPinEmail, 
+    setEducationPinEmail
   };
 
   return (

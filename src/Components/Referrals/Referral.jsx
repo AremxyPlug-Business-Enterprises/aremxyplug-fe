@@ -10,11 +10,11 @@ import rightArrow from "../Referrals/referralImage/rightArrowRefer.svg";
 import arrowDown from "../Referrals/referralImage/arrow-down.svg";
 import { Link } from "react-router-dom/dist/react-router-dom.development";
 import { useState } from "react";
-import copy from "copy-to-clipboard";
+// import copy from "copy-to-clipboard";
 
 export default function Referral() {
   
- 
+
   const [copyTextOne, setCopyTextOne] = useState('https://aremxyplug.com/app/register?referral=aremxyplug');
   const [copyTextTwo, setCopyTextTwo] = useState('aremxyplug');
 
@@ -23,7 +23,7 @@ export default function Referral() {
     }
  
     const copyToClipBoardOne = () => {
-        copy(copyTextOne);
+        // copy(copyTextOne);
         alert(`You have copied "${copyTextOne}"`);
     }
         
@@ -33,7 +33,7 @@ export default function Referral() {
     }
  
     const copyToClipBoardTwo = () => {
-        copy(copyTextTwo);
+        // copy(copyTextTwo);
         alert(`You have copied "${copyTextTwo}"`);
     }
   
