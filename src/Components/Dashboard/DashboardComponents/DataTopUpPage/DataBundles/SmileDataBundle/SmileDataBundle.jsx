@@ -10,7 +10,7 @@ import Recipient from "../DataBundles-Images/Recipient.svg";
 import Recipient2 from "../DataBundles-Images/Recipient2.svg";
 import DataBalance from "../DataBundles-Images/DataBalance.svg";
 import DataBalance2 from "../DataBundles-Images/DataBalance2.svg";
-import AirtelLogo from "./AirtelLogo.svg";
+import SmileLogo from "../SmileDataBundle/SmileDataBundleImages/SmileLogo.svg";
 import arrowDown from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/ArrowDown.svg";
 import PhoneNumber from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/PhoneNumber.svg";
 import Recipient3 from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/Recipient.svg";
@@ -22,11 +22,13 @@ import OtpInput from "react-otp-input";
 import styles from "../../../TransferComponent/transfer.module.css";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
-import { AirtelReceipt } from "./AirtelReceipt";
 import Joi from "joi";
 import airtimestyles from "../../../../../AirTimePage/AirtimeVtu.module.css";
+import AccountID from "../SmileDataBundle/SmileDataBundleImages/AccountId.svg";
+import { SmileReceipt } from "./SmileReceipt"
+// import { DataBundleFailedPopUp } from "../../../TransferComponent/PopUps/TransactionFailedPopUp";
 
-const AirtelDataBundle = () => {
+const SmileDataBundle = () => {
   const { isDarkMode } = useContext(ContextProvider);
   const { selectedOption, setSelectedOption } = useContext(ContextProvider);
   const { selectedNetworkProduct, setSelectedNetworkProduct } =
@@ -36,6 +38,7 @@ const AirtelDataBundle = () => {
   const { selectedAmount, setSelectedAmount } = useContext(ContextProvider);
   const { recipientNames, setRecipientNames } = useContext(ContextProvider);
   const { walletName, setWalletName } = useContext(ContextProvider);
+  const { accountId, setAccountId } = useContext(ContextProvider);
 
   const [showProductList, setShowProductList] = useState(false);
   const [showOptionList, setShowOptionList] = useState(false);
@@ -48,12 +51,14 @@ const AirtelDataBundle = () => {
   const [showPayment, setShowPayment] = useState(false);
   const [image, setImage] = useState("");
   const [paymentAmount, setPaymentAmount] = useState("");
-  const [codes, setCodes] = useState(false);
+  // const [codes, setCodes] = useState(false);
 
-  const handleCodes =()=> {
-    setCodes(false);
-    setCodes(true);
-  }
+  const points = "+2.00";
+
+  // const handleCodes = () => {
+  //   setCodes(false);
+  //   setCodes(true);
+  // };
 
   const handleShowPayment = () => {
     setShowPayment(!showPayment);
@@ -160,96 +165,148 @@ const AirtelDataBundle = () => {
   const productList = [
     {
       id: 1,
-      name: "AIRTEL CG",
+      name: "BIGGA",
       options: [
-        "AIRTEL CG 100MB",
-        "AIRTEL CG 200MB",
-        "AIRTEL CG 300MB",
-        "AIRTEL CG 1GB",
-        "AIRTEL CG 2GB",
-        "AIRTEL CG 3GB",
-        "AIRTEL CG 5GB",
-        "AIRTEL CG 10GB",
-        "AIRTEL CG 15GB",
-        "AIRTEL CG 20GB",
+        "5GB Bigga",
+        "6.5GB Bigga",
+        "10GB Bigga",
+        "15GB Bigga",
+        "20GB Bigga",
+        "25GB Bigga",
+        "30GB Bigga",
+        "40GB Bigga",
+        "60GB Bigga",
+        "75GB Bigga",
+        "100GB Bigga",
+        "130GB Bigga",
+        "200GB Bigga",
       ],
 
       amount: [
-        "₦100",
-        "₦200",
-        "₦300",
-        "₦500",
-        "₦500",
-        "₦800",
-        "₦900",
-        "₦900",
-        "₦900",
-        "₦900",
+        "₦18,000",
+        "₦18,000",
+        "₦18,000",
+        "₦18,000",
+        "₦18,000",
+        "₦18,000",
+        "₦18,000",
+        "₦18,000",
+        "₦18,000",
+        "₦18,000",
+        "₦18,000",
+        "₦18,000",
+        "₦18,000",
       ],
 
       duration: [
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
+        "30days",
+        "30days",
+        "30days",
+        "30days",
+        "30days",
+        "30days",
+        "30days",
+        "30days",
+        "30days",
+        "30days",
+        "30days",
+        "30days",
+        "30days",
       ],
     },
 
     {
       id: 2,
-      name: "AIRTEL GIFTING",
-      options: [
-        "AIRTEL GIFTING 1.5GB",
-        "AIRTEL GIFTING 2GB",
-        "AIRTEL GIFTING 3GB",
-        "AIRTEL GIFTING 4.5GB",
-        "AIRTEL GIFTING 6GB",
-        "AIRTEL GIFTING 10GB",
-        "AIRTEL GIFTING 11GB",
-        "AIRTEL GIFTING 15GB",
-        "AIRTEL GIFTING 40GB",
-        "AIRTEL GIFTING 75GB",
-        "AIRTEL GIFTING 120GB",
-      ],
+      name: "JUMBO",
+      options: ["90GB Jumbo", "160GB Jumbo", "200GB Jumbo", "400GB Jumbo"],
+      amount: ["₦18,000", "₦18,000", "₦18,000", "₦18,000"],
 
+      duration: ["60days", "90days", "120days", "180days"],
+    },
+    {
+      id: 3,
+      name: "UNLIMITED ---",
+      options: [],
+
+      amount: [],
+
+      duration: [],
+    },
+
+    {
+      id: 4,
+      name: "DAILY ---",
+      options: [],
+
+      amount: [],
+
+      duration: [],
+    },
+
+    {
+      id: 5,
+      name: "WEEKLY ---",
+      options: [],
+
+      amount: [],
+
+      duration: [],
+    },
+
+    {
+      id: 6,
+      name: "NIGHT",
+      options: ["2GB MidNite", "3GB MidNite"],
+      amount: ["₦18,000", "₦18,000"],
+
+      duration: ["7days", "7days"],
+    },
+
+    {
+      id: 7,
+      name: "SmileVoice ONLY",
+      options: [
+        "Int'l SmileVoice ONLY 23 (New)",
+        "Int'l SmileVoice ONLY 60 (New)",
+        "Int'l SmileVoice ONLY 125 (New)",
+        "SmileVoice ONLY 65 (New)",
+        "SmileVoice ONLY 135 (New)",
+        "SmileVoice ONLY 150 (New)",
+        "SmileVoice ONLY 175 (New)",
+        "SmileVoice ONLY 430 (New)",
+        "SmileVoice ONLY 450 (New)",
+        "SmileVoice ONLY 500 (New)",
+      ],
       amount: [
-        "₦1050",
-        "₦2500",
-        "₦3500",
-        "₦5800",
-        "₦5300",
-        "₦8100",
-        "₦9500",
-        "₦5800",
-        "₦5300",
-        "₦8100",
-        "₦9500",
+        "₦18,000",
+        "₦18,000",
+        "₦18,000",
+        "₦18,000",
+        "₦18,000",
+        "₦18,000",
+        "₦18,000",
+        "₦18,000",
+        "₦18,000",
+        "₦18,000",
       ],
 
       duration: [
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
+        "3days",
+        "7days",
+        "30days",
+        "30days",
+        "30days",
+        "60days",
+        "90days",
+        "90days",
+        "60days",
+        "90days",
       ],
     },
 
     {
-      id: 3,
-      name: "AIRTEL GENERAL BUNDLES ---",
+      id: 8,
+      name: "FREEDOM ---",
       options: [],
       amount: [],
 
@@ -292,6 +349,7 @@ const AirtelDataBundle = () => {
     setSelectedOption("");
     setShowProductList(false);
     setShowOptionList(false);
+    setAccountId(false);
   };
 
   const handleSelectOption = (selectedOption, selectedAmount, duration) => {
@@ -313,6 +371,15 @@ const AirtelDataBundle = () => {
 
   const handleRecipientNameChange = (e) => {
     setRecipientNames(e.target.value);
+  };
+
+  const handleAccountId = (e) => {
+    // setAccountId(e.target.value);
+    const value = e.target.value;
+
+    const numericValue = value.replace(/\D/g, "").slice(0, 11);
+
+    setAccountId(numericValue);
   };
 
   const handleReceipt = () => {
@@ -362,31 +429,42 @@ const AirtelDataBundle = () => {
           </div>
 
           {/* =========================Select/Add Recipient===================== */}
-          
+
           <div className="flex gap-[10%] mt-[40px] md:w-full md:justify-between md:gap-[10%] ">
             <div className="w-full flex items-center justify-between border text-[10px] md:py-[15px] md:w-[50%] rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
-              <Link to="/DataBundleSelectRecipient" style={{ display: 'inline-flex', width: '100%',}} className="justify-between">
-              <p className="font-semibold">Select Recipient</p>
-              <img
-                className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
-                src={Recipient}
-                alt=""
-              />
+              <Link
+                to="/DataBundleSelectRecipient"
+                style={{ display: "inline-flex", width: "100%" }}
+                className="justify-between"
+              >
+                <p className="font-semibold">Select Recipient</p>
+                <img
+                  className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
+                  src={Recipient}
+                  alt=""
+                />
               </Link>
             </div>
             <div className="w-full flex items-center justify-between border text-[10px] md:py-[15px] md:w-[40%] md:mr-[9%]  rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
-            <Link to="/DataBundleAddRecipient" style={{ display: 'inline-flex', width: '100%' }} className="justify-between">
-              <p className="font-semibold">Add Recipient</p>
-              <img
-                className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
-                src={Recipient2}
-                alt=""
-              />
+              <Link
+                to="/DataBundleAddRecipient"
+                style={{ display: "inline-flex", width: "100%" }}
+                className="justify-between"
+              >
+                <p className="font-semibold">Add Recipient</p>
+                <img
+                  className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
+                  src={Recipient2}
+                  alt=""
+                />
               </Link>
             </div>
           </div>
 
-          <div onClick={handleCodes} className="flex mt-[35px] my-[30px] md:w-[100%] md:gap-[10%]">
+          <div
+            // onClick={handleCodes}
+            className="flex mt-[35px] my-[30px] md:w-[100%] md:gap-[10%]"
+          >
             <div className="rounded-[4px] w-full bg-primary text-white md:w-[50%] h-[30px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-center md:justify-between gap-[10px] px-[5px]">
               <h2 className="lg:text-[16px] lg:leading-[24px] text-[10px] md:text-[12px] leading-[12px]">
                 Data Balance USSD Codes
@@ -424,12 +502,12 @@ const AirtelDataBundle = () => {
                 Purchase
                 <span>
                   <img
-                    src={AirtelLogo}
+                    src={SmileLogo}
                     alt=""
                     className="md:w-[20px] md:h-[15px] mt-[px] lg:w-[30px] lg:h-[25px] 2xl:mt-[5px]"
                   />
                 </span>{" "}
-                AIRTEL Data Instantly
+                Smile Data Instantly
               </p>
               <img
                 src={Select}
@@ -440,58 +518,73 @@ const AirtelDataBundle = () => {
             <div className="md:w-[50%]"></div>
           </div>
 
-          {codes && (
-                <Modal>
-                (
-                <div
-                    className={`code ${
-                    toggleSideBar ? "xl:w-[65%] xl:ml-[17%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-                    } w-[90%] xl:w-[80%] overflow-auto`}
+          {/* {codes && (
+            <Modal>
+              (
+              <div
+                className={`code ${
+                  toggleSideBar
+                    ? "xl:w-[65%] xl:ml-[17%] lg:ml-[20%] lg:w-[40%]"
+                    : "lg:w-[40%]"
+                } w-[90%] xl:w-[80%] overflow-auto`}
+              >
+                <img
+                  onClick={() => setCodes(false)}
+                  className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px] xl:h-[35px] xl:w-[35px]"
+                  src="/Images/transferImages/close-circle.png"
+                  alt=""
+                />
+                <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
+
+                <button
+                  className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[50%] md:rounded-[8px] md:text-[16px] lg:text-[14px] xl:text-[20px] lg:w-[350px] lg:h-[38px] lg:my-[2%]`}
                 >
-                    <img
-                    onClick={()=> setCodes(false)}
-                    className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px] xl:h-[35px] xl:w-[35px]"
-                    src="/Images/transferImages/close-circle.png"
-                    alt=""
-                    />
-                    <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
-
-                    <button
-                    className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[50%] md:rounded-[8px] md:text-[16px] lg:text-[14px] xl:text-[20px] lg:w-[350px] lg:h-[38px] lg:my-[2%]`}
-                    >
-                    Data Balance USSD Codes
-                    </button>
-                    <h2 className="text-[12px] my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
-                    Data balance / share ussd codes.
-                    </h2>
-                    <h2 className="text-[12px] px-[2%] my-[5%] text-blue-600 text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
-                    Tap the network Dial button to check data balance:
-                    </h2>
-                    <div className='flex flex-col gap-1 mb-5'>
-                        
-                        <button
-                            className={`bg-[#FAF8F8] mt-[10%] mb-[2%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:mt-[5%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:mt-[0%] xl:mb-[1%]`}
-                            >
-                            AIRTEL Data Balance Code - *323#
-                        </button>
-                        <button
-                            className={`bg-[#FAF8F8] my-[2%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:my-[1%]`}
-                            >
-                            AIRTEL Data Share Code - *321#
-                        </button>
-                        
-                    </div>
-
-                    <button
-                    onClick={()=> setCodes(false)}
-                    className={`bg-[#04177f] my-[5%] mt-[40%] md:mt-[10%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:my-[2%] xl:mt-[15%]`}
-                    >
-                    Okay
-                    </button>
+                  Data Balance USSD Codes
+                </button>
+                <h2 className="text-[12px] my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
+                  Data balance / share ussd codes.
+                </h2>
+                <h2 className="text-[12px] px-[5%] my-[5%] text-blue-600 text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
+                  Tap the network Dial button to check data balance:
+                </h2>
+                <div className="flex flex-col gap-1 mb-5">
+                  <button
+                    className={`bg-[#FAF8F8] my-[2%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:my-[1%]`}
+                  >
+                    MTN Data Balance Code - *323#
+                  </button>
+                  <button
+                    className={`bg-[#FAF8F8] my-[2%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:my-[1%]`}
+                  >
+                    MTN SME Data Balance Code - *461*4#
+                  </button>
+                  <button
+                    className={`bg-[#FAF8F8] my-[2%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:my-[1%]`}
+                  >
+                    MTN CG Data Balance Code - *460*260#
+                  </button>
+                  <button
+                    className={`bg-[#FAF8F8] my-[2%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:my-[1%]`}
+                  >
+                    MTN Direct Coupon Balance Code - *323*4#
+                  </button>
+                  <button
+                    className={`bg-[#FAF8F8] my-[2%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:my-[1%]`}
+                  >
+                    MTN Data Share Code - *321#
+                  </button>
                 </div>
-                )
-                </Modal>
-            )}
+
+                <button
+                  onClick={() => setCodes(false)}
+                  className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                >
+                  Okay
+                </button>
+              </div>
+              )
+            </Modal>
+          )} */}
 
           {/* =========================PRODUCTS============================== */}
 
@@ -536,7 +629,7 @@ const AirtelDataBundle = () => {
                 className="input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between"
                 onClick={() => setShowOptionList(!showOptionList)}
               >
-                <h2 className="text-[10px] font-[600] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                <h2 className="text-[10px] font-[600] leading-[12px] md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
                   {selectedOption}
                 </h2>
                 <button className="lg:w-6 lg:h-6 w-[11px] h-[11px]">
@@ -569,12 +662,12 @@ const AirtelDataBundle = () => {
                             }`}
                             onClick={() =>
                               handleSelectOption(
-                                `${optionItem} (${amount}) ~ ${duration}`,
+                                `${optionItem} (${amount}) for ${duration}`,
                                 amount
                               )
                             }
                           >
-                            {`${optionItem} (${amount}) ~ ${duration}`}
+                            {`${optionItem} (${amount}) for ${duration}`}
                           </div>
                         );
                       }
@@ -583,6 +676,63 @@ const AirtelDataBundle = () => {
                     })}
                 </div>
               )}
+            </div>
+
+            <div className="input border w-full h-[30px] bg-[#92ABFE2E] opacity-[%] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-center">
+              <h2 className="text-[10px] text-[#7C7C7C] font-[600] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                Registered Email or Smile Account ID
+              </h2>
+            </div>
+
+            <div className="">
+              <button
+                className={`w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[600] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px] ${
+                  !selectedNetworkProduct ||
+                  !selectedOption ||
+                  !inputValue ||
+                  !selectedAmount ||
+                  !paymentSelected ||
+                  !accountId
+                    ? "bg-[#63616188] cursor-not-allowed"
+                    : "bg-primary"
+                }`}
+                //   onClick={handleProceed}
+                disabled={
+                  !selectedNetworkProduct ||
+                  !selectedOption ||
+                  !inputValue ||
+                  !selectedAmount ||
+                  !paymentSelected ||
+                  !accountId
+                }
+              >
+                Validate
+              </button>
+            </div>
+
+            <div className="">
+              <h2 className="text-[10px] font-[600] md:text-[12px] lg:text-[18px]">
+                Account ID{" "}
+              </h2>
+              <div className="relative mt-[5px]">
+                <input
+                  type="number"
+                  className="input border w-full h-8 px-4 rounded-md text-[10px] lg:text-[16px] font-[600] focus:outline-none lg:h-[51px]"
+                  placeholder=""
+                  value={accountId}
+                  onChange={(event) => {
+                    handleAccountId(event);
+                    setAccountId(event.target.value);
+                  }}
+                />
+                <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                  <img
+                    src={AccountID}
+                    alt=""
+                    className="lg:w-[100%] lg:h-[50%]"
+                  />
+                </div>
+              </div>
             </div>
 
             <div className="">
@@ -663,23 +813,22 @@ const AirtelDataBundle = () => {
 
             <div>
               <div onClick={handleShowPayment}>
-                <h2 className={airtimestyles.head3}>Payment Method</h2>
-                <div className={airtimestyles.input1}>
+                <h2 className="lg:text-[18px] lg:leading-[24px] mb-2 text-[10px] md:text-[12px] font-[600] leading-[12px]">
+                  Payment Method
+                </h2>
+                <div className="input flex justify-between items-center border w-full h-8 px-2 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px]">
                   {paymentSelected ? (
                     <li
                       onClick={handleShowPayment}
                       className={airtimestyles.labelInput}
                     >
-                      <h2 className={airtimestyles.head4}>{walletName}</h2>
-                      <h2 className={airtimestyles.head4}>
-                        Wallet({paymentAmount.toLocaleString()}.00)
+                      <h2 className="text-[#7C7C7C]">{walletName}</h2>
+                      <h2 className="text-[#7C7C7C]">
+                        Wallet ({paymentAmount.toLocaleString()}.00)
                       </h2>
                     </li>
                   ) : (
-                    <h2
-                      onClick={handleShowPayment}
-                      className={airtimestyles.head9}
-                    >
+                    <h2 onClick={handleShowPayment} className="text-[10px] lg:text-[14px]">
                       Select Payment Method
                     </h2>
                   )}
@@ -705,7 +854,11 @@ const AirtelDataBundle = () => {
                 </div>
               </div>
               {showPayment && (
-                <div className={airtimestyles.colDown}>
+                <div className={`border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute ${
+                  toggleSideBar
+                    ? "w-full md:w-[44.5%] lg:w-[45%] 2xl:w-[46%]"
+                    : "w-full md:w-[46%] 2xl:w-[46.5%]"
+                } bg-[#FFF] z-[100]`}>
                   {countryList.map((country) => (
                     <Payment
                       key={country.id}
@@ -743,7 +896,7 @@ const AirtelDataBundle = () => {
           </div>
 
           {/* ================Proceed=================== */}
-          
+
           {proceed && (
             <Modal>
               <div
@@ -751,16 +904,16 @@ const AirtelDataBundle = () => {
                   isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
                 } ${
                   toggleSideBar
-                    ? "md:w-[40%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
+                    ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
                     : "lg:w-[40%]"
-                } lg:ml-[10%] lg:mr-[10%] grow pt-[10px] md:mt-[1%] mb-0 pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:mb-[18%] md:overflow-auto`}
+                } lg:ml-[10%] lg:mr-[10%] grow pt-[10px] md:mt-[1%] mb-0 pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:mb-[18%] overflow-auto`}
               >
                 <div className="w-full flex justify-end border-b-[6px] border-primary px-[12px] md:h-[25px] lg:border-b-[10px] lg:mt-[20px]">
                   <img
                     src={Cancel}
                     alt=""
                     onClick={() => setProceed(false)}
-                    className="mb-[5px] h-[100%] w-[7%] md:h-[120%] lg:h-[400%] lg:mt-[-25px] lg:pb-[20px]"
+                    className="md:h-[120%] lg:h-[400%] lg:mt-[-25px] lg:pb-[20px]"
                   />
                 </div>
 
@@ -782,13 +935,13 @@ const AirtelDataBundle = () => {
                       <div className="flex gap-1">
                         <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
                           <img
-                            src={AirtelLogo}
+                            src={SmileLogo}
                             alt=""
-                            className="w-full h-full object-cover md:h-[15px]"
+                            className="w-full h-full object-cover md:h-[25px]"
                           />
                         </div>
                         <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          AIRTEL
+                          Smile
                         </h2>
                       </div>
                     </div>
@@ -817,11 +970,22 @@ const AirtelDataBundle = () => {
 
                     <div className="flex items-center justify-between">
                       <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        Phone Number
+                        Registered Email
                       </h2>
                       <div className="flex gap-1">
                         <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          {inputValue}
+                          Aremxyplug.com
+                        </h2>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                        Account ID
+                      </h2>
+                      <div className="flex gap-1">
+                        <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                          {accountId}
                         </h2>
                       </div>
                     </div>
@@ -866,6 +1030,17 @@ const AirtelDataBundle = () => {
                       <div className="flex gap-1">
                         <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
                           0.00
+                        </h2>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                        Points Earned
+                      </h2>
+                      <div className="flex gap-1">
+                        <h2 className="text-[10px] text-[#00AA48] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                          {points}
                         </h2>
                       </div>
                     </div>
@@ -985,7 +1160,7 @@ const AirtelDataBundle = () => {
 
           {transactSuccessPopUp && (
             <Modal>
-              {/* <TransactFailedPopUp/> */}
+              {/* <DataBundleFailedPopUp/> */}
               <div
                 className={`confirm ${styles.successfulTwo} ${
                   toggleSideBar
@@ -999,7 +1174,7 @@ const AirtelDataBundle = () => {
                       setTransactSuccessPopUp(false);
                       window.location.reload();
                     }}
-                    className=" w-[18px] h-[15px] md:w-[35px] md:h-[33px] lg:w-[35px] lg:h-[22px]"
+                    className=" w-[30px] h-[15px] md:w-[40px] md:h-[20px] lg:w-[50px] lg:h-[25px]"
                     src="/Images/login/arpLogo.png"
                     alt=""
                   />
@@ -1040,13 +1215,13 @@ const AirtelDataBundle = () => {
                     <div className="flex gap-1">
                       <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
                         <img
-                          src={AirtelLogo}
+                          src={SmileLogo}
                           alt=""
                           className="w-full h-full object-cover"
                         />
                       </div>
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        AIRTEL
+                        Smile
                       </h2>
                     </div>
                   </div>
@@ -1075,6 +1250,28 @@ const AirtelDataBundle = () => {
 
                   <div className="flex items-center justify-between">
                     <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                      Registered Email
+                    </h2>
+                    <div className="flex gap-1">
+                      <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                        Aremxyplug.com
+                      </h2>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                      Account ID
+                    </h2>
+                    <div className="flex gap-1">
+                      <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                        {accountId}
+                      </h2>
+                    </div>
+                  </div>
+
+                  {/* <div className="flex items-center justify-between">
+                    <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
                       Phone Number
                     </h2>
                     <div className="flex gap-1">
@@ -1082,7 +1279,7 @@ const AirtelDataBundle = () => {
                         {inputValue}
                       </h2>
                     </div>
-                  </div>
+                  </div> */}
 
                   <div className="flex items-center justify-between">
                     <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
@@ -1097,7 +1294,18 @@ const AirtelDataBundle = () => {
 
                   <div className="flex items-center justify-between">
                     <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                      Amount
+                      Payment Method
+                    </h2>
+                    <div className="flex gap-1">
+                      <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                        {walletName + " Wallet"}
+                      </h2>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                      Total Amount
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
@@ -1108,11 +1316,11 @@ const AirtelDataBundle = () => {
 
                   <div className="flex items-center justify-between">
                     <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                      Payment Method
+                      Transaction Fee
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        {walletName + " Wallet"}
+                        0.00
                       </h2>
                     </div>
                   </div>
@@ -1137,8 +1345,8 @@ const AirtelDataBundle = () => {
                     contact us for any further assistance.
                   </p>
                 </div>
-                <div className="flex w-full justify-center mx-auto px-[50px] items-center gap-[5%] md:gap-[10%] mt-[50px] md:w-[50%] lg:gap-[10%] lg:mx-auto  lg:my-[5%] md:mt-[40px]">
-                  <Link to="/AirtelDataBundle">
+                <div className="flex w-full justify-center mb-[30px] mx-auto px-[50px] items-center gap-[5%] md:gap-[10%] mt-[50px] md:w-[50%] lg:gap-[10%] lg:mx-auto  lg:my-[5%] md:mt-[40px]">
+                  <Link to="/SmileDataBundle">
                     <button
                       onClick={() => {
                         handleTransactionSuccessClose();
@@ -1150,7 +1358,7 @@ const AirtelDataBundle = () => {
                     </button>
                   </Link>
 
-                  <Link to="/AirtelReceipt">
+                  <Link to="/Smilereceipt">
                     <button
                       onClick={handleReceipt}
                       className={`border-[1px] w-[100px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-[600] h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[12px] lg:w-[163px] lg:h-[38px] lg:my-[2%] md:px-[60px] md:h-[30px]`}
@@ -1164,8 +1372,8 @@ const AirtelDataBundle = () => {
           )}
 
           {receipt && (
-            <AirtelReceipt
-              networkName="AIRTEL"
+            <SmileReceipt
+              networkName="Smile"
               selectedOption={selectedOption}
               selectedNetworkProduct={selectedNetworkProduct}
               recipientNumber={inputValue}
@@ -1180,6 +1388,7 @@ const AirtelDataBundle = () => {
               className={`w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[600] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px] ${
                 !selectedNetworkProduct ||
                 !selectedOption ||
+                !accountId ||
                 !inputValue ||
                 !selectedAmount ||
                 !paymentSelected
@@ -1190,6 +1399,7 @@ const AirtelDataBundle = () => {
               disabled={
                 !selectedNetworkProduct ||
                 !selectedOption ||
+                !accountId ||
                 !inputValue ||
                 !selectedAmount ||
                 !paymentSelected
@@ -1217,4 +1427,4 @@ const AirtelDataBundle = () => {
   );
 };
 
-export default AirtelDataBundle;
+export default SmileDataBundle;

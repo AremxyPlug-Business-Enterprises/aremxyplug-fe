@@ -222,9 +222,13 @@ const DataBundlesPage = () => {
             </div>
             </Link>
 
+              <Link to="/SmileDataBundle" >
             <div
               id="Network"
               className="rounded-[4px] relative flex flex-col justify-center items-center"
+              onClick={() => {
+                handleChange();
+              }}
             >
               <img src={Smile} alt="" className="w-full" />
               <img
@@ -233,7 +237,9 @@ const DataBundlesPage = () => {
                 className="absolute self-center md:w-[20%] lg:w-[25%]"
               />
             </div>
-
+            </Link>
+            
+            <Link to="/SpectranetdataBundle">
             <div
               id="Network"
               className="rounded-[4px] relative flex flex-col justify-center items-center"
@@ -245,6 +251,7 @@ const DataBundlesPage = () => {
                 className="absolute self-center md:w-[20%] lg:w-[25%]"
               />
             </div>
+            </Link>
           </div>
 
           {codes && (

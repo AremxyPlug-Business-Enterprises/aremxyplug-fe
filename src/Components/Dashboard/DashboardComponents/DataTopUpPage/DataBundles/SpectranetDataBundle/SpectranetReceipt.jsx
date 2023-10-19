@@ -7,7 +7,9 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
 
-export const AirtelReceipt = () => { 
+
+
+export const SpectranetReceipt = () => { 
 
   const {
     selectedNetworkProduct,
@@ -20,6 +22,10 @@ export const AirtelReceipt = () => {
     setSelectedOption,
     setSelectedAmount,
     setRecipientNames,
+    // accountId,
+    setAccountId,
+    numberPins, 
+    setNumberPins,
   }
    = useContext(ContextProvider);
 
@@ -36,6 +42,8 @@ export const AirtelReceipt = () => {
     setSelectedOption(false);
     setSelectedAmount('');
     setRecipientNames('');
+    setAccountId('');
+    setNumberPins('');
   }
 
 
@@ -70,6 +78,8 @@ export const AirtelReceipt = () => {
     }
   };
   
+
+  
   // ==============Save Pdf Function==============
   const handleSaveAsPDFClick = () => {
     const content = contentRef.current;
@@ -93,12 +103,12 @@ export const AirtelReceipt = () => {
           <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
             <Link to="/">
               <img
-                className="w-[30px] h-[15px] md:w-[40px] md:h-[20px] lg:w-[50px] lg:h-[25px]"
+                className=" w-[30px] h-[15px] md:w-[40px] md:h-[20px] lg:w-[50px] lg:h-[25px]"
                 src="/Images/login/arpLogo.png"
                 alt=""
               />
             </Link>
-            <Link to="/AirtelDataBundle">
+            <Link to="/SpectranetDataBundle">
               {" "}
               <img
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
@@ -155,7 +165,7 @@ export const AirtelReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Network</p>
-                  <span>AIRTEL</span>
+                  <span>SPECTRANET</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Product</p>
@@ -165,14 +175,32 @@ export const AirtelReceipt = () => {
                   <p className="text-[#0008]">Plan</p>
                   <span>{selectedOption}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Recipient Name</p>
-                  <span>{recipientNames}</span>
+
+                {/* <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                  <p className="text-[#0008]">Registered Email</p>
+                  <span>Aremxyplug.com</span>
                 </div>
+
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                  <p className="text-[#0008]">Account ID</p>
+                  <span>{accountId}</span>
+                </div> */}
+
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Phone Number</p>
                   <span>{recipientPhoneNumber}</span>
                 </div>
+
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                  <p className="text-[#0008]">Recipient Name</p>
+                  <span>{recipientNames}</span>
+                </div>
+
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                  <p className="text-[#0008]">Number Of PINs</p>
+                  <span>{numberPins}</span>
+                </div>
+                
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Amount</p>
                   <span>{selectedAmount}</span>
@@ -211,11 +239,11 @@ export const AirtelReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Product</p>
-                  <span>{selectedNetworkProduct}</span>
+                  <span>Data  Top-up</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Description</p>
-                  <span>Data  Top-up</span>
+                  <span>SMILE {selectedNetworkProduct}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Order Number</p>
@@ -239,7 +267,11 @@ export const AirtelReceipt = () => {
               onClick={() => {
                 handleShareClick();
               }}
-              className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+              className={`${
+                toggleSideBar
+                  ? "md:w-[45%]"
+                  : "md:w-[35%]"
+              } bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px]  md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
             >
               Share Receipt
             </button>
@@ -247,12 +279,18 @@ export const AirtelReceipt = () => {
               onClick={() => {
                 handleSaveAsPDFClick();
               }}
-              className={`bg-[#ffffff] border-[1px] w-[111px] border-[#0003] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+              className={`${
+                toggleSideBar
+                  ? "md:w-[45%]"
+                  : "md:w-[35%]"
+              } bg-[#ffffff] border-[1px] w-[111px] border-[#0003] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
             >
               Save as PDF
             </button>
           </div>
         </div>
+
+
         <div
           className={`${
             isDarkMode ? "mb-[1%]" : "mb-[5%]"

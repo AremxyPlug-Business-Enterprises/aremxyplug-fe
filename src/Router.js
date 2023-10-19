@@ -78,6 +78,10 @@ import SelectRecipient from "./Components/AirTimePage/SelectRecipient";
 import { RedeemReceipt } from "./Components/Dashboard/DashboardComponents/PointRedeem/RedeemReceipt";
 import DataBundleSelectRecipient from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundleSelectRecipient";
 import DataBundleAddRecipient from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundleAddRecipient";
+import SmileDataBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/SmileDataBundle/SmileDataBundle";
+import { SmileReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/SmileDataBundle/SmileReceipt";
+import SpectranetDataBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/SpectranetDataBundle/SpectranetDataBundle";
+import { SpectranetReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/SpectranetDataBundle/SpectranetReceipt";
 export const Router = () => {
   return (
     <div>
@@ -180,6 +184,10 @@ export const Router = () => {
         <Route path="/GloReceipt" element={<GloReceipt/>} />
         <Route path="/DataBundleSelectRecipient" element={<DataBundleSelectRecipient/>} />
         <Route path="/DataBundleAddRecipient" element={<DataBundleAddRecipient/>} />
+        <Route path="/SmileDataBundle" element={<SmileDataBundle/>} />
+        <Route path="/Smilereceipt" element={<SmileReceipt/>} />
+        <Route path="/SpectranetDataBundle" element={<SpectranetDataBundle/>} />
+        <Route path="/SpectranetReceipt" element={<SpectranetReceipt/>} />
         
       </Routes>
     </div>
