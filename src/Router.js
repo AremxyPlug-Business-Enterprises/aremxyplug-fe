@@ -61,8 +61,7 @@ import MtnDataTopUpBundle from "./Components/Dashboard/DashboardComponents/DataT
 import WithdrawToOtherBanks from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToOtherBanks";
 import ConfirmConversion from "./Components/CurrencyConversion/currencyPopups/confirmConversion";
 import { SuccessfulReceipt } from "./Components/CurrencyConversion/ConversionReceipts/SuccessConversionReceipt";
-
-
+import { TvSubscription } from "./Components/TvSubscription/TvSubscriptionPage";
 import WalletSummaryPage from "./Components/WalletSummaryPage/WalletSummary";
 import SalesSummaryPage from "./Components/SalesSummaryPage/SalesSummary";
 import { WithdrawToOtherBankReceipt } from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToOtherBanksPopUp/WithdrawToOtherBankReceipt";
@@ -78,10 +77,15 @@ import SelectRecipient from "./Components/AirTimePage/SelectRecipient";
 import { RedeemReceipt } from "./Components/Dashboard/DashboardComponents/PointRedeem/RedeemReceipt";
 import DataBundleSelectRecipient from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundleSelectRecipient";
 import DataBundleAddRecipient from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundleAddRecipient";
+<<<<<<< HEAD
 import SmileDataBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/SmileDataBundle/SmileDataBundle";
 import { SmileReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/SmileDataBundle/SmileReceipt";
 import SpectranetDataBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/SpectranetDataBundle/SpectranetDataBundle";
 import { SpectranetReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/SpectranetDataBundle/SpectranetReceipt";
+=======
+import GoTv from "./Components/TvSubscription/TvOne";
+
+>>>>>>> 7c4e839e74d9bbb228e30ac91f7ceee070aec80f
 export const Router = () => {
   return (
     <div>
@@ -189,6 +193,8 @@ export const Router = () => {
         <Route path="/SpectranetDataBundle" element={<SpectranetDataBundle/>} />
         <Route path="/SpectranetReceipt" element={<SpectranetReceipt/>} />
         
+        <Route path="/TvSubscription" element={<TvSubscription/>} />
+        <Route path="/GoTv" element={<GoTv/>} />
       </Routes>
     </div>
   );
