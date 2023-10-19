@@ -22,7 +22,7 @@ import OtpInput from "react-otp-input";
 import styles from "../../../TransferComponent/transfer.module.css";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
-import Joi from "joi";
+import Joi, { number } from "joi";
 import airtimestyles from "../../../../../AirTimePage/AirtimeVtu.module.css";
 import AccountID from "../SmileDataBundle/SmileDataBundleImages/AccountId.svg";
 import { SmileReceipt } from "./SmileReceipt"
@@ -39,6 +39,7 @@ const SmileDataBundle = () => {
   const { recipientNames, setRecipientNames } = useContext(ContextProvider);
   const { walletName, setWalletName } = useContext(ContextProvider);
   const { accountId, setAccountId } = useContext(ContextProvider);
+  const [email, setEmail] = useState("");
 
   const [showProductList, setShowProductList] = useState(false);
   const [showOptionList, setShowOptionList] = useState(false);
@@ -161,6 +162,31 @@ const SmileDataBundle = () => {
   } else {
     console.log("did not add recipient");
   }
+
+  const [errorMessage, setErrorMessage] = useState('');
+  const [showAccountId, setShowAccountId] = useState("");
+
+  const isEmailOrNumberValid = (input) => {
+    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    const numberRegex = /^\d{10}$/;
+
+    if (emailRegex.test(input) || numberRegex.test(input)) {
+      return true; 
+    }
+    return false;
+  };
+
+  const handleValidate = () => {
+
+    if (isEmailOrNumberValid(email) || isEmailOrNumberValid(number)) {
+      setErrorMessage('')
+      setAccountId(email);
+    setShowAccountId(true);;
+    } else {
+      setErrorMessage('Invalid Email or Smile Account ID')
+    setShowAccountId(false);
+    }
+  };
 
   const productList = [
     {
@@ -334,6 +360,7 @@ const SmileDataBundle = () => {
       setErrors({});
     }
   };
+
 
   const schema = Joi.object({
     recipientPhoneNumber: Joi.string()
@@ -678,33 +705,32 @@ const SmileDataBundle = () => {
               )}
             </div>
 
-            <div className="input border w-full h-[30px] bg-[#92ABFE2E] opacity-[%] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-center">
-              <h2 className="text-[10px] text-[#7C7C7C] font-[600] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                Registered Email or Smile Account ID
-              </h2>
+            <div className="">
+              <input
+                  type="text"
+                  className="input border w-full h-[30px] bg-[#92ABFE2E] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-center text-[10px] text-[#7C7C7C] font-[600] leading-[12px] md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] text-center"
+                  placeholder="Registered Email or Smile Account ID"
+                  value={email}
+                  onChange={(event) => {
+                    setEmail(event.target.value);
+                    setErrorMessage('');
+                  }}
+                />
             </div>
 
             <div className="">
               <button
                 className={`w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[600] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px] ${
-                  !selectedNetworkProduct ||
-                  !selectedOption ||
-                  !inputValue ||
-                  !selectedAmount ||
-                  !paymentSelected ||
-                  !accountId
+                  !email 
                     ? "bg-[#63616188] cursor-not-allowed"
                     : "bg-primary"
                 }`}
-                //   onClick={handleProceed}
                 disabled={
-                  !selectedNetworkProduct ||
-                  !selectedOption ||
-                  !inputValue ||
-                  !selectedAmount ||
-                  !paymentSelected ||
-                  !accountId
+                  !email 
                 }
+                onClick={() => {
+                  handleValidate();
+                }}
               >
                 Validate
               </button>
@@ -716,10 +742,11 @@ const SmileDataBundle = () => {
               </h2>
               <div className="relative mt-[5px]">
                 <input
-                  type="number"
+                  type="text"
                   className="input border w-full h-8 px-4 rounded-md text-[10px] lg:text-[16px] font-[600] focus:outline-none lg:h-[51px]"
                   placeholder=""
-                  value={accountId}
+                  value={showAccountId ? accountId : ''}
+                  readOnly
                   onChange={(event) => {
                     handleAccountId(event);
                     setAccountId(event.target.value);
@@ -762,7 +789,7 @@ const SmileDataBundle = () => {
             </div>
 
             {errors.recipientPhoneNumber && (
-              <div className="text-[12px] text-red-500 italic lg:text-[14px]">
+              <div className="text-[10px] text-red-500 italic lg:text-[14px]">
                 {errors.recipientPhoneNumber}
               </div>
             )}
@@ -895,6 +922,10 @@ const SmileDataBundle = () => {
             </div>
           </div>
 
+          {errorMessage && (
+        <p className="text-red-500 text-start text-[10px] mt-[5px]">{errorMessage}</p>
+      )}
+
           {/* ================Proceed=================== */}
 
           {proceed && (
@@ -913,7 +944,7 @@ const SmileDataBundle = () => {
                     src={Cancel}
                     alt=""
                     onClick={() => setProceed(false)}
-                    className="md:h-[120%] lg:h-[400%] lg:mt-[-25px] lg:pb-[20px]"
+                    className="mb-[5px] md:h-[120%] lg:h-[400%] lg:mt-[-25px] lg:pb-[20px]"
                   />
                 </div>
 
