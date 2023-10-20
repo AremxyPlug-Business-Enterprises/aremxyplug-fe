@@ -55,7 +55,7 @@ const NewPassword = () => {
         <div>
             <>
                 {/* mobile screen view  start here*/}
-                <div className='md:hidden h-[150vh] relative w-[100%] xl:w-[85%] md:mx-[unset]'>
+                <div className='md:hidden h-[150vh] relative w-[100%] xl:w-[85%] md:mx-[unset] '>
                     <div className='pt-[27%] pb-[33%] bg-primary'>
                         <h2 className='text-white font-bold text-[18.33px] leading-[27.5px] text-center'>Welcome to AremxyPlug!</h2>
                         <p className='text-white text-[9.17px] leading-[13.75px] text-center'>The one-stop shop solution for all your digital needs.</p>
@@ -63,7 +63,7 @@ const NewPassword = () => {
                             <img src={passBanner} alt="pass_banner"/>
                         </div>
                     </div>
-                    <div className="relative w-[96%] h-[432px] mx-auto rounded-[14.33px] px-[32px] -mt-[80px] bg-white mb-[25%] flex items-center justify-center" style={{boxShadow: `0px 0px 11.5px 0px rgba(0, 0, 0, 0.25)`}}>
+                    <div className="relative w-[96%] h-[432px] mx-auto rounded-[14.33px] px-[32px] bg-white -mt-[32%] flex items-center justify-center" style={{boxShadow: `0px 0px 11.5px 0px rgba(0, 0, 0, 0.25)`}}>
                         <Link to={`/`} className="absolute top-[14.3px] left-[14.3px] w-[36.51px] h-[17.73px]">
                             <img src={aremxyPlug} alt="brand_logo" className='h-full w-full object-cover'/>
                         </Link>
@@ -80,7 +80,7 @@ const NewPassword = () => {
                                     )}
                                     <input className={`${border} border w-full h-full text-[8.93px] md:text-[11.58px] lg:text-[20px] pl-[7.5px] md:pl-[10px] pr-[40px] md:pr-[50px] rounded  text-[#403f3f] outline-none`} type={passHide} value={password} onChange={(event) => setPassword(event.target.value)}/>
                                 </div>
-                                <h2>{passError}</h2>
+                                <h2 className='text-red-500 text-[5.7px] text-center leading-normal mt-[3px] italic'>{passError}</h2>
                             </div>
                             <div className=''>
                                 <p className="text-[9.17px] md:text-[11.58px] lg:text-[16px] font-[600] lg:mb-[10px] tracking-wider leading-normal">Confirm Password</p>
@@ -93,7 +93,7 @@ const NewPassword = () => {
                                     )}
                                     <input className={`${border} border w-full h-full text-[8.93px] md:text-[11.58px] lg:text-[20px] pl-[7.5px] md:pl-[10px] pr-[40px] md:pr-[50px] rounded  text-[#403f3f] outline-none`} type={passHide} value={cpassword} onChange={(event) => setCpassword(event.target.value)}/>
                                 </div>
-                                <h2 className='text-red-500 text-[5.7px] text-center leading-normal mt-[3px]'>{error}</h2>
+                                <h2 className='text-red-500 text-[5.7px] text-center leading-normal mt-[3px] italic'>{error}</h2>
                             </div>
                             <div className='flex justify-center my-[14.79px] lg:my-[35px]'>
                                 <button className='py-[5.729px] px-[20.052px] border rounded-[4.583px] disabled:bg-[#ccc] font-bold text-white text-[6.875px] leading-normal bg-primary lg:py-[10px] lg:px-[35px] lg:text-[12px] lg:rounded-[8px]' disabled={!password || !cpassword} onClick={handleSubmit}>Continue</button>
@@ -136,7 +136,7 @@ const NewPassword = () => {
                                         )}
                                         <input className={`${border} border w-full h-full text-[8.93px] md:text-[11.58px] lg:text-[20px] pl-[7.5px] md:pl-[10px] pr-[40px] md:pr-[50px] rounded  text-[#403f3f] outline-none`} type={passHide} value={password} onChange={(event) => setPassword(event.target.value)}/>
                                     </div>
-                                    <h2 className='text-red-500 text-[5.7px] text-center lg:text-[10px] leading-normal'>{passError}</h2>
+                                    <h2 className='text-red-500 text-[5.7px] text-center lg:text-[10px] leading-normal italic'>{passError}</h2>
                                 </div>
                                 <div className=''>
                                     <p className="text-[9.17px] md:text-[11.58px] lg:text-[16px] font-[600] lg:mb-[10px] tracking-wider leading-normal">Confirm Password</p>
@@ -149,7 +149,7 @@ const NewPassword = () => {
                                         )}
                                         <input className={`${border} border w-full h-full text-[8.93px] md:text-[11.58px] lg:text-[20px] pl-[7.5px] lg:p-[12px] md:pl-[10px] pr-[40px] md:pr-[50px] rounded  text-[#403f3f] outline-none`} type={cpassHide} value={cpassword} onChange={(event) => setCpassword(event.target.value)}/>
                                     </div>
-                                    <h2 className='text-red-500 text-[5.7px] text-center lg:text-[10px] leading-normal'>{error}</h2>
+                                    <h2 className='text-red-500 text-[5.7px] text-center lg:text-[10px] leading-normal italic'>{error}</h2>
                                 </div>
                                 <div className='flex justify-center my-[14.32px] lg:my-[35px]'>
                                     <button className='py-[5.729px] px-[20.052px] border rounded-[4.583px] disabled:bg-[#ccc] font-bold text-white text-[6.875px] leading-normal bg-primary lg:py-[10px] lg:px-[35px] lg:text-[12px] lg:rounded-[8px]' disabled={!password || !cpassword} onClick={handleSubmit}>Continue</button>
