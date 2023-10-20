@@ -35,12 +35,12 @@ const CurrencyConversion = () =>{
         
         <div className="">
         
-          <div id='background' className="h-[90px] justify-between lg:h-[196px] items-center md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] lg:rounded-[20px] mx-auto  flex gap-5 px-[14px] md:px-[28.65px] lg:px-[50px]">
-            <div className="py-[9.57px] md:py-[16.61px] lg:py-[29px] align-middle flex flex-col gap-1.5">
-                <p className="text-[9px] lg:text-[24px] md:text-[13.75px] font-semibold w-[230px] lg:w-[600px] md:w-[430px]">CONVERT CURRENCY, AIRTIME, AND POINTS WITH AREMXYPLUG!</p>
-                <p className="text-[7.5px] lg:text-[20px] md:text-[11.46px] w-[177.94px] lg:w-[539px] md:w-[308.8px]">Accept payments in any currency, convert and transfer money internationally without any hassle.</p>
+          <div id='background' className="h-[90px] justify-between lg:h-[196px] md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] lg:rounded-[20px] mx-auto  flex gap-5 px-[14px] md:px-[28.65px] lg:px-[50px]">
+            <div className=" w-[70%] py-[9.57px] md:py-[16.61px] lg:py-[29px] align-middle self-center flex flex-col gap-1.5">
+                <p className="text-[9px] lg:text-[24px] md:text-[13.75px] font-semibold ">CONVERT CURRENCY, AIRTIME, AND POINTS WITH AREMXYPLUG!</p>
+                <p className="text-[7.5px] lg:text-[20px] md:text-[11.46px]">Accept payments in any currency, convert and transfer money internationally without any hassle.</p>
             </div>
-            <div className="flex w-[25%] h-[97%] pt-2">
+            <div className="flex w-[23%] h-[97%] pt-2 shrink-0">
                 <img src={creditCard} alt="" className="" />
             </div>
           </div>
@@ -93,11 +93,11 @@ const CurrencyConversion = () =>{
             <p className="text-center font-bold text-[10px] md:text-[12px] lg:text-[20px] py-2.5 lg:py-7 md:py-4">Crypto Conversion</p>
             <p className="text-[#04177F] text-[10px] md:text-[14px] lg:text-[20px] text-center font-bold">This Feature is Currently Not Available.</p>
             
-              <div className="flex justify-center relative my-[35px] md:my-[25px]">
+              <div className="flex justify-center relative my-[32px] md:my-[25px]">
                 <img src={cryptoFeature} alt="" className="lg:h-[200px] md:w-[150px] lg:w-[204.4px] md:h-[150px]"/>
               </div>
               <div className="mx-[6%] flex flex-col gap-[5px] pb-[5%]">
-                <div className="text-[8px] font-extrabold float-right ml-[80%] md:ml-[70%] md:text-[12px] lg:text-[13px] lg:ml-[80%]">
+                <div className="text-[8px] font-extrabold float-right ml-[76%] md:ml-[70%] md:text-[12px] lg:text-[13px] lg:ml-[80%]">
                   Coming soon...
                 </div>
                 <div
@@ -132,13 +132,13 @@ const CurrencyConversion = () =>{
             <p className="text-center font-bold text-[10px] md:text-[12px] lg:text-[20px] py-2.5 lg:py-7 md:py-4">Multi-Wallet Conversion</p>
             <p className="text-[#04177F] text-[10px] md:text-[12px] lg:text-[20px] text-center font-bold">This Feature is Currently Not Available.</p>
           
-              <div className="flex justify-center relative my-[35px] md:my-[25px]">
+              <div className="flex justify-center relative my-[28px] md:my-[25px]">
                 <img src={mwFeature} alt=""  className="lg:h-[200px] md:w-[150px] lg:w-[204.4px] md:h-[150px]"/>
               </div>
         
             
             <div className="mx-[6%] flex flex-col gap-[5px] pb-[5%]">
-                <div className="text-[8px] font-extrabold float-right ml-[80%] md:ml-[70%] md:text-[12px] lg:text-[13px] lg:ml-[80%]">
+                <div className="text-[8px] font-extrabold float-right ml-[76%] md:ml-[70%] md:text-[12px] lg:text-[13px] lg:ml-[80%]">
                   Coming soon...
                 </div>
                 <div
@@ -183,7 +183,7 @@ const CurrencyConversion = () =>{
          </div>
 
         
-         <div className={`flex gap-[15px] justify-center items-center mt-[68%] md:mt-[38%] lg:mt-[26%] lg:mb-[%]`}>
+         <div className={`flex gap-[15px] justify-center items-center mt-[68%] md:mt-[38%] lg:mt-[26%] max-[760px]:pb-[60px]`}>
           <div className="font-medium text-[10px] md:text-[12px] lg:text-[14px]">
             You need help ?</div>
             <Link to="/ContactUs">

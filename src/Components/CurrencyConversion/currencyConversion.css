@@ -8,9 +8,11 @@
 .conversionLists{
     box-shadow: 0px 0px 11.495177268981934px 0px #00000040;
 }
-  .confirmConversion::-webkit-scrollbar {
+
+.confirmConversion::-webkit-scrollbar {
     display: none;
   }
+
 .switch{
     padding: 4.91px 8.96px 4.91px 2.89px;
     width: 102.02px;
