@@ -2,15 +2,15 @@ import React, {useState} from "react";
 import { Link } from "react-router-dom";
 import { DashBoardLayout } from "../Dashboard/Layout/DashBoardLayout";
 import { AiFillEyeInvisible } from "react-icons/ai";
+import "../CurrencyConversion/currencyConversion.css";
 import OtpInput from "react-otp-input";
 import { AiFillEye } from "react-icons/ai";
 import { useContext, useEffect } from "react";
 import { ContextProvider } from "../Context";
 import { Modal } from "../Screens/Modal/Modal";
 import styles from "../Dashboard/DashboardComponents/TransferComponent/transfer.module.css";
-import { CountrySelectorFiat } from "./currencyPopups/currencySelectorFiat";
 import { CountrySelector } from "../Dashboard/DashboardComponents/CountrySelect/CountrySelector";
-
+import { FiatSelector } from "./currencyPopups/countryselectorFiat";
 
 
 const FiatConversion = () => {
@@ -30,25 +30,22 @@ const FiatConversion = () => {
     }, []);
 
     const [errors] = useState({});
+    
+
     const [conversionRate, setConversionRate] = useState(false);
   
 
-    // const transferHandler = (e) => {
-    //   setTransfer(e.target.value);
-    // };
-    // const receiveHandler = (e) => {
-    //   setReceive(e.target.value);
-    // };
-
-    
   const [selectedCountry, setSelectedCountry] = useState("");
 
   const handleCountrySelect = (country, id) => {
     setSelectedCountry(country);
   };
+  const [selectedCountryTwo, setSelectedCountryTwo] = useState("");
 
-    const [buttonColor, setButtonColor] = useState('#0008'); // Default color
-    // const [isValid, setIsValid] = useState(false);
+  const handleCountrySelectTwo = (country, id) => {
+    setSelectedCountryTwo(country);
+  };
+
   
         
     const CopyButton = ({ textToCopy }) => {
@@ -69,20 +66,36 @@ const FiatConversion = () => {
         </button>
       );
     };
-
+    const cvRate = (1/ exchangeRate).toFixed(4)
     const {
         toggleSideBar,
         inputPin,
         isDarkMode,
         setHideNavbar,
-        // setTransfer,
-        // setReceive,
+        convertedAmount,
+        setConvertedAmount,
+        initialValue,
+        setInitialValue,
         setInputPin,
         toggleVisibility,
         isVisible,    
       } = useContext(ContextProvider);
 
-      
+      const convertHandler = (e) => {
+        setConvertedAmount(e.target.value);
+      };
+      const initialHandler = (e) => {
+        setInitialValue(e.target.value);
+      };
+
+     
+
+      const [confirm, setConfirm] = useState(false);
+
+      const handleConfirm = (event) => {
+    event.preventDefault();
+      setConfirm(true)
+  };
       const setNav = () => {
         setHideNavbar(true);
       };
@@ -101,20 +114,10 @@ const FiatConversion = () => {
         setConfirm(true)
       }
 
-      const [pinInput, setPinInput] = useState(false);
-      const handlePinInput = () =>{
-        setPinInput(true);
-        setConfirm(false);
-      }
-
-      const [conversionSuccessful, setConversionSuccessful] = useState(false)
-       const handleConversionSuccessful = () =>{
-        setPinInput(false);
-        setConversionSuccessful(true);
-       }
+     
       
 
-    const availableBalance = (`${50},000`);
+    
 
 
   const [nairaAmount, setNairaAmount] = useState("");
@@ -146,6 +149,22 @@ const FiatConversion = () => {
   };
 
   const convertedAmountTwo = (nairaAmountTwo / rate).toFixed(2);
+// current change ends here
+
+      const [pinInput, setPinInput] = useState(false);
+      const handlePinInput = () =>{
+        setPinInput(true);
+        setConfirm(false);
+      }
+
+      const [conversionSuccessful, setConversionSuccessful] = useState(false)
+       const handleConversionSuccessful = () =>{
+        setPinInput(false);
+        setConversionSuccessful(true);
+       }
+      
+
+    const availableBalance = (`${50},000`);
 
       const [isFocused, setIsFocused] = useState(false);
       const handleFocus = () => {
@@ -201,9 +220,10 @@ const FiatConversion = () => {
               alt=""
             />
             <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[8%] md:h-[15px]" />
-            <div className="bg-[#04177f] text-[#fff] text-[10px] my-[2%] h-[20px] flex justify-center items-center rounded-[2px] md:my-[5%] md:h-[30px] md:text-[15px] lg:text-[16px] lg:mx-auto lg:my-[5%] lg:h-[38px] lg:w-[60%]">
-              Real-time fiat Transfer Check Rate
+            <div className="bg-[#04177f] font-medium py-3 lg:py-5 text-[#fff] mt-[60px] lg:mt-[50px] text-[10px] my-[2%] h-[20px] flex justify-center items-center rounded-[2px] lg:rounded-[8px] md:my-[5%] md:h-[30px] md:text-[15px] lg:text-[16px] lg:mx-auto lg:my-[5%] lg:h-[38px] lg:w-[60%]">
+              Real-time fiat Conversion Check Rate
             </div>
+            
             <div className="mx-[5%]">
               <div className="font-extrabold flex text-[#000] text-[10px] leading-[130%] items-center my-[7%] gap-[8px] md:my-[3%] md:text-[18px] lg:text-[20px]">
                 <p>Sender</p>
@@ -244,6 +264,22 @@ const FiatConversion = () => {
                   </div>
                 )}
               </div>
+                
+                <div className="input border h-[25px] flex justify-between pl-[2%] md:h-[40px] lg:h-[45px] lg:border-[1px] lg:border-[#0003]">
+                  {" "}
+                  <input
+                    type="number"
+                    placeholder="Amount to Convert"
+                    className="text-[10px] text-[#000] w-[90%] h-[100%] outline-none md:text-[15px] lg:text-[16px]"
+                  />
+                  <FiatSelector
+                      onSelectOne={handleCountrySelectTwo}
+                      selectedCountryOne={selectedCountryTwo}
+                     />
+                </div>
+
+              </div>
+              
               <div className="text-[9px] text-[#29B8FC] border-[0.9px] drop-shadow-3xl border-[#0003] rounded-[7px] w-[55%] mx-auto my-[3%] flex justify-center items-center py-[7px] gap-1 md:my-[5%] md:h-[40px] md:text-[14px] md:gap-2 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
                 <img
                   className="w-[14px] h-[14px] md:w-[20px] md:h-[20px] lg:w-[24px] lg:h-[24px]"
@@ -265,11 +301,9 @@ const FiatConversion = () => {
                 />
               </div>
               <div className={``}>
-                <div className="border h-[23.5px] md:h-[45px] lg:h-[44px] flex justify-between pl-[2%] lg:border-[1px] lg:border-[#0003]">
+                <div className="input border h-[23.5px] md:h-[45px] lg:h-[44px] flex justify-between pl-[2%] lg:border-[1px] lg:border-[#0003]">
                   {" "}
                   <input
-                    value={convertedAmountTwo}
-                    readOnly
                     type="number"
                     placeholder="Recipient will Receive"
                     className="text-[10px] w-[90%] h-[100%] outline-none md:text-[15px] lg:text-[16px]"
@@ -287,13 +321,15 @@ const FiatConversion = () => {
                     {errors.receive}
                   </div>
                 )}
+             
+                
               </div>
               <button
-                onClick={() => setConversionRate(false)}
-                className="bg-[#04177f] mt-[25%] w-full flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:my-[10%] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:mt-[10%]"
-              >
-                Okay
-              </button>
+                  onClick={() => setConversionRate(false)}
+                  className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center mt-14 items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:mt-[40px]`}
+                >
+                  Okay
+                </button>
             </div>
           </div>
         </Modal>
@@ -305,14 +341,16 @@ const FiatConversion = () => {
                         <img src="./Images/currencyImages/right.svg" alt="" className="lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px]" />
                     </div>
                 {/* value={numeric} onChange={NumericChange} */}
-                   <div className="flex ">
-                    <input type="number" value={nairaAmount} onChange={handleAmountChange} placeholder="Amount To Convert" className="input text-[8px] flex md:text-[12px] lg:text-[16px] pl-[5px] md:pl-[12px] lg:pl-[20px] font-semibold w-full h-[24.24px] md:h-[41.82px] lg:h-[70px]" />
-                    <button class="dropdown bg-[#04177F]">
-                        <div class="dropbtn flex gap-[7.2px] lg:gap-[18px] justify-center w-[40px] md:w-[63px] lg:w-[123px]">
-                            <img src="./Images/currencyImages/nigeria.svg" alt=""  className="lg:h-[32px] lg:w-[32px] md:h-[18px] md:w-[18px]" />
-                            <img src="./Images/currencyImages/drop.svg" alt=""  className="lg:h-[32px] lg:w-[32px] md:h-[18px] md:w-[18px]"/>
-                        </div>
-                    </button>
+                   <div className="input border h-[25px] flex justify-between pl-[2%] md:h-[45px] lg:h-[45px] lg:border-[1px] lg:border-[#0003] ">
+                    <input type="number"
+                    onChange={initialHandler}
+                     placeholder="Amount To Convert" className="text-[10px] w-[90%] h-[100%] outline-none md:text-[16px] lg:text-[16px]" />
+                    
+                     <FiatSelector
+                      onSelectOne={handleCountrySelectTwo}
+                      selectedCountryOne={selectedCountryTwo}
+                     />
+                    
                    </div>
 
                    <div className="available flex justify-between w-[160px] md:w-[210px] lg:w-[360px] h-[16px] lg:h-[41px] md:h-[20px] border-[#000000] border-opacity-30 rounded-[4px] md:rounded-[6px] lg:rounded-[8px] border-[0.8px] mx-auto my-7 px-2">
@@ -325,15 +363,17 @@ const FiatConversion = () => {
                         <img src="./Images/currencyImages/right.svg" alt="" className="lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px]" />
                     </div>
                     {/* value={numeric2}  */}
-                   <div className="flex">
-                    <input type="number" readOnly value={convertedAmount} placeholder="Amount To Recieve" className="input text-[8px] md:text-[12px] lg:text-[16px] pl-[5px] md:pl-[12px] lg:pl-[20px] font-semibold w-full h-[24.24px] md:h-[41.82px] lg:h-[70px]" />
+                   <div className="input border h-[25px] flex justify-between pl-[2%] md:h-[45px] lg:h-[45px] lg:border-[1px] lg:border-[#0003]">
+                    <input type="number" 
+                    onChange={convertHandler}  placeholder="Amount To Recieve" className="text-[10px] w-[90%] h-[100%] outline-none md:text-[16px] lg:text-[16px]" />
                     <div className="">
                     <div>
-                     <CountrySelectorFiat
+                     <CountrySelector
                       onSelect={handleCountrySelect}
                       selectedCountry={selectedCountry}
                      />
                     </div>
+                  
                   </div>
                    </div> 
 
@@ -358,90 +398,108 @@ const FiatConversion = () => {
                    </div>
 
                    <div className="flex mx-auto ">
-                    <button onClick={handleConfirm} style={{ backgroundColor: buttonColor }} id="button" className="bg-[#04177F] my-[40px] lg:my-[80px] md:my-[55px] mx-auto text-white text-[12px] md:text-[12px] lg:text-[16px] rounded md:rounded-[7px] lg:rounded-[12px] text-center font-semibold w-full md:w-[210.83px] lg:w-[163px] h-[40px] lg:h-[38px] md:h-[25px]">
+                    <button onClick={handleConfirm} id="button" className={`${
+                convertedAmount.length < 4 ? "bg-[#0008]" : "bg-[#04177f]"
+              } my-[40px] lg:my-[80px] md:my-[55px] mx-auto text-white text-[12px] md:text-[12px] lg:text-[16px] rounded md:rounded-[7px] lg:rounded-[12px] text-center font-semibold w-full md:w-[210.83px] lg:w-[163px] h-[40px] lg:h-[38px] md:h-[25px]`}>
                         Proceed
                     </button>
                 </div>
                 </div>
 
                 
-                <div className="flex justify-center items-center mt-[62.3%] md:mt-[38%] lg:mt-[30%] gap-2">
-           <div className="font-medium text-[10px] md:text-[10px] lg:text-[15px] self-center">You need help ?</div>
-            <Link to="/ContactUs">
-                <div className="bluebutton flex bg-[#04177f] text-[8.5px] md:text-[8.5px] lg:text-[12px] text-white">
-                  <p className="self-center mx-auto align-middle">Contact Us</p>
-                </div>
-            </Link>
-         </div>
+                <div className={`flex gap-[15px] justify-center items-center mt-[68%] md:mt-[38%] lg:mt-[26%] lg:mb-[%]`}>
+                    <div className="font-medium text-[10px] md:text-[12px] lg:text-[14px]">
+                      You need help ?</div>
+                    <Link to="/ContactUs">
+                       <div className="bluebutton flex bg-[#04177f] text-[8.5px] md:text-[8.5px] lg:text-[12px] text-white">
+                         <p className="self-center mx-auto align-middle">Contact Us</p>
+                       </div>
+                    </Link>
+               </div>
         </div>
 
         {confirm &&
             (
             <Modal >
               
-       <div className="confirmConversion bg-white mx-auto w-[95%] md:w-[92%] lg:w-[85%] h-[392px] md:h-[573px] lg:h-full">
-        <div className="lg:h-[60px] md:h-[35px] h-[18px] flex justify-end pr-2 lg:pr-5">
+       <div 
+            className={`confirmConversion mx-auto  ${
+              toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+            } w-[90%]`}
+          >
+        <div className="flex justify-end pr-2 mt-1 mb-3 md:mt-2 md:mb-2 lg:mb-0 lg:mt-1">
         <img  onClick={()=>setConfirm(false)}
-                className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px] self-center"
+                className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[26px] lg:h-[26px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
               />
         </div>
-        <hr className="h-[6px] bg-[#04177f] border-none md:h-[12px] lg:h-[22px]" />
-        <div className="mx-auto w-[95%] md:w-[92%] lg:w-[88%]">
-            <div className="text-center font-semibold text-[9px] md:text-[9.17px] lg:text-[16px] pt-[23px] md:pt-[13px] lg:pt-[19px]">Confirm Transaction</div>
-            <div className="text-[#7C7C7C] text-[6px] md:text-[9.12px] lg:text-[16px] font-medium text-center pt-[22px] lg:pt-[40px] pb-1 md:pb-3">You are about to convert &nbsp;
-               <span className="text-black text-[8px] md:text-[11.46px] lg:text-[20px] font-semibold">{nairaAmount}.00</span>&nbsp;
+        <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
+        <div className="mx-auto">
+            <div className="text-[12px] my-[5%] font-medium text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
+              Confirm Transaction</div>
+            <div className="text-[8px] text-[#0008] text-center mb-2 md:text-[12px] lg:text-[14px]">
+              You are about to convert &nbsp;
+               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">{initialValue}.00</span>&nbsp;
              from your NGN wallet to
             </div>
-            <div className="flex flex-col gap-[8.86px] pt-[9px] md:pt-[15px] lg:pt-[25px] md:gap-[15px] lg:gap-[25px]">
-                <div className="flex justify-between font-medium text-[8px] md:text-[11.5px] lg:text-[20px]">
+            
+            <div className="flex flex-col gap-3 mt-4 md:mt-6 lg:mt-7">
+
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <span className="text-[#7C7C7C]">Wallet Type</span>
                     <span>United S. USD Wallet</span>
                 </div>
-                <div className="flex justify-between font-medium text-[8px] md:text-[11.5px] lg:text-[20px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <span className="text-[#7C7C7C]">Amount To Convert</span>
-                    <span>{nairaAmount}.00</span>
+                    <span>{initialValue}.00</span>
                 </div>
-                <div className="flex justify-between font-medium text-[8px] md:text-[11.5px] lg:text-[20px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <span className="text-[#7C7C7C]">Amount To Receive</span>
                     <span>${convertedAmount}</span>
                 </div>
-                <div className="flex justify-between font-medium text-[8px] md:text-[11.5px] lg:text-[20px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <span className="text-[#7C7C7C]">Conversion Rate</span>
-                    <span>1 NGN ~ {1/exchangeRate} USD</span>
+                    <span>1 NGN ~ {cvRate} USD</span>
                 </div>
-                <div className="flex justify-between font-medium text-[8px] md:text-[11.5px] lg:text-[20px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <span className="text-[#7C7C7C]">Transaction Fee</span>
                     <span>0.00</span>
                 </div>
-                <div className="flex justify-between font-medium text-[8px] md:text-[11.5px] lg:text-[20px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <span className="text-[#7C7C7C]">Completion Time </span>
                     <span>Instantly</span>
                 </div>
-                <div className="flex justify-between font-medium text-[8px] md:text-[11.5px] lg:text-[20px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <span className="text-[#7C7C7C]">Points Earned</span>
                     <span className="text-[#2ED173]">+2.00</span>
                 </div>
             </div>
         </div>
-        <div className="bg-[#F6F7F7] h-[36px] md:h-[57.29px] lg:h-[100px] flex my-[19px] md:my-[38px] lg:my-[70px]">
-            <div className="mx-auto w-[95%] md:w-[88%] lg:w-[84%] flex justify-between align-middle self-center content-center">
-                <div className="flex gap-[3.5px]">
-                    <div className="relative">
-                        <img src="./Images/currencyImages/nigeria.svg" alt="" className='md:w-[16px] md:h-[16px] lg:w-[24px] lg:h-[24px]'/>
-                    </div>
-                    <div className="font-semibold text-[8px] md:text-[12px] lg:text-[20px]">Available Balance</div>
-                    <div className="text-[#7C7C7C] font-medium text-[8px] md:text-[12px] lg:text-[20px]">(&#x20A6;{availableBalance})</div>
+
+        <div className="bg-[#F6F7F7] h-[45px] my-5 lg:my-8 flex justify-between items-center px-[4%]">
+              <div className="flex gap-2 items-center">
+                <div className="bg-white rounded-full h-[27px] w-[27px] flex justify-center items-center">
+                  <img className="w-[16px] h-[16px]" src="./Images/currencyImages/nigeria.svg" alt="/" />
                 </div>
-                <div>
-                    <img src="./Images/currencyImages/right.svg" alt="" className='md:w-[16px] md:h-[16px] lg:w-[24px] lg:h-[24px]'/>
-                </div>
+                <p className="text-[10px] md:text-[14px]  lg:text-[16px]">
+                  Available Balance{" "}
+                  <span className="text-[#0003]">{availableBalance}</span>
+                </p>
+              </div>
+              <img
+                className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
+                src="./Images/currencyImages/right.svg"
+                alt="/"
+              />
             </div>
-        </div>
-        <div className="bg-[#04177F] md:mt-3 lg:mt-4 h-[40px] md:h-[23px] w-[255px] md:w-[93.39px] lg:w-[163px] lg:h-[38px] mx-auto rounded-[5px] md:rounded-[6.88px] lg:rounded-[12px] flex justify-center">
-            <button onClick={handlePinInput}  className="self-center text-[#fff] font-semibold text-[12px] md:text-[10px] lg:text-[16px]">Confirmed</button>
-        </div>
+       
+        <button
+              onClick={handlePinInput}
+              className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] lg:rounded-[12px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+            >
+              Confirmed
+            </button>
        </div> 
             </Modal>
           )}
@@ -450,18 +508,21 @@ const FiatConversion = () => {
             (
             <Modal>
          
-        <div className="InputPinToConvert bg-white mx-auto w-[312px] md:w-[483px] lg:w-[840px] h-[250px] md:h-[267px] lg:h-[465px]">
-            <div className="lg:h-[60px] md:h-[35px] h-[18px]  pr-3 lg:pr-5 flex justify-end">
+        <div className={`InputPinToConvert ${
+              toggleSideBar ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
+            } md:w-[55%] w-[90%]`}
+            >
+            <div className=" pr-3 lg:pr-5 flex justify-end">
             <img  onClick={()=>setPinInput(false)}
-                className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px] self-center"
+                className="w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px] self-center"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
               />
             </div>
-            <hr className="h-[6px] bg-[#04177f] border-none md:h-[15px] lg:h-[22px]" />
-            <div className="font-semibold text-[8px] md:text-[10px] lg:text-[16px] text-center pt-[33px]
-             md:pt-[16px] lg:pt-[20px] pb-4 lg:pb-[70px]">Input PIN to complete transaction</div>
-            <div className="flex flex-col gap-[20px] items-center lg:gap-[25px] font-extrabold mb-[7%]">
+            <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
+            <div className="font-extrabold text-[8px] md:text-[10px] lg:text-[16px] text-center my-[8%]
+            ">Input PIN to complete transaction</div>
+            <div className="flex flex-col items-center gap-[1px] font-extrabold mb-[7%]">
               <div className=" flex items-center ml-[5%] md:ml-[5%] gap-[10px]">
                 {" "}
                 {isVisible ? (
@@ -495,10 +556,10 @@ const FiatConversion = () => {
                   className="text-[#0003]"
                   onClick={toggleVisibility}
                 >
-                  {isVisible ? <AiFillEye color="#04177F" className="w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]" /> : <AiFillEyeInvisible  className="w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]" color="#04177F"/>}
+                  {isVisible ? <AiFillEye className="w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]" /> : <AiFillEyeInvisible  className="w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]"/>}
                 </div>
               </div>
-              <p className="text-[8px] md:text-[12px] lg:text-[14px] my-3 text-[#04177f]">
+              <p className="text-[8px] md:text-[12px] leading-[5px] my-3 text-[#04177f]">
                 Forgot Pin ?
               </p>
             </div>
@@ -519,60 +580,64 @@ const FiatConversion = () => {
             (
             <Modal>
            
-       <div className="confirmConversion shrink-0 mx-auto w-[312px] h-[423px] lg:w-[880px] md:w-[504.5px] md:h-[610px] lg:h-[1000px]">
-        <div className="flex justify-between items-center mx-[3%] lg:h-[60px] md:h-[35px] h-[18px]">
+       <div className={`confirmConversion mx-auto  ${
+              toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+            } w-[90%]`}>
+        <div className="flex justify-between items-center mx-[3%] my-[2%] md:my-[1%]">
         <Link to="/">
               <img
+                onClick={()=>setConversionSuccessful(false)}
                 className=" w-[15px] h-[10px] md:w-[24px] md:h-[15px] lg:w-[42px] lg:h-[25px]"
                 src="/Images/login/arpLogo.png"
                 alt=""
               />
             </Link>
-        <img onClick={()=>setConversionSuccessful(false)}
+              <img
+                onClick={()=>setConversionSuccessful(false)}
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
               />
         </div>
-        <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px] lg:h-[12px]" />
-        <div className="shrink-0 mx-auto w-[270px] md:w-[474px] lg:w-[830px]">
-            <div className="text-center font-semibold text-[9px] md:text-[9.17px] lg:text-[16px] pt-[23px] md:pt-[15px]"
+        <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
+        <div className="">
+            <div className="text-[12px] my-[4%] font-medium text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%]"
             >Conversion Successful</div>
             <img
-              className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[150px] lg:h-[150px] md:w-[78px] md:h-[78px]"
+              className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[250px] lg:h-[250px] md:w-[78px] md:h-[78px]"
               src="./Gif/checkMarkGif.gif"
               alt="/"
             />
-            <div className="text-[#7C7C7C] text-[6px] md:text-[9.12px] lg:text-[16px] font-medium text-center  pb-1 md:pb-3">You have successfully converted &nbsp;
-               <span className="text-black text-[8px] md:text-[11.46px] lg:text-[20px] font-semibold">{nairaAmount}.00</span>&nbsp;
+            <div className="text-[#7C7C7C] text-[8px] text-center mb-2 md:pb-2 lg:pb-3 md:text-[14px] lg:text-[12px]">You have successfully converted &nbsp;
+               <span className="text-black font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">{initialValue}.00</span>&nbsp;
                from your NGN wallet to
             </div>
-            <div className="flex flex-col gap-[8.86px] pt-[9px] md:pt-[15px] lg:pt-[25px] md:gap-[15px] lg:gap-[25px]">
-                <div className="flex justify-between font-medium text-[8px] md:text-[11.5px] lg:text-[20px]">
+            <div className="flex flex-col gap-2 lg:gap-4 ">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                     <span className="text-[#7C7C7C]">Wallet Type</span>
                     <span>United S. USD Wallet</span>
                 </div>
-                <div className="flex justify-between font-medium text-[8px] md:text-[11.5px] lg:text-[20px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                     <span className="text-[#7C7C7C]">Amount To Convert</span>
-                    <span>{nairaAmount}.00</span>
+                    <span>{initialValue}.00</span>
                 </div>
-                <div className="flex justify-between font-medium text-[8px] md:text-[11.5px] lg:text-[20px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                     <span className="text-[#7C7C7C]">Amount To Receive</span>
                     <span>${convertedAmount}</span>
                 </div>
-                <div className="flex justify-between font-medium text-[8px] md:text-[11.5px] lg:text-[20px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                     <span className="text-[#7C7C7C]">Conversion Rate</span>
-                    <span>1 NGN ~ {1/exchangeRate} USD</span>
+                    <span>1 NGN ~ {cvRate} USD</span>
                 </div>
-                <div className="flex justify-between font-medium text-[8px] md:text-[11.5px] lg:text-[20px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                     <span className="text-[#7C7C7C]">Transaction Fee</span>
                     <span>0.00</span>
                 </div>
-                <div className="flex justify-between font-medium text-[8px] md:text-[11.5px] lg:text-[20px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                     <span className="text-[#7C7C7C]">Order Number</span>
                     <span>12255566464564</span>
                 </div>
-                <div className="flex justify-between font-medium text-[8px] md:text-[11.5px] lg:text-[20px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                     <span className="text-[#7C7C7C]">Session ID</span>
                     <div>
                         <span id="CopySessionIdNumber">12255566464564<br/>12255566464564</span>
@@ -583,13 +648,13 @@ const FiatConversion = () => {
                 </div>
             </div>
         </div>
-        <div className="bg-[#F2FAFF] rounded-[6px] md:rounded-[9.17px] lg:rounded-[16px] mx-auto h-[34px] md:h-[32px] lg:h-[56px] w-[250px] md:w-[474px] lg:w-[830px] flex my-[19px] md:my-[38px]">
-            <div className="mx-auto self-center text-[#7C7C7C] text-[6px] md:text-[7px] lg:text-[12px] font-medium w-[171.46px] md:w-[270.99px] lg:w-[473px] text-center">
+        <div className="bg-[#F2FAFF] mx-10 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
+            <div className="text-[6px] text-center mx-auto w-[171px] md:text-[14px] md:w-[80%] lg:text-[14px]">
             The conversion has been sent successfully. Please check the correspondent wallet to view the value.
             </div>
         </div>
 
-        <div className="flex w-full justify-center items-center gap-[10px] md:gap-[8.59px] lg:gap-[15px]">
+        <div className="flex w-full justify-center items-center gap-[10px] md:gap-[8.59px] lg:gap-[15px] md:pb-2">
               
                 <button
                 onClick={()=>setConversionSuccessful(false)} 

@@ -59,10 +59,6 @@ import AirtimeVtuReceipt from "./Components/AirTimePage/AirtimeVtuReceipt"
 import DataBundlesPage from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundlesPage";
 import MtnDataTopUpBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/MtnDataTopUpBundle/MtnDataTopUpBundle";
 import WithdrawToOtherBanks from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToOtherBanks";
-import ConfirmConversion from "./Components/CurrencyConversion/currencyPopups/confirmConversion";
-import { SuccessfulReceipt } from "./Components/CurrencyConversion/ConversionReceipts/SuccessConversionReceipt";
-
-
 import WalletSummaryPage from "./Components/WalletSummaryPage/WalletSummary";
 import SalesSummaryPage from "./Components/SalesSummaryPage/SalesSummary";
 import { WithdrawToOtherBankReceipt } from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToOtherBanksPopUp/WithdrawToOtherBankReceipt";
@@ -73,16 +69,6 @@ import { MtnReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUp
 import { AirtelReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/AirtelDataBundle/AirtelReceipt";
 import { EtisalatReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/EtisalatDataBundle/9MobileReceipt";
 import { GloReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/GloDataBundle/GloReceipt";
-import EducationMain from "./Components/EducationPins/educationMain";
-import WaecEducationPins from "./Components/EducationPins/waecEducationPin";
-import JambEducationPins from "./Components/EducationPins/jambEducationPin";
-import NecoEducationPins from "./Components/EducationPins/NecoEducationPins";
-import NabtebEducationPins from "./Components/EducationPins/nabtebEducationPins";
-// import WaecReceipt from "./Components/EducationPins/ReceiptEducationPins/waecReceipt";
-
-import AddRecipient from "./Components/AirTimePage/AddRecipient";
-import SelectRecipient from "./Components/AirTimePage/SelectRecipient";
-import { RedeemReceipt } from "./Components/Dashboard/DashboardComponents/PointRedeem/RedeemReceipt";
 export const Router = () => {
   return (
     <div>
@@ -183,16 +169,7 @@ export const Router = () => {
         <Route path="/AirtelReceipt" element={<AirtelReceipt/>} />
         <Route path="/EtisalatReceipt" element={<EtisalatReceipt/>} />
         <Route path="/GloReceipt" element={<GloReceipt/>} />
-     
-     <Route path="/EducationPins" element={<EducationMain/>}/>
-     <Route path = "/WaecEducationPin" element ={<WaecEducationPins/>}/>
-     <Route path = "/NecoEducationPin" element = {<NecoEducationPins/>}/>
-     <Route path="/NabtebEducationPin" element = {<NabtebEducationPins/>}/>
-     <Route path = "/JambEducationPin" element ={<JambEducationPins/>}/>
-     {/* <Route path="/WaecReceipt" element = {<WaecEducationPins/>}/> */}
-      </Routes> 
-        
-      
+      </Routes>
     </div>
   );
 };

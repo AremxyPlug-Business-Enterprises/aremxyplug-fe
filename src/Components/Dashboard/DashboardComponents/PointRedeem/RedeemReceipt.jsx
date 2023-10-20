@@ -12,10 +12,17 @@ export const RedeemReceipt = () => {
     toggleSideBar,
     isDarkMode,
     date,
-    purposeOfPayment,
+   
     inputValue,
     outputValue,
+    setInputValue,
+    setoutputValue,
   } = useContext(ContextProvider);
+
+  const handleClear = () =>{
+    setInputValue('');
+    setoutputValue('');
+  }
 
   const contentRef = useRef(null);
 
@@ -57,14 +64,14 @@ export const RedeemReceipt = () => {
           } w-full lg:mx-auto`}
         >
           <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
-            <Link to="/">
+            <Link onClick={handleClear} to="/point-redeem">
               <img
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[29px]"
                 src="/Images/login/arpLogo.png"
                 alt=""
               />
             </Link>
-            <Link to="/money-transfer">
+            <Link onClick={ handleClear } to="/point-redeem">
               {" "}
               <img
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
@@ -129,17 +136,14 @@ export const RedeemReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Account Received</p>
-                  <span>{outputValue}.00</span>
+                  <span>&#8358;{outputValue}.00</span>
                 </div>
                
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Redeem Rate </p>
                   <span>1 PTS ~ 1 NGN</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Purpose of Payment</p>
-                  <span>{purposeOfPayment}</span>
-                </div>
+                
               </div>
 
              
@@ -208,7 +212,7 @@ export const RedeemReceipt = () => {
         <div
           className={`${
             isDarkMode ? "mb-[1%]" : "mb-[5%]"
-          } flex gap-[15px] justify-center items-center lg:mb-[%]`}
+          } flex gap-[15px] justify-center items-center mt-[80px] lg:mb-[%]`}
         >
           <div className="text-[10px] md:text-[12px] lg:text-[16px]">
             You need help ?
