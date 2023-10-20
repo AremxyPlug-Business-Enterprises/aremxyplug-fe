@@ -6,11 +6,11 @@ import flagsales from "./assets/Country Flags (5)sales.png";
 import filtersales from "./assets/document-filtersales.png";
 // import downsales from "./assets/arrow-downsales.png";
 import menusales from "./assets/menusales.png";
-import squaresales from "./assets/arrow-square-rightsalesA.png";
+// import squaresales from "./assets/arrow-square-rightsalesA.png";
 // import salesA from "./assets/arrow-downsalesA.png";
-import salesB from "./assets/arrow-downsalesB.png";
-import salesC from "./assets/arrow-downsalesC.png";
-import salesD from "./assets/arrow-downsalesD.svg";
+// import salesB from "./assets/arrow-downsalesB.png";
+// import salesC from "./assets/arrow-downsalesC.png";
+// import salesD from "./assets/arrow-downsalesD.svg";
 import arrow44 from "./assets/arrow-down@4x.png";
 import arrow11 from "./assets/arrow-down@1x.png";
 import arrow00 from "./assets/arrow-down@0x.png";
@@ -20,9 +20,9 @@ import arrow00 from "./assets/arrow-down@0x.png";
 // import flagpage3 from "./assets/Countryflag3.svg";
 // import flagpage4 from "./assets/Countryflag4.svg";
 // import flagpage5 from "./assets/Countryflag5.svg";
-// import { useContext } from "react";
-// import { ContextProvider } from  "../Context";
-// import styles from "../Dashboard/DashboardComponents/./component.module.css";
+import { useContext } from "react";
+import { ContextProvider } from  "../Context";
+import styles from "../Dashboard/DashboardComponents/./component.module.css";
 
 
 
@@ -52,27 +52,27 @@ export default function SalesSummaryPage ()  {
 
 
 
-        // const [blur, setBlur] = useState(false);
-        // const [selected, setSelected] = useState("");
-        // const { volumeValueToggle, isValue, isDarkMode, toggleSideBar } =
-  // useContext(ContextProvider);
-
-
-        
-        
-        // const handleSelectedOption = (event) => {
-          // const clickedoption = event.target.value;
-          // setSelected(clickedoption);
-          // setBlur(
-            // clickedoption === "USD" ||
-              // clickedoption === "GBP" ||
-              // clickedoption === "AUD" ||
-              // clickedoption === "KES" ||
-              // clickedoption === "EUR"
-          // );
-          // return;
-        // };
-       
+        const [ setBlur] = useState(false);
+        const [selected, setSelected] = useState("");
+        const { isDarkMode, toggleSideBar } =
+  useContext(ContextProvider);
+// 
+// 
+        // 
+        // 
+        const handleSelectedOption = (event) => {
+          const clickedoption = event.target.value;
+          setSelected(clickedoption);
+          setBlur(
+            clickedoption === "USD" ||
+              clickedoption === "GBP" ||
+              clickedoption === "AUD" ||
+              clickedoption === "KES" ||
+              clickedoption === "EUR"
+          );
+          return;
+        };
+      //  
         
 
 
@@ -107,17 +107,21 @@ export default function SalesSummaryPage ()  {
 
 
 
-{/* Wallet summary */}
-    <div class="flex gap-[6px] flex-row">
-        <div class="text-neutral-500 text-[9px] lg:text-[20px] md:text-[12px] font-semibold ">Wallet Summary</div>
-        <div class="w-3 h-3 lg:h-6 lg:mt-1 lg:w-6 md:w-[13.75px] md:h-[13.75px] justify-center items-center inline-flex">
-            <img src={arrowsales} class="w-3 h-3 lg:h-6 lg:w-6 md:mt-[5px] mt-1  md:w-[13.75px] md:h-[13.75px] relative" alt="" />
+{/* Sales summary */}
+    <div class="flex gap-[8px] md:gap-[10px] lg:mt-[30px] mt-[8px] flex-row">
+        <div class="text-neutral-500 text-[11px] lg:text-[20px] md:text-[14px] font-semibold ">Sales Summary</div>
+        <div class="w-4 h-4 lg:h-6 lg:mt-1 lg:w-6 md:w-[15.75px] md:h-[15.75px] justify-center items-center inline-flex">
+            <img src={arrowsales} class="w-4 h-4 lg:h-6 lg:w-6 md:mt-[8px] mt-1  md:w-[15.75px] md:h-[15.75px] relative" alt="" />
 
         
         </div>
 
         </div>
-    <div class="w-full h-10 pl-[63.15px] pr-[62.90px] pt-[8.38px] pb-[7.62px] lg:w-full lg:h-[120px] lg:px-[245px] lg:py-[25px] md:w-full md:h-[68.75px] md:px-[140.10px] md:py-[14.32px] bg-indigo-300 bg-opacity-20 rounded-[6.88px] md:rounded-[6.88px] justify-center items-center inline-flex">
+        {/* available balance */}
+    <div class="w-full h-10 pl-[63.15px] pr-[62.90px] mt-[8px] lg:mt-[20px] pt-[8.38px] pb-[7.62px] lg:w-full 
+    lg:h-[120px] lg:px-[245px] lg:py-[25px] md:w-full md:h-[68.75px] md:px-[140.10px] 
+    md:py-[14.32px] bg-indigo-300 bg-opacity-20 rounded-[6.88px] md:rounded-[6.88px] 
+    justify-center items-center inline-flex">
         <div class="self-stretch justify-start items-center gap-[9.17px] md:gap-[9.17px] lg:gap-4 inline-flex">
             <div class="justify-start items-center md:gap-[5.73px] lg:gap-2.5 gap-[5.73px] flex">
                 <div class="w-2.5 h-[9.41px]  md:w-[40.10px] md:mt-[30px] md:h-[40.10px]   ">
@@ -133,7 +137,7 @@ export default function SalesSummaryPage ()  {
                 </div>
 
 
-                {/* available balance */}
+                
                 <div class="justify-start items-start gap-[6.30px] lg:gap-[11px]  flex">
                     <div class="text-black text-[8px] md:text-xs lg:text-xl font-semibold  md:leading-[14.90px] lg:leading-relaxed leading-[10.40px]">Available Balance</div>
                     <div class="text-neutral-500 text-[8px] lg:text-xl md:text-xs font-medium  lg:leading-relaxed md:leading-[14.90px] leading-[10.40px]">(₦50,000.00)</div>
@@ -153,7 +157,11 @@ export default function SalesSummaryPage ()  {
 
 
     {/* filter by date */}
-    <div class="w-full h-6 pl-[0.33px] pr-[86.66px] py-[2.67px] lg:w-full lg:h-[72px] lg:pl-4 lg:pr-[459.30px] lg:gap-[50.53px] lg:py-[11px] md:w-full md:h-[41.25px] md:pl-[9.17px] md:pr-[262.40px] md:pt-[6.39px] md:pb-[6.40px] bg-white shadow border-t border-b border-black border-opacity-30 justify-start items-center gap-[52.80px] inline-flex">
+    <div class="w-full h-6 pl-[0.33px] mt-[2px] lg:mt-[30px] md:mt-[10px] pr-[86.66px] py-[2.67px] lg:w-full
+     lg:h-[72px] lg:pl-4 lg:pr-[459.30px] lg:gap-[50.53px] lg:py-[11px]
+      md:w-full md:h-[41.25px] md:pl-[9.17px] md:pr-[262.40px] md:pt-[6.39px]
+       md:pb-[6.40px] bg-white shadow border-t border-b border-black
+        border-opacity-30 justify-start items-center gap-[52.80px] inline-flex">
         <div class="self-stretch p-[3.33px] lg:p-2.5 md:p-[5.73px] bg-white rounded-sm lg:rounded-[5px] lg:gap-[6.62px]  shadow justify-start items-center md:rounded-[2.86px] md:gap-[3.79px] gap-[2.21px] inline-flex">
             <div class="text-blue-900 text-[9px] md:text-[13px] lg:text-[20px] whitespace-nowrap font-semibold ">Filter by Date</div>
             <div class="w-3 h-3 md:w-[11.37px] md:h-[11.37px] lg:w-[19.85px] lg:h-[19.85px] justify-center items-center flex">
@@ -192,77 +200,95 @@ export default function SalesSummaryPage ()  {
 
 
 
+    <div className="mt-[-13%] lg:mt-[-3%] md:mt-[-10%]  mb-[10%]">
 
+      {/* ==============================Sale Analysis Indicator====================== */}
+      <div
+        className={`${styles.INnOUT} my-[10%] flex lg:mt-[5%] lg:items-center`}
+      >
+        <select
+          name="curr"
+          id="curr"
+          onChange={handleSelectedOption}
+          value={selected}
+        >
+          <option value="NGN">NGN</option>
+          <option value="USD">USD</option>
+          <option value="GBP">GBP</option>
+          <option value="EUR">EUR</option>
+          <option value="AUD">AUD</option>
+          <option value="KES">KES</option>
+        </select>
 
-
-
-
-
-    {/* NGN, inflows, transactions and outflows */}
-    <div class="w-full h-[53.49px] md:w-full lg:w-full  lg:h-[78px] md:h-[45.05px] lg:gap-[90.50px] justify-start items-center gap-[5px] md:gap-[51.85px] inline-flex">
-        <div class="p-[1.86px] lg:p-[5.65px] md:p-[3.24px] bg-indigo-300 bg-opacity-20 lg:rounded-[14.70px] lg:gap-[11.31px] rounded-[4.83px] md:rounded-lg justify-start items-start md:gap-[6.48px] gap-[3.71px] flex">
-            <div class="text-black text-[10px] md:text-[5.73px] lg:text-[10px]  font-semibold ">NGN</div>
-            <div class="w-[5.20px] h-[5.20px] lg:w-[15.83px] lg:h-[15.83px] md:w-[9.07px] md:h-[9.07px] justify-center items-center flex">
-                <div class="w-[5.20px] h-[5.20px] lg:w-[15.83px] lg:h-[15.83px] md:w-[9.07px] md:h-[9.07px] relative">
-                    <img className='w-[5.20px] h-[5.20px] lg:w-[15.83px] lg:h-[15.83px] md:w-[9.07px] md:h-[9.07px]' src={salesB} alt="" />
-                </div>
-            </div>
+        <div
+          className={`${styles.inflowOutflow} ${
+            isDarkMode ? "border " : " bg-[#D5F6E3]"
+          }  text-[7px] ${toggleSideBar ? "lg:text-[14px]" : "lg:text-[px]"}`}
+        >
+          <div className="flex gap-1 md:items-center ">
+            <p className={`${toggleSideBar ? "lg:text-[18px]" : ""}`}>
+              Total Inflows
+            </p>
+            <img
+              className="h-[8.3px] w-[8.3px] md:h-[18px] md:w-[18px] lg:w-[24px] lg:h-[24px]"
+              src="./Images/dashboardImages/newarrow-down.png"
+              alt="dropdown"
+            />
+          </div>
+          <div className="text-center">&#8358;96,001,55</div>
         </div>
-        <div class="h-[53px] lg:h-[78px] px-[5px] py-[4.92px] md:px-[22.92px] lg:rounded-md md:w-full md:py-[8.59px] bg-emerald-100 rounded-sm md:rounded flex-col justify-center items-center gap-[1.64px] md:gap-[2.86px] inline-flex">
-            <div class="justify-start items-center md:gap-[2.86px] gap-[1.64px] inline-flex">
-                <div class="text-black text-[10px] md:text-[9.17px] lg:text-[16px] md:whitespace-nowrap font-medium ">Total Inflows</div>
-                <div class="w-[4.92px] h-[4.92px] md:w-[8.59px] md:h-[8.59px] justify-center items-center flex">
-                    <div class="w-[4.92px] h-[4.92px] md:w-[8.59px] md:h-[8.59px] relative">
-                    </div>
-                </div>
-            </div>
-            <div class="justify-start items-start gap-[1.64px] md:gap-[2.86px]  inline-flex">
-                <div class="text-black text-[10px] md:text-[9.17px] lg:text-[16px] font-semibold md:leading-[11px] leading-3">₦</div>
-                <div class="text-black text-[10px] md:text-[9.17px] lg:text-[16px] font-medium  md:leading-[11px] leading-3">96,001,55</div>
-            </div>
+
+        <div
+          className={`${styles.inflowOutflow} ${
+            isDarkMode ? "border " : " bg-[#92abfe81]"
+          }  text-[7px]`}
+        >
+          <div className="flex gap-1 md:items-center">
+            <p className={`${toggleSideBar ? "lg:text-[18px]" : ""}`}>
+              Total Transactions{" "}
+            </p>
+            <img
+              className="h-[8.3px] w-[8.3px] md:h-[18px] md:w-[18px] lg:w-[24px] lg:h-[24px]"
+              src="./Images/dashboardImages/newarrow-down.png"
+              alt="dropdown"
+            />
+          </div>
+          <div className="text-center">10,000</div>
         </div>
-        <div class="w-[99px] px-[5px] py-[4.92px] md:w-full lg:rounded-md md:px-[22.92px] lg:px-0 md:py-[8.59px] lg:h-[78px] bg-indigo-300 bg-opacity-20 rounded-sm md:rounded flex-col justify-center items-center md:gap-[2.86px] gap-[1.64px] inline-flex">
-            <div class="justify-start items-center gap-[1.64px] md:gap-[2.86px]  inline-flex">
-                <div class="w-[76px] text-center text-black text-[10px] md:text-[9.17px] lg:text-[16px] md:whitespace-nowrap lg:w-full font-medium ">Total Transactions</div>
-                <div class="w-[4.92px] h-[4.92px] md:w-[8.59px] md:h-[8.59px] justify-center items-center flex">
-                    <div class="w-[4.92px] h-[4.92px] md:w-[8.59px] md:h-[8.59px]  relative">
-                        <img className='w-[4.92px] h-[4.92px] md:w-[8.59px] md:h-[8.59px] lg:w-[15.83px] lg:h-[15.83px] ' src={salesC} alt="" />
-                    </div>
-                </div>
-            </div>
-            <div class="justify-start items-start gap-[1.64px] md:gap-[2.86px] inline-flex">
-                <div class="text-black  text-[10px] md:text-[9.17px] lg:text-[16px] font-medium  md:leading-[11px] leading-3">10,000</div>
-            </div>
+
+        <div
+          className={`${styles.inflowOutflow} ${
+            isDarkMode ? "border " : " bg-[#FDCECE]"
+          } text-[7px]`}
+        >
+          <div className="flex gap-1 md:items-center">
+            <p className={`${toggleSideBar ? "lg:text-[18px]" : ""}`}>
+              Total Outflows
+            </p>
+            <img
+              className="h-[8.3px] w-[8.3px] md:h-[18px] md:w-[18px] lg:w-[24px] lg:h-[24px]"
+              src="./Images/dashboardImages/newarrow-up.png"
+              alt="dropdown"
+            />
+          </div>
+          <div className="text-center">&#8358;96,001,55</div>
         </div>
-        <div class="w-[82px]  h-[52px] lg:h-[78px] lg:rounded-md px-[13.13px] py-[4.92px] md:w-full md:px-[22.92px] md:py-[8.59px] bg-red-200 md:rounded rounded-sm flex-col md:gap-[2.86px] justify-center items-center gap-[1.64px] inline-flex">
-            <div class="justify-start items-center  md:gap-[2.86px] gap-[1.64px] inline-flex">
-                <div class="text-black text-[10px] md:text-[9.17px] lg:text-[16px] md:whitespace-nowrap font-medium ">Total Outflows</div>
-                <div class="w-[4.92px] h-[4.92px] md:w-[8.59px] md:h-[8.59px] origin-top-left -rotate-180 justify-center items-center flex">
-                    <div class="w-[4.92px] h-[4.92px] md:w-[8.59px] md:h-[8.59px] relative">
-                        <img className='w-[4.92px] h-[4.92px] md:w-[8.59px] md:h-[8.59px] lg:w-[15.83px] lg:h-[15.83px]' src={salesD} alt="" />
-                    </div>
-                </div>
-            </div>
-            <div class="justify-start items-start gap-[1.64px] md:gap-[2.86px] inline-flex">
-                <div class="text-black text-[10px] md:text-[9.17px] lg:text-[16px] font-semibold md:leading-[11px] leading-3">₦</div>
-                <div class="text-black text-[10px] md:text-[9.17px] lg:text-[16px] font-medium  md:leading-[11px] leading-3">96,001,55</div>
-            </div>
-        </div>
-    </div>
+      </div>
+
+      <div className="flex lg:mt-[-48px] mt-[-10px] md:mt-[-50px] items-center text-neutral-500 gap-[10px]">
+        <p className={styles.InOutText}>Sales Analysis</p>
+        <img
+          className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
+          src="./Images/Dashboardimages/arrowright.png"
+          alt="/"
+        />
+      </div>
+
+      </div>
 
 
-    {/* sales analysis */}
-    <div class="flex gap-[6px] flex-row">
-        <div class="text-neutral-500 text-[9px] md:text-[12px] lg:text-[20px]  font-semibold">Sales Analysis</div>
-        <div class="w-3 h-3 lg:h-6 lg:mt-1  lg:w-6 md:w-[13.75px] md:h-[13.75px] justify-center items-center inline-flex">
-            <img src={squaresales} class="w-3 h-3 lg:h-6 lg:w-6 md:mt-1 mt-1  md:w-[13.75px] md:h-[13.75px] " alt="" />
-
-        
-        </div>
-    </div>
-
-    {/* product, quality and total amount */}
-    <div class="flex md:w-full w-full border-opacity-100 lg:w-full shadow border-black flex-col">
+ {/* product, quality and total amount */}
+    <div class="flex md:w-full w-full border-opacity-100 lg:mt-[-80px] mt-[-30px] md:mt-[-60px] lg:w-full shadow border-black flex-col">
     <div class="w-full h-[25px] lg:pr-0 pl-[8.67px] pr-[1.33px] pt-[8.17px] pb-[6.83px] md:w-full lg:w-full lg:pl-[23px] lg:h-[42px] md:h-[24.06px]  md:pl-[14.90px] md:pr-[2.29px] md:pt-[6.32px] md:pb-[5.74px] bg-indigo-200 justify-end lg:justify-between md:justify-evenly items-center inline-flex">
         <div class="self-stretch md:justify-between md:w-full lg:justify-between lg:gap-[300px]  lg:w-full justify-start items-start gap-[66px] md:gap-[113.44px] inline-flex">
             <div class="w-[56.33px] md:w-[96.82px] lg:w-full text-black text-[8px] md:text-[9.17px] lg:text-[16px] font-semibold  md:leading-3 lg:leading-tight  leading-[10.40px]">Products</div>
@@ -280,7 +306,8 @@ export default function SalesSummaryPage ()  {
 {/* main dropdown */}
 
 {isOpen1 && (
-  <div className="flex absolute lg:h-[300px] md:ml-[100px] left-[80px] md:left-[225px] lg:w-full md:h-[150px] h-[200px] md:top-[450px] lg:ml-[550px] lg:left-[10px] lg:top-[630px]  top-[285px] flex-col">
+  <div className="flex absolute lg:h-[300px] md:ml-[100px] left-[80px] md:left-[225px]
+   lg:w-full md:h-[150px] h-[200px] md:top-[480px] lg:ml-[550px] lg:left-[10px] lg:top-[710px]  top-[332px] flex-col">
     <div class="w-44 h-[29px] md:w-[200px] md:h-[35px] lg:h-[40px]  bg-white shadow">
         
         <div class="w-[199.37px] ml-[5px] md:w-[199.37px] justify-start items-center inline-flex">

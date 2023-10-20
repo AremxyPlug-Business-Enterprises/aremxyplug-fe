@@ -34,11 +34,11 @@ import React, { useState } from "react";
 // import notification from "./assets/notification.svg";
 // import logouts from "./assets/logout.svg";
 // import drops from "./assets/arrow-down.svg";
-import arrowsquare from "./assets/arrow-square-right.svg";
+// import arrowsquare from "./assets/arrow-square-right.svg";
 import arrowsquare1 from "./assets/arrow-square-right.png";
 import group1 from "./assets/Group.png";
 import arrow7 from "./assets/arrow-down7.svg";
-import filter from "./assets/document-filter.svg";
+// import filter from "./assets/document-filter.svg";
 import menus from "./assets/menu.png";
 import arrow9 from "./assets/arrow-down9.svg";
 import arrows from "./assets/arrow-square-right1.svg";
@@ -48,10 +48,10 @@ import arrows4 from "./assets/arrow-square-right4.svg";
 import arrows5 from "./assets/arrow-square-right5.svg";
 import arrows6 from "./assets/arrow-square-right6.png";
 import arrows7 from "./assets/arrow-square-right7.png";
-import arrows8 from "./assets/arrow-down8.png";
-import arrows9 from "./assets/arrow-down12.svg";
-import arrows10 from "./assets/arrow-down11.svg";
-import arrows11 from "./assets/arrow-down10.svg";
+// import arrows8 from "./assets/arrow-down8.png";
+// import arrows9 from "./assets/arrow-down12.svg";
+// import arrows10 from "./assets/arrow-down11.svg";
+// import arrows11 from "./assets/arrow-down10.svg";
 import arrowA from "./assets/arrow-square-rightA.png";
 import arrowB from "./assets/arrow-square-rightB.png";
 import arrowC from "./assets/arrow-square-rightC.png";
@@ -75,8 +75,13 @@ import cash from "./assets/cash receipt from online shopping on mobile phone (1)
 import { Link } from "react-router-dom/dist/react-router-dom.development";
 import arrowdown33 from "./assets/arrow-down@3x.png";
 import arrowdown22 from "./assets/arrow-down@2x.png";
+import { useContext } from "react";
+import { ContextProvider } from  "../Context";
+import styles from "../Dashboard/DashboardComponents/./component.module.css";
 
-// import desk from "./assets/arrow-square-rightdesk.png";
+
+
+
 
 
 export default function WalletSummaryPage() {
@@ -86,12 +91,37 @@ export default function WalletSummaryPage() {
     alert('Searching for: ' + document.getElementById('searchInput').value);
   };
 
+  const [ setCalender] = useState(false);
+  
 
 
-  // const = useContext(ContextProvider)
+  
   const [isOpen1, setIsOpen1] = useState("");
 
   const [isOpen2, setIsOpen2] = useState("");
+
+
+
+  const [ setBlur] = useState(false);
+  const [selected, setSelected] = useState("");
+  const { isDarkMode, toggleSideBar } =
+useContext(ContextProvider);
+
+
+
+const handleSelectedOption = (event) => {
+  const clickedoption = event.target.value;
+  setSelected(clickedoption);
+  setBlur(
+    clickedoption === "USD" ||
+      clickedoption === "GBP" ||
+      clickedoption === "AUD" ||
+      clickedoption === "KES" ||
+      clickedoption === "EUR"
+  );
+  return;
+};
+
 
   // const toggleDropdown1 = () => {
     // setIsOpen1(true);
@@ -138,20 +168,20 @@ export default function WalletSummaryPage() {
           </div>
 
       
-        <div className=" lg:top-[880px] top-[430px] md:top-[630px] absolute mt-[-12px]  lg:justify-start lg:items-center gap-[5px]  inline-flex">
-          <div className="text-neutral-500 lg:text-[20px] md:text-[13px] md:mt-[5px] text-[10px] font-semibold ">
-            Wallet History
-          </div>
-          <div className="lg:w-6 lg:h-6 w-3 h-3 md:w-[13.75px] md:h-[13.75px] mt-[3%] md:mt-[7px] justify-center items-center relative flex">
-            <img src={arrowsquare} alt="" />
-          </div>
-        </div>
-        <div className=" lg:top-[400px] md:top-[285px] top-[185px] gap-[3px]
-         absolute lg:justify-start md:gap-[5px] lg:items-center lg:gap-[5px] inline-flex">
-          <div className="text-neutral-500 lg:text-[20px] text-[10px] md:mt-[5px] md:text-[13px] font-semibold ">
+        {/* <div className=" lg:top-[880px] top-[430px] md:top-[630px] absolute mt-[-12px]  lg:justify-start lg:items-center gap-[5px]  inline-flex"> */}
+          {/* <div className="text-neutral-500 lg:text-[20px] md:text-[13px] md:mt-[5px] text-[10px] font-semibold "> */}
+            {/* Wallet History */}
+          {/* </div> */}
+          {/* <div className="lg:w-6 lg:h-6 w-3 h-3 md:w-[13.75px] md:h-[13.75px] mt-[3%] md:mt-[7px] justify-center items-center relative flex"> */}
+            {/* <img src={arrowsquare} alt="" /> */}
+          {/* </div> */}
+        {/* </div> */}
+        <div className=" lg:top-[400px] md:top-[285px] top-[185px] gap-[8px]
+         absolute lg:justify-start md:gap-[7px] lg:items-center lg:gap-[5px] inline-flex">
+          <div className="text-neutral-500 lg:text-[20px] text-[11px] md:mt-[5px] md:text-[13px] font-semibold ">
             Wallet Summary
           </div>
-          <div className="lg:w-6 lg:h-6 w-3 h-3 lg:justify-center md:w-[13.75px]
+          <div className="lg:w-6 lg:h-6 w-[13px] h-[13px] lg:justify-center md:w-[13.75px]
            md:h-[13.75px] md:mt-[6px] mt-[3%] lg:items-center relative flex">
             <img src={arrowsquare1} alt="" />
           </div>
@@ -203,23 +233,48 @@ export default function WalletSummaryPage() {
          md:pt-[6.39px] md:pb-[6.40px] py-[2.67px] lg:mt-[50px] top-[243.82px]
           lg:w-full w-full mt-[25px] bg-white shadow border-t border-b border-black
            border-opacity-30 lg:justify-start lg:items-center lg:gap-[50.53px]  md:gap-[28.72px] gap-[50px] flex">
-          <div className="lg:self-stretch lg:p-2.5 md:h-[33px] md:mt-[-4px] lg:h-[50px] 
-          lg:mt-[1px] md:p-[5.73px] p-[3.33px] bg-white lg:rounded-[5px]
-           rounded-sm md:rounded-[2.86px] shadow justify-start items-center
-            lg:gap-[6.62px] mt-[5px] gap-[2.21px] md:w-[115.6px] md:gap-[4px] inline-flex">
-            <div className="text-blue-900 lg:whitespace-nowrap whitespace-nowrap lg:text-[20px] text-[10px] md:text-[13px] md:whitespace-nowrap font-semibold ">
-              Filter by Date
-            </div>
-            <div className="lg:w-[19.85px] w-4 lg:h-[19.85px] h-4 md:mt-[7px] md:w-[13.37px] md:h-[13.37px] lg:justify-center lg:items-center flex">
-              <img src={filter} alt="" />
-            </div>
-          </div>
+
+<div
+  className={`${
+    toggleSideBar
+      ? "lg:gap-[px] lg:text-[20px]"
+      : "lg:gap-[118px] lg:text-[23px]"
+  } my-[10%] flex text-[8px] font-extrabold gap-[8px] mt-[10px] lg:mt-9 md:mt-4 md:my-[5%] md:text-[20px] md:gap-[39px] `}
+>
+  <div
+    onClick={() => {
+      setCalender((prev) => !prev);
+    }}
+    className={`cursor-pointer ${styles.filter} ${
+      isDarkMode ? "border" : ""
+    } flex items-center gap-[1px] px-[2px] rounded-[3px] md:px-[8px]`}
+  >
+    <div className={`text-[#04177f]`}>Filter by Date </div>
+    <img
+      className="w-[15px] h-[15px] md:w-[17px] md:h-[17px] lg:w-[20px] lg:h-[20px]"
+      src="./Images/Dashboardimages/dateImg.png"
+      alt=""
+    />
+  </div>
+</div>
+          {/* <div className="lg:self-stretch lg:p-2.5 md:h-[33px] md:mt-[-4px] lg:h-[50px]  */}
+          {/* // lg:mt-[1px] md:p-[5.73px] p-[3.33px] bg-white lg:rounded-[5px] */}
+          {/* //  rounded-sm md:rounded-[2.86px] shadow justify-start items-center */}
+            {/* // lg:gap-[6.62px] mt-[5px] gap-[2.21px] md:w-[115.6px] lg:w-[180px] md:gap-[4px] inline-flex"> */}
+            {/* <div className="text-blue-900 lg:whitespace-nowrap whitespace-nowrap lg:text-[20px] text-[10px] md:text-[13px] md:whitespace-nowrap font-semibold "> */}
+              {/* Filter by Date */}
+            {/* </div> */}
+            {/* <div className="lg:w-[19.85px] w-4 lg:h-[19.85px] h-4 md:mt-[7px] md:w-[13.37px] md:h-[13.37px] lg:justify-center lg:items-center flex"> */}
+              {/* <img src={filter} alt="" /> */}
+            {/* </div> */}
+          {/* </div> */}
           <div className="lg:self-stretch justify-start lg:mt-[7px] mt-[5px] items-center lg:gap-2.5 gap-[5.73px] md:gap-[5.73px] inline-flex">
             <div className="lg:justify-start lg:items-center lg:gap-[5px] md:gap-[2.86px] gap-[2.86px] flex">
-              <div className="lg:w-[19.85px] w-[13.37px] lg:h-[19.85px] h-[13.37px] justify-center items-center relative flex">
+              <div className="lg:w-[20.85px] w-[13.37px] lg:h-[20.85px] h-[13.37px]
+              md:w-[19px] md:h-[19px] md:mt-[4px] justify-center items-center relative flex">
                 <img src={menus} alt="" />
               </div>
-              <div className="text-neutral-500 whitespace-nowrap lg:whitespace-nowrap lg:text-[20px] md:mt-[-2px] text-[10px] md:text-[13px] md:whitespace-nowrap font-semibold ">
+              <div className="text-neutral-500 whitespace-nowrap lg:whitespace-nowrap lg:text-[20px] md:mt-[-2px] text-[10px] md:text-[18px] md:whitespace-nowrap font-semibold ">
                 Filter By Status
               </div>
             </div>
@@ -227,7 +282,7 @@ export default function WalletSummaryPage() {
                 onClick={() => {
                   setIsOpen2((prev) => !prev);
                 }}
-              className="lg:w-[19.85px] w-[11.37px] lg:h-[19.85px] h-[11.37px]  lg:justify-center lg:items-center relative flex"
+              className="lg:w-[19.85px] w-[11.37px] lg:h-[19.85px] h-[11.37px] md:w-[18px] md:h-[18px] lg:justify-center lg:items-center relative flex"
             >
                              {isOpen2 ? (
     <img src={arrowdown22} alt="Arrow Down 22" />
@@ -239,120 +294,95 @@ export default function WalletSummaryPage() {
         </div>
 
 
-        <div className="flex gap-[5px] mb-[20px] w-full md:w-full md:gap-[51.849px] mt-5 lg:gap-[90.5px] lg:mb-[15px]">
-            
+        <div className="mt-[-5%] lg:mt-[1%] md:mt-[-6%]   mb-[10%]">
 
-                      <div className="lg:p-[5.65px] md:w-auto h-[19px] w-[36px] lg:h-[27.14px] lg:w-[61.45px]
-                       md:py-[1px] md:h-[20px] p-[1px] bg-indigo-300 bg-opacity-20 md:rounded-lg
-                        lg:rounded-[14.70px] rounded-[4.83px] md:gap-[6.48px] lg:justify-start lg:items-start 
-                        lg:gap-[11.31px] gap-[3.71px] flex">
-            <div className="text-black lg:text-[10px] text-[10px] md:text-[5.73px] font-semibold ">
-              NGN
-            </div>
-            <div className="hidden md:block lg:w-[15.83px] w-[5.20px] h-[5.20px] lg:h-[15.83px] md:w-[9.07px] md:h-[9.07px] lg:justify-center lg:items-center relative ">
-              <img src={arrows8} alt="" />
-            </div>
-          </div>
+{/* ==============================Sale Analysis Indicator====================== */}
+<div
+  className={`${styles.INnOUT} my-[10%] flex lg:mt-[5%] lg:items-center`}
+>
+  <select
+    name="curr"
+    id="curr"
+    onChange={handleSelectedOption}
+    value={selected}
+  >
+    <option value="NGN">NGN</option>
+    <option value="USD">USD</option>
+    <option value="GBP">GBP</option>
+    <option value="EUR">EUR</option>
+    <option value="AUD">AUD</option>
+    <option value="KES">KES</option>
+  </select>
 
-            <div
-              className="flex flex-col w-1/3  rounded-[1.97px] justify-center
-   bg-[#D5F6E3] md:py-[8.597px] md:px-[22.917px] 
-   gap-[1.641px] py-[4.924px] px-[5px] lg:px-[40px] lg:py-[15px] md:w-full lg:rounded-[6px]"
-            >
-            
-              <div className="flex justify-center gap-[5px]">
-                <h2
-                  className="font-style text-[#000000] 
-                  font-[500] text-center text-[10px] leading-[15px]
-  lg:text-[16px] lg:leading-[24px]"
-                >
-                  Total Inflows
-                </h2>
-                <img
-                  src={arrows9}
-                  className="lg:w-[16px] lg:h-[16px]
-     w-[4.924px] h-[4.924px] md:w-[8.594px] md:h-[8.594px] self-center"
-                  alt=""
-                />
-              </div>
-              <h2
-                className="font-style font-[500] text-[10px] text-center leading-[15px]
-  lg:text-[16px] lg:leading-[24px]"
-              >
-                ₦96,001,55
-              </h2>
-            </div>
-            
-            <div
-              className="flex w-1/3 md:w-full justify-center flex-col rounded-[1.97px] bg-[#92ABFE2E]
-   bg-opacity-[18%] md:py-[8.597px] md:px-[22.917px] 
-   gap-[1.641px] py-[4.924px] px-[5px] lg:px-[40px] lg:py-[15px] lg:rounded-[6px]"
-            >
-              
-              <div className=" flex justify-center gap-[5px]">
-                <h2
-                  className="font-style text-[#000000] font-[500] text-center text-[10px] leading-[15px]
-  lg:text-[16px] lg:leading-[24px]"
-                >
-                  Total Transactions
-                </h2>
-                <img
-                  src={arrows10}
-                  className="lg:w-[16px] md:w-[8.594px] md:h-[8.594px] lg:h-[16px]
-     w-[4.924px] h-[4.924px] self-center"
-                  alt=""
-                />
-              </div>
-              <h2
-                className="font-style font-[500] text-[10px] text-center leading-[15px]
-  lg:text-[16px] lg:leading-[24px]"
-              >
-                10,000
-              </h2>
-            </div>
-            
-            <div
-              className="flex w-1/3 md:w-full flex-col rounded-[1.97px] bg-[#FDCECE]
-   gap-[1.641px] py-[4.924px] px-[5px] lg:px-[40px] md:py-[8.597px] md:px-[22.917px] 
-   lg:py-[15px] lg:rounded-[6px]"
-            >
-              
-              <div className="flex justify-center lg:gap-[5px]">
-                <h2
-                  className="font-style text-[#000000] font-[500] text-center text-[10px] leading-[15px]
-  lg:text-[16px] lg:leading-[24px]"
-                >
-                  Total Outflows
-                </h2>
-                <img
-                  src={arrows11}
-                  className="lg:w-[16px] lg:h-[16px]
-     w-[4.924px] h-[4.924px] md:w-[8.594px] md:h-[8.594px] self-center"
-                  alt=""
-                />
-              </div>
-              <h2
-                className="font-style font-[500] text-[10px] text-center leading-[15px]
-  lg:text-[16px] lg:leading-[24px]"
-              >
-                ₦96,001,55
-              </h2>
-            </div>
-          </div>
+  <div
+    className={`${styles.inflowOutflow} ${
+      isDarkMode ? "border " : " bg-[#D5F6E3]"
+    }  text-[7px] ${toggleSideBar ? "lg:text-[14px]" : "lg:text-[px]"}`}
+  >
+    <div className="flex gap-1 md:items-center ">
+      <p className={`${toggleSideBar ? "lg:text-[18px]" : ""}`}>
+        Total Inflows
+      </p>
+      <img
+        className="h-[8.3px] w-[8.3px] md:h-[18px] md:w-[18px] lg:w-[24px] lg:h-[24px]"
+        src="./Images/dashboardImages/newarrow-down.png"
+        alt="dropdown"
+      />
+    </div>
+    <div className="text-center">&#8358;96,001,55</div>
+  </div>
 
+  <div
+    className={`${styles.inflowOutflow} ${
+      isDarkMode ? "border " : " bg-[#92abfe81]"
+    }  text-[7px]`}
+  >
+    <div className="flex gap-1 md:items-center">
+      <p className={`${toggleSideBar ? "lg:text-[18px]" : ""}`}>
+        Total Transactions{" "}
+      </p>
+      <img
+        className="h-[8.3px] w-[8.3px] md:h-[18px] md:w-[18px] lg:w-[24px] lg:h-[24px]"
+        src="./Images/dashboardImages/newarrow-down.png"
+        alt="dropdown"
+      />
+    </div>
+    <div className="text-center">10,000</div>
+  </div>
 
+  <div
+    className={`${styles.inflowOutflow} ${
+      isDarkMode ? "border " : " bg-[#FDCECE]"
+    } text-[7px]`}
+  >
+    <div className="flex gap-1 md:items-center">
+      <p className={`${toggleSideBar ? "lg:text-[18px]" : ""}`}>
+        Total Outflows
+      </p>
+      <img
+        className="h-[8.3px] w-[8.3px] md:h-[18px] md:w-[18px] lg:w-[24px] lg:h-[24px]"
+        src="./Images/dashboardImages/newarrow-up.png"
+        alt="dropdown"
+      />
+    </div>
+    <div className="text-center">&#8358;96,001,55</div>
+  </div>
+</div>
 
+<div className="flex lg:mt-[-48px] mt-[-10px] md:mt-[-50px] items-center text-neutral-500 gap-[10px]">
+  <p className={styles.InOutText}>Wallet History</p>
+  <img
+    className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
+    src="./Images/Dashboardimages/arrowright.png"
+    alt="/"
+  />
+</div>
 
+</div>
 
-
-
-
-
-
-
-
-        {isOpen1 && (
-          <div className="lg:ml-[510px]  lg:top-[360px] md:w-[300px] lg:pl-[-500px] left-[65px] w-[62%] lg:w-full  top-[265px] md:top-[175px] absolute flex-col md:mt-[260px] md:ml-[300px] lg:items-start inline-flex">
+ {isOpen1 && (
+          <div className="lg:ml-[510px]  lg:top-[360px] md:w-[300px] lg:pl-[-500px] left-[65px] w-[62%] lg:w-full 
+           top-[275px] md:top-[175px] absolute flex-col md:mt-[260px] md:ml-[300px] lg:items-start inline-flex">
             <div className="lg:pl-2.5 lg:w-[370px] md:w-[214.84px] lg:pt-[7px] lg:h-[40px] h-[30px] justify-start items-center pt-[3px] pb-[px] bg-white shadow   md:pt-1 md:pb-[4.43px] inline-flex">
               <div className="lg:self-stretch lg:justify-start lg:items-center flex md:gap-[2.86px] md:h-[30px]  flex-row  ">
                 <div className="lg:w-[29.27px] lg:h-[29.27px] h-[16.77px] md:w-[16.77px] md:h-[16.77px] relative bg-white">
@@ -441,8 +471,8 @@ export default function WalletSummaryPage() {
           </div>
         )}
 
-<div className="lg:w-full  w-full lg:h-[60px]  lg:mt-[120px] md:mt-[100px] h-5 
- bg-white mt-[65px] md:w-full md:h-[30.94px] md:pl-[9.17px] flex flex-row
+<div className="lg:w-full  w-full lg:h-[60px]  lg:mt-[-7%] md:mt-[-38px] h-5 
+ bg-white mt-[-7px] md:w-full md:h-[30.94px] md:pl-[9.17px] flex flex-row
 lg:gap-[120px] lg:justify-between justify-around md:justify-between
   items-center gap-[100px] md:gap-[90px] border border-black border-opacity-30 ">
     <div className="flex lg:gap-3 lg:mt-[-15px] lg:justify-around md:justify-around justify-around
@@ -1546,7 +1576,7 @@ w-3 h-3 lg:h-5 md:w-[10px] md:h-[10px]" src={normal} alt="" /> </label>
 
         {/* filter by status dropdown */}
         {isOpen2 && (
-          <div className="flex absolute lg:top-[725px] top-[320px] md:top-[495px] w-full md:w-full ml-[50px] md:ml-[40px] lg:w-full lg:ml-[60px] flex-col">
+          <div className="flex absolute lg:top-[725px] top-[325px] md:top-[495px] w-full md:w-full ml-[50px] md:ml-[40px] lg:w-full lg:ml-[60px] flex-col">
             <div className="lg:w-[375px] lg:h-[53px] md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px] justify-around items-center flex relative bg-white shadow">
               <div class="lg:w-[325px] text-neutral-500 lg:text-base font-medium lg:leading-tight md:w-[186.20px]  md:text-[14px] md:leading-3 w-[163.80px] text-[8.06px] leading-[10.48px] ">
                 All Transactions
