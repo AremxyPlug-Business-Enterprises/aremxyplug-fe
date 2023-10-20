@@ -69,6 +69,12 @@ import { MtnReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUp
 import { AirtelReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/AirtelDataBundle/AirtelReceipt";
 import { EtisalatReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/EtisalatDataBundle/9MobileReceipt";
 import { GloReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/GloDataBundle/GloReceipt";
+import EducationMain from "./Components/EducationPins/educationMain";
+import WaecEducationPin from "./Components/EducationPins/waecEducationPin";
+import NecoEducationPins from "./Components/EducationPins/NecoEducationPins";
+import JambEducationPin from "./Components/EducationPins/jambEducationPin";
+import NabtebEducationPins from './Components/EducationPins/nabtebEducationPins';
+
 export const Router = () => {
   return (
     <div>
@@ -115,8 +121,8 @@ export const Router = () => {
         <Route path="/airtime-topup" element={<AirTime />} />
         <Route path="/airtime-vtu" element={<AirtimeVtu />} />
         <Route path="/airtime-vtu-receipt" element={<AirtimeVtuReceipt />} />
-        <Route path="/add-vtu-recipient" element={<AddRecipient />} />
-        <Route path="/select-vtu-recipient" element={<SelectRecipient />} />
+        {/* <Route path="/add-vtu-recipient" element={<AddRecipient />} /> */}
+        {/* <Route path="/select-vtu-recipient" element={<SelectRecipient />} /> */}
         <Route path="/add-account" element={<AddAccount />} />
         <Route path="/ngn-virtual-account" element={<NgnVirtualAccount />} />
         <Route path="/cookie-settings" element={<CookiesSettings />} />
@@ -151,7 +157,7 @@ export const Router = () => {
           path="/international-bank-receipt"
           element={<InternationalReceipt />}
         />
-        <Route path="/redeem-receipt" element={<RedeemReceipt />} />
+        {/* <Route path="/redeem-receipt" element={<RedeemReceipt />} /> */}
         <Route path="/global-transfer" element={<GlobalTransfer />} />
         <Route path="/point-redeem" element={<PointRedeem />} />
         <Route path="/fiat" element={<FiatConversion />} />
@@ -160,8 +166,8 @@ export const Router = () => {
         <Route path="/data-bundles" element={<DataBundlesPage />} />
         <Route path="/My-Referral" element={<Referral />} />
         <Route path="/MtnDataTopUpBundle" element={<MtnDataTopUpBundle />} />
-        <Route path="/ConfirmConversion" element={<ConfirmConversion/>}/>
-        <Route path="/SuccessfulConversion" element={<SuccessfulReceipt/>}/>
+        {/* <Route path="/ConfirmConversion" element={<ConfirmConversion/>}/> */}
+        {/* <Route path="/SuccessfulConversion" element={<SuccessfulReceipt/>}/> */}
         <Route path="/MtnReceipt" element={<MtnReceipt/>} />
         <Route path="/AirtelDataBundle" element={<AirtelDataBundle/>} />
         <Route path="/GloDataBundle" element={<GloDataBundle/>} />
@@ -169,6 +175,12 @@ export const Router = () => {
         <Route path="/AirtelReceipt" element={<AirtelReceipt/>} />
         <Route path="/EtisalatReceipt" element={<EtisalatReceipt/>} />
         <Route path="/GloReceipt" element={<GloReceipt/>} />
+        <Route path="/EducationPins" element={<EducationMain/>}/>
+        <Route path="/WaecEducationPin" element={<WaecEducationPin/>}/>
+        <Route path="/NecoEducationPin" element={<NecoEducationPins/>}/>
+        <Route path="/NabtebEducationPin" element={<NabtebEducationPins/>}/>
+        <Route path="/JambEducationPin" element={<JambEducationPin/>}/>
+        
       </Routes>
     </div>
   );

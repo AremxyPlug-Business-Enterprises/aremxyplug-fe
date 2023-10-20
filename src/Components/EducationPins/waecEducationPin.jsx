@@ -491,11 +491,14 @@ const waecReceipt = () => {
 
            <div className="flex flex-col gap-[15px] px-[20px] mt-[50px] md:gap-[25px]">
                     <div className="flex items-center justify-between">
-                      <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                      <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize 
+                      md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
                         Exam Type
                       </h2>
                       <div className="flex gap-1">
-                        <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
+                        <div className="rounded-full w-[12.02px] h-[12.02px] 
+                        flex items-center justify-center text-[6px] 
+                        overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
                           <img
                             src={WaecImg}
                             alt=""

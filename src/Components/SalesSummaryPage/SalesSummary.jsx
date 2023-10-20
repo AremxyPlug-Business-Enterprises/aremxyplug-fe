@@ -137,6 +137,7 @@ export default function SalesSummaryPage ()  {
                 </div>
 
 
+                {/* available balance */}
                 
                 <div class="justify-start items-start gap-[6.30px] lg:gap-[11px]  flex">
                     <div class="text-black text-[8px] md:text-xs lg:text-xl font-semibold  md:leading-[14.90px] lg:leading-relaxed leading-[10.40px]">Available Balance</div>
@@ -179,75 +180,6 @@ export default function SalesSummaryPage ()  {
                         <img className='w-[11.37px] h-[11.37px] lg:w-[19.85px] lg:h-[19.85px]' src={menusales} alt="" />
                     </div>
                 </div>
-                <div   className="text-neutral-500 md:text-xs text-[8px] lg:text-xl md:whitespace-nowrap font-semibold ">{selectedProduct}</div>
-            </div>
-            <div class="w-[11.37px] h-[11.37px] lg:w-[19.85px] lg:h-[19.85px] justify-center items-center flex">
-                <div onClick={toggleDropdown1} class="w-[11.37px] h-[11.37px] lg:w-[19.85px] lg:h-[19.85px] relative">
-                    <img className='w-[11.37px] h-[11.37px] lg:w-[19.85px] lg:h-[19.85px] ' src={salesA} alt="" />
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    {/* NGN, inflows, transactions and outflows */}
-    <div class="w-[312px] h-[53.49px] md:w-full lg:w-full  lg:h-[78px] md:h-[45.05px] lg:gap-[90.50px] justify-start items-center gap-[5px] md:gap-[51.85px] inline-flex">
-        <div class="p-[1.86px] lg:p-[5.65px] md:p-[3.24px] bg-indigo-300 bg-opacity-20 lg:rounded-[14.70px] lg:gap-[11.31px] rounded-[4.83px] md:rounded-lg justify-start items-start md:gap-[6.48px] gap-[3.71px] flex">
-            <div class="text-black text-[10px] md:text-[5.73px] lg:text-[10px]  font-semibold ">NGN</div>
-            <div class="w-[5.20px] h-[5.20px] lg:w-[15.83px] lg:h-[15.83px] md:w-[9.07px] md:h-[9.07px] justify-center items-center flex">
-                <div class="w-[5.20px] h-[5.20px] lg:w-[15.83px] lg:h-[15.83px] md:w-[9.07px] md:h-[9.07px] relative">
-                    <img className='w-[5.20px] h-[5.20px] lg:w-[15.83px] lg:h-[15.83px] md:w-[9.07px] md:h-[9.07px]' src={salesB} alt="" />
-                </div>
-            </div>
-        </div>
-        <div class="h-[53px] lg:h-[78px] px-[5px] py-[4.92px] md:px-[22.92px] lg:rounded-md md:w-full md:py-[8.59px] bg-emerald-100 rounded-sm md:rounded flex-col justify-center items-center gap-[1.64px] md:gap-[2.86px] inline-flex">
-            <div class="justify-start items-center md:gap-[2.86px] gap-[1.64px] inline-flex">
-                <div class="text-black text-[10px] md:text-[9.17px] lg:text-[16px] md:whitespace-nowrap font-medium ">Total Inflows</div>
-                <div class="w-[4.92px] h-[4.92px] md:w-[8.59px] md:h-[8.59px] justify-center items-center flex">
-                    <div class="w-[4.92px] h-[4.92px] md:w-[8.59px] md:h-[8.59px] relative">
-                    </div>
-                </div>
-            </div>
-            <div class="justify-start items-start gap-[1.64px] md:gap-[2.86px]  inline-flex">
-                <div class="text-black text-[10px] md:text-[9.17px] lg:text-[16px] font-semibold md:leading-[11px] leading-3">₦</div>
-                <div class="text-black text-[10px] md:text-[9.17px] lg:text-[16px] font-medium  md:leading-[11px] leading-3">96,001,55</div>
-            </div>
-        </div>
-        <div class="w-[99px] px-[5px] py-[4.92px] md:w-full lg:rounded-md md:px-[22.92px] lg:px-0 md:py-[8.59px] lg:h-[78px] bg-indigo-300 bg-opacity-20 rounded-sm md:rounded flex-col justify-center items-center md:gap-[2.86px] gap-[1.64px] inline-flex">
-            <div class="justify-start items-center gap-[1.64px] md:gap-[2.86px]  inline-flex">
-                <div class="w-[76px] text-center text-black text-[10px] md:text-[9.17px] lg:text-[16px] md:whitespace-nowrap lg:w-full font-medium ">Total Transactions</div>
-                <div class="w-[4.92px] h-[4.92px] md:w-[8.59px] md:h-[8.59px] justify-center items-center flex">
-                    <div class="w-[4.92px] h-[4.92px] md:w-[8.59px] md:h-[8.59px]  relative">
-                        <img className='w-[4.92px] h-[4.92px] md:w-[8.59px] md:h-[8.59px] lg:w-[15.83px] lg:h-[15.83px] ' src={salesC} alt="" />
-                    </div>
-                </div>
-            </div>
-            <div class="justify-start items-start gap-[1.64px] md:gap-[2.86px] inline-flex">
-                <div class="text-black  text-[10px] md:text-[9.17px] lg:text-[16px] font-medium  md:leading-[11px] leading-3">10,000</div>
-            </div>
-        </div>
-        <div class="w-[82px]  h-[52px] lg:h-[78px] lg:rounded-md px-[13.13px] py-[4.92px] md:w-full md:px-[22.92px] md:py-[8.59px] bg-red-200 md:rounded rounded-sm flex-col md:gap-[2.86px] justify-center items-center gap-[1.64px] inline-flex">
-            <div class="justify-start items-center  md:gap-[2.86px] gap-[1.64px] inline-flex">
-                <div class="text-black text-[10px] md:text-[9.17px] lg:text-[16px] md:whitespace-nowrap font-medium ">Total Outflows</div>
-                <div class="w-[4.92px] h-[4.92px] md:w-[8.59px] md:h-[8.59px] origin-top-left -rotate-180 justify-center items-center flex">
-                    <div class="w-[4.92px] h-[4.92px] md:w-[8.59px] md:h-[8.59px] relative">
-                        <img className='w-[4.92px] h-[4.92px] md:w-[8.59px] md:h-[8.59px] lg:w-[15.83px] lg:h-[15.83px]' src={salesD} alt="" />
-                    </div>
-                </div>
-            </div>
-            <div class="justify-start items-start gap-[1.64px] md:gap-[2.86px] inline-flex">
-                <div class="text-black text-[10px] md:text-[9.17px] lg:text-[16px] font-semibold md:leading-[11px] leading-3">₦</div>
-                <div class="text-black text-[10px] md:text-[9.17px] lg:text-[16px] font-medium  md:leading-[11px] leading-3">96,001,55</div>
-            </div>
-        </div>
-    </div>
-
-
-    {/* sales analysis */}
-    <div class="flex gap-[10px] flex-row">
-        <div class="text-neutral-500 text-[8px] md:text-xs lg:text-xl  font-semibold">Sales Analysis</div>
-        <div class="w-3 h-3 lg:h-6 lg:w-6 md:w-[13.75px] md:h-[13.75px] justify-center items-center inline-flex">
-            <img src={squaresales} class="w-3 h-3 lg:h-6 lg:w-6 md:mt-[5px]  md:w-[13.75px] md:h-[13.75px] relative" alt="" />
                 <div   className="text-neutral-500 md:text-[13px] text-[9px] lg:text-[20px] md:whitespace-nowrap font-semibold ">{selectedProduct}</div>
             </div>
             <div class="w-[11.37px] h-[11.37px] lg:w-[19.85px] lg:h-[19.85px] justify-center items-center flex">
@@ -482,7 +414,7 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[8.06px
                   {/* <img src={flagpage4} alt="" /> */}
                   {/* <div className="lg:w-[27.45px] w-[15px] lg:h-[29.27px] lg:left-[0.91px] lg:top-0 absolute"> */}
                   
-                
+                  </div>
                 {/* </div> */}
                 {/* <div className="text-neutral-500 lg:text-base text-[8px] md:text-[9.17px] font-medium  md:leading-3 leading-tight"> */}
                   {/* AUD Wallet (0.00) */}
