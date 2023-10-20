@@ -38,7 +38,7 @@ const SecondModal = ({value}) => {
     <>
         {/* this is such that whatever is selected determines the kind of modal that shows and it contents */}
         { value === 'number' ?         
-        <div className='bg-black/[0.48] absolute top-0 left-0 w-full h-full flex items-center justify-center z-50'>
+        <div className='bg-black/[0.48] fixed top-0 bottom-0 right-0 left-0 flex items-center justify-center z-50'>
             {/* if submision is true, it will display next content but if submission is not true then next content is not displayed. this prevents me from using two modals */}
             { submision ? 
                 <div className="md:ml-[45%] lg:-mb-[30%] px-[17.609px] py-[35.536px] bg-white rounded-[10.3px] md:py-[34.96px] md:px-[17.6px] lg:py-[62px] lg:px-[31px]">
@@ -96,7 +96,7 @@ const SecondModal = ({value}) => {
             }
         </div> : 
 
-        <div className='bg-black/[0.48] absolute top-0 left-0 w-full h-full flex items-center justify-center z-50'>
+        <div className='bg-black/[0.48] fixed top-0 bottom-0 right-0 left-0 flex items-center justify-center z-50'>
             {/* if checked is true, it will display next content but if submission is not true then next content is not displayed. this prevents me from using two modals */}
             { checked ? 
                 <div className="md:ml-[44.5%] lg:ml-[45%] px-[17.609px] py-[35.536px] bg-white rounded-[10.3px] md:py-[34.96px] md:px-[17.6px] lg:py-[62px] lg:px-[31px]">
