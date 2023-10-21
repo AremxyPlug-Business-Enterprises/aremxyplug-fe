@@ -697,6 +697,17 @@ export const Context = ({ children }) => {
   const [selectedOne, setSelectedOne] = useState(false);
   const [activeButtonOne, setActiveButtonsOne] = useState([true, false]);
 
+  //============= EDUCATION PINS ========================
+
+  const [quantityResult, setQuantityResult] = useState('');
+const [waecActive, setWaecActive] = useState(false);
+const [paymentResult, setPaymentResult] = useState('');
+const [methodActive, setMethodActive] = useState(false);
+const [examType, setExamType] = useState('');
+const [examActive, setExamActive] = useState(false);
+const [educationPinPhone, setEducationPinPhone]= useState('');
+const[ educationPinEmail, setEducationPinEmail] = useState('');
+const [waecAmount, setWaecAmount] = useState('₦');
 
   const hold = {
     firstDrop,
@@ -992,6 +1003,26 @@ export const Context = ({ children }) => {
     realoutputValue, 
     setRealOutputValue,
 
+  //====== EDUCATION PINS
+  quantityResult, 
+  setQuantityResult,
+  paymentResult, 
+  setPaymentResult,
+  waecActive, 
+  setWaecActive,
+  methodActive, 
+  setMethodActive,
+  examType, 
+  setExamType,
+  examActive,
+   setExamActive,
+   educationPinPhone, 
+   setEducationPinPhone,
+   educationPinEmail, 
+  setEducationPinEmail,
+  waecAmount, 
+  setWaecAmount
+
   };
 
   return (
@@ -1002,3 +1033,4 @@ export const Context = ({ children }) => {
     </div>
   );
 };
+
