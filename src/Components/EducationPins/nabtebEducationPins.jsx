@@ -1,8 +1,8 @@
 import React from 'react'
-import { DashBoardLayout } from '../Dashboard/Layout/DashBoardLayout';
-import '../../App.css';
+import { DashBoardLayout } from '../Dashboard/Layout/DashBoardLayout'
+import { useContext } from 'react';
+import NabtebImg from './imagesEducation/NabtebImg.svg'
 import HeroComponent from './heroComponent';
-import WaecImg from '../EducationPins/imagesEducation/WaecImg.svg';
 import arrowRight from "../EducationPins/imagesEducation/educationArrowRight.svg";
 import arrowDown from '../EducationPins/imagesEducation/arrow-down.svg';
 import { useState } from 'react';
@@ -21,9 +21,9 @@ import OtpInput from "react-otp-input";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
  import { Modal } from '../Screens/Modal/Modal';
-import WaecReceipt from './ReceiptEducationPins/waecReceipt';
+import NabtebReceipt from './ReceiptEducationPins/nabtebReceipt';
 
-export default function WaecEducationPin() {
+export default function NabtebEducationPins() {
   const { isDarkMode } = useContext(ContextProvider);
   const {quantityResult, setQuantityResult} = useContext(ContextProvider);
 const {waecActive, setWaecActive} = useContext(ContextProvider);
@@ -35,17 +35,16 @@ const { transactSuccessPopUp, setTransactSuccessPopUp } =
 useContext(ContextProvider);
 const {educationPinPhone, setEducationPinPhone} = useContext(ContextProvider);
 const {educationPinEmail, setEducationPinEmail} = useContext(ContextProvider);
- const {waecAmount, setWaecAmount} = useContext(ContextProvider);
+const {waecAmount, setWaecAmount} = useContext(ContextProvider);
 
 // UseStates
 const [imageState, setImageState] = useState(arrowDown);
 const [educationProceed, setEducationProceed] = useState(false);
 const [errors, setErrors] = useState({});
 const [educationConfirm, setEducationConfirm] = useState(false);
+
 const [receipt] = useState(false);
 
-
-//==========  QUANTITY RESULT SLIP CHECKERS ==============
 function clickDropDown(){
   setWaecActive(!waecActive);
 document.querySelector('.imgdrop').classList.toggle('DropIt');
@@ -77,9 +76,9 @@ const [methodOptions,setMethodOptions] = useState([
 
 // CONFIRM EXAM TYPE
 const Exams  = [
-{ examType :'WAEC (₦100)',  id : 1},
-  { examType :'NECO (₦100)', path :  "/NecoEducationPin", id : 2 },
-  { examType :'NABTEB (₦100)', path : "/NabtebEducationPin", id : 3 },
+{ examType :'NABTEB (₦100)',   id : 1},
+{ examType :'NECO (₦100)', path :  "/NecoEducationPin", id : 2 },
+{ examType :'WAEC (₦100)', path : "/WaecEducationPin", id : 3 },
 { examType :'JAMB (₦100)', path : "/JambEducationPin", id : 4 }
  ]
 function examDropDown(){
@@ -96,10 +95,8 @@ const {
   isVisible,
 } = useContext(ContextProvider);
 
-const waecProceed = () => {
-  
-
-  const { error } = schema.validate({
+const waecProceed = (e) => {
+ const { error } = schema.validate({
     educationPinPhone,
   });
 
@@ -123,10 +120,12 @@ const schema = Joi.object({
     .messages({
       "string.pattern.base": "Phone number should be 11 digits ",
     })
+    
     // educationPinEmail: Joi.string()
     // .pattern(new RegExp(/^[^\s@]+@[^\s@]+\.[^\s@]+$/))
     // .required()
     // .messages({ "string.pattern.base": "Invalid email " })
+
 });
 
 const confirmButton = () => {
@@ -140,7 +139,6 @@ const waecTransactionSuccessClose = () => {
 const waecReceipt = () => {
   setTransactSuccessPopUp(false);
 };
-
 
   return (
     <DashBoardLayout>
@@ -156,11 +154,11 @@ const waecReceipt = () => {
       </h2>
 
       <img className='h-[12px] w-[12px] md:h-[14.083px] md-w-[14.083px] lg:h-[24px] lg:w-[24px] self-center'
-      src={WaecImg} alt="" />
+      src={NabtebImg} alt="" />
 
       <h2 className='font-[600] text-[8px] leading-[12px] md:text-[9.389px]
        md:leading-[11.267px] lg:text-[16px] text-[#7E7E7E] lg:leading-[19.2px]'>
-      WAEC E-PINs Instantly
+      NABTEB E-PINs Instantly
       </h2>
       <img className='md:h-[14.083px] md:w-[14.083px] lg:h-[24px] lg:w-[24px] h-[14px] w-[14px]'
       src={arrowRight} alt="" />
@@ -493,13 +491,13 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                     <div className="flex gap-1">
                       <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
                         <img
-                          src={WaecImg}
+                          src={NabtebImg}
                           alt=""
                           className="w-full h-full object-cover md:h-[15px]"
                         />
                       </div>
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        WAEC
+                        NABTEB
                       </h2>
                     </div>
                   </div>
@@ -746,7 +744,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                 <p className="text-[8px] text-[#0008] text-center mb-2 md:text-[14px] lg:text-[12px]">
                   You have successfully purchased{" "}
                   <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
-                  {`WAEC  ${waecAmount}`}
+                  {`NABTEB   ${waecAmount}`}
                   </span>
                   from your {paymentResult} to{" "}
                 </p>
@@ -758,13 +756,13 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                   <div className="flex gap-1">
                     <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
                       <img
-                        src={WaecImg}
+                        src={NabtebImg}
                         alt=""
                         className="w-full h-full object-cover"
                       />
                     </div>
                     <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        WAEC
+                        NABTEB
                     </h2>
                   </div>
                 </div>
@@ -877,7 +875,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
 
  {/* =========== RECEIPT ============*/}
  {receipt && (
-          <WaecReceipt
+          <NabtebReceipt
              Exam ="WAEC"
             ExamType={examType}
              ListOfResultCheckers={quantityResult}
@@ -941,6 +939,3 @@ px-[8.594px] leading-[10.4px] rounded-[5.156px] bg-[#04177F]"
 
   )
 }
-
-
-

@@ -84,7 +84,7 @@ export const RedeemReceipt = () => {
           <div ref={contentRef}>
             {" "}
             <h3 className="font-extrabold text-[12px] my-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
-              Redeem Receipt
+              Transaction Receipt
             </h3>
             <div className="w-full flex justify-center ">
               <img

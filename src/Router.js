@@ -59,11 +59,11 @@ import AirtimeVtuReceipt from "./Components/AirTimePage/AirtimeVtuReceipt"
 import DataBundlesPage from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundlesPage";
 import MtnDataTopUpBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/MtnDataTopUpBundle/MtnDataTopUpBundle";
 import WithdrawToOtherBanks from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToOtherBanks";
+import WalletSummaryPage from "./Components/WalletSummaryPage/WalletSummary";
+import SalesSummaryPage from "./Components/SalesSummaryPage/SalesSummary";
 import ConfirmConversion from "./Components/CurrencyConversion/currencyPopups/confirmConversion";
 import { SuccessfulReceipt } from "./Components/CurrencyConversion/ConversionReceipts/SuccessConversionReceipt";
 import { TvSubscription } from "./Components/TvSubscription/TvSubscriptionPage";
-import WalletSummaryPage from "./Components/WalletSummaryPage/WalletSummary";
-import SalesSummaryPage from "./Components/SalesSummaryPage/SalesSummary";
 import { WithdrawToOtherBankReceipt } from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToOtherBanksPopUp/WithdrawToOtherBankReceipt";
 import AirtelDataBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/AirtelDataBundle/AirtelDataBundle";
 import GloDataBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/GloDataBundle/GloDataBundle";
@@ -78,6 +78,15 @@ import { RedeemReceipt } from "./Components/Dashboard/DashboardComponents/PointR
 import DataBundleSelectRecipient from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundleSelectRecipient";
 import DataBundleAddRecipient from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundleAddRecipient";
 import GoTv from "./Components/TvSubscription/TvOne";
+import EducationMain from "./Components/EducationPins/educationMain";
+import WaecEducationPin from "./Components/EducationPins/waecEducationPin";
+import NecoEducationPins from "./Components/EducationPins/NecoEducationPins";
+import JambEducationPin from "./Components/EducationPins/jambEducationPin";
+import NabtebEducationPins from './Components/EducationPins/nabtebEducationPins';
+import WaecReceipt from "./Components/EducationPins/ReceiptEducationPins/waecReceipt";
+import JambReceipt from "./Components/EducationPins/ReceiptEducationPins/jambReceipt";
+import NecoReceipt from "./Components/EducationPins/ReceiptEducationPins/necoReceipt";
+import NabtebReceipt from "./Components/EducationPins/ReceiptEducationPins/nabtebReceipt";
 
 export const Router = () => {
   return (
@@ -125,8 +134,8 @@ export const Router = () => {
         <Route path="/airtime-topup" element={<AirTime />} />
         <Route path="/airtime-vtu" element={<AirtimeVtu />} />
         <Route path="/airtime-vtu-receipt" element={<AirtimeVtuReceipt />} />
-        <Route path="/add-vtu-recipient" element={<AddRecipient />} />
-        <Route path="/select-vtu-recipient" element={<SelectRecipient />} />
+        <Route path="/add-vtu-recipient" element={<AddRecipient />} /> 
+       <Route path="/select-vtu-recipient" element={<SelectRecipient />} />
         <Route path="/add-account" element={<AddAccount />} />
         <Route path="/ngn-virtual-account" element={<NgnVirtualAccount />} />
         <Route path="/cookie-settings" element={<CookiesSettings />} />
@@ -183,6 +192,16 @@ export const Router = () => {
         <Route path="/DataBundleAddRecipient" element={<DataBundleAddRecipient/>} />
         <Route path="/TvSubscription" element={<TvSubscription/>} />
         <Route path="/GoTv" element={<GoTv/>} />
+        <Route path="/EducationPins" element={<EducationMain/>}/>
+        <Route path="/WaecEducationPin" element={<WaecEducationPin/>}/>
+        <Route path="/NecoEducationPin" element={<NecoEducationPins/>}/>
+        <Route path="/NabtebEducationPin" element={<NabtebEducationPins/>}/>
+        <Route path="/JambEducationPin" element={<JambEducationPin/>}/>
+        <Route path="/WaecReceipt" element={<WaecReceipt/>}/>
+        <Route path="/JambReceipt" element={<JambReceipt/>}/>
+        <Route path="/NecoReceipt" element={<NecoReceipt/>}/>
+        <Route path="/NabtebReceipt" element={<NabtebReceipt/>}/>
+        
       </Routes>
     </div>
   );
