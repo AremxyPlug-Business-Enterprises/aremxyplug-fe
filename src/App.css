@@ -200,7 +200,7 @@ html {
     font-size: 16px;
   }
 }
-/* Oladimeji code starts here */
+/* Referral code starts here */
 .rectangle1{
   background: linear-gradient(92deg, #92ABFE 4.68%, #404EDE 55.04%);
 
@@ -209,3 +209,21 @@ html {
   border: none;
 } 
 /* and ends here */
+/* Education code starts here */
+.educationPinsHero{
+  background: var(--Gradiant, linear-gradient(90deg, #60FF52 0%, rgba(250, 232, 68, 0.90) 50.97%, #FF5A7F 100%));
+}
+.Exam-box{
+  box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--stroke-fade, rgba(0, 0, 0, 0.30));
+}
+@keyframes openDropDown {
+  from {
+   transform : rotate(0deg)
+  }to{
+   transform : rotate(180deg)
+  }
+}
+.DropIt {
+  animation : openDropDown 0.3s ease 1 forwards;
+}

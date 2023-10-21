@@ -156,6 +156,7 @@ export default function SalesSummaryPage ()  {
                 </div>
 
 
+                {/* available balance */}
                 
                 <div class="justify-start items-start gap-[6.30px] lg:gap-[11px]  flex">
                     <div class="text-black text-[8px] md:text-xs lg:text-xl font-semibold  md:leading-[14.90px] lg:leading-relaxed leading-[10.40px]">Available Balance</div>

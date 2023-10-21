@@ -283,7 +283,7 @@ const [text, setText] =useState(false);
           </div>
         </div>
 
-        <div className="flex flex-row items-center justify-center mt-[200px] md:mt-[38%] lg:mt-[45%] gap-2">
+        <div className="flex flex-row items-center justify-center mt-[200px] md:mt-[38%] lg:mt-[75%] gap-2">
           <div className="text-[8px] lg:text-[12px] font-[600] text-black">
             You need help?
           </div>
@@ -308,12 +308,12 @@ const [text, setText] =useState(false);
               onClick={() => {setRealPop(false);
               handlerealClear(); }
               
-               } className="absolute right-6 md:right-[23%] lg:right-[32%] w-[18px] h-[18px] my-[1%] md:w-[30px] md:h-[30px] lg:w-[25px] lg:h-[25px]"
+               } className="absolute right-6 md:right-[23%] lg:right-[33%] w-[18px] h-[18px] my-[1%] md:w-[30px] md:h-[30px] lg:w-[25px] lg:h-[25px]"
               src="/Images/transferImages/close-circle.png"
               alt=""
             />
             <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[8%] md:h-[10px] lg:h-[10px] lg:mt-[8%]" />
-            <div className="flex flex-col text-center items-center justify-center pt-[30px]">
+            <div className="flex flex-col text-center items-center justify-center pt-[30px] md:pt-[30px] lg:pt-[1px]">
               <div className="font-[500] flex items-center justify-center w-[100%] text-center text-[10px] py-1 mt-[30px] md:mt-[30px] lg:mt-[50px]   md:text-[9.17px] lg:text-[16px] leading-[20.8px] lg:px-6 lg:w-fit  md:flex md:flex-row md:w-fit md:py-1 md:px-4 lg:py-3 rounded-sm md:rounded-sm lg:rounded-md md:leading-[11.5px] bg-primary text-white">
                 Real-time Points Redeem Tracker
               </div>
@@ -433,7 +433,7 @@ const [text, setText] =useState(false);
           >
             <img
               onClick={() => setProceed(false)}
-              className="absolute right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px]"
+              className="absolute right-2 w-[18px] h-[18px] my-[3%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px]"
               src="/Images/transferImages/close-circle.png"
               alt=""
             />
@@ -590,7 +590,7 @@ const [text, setText] =useState(false);
             <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
               <img
                 onClick={() => setSuccessPopup(false)}
-                className=" w-[18px]  md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[25px]"
+                className=" w-[18px]   md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[25px]"
                 src="/Images/login/arpLogo.png"
                 alt=""
               />
