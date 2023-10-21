@@ -11,6 +11,7 @@ import rightArrow from "../Referrals/referralImage/rightArrowRefer.svg";
 import arrowDown from "../Referrals/referralImage/arrow-down.svg";
 import { Link } from "react-router-dom/dist/react-router-dom.development";
 import { useState } from "react";
+import "../../App.css";
 // import copy from "copy-to-clipboard";
 
 export default function Referral() {

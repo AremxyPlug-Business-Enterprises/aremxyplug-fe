@@ -12,7 +12,7 @@ const RedirectModal = () => {
 
   return (
     <>
-        <div className='bg-black/[0.48] absolute top-0 left-0 w-full h-full flex items-center justify-center z-50'>
+        <div className='bg-black/[0.48] fixed top-0 left-0 w-full h-full flex items-center justify-center z-50'>
             <div className="w-[258px] h-[186px] lg:w-[450px] lg:h-[450px] md:ml-[45%] lg:ml-[45%] px-[17.19px] bg-white rounded-[10.3px] md:py-[34.96px] md:px-[17.6px] lg:py-[62px] lg:px-[31px] flex items-center justify-center">
                 <div className=''>
                     <div className="flex items-center justify-center mb-[14.32px] lg:mb-[25px]">
