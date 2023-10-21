@@ -691,8 +691,12 @@ export const Context = ({ children }) => {
   
 
   //=============Currency conversion==============
+  const [convertedAmount, setConvertedAmount] = useState('');
+  const [initialValue, setInitialValue] = useState('');
+  const [showListOne, setShowListOne] = useState(false);
+  const [selectedOne, setSelectedOne] = useState(false);
+  const [activeButtonOne, setActiveButtonsOne] = useState([true, false]);
 
-  
 
   const hold = {
     firstDrop,
@@ -970,10 +974,24 @@ export const Context = ({ children }) => {
     setInputValue,
     outputValue,
     setOutputValue,
+
+
+    //currency
+    convertedAmount,
+    setConvertedAmount,
+    initialValue,
+    setInitialValue,
+    showListOne,
+    setShowListOne,
+    selectedOne,
+    setSelectedOne,
+    setActiveButtonsOne,
+    activeButtonOne,
     realinputValue, 
     setRealInputValue,
     realoutputValue, 
     setRealOutputValue,
+
   };
 
   return (
