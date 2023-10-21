@@ -254,6 +254,14 @@
     grid-template-columns: 1fr 1fr 1fr;
     gap: 25px;
   }
+  .redeemrate {
+    height: 600px;
+    /* width: 90%; */
+    flex-shrink: 0;
+    border-radius: 11px;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+  }
 
   .boxes {
     background: #fff3e5;
