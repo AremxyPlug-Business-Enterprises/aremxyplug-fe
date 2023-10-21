@@ -36,7 +36,7 @@ import React, { useState } from "react";
 // import drops from "./assets/arrow-down.svg";
 // import arrowsquare from "./assets/arrow-square-right.svg";
 import arrowsquare1 from "./assets/arrow-square-right.png";
-import group1 from "./assets/Group.png";
+
 import arrow7 from "./assets/arrow-down7.svg";
 // import filter from "./assets/document-filter.svg";
 import menus from "./assets/menu.png";
@@ -78,6 +78,9 @@ import arrowdown22 from "./assets/arrow-down@2x.png";
 import { useContext } from "react";
 import { ContextProvider } from  "../Context";
 import styles from "../Dashboard/DashboardComponents/./component.module.css";
+import { Calender } from "../Dashboard/DashboardComponents/Calender";
+import group1 from "./assets/Group.png";
+
 
 
 
@@ -87,11 +90,19 @@ import styles from "../Dashboard/DashboardComponents/./component.module.css";
 export default function WalletSummaryPage() {
 
   const handleSearch = () => {
-    // Implement the search functionality here
     alert('Searching for: ' + document.getElementById('searchInput').value);
   };
 
-  const [ setCalender] = useState(false);
+  
+  const [calender, setCalender] = useState(false);
+
+  const [selectedProduct, setSelectedProduct] = useState("./assets/Group.png");
+  const handleClick = (product) => {
+    setSelectedProduct(product); };
+    
+
+    
+
   
 
 
@@ -106,6 +117,10 @@ export default function WalletSummaryPage() {
   const [selected, setSelected] = useState("");
   const { isDarkMode, toggleSideBar } =
 useContext(ContextProvider);
+
+
+
+
 
 
 
@@ -137,46 +152,32 @@ const handleSelectedOption = (event) => {
     <DashBoardLayout>
 
 
-<div className='w-full'>
+<div className='w-full mb-[100px]'>
 
-<div
+<div className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] bg-gradient-to-r from-yellow-300 to-rose-400 flex px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px]">
+                <div className="py-[13px] lg:py-[40px]">
+                  <h2 className="text-[9px] md:text-[13.75px] font-bold mb-3 lg:text-[24px] lg:mb-4">
+                  MANAGE ALL YOUR TRANSACTIONS AT A <br /> TIME WITHOUT ANY HASSLE.
+                  </h2>
+                  <h2 className="text-[7px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3">
+                  Select, filter, and manage all your transactions at a time,
+                   download all <br/> transactions stats and keep a record track.
+                    
+                  </h2>
+                </div>
+                <div className="w-[91px] h-[66px] lg:w-[220px] lg:h-[180px]">
+                  <img
+                    src={cash}
+                    alt=""
+                    className="h-full"
+                  />
+                </div>
+              </div>
 
-            id="cash"
-            className="w-full h-[90px] bg-gradient-to-r from-yellow-300 to-rose-400  
-            md:h-[115.29px] lg:h-[196px] md:rounded-[11.5px] rounded-[7px]
-             md:mt-[-1px] px-[10px] lg:ml-[-20px] lg:w-[102%] md:w-full 
-              lg:gap-[50px] pt-[10px] lg:px-[30px] lg:rounded-[20px] lg:py-[20px] 
-              pb-[16px] flex justify-between md:gap-[38px] items-center"
-          >
-            <div className="w-[100%] pt-[19px] lg:pt-[20px] pl-[8.5px] md:pl-[9px]">
-              <p className="text-[10px] mb-2 font-bold uppercase w-[110%] md:text-[13.75px] md:w-[70%] lg:w-[70%] lg:text-[20px] 2xl:w-[80%] 2xl:text-[24px] lg:mb-4">
-                MANAGE ALL YOUR TRANSACTIONS AT A <br /> TIME WITHOUT ANY HASSLE.
-              </p>
-              <p className="text-[7px] font-[400] leading-[9px] mb-3 md:text-[9.167px] md:leading-[12.2px] w-[90%] md:w-[65%] lg:w-[75%] 2xl:w-[85%] 2xl:mt-[5px] lg:mt-[20px] lg:text-[16px] lg:leading-[26px] 2xl:text-[20px] lg:mb-[20px]">
-                Select, filter, and manage all <br /> your transactions at a time,
-                download all transactions stats and keep a record track.
-              </p>
-            </div>
 
-            <div className="w-[91px] h-[66px] md:w-[91.214px] md:h-[85.938px] lg:w-[199px] lg:h-[199px] lg:mt-[40px]">
-              <img
-                src={cash}
-                alt=""
-                className="w-[55.482px] h-full md:w-[91.214px] md:h-[85.938px] lg:w-[166.447px] lg:h-[150px]"
-              />
-            </div>
-          </div>
 
       
-        {/* <div className=" lg:top-[880px] top-[430px] md:top-[630px] absolute mt-[-12px]  lg:justify-start lg:items-center gap-[5px]  inline-flex"> */}
-          {/* <div className="text-neutral-500 lg:text-[20px] md:text-[13px] md:mt-[5px] text-[10px] font-semibold "> */}
-            {/* Wallet History */}
-          {/* </div> */}
-          {/* <div className="lg:w-6 lg:h-6 w-3 h-3 md:w-[13.75px] md:h-[13.75px] mt-[3%] md:mt-[7px] justify-center items-center relative flex"> */}
-            {/* <img src={arrowsquare} alt="" /> */}
-          {/* </div> */}
-        {/* </div> */}
-        <div className=" lg:top-[400px] md:top-[285px] top-[185px] gap-[8px]
+        <div className=" lg:top-[385px] md:top-[283px] top-[182px] gap-[8px]
          absolute lg:justify-start md:gap-[7px] lg:items-center lg:gap-[5px] inline-flex">
           <div className="text-neutral-500 lg:text-[20px] text-[11px] md:mt-[5px] md:text-[13px] font-semibold ">
             Wallet Summary
@@ -198,14 +199,21 @@ const handleSelectedOption = (event) => {
               <div className="lg:w-[70px] lg:h-[70px] w-6 h-6 md:w-[40.10px] md:h-[40.10px] lg:gap-[5.73px] relative">
                 <div className="lg:w-[70px] lg:h-[70px] left-0 top-0 w-6 h-6 md:w-[40.10px] md:h-[40.10px]  absolute bg-white rounded-full"></div>
                 <div className="lg:w-[29.27px] lg:h-[29.27px] left-[20px] lg:top-[20px] w-2.5 h-2.5 top-[6.86px] md:w-[16.77px] md:h-[16.77px] md:left-[11.46px] md:top-[11.46px]  absolute">
+                 
+                {selectedProduct === '' ? (
+        <p>{selectedProduct}</p>
+      ) : (
                   <img
                     src={group1}
-                    class="lg:w-[29.27px] lg:h-[29.27px] ml-[-1.5px] left-[-11px] lg:top-[0.91px] w-2.5 h-[9.41px] top-[0.31px] lg:left-[10px]  md:w-[16.77px] md:h-[15.73px] md:left-0 md:top-[0.52px] absolute"
+                    className="lg:w-[29.27px] lg:h-[29.27px] ml-[-1.5px] left-[-11px] lg:top-[0.91px] w-2.5 h-[9.41px] top-[0.31px] lg:left-[10px]  md:w-[16.77px] md:h-[15.73px] md:left-0 md:top-[0.52px] absolute"
                     alt=""
                   />
+      )}
+                  
                 </div>
+                  
               </div>
-              <div className="justify-start items-start mt-[5px] md:mt-[12px] gap-[5.5px] lg:gap-[11px] md:gap-[6.30px]  flex">
+              <div  className="justify-start items-start mt-[5px] md:mt-[12px] gap-[5.5px] lg:gap-[11px] md:gap-[6.30px]  flex">
                 <div className="text-black lg:text-[20px] text-[10px] md:text-[13px] md:whitespace-nowrap font-semibold lg:leading-relaxed md:leading-[14.90px] leading-[10.40px] ">
                   Available Balance
                 </div>
@@ -217,6 +225,9 @@ const handleSelectedOption = (event) => {
             <div
                onClick={() => {
                 setIsOpen1((prev) => !prev);
+                setCalender(false)
+                setIsOpen2(false)
+
               }}
               className="lg:w-6 lg:h-6 w-[13.75px] md:mt-[5px] mt-[0px] h-[13.75px] md:w-[13.75px] md:h-[13.75px] lg:justify-center lg:items-center flex"
             >
@@ -244,10 +255,12 @@ const handleSelectedOption = (event) => {
   <div
     onClick={() => {
       setCalender((prev) => !prev);
+      setIsOpen1(false)
+      setIsOpen2(false)
     }}
     className={`cursor-pointer ${styles.filter} ${
       isDarkMode ? "border" : ""
-    } flex items-center gap-[1px] px-[2px] rounded-[3px] md:px-[8px]`}
+    } flex items-center gap-[1px]  px-[2px] rounded-[3px] md:px-[8px]`}
   >
     <div className={`text-[#04177f]`}>Filter by Date </div>
     <img
@@ -256,19 +269,16 @@ const handleSelectedOption = (event) => {
       alt=""
     />
   </div>
+  
 </div>
-          {/* <div className="lg:self-stretch lg:p-2.5 md:h-[33px] md:mt-[-4px] lg:h-[50px]  */}
-          {/* // lg:mt-[1px] md:p-[5.73px] p-[3.33px] bg-white lg:rounded-[5px] */}
-          {/* //  rounded-sm md:rounded-[2.86px] shadow justify-start items-center */}
-            {/* // lg:gap-[6.62px] mt-[5px] gap-[2.21px] md:w-[115.6px] lg:w-[180px] md:gap-[4px] inline-flex"> */}
-            {/* <div className="text-blue-900 lg:whitespace-nowrap whitespace-nowrap lg:text-[20px] text-[10px] md:text-[13px] md:whitespace-nowrap font-semibold "> */}
-              {/* Filter by Date */}
-            {/* </div> */}
-            {/* <div className="lg:w-[19.85px] w-4 lg:h-[19.85px] h-4 md:mt-[7px] md:w-[13.37px] md:h-[13.37px] lg:justify-center lg:items-center flex"> */}
-              {/* <img src={filter} alt="" /> */}
-            {/* </div> */}
-          {/* </div> */}
-          <div className="lg:self-stretch justify-start lg:mt-[7px] mt-[5px] items-center lg:gap-2.5 gap-[5.73px] md:gap-[5.73px] inline-flex">
+          <div
+           onClick={() => {
+            setIsOpen2((prev) => !prev);
+            setCalender(false)
+            setIsOpen1(false)
+
+          }}
+          className="lg:self-stretch justify-start lg:mt-[7px] mt-[5px] items-center lg:gap-2.5 gap-[5.73px] md:gap-[5.73px] inline-flex">
             <div className="lg:justify-start lg:items-center lg:gap-[5px] md:gap-[2.86px] gap-[2.86px] flex">
               <div className="lg:w-[20.85px] w-[13.37px] lg:h-[20.85px] h-[13.37px]
               md:w-[19px] md:h-[19px] md:mt-[4px] justify-center items-center relative flex">
@@ -278,10 +288,12 @@ const handleSelectedOption = (event) => {
                 Filter By Status
               </div>
             </div>
+
+            
             <div
-                onClick={() => {
-                  setIsOpen2((prev) => !prev);
-                }}
+               
+               
+               
               className="lg:w-[19.85px] w-[11.37px] lg:h-[19.85px] h-[11.37px] md:w-[18px] md:h-[18px] lg:justify-center lg:items-center relative flex"
             >
                              {isOpen2 ? (
@@ -291,9 +303,12 @@ const handleSelectedOption = (event) => {
   )}
             </div>
           </div>
+          
         </div>
+        { calender && <div className="mt-[30px] lg:mt-[50px]"><Calender/></div> }
+        
 
-
+        
         <div className="mt-[-5%] lg:mt-[1%] md:mt-[-6%]   mb-[10%]">
 
 {/* ==============================Sale Analysis Indicator====================== */}
@@ -380,93 +395,117 @@ const handleSelectedOption = (event) => {
 
 </div>
 
+
+
  {isOpen1 && (
-          <div className="lg:ml-[510px]  lg:top-[360px] md:w-[300px] lg:pl-[-500px] left-[65px] w-[62%] lg:w-full 
-           top-[275px] md:top-[175px] absolute flex-col md:mt-[260px] md:ml-[300px] lg:items-start inline-flex">
-            <div className="lg:pl-2.5 lg:w-[370px] md:w-[214.84px] lg:pt-[7px] lg:h-[40px] h-[30px] justify-start items-center pt-[3px] pb-[px] bg-white shadow   md:pt-1 md:pb-[4.43px] inline-flex">
-              <div className="lg:self-stretch lg:justify-start lg:items-center flex md:gap-[2.86px] md:h-[30px]  flex-row  ">
-                <div className="lg:w-[29.27px] lg:h-[29.27px] h-[16.77px] md:w-[16.77px] md:h-[16.77px] relative bg-white">
-                  <div className="lg:w-[29.27px] w-[16.77px] lg:h-[27.45px] h-[16.77px] lg:left-0 lg:top-[0.91px] md:w-[16.77px] md:h-[16.77px] md:left-1 md:top-[0.52px] absolute">
+          <div className="lg:ml-[510px] pl-[-50px] lg:top-[600px] md:w-[300px] lg:pl-[-500px]
+           left-[65px] w-[62%] lg:w-full 
+           top-[270px] md:top-[420px] absolute flex-col md:ml-[300px] lg:items-start inline-flex">
+            <div onClick={() => handleClick(<img className="" src={group5} alt="" />)} className="lg:pl-2.5 lg:w-[370px] border border-b md:w-[214.84px] 
+            lg:pt-[7px] md:h-[35px] lg:h-[47px] h-[30px] 
+            justify-start items-center pt-[3px] pb-[px] bg-white shadow gap-[5px] pl-2 md:pl-2 md:gap-[5px] 
+              flex-row  md:pt-1 md:pb-[4.43px] inline-flex">
+              
+                
+                  <div className="lg:w-[29.27px] w-[16.77px] lg:h-[27.45px]
+                   h-[16.77px] lg:left-0 lg:top-[0.91px] md:w-[16.77px]
+                    md:h-[16.77px] md:left-1 md:top-[0.52px]">
                     <img src={group5} alt="" />
                   </div>
-                </div>
-                <div className="text-neutral-500 text-[8px] md:text-[9.17px] lg:text-base lg:font-medium md:ml-1 ml-5  md:leading-3 lg:leading-tight">
+                
+                <div className="text-neutral-500 text-[9px] md:text-[13px] lg:text-xl lg:font-medium 
+                  md:leading-3 lg:leading-tight">
                   NGN Wallet (50,000.00)
                 </div>
-              </div>
+              
             </div>
-            <div className="lg:pl-2.5 md:w-[214.84px]  mt-[0.0px] justify-start items-center
+            <div
+            onClick={() => handleClick('./assets/Country Flags.png')}
+            className="lg:pl-2.5 md:w-[214.84px] border border-b mt-[0.0px] 
              h-[30px] lg:h-[45px] lg:w-[370px] lg:pb-[7.73px] bg-white shadow 
-             lg:justify-start lg:items-center md:h-[30px] lg:mt-[-3px] md:pl-[5.73px]
-              md:mt-[-5px] md:pr-[84.48px] md:pt-1 md:pb-[4.43px]  inline-flex">
-              <div className="lg:self-stretch lg:justify-start lg:items-center flex flex-row gap-[5px] md:gap-[2.86px] lg:gap-[5px] lg:flex">
-                <div className="lg:w-[29.27px] lg:h-[29.27px] lg:relative md:w-[16.77px] md:h-[16.77px] bg-white">
-                  <div className="lg:w-[28.77px] w-[16.77px] lg:h-[26.09px] h-[16.77px] lg:left-[0.50px] lg:top-[3.18px] md:w-[16.77px] md:h-[16.77px] md:left-0 md:top-[0.52px] lg:absolute">
+             justify-start items-center md:h-[35px] lg:mt-[-3px] flex-row pl-2 md:pl-2 gap-[5px] 
+               md:gap-[5px] lg:gap-[5px] md:pt-1   inline-flex">
+              
+                
+                  <div className="lg:w-[28.77px] w-[16.77px] lg:h-[26.09px]
+                   h-[16.77px] lg:left-[0.50px] lg:top-[3.18px] md:w-[16.77px]
+                    md:h-[16.77px] md:left-0 md:top-[0.52px] ">
                     <img src={flags} alt="" />
                   </div>
-                </div>
-                <div className="text-neutral-500 lg:text-base md:text-[9.17px] text-[8px] font-medium  md:leading-3 leading-tight">
+                
+                <div className="text-neutral-500 lg:text-xl md:text-[13px] text-[9px]
+                 font-medium  md:leading-3 leading-tight">
                   USD Wallet (0.00)
                 </div>
-              </div>
+              
             </div>
-            <div className="lg:pl-2.5 lg:h-[45px] md:w-[214.84px] h-[30px] justify-start items-center lg:pt-[7px] lg:w-[370px] lg:pb-[7.73px] bg-white shadow lg:justify-start lg:items-center md:h-[30px]  md:pl-[5.73px] md:pr-[84.48px] md:pt-1 md:pb-[4.43px] inline-flex">
-              <div className="lg:self-stretch lg:justify-start lg:items-center flex flex-row gap-[5px] md:gap-[2.86px] lg:gap-[5px] lg:flex">
-                <div className="lg:w-[29.27px] lg:h-[29.27px] md:w-[16.77px] md:h-[16.77px] relative bg-white">
+            <div onClick={() => handleClick('./assets/EUR.svg')} className="lg:pl-2.5 lg:h-[45px] border border-b md:w-[214.84px] pl-2 md:pl-2 h-[30px] 
+            justify-start items-center lg:pt-[7px] lg:w-[370px] lg:pb-[7.73px] bg-white 
+            shadow md:h-[35px]  gap-[5px] md:gap-[5px] lg:gap-[5px] flex-row 
+             md:pt-1  inline-flex">
+              
+                
                   <img
                     src={EUR}
-                    className="lg:w-[29.27px] w-[16.77px] md:h-[16.77px] md:w-[16.77px] lg:mt-[-1px] lg:h-[29.27px] h-[16.77px] lg:left-0 lg:top-0 "
+                    className="lg:w-[29.27px] w-[16.77px] md:h-[16.77px] md:w-[16.77px]
+                     lg:mt-[-1px] lg:h-[29.27px] h-[16.77px] lg:left-0 lg:top-0 "
                     alt=""
                   />
-                  <div className="lg:w-[28.26px] lg:h-[28.26px] lg:left-[0.50px] lg:top-[0.51px] md:w-[18px] md:h-[35px] md:left-0 md:top-[0.52px] absolute"></div>
-                </div>
-                <div className="text-neutral-500 lg:text-base text-[8px] md:text-[9.17px] font-medium  md:leading-3 leading-tight">
+                 <div className="text-neutral-500 lg:text-xl text-[9px] md:text-[13px]
+                 font-medium  md:leading-3 leading-tight">
                   EUR Wallet (0.00)
                 </div>
-              </div>
+              
             </div>
-            <div className="lg:pl-2.5 lg:w-[370px] md:w-[214.84px] lg:h-[45px] h-[30px] justify-start items-center lg:pt-[7px] lg:pb-[7.73px] bg-white shadow lg:justify-start lg:items-center md:h-[30px]  md:pl-[5.73px] md:pr-[84.48px] md:pt-1 md:pb-[4.43px] inline-flex">
-              <div className="lg:self-stretch lg:justify-start lg:items-center flex-row gap-[5px] lg:gap-[5px] md:gap-[2.86px] inline-flex">
-                <div className="lg:w-[29.27px] w-[16.77px] lg:h-[29.27px] h-[16.77px] md:w-[16.77px] md:h-[16.77px] relative bg-white">
-                  <img src={flags3} alt="" />
-                  <div className="lg:w-[28.26px] lg:h-[28.26px] lg:left-[0.50px] lg:top-[0.51px] md:w-[18px] md:h-[35px] md:left-0 md:top-[0.52px] absolute"></div>
+            <div onClick={() => handleClick('./assets/Country Flags (3).png')} className="lg:pl-2.5 lg:w-[370px] md:w-[214.84px] pl-2 md:pl-2 border border-b lg:h-[45px] h-[30px]
+             justify-start items-center lg:pt-[7px] lg:pb-[7.73px] bg-white shadow 
+               md:h-[35px] flex-row gap-[5px]
+                lg:gap-[5px] md:gap-[5px] md:pt-1 inline-flex">
+              
+                
+                  <img  className="lg:w-[29.27px] w-[16.77px] h-[16.77px]
+                   lg:h-[29.27px] lg:left-[0.50px] lg:top-[0.51px]
+                   md:w-[16.77px] md:h-[16.77px] md:left-0 md:top-[0.52px] " src={flags3} alt="" />
+                  
 
-                  <div className="lg:w-[17.82px] lg:h-[17.82px] lg:left-[5.72px] lg:top-[5.73px] absolute"></div>
-                </div>
-                <div className="text-neutral-500 lg:text-base text-[8px] md:text-[9.17px] font-medium  md:leading-3 leading-tight">
+                
+                <div className="text-neutral-500 lg:text-xl text-[9px] md:text-[13px] font-medium 
+                 md:leading-3 leading-tight">
                   GBP Wallet (0.00)
                 </div>
-              </div>
+              
             </div>
-            <div className="lg:pl-2.5 md:w-[214.84px] lg:pt-[7px] lg:pb-[7.73px] lg:h-[45px] h-[30px] justify-start items-center  lg:w-[370px] bg-white shadow lg:justify-start lg:items-center md:h-[30px]  md:pl-[5.73px] md:pr-[84.48px] md:pt-1 md:pb-[4.43px]  inline-flex">
-              <div className="lg:self-stretch lg:justify-start lg:items-center lg:gap-[5px] flex-row gap-[5px] md:gap-[2.86px] inline-flex">
-                <div className="lg:w-[29.27px] w-[16.77px] lg:h-[29.27px] h-[16.77px] md:w-[16.77px] md:h-[16.77px] relative bg-white">
-                  <div className="lg:w-[28.26px] lg:h-[28.26px] lg:left-[0.50px] lg:top-[0.51px] md:w-[18px] md:h-[35px] md:left-0 md:top-[0.52px] absolute"></div>
+            <div onClick={() => handleClick('./assets/Group (2).png')} className="lg:pl-2.5 md:w-[214.84px] border border-b lg:pt-[7px] lg:pb-[7.73px]
+             lg:h-[45px] h-[30px] justify-start items-center lg:gap-[5px] lg:w-[370px] bg-white shadow
+              md:h-[35px] pl-2 md:pl-2
+               md:pt-1  flex-row gap-[5px] md:gap-[5px] inline-flex">
+              
+                
+                  <div className="lg:w-[29.27px] lg:h-[29.27px] lg:left-[0.50px] 
+                  lg:top-[0.51px] h-[16.77px] w-[16.77px] md:w-[16.77px] md:h-[16.77px]
+                   md:left-0 md:top-[0.52px]">
 
-                  <img src={group10} alt="" />
-                  {/* <div className="lg:w-[27.45px] w-[15px] lg:h-[29.27px] lg:left-[0.91px] lg:top-0 absolute"> */}
-                  {/*  */}
-                  {/* </div> */}
-                </div>
-                <div className="text-neutral-500 lg:text-base text-[8px] md:text-[9.17px] font-medium  md:leading-3 leading-tight">
+                  <img src={group10} alt="" /></div>
+                
+                <div className="text-neutral-500 lg:text-xl text-[9px] md:text-[13px] font-medium 
+                 md:leading-3 leading-tight">
                   AUD Wallet (0.00)
                 </div>
-              </div>
+              
             </div>
-            <div className="lg:pl-2.5 md:w-[214.84px] lg:pt-[7px] lg:w-[370px] lg:h-[45px] h-[30px] justify-start items-center lg:pb-[7.73px] bg-white shadow lg:justify-start lg:items-center md:h-[30px] md:pl-[5.73px] md:pr-[84.48px] md:pt-1 md:pb-[4.43px] inline-flex">
-              <div className="lg:self-stretch lg:justify-start  lg:items-center lg:gap-[5px] flex-row gap-[5px] md:gap-[2.86px] inline-flex">
-                <div className="lg:w-[29.27px] w-[16.77px] lg:h-[29.27px] h-[16.77px] md:w-[16.77px] md:h-[16.77px] relative bg-white">
-                  <img src={country5} alt="" />
-                  <div className="lg:w-[28.26px] lg:h-[28.26px] lg:left-[0.50px] lg:top-[0.51px] md:w-[18px] md:h-[35px] md:left-0 md:top-[0.52px] absolute"></div>
+            <div onClick={() => handleClick('./assets/Country Flags (4).png')} className="lg:pl-2.5 md:w-[214.84px] border border-b lg:pt-[7px] lg:w-[370px] lg:h-[45px] h-[30px]
+             justify-start items-center lg:pb-[7.73px] bg-white shadow lg:gap-[5px] md:h-[35px]
+               flex-row gap-[5px] md:gap-[5px] md:pt-1 pl-2 md:pl-2 inline-flex">
+              
+                
+                  <img className="lg:w-[29.27px]  md:w-[16.77px] md:h-[16.77px] w-[16.77px] h-[16.77px] 
+                   lg:h-[29.27px] lg:left-[0.50px] 
+                  lg:top-[0.51px]  md:left-0 md:top-[0.52px]" src={country5} alt="" />
 
-                  {/* <div className="lg:w-[9.11px] lg:h-[17.34px] lg:left-[10.07px] lg:top-[5.96px] absolute"> */}
-                  {/* </div> */}
-                  <div className="lg:w-[6.36px] lg:h-[14.71px] lg:left-[11.46px] lg:top-[7.28px] md:w-[16.77px] md:h-[15.73px] md:left-0 md:top-[0.52px]  absolute"></div>
-                </div>
-                <div className="text-neutral-500 lg:text-base text-[8px] md:text-[9.17px] font-medium  md:leading-3 leading-tight">
+                <div className="text-neutral-500 lg:text-xl text-[9px] md:text-[13px] font-medium  md:leading-3 leading-tight">
                   KES Wallet (0.00)
                 </div>
-              </div>
+              
             </div>
           </div>
         )}
@@ -477,13 +516,15 @@ lg:gap-[120px] lg:justify-between justify-around md:justify-between
   items-center gap-[100px] md:gap-[90px] border border-black border-opacity-30 ">
     <div className="flex lg:gap-3 lg:mt-[-15px] lg:justify-around md:justify-around justify-around
      gap-2 mt-[0.1px] md:gap-2 flex-row  "> 
-      <label htmlFor="searchInput"><img className="justify-center items-center lg:w-5 mt-[4px]
+      <label for="searchInput"><img className="justify-center items-center lg:w-5 mt-[4px]
        md:mt-[7px] lg:mt-[18px] 
 w-3 h-3 lg:h-5 md:w-[10px] md:h-[10px]" src={normal} alt="" /> </label>
-      <input className="items-center text-neutral-400 text-[9px] 
-       lg:text-[20px] mt-[4px] lg:mt-4 md:text-[13px] leading-3 whitespace-nowrap font-medium  lg:leading-tight "
+      <input className="items-center text-neutral-400  
+        mt-[4px] lg:mt-4 md:text-[13px] leading-3 whitespace-nowrap font-medium 
+        lg:leading-tight text-[10px] w-[100%] h-[100%] outline-none lg:text-[20px] "
         type="text"
         id="searchInput"
+        name="search"
         placeholder="Search for Transactions, e.g; Order Number"
       /></div>
       <div className="lg:gap-[10px] gap-1  md:w-[100px] md:pl-[15.59px] 
@@ -496,37 +537,6 @@ w-3 h-3 lg:h-5 md:w-[10px] md:h-[10px]" src={normal} alt="" /> </label>
       </div>
     </div>
 
-        {/* <div className=" lg:w-full  w-[312px] lg:h-[60px]  lg:mt-[90px] md:mt-[120px] */}
-        {/* //  h-5  bg-white mt-[50px] md:w-full md:h-[30.94px] md:pl-[9.17px] */}
-          {/* // flex flex-row md:justify-between lg:justify-between justify-around items-center gap-[70px] md:gap-[90px] border border-black border-opacity-30 "> */}
-          {/*  */}
-            {/*  */}
-              {/* <div className="flex lg:gap-3 lg:mt-[-15px] justify-around gap-2 mt-[0.1px] md:gap-2 flex-row  "> */}
-                {/*  */}
-                  {/* <div className=""> */}
-                    {/* <img className=" lg:w-4 mt-[4px] md:mt-[7px] lg:mt-[22px] */}
-                    {/* //  w-3 lg:h-4 md:w-[9.17px] md:h-[9.17px]" src={normal} alt="" /> */}
-                  {/* </div> */}
-                {/*  */}
-                {/* <div className="text-neutral-400 text-[8px] lg:mt-[20px] lg:text-base mt-[4px] md:text-xs leading-3 whitespace-nowrap font-medium  lg:leading-tight"> */}
-                  {/* Search for Transactions, e.g; Order Number */}
-                {/* </div> */}
-              {/* </div> */}
-            {/*  */}
-            {/* <div className="lg:gap-[10px] gap-1 md:w-[100px] md:pl-[15.59px] justify-end items-center md:pr-[15.58px]  md:gap-3  md:mt-[0px] md:py-[8.47px] lg:w-[130px] bg-white shadow border-black border-opacity-50  md:h-[30.94px] lg:h-[60px] lg:items-center flex-row flex"> */}
-              {/*  */}
-                {/* <div className="text-neutral-500 md:text-xs lg:text-base text-[8px] mt-[4px]  font-medium "> */}
-                  {/* Search */}
-                {/* </div> */}
-                {/* <div className="lg:w-6 lg:h-6 md:w-[13.75px] w-3 mt-[2px] md:mt-[3px] md:h-[13.75px] lg:items-center flex"> */}
-                  {/* <div className="lg:w-6 mt-[2px] md:mt-[3px] w-3 lg:h-6 md:w-[13.75px] md:h-[13.75px] "> */}
-                    {/* <img src={refresh} alt="" /> */}
-                  {/* </div> */}
-                {/* </div> */}
-              {/*  */}
-            {/* </div> */}
-          {/*  */}
-        {/* </div> */}
 
 {/* table for large screens */}
         <div className='mt-[30px] hidden md:flex '>
@@ -1218,12 +1228,12 @@ w-3 h-3 lg:h-5 md:w-[10px] md:h-[10px]" src={normal} alt="" /> </label>
 
 
         <div
-            className="md:hidden mt-9 flex flex-col w-full p-[20px] border-x-[1.2px]
- border-[#7C7C7C] border-opacity-[25%] mb-[50px]  shadow-md"
+            className="md:hidden mt-9 flex flex-col w-full p-[20px] border-x-[1.2px] border-b-[1.2px]
+ border-[#7C7C7C] border-opacity-[25%] mb-[20px] pb-[20px] shadow-md"
           >
             
             <div
-              className="flex justify-between pb-[31.5px] border-b-[1px] border-b-[black]
+              className="flex justify-between  pb-[31.5px] border-b-[1px] border-b-[black]
    border-opacity-[20%]"
             >
               
@@ -1244,14 +1254,14 @@ w-3 h-3 lg:h-5 md:w-[10px] md:h-[10px]" src={normal} alt="" /> </label>
               </div>
               {/* rightSide */}
               <div className="flex flex-col gap-[13.473px]">
-                <div className="flex flex-row justify-end gap-[2px] items-center">
+                <div className="flex flex-row justify-end gap-[5px] items-center">
                 <p
                   className="font-medium text-neutral-500 self-start text-[9.167px] leading-[11.167px] cursor-pointer"
                 >
                   Status: </p>
-                  <div className="mt-[-10px]">
+                  <div className="mt-[-8px]">
                   <span className="font-medium text-white self-end text-[9.167px] leading-[11.167px] cursor-pointer
-                  py-[2.122px] px-[4.245px] rounded-sm bg-green-300">Successful</span> 
+                  py-[2.122px] px-[4.245px]  rounded-sm bg-green-300">Successful</span> 
                 </div>
                 </div>
 
@@ -1291,13 +1301,17 @@ w-3 h-3 lg:h-5 md:w-[10px] md:h-[10px]" src={normal} alt="" /> </label>
                 </h2>
               </div>
               {/* rightSide */}
-              <div className="flex flex-col gap-[13.473px]">
+              <div className="flex flex-col gap-[15.473px]">
+                <div className="flex flex-row gap-[5px]">
+                  <div>
                 <p
-                  className="font-medium text-neutral-500 self-end text-[9.167px] leading-[11.167px] cursor-pointer"
+                  className="font-medium text-neutral-500 mt-0 self-end text-[9.167px] leading-[11.167px] cursor-pointer"
                 >
-                   Status: <span className="font-medium text-white self-end text-[9.167px] leading-[11.167px] cursor-pointer
-                   py-[2.122px] px-[4.245px] rounded-sm bg-green-300">Successful</span>
-                </p>
+                   Status: </p></div>
+                   <div className="mt-0 font-medium text-white self-end  text-[9.167px] leading-[11.167px] cursor-pointer
+                   py-[2.122px] px-[4.245px] rounded-sm bg-green-300">Successful</div>
+                   </div>
+                
                 <div className="flex flex-row">
                 <p className="font-medium text-neutral-500 text-[10px] leading-[13px]">
                 <span className="block">Date & Time:</span>
@@ -1332,15 +1346,17 @@ w-3 h-3 lg:h-5 md:w-[10px] md:h-[10px]" src={normal} alt="" /> </label>
               </div>
               {/* rightSide */}
               <div className="flex flex-col gap-[13.473px]">
-                <div className="flex flex-row justify-end items-center gap-[2px]">
+                <div className="flex flex-row justify-end items-center gap-[5px]">
+                  <div>
                 <p
-                  className="font-medium self-end text-[9.167px] text-neutral-500 leading-[11.167px] cursor-pointer"
+                  className="font-medium  self-end text-[9.167px] text-neutral-500 leading-[11.167px] cursor-pointer"
                 >
                   Status:
                   </p>
+                  </div>
 
-                  <span className="font-medium text-white self-end text-[9.167px] leading-[11.167px] cursor-pointer
-                  py-[2.122px] px-[4.245px] rounded-sm bg-green-300">Successful</span>
+                  <div className="font-medium text-white self-end text-[9.167px] leading-[11.167px] cursor-pointer
+                  py-[2.122px] px-[4.245px] rounded-sm bg-green-300">Successful</div>
                 
                 </div>
                 <div className="flex flex-row">
@@ -1376,15 +1392,14 @@ w-3 h-3 lg:h-5 md:w-[10px] md:h-[10px]" src={normal} alt="" /> </label>
               </div>
               {/* rightSide */}
               <div className="flex flex-col gap-[13.473px]">
-                <div className="flex flex-row justify-end items-center gap-[2px]">
+                <div className="flex flex-row justify-end items-center gap-[5px]">
+                  <div>
                 <p
-                  className="font-medium text-neutral-500 self-end text-[9.167px] leading-[11.167px] cursor-pointer
-      "
-                >
-                   Status:</p>
+                  className="font-medium text-neutral-500 self-end text-[9.167px] leading-[11.167px] cursor-pointer">
+                   Status:</p></div>
                    
-                   <span className="font-medium text-white self-end text-[9.167px] leading-[11.167px] cursor-pointer
-                   py-[2.122px] px-[4.245px] rounded-sm bg-green-300">Successful</span>
+                   <div className="font-medium text-white self-end text-[9.167px] leading-[11.167px] cursor-pointer
+                   py-[2.122px] px-[4.245px] rounded-sm bg-green-300">Successful</div>
                 
                 </div>
                 <div className="flex flex-row">
@@ -1423,13 +1438,15 @@ w-3 h-3 lg:h-5 md:w-[10px] md:h-[10px]" src={normal} alt="" /> </label>
               <div className="flex flex-col gap-[13.473px]">
 
                 <div className="flex flex-row justify-end items-center gap-[12px]">
+                  <div className="mt-[5px">
                 <p
-                  className="font-medium text-neutral-500 justify-start flex  text-[9.167px] leading-[11.167px] cursor-pointer"
+                  className="font-medium text-neutral-500 justify-start  flex  text-[9.167px] leading-[11.167px] cursor-pointer"
                 >
-                   Status:</p> 
-                   <span className="font-medium text-white self-end text-[9.167px] leading-[11.167px] cursor-pointer
-                  py-[2.122px] px-[4.245px] bg-amber-200 rounded-sm  ">Pending</span>
+                   Status:</p> </div>
+                   <div className="font-medium text-white self-end text-[9.167px] leading-[11.167px] cursor-pointer
+                  py-[2.122px] px-[4.245px] bg-amber-200 rounded-sm  ">Pending</div>
                   </div>
+                  
                 
                 <div className="flex flex-row">
                 <p className="font-medium text-[10px] text-neutral-500 leading-[13px]">
@@ -1471,12 +1488,14 @@ w-3 h-3 lg:h-5 md:w-[10px] md:h-[10px]" src={normal} alt="" /> </label>
               {/* rightSide */}
               <div className="flex flex-col gap-[13.473px]">
                 <div className="flex flex-row justify-end items-center gap-[20px]">
+                  <div>
                 <p
                   className="font-medium text-neutral-500 text-[9.167px] leading-[11.167px] cursor-pointer"
                 >
-                   Status:</p> <span className="font-medium text-white self-end text-[9.167px]
+                   Status:</p> </div>
+                   <div className="font-medium text-white self-end text-[9.167px]
                     leading-[11.167px] cursor-pointer
-                  py-[2.122px] px-[4.245px] bg-red-300 rounded-sm ">Failed</span>
+                  py-[2.122px] px-[4.245px] bg-red-300 rounded-sm ">Failed</div>
                 
                 </div>
                 <div className="flex flex-row">
@@ -1513,14 +1532,13 @@ w-3 h-3 lg:h-5 md:w-[10px] md:h-[10px]" src={normal} alt="" /> </label>
               {/* rightSide */}
               <div className="flex flex-col gap-[13.473px]">
                 <div className="flex flex-row justify-end items-center gap-[11px]">
+                  <div>
                 <p
-                  className="font-medium text-neutral-500 mt-[-30px] self-end text-[9.167px] leading-[11.167px] cursor-pointer
-      "
-                >
-                  Status: </p> 
-                  <span className="font-medium text-white self-end items-center text-[9.167px] 
+                  className="font-medium text-neutral-500 self-end text-[9.167px] leading-[11.167px] cursor-pointer" >
+                  Status: </p> </div>
+                  <div className="font-medium text-white self-end items-center text-[9.167px] 
                   leading-[11.167px] cursor-pointer
-                  py-[2.122px] px-[4.245px] bg-amber-200 rounded-sm ">Pending</span> 
+                  py-[2.122px] px-[4.245px] bg-amber-200 rounded-sm ">Pending</div> 
                
                 </div>
                 <div className="flex flex-row">
@@ -1533,20 +1551,39 @@ w-3 h-3 lg:h-5 md:w-[10px] md:h-[10px]" src={normal} alt="" /> </label>
               </div>
             </div>
             </div>
-            
-            {/* CONTACT US */}
-            <div className="flex gap-[14.896px] py-[2.865px] mt-4 justify-center px-[8.594px] ">
-              <p className="font-[500] text-[8px] text-[#707070] leading-[10.4px]">
-                You need help?
-              </p>
-              <Link to ="/contactUs"
-                className="font-[500] text-white mt-[-3px] text-[8px] py-[2.865px] 
- px-[8.594px] leading-[10.4px] rounded-[5.156px] items-center justify-center bg-[#04177F]"
+
+            <footer className="flex justify-center text-center gap-[20px] mt-[20px] mb-[10px]">
+            <p className="text-[8px]  font-[500] leading-[9.1px] mt-[5px]">
+              You need help?
+            </p>
+
+            <Link to="/ContactUs">
+              <div
+                className={`${
+                  isDarkMode ? "border " : "bg-[#04177f]"
+                } text-[8px] p-1 text-white rounded-[8px]`}
               >
                 Contact Us
-              </Link>
-            </div>
-            </div>
+              </div>
+            </Link>
+          </footer>
+          </div>
+
+
+            
+            {/* CONTACT US */}
+            {/* <div className="flex gap-[14.896px] py-[2.865px] mt-4 justify-center px-[8.594px] "> */}
+              {/* <p className="font-[500] text-[8px] text-[#707070] leading-[10.4px]"> */}
+                {/* You need help? */}
+              {/* </p> */}
+              {/* <Link to ="/contactUs" */}
+                {/* // className="font-[500] text-white mt-[-3px] text-[8px] py-[2.865px]  */}
+{/* //  px-[8.594px] leading-[10.4px] rounded-[5.156px] items-center justify-center bg-[#04177F]" */}
+              {/* // > */}
+                {/* Contact Us */}
+              {/* </Link> */}
+            {/* </div> */}
+           
           
 
 
@@ -1576,35 +1613,49 @@ w-3 h-3 lg:h-5 md:w-[10px] md:h-[10px]" src={normal} alt="" /> </label>
 
         {/* filter by status dropdown */}
         {isOpen2 && (
-          <div className="flex absolute lg:top-[725px] top-[325px] md:top-[495px] w-full md:w-full ml-[50px] md:ml-[40px] lg:w-full lg:ml-[60px] flex-col">
-            <div className="lg:w-[375px] lg:h-[53px] md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px] justify-around items-center flex relative bg-white shadow">
-              <div class="lg:w-[325px] text-neutral-500 lg:text-base font-medium lg:leading-tight md:w-[186.20px]  md:text-[14px] md:leading-3 w-[163.80px] text-[8.06px] leading-[10.48px] ">
+          <div className="flex absolute lg:top-[725px] top-[325px] md:top-[498px] w-full md:w-full
+           ml-[50px] md:ml-[40px] lg:w-full lg:ml-[60px] flex-col">
+            <div className="border border-b lg:w-[375px] lg:h-[53px] md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px] justify-around items-center flex relative bg-white shadow">
+              <div class="lg:w-[325px] text-neutral-500 lg:text-xl font-medium 
+              lg:leading-tight md:w-[186.20px] md:text-[16px] md:leading-3 w-[163.80px]
+               text-[10px] leading-[10.48px] ">
                 All Transactions
               </div>
+              
             </div>
-            <div className="lg:w-[375px] lg:h-[53px]  md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px] justify-around items-center flex relative bg-white shadow">
-              <div class="lg:w-[325px] text-neutral-500 lg:text-base font-medium lg:leading-tight md:w-[186.20px]  md:text-[14px] md:leading-3 w-[163.80px] text-[8.06px] leading-[10.48px]">
+            <div className="lg:w-[375px] lg:h-[53px] border border-b  md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px] justify-around items-center flex relative bg-white shadow">
+              <div class="lg:w-[325px] text-neutral-500 lg:text-xl 
+              font-medium lg:leading-tight md:w-[186.20px]  md:text-[16px]
+               md:leading-3 w-[163.80px] text-[10px] leading-[10.48px]">
                 Successful
               </div>
             </div>
 
-            <div className="lg:w-[375px] lg:h-[53px]  md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px] justify-around items-center flex relative bg-white shadow">
-              <div class="lg:w-[325px] text-neutral-500 lg:text-base font-medium lg:leading-tight md:w-[186.20px]  md:text-[14px] md:leading-3 w-[163.80px] text-[8.06px] leading-[10.48px]">
+            <div className="lg:w-[375px] lg:h-[53px] border border-b md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px] justify-around items-center flex relative bg-white shadow">
+              <div class="lg:w-[325px] text-neutral-500 lg:text-xl font-medium 
+              lg:leading-tight md:w-[186.20px]  md:text-[16px] md:leading-3 w-[163.80px]
+               text-[10px] leading-[10.48px]">
                 Failed
               </div>
             </div>
-            <div className="lg:w-[375px] lg:h-[53px]  md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px]  justify-around items-center flex relative bg-white shadow">
-              <div class="lg:w-[325px] text-neutral-500 lg:text-base font-medium lg:leading-tight md:w-[186.20px]  md:text-[14px] md:leading-3 w-[163.80px] text-[8.06px] leading-[10.48px]">
+            <div className="lg:w-[375px] lg:h-[53px] border border-b md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px]  justify-around items-center flex relative bg-white shadow">
+              <div class="lg:w-[325px] text-neutral-500 lg:text-xl
+               font-medium lg:leading-tight md:w-[186.20px]  md:text-[16px]
+                md:leading-3 w-[163.80px] text-[10px] leading-[10.48px]">
                 Pending
               </div>
             </div>
-            <div className="lg:w-[375px] lg:h-[53px] md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px] justify-around items-center flex relative bg-white shadow">
-              <div class="lg:w-[325px] text-neutral-500 lg:text-base font-medium lg:leading-tight md:w-[186.20px]  md:text-[14px] md:leading-3 w-[163.80px] text-[8.06px] leading-[10.48px]">
+            <div className="lg:w-[375px] lg:h-[53px] border border-b md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px] justify-around items-center flex relative bg-white shadow">
+              <div class="lg:w-[325px] text-neutral-500 lg:text-xl
+               font-medium lg:leading-tight md:w-[186.20px]  md:text-[16px] 
+               md:leading-3 w-[163.80px] text-[10px] leading-[10.48px]">
                 Refunded
               </div>
             </div>
-            <div className="lg:w-[375px] lg:h-[53px]  md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px] justify-around items-center flex relative bg-white shadow">
-              <div class="lg:w-[325px] text-neutral-500 lg:text-base font-medium lg:leading-tight md:w-[186.20px]  md:text-[14px] md:leading-3 w-[163.80px] text-[8.06px] leading-[10.48px]">
+            <div className="lg:w-[375px] lg:h-[53px] border border-b md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px] justify-around items-center flex relative bg-white shadow">
+              <div class="lg:w-[325px] text-neutral-500 lg:text-xl
+               font-medium lg:leading-tight md:w-[186.20px]  md:text-[16px] md:leading-3 w-[163.80px] text-[10px] 
+               leading-[10.48px]">
                 Canceled
               </div>
             </div>
