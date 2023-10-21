@@ -8,15 +8,15 @@ export const TvSubscription = () =>{
     return(
         <DashBoardLayout>
             <div id='tvBackground' className="h-[90px] lg:h-[196px] md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] lg:rounded-[20px] mx-auto  flex gap-6 justify-between px-[16.51px] md:px-[28.65px] lg:px-[50px]">
-                <div className="py-[9.57px] md:py-[16.61px] align-middle flex flex-col gap-1.5">
-                    <p className="text-[9px] lg:text-[24px] md:text-[13.75px] font-semibold w-[194.12px] lg:w-[600px] md:w-[450px]">
+                <div className="py-[9.57px] md:py-[16.61px] align-middle self-center flex flex-col gap-1.5 w-[70%]">
+                    <p className="text-[9px] lg:text-[24px] md:text-[13.75px] font-semibold">
                         SUBSCRIBE YOUR TV CHANNELS WITH AREMXYPLUG.
                         </p>
-                    <p className="text-[7.5px] lg:text-[20px] md:text-[11.46px] w-[180px] lg:w-[539px] md:w-[350.8px]">
+                    <p className="text-[7.5px] lg:text-[20px] md:text-[11.46px]">
                     Never miss a beat! Subscribe your tv channels on our platform to watch and stream your favorite movies without any hassle.
                       </p>
                 </div>
-                <div className="flex w-[25%] h-[97%] pt-2">
+                <div className="flex w-[23%] h-[97%] pt-2 shrink-0">
                     <img src="./Images/TvSubscription/tv.svg" alt="" className="" />
                 </div>
             </div>
