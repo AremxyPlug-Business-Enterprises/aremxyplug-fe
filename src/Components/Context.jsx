@@ -665,6 +665,50 @@ export const Context = ({ children }) => {
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
+  // =====================AirtimeVTU========================
+  const [networkName, setNetworkName] = useState('');
+  const [selectedProduct, setSelectedProduct] = useState('');
+  const [recipientName, setRecipientName] = useState('');
+  const [recipientNumber, setRecipientNumber] = useState('');
+  const [amount, setAmount] = useState('');
+  const [networkImage, setNetworkImage] = useState('');
+
+
+
+  // =====================DATABUNDLE========================
+  const [selectedOption, setSelectedOption] = useState('');
+  const [selectedNetworkProduct, setSelectedNetworkProduct] = useState('');
+  const [recipientPhoneNumber, setRecipientPhoneNumber] = useState('');
+  const [selectedAmount, setSelectedAmount] = useState('');
+  const [recipientNames, setRecipientNames] = useState('');
+  const [walletName, setWalletName] = useState("");
+
+  //=============point redeem==============
+  const [inputValue, setInputValue] = useState('');
+  const [outputValue, setOutputValue] = useState('');
+  const [realinputValue, setRealInputValue] = useState('');
+  const [realoutputValue, setRealOutputValue] = useState('');
+  
+
+  //=============Currency conversion==============
+  const [convertedAmount, setConvertedAmount] = useState('');
+  const [initialValue, setInitialValue] = useState('');
+  const [showListOne, setShowListOne] = useState(false);
+  const [selectedOne, setSelectedOne] = useState(false);
+  const [activeButtonOne, setActiveButtonsOne] = useState([true, false]);
+
+  //============= EDUCATION PINS ========================
+
+  const [quantityResult, setQuantityResult] = useState('');
+const [waecActive, setWaecActive] = useState(false);
+const [paymentResult, setPaymentResult] = useState('');
+const [methodActive, setMethodActive] = useState(false);
+const [examType, setExamType] = useState('');
+const [examActive, setExamActive] = useState(false);
+const [educationPinPhone, setEducationPinPhone]= useState('');
+const[ educationPinEmail, setEducationPinEmail] = useState('');
+const [waecAmount, setWaecAmount] = useState('₦');
+
   const hold = {
     firstDrop,
     secondDrop,
@@ -904,6 +948,81 @@ export const Context = ({ children }) => {
     setOtherBankWithdrawalSuccess,
     // ==============exchangeRate=============
     exchangeRate,
+    
+
+    
+    // ==============AirtimeVTU===============
+    networkName,
+    setNetworkName,
+    selectedProduct,
+    setSelectedProduct,
+    recipientName,
+    setRecipientName,
+    recipientNumber,
+    setRecipientNumber,
+    amount,
+    setAmount,
+    networkImage, 
+    setNetworkImage,
+
+    // ==============DataBundle===============
+    selectedOption, 
+    setSelectedOption,
+    selectedNetworkProduct, 
+    setSelectedNetworkProduct,
+    recipientPhoneNumber, 
+    setRecipientPhoneNumber,
+    selectedAmount, 
+    setSelectedAmount,
+    recipientNames, 
+    setRecipientNames,
+    walletName, 
+    setWalletName,
+
+
+    //point redeem
+    inputValue,
+    setInputValue,
+    outputValue,
+    setOutputValue,
+
+
+    //currency
+    convertedAmount,
+    setConvertedAmount,
+    initialValue,
+    setInitialValue,
+    showListOne,
+    setShowListOne,
+    selectedOne,
+    setSelectedOne,
+    setActiveButtonsOne,
+    activeButtonOne,
+    realinputValue, 
+    setRealInputValue,
+    realoutputValue, 
+    setRealOutputValue,
+
+  //====== EDUCATION PINS
+  quantityResult, 
+  setQuantityResult,
+  paymentResult, 
+  setPaymentResult,
+  waecActive, 
+  setWaecActive,
+  methodActive, 
+  setMethodActive,
+  examType, 
+  setExamType,
+  examActive,
+   setExamActive,
+   educationPinPhone, 
+   setEducationPinPhone,
+   educationPinEmail, 
+  setEducationPinEmail,
+  waecAmount, 
+  setWaecAmount
+
   };
 
   return (
@@ -914,3 +1033,4 @@ export const Context = ({ children }) => {
     </div>
   );
 };
+

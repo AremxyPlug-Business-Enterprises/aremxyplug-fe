@@ -5,42 +5,40 @@ import { DashBoardLayout } from '../../Dashboard/Layout/DashBoardLayout';
 import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-
-export default function WaecReceipt() {
+export default function NabtebReceipt() {
     const {
-      examType,
-      quantityResult,
-      educationPinPhone,
-      educationPinEmail,
-      paymentResult,
-      setExamType,
-      waecAmount,
-      setQuantityResult,
-      setEducationPinEmail,
-      setEducationPinPhone,
-      setPaymentResult,
-      setWaecAmount
-      }
-       = useContext(ContextProvider);
-
-       const { 
-        toggleSideBar,
-        isDarkMode,
-        date, } =
-        useContext(ContextProvider);  
-
-        const contentRef = useRef(null);
-
-        const currentChanges = () => {
-          setQuantityResult(false);
-          setExamType(false);
-          setEducationPinPhone('');
-          setEducationPinEmail('');
-         setPaymentResult(false);
-         setWaecAmount('')
+        examType,
+        quantityResult,
+        educationPinPhone,
+        educationPinEmail,
+        paymentResult,
+        setExamType,
+        waecAmount,
+        setQuantityResult,
+        setEducationPinEmail,
+        setEducationPinPhone,
+        setPaymentResult,
+        setWaecAmount
         }
-      
-      
+         = useContext(ContextProvider);
+  
+         const { 
+          toggleSideBar,
+          isDarkMode,
+          date, } =
+          useContext(ContextProvider);  
+  
+          const contentRef = useRef(null);
+  
+          const currentNabtebChanges = () => {
+            setQuantityResult(false);
+            setExamType(false);
+            setEducationPinPhone('');
+            setEducationPinEmail('');
+           setPaymentResult(false);
+           setWaecAmount('')
+          }
+        
         //   Share function
         const waecShareClick = () => {
             if (navigator.share) {
@@ -69,8 +67,9 @@ export default function WaecReceipt() {
               });
             }
           };
+
   return (
-<DashBoardLayout>
+    <DashBoardLayout>
       <div className="flex flex-col gap-[35px] lg:gap-[85px]">
         <div
           className={`  ${
@@ -85,19 +84,19 @@ export default function WaecReceipt() {
                 alt=""
               />
             </Link>
-            <Link to="/WaecEducationPins">
+            <Link to="/NabtebEducationPin">
               {" "}
               <img
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
                 onClick={(e) => {
-                  currentChanges();
+                  currentNabtebChanges();
                 }}
               />
             </Link>
           </div>
-          <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]"/>
+          <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
           <div ref={contentRef}>
             {" "}
             <h3 className="font-extrabold text-[12px] my-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
@@ -272,6 +271,5 @@ export default function WaecReceipt() {
         </div>
         </div>
         </DashBoardLayout>
-
   )
 }

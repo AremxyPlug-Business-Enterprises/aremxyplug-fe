@@ -74,6 +74,10 @@ import WaecEducationPin from "./Components/EducationPins/waecEducationPin";
 import NecoEducationPins from "./Components/EducationPins/NecoEducationPins";
 import JambEducationPin from "./Components/EducationPins/jambEducationPin";
 import NabtebEducationPins from './Components/EducationPins/nabtebEducationPins';
+import WaecReceipt from "./Components/EducationPins/ReceiptEducationPins/waecReceipt";
+import JambReceipt from "./Components/EducationPins/ReceiptEducationPins/jambReceipt";
+import NecoReceipt from "./Components/EducationPins/ReceiptEducationPins/necoReceipt";
+import NabtebReceipt from "./Components/EducationPins/ReceiptEducationPins/nabtebReceipt";
 
 export const Router = () => {
   return (
@@ -180,7 +184,11 @@ export const Router = () => {
         <Route path="/NecoEducationPin" element={<NecoEducationPins/>}/>
         <Route path="/NabtebEducationPin" element={<NabtebEducationPins/>}/>
         <Route path="/JambEducationPin" element={<JambEducationPin/>}/>
-        
+        <Route path="/WaecReceipt" element={<WaecReceipt/>}/>
+        <Route path="/JambReceipt" element={<JambReceipt/>}/>
+        <Route path="/NecoReceipt" element={<NecoReceipt/>}/>
+        <Route path="/NabtebReceipt" element={<NabtebReceipt/>}/>
+
       </Routes>
     </div>
   );

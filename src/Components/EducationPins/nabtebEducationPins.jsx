@@ -21,6 +21,7 @@ import OtpInput from "react-otp-input";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
  import { Modal } from '../Screens/Modal/Modal';
+import NabtebReceipt from './ReceiptEducationPins/nabtebReceipt';
 
 export default function NabtebEducationPins() {
   const { isDarkMode } = useContext(ContextProvider);
@@ -33,14 +34,16 @@ const {examActive, setExamActive} = useContext(ContextProvider);
 const { transactSuccessPopUp, setTransactSuccessPopUp } =
 useContext(ContextProvider);
 const {educationPinPhone, setEducationPinPhone} = useContext(ContextProvider);
-// const {educationPinEmail, setEducationPinEmail} = useContext(ContextProvider);
-
+const {educationPinEmail, setEducationPinEmail} = useContext(ContextProvider);
+const {waecAmount, setWaecAmount} = useContext(ContextProvider);
 
 // UseStates
 const [imageState, setImageState] = useState(arrowDown);
 const [educationProceed, setEducationProceed] = useState(false);
 const [errors, setErrors] = useState({});
 const [educationConfirm, setEducationConfirm] = useState(false);
+
+const [receipt] = useState(false);
 
 function clickDropDown(){
   setWaecActive(!waecActive);
@@ -92,10 +95,8 @@ const {
   isVisible,
 } = useContext(ContextProvider);
 
-const waecProceed = () => {
-  
-
-  const { error } = schema.validate({
+const waecProceed = (e) => {
+ const { error } = schema.validate({
     educationPinPhone,
   });
 
@@ -119,10 +120,12 @@ const schema = Joi.object({
     .messages({
       "string.pattern.base": "Phone number should be 11 digits ",
     })
+    
     // educationPinEmail: Joi.string()
     // .pattern(new RegExp(/^[^\s@]+@[^\s@]+\.[^\s@]+$/))
     // .required()
     // .messages({ "string.pattern.base": "Invalid email " })
+
 });
 
 const confirmButton = () => {
@@ -133,9 +136,9 @@ const confirmButton = () => {
 const waecTransactionSuccessClose = () => {
   setTransactSuccessPopUp(false);
 };
-// const waecReceipt = () => {
-//   setTransactSuccessPopUp(false);
-// };
+const waecReceipt = () => {
+  setTransactSuccessPopUp(false);
+};
 
   return (
     <DashBoardLayout>
@@ -258,6 +261,7 @@ border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
               <h2 onClick={(e =>{
                 setQuantityResult(option.quantity)
                 setWaecActive(false);
+                setWaecAmount(option.Amount)
               document.querySelector('.imgdrop').classList.remove('DropIt');
          
               })}
@@ -313,13 +317,14 @@ border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
     value={educationPinPhone} onChange={(e)=>{
       setEducationPinPhone(e.target.value);
     }}/>
-   
-   </div>
-   {errors.educationPinPhone && (
+     {errors.educationPinPhone && (
             <div className="text-[12px] text-red-500 italic lg:text-[14px]">
               {errors.educationPinPhone}
             </div>
           )}
+   </div>
+   
+        
    {/* right-side */}
    <div className='flex flex-col gap-[5.868px] md:w-1/2 md:gap-[10px]'>
    <h2 className='font-[600] text-[8px] leading-[10.4px]
@@ -328,8 +333,8 @@ border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
    Email
    </h2>
    
-   < input className='flex h-[29.927px] lg:h-[51px] md:h-[29.93px] w-[100%]
-    pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
+   <input className ='EmailPins flex h-[29.927px] lg:h-[51px] md:h-[29.93px] w-[100%]
+   pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] 
     border-[0.4px] border-[#9C9C9C] focus:outline-none self-center
    md:pt-[8.802px] md:pb-[7.042px] 
    md:pr-[5.282px] md:pl-[5.867px] 
@@ -338,9 +343,12 @@ border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
    lg:placeholder:text-[16px] lg:placeholder:leading-[20.8px] placeholder:text-[#7E7E7E]
    md:placeholder:text-[9.389px] md:placeholder:leading-[12.206px]
     md:placeholder:text-[#7E7E7E]'
+    value={educationPinEmail}
+   onChange={(e) =>{
+    setEducationPinEmail(e.target.value)
+   }}
     type="Email" 
-    placeholder='Habib@aremxy.com'
-  />
+    placeholder='Habib@aremxy.com'/>
     
   
    </div>
@@ -360,27 +368,20 @@ border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
     Amount
     </h2>
     {/* input */}
-    <input
-    onInput={(e =>{
-      const onlyNum = e.target.value.replace(/\D/g, '');
-      e.target.value = onlyNum;
-    if(e.target.value.length === 4){
-    
-      }
-    })}
-      className='h-[29.927px]  lg:h-[51px] md:h-[29.93px]
-      md:pt-[8.802px] md:pb-[7.042px] 
-     pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
-   md:pr-[5.282px] md:pl-[5.867px]
-lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] border-[0.4px] border-[#9C9C9C]
-focus:outline-none text-start
-  placeholder:text-[8px] placeholder:leading-[10.4px]
- placeholder:font-[500]  placeholder:md:text-[9.389px] placeholder:md:leading-[12.206px]
-placeholder:lg:text-[16px] placeholder:text-[#7C7C7C] placeholder:lg:leading-[20.8px]
-' placeholder=' ₦'
- maxLength={7}
- 
- />
+    <div
+      onchange={setWaecAmount}
+     className='h-[29.927px]  lg:h-[51px] md:h-[29.93px]
+        md:pt-[8.802px] md:pb-[7.042px] 
+       pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
+     md:pr-[5.282px] md:pl-[5.867px]
+  lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] border-[0.4px] border-[#9C9C9C]
+  focus:outline-none text-start
+    text-[8px] leading-[10.4px]
+   font-[500]  md:text-[9.389px] md:leading-[12.206px]
+  lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px]'
+  maxLength={7}>
+  {waecAmount}
+   </div>
 
 
     </div>
@@ -496,7 +497,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                         />
                       </div>
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        WAEC
+                        NABTEB
                       </h2>
                     </div>
                   </div>
@@ -530,8 +531,8 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                      Email
                     </h2>
                     <div className="flex gap-1">
-                      <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                      
+                      <h2 className="text-[10px] leading-[12px] md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                      {educationPinEmail}
                       </h2>
                     </div>
                   </div>
@@ -542,7 +543,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                      ₦100
+                   {waecAmount}
                       </h2>
                     </div>
                   </div>
@@ -743,7 +744,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                 <p className="text-[8px] text-[#0008] text-center mb-2 md:text-[14px] lg:text-[12px]">
                   You have successfully purchased{" "}
                   <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
-                  WAEC (₦100)
+                  {`NABTEB   ${waecAmount}`}
                   </span>
                   from your {paymentResult} to{" "}
                 </p>
@@ -761,7 +762,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                       />
                     </div>
                     <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                         WAEC
+                        NABTEB
                     </h2>
                   </div>
                 </div>
@@ -791,12 +792,12 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                 </div>
 
                 <div className="flex items-center justify-between">
-                  <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                  <h2 className="text-[#7C7C7C] text-[10px] leading-[12px]  md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
                      Email
                   </h2>
                   <div className="flex gap-1">
                     <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                     
+                     {educationPinEmail}
                     </h2>
                   </div>
                 </div>
@@ -846,20 +847,21 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
               <div className="flex w-full justify-center mx-auto px-[50px] 
               items-center gap-[5%] md:gap-[10%] mt-[50px] md:w-[50%] lg:gap-[10%] lg:mx-auto  
               lg:my-[5%] md:mt-[40px]">
-                 <Link to="/WaecReceipt">
+                 <Link to="/NabtebReceipt">
                   <button
-                  
+                  onClick={waecReceipt}
                     className={`border-[1px] w-[100px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-[600] h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[12px] lg:w-[163px] lg:h-[38px] lg:my-[2%] md:px-[60px] md:h-[30px]`}
                   >
                     Share Receipt
                   </button>
                 </Link>
 
-                <Link to="/">
+                <Link to="">
                   <button
                     onClick={() => {
                       waecTransactionSuccessClose();
                       window.location.reload();
+
                     }}
                     className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-[600] h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[12px] lg:w-[163px] lg:h-[38px] lg:my-[2%] md:px-[60px] md:h-[30px]`}
                   >
@@ -872,16 +874,17 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
         )}
 
  {/* =========== RECEIPT ============*/}
- {/* {receipt && (
-          <WaecReceipt
+ {receipt && (
+          <NabtebReceipt
              Exam ="WAEC"
             ExamType={examType}
              ListOfResultCheckers={quantityResult}
              PhoneNumber={educationPinPhone}
             Email={educationPinEmail}
+            Amount={waecAmount}
            walletName={paymentResult}
           />
-        )} */}
+        )}
                
                <div className="py-[30px] lg:py-[60px] mt-10">
           <button
@@ -892,18 +895,23 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
               !examType ||
               !quantityResult ||
               !educationPinPhone ||
-              // !educationPinEmail ||
-              !paymentResult
+              !educationPinEmail ||
+              !paymentResult ||
+              !waecAmount
                 ? "bg-[#63616188] cursor-not-allowed"
                 : "bg-primary"
             }`}
-            onClick={waecProceed}
+            onClick={(e) => {
+              waecProceed();
+              e.preventDefault();
+            }}
             disabled={
               !examType ||
               !quantityResult ||
               !educationPinPhone ||
-              // !educationPinEmail ||
-              !paymentResult
+              !educationPinEmail ||
+              !paymentResult ||
+              !waecAmount
             }
           >
             Proceed

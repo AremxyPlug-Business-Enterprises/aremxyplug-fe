@@ -42,7 +42,7 @@ const [educationProceed, setEducationProceed] = useState(false);
 const [errors, setErrors] = useState({});
 const [educationConfirm, setEducationConfirm] = useState(false);
 // const [receipt] = useState(false);
-// const [waecAmount, setWaecAmount] = ('');
+const [waecAmount, setWaecAmount] = useState('₦');
 
 //==========  QUANTITY RESULT SLIP CHECKERS ==============
 function clickDropDown(){
@@ -167,7 +167,7 @@ const waecTransactionSuccessClose = () => {
       </div>
       {/* Input for Request of examination pins  */}
       <form action=''>
-      <div  className='flex flex-col gap-[20px]  md:h-[172.73px] md:gap-[14.67px] 
+      <div  className='relative flex flex-col gap-[20px]  md:h-[172.73px] md:gap-[14.67px] 
       md:w-[80%] lg:gap-[25px] lg:h-[296px] lg:mb-[30px] mb-[30px]'>
         {/* container for the first two input */}
         <div className=' w-[100%]
@@ -175,7 +175,7 @@ const waecTransactionSuccessClose = () => {
         md:gap-[12.91px] lg:gap-[22px]'>
 
           {/* First Step Confirm exam type */}
-     <div className='relative flex flex-col w-[100%] gap-[5.868px] md:w-1/2 md:gap-[5.868px]  
+     <div className='relative z-[4] flex flex-col w-[100%] gap-[5.868px] md:w-1/2 md:gap-[5.868px]  
      lg:gap-[10px]'>
       {/* header */}
       <h2 className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px]  
@@ -201,7 +201,7 @@ const waecTransactionSuccessClose = () => {
         src= {arrowDown} alt="" />
          </div>
          {examActive && (
-           <div className='absolute md:top-[90px] top-[50px] z-[3]  flex flex-col w-[100%] lg:h-225px md:h-[210px]  
+           <div className='absolute md:top-[90px] top-[50px] z-[5]  flex flex-col w-[100%] lg:h-225px md:h-[210px]  
            md:shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]'>
             {(Exams.map(exam => {
               return (
@@ -228,7 +228,7 @@ const waecTransactionSuccessClose = () => {
       </div>
 
       {/* Quantity input Two / RightSide */}
-      <div className='relative gap-[5.868px] flex flex-col w-[100%] md:w-1/2  
+      <div className='relative  gap-[5.868px] flex flex-col w-[100%] md:w-1/2  
       md:gap-[5.868px] lg:gap-[10px] '>
       {/* header */}
       <h2 className='  font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px]
@@ -263,6 +263,7 @@ const waecTransactionSuccessClose = () => {
                 <h2 onClick={(e =>{
                   setQuantityResult(option.quantity)
                   setWaecActive(false);
+                  setWaecAmount(option.Amount);
                 document.querySelector('.imgdrop').classList.remove('DropIt');
            
                 })}
@@ -281,11 +282,11 @@ const waecTransactionSuccessClose = () => {
       </div>
      </div>
     {/* container for Phone number and Email */}
-     <div className=' w-[100%] 
-     flex flex-col  md:flex-row gap-[20px] md:gap-[12.91px] lg:gap-[22px] z-0'>
+     <div className='  w-[100%] 
+     flex flex-col  md:flex-row gap-[20px] md:gap-[12.91px] lg:gap-[22px] '>
       {/* LeftSide */}
-       <div className=' container-phone gap-[5.868px] 
-       flex flex-col md:w-1/2 md:gap-[10px] z-0'>
+       <div className='relative  z-[3] container-phone gap-[5.868px] 
+       flex flex-col md:w-1/2 md:gap-[10px] '>
      <h2 className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px]
        md:text-[9.389px] md:leading-[12.206px]
      lg:text-[16px] lg:leading-[20.8px] '>
@@ -326,7 +327,7 @@ const waecTransactionSuccessClose = () => {
               </div>
             )}
      {/* right-side */}
-     <div className='flex flex-col gap-[5.868px] md:w-1/2 md:gap-[10px]'>
+     <div className='relative top-0 flex flex-col gap-[5.868px] md:w-1/2 md:gap-[10px]'>
      <h2 className='font-[600] text-[8px] leading-[10.4px]
      text-[#7E7E7E]  md:text-[9.389px] md:leading-[12.206px]
      lg:text-[16px] lg:leading-[20.8px]'>
@@ -357,7 +358,7 @@ const waecTransactionSuccessClose = () => {
      flex-col gap-[20px] md:flex-row md:gap-[12.91px] lg:gap-[22px]'>
 
    {/* Amount Step /Leftside */}
-     <div className='flex flex-col gap-[5.868px] w-[100%] md:w-1/2 md:gap-[10px]'>
+     <div className='relative top-0 flex flex-col gap-[5.868px] w-[100%] md:w-1/2 md:gap-[10px]'>
       {/* header */}
       <h2 className='font-[600] text-[8px] leading-[10.4px]
        md:text-[9.389px] md:leading-[12.206px]
@@ -365,32 +366,27 @@ const waecTransactionSuccessClose = () => {
       Amount
       </h2>
       {/* input */}
-      <input
-      onInput={(e =>{
-        const onlyNum = e.target.value.replace(/\D/g, '');
-        e.target.value = onlyNum;
-      if(e.target.value.length === 4){
-      
-        }
-      })}
-        className='h-[29.927px]  lg:h-[51px] md:h-[29.93px]
+      <div
+      onchange={setWaecAmount}
+     className='h-[29.927px]  lg:h-[51px] md:h-[29.93px]
         md:pt-[8.802px] md:pb-[7.042px] 
        pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
      md:pr-[5.282px] md:pl-[5.867px]
   lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] border-[0.4px] border-[#9C9C9C]
   focus:outline-none text-start
-    placeholder:text-[8px] placeholder:leading-[10.4px]
-   placeholder:font-[500]  placeholder:md:text-[9.389px] placeholder:md:leading-[12.206px]
-  placeholder:lg:text-[16px] placeholder:text-[#7C7C7C] placeholder:lg:leading-[20.8px]
-  ' placeholder=' ₦'
-   maxLength={7}
+    text-[8px] leading-[10.4px]
+   font-[500]  md:text-[9.389px] md:leading-[12.206px]
+  lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px]'
+  maxLength={7}>
+  {waecAmount}
+   </div>
    
-   />
+   
 
  
       </div>
       {/* payment method */}
-      <div className=' payment-parent gap-[5.868px]
+      <div className='relative top-1 payment-parent gap-[5.868px]
        flex w-[100%] flex-col md:w-1/2  md:gap-[5.868px] lg:gap-[10px]'>
       {/* header */}
       <h2 className='font-[600] text-[8px] leading-[10.4px]
@@ -501,7 +497,7 @@ const waecTransactionSuccessClose = () => {
                           />
                         </div>
                         <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          WAEC
+                          NECO
                         </h2>
                       </div>
                     </div>
@@ -766,7 +762,7 @@ const waecTransactionSuccessClose = () => {
                         />
                       </div>
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                           WAEC
+                        NECO
                       </h2>
                     </div>
                   </div>
@@ -801,7 +797,7 @@ const waecTransactionSuccessClose = () => {
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                       
+                      
                       </h2>
                     </div>
                   </div>
