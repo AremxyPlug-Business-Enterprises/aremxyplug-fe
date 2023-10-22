@@ -1,5 +1,6 @@
 import React from 'react'
 import { DashBoardLayout } from '../Dashboard/Layout/DashBoardLayout';
+import { useContext } from 'react';
 import '../../App.css';
 import HeroComponent from './heroComponent';
 import WaecImg from '../EducationPins/imagesEducation/WaecImg.svg';
