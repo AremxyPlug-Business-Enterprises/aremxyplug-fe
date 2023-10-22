@@ -697,6 +697,24 @@ export const Context = ({ children }) => {
   const [selectedOne, setSelectedOne] = useState(false);
   const [activeButtonOne, setActiveButtonsOne] = useState([true, false]);
 
+  //=============Currency conversion==============
+  const [confirmGotvPopup, setConfirmGotvPopup] = useState(false);
+  const handleGotv = (event) =>{
+    event.preventDefault();
+    setConfirmGotvPopup(true)
+ }
+ const [inputPinGotv, setInputPinGotv] = useState(false);
+ const handleInputGotv = (event) =>{
+  event.preventDefault();
+  setConfirmGotvPopup(false);
+  setInputPinGotv(true);
+}
+ const [gotvSuccessful, setGotvSuccessful] = useState(false);
+ const handleGotvSuccessful = (event) =>{
+  event.preventDefault();;
+  setInputPinGotv(false);
+  setGotvSuccessful(true);
+}
 
   const hold = {
     firstDrop,
@@ -992,6 +1010,16 @@ export const Context = ({ children }) => {
     realoutputValue, 
     setRealOutputValue,
 
+    //TV-subscription
+    confirmGotvPopup,
+    setConfirmGotvPopup,
+    handleGotv,
+    inputPinGotv,
+    setInputPinGotv,
+    handleInputGotv,
+    gotvSuccessful,
+    setGotvSuccessful,
+    handleGotvSuccessful,
   };
 
   return (
