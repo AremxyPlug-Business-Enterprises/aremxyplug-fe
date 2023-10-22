@@ -715,6 +715,17 @@ export const Context = ({ children }) => {
   setInputPinGotv(false);
   setGotvSuccessful(true);
 }
+  //============= EDUCATION PINS ========================
+
+  const [quantityResult, setQuantityResult] = useState('');
+const [waecActive, setWaecActive] = useState(false);
+const [paymentResult, setPaymentResult] = useState('');
+const [methodActive, setMethodActive] = useState(false);
+const [examType, setExamType] = useState('');
+const [examActive, setExamActive] = useState(false);
+const [educationPinPhone, setEducationPinPhone]= useState('');
+const[ educationPinEmail, setEducationPinEmail] = useState('');
+const [waecAmount, setWaecAmount] = useState('₦');
 
   const hold = {
     firstDrop,
@@ -1020,6 +1031,26 @@ export const Context = ({ children }) => {
     gotvSuccessful,
     setGotvSuccessful,
     handleGotvSuccessful,
+  //====== EDUCATION PINS
+  quantityResult, 
+  setQuantityResult,
+  paymentResult, 
+  setPaymentResult,
+  waecActive, 
+  setWaecActive,
+  methodActive, 
+  setMethodActive,
+  examType, 
+  setExamType,
+  examActive,
+   setExamActive,
+   educationPinPhone, 
+   setEducationPinPhone,
+   educationPinEmail, 
+  setEducationPinEmail,
+  waecAmount, 
+  setWaecAmount
+
   };
 
   return (
@@ -1030,3 +1061,4 @@ export const Context = ({ children }) => {
     </div>
   );
 };
+
