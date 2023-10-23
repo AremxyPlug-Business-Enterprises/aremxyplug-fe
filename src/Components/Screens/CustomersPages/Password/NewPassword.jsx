@@ -136,11 +136,8 @@ const NewPassword = () => {
                                         )}
                                         <input className={`${border} border w-full h-full text-[8.93px] md:text-[11.58px] lg:text-[20px] pl-[7.5px] md:pl-[10px] pr-[40px] md:pr-[50px] rounded  text-[#403f3f] outline-none`} type={passHide} value={password} onChange={(event) => setPassword(event.target.value)} placeholder='enter new password'/>
                                     </div>
-<<<<<<< HEAD
                                     <h2 className='text-red-500 text-[5.7px] text-center lg:text-[10px] leading-normal'>{passError}</h2>
-=======
-                                    <h2 className='text-red-500 text-[5.7px] text-center lg:text-[10px] leading-normal italic' >{passError}</h2>
->>>>>>> dceea8dae4ff3f5d0aa2aec5e6488550d5d694d7
+ 
                                 </div>
                                 <div className=''>
                                     <p className="text-[9.17px] md:text-[11.58px] lg:text-[16px] font-[600] lg:mb-[10px] tracking-wider leading-normal">Confirm Password</p>

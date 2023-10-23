@@ -699,8 +699,6 @@ export const Context = ({ children }) => {
   const [selectedOne, setSelectedOne] = useState(false);
   const [activeButtonOne, setActiveButtonsOne] = useState([true, false]);
 
-<<<<<<< HEAD
-=======
   //=============TV-subscription==============
   const [confirmGotvPopup, setConfirmGotvPopup] = useState(false);
   const handleGotv = (event) =>{
@@ -754,7 +752,6 @@ const [examActive, setExamActive] = useState(false);
 const [educationPinPhone, setEducationPinPhone]= useState('');
 const[ educationPinEmail, setEducationPinEmail] = useState('');
 const [waecAmount, setWaecAmount] = useState('₦');
->>>>>>> 4492024d64d2ac34f8b248104cf6e03dcead9c4f
 
   const hold = {
     firstDrop,
@@ -1054,8 +1051,6 @@ const [waecAmount, setWaecAmount] = useState('₦');
     realoutputValue, 
     setRealOutputValue,
 
-<<<<<<< HEAD
-=======
     //TV-subscription
     confirmGotvPopup,
     setConfirmGotvPopup,
@@ -1096,7 +1091,6 @@ const [waecAmount, setWaecAmount] = useState('₦');
   waecAmount, 
   setWaecAmount
 
->>>>>>> 4492024d64d2ac34f8b248104cf6e03dcead9c4f
   };
 
   return (

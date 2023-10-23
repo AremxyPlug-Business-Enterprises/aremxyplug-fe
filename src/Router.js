@@ -59,7 +59,6 @@ import AirtimeVtuReceipt from "./Components/AirTimePage/AirtimeVtuReceipt"
 import DataBundlesPage from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundlesPage";
 import MtnDataTopUpBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/MtnDataTopUpBundle/MtnDataTopUpBundle";
 import WithdrawToOtherBanks from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToOtherBanks";
-import ConfirmConversion from "./Components/CurrencyConversion/currencyPopups/confirmConversion";
 import { SuccessfulReceipt } from "./Components/CurrencyConversion/ConversionReceipts/SuccessConversionReceipt";
 import { TvSubscription } from "./Components/TvSubscription/TvSubscriptionPage";
 import WalletSummaryPage from "./Components/WalletSummaryPage/WalletSummary";
@@ -72,7 +71,6 @@ import { MtnReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUp
 import { AirtelReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/AirtelDataBundle/AirtelReceipt";
 import { EtisalatReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/EtisalatDataBundle/9MobileReceipt";
 import { GloReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/GloDataBundle/GloReceipt";
-<<<<<<< HEAD
 import AddRecipient from "./Components/AirTimePage/AddRecipient";
 import SelectRecipient from "./Components/AirTimePage/SelectRecipient";
 import { RedeemReceipt } from "./Components/Dashboard/DashboardComponents/PointRedeem/RedeemReceipt";
@@ -83,7 +81,6 @@ import { SmileReceipt } from "./Components/Dashboard/DashboardComponents/DataTop
 import SpectranetDataBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/SpectranetDataBundle/SpectranetDataBundle";
 import { SpectranetReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/SpectranetDataBundle/SpectranetReceipt";
 import GoTv from "./Components/TvSubscription/TvOne";
-=======
 import EducationMain from "./Components/EducationPins/educationMain";
 import WaecEducationPin from "./Components/EducationPins/waecEducationPin";
 import NecoEducationPins from "./Components/EducationPins/NecoEducationPins";
@@ -93,11 +90,7 @@ import WaecReceipt from "./Components/EducationPins/ReceiptEducationPins/waecRec
 import JambReceipt from "./Components/EducationPins/ReceiptEducationPins/jambReceipt";
 import NecoReceipt from "./Components/EducationPins/ReceiptEducationPins/necoReceipt";
 import NabtebReceipt from "./Components/EducationPins/ReceiptEducationPins/nabtebReceipt";
-import {SuccessfulReceipt} from "./Components/CurrencyConversion/ConversionReceipts/SuccessConversionReceipt";
-import { TvSubscription } from "./Components/TvSubscription/TvSubscriptionPage";
-import GoTv from "./Components/TvSubscription/TvOne";
 
->>>>>>> 4492024d64d2ac34f8b248104cf6e03dcead9c4f
 
 export const Router = () => {
   return (
@@ -190,7 +183,6 @@ export const Router = () => {
         <Route path="/data-bundles" element={<DataBundlesPage />} />
         <Route path="/My-Referral" element={<Referral />} />
         <Route path="/MtnDataTopUpBundle" element={<MtnDataTopUpBundle />} />
-        <Route path="/ConfirmConversion" element={<ConfirmConversion/>}/>
         <Route path="/SuccessfulConversion" element={<SuccessfulReceipt/>}/>
         <Route path="/MtnReceipt" element={<MtnReceipt/>} />
         <Route path="/AirtelDataBundle" element={<AirtelDataBundle/>} />
