@@ -1,0 +1,19 @@
+#tvBackground{
+    background: linear-gradient(90deg, rgba(29, 255, 255, 0.84) 0%, rgba(172, 67, 255, 0.59) 50.97%, #FF5A7F 100%);
+}
+
+#tvGrid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.dropdownCSS{
+    box-shadow: 0px 0.2319998741149902px 3.079999923706055px 0px #00000040;
+}
+
+@media only screen and (min-width: 768px) {
+    #tvGrid{
+        display: flex;
+        justify-content: space-between;
+    }
+}

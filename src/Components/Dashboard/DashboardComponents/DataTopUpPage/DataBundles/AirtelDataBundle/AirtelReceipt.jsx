@@ -69,7 +69,7 @@ export const AirtelReceipt = () => {
       console.log("Web Share API not supported.");
     }
   };
-
+  
   // ==============Save Pdf Function==============
   const handleSaveAsPDFClick = () => {
     const content = contentRef.current;
@@ -93,7 +93,7 @@ export const AirtelReceipt = () => {
           <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
             <Link to="/">
               <img
-                className="  w-[30px] h-[15px] md:w-[40px] md:h-[20px] lg:w-[50px] lg:h-[25px]"
+                className="w-[30px] h-[15px] md:w-[40px] md:h-[20px] lg:w-[50px] lg:h-[25px]"
                 src="/Images/login/arpLogo.png"
                 alt=""
               />

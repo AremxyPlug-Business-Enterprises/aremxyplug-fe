@@ -8,8 +8,14 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { ContextProvider } from "../../../../src/Components/Context";
 
+
+
 export const SuccessfulReceipt = (receipt) => {
-  const { toggleSideBar, textRef, amtToTransfer, isDarkMode, date } =
+  const { toggleSideBar, textRef,
+    convertedAmount,
+    exchangeRate,
+    initialValue,
+      isDarkMode, date } =
     useContext(ContextProvider);
 
   const contentRef = useRef(null);
@@ -56,6 +62,9 @@ export const SuccessfulReceipt = (receipt) => {
       });
     }
   };
+
+  const cvRate = (1/ exchangeRate).toFixed(4)
+
   return (
     <DashBoardLayout>
       <div className="flex flex-col gap-[35px] lg:gap-[85px]">
@@ -111,7 +120,7 @@ export const SuccessfulReceipt = (receipt) => {
             <p className="text-[9px] text-[#0008] text-center my-2 md:text-[14px] lg:text-[14px]">
             You have successfully converted {" "}
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[16px]">
-                &#8358;{amtToTransfer}.00{" "}
+                &#8358;{convertedAmount}{" "}
               </span>
               from your NGN wallet to{" "}
             </p>
@@ -132,15 +141,15 @@ export const SuccessfulReceipt = (receipt) => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Amount Converted</p>
-                  <span>{amtToTransfer}</span>
+                  <span>{initialValue}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Amount Received</p>
-                  <span>$10.00</span>
+                  <span>${convertedAmount}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Conversion Rate</p>
-                  <span>1 NGN ~ 0.001 USD</span>
+                  <span>1 NGN ~ {cvRate} USD</span>
                 </div>
               </div>
 
@@ -219,7 +228,7 @@ export const SuccessfulReceipt = (receipt) => {
         <div
           className={`${
             isDarkMode ? "mb-[1%]" : "mb-[5%]"
-          } flex gap-[15px] justify-center items-center lg:mb-[%]`}
+          } flex gap-[15px] justify-center items-center lg:mb-[20px] mt-[120px] mb-[50px] lg:mt-11`}
         >
           <div className="text-[10px] md:text-[12px] lg:text-[16px]">
             You need help ?

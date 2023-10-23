@@ -46,8 +46,8 @@ const FirstModal = () => {
                     </button>
                 </div>
                 <div className="flex justify-between items-center leading-normal'">
-                    <h2 className='text-[#677A8C] text-[8.021px] lg:text-[14px]'>You need help?</h2>
-                    <Link className='text-primary text-[8.021px] font-bold lg:text-[14px]' to={`/contactUs`}>Contact us</Link>
+                    <h2 className='text-[#677A8C] text-xs lg:text-[14px]'>You need help?</h2>
+                    <Link className='text-primary text-xs font-bold lg:text-[14px]' to={`/contactUs`}>Contact us</Link>
                 </div>
            </form>
         </div>

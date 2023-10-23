@@ -743,7 +743,7 @@ const AirtelDataBundle = () => {
           </div>
 
           {/* ================Proceed=================== */}
-
+          
           {proceed && (
             <Modal>
               <div
@@ -760,7 +760,7 @@ const AirtelDataBundle = () => {
                     src={Cancel}
                     alt=""
                     onClick={() => setProceed(false)}
-                    className="md:h-[120%] lg:h-[400%] lg:mt-[-25px] lg:pb-[20px]"
+                    className="mb-[5px] h-[100%] w-[7%] md:h-[120%] lg:h-[400%] lg:mt-[-25px] lg:pb-[20px]"
                   />
                 </div>
 

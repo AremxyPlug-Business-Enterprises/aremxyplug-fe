@@ -71,7 +71,7 @@ export const MtnReceipt = () => {
       console.log("Web Share API not supported.");
     }
   };
-
+  
 
   
   // ==============Save Pdf Function==============
