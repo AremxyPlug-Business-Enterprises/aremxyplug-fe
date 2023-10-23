@@ -697,7 +697,7 @@ export const Context = ({ children }) => {
   const [selectedOne, setSelectedOne] = useState(false);
   const [activeButtonOne, setActiveButtonsOne] = useState([true, false]);
 
-  //=============Currency conversion==============
+  //=============TV-subscription==============
   const [confirmGotvPopup, setConfirmGotvPopup] = useState(false);
   const handleGotv = (event) =>{
     event.preventDefault();
@@ -715,6 +715,8 @@ export const Context = ({ children }) => {
   setInputPinGotv(false);
   setGotvSuccessful(true);
 }
+
+
   //============= EDUCATION PINS ========================
 
   const [quantityResult, setQuantityResult] = useState('');

@@ -2,18 +2,41 @@ import React from "react";
 import { DashBoardLayout } from "../Dashboard/Layout/DashBoardLayout";
 import "../TvSubscription/TvSubscription.css";
 import { useContext } from "react";
+import { useState } from "react";
 import { ContextProvider } from "../Context";
 import { Link } from "react-router-dom";
 import ConfirmGotvPopup from "./GotvPopups/confirmGotvPopup";
 import { InputGotvPopup } from "./GotvPopups/inputPinGotv"
 import GotvSuccessfulPopup from "./GotvPopups/GotvSuccessfulPopup";
+
  const GoTv = () => {
 
     const {
         handleGotv,
-     } = useContext(ContextProvider)
-    
-     
+     } = useContext(ContextProvider) 
+      
+     const [selectedOption, setSelectedOption] = useState('');
+
+     const [showDropdown, setShowDropdown] = useState(false);
+     const handleOptionClick = (option) => {
+    setSelectedOption(option);
+    setShowDropdown(false); 
+  };
+
+  const formatNumberWithCommas = (number) => {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  };
+
+  const options = [
+    `Gotv Smallie ₦(${formatNumberWithCommas(1100)}) ~ Monthly`,
+     'DStv ' + formatNumberWithCommas(2000)];
+
+  const getNumericValue = (option) => {
+    const numericValue = parseInt(option.match(/\d+/)[0], 10);  // Extract the numeric part
+    return isNaN(numericValue) ? '' : formatNumberWithCommas(numericValue);
+  };
+
+
     return(
         <div>
         <DashBoardLayout>
@@ -54,6 +77,29 @@ import GotvSuccessfulPopup from "./GotvPopups/GotvSuccessfulPopup";
                     Select Package</label>
                     <button className="border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[375px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C]">Gotv</button>
                 </div>
+                
+                <div className="custom-dropdown">
+        <div
+          className="dropdown-toggle"
+          onClick={() => setShowDropdown(!showDropdown)}
+        >
+          {selectedOption || `Gotv Smallie ${formatNumberWithCommas(1000)} ~ Monthly`}
+        </div>
+        {showDropdown && (
+          <ul className="dropdown-options">
+            {options.map((option, index) => (
+              <li
+                key={index}
+                onClick={() => handleOptionClick(option)}
+              >
+                {option}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+            
+        
             </div>
             <div className="flex flex-col md:flex-row gap-[20px] md:gap-[12px lg:gap-[22px]] md:my-2 lg:my-4">
                 <div className="flex flex-col gap-[3px] lg:gap-[5px]">
@@ -87,6 +133,14 @@ import GotvSuccessfulPopup from "./GotvPopups/GotvSuccessfulPopup";
                         Amount</label>
                     <button className="border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[375px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C]">Gotv</button>
                 </div>
+                {selectedOption && (
+              <div>
+                <input
+                  type="text"
+                  value={getNumericValue(selectedOption)}
+                />
+              </div>
+            )}
                 
                 <div className="flex flex-col gap-[3px] lg:gap-[5px]">
                     <label htmlFor="decoderType" className="text-[#7E7E7E] text-[8px] lg:text-[18px] md:text-[11.46px] font-semibold">
