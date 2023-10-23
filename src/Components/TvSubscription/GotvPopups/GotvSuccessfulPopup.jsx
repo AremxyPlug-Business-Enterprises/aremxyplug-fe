@@ -14,24 +14,24 @@ import { Link } from "react-router-dom";
      toggleSideBar,
   } = useContext(ContextProvider)
 
-  const CopyButton = ({ textToCopy }) => {
-    const handleCopyClick = () => {
-      navigator.clipboard.writeText(textToCopy)
-        .then(() => {
-          // Handle successful copy, e.g., show a success message
-          alert('Copied to clipboard');
-        })
-        .catch((error) => {
-          // Handle error, e.g., show an error message
-          console.error('Copy failed: ' + error);
-        });
-    };
-    return (
-        <button onClick={handleCopyClick}>
-          <img src="./Images/currencyImages/copy.svg" alt="" className="md:w-[13px] md:h-[15px] lg:w-[21px] lg:h-[27px]"/>
-        </button>
-      );
-    };
+  // const CopyButton = ({ textToCopy }) => {
+  //   const handleCopyClick = () => {
+  //     navigator.clipboard.writeText(textToCopy)
+  //       .then(() => {
+  //         // Handle successful copy, e.g., show a success message
+  //         alert('Copied to clipboard');
+  //       })
+  //       .catch((error) => {
+  //         // Handle error, e.g., show an error message
+  //         console.error('Copy failed: ' + error);
+  //       });
+  //   };
+  //   return (
+  //       <button onClick={handleCopyClick}>
+  //         <img src="./Images/currencyImages/copy.svg" alt="" className="md:w-[13px] md:h-[15px] lg:w-[21px] lg:h-[27px]"/>
+  //       </button>
+  //     );
+  //   };
 
     return(
        <>

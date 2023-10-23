@@ -13,28 +13,42 @@ import GotvSuccessfulPopup from "./GotvPopups/GotvSuccessfulPopup";
 
     const {
         handleGotv,
+        selectedOptionGOTV,
+        showDropdownGOTV,
+        setShowDropdownGOTV,
+        handleOptionClickGOTV,
+        getNumericValue,
+        formatNumberWithCommas,
+        initialValueGOTV,
      } = useContext(ContextProvider) 
-      
-     const [selectedOption, setSelectedOption] = useState('');
-
-     const [showDropdown, setShowDropdown] = useState(false);
-     const handleOptionClick = (option) => {
-    setSelectedOption(option);
-    setShowDropdown(false); 
-  };
-
-  const formatNumberWithCommas = (number) => {
-    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  };
+     
 
   const options = [
-    `Gotv Smallie ₦(${formatNumberWithCommas(1100)}) ~ Monthly`,
-     'DStv ' + formatNumberWithCommas(2000)];
+    `Gotv Smallie (₦1100) ~ Monthly`,
+    `GOtv Jinja (₦2250) ~ Monthly`,
+    `GOtv Jinja (₦4500) ~ 2 Months`,
+    `GOtv Lite (₦2900) ~ 3 Months`,
+    `GOtv Lite (₦8600) ~ Annually`,
+    `GOtv Max (₦4850) ~ Monthly`,
+    `GOtv Max (₦9700) ~ 2 Months`,
+    `GOtv Joli (₦3300) ~ Monthly`,
+    `GOtv Joli (₦6600) ~ 2 Months`,
+    `GOtv SUPA (₦6400) ~ Monthly`,
+    `GOtv SUPA (₦12800) ~ 2 Months`,
+    `GOtv SUPA plus (₦21000) ~ 2 Months`,
+  ]
 
-  const getNumericValue = (option) => {
-    const numericValue = parseInt(option.match(/\d+/)[0], 10);  // Extract the numeric part
-    return isNaN(numericValue) ? '' : formatNumberWithCommas(numericValue);
-  };
+  const decoders = [
+    `Gotv`,
+  ]
+
+const [selectedDecoderGOTV, setSelectedDecoderGOTV] = useState('');
+
+  const [confirmDecoderGOTV, setConfirmDecoderGOTV] = useState(false);
+  const handleDecoderClickGOTV = (option, index) => {
+    setSelectedDecoderGOTV(false);
+  setConfirmDecoderGOTV(false);
+};
 
 
     return(
@@ -69,35 +83,49 @@ import GotvSuccessfulPopup from "./GotvPopups/GotvSuccessfulPopup";
                 <div className="flex flex-col gap-[3px] lg:gap-[5px]">
                     <label htmlFor="decoderType" className="text-[#7E7E7E] text-[8px] lg:text-[18px] md:text-[11.46px] font-semibold">
                         Confirm Decoder Type</label>
-                    <button className="border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[375px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C]">Gotv</button>
+                    {/* <button className="border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[375px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C]">Gotv</button> */}
+                    <div className="dropdown-toggle flex items-center cursor-pointer outline-0 border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[375px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center" onClick={() => setConfirmDecoderGOTV(!confirmDecoderGOTV)}>
+                        {selectedDecoderGOTV || `Gotv`}
+                      </div>
+                   
+                    {confirmDecoderGOTV && (
+                      <ul className="dropdown-options absolute top-[92%] w-[312px] bg-white cursor-pointer">
+                        {decoders.map((option, index) => (
+                        <li
+                        className={`dropdownCSS h-[30px] md:h-[35px] lg:h-[50px] font-medium text-[12.93px] flex items-center text-[#7C7C7C]`}
+                          key={index}
+                        onClick={() => handleDecoderClickGOTV(option)}
+                          >
+                            {option}
+                        </li>
+                        ))}
+                      </ul>
+                    )}
                 </div>
                 
-                <div className="flex flex-col gap-[3px] lg:gap-[5px]">
+                <div className="relative flex flex-col gap-[3px] lg:gap-[5px]">
                     <label htmlFor="decoderType" className="text-[#7E7E7E] text-[8px] lg:text-[18px] md:text-[11.46px] font-semibold">
                     Select Package</label>
-                    <button className="border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[375px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C]">Gotv</button>
+                   
+                      <div className="dropdown-toggle flex items-center cursor-pointer outline-0 border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[375px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center" onClick={() => setShowDropdownGOTV(!showDropdownGOTV)}>
+                        {selectedOptionGOTV || `Gotv Smallie ${formatNumberWithCommas(1100)} ~ Monthly`}
+                      </div>
+                   
+                    {showDropdownGOTV && (
+                      <ul className="dropdown-options absolute top-[100%] bg-white cursor-pointer">
+                        {options.map((option, index) => (
+                        <li
+                        className={`dropdownCSS h-[30px] md:h-[35px] lg:h-[50px] font-medium text-[12.93px] flex items-center text-[#7C7C7C]`}
+                          key={index}
+                        onClick={() => handleOptionClickGOTV(option)}
+                          >
+                            {option}
+                        </li>
+                        ))}
+                      </ul>
+                    )}
+                  
                 </div>
-                
-                <div className="custom-dropdown">
-        <div
-          className="dropdown-toggle"
-          onClick={() => setShowDropdown(!showDropdown)}
-        >
-          {selectedOption || `Gotv Smallie ${formatNumberWithCommas(1000)} ~ Monthly`}
-        </div>
-        {showDropdown && (
-          <ul className="dropdown-options">
-            {options.map((option, index) => (
-              <li
-                key={index}
-                onClick={() => handleOptionClick(option)}
-              >
-                {option}
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
             
         
             </div>
@@ -118,12 +146,24 @@ import GotvSuccessfulPopup from "./GotvPopups/GotvSuccessfulPopup";
                 <div className="flex flex-col gap-[3px] lg:gap-[5px]">
                     <label htmlFor="decoderType" className="text-[#7E7E7E] text-[8px] lg:text-[18px] md:text-[11.46px] font-semibold">
                         Phone Number</label>
-                        <input type="number" max='10' placeholder="7744115566" className="outline-0 border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[375px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] "/>
+                        {/* <input type="number" max='10' placeholder="7744115566" className="outline-0 border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[375px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] "/> */}
+                       <input onInput={(e =>{
+  
+  const numericValue = e.target.value.replace(/\D/g, '');
+      e.target.value = numericValue
+     if(numericValue.length === 11){
+      e.target.style.backgroundColor = '2px solid green';
+    }
+    else if(e.target.value.length < 11){
+    e.target.style.backgroundColor = '2px solid red';
+  }
+
+   })} />
                 </div>
                 <div className="flex flex-col gap-[3px] lg:gap-[5px]">
                     <label htmlFor="Email" className="text-[#7E7E7E] text-[8px] lg:text-[18px] md:text-[11.46px] font-semibold">
                         Email</label>
-                        <input type="email" placeholder="Habib@aremxy.com" className="outline-0 border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[375px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] "/>
+                        <input type="email" placeholder="Habib@aremxy.com" className="outline-0 border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[375px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px]"/>
                 </div>
                 
             </div>
@@ -131,16 +171,22 @@ import GotvSuccessfulPopup from "./GotvPopups/GotvSuccessfulPopup";
                 <div className="flex flex-col gap-[3px] lg:gap-[5px]">
                     <label htmlFor="decoderType" className="text-[#7E7E7E] text-[8px] lg:text-[18px] md:text-[11.46px] font-semibold">
                         Amount</label>
-                    <button className="border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[375px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C]">Gotv</button>
-                </div>
-                {selectedOption && (
-              <div>
+                    
+                {initialValueGOTV && (
                 <input
                   type="text"
-                  value={getNumericValue(selectedOption)}
+                  className="text-[#7E7E7E] outline-0 border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[375px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px]"
+                  value={`₦1,100`}
                 />
-              </div>
             )}
+                {selectedOptionGOTV && (
+                <input
+                  type="text"
+                  className="text-[#7E7E7E] outline-0 border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[375px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px]"
+                  value={'₦'+ getNumericValue(selectedOptionGOTV)}
+                />
+            )}
+               </div>
                 
                 <div className="flex flex-col gap-[3px] lg:gap-[5px]">
                     <label htmlFor="decoderType" className="text-[#7E7E7E] text-[8px] lg:text-[18px] md:text-[11.46px] font-semibold">

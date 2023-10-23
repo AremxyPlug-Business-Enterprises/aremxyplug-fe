@@ -715,6 +715,28 @@ export const Context = ({ children }) => {
   setInputPinGotv(false);
   setGotvSuccessful(true);
 }
+ 
+const [selectedOptionGOTV, setSelectedOptionGOTV] = useState('');
+
+const [showDropdownGOTV, setShowDropdownGOTV] = useState(false);
+const handleOptionClickGOTV = (option) => {
+  setSelectedOptionGOTV(option);
+  setShowDropdownGOTV(false); 
+  setInitialValueGOTV(false);
+};
+
+const formatNumberWithCommas = (number) => {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};
+
+const getNumericValue = (option) => {
+  const numericPart = option.match(/\d+/);
+  if (numericPart) {
+    return formatNumberWithCommas(parseInt(numericPart[0], numericPart[2], 10));
+  }
+  return '';
+};
+const [initialValueGOTV, setInitialValueGOTV] = useState(true)
 
 
   //============= EDUCATION PINS ========================
@@ -1033,6 +1055,16 @@ const [waecAmount, setWaecAmount] = useState('₦');
     gotvSuccessful,
     setGotvSuccessful,
     handleGotvSuccessful,
+    selectedOptionGOTV,
+    setSelectedOptionGOTV,
+    showDropdownGOTV,
+    setShowDropdownGOTV,
+    handleOptionClickGOTV,
+    getNumericValue,
+    formatNumberWithCommas,
+    initialValueGOTV,
+    setInitialValueGOTV,
+
   //====== EDUCATION PINS
   quantityResult, 
   setQuantityResult,
