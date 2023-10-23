@@ -72,6 +72,7 @@ import { MtnReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUp
 import { AirtelReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/AirtelDataBundle/AirtelReceipt";
 import { EtisalatReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/EtisalatDataBundle/9MobileReceipt";
 import { GloReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/GloDataBundle/GloReceipt";
+<<<<<<< HEAD
 import AddRecipient from "./Components/AirTimePage/AddRecipient";
 import SelectRecipient from "./Components/AirTimePage/SelectRecipient";
 import { RedeemReceipt } from "./Components/Dashboard/DashboardComponents/PointRedeem/RedeemReceipt";
@@ -82,6 +83,21 @@ import { SmileReceipt } from "./Components/Dashboard/DashboardComponents/DataTop
 import SpectranetDataBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/SpectranetDataBundle/SpectranetDataBundle";
 import { SpectranetReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/SpectranetDataBundle/SpectranetReceipt";
 import GoTv from "./Components/TvSubscription/TvOne";
+=======
+import EducationMain from "./Components/EducationPins/educationMain";
+import WaecEducationPin from "./Components/EducationPins/waecEducationPin";
+import NecoEducationPins from "./Components/EducationPins/NecoEducationPins";
+import JambEducationPin from "./Components/EducationPins/jambEducationPin";
+import NabtebEducationPins from './Components/EducationPins/nabtebEducationPins';
+import WaecReceipt from "./Components/EducationPins/ReceiptEducationPins/waecReceipt";
+import JambReceipt from "./Components/EducationPins/ReceiptEducationPins/jambReceipt";
+import NecoReceipt from "./Components/EducationPins/ReceiptEducationPins/necoReceipt";
+import NabtebReceipt from "./Components/EducationPins/ReceiptEducationPins/nabtebReceipt";
+import {SuccessfulReceipt} from "./Components/CurrencyConversion/ConversionReceipts/SuccessConversionReceipt";
+import { TvSubscription } from "./Components/TvSubscription/TvSubscriptionPage";
+import GoTv from "./Components/TvSubscription/TvOne";
+
+>>>>>>> 4492024d64d2ac34f8b248104cf6e03dcead9c4f
 
 export const Router = () => {
   return (
@@ -191,6 +207,18 @@ export const Router = () => {
         <Route path="/SpectranetReceipt" element={<SpectranetReceipt/>} />
         <Route path="/TvSubscription" element={<TvSubscription/>} />
         <Route path="/GoTv" element={<GoTv/>} />
+        <Route path="/EducationPins" element={<EducationMain/>}/>
+        <Route path="/WaecEducationPin" element={<WaecEducationPin/>}/>
+        <Route path="/NecoEducationPin" element={<NecoEducationPins/>}/>
+        <Route path="/NabtebEducationPin" element={<NabtebEducationPins/>}/>
+        <Route path="/JambEducationPin" element={<JambEducationPin/>}/>
+        <Route path="/WaecReceipt" element={<WaecReceipt/>}/>
+        <Route path="/JambReceipt" element={<JambReceipt/>}/>
+        <Route path="/NecoReceipt" element={<NecoReceipt/>}/>
+        <Route path="/NabtebReceipt" element={<NabtebReceipt/>}/>
+        <Route path="/TvSubscription" element={<TvSubscription/>}/>
+        <Route path="/GoTv" element={<GoTv/>}/>
+        <Route path="/SuccessfulConversion" element={<SuccessfulReceipt/>}/>
       </Routes>
     </div>
   );
