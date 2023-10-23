@@ -193,6 +193,7 @@ export const Router = () => {
         <Route path="/NabtebReceipt" element={<NabtebReceipt/>}/>
         <Route path="/TvSubscription" element={<TvSubscription/>}/>
         <Route path="/GoTv" element={<GoTv/>}/>
+        <Route path="/SuccessfulConversion" element={<SuccessfulReceipt/>}/>
       </Routes>
     </div>
   );

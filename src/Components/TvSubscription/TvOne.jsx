@@ -146,8 +146,8 @@ const [selectedDecoderGOTV, setSelectedDecoderGOTV] = useState('');
                 <div className="flex flex-col gap-[3px] lg:gap-[5px]">
                     <label htmlFor="decoderType" className="text-[#7E7E7E] text-[8px] lg:text-[18px] md:text-[11.46px] font-semibold">
                         Phone Number</label>
-                        {/* <input type="number" max='10' placeholder="7744115566" className="outline-0 border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[375px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] "/> */}
-                       <input onInput={(e =>{
+                        <input type="number" max='10' placeholder="7744115566" className="outline-0 border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[375px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] "/>
+                       {/* <input onInput={(e =>{
   
   const numericValue = e.target.value.replace(/\D/g, '');
       e.target.value = numericValue
@@ -158,7 +158,7 @@ const [selectedDecoderGOTV, setSelectedDecoderGOTV] = useState('');
     e.target.style.backgroundColor = '2px solid red';
   }
 
-   })} />
+   })} /> */}
                 </div>
                 <div className="flex flex-col gap-[3px] lg:gap-[5px]">
                     <label htmlFor="Email" className="text-[#7E7E7E] text-[8px] lg:text-[18px] md:text-[11.46px] font-semibold">
