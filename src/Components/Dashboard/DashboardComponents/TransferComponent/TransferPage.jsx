@@ -79,7 +79,7 @@ export const TransferPage = () => {
             </div>
           </div>
 
-          {/* =================Trasnfer buttons==================== */}
+          {/* =================Transfer buttons==================== */}
           {fiatTransfer && (
             <div className="mt-[10%] flex flex-col gap-[20px] md:mt-[8%] md:gap-[30px]">
               <Link to="/to-my-account">

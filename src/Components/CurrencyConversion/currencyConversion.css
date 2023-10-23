@@ -26,9 +26,14 @@
 }
 
 .input, .available{
+   -webkit-box-shadow: 0px 0px 2.2916667461395264px 0px #00000040;
     box-shadow: 0px 0px 2.2916667461395264px 0px #00000040;
 
 }
+
+/* .input::-ms-value{
+ display: none;
+} */
 
 .input:focus{
    outline: 0;

@@ -92,15 +92,21 @@ const CurrencyConversion = () =>{
             <div className="modal-content">
             <p className="text-center font-bold text-[10px] md:text-[12px] lg:text-[20px] py-2.5 lg:py-7 md:py-4">Crypto Conversion</p>
             <p className="text-[#04177F] text-[10px] md:text-[14px] lg:text-[20px] text-center font-bold">This Feature is Currently Not Available.</p>
-            <div className="relative my-[35px]">
-              <div className="flex justify-center">
+            
+              <div className="flex justify-center relative my-[35px] md:my-[25px]">
                 <img src={cryptoFeature} alt="" className="lg:h-[200px] md:w-[150px] lg:w-[204.4px] md:h-[150px]"/>
               </div>
-              <span className="text-[8px] md:text-[12px] lg:text-[15px] font-bold absolute right-12">Coming soon...</span>
-            </div>
-            <button onClick={()=>setModalOne(false)} className="bg-[#04177F] flex mx-auto mt-[54px] md:mt-[30px] lg:mt-[58px] rounded-[4.6px] md:rounded-[7px] lg:rounded-[12px] w-[255px] md:w-[80px] lg:w-[120px] h-[30px] lg:h-[39px] md:h-[28px]">
-                      <p className="text-white text-[12px] md:text-[14px] lg:text-[16px] font-semibold flex mx-auto self-center">Okay</p>
-            </button>
+              <div className="mx-[6%] flex flex-col gap-[5px] pb-[5%]">
+                <div className="text-[8px] font-extrabold float-right ml-[80%] md:ml-[70%] md:text-[12px] lg:text-[13px] lg:ml-[80%]">
+                  Coming soon...
+                </div>
+                <div
+                  onClick={()=>setModalOne(false)}
+                  className={`bg-[#04177f] cursor-pointer text-white text-[10px] h-[40px] rounded-[5px] flex items-center justify-center md:mx-auto md:w-[20%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[30%] lg:mx-auto`}
+                >
+                  Okay
+                </div>
+              </div>
             </div>
           </Modal>
            )}
@@ -123,17 +129,25 @@ const CurrencyConversion = () =>{
             (
           <Modal>
            <div className="modal-content">
-            <p className="text-center font-semibold text-[10px] md:text-[12px] lg:text-[20px] py-2.5 lg:py-7 md:py-4">Multi-Wallet Conversion</p>
-            <p className="text-[#04177F] text-[10px] md:text-[12px] lg:text-[20px] text-center font-semibold">This Feature is Currently Not Available.</p>
-            <div className="relative my-[35px]">
-              <div className="flex justify-center">
+            <p className="text-center font-bold text-[10px] md:text-[12px] lg:text-[20px] py-2.5 lg:py-7 md:py-4">Multi-Wallet Conversion</p>
+            <p className="text-[#04177F] text-[10px] md:text-[12px] lg:text-[20px] text-center font-bold">This Feature is Currently Not Available.</p>
+          
+              <div className="flex justify-center relative my-[35px] md:my-[25px]">
                 <img src={mwFeature} alt=""  className="lg:h-[200px] md:w-[150px] lg:w-[204.4px] md:h-[150px]"/>
               </div>
-              <span className="text-[8px] md:text-[10px] lg:text-[13px] font-bold absolute right-12">Coming soon...</span>
-            </div>
-            <button onClick={()=>setModalTwo(false)} className="bg-[#04177F] flex mx-auto mt-[43px] md:mt-[30px] lg:mt-[58px] rounded-[4.6px] md:rounded-[7px] lg:rounded-[12px] w-[255px] md:w-[70px] lg:w-[120px] h-[30px] lg:h-[39px] md:h-[28px]">
-                      <p className="text-white text-[12px] md:text-[11px] lg:text-[16px] font-semibold flex mx-auto self-center">Okay</p>
-            </button>
+        
+            
+            <div className="mx-[6%] flex flex-col gap-[5px] pb-[5%]">
+                <div className="text-[8px] font-extrabold float-right ml-[80%] md:ml-[70%] md:text-[12px] lg:text-[13px] lg:ml-[80%]">
+                  Coming soon...
+                </div>
+                <div
+                  onClick={()=>setModalTwo(false)}
+                  className={`bg-[#04177f] cursor-pointer text-white text-[10px] h-[40px] rounded-[5px] flex items-center justify-center md:mx-auto md:w-[20%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[30%] lg:mx-auto`}
+                >
+                  Okay
+                </div>
+              </div>
             </div> 
           </Modal>
               )} {/* airtime conversion */}
@@ -168,14 +182,16 @@ const CurrencyConversion = () =>{
           </Link>
          </div>
 
-         <div className="flex justify-center items-center mt-[62.3%] md:mt-[38%] lg:mt-[30%] gap-2">
-           <div className="font-medium text-[10px] md:text-[10px] lg:text-[15px] self-center">You need help ?</div>
+        
+         <div className={`flex gap-[15px] justify-center items-center mt-[68%] md:mt-[38%] lg:mt-[26%] lg:mb-[%]`}>
+          <div className="font-medium text-[10px] md:text-[12px] lg:text-[14px]">
+            You need help ?</div>
             <Link to="/ContactUs">
                 <div className="bluebutton flex bg-[#04177f] text-[8.5px] md:text-[8.5px] lg:text-[12px] text-white">
                   <p className="self-center mx-auto align-middle">Contact Us</p>
                 </div>
             </Link>
-         </div>
+        </div>
         
         </div>
 

@@ -682,14 +682,76 @@ export const Context = ({ children }) => {
   const [selectedAmount, setSelectedAmount] = useState('');
   const [recipientNames, setRecipientNames] = useState('');
   const [walletName, setWalletName] = useState("");
-
+  const [accountId, setAccountId] = useState("");
+  const [numberPins, setNumberPins] = useState("");
+  
   //=============point redeem==============
   const [inputValue, setInputValue] = useState('');
   const [outputValue, setOutputValue] = useState('');
+  const [realinputValue, setRealInputValue] = useState('');
+  const [realoutputValue, setRealOutputValue] = useState('');
+  
 
   //=============Currency conversion==============
+  const [convertedAmount, setConvertedAmount] = useState('');
+  const [initialValue, setInitialValue] = useState('');
+  const [showListOne, setShowListOne] = useState(false);
+  const [selectedOne, setSelectedOne] = useState(false);
+  const [activeButtonOne, setActiveButtonsOne] = useState([true, false]);
 
-  
+  //=============TV-subscription==============
+  const [confirmGotvPopup, setConfirmGotvPopup] = useState(false);
+  const handleGotv = (event) =>{
+    event.preventDefault();
+    setConfirmGotvPopup(true)
+ }
+ const [inputPinGotv, setInputPinGotv] = useState(false);
+ const handleInputGotv = (event) =>{
+  event.preventDefault();
+  setConfirmGotvPopup(false);
+  setInputPinGotv(true);
+}
+ const [gotvSuccessful, setGotvSuccessful] = useState(false);
+ const handleGotvSuccessful = (event) =>{
+  event.preventDefault();;
+  setInputPinGotv(false);
+  setGotvSuccessful(true);
+}
+ 
+const [selectedOptionGOTV, setSelectedOptionGOTV] = useState('');
+
+const [showDropdownGOTV, setShowDropdownGOTV] = useState(false);
+const handleOptionClickGOTV = (option) => {
+  setSelectedOptionGOTV(option);
+  setShowDropdownGOTV(false); 
+  setInitialValueGOTV(false);
+};
+
+const formatNumberWithCommas = (number) => {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};
+
+const getNumericValue = (option) => {
+  const numericPart = option.match(/\d+/);
+  if (numericPart) {
+    return formatNumberWithCommas(parseInt(numericPart[0], numericPart[2], 10));
+  }
+  return '';
+};
+const [initialValueGOTV, setInitialValueGOTV] = useState(true)
+
+
+  //============= EDUCATION PINS ========================
+
+  const [quantityResult, setQuantityResult] = useState('');
+const [waecActive, setWaecActive] = useState(false);
+const [paymentResult, setPaymentResult] = useState('');
+const [methodActive, setMethodActive] = useState(false);
+const [examType, setExamType] = useState('');
+const [examActive, setExamActive] = useState(false);
+const [educationPinPhone, setEducationPinPhone]= useState('');
+const[ educationPinEmail, setEducationPinEmail] = useState('');
+const [waecAmount, setWaecAmount] = useState('₦');
 
   const hold = {
     firstDrop,
@@ -960,6 +1022,10 @@ export const Context = ({ children }) => {
     setRecipientNames,
     walletName, 
     setWalletName,
+    accountId, 
+    setAccountId,
+    numberPins, 
+    setNumberPins,
 
 
     //point redeem
@@ -967,6 +1033,64 @@ export const Context = ({ children }) => {
     setInputValue,
     outputValue,
     setOutputValue,
+
+
+    //currency
+    convertedAmount,
+    setConvertedAmount,
+    initialValue,
+    setInitialValue,
+    showListOne,
+    setShowListOne,
+    selectedOne,
+    setSelectedOne,
+    setActiveButtonsOne,
+    activeButtonOne,
+    realinputValue, 
+    setRealInputValue,
+    realoutputValue, 
+    setRealOutputValue,
+
+    //TV-subscription
+    confirmGotvPopup,
+    setConfirmGotvPopup,
+    handleGotv,
+    inputPinGotv,
+    setInputPinGotv,
+    handleInputGotv,
+    gotvSuccessful,
+    setGotvSuccessful,
+    handleGotvSuccessful,
+    selectedOptionGOTV,
+    setSelectedOptionGOTV,
+    showDropdownGOTV,
+    setShowDropdownGOTV,
+    handleOptionClickGOTV,
+    getNumericValue,
+    formatNumberWithCommas,
+    initialValueGOTV,
+    setInitialValueGOTV,
+
+  //====== EDUCATION PINS
+  quantityResult, 
+  setQuantityResult,
+  paymentResult, 
+  setPaymentResult,
+  waecActive, 
+  setWaecActive,
+  methodActive, 
+  setMethodActive,
+  examType, 
+  setExamType,
+  examActive,
+   setExamActive,
+   educationPinPhone, 
+   setEducationPinPhone,
+   educationPinEmail, 
+  setEducationPinEmail,
+  waecAmount, 
+  setWaecAmount
+
   };
 
   return (

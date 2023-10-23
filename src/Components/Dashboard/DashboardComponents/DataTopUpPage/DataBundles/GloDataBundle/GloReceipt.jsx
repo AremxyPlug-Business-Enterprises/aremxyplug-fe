@@ -69,7 +69,7 @@ export const GloReceipt = () => {
       console.log("Web Share API not supported.");
     }
   };
-
+  
   // ==============Save Pdf Function==============
   const handleSaveAsPDFClick = () => {
     const content = contentRef.current;

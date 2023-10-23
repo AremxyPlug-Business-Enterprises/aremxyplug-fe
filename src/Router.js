@@ -59,10 +59,8 @@ import AirtimeVtuReceipt from "./Components/AirTimePage/AirtimeVtuReceipt"
 import DataBundlesPage from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundlesPage";
 import MtnDataTopUpBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/MtnDataTopUpBundle/MtnDataTopUpBundle";
 import WithdrawToOtherBanks from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToOtherBanks";
-import ConfirmConversion from "./Components/CurrencyConversion/currencyPopups/confirmConversion";
 import { SuccessfulReceipt } from "./Components/CurrencyConversion/ConversionReceipts/SuccessConversionReceipt";
-
-
+import { TvSubscription } from "./Components/TvSubscription/TvSubscriptionPage";
 import WalletSummaryPage from "./Components/WalletSummaryPage/WalletSummary";
 import SalesSummaryPage from "./Components/SalesSummaryPage/SalesSummary";
 import { WithdrawToOtherBankReceipt } from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToOtherBanksPopUp/WithdrawToOtherBankReceipt";
@@ -78,6 +76,22 @@ import SelectRecipient from "./Components/AirTimePage/SelectRecipient";
 import { RedeemReceipt } from "./Components/Dashboard/DashboardComponents/PointRedeem/RedeemReceipt";
 import DataBundleSelectRecipient from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundleSelectRecipient";
 import DataBundleAddRecipient from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundleAddRecipient";
+import SmileDataBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/SmileDataBundle/SmileDataBundle";
+import { SmileReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/SmileDataBundle/SmileReceipt";
+import SpectranetDataBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/SpectranetDataBundle/SpectranetDataBundle";
+import { SpectranetReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/SpectranetDataBundle/SpectranetReceipt";
+import GoTv from "./Components/TvSubscription/TvOne";
+import EducationMain from "./Components/EducationPins/educationMain";
+import WaecEducationPin from "./Components/EducationPins/waecEducationPin";
+import NecoEducationPins from "./Components/EducationPins/NecoEducationPins";
+import JambEducationPin from "./Components/EducationPins/jambEducationPin";
+import NabtebEducationPins from './Components/EducationPins/nabtebEducationPins';
+import WaecReceipt from "./Components/EducationPins/ReceiptEducationPins/waecReceipt";
+import JambReceipt from "./Components/EducationPins/ReceiptEducationPins/jambReceipt";
+import NecoReceipt from "./Components/EducationPins/ReceiptEducationPins/necoReceipt";
+import NabtebReceipt from "./Components/EducationPins/ReceiptEducationPins/nabtebReceipt";
+
+
 export const Router = () => {
   return (
     <div>
@@ -169,7 +183,6 @@ export const Router = () => {
         <Route path="/data-bundles" element={<DataBundlesPage />} />
         <Route path="/My-Referral" element={<Referral />} />
         <Route path="/MtnDataTopUpBundle" element={<MtnDataTopUpBundle />} />
-        <Route path="/ConfirmConversion" element={<ConfirmConversion/>}/>
         <Route path="/SuccessfulConversion" element={<SuccessfulReceipt/>}/>
         <Route path="/MtnReceipt" element={<MtnReceipt/>} />
         <Route path="/AirtelDataBundle" element={<AirtelDataBundle/>} />
@@ -180,7 +193,24 @@ export const Router = () => {
         <Route path="/GloReceipt" element={<GloReceipt/>} />
         <Route path="/DataBundleSelectRecipient" element={<DataBundleSelectRecipient/>} />
         <Route path="/DataBundleAddRecipient" element={<DataBundleAddRecipient/>} />
-        
+        <Route path="/SmileDataBundle" element={<SmileDataBundle/>} />
+        <Route path="/Smilereceipt" element={<SmileReceipt/>} />
+        <Route path="/SpectranetDataBundle" element={<SpectranetDataBundle/>} />
+        <Route path="/SpectranetReceipt" element={<SpectranetReceipt/>} />
+        <Route path="/TvSubscription" element={<TvSubscription/>} />
+        <Route path="/GoTv" element={<GoTv/>} />
+        <Route path="/EducationPins" element={<EducationMain/>}/>
+        <Route path="/WaecEducationPin" element={<WaecEducationPin/>}/>
+        <Route path="/NecoEducationPin" element={<NecoEducationPins/>}/>
+        <Route path="/NabtebEducationPin" element={<NabtebEducationPins/>}/>
+        <Route path="/JambEducationPin" element={<JambEducationPin/>}/>
+        <Route path="/WaecReceipt" element={<WaecReceipt/>}/>
+        <Route path="/JambReceipt" element={<JambReceipt/>}/>
+        <Route path="/NecoReceipt" element={<NecoReceipt/>}/>
+        <Route path="/NabtebReceipt" element={<NabtebReceipt/>}/>
+        <Route path="/TvSubscription" element={<TvSubscription/>}/>
+        <Route path="/GoTv" element={<GoTv/>}/>
+        <Route path="/SuccessfulConversion" element={<SuccessfulReceipt/>}/>
       </Routes>
     </div>
   );
