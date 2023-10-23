@@ -8,6 +8,7 @@ import { primaryColor } from "../Screens/cardIssuing/cardIssuing";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import LoginPopUp from "./LoginPopUp";
 import Joi from "joi";
+import axios from "axios";
 
 
 
@@ -147,9 +148,9 @@ function LoginForm() {
     }
   };
 
-  const submitHandler = (e) => {
-    e.preventDefault();
 
+  const submitHandler = async (e) => {
+    e.preventDefault();
     if (usernameORemail === "username") {
       // ========Login form validation starts her=======
       const schema = Joi.object({
@@ -216,8 +217,18 @@ function LoginForm() {
         setErrors({});
       }
     }
+    if (usernameORemail === "username") {
+      const loginData = {username: username, password: password}
+      const {data} = await axios.post('https://aremxyplug.onrender.com/api/v1/users/login', loginData);
+      console.log(data);
+    } else {
+      const loginData = {email: email, password: password}
+      const {data} = await axios.post('https://aremxyplug.onrender.com/api/v1/users/login', loginData);
+      console.log(data);
+    }
   };
 
+  
   return (
     <div
       className="relative overflow-hidden w-[100%] xl:w-[85%] md:mx-[unset]   loginForm p-[25px] rounded-lg md:rounded-xl xl:rounded-3xl "

@@ -67,7 +67,7 @@ const NewPassword = () => {
                         <Link to={`/`} className="absolute top-[14.3px] left-[14.3px] w-[36.51px] h-[17.73px]">
                             <img src={aremxyPlug} alt="brand_logo" className='h-full w-full object-cover'/>
                         </Link>
-                        <div className=''>
+                        <div className='w-[90%] mx-auto'>
                             <h2 className='text-center text-[11.45px] leading-normal font-[600] mb-[57.29px]'>Create a new password</h2>
                             <div className='my-[10px]'>
                                 <p className="text-[9.17px] md:text-[11.58px] lg:text-[16px] font-[600] lg:mb-[10px] tracking-wider leading-normal">Password</p>
@@ -78,7 +78,7 @@ const NewPassword = () => {
                                     (
                                         <img src={showIcon} alt="icon" className="absolute right-2 w-[13.75px] lg:w-[24px] cursor-pointer" onClick={() => setPassHide("password")}/>
                                     )}
-                                    <input className={`${border} border w-full h-full text-[8.93px] md:text-[11.58px] lg:text-[20px] pl-[7.5px] md:pl-[10px] pr-[40px] md:pr-[50px] rounded  text-[#403f3f] outline-none`} type={passHide} value={password} onChange={(event) => setPassword(event.target.value)}/>
+                                    <input className={`${border} border w-full h-full text-[8.93px] md:text-[11.58px] lg:text-[20px] pl-[7.5px] md:pl-[10px] pr-[40px] md:pr-[50px] rounded text-[#403f3f] outline-none py-1 lg:py-2`} type={passHide} value={password} onChange={(event) => setPassword(event.target.value)} placeholder='enter new password'/>
                                 </div>
                                 <h2>{passError}</h2>
                             </div>
@@ -91,12 +91,12 @@ const NewPassword = () => {
                                     (
                                         <img src={showIcon} alt="icon" className="absolute right-2 w-[13.75px] lg:w-[24px] cursor-pointer" onClick={() => setCpassHide("password")}/>
                                     )}
-                                    <input className={`${border} border w-full h-full text-[8.93px] md:text-[11.58px] lg:text-[20px] pl-[7.5px] md:pl-[10px] pr-[40px] md:pr-[50px] rounded  text-[#403f3f] outline-none`} type={passHide} value={cpassword} onChange={(event) => setCpassword(event.target.value)}/>
+                                    <input className={`${border} border w-full h-full text-[8.93px] md:text-[11.58px] lg:text-[20px] pl-[7.5px] md:pl-[10px] pr-[40px] md:pr-[50px] rounded text-[#403f3f] outline-none py-1 lg:py-2`} type={passHide} value={cpassword} onChange={(event) => setCpassword(event.target.value)} placeholder='confirm password'/>
                                 </div>
                                 <h2 className='text-red-500 text-[5.7px] text-center leading-normal mt-[3px]'>{error}</h2>
                             </div>
-                            <div className='flex justify-center my-[14.79px] lg:my-[35px]'>
-                                <button className='py-[5.729px] px-[20.052px] border rounded-[4.583px] disabled:bg-[#ccc] font-bold text-white text-[6.875px] leading-normal bg-primary lg:py-[10px] lg:px-[35px] lg:text-[12px] lg:rounded-[8px]' disabled={!password || !cpassword} onClick={handleSubmit}>Continue</button>
+                            <div className='flex justify-center my-[30px] lg:my-[35px]'>
+                                <button className='py-[5.729px] px-[20.052px] border rounded-[4.583px] disabled:bg-[#ccc] font-bold text-white text-[10px] leading-normal bg-primary lg:py-[10px] lg:px-[35px] lg:text-[12px] lg:rounded-[8px]' disabled={!password || !cpassword} onClick={handleSubmit}>Continue</button>
                             </div>
                         </div>
                     </div>
@@ -134,9 +134,13 @@ const NewPassword = () => {
                                         (
                                             <img src={showIcon} alt="icon" className="absolute right-2 w-[13.75px] lg:w-[24px] cursor-pointer" onClick={() => setPassHide("password")}/>
                                         )}
-                                        <input className={`${border} border w-full h-full text-[8.93px] md:text-[11.58px] lg:text-[20px] pl-[7.5px] md:pl-[10px] pr-[40px] md:pr-[50px] rounded  text-[#403f3f] outline-none`} type={passHide} value={password} onChange={(event) => setPassword(event.target.value)}/>
+                                        <input className={`${border} border w-full h-full text-[8.93px] md:text-[11.58px] lg:text-[20px] pl-[7.5px] md:pl-[10px] pr-[40px] md:pr-[50px] rounded  text-[#403f3f] outline-none`} type={passHide} value={password} onChange={(event) => setPassword(event.target.value)} placeholder='enter new password'/>
                                     </div>
+<<<<<<< HEAD
                                     <h2 className='text-red-500 text-[5.7px] text-center lg:text-[10px] leading-normal'>{passError}</h2>
+=======
+                                    <h2 className='text-red-500 text-[5.7px] text-center lg:text-[10px] leading-normal italic' >{passError}</h2>
+>>>>>>> dceea8dae4ff3f5d0aa2aec5e6488550d5d694d7
                                 </div>
                                 <div className=''>
                                     <p className="text-[9.17px] md:text-[11.58px] lg:text-[16px] font-[600] lg:mb-[10px] tracking-wider leading-normal">Confirm Password</p>
@@ -147,7 +151,7 @@ const NewPassword = () => {
                                         (
                                             <img src={showIcon} alt="icon" className="absolute right-2 w-[13.75px] lg:w-[24px] cursor-pointer" onClick={() => setCpassHide("password")}/>
                                         )}
-                                        <input className={`${border} border w-full h-full text-[8.93px] md:text-[11.58px] lg:text-[20px] pl-[7.5px] lg:p-[12px] md:pl-[10px] pr-[40px] md:pr-[50px] rounded  text-[#403f3f] outline-none`} type={cpassHide} value={cpassword} onChange={(event) => setCpassword(event.target.value)}/>
+                                        <input className={`${border} border w-full h-full text-[8.93px] md:text-[11.58px] lg:text-[20px] pl-[7.5px] lg:p-[12px] md:pl-[10px] pr-[40px] md:pr-[50px] rounded  text-[#403f3f] outline-none`} type={cpassHide} value={cpassword} onChange={(event) => setCpassword(event.target.value)} placeholder='confirm password'/>
                                     </div>
                                     <h2 className='text-red-500 text-[5.7px] text-center lg:text-[10px] leading-normal'>{error}</h2>
                                 </div>
