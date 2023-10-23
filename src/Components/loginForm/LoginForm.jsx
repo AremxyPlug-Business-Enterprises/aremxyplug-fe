@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./LoginForm.css";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import FirstModal from "../Screens/CustomersPages/Password/FirstModal";
 import { ContextProvider } from "../Context";
 import { primaryColor } from "../Screens/cardIssuing/cardIssuing";
@@ -13,13 +14,8 @@ import axios from "axios";
 
 
 function LoginForm() {
-  const {
-    setOpenTranspin,
-  setOpenResetTranspin, 
-    setOpen2StepVerification
- 
-  } = useContext(ContextProvider);
-  // The satate handling whether input is user name or email starts here
+  const { setOpenTranspin, setOpenResetTranspin, setOpen2StepVerification } = useContext(ContextProvider);
+  // The state handling whether input is user name or email starts here
   const [usernameORemail, setUsernameORemail] = useState("username");
   // The satate handling whether input is user name or email ends here
 
@@ -60,12 +56,8 @@ function LoginForm() {
   const [toolTipOffset, setToolTipOffset] = useState("");
   const [errors, setErrors] = useState({});
 
-
-
-
-
-
-
+  const [redirect, setRedirect] = useState(false);
+  const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -159,7 +151,6 @@ function LoginForm() {
           .required()
           .messages({ "string.pattern.base": "Invalid Username" }),
       });
-      // ======Login form validation ends here=====
 
       const { error } = schema.validate({ username });
       if (error) {
@@ -172,28 +163,35 @@ function LoginForm() {
         );
       } else {
         console.log("Form submitted successfully");
-
         if (checkbox === true) {
           localStorage.setItem("aremxyUsername", JSON.stringify(username));
           localStorage.setItem("aremxyPassword", JSON.stringify(password));
         }
+      }
 
+      try {
+        const loginData = {username: username, password: password}
+        const {data} = await axios.post('https://aremxyplug.onrender.com/api/v1/users/login', loginData);
+        console.log(data);
         setOpenTranspin(true);
         setUsername("");
-        setEmail("");
         setPassword("");
         setErrors({});
+        setRedirect(true);
+      } catch {
+        alert('Error Logging In')
       }
-    } else if (usernameORemail === "email") {
-      // ========Login form validation starts her=======
+      // ======Login form validation ends here=====
+    }
+
+    if (usernameORemail === "email") {
+      // ========Login form validation starts here=======
       const schema = Joi.object({
         email: Joi.string()
           .pattern(new RegExp(/^\S+@\S+\.\S+$/))
           .required()
           .messages({ "string.pattern.base": "Invalid email" }),
       });
-      // ======Login form validation ends here=====
-
       const { error } = schema.validate({ email });
       if (error) {
         // Handle validation error
@@ -209,26 +207,28 @@ function LoginForm() {
           localStorage.setItem("aremxyEmail", JSON.stringify(email));
           localStorage.setItem("aremxyPassword", JSON.stringify(password));
         }
+      }
 
+      try {
+        const loginData = {email: email, password: password}
+        const {data} = await axios.post('https://aremxyplug.onrender.com/api/v1/users/login', loginData);
+        console.log(data);
         setOpenTranspin(true);
-        setUsername("");
         setEmail("");
         setPassword("");
         setErrors({});
+        setRedirect(true);
+      } catch (error) {
+        alert('Error Logging In');
       }
-    }
-    if (usernameORemail === "username") {
-      const loginData = {username: username, password: password}
-      const {data} = await axios.post('https://aremxyplug.onrender.com/api/v1/users/login', loginData);
-      console.log(data);
-    } else {
-      const loginData = {email: email, password: password}
-      const {data} = await axios.post('https://aremxyplug.onrender.com/api/v1/users/login', loginData);
-      console.log(data);
+      // ======Login form validation ends here=====
     }
   };
 
-  
+  if (redirect) {
+    navigate('/dashboard', {replace: true});
+  }
+
   return (
     <div
       className="relative overflow-hidden w-[100%] xl:w-[85%] md:mx-[unset]   loginForm p-[25px] rounded-lg md:rounded-xl xl:rounded-3xl "
@@ -238,13 +238,10 @@ function LoginForm() {
     >
       {showModal && <FirstModal />}
         
+      {
+        <LoginPopUp /> 
 
-{
-  <LoginPopUp /> 
-
-}
-
-
+      }
       <Link to="/">
         <img
           src="./Images/login/arpLogo.png"
