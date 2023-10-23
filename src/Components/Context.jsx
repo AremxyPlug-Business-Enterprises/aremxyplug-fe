@@ -697,6 +697,48 @@ export const Context = ({ children }) => {
   const [selectedOne, setSelectedOne] = useState(false);
   const [activeButtonOne, setActiveButtonsOne] = useState([true, false]);
 
+  //=============TV-subscription==============
+  const [confirmGotvPopup, setConfirmGotvPopup] = useState(false);
+  const handleGotv = (event) =>{
+    event.preventDefault();
+    setConfirmGotvPopup(true)
+ }
+ const [inputPinGotv, setInputPinGotv] = useState(false);
+ const handleInputGotv = (event) =>{
+  event.preventDefault();
+  setConfirmGotvPopup(false);
+  setInputPinGotv(true);
+}
+ const [gotvSuccessful, setGotvSuccessful] = useState(false);
+ const handleGotvSuccessful = (event) =>{
+  event.preventDefault();;
+  setInputPinGotv(false);
+  setGotvSuccessful(true);
+}
+ 
+const [selectedOptionGOTV, setSelectedOptionGOTV] = useState('');
+
+const [showDropdownGOTV, setShowDropdownGOTV] = useState(false);
+const handleOptionClickGOTV = (option) => {
+  setSelectedOptionGOTV(option);
+  setShowDropdownGOTV(false); 
+  setInitialValueGOTV(false);
+};
+
+const formatNumberWithCommas = (number) => {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};
+
+const getNumericValue = (option) => {
+  const numericPart = option.match(/\d+/);
+  if (numericPart) {
+    return formatNumberWithCommas(parseInt(numericPart[0], numericPart[2], 10));
+  }
+  return '';
+};
+const [initialValueGOTV, setInitialValueGOTV] = useState(true)
+
+
   //============= EDUCATION PINS ========================
 
   const [quantityResult, setQuantityResult] = useState('');
@@ -1002,6 +1044,26 @@ const [waecAmount, setWaecAmount] = useState('₦');
     setRealInputValue,
     realoutputValue, 
     setRealOutputValue,
+
+    //TV-subscription
+    confirmGotvPopup,
+    setConfirmGotvPopup,
+    handleGotv,
+    inputPinGotv,
+    setInputPinGotv,
+    handleInputGotv,
+    gotvSuccessful,
+    setGotvSuccessful,
+    handleGotvSuccessful,
+    selectedOptionGOTV,
+    setSelectedOptionGOTV,
+    showDropdownGOTV,
+    setShowDropdownGOTV,
+    handleOptionClickGOTV,
+    getNumericValue,
+    formatNumberWithCommas,
+    initialValueGOTV,
+    setInitialValueGOTV,
 
   //====== EDUCATION PINS
   quantityResult, 

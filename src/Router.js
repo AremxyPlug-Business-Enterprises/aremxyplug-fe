@@ -78,6 +78,10 @@ import WaecReceipt from "./Components/EducationPins/ReceiptEducationPins/waecRec
 import JambReceipt from "./Components/EducationPins/ReceiptEducationPins/jambReceipt";
 import NecoReceipt from "./Components/EducationPins/ReceiptEducationPins/necoReceipt";
 import NabtebReceipt from "./Components/EducationPins/ReceiptEducationPins/nabtebReceipt";
+import {SuccessfulReceipt} from "./Components/CurrencyConversion/ConversionReceipts/SuccessConversionReceipt";
+import { TvSubscription } from "./Components/TvSubscription/TvSubscriptionPage";
+import GoTv from "./Components/TvSubscription/TvOne";
+
 
 export const Router = () => {
   return (
@@ -170,8 +174,7 @@ export const Router = () => {
         <Route path="/data-bundles" element={<DataBundlesPage />} />
         <Route path="/My-Referral" element={<Referral />} />
         <Route path="/MtnDataTopUpBundle" element={<MtnDataTopUpBundle />} />
-        {/* <Route path="/ConfirmConversion" element={<ConfirmConversion/>}/> */}
-        {/* <Route path="/SuccessfulConversion" element={<SuccessfulReceipt/>}/> */}
+        <Route path="/SuccessfulConversion" element={<SuccessfulReceipt/>}/>
         <Route path="/MtnReceipt" element={<MtnReceipt/>} />
         <Route path="/AirtelDataBundle" element={<AirtelDataBundle/>} />
         <Route path="/GloDataBundle" element={<GloDataBundle/>} />
@@ -188,7 +191,9 @@ export const Router = () => {
         <Route path="/JambReceipt" element={<JambReceipt/>}/>
         <Route path="/NecoReceipt" element={<NecoReceipt/>}/>
         <Route path="/NabtebReceipt" element={<NabtebReceipt/>}/>
-
+        <Route path="/TvSubscription" element={<TvSubscription/>}/>
+        <Route path="/GoTv" element={<GoTv/>}/>
+        <Route path="/SuccessfulConversion" element={<SuccessfulReceipt/>}/>
       </Routes>
     </div>
   );
