@@ -49,8 +49,20 @@ const DataBundleAddRecipient = () => {
       image: require("../../../../AirTimePage/Images/9mobile.svg").default,
       discount: 3,
     },
+    {
+      id: 4,
+      name: "SMILE",
+      image: require("../DataBundles/SmileDataBundle/SmileDataBundleImages/SmileLogo.svg").default,
+      discount: 3,
+    },
+    {
+      id: 4,
+      name: "SPECTRANET",
+      image: require("../DataBundles/SpectranetDataBundle/SpectranetDataBundleImages/SpectranetLogo.svg").default,
+      discount: 3,
+    },
   ];
-
+  
   const Network = ({ name, image, onClick }) => {
     return (
       <li className={airtimestyles.netList} onClick={onClick}>
