@@ -699,31 +699,10 @@ export const Context = ({ children }) => {
 
   //=============TV-subscription==============
   const [confirmGotvPopup, setConfirmGotvPopup] = useState(false);
-  const handleGotv = (event) =>{
-    event.preventDefault();
-    setConfirmGotvPopup(true)
- }
- const [inputPinGotv, setInputPinGotv] = useState(false);
- const handleInputGotv = (event) =>{
-  event.preventDefault();
-  setConfirmGotvPopup(false);
-  setInputPinGotv(true);
-}
- const [gotvSuccessful, setGotvSuccessful] = useState(false);
- const handleGotvSuccessful = (event) =>{
-  event.preventDefault();;
-  setInputPinGotv(false);
-  setGotvSuccessful(true);
-}
- 
-const [selectedOptionGOTV, setSelectedOptionGOTV] = useState('');
-
-const [showDropdownGOTV, setShowDropdownGOTV] = useState(false);
-const handleOptionClickGOTV = (option) => {
-  setSelectedOptionGOTV(option);
-  setShowDropdownGOTV(false); 
-  setInitialValueGOTV(false);
-};
+  const [inputPinGotv, setInputPinGotv] = useState(false);
+  const [gotvSuccessful, setGotvSuccessful] = useState(false);
+  const [selectedOptionGOTV, setSelectedOptionGOTV] = useState('');
+  const [showDropdownGOTV, setShowDropdownGOTV] = useState(false);
 
 const formatNumberWithCommas = (number) => {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -737,6 +716,7 @@ const getNumericValue = (option) => {
   return '';
 };
 const [initialValueGOTV, setInitialValueGOTV] = useState(true)
+const [GOTVMobileNumber, setGOTVMobileNumber] = useState('');
 
 
   //============= EDUCATION PINS ========================
@@ -1048,22 +1028,21 @@ const [waecAmount, setWaecAmount] = useState('₦');
     //TV-subscription
     confirmGotvPopup,
     setConfirmGotvPopup,
-    handleGotv,
     inputPinGotv,
     setInputPinGotv,
-    handleInputGotv,
     gotvSuccessful,
     setGotvSuccessful,
-    handleGotvSuccessful,
     selectedOptionGOTV,
     setSelectedOptionGOTV,
     showDropdownGOTV,
     setShowDropdownGOTV,
-    handleOptionClickGOTV,
     getNumericValue,
     formatNumberWithCommas,
     initialValueGOTV,
     setInitialValueGOTV,
+    GOTVMobileNumber,
+    setGOTVMobileNumber,
+    
 
   //====== EDUCATION PINS
   quantityResult, 

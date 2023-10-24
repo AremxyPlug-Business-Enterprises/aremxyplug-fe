@@ -81,6 +81,7 @@ import NabtebReceipt from "./Components/EducationPins/ReceiptEducationPins/nabte
 import {SuccessfulReceipt} from "./Components/CurrencyConversion/ConversionReceipts/SuccessConversionReceipt";
 import { TvSubscription } from "./Components/TvSubscription/TvSubscriptionPage";
 import GoTv from "./Components/TvSubscription/TvOne";
+import DsTv from "./Components/TvSubscription/TvTwo";
 
 
 export const Router = () => {
@@ -193,6 +194,7 @@ export const Router = () => {
         <Route path="/NabtebReceipt" element={<NabtebReceipt/>}/>
         <Route path="/TvSubscription" element={<TvSubscription/>}/>
         <Route path="/GoTv" element={<GoTv/>}/>
+        <Route path="/DsTv" element={<DsTv/>}/>
         <Route path="/SuccessfulConversion" element={<SuccessfulReceipt/>}/>
       </Routes>
     </div>
