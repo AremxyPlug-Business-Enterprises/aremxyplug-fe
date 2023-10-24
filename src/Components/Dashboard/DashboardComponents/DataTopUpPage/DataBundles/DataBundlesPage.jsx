@@ -221,7 +221,8 @@ const DataBundlesPage = () => {
               />
             </div>
             </Link>
-
+            
+            <Link to="/SmileDataBundle">
             <div
               id="Network"
               className="rounded-[4px] relative flex flex-col justify-center items-center"
@@ -233,7 +234,9 @@ const DataBundlesPage = () => {
                 className="absolute self-center md:w-[20%] lg:w-[25%]"
               />
             </div>
+            </Link>
 
+              <Link to="/SpectranetDataBundle">
             <div
               id="Network"
               className="rounded-[4px] relative flex flex-col justify-center items-center"
@@ -245,6 +248,7 @@ const DataBundlesPage = () => {
                 className="absolute self-center md:w-[20%] lg:w-[25%]"
               />
             </div>
+            </Link>
           </div>
 
           {codes && (

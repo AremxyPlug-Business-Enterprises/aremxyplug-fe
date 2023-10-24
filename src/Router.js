@@ -83,6 +83,14 @@ import { TvSubscription } from "./Components/TvSubscription/TvSubscriptionPage";
 import GoTv from "./Components/TvSubscription/TvOne";
 import DsTv from "./Components/TvSubscription/TvTwo";
 
+import SmileDataBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/SmileDataBundle/SmileDataBundle";
+import { SmileReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/SmileDataBundle/SmileReceipt";
+import SpectranetDataBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/SpectranetDataBundle/SpectranetDataBundle";
+import { SpectranetReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/SpectranetDataBundle/SpectranetReceipt";
+import AddRecipient from "./Components/AirTimePage/AddRecipient"
+import SelectRecipient from "./Components/AirTimePage/SelectRecipient"
+import DataBundleSelectRecipient from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundleSelectRecipient"
+import DataBundleAddRecipient from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundleAddRecipient"
 
 export const Router = () => {
   return (
@@ -130,8 +138,8 @@ export const Router = () => {
         <Route path="/airtime-topup" element={<AirTime />} />
         <Route path="/airtime-vtu" element={<AirtimeVtu />} />
         <Route path="/airtime-vtu-receipt" element={<AirtimeVtuReceipt />} />
-        {/* <Route path="/add-vtu-recipient" element={<AddRecipient />} /> */}
-        {/* <Route path="/select-vtu-recipient" element={<SelectRecipient />} /> */}
+        <Route path="/add-vtu-recipient" element={<AddRecipient />} /> 
+        <Route path="/select-vtu-recipient" element={<SelectRecipient />} />
         <Route path="/add-account" element={<AddAccount />} />
         <Route path="/ngn-virtual-account" element={<NgnVirtualAccount />} />
         <Route path="/cookie-settings" element={<CookiesSettings />} />
@@ -196,6 +204,12 @@ export const Router = () => {
         <Route path="/GoTv" element={<GoTv/>}/>
         <Route path="/DsTv" element={<DsTv/>}/>
         <Route path="/SuccessfulConversion" element={<SuccessfulReceipt/>}/>
+        <Route path="/SmileDataBundle" element={<SmileDataBundle/>} />
+        <Route path="/Smilereceipt" element={<SmileReceipt/>} />
+        <Route path="/SpectranetDataBundle" element={<SpectranetDataBundle/>} />
+        <Route path="/SpectranetReceipt" element={<SpectranetReceipt/>} />
+        <Route path="/DataBundleSelectRecipient" element={<DataBundleSelectRecipient/>} />
+        <Route path="/DataBundleAddRecipient" element={<DataBundleAddRecipient/>} />
       </Routes>
     </div>
   );

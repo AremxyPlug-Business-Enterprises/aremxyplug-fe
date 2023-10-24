@@ -21,6 +21,13 @@ const SecondModal = ({value}) => {
         return <Navigate to={`/newPassword`}/>
     }
 
+    const renderButton = (buttonProps) => {
+        return <button {...buttonProps} className='disabled:text-[#ccc] text-primary lg:text-sm text-xs'>Resend</button>
+    }
+
+    const renderTime =(remainingTime)=> {
+        return <span className='lg:text-sm text-xs text-primary'>{remainingTime}</span>
+    }
     const handleSubmit =(event)=> {
         event.preventDefault();
         if (+OTP !== presetNum) {
@@ -60,17 +67,17 @@ const SecondModal = ({value}) => {
                     <form>
                         <div className="lg:hidden">
                             <OTPInput 
-                                    value={OTP} 
-                                    onChange={setOTP}
-                                    autoFocus
-                                    OTPLength={6}
-                                    otpType="number"
-                                    disabled={false}
-                                    resendOTP={{}}
-                                    inputClassName={`${border} rounded focus:outline-none p-[5px] text-[12px] `}
-                                    style={{justifyContent: 'space-between', display: 'flex'}}
-                                    inputStyles={{width: 30, height: 30, marginRight: 0}}
-                                />
+                                value={OTP} 
+                                onChange={setOTP}
+                                autoFocus
+                                OTPLength={6}
+                                otpType="number"
+                                disabled={false}
+                                resendOTP={true}
+                                inputClassName={`${border} rounded focus:outline-none p-[5px] text-[12px] `}
+                                style={{justifyContent: 'space-between', display: 'flex'}}
+                                inputStyles={{width: 30, height: 30, marginRight: 0}}
+                            />
                         </div> 
                         <div className="hidden lg:block">
                             <OTPInput 
@@ -80,14 +87,14 @@ const SecondModal = ({value}) => {
                                 OTPLength={6}
                                 otpType="number"
                                 disabled={false}
-                                resendOTP={{}}
+                                resendOTP={true}
                                 inputClassName={`${border} rounded focus:outline-none p-[5px] text-[12px]`}
                                 style={{justifyContent: 'space-between', display: 'flex'}}
                                 inputStyles={{width: 45, height: 45, marginRight: 0}}
                             />
                         </div>
                         <h2 className='text-red-500 text-[5.7px] text-center leading-normal lg:text-[10px] mt-[3px]'>{error}</h2>
-                        <ResendOTP handelResendClick={() => alert("Resend clicked")} className='text-xs text-primary lg:text-sm'/>
+                        <ResendOTP renderButton={renderButton} renderTime={renderTime}/>
                         <div className='flex justify-center mt-[20.65px]'>
                             <button className='py-[5.729px] px-[20.052px] border rounded-[4.583px] disabled:bg-[#ccc] font-bold text-white text-xs leading-normal bg-primary lg:py-[10px] lg:px-[35px] lg:text-[12px] lg:rounded-[8px]' disabled={OTP.length !==6 } onClick={handleSubmit}>Continue</button>
                         </div>
