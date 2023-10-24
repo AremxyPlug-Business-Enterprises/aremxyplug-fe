@@ -682,7 +682,9 @@ export const Context = ({ children }) => {
   const [selectedAmount, setSelectedAmount] = useState('');
   const [recipientNames, setRecipientNames] = useState('');
   const [walletName, setWalletName] = useState("");
-
+  const [accountId, setAccountId] = useState("");
+  const [numberPins, setNumberPins] = useState("");
+  
   //=============point redeem==============
   const [inputValue, setInputValue] = useState('');
   const [outputValue, setOutputValue] = useState('');
@@ -1020,6 +1022,11 @@ const [waecAmount, setWaecAmount] = useState('₦');
     setRecipientNames,
     walletName, 
     setWalletName,
+    accountId, 
+    setAccountId,
+    numberPins, 
+    setNumberPins,
+
 
 
     //point redeem

@@ -81,6 +81,10 @@ import NabtebReceipt from "./Components/EducationPins/ReceiptEducationPins/nabte
 import {SuccessfulReceipt} from "./Components/CurrencyConversion/ConversionReceipts/SuccessConversionReceipt";
 import { TvSubscription } from "./Components/TvSubscription/TvSubscriptionPage";
 import GoTv from "./Components/TvSubscription/TvOne";
+import SmileDataBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/SmileDataBundle/SmileDataBundle";
+import { SmileReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/SmileDataBundle/SmileReceipt";
+import SpectranetDataBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/SpectranetDataBundle/SpectranetDataBundle";
+import { SpectranetReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/SpectranetDataBundle/SpectranetReceipt";
 
 
 export const Router = () => {
@@ -194,6 +198,10 @@ export const Router = () => {
         <Route path="/TvSubscription" element={<TvSubscription/>}/>
         <Route path="/GoTv" element={<GoTv/>}/>
         <Route path="/SuccessfulConversion" element={<SuccessfulReceipt/>}/>
+        <Route path="/SmileDataBundle" element={<SmileDataBundle/>} />
+        <Route path="/Smilereceipt" element={<SmileReceipt/>} />
+        <Route path="/SpectranetDataBundle" element={<SpectranetDataBundle/>} />
+        <Route path="/SpectranetReceipt" element={<SpectranetReceipt/>} />
       </Routes>
     </div>
   );
