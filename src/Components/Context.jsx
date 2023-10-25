@@ -708,6 +708,7 @@ const [examActive, setExamActive] = useState(false);
 const [educationPinPhone, setEducationPinPhone]= useState('');
 const[ educationPinEmail, setEducationPinEmail] = useState('');
 const [waecAmount, setWaecAmount] = useState('₦');
+const [walletBalance, setWalletBalance] = useState('');
 
   const hold = {
     firstDrop,
@@ -1021,7 +1022,9 @@ const [waecAmount, setWaecAmount] = useState('₦');
    educationPinEmail, 
   setEducationPinEmail,
   waecAmount, 
-  setWaecAmount
+  setWaecAmount,
+  walletBalance, 
+  setWalletBalance
 
   };
 
