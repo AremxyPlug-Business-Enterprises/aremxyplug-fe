@@ -227,7 +227,7 @@ export const SideBar = () => {
                         <div>Data Top-up</div>
                       </li>
                     </Link>
-
+                    <Link to ="/EducationPins">
                     <li className="flex gap-[5%] hover:underline text-[#fff] pt-1 pb-1  font-medium md:text-[11px] lg:pt-[6%] lg:pb-[6%] lg:pl-[%] lg:text-[14px] ">
                       <img
                         className="w-[8.5px] h-[8.5px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
@@ -236,6 +236,7 @@ export const SideBar = () => {
                       />
                       <div>Education pins</div>
                     </li>
+                    </Link>
                     <li className="flex gap-[5%] hover:underline text-[#fff] pt-1 pb-1 font-medium md:text-[11px] lg:pt-[6%] lg:pb-[6%] lg:pl-[%] lg:text-[14px] ">
                       <img
                         className="w-[8.5px] h-[8.5px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"

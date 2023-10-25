@@ -682,7 +682,9 @@ export const Context = ({ children }) => {
   const [selectedAmount, setSelectedAmount] = useState('');
   const [recipientNames, setRecipientNames] = useState('');
   const [walletName, setWalletName] = useState("");
-
+  const [accountId, setAccountId] = useState("");
+  const [numberPins, setNumberPins] = useState("");
+  
   //=============point redeem==============
   const [inputValue, setInputValue] = useState('');
   const [outputValue, setOutputValue] = useState('');
@@ -702,6 +704,40 @@ export const Context = ({ children }) => {
   const [selectedOne, setSelectedOne] = useState(false);
   const [activeButtonOne, setActiveButtonsOne] = useState([true, false]);
 
+  //=============TV-subscription==============
+  const [confirmGotvPopup, setConfirmGotvPopup] = useState(false);
+  const [inputPinGotv, setInputPinGotv] = useState(false);
+  const [gotvSuccessful, setGotvSuccessful] = useState(false);
+  const [selectedOptionGOTV, setSelectedOptionGOTV] = useState('');
+  const [showDropdownGOTV, setShowDropdownGOTV] = useState(false);
+
+const formatNumberWithCommas = (number) => {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};
+
+const getNumericValue = (option) => {
+  const numericPart = option.match(/\d+/);
+  if (numericPart) {
+    return formatNumberWithCommas(parseInt(numericPart[0], numericPart[2], 10));
+  }
+  return '';
+};
+const [initialValueGOTV, setInitialValueGOTV] = useState(true)
+const [GOTVMobileNumber, setGOTVMobileNumber] = useState('');
+
+
+  //============= EDUCATION PINS ========================
+
+  const [quantityResult, setQuantityResult] = useState('');
+const [waecActive, setWaecActive] = useState(false);
+const [paymentResult, setPaymentResult] = useState('');
+const [methodActive, setMethodActive] = useState(false);
+const [examType, setExamType] = useState('');
+const [examActive, setExamActive] = useState(false);
+const [educationPinPhone, setEducationPinPhone]= useState('');
+const[ educationPinEmail, setEducationPinEmail] = useState('');
+const [waecAmount, setWaecAmount] = useState('₦');
+const [walletBalance, setWalletBalance] = useState('');
 
   const hold = {
     firstDrop,
@@ -972,6 +1008,11 @@ export const Context = ({ children }) => {
     setRecipientNames,
     walletName, 
     setWalletName,
+    accountId, 
+    setAccountId,
+    numberPins, 
+    setNumberPins,
+
 
 
     //point redeem
@@ -1009,6 +1050,47 @@ export const Context = ({ children }) => {
     activeButtonOne,
    
 
+    //TV-subscription
+    confirmGotvPopup,
+    setConfirmGotvPopup,
+    inputPinGotv,
+    setInputPinGotv,
+    gotvSuccessful,
+    setGotvSuccessful,
+    selectedOptionGOTV,
+    setSelectedOptionGOTV,
+    showDropdownGOTV,
+    setShowDropdownGOTV,
+    getNumericValue,
+    formatNumberWithCommas,
+    initialValueGOTV,
+    setInitialValueGOTV,
+    GOTVMobileNumber,
+    setGOTVMobileNumber,
+    
+
+  //====== EDUCATION PINS
+  quantityResult, 
+  setQuantityResult,
+  paymentResult, 
+  setPaymentResult,
+  waecActive, 
+  setWaecActive,
+  methodActive, 
+  setMethodActive,
+  examType, 
+  setExamType,
+  examActive,
+   setExamActive,
+   educationPinPhone, 
+   setEducationPinPhone,
+   educationPinEmail, 
+  setEducationPinEmail,
+  waecAmount, 
+  setWaecAmount,
+  walletBalance, 
+  setWalletBalance
+
   };
 
   return (
@@ -1019,3 +1101,4 @@ export const Context = ({ children }) => {
     </div>
   );
 };
+
