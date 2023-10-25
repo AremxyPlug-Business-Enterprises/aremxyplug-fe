@@ -78,6 +78,8 @@ import { RedeemReceipt } from "./Components/Dashboard/DashboardComponents/PointR
 import DataBundleSelectRecipient from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundleSelectRecipient";
 import DataBundleAddRecipient from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundleAddRecipient";
 import GoTv from "./Components/TvSubscription/TvOne";
+import ElectricitySubscription from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/ElectricitySubscription";
+import IKEDC from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/IKEDC";
 
 export const Router = () => {
   return (
@@ -161,7 +163,9 @@ export const Router = () => {
           path="/international-bank-receipt"
           element={<InternationalReceipt />}
         />
+        <Route path="/electricity-subscription" element={<ElectricitySubscription />} />
         <Route path="/redeem-receipt" element={<RedeemReceipt />} />
+        <Route path="/ikedc" element={<IKEDC />} />
         <Route path="/global-transfer" element={<GlobalTransfer />} />
         <Route path="/point-redeem" element={<PointRedeem />} />
         <Route path="/fiat" element={<FiatConversion />} />

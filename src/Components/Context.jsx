@@ -688,7 +688,12 @@ export const Context = ({ children }) => {
   const [outputValue, setOutputValue] = useState('');
   const [realinputValue, setRealInputValue] = useState('');
   const [realoutputValue, setRealOutputValue] = useState('');
-  
+
+  //==============electricity subscrition===========
+  const [meterNumber, setMeterNumber] = useState('');
+  const [verifiedName, setVerifiedName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [ikedcEmail, setEmail] = useState('');
 
   //=============Currency conversion==============
   const [convertedAmount, setConvertedAmount] = useState('');
@@ -974,7 +979,22 @@ export const Context = ({ children }) => {
     setInputValue,
     outputValue,
     setOutputValue,
+    realinputValue, 
+    setRealInputValue,
+    realoutputValue, 
+    setRealOutputValue,
 
+
+
+    //electricity subscription
+    meterNumber,
+   setMeterNumber,
+   verifiedName,
+    setVerifiedName,
+    phoneNumber, 
+    setPhoneNumber,
+    ikedcEmail, 
+    setEmail,
 
     //currency
     convertedAmount,
@@ -987,10 +1007,7 @@ export const Context = ({ children }) => {
     setSelectedOne,
     setActiveButtonsOne,
     activeButtonOne,
-    realinputValue, 
-    setRealInputValue,
-    realoutputValue, 
-    setRealOutputValue,
+   
 
   };
 

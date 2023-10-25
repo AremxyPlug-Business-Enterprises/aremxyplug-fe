@@ -204,7 +204,7 @@ const [text, setText] =useState(false);
           </div>
         </div>
         <div className="mt-[7px] flex flex-row lg:mt-[20px]">
-          <div className="border-[1px] w-[85%] md:w-[85%]  text-[10px] lg:text-[16px] h-[30px] md:h-[40px] font-[600] text-[#7C7C7C] lg:h-[50px] px-2 py-0 pt-2 md:pt-3 lg:pt-4 border-slate-200">
+          <div className="border-[1px] w-[85%] md:w-[92%]  text-[10px] lg:text-[16px] h-[30px] md:h-[40px] font-[600] text-[#7C7C7C] lg:h-[50px] px-2 py-0 pt-2 md:pt-3 lg:pt-4 border-slate-200">
             {/* <input
               type="number"
               readOnly
@@ -214,7 +214,7 @@ const [text, setText] =useState(false);
             />{" "} */}
             {!text ? <p>Amount to Receive</p> : <div>&#8358;{outputValue}</div>}
           </div>
-          <div className="h-[30px] md:h-[40px] lg:h-[60px] w-[15%] md:w-[8%] gap-2 lg:gap-4 flex flex-row px-3 py-2 bg-primary items-center   ">
+          <div className="h-[30px] md:h-[40px] lg:h-[50px] w-[15%] md:w-[8%] gap-2 lg:gap-4 flex flex-row px-3 py-2 bg-primary items-center   ">
             <div>
               {" "}
               <img
