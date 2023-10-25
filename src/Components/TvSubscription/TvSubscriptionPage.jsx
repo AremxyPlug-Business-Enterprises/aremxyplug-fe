@@ -30,11 +30,11 @@ export const TvSubscription = () =>{
 
             <div id="tvGrid" className="mx-auto">
                 <Link to='/GoTv'>
-                    <img src="./Images/TvSubscription/goTV.svg" alt="" className="md:w-[118px] lg:w-[200px] md:h-[94px] lg:h-[160px]"/>
+                    <img src="./Images/TvSubscription/goTV.svg" alt="" className="md:w-[118px] lg:w-[270px] md:h-[94px] lg:h-[250px]"/>
                 </Link>
-                <img src="./Images/TvSubscription/dstv.svg" alt="" className="md:w-[118px] lg:w-[200px] md:h-[94px] lg:h-[160px]"/>
-                <img src="./Images/TvSubscription/starTimes.svg" alt="" className="md:w-[118px] lg:w-[200px] md:h-[94px] lg:h-[160px]"/>
-                <img src="./Images/TvSubscription/showmax.svg" alt="" className="md:w-[118px] lg:w-[200px] md:h-[94px] lg:h-[160px]"/>
+                <img src="./Images/TvSubscription/dstv.svg" alt="" className="md:w-[118px] lg:w-[270px] md:h-[94px] lg:h-[250px]"/>
+                <img src="./Images/TvSubscription/starTimes.svg" alt="" className="md:w-[118px] lg:w-[270px] md:h-[94px] lg:h-[250px]"/>
+                <img src="./Images/TvSubscription/showmax.svg" alt="" className="md:w-[118px] lg:w-[270px] md:h-[94px] lg:h-[250px]"/>
             </div>
 
             <div className="flex justify-center items-center mt-[62.3%] md:mt-[38%] lg:mt-[30%] mb-[40px] gap-2">
