@@ -17,15 +17,8 @@ export const InputGotvPopup = () => {
       toggleSideBar,
       toggleVisibility,
       isVisible,
-      setInputPinGotv,
-      setGotvSuccessful,
+      handleGotvSuccessful,
    } = useContext(ContextProvider)
-
-   const handleGotvSuccessful = (event) =>{
-    event.preventDefault();;
-    setInputPinGotv(false);
-    setGotvSuccessful(true);
-  }
 
    const [isFocused, setIsFocused] = useState(false);
       const handleFocus = () => {

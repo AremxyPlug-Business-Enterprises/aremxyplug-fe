@@ -81,6 +81,8 @@ import NabtebReceipt from "./Components/EducationPins/ReceiptEducationPins/nabte
 import {SuccessfulReceipt} from "./Components/CurrencyConversion/ConversionReceipts/SuccessConversionReceipt";
 import { TvSubscription } from "./Components/TvSubscription/TvSubscriptionPage";
 import GoTv from "./Components/TvSubscription/TvOne";
+import DsTv from "./Components/TvSubscription/TvTwo";
+
 import SmileDataBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/SmileDataBundle/SmileDataBundle";
 import { SmileReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/SmileDataBundle/SmileReceipt";
 import SpectranetDataBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/SpectranetDataBundle/SpectranetDataBundle";
@@ -200,6 +202,7 @@ export const Router = () => {
         <Route path="/NabtebReceipt" element={<NabtebReceipt/>}/>
         <Route path="/TvSubscription" element={<TvSubscription/>}/>
         <Route path="/GoTv" element={<GoTv/>}/>
+        <Route path="/DsTv" element={<DsTv/>}/>
         <Route path="/SuccessfulConversion" element={<SuccessfulReceipt/>}/>
         <Route path="/SmileDataBundle" element={<SmileDataBundle/>} />
         <Route path="/Smilereceipt" element={<SmileReceipt/>} />

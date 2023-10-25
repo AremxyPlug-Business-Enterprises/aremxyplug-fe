@@ -11,20 +11,11 @@ import { Modal } from "../../Screens/Modal/Modal";
      confirmGotvPopup,
      setConfirmGotvPopup,
      toggleSideBar,
+     handleInputGotv,
      getNumericValue,
-     setInputPinGotv,
      GOTVMobileNumber,
      selectedOptionGOTV,
   } = useContext(ContextProvider)
-
-  const handleInputGotv = (event) =>{
-    event.preventDefault();
-    setConfirmGotvPopup(false);
-    setInputPinGotv(true);
-  }
-
-  const valueWithoutTilde = selectedOptionGOTV.split(" ~ ")[0];
-  const trimmedValue = valueWithoutTilde.trim();
 
     return(
        <>
@@ -50,8 +41,8 @@ import { Modal } from "../../Screens/Modal/Modal";
               Confirm Transaction</div>
             <div className="text-[8px] text-[#0008] text-center mb-2 md:text-[12px] lg:text-[14px]">
             You are about to purchase&nbsp;
-               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">{trimmedValue}</span>&nbsp;
-               from your NGN wallet to
+               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]"><code>plan</code></span>&nbsp;
+              Monthly from your NGN wallet to
             </div>
             
             <div className="flex flex-col gap-3 mt-4 md:mt-6 lg:mt-7">
