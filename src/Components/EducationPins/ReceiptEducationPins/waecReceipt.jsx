@@ -4,6 +4,7 @@ import { useContext, useRef } from "react";
 import { DashBoardLayout } from '../../Dashboard/Layout/DashBoardLayout';
 import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
+import AremxyPlugIcon from '../imagesEducation/AremxyPlug.svg'
 import html2canvas from "html2canvas";
 
 export default function WaecReceipt() {
@@ -82,8 +83,8 @@ export default function WaecReceipt() {
           <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
             <Link to="/">
               <img
-                className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[29px]"
-                src="/Images/login/arpLogo.png"
+                className=" w-[18px] h-[18px] md:w-[25px] md:h-[25px] lg:w-[35px] lg:h-[29px]"
+                src={AremxyPlugIcon}
                 alt=""
               />
             </Link>
@@ -141,7 +142,7 @@ export default function WaecReceipt() {
               {/* ========================Recipient Info================== */}
               <div className="flex flex-col gap-[3px] md:gap-[7px] w-[90%] mx-auto lg:gap-[8px]">
                 <div className="flex gap-[5px] items-center text-[10px] 
-                lg:text-[16px] font-600">
+                lg:text-[16px] font-[600]">
                   <p>Recipient Info</p>
                   <img
                     className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
