@@ -144,6 +144,18 @@ function LoginForm() {
   const submitHandler = async (e) => {
     e.preventDefault();
     if (usernameORemail === "username") {
+      try {
+        const loginData = {username: username, password: password}
+        const {data} = await axios.post('https://aremxyplug.onrender.com/api/v1/login', loginData);
+        console.log(data);
+        setOpenTranspin(true);
+        setUsername("");
+        setPassword("");
+        setErrors({});
+        setRedirect(true);
+      } catch {
+        alert('Error Logging In')
+      }
       // ========Login form validation starts her=======
       const schema = Joi.object({
         username: Joi.string()
@@ -168,23 +180,22 @@ function LoginForm() {
           localStorage.setItem("aremxyPassword", JSON.stringify(password));
         }
       }
+      // ======Login form validation ends here=====
+    };
 
+    if (usernameORemail === "email") {
       try {
-        const loginData = {username: username, password: password}
-        const {data} = await axios.post('https://aremxyplug.onrender.com/api/v1/users/login', loginData);
+        const loginData = {email: email, password: password}
+        const {data} = await axios.post('https://aremxyplug.onrender.com/api/v1/login', loginData);
         console.log(data);
         setOpenTranspin(true);
-        setUsername("");
+        setEmail("");
         setPassword("");
         setErrors({});
         setRedirect(true);
-      } catch {
-        alert('Error Logging In')
+      } catch (error) {
+        alert('Error Logging In');
       }
-      // ======Login form validation ends here=====
-    }
-
-    if (usernameORemail === "email") {
       // ========Login form validation starts here=======
       const schema = Joi.object({
         email: Joi.string()
@@ -209,20 +220,8 @@ function LoginForm() {
         }
       }
 
-      try {
-        const loginData = {email: email, password: password}
-        const {data} = await axios.post('https://aremxyplug.onrender.com/api/v1/users/login', loginData);
-        console.log(data);
-        setOpenTranspin(true);
-        setEmail("");
-        setPassword("");
-        setErrors({});
-        setRedirect(true);
-      } catch (error) {
-        alert('Error Logging In');
-      }
       // ======Login form validation ends here=====
-    }
+    };
   };
 
   if (redirect) {
@@ -352,7 +351,7 @@ function LoginForm() {
                 onFocus={() => handleFocus(2)}
                 onBlur={() => handleBlur(2)}
               >
-                {passwordHidden === "password" ? (
+                { passwordHidden === "password" ? (
                   <img
                     src="./Images/login/eyeIcon2.png"
                     alt="icon"
