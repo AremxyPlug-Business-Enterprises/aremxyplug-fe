@@ -5,6 +5,8 @@ import { DashBoardLayout } from '../../Dashboard/Layout/DashBoardLayout';
 import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import AremxyPlugIcon from '../imagesEducation/AremxyPlug.svg';
+
 export default function NabtebReceipt() {
     const {
         examType,
@@ -83,7 +85,7 @@ export default function NabtebReceipt() {
             <Link to="/">
               <img
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[29px]"
-                src="/Images/login/arpLogo.png"
+                src={AremxyPlugIcon}
                 alt=""
               />
             </Link>
@@ -116,8 +118,8 @@ export default function NabtebReceipt() {
             md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
               Purchase Successful on
             </h3>
-            <span className="text-[11px] text-[#0008] font-extrabold 
-            flex justify-center items-center">
+            <span className="text-[11px] md:text-[14px] lg:text-[16px] text-[#0008]  
+            flex justify-center items-center font-[600]">
               {date.toLocaleDateString(undefined, {
                 year: "numeric",
                 month: "long",
@@ -217,7 +219,8 @@ export default function NabtebReceipt() {
                   <p className="text-[#0008]">Product</p>
                   <span>Education Pins</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  
+                lg:text-[16px] font-[500]">
                   <p className="text-[#0008]">Description</p>
                   <span>NABTEB E-PINS</span>
                 </div>
