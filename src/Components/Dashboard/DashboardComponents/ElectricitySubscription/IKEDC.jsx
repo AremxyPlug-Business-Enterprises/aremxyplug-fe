@@ -14,8 +14,8 @@ const IKEDC = () => {
       toggleSideBar,
       meterNumber,
       showList,
-      setMeterNumber,
-      setVerifiedName,
+      // setMeterNumber,
+      // setVerifiedName,
     setShowList,
     setSelected,
     selected,
@@ -24,9 +24,9 @@ const IKEDC = () => {
     globalTransferErrors,
     verifiedName,
     phoneNumber, 
-    setPhoneNumber,
-    ikedcEmail, 
-    setEmail,
+    // setPhoneNumber,
+    // ikedcEmail, 
+    // setEmail,
     } = useContext(ContextProvider);
     const [flag, setFlag] = useState("");
   // const [countryCode, setCountryCode] = useState("");
@@ -35,13 +35,13 @@ const IKEDC = () => {
     const { selectedNetworkProduct, setSelectedNetworkProduct } =
     useContext(ContextProvider);
     const [showProductList, setShowProductList] = useState(false);
-    const handleInputChange = (event) => {
-      const newValue = event.target.value;
-      setVerifiedName(newValue);
-      setMeterNumber(newValue);
-      setPhoneNumber(newValue);
-      setEmail(newValue);
-    };
+    // const handleInputChange = (event) => {
+    //   const newValue = event.target.value;
+    //   setVerifiedName(newValue);
+    //   setMeterNumber(newValue);
+    //   setPhoneNumber(newValue);
+    //   setEmail(newValue);
+    // };
 
     const productList = [
         {
@@ -207,7 +207,7 @@ const IKEDC = () => {
         <div className="flex flex-col mt-[10px]">
             <div className="text-[#7E7E7E] text-[10px] font-[600]" >Email</div>
             <div>
-              <input type="text" value={ikedcEmail}  className=" w-full text-[#7E7E7E] pl-[9px] text-[10px] font-[500]  border-[1px] h-[30px]" />
+              <input type="text"   className=" w-full text-[#7E7E7E] pl-[9px] text-[10px] font-[500]  border-[1px] h-[30px]" />
             </div>
         </div>
         <div className="flex flex-col mt-[10px]">
