@@ -682,13 +682,20 @@ export const Context = ({ children }) => {
   const [selectedAmount, setSelectedAmount] = useState('');
   const [recipientNames, setRecipientNames] = useState('');
   const [walletName, setWalletName] = useState("");
-
+  const [accountId, setAccountId] = useState("");
+  const [numberPins, setNumberPins] = useState("");
+  
   //=============point redeem==============
   const [inputValue, setInputValue] = useState('');
   const [outputValue, setOutputValue] = useState('');
   const [realinputValue, setRealInputValue] = useState('');
   const [realoutputValue, setRealOutputValue] = useState('');
-  
+
+  //==============electricity subscrition===========
+  const [meterNumber, setMeterNumber] = useState('');
+  const [verifiedName, setVerifiedName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [ikedcEmail, setEmail] = useState('');
 
   //=============Currency conversion==============
   const [convertedAmount, setConvertedAmount] = useState('');
@@ -696,6 +703,28 @@ export const Context = ({ children }) => {
   const [showListOne, setShowListOne] = useState(false);
   const [selectedOne, setSelectedOne] = useState(false);
   const [activeButtonOne, setActiveButtonsOne] = useState([true, false]);
+
+  //=============TV-subscription==============
+  const [confirmGotvPopup, setConfirmGotvPopup] = useState(false);
+  const [inputPinGotv, setInputPinGotv] = useState(false);
+  const [gotvSuccessful, setGotvSuccessful] = useState(false);
+  const [selectedOptionGOTV, setSelectedOptionGOTV] = useState('');
+  const [showDropdownGOTV, setShowDropdownGOTV] = useState(false);
+
+const formatNumberWithCommas = (number) => {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};
+
+const getNumericValue = (option) => {
+  const numericPart = option.match(/\d+/);
+  if (numericPart) {
+    return formatNumberWithCommas(parseInt(numericPart[0], numericPart[2], 10));
+  }
+  return '';
+};
+const [initialValueGOTV, setInitialValueGOTV] = useState(true)
+const [GOTVMobileNumber, setGOTVMobileNumber] = useState('');
+
 
   //============= EDUCATION PINS ========================
 
@@ -708,6 +737,7 @@ const [examActive, setExamActive] = useState(false);
 const [educationPinPhone, setEducationPinPhone]= useState('');
 const[ educationPinEmail, setEducationPinEmail] = useState('');
 const [waecAmount, setWaecAmount] = useState('₦');
+const [walletBalance, setWalletBalance] = useState('');
 
   const hold = {
     firstDrop,
@@ -978,6 +1008,11 @@ const [waecAmount, setWaecAmount] = useState('₦');
     setRecipientNames,
     walletName, 
     setWalletName,
+    accountId, 
+    setAccountId,
+    numberPins, 
+    setNumberPins,
+
 
 
     //point redeem
@@ -985,7 +1020,22 @@ const [waecAmount, setWaecAmount] = useState('₦');
     setInputValue,
     outputValue,
     setOutputValue,
+    realinputValue, 
+    setRealInputValue,
+    realoutputValue, 
+    setRealOutputValue,
 
+
+
+    //electricity subscription
+    meterNumber,
+   setMeterNumber,
+   verifiedName,
+    setVerifiedName,
+    phoneNumber, 
+    setPhoneNumber,
+    ikedcEmail, 
+    setEmail,
 
     //currency
     convertedAmount,
@@ -998,10 +1048,26 @@ const [waecAmount, setWaecAmount] = useState('₦');
     setSelectedOne,
     setActiveButtonsOne,
     activeButtonOne,
-    realinputValue, 
-    setRealInputValue,
-    realoutputValue, 
-    setRealOutputValue,
+   
+
+    //TV-subscription
+    confirmGotvPopup,
+    setConfirmGotvPopup,
+    inputPinGotv,
+    setInputPinGotv,
+    gotvSuccessful,
+    setGotvSuccessful,
+    selectedOptionGOTV,
+    setSelectedOptionGOTV,
+    showDropdownGOTV,
+    setShowDropdownGOTV,
+    getNumericValue,
+    formatNumberWithCommas,
+    initialValueGOTV,
+    setInitialValueGOTV,
+    GOTVMobileNumber,
+    setGOTVMobileNumber,
+    
 
   //====== EDUCATION PINS
   quantityResult, 
@@ -1021,7 +1087,9 @@ const [waecAmount, setWaecAmount] = useState('₦');
    educationPinEmail, 
   setEducationPinEmail,
   waecAmount, 
-  setWaecAmount
+  setWaecAmount,
+  walletBalance, 
+  setWalletBalance
 
   };
 
