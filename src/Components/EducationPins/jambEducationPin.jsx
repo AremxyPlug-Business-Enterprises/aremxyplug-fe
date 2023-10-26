@@ -153,16 +153,16 @@ const jambReceipt = () => {
       <div className='flex lg:gap-[8px] items-center md:gap-[5.694px] mb-[20px]  
       lg:mb-[50px] md:mb-[30px] gap-[4.694px]'>
 
-        <h2 className='font-[600] text-[8px] leading-[12px] md:text-[9.389px]
-         md:leading-[11.267px] lg:text-[16px] text-[#7E7E7E] lg:leading-[19.2px]'>
+        <h2 className='font-[600] text-[9px] leading-[12px] md:text-[9.389px]
+         md:leading-[11.267px] lg:text-[17px] text-[#7E7E7E] lg:leading-[19.2px]'>
       Purchase
         </h2>
 
         <img className='h-[12px] w-[12px] md:h-[14.083px] md-w-[14.083px] lg:h-[24px] lg:w-[24px] self-center'
         src={jambImg} alt="" />
 
-        <h2 className='font-[600] text-[8px] leading-[12px] md:text-[9.389px]
-         md:leading-[11.267px] lg:text-[16px] text-[#7E7E7E] lg:leading-[19.2px]'>
+        <h2 className='font-[600] text-[9px] leading-[12px] md:text-[9.389px]
+         md:leading-[11.267px] lg:text-[17px] text-[#7E7E7E] lg:leading-[19.2px]'>
         JAMB E-PINs Instantly
         </h2>
         <img className='md:h-[14.083px] md:w-[14.083px] lg:h-[24px] lg:w-[24px] h-[14px] w-[14px]'
@@ -483,10 +483,10 @@ const jambReceipt = () => {
                   toggleSideBar
                     ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
                     : "lg:w-[40%]"
-                } lg:ml-[10%] lg:mr-[10%] grow md:mt-[1%] mb-0 pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:mb-[18%] md:overflow-auto`}
+                } lg:ml-[10%] lg:mr-[10%] grow md:mt-[1%] mb-0  pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:mb-[18%] md:overflow-auto`}
               >
                 <div className="w-full flex justify-end border-b-[6px] items-center
-                 border-primary px-[12px] md:h-[25px] lg:h-[60px] lg:border-b-[10px] ">
+                 border-primary px-[12px] h-[35px] md:h-[45px] lg:h-[60px] lg:border-b-[10px]">
                   <img
                     src={closeIcon}
                     alt=""
@@ -656,11 +656,11 @@ const jambReceipt = () => {
                       />
                     </div>
 
-                    <div className="flex items-center justify-center">
+                    <div className="flex items-center justify-center mb-[60px]">
                       <button
                         className="w-full md:w-fit bg-primary text-white rounded-md 
                         px-[28px] text-[10px] md:text-[12px] leading-[15px] lg:text-[16px] 
-                        lg:leading-[24px] py-[15px] md:py-[10px] font-extrabold"
+                        lg:leading-[24px] py-[15px] md:py-[10px] font-extrabold "
                         onClick={() => {
                           confirmButton();
                         }}
@@ -907,7 +907,7 @@ const jambReceipt = () => {
                 <div className="bg-[#F2FAFF] mx-5 h-[45px] my-5 flex p-[10.193px] 
                 items-center justify-center   
               md:mx-[20px] md:rounded-[15px] lg:rounded-[16.308px] lg:h-[75px]">
-                  <p className="text-[p8x] text-[#7C7C7C] text-center  md:text-[10px] 
+                  <p className="text-[9px] text-[#7C7C7C] text-center  md:text-[12px] 
                 lg:text-[16.231px] lg:leading-[20px]">
                   <span className='md:block'>The e-pins purchase has been generated successfully. 
                 Please kindly check</span>
@@ -965,7 +965,7 @@ const jambReceipt = () => {
                  <div className="py-[30px] lg:py-[60px] mt-10">
             <button
               className={`font-extrabold h-[43px] w-[100%] py-[3.534px] px-[5.301px] 
-              mb-[40px] md:mb-[0px] rounded-[4.241px]
+              mb-[40px] md:mb-[0px] rounded-[4.241px] md:h-auto
               md:w-[95.649px] text-white md:py-[5.868px] md:px-[8.802px] 
              md:text-[9.389px] md:leading-[14px] md:rounded-[7.042px]
              lg:text-[16px] lg:leading-[24px] lg:py-[10px] lg:px-[15px] lg:w-[163px] lg:rounded-[12px] ${
