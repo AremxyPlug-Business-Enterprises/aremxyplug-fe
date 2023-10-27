@@ -703,46 +703,30 @@ export const Context = ({ children }) => {
   const [activeButtonOne, setActiveButtonsOne] = useState([true, false]);
 
   //=============TV-subscription==============
+
+  //==========GOTV===========
   const [confirmGotvPopup, setConfirmGotvPopup] = useState(false);
   const handleGotv = (event) => {
     event.preventDefault();
     setConfirmGotvPopup(true);
   };
   const [inputPinGotv, setInputPinGotv] = useState(false);
-  const handleInputGotv = (event) => {
-    event.preventDefault();
-    setConfirmGotvPopup(false);
-    setInputPinGotv(true);
-  };
   const [gotvSuccessful, setGotvSuccessful] = useState(false);
-  const handleGotvSuccessful = (event) => {
-    event.preventDefault();
-    setInputPinGotv(false);
-    setGotvSuccessful(true);
-  };
-  const [selectedOptionGOTV, setSelectedOptionGOTV] = useState("");
-
+  const [selectedOptionGOTV, setSelectedOptionGOTV] = useState('');
   const [showDropdownGOTV, setShowDropdownGOTV] = useState(false);
-  const handleOptionClickGOTV = (option) => {
-    setSelectedOptionGOTV(option);
-    setShowDropdownGOTV(false);
-    setInitialValueGOTV(false);
-  };
-
   const formatNumberWithCommas = (number) => {
-    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  };
-const getNumericValue = (option) => {
-  const numericPart = option.match(/\d+/);
-  if (numericPart) {
-    return formatNumberWithCommas(parseInt(numericPart[0], numericPart[2], 10));
-  }
-  return '';
-};
-const [initialValueGOTV, setInitialValueGOTV] = useState(true)
-const [GOTVMobileNumber, setGOTVMobileNumber] = useState('');
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');};
+  const [GOTVMobileNumber, setGOTVMobileNumber] = useState('');
+  const [cardName, setCardName] = useState('');
 
- 
+    //==========DSTV===========
+  const [selectedOptionDstv, setSelectedOptionDstv] = useState('');
+  const [showDropdownDstv, setShowDropdownDstv] = useState(false);
+  const [confirmDstvPopup, setConfirmDstvPopup] = useState(false);
+  const [inputPinDstv, setInputPinDstv] = useState(false);
+  const [dstvSuccessful, setDstvSuccessful] = useState(false);
+  const [dstvMobileNumber, setDstvMobileNumber] = useState('');
+
   //============= EDUCATION PINS ========================
 
   const [quantityResult, setQuantityResult] = useState('');
@@ -1074,13 +1058,24 @@ const [walletBalance, setWalletBalance] = useState('');
     setSelectedOptionGOTV,
     showDropdownGOTV,
     setShowDropdownGOTV,
-    getNumericValue,
     formatNumberWithCommas,
-    initialValueGOTV,
-    setInitialValueGOTV,
     GOTVMobileNumber,
     setGOTVMobileNumber,
     handleGotv,
+    cardName,
+    setCardName,
+    confirmDstvPopup,
+    setConfirmDstvPopup,
+    inputPinDstv,
+    setInputPinDstv,
+    dstvSuccessful,
+    setDstvSuccessful,
+    selectedOptionDstv,
+    setSelectedOptionDstv,
+    showDropdownDstv,
+    setShowDropdownDstv,
+    dstvMobileNumber,
+    setDstvMobileNumber,
     
 
   //====== EDUCATION PINS

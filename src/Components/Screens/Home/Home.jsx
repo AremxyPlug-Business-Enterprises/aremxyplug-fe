@@ -116,7 +116,7 @@ export const Home = () => {
             </button>
 
             <button className="bg-[#04177F] text-[#ffffff] p-[3%] rounded-lg w-[108px] text-[10px] lg:w-[25%] lg:text-[20px] lg:p-[1%] lg:h-[45px]">
-              <Link to="/Login"> Sign in </Link>
+              <Link to="/Dashboard"> Sign in </Link>
             </button>
           </div>
         </div>
