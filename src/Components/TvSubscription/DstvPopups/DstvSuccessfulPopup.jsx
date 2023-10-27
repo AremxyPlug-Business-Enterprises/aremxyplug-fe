@@ -12,14 +12,8 @@ import { Link } from "react-router-dom";
      gotvSuccessful, 
      setGotvSuccessful,
      toggleSideBar,
-     GOTVMobileNumber,
-     selectedOptionGOTV,
   } = useContext(ContextProvider)
 
-  
-  const valueWithoutTilde = selectedOptionGOTV.split(" ~ ")[0];
-  const trimmedValue = valueWithoutTilde.trim();
-  
   // const CopyButton = ({ textToCopy }) => {
   //   const handleCopyClick = () => {
   //     navigator.clipboard.writeText(textToCopy)
@@ -74,17 +68,17 @@ import { Link } from "react-router-dom";
               alt="/"
             />
             <div className="text-[#7C7C7C] text-[8px] text-center mb-2 md:pb-2 lg:pb-3 md:text-[14px] lg:text-[12px]">You have successfully subscribed &nbsp;
-              <span className="text-black font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">{trimmedValue}</span>&nbsp;
+               <span className="text-black font-extrabold text-[10px] md:text-[16px] lg:text-[14px]"> <code>plan</code></span>&nbsp;
                Monthly From Your NGN Wallet to
             </div>
             <div className="flex flex-col gap-2 lg:gap-4 ">
             <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[14px]">
                     <span className="text-[#7C7C7C]">Decoder Type</span>
-                    <span>GOtv</span>
+                    <span>decoder</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[14px]">
                     <span className="text-[#7C7C7C]">Package</span>
-                    <span>{selectedOptionGOTV}</span>
+                    <span>GOtv Smallie (₦1,100) ~ Monthly</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[14px]">
                     <span className="text-[#7C7C7C]">Smartcard / IUC Number</span>
@@ -96,7 +90,7 @@ import { Link } from "react-router-dom";
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[14px]">
                     <span className="text-[#7C7C7C]">Phone Number</span>
-                    <span>{GOTVMobileNumber}</span>
+                    <span>7741235545</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[14px]">
                     <span className="text-[#7C7C7C]">Email</span>

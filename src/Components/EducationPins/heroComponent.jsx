@@ -26,10 +26,10 @@ export default function HeroComponent() {
       lg:text-[16px] lg:leading-[20.8px] "
             >
               <span className="md:block">
-         Purchase an affordable education scratch pins / token to
+         Purchase an affordable education scratch pins / token to{' '}
          </span>
-              <span className="md:block">
-              check your waec, neco, and nabteb results, including jamb 
+          <span className="md:block">
+              check your waec, neco, and nabteb results, including jamb {' '}
               </span>
               registration pin.
             </p>
