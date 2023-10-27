@@ -24,7 +24,7 @@ import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import Joi from "joi";
 import airtimestyles from "../../../../../AirTimePage/AirtimeVtu.module.css";
-import AccountID from "../SmileDataBundle/SmileDataBundleImages/AccountId.svg";
+import EmailId from "../SmileDataBundle/SmileDataBundleImages/EmailId.svg";
 import { SpectranetReceipt } from "./SpectranetReceipt"
 // import { DataBundleFailedPopUp } from "../../../TransferComponent/PopUps/TransactionFailedPopUp";
 
@@ -38,8 +38,10 @@ const SpectranetDataBundle = () => {
   const { selectedAmount, setSelectedAmount } = useContext(ContextProvider);
   const { recipientNames, setRecipientNames } = useContext(ContextProvider);
   const { walletName, setWalletName } = useContext(ContextProvider);
-  const { accountId, setAccountId } = useContext(ContextProvider);
   const { numberPins, setNumberPins } = useContext(ContextProvider);
+  const { emailId, setEmailId } = useContext(ContextProvider);
+  const { count, setCount } = useContext(ContextProvider);
+
 
   const [showProductList, setShowProductList] = useState(false);
   const [showOptionList, setShowOptionList] = useState(false);
@@ -184,6 +186,24 @@ const SpectranetDataBundle = () => {
 
   ];
 
+  const [errorMessage, setErrorMessage] = useState('');
+  const [emailInputColor, setEmailInputColor] = useState('');
+
+  
+
+
+  const handlePin = (event) => {
+    const inputValue = event.target.value;
+    setNumberPins(inputValue);
+
+    // Calculate the count of digits (numbers) in the input
+    const digitCount = inputValue.replace(/\D/g, '').length;
+    setCount(digitCount);
+  };
+
+  
+ 
+
   const handleProceed = (e) => {
     // setProceed(true);
     // e.preventDefault();
@@ -191,6 +211,8 @@ const SpectranetDataBundle = () => {
     const { error } = schema.validate({
       recipientPhoneNumber,
     });
+
+   
 
     if (error) {
       setErrors(
@@ -203,6 +225,24 @@ const SpectranetDataBundle = () => {
       setProceed(true);
       setErrors({});
     }
+
+    const isEmail = (input) => {
+      const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{3,}$/i;
+      return emailRegex.test(input);
+    };
+
+   
+    if (isEmail(emailId)) {
+      setErrorMessage('');
+      setEmailInputColor('#2ED173');
+      setProceed(true);
+    } else {
+      setErrorMessage('Invalid email ID');
+      setEmailInputColor('#F95252');
+      setProceed(false);
+    }
+
+
   };
 
   const schema = Joi.object({
@@ -219,7 +259,7 @@ const SpectranetDataBundle = () => {
     setSelectedOption("");
     setShowProductList(false);
     setShowOptionList(false);
-    setAccountId(false);
+    setEmailId('');
   };
 
   const handleSelectOption = (selectedOption, selectedAmount, duration) => {
@@ -243,14 +283,14 @@ const SpectranetDataBundle = () => {
     setRecipientNames(e.target.value);
   };
 
-  const handleAccountId = (e) => {
-    // setAccountId(e.target.value);
-    const value = e.target.value;
-
-    const numericValue = value.replace(/\D/g, "").slice(0, 11);
-
-    setAccountId(numericValue);
-  };
+  // const handleEmailId = (e) => {
+  //   const value = e.target.value;
+  //   const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+  
+  //   if (emailRegex.test(value)) {
+  //     setEmailId(value);
+  //   }
+  // };
 
   const handleReceipt = () => {
     setTransactSuccessPopUp(false);
@@ -388,73 +428,7 @@ const SpectranetDataBundle = () => {
             <div className="md:w-[50%]"></div>
           </div>
 
-          {/* {codes && (
-            <Modal>
-              (
-              <div
-                className={`code ${
-                  toggleSideBar
-                    ? "xl:w-[65%] xl:ml-[17%] lg:ml-[20%] lg:w-[40%]"
-                    : "lg:w-[40%]"
-                } w-[90%] xl:w-[80%] overflow-auto`}
-              >
-                <img
-                  onClick={() => setCodes(false)}
-                  className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px] xl:h-[35px] xl:w-[35px]"
-                  src="/Images/transferImages/close-circle.png"
-                  alt=""
-                />
-                <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
-
-                <button
-                  className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[50%] md:rounded-[8px] md:text-[16px] lg:text-[14px] xl:text-[20px] lg:w-[350px] lg:h-[38px] lg:my-[2%]`}
-                >
-                  Data Balance USSD Codes
-                </button>
-                <h2 className="text-[12px] my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
-                  Data balance / share ussd codes.
-                </h2>
-                <h2 className="text-[12px] px-[5%] my-[5%] text-blue-600 text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
-                  Tap the network Dial button to check data balance:
-                </h2>
-                <div className="flex flex-col gap-1 mb-5">
-                  <button
-                    className={`bg-[#FAF8F8] my-[2%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:my-[1%]`}
-                  >
-                    MTN Data Balance Code - *323#
-                  </button>
-                  <button
-                    className={`bg-[#FAF8F8] my-[2%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:my-[1%]`}
-                  >
-                    MTN SME Data Balance Code - *461*4#
-                  </button>
-                  <button
-                    className={`bg-[#FAF8F8] my-[2%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:my-[1%]`}
-                  >
-                    MTN CG Data Balance Code - *460*260#
-                  </button>
-                  <button
-                    className={`bg-[#FAF8F8] my-[2%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:my-[1%]`}
-                  >
-                    MTN Direct Coupon Balance Code - *323*4#
-                  </button>
-                  <button
-                    className={`bg-[#FAF8F8] my-[2%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:my-[1%]`}
-                  >
-                    MTN Data Share Code - *321#
-                  </button>
-                </div>
-
-                <button
-                  onClick={() => setCodes(false)}
-                  className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
-                >
-                  Okay
-                </button>
-              </div>
-              )
-            </Modal>
-          )} */}
+          
 
           {/* =========================PRODUCTS============================== */}
 
@@ -532,7 +506,7 @@ const SpectranetDataBundle = () => {
                             }`}
                             onClick={() =>
                               handleSelectOption(
-                                `${optionItem} (${amount}) for ${duration}`,
+                                `${optionItem} (${amount}) ${duration}`,
                                 amount
                               )
                             }
@@ -548,61 +522,34 @@ const SpectranetDataBundle = () => {
               )}
             </div>
 
-            {/* <div className="input border w-full h-[30px] bg-[#92ABFE2E] opacity-[%] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-center">
-              <h2 className="text-[10px] text-[#7C7C7C] font-[600] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                Registered Email or Smile Account ID
-              </h2>
-            </div> */}
-
-            {/* <div className="">
-              <button
-                className={`w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[600] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px] ${
-                  !selectedNetworkProduct ||
-                  !selectedOption ||
-                  !inputValue ||
-                  !selectedAmount ||
-                  !paymentSelected ||
-                  !accountId
-                    ? "bg-[#63616188] cursor-not-allowed"
-                    : "bg-primary"
-                }`}
-                //   onClick={handleProceed}
-                disabled={
-                  !selectedNetworkProduct ||
-                  !selectedOption ||
-                  !inputValue ||
-                  !selectedAmount ||
-                  !paymentSelected ||
-                  !accountId
-                }
-              >
-                Validate
-              </button>
-            </div> */}
-
             <div className="">
               <h2 className="text-[10px] font-[600] md:text-[12px] lg:text-[18px]">
-                Account ID{" "}
+              Email ID{" "}
               </h2>
               <div className="relative mt-[5px]">
                 <input
-                  type="number"
+                  type="text"
                   className="input border w-full h-8 px-4 rounded-md text-[10px] lg:text-[16px] font-[600] focus:outline-none lg:h-[51px]"
                   placeholder=""
-                  value={accountId}
+                  value={emailId}
+                  style={{ borderColor: emailInputColor }}
                   onChange={(event) => {
-                    handleAccountId(event);
-                    setAccountId(event.target.value);
+                    setEmailId(event.target.value);
+                    setEmailInputColor(''); 
                   }}
                 />
                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                   <img
-                    src={AccountID}
+                    src={EmailId}
                     alt=""
                     className="lg:w-[100%] lg:h-[50%]"
                   />
                 </div>
               </div>
+
+              {errorMessage && (
+        <p className="text-red-500 text-start text-[10px] mt-[5px]">{errorMessage}</p>
+      )}
             </div>
 
             <div className="">
@@ -616,6 +563,7 @@ const SpectranetDataBundle = () => {
                   className="input border w-full h-8 px-4 rounded-md text-[10px] lg:text-[16px] font-[600] focus:outline-none lg:h-[51px]"
                   placeholder=""
                   value={inputValue}
+                  
                   onChange={(event) => {
                     handleChange(event);
                     setRecipientPhoneNumber(event.target.value);
@@ -691,10 +639,7 @@ const SpectranetDataBundle = () => {
                   className="input border w-full h-8 px-4 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px]"
                   // placeholder="&#8358;100"
                   value={numberPins}
-                  onChange={(event) => {
-                    // handleChange(event);
-                    setNumberPins(event.target.value);
-                  }}
+                  onChange={handlePin}
                 />
                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                   <img src={Amount} alt="" className="lg:w-[100%] lg:h-[50%]" />
@@ -832,7 +777,7 @@ const SpectranetDataBundle = () => {
                           />
                         </div>
                         <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          Spectranet
+                        SPECTRANET
                         </h2>
                       </div>
                     </div>
@@ -868,7 +813,7 @@ const SpectranetDataBundle = () => {
                           Aremxyplug.com
                         </h2>
                       </div>
-                    </div>
+                    </div> */}
 
                     <div className="flex items-center justify-between">
                       <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
@@ -876,10 +821,10 @@ const SpectranetDataBundle = () => {
                       </h2>
                       <div className="flex gap-1">
                         <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          {accountId}
+                          {emailId}
                         </h2>
                       </div>
-                    </div> */}
+                    </div> 
 
                     <div className="flex items-center justify-between">
                       <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
@@ -909,7 +854,7 @@ const SpectranetDataBundle = () => {
                       </h2>
                       <div className="flex gap-1">
                         <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          {numberPins}
+                        {count}
                         </h2>
                       </div>
                     </div>
@@ -1163,22 +1108,11 @@ const SpectranetDataBundle = () => {
 
                   <div className="flex items-center justify-between">
                     <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                      Registered Email
+                    Email ID
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        Aremxyplug.com
-                      </h2>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                      Account ID
-                    </h2>
-                    <div className="flex gap-1">
-                      <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        {accountId}
+                        {emailId}
                       </h2>
                     </div>
                   </div>
@@ -1211,25 +1145,14 @@ const SpectranetDataBundle = () => {
                       </h2>
                       <div className="flex gap-1">
                         <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          {numberPins}
+                        {count}
                         </h2>
                       </div>
                     </div>
 
-                  <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between">
                     <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                      Payment Method
-                    </h2>
-                    <div className="flex gap-1">
-                      <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        {walletName + " Wallet"}
-                      </h2>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                      Total Amount
+                      Amount
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
@@ -1240,11 +1163,11 @@ const SpectranetDataBundle = () => {
 
                   <div className="flex items-center justify-between">
                     <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                      Transaction Fee
+                      Payment Method
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        0.00
+                        {walletName + " Wallet"}
                       </h2>
                     </div>
                   </div>
@@ -1312,7 +1235,7 @@ const SpectranetDataBundle = () => {
               className={`w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[600] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px] ${
                 !selectedNetworkProduct ||
                 !selectedOption ||
-                !accountId ||
+                !emailId ||
                 !inputValue ||
                 !selectedAmount ||
                 !paymentSelected
@@ -1323,7 +1246,7 @@ const SpectranetDataBundle = () => {
               disabled={
                 !selectedNetworkProduct ||
                 !selectedOption ||
-                !accountId ||
+                !emailId ||
                 !inputValue ||
                 !selectedAmount ||
                 !paymentSelected
