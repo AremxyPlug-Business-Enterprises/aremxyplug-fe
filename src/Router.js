@@ -82,7 +82,7 @@ import {SuccessfulReceipt} from "./Components/CurrencyConversion/ConversionRecei
 import { TvSubscription } from "./Components/TvSubscription/TvSubscriptionPage";
 import GoTv from "./Components/TvSubscription/TvOne";
 import DsTv from "./Components/TvSubscription/TvTwo";
-
+import { RedeemReceipt } from "./Components/Dashboard/DashboardComponents/PointRedeem/RedeemReceipt";
 import SmileDataBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/SmileDataBundle/SmileDataBundle";
 import { SmileReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/SmileDataBundle/SmileReceipt";
 import SpectranetDataBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/SpectranetDataBundle/SpectranetDataBundle";
@@ -91,6 +91,8 @@ import AddRecipient from "./Components/AirTimePage/AddRecipient"
 import SelectRecipient from "./Components/AirTimePage/SelectRecipient"
 import DataBundleSelectRecipient from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundleSelectRecipient"
 import DataBundleAddRecipient from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundleAddRecipient"
+import ElectricitySubscription from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/ElectricitySubscription";
+import IKEDC from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/IKEDC";
 
 export const Router = () => {
   return (
@@ -174,7 +176,9 @@ export const Router = () => {
           path="/international-bank-receipt"
           element={<InternationalReceipt />}
         />
-        {/* <Route path="/redeem-receipt" element={<RedeemReceipt />} /> */}
+       <Route path="/redeem-receipt"element={<RedeemReceipt />} />
+        <Route path="/ikedc" element={<IKEDC />} />
+        <Route path="/electricity-subscription" element={<ElectricitySubscription/>} />
         <Route path="/global-transfer" element={<GlobalTransfer />} />
         <Route path="/point-redeem" element={<PointRedeem />} />
         <Route path="/fiat" element={<FiatConversion />} />

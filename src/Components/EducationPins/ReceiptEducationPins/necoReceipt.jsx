@@ -5,6 +5,7 @@ import { DashBoardLayout } from '../../Dashboard/Layout/DashBoardLayout';
 import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import AremxyPlugIcon from '../imagesEducation/AremxyPlug.svg'
 
 export default function NecoReceipt() {
     const {
@@ -19,7 +20,8 @@ export default function NecoReceipt() {
         setEducationPinEmail,
         setEducationPinPhone,
         setPaymentResult,
-        setWaecAmount
+        setWaecAmount,
+        setWalletBalance
         }
          = useContext(ContextProvider);
   
@@ -33,15 +35,16 @@ export default function NecoReceipt() {
   
           const currentNecoChanges = () => {
             setQuantityResult(false);
-            setExamType(false);
-            setEducationPinPhone('');
-            setEducationPinEmail('');
-           setPaymentResult(false);
-           setWaecAmount('')
+        setExamType(false);
+        setEducationPinPhone('');
+        setEducationPinEmail('');
+       setPaymentResult('');
+       setWaecAmount('₦');
+       setWalletBalance('');
           }
         
         //   Share function
-        const waecShareClick = () => {
+        const necoShareClick = () => {
             if (navigator.share) {
               navigator
                 .share({
@@ -57,13 +60,13 @@ export default function NecoReceipt() {
           };
         
           // ==============Save Pdf Function==============
-          const waecSaveAsPDFClick = () => {
-            const contentWaec = contentRef.current;
-            if (contentWaec) {
+          const necoSaveAsPDFClick = () => {
+            const contentNeco = contentRef.current;
+            if (contentNeco) {
               const pdf = new jsPDF();
-              html2canvas(contentWaec).then((canvas) => {
-                const imgWaecData = canvas.toDataURL("image/png");
-                pdf.addImage(imgWaecData, "PNG", 10, 10, 190, 0);
+              html2canvas(contentNeco).then((canvas) => {
+                const imgNecoData = canvas.toDataURL("image/png");
+                pdf.addImage(imgNecoData, "PNG", 10, 10, 190, 0);
                 pdf.save("page.pdf");
               });
             }
@@ -81,7 +84,7 @@ export default function NecoReceipt() {
           <Link to="/">
             <img
               className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[29px]"
-              src="/Images/login/arpLogo.png"
+              src={AremxyPlugIcon}
               alt=""
             />
           </Link>
@@ -110,10 +113,12 @@ export default function NecoReceipt() {
               alt="/"
             />
           </div>
-          <h3 className="font-extrabold text-[12px] mt-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
+          <h3 className="font-extrabold text-[12px] mt-[2%] 
+          text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
             Purchase Successful on
           </h3>
-          <span className="text-[11px] text-[#0008] font-extrabold flex justify-center items-center">
+          <span className="text-[11px] text-[#0008] md:text-[14px] 
+          flex justify-center items-center font-[600]">
             {date.toLocaleDateString(undefined, {
               year: "numeric",
               month: "long",
@@ -124,17 +129,21 @@ export default function NecoReceipt() {
               hour12: true,
             })}
           </span>
-          <p className="text-[9px] text-[#0008] px-[20px] text-center my-2 md:text-[14px] lg:text-[14px]">
+          <p className="text-[10px] leading-[15px] md:leading-[20px]
+           text-[#000] px-[20px] text-center my-2 md:text-[14px] 
+          lg:text-[16px]  lg:leading-[24px font-[500] md:mb-7">
             You have successfully purchased{" "}
-            <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[16px]">
+            <span className=" font-extrabold text-[10.9px] md:text-[14.9px] lg:text-[16.9px]   
+            ">
             {examType} {" "}
             </span>
             from your {paymentResult} to{" "}
           </p>
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-7  md:gap-10">
             {/* ========================Recipient Info================== */}
-            <div className="flex flex-col gap-[3px] w-[90%] mx-auto lg:gap-[5px]">
-              <div className="flex gap-[5px] items-center text-[10px] lg:text-[16px] font-extrabold">
+            <div className="flex flex-col gap-[3px] md:gap-[7px] w-[90%] mx-auto lg:gap-[8px]">
+              <div className="flex gap-[5px] items-center text-[10px]
+               lg:text-[16px] font-[600]">
                 <p>Recipient Info</p>
                 <img
                   className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
@@ -142,12 +151,16 @@ export default function NecoReceipt() {
                   alt="/"
                 />
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#0008]">Exam Type</p>
+              <div className="flex text-[10px] md:text-[14px] 
+              
+              w-[90%] mx-auto justify-between  
+              lg:text-[16px] font-[500]">
+                <p className="text-[#7C7C7C]">Exam Type</p>
                 <span>NECO</span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#0008]">Quantity</p>
+              <div className="flex text-[10px] md:text-[14px] w-[90%] 
+              mx-auto justify-between  lg:text-[16px] font-[500]">
+                <p className="text-[#7C7C7C]">Quantity</p>
                 <span>{quantityResult}</span>
               </div>
               {/* <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -155,23 +168,26 @@ export default function NecoReceipt() {
                 <span>{selectedOption}</span>
               </div> */}
               
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-[14px] w-[90%] 
+              mx-auto justify-between  lg:text-[16px] font-[500]">
                 <p className="text-[#0008]">Phone Number</p>
                 <span>{educationPinPhone}</span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-[14px] w-[90%] 
+              mx-auto justify-between  lg:text-[16px] font-[500]">
                 <p className="text-[#0008]">Email</p>
                 <span>{educationPinEmail}</span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#0008]">Amount</p>
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  
+              lg:text-[16px] font-[500]">
+                <p className="text-[#7C7C7C]">Amount</p>
                 <span>{waecAmount}</span>
               </div>            
             </div>
 
             {/* ===================Sender Info====================== */}
-            <div className="flex flex-col gap-[3px] w-[90%] mx-auto lg:gap-[5px]">
-              <div className="flex gap-[5px] items-center text-[10px] lg:text-[16px] font-extrabold">
+            <div className="flex flex-col gap-[3px] md:gap-[7px] w-[90%] mx-auto lg:gap-[8px]">
+              <div className="flex gap-[5px] items-center text-[10px] lg:text-[16px] font-[600]">
                 <p>Sender Info</p>
                 <img
                   className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
@@ -179,18 +195,21 @@ export default function NecoReceipt() {
                   alt="/"
                 />
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#0008]">Customer Name</p>
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  
+              lg:text-[16px] font-[500]">
+                <p className="text-[#7C7C7C]">Customer Name</p>
                 <span>Aremxyplug</span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#0008]">Wallet Type</p>
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
+              justify-between  lg:text-[16px] font-[500]">
+                <p className="text-[#7C7C7C]">Wallet Type</p>
               {paymentResult}
               </div>
             </div>
 
             {/* ===================Transaction Info==================== */}
-            <div className="flex flex-col gap-[3px] w-[90%] mx-auto lg:gap-[5px]">
+            <div className="flex flex-col gap-[3px] md:gap-[7px] w-[90%] 
+            mx-auto lg:gap-[8px]">
               <div className="flex gap-[5px] items-center text-[10px] lg:text-[16px] font-extrabold">
                 <p>Transaction Info</p>
                 <img
@@ -199,49 +218,63 @@ export default function NecoReceipt() {
                   alt="/"
                 />
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#0008]">Product</p>
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
+              justify-between  lg:text-[16px] font-[500]">
+                <p className="text-[#7C7C7C]">Product</p>
                 <span>Education Pins</span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#0008]">Description</p>
-                <span>WAEC E-PINS</span>
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
+              justify-between  lg:text-[16px] font-[500]">
+                <p className="text-[#7C7C7C]">Description</p>
+                <span>NECO E-PINS</span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#0008]">WAEC PIN Generated</p>
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
+              justify-between  lg:text-[16px] font-[500]">
+                <p className="text-[#7C7C7C]">NECO PIN Generated</p>
                 <span>0123456789AP</span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#0008]">Order Number</p>
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
+              justify-between  lg:text-[16px] font-[500]">
+                <p className="text-[#7C7C7C]">Order Number</p>
                 <span>1256478999</span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#0008]">Transactiom ID</p>
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  
+              lg:text-[16px] font-[500]">
+                <p className="text-[#7C7C7C] ">Transactiom ID</p>
                 <span>0331njokdhtf55</span>
               </div>
             </div>
           </div>
-          <div className="rounded-[8px] bg-[#E2F3FF] mx-4 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
+          <div className="rounded-[8px] text-[#7C7C7C] bg-[#E2F3FF] mx-4 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
             <p className="text-[8px] text-center mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[16px]">
-            Earn free points on every successful transactions, redeem your earned points to real money, withdrawn to your bank account instantly.
+            <span className='md:block'>Earn free points on every successful transactions, 
+            redeem your earned points </span>
+            to real money, withdrawn to your bank account instantly.
             </p>
           </div>
         </div>
 
-        <div className="flex w-full px-[20px] mx-auto mb-[5%] md:w-[60%] ">
+        <div className="flex w-full justify-center 
+        gap-[10px] md:gap-[20px] px-[20px]  mb-[5%]  ">
           <button
             onClick={() => {
-              waecShareClick();
+              necoShareClick();
             }}
-            className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+            className={`bg-[#04177f] w-[111px] 
+              cursor-pointer text-[12px] 
+            font-extrabold h-[40px] text-white rounded-[6px]
+             md:w-[150px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
           >
             Share Receipt
           </button>
           <button
             onClick={() => {
-              waecSaveAsPDFClick();
+              necoSaveAsPDFClick();
             }}
-            className={`bg-[#ffffff] border-[1px] w-[111px] border-[#0003] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+            className={`bg-[#ffffff] border-[1px] w-[111px] 
+            border-[#0003]  cursor-pointer text-[12px] font-extrabold h-[40px] 
+            rounded-[6px] md:w-[150px] md:rounded-[8px] md:text-[16px] 
+            lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
           >
             Save as PDF
           </button>
@@ -258,7 +291,7 @@ export default function NecoReceipt() {
           isDarkMode ? "mb-[1%]" : "mb-[5%]"
         } flex gap-[15px] justify-center items-center lg:mb-[%]`}
       >
-        <div className="flex gap-2 justify-center items-center mb-[15%] md:mt-40 mt-[50%] lg:mt-[50%]">
+        <div className="flex gap-2 justify-center items-center mb-[50px] md:mt-40 mt-[100px] lg:mt-[100px]">
           <h2 className="text-[8px] leading-[12px] lg:text-[16px]">
             You need help?
           </h2>
