@@ -700,26 +700,25 @@ export const Context = ({ children }) => {
   const [activeButtonOne, setActiveButtonsOne] = useState([true, false]);
 
   //=============TV-subscription==============
+
+  //==========GOTV===========
   const [confirmGotvPopup, setConfirmGotvPopup] = useState(false);
   const [inputPinGotv, setInputPinGotv] = useState(false);
   const [gotvSuccessful, setGotvSuccessful] = useState(false);
   const [selectedOptionGOTV, setSelectedOptionGOTV] = useState('');
   const [showDropdownGOTV, setShowDropdownGOTV] = useState(false);
+  const formatNumberWithCommas = (number) => {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');};
+  const [GOTVMobileNumber, setGOTVMobileNumber] = useState('');
+  const [cardName, setCardName] = useState('');
 
-const formatNumberWithCommas = (number) => {
-  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-};
-
-const getNumericValue = (option) => {
-  const numericPart = option.match(/\d+/);
-  if (numericPart) {
-    return formatNumberWithCommas(parseInt(numericPart[0], numericPart[2], 10));
-  }
-  return '';
-};
-const [initialValueGOTV, setInitialValueGOTV] = useState(true)
-const [GOTVMobileNumber, setGOTVMobileNumber] = useState('');
-
+    //==========DSTV===========
+  const [selectedOptionDstv, setSelectedOptionDstv] = useState('');
+  const [showDropdownDstv, setShowDropdownDstv] = useState(false);
+  const [confirmDstvPopup, setConfirmDstvPopup] = useState(false);
+  const [inputPinDstv, setInputPinDstv] = useState(false);
+  const [dstvSuccessful, setDstvSuccessful] = useState(false);
+  const [dstvMobileNumber, setDstvMobileNumber] = useState('');
 
   //============= EDUCATION PINS ========================
 
@@ -1043,12 +1042,24 @@ const [waecAmount, setWaecAmount] = useState('₦');
     setSelectedOptionGOTV,
     showDropdownGOTV,
     setShowDropdownGOTV,
-    getNumericValue,
     formatNumberWithCommas,
-    initialValueGOTV,
-    setInitialValueGOTV,
     GOTVMobileNumber,
     setGOTVMobileNumber,
+    cardName,
+    setCardName,
+    
+    confirmDstvPopup,
+    setConfirmDstvPopup,
+    inputPinDstv,
+    setInputPinDstv,
+    dstvSuccessful,
+    setDstvSuccessful,
+    selectedOptionDstv,
+    setSelectedOptionDstv,
+    showDropdownDstv,
+    setShowDropdownDstv,
+    dstvMobileNumber,
+    setDstvMobileNumber,
     
 
   //====== EDUCATION PINS
