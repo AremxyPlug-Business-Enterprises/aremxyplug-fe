@@ -245,6 +245,7 @@ export const SideBar = () => {
                       />
                       <div>Tv Subscription</div>
                     </li>
+                    <Link to="/electricity-subscription">
                     <li className="flex gap-[5%] hover:underline text-#fff] pt-1 pb-1 font-medium md:text-[11px] lg:pt-[6%] lg:pb-[6%] lg:pl-[%] lg:text-[14px] ">
                       <img
                         className="w-[8.5px] h-[8.5px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
@@ -253,6 +254,7 @@ export const SideBar = () => {
                       />
                       <div>Electricity Bills</div>
                     </li>
+                    </Link>
                     <li className="flex gap-[5%] hover:underline text-[#fff] pt-1 pb-1 font-medium md:text-[11px] lg:pt-[6%] lg:pb-[6%] lg:pl-[%] lg:text-[14px] ">
                       <img
                         className="w-[8.5px] h-[8.5px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"

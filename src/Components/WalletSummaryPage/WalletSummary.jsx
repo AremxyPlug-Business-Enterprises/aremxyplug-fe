@@ -1,40 +1,4 @@
 import React, { useState } from "react";
-// import menu from "./assets/menu1.png";
-// import square from "./assets/3square.png";
-// import wallet from "./assets/wallet.png";
-// import xport from "./assets/export.png";
-// import translate from "./assets/translate.png";
-// import transaction from "./assets/transaction-minus.png";
-// import arrow from "./assets/arrow-down1.png";
-// import align from "./assets/align-vertically.png";
-// import arrow1 from "./assets/arrow-down.png";
-// import card from "./assets/card.svg";
-// import arrow2 from "./assets/arrow-down2.png";
-// import pos from "./assets/card-pos.png";
-// import arrow3 from "./assets/arrow-down3.png";
-// import gameboy from "./assets/gameboy.png";
-// import cpu from "./assets/cpu-setting.png";
-// import status from "./assets/status-up.png";
-// import coin from "./assets/coin.png";
-// import trend from "./assets/trend-up.png";
-// import arrow4 from "./assets/arrow-down4.svg";
-// import attach from "./assets/attach-square.svg";
-// import arrow5 from "./assets/arrow-down5.png";
-// import profile from "./assets/profile-circle.png";
-// import document from "./assets/document-text.png";
-// import building from "./assets/building.png";
-// import clipboard from "./assets/clipboard-tick.png";
-// import messages from "./assets/messages.png";
-// import sms from "./assets/sms.png";
-// import whatsapp from "./assets/whatsapp.png";
-// import call from "./assets/call-remove.png";
-// import logout from "./assets/logout.png";
-// import profileuser from "./assets/profile-2user.png";
-// import arrow6 from "./assets/arrow-down6.png";
-// import notification from "./assets/notification.svg";
-// import logouts from "./assets/logout.svg";
-// import drops from "./assets/arrow-down.svg";
-// import arrowsquare from "./assets/arrow-square-right.svg";
 import arrowsquare1 from "./assets/arrow-square-right.png";
 
 import arrow7 from "./assets/arrow-down7.svg";
@@ -48,10 +12,6 @@ import arrows4 from "./assets/arrow-square-right4.svg";
 import arrows5 from "./assets/arrow-square-right5.svg";
 import arrows6 from "./assets/arrow-square-right6.png";
 import arrows7 from "./assets/arrow-square-right7.png";
-// import arrows8 from "./assets/arrow-down8.png";
-// import arrows9 from "./assets/arrow-down12.svg";
-// import arrows10 from "./assets/arrow-down11.svg";
-// import arrows11 from "./assets/arrow-down10.svg";
 import arrowA from "./assets/arrow-square-rightA.png";
 import arrowB from "./assets/arrow-square-rightB.png";
 import arrowC from "./assets/arrow-square-rightC.png";
@@ -89,25 +49,18 @@ import group1 from "./assets/Group.png";
 
 export default function WalletSummaryPage() {
 
-  const handleSearch = () => {
-    alert('Searching for: ' + document.getElementById('searchInput').value);
-  };
 
+  const handleButton = () => {
+    const searchInput = document.querySelector('.searchInput');
+    alert('Searching for: ' + searchInput.value);
+  };
+  
   
   const [calender, setCalender] = useState(false);
 
-  const [selectedProduct, setSelectedProduct] = useState("./assets/Group.png");
-  const handleClick = (product) => {
-    setSelectedProduct(product); };
-    
-
-    
-
-  
-
-
-  
-  const [isOpen1, setIsOpen1] = useState("");
+ 
+ 
+ const [isOpen1, setIsOpen1] = useState("");
 
   const [isOpen2, setIsOpen2] = useState("");
 
@@ -137,6 +90,15 @@ const handleSelectedOption = (event) => {
   return;
 };
 
+const [selectedCountry, setSelectedCountry] = useState(<img
+  src={group1} alt="" />);
+const handleSelect = (product) => {
+setSelectedCountry(product); };
+
+const [selectedProduct, setSelectedProduct] = useState('Filter By Status');
+const handleClick = (product) => {
+  setSelectedProduct(product); };
+
 
   // const toggleDropdown1 = () => {
     // setIsOpen1(true);
@@ -152,16 +114,18 @@ const handleSelectedOption = (event) => {
     <DashBoardLayout>
 
 
-<div className='w-full mb-[100px]'>
+<div className='w-full h-full'>
 
-<div className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] bg-gradient-to-r from-yellow-300 to-rose-400 flex px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px]">
+<div className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] 
+rounded-[7px] md:rounded-[11.5px] bg-gradient-to-r from-yellow-300 to-rose-400 flex 
+px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px]">
                 <div className="py-[13px] lg:py-[40px]">
                   <h2 className="text-[9px] md:text-[13.75px] font-bold mb-3 lg:text-[24px] lg:mb-4">
                   MANAGE ALL YOUR TRANSACTIONS AT A <br /> TIME WITHOUT ANY HASSLE.
                   </h2>
                   <h2 className="text-[7px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3">
                   Select, filter, and manage all your transactions at a time,
-                   download all <br/> transactions stats and keep a record track.
+                   download all  <br/> transactions stats and keep a record track.
                     
                   </h2>
                 </div>
@@ -177,11 +141,12 @@ const handleSelectedOption = (event) => {
 
 
       
-        <div className=" lg:top-[385px] md:top-[283px] top-[182px] gap-[8px]
+        <div className=" lg:top-[385px] md:top-[283px] top-[188px] gap-[8px]
          absolute lg:justify-start md:gap-[7px] lg:items-center lg:gap-[5px] inline-flex">
-          <div className="text-neutral-500 lg:text-[20px] text-[11px] md:mt-[5px] md:text-[13px] font-semibold ">
-            Wallet Summary
-          </div>
+          {/* <div className="text-neutral-500 lg:text-[20px] text-[11px] md:mt-[5px] md:text-[13px] font-semibold "> */}
+            {/* Wallet Summary */}
+          {/* </div> */}
+          <p className={styles.InOutText}>Wallet Summary</p>
           <div className="lg:w-6 lg:h-6 w-[13px] h-[13px] lg:justify-center md:w-[13.75px]
            md:h-[13.75px] md:mt-[6px] mt-[3%] lg:items-center relative flex">
             <img src={arrowsquare1} alt="" />
@@ -198,17 +163,22 @@ const handleSelectedOption = (event) => {
             <div className="lg:justify-start lg:items-center gap-[10px] md:gap-[5.73px] lg:gap-[5.73px] flex">
               <div className="lg:w-[70px] lg:h-[70px] w-6 h-6 md:w-[40.10px] md:h-[40.10px] lg:gap-[5.73px] relative">
                 <div className="lg:w-[70px] lg:h-[70px] left-0 top-0 w-6 h-6 md:w-[40.10px] md:h-[40.10px]  absolute bg-white rounded-full"></div>
-                <div className="lg:w-[29.27px] lg:h-[29.27px] left-[20px] lg:top-[20px] w-2.5 h-2.5 top-[6.86px] md:w-[16.77px] md:h-[16.77px] md:left-[11.46px] md:top-[11.46px]  absolute">
+                <div className="lg:w-[29.27px] lg:h-[29.27px]  lg:top-[20px]
+                 w-4 h-4 top-[6.86px] md:w-[16.77px] lg:left-[20px] md:h-[16.77px]
+                  md:left-[11.46px]  md:top-[11.46px] left-[7px] absolute">
                  
-                {selectedProduct === '' ? (
-        <p>{selectedProduct}</p>
-      ) : (
-                  <img
-                    src={group1}
-                    className="lg:w-[29.27px] lg:h-[29.27px] ml-[-1.5px] left-[-11px] lg:top-[0.91px] w-2.5 h-[9.41px] top-[0.31px] lg:left-[10px]  md:w-[16.77px] md:h-[15.73px] md:left-0 md:top-[0.52px] absolute"
-                    alt=""
-                  />
-      )}
+                
+                {selectedCountry}
+        
+      
+                  {/* <img */}
+                    {/* // src={group1} */}
+                    {/* // className="lg:w-[29.27px] lg:h-[29.27px] ml-[-1.5px] left-[-11px] */}
+                    {/* //  lg:top-[0.91px] w-2.5 h-[9.41px] top-[0.31px] lg:left-[10px]  */}
+                      {/* // md:w-[16.77px] md:h-[15.73px] md:left-0 md:top-[0.52px] absolute" */}
+                    {/* // alt="" */}
+                  {/* // /> */}
+      
                   
                 </div>
                   
@@ -239,18 +209,19 @@ const handleSelectedOption = (event) => {
             </div>
           
         </div>
-        <div className="lg:pl-[30px] pl-[0.33px] md:mt-[40px] lg:h-[72px] lg:pr-[484.30px] pr-[92.66px] 
-        lg:py-[11px] md:h-[41.25px] md:w-full h-6 md:pl-[9.17px] md:pr-[277.40px]
-         md:pt-[6.39px] md:pb-[6.40px] py-[2.67px] lg:mt-[50px] top-[243.82px]
-          lg:w-full w-full mt-[25px] bg-white shadow border-t border-b border-black
-           border-opacity-30 lg:justify-start lg:items-center lg:gap-[50.53px]  md:gap-[28.72px] gap-[50px] flex">
+        <div class="w-full h-6 pl-[0.33px] mt-[10px] lg:mt-[30px] md:mt-[12px] pr-[86.66px] py-[2.67px]
+lg:h-[72px] lg:pl-4 lg:pr-[459.30px] lg:gap-[50.53px] lg:py-[11px]
+md:w-full md:h-[41.25px] md:pl-[9.17px] md:py-[px] md:pr-[262.40px] md:pt-[6.39px] lg:w-full
+md:pb-[6.40px] bg-white shadow border-t border-b border-black
+border-opacity-30 justify-start items-center gap-[52.80px] inline-flex">
 
 <div
   className={`${
     toggleSideBar
       ? "lg:gap-[px] lg:text-[20px]"
       : "lg:gap-[118px] lg:text-[23px]"
-  } my-[10%] flex text-[8px] font-extrabold gap-[8px] mt-[10px] lg:mt-9 md:mt-4 md:my-[5%] md:text-[20px] md:gap-[39px] `}
+  } my-[10%] flex text-[9px] font-extrabold gap-[8px] mt-[25px]
+   lg:mt-9 md:mt-6 md:my-[5%] md:whitespace-nowrap md:text-[16px] md:gap-[39px] `}
 >
   <div
     onClick={() => {
@@ -285,7 +256,7 @@ const handleSelectedOption = (event) => {
                 <img src={menus} alt="" />
               </div>
               <div className="text-neutral-500 whitespace-nowrap lg:whitespace-nowrap lg:text-[20px] md:mt-[-2px] text-[10px] md:text-[18px] md:whitespace-nowrap font-semibold ">
-                Filter By Status
+                {selectedProduct}
               </div>
             </div>
 
@@ -384,7 +355,7 @@ const handleSelectedOption = (event) => {
   </div>
 </div>
 
-<div className="flex lg:mt-[-48px] mt-[-10px] md:mt-[-50px] items-center text-neutral-500 gap-[10px]">
+<div className="flex lg:mt-[-48px] mt-[-5px] md:mt-[-20px] items-center text-neutral-500 gap-[10px]">
   <p className={styles.InOutText}>Wallet History</p>
   <img
     className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
@@ -398,10 +369,10 @@ const handleSelectedOption = (event) => {
 
 
  {isOpen1 && (
-          <div className="lg:ml-[510px] pl-[-50px] lg:top-[600px] md:w-[300px] lg:pl-[-500px]
+          <div className="lg:ml-[510px] pl-[-50px] lg:top-[610px] md:w-[300px] lg:pl-[-500px]
            left-[65px] w-[62%] lg:w-full 
-           top-[270px] md:top-[420px] absolute flex-col md:ml-[300px] lg:items-start inline-flex">
-            <div onClick={() => handleClick(<img className="" src={group5} alt="" />)} className="lg:pl-2.5 lg:w-[370px] border border-b md:w-[214.84px] 
+           top-[279px] md:top-[420px] absolute flex-col md:ml-[300px] lg:items-start inline-flex">
+            <div onClick={() => handleSelect(<img className="" src={group5} alt="" />)} className="lg:pl-2.5 lg:w-[370px] border border-b md:w-[214.84px] 
             lg:pt-[7px] md:h-[35px] lg:h-[47px] h-[30px] 
             justify-start items-center pt-[3px] pb-[px] bg-white shadow gap-[5px] pl-2 md:pl-2 md:gap-[5px] 
               flex-row  md:pt-1 md:pb-[4.43px] inline-flex">
@@ -420,7 +391,7 @@ const handleSelectedOption = (event) => {
               
             </div>
             <div
-            onClick={() => handleClick('./assets/Country Flags.png')}
+            onClick={() => handleSelect(<img src={flags} alt="" />)}
             className="lg:pl-2.5 md:w-[214.84px] border border-b mt-[0.0px] 
              h-[30px] lg:h-[45px] lg:w-[370px] lg:pb-[7.73px] bg-white shadow 
              justify-start items-center md:h-[35px] lg:mt-[-3px] flex-row pl-2 md:pl-2 gap-[5px] 
@@ -439,25 +410,27 @@ const handleSelectedOption = (event) => {
                 </div>
               
             </div>
-            <div onClick={() => handleClick('./assets/EUR.svg')} className="lg:pl-2.5 lg:h-[45px] border border-b md:w-[214.84px] pl-2 md:pl-2 h-[30px] 
+            <div onClick={() => handleSelect(<img src={EUR}   alt="" />)} className="lg:pl-2.5 lg:h-[45px]
+             border border-b md:w-[214.84px] pl-2 md:pl-2 h-[30px] 
             justify-start items-center lg:pt-[7px] lg:w-[370px] lg:pb-[7.73px] bg-white 
             shadow md:h-[35px]  gap-[5px] md:gap-[5px] lg:gap-[5px] flex-row 
              md:pt-1  inline-flex">
               
-                
-                  <img
-                    src={EUR}
-                    className="lg:w-[29.27px] w-[16.77px] md:h-[16.77px] md:w-[16.77px]
-                     lg:mt-[-1px] lg:h-[29.27px] h-[16.77px] lg:left-0 lg:top-0 "
-                    alt=""
-                  />
+
+                  <img  className="lg:w-[29.27px] w-[16.77px] h-[16.77px]
+                   lg:h-[29.27px] lg:left-0 lg:top-0 lg:mt-[-1px]
+                   md:w-[16.77px] md:h-[16.77px] md:left-0 md:top-[0.52px] " src={EUR} alt="" />
+
+
+
                  <div className="text-neutral-500 lg:text-xl text-[9px] md:text-[13px]
                  font-medium  md:leading-3 leading-tight">
                   EUR Wallet (0.00)
                 </div>
               
             </div>
-            <div onClick={() => handleClick('./assets/Country Flags (3).png')} className="lg:pl-2.5 lg:w-[370px] md:w-[214.84px] pl-2 md:pl-2 border border-b lg:h-[45px] h-[30px]
+            <div onClick={() => handleSelect(<img src={flags3} alt="" />)}
+             className="lg:pl-2.5 lg:w-[370px] md:w-[214.84px] pl-2 md:pl-2 border border-b lg:h-[45px] h-[30px]
              justify-start items-center lg:pt-[7px] lg:pb-[7.73px] bg-white shadow 
                md:h-[35px] flex-row gap-[5px]
                 lg:gap-[5px] md:gap-[5px] md:pt-1 inline-flex">
@@ -475,7 +448,8 @@ const handleSelectedOption = (event) => {
                 </div>
               
             </div>
-            <div onClick={() => handleClick('./assets/Group (2).png')} className="lg:pl-2.5 md:w-[214.84px] border border-b lg:pt-[7px] lg:pb-[7.73px]
+            <div onClick={() => handleSelect( <img src={group10} alt="" />)} className="lg:pl-2.5 md:w-[214.84px]
+             border border-b lg:pt-[7px] lg:pb-[7.73px]
              lg:h-[45px] h-[30px] justify-start items-center lg:gap-[5px] lg:w-[370px] bg-white shadow
               md:h-[35px] pl-2 md:pl-2
                md:pt-1  flex-row gap-[5px] md:gap-[5px] inline-flex">
@@ -493,7 +467,7 @@ const handleSelectedOption = (event) => {
                 </div>
               
             </div>
-            <div onClick={() => handleClick('./assets/Country Flags (4).png')} className="lg:pl-2.5 md:w-[214.84px] border border-b lg:pt-[7px] lg:w-[370px] lg:h-[45px] h-[30px]
+            <div onClick={() => handleSelect(<img src={country5} alt="" />)} className="lg:pl-2.5 md:w-[214.84px] border border-b lg:pt-[7px] lg:w-[370px] lg:h-[45px] h-[30px]
              justify-start items-center lg:pb-[7.73px] bg-white shadow lg:gap-[5px] md:h-[35px]
                flex-row gap-[5px] md:gap-[5px] md:pt-1 pl-2 md:pl-2 inline-flex">
               
@@ -510,32 +484,36 @@ const handleSelectedOption = (event) => {
           </div>
         )}
 
-<div className="lg:w-full  w-full lg:h-[60px]  lg:mt-[-7%] md:mt-[-38px] h-5 
- bg-white mt-[-7px] md:w-full md:h-[30.94px] md:pl-[9.17px] flex flex-row
-lg:gap-[120px] lg:justify-between justify-around md:justify-between
-  items-center gap-[100px] md:gap-[90px] border border-black border-opacity-30 ">
-    <div className="flex lg:gap-3 lg:mt-[-15px] lg:justify-around md:justify-around justify-around
-     gap-2 mt-[0.1px] md:gap-2 flex-row  "> 
-      <label for="searchInput"><img className="justify-center items-center lg:w-5 mt-[4px]
-       md:mt-[7px] lg:mt-[18px] 
-w-3 h-3 lg:h-5 md:w-[10px] md:h-[10px]" src={normal} alt="" /> </label>
-      <input className="items-center text-neutral-400  
-        mt-[4px] lg:mt-4 md:text-[13px] leading-3 whitespace-nowrap font-medium 
-        lg:leading-tight text-[10px] w-[100%] h-[100%] outline-none lg:text-[20px] "
-        type="text"
-        id="searchInput"
-        name="search"
-        placeholder="Search for Transactions, e.g; Order Number"
-      /></div>
-      <div className="lg:gap-[10px] gap-1  md:w-[100px] md:pl-[15.59px] 
-      justify-end items-center md:pr-[15.58px]  md:gap-3   md:py-[8.47px] lg:w-[130px] bg-white
-       shadow border-black border-opacity-50  md:h-[30.938px]
-        lg:h-[60px] lg:items-center flex-row flex ">
-      <button className="text-neutral-500 md:text-[13px] lg:text-[20px] text-[9px] mt-[4px]  font-medium " onClick={handleSearch}>Search</button>
-      <button className="lg:w-6 mt-[2px] md:mt-[3px] h-4 w-4 lg:h-6 md:w-[13.75px] md:h-[13.75px]" onClick={handleSearch}><img src={refresh} alt="" /></button>
 
-      </div>
-    </div>
+<div className={styles.mainGrid}>
+                    <div className={styles.mainGridCol}>
+                        <div className="border md:h-[35px] mt-[-5px]  h-[25px] lg:mt-[-55px] md:mt-[-25px] flex justify-between
+                         items-center py-1 px-3 lg:h-[45px] lg:border-[1px] lg:border-[#0003]">
+                          
+        <img  className="justify-center items-center lg:w-5 mt-[0px]
+       md:mt-[0px] lg:mt-[0px] 
+w-3 h-3 lg:h-5 md:w-[13px]  md:h-[13px]" onClick={handleButton} src={normal} alt="" /> 
+
+                            <input
+                            className="searchInput text-[10px] w-[100%] h-[100%] md:text-[13px] ml-4 outline-none lg:text-[20px]"
+                            type="text"  name="search" placeholder='Search for Transactions, e.g; Order Number'
+                            />
+                            
+
+                            <div className="border md:gap-2 gap-1 flex flex-row
+                             lg:gap-2 lg:h-[45px] md:h-[35px] h-[25px] justify-between items-center
+                             shadow border-r-0 bg-white border-opacity-50">
+                             <button className="text-neutral-500 md:text-[13px] 
+                             lg:text-[20px] text-[9px] mt-[4px] ml-3  font-medium " >Search</button>
+                            <button className=" h-[13.3px] w-[13.3px] mt-[3px] md:mt-0 md:h-[15px] md:w-[15px] lg:w-[24px] lg:h-[24px]"><img
+                            className=" h-[13.3px] w-[13.3px] mt-[-2px] md:mt-[3px] md:h-[15px] md:w-[15px] lg:w-[24px] lg:h-[24px] "
+                            src={refresh}
+                            alt="dropdown"
+                            /></button>
+                        </div>
+                    </div>
+                </div>
+                </div>
 
 
 {/* table for large screens */}
@@ -1226,14 +1204,19 @@ w-3 h-3 lg:h-5 md:w-[10px] md:h-[10px]" src={normal} alt="" /> </label>
 
         {/* table for mobile view */}
 
-
+        {/* <div */}
+        {/* // className={`${styles.viewTransact} ${ */}
+          {/* // isDarkMode ? "bg-black border" : "bg-white" */}
+        {/* // }`} */}
+      {/* // > */}
+<div className=" h-[1110px]">
         <div
-            className="md:hidden mt-9 flex flex-col w-full p-[20px] border-x-[1.2px] border-b-[1.2px]
- border-[#7C7C7C] border-opacity-[25%] mb-[20px] pb-[20px] shadow-md"
+            className="md:hidden flex flex-col h-[1030px] mt-9  w-full p-[20px] border-x-[1.2px] border-b-[1.2px]
+ border-gray-500 border-opacity-[25%] my-[50px] shadow-md"
           >
             
             <div
-              className="flex justify-between  pb-[31.5px] border-b-[1px] border-b-[black]
+              className="flex justify-between pb-[31.5px] border-b-[1px] border-b-[black]
    border-opacity-[20%]"
             >
               
@@ -1552,7 +1535,7 @@ w-3 h-3 lg:h-5 md:w-[10px] md:h-[10px]" src={normal} alt="" /> </label>
             </div>
             </div>
 
-            <footer className="flex justify-center text-center gap-[20px] mt-[20px] mb-[10px]">
+            <div className="flex justify-center text-center gap-[20px] mt-[15px] mb-[30px]">
             <p className="text-[8px]  font-[500] leading-[9.1px] mt-[5px]">
               You need help?
             </p>
@@ -1566,64 +1549,29 @@ w-3 h-3 lg:h-5 md:w-[10px] md:h-[10px]" src={normal} alt="" /> </label>
                 Contact Us
               </div>
             </Link>
-          </footer>
           </div>
-
+          </div>
+</div>
 
             
-            {/* CONTACT US */}
-            {/* <div className="flex gap-[14.896px] py-[2.865px] mt-4 justify-center px-[8.594px] "> */}
-              {/* <p className="font-[500] text-[8px] text-[#707070] leading-[10.4px]"> */}
-                {/* You need help? */}
-              {/* </p> */}
-              {/* <Link to ="/contactUs" */}
-                {/* // className="font-[500] text-white mt-[-3px] text-[8px] py-[2.865px]  */}
-{/* //  px-[8.594px] leading-[10.4px] rounded-[5.156px] items-center justify-center bg-[#04177F]" */}
-              {/* // > */}
-                {/* Contact Us */}
-              {/* </Link> */}
-            {/* </div> */}
            
-          
-
-
-
-
-
-
-
-
-              
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         {/* filter by status dropdown */}
         {isOpen2 && (
-          <div className="flex absolute lg:top-[725px] top-[325px] md:top-[498px] w-full md:w-full
-           ml-[50px] md:ml-[40px] lg:w-full lg:ml-[60px] flex-col">
-            <div className="border border-b lg:w-[375px] lg:h-[53px] md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px] justify-around items-center flex relative bg-white shadow">
-              <div class="lg:w-[325px] text-neutral-500 lg:text-xl font-medium 
+          <div className="flex absolute lg:top-[705px] top-[310px] md:top-[470px] 
+           ml-[50px] md:ml-[40px]  lg:ml-[60px] flex-col">
+            
+            <div  
+          
+          className="border border-b bg-white lg:w-[375px] lg:h-[53px] md:w-[250.84px] md:h-[39.22px]
+           w-[189px] h-[25.70px] justify-around items-center flex relative shadow">
+              <div onClick={() => { handleClick('All Transactions'); }} className="lg:w-[325px] text-neutral-500 lg:text-xl font-medium 
               lg:leading-tight md:w-[186.20px] md:text-[16px] md:leading-3 w-[163.80px]
                text-[10px] leading-[10.48px] ">
                 All Transactions
               </div>
               
             </div>
-            <div className="lg:w-[375px] lg:h-[53px] border border-b  md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px] justify-around items-center flex relative bg-white shadow">
+            <div onClick={() => { handleClick('Successful'); }} className="lg:w-[375px] lg:h-[53px] border border-b  md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px] justify-around items-center flex relative bg-white shadow">
               <div class="lg:w-[325px] text-neutral-500 lg:text-xl 
               font-medium lg:leading-tight md:w-[186.20px]  md:text-[16px]
                md:leading-3 w-[163.80px] text-[10px] leading-[10.48px]">
@@ -1631,28 +1579,28 @@ w-3 h-3 lg:h-5 md:w-[10px] md:h-[10px]" src={normal} alt="" /> </label>
               </div>
             </div>
 
-            <div className="lg:w-[375px] lg:h-[53px] border border-b md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px] justify-around items-center flex relative bg-white shadow">
+            <div onClick={() => { handleClick('Failed'); }} className="lg:w-[375px] lg:h-[53px] border border-b md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px] justify-around items-center flex relative bg-white shadow">
               <div class="lg:w-[325px] text-neutral-500 lg:text-xl font-medium 
               lg:leading-tight md:w-[186.20px]  md:text-[16px] md:leading-3 w-[163.80px]
                text-[10px] leading-[10.48px]">
                 Failed
               </div>
             </div>
-            <div className="lg:w-[375px] lg:h-[53px] border border-b md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px]  justify-around items-center flex relative bg-white shadow">
+            <div onClick={() => { handleClick('Pending'); }} className="lg:w-[375px] lg:h-[53px] border border-b md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px]  justify-around items-center flex relative bg-white shadow">
               <div class="lg:w-[325px] text-neutral-500 lg:text-xl
                font-medium lg:leading-tight md:w-[186.20px]  md:text-[16px]
                 md:leading-3 w-[163.80px] text-[10px] leading-[10.48px]">
                 Pending
               </div>
             </div>
-            <div className="lg:w-[375px] lg:h-[53px] border border-b md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px] justify-around items-center flex relative bg-white shadow">
+            <div onClick={() => { handleClick('Refunded'); }} className="lg:w-[375px] lg:h-[53px] border border-b md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px] justify-around items-center flex relative bg-white shadow">
               <div class="lg:w-[325px] text-neutral-500 lg:text-xl
                font-medium lg:leading-tight md:w-[186.20px]  md:text-[16px] 
                md:leading-3 w-[163.80px] text-[10px] leading-[10.48px]">
                 Refunded
               </div>
             </div>
-            <div className="lg:w-[375px] lg:h-[53px] border border-b md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px] justify-around items-center flex relative bg-white shadow">
+            <div onClick={() => { handleClick('Canceled'); }} className="lg:w-[375px] lg:h-[53px] border border-b md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px] justify-around items-center flex relative bg-white shadow">
               <div class="lg:w-[325px] text-neutral-500 lg:text-xl
                font-medium lg:leading-tight md:w-[186.20px]  md:text-[16px] md:leading-3 w-[163.80px] text-[10px] 
                leading-[10.48px]">
