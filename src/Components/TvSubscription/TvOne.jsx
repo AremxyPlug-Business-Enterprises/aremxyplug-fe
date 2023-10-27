@@ -18,11 +18,9 @@ import GotvSuccessfulPopup from "./GotvPopups/GotvSuccessfulPopup";
         showDropdownGOTV,
         setShowDropdownGOTV,
         setSelectedOptionGOTV,
-        setInitialValueGOTV,
-        getNumericValue,
         formatNumberWithCommas,
-        initialValueGOTV,
         GOTVMobileNumber,
+        setCardName,
         setGOTVMobileNumber,
      } = useContext(ContextProvider) 
      
@@ -30,12 +28,22 @@ import GotvSuccessfulPopup from "./GotvPopups/GotvSuccessfulPopup";
       event.preventDefault();
       setConfirmGotvPopup(true)
    }
+   
+  const [initialValueGOTV, setInitialValueGOTV] = useState(true)
+
    const handleOptionClickGOTV = (option) => {
     setSelectedOptionGOTV(option);
     setShowDropdownGOTV(false); 
     setInitialValueGOTV(false);
   };
   
+const getNumericValue = (option) => {
+  const numericPart = option.match(/\d+/);
+  if (numericPart) {
+    return formatNumberWithCommas(parseInt(numericPart[0], numericPart[2], 10));
+  }
+  return '';
+};
 
   const options = [
     `Gotv Smallie (₦1100) ~ Monthly`,
@@ -64,6 +72,10 @@ const [selectedDecoderGOTV, setSelectedDecoderGOTV] = useState('');
   setConfirmDecoderGOTV(false);
 };
 
+const handleCardName = (e) => {
+  const inputValue = e.target.value;
+  setCardName(inputValue);
+}
  
   const [GOTVErrorMessage, setGOTVErrorMessage] = useState('');
 
@@ -172,7 +184,8 @@ const [selectedDecoderGOTV, setSelectedDecoderGOTV] = useState('');
                 <div className="flex flex-col gap-[3px] lg:gap-[5px]">
                     <label htmlFor="decoderType" className="text-[#7E7E7E] text-[8px] lg:text-[18px] md:text-[11.46px] font-semibold">
                         Card Name</label>
-                    <input type="text" placeholder="Aremxyplug" className="outline-0 border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[375px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] "/>
+                    <input type="text"
+                    onChange={handleCardName} placeholder="Aremxyplug" className="outline-0 border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[375px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] "/>
                 </div>
             </div>
             <div className="flex flex-col md:flex-row gap-[20px] md:gap-[12px] lg:gap-[22px] md:my-2 lg:my-4">

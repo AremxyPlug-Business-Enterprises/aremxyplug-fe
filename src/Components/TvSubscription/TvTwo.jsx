@@ -6,25 +6,35 @@ import { useContext } from "react";
 import { useState } from "react";
 import { ContextProvider } from "../Context";
 import { Link } from "react-router-dom";
-import ConfirmGotvPopup from "./GotvPopups/confirmGotvPopup";
+import ConfirmDstvPopup from "./DstvPopups/confirmDstvPopup";
 import { InputGotvPopup } from "./GotvPopups/inputPinGotv"
 import GotvSuccessfulPopup from "./GotvPopups/GotvSuccessfulPopup";
 
  const DsTv = () => {
 
     const {
-        handleGotv,
-        selectedOptionGOTV,
-        showDropdownGOTV,
-        setShowDropdownGOTV,
-        handleOptionClickGOTV,
-        getNumericValue,
+        selectedOptionDstv,
+        setSelectedOptionDstv,
+        showDropdownDstv,
+        setShowDropdownDstv,
+        setCardName,
+        setConfirmDstvPopup,
         formatNumberWithCommas,
-        initialValueGOTV,
-        GOTVMobileNumber,
-        setGOTVMobileNumber,
+        dstvMobileNumber,
+        setDstvMobileNumber,
      } = useContext(ContextProvider) 
      
+     const handleDstv = (event) =>{
+      event.preventDefault();
+      setConfirmDstvPopup(true)
+   }
+   const [initialValueDstv, setInitialValueDstv] = useState(true)
+
+   const handleOptionClickDstv = (option) => {
+    setSelectedOptionDstv(option);
+    setShowDropdownDstv(false); 
+    setInitialValueDstv(false);
+  };
 
   const options = [
     `Dstv Padi (₦2500)`,
@@ -45,6 +55,14 @@ import GotvSuccessfulPopup from "./GotvPopups/GotvSuccessfulPopup";
     `DStv`,
   ]
 
+  const getNumericValue = (option) => {
+    const numericPart = option.match(/\d+/);
+    if (numericPart) {
+      return formatNumberWithCommas(parseInt(numericPart[0], 10));
+    }
+    return '';
+  };
+
 const [selectedDecoderGOTV, setSelectedDecoderGOTV] = useState('');
 
   const [confirmDecoderGOTV, setConfirmDecoderGOTV] = useState(false);
@@ -53,23 +71,27 @@ const [selectedDecoderGOTV, setSelectedDecoderGOTV] = useState('');
   setConfirmDecoderGOTV(false);
 };
 
+const handleCardName = (e) => {
+  const inputValue = e.target.value;
+  setCardName(inputValue);
+}
  
-  const [GOTVErrorMessage, setGOTVErrorMessage] = useState('');
+  const [dstvErrorMessage, setDstvErrorMessage] = useState('');
 
-  const GOTVSchema = Joi.object({
+  const DstvSchema = Joi.object({
     mobileNumber: Joi.string().regex(/^\d{11}$/).required(),
   });
 
-  const handleGOTVMobileNumberChange = (e) => {
+  const handleDstvMobileNumberChange = (e) => {
     const inputValue = e.target.value;
-    setGOTVMobileNumber(inputValue);
+    setDstvMobileNumber(inputValue);
 
-    const validation = GOTVSchema.validate({ mobileNumber: inputValue });
+    const validation = DstvSchema.validate({ mobileNumber: inputValue });
 
     if (validation.error) {
-      setGOTVErrorMessage('Incorrect Phone Number..');
+      setDstvErrorMessage('Incorrect Phone Number..');
     } else {
-      setGOTVErrorMessage('');
+      setDstvErrorMessage('');
     }
   };
 
@@ -129,17 +151,18 @@ const [selectedDecoderGOTV, setSelectedDecoderGOTV] = useState('');
                     <label htmlFor="decoderType" className="text-[#7E7E7E] text-[8px] lg:text-[18px] md:text-[11.46px] font-semibold">
                     Select Package</label>
                    
-                      <div className="dropdown-toggle flex items-center cursor-pointer outline-0 border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[375px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center" onClick={() => setShowDropdownGOTV(!showDropdownGOTV)}>
-                        {selectedOptionGOTV || `Gotv Smallie ${formatNumberWithCommas(1100)} ~ Monthly`}
+                      <div className="dropdown-toggle flex items-center cursor-pointer outline-0 border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[375px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center"
+                       onClick={() => setShowDropdownDstv(!showDropdownDstv)}>
+                        {selectedOptionDstv || `Dstv Padi (₦2,500)`}
                       </div>
                    
-                    {showDropdownGOTV && (
+                    {showDropdownDstv && (
                       <ul className="dropdown-options absolute top-[100%] bg-white cursor-pointer">
                         {options.map((option, index) => (
                         <li
                         className={`dropdownCSS h-[30px] md:h-[35px] lg:h-[50px] font-medium text-[12.93px] flex items-center text-[#7C7C7C] pl-[9px]`}
                           key={index}
-                        onClick={() => handleOptionClickGOTV(option)}
+                        onClick={() => handleOptionClickDstv(option)}
                           >
                             {option}
                         </li>
@@ -161,17 +184,17 @@ const [selectedDecoderGOTV, setSelectedDecoderGOTV] = useState('');
                 <div className="flex flex-col gap-[3px] lg:gap-[5px]">
                     <label htmlFor="decoderType" className="text-[#7E7E7E] text-[8px] lg:text-[18px] md:text-[11.46px] font-semibold">
                         Card Name</label>
-                    <input type="text" placeholder="Aremxyplug" className="outline-0 border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[375px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] "/>
+                    <input type="text" onChange={handleCardName} placeholder="Aremxyplug" className="outline-0 border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[375px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] "/>
                 </div>
             </div>
             <div className="flex flex-col md:flex-row gap-[20px] md:gap-[12px] lg:gap-[22px] md:my-2 lg:my-4">
                 <div className="flex flex-col gap-[3px] lg:gap-[5px]">
                     <label htmlFor="decoderType" className="text-[#7E7E7E] text-[8px] lg:text-[18px] md:text-[11.46px] font-semibold">
                         Phone Number</label>
-                        <input id="val" value={GOTVMobileNumber} onChange={handleGOTVMobileNumberChange}
-                        style={{ backgroundColor: GOTVErrorMessage ? '#FFD8D8' : 'white' }}
+                        <input id="val" value={dstvMobileNumber} onChange={handleDstvMobileNumberChange}
+                        style={{ backgroundColor: dstvErrorMessage ? '#FFD8D8' : 'white' }}
                         type="tel" maxLength={11} placeholder="7744115566" className="outline-0 border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[375px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] "/>
-             {GOTVErrorMessage && <p className="text-[#F95252] text-[9px] md:text-[12px] lg:text-[14px] md:hidden font-semibold ">{GOTVErrorMessage}</p>}           
+             {dstvErrorMessage && <p className="text-[#F95252] text-[9px] md:text-[12px] lg:text-[14px] md:hidden font-semibold ">{dstvErrorMessage}</p>}           
                 
                 </div>
                 <div className="flex flex-col gap-[3px] lg:gap-[5px]">
@@ -186,18 +209,18 @@ const [selectedDecoderGOTV, setSelectedDecoderGOTV] = useState('');
                     <label htmlFor="decoderType" className="text-[#7E7E7E] text-[8px] lg:text-[18px] md:text-[11.46px] font-semibold">
                         Amount</label>
                     
-                {initialValueGOTV && (
+                {initialValueDstv && (
                 <input
                   type="text"
                   className="text-[#7E7E7E] outline-0 border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[375px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px]"
                   value={`₦1,100`}
                 />
             )}
-                {selectedOptionGOTV && (
+                {selectedOptionDstv && (
                 <input
                   type="text"
                   className="text-[#7E7E7E] outline-0 border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[375px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px]"
-                  value={'₦'+ getNumericValue(selectedOptionGOTV)}
+                  value={'₦'+ getNumericValue(selectedOptionDstv)}
                 />
             )}
                </div>
@@ -210,10 +233,10 @@ const [selectedDecoderGOTV, setSelectedDecoderGOTV] = useState('');
             </div>
           </div>  
 
-          {GOTVErrorMessage && <p className="text-[#F95252] text-[9px] md:text-[12px] lg:text-[14px] max-[500px]:hidden mt-3 font-semibold ">{GOTVErrorMessage}</p>}           
+          {dstvErrorMessage && <p className="text-[#F95252] text-[9px] md:text-[12px] lg:text-[14px] max-[500px]:hidden mt-3 font-semibold ">{dstvErrorMessage}</p>}           
 
-            <button onClick={handleGotv}
-            disabled={GOTVMobileNumber.length !== 11}
+            <button onClick={handleDstv}
+            disabled={dstvMobileNumber.length !== 11}
              className="mt-[38px] md:mt-[30px] lg:mt-[25px] rounded-[6px] md:rounded-[10px] lg:rounded-[15px] bg-[#04177F] h-[43px] md:h-[30px] lg:h-[40px] flex items-center font-semibold text-[12px] md:text-[11px] lg:text-[16px] text-[#fff] w-full md:w-[100px] lg:w-[170px] justify-center">
                 Proceed</button>
             
@@ -226,7 +249,7 @@ const [selectedDecoderGOTV, setSelectedDecoderGOTV] = useState('');
                 </Link>
             </div>
         </DashBoardLayout>
-        <ConfirmGotvPopup/>
+        <ConfirmDstvPopup/>
         <InputGotvPopup/>
         <GotvSuccessfulPopup/>
         </div>
