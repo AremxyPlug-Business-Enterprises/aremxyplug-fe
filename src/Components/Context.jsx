@@ -275,7 +275,7 @@ export const Context = ({ children }) => {
         headers: { "Content-Type": "Application/json" },
       };
 
-      const url = "https://aremxyplug.onrender.com/api/v1/users/signup";
+      const url = "https://aremxyplug.onrender.com/api/v1/signup";
 
       axios
         .post(url, data, config)
