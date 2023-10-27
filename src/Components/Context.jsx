@@ -706,10 +706,6 @@ export const Context = ({ children }) => {
 
   //==========GOTV===========
   const [confirmGotvPopup, setConfirmGotvPopup] = useState(false);
-  const handleGotv = (event) => {
-    event.preventDefault();
-    setConfirmGotvPopup(true);
-  };
   const [inputPinGotv, setInputPinGotv] = useState(false);
   const [gotvSuccessful, setGotvSuccessful] = useState(false);
   const [selectedOptionGOTV, setSelectedOptionGOTV] = useState('');
@@ -1061,7 +1057,6 @@ const [walletBalance, setWalletBalance] = useState('');
     formatNumberWithCommas,
     GOTVMobileNumber,
     setGOTVMobileNumber,
-    handleGotv,
     cardName,
     setCardName,
     confirmDstvPopup,
