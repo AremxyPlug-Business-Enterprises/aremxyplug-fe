@@ -58,15 +58,15 @@ export const SignUp = () => {
     // confirmPassword,
   } = state;
 
-  console.log(checkboxChecked)
+  console.log(checkboxChecked);
   console.log(state);
 
-  const [showPassModal, setShowPassModal] = useState(false)
+  const [showPassModal, setShowPassModal] = useState(false);
 
   return (
     <div className="h-[1237px] bg-[#04177f] md: pb-[%] md:flex md:justify-center md:items-center md:pb-0 md:h-[100vh] lg:h-[170vh]">
       {/* =====Hero Image==== */}
-      {showPassModal && <FirstModal/>}
+      {showPassModal && <FirstModal />}
       <img
         className=" w-[286px] py-[15%] mx-auto md:absolute md:h-[%] md:w-[286.46px] md:top-[26%] md:left-[1%] lg:w-[500px] lg:top-[20%] lg:left-[2%]"
         src="./Images/signupimages/signUpImg.png"
@@ -89,10 +89,7 @@ export const SignUp = () => {
         <p className="text-[11px] font-bold text-center text-[#00000056] lg:text-[20px]">
           Create an account Now to get started...
         </p>
-        <form
-          onSubmit={handleSubmit}
-          className="pt-[5%] pb-[10%] md:grid md:grid-cols-2 md:gap-[5%] md:mx-[8%] lg:pt-[13%] lg:px-[10%] lg:pb-[6%]"
-        >
+        <form className="pt-[5%] pb-[10%] md:grid md:grid-cols-2 md:gap-[5%] md:mx-[8%] lg:pt-[13%] lg:px-[10%] lg:pb-[6%]">
           {/* =====Country Input start======= */}
           <div>
             <p className="text-[9px] font-semibold mb-[5px] lg:text-[16px]">
@@ -397,7 +394,10 @@ export const SignUp = () => {
 
           <Link>
             {" "}
-            <p className="mt-[2%] text-[8px] font-extrabold mx-auto w-[90%] text-[#04177f] lg:text-[14px]" onClick={()=>setShowPassModal(!showPassModal)}>
+            <p
+              className="mt-[2%] text-[8px] font-extrabold mx-auto w-[90%] text-[#04177f] lg:text-[14px]"
+              onClick={() => setShowPassModal(!showPassModal)}
+            >
               Forgot password ?
             </p>
           </Link>
@@ -405,8 +405,8 @@ export const SignUp = () => {
 
         <button
           onClick={handleSubmit}
-          type="submit"
-          className="hover:cursor-pointer px-[35px] py-[10px] flex justify-center item-center mb-[5%] lg:mb-[2%] bg-[#04177f]  text-white p-[%] rounded-[4px] mx-auto text-center mt-[7%] text-[9px] lg:px-[37px] lg:mt-[3%] lg:w-[140px] lg:h-[42px] lg:text-[14px] lg:rounded-lg"
+          disabled={true}
+          className="hover:cursor-pointer px-[35px] py-[10px] flex justify-center item-center mb-[5%] lg:mb-[2%] bg-[#0003]  text-white p-[%] rounded-[4px] mx-auto text-center mt-[7%] text-[9px] lg:px-[37px] lg:mt-[3%] lg:w-[140px] lg:h-[42px] lg:text-[14px] lg:rounded-lg"
         >
           Sign Up
         </button>

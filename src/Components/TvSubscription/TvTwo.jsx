@@ -6,63 +6,62 @@ import { useContext } from "react";
 import { useState } from "react";
 import { ContextProvider } from "../Context";
 import { Link } from "react-router-dom";
-import ConfirmGotvPopup from "./GotvPopups/confirmGotvPopup";
+import ConfirmDstvPopup from "./DstvPopups/confirmDstvPopup";
 import { InputGotvPopup } from "./GotvPopups/inputPinGotv"
 import GotvSuccessfulPopup from "./GotvPopups/GotvSuccessfulPopup";
 
- const GoTv = () => {
+ const DsTv = () => {
 
     const {
-        setConfirmGotvPopup,
-        selectedOptionGOTV,
-        showDropdownGOTV,
-        setShowDropdownGOTV,
-        setSelectedOptionGOTV,
-        formatNumberWithCommas,
-        GOTVMobileNumber,
+        selectedOptionDstv,
+        setSelectedOptionDstv,
+        showDropdownDstv,
+        setShowDropdownDstv,
         setCardName,
-        setGOTVMobileNumber,
+        setConfirmDstvPopup,
+        formatNumberWithCommas,
+        dstvMobileNumber,
+        setDstvMobileNumber,
      } = useContext(ContextProvider) 
      
-     const handleGotv = (event) =>{
+     const handleDstv = (event) =>{
       event.preventDefault();
-      setConfirmGotvPopup(true)
+      setConfirmDstvPopup(true)
    }
-   
-  const [initialValueGOTV, setInitialValueGOTV] = useState(true)
+   const [initialValueDstv, setInitialValueDstv] = useState(true)
 
-   const handleOptionClickGOTV = (option) => {
-    setSelectedOptionGOTV(option);
-    setShowDropdownGOTV(false); 
-    setInitialValueGOTV(false);
+   const handleOptionClickDstv = (option) => {
+    setSelectedOptionDstv(option);
+    setShowDropdownDstv(false); 
+    setInitialValueDstv(false);
   };
-  
-const getNumericValue = (option) => {
-  const numericPart = option.match(/\d+/);
-  if (numericPart) {
-    return formatNumberWithCommas(parseInt(numericPart[0], numericPart[2], 10));
-  }
-  return '';
-};
 
   const options = [
-    `Gotv Smallie (₦1100) ~ Monthly`,
-    `GOtv Jinja (₦2250) ~ Monthly`,
-    `GOtv Jinja (₦4500) ~ 2 Months`,
-    `GOtv Lite (₦2900) ~ 3 Months`,
-    `GOtv Lite (₦8600) ~ Annually`,
-    `GOtv Max (₦4850) ~ Monthly`,
-    `GOtv Max (₦9700) ~ 2 Months`,
-    `GOtv Joli (₦3300) ~ Monthly`,
-    `GOtv Joli (₦6600) ~ 2 Months`,
-    `GOtv SUPA (₦6400) ~ Monthly`,
-    `GOtv SUPA (₦12800) ~ 2 Months`,
-    `GOtv SUPA plus (₦21000) ~ 2 Months`,
+    `Dstv Padi (₦2500)`,
+    `Dstv Yanga (₦3500)`,
+    `Dstv Confam (₦6300)`,
+    `Dstv Padi Extra (₦5050) `,
+    `Dstv Yanga Extra (₦5850) `,
+    `Dstv Asia (₦8300)`,
+    `Dstv Confam Extra (₦8200)`,
+    `Dstv Compact (₦10500)`,
+    `Dstv Compact Plus (₦16600)`,
+    `Dstv Compact Extra View (₦23900)`,
+    `Dstv Premium (₦24500)`,
+    `Dstv Premium Asia (₦27500)`,
   ]
 
   const decoders = [
-    `Gotv`,
+    `DStv`,
   ]
+
+  const getNumericValue = (option) => {
+    const numericPart = option.match(/\d+/);
+    if (numericPart) {
+      return formatNumberWithCommas(parseInt(numericPart[0], 10));
+    }
+    return '';
+  };
 
 const [selectedDecoderGOTV, setSelectedDecoderGOTV] = useState('');
 
@@ -77,22 +76,22 @@ const handleCardName = (e) => {
   setCardName(inputValue);
 }
  
-  const [GOTVErrorMessage, setGOTVErrorMessage] = useState('');
+  const [dstvErrorMessage, setDstvErrorMessage] = useState('');
 
-  const GOTVSchema = Joi.object({
+  const DstvSchema = Joi.object({
     mobileNumber: Joi.string().regex(/^\d{11}$/).required(),
   });
 
-  const handleGOTVMobileNumberChange = (e) => {
+  const handleDstvMobileNumberChange = (e) => {
     const inputValue = e.target.value;
-    setGOTVMobileNumber(inputValue);
+    setDstvMobileNumber(inputValue);
 
-    const validation = GOTVSchema.validate({ mobileNumber: inputValue });
+    const validation = DstvSchema.validate({ mobileNumber: inputValue });
 
     if (validation.error) {
-      setGOTVErrorMessage('Incorrect Phone Number..');
+      setDstvErrorMessage('Incorrect Phone Number..');
     } else {
-      setGOTVErrorMessage('');
+      setDstvErrorMessage('');
     }
   };
 
@@ -130,7 +129,7 @@ const handleCardName = (e) => {
                         Confirm Decoder Type</label>
                     {/* <button className="border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[375px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C]">Gotv</button> */}
                     <div className="dropdown-toggle flex items-center cursor-pointer outline-0 border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[375px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center" onClick={() => setConfirmDecoderGOTV(!confirmDecoderGOTV)}>
-                        {selectedDecoderGOTV || `GOtv`}
+                        {selectedDecoderGOTV || `DStv`}
                       </div>
                    
                     {confirmDecoderGOTV && (
@@ -152,17 +151,18 @@ const handleCardName = (e) => {
                     <label htmlFor="decoderType" className="text-[#7E7E7E] text-[8px] lg:text-[18px] md:text-[11.46px] font-semibold">
                     Select Package</label>
                    
-                      <div className="dropdown-toggle flex items-center cursor-pointer outline-0 border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[375px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center" onClick={() => setShowDropdownGOTV(!showDropdownGOTV)}>
-                        {selectedOptionGOTV || `Gotv Smallie ${formatNumberWithCommas(1100)} ~ Monthly`}
+                      <div className="dropdown-toggle flex items-center cursor-pointer outline-0 border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[375px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center"
+                       onClick={() => setShowDropdownDstv(!showDropdownDstv)}>
+                        {selectedOptionDstv || `Dstv Padi (₦2,500)`}
                       </div>
                    
-                    {showDropdownGOTV && (
+                    {showDropdownDstv && (
                       <ul className="dropdown-options absolute top-[100%] bg-white cursor-pointer">
                         {options.map((option, index) => (
                         <li
                         className={`dropdownCSS h-[30px] md:h-[35px] lg:h-[50px] font-medium text-[12.93px] flex items-center text-[#7C7C7C] pl-[9px]`}
                           key={index}
-                        onClick={() => handleOptionClickGOTV(option)}
+                        onClick={() => handleOptionClickDstv(option)}
                           >
                             {option}
                         </li>
@@ -184,18 +184,17 @@ const handleCardName = (e) => {
                 <div className="flex flex-col gap-[3px] lg:gap-[5px]">
                     <label htmlFor="decoderType" className="text-[#7E7E7E] text-[8px] lg:text-[18px] md:text-[11.46px] font-semibold">
                         Card Name</label>
-                    <input type="text"
-                    onChange={handleCardName} placeholder="Aremxyplug" className="outline-0 border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[375px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] "/>
+                    <input type="text" onChange={handleCardName} placeholder="Aremxyplug" className="outline-0 border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[375px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] "/>
                 </div>
             </div>
             <div className="flex flex-col md:flex-row gap-[20px] md:gap-[12px] lg:gap-[22px] md:my-2 lg:my-4">
                 <div className="flex flex-col gap-[3px] lg:gap-[5px]">
                     <label htmlFor="decoderType" className="text-[#7E7E7E] text-[8px] lg:text-[18px] md:text-[11.46px] font-semibold">
                         Phone Number</label>
-                        <input id="val" value={GOTVMobileNumber} onChange={handleGOTVMobileNumberChange}
-                        style={{ backgroundColor: GOTVErrorMessage ? '#FFD8D8' : 'white' }}
+                        <input id="val" value={dstvMobileNumber} onChange={handleDstvMobileNumberChange}
+                        style={{ backgroundColor: dstvErrorMessage ? '#FFD8D8' : 'white' }}
                         type="tel" maxLength={11} placeholder="7744115566" className="outline-0 border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[375px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] "/>
-             {GOTVErrorMessage && <p className="text-[#F95252] text-[9px] md:text-[12px] lg:text-[14px] md:hidden font-semibold ">{GOTVErrorMessage}</p>}           
+             {dstvErrorMessage && <p className="text-[#F95252] text-[9px] md:text-[12px] lg:text-[14px] md:hidden font-semibold ">{dstvErrorMessage}</p>}           
                 
                 </div>
                 <div className="flex flex-col gap-[3px] lg:gap-[5px]">
@@ -210,18 +209,18 @@ const handleCardName = (e) => {
                     <label htmlFor="decoderType" className="text-[#7E7E7E] text-[8px] lg:text-[18px] md:text-[11.46px] font-semibold">
                         Amount</label>
                     
-                {initialValueGOTV && (
+                {initialValueDstv && (
                 <input
                   type="text"
                   className="text-[#7E7E7E] outline-0 border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[375px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px]"
                   value={`₦1,100`}
                 />
             )}
-                {selectedOptionGOTV && (
+                {selectedOptionDstv && (
                 <input
                   type="text"
                   className="text-[#7E7E7E] outline-0 border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[375px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px]"
-                  value={'₦'+ getNumericValue(selectedOptionGOTV)}
+                  value={'₦'+ getNumericValue(selectedOptionDstv)}
                 />
             )}
                </div>
@@ -234,10 +233,10 @@ const handleCardName = (e) => {
             </div>
           </div>  
 
-          {GOTVErrorMessage && <p className="text-[#F95252] text-[9px] md:text-[12px] lg:text-[14px] max-[500px]:hidden mt-3 font-semibold ">{GOTVErrorMessage}</p>}           
+          {dstvErrorMessage && <p className="text-[#F95252] text-[9px] md:text-[12px] lg:text-[14px] max-[500px]:hidden mt-3 font-semibold ">{dstvErrorMessage}</p>}           
 
-            <button onClick={handleGotv}
-            disabled={GOTVMobileNumber.length !== 11}
+            <button onClick={handleDstv}
+            disabled={dstvMobileNumber.length !== 11}
              className="mt-[38px] md:mt-[30px] lg:mt-[25px] rounded-[6px] md:rounded-[10px] lg:rounded-[15px] bg-[#04177F] h-[43px] md:h-[30px] lg:h-[40px] flex items-center font-semibold text-[12px] md:text-[11px] lg:text-[16px] text-[#fff] w-full md:w-[100px] lg:w-[170px] justify-center">
                 Proceed</button>
             
@@ -250,11 +249,11 @@ const handleCardName = (e) => {
                 </Link>
             </div>
         </DashBoardLayout>
-        <ConfirmGotvPopup/>
+        <ConfirmDstvPopup/>
         <InputGotvPopup/>
         <GotvSuccessfulPopup/>
         </div>
     )
 }
 
-export default GoTv
+export default DsTv;
