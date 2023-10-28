@@ -14,6 +14,7 @@ import { Modal } from "../../../Screens/Modal/Modal";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import OtpInput from "react-otp-input";
+import { Link } from "react-router-dom";
 const IKEDC = () => {
 
     const { isDarkMode,
@@ -458,6 +459,22 @@ const IKEDC = () => {
           >
             Proceed
           </div>
+
+          <footer className="flex justify-center text-center gap-[20px] mt-[220px] mb-[50px] md:mt-[750px] lg:mb-[30px] 2xl:mt-[500px]">
+            <p className="text-[8px] md:text-[12px] lg:text-[20px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
+              You need help?
+            </p>
+
+            <Link to="/ContactUs">
+              <div
+                className={`${
+                  isDarkMode ? "border " : "bg-[#04177f]"
+                } text-[8px] p-1 text-white rounded-[8px] lg:text-[18px]`}
+              >
+                Contact Us
+              </div>
+            </Link>
+          </footer>
 
           {/* Confirmation Transaction Popup */}
           {proceed && (
