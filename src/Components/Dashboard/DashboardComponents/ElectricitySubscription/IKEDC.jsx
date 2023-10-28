@@ -11,6 +11,9 @@ import nig from "../ElectricitySubscription/Electricity-sub-images/nigeriaFlag.p
 import logo2 from "../ElectricitySubscription/Electricity-sub-images/pngaaa 1.svg"
 import Joi from "joi";
 import { Modal } from "../../../Screens/Modal/Modal";
+import { AiFillEyeInvisible } from "react-icons/ai";
+import { AiFillEye } from "react-icons/ai";
+import OtpInput from "react-otp-input";
 const IKEDC = () => {
 
     const { isDarkMode,
@@ -32,6 +35,7 @@ const IKEDC = () => {
     setEmail,
     ikedcamount,
      setIkedcamount,
+     toggleVisibility, isVisible,
     } = useContext(ContextProvider);
     const [flag, setFlag] = useState("");
  ;
@@ -80,7 +84,7 @@ const IKEDC = () => {
       {
         id: 1,
         name: "NGN Wallet(50,000.00)",
-        code: "NGN",
+        code: "Nigerian NGN Wallet",
         flag: require("../ElectricitySubscription/Electricity-sub-images/nigeriaFlag.png"),
       },
       {
@@ -210,6 +214,26 @@ const IKEDC = () => {
       }
        
     };
+    // const [successPopup, setSuccessPopup] = useState(false);
+
+    // const handleSuccess = () => {
+    //   // setSuccessPopup(true);
+    //   setInputPinPopUp(false);
+    //   setProceed(false);
+    // };
+    const [InputPinPopUp, setInputPinPopUp] = useState(false);
+  const [inputPin, setInputPin] = useState("");
+
+  const handle = () => {
+    setInputPinPopUp(false);
+    setProceed(true);
+  };
+  
+  const handleSwitch = () => {
+    setInputPinPopUp(true);
+    setProceed(false);
+  };
+
     
 
     return ( 
@@ -449,11 +473,11 @@ const IKEDC = () => {
               src="/Images/transferImages/close-circle.png"
               alt=""
             />
-            <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
-            <h2 className="text-[12px] my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
+            <hr className="h-[6px] bg-[#04177f] border-none mt-[9%] md:mt-[8%] md:h-[10px]" />
+            <h2 className="text-[12px] font-[600] my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
               Confirm Transaction
             </h2>
-            <p className="text-[10px] text-[#000] pt-[20px] text-center mb-2 md:text-[12px] lg:text-[14px]">
+            <p className="text-[10px] text-[#000] pt-[20px] font-[500] text-center mb-2 md:text-[12px] lg:text-[14px]">
               You are about to Purchase{" "}
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">
                 {selectedNetworkProduct} Meter ({ikedcamount})
@@ -467,44 +491,44 @@ const IKEDC = () => {
 
             <div className="flex flex-col gap-3 pt-[10px]">
               <div className="flex text-[10px] md:text-[14px] pt-[10px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#0008]">Disco Type</p>
+                <p className="text-[#7C7C7C] font-[500]">Disco Type</p>
                 <span className="flex items-center gap-1 ">
                   <div><img className="w-[12px]" src={logo2} alt="" /></div>
                   <div>Ikeja-IKEDC</div>
                   </span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#0008]">Meter Type</p>
+              <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <p className="text-[#7C7C7C] font-[500]">Meter Type</p>
                 <span>{selectedNetworkProduct} </span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#0008]">Meter Number</p>
+                <p className="text-[#7C7C7C] font-[500]">Meter Number</p>
                 <span>{meterNumber} </span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#0008]">Verified Name</p>
+                <p className="text-[#7C7C7C] font-[500]">Verified Name</p>
                 <span>{verifiedName}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#0008]">Phone Number</p>
+                <p className="text-[#7C7C7C] font-[500]">Phone Number</p>
                 <span>{phoneNumber}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#0008]">Email</p>
+                <p className="text-[#7C7C7C] font-[500]">Email</p>
                 <span>{ikedcEmail}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#0008]">Amount</p>
+                <p className="text-[#7C7C7C] font-[500]">Amount</p>
                 <span>{ikedcamount}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#0008]">Payment Method</p>
-                <span>{selected}</span>
+                <p className="text-[#7C7C7C] font-[500]">Payment Method</p>
+                <span>Nigerian NGN Wallet</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#0008]">Points Earned</p>
+                <p className="text-[#7C7C7C] font-[500]">Points Earned</p>
                 <span className="text-[#00AA48]">{pointsEarned}</span>
               </div>
             </div>
@@ -516,7 +540,7 @@ const IKEDC = () => {
                 </div>
                 <p className="text-[10px] md:text-[14px]  lg:text-[16px]">
                   Available Balance{" "}
-                  <span className="text-[#0003]">(&#8358;50,000.00)</span>
+                  <span className="text-[#000]">(&#8358;50,000.00)</span>
                 </p>
               </div>
               <img
@@ -526,7 +550,7 @@ const IKEDC = () => {
               />
             </div>
             <button
-              
+              onClick={handleSwitch}
               className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
             >
               Confirmed
@@ -534,6 +558,74 @@ const IKEDC = () => {
           </div>
             </Modal>
           )}
+
+
+          {/* Input pin pop up */}
+      {InputPinPopUp && (
+        <Modal>
+          <div
+            className={`${styles.inputPin} ${
+              toggleSideBar ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
+            } md:w-[55%] w-[90%]`}
+          >
+            <img
+              onClick={handle}
+              className="absolute right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px]"
+              src="/Images/transferImages/close-circle.png"
+              alt=""
+            />
+            <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
+            <p className="text-[9px] md:text-[16px] font-extrabold text-center my-[10%] lg:my-[%]">
+              Input PIN to complete transaction
+            </p>
+            <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[8%]">
+              <div className=" flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
+                {" "}
+                {isVisible ? (
+                  <OtpInput
+                    value={inputPin}
+                    inputType="tel"
+                    onChange={setInputPin}
+                    numInputs={4}
+                    shouldAutoFocus={true}
+                    inputStyle={{
+                      color: "#403f3f",
+                      width: 30,
+                      height: 30,
+                      borderRadius: 3,
+                    }}
+                    renderInput={(props) => (
+                      <input {...props} className="inputOTP mx-[3px]" />
+                    )}
+                  />
+                ) : (
+                  <div className="text-[24px] md:text-[24px] mt-1">
+                    * * * *{" "}
+                  </div>
+                )}
+                <div
+                  className="text-[#0003] text-xl md:text-3xl"
+                  onClick={toggleVisibility}
+                >
+                  {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
+                </div>
+              </div>
+              <p className="text-[8px] md:text-[12px] text-[#04177f]">
+                Forgot Pin ?
+              </p>
+            </div>
+            <button
+              disabled={inputPin.length !== 4 ? true : false}
+              
+              className={`${
+                inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
+              } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+            >
+              Fund
+            </button>
+          </div>
+        </Modal>
+      )}
 
        </DashBoardLayout>
      );
