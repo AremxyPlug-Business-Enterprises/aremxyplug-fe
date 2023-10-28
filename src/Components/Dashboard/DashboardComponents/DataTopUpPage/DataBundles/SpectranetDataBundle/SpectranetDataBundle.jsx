@@ -25,7 +25,8 @@ import { AiFillEye } from "react-icons/ai";
 import Joi from "joi";
 import airtimestyles from "../../../../../AirTimePage/AirtimeVtu.module.css";
 import EmailId from "../SmileDataBundle/SmileDataBundleImages/EmailId.svg";
-import { SpectranetReceipt } from "./SpectranetReceipt"
+import { SpectranetReceipt } from "./SpectranetReceipt";
+import NumberOfPins from "./SpectranetDataBundleImages/NumberOfPins.svg";
 // import { DataBundleFailedPopUp } from "../../../TransferComponent/PopUps/TransactionFailedPopUp";
 
 const SpectranetDataBundle = () => {
@@ -41,7 +42,6 @@ const SpectranetDataBundle = () => {
   const { numberPins, setNumberPins } = useContext(ContextProvider);
   const { emailId, setEmailId } = useContext(ContextProvider);
   const { count, setCount } = useContext(ContextProvider);
-
 
   const [showProductList, setShowProductList] = useState(false);
   const [showOptionList, setShowOptionList] = useState(false);
@@ -169,40 +169,25 @@ const SpectranetDataBundle = () => {
     {
       id: 1,
       name: "SPECTRANET DATA",
-      options: [
-        "Spectranet",
-        "Spectranet",
-        "Spectranet",
-      ],
-      
-      amount: [
-        "₦5,000", "₦7,000", "₦10,000",
-      ],
+      options: ["Spectranet", "Spectranet", "Spectranet"],
 
-      duration: [ 
-        "", "", "",
-      ],
+      amount: ["₦5,000", "₦7,000", "₦10,000"],
+
+      duration: ["", "", ""],
     },
-
   ];
 
-  const [errorMessage, setErrorMessage] = useState('');
-  const [emailInputColor, setEmailInputColor] = useState('');
-
-  
-
+  const [errorMessage, setErrorMessage] = useState("");
+  const [emailInputColor, setEmailInputColor] = useState("");
 
   const handlePin = (event) => {
     const inputValue = event.target.value;
     setNumberPins(inputValue);
 
     // Calculate the count of digits (numbers) in the input
-    const digitCount = inputValue.replace(/\D/g, '').length;
+    const digitCount = inputValue.replace(/\D/g, "").length;
     setCount(digitCount);
   };
-
-  
- 
 
   const handleProceed = (e) => {
     // setProceed(true);
@@ -211,8 +196,6 @@ const SpectranetDataBundle = () => {
     const { error } = schema.validate({
       recipientPhoneNumber,
     });
-
-   
 
     if (error) {
       setErrors(
@@ -231,18 +214,15 @@ const SpectranetDataBundle = () => {
       return emailRegex.test(input);
     };
 
-   
     if (isEmail(emailId)) {
-      setErrorMessage('');
-      setEmailInputColor('#2ED173');
+      setErrorMessage("");
+      setEmailInputColor("#2ED173");
       setProceed(true);
     } else {
-      setErrorMessage('Invalid email ID');
-      setEmailInputColor('#F95252');
+      setErrorMessage("Invalid email ID");
+      setEmailInputColor("#F95252");
       setProceed(false);
     }
-
-
   };
 
   const schema = Joi.object({
@@ -259,7 +239,7 @@ const SpectranetDataBundle = () => {
     setSelectedOption("");
     setShowProductList(false);
     setShowOptionList(false);
-    setEmailId('');
+    setEmailId("");
   };
 
   const handleSelectOption = (selectedOption, selectedAmount, duration) => {
@@ -286,7 +266,7 @@ const SpectranetDataBundle = () => {
   // const handleEmailId = (e) => {
   //   const value = e.target.value;
   //   const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-  
+
   //   if (emailRegex.test(value)) {
   //     setEmailId(value);
   //   }
@@ -428,8 +408,6 @@ const SpectranetDataBundle = () => {
             <div className="md:w-[50%]"></div>
           </div>
 
-          
-
           {/* =========================PRODUCTS============================== */}
 
           <div className="grid grid-cols-1 mt-[50px] md:grid-cols-2 gap-y-[20px] md:gap-x-[58.68px] lg:gap-x-[100px] md:gap-y-[15px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[40px]">
@@ -524,7 +502,7 @@ const SpectranetDataBundle = () => {
 
             <div className="">
               <h2 className="text-[10px] font-[600] md:text-[12px] lg:text-[18px]">
-              Email ID{" "}
+                Email ID{" "}
               </h2>
               <div className="relative mt-[5px]">
                 <input
@@ -535,7 +513,7 @@ const SpectranetDataBundle = () => {
                   style={{ borderColor: emailInputColor }}
                   onChange={(event) => {
                     setEmailId(event.target.value);
-                    setEmailInputColor(''); 
+                    setEmailInputColor("");
                   }}
                 />
                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
@@ -548,8 +526,10 @@ const SpectranetDataBundle = () => {
               </div>
 
               {errorMessage && (
-        <p className="text-red-500 text-start text-[10px] mt-[5px]">{errorMessage}</p>
-      )}
+                <p className="text-red-500 text-start text-[10px] mt-[5px]">
+                  {errorMessage}
+                </p>
+              )}
             </div>
 
             <div className="">
@@ -563,7 +543,6 @@ const SpectranetDataBundle = () => {
                   className="input border w-full h-8 px-4 rounded-md text-[10px] lg:text-[16px] font-[600] focus:outline-none lg:h-[51px]"
                   placeholder=""
                   value={inputValue}
-                  
                   onChange={(event) => {
                     handleChange(event);
                     setRecipientPhoneNumber(event.target.value);
@@ -631,7 +610,7 @@ const SpectranetDataBundle = () => {
 
             <div className="">
               <h2 className="text-[10px] font-[600] md:text-[12px] lg:text-[18px]">
-              Number Of PINs
+                Number Of PINs
               </h2>
               <div className="relative mt-[5px]">
                 <input
@@ -642,7 +621,11 @@ const SpectranetDataBundle = () => {
                   onChange={handlePin}
                 />
                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                  <img src={Amount} alt="" className="lg:w-[100%] lg:h-[50%]" />
+                  <img
+                    src={NumberOfPins}
+                    alt=""
+                    className="h-[15px] lg:w-[100%] lg:h-[50%]"
+                  />
                 </div>
               </div>
             </div>
@@ -664,7 +647,10 @@ const SpectranetDataBundle = () => {
                       </h2>
                     </li>
                   ) : (
-                    <h2 onClick={handleShowPayment} className="text-[10px] lg:text-[14px]">
+                    <h2
+                      onClick={handleShowPayment}
+                      className="text-[10px] lg:text-[14px]"
+                    >
                       Select Payment Method
                     </h2>
                   )}
@@ -690,11 +676,13 @@ const SpectranetDataBundle = () => {
                 </div>
               </div>
               {showPayment && (
-                <div className={`border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute ${
-                  toggleSideBar
-                    ? "w-full md:w-[44.5%] lg:w-[45%] 2xl:w-[46%]"
-                    : "w-full md:w-[46%] 2xl:w-[46.5%]"
-                } bg-[#FFF] z-[100]`}>
+                <div
+                  className={`border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute ${
+                    toggleSideBar
+                      ? "w-full md:w-[44.5%] lg:w-[45%] 2xl:w-[46%]"
+                      : "w-full md:w-[46%] 2xl:w-[46.5%]"
+                  } bg-[#FFF] z-[100]`}
+                >
                   {countryList.map((country) => (
                     <Payment
                       key={country.id}
@@ -777,7 +765,7 @@ const SpectranetDataBundle = () => {
                           />
                         </div>
                         <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        SPECTRANET
+                          SPECTRANET
                         </h2>
                       </div>
                     </div>
@@ -817,14 +805,14 @@ const SpectranetDataBundle = () => {
 
                     <div className="flex items-center justify-between">
                       <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        Account ID
+                        Email ID
                       </h2>
                       <div className="flex gap-1">
                         <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
                           {emailId}
                         </h2>
                       </div>
-                    </div> 
+                    </div>
 
                     <div className="flex items-center justify-between">
                       <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
@@ -850,11 +838,11 @@ const SpectranetDataBundle = () => {
 
                     <div className="flex items-center justify-between">
                       <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                      Number Of PINs
+                        Number Of PINs
                       </h2>
                       <div className="flex gap-1">
                         <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        {count}
+                          {count}
                         </h2>
                       </div>
                     </div>
@@ -1108,7 +1096,7 @@ const SpectranetDataBundle = () => {
 
                   <div className="flex items-center justify-between">
                     <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                    Email ID
+                      Email ID
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
@@ -1140,17 +1128,17 @@ const SpectranetDataBundle = () => {
                   </div>
 
                   <div className="flex items-center justify-between">
-                      <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                    <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
                       Number Of PINs
-                      </h2>
-                      <div className="flex gap-1">
-                        <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                    </h2>
+                    <div className="flex gap-1">
+                      <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
                         {count}
-                        </h2>
-                      </div>
+                      </h2>
                     </div>
+                  </div>
 
-                    <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between">
                     <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
                       Amount
                     </h2>
@@ -1204,7 +1192,7 @@ const SpectranetDataBundle = () => {
                       Done
                     </button>
                   </Link>
-                  
+
                   <Link to="/SpectranetReceipt">
                     <button
                       onClick={handleReceipt}

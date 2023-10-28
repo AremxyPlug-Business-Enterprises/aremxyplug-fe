@@ -6,6 +6,9 @@
     background: linear-gradient(92deg, #0CBC8B 4.68%, #367CFF 55.04%);
 }
 
+.custom-placeholder::placeholder {
+  text-align: center;
+}
 .input {
   box-shadow: 0px 0px 4px 0px #00000040
 }

@@ -171,7 +171,7 @@ export const SmileReceipt = () => {
                   <p className="text-[#0008]">Product</p>
                   <span>{selectedNetworkProduct}</span>
                 </div> */}
-                
+
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Product & Plan</p>
                   <span>{selectedOption}</span>
