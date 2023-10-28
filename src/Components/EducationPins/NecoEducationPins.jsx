@@ -21,6 +21,7 @@ import OtpInput from "react-otp-input";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
  import { Modal } from '../Screens/Modal/Modal';
+ import AremxyPlugIcon from './imagesEducation/AremxyPlug.svg';
 import NecoReceipt from './ReceiptEducationPins/necoReceipt';
 
 export default function NecoEducationPins() {
@@ -154,16 +155,16 @@ const necoReceipt = () => {
       <div className='flex lg:gap-[8px] items-center gap-[4.694px] md:gap-[5.868px] mb-[20px]  
       lg:mb-[50px] md:mb-[30px]'>
 
-        <h2 className='font-[600] text-[8px] leading-[12px] md:text-[9.389px]
-         md:leading-[11.267px] lg:text-[16px] text-[#7E7E7E] lg:leading-[19.2px]'>
+        <h2 className='font-[600] text-[9px] leading-[12px] md:text-[9.389px]
+         md:leading-[11.267px] lg:text-[16px] text-[#7E7E7E] lg:leading-[20.2px]'>
       Purchase
         </h2>
 
         <img className='h-[12px] w-[12px] md:h-[14.083px] md-w-[14.083px] lg:h-[24px] lg:w-[24px] self-center'
         src={NecoImg} alt="" />
 
-        <h2 className='font-[600] text-[8px] leading-[12px] md:text-[9.389px]
-         md:leading-[11.267px] lg:text-[16px] text-[#7E7E7E] lg:leading-[19.2px]'>
+        <h2 className='font-[600] text-[9px] leading-[12px] md:text-[9.389px]
+         md:leading-[11.267px] lg:text-[16px] text-[#7E7E7E] lg:leading-[20.2px]'>
         NECO E-PINs Instantly
         </h2>
         <img className='md:h-[14.083px] md:w-[14.083px] lg:h-[24px] lg:w-[24px] h-[14px] w-[14px]'
@@ -484,17 +485,17 @@ const necoReceipt = () => {
                   toggleSideBar
                     ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
                     : "lg:w-[40%]"
-                } lg:ml-[10%] lg:mr-[10%] grow pt-[10px] md:mt-[1%] mb-0 pb-[20px] 
+                } lg:ml-[10%] lg:mr-[10%] grow  md:mt-[1%] mb-0 pb-[20px] 
                 rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] 
                 md:mx-auto md:my-auto md:mb-[18%] md:overflow-auto`}
               >
                 <div className="w-full flex justify-end items-center border-b-[6px]
-                 border-primary px-[12px] md:h-[25px] lg:border-b-[10px] lg:mt-[20px]">
+                 border-primary px-[12px] h-[35px] md:h-[45px] lg:h-[60px] lg:border-b-[10px] ">
                   <img
                     src={closeIcon}
                     alt=""
                     onClick={() => setEducationProceed(false)}
-                    className="md:h-[19.14px] lg:h-[24px] lg:mt-[-20px] self-center"
+                    className="w-[18px] h-[18px]  md:w-[25px] md:h-[25px] lg:w-[35px] lg:h-[35px]"
                   />
                 </div>
 
@@ -651,11 +652,11 @@ const necoReceipt = () => {
                       />
                     </div>
 
-                    <div className="flex items-center justify-center">
+                    <div className="flex items-center justify-center mb-[60px]">
                       <button
                         className="w-full md:w-fit bg-primary text-white rounded-md px-[28px] 
                         text-[10px] md:text-[12px] leading-[15px] lg:text-[16px] 
-                        lg:leading-[24px] py-[15px] md:py-[10px] font-[500]"
+                        lg:leading-[24px] py-[15px] md:py-[10px] font-extrabold"
                         onClick={() => {
                           confirmButton();
                         
@@ -682,7 +683,8 @@ const necoReceipt = () => {
               >
                 <img
                   onClick={() => setEducationConfirm(false)}
-                  className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[45px] lg:h-[45px] "
+                  className="absolute cursor-pointer right-2 top-[5.5px] w-[18px] 
+                  h-[18px]  md:w-[35px] md:h-[25px] lg:w-[45px] lg:h-[45px] my-[8px]"
                   src={closeIcon}
                   alt=""
                 />
@@ -737,7 +739,9 @@ const necoReceipt = () => {
                   disabled={inputPin.length !== 4}
                   className={`${
                     inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
-                  } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                  } my-[5%] w-[225px] flex justify-center items-center mx-auto 
+                  cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] 
+                  md:w-[150px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
                 >
                  Purchase
                 </button>
@@ -761,8 +765,8 @@ const necoReceipt = () => {
                       setTransactSuccessPopUp(false);
                       window.location.reload();
                     }}
-                    className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[25px]"
-                    src="/Images/login/arpLogo.png"
+                    className="w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[42px]"
+                    src={AremxyPlugIcon}
                     alt=""
                   />
 
@@ -900,8 +904,8 @@ const necoReceipt = () => {
                 <div className="bg-[#F2FAFF] mx-5 h-[45px] my-5 flex p-[10.193px] 
                 items-center justify-center   
               md:mx-[20px] md:rounded-[15px] lg:rounded-[16.308px] lg:h-[75px]">
-                <p className="text-[6px] text-[#7C7C7C] text-center  md:text-[9px] 
-                lg:text-[14.231px] lg:leading-[20px]">
+                <p className="text-[9px] text-[#7C7C7C] text-center  md:text-[11px] 
+                lg:text-[16.231px] lg:leading-[20px]">
                <span className='md:block'>The e-pins purchase has been generated successfully. 
                 Please kindly check</span>
              <span className='md:block'> receipt to confirm the pin / token. 
@@ -911,7 +915,7 @@ const necoReceipt = () => {
               </div>
               
               <div className="flex  justify-center  w-[100%] 
-              items-center gap-[5%] md:gap-[20px] mt-[50px]  lg:gap-[10%] 
+              items-center gap-[15px] md:gap-[20px] mt-[50px]  lg:gap-[20px] 
               lg:my-[5%] md:mt-[20px] mb-[20px]">
                  
                 <Link 
@@ -938,7 +942,7 @@ const necoReceipt = () => {
                      font-extrabold h-[40px] rounded-[6px] md:w-[150px] md:rounded-[8px] 
                      md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}>
                   
-                    Share as Receipt
+                    Receipt
                   
                 </Link>
                
@@ -963,7 +967,7 @@ const necoReceipt = () => {
                  
                  <div className="py-[30px] lg:py-[60px] mt-10 lg:mb-[0px] mb-[40px] md:mb-[0px] ">
             <button
-              className={`font-[600] h-[43px] w-[100%] py-[3.534px] px-[5.301px] 
+              className={`font-extrabold h-[43px] w-[100%] py-[3.534px] px-[5.301px] 
               mb-[40px] md:mb-[0px] rounded-[4.241px] md:h-auto
               md:w-[95.649px] text-white md:py-[5.868px] md:px-[8.802px] 
              md:text-[9.389px] md:leading-[14px] md:rounded-[7.042px] 

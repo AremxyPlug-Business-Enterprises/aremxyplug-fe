@@ -5,6 +5,7 @@ import { DashBoardLayout } from '../../Dashboard/Layout/DashBoardLayout';
 import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import AremxyPlugIcon  from '../imagesEducation/AremxyPlug.svg';
 
 export default function JambReceipt() {
   const {
@@ -82,7 +83,7 @@ export default function JambReceipt() {
           <Link to="/">
             <img
               className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[29px]"
-              src="/Images/login/arpLogo.png"
+              src={AremxyPlugIcon}
               alt=""
             />
           </Link>
@@ -116,8 +117,8 @@ export default function JambReceipt() {
           text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
             Purchase Successful on
           </h3>
-          <span className="text-[11px] text-[#0008] md:text-[14px] 
-          font-[500] flex justify-center items-center">
+          <span className="text-[11px] text-[#0008] md:text-[14px] lg:text-[16px]
+          font-[600] flex justify-center items-center">
             {date.toLocaleDateString(undefined, {
               year: "numeric",
               month: "long",
@@ -195,7 +196,7 @@ export default function JambReceipt() {
                 />
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  
-              lg:text-[16px] font-[600]">
+              lg:text-[16px] font-[500]">
                 <p className="text-[#7C7C7C]">Customer Name</p>
                 <span>Aremxyplug</span>
               </div>

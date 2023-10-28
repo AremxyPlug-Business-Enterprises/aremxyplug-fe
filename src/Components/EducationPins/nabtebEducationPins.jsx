@@ -21,6 +21,7 @@ import OtpInput from "react-otp-input";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
  import { Modal } from '../Screens/Modal/Modal';
+ import AremxyPlugIcon from './imagesEducation/AremxyPlug.svg';
 import NabtebReceipt from './ReceiptEducationPins/nabtebReceipt';
 
 export default function NabtebEducationPins() {
@@ -151,7 +152,7 @@ const nabtebReceipt = () => {
     <div className='flex lg:gap-[8px] items-center md:gap-[5.868px] gap-[4.694px] 
     mb-[20px]  lg:mb-[50px] md:mb-[30px]'>
 
-      <h2 className='font-[600] text-[8px] leading-[12px] md:text-[9.389px]
+      <h2 className='font-[600] text-[9px] leading-[12px] md:text-[9.389px]
        md:leading-[11.267px] lg:text-[16px] text-[#7E7E7E] lg:leading-[19.2px]'>
     Purchase
       </h2>
@@ -159,7 +160,7 @@ const nabtebReceipt = () => {
       <img className='h-[12px] w-[12px] md:h-[14.083px] md-w-[14.083px] lg:h-[24px] lg:w-[24px] self-center'
       src={NabtebImg} alt="" />
 
-      <h2 className='font-[600] text-[8px] leading-[12px] md:text-[9.389px]
+      <h2 className='font-[600] text-[9px] leading-[12px] md:text-[9.389px]
        md:leading-[11.267px] lg:text-[16px] text-[#7E7E7E] lg:leading-[19.2px]'>
       NABTEB E-PINs Instantly
       </h2>
@@ -478,14 +479,15 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                 toggleSideBar
                   ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
                   : "lg:w-[40%]"
-              } lg:ml-[10%] lg:mr-[10%] grow pt-[10px] md:mt-[1%] mb-0 pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:mb-[18%] md:overflow-auto`}
+              } lg:ml-[10%] lg:mr-[10%] grow  md:mt-[1%] mb-0 pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:mb-[18%] md:overflow-auto`}
             >
-              <div className="w-full flex justify-end border-b-[6px] border-primary px-[12px] md:h-[25px] lg:border-b-[10px] lg:mt-[20px]">
+              <div className="w-full flex justify-end border-b-[6px] items-center
+               border-primary px-[12px] h-[35px] md:h-[45px] lg:h-[60px] lg:border-b-[10px]">
                 <img
                   src={closeIcon}
                   alt=""
                   onClick={() => setEducationProceed(false)}
-                  className="md:h-[120%] lg:h-[400%] lg:mt-[-25px] lg:pb-[20px]"
+                  className="w-[18px] h-[18px]  md:w-[25px] md:h-[25px] lg:w-[35px] lg:h-[35px]"
                 />
               </div>
 
@@ -582,8 +584,8 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                      Payment Method
                     </h2>
                     <div className="flex gap-1">
-                      <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px]
-                       md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] font-[600]">
+                      <h2 className="text-[10px] leading-[12px] md:text-[12px]
+                       md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] font-[500]">
                       {paymentResult}
                       </h2>
                     </div>
@@ -641,11 +643,11 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                     />
                   </div>
 
-                  <div className="flex items-center justify-center">
+                  <div className="flex items-center justify-center mb-[60px] bg-blue-200">
                     <button
                       className="w-full md:w-fit bg-primary text-white rounded-md
                        px-[28px] text-[10px] md:text-[12px] leading-[15px] lg:text-[16px]
-                        lg:leading-[24px] py-[15px] md:py-[10px] font-[500]"
+                        lg:leading-[24px] py-[15px] md:py-[10px] font-extrabold "
                       onClick={() => {
                         confirmButton();
                       }}
@@ -671,7 +673,8 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
             >
               <img
                 onClick={() => setEducationConfirm(false)}
-                className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[45px] lg:h-[45px] "
+                className="absolute cursor-pointer top-[5.5px] my-[8px] right-2 w-[18px] h-[18px] 
+                 md:w-[35px] md:h-[25px] lg:w-[45px] lg:h-[45px]"
                 src={closeIcon}
                 alt=""
               />
@@ -753,8 +756,8 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                     setTransactSuccessPopUp(false);
                     window.location.reload();
                   }}
-                  className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[25px]"
-                  src="/Images/login/arpLogo.png"
+                  className="w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[42px]"
+                  src={AremxyPlugIcon}
                   alt=""
                 />
 
@@ -893,8 +896,8 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
 
               <div className="bg-[#F2FAFF] mx-5 h-[45px] my-5 flex p-[10.193px] items-center justify-center   
               md:mx-[20px] md:rounded-[15px] lg:rounded-[16.308px] lg:h-[75px]">
-                <p className="text-[8px] text-[#7C7C7C] text-center  md:text-[10px] 
-                lg:text-[14.231px] lg:leading-[20px]">
+                <p className="text-[9px] text-[#7C7C7C] text-center  md:text-[11px] 
+                lg:text-[16.231px] lg:leading-[20px]">
                <span className='md:block'>The e-pins purchase has been generated successfully. 
                 Please kindly check</span>
              <span className='md:block'> receipt to confirm the pin / token. 
@@ -903,7 +906,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                 </p>
               </div>
               <div className="flex  justify-center  w-[100%] 
-              items-center gap-[5%] md:gap-[20px] mt-[50px]  lg:gap-[10%] 
+              items-center gap-[15px] md:gap-[20px] mt-[50px]  lg:gap-[20px] 
               lg:my-[5%] md:mt-[20px] mb-[20px]">
                  
                 <Link 
@@ -930,7 +933,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                      font-extrabold h-[40px] rounded-[6px] md:w-[150px] md:rounded-[8px] 
                      md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}>
                   
-                    Share as Receipt
+                    Receipt
                   
                 </Link>
                
@@ -955,7 +958,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                
                <div className="py-[30px] lg:py-[60px] mt-10">
           <button
-            className={`font-600 h-[43px] w-[100%] py-[3.534px] px-[5.301px] mb-[40px] md:mb-[0px] rounded-[4.241px]
+            className={`font-extrabold h-[43px] w-[100%] py-[3.534px] px-[5.301px] mb-[40px] md:mb-[0px] rounded-[4.241px]
             md:w-[95.649px] text-white md:py-[5.868px] md:px-[8.802px]  md:h-auto
            md:text-[9.389px] md:leading-[14px] md:rounded-[7.042px]
            lg:text-[16px] lg:leading-[24px] lg:py-[10px] lg:px-[15px] lg:w-[163px] lg:rounded-[12px] ${
