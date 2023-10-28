@@ -14,6 +14,7 @@ import { Modal } from "../../../Screens/Modal/Modal";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import OtpInput from "react-otp-input";
+import { Link } from "react-router-dom";
 const IKEDC = () => {
 
     const { isDarkMode,
@@ -214,13 +215,13 @@ const IKEDC = () => {
       }
        
     };
-    // const [successPopup, setSuccessPopup] = useState(false);
+    const [successPopup, setSuccessPopup] = useState(false);
 
-    // const handleSuccess = () => {
-    //   // setSuccessPopup(true);
-    //   setInputPinPopUp(false);
-    //   setProceed(false);
-    // };
+    const handleSuccess = () => {
+      setSuccessPopup(true);
+      setInputPinPopUp(false);
+      setProceed(false);
+    };
     const [InputPinPopUp, setInputPinPopUp] = useState(false);
   const [inputPin, setInputPin] = useState("");
 
@@ -311,7 +312,7 @@ const IKEDC = () => {
               )}
         </div>
 
-        <div className="flex flex-col mt-[10px] lg:mt-[23px]">
+        <div className="flex flex-col mt-[10px] md:mt-[23px] lg:mt-[23px]">
             <div className="text-[#7E7E7E] text-[10px] lg:text-[16px] font-[600] " >Meter Number</div>
             <div>
               <input type="number" value= { meterNumber } onChange={handleMeterNumber} className=" w-full text-[#7E7E7E] pl-[9px] lg:h-[51px] lg:text-[16px]  text-[10px] font-[500]  border-[1px] h-[30px]" />{" "}
@@ -458,6 +459,22 @@ const IKEDC = () => {
           >
             Proceed
           </div>
+
+          <footer className="flex justify-center text-center gap-[20px] mt-[220px] mb-[50px] md:mt-[750px] lg:mb-[30px] 2xl:mt-[500px]">
+            <p className="text-[8px] md:text-[12px] lg:text-[20px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
+              You need help?
+            </p>
+
+            <Link to="/ContactUs">
+              <div
+                className={`${
+                  isDarkMode ? "border " : "bg-[#04177f]"
+                } text-[8px] p-1 text-white rounded-[8px] lg:text-[18px]`}
+              >
+                Contact Us
+              </div>
+            </Link>
+          </footer>
 
           {/* Confirmation Transaction Popup */}
           {proceed && (
@@ -616,13 +633,133 @@ const IKEDC = () => {
             </div>
             <button
               disabled={inputPin.length !== 4 ? true : false}
-              
+              onClick={handleSuccess}
               className={`${
                 inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
               } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
             >
               Fund
             </button>
+          </div>
+        </Modal>
+      )}
+
+
+      {/* purchase Successful Popup */}
+      {successPopup && (
+        <Modal>
+          <div
+            className={`${styles.successfulTwo} ${
+              toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+            } md:w-[45%] w-[90%] overflow-auto`}
+          >
+            <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
+              <img
+                onClick={() => setSuccessPopup(false)}
+                className=" w-[18px]   md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[25px]"
+                src="/Images/login/arpLogo.png"
+                alt=""
+              />
+
+              <img
+                onClick={() => setSuccessPopup(false)}
+                className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
+                src="/Images/transferImages/close-circle.png"
+                alt=""
+              />
+            </div>
+            <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
+            <h2 className="text-[12px] my-[4%] text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%]">
+              Purchase Successful
+            </h2>
+            <img
+              className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[60px] lg:h-[60px]"
+              src="./Gif/checkMarkGif.gif"
+              alt="/"
+            />
+            <p className="text-[8px] lg:text-[16px] font-[500] text-[#000] text-center mb-2 md:text-[14px] ">
+              You have successfully Purchased{" "}
+              <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
+               Ikeja {selectedNetworkProduct} Meter
+              </span>{" "}
+             <br></br>
+              <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
+                ({ikedcamount}){" "}
+              </span>
+              From your NGN Nigerian Wallet to{" "}
+            </p>
+
+            <div className="flex flex-col gap-3 pt-[10px]">
+              <div className="flex text-[10px] md:text-[14px] pt-[10px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <p className="text-[#7C7C7C] font-[500]">Disco Type</p>
+                <span className="flex items-center gap-1 ">
+                  <div><img className="w-[12px]" src={logo2} alt="" /></div>
+                  <div>Ikeja-IKEDC</div>
+                  </span>
+              </div>
+              <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <p className="text-[#7C7C7C] font-[500]">Meter Type</p>
+                <span>{selectedNetworkProduct} </span>
+              </div>
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <p className="text-[#7C7C7C] font-[500]">Meter Number</p>
+                <span>{meterNumber} </span>
+              </div>
+
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <p className="text-[#7C7C7C] font-[500]">Verified Name</p>
+                <span>{verifiedName}</span>
+              </div>
+
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <p className="text-[#7C7C7C] font-[500]">Phone Number</p>
+                <span>{phoneNumber}</span>
+              </div>
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <p className="text-[#7C7C7C] font-[500]">Email</p>
+                <span>{ikedcEmail}</span>
+              </div>
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <p className="text-[#7C7C7C] font-[500]">Amount</p>
+                <span>{ikedcamount}</span>
+              </div>
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <p className="text-[#7C7C7C] font-[500]">Payment Method</p>
+                <span>Nigerian NGN Wallet</span>
+              </div>
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <p className="text-[#7C7C7C] font-[500]">Points Earned</p>
+                <span className="text-[#00AA48]">{pointsEarned}</span>
+              </div>
+            </div>
+
+
+            <div className="bg-[#F2FAFF] mx-10 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
+              <p className="text-[6px] text-center mx-auto w-[171px] md:text-[14px] md:w-[80%] lg:text-[14px]">
+              The electricity bills / token purchase has been generated successfully. Please kindly check receipt
+               to confirm the bills / token. You can contact us for any further assistance.
+              </p>
+            </div>
+            <div className="flex w-[70%] mx-auto items-center gap-[5%] md:gap-[20px] justify-center md:w-[20%] lg:my-[5%]">
+              <button
+                onClick={() => {
+                  setSuccessPopup(false);
+                }}
+                className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:px-[50px] md:w-[70%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+              >
+                Done
+              </button>
+              <Link to="/">
+                <button
+                  onClick={() => {
+                    setSuccessPopup(false);
+                  }}
+                  className={`border-[1px] w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                >
+                  Receipt
+                </button>
+              </Link>
+            </div>
           </div>
         </Modal>
       )}
