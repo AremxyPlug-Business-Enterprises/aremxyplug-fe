@@ -173,7 +173,7 @@ const necoReceipt = () => {
       {/* Input for Request of examination pins  */}
       <form action=''>
       <div  className=' flex flex-col gap-[20px]  md:h-[172.73px] md:gap-[14.67px] 
-      md:w-[80%] lg:gap-[25px] lg:h-[296px] lg:mb-[30px] mb-[30px]'>
+       lg:gap-[25px] lg:h-[296px] lg:mb-[30px] mb-[30px]'>
         {/* container for the first two input */}
         <div className=' w-[100%]
         flex flex-col md:flex-row gap-[20px] 
@@ -495,7 +495,8 @@ const necoReceipt = () => {
                     src={closeIcon}
                     alt=""
                     onClick={() => setEducationProceed(false)}
-                    className="w-[18px] h-[18px]  md:w-[25px] md:h-[25px] lg:w-[35px] lg:h-[35px]"
+                    className="w-[18px] h-[18px]  md:w-[25px] cursor-pointer
+                    md:h-[25px] lg:w-[35px] lg:h-[35px]"
                   />
                 </div>
 
@@ -683,8 +684,9 @@ const necoReceipt = () => {
               >
                 <img
                   onClick={() => setEducationConfirm(false)}
-                  className="absolute cursor-pointer right-2 top-[5.5px] w-[18px] 
-                  h-[18px]  md:w-[35px] md:h-[25px] lg:w-[45px] lg:h-[45px] my-[8px]"
+                  className="absolute cursor-pointer top-[5.5px] 
+                  right-2 w-[18px] h-[18px] 
+                  md:w-[35px] md:h-[25px] lg:w-[45px] lg:h-[45px]"
                   src={closeIcon}
                   alt=""
                 />
@@ -765,7 +767,8 @@ const necoReceipt = () => {
                       setTransactSuccessPopUp(false);
                       window.location.reload();
                     }}
-                    className="w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[42px]"
+                    className="w-[18px] h-[18px] md:w-[35px]
+                     md:h-[35px] lg:w-[35px] lg:h-[42px]"
                     src={AremxyPlugIcon}
                     alt=""
                   />
@@ -775,7 +778,8 @@ const necoReceipt = () => {
                       setTransactSuccessPopUp(false);
                       window.location.reload();
                     }}
-                    className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
+                    className=" w-[18px] h-[18px] md:w-[35px] cursor-pointer
+                     md:h-[35px] lg:w-[29px] lg:h-[29px]"
                     src="/Images/transferImages/close-circle.png"
                     alt=""
                   />
