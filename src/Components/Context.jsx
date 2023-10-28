@@ -697,6 +697,7 @@ export const Context = ({ children }) => {
   const [verifiedName, setVerifiedName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [ikedcEmail, setEmail] = useState('');
+  const [ikedcamount, setIkedcamount] = useState('');
 
   //=============Currency conversion==============
   const [convertedAmount, setConvertedAmount] = useState("");
@@ -1037,6 +1038,8 @@ const [walletBalance, setWalletBalance] = useState('');
     setPhoneNumber,
     ikedcEmail, 
     setEmail,
+    ikedcamount,
+     setIkedcamount,
 
     //currency
     convertedAmount,
