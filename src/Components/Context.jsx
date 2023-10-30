@@ -275,7 +275,7 @@ export const Context = ({ children }) => {
         headers: { "Content-Type": "Application/json" },
       };
 
-      const url = "https://aremxyplug.onrender.com/api/v1/users/signup";
+      const url = "https://aremxyplug.onrender.com/api/v1/signup";
 
       axios
         .post(url, data, config)
@@ -666,40 +666,39 @@ export const Context = ({ children }) => {
   }, []);
 
   // =====================AirtimeVTU========================
-  const [networkName, setNetworkName] = useState('');
-  const [selectedProduct, setSelectedProduct] = useState('');
-  const [recipientName, setRecipientName] = useState('');
-  const [recipientNumber, setRecipientNumber] = useState('');
-  const [amount, setAmount] = useState('');
-  const [networkImage, setNetworkImage] = useState('');
-
-
+  const [networkName, setNetworkName] = useState("");
+  const [selectedProduct, setSelectedProduct] = useState("");
+  const [recipientName, setRecipientName] = useState("");
+  const [recipientNumber, setRecipientNumber] = useState("");
+  const [amount, setAmount] = useState("");
+  const [networkImage, setNetworkImage] = useState("");
 
   // =====================DATABUNDLE========================
-  const [selectedOption, setSelectedOption] = useState('');
-  const [selectedNetworkProduct, setSelectedNetworkProduct] = useState('');
-  const [recipientPhoneNumber, setRecipientPhoneNumber] = useState('');
-  const [selectedAmount, setSelectedAmount] = useState('');
-  const [recipientNames, setRecipientNames] = useState('');
+  const [selectedOption, setSelectedOption] = useState("");
+  const [selectedNetworkProduct, setSelectedNetworkProduct] = useState("");
+  const [recipientPhoneNumber, setRecipientPhoneNumber] = useState("");
+  const [selectedAmount, setSelectedAmount] = useState("");
+  const [recipientNames, setRecipientNames] = useState("");
   const [walletName, setWalletName] = useState("");
   const [accountId, setAccountId] = useState("");
   const [numberPins, setNumberPins] = useState("");
   
   //=============point redeem==============
-  const [inputValue, setInputValue] = useState('');
-  const [outputValue, setOutputValue] = useState('');
-  const [realinputValue, setRealInputValue] = useState('');
-  const [realoutputValue, setRealOutputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
+  const [outputValue, setOutputValue] = useState("");
+  const [realinputValue, setRealInputValue] = useState("");
+  const [realoutputValue, setRealOutputValue] = useState("");
 
   //==============electricity subscrition===========
   const [meterNumber, setMeterNumber] = useState('');
   const [verifiedName, setVerifiedName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [ikedcEmail, setEmail] = useState('');
+  const [ikedcamount, setIkedcamount] = useState('');
 
   //=============Currency conversion==============
-  const [convertedAmount, setConvertedAmount] = useState('');
-  const [initialValue, setInitialValue] = useState('');
+  const [convertedAmount, setConvertedAmount] = useState("");
+  const [initialValue, setInitialValue] = useState("");
   const [showListOne, setShowListOne] = useState(false);
   const [selectedOne, setSelectedOne] = useState(false);
   const [activeButtonOne, setActiveButtonsOne] = useState([true, false]);
@@ -978,9 +977,7 @@ const [walletBalance, setWalletBalance] = useState('');
     setOtherBankWithdrawalSuccess,
     // ==============exchangeRate=============
     exchangeRate,
-    
 
-    
     // ==============AirtimeVTU===============
     networkName,
     setNetworkName,
@@ -992,27 +989,26 @@ const [walletBalance, setWalletBalance] = useState('');
     setRecipientNumber,
     amount,
     setAmount,
-    networkImage, 
+    networkImage,
     setNetworkImage,
 
     // ==============DataBundle===============
-    selectedOption, 
+    selectedOption,
     setSelectedOption,
-    selectedNetworkProduct, 
+    selectedNetworkProduct,
     setSelectedNetworkProduct,
-    recipientPhoneNumber, 
+    recipientPhoneNumber,
     setRecipientPhoneNumber,
-    selectedAmount, 
+    selectedAmount,
     setSelectedAmount,
-    recipientNames, 
+    recipientNames,
     setRecipientNames,
-    walletName, 
+    walletName,
     setWalletName,
     accountId, 
     setAccountId,
     numberPins, 
     setNumberPins,
-
 
 
     //point redeem
@@ -1036,6 +1032,8 @@ const [walletBalance, setWalletBalance] = useState('');
     setPhoneNumber,
     ikedcEmail, 
     setEmail,
+    ikedcamount,
+     setIkedcamount,
 
     //currency
     convertedAmount,
@@ -1048,7 +1046,6 @@ const [walletBalance, setWalletBalance] = useState('');
     setSelectedOne,
     setActiveButtonsOne,
     activeButtonOne,
-   
 
     //TV-subscription
     confirmGotvPopup,
@@ -1115,4 +1112,3 @@ const [walletBalance, setWalletBalance] = useState('');
     </div>
   );
 };
-

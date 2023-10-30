@@ -148,7 +148,7 @@ const waecReceipt = () => {
 
   return (
     <DashBoardLayout>
-    <div className='flex flex-col lg:h-[700px] justify-between '>
+    <div className='flex flex-col h-[110%] justify-between '>
  <div className=''>
   {/* Hero-section */}
 <HeroComponent/>
@@ -173,7 +173,7 @@ const waecReceipt = () => {
     {/* Input for Request of examination pins  */}
     <form action=''>
     <div  className='flex flex-col gap-[20px]  md:h-[172.73px] md:gap-[14.67px] 
-    md:w-[80%] lg:gap-[25px] lg:h-[296px] lg:mb-[30px] mb-[30px]'>
+     lg:gap-[25px] lg:h-[296px] lg:mb-[30px] mb-[30px]'>
       {/* container for the first two input */}
       <div className=' w-[100%]
       flex flex-col md:flex-row gap-[20px] 
@@ -315,6 +315,8 @@ border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
 
    })}
    className='h-[29.927px] lg:h-[51px]  md:h-[29.93px] w-[100%] border-[0.4px] border-[#9C9C9C] 
+   lg:text-[16px] lg:leading-[20.8px] text-[#7E7E7E]
+     text-[10.389px] leading-[16.206px]
    pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
    focus:outline-none 
    md:pt-[8.802px] md:pb-[7.042px] 
@@ -344,6 +346,8 @@ border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
    </h2>
    
    <input className ='EmailPins flex h-[29.927px] lg:h-[51px] md:h-[29.93px] w-[100%]
+   lg:text-[16px] lg:leading-[20.8px] text-[#7E7E7E]
+   text-[10.389px] leading-[16.206px]
    pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] 
     border-[0.4px] border-[#9C9C9C] focus:outline-none self-center
    md:pt-[8.802px] md:pb-[7.042px] 
@@ -401,7 +405,7 @@ border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
     </div>
     {/* payment method */}
     <div className='relative payment-parent gap-[5.868px]
-     flex w-[100%] flex-col md:w-1/2  md:gap-[5.868px] lg:gap-[10px]'>
+     flex w-[100%] flex-col md:w-1/2   md:gap-[10px]'>
     {/* header */}
     <h2 className='font-[600] text-[8px] leading-[10.4px]
      text-[#7E7E7E]  md:text-[9.389px] md:leading-[12.206px]
@@ -490,7 +494,8 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
               src={closeIcon}
               alt=""
               onClick={() => setEducationProceed(false)}
-              className="w-[18px] h-[18px]  md:w-[25px] md:h-[25px] lg:w-[35px] lg:h-[35px]"
+              className="w-[18px] h-[18px]  md:w-[25px] cursor-pointer
+               md:h-[25px] lg:w-[35px] lg:h-[35px]"
                />
               </div>
 
@@ -683,8 +688,9 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
             >
               <img
                 onClick={() => setEducationConfirm(false)}
-                className="absolute cursor-pointer right-2 top-[5.5px]  w-[18px] h-[18px] my-[8px] md:w-[35px] 
-                md:h-[25px] lg:w-[45px] lg:h-[45px] "
+                className="absolute cursor-pointer top-[5.5px] 
+                right-2 w-[18px] h-[18px] 
+                md:w-[35px] md:h-[25px] lg:w-[45px] lg:h-[45px]"
                 src={closeIcon}
                 alt=""
               />
@@ -767,7 +773,8 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                     setTransactSuccessPopUp(false);
                     window.location.reload();
                   }}
-                  className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[42px]"
+                  className=" w-[18px] h-[18px] md:w-[35px] cursor-pointer
+                  md:h-[35px] lg:w-[35px] lg:h-[42px]"
                   src={AremxyPlugIcon}
                   alt=""
                 />
@@ -999,7 +1006,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
         </div>
 
     </form>
-
+</div>
     
 
     <div className=" flex gap-[5.729px]  md:gap-[14.896px] py-[30.865px] justify-center px-[8.594px] ">
@@ -1020,7 +1027,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
               </Link>
             </div>
   </div>
-  </div>
+  
   </DashBoardLayout>
 
   )

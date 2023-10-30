@@ -11,10 +11,9 @@ import LoginPopUp from "./LoginPopUp";
 import Joi from "joi";
 import axios from "axios";
 
-
-
 function LoginForm() {
-  const { setOpenTranspin, setOpenResetTranspin, setOpen2StepVerification } = useContext(ContextProvider);
+  const { setOpenTranspin, setOpenResetTranspin, setOpen2StepVerification } =
+    useContext(ContextProvider);
   // The state handling whether input is user name or email starts here
   const [usernameORemail, setUsernameORemail] = useState("username");
   // The satate handling whether input is user name or email ends here
@@ -47,7 +46,6 @@ function LoginForm() {
   const [password, setPassword] = useState(checkPassword());
   const [checkbox, setCheckbox] = useState(false);
 
-
   const [passwordHidden, setPasswordHidden] = useState("password");
   const [isFocused, setIsFocused] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -58,7 +56,6 @@ function LoginForm() {
 
   const [redirect, setRedirect] = useState(false);
   const navigate = useNavigate();
-
 
   useEffect(() => {
     const handleResize = () => {
@@ -126,8 +123,6 @@ function LoginForm() {
     setCheckbox(e.target.checked);
   };
 
-
-
   const handleFocus = (index) => {
     if (!isFocused.includes(index)) {
       setIsFocused([...isFocused, index]);
@@ -140,10 +135,21 @@ function LoginForm() {
     }
   };
 
-
   const submitHandler = async (e) => {
     e.preventDefault();
     if (usernameORemail === "username") {
+      try {
+        const loginData = {username: username, password: password}
+        const {data} = await axios.post('https://aremxyplug.onrender.com/api/v1/login', loginData);
+        console.log(data);
+        setOpenTranspin(true);
+        setUsername("");
+        setPassword("");
+        setErrors({});
+        setRedirect(true);
+      } catch {
+        alert('Error Logging In')
+      }
       // ========Login form validation starts her=======
       const schema = Joi.object({
         username: Joi.string()
@@ -168,23 +174,22 @@ function LoginForm() {
           localStorage.setItem("aremxyPassword", JSON.stringify(password));
         }
       }
+      // ======Login form validation ends here=====
+    };
 
+    if (usernameORemail === "email") {
       try {
-        const loginData = {username: username, password: password}
-        const {data} = await axios.post('https://aremxyplug.onrender.com/api/v1/users/login', loginData);
+        const loginData = {email: email, password: password}
+        const {data} = await axios.post('https://aremxyplug.onrender.com/api/v1/login', loginData);
         console.log(data);
         setOpenTranspin(true);
-        setUsername("");
+        setEmail("");
         setPassword("");
         setErrors({});
         setRedirect(true);
-      } catch {
-        alert('Error Logging In')
+      } catch (error) {
+        alert('Error Logging In');
       }
-      // ======Login form validation ends here=====
-    }
-
-    if (usernameORemail === "email") {
       // ========Login form validation starts here=======
       const schema = Joi.object({
         email: Joi.string()
@@ -209,24 +214,12 @@ function LoginForm() {
         }
       }
 
-      try {
-        const loginData = {email: email, password: password}
-        const {data} = await axios.post('https://aremxyplug.onrender.com/api/v1/users/login', loginData);
-        console.log(data);
-        setOpenTranspin(true);
-        setEmail("");
-        setPassword("");
-        setErrors({});
-        setRedirect(true);
-      } catch (error) {
-        alert('Error Logging In');
-      }
       // ======Login form validation ends here=====
-    }
+    };
   };
 
   if (redirect) {
-    navigate('/dashboard', {replace: true});
+    navigate("/dashboard", { replace: true });
   }
 
   return (
@@ -237,11 +230,8 @@ function LoginForm() {
       }}
     >
       {showModal && <FirstModal />}
-        
-      {
-        <LoginPopUp /> 
 
-      }
+      {<LoginPopUp />}
       <Link to="/">
         <img
           src="./Images/login/arpLogo.png"
@@ -352,7 +342,7 @@ function LoginForm() {
                 onFocus={() => handleFocus(2)}
                 onBlur={() => handleBlur(2)}
               >
-                {passwordHidden === "password" ? (
+                { passwordHidden === "password" ? (
                   <img
                     src="./Images/login/eyeIcon2.png"
                     alt="icon"
@@ -441,11 +431,10 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
         </form>
         <p
           className="text-center text-[14px] font-semibold text-[#575757] my-4 cursor-pointer"
-          onClick={() =>{
+          onClick={() => {
             //  setShowModal2(true)
-             setOpen2StepVerification(true)
-          }
-            }
+            setOpen2StepVerification(true);
+          }}
         >
           -OR-
         </p>
@@ -476,7 +465,6 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
         </div>
       </div>
     </div>
-
   );
 }
 
