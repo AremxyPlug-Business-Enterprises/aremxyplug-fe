@@ -65,42 +65,61 @@ const ElectricitySubscription = () => {
                 <div className="text-[9px] lg:text-[16px]   font-[500] leading-[11.27px]">IKEDC</div>
             </div>
             </Link>
+            <Link to="/ekedc">
             <div className="flex flex-col justify-between items-center rounded-md border-[1px] pt-2 pb-3 lg:pb-5 px-4 w-[144px] h-[94px] md:w-[94px] md:h-[94px] lg:w-[160px] lg:h-[160px]">
                 <div><img className="w-[58.7px] lg:w-[100px] pt-3 " src={bill2} alt="" /></div>
                 <div className="text-[9px] lg:text-[16px] font-[500] leading-[11.27px]">EKEDC</div>
             </div>
+            </Link>
+           
+            <Link to= "/aedc">
             <div className="flex flex-col justify-between items-center rounded-md border-[1px] pt-1 pb-3 lg:pb-5 px-4 w-[144px] h-[94px] md:w-[94px] md:h-[94px] lg:w-[160px] lg:h-[160px]">
                 <div><img className="w-[60px] lg:w-[100px] pt-4" src={bill3} alt="" /></div>
                 <div className="text-[9px] lg:text-[16px] font-[500] leading-[11.27px]">AEDC</div>
             </div>
+            </Link>
+           <Link to="/kedco">
             <div className="flex flex-col justify-between items-center rounded-md border-[1px] pt-1 pb-3 lg:pb-5 px-4 w-[144px] h-[94px] md:w-[94px] md:h-[94px] lg:w-[160px] lg:h-[160px]">
                 <div><img className="w-[42.9px] lg:w-[73px] " src={bill4} alt="" /></div>
                 <div className="text-[9px] lg:text-[16px] font-[500] leading-[11.27px]"> KEDCO</div>
             </div>
+            </Link>
+            <Link to="/phed">
             <div className="flex flex-col justify-between items-center rounded-md border-[1px] pt-1 pb-3 lg:pb-5  px-4 w-[144px] h-[94px] md:w-[94px] md:h-[94px] lg:w-[160px] lg:h-[160px]">
                 <div><img className="w-[89px] lg:w-[100px]  " src={bill5} alt="" /></div>
                 <div className="text-[9px] lg:text-[16px] font-[500] leading-[11.27px]">PHED</div>
             </div>
+            </Link>
+            <Link to="/jed">
             <div className="flex flex-col justify-between items-center rounded-md border-[1px] pt-0 pb-3 lg:pb-5 px-4 w-[144px] h-[94px] md:w-[94px] md:h-[94px] lg:w-[160px] lg:h-[160px]">
                 <div><img className="w-[70px] lg:w-[80px]  " src={bill6} alt="" /></div>
                 <div className="text-[9px] lg:text-[16px] font-[500] leading-[11.27px]">JED</div>
             </div>
+            </Link>
+            <Link to="/kaedco">
             <div className="flex flex-col justify-between items-center rounded-md border-[1px] pt-0 pb-3 lg:pb-5 px-4 w-[144px] h-[94px] md:w-[94px] md:h-[94px] lg:w-[160px] lg:h-[160px]">
                 <div><img className="w-[70px] lg:w-[100px] pt-2 " src={bill7} alt="" /></div>
                 <div className="text-[9px] lg:text-[16px] font-[500] leading-[11.27px]">KAEDCO</div>
             </div>
+            </Link>
+            <Link to="/eedc">
             <div className="flex flex-col justify-between items-center rounded-md border-[1px] pt-0 pb-3 lg:pb-5 px-4 w-[144px] h-[94px] md:w-[94px] md:h-[94px] lg:w-[160px] lg:h-[160px]">
                 <div><img className="w-[70px] lg:w-[100px] pt-2  " src={bill8} alt="" /></div>
                 <div className="text-[9px] lg:text-[16px] font-[500] leading-[11.27px]">EEDC</div>
             </div>
+            </Link>
+            <Link to="/ibedc">
             <div className="flex flex-col justify-between items-center rounded-md border-[1px] pt-0 pb-3 lg:pb-5 px-4 w-[144px] h-[94px] md:w-[94px] md:h-[94px] lg:w-[160px] lg:h-[160px]">
                 <div><img className="w-[70px] lg:w-[80px] pt-2  " src={bill9} alt="" /></div>
                 <div className="text-[9px] lg:text-[16px] font-[500] leading-[11.27px]">IBEDC</div>
             </div>
+            </Link>
+            <Link to="/bedc">
             <div className="flex flex-col justify-between items-center rounded-md border-[1px] pt-0 pb-3 lg:pb-5 px-4 w-[144px] h-[94px] md:w-[94px] md:h-[94px] lg:w-[160px] lg:h-[160px]">
                 <div><img className="w-[90px] lg:w-[120px] pt-4  " src={bill10} alt="" /></div>
                 <div className="text-[9px] lg:text-[16px] font-[500] leading-[11.27px]">BEDC</div>
             </div>
+            </Link>
         </div>
         <div className="flex flex-row items-center justify-center mt-[200px] md:mt-[38%] lg:mt-[75%] gap-2">
           <div className="text-[8px] lg:text-[12px] font-[600] text-black">

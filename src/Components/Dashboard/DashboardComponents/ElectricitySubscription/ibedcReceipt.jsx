@@ -6,9 +6,9 @@ import { DashBoardLayout } from "../../Layout/DashBoardLayout";
 import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-import logo2 from "../ElectricitySubscription/Electricity-sub-images/pngaaa 1.svg"
+import logo2 from "../ElectricitySubscription/Electricity-sub-images/ibedc-logo 1.svg"
 
-export const IkedcReceipt = () => {
+export const IbedcReceipt = () => {
   const {
     toggleSideBar,
     isDarkMode,
@@ -113,7 +113,7 @@ export const IkedcReceipt = () => {
             <p className="text-[8px] lg:text-[16px] font-[500] text-[#000] text-center mb-2 md:text-[14px] ">
               You have successfully Purchased{" "}
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
-               Ikeja {selectedNetworkProduct} Meter
+               Ibadan {selectedNetworkProduct} Meter
               </span>{" "}
              <br></br>
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
@@ -138,8 +138,8 @@ export const IkedcReceipt = () => {
               <div className="flex text-[10px] md:text-[14px] pt-[10px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Disco Type</p>
                 <span className="flex items-center gap-1 ">
-                  <div><img className="w-[12px]" src={logo2} alt="" /></div>
-                  <div>Ikeja-IKEDC</div>
+                  <div><img className="w-[25px]" src={logo2} alt="" /></div>
+                  <div>Ibadan-IBEDC</div>
                   </span>
               </div>
               <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -214,7 +214,7 @@ export const IkedcReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Description</p>
-                  <span>Ikeja {selectedNetworkProduct} </span>
+                  <span>Ibadan {selectedNetworkProduct} </span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Bill / Token Generated</p>
