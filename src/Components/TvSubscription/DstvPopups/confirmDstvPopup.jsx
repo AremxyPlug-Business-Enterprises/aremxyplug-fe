@@ -13,7 +13,9 @@ import { Modal } from "../../Screens/Modal/Modal";
      toggleSideBar,
      handleInputGotv,
      cardName,
-     GOTVMobileNumber,
+     smartCard,
+     tvEmail,
+     mobileNumber,
      formatNumberWithCommas,
      selectedOptionDstv,
   } = useContext(ContextProvider)
@@ -66,7 +68,7 @@ import { Modal } from "../../Screens/Modal/Modal";
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <span className="text-[#7C7C7C]">Smartcard / IUC Number</span>
-                    <span>1234567890</span>
+                    <span>{smartCard}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <span className="text-[#7C7C7C]">Card Name</span>
@@ -74,11 +76,11 @@ import { Modal } from "../../Screens/Modal/Modal";
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <span className="text-[#7C7C7C]">Phone Number</span>
-                    <span>{GOTVMobileNumber}</span>
+                    <span>{mobileNumber}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <span className="text-[#7C7C7C]">Email</span>
-                    <span>Habib@aremxy.com</span>
+                    <span>{tvEmail}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <span className="text-[#7C7C7C]">Amount</span>
