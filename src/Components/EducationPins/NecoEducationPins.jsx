@@ -197,7 +197,7 @@ const necoReceipt = () => {
   hover:bg-[#EDEAEA]'>
       <h2 
       className='font-[500] text-[8px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] 
-      lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px] cursor-pointer'>
+      lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer'>
       {examType}
         </h2>
         <img  
@@ -254,7 +254,7 @@ const necoReceipt = () => {
   lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
   border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
       <h2 className='font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
-      lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px] cursor-pointer'>
+      lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer'>
       {quantityResult}
         </h2>
         <img 
@@ -317,10 +317,10 @@ const necoReceipt = () => {
     }
   
      })}
-     className='h-[29.927px] lg:h-[51px]  md:h-[29.93px] w-[100%] border-[0.4px] border-[#9C9C9C] 
-     lg:text-[16px] lg:leading-[20.8px] text-[#7E7E7E]
-     text-[10.389px] leading-[16.206px]
-     pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
+     className='h-[29.927px] lg:h-[51px] font-[500]  md:h-[29.93px] w-[100%] border-[0.4px] border-[#9C9C9C] 
+     text-[14.389px] leading-[18.206px]
+     lg:text-[16px] lg:leading-[20.8px] text-black
+ pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
      focus:outline-none 
      md:pt-[8.802px] md:pb-[7.042px] 
      md:pr-[5.282px] md:pl-[5.867px] 
@@ -348,8 +348,9 @@ const necoReceipt = () => {
      </h2>
      
      < input className='flex h-[29.927px] lg:h-[51px] md:h-[29.93px] w-[100%]
-     lg:text-[16px] lg:leading-[20.8px] text-[#7E7E7E]
-     text-[10.389px] leading-[16.206px]
+     text-[14.389px] font-[500] leading-[18.206px] tracking-[0.4px]
+     lg:text-[16px] lg:leading-[20.8px] text-black
+     
      pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
       border-[0.4px] border-[#9C9C9C] focus:outline-none self-center
      md:pt-[8.802px] md:pb-[7.042px] 
@@ -398,7 +399,7 @@ const necoReceipt = () => {
   focus:outline-none text-start
     text-[8px] leading-[10.4px]
    font-[500]  md:text-[9.389px] md:leading-[12.206px]
-  lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px]'
+  lg:text-[16px] text-black lg:leading-[20.8px]'
   maxLength={7}>
   {waecAmount}
    </div>
@@ -426,7 +427,7 @@ const necoReceipt = () => {
 
       <h2 className='font-[500] text-[8px] leading-[10.4px]
        md:text-[9.389px] md:leading-[12.206px]
-        lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px] 
+        lg:text-[16px] text-black lg:leading-[20.8px] 
         cursor-pointer'>
       {paymentResult + walletBalance}
         </h2>
@@ -1015,7 +1016,7 @@ const necoReceipt = () => {
                 You need help?
               </p>
               <Link to ="/contactUs"
-                className="font-[500] text-white text-[10px]  py-[4.865px] 
+                className="font-extrabold text-white text-[10px]  py-[4.865px] 
  px-[12.594px] leading-[10.4px] rounded-[5.156px] bg-[#04177F]
  lg:text-[12px] lg:leading-[14.4px] 
   md:text-[4.583px]  md:py-[4.865px] 
