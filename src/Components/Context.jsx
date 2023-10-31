@@ -682,6 +682,8 @@ export const Context = ({ children }) => {
   const [walletName, setWalletName] = useState("");
   const [accountId, setAccountId] = useState("");
   const [numberPins, setNumberPins] = useState("");
+  const [emailId, setEmailId] = useState("");
+   
   
   //=============point redeem==============
   const [inputValue, setInputValue] = useState("");
@@ -1009,6 +1011,9 @@ const [walletBalance, setWalletBalance] = useState('');
     setAccountId,
     numberPins, 
     setNumberPins,
+    emailId, 
+    setEmailId,
+
 
 
     //point redeem
