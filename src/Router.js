@@ -93,6 +93,25 @@ import DataBundleSelectRecipient from "./Components/Dashboard/DashboardComponent
 import DataBundleAddRecipient from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundleAddRecipient"
 import ElectricitySubscription from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/ElectricitySubscription";
 import IKEDC from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/IKEDC";
+import { IkedcReceipt } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/IkedcReceipt";
+import AEDC from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/AEDC";
+import { AedcReceipt } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/aedcReceipt";
+import EKEDC from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/EKEDC";
+import { EkedcReceipt } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/ekedcReceipt";
+import KAEDCO from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/KAEDCO";
+import { KaedcoReceipt } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/kaedcoReceipt";
+import { BedcReceipt } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/bedcReceipt";
+import BEDC from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/BEDC";
+import EEDC from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/EEDC";
+import { EedcReceipt } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/eedcReceipt";
+import { IbedcReceipt } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/ibedcReceipt";
+import IBEDC from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/IBEDC";
+import JED from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/JED";
+import { JedReceipt } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/jedReceipt";
+import { KedcoReceipt } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/kedcoReceipt";
+import KEDCO from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/KEDCO";
+import PHED from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/PHED";
+import { PhedReceipt } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/phedReceipt";
 
 export const Router = () => {
   return (
@@ -177,7 +196,26 @@ export const Router = () => {
           element={<InternationalReceipt />}
         />
        <Route path="/redeem-receipt"element={<RedeemReceipt />} />
+       <Route path="/ikedec-receipt" element={<IkedcReceipt />} />
+       <Route path="/aedc-receipt" element={<AedcReceipt />} />
+       <Route path="/ekedc-receipt" element={<EkedcReceipt />} />
+       <Route path="/eedc-receipt" element={<EedcReceipt />} />
+       <Route path="/kaedco-receipt" element={<KaedcoReceipt />} />
+       <Route path="/bedc-receipt" element={<BedcReceipt/>} />
+       <Route path="/ibedc-receipt" element={<IbedcReceipt/>} />
+       <Route path="/jed-receipt" element={<JedReceipt/>} />
+       <Route path="/kedco-receipt" element={<KedcoReceipt/>} />
+       <Route path="/phed-receipt" element={<PhedReceipt/>} />
+       <Route path="/bedc" element={<BEDC />} />
+       <Route path="/phed" element={<PHED />} />
+       <Route path="/kedco" element={<KEDCO/>} />
+       <Route path="/jed" element={<JED />} />
+       <Route path="/ibedc" element={<IBEDC />} />
+       <Route path="/eedc" element={<EEDC />} />
+       <Route path="/kaedco" element={<KAEDCO />} />
         <Route path="/ikedc" element={<IKEDC />} />
+        <Route path="/aedc" element={<AEDC />} />
+        <Route path="/ekedc" element={<EKEDC />} />
         <Route path="/electricity-subscription" element={<ElectricitySubscription/>} />
         <Route path="/global-transfer" element={<GlobalTransfer />} />
         <Route path="/point-redeem" element={<PointRedeem />} />
