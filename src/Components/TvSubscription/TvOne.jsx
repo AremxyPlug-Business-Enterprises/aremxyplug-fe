@@ -10,6 +10,12 @@ import { Link } from "react-router-dom";
 import ConfirmGotvPopup from "./GotvPopups/confirmGotvPopup";
 import { InputGotvPopup } from "./GotvPopups/inputPinGotv"
 import GotvSuccessfulPopup from "./GotvPopups/GotvSuccessfulPopup";
+import nigerianFlag from '../../Components/EducationPins/imagesEducation/Nigeriaflag.svg';
+import americaFlag from '../../Components/EducationPins/imagesEducation/Usa.svg';
+import britainFlag from '../../Components/EducationPins/imagesEducation/Britain.svg';
+import euroFlag from '../../Components/EducationPins/imagesEducation/GBP.svg';
+import austriaFlag from '../../Components/EducationPins/imagesEducation/Austria.svg';
+import kenyaFlag from '../../Components/EducationPins/imagesEducation/Kenya.svg';
 
  const GoTv = () => {
 
@@ -108,14 +114,26 @@ const handleTvEmail = (e) => {
     }
   };
 
-  // const [methodOptions,setMethodOptions] = useState([
-  //   {method : 'NGN Wallet', balance :" (50,000.00)", flag : nigerianFlag, id : 1},
-  //  {method : 'USD Wallet ', balance :'(0.00)', flag : americaFlag, id : 2 },
-  //  {method : 'EUR Wallet', balance :'(0.00)', flag : britainFlag, id : 3 },
-  //  {method :  'GBP Wallet', balance :'(0.00)', flag : euroFlag, id : 4 },
-  //  {method : 'AUD Wallet', balance :'(0.00)', flag : austriaFlag, id : 5 },
-  //  {method : 'KES Wallet',balance :'(0.00)', flag : kenyaFlag, id: 6 }
-  //  ])
+  const {paymentResult, setPaymentResult} = useContext(ContextProvider);
+const {methodActive, setMethodActive} = useContext(ContextProvider);
+const [imageState, setImageState] = useState(arrowDown);
+const {walletBalance, setWalletBalance } = useContext(ContextProvider);
+
+
+
+  function methodDropDown(){
+    setMethodActive(!methodActive);
+  document.querySelector('.methodDrop').classList.toggle('DropIt');
+  }
+  
+  const [methodOptions,setMethodOptions] = useState([
+    {method : 'NGN Wallet', balance :" (50,000.00)", flag : nigerianFlag, id : 1},
+   {method : 'USD Wallet ', balance :'(0.00)', flag : americaFlag, id : 2 },
+   {method : 'EUR Wallet', balance :'(0.00)', flag : britainFlag, id : 3 },
+   {method :  'GBP Wallet', balance :'(0.00)', flag : euroFlag, id : 4 },
+   {method : 'AUD Wallet', balance :'(0.00)', flag : austriaFlag, id : 5 },
+   {method : 'KES Wallet',balance :'(0.00)', flag : kenyaFlag, id: 6 }
+   ])
 
     return(
         <div>
@@ -202,7 +220,7 @@ const handleTvEmail = (e) => {
                 <div className="flex flex-col gap-[3px] lg:gap-[5px]">
                     <label htmlFor="decoderType" className="text-[#7E7E7E] text-[8px] lg:text-[16px] md:text-[11.46px] font-semibold">
                     Smart Card / IUC Number</label>
-                  <input type="tel" style={ {backgroundColor: smartCard.length !== 10 ? '#FFD8D8' : 'white' }} maxLength={10} onChange={handleSmartCard} placeholder="1234567890" className="outline-0 border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[435px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] "/>
+                    <input type="tel" style={ {backgroundColor: smartCard.length !== 10 ? '#FFD8D8' : 'white' }} maxLength={10} onChange={handleSmartCard} placeholder="1234567890" className="outline-0 border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[435px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] "/>
                 </div>
                 
                 <div className="flex flex-col gap-[3px] lg:gap-[5px]">
@@ -237,17 +255,60 @@ const handleTvEmail = (e) => {
                 
                 <input
                   type="text"
-                  className="text-[#7E7E7E] outline-0 border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[435px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px]"
+                  className="text-[#7e7e7e71] outline-0 border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[435px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px]"
                   value={'₦'+ getNumericValue(selectedOptionGOTV)}
                 />
             
                </div>
                 
-                <div className="flex flex-col gap-[3px] lg:gap-[5px]">
+                <div className="flex relative flex-col gap-[3px] lg:gap-[5px]">
                     <label htmlFor="decoderType" className="text-[#7E7E7E] text-[8px] lg:text-[16px] md:text-[11.46px] font-semibold">
                        Payment Method</label>
-                    <button className="border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[435px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C]">Gotv</button>
-                </div>
+                       <div onClick={methodDropDown}  className="flex items-center justify-between border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[435px] h-[30px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] border-[#9C9C9C]">
+                          <p className='font-[500] text-[8px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px] cursor-pointer'>
+                              {paymentResult + walletBalance}
+                          </p>
+                          <img className='methodDrop h-[14px] w-[14px] md:h-[14.038px] md:w-[14.038px] lg:h-[24px] lg:w-[24px]'
+                              src={imageState} alt="" />
+                        </div>
+     {methodActive && (
+         <div className='absolute top-[102%] z-0 flex flex-col w-[100%] md:w-[220px] lg:w-[435px] bg-white cursor-pointer '>
+
+        {(methodOptions.map(methodOption => {
+            return (
+        <div 
+        onClick={(e =>{
+        onchange={setMethodOptions}
+          setPaymentResult(methodOption.method);
+          setWalletBalance(methodOption.balance)
+          setImageState(methodOption.flag);
+          setMethodActive(false);
+       document.querySelector('.methodDrop').classList.remove('DropIt');
+        })}
+        className='flex gap-[10px] lg:py-[15px] py-[10px] pl-[10px]
+        cursor-pointer hover:bg-[#EDEAEA] items-center bg-white
+        shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]' 
+        key={ methodOption.id }>
+
+          <img className='md:h-[29.27px]  h-[14.27px]' src={methodOption.flag} alt=""/>
+
+            <h2 
+              className='text-[8px] leading-[10.4px]
+               font-[500] text-[#7C7C7C]  
+         md:text-[13.227px] md:leading-[17.195px] 
+         lg:text-[16px] lg:leading-[20.8px] self-center cursor-pointer' >
+        {methodOption.method + ' ' + methodOption.balance}
+         </h2>
+        </div>
+              
+            )
+          }))}
+         
+          
+             </div>
+      )}
+      
+            </div>
             </div>
           </div>  
 
