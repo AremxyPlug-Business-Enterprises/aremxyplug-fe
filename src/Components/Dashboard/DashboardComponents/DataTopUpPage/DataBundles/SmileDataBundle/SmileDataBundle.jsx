@@ -25,8 +25,8 @@ import { AiFillEye } from "react-icons/ai";
 import Joi, { number } from "joi";
 import airtimestyles from "../../../../../AirTimePage/AirtimeVtu.module.css";
 import AccountID from "../SmileDataBundle/SmileDataBundleImages/AccountId.svg";
-import { SmileReceipt } from "./SmileReceipt"
-import EmailId from "./SmileDataBundleImages/EmailId.svg"
+import { SmileReceipt } from "./SmileReceipt";
+import EmailId from "./SmileDataBundleImages/EmailId.svg";
 // import { DataBundleFailedPopUp } from "../../../TransferComponent/PopUps/TransactionFailedPopUp";
 
 const SmileDataBundle = () => {
@@ -42,7 +42,6 @@ const SmileDataBundle = () => {
   const { accountId, setAccountId } = useContext(ContextProvider);
   const { emailId, setEmailId } = useContext(ContextProvider);
 
-
   const [showProductList, setShowProductList] = useState(false);
   const [showOptionList, setShowOptionList] = useState(false);
   const [addRecipient, setAddRecipient] = useState(false);
@@ -54,13 +53,9 @@ const SmileDataBundle = () => {
   const [showPayment, setShowPayment] = useState(false);
   const [image, setImage] = useState("");
   const [paymentAmount, setPaymentAmount] = useState("");
-  const [accountIdInputColor, setAccountIdInputColor] = useState('#92ABFE2E');
-  const [input, setInput] = useState('');
-  const [emailError, setEmailError] = useState('');
-  
-
-  
-  
+  const [accountIdInputColor, setAccountIdInputColor] = useState("#92ABFE2E");
+  const [input, setInput] = useState("");
+  const [emailError, setEmailError] = useState("");
 
   // const [codes, setCodes] = useState(false);
 
@@ -173,25 +168,22 @@ const SmileDataBundle = () => {
     console.log("did not add recipient");
   }
 
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
   const [showAccountId, setShowAccountId] = useState("");
-
 
   const isEmailOrNumberValid = (input) => {
     const textRegex = /^.{6}$/;
     const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{3}$/i;
     const numberRegex = /^\d{10}$/;
-  
-    
 
     if (emailRegex.test(input)) {
       return true;
     }
-  
+
     if (numberRegex.test(input)) {
       return true;
     }
-  
+
     if (textRegex.test(input)) {
       return true;
     }
@@ -200,16 +192,15 @@ const SmileDataBundle = () => {
 
   const handleValidate = () => {
     if (isEmailOrNumberValid(input) || isEmailOrNumberValid(number)) {
-      setErrorMessage('');
+      setErrorMessage("");
       setAccountId(input);
       setShowAccountId(true);
-      setAccountIdInputColor('#2ED173');
-      setInput('')
-      
+      setAccountIdInputColor("#2ED173");
+      setInput("");
     } else {
-      setErrorMessage('Invalid Email, Smile Account ID');
+      setErrorMessage("Invalid Email, Smile Account ID");
       setShowAccountId(false);
-      setAccountIdInputColor('#F95252');
+      setAccountIdInputColor("#F95252");
     }
   };
 
@@ -365,48 +356,44 @@ const SmileDataBundle = () => {
     },
   ];
 
+  const handleInputChange = (event) => {
+    const newEmail = event.target.value;
+    setEmailId(newEmail);
+    // validateEmail(newEmail);
+  };
 
- const handleInputChange = (event) => {
-  const newEmail = event.target.value;
-  setEmailId(newEmail);
-  // validateEmail(newEmail);
- }
-  
- const handleProceed = (e) => {
-  // Email validation
-  const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{3}$/i;
+  const handleProceed = (e) => {
+    // Email validation
+    const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{3}$/i;
 
-  if (emailPattern.test(emailId)) {
-    setEmailError('');
-  } else {
-    setEmailError('Invalid email address');
-  }
+    if (emailPattern.test(emailId)) {
+      setEmailError("");
+    } else {
+      setEmailError("Invalid email address");
+    }
 
-  // Schema validation
-  const { error } = schema.validate({
-    recipientPhoneNumber,
-  });
+    // Schema validation
+    const { error } = schema.validate({
+      recipientPhoneNumber,
+    });
 
-  if (error) {
-    setErrors(
-      error.details.reduce((acc, curr) => {
-        acc[curr.path[0]] = curr.message;
-        return acc;
-      }, {})
-    );
-  }
+    if (error) {
+      setErrors(
+        error.details.reduce((acc, curr) => {
+          acc[curr.path[0]] = curr.message;
+          return acc;
+        }, {})
+      );
+    }
 
-  // Set proceed based on both email and schema validation
-  if (emailPattern.test(emailId) && !error) {
-    setProceed(true);
-    setErrors({});
-  } else {
-    setProceed(false);
-  }
-};
-
-  
-  
+    // Set proceed based on both email and schema validation
+    if (emailPattern.test(emailId) && !error) {
+      setProceed(true);
+      setErrors({});
+    } else {
+      setProceed(false);
+    }
+  };
 
   const schema = Joi.object({
     recipientPhoneNumber: Joi.string()
@@ -475,7 +462,7 @@ const SmileDataBundle = () => {
             isDarkMode
               ? "bg-[#000] text-[#fff] border-[#fff]"
               : "bg-[#ffffff] text-[#000] "
-          } `}
+          } flex flex-col justify-between h-full`}
         >
           <div
             id="DataBundle"
@@ -557,18 +544,6 @@ const SmileDataBundle = () => {
             </div>
             <div className="hidden md:w-[50%] md:block"></div>
           </div>
-
-          <div className="flex items-center my-[10%] gap-[8px] md:my-[5%] md:text-[18px] lg:text-[20px] md:hidden">
-            <p className="text-[#7c7c7c] text-[10px] leading-[130%] md:text-[18px] lg:text-[20px] 2xl:text-[28px]">
-              Select Network Type
-            </p>
-            <img
-              src={Select}
-              alt=""
-              className="w-[12px] h-[12px] md:w-[50px] md:h-[20px] lg:w-[80px] lg:h-[30px]"
-            />
-          </div>
-
           <div className="flex gap-[15px]  justify-between md:w-full md:gap-[10%]">
             <div className="flex gap-[15px] md:w-[50%] md:justify-between">
               <p className="flex text-[#7c7c7c] gap-[7px] text-[10px] md:gap-[7px] leading-[130%] md:text-[12px] lg:text-[20px] 2xl:text-[28px]">
@@ -591,10 +566,9 @@ const SmileDataBundle = () => {
             <div className="md:w-[50%]"></div>
           </div>
 
-          
           {/* =========================PRODUCTS============================== */}
 
-          <div className="grid grid-cols-1 mt-[50px] md:grid-cols-2 gap-y-[20px] md:gap-x-[58.68px] lg:gap-x-[100px] md:gap-y-[15px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[40px]">
+          <div className="grid grid-cols-1 mt-[25px] md:grid-cols-2 gap-y-[20px] md:gap-x-[58.68px] lg:gap-x-[100px] md:gap-y-[15px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[20px]">
             <div className="relative">
               <h2 className="lg:text-[18px] lg:leading-[24px] mb-1 text-[10px] md:text-[12px] font-[600] leading-[12px]">
                 Select Product
@@ -685,27 +659,25 @@ const SmileDataBundle = () => {
             </div>
 
             <div className="">
-                  <input
-                    type="text"
-                    className="input border w-full h-[30px] bg-[#92ABFE2E] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-center text-[10px] text-[#7C7C7C] font-[600] leading-[12px] md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] text-start custom-placeholder"
-                    placeholder="Registered Email or Smile Account ID"
-                    value={input}
-                    onChange={(event) => {
-                      setInput(event.target.value);
-                      setErrorMessage('');
-                    }}
-                  />
-                </div>
+              <input
+                type="text"
+                className="input border w-full h-[30px] bg-[#92ABFE2E] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-center text-[10px] text-[#7C7C7C] font-[600] leading-[12px] md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] text-start custom-placeholder"
+                placeholder="Registered Email or Smile Account ID"
+                value={input}
+                onChange={(event) => {
+                  setInput(event.target.value);
+                  setErrorMessage("");
+                }}
+              />
+            </div>
 
             <div className="">
               <button
                 className={`w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[600] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px] ${
-                  !input 
-                    ? "bg-primary cursor-not-allowed"
-                    : "bg-primary"
+                  !input ? "bg-primary cursor-not-allowed" : "bg-primary"
                 }`}
                 // disabled={
-                //   !email 
+                //   !email
                 // }
                 onClick={() => {
                   handleValidate();
@@ -724,7 +696,7 @@ const SmileDataBundle = () => {
                   type="text"
                   className="input border w-full h-8 px-4 rounded-md text-[10px] lg:text-[16px] font-[600] focus:outline-none lg:h-[51px]"
                   placeholder=""
-                  value={showAccountId ? accountId : ''}
+                  value={showAccountId ? accountId : ""}
                   readOnly
                   style={{ borderColor: accountIdInputColor }}
                   onChange={(event) => {
@@ -741,10 +713,11 @@ const SmileDataBundle = () => {
                 </div>
               </div>
               {errorMessage && (
-        <p className="text-[10px] text-red-500 lg:text-[14px]">{errorMessage}</p>
-      )}
+                <p className="text-[10px] text-red-500 lg:text-[14px]">
+                  {errorMessage}
+                </p>
+              )}
             </div>
-
 
             <div className="">
               <h2 className="text-[10px] font-[600] md:text-[12px] lg:text-[18px]">
@@ -766,7 +739,11 @@ const SmileDataBundle = () => {
                   />
                 </div>
               </div>
-              {emailError && <p className="text-[10px] text-red-500 lg:text-[14px]">{emailError}</p>}
+              {emailError && (
+                <p className="text-[10px] text-red-500 lg:text-[14px]">
+                  {emailError}
+                </p>
+              )}
             </div>
 
             <div className="">
@@ -794,13 +771,11 @@ const SmileDataBundle = () => {
                 </div>
               </div>
               {errors.recipientPhoneNumber && (
-              <p className="text-[10px] text-red-500 lg:text-[14px]">
-                {errors.recipientPhoneNumber}
-              </p>
-            )}
+                <p className="text-[10px] text-red-500 lg:text-[14px]">
+                  {errors.recipientPhoneNumber}
+                </p>
+              )}
             </div>
-
-           
 
             <div className="">
               <h2 className="text-[10px] font-[600] md:text-[12px] lg:text-[18px]">
@@ -848,7 +823,7 @@ const SmileDataBundle = () => {
 
             <div>
               <div onClick={handleShowPayment}>
-                <h2 className="lg:text-[18px] lg:leading-[24px] mb-2 text-[10px] md:text-[12px] font-[600] leading-[12px]">
+                <h2 className="lg:text-[18px] mt-[5px] lg:leading-[24px] mb-2 text-[10px] md:text-[12px] font-[600] leading-[12px]">
                   Payment Method
                 </h2>
                 <div className="input flex justify-between items-center border w-full h-8 px-2 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px]">
@@ -863,7 +838,10 @@ const SmileDataBundle = () => {
                       </h2>
                     </li>
                   ) : (
-                    <h2 onClick={handleShowPayment} className="text-[10px] lg:text-[14px]">
+                    <h2
+                      onClick={handleShowPayment}
+                      className="text-[10px] lg:text-[14px]"
+                    >
                       Select Payment Method
                     </h2>
                   )}
@@ -889,11 +867,13 @@ const SmileDataBundle = () => {
                 </div>
               </div>
               {showPayment && (
-                <div className={`border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute ${
-                  toggleSideBar
-                    ? "w-full md:w-[44.5%] lg:w-[45%] 2xl:w-[46%]"
-                    : "w-full md:w-[46%] 2xl:w-[46.5%]"
-                } bg-[#FFF] z-[100]`}>
+                <div
+                  className={`border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute ${
+                    toggleSideBar
+                      ? "w-full md:w-[44.5%] lg:w-[45%] 2xl:w-[46%]"
+                      : "w-full md:w-[46%] 2xl:w-[46.5%]"
+                  } bg-[#FFF] z-[100]`}
+                >
                   {countryList.map((country) => (
                     <Payment
                       key={country.id}
@@ -929,8 +909,6 @@ const SmileDataBundle = () => {
               ></div>
             </div>
           </div>
-
-         
 
           {/* ================Proceed=================== */}
 
@@ -989,7 +967,7 @@ const SmileDataBundle = () => {
                       </h2>
                       <div className="flex gap-1">
                         <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        SMILE NETWORK
+                          SMILE NETWORK
                         </h2>
                       </div>
                     </div>
@@ -1280,7 +1258,7 @@ const SmileDataBundle = () => {
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                      SMILE NETWORK
+                        SMILE NETWORK
                       </h2>
                     </div>
                   </div>
@@ -1308,15 +1286,15 @@ const SmileDataBundle = () => {
                   </div>
 
                   <div className="flex items-center justify-between">
-                      <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        Email ID
+                    <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                      Email ID
+                    </h2>
+                    <div className="flex gap-1">
+                      <h2 className="text-[10px] leading-[12px] md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                        {emailId}
                       </h2>
-                      <div className="flex gap-1">
-                        <h2 className="text-[10px] leading-[12px] md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          {emailId}
-                        </h2>
-                      </div>
                     </div>
+                  </div>
 
                   <div className="flex items-center justify-between">
                     <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
@@ -1447,15 +1425,22 @@ const SmileDataBundle = () => {
           </div>
 
           {/* =======================FOOTER=================================== */}
-          <div className="flex gap-2 justify-center items-center mb-[15%] md:mt-40 mt-[50%] lg:mt-[50%]">
-            <h2 className="text-[8px] leading-[12px] lg:text-[16px]">
-              You need help?
-            </h2>
-            <Link
-              to={`/ContactUs`}
-              className="text-[8px] leading-[12px] text-white bg-primary px-2 py-1 rounded-full lg:text-[16px] lg:px-[10px] lg:py-[10px]"
-            >
-              Contact Us
+          <div
+            className={`${
+              isDarkMode ? "" : ""
+            } flex gap-[15px] justify-center items-center mt-[100%] md:mt-[38%] lg:mt-[26%] lg:mb-[%]`}
+          >
+            <div className="text-[10px] md:text-[12px] lg:text-[14px]">
+              You need help ?
+            </div>
+            <Link to="/ContactUs">
+              <div
+                className={`${
+                  isDarkMode ? "border" : "bg-[#04177f]"
+                } text-[10px] p-1 text-white rounded-[8px] lg:text-[18px]`}
+              >
+                Contact Us
+              </div>
             </Link>
           </div>
         </section>

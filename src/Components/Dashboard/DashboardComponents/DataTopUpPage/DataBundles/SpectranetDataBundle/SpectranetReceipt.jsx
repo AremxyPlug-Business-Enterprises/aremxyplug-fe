@@ -22,12 +22,8 @@ export const SpectranetReceipt = () => {
     setSelectedOption,
     setSelectedAmount,
     setRecipientNames,
-    // accountId,
-    // setAccountId,
-    // numberPins, 
+    numberPins, 
     setNumberPins,
-    count, 
-    // setCount,
     emailId, 
     setEmailId,
   }
@@ -202,12 +198,12 @@ export const SpectranetReceipt = () => {
 
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Number Of PINs</p>
-                  <span>{count}</span>
+                  <span>{numberPins}</span>
                 </div>
                 
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Amount</p>
-                  <span>{selectedAmount}</span>
+                  <span>₦{parseFloat(selectedAmount.replace("₦", "").replace(",", "")) * parseFloat(numberPins)}</span>
                 </div>            
               </div>
 

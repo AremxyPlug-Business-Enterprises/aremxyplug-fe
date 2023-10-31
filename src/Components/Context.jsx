@@ -683,8 +683,7 @@ export const Context = ({ children }) => {
   const [accountId, setAccountId] = useState("");
   const [numberPins, setNumberPins] = useState("");
   const [emailId, setEmailId] = useState("");
-  const [count, setCount] = useState(0);
-
+   
   
   //=============point redeem==============
   const [inputValue, setInputValue] = useState("");
@@ -1013,8 +1012,7 @@ const [walletBalance, setWalletBalance] = useState('');
     setNumberPins,
     emailId, 
     setEmailId,
-    count, 
-    setCount,
+
 
 
     //point redeem
