@@ -5,17 +5,17 @@ import { useState } from "react";
 import styles from "../TransferComponent/transfer.module.css";
 import bulb from "../ElectricitySubscription/Electricity-sub-images/Group 13115.svg"
 import arrow from "../ElectricitySubscription/Electricity-sub-images/arrow-square-right.png"
-import logo from "../ElectricitySubscription/Electricity-sub-images/315-3152211_ikeja-electric-logo 1.png"
+import logo from "../ElectricitySubscription/Electricity-sub-images/Jos-Electric-JED 1.svg"
 import arrowDown from "../ElectricitySubscription/Electricity-sub-images/arrow-down.png";
 import nig from "../ElectricitySubscription/Electricity-sub-images/nigeriaFlag.png";
-import logo2 from "../ElectricitySubscription/Electricity-sub-images/pngaaa 1.svg"
+
 import Joi from "joi";
 import { Modal } from "../../../Screens/Modal/Modal";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import OtpInput from "react-otp-input";
 import { Link } from "react-router-dom";
-const IKEDC = () => {
+const JED = () => {
 
     const { isDarkMode,
       toggleSideBar,
@@ -268,13 +268,14 @@ const IKEDC = () => {
         </div>  
         <div className=" flex lg:mt-[20px] text-[10px] lg:text-[16px] font-[600] pt-[30px] text-[#7E7E7E] items-center "> 
             <div>Recharge</div>
-            <div><img className="w-[25px]" src={logo} alt="" /></div>
-            <div className=" ml-1">Ikeja Electric Payment-IKEDC Meter Instantly</div>
+            <div><img className="w-[25px] ml-1"  src={logo} alt="" /></div>
+            <div className=" ml-1">Jos Electric Payment-JED Meter Instantly</div>
             <div><img className="lg:w-[24px]" src={arrow} alt="" /></div>
 
             </div>  
             <div className="lg:flex lg:items-start ">
-            <div className="bg-gradient-to-b mt-[10px] lg:mt-[15px] border-[1px] border-[] from-[#E2F3FF] font-[700] text-[10px] lg:text-[16px] lg:rounded-sm lg:py-2 text-center lg:px-3 py-1 to-[#FFF]">Ikeja Electric Covers: Ikeja IKEDC</div>
+            <div className="bg-gradient-to-b mt-[10px] lg:mt-[15px] border-[1px] border-[] from-[#E2F3FF] font-[700] text-[10px] lg:text-[16px] lg:rounded-sm lg:py-2 text-center lg:px-3 py-1 to-[#FFF]">Jos Electric Covers: Bauchi | Benue | Gombe | Plateau.
+</div>
             </div>
                 
 
@@ -512,8 +513,8 @@ const IKEDC = () => {
               <div className="flex text-[10px] md:text-[14px] pt-[10px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Disco Type</p>
                 <span className="flex items-center gap-1 ">
-                  <div><img className="w-[12px]" src={logo2} alt="" /></div>
-                  <div>Ikeja-IKEDC</div>
+                  <div><img className="w-[25px]" src={logo} alt="" /></div>
+                  <div>Jos-JED</div>
                   </span>
               </div>
               <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -682,7 +683,7 @@ const IKEDC = () => {
             <p className="text-[8px] lg:text-[16px] font-[500] text-[#000] text-center mb-2 md:text-[14px] ">
               You have successfully Purchased{" "}
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
-               Ikeja {selectedNetworkProduct} Meter
+               Jos {selectedNetworkProduct} Meter
               </span>{" "}
              <br></br>
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
@@ -695,8 +696,8 @@ const IKEDC = () => {
               <div className="flex text-[10px] md:text-[14px] pt-[10px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Disco Type</p>
                 <span className="flex items-center gap-1 ">
-                  <div><img className="w-[12px]" src={logo2} alt="" /></div>
-                  <div>Ikeja-IKEDC</div>
+                  <div><img className="w-[25px]" src={logo} alt="" /></div>
+                  <div>Jos-JED</div>
                   </span>
               </div>
               <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -751,7 +752,7 @@ const IKEDC = () => {
               >
                 Done
               </button>
-              <Link to="/ikedec-receipt">
+              <Link to="/jed-receipt">
                 <button
                   onClick={() => {
                     setSuccessPopup(false);
@@ -770,4 +771,4 @@ const IKEDC = () => {
      );
 }
  
-export default IKEDC;
+export default JED;

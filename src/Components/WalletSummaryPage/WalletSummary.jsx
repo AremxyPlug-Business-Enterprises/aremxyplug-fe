@@ -50,10 +50,10 @@ import group1 from "./assets/Group.png";
 export default function WalletSummaryPage() {
 
 
-  const handleButton = () => {
-    const searchInput = document.querySelector('.searchInput');
-    alert('Searching for: ' + searchInput.value);
-  };
+  // const handleButton = () => {
+    // const searchInput = document.querySelector('.searchInput');
+    // alert('Searching for: ' + searchInput.value);
+  // };
   
   
   const [calender, setCalender] = useState(false);
@@ -90,10 +90,16 @@ const handleSelectedOption = (event) => {
   return;
 };
 
-const [selectedCountry, setSelectedCountry] = useState(<img
-  src={group1} alt="" />);
+const [selectedCountry, setSelectedCountry] = useState(<img className="lg:w-[29.27px] lg:h-[29.27px]
+  w-3 h-3 ml-[-1px] mt-[-1px] md:w-[16.77px] md:h-[15.73px]" src={group1} alt="" /> );
 const handleSelect = (product) => {
 setSelectedCountry(product); };
+
+const [selectedBalance, setSelectedBalance] = useState(<div>(₦50,000.00)</div>);
+const handleBalance = (product) => {
+  setSelectedBalance(product); };
+  
+
 
 const [selectedProduct, setSelectedProduct] = useState('Filter By Status');
 const handleClick = (product) => {
@@ -123,7 +129,7 @@ px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px]">
                   <h2 className="text-[9px] md:text-[13.75px] font-bold mb-3 lg:text-[24px] lg:mb-4">
                   MANAGE ALL YOUR TRANSACTIONS AT A <br /> TIME WITHOUT ANY HASSLE.
                   </h2>
-                  <h2 className="text-[7px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3">
+                  <h2 className="text-[6px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3">
                   Select, filter, and manage all your transactions at a time,
                    download all  <br/> transactions stats and keep a record track.
                     
@@ -152,7 +158,16 @@ px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px]">
             <img src={arrowsquare1} alt="" />
           </div>
         </div>
-        <div className="lg:px-[] lg:py-[25px] lg:h-[120px] py-[10px] lg:gap-2.5 lg:top-[455px] 
+
+        {/* available Balance */}
+
+        <div                onClick={() => {
+                setIsOpen1((prev) => !prev);
+                setCalender(false)
+                setIsOpen2(false)
+
+              }}
+ className="lg:px-[] lg:py-[25px] lg:h-[120px] py-[10px] lg:gap-2.5 lg:top-[455px] 
         gap-[5px] mt-[20%] lg:mt-[150px] bg-indigo-300
          bg-opacity-20 md:rounded-[11.46px] lg:rounded-[20px] rounded-[6px]
           justify-center lg:w-full w-full md:w-full md:mt-[100px] md:h-[68.75px] 
@@ -188,17 +203,11 @@ px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px]">
                   Available Balance
                 </div>
                 <div className="text-neutral-500 lg:text-[20px] text-[10px] md:text-[13px] font-medium  lg:leading-relaxed md:leading-[14.90px] leading-[10.40px]">
-                  (₦50,000.00)
+                  {selectedBalance}
                 </div>
               </div>
             </div>
             <div
-               onClick={() => {
-                setIsOpen1((prev) => !prev);
-                setCalender(false)
-                setIsOpen2(false)
-
-              }}
               className="lg:w-6 lg:h-6 w-[13.75px] md:mt-[5px] mt-[0px] h-[13.75px] md:w-[13.75px] md:h-[13.75px] lg:justify-center lg:items-center flex"
             >
                {isOpen1 ? (
@@ -231,9 +240,11 @@ border-opacity-30 justify-start items-center gap-[52.80px] inline-flex">
     }}
     className={`cursor-pointer ${styles.filter} ${
       isDarkMode ? "border" : ""
-    } flex items-center gap-[1px]  px-[2px] rounded-[3px] md:px-[8px]`}
+    }  ${
+        toggleSideBar ? "md:mt-[-10px] md:w-[135px] lg:w-[167px]" : "md:mt-[] md:w-[] lg:w-[]" }
+      flex items-center gap-[1px]  px-[2px] rounded-[3px] md:px-[8px]`}
   >
-    <div className={`text-[#04177f]`}>Filter by Date </div>
+    <div className={`text-[#04177f] whitespace-nowrap`}>Filter by Date </div>
     <img
       className="w-[15px] h-[15px] md:w-[17px] md:h-[17px] lg:w-[20px] lg:h-[20px]"
       src="./Images/Dashboardimages/dateImg.png"
@@ -252,10 +263,10 @@ border-opacity-30 justify-start items-center gap-[52.80px] inline-flex">
           className="lg:self-stretch justify-start lg:mt-[7px] mt-[5px] items-center lg:gap-2.5 gap-[5.73px] md:gap-[5.73px] inline-flex">
             <div className="lg:justify-start lg:items-center lg:gap-[5px] md:gap-[2.86px] gap-[2.86px] flex">
               <div className="lg:w-[20.85px] w-[13.37px] lg:h-[20.85px] h-[13.37px]
-              md:w-[19px] md:h-[19px] md:mt-[4px] justify-center items-center relative flex">
+              md:w-[19px] md:h-[19px] md:mt-[1px] justify-center items-center relative flex">
                 <img src={menus} alt="" />
               </div>
-              <div className="text-neutral-500 whitespace-nowrap lg:whitespace-nowrap lg:text-[20px] md:mt-[-2px] text-[10px] md:text-[18px] md:whitespace-nowrap font-semibold ">
+              <div className="text-neutral-500 whitespace-nowrap lg:whitespace-nowrap lg:text-[20px] md:mt-[-2px] text-[10px] md:text-[16px] md:whitespace-nowrap font-semibold ">
                 {selectedProduct}
               </div>
             </div>
@@ -369,10 +380,24 @@ border-opacity-30 justify-start items-center gap-[52.80px] inline-flex">
 
 
  {isOpen1 && (
-          <div className="lg:ml-[510px] pl-[-50px] lg:top-[610px] md:w-[300px] lg:pl-[-500px]
+          <div className={`${ toggleSideBar
+            ? "lg:left-[110px] md:left-[90px]"
+            : "lg:left-[-30px] md:left-[-5px]"}
+          
+          lg:ml-[510px] pl-[-50px] lg:top-[603px] md:w-[300px] lg:pl-[-500px]
            left-[65px] w-[62%] lg:w-full 
-           top-[279px] md:top-[420px] absolute flex-col md:ml-[300px] lg:items-start inline-flex">
-            <div onClick={() => handleSelect(<img className="" src={group5} alt="" />)} className="lg:pl-2.5 lg:w-[370px] border border-b md:w-[214.84px] 
+           top-[277px] md:top-[415px] absolute flex-col md:ml-[300px] lg:items-start inline-flex`}>
+            <div onClick={() =>{
+              setIsOpen1((prev) => !prev);
+              handleSelect (<img className="w-3 h-3 lg:w-[29.27px] lg:h-[29.27px] ml-[-1px] mt-[-1px]
+               md:w-[16.77px] md:h-[15.73px] " src={group5} alt="" />)
+
+            handleBalance( <div className="text-neutral-500 lg:mt-[5px] md:mt-[2px] text-[9px] md:text-[13px] lg:text-xl
+             lg:font-medium 
+            md:leading-3 lg:leading-tight">
+            (50,000.00)
+          </div>
+)}} className="lg:pl-2.5 lg:w-[370px] border border-b md:w-[214.84px] 
             lg:pt-[7px] md:h-[35px] lg:h-[47px] h-[30px] 
             justify-start items-center pt-[3px] pb-[px] bg-white shadow gap-[5px] pl-2 md:pl-2 md:gap-[5px] 
               flex-row  md:pt-1 md:pb-[4.43px] inline-flex">
@@ -391,7 +416,16 @@ border-opacity-30 justify-start items-center gap-[52.80px] inline-flex">
               
             </div>
             <div
-            onClick={() => handleSelect(<img src={flags} alt="" />)}
+            onClick={() => {
+              setIsOpen1((prev) => !prev);
+              handleSelect(<img className="w-3 h-3 lg:w-[29.27px] lg:h-[29.27px] ml-[-1px]
+            mt-[-1px] md:w-[16.77px] md:h-[15.73px]" src={flags} alt="" />) 
+            handleBalance(                <div className="text-neutral-500 md:mt-[2px] lg:text-xl md:text-[13px] text-[9px]
+            font-medium  md:leading-3 leading-tight">
+             (0.00)
+           </div>
+)
+          }}
             className="lg:pl-2.5 md:w-[214.84px] border border-b mt-[0.0px] 
              h-[30px] lg:h-[45px] lg:w-[370px] lg:pb-[7.73px] bg-white shadow 
              justify-start items-center md:h-[35px] lg:mt-[-3px] flex-row pl-2 md:pl-2 gap-[5px] 
@@ -410,7 +444,18 @@ border-opacity-30 justify-start items-center gap-[52.80px] inline-flex">
                 </div>
               
             </div>
-            <div onClick={() => handleSelect(<img src={EUR}   alt="" />)} className="lg:pl-2.5 lg:h-[45px]
+            <div onClick={() =>{
+              setIsOpen1((prev) => !prev);
+              handleSelect(                  <img  className="lg:w-[29.27px] w-3 h-3
+                   lg:h-[29.27px] lg:left-0 lg:top-0 lg:mt-[-1px] mt-[-1px] ml-[-1px]
+                   md:w-[16.77px] md:h-[16.77px] md:left-0 md:top-[0.52px] " src={EUR} alt="" />
+) 
+             handleBalance(                 <div className="text-neutral-500 md:mt-[2px] lg:text-xl text-[9px] md:text-[13px]
+                 font-medium  md:leading-3 leading-tight">
+                  (0.00)
+                </div>
+)
+            }} className="lg:pl-2.5 lg:h-[45px]
              border border-b md:w-[214.84px] pl-2 md:pl-2 h-[30px] 
             justify-start items-center lg:pt-[7px] lg:w-[370px] lg:pb-[7.73px] bg-white 
             shadow md:h-[35px]  gap-[5px] md:gap-[5px] lg:gap-[5px] flex-row 
@@ -429,7 +474,19 @@ border-opacity-30 justify-start items-center gap-[52.80px] inline-flex">
                 </div>
               
             </div>
-            <div onClick={() => handleSelect(<img src={flags3} alt="" />)}
+            <div onClick={() => {
+              setIsOpen1((prev) => !prev);
+              handleSelect(<img className="md:w-[16.77px] md:h-[15.73px] w-3 h-3 lg:w-[29.27px] lg:h-[29.27px]
+               ml-[-1px] mt-[-1px] " src={flags3} alt="" />) 
+            handleBalance(  <div className="text-neutral-500 md:mt-[2px]
+            lg:text-xl
+             text-[9px] md:text-[13px] font-medium 
+                 md:leading-3 leading-tight">
+                   (0.00)
+                </div>
+)
+
+            }}
              className="lg:pl-2.5 lg:w-[370px] md:w-[214.84px] pl-2 md:pl-2 border border-b lg:h-[45px] h-[30px]
              justify-start items-center lg:pt-[7px] lg:pb-[7.73px] bg-white shadow 
                md:h-[35px] flex-row gap-[5px]
@@ -448,7 +505,16 @@ border-opacity-30 justify-start items-center gap-[52.80px] inline-flex">
                 </div>
               
             </div>
-            <div onClick={() => handleSelect( <img src={group10} alt="" />)} className="lg:pl-2.5 md:w-[214.84px]
+            <div onClick={() =>{
+              setIsOpen1((prev) => !prev);
+              handleSelect( <img className="w-3 h-3 lg:w-[29.27px] lg:h-[29.27px] ml-[-1px] 
+              mt-[-1px] md:w-[16.77px] md:h-[15.73px] " src={group10} alt="" />)
+            handleBalance(                <div className="text-neutral-500 md:mt-[2px] lg:text-xl text-[9px] md:text-[13px] font-medium 
+            md:leading-3 leading-tight">
+             (0.00)
+           </div>
+)
+          }} className="lg:pl-2.5 md:w-[214.84px]
              border border-b lg:pt-[7px] lg:pb-[7.73px]
              lg:h-[45px] h-[30px] justify-start items-center lg:gap-[5px] lg:w-[370px] bg-white shadow
               md:h-[35px] pl-2 md:pl-2
@@ -467,7 +533,15 @@ border-opacity-30 justify-start items-center gap-[52.80px] inline-flex">
                 </div>
               
             </div>
-            <div onClick={() => handleSelect(<img src={country5} alt="" />)} className="lg:pl-2.5 md:w-[214.84px] border border-b lg:pt-[7px] lg:w-[370px] lg:h-[45px] h-[30px]
+            <div onClick={() =>{
+              setIsOpen1((prev) => !prev);
+              handleSelect(<img className="mt-[-1px] md:w-[16.77px] md:h-[15.73px]
+              w-3 h-3 lg:w-[29.27px] lg:h-[29.27px] ml-[-1px]" src={country5} alt="" />)
+            handleBalance(                <div className="text-neutral-500 lg:text-xl md:mt-[2px] text-[9px] md:text-[13px] font-medium  md:leading-3 leading-tight">
+            (0.00)
+          </div>
+)
+            }} className="lg:pl-2.5 md:w-[214.84px] border border-b lg:pt-[7px] lg:w-[370px] lg:h-[45px] h-[30px]
              justify-start items-center lg:pb-[7.73px] bg-white shadow lg:gap-[5px] md:h-[35px]
                flex-row gap-[5px] md:gap-[5px] md:pt-1 pl-2 md:pl-2 inline-flex">
               
@@ -490,9 +564,9 @@ border-opacity-30 justify-start items-center gap-[52.80px] inline-flex">
                         <div className="border md:h-[35px] mt-[-5px]  h-[25px] lg:mt-[-55px] md:mt-[-25px] flex justify-between
                          items-center py-1 px-3 lg:h-[45px] lg:border-[1px] lg:border-[#0003]">
                           
-        <img  className="justify-center items-center lg:w-5 mt-[0px]
+        <button><img  className="justify-center items-center lg:w-5 mt-[0px]
        md:mt-[0px] lg:mt-[0px] 
-w-3 h-3 lg:h-5 md:w-[13px]  md:h-[13px]" onClick={handleButton} src={normal} alt="" /> 
+w-3 h-3 lg:h-5 md:w-[13px]  md:h-[13px]" src={normal} alt="" /> </button>
 
                             <input
                             className="searchInput text-[10px] w-[100%] h-[100%] md:text-[13px] ml-4 outline-none lg:text-[20px]"
@@ -1564,14 +1638,18 @@ w-3 h-3 lg:h-5 md:w-[13px]  md:h-[13px]" onClick={handleButton} src={normal} alt
           
           className="border border-b bg-white lg:w-[375px] lg:h-[53px] md:w-[250.84px] md:h-[39.22px]
            w-[189px] h-[25.70px] justify-around items-center flex relative shadow">
-              <div onClick={() => { handleClick('All Transactions'); }} className="lg:w-[325px] text-neutral-500 lg:text-xl font-medium 
+              <div onClick={() => { 
+                setIsOpen2((prev) => !prev);
+                handleClick('All Transactions'); }} className="lg:w-[325px] text-neutral-500 lg:text-xl font-medium 
               lg:leading-tight md:w-[186.20px] md:text-[16px] md:leading-3 w-[163.80px]
                text-[10px] leading-[10.48px] ">
                 All Transactions
               </div>
               
             </div>
-            <div onClick={() => { handleClick('Successful'); }} className="lg:w-[375px] lg:h-[53px] border border-b  md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px] justify-around items-center flex relative bg-white shadow">
+            <div onClick={() => {
+              setIsOpen2((prev) => !prev);
+              handleClick('Successful'); }} className="lg:w-[375px] lg:h-[53px] border border-b  md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px] justify-around items-center flex relative bg-white shadow">
               <div class="lg:w-[325px] text-neutral-500 lg:text-xl 
               font-medium lg:leading-tight md:w-[186.20px]  md:text-[16px]
                md:leading-3 w-[163.80px] text-[10px] leading-[10.48px]">
@@ -1579,28 +1657,36 @@ w-3 h-3 lg:h-5 md:w-[13px]  md:h-[13px]" onClick={handleButton} src={normal} alt
               </div>
             </div>
 
-            <div onClick={() => { handleClick('Failed'); }} className="lg:w-[375px] lg:h-[53px] border border-b md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px] justify-around items-center flex relative bg-white shadow">
+            <div onClick={() => {
+              setIsOpen2((prev) => !prev);
+              handleClick('Failed'); }} className="lg:w-[375px] lg:h-[53px] border border-b md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px] justify-around items-center flex relative bg-white shadow">
               <div class="lg:w-[325px] text-neutral-500 lg:text-xl font-medium 
               lg:leading-tight md:w-[186.20px]  md:text-[16px] md:leading-3 w-[163.80px]
                text-[10px] leading-[10.48px]">
                 Failed
               </div>
             </div>
-            <div onClick={() => { handleClick('Pending'); }} className="lg:w-[375px] lg:h-[53px] border border-b md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px]  justify-around items-center flex relative bg-white shadow">
+            <div onClick={() => {
+              setIsOpen2((prev) => !prev);
+              handleClick('Pending'); }} className="lg:w-[375px] lg:h-[53px] border border-b md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px]  justify-around items-center flex relative bg-white shadow">
               <div class="lg:w-[325px] text-neutral-500 lg:text-xl
                font-medium lg:leading-tight md:w-[186.20px]  md:text-[16px]
                 md:leading-3 w-[163.80px] text-[10px] leading-[10.48px]">
                 Pending
               </div>
             </div>
-            <div onClick={() => { handleClick('Refunded'); }} className="lg:w-[375px] lg:h-[53px] border border-b md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px] justify-around items-center flex relative bg-white shadow">
+            <div onClick={() => {
+              setIsOpen2((prev) => !prev);
+              handleClick('Refunded'); }} className="lg:w-[375px] lg:h-[53px] border border-b md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px] justify-around items-center flex relative bg-white shadow">
               <div class="lg:w-[325px] text-neutral-500 lg:text-xl
                font-medium lg:leading-tight md:w-[186.20px]  md:text-[16px] 
                md:leading-3 w-[163.80px] text-[10px] leading-[10.48px]">
                 Refunded
               </div>
             </div>
-            <div onClick={() => { handleClick('Canceled'); }} className="lg:w-[375px] lg:h-[53px] border border-b md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px] justify-around items-center flex relative bg-white shadow">
+            <div onClick={() => {
+              setIsOpen2((prev) => !prev);
+              handleClick('Canceled'); }} className="lg:w-[375px] lg:h-[53px] border border-b md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px] justify-around items-center flex relative bg-white shadow">
               <div class="lg:w-[325px] text-neutral-500 lg:text-xl
                font-medium lg:leading-tight md:w-[186.20px]  md:text-[16px] md:leading-3 w-[163.80px] text-[10px] 
                leading-[10.48px]">

@@ -6,9 +6,9 @@ import { DashBoardLayout } from "../../Layout/DashBoardLayout";
 import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-import logo2 from "../ElectricitySubscription/Electricity-sub-images/pngaaa 1.svg"
+import logo2 from "../ElectricitySubscription/Electricity-sub-images/AEDC1 1.svg"
 
-export const IkedcReceipt = () => {
+export const AedcReceipt = () => {
   const {
     toggleSideBar,
     isDarkMode,
@@ -138,8 +138,8 @@ export const IkedcReceipt = () => {
               <div className="flex text-[10px] md:text-[14px] pt-[10px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Disco Type</p>
                 <span className="flex items-center gap-1 ">
-                  <div><img className="w-[12px]" src={logo2} alt="" /></div>
-                  <div>Ikeja-IKEDC</div>
+                  <div><img className="w-[25px]" src={logo2} alt="" /></div>
+                  <div>Abuja-AEDC</div>
                   </span>
               </div>
               <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -214,7 +214,7 @@ export const IkedcReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Description</p>
-                  <span>Ikeja {selectedNetworkProduct} </span>
+                  <span>Abuja {selectedNetworkProduct} </span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Bill / Token Generated</p>
