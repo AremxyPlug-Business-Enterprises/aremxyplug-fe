@@ -61,9 +61,6 @@ import MtnDataTopUpBundle from "./Components/Dashboard/DashboardComponents/DataT
 import WithdrawToOtherBanks from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToOtherBanks";
 import WalletSummaryPage from "./Components/WalletSummaryPage/WalletSummary";
 import SalesSummaryPage from "./Components/SalesSummaryPage/SalesSummary";
-import ConfirmConversion from "./Components/CurrencyConversion/currencyPopups/confirmConversion";
-import { SuccessfulReceipt } from "./Components/CurrencyConversion/ConversionReceipts/SuccessConversionReceipt";
-import { TvSubscription } from "./Components/TvSubscription/TvSubscriptionPage";
 import { WithdrawToOtherBankReceipt } from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToOtherBanksPopUp/WithdrawToOtherBankReceipt";
 import AirtelDataBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/AirtelDataBundle/AirtelDataBundle";
 import GloDataBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/GloDataBundle/GloDataBundle";
@@ -72,12 +69,6 @@ import { MtnReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUp
 import { AirtelReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/AirtelDataBundle/AirtelReceipt";
 import { EtisalatReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/EtisalatDataBundle/9MobileReceipt";
 import { GloReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/GloDataBundle/GloReceipt";
-import AddRecipient from "./Components/AirTimePage/AddRecipient";
-import SelectRecipient from "./Components/AirTimePage/SelectRecipient";
-import { RedeemReceipt } from "./Components/Dashboard/DashboardComponents/PointRedeem/RedeemReceipt";
-import DataBundleSelectRecipient from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundleSelectRecipient";
-import DataBundleAddRecipient from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundleAddRecipient";
-import GoTv from "./Components/TvSubscription/TvOne";
 import EducationMain from "./Components/EducationPins/educationMain";
 import WaecEducationPin from "./Components/EducationPins/waecEducationPin";
 import NecoEducationPins from "./Components/EducationPins/NecoEducationPins";
@@ -87,6 +78,40 @@ import WaecReceipt from "./Components/EducationPins/ReceiptEducationPins/waecRec
 import JambReceipt from "./Components/EducationPins/ReceiptEducationPins/jambReceipt";
 import NecoReceipt from "./Components/EducationPins/ReceiptEducationPins/necoReceipt";
 import NabtebReceipt from "./Components/EducationPins/ReceiptEducationPins/nabtebReceipt";
+import {SuccessfulReceipt} from "./Components/CurrencyConversion/ConversionReceipts/SuccessConversionReceipt";
+import { TvSubscription } from "./Components/TvSubscription/TvSubscriptionPage";
+import GoTv from "./Components/TvSubscription/TvOne";
+import DsTv from "./Components/TvSubscription/TvTwo";
+import { RedeemReceipt } from "./Components/Dashboard/DashboardComponents/PointRedeem/RedeemReceipt";
+import SmileDataBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/SmileDataBundle/SmileDataBundle";
+import { SmileReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/SmileDataBundle/SmileReceipt";
+import SpectranetDataBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/SpectranetDataBundle/SpectranetDataBundle";
+import { SpectranetReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/SpectranetDataBundle/SpectranetReceipt";
+import AddRecipient from "./Components/AirTimePage/AddRecipient"
+import SelectRecipient from "./Components/AirTimePage/SelectRecipient"
+import DataBundleSelectRecipient from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundleSelectRecipient"
+import DataBundleAddRecipient from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundleAddRecipient"
+import ElectricitySubscription from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/ElectricitySubscription";
+import IKEDC from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/IKEDC";
+import { IkedcReceipt } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/IkedcReceipt";
+import AEDC from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/AEDC";
+import { AedcReceipt } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/aedcReceipt";
+import EKEDC from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/EKEDC";
+import { EkedcReceipt } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/ekedcReceipt";
+import KAEDCO from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/KAEDCO";
+import { KaedcoReceipt } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/kaedcoReceipt";
+import { BedcReceipt } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/bedcReceipt";
+import BEDC from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/BEDC";
+import EEDC from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/EEDC";
+import { EedcReceipt } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/eedcReceipt";
+import { IbedcReceipt } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/ibedcReceipt";
+import IBEDC from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/IBEDC";
+import JED from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/JED";
+import { JedReceipt } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/jedReceipt";
+import { KedcoReceipt } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/kedcoReceipt";
+import KEDCO from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/KEDCO";
+import PHED from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/PHED";
+import { PhedReceipt } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/phedReceipt";
 
 export const Router = () => {
   return (
@@ -135,7 +160,7 @@ export const Router = () => {
         <Route path="/airtime-vtu" element={<AirtimeVtu />} />
         <Route path="/airtime-vtu-receipt" element={<AirtimeVtuReceipt />} />
         <Route path="/add-vtu-recipient" element={<AddRecipient />} /> 
-       <Route path="/select-vtu-recipient" element={<SelectRecipient />} />
+        <Route path="/select-vtu-recipient" element={<SelectRecipient />} />
         <Route path="/add-account" element={<AddAccount />} />
         <Route path="/ngn-virtual-account" element={<NgnVirtualAccount />} />
         <Route path="/cookie-settings" element={<CookiesSettings />} />
@@ -170,7 +195,28 @@ export const Router = () => {
           path="/international-bank-receipt"
           element={<InternationalReceipt />}
         />
-        <Route path="/redeem-receipt" element={<RedeemReceipt />} />
+       <Route path="/redeem-receipt"element={<RedeemReceipt />} />
+       <Route path="/ikedec-receipt" element={<IkedcReceipt />} />
+       <Route path="/aedc-receipt" element={<AedcReceipt />} />
+       <Route path="/ekedc-receipt" element={<EkedcReceipt />} />
+       <Route path="/eedc-receipt" element={<EedcReceipt />} />
+       <Route path="/kaedco-receipt" element={<KaedcoReceipt />} />
+       <Route path="/bedc-receipt" element={<BedcReceipt/>} />
+       <Route path="/ibedc-receipt" element={<IbedcReceipt/>} />
+       <Route path="/jed-receipt" element={<JedReceipt/>} />
+       <Route path="/kedco-receipt" element={<KedcoReceipt/>} />
+       <Route path="/phed-receipt" element={<PhedReceipt/>} />
+       <Route path="/bedc" element={<BEDC />} />
+       <Route path="/phed" element={<PHED />} />
+       <Route path="/kedco" element={<KEDCO/>} />
+       <Route path="/jed" element={<JED />} />
+       <Route path="/ibedc" element={<IBEDC />} />
+       <Route path="/eedc" element={<EEDC />} />
+       <Route path="/kaedco" element={<KAEDCO />} />
+        <Route path="/ikedc" element={<IKEDC />} />
+        <Route path="/aedc" element={<AEDC />} />
+        <Route path="/ekedc" element={<EKEDC />} />
+        <Route path="/electricity-subscription" element={<ElectricitySubscription/>} />
         <Route path="/global-transfer" element={<GlobalTransfer />} />
         <Route path="/point-redeem" element={<PointRedeem />} />
         <Route path="/fiat" element={<FiatConversion />} />
@@ -179,7 +225,6 @@ export const Router = () => {
         <Route path="/data-bundles" element={<DataBundlesPage />} />
         <Route path="/My-Referral" element={<Referral />} />
         <Route path="/MtnDataTopUpBundle" element={<MtnDataTopUpBundle />} />
-        <Route path="/ConfirmConversion" element={<ConfirmConversion/>}/>
         <Route path="/SuccessfulConversion" element={<SuccessfulReceipt/>}/>
         <Route path="/MtnReceipt" element={<MtnReceipt/>} />
         <Route path="/AirtelDataBundle" element={<AirtelDataBundle/>} />
@@ -201,7 +246,16 @@ export const Router = () => {
         <Route path="/JambReceipt" element={<JambReceipt/>}/>
         <Route path="/NecoReceipt" element={<NecoReceipt/>}/>
         <Route path="/NabtebReceipt" element={<NabtebReceipt/>}/>
-        
+        <Route path="/TvSubscription" element={<TvSubscription/>}/>
+        <Route path="/GoTv" element={<GoTv/>}/>
+        <Route path="/DsTv" element={<DsTv/>}/>
+        <Route path="/SuccessfulConversion" element={<SuccessfulReceipt/>}/>
+        <Route path="/SmileDataBundle" element={<SmileDataBundle/>} />
+        <Route path="/Smilereceipt" element={<SmileReceipt/>} />
+        <Route path="/SpectranetDataBundle" element={<SpectranetDataBundle/>} />
+        <Route path="/SpectranetReceipt" element={<SpectranetReceipt/>} />
+        <Route path="/DataBundleSelectRecipient" element={<DataBundleSelectRecipient/>} />
+        <Route path="/DataBundleAddRecipient" element={<DataBundleAddRecipient/>} />
       </Routes>
     </div>
   );

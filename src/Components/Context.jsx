@@ -275,7 +275,7 @@ export const Context = ({ children }) => {
         headers: { "Content-Type": "Application/json" },
       };
 
-      const url = "https://aremxyplug.onrender.com/api/v1/users/signup";
+      const url = "https://aremxyplug.onrender.com/api/v1/signup";
 
       axios
         .post(url, data, config)
@@ -666,36 +666,66 @@ export const Context = ({ children }) => {
   }, []);
 
   // =====================AirtimeVTU========================
-  const [networkName, setNetworkName] = useState('');
-  const [selectedProduct, setSelectedProduct] = useState('');
-  const [recipientName, setRecipientName] = useState('');
-  const [recipientNumber, setRecipientNumber] = useState('');
-  const [amount, setAmount] = useState('');
-  const [networkImage, setNetworkImage] = useState('');
-
-
+  const [networkName, setNetworkName] = useState("");
+  const [selectedProduct, setSelectedProduct] = useState("");
+  const [recipientName, setRecipientName] = useState("");
+  const [recipientNumber, setRecipientNumber] = useState("");
+  const [amount, setAmount] = useState("");
+  const [networkImage, setNetworkImage] = useState("");
 
   // =====================DATABUNDLE========================
-  const [selectedOption, setSelectedOption] = useState('');
-  const [selectedNetworkProduct, setSelectedNetworkProduct] = useState('');
-  const [recipientPhoneNumber, setRecipientPhoneNumber] = useState('');
-  const [selectedAmount, setSelectedAmount] = useState('');
-  const [recipientNames, setRecipientNames] = useState('');
+  const [selectedOption, setSelectedOption] = useState("");
+  const [selectedNetworkProduct, setSelectedNetworkProduct] = useState("");
+  const [recipientPhoneNumber, setRecipientPhoneNumber] = useState("");
+  const [selectedAmount, setSelectedAmount] = useState("");
+  const [recipientNames, setRecipientNames] = useState("");
   const [walletName, setWalletName] = useState("");
-
-  //=============point redeem==============
-  const [inputValue, setInputValue] = useState('');
-  const [outputValue, setOutputValue] = useState('');
-  const [realinputValue, setRealInputValue] = useState('');
-  const [realoutputValue, setRealOutputValue] = useState('');
+  const [accountId, setAccountId] = useState("");
+  const [numberPins, setNumberPins] = useState("");
+  const [emailId, setEmailId] = useState("");
+   
   
+  //=============point redeem==============
+  const [inputValue, setInputValue] = useState("");
+  const [outputValue, setOutputValue] = useState("");
+  const [realinputValue, setRealInputValue] = useState("");
+  const [realoutputValue, setRealOutputValue] = useState("");
+
+  //==============electricity subscrition===========
+  const [meterNumber, setMeterNumber] = useState('');
+  const [verifiedName, setVerifiedName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [ikedcEmail, setEmail] = useState('');
+  const [ikedcamount, setIkedcamount] = useState('');
 
   //=============Currency conversion==============
-  const [convertedAmount, setConvertedAmount] = useState('');
-  const [initialValue, setInitialValue] = useState('');
+  const [convertedAmount, setConvertedAmount] = useState("");
+  const [initialValue, setInitialValue] = useState("");
   const [showListOne, setShowListOne] = useState(false);
   const [selectedOne, setSelectedOne] = useState(false);
   const [activeButtonOne, setActiveButtonsOne] = useState([true, false]);
+
+  //=============TV-subscription==============
+
+  //==========GOTV===========
+  const [confirmGotvPopup, setConfirmGotvPopup] = useState(false);
+  const [inputPinGotv, setInputPinGotv] = useState(false);
+  const [gotvSuccessful, setGotvSuccessful] = useState(false);
+  const [selectedOptionGOTV, setSelectedOptionGOTV] = useState('');
+  const [showDropdownGOTV, setShowDropdownGOTV] = useState(false);
+  const formatNumberWithCommas = (number) => {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');};
+  const [mobileNumber, setMobileNumber] = useState('');
+  const [cardName, setCardName] = useState('');
+  const [smartCard, setSmartCard] = useState('');
+  const [tvEmail, setTvEmail] = useState('')
+
+    //==========DSTV===========
+  const [selectedOptionDstv, setSelectedOptionDstv] = useState('');
+  const [showDropdownDstv, setShowDropdownDstv] = useState(false);
+  const [confirmDstvPopup, setConfirmDstvPopup] = useState(false);
+  const [inputPinDstv, setInputPinDstv] = useState(false);
+  const [dstvSuccessful, setDstvSuccessful] = useState(false);
 
   //============= EDUCATION PINS ========================
 
@@ -708,6 +738,7 @@ const [examActive, setExamActive] = useState(false);
 const [educationPinPhone, setEducationPinPhone]= useState('');
 const[ educationPinEmail, setEducationPinEmail] = useState('');
 const [waecAmount, setWaecAmount] = useState('₦');
+const [walletBalance, setWalletBalance] = useState('');
 
   const hold = {
     firstDrop,
@@ -948,9 +979,7 @@ const [waecAmount, setWaecAmount] = useState('₦');
     setOtherBankWithdrawalSuccess,
     // ==============exchangeRate=============
     exchangeRate,
-    
 
-    
     // ==============AirtimeVTU===============
     networkName,
     setNetworkName,
@@ -962,22 +991,29 @@ const [waecAmount, setWaecAmount] = useState('₦');
     setRecipientNumber,
     amount,
     setAmount,
-    networkImage, 
+    networkImage,
     setNetworkImage,
 
     // ==============DataBundle===============
-    selectedOption, 
+    selectedOption,
     setSelectedOption,
-    selectedNetworkProduct, 
+    selectedNetworkProduct,
     setSelectedNetworkProduct,
-    recipientPhoneNumber, 
+    recipientPhoneNumber,
     setRecipientPhoneNumber,
-    selectedAmount, 
+    selectedAmount,
     setSelectedAmount,
-    recipientNames, 
+    recipientNames,
     setRecipientNames,
-    walletName, 
+    walletName,
     setWalletName,
+    accountId, 
+    setAccountId,
+    numberPins, 
+    setNumberPins,
+    emailId, 
+    setEmailId,
+
 
 
     //point redeem
@@ -985,7 +1021,24 @@ const [waecAmount, setWaecAmount] = useState('₦');
     setInputValue,
     outputValue,
     setOutputValue,
+    realinputValue, 
+    setRealInputValue,
+    realoutputValue, 
+    setRealOutputValue,
 
+
+
+    //electricity subscription
+    meterNumber,
+   setMeterNumber,
+   verifiedName,
+    setVerifiedName,
+    phoneNumber, 
+    setPhoneNumber,
+    ikedcEmail, 
+    setEmail,
+    ikedcamount,
+     setIkedcamount,
 
     //currency
     convertedAmount,
@@ -998,10 +1051,39 @@ const [waecAmount, setWaecAmount] = useState('₦');
     setSelectedOne,
     setActiveButtonsOne,
     activeButtonOne,
-    realinputValue, 
-    setRealInputValue,
-    realoutputValue, 
-    setRealOutputValue,
+
+    //TV-subscription
+    confirmGotvPopup,
+    setConfirmGotvPopup,
+    inputPinGotv,
+    setInputPinGotv,
+    gotvSuccessful,
+    setGotvSuccessful,
+    selectedOptionGOTV,
+    setSelectedOptionGOTV,
+    showDropdownGOTV,
+    setShowDropdownGOTV,
+    formatNumberWithCommas,
+    mobileNumber,
+    setMobileNumber,
+    cardName,
+    setCardName,
+    smartCard,
+    setSmartCard,
+    tvEmail,
+    setTvEmail,
+    
+    confirmDstvPopup,
+    setConfirmDstvPopup,
+    inputPinDstv,
+    setInputPinDstv,
+    dstvSuccessful,
+    setDstvSuccessful,
+    selectedOptionDstv,
+    setSelectedOptionDstv,
+    showDropdownDstv,
+    setShowDropdownDstv,
+    
 
   //====== EDUCATION PINS
   quantityResult, 
@@ -1021,7 +1103,9 @@ const [waecAmount, setWaecAmount] = useState('₦');
    educationPinEmail, 
   setEducationPinEmail,
   waecAmount, 
-  setWaecAmount
+  setWaecAmount,
+  walletBalance, 
+  setWalletBalance
 
   };
 
@@ -1033,4 +1117,3 @@ const [waecAmount, setWaecAmount] = useState('₦');
     </div>
   );
 };
-

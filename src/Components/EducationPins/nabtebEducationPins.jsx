@@ -21,6 +21,7 @@ import OtpInput from "react-otp-input";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
  import { Modal } from '../Screens/Modal/Modal';
+ import AremxyPlugIcon from './imagesEducation/AremxyPlug.svg';
 import NabtebReceipt from './ReceiptEducationPins/nabtebReceipt';
 
 export default function NabtebEducationPins() {
@@ -36,6 +37,7 @@ useContext(ContextProvider);
 const {educationPinPhone, setEducationPinPhone} = useContext(ContextProvider);
 const {educationPinEmail, setEducationPinEmail} = useContext(ContextProvider);
 const {waecAmount, setWaecAmount} = useContext(ContextProvider);
+const {walletBalance, setWalletBalance } = useContext(ContextProvider);
 
 // UseStates
 const [imageState, setImageState] = useState(arrowDown);
@@ -98,6 +100,7 @@ const {
 const waecProceed = (e) => {
  const { error } = schema.validate({
     educationPinPhone,
+    educationPinEmail
   });
 
   if (error) {
@@ -119,12 +122,12 @@ const schema = Joi.object({
     .required()
     .messages({
       "string.pattern.base": "Phone number should be 11 digits ",
-    })
+    }),
     
-    // educationPinEmail: Joi.string()
-    // .pattern(new RegExp(/^[^\s@]+@[^\s@]+\.[^\s@]+$/))
-    // .required()
-    // .messages({ "string.pattern.base": "Invalid email " })
+    educationPinEmail: Joi.string()
+    .pattern(new RegExp(/^[^\s@]+@[^\s@]+\.[^\s@]+$/))
+    .required()
+    .messages({ "string.pattern.base": "Invalid email " })
 
 });
 
@@ -136,19 +139,20 @@ const confirmButton = () => {
 const waecTransactionSuccessClose = () => {
   setTransactSuccessPopUp(false);
 };
-const waecReceipt = () => {
+const nabtebReceipt = () => {
   setTransactSuccessPopUp(false);
 };
 
   return (
     <DashBoardLayout>
-    <div className='flex flex-col lg:h-[700px] justify-between '>
+    <div className='flex flex-col h-[110%] justify-between '>
  <div className=''>
   {/* Hero-section */}
 <HeroComponent/>
-    <div className='flex lg:gap-[8px] items-center md:gap-[4.694px] mb-[20px]  lg:mb-[50px] md:mb-[30px]'>
+    <div className='flex lg:gap-[8px] items-center md:gap-[5.868px] gap-[4.694px] 
+    mb-[20px]  lg:mb-[50px] md:mb-[30px]'>
 
-      <h2 className='font-[600] text-[8px] leading-[12px] md:text-[9.389px]
+      <h2 className='font-[600] text-[9px] leading-[12px] md:text-[9.389px]
        md:leading-[11.267px] lg:text-[16px] text-[#7E7E7E] lg:leading-[19.2px]'>
     Purchase
       </h2>
@@ -156,7 +160,7 @@ const waecReceipt = () => {
       <img className='h-[12px] w-[12px] md:h-[14.083px] md-w-[14.083px] lg:h-[24px] lg:w-[24px] self-center'
       src={NabtebImg} alt="" />
 
-      <h2 className='font-[600] text-[8px] leading-[12px] md:text-[9.389px]
+      <h2 className='font-[600] text-[9px] leading-[12px] md:text-[9.389px]
        md:leading-[11.267px] lg:text-[16px] text-[#7E7E7E] lg:leading-[19.2px]'>
       NABTEB E-PINs Instantly
       </h2>
@@ -166,7 +170,7 @@ const waecReceipt = () => {
     {/* Input for Request of examination pins  */}
     <form action=''>
     <div  className='flex flex-col gap-[20px]  md:h-[172.73px] md:gap-[14.67px] 
-    md:w-[80%] lg:gap-[25px] lg:h-[296px] lg:mb-[30px] mb-[30px]'>
+     lg:gap-[25px] lg:h-[296px] lg:mb-[30px] mb-[30px]'>
       {/* container for the first two input */}
       <div className=' w-[100%]
       flex flex-col md:flex-row gap-[20px] 
@@ -190,7 +194,7 @@ lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] border-[0.4px] border-[#9C9C9
 hover:bg-[#EDEAEA]'>
     <h2 
     className='font-[500] text-[8px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] 
-    lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px] cursor-pointer'>
+    lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer'>
     {examType}
       </h2>
       <img  
@@ -199,8 +203,8 @@ hover:bg-[#EDEAEA]'>
       src= {arrowDown} alt="" />
        </div>
        {examActive && (
-         <div className='absolute md:top-[90px] top-[50px] z-[3]  flex flex-col w-[100%] lg:h-225px md:h-[210px]  
-         md:shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]'>
+         <div className='absolute lg:top-[90px] md:top-[60px] top-[50px] z-[3]  
+         flex flex-col w-[100%] lg:h-225px md:h-[210px] '>
           {(Exams.map(exam => {
             return (
                <a href={exam.path}
@@ -210,8 +214,10 @@ hover:bg-[#EDEAEA]'>
              document.querySelector('.Examdrop').classList.remove('DropIt');
              console.log(e);
               })}
-              className=' text-[8px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
-         md:text-[13.227px] md:leading-[17.195px] 
+              className=' text-[8px] leading-[10.4px]
+           bg-white    md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
+         md:text-[13.227px] md:leading-[17.195px]
+         shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
          lg:text-[16px] lg:leading-[20.8px] cursor-pointer hover:bg-[#EDEAEA]' 
          key= {exam.id}>
       <h2>{exam.examType}   </h2>
@@ -243,7 +249,7 @@ md:pr-[5.282px] md:pl-[5.867px]
 lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
 border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
     <h2 className='font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
-    lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px] cursor-pointer'>
+    lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer'>
     {quantityResult}
       </h2>
       <img 
@@ -254,8 +260,9 @@ border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
        {/* drop down */}
        
       {waecActive && (
-         <div className='absolute z-0 md:top-[90px] top-[50px]   flex flex-col w-[100%] lg:h-225px md:h-[210px]  
-         md:shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]'>
+         <div className='absolute z-[2] lg:top-[90px] md:top-[60px] top-[50px]  
+          flex flex-col w-[100%]   
+        '>
           {(options.map(option => {
             return (
               <h2 onClick={(e =>{
@@ -265,8 +272,10 @@ border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
               document.querySelector('.imgdrop').classList.remove('DropIt');
          
               })}
-              className='text-[8px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
-         md:text-[13.227px] md:leading-[17.195px] 
+              className='text-[8px] text-[#7E7E7E] leading-[10.4px] md:py-[15px] 
+              py-[8px] pl-[10px] font-[500]
+               bg-white shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
+         md:text-[13.227px] md:leading-[17.195px] w-[100%]
          lg:text-[16px] lg:leading-[20.8px] cursor-pointer hover:bg-[#EDEAEA]' 
          key={option.id}>
         {option.quantity}
@@ -281,10 +290,10 @@ border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
    </div>
   {/* container for Phone number and Email */}
    <div className=' w-[100%] 
-   flex flex-col  md:flex-row gap-[20px] md:gap-[12.91px] lg:gap-[22px] z-0'>
+   flex flex-col  md:flex-row gap-[20px] md:gap-[12.91px] lg:gap-[22px] '>
     {/* LeftSide */}
      <div className=' container-phone gap-[5.868px] 
-     flex flex-col md:w-1/2 md:gap-[10px] z-0'>
+     flex flex-col md:w-1/2 md:gap-[10px] '>
    <h2 className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px]
      md:text-[9.389px] md:leading-[12.206px]
    lg:text-[16px] lg:leading-[20.8px] '>
@@ -304,8 +313,11 @@ border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
   }
 
    })}
-   className='h-[29.927px] lg:h-[51px]  md:h-[29.93px] w-[100%] border-[0.4px] border-[#9C9C9C] 
-   pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
+   className='h-[29.927px] lg:h-[51px]  md:h-[29.93px] font-[500]
+   w-[100%] border-[0.4px] border-[#9C9C9C] 
+   text-[14.389px] leading-[18.206px]
+   lg:text-[16px] lg:leading-[20.8px] text-black
+ pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
    focus:outline-none 
    md:pt-[8.802px] md:pb-[7.042px] 
    md:pr-[5.282px] md:pl-[5.867px] 
@@ -313,7 +325,7 @@ border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
    placeholder:text-[8px] placeholder:leading-[10.4px] 
    lg:placeholder:text-[16px] lg:placeholder:leading-[20.8px] placeholder:text-[#7E7E7E]
    md:placeholder:text-[9.389px] md:placeholder:leading-[12.206px]'
-    type="tel" name='phone' id='phone' maxLength={11} placeholder='090*****2340'
+    type="tel" name='phone' id='phone' maxLength={11} placeholder=''
     value={educationPinPhone} onChange={(e)=>{
       setEducationPinPhone(e.target.value);
     }}/>
@@ -333,7 +345,10 @@ border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
    Email
    </h2>
    
-   <input className ='EmailPins flex h-[29.927px] lg:h-[51px] md:h-[29.93px] w-[100%]
+   <input className ='EmailPins font-[500] flex h-[29.927px] lg:h-[51px] md:h-[29.93px] w-[100%]
+   lg:text-[16px] lg:leading-[20.8px] 
+   text-black
+   text-[14.389px] leading-[18.206px] tracking-[0.4px]
    pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] 
     border-[0.4px] border-[#9C9C9C] focus:outline-none self-center
    md:pt-[8.802px] md:pb-[7.042px] 
@@ -348,9 +363,14 @@ border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
     setEducationPinEmail(e.target.value)
    }}
     type="Email" 
-    placeholder='Habib@aremxy.com'/>
+    placeholder='example@gmail.com'/>
     
-  
+    {errors.educationPinEmail && (
+            <div className="text-[12px] text-red-500 italic lg:text-[14px]">
+              {errors.educationPinEmail}
+            </div>
+          )}
+              
    </div>
    
    </div>
@@ -370,7 +390,7 @@ border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
     {/* input */}
     <div
       onchange={setWaecAmount}
-     className='h-[29.927px]  lg:h-[51px] md:h-[29.93px]
+     className='h-[29.927px] lg:h-[51px] md:h-[29.93px]
         md:pt-[8.802px] md:pb-[7.042px] 
        pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
      md:pr-[5.282px] md:pl-[5.867px]
@@ -378,7 +398,7 @@ border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
   focus:outline-none text-start
     text-[8px] leading-[10.4px]
    font-[500]  md:text-[9.389px] md:leading-[12.206px]
-  lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px]'
+  lg:text-[16px] text-black lg:leading-[20.8px]'
   maxLength={7}>
   {waecAmount}
    </div>
@@ -386,8 +406,8 @@ border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
 
     </div>
     {/* payment method */}
-    <div className=' payment-parent gap-[5.868px]
-     flex w-[100%] flex-col md:w-1/2  md:gap-[5.868px] lg:gap-[10px]'>
+    <div className=' relative gap-[5.868px]
+     flex w-[100%] flex-col md:w-1/2   md:gap-[10px]'>
     {/* header */}
     <h2 className='font-[600] text-[8px] leading-[10.4px]
      text-[#7E7E7E]  md:text-[9.389px] md:leading-[12.206px]
@@ -404,8 +424,8 @@ lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]
 border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
     <h2 className='font-[500] text-[8px] leading-[10.4px]
      md:text-[9.389px] md:leading-[12.206px]
-    lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px] cursor-pointer'>
-    {paymentResult}
+    lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer'>
+    {paymentResult +  walletBalance}
       </h2>
       <img 
      
@@ -415,28 +435,31 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
        {/* drop down */}
        
       {methodActive && (
-         <div className=' flex flex-col w-[100%]  
-         md:shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]'>
+         <div className=' flex flex-col w-[100%]
+         absolute z-0 lg:top-[90px] md:top-[60px] top-[50px]'>
 
         {(methodOptions.map(methodOption => {
             return (
         <div 
         onClick={(e =>{
         onchange={setMethodOptions}
-          setPaymentResult(methodOption.method + ' ' + methodOption.balance);
+          setPaymentResult(methodOption.method);
+          setWalletBalance(methodOption.balance);
           setImageState(methodOption.flag);
           setMethodActive(false);
        document.querySelector('.methodDrop').classList.remove('DropIt');
         })}
-        className='flex gap-[10px] md:py-[15px] py-[3px] pl-[10px]
-        cursor-pointer hover:bg-[#EDEAEA] items-center' 
+        className='
+          flex gap-[10px] lg:py-[15px] py-[10px] pl-[10px]
+        cursor-pointer items-center bg-white  hover:bg-[#EDEAEA]
+        shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]' 
         key={ methodOption.id }>
 
           <img className='md:h-[29.27px]  h-[14.27px]' src={methodOption.flag} alt=""/>
 
             <h2 
               className='text-[8px] leading-[10.4px]
-               font-[500] text-[#7C7C7C]  
+               font-[500] text-[#7C7C7C] 
          md:text-[13.227px] md:leading-[17.195px] 
          lg:text-[16px] lg:leading-[20.8px] self-center cursor-pointer' >
         {methodOption.method + ' ' + methodOption.balance}
@@ -462,14 +485,16 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                 toggleSideBar
                   ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
                   : "lg:w-[40%]"
-              } lg:ml-[10%] lg:mr-[10%] grow pt-[10px] md:mt-[1%] mb-0 pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:mb-[18%] md:overflow-auto`}
+              } lg:ml-[10%] lg:mr-[10%] grow  md:mt-[1%] mb-0 pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:mb-[18%] md:overflow-auto`}
             >
-              <div className="w-full flex justify-end border-b-[6px] border-primary px-[12px] md:h-[25px] lg:border-b-[10px] lg:mt-[20px]">
+              <div className="w-full flex justify-end border-b-[6px] items-center
+               border-primary px-[12px] h-[35px] md:h-[45px] lg:h-[60px] lg:border-b-[10px]">
                 <img
                   src={closeIcon}
                   alt=""
                   onClick={() => setEducationProceed(false)}
-                  className="md:h-[120%] lg:h-[400%] lg:mt-[-25px] lg:pb-[20px]"
+                  className="w-[18px] h-[18px]  md:w-[25px] cursor-pointer
+                   md:h-[25px] lg:w-[35px] lg:h-[35px]"
                 />
               </div>
 
@@ -477,15 +502,18 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                 <h2 className="lg:text-[16px] lg:leading-[24px] text-center mb-1 text-[10px] md:text-[13px] font-[600] mt-[20px] leading-[12px]">
                   Confirm Transaction
                 </h2>
-                <h2 className="lg:text-[16px] md:text-[12px] md:px-[30px] lg:leading-[24px] text-[10px] leading-[12px] text-center mt-[26px] mx-[10px] mb-[20px]">
+                <h2 className="lg:text-[16px]  md:text-[12px] md:leading-[20px] md:px-[30px] lg:leading-[24px] 
+                text-[10px] leading-[15px] text-center mt-[26px] mx-[10px] mb-[20px] font-[600]">
                   You are about to purchase{" "}
-                  <span className="font-[600]">{examType}</span> from
-                  your {paymentResult + " Wallet"} to
+                  <span className="font-[600] lg:text-[16.9px] md:leading-[14.9px] text-[10.9px]">
+                    NABTEB PINS (₦100)</span> from
+                  your {paymentResult} to
                 </h2>
 
          <div className="flex flex-col gap-[15px] px-[20px] mt-[50px] md:gap-[25px]">
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                  <div className="flex items-center justify-between font-[500]">
+                    <h2 className="text-[#7C7C7C] text-[10px] leading-[12px]
+                     md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
                       Exam Type
                     </h2>
                     <div className="flex gap-1">
@@ -496,18 +524,21 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                           className="w-full h-full object-cover md:h-[15px]"
                         />
                       </div>
-                      <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                      <h2 className="text-[10px] leading-[12px] md:text-[12px] md:leading-[11.92px] 
+                      lg:text-[16px] lg:leading-[24px] font-[500]">
                         NABTEB
                       </h2>
                     </div>
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                    <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] 
+                    md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] font-[500]">
                       Quantity
                     </h2>
                     <div className="flex gap-1">
-                      <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                      <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] 
+                      md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] font-[500]">
                         {quantityResult}
                       </h2>
                     </div>
@@ -516,55 +547,65 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                  
 
                   <div className="flex items-center justify-between">
-                    <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                    <h2 className="text-[#7C7C7C] text-[10px] leading-[12px]
+                     font-[500] md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
                       Phone Number
                     </h2>
                     <div className="flex gap-1">
-                      <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                      <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] 
+                      md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] font-[500]">
                         {educationPinPhone}
                       </h2>
                     </div>
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                    <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] 
+                    md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] font-[500]">
                      Email
                     </h2>
                     <div className="flex gap-1">
-                      <h2 className="text-[10px] leading-[12px] md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                      <h2 className="text-[10px] leading-[12px] md:text-[12px] md:leading-[11.92px] 
+                      lg:text-[16px] lg:leading-[24px] font-[500]">
                       {educationPinEmail}
                       </h2>
                     </div>
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                    <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] md:text-[12px] 
+                    md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] font-[500]">
                      Amount
                     </h2>
                     <div className="flex gap-1">
-                      <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                      <h2 className="text-[10px] leading-[12px] md:text-[12px] md:leading-[11.92px] 
+                      lg:text-[16px] lg:leading-[24px] font-[500]">
                    {waecAmount}
                       </h2>
                     </div>
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                    <h2 className="text-[#7C7C7C] text-[10px] leading-[12px]
+                    md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] font-[500]">
                      Payment Method
                     </h2>
                     <div className="flex gap-1">
-                      <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                      {paymentResult + " Wallet"}
+                      <h2 className="text-[10px] leading-[12px] md:text-[12px]
+                       md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] font-[500]">
+                      {paymentResult}
                       </h2>
                     </div>
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                    <h2 className="text-[#7C7C7C] text-[10px] leading-[12px]
+                     md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] font-[500]">
                       Transaction Fee
                     </h2>
                     <div className="flex gap-1">
-                      <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                      <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] 
+                      md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] font-[500]">
                         0.00
                       </h2>
                     </div>
@@ -572,13 +613,14 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
 
                   {/* POINTS EARNED */}
                   <div className="flex items-center justify-between">
-                    <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                    <h2 className="text-[#7C7C7C] text-[10px] leading-[12px]
+                    md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] font-[500]">
                       Points Earned
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] text-[#2ED173] 
                       leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] 
-                      lg:text-[16px] lg:leading-[24px]">
+                      lg:text-[16px] lg:leading-[24px] font-[500]">
                       +2.00
                       </h2>
                     </div>
@@ -594,10 +636,10 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                           alt="/"
                         />
                       </div>
-                      <p className="text-[10px] md:text-[14px]  lg:text-[16px]">
+                      <p className="text-[10px] md:text-[14px]  lg:text-[16px] font-[600]">
                         Available Balance{" "}
-                        <span className="text-[#0003]">
-                          ( (₦50,000.00) )
+                        <span className="text-[#0003] font-[500]">
+                          {walletBalance}
                         </span>
                       </p>
                     </div>
@@ -608,9 +650,11 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                     />
                   </div>
 
-                  <div className="flex items-center justify-center">
+                  <div className="flex items-center justify-center mb-[60px] bg-blue-200">
                     <button
-                      className="w-full md:w-fit bg-primary text-white rounded-md px-[28px] text-[10px] md:text-[12px] leading-[15px] lg:text-[16px] lg:leading-[24px] py-[15px] md:py-[10px]"
+                      className="w-full md:w-fit bg-primary text-white rounded-md
+                       px-[28px] text-[10px] md:text-[12px] leading-[15px] lg:text-[16px]
+                        lg:leading-[24px] py-[15px] md:py-[10px] font-extrabold "
                       onClick={() => {
                         confirmButton();
                       }}
@@ -636,7 +680,9 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
             >
               <img
                 onClick={() => setEducationConfirm(false)}
-                className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[45px] lg:h-[45px] "
+                className="absolute cursor-pointer md:top-[5.5px] top-[5.5px]
+                     right-2 w-[18px] h-[18px] 
+                 md:w-[35px] md:h-[25px] lg:w-[45px] lg:h-[45px]"
                 src={closeIcon}
                 alt=""
               />
@@ -691,9 +737,12 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                 disabled={inputPin.length !== 4}
                 className={`${
                   inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
-                } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                } my-[5%] w-[225px] flex justify-center items-center 
+                mx-auto cursor-pointer text-[10px] font-extrabold h-[40px]
+                 text-white rounded-[6px] md:w-[150px] md:rounded-[8px] 
+                 md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
               >
-               Fund
+               Purchase
               </button>
             </div>
           </Modal>
@@ -715,8 +764,8 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                     setTransactSuccessPopUp(false);
                     window.location.reload();
                   }}
-                  className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[25px]"
-                  src="/Images/login/arpLogo.png"
+                  className="w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[42px]"
+                  src={AremxyPlugIcon}
                   alt=""
                 />
 
@@ -725,13 +774,15 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                     setTransactSuccessPopUp(false);
                     window.location.reload();
                   }}
-                  className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
+                  className=" w-[18px] h-[18px] md:w-[35px] cursor-pointer
+                  md:h-[35px] lg:w-[29px] lg:h-[29px]"
                   src="/Images/transferImages/close-circle.png"
                   alt=""
                 />
               </div>
               <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
-              <h2 className="text-[12px] my-[4%] text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%]">
+              <h2 className="text-[12px] my-[4%] text-center md:text-[20px] md:my-[3%] lg:text-[14px]
+               lg:my-[2%] font-[600]">
                 Purchase Successful
               </h2>
               <img 
@@ -740,39 +791,47 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                 alt="/"
               />
 
-              <div className="flex flex-col gap-2 lg:gap-4 px-[20px]">
-                <p className="text-[8px] text-[#0008] text-center mb-2 md:text-[14px] lg:text-[12px]">
+              <div className="flex flex-col gap-[15px] md:gap-[20px] lg:gap-[30px] px-[20px]">
+                <p className="text-[10px] font-[500] text-[#000] text-center mb-2 
+                md:text-[14px] lg:text-[16px] leading-[15px] md:leading-[20px] lg:leading-[16px]">
                   You have successfully purchased{" "}
-                  <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
-                  {`NABTEB   ${waecAmount}`}
+                  <span className="text-[#000] font-[600] text-[10.9px] md:text-[14.9px]
+                    lg:text-[16.9px]">
+                 NABTEB PIN (₦100) {' '}
                   </span>
                   from your {paymentResult} to{" "}
                 </p>
 
                 <div className="flex items-center justify-between">
-                  <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                  <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] md:text-[12px] 
+                  md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] font-[500]">
                       Exam Type
                   </h2>
                   <div className="flex gap-1">
-                    <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
+                    <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center 
+                    justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] 
+                    md:h-[12.02px] lg:h-[25px]">
                       <img
                         src={NabtebImg}
                         alt=""
                         className="w-full h-full object-cover"
                       />
                     </div>
-                    <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                    <h2 className="text-[10px] leading-[12px] md:text-[12px] md:leading-[11.92px] 
+                    lg:text-[16px] lg:leading-[24px] font-[500]">
                         NABTEB
                     </h2>
                   </div>
                 </div>
 
                 <div className="flex items-center justify-between">
-                  <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                  <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] 
+                  md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] font-[500]">
                     Quantity
                   </h2>
                   <div className="flex gap-1">
-                    <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                    <h2 className="text-[10px] leading-[12px] md:text-[12px] md:leading-[11.92px] 
+                    lg:text-[16px] lg:leading-[24px] font-[500]">
                       {quantityResult}
                     </h2>
                   </div>
@@ -781,22 +840,26 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                 
 
                 <div className="flex items-center justify-between">
-                  <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                  <h2 className="text-[#7C7C7C] text-[10px] leading-[12px]
+                   md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] font-[500]">
                     Phone Number
                   </h2>
                   <div className="flex gap-1">
-                    <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                    <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] 
+                    md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] font-[500]">
                       {educationPinPhone}
                     </h2>
                   </div>
                 </div>
 
                 <div className="flex items-center justify-between">
-                  <h2 className="text-[#7C7C7C] text-[10px] leading-[12px]  md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                  <h2 className="text-[#7C7C7C] text-[10px] leading-[12px]  
+                  md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] font-[500]">
                      Email
                   </h2>
                   <div className="flex gap-1">
-                    <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                    <h2 className="text-[10px] leading-[12px]  md:text-[12px] md:leading-[11.92px]
+                     lg:text-[16px] lg:leading-[24px] font-[500]">
                      {educationPinEmail}
                     </h2>
                   </div>
@@ -814,60 +877,75 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                 </div> */}
 
                 <div className="flex items-center justify-between">
-                  <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                  <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] 
+                  md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] font-[500]">
                     Payment Method
                   </h2>
                   <div className="flex gap-1">
-                    <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                      {paymentResult + " Wallet"}
+                    <h2 className="text-[10px] leading-[12px]  md:text-[12px] md:leading-[11.92px] 
+                    lg:text-[16px] lg:leading-[24px] font-[500]">
+                      {paymentResult}
                     </h2>
                   </div>
                 </div>
 
                 <div className="flex items-center justify-between">
-                  <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                  <h2 className="text-[#7C7C7C] text-[10px] leading-[12px]
+                   md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] font-[500]">
                     Order Number
                   </h2>
                   <div className="flex gap-1">
-                    <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                    <h2 className="text-[10px] leading-[12px]  md:text-[12px] 
+                    md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] font-[500]">
                       0124yend44
                     </h2>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-[#F2FAFF] mx-10 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[75px] md:mx-[20px] md:rounded-[15px] lg:h-[75px]">
-                <p className="text-[6px] text-center mx-auto w-[171px] md:text-[9px] md:w-full lg:text-[14px]">
-                  The data purchase has been sent successfully to the
-                  recipient phone number. Please kindly engage the recipient
-                  to check his/her balance to confirm the value. You can
-                  contact us for any further assistance.
+              <div className="bg-[#F2FAFF] mx-5 h-[45px] my-5 flex p-[10.193px] items-center justify-center   
+              md:mx-[20px] md:rounded-[15px] lg:rounded-[16.308px] lg:h-[75px]">
+                <p className="text-[9px] text-[#7C7C7C] text-center  md:text-[11px] 
+                lg:text-[16.231px] lg:leading-[20px]">
+               <span className='md:block'>The e-pins purchase has been generated successfully. 
+                Please kindly check</span>
+             <span className='md:block'> receipt to confirm the pin / token. 
+                You can contact us for any further </span> assistance.
+
                 </p>
               </div>
-              <div className="flex w-full justify-center mx-auto px-[50px] 
-              items-center gap-[5%] md:gap-[10%] mt-[50px] md:w-[50%] lg:gap-[10%] lg:mx-auto  
-              lg:my-[5%] md:mt-[40px]">
-                 <Link to="/NabtebReceipt">
-                  <button
-                  onClick={waecReceipt}
-                    className={`border-[1px] w-[100px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-[600] h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[12px] lg:w-[163px] lg:h-[38px] lg:my-[2%] md:px-[60px] md:h-[30px]`}
-                  >
-                    Share Receipt
-                  </button>
-                </Link>
-
-                <Link to="">
-                  <button
-                    onClick={() => {
+              <div className="flex  justify-center  w-[100%] 
+              items-center gap-[15px] md:gap-[20px] mt-[50px]  lg:gap-[20px] 
+              lg:my-[5%] md:mt-[20px] mb-[20px]">
+                 
+                <Link 
+               to="/NabtebEducationPin"
+                 onClick=  {() => {
                       waecTransactionSuccessClose();
                       window.location.reload();
-
                     }}
-                    className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-[600] h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[12px] lg:w-[163px] lg:h-[38px] lg:my-[2%] md:px-[60px] md:h-[30px]`}
-                  >
-                    Save As Pdf
-                  </button>
+                    className={`bg-[#04177f] w-[111px] flex justify-center 
+                    items-center  cursor-pointer text-center text-[12px] font-extrabold h-[40px]
+                     text-white rounded-[6px] md:w-[150px] md:rounded-[8px] 
+                     md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}>
+                  
+                    Done
+               
                 </Link>
+                
+                <Link to="/NabtebReceipt"
+                
+                    onClick=
+                      {nabtebReceipt}
+                     className={`bg-[#ffffff] border-[1px] w-[111px] border-[#0003] 
+                     flex justify-center items-center text-center  cursor-pointer text-[12px] 
+                     font-extrabold h-[40px] rounded-[6px] md:w-[150px] md:rounded-[8px] 
+                     md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}>
+                  
+                    Receipt
+                  
+                </Link>
+               
                 </div>
             </div>
           </Modal>
@@ -876,20 +954,21 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
  {/* =========== RECEIPT ============*/}
  {receipt && (
           <NabtebReceipt
-             Exam ="WAEC"
+             Exam ="NABTEB"
             ExamType={examType}
              ListOfResultCheckers={quantityResult}
              PhoneNumber={educationPinPhone}
             Email={educationPinEmail}
             Amount={waecAmount}
+            walletBalance = {walletBalance}
            walletName={paymentResult}
           />
         )}
                
                <div className="py-[30px] lg:py-[60px] mt-10">
           <button
-            className={`font-600 h-[43px] w-[100%] py-[3.534px] px-[5.301px] mb-[40px] md:mb-[0px] rounded-[4.241px]
-            md:w-[95.649px] text-white md:py-[5.868px] md:px-[8.802px] 
+            className={`font-extrabold h-[43px] w-[100%] py-[3.534px] px-[5.301px] mb-[40px] md:mb-[0px] rounded-[4.241px]
+            md:w-[95.649px] text-white md:py-[5.868px] md:px-[8.802px]  md:h-auto
            md:text-[9.389px] md:leading-[14px] md:rounded-[7.042px]
            lg:text-[16px] lg:leading-[24px] lg:py-[10px] lg:px-[15px] lg:w-[163px] lg:rounded-[12px] ${
               !examType ||
@@ -919,21 +998,27 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
         </div>
 
     </form>
-
+</div>
     
 
-    <div className="md:hidden flex gap-[5.729px] py-[2.865px] justify-center px-[8.594px] ">
-            <p className="font-[500] text-[8px] text-[#707070] leading-[10.4px]">
+    <div className="flex gap-[5.729px]  md:gap-[14.896px] py-[30.865px] justify-center px-[8.594px] ">
+            <p className="font-[500] text-[10px] text-black 
+              leading-[10.4px] lg:text-[16px] lg:leading-[15.6px]  md:text-[6.875px]
+            ] md:leading-[12.938px] self-center">
               You need help?
             </p>
             <Link to ="/contactUs"
-              className="font-[500] text-white text-[8px]  py-[2.865px] 
-px-[8.594px] leading-[10.4px] rounded-[5.156px] bg-[#04177F]"
+              className="font-extrabold text-white text-[10px]  py-[4.865px] 
+              px-[12.594px] leading-[10.4px] rounded-[5.156px] bg-[#04177F]
+              lg:text-[12px] lg:leading-[14.4px] 
+               md:text-[4.583px]  md:py-[4.865px] 
+              md:px-[14.594px] md:leading-[5.985px]  lg:py-[10px]
+              lg:px-[16px] lg:rounded-[9px]"
             >
               Contact Us
             </Link>
           </div>
-  </div>
+  
   </div>
   </DashBoardLayout>
 

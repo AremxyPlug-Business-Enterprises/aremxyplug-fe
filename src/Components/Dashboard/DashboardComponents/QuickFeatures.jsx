@@ -75,6 +75,7 @@ const QuickFeatures = () => {
           <p>TV Subscriptions</p>
         </div>
         </Link>
+        <Link to="/electricity-subscription">
         <div
           className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
             styles.feature
@@ -87,6 +88,7 @@ const QuickFeatures = () => {
           />
           <p>Electricity Bills</p>
         </div>
+        </Link>
         <div
           className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
             styles.feature
