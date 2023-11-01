@@ -111,7 +111,7 @@ const handleBalance = (product) => {
 
         <DashBoardLayout>
         <>
-        <div class="flex gap-[25px] md:w-full w-full flex-col">
+        <div class="flex gap-[25px] lg:w-full lg:h-[1850px] md:h-[1200px] h-[800px] md:w-full w-full flex-col">
 
         <div className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] bg-gradient-to-r from-yellow-300 to-rose-400 flex px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px]">
                 <div className="py-[13px] lg:py-[40px]">
@@ -223,8 +223,8 @@ gap-[5px] mt-[-0%] lg:mt-[25px] bg-indigo-300
     }}
     className={`cursor-pointer ${styles.filter} ${
       isDarkMode ? "border" : ""} ${ 
-          toggleSideBar ? "lg:mt-[-10px] md:mt-[-10px] md:w-[135px]" : "lg:mt-[4px] md:mt-[] md:w-[]" } 
-        flex items-center gap-[1px] mt-[1px]  px-[2px] rounded-[3px] md:px-[8px]`}
+          toggleSideBar ? "lg:mt-[-10px] md:mt-[-10px]  md:w-[135px] lg:w-[170px]" : "lg:mt-[4px] md:mt-[] md:w-[] lg:w-[]" } 
+        flex items-center gap-[1px] mt-[1px] cursor-pointer px-[2px] rounded-[3px] md:px-[8px]`}
   >
     <div className={`text-[#04177f] text-[9px] md:text-[16px] lg:text-[20px] whitespace-nowrap`}>Filter by Date </div>
     <img
@@ -266,12 +266,12 @@ gap-[5px] mt-[-0%] lg:mt-[25px] bg-indigo-300
             </div>
         </div>
     </div>
-    </div>
+    
 
 
-    { calender && <div className="mt-[0px] absolute  z-50 lg:mt-[0px]"><Calender/></div> }
+    { calender && <div className="mt-[260px] md:mt-[336px] absolute  z-50 lg:mt-[575px]"><Calender/></div> }
    
-    <div className="mt-[-13%] lg:mt-[-3%] md:mt-[-10%]  mb-[10%]">
+    <div className="mt-[-17%] lg:mt-[-3%] md:mt-[-13%]  mb-[10%]">
 
 
     
@@ -354,7 +354,7 @@ gap-[5px] mt-[-0%] lg:mt-[25px] bg-indigo-300
         </div>
       </div>
 
-      <div className="flex lg:mt-[-48px] mt-[-10px] md:mt-[-35px] items-center text-neutral-500 gap-[10px]">
+      <div className="flex lg:mt-[-48px] mt-[-0px] md:mt-[-20px] items-center text-neutral-500 gap-[10px]">
         <p className={styles.InOutText}>Sales Analysis</p>
         <img
           className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
@@ -366,9 +366,9 @@ gap-[5px] mt-[-0%] lg:mt-[25px] bg-indigo-300
       </div>
 
      
- {/* product, quality and total amount */}
-    <div class="flex md:w-full w-full border-opacity-100 lg:mt-[-50px] mt-[-9px]
-     md:mt-[-37px] lg:w-full shadow border-black flex-col">
+ {/* product, quantity and total amount */}
+    <div class="flex md:w-full w-full border-opacity-100 lg:mt-[-80px] mt-[-22px]
+     md:mt-[-45px] lg:w-full shadow border-black flex-col">
     <div class="w-full h-[25px] lg:pr-0 pl-[8.67px] pr-[1.33px] pt-[8.17px] pb-[6.83px]
      md:w-full lg:w-full lg:pl-[23px]
      lg:h-[42px] md:h-[24.06px]  md:pl-[14.90px] md:pr-[2.29px]
@@ -437,9 +437,12 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
 
 {/* contact us */}
 <div className='md:ml-[-1000px] '>
-<footer className="flex  justify-center md:left-[310px] lg:left-[550px]  text-center gap-[20px] 
- mt-[370px] mb-[50px] md:mt-[400px] lg:mb-[30px] left-[125px]  absolute 
-  z-index-2 onset-[500px] lg:mt-[650px]">
+<footer className={`${
+toggleSideBar ? "lg:left-[670px] md:left-[410px] " : "lg:left-[550px] md:left-[310px]"
+}
+ flex  justify-center   text-center gap-[20px] 
+ mt-[290px] mb-[50px] md:mt-[460px] lg:mb-[30px] left-[125px]  absolute 
+  z-index-2 onset-[500px] lg:mt-[750px]`}>
             <p className="text-[8px] md:text-[12px] lg:text-[12px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
               You need help?
             </p>
@@ -448,7 +451,7 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
               <div
                 className={`${
                   isDarkMode ? "border " : "bg-[#04177f]"
-                } text-[8px] p-1 text-white rounded-[8px] lg:text-[12px]`}
+                } text-[8px] p-1 text-white rounded-[10px] lg:w-[100px] lg:text-[12px]`}
               >
                 Contact Us
               </div>
@@ -664,150 +667,166 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
   className={`${styles.viewTransact} ${
     isDarkMode ? "bg-black border" : "bg-white"
   }`}
->
-
-  <div className=" flex w-full md:w-full justify-between bg-white h-[1030px] 
-   p-[20px] border-x-[1.2px] border-b-[1.2px] relative
-   lg:mt-[-105px] mt-[-33px] mb-10 md:mt-[-60px]
-   items-center lg:w-full gap-[20px] flex-col">
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1  w-full h-[5.67px] pl-[8.67px]
- pr-[1.33px] pt-3  md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] bg-white
-  justify-between items-start lg:gap-[355px] inline-flex">
-    
-        <div class="w-[56.33px] text-black text-[8px] font-medium md:w-[96.82px] md:text-[12px]
-         lg:w-[169px] lg:text-base lg:leading-tight md:leading-3 lg:whitespace-nowrap  leading-[10.40px]">MTN VTU</div>
-        <div class="w-[53.33px] text-black text-[8px] font-medium md:w-[91.67px] md:text-[12px] md:leading-3 lg:w-40 lg:text-base lg:leading-tight leading-[10.40px]">100</div>
-        <div class="w-[60.33px] text-black text-[8px] font-medium md:w-[103.70px] md:text-[12px] lg:w-[181px] lg:text-base lg:leading-tight  md:leading-3 leading-[10.40px]">(₦10,000.00)</div>
-    
-</div>
-<div class="w-full h-[5.67px] pl-[8.67px] pr-[1.33px] pt-3  md:w-full
- md:h-[57.86px] lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 md:pl-[14.90px]
-  md:pr-[2.29px] bg-white justify-between lg:gap-[355px] items-center inline-flex">
-    
-        <div class="w-[56.33px] text-black text-[8px] font-medium md:w-[96.82px] md:text-[12px] lg:whitespace-nowrap lg:w-[169px] lg:text-base lg:leading-tight md:leading-3 leading-[10.40px]">MTN SNS</div>
-        <div class="w-[53.33px] text-black text-[8px] font-medium md:w-[91.67px] md:text-[12px] md:leading-3 leading-[10.40px] lg:w-40 lg:text-base lg:leading-tight ">100</div>
-        <div class="w-[60.33px] text-black text-[8px] font-medium md:w-[103.70px] md:text-[12px] md:leading-3 leading-[10.40px] lg:w-[181px] lg:text-base lg:leading-tight">(₦10,000.00)</div>
-    
-</div>
-<div class={`${
-   toggleSideBar
-   ? " lg:gap-[335px]"
-   : " lg:gap-[359px]"}
-  w-[312px] h-[17.67px] pl-[8.67px] pr-[1.33px] pt-3 lg:gap-[335px] md:w-full md:h-[57.86px] 
-md:pl-[14.90px] md:pr-[2.29px] bg-white lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 justify-between
-items-center inline-flex`}>
-    
-        <div class="w-[56.33px] text-black text-[8px] lg:whitespace-nowrap font-medium md:w-[96.82px] md:text-[12px] lg:w-[169px] lg:text-base lg:leading-tight md:leading-3 leading-[10.40px]">AIRTEL VTU</div>
-        <div class="w-[53.33px] text-black text-[8px] font-medium md:w-[91.67px] md:text-[12px] md:leading-3 lg:w-40 lg:text-base lg:leading-tight leading-[10.40px]">100</div>
-        <div class="w-[60.33px] text-black text-[8px] font-medium md:w-[103.70px] md:text-[12px] md:leading-3 leading-[10.40px] lg:w-[181px] lg:text-base lg:leading-tight ">(₦10,000.00)</div>
-    
-</div>
-<div class={`${
-   toggleSideBar
-   ? " lg:gap-[335px]"
-   : " lg:gap-[359px]"
-}
-w-[312px] h-[17.67px] pl-[8.67px] pr-[1.33px] pt-3  md:w-full md:h-[57.86px] md:pl-[14.90px]
- lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 md:pr-[2.29px] bg-white justify-between
-   items-center inline-flex`}>
-    
-        <div class="w-[56.33px] text-black text-[8px] font-medium md:w-[96.82px] lg:whitespace-nowrap md:text-[12px] lg:w-[169px] lg:text-base lg:leading-tight md:leading-3 leading-[10.40px]">AIRTEL SNS</div>
-        <div class="w-[53.33px] text-black text-[8px] font-medium md:w-[91.67px] md:text-[12px] md:leading-3 lg:w-40 lg:text-base lg:leading-tight leading-[10.40px]">100</div>
-        <div class="w-[60.33px] text-black text-[8px] font-medium md:w-[103.70px] md:text-[12px] md:leading-3 lg:w-[181px] lg:text-base lg:leading-tight leading-[10.40px]">(₦10,000.00)</div>
-    
-</div>
-<div class="w-[312px] h-[17.67px] pl-[8.67px] pr-[1.33px] pt-3  md:w-full md:h-[57.86px] lg:gap-[355px] md:pl-[14.90px] md:pr-[2.29px] bg-white justify-between items-center lg:w-full lg:h-[101px]  lg:pl-[26px] lg:pr-1 inline-flex">
-    
-        <div class="w-[56.33px] text-black text-[8px] font-medium md:w-[96.82px] lg:whitespace-nowrap md:text-[12px] md:leading-3 lg:w-[169px] lg:text-base lg:leading-tight leading-[10.40px]">GLO VTU</div>
-        <div class="w-[53.33px] text-black text-[8px] font-medium md:w-[91.67px] md:text-[12px] md:leading-3 lg:w-40 lg:text-base lg:leading-tight leading-[10.40px]">100</div>
-        <div class="w-[60.33px] text-black text-[8px] md:w-[103.70px] md:text-[12px] md:leading-3 font-medium lg:w-[181px] lg:text-base lg:leading-tight leading-[10.40px]">(₦10,000.00)</div>
-    
-</div>
-<div class="w-[312px] h-[17.67px] pl-[8.67px] pr-[1.33px] pt-3 lg:gap-[355px] md:w-full md:h-[57.86px] md:pl-[14.90px] lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 md:pr-[2.29px] bg-white justify-between items-center inline-flex">
-    
-        <div class="w-[56.33px] text-black text-[8px] font-medium md:w-[96.82px] lg:whitespace-nowrap md:text-[12px] lg:w-[169px] lg:text-base lg:leading-tight md:leading-3 leading-[10.40px]">GLO SNS</div>
-        <div class="w-[53.33px] text-black text-[8px] font-medium md:w-[91.67px] md:text-[12px] md:leading-3 lg:w-40 lg:text-base lg:leading-tight leading-[10.40px]">100</div>
-        <div class="w-[60.33px] text-black text-[8px] font-medium md:w-[103.70px] md:text-[12px] md:leading-3 lg:w-[181px] lg:text-base lg:leading-tight leading-[10.40px]">(₦10,000.00)</div>
-    
-</div>
-<div class={`${
-  toggleSideBar
-  ? " lg:gap-[318px]"
-  : " lg:gap-[359px]"
-}
-w-[312px]  pl-[8.67px] pr-[1.33px] pt-3  md:w-full md:h-[57.86px] 
- md:pl-[14.90px] md:pr-[2.29px] bg-white h-3 lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 justify-between 
- items-center inline-flex`}>
-    
-        <div class="w-[56.33px] text-black text-[8px] font-medium md:w-[96.82px] lg:whitespace-nowrap md:text-[12px] lg:w-[169px] lg:text-base lg:leading-tight md:leading-3 leading-[10.40px]">9MOBILE VTU</div>
-        <div class="w-[53.33px] text-black text-[8px] font-medium md:w-[91.67px] md:text-[12px] md:leading-3 lg:w-40 lg:text-base lg:leading-tight leading-[10.40px]">100</div>
-        <div class="w-[60.33px] text-black text-[8px] font-medium md:w-[103.70px] md:text-[12px] md:leading-3 lg:w-[181px] lg:text-base lg:leading-tight leading-[10.40px]">(₦10,000.00)</div>
-    
-</div>
-<div class={`${
-  toggleSideBar
- ? " lg:gap-[319px]"
- : " lg:gap-[359px]"
-}
-w-[312px] h-[17.67px] pl-[8.67px] pr-[1.33px] pt-3 md:w-full md:h-[57.86px] 
-md:pl-[14.90px] lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 pb-[1.67px] md:pr-[2.29px] bg-white justify-between 
-items-center inline-flex`}>
-    
-        <div class="w-[56.33px] text-black text-[8px] md:w-[96.82px] md:text-[12px] lg:whitespace-nowrap md:leading-3 lg:w-[169px] lg:text-base lg:leading-tight  font-medium leading-[10.40px]">9MOBILE SNS</div>
-        <div class="w-[53.33px] text-black text-[8px] font-medium md:w-[91.67px] md:text-[12px] md:leading-3 lg:w-40 lg:text-base lg:leading-tight leading-[10.40px]">100</div>
-        <div class="w-[60.33px] text-black text-[8px] md:w-[103.70px] md:text-[12px] md:leading-3 font-medium lg:w-[181px] lg:text-base lg:leading-tight  leading-[10.40px]">(₦10,000.00)</div>
-    
-</div>
-<div class={`${
- toggleSideBar
- ? " lg:gap-[310px]"
- : " lg:gap-[359px]"
-}
-w-[312px] h-[17.67px] pl-[8.67px] pr-[1.33px] pt-[7px]  md:w-full
- md:h-[57.86px] md:pl-[14.90px] lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 md:pr-[2.29px]
-  bg-white justify-between pb-[7.67px] items-center inline-flex`}>
-    
-        <div class="w-[56.33px] text-black text-[8px] font-medium md:w-[96.82px] lg:whitespace-nowrap md:text-[12px] md:leading-3 lg:w-[169px] lg:text-base lg:leading-tight leading-[10.40px]">SMILE AIRTIME</div>
-        <div class="w-[53.33px] text-black text-[8px] font-medium md:w-[91.67px] md:text-[12px] md:leading-3 lg:w-40 lg:text-base lg:leading-tight  leading-[10.40px]">100</div>
-        <div class="w-[60.33px] text-black text-[8px] font-medium md:w-[103.70px] md:text-[12px] md:leading-3 lg:w-[181px] lg:text-base lg:leading-tight leading-[10.40px]">(₦10,000.00)</div>
-    
-</div>
-<div class={`${
- toggleSideBar
- ? " lg:gap-[300px]"
- : " lg:gap-[359px]"
-}
-w-[312px] h-[17.67px] pl-[8.67px] pr-[1.33px] pt-[7px] lg:pb-[11px]
- md:pb-[16px] pb-[7.67px] md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] bg-white lg:w-full
-  lg:h-[101px] lg:pl-[26px] lg:pr-1 justify-between items-center inline-flex`}>
-    
-        <div class="w-[56.33px] text-black text-[8px] font-medium md:w-[96.82px]  md:text-[12px] md:leading-3 lg:w-[169px] lg:text-base lg:leading-tight leading-[10.40px]">INTERNATIONAL AIRTIME</div>
-        <div class="w-[53.33px] text-black text-[8px] font-medium md:w-[91.67px] md:text-[12px] md:leading-3 lg:w-40 lg:text-base lg:leading-tight leading-[10.40px]">100</div>
-        <div class="w-[60.33px] text-black text-[8px] font-medium md:w-[103.70px] md:text-[12px] md:leading-3 lg:w-[181px] lg:text-base lg:leading-tight leading-[10.40px]">(₦10,000.00)</div>
-    
-</div>
-<footer className="flex justify-center text-center lg:ml-[-80px] md:ml-[-60px] ml-[20px] 
- gap-[20px] mt-[20px] mb-[50px] md:mt-[300px]
- lg:mb-[30px] lg:mt-[200px]">
-            <p className="text-[8px] md:text-[12px] lg:text-[12px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
-              You need help?
-            </p>
-
-            <Link to="/ContactUs">
-              <div
-                className={`${
-                  isDarkMode ? "border " : "bg-[#04177f]"
-                } text-[8px] p-1 text-white rounded-[8px] lg:text-[12px]`}
-              >
-                Contact Us
-              </div>
-            </Link>
-          </footer>
-
-
-          </div>
-</div>
+  >
+  
+  
+  <div className="flex  justify-start items-center lg:w-full relative bg-white  md:mt-[-107px]
+    lg:mt-[-150px] mt-[-85px] lg:h-[1100px] md:h-[700px] h-[450px]  mb-10 border-b-[1.2px] flex-col">
+  <div className={`${  
+    toggleSideBar
+  ? "lg:gap-[325px]"
+  : "lg:gap-[400px]"}
+  lg:w-full md:w-full md:h-[70.86px] md:pl-[14.90px]  md:pr-[9.29px]  lg:h-[101px] 
+  lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px]  pr-[1.33px] pt-3 pb-[11.67px] bg-white 
+  justify-between md:justify-between
+   lg:justify-start 
+  items-center inline-flex`}>
+      
+          <div class="lg:w-[100px] lg:text-base md:w-[96.82px] md:whitespace-nowrap  md:text-[12px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium leading-[10.40px]">MTN VTU</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
+      
   </div>
+  <div class={`${
+      toggleSideBar
+      ? "lg:gap-[325px]"
+      : "lg:gap-[400px]"}
+    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px]
+   lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white 
+   justify-between md:justify-between lg:justify-start  items-center inline-flex`}>
+      
+          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[12px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium leading-[10.40px]">MTN SNS</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
+      
+  </div>
+  <div class={`${
+      toggleSideBar
+      ? "lg:gap-[325px]"
+      : "lg:gap-[400px]"}
+    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px]
+   lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px]
+    pt-3 pb-[11.67px] bg-white justify-between md:justify-between  md:whitespace-nowrap lg:justify-start  items-center inline-flex`}>
+      
+          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[12px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium  leading-[10.40px]">AIRTEL VTU</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium  leading-[10.40px]">100</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium  leading-[10.40px]">(₦10,000.00)</div>
+      </div>
+  
+  <div class={`${
+      toggleSideBar
+      ? "lg:gap-[325px]"
+      : "lg:gap-[400px]"}
+    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px]
+   lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px]
+    pt-3 pb-[11.67px] bg-white justify-between md:justify-between lg:justify-start md:whitespace-nowrap
+     items-center inline-flex`}>
+      
+          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[12px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium  leading-[10.40px]">AIRTEL SNS</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium  leading-[10.40px]">100</div>
+          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium  leading-[10.40px]">(₦10,000.00)</div>
+      
+  </div>
+  <div class={`${
+      toggleSideBar
+      ? "lg:gap-[325px]"
+      : "lg:gap-[400px]"}
+    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px]
+   lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.66px] bg-white
+    justify-between md:justify-between lg:justify-start  md:whitespace-nowrap items-center inline-flex`}>
+      
+          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[12px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[7px] font-medium  leading-[9.10px]">GLO VTU</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium  leading-[10.40px]">100</div>
+          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium  leading-[10.40px]">(₦10,000.00)</div>
+      
+  </div>
+  <div class={`${
+      toggleSideBar
+      ? "lg:gap-[325px]"
+      : "lg:gap-[400px]"}
+    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px]
+   lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] lg:justify-start  pr-[1.33px] pt-2 pb-[7.67px] bg-white
+    justify-between md:justify-between md:whitespace-nowrap items-center inline-flex`}>
+      
+          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[12px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[7px] font-medium leading-[9.10px]">GLO SNS</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
+      
+  </div>
+  <div class={`${
+      toggleSideBar
+      ? "lg:gap-[325px]"
+      : "lg:gap-[400px]"}
+    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px] 
+  lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.67px] bg-white
+   justify-between md:justify-between items-center lg:justify-start  md:whitespace-nowrap inline-flex`}>
+      
+          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[12px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[7px] font-medium  leading-[9.10px]">9MOBILE VTU</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium  leading-[10.40px]">100</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium  leading-[10.40px]">(₦10,000.00)</div>
+      
+  </div>
+  <div class={`${
+      toggleSideBar
+      ? "lg:gap-[325px]"
+      : "lg:gap-[400px]"}
+    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px]
+   lg:pl-[26px] lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.67px] bg-white
+    justify-between md:justify-between lg:justify-start  md:whitespace-nowrap items-center inline-flex`}>
+      
+          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[96.82px]  md:text-[12px] md:leading-3 w-[56.33px] text-black text-[7px] font-medium leading-[9.10px]">9MOBILE SNS</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
+      
+  </div>
+  <div class={`${
+      toggleSideBar
+      ? "lg:gap-[325px]"
+      : "lg:gap-[400px]"}
+    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px] lg:pl-[26px]
+   lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.67px] bg-white justify-between
+   md:justify-between lg:justify-start  md:whitespace-nowrap items-center inline-flex`}>
+      
+          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[12px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium leading-[10.40px]">SMILE AIRTIME</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100</div>
+          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
+      
+  </div>
+  <div class={`${
+      toggleSideBar
+      ? "lg:gap-[325px]"
+      : "lg:gap-[400px]"}
+    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px] lg:pl-[26px]
+   lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
+   md:justify-between lg:justify-start items-center inline-flex `}>
+      
+          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium leading-[10.40px]">INTERNATIONAL AIRTIME</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100</div>
+          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
+      </div>
+  
+  
+  
+      <footer className="flex justify-center lg:ml-[-20px] text-center gap-[20px] mt-[100px] mb-[50px]
+       md:mt-[200px] lg:mb-[30px] lg:mt-[185px]">
+              <p className="text-[8px] md:text-[12px] lg:text-[12px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
+                You need help?
+              </p>
+  
+              <Link to="/ContactUs">
+                <div
+                  className={`${
+                    isDarkMode ? "border " : "bg-[#04177f]"
+                  } text-[8px] p-1 text-white md:text-[10px] rounded-[8px] lg:w-[100px] w-[70px] lg:text-[12px]`}
+                >
+                  Contact Us
+                </div>
+              </Link>
+            </footer>
+            </div>
+  </div>
+  </div>
+  
 )}
 
 
@@ -816,213 +835,581 @@ w-[312px] h-[17.67px] pl-[8.67px] pr-[1.33px] pt-[7px] lg:pb-[11px]
 
 {/* data top-up dropdown */}
 {isOpen3 && (
-  <div className=' bg-white border h-[1150px] shadow md:h-[1300px] md:border-b md:mb-[300px] w-full lg:h-full'>
+  <div className=' bg-white  h-[1150px] shadow lg:h-full  w-full '>
   {/* <div */}
     {/* // className={`${ */}
       {/* // isDarkMode ? "bg-black border text-[#fff]" : "bg-[#fff]" */}
     {/* // } ${styles.Chart}`} */}
   {/* // > */}
 
-<div className="flex md:mt-[1150px] md:z-50 bg-white md:mb-[300px] lg:w-full md:w-full w-full md:h-[1800px]
-  relative h-[1500px]
- mt-[370px] lg:mt-[1135px] flex-col">
-<div class="lg:w-full justify-between items-center lg:h-[101px] w-full md:w-full md:mt-[-1210px] lg:mt-[-1240px] 
-md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] mt-[-400px] 
-lg:pl-[26px] lg:pr-1   h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.67px] bg-white flex-row flex">
-    
-        <div class=" w-[56.33px] text-black text-[8px] font-medium lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">MTN SME</div>
-        <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight leading-[10.40px]">100GB</div>
-        <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base  lg:leading-tight md:w-[103.70px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div>
-    
-</div>
+
+  <div className="flex  justify-start items-center lg:w-full shadow relative bg-white  md:mt-[-108px]
+    lg:mt-[-152px] mt-[-85px] lg:h-[1590px] md:h-[1230px] h-[1050px] border lg:mb-5 mb-10 border-b-[1.2px] flex-col">
+  <div className={`${  
+    toggleSideBar
+  ? "lg:gap-[325px]"
+  : "lg:gap-[400px]"}
+  lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px]  lg:h-[101px] 
+  lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px]  pr-[1.33px] pt-3 pb-[11.67px] bg-white 
+  justify-between md:justify-between
+   lg:justify-start 
+  items-center inline-flex`}>
+      
+          <div class="lg:w-[100px] lg:text-base md:w-[96.82px] md:whitespace-nowrap  md:text-[12px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium leading-[10.40px]">MTN SME</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
+      
+  </div>
+  <div class={`${
+      toggleSideBar
+      ? "lg:gap-[325px]"
+      : "lg:gap-[400px]"}
+    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px]
+   lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white 
+   justify-between md:justify-between lg:justify-start  items-center inline-flex`}>
+      
+          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[12px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium leading-[10.40px]">MTN SME2</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
+      
+  </div>
+  <div class={`${
+      toggleSideBar
+      ? "lg:gap-[325px]"
+      : "lg:gap-[400px]"}
+    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px]
+   lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px]
+    pt-3 pb-[11.67px] bg-white justify-between md:justify-between  md:whitespace-nowrap lg:justify-start  items-center inline-flex`}>
+      
+          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[12px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium  leading-[10.40px]">MTN CG</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium  leading-[10.40px]">100GB</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium  leading-[10.40px]">(₦10,000.00)</div>
+      </div>
+  
+  <div class={`${
+      toggleSideBar
+      ? "lg:gap-[325px]"
+      : "lg:gap-[400px]"}
+    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px]
+   lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px]
+    pt-3 pb-[11.67px] bg-white justify-between md:justify-between lg:justify-start md:whitespace-nowrap
+     items-center inline-flex`}>
+      
+          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[12px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium  leading-[10.40px]">MTN GIFTING</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium  leading-[10.40px]">100GB</div>
+          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium  leading-[10.40px]">(₦10,000.00)</div>
+      
+  </div>
+  <div class={`${
+      toggleSideBar
+      ? "lg:gap-[325px]"
+      : "lg:gap-[400px]"}
+    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px]
+   lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.66px] bg-white
+    justify-between md:justify-between lg:justify-start  md:whitespace-nowrap items-center inline-flex`}>
+      
+          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[12px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[7px] font-medium whitespace-nowrap leading-[9.10px]">MTN DIRECT <br/> COUPON</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium  leading-[10.40px]">100GB</div>
+          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium  leading-[10.40px]">(₦10,000.00)</div>
+      
+  </div>
+  <div class={`${
+      toggleSideBar
+      ? "lg:gap-[325px]"
+      : "lg:gap-[400px]"}
+    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px]
+   lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] lg:justify-start  pr-[1.33px] pt-2 pb-[7.67px] bg-white
+    justify-between md:justify-between md:whitespace-nowrap items-center inline-flex`}>
+      
+          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[12px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[7px] font-medium whitespace-nowrap leading-[9.10px]">MTN GENERAL<br /> BUNDLES</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
+      
+  </div>
+  <div class={`${
+      toggleSideBar
+      ? "lg:gap-[325px]"
+      : "lg:gap-[400px]"}
+    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] 
+  lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.67px] bg-white
+   justify-between md:justify-between items-center lg:justify-start  md:whitespace-nowrap inline-flex`}>
+      
+          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[12px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[7px] font-medium  leading-[9.10px]">AIRTEL CG</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium  leading-[10.40px]">100GB</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium  leading-[10.40px]">(₦10,000.00)</div>
+      
+  </div>
+  <div class={`${
+      toggleSideBar
+      ? "lg:gap-[325px]"
+      : "lg:gap-[400px]"}
+    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px]
+   lg:pl-[26px] lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.67px] bg-white
+    justify-between md:justify-between lg:justify-start  md:whitespace-nowrap items-center inline-flex`}>
+      
+          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[96.82px]  md:text-[12px] md:leading-3 w-[56.33px] text-black text-[7px] font-medium whitespace-nowrap leading-[9.10px]">AIRTEL GIFTING</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
+      
+  </div>
+  <div class={`${
+      toggleSideBar
+      ? "lg:gap-[325px]"
+      : "lg:gap-[400px]"}
+    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
+   lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.67px] bg-white justify-between
+   md:justify-between lg:justify-start  md:whitespace-nowrap items-center inline-flex`}>
+      
+          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[12px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium leading-[10.40px]">GLO CG</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
+          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
+      
+  </div>
+  <div class={`${
+      toggleSideBar
+      ? "lg:gap-[325px]"
+      : "lg:gap-[400px]"}
+    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
+   lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
+   md:justify-between lg:justify-start items-center inline-flex `}>
+      
+          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium whitespace-nowrap leading-[10.40px]">AIRTEL GIFTING</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
+          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
+      </div>
+  
+      <div class={`${
+      toggleSideBar
+      ? "lg:gap-[325px]"
+      : "lg:gap-[400px]"}
+    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
+   lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
+   md:justify-between lg:justify-start items-center inline-flex `}>
+      
+          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium whitespace-nowrap leading-[10.40px]">AIRTEL GENERAL<br/> BUNDLE</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
+          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
+      </div>
+
+      <div class={`${
+      toggleSideBar
+      ? "lg:gap-[325px]"
+      : "lg:gap-[400px]"}
+    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
+   lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
+   md:justify-between lg:justify-start items-center inline-flex `}>
+      
+          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium leading-[10.40px]">GLO CG</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
+          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
+      </div>
+
+      <div class={`${
+      toggleSideBar
+      ? "lg:gap-[325px]"
+      : "lg:gap-[400px]"}
+    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
+   lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
+   md:justify-between lg:justify-start items-center inline-flex `}>
+      
+          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium whitespace-nowrap leading-[10.40px]">GLO GIFTING</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
+          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
+      </div>
+
+      <div class={`${
+      toggleSideBar
+      ? "lg:gap-[325px]"
+      : "lg:gap-[400px]"}
+    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
+   lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
+   md:justify-between lg:justify-start items-center inline-flex `}>
+      
+          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium whitespace-nowrap leading-[10.40px]">GLO GENERAL<br/> BUNDLES</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
+          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
+      </div>
+
+      <div class={`${
+      toggleSideBar
+      ? "lg:gap-[325px]"
+      : "lg:gap-[400px]"}
+    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
+   lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
+   md:justify-between lg:justify-start items-center inline-flex `}>
+      
+          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium whitespace-nowrap leading-[10.40px]">9MOBILE SME</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
+          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
+      </div>
+
+      <div class={`${
+      toggleSideBar
+      ? "lg:gap-[325px]"
+      : "lg:gap-[400px]"}
+    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
+   lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
+   md:justify-between lg:justify-start items-center inline-flex `}>
+      
+          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium whitespace-nowrap leading-[10.40px]">9MOBILE CG</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
+          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
+      </div>
+
+      <div class={`${
+      toggleSideBar
+      ? "lg:gap-[325px]"
+      : "lg:gap-[400px]"}
+    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
+   lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
+   md:justify-between lg:justify-start items-center inline-flex `}>
+      
+          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium whitespace-nowrap leading-[10.40px]">9MOBILE GENERAL<br/> BUNDLES</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
+          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
+      </div>
+
+      <div class={`${
+      toggleSideBar
+      ? "lg:gap-[325px]"
+      : "lg:gap-[400px]"}
+    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
+   lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
+   md:justify-between lg:justify-start items-center inline-flex `}>
+      
+          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium whitespace-nowrap leading-[10.40px]">SMILE BIGGA</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
+          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
+      </div>
+
+      <div class={`${
+      toggleSideBar
+      ? "lg:gap-[325px]"
+      : "lg:gap-[400px]"}
+    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
+   lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
+   md:justify-between lg:justify-start items-center inline-flex `}>
+      
+          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium whitespace-nowrap leading-[10.40px]">SMILE UNLIMITED</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
+          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
+      </div>
+
+      <div class={`${
+      toggleSideBar
+      ? "lg:gap-[325px]"
+      : "lg:gap-[400px]"}
+    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
+   lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
+   md:justify-between lg:justify-start items-center inline-flex `}>
+      
+          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium whitespace-nowrap leading-[10.40px]">SMILE DAILY</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
+          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
+      </div>
+
+      <div class={`${
+      toggleSideBar
+      ? "lg:gap-[325px]"
+      : "lg:gap-[400px]"}
+    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
+   lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
+   md:justify-between lg:justify-start items-center inline-flex `}>
+      
+          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium whitespace-nowrap leading-[10.40px]">SMILE WEEKLY</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
+          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
+      </div>
+
+      <div class={`${
+      toggleSideBar
+      ? "lg:gap-[325px]"
+      : "lg:gap-[400px]"}
+    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
+   lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
+   md:justify-between lg:justify-start items-center inline-flex `}>
+      
+          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium whitespace-nowrap leading-[10.40px]">SMILE NIGHT</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
+          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
+      </div>
+
+      <div class={`${
+      toggleSideBar
+      ? "lg:gap-[325px]"
+      : "lg:gap-[400px]"}
+    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
+   lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
+   md:justify-between lg:justify-start items-center inline-flex `}>
+      
+          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium whitespace-nowrap leading-[10.40px]">SMILEVOICE ONLY</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
+          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
+      </div>
+
+      <div class={`${
+      toggleSideBar
+      ? "lg:gap-[325px]"
+      : "lg:gap-[400px]"}
+    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
+   lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
+   md:justify-between lg:justify-start items-center inline-flex `}>
+      
+          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium whitespace-nowrap leading-[10.40px]">SMILE FREEDOM</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
+          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
+      </div>
+
+      <div class={`${
+      toggleSideBar
+      ? "lg:gap-[325px]"
+      : "lg:gap-[400px]"}
+    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
+   lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
+   md:justify-between lg:justify-start items-center inline-flex `}>
+      
+          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium whitespace-nowrap leading-[10.40px]">SPECTRANET DATA</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
+          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
+      </div>
+
+      <div class={`${
+      toggleSideBar
+      ? "lg:gap-[325px]"
+      : "lg:gap-[400px]"}
+    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
+   lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
+   md:justify-between lg:justify-start items-center inline-flex `}>
+      
+          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium leading-[10.40px]">INTERNATIONAL<br /> DATA</div>
+          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
+          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
+      </div>
 
 
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px]
- pr-[1.33px] pt-3 pb-[11.67px] bg-white md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px]
-  justify-between items-center  inline-flex">
-    
-        <div class="w-[56.33px] text-black text-[8px] font-medium lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">MTN SME2</div>
-        <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div>
-        <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div>
-    </div>
+      
+      <footer className="flex justify-center lg:ml-[-20px] text-center gap-[20px] mt-[100px] mb-[50px]
+       md:mt-[200px] lg:mb-[30px] lg:mt-[150px]">
+              <p className="text-[8px] md:text-[12px] lg:text-[12px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
+                You need help?
+              </p>
+  
+              <Link to="/ContactUs">
+                <div
+                  className={`${
+                    isDarkMode ? "border " : "bg-[#04177f]"
+                  } text-[8px] p-1 text-white rounded-[8px] lg:w-[100px] w-[70px] lg:text-[12px]`}
+                >
+                  Contact Us
+                </div>
+              </Link>
+            </footer>
+            </div>
+  
+  
 
 
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px]  items-center inline-flex">
-    
-        <div class="w-[56.33px] text-black text-[8px] font-medium lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">MTN CG</div>
-        <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div>
-        <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3  leading-[10.40px]">(₦10,000.00)</div>
-    </div>
-
-
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px]  pt-3 pb-[11.66px] bg-white justify-between items-center inline-flex">
-    
-        <div class="w-[56.33px] text-black text-[8px] font-medium lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">MTN GIFTING</div>
-        <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div>
-        <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div>
-</div>
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px]  pt-[7px] pb-[6.66px] bg-white justify-between items-center inline-flex">
-    
-        <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight font-medium md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">MTN DIRECT COUPON</div>
-        <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3  leading-[10.40px]">100GB</div>
-        <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight leading-[10.40px]">(₦10,000.00)</div>
-    
-</div>
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] justify-between items-center lg:gap-[198px] md:w-full pl-[8.67px] pr-[1.33px] md:h-[57.86px] pt-[7px] pb-[6.66px] md:pl-[14.90px] md:pr-[2.29px] gap-[66px] inline-flex">
-
-    <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight font-medium md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">MTN GENERAL BUNDLES</div>
-    <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div>
-    <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div>
-
-</div>
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] pt-3 pb-[11.67px] bg-white justify-between items-center inline-flex">
-    
-        <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 font-medium leading-[10.40px]">AIRTEL CG</div>
-        <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div>
-        <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div>
-    
-</div>
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] pb-[6.67px] bg-white justify-between items-center inline-flex">
-    
-        <div class="w-[56.33px] text-black text-[8px] font-medium lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">AIRTEL GIFTING</div>
-        <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div>
-        <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div>
-    
-</div>
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] justify-between items-center md:w-full pl-[8.67px] pr-[1.33px]  md:h-[57.86px] pt-[7px] pb-[6.66px] md:pl-[14.90px] md:pr-[2.29px] gap-[66px] inline-flex">
-
-    <div class="w-[56.33px] text-black text-[8px] font-medium lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">AIRTEL GENERAL BUNDLE</div>
-    <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div>
-    <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div>
-
-</div>
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] pb-[11.67px] bg-white justify-between items-center inline-flex">
-    
-        <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 font-medium leading-[10.40px]">GLO CG</div>
-        <div class="w-[53.33px] text-black text-[8px] lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 font-medium leading-[10.40px]">100GB</div>
-        <div class="w-[60.33px] text-black text-[8px] lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 font-medium leading-[10.40px]">(₦10,000.00)</div>
-    
-</div>
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] pt-3 pb-[11.66px] bg-white justify-between items-center inline-flex">
-    
-        <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 font-medium leading-[10.40px]">GLO GIFTING</div>
-        <div class="w-[53.33px] text-black text-[8px] lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3  font-medium leading-[10.40px]">100GB</div>
-        <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div>
-    
-</div>
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.67px] bg-white  md:w-full md:h-[57.86px]  md:pl-[14.90px] md:pr-[2.29px] justify-between items-center inline-flex">
-    
-        <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 font-medium leading-[10.40px]">GLO GENERAL BUNDLES</div>
-        <div class="w-[53.33px] text-black text-[8px] lg:w-40 lg:text-base lg:leading-tight font-medium md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div>
-        <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div>
-    
-</div>
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between md:w-full  md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex">
-    
-        <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight font-medium md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">9MOBILE SME</div>
-        <div class="w-[53.33px] text-black text-[8px] lg:w-40 lg:text-base lg:leading-tight font-medium md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div>
-        <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3  leading-[10.40px]">(₦10,000.00)</div>
-    
-</div>
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex">
-    
-        <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 font-medium leading-[10.40px]">9MOBILE CG</div>
-        <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div>
-        <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div>
-
-</div>
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] justify-between items-center gap-[66px] md:w-full md:h-[57.86px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.66px] md:pl-[14.90px] md:pr-[2.29px] inline-flex">
-
-    <div class="w-[56.33px] text-black text-[8px] font-medium lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">9MOBILE GENERAL BUNDLES</div>
-    <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div>
-    <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div>
- 
-</div>
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] justify-between items-center inline-flex">
-    
-        <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight font-medium md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">SMILE BIGGA</div>
-        <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div>
-        <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div>
-    
-</div>
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.66px] bg-white justify-between md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex">
-    
-        <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight font-medium md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">SMILE UNLIMITED</div>
-        <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight leading-[10.40px]">100GB</div>
-        <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div>
-    
-</div>
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex">
-    
-        <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight font-medium md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">SMILE DAILY</div>
-        <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div>
-        <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div>
-    
-</div>
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.67px] bg-white justify-between md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex">
-    
-        <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight font-medium md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">SMILE WEEKLY</div>
-        <div class="w-[53.33px] text-black text-[8px] lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 font-medium leading-[10.40px]">100GB</div>
-        <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div>
-    
-</div>
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.67px] bg-white justify-between md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex">
-    
-        <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 font-medium leading-[10.40px]">SMILE NIGHT</div>
-        <div class="w-[53.33px] text-black text-[8px] lg:w-40 lg:text-base lg:leading-tight font-medium md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div>
-        <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3  leading-[10.40px]">(₦10,000.00)</div>
-    
-</div>
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.66px] bg-white justify-between md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px]  items-center inline-flex">
-    
-        <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 font-medium leading-[10.40px]">SMILEVOICE ONLY</div>
-        <div class="w-[53.33px] text-black text-[8px] lg:w-40 lg:text-base lg:leading-tight font-medium md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div>
-        <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div>
-    </div>
-
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.67px] bg-white justify-between md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex">
-    
-        <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight font-medium md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">SMILE FREEDOM</div>
-        <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div>
-        <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div>
-    </div>
-
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[7px] pr-[3px] pt-[7.02px] pb-[6.64px] bg-white justify-between md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex">
-    
-        <div class="w-[56.33px] text-black text-[8px] font-medium lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">SPECTRANET DATA</div>
-        <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div>
-        <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div>
-    </div>
-
-<div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[7px] pr-[3px] pt-[7.02px] pb-[6.64px] bg-white justify-between md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex">
-    
-        <div class="w-[56.33px] text-black text-[8px] font-medium lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">SPECTRANET DATA</div>
-        <div class="w-[53.33px] text-black text-[8px] font-medium  lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div>
-        <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div>
-    </div>
-
-
-    <footer className="flex justify-center text-center gap-[20px] mt-[200px] mb-[50px] md:mt-[300px]
-     lg:mb-[30px] lg:mt-[500px]">
-            <p className="text-[8px] md:text-[12px] lg:text-[12px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
-              You need help?
-            </p>
-
-            <Link to="/ContactUs">
-              <div
-                className={`${
-                  isDarkMode ? "border " : "bg-[#04177f]"
-                } text-[8px] p-1 text-white rounded-[8px] lg:text-[12px]`}
-              >
-                Contact Us
-              </div>
-            </Link>
-          </footer>
-
-
-</div>
+{/* <div className="flex md:mt-[1150px] md:z-50 bg-white md:mb-[300px] lg:w-full md:w-full w-full md:h-[1800px] */}
+  {/* // relative h-[1500px] */}
+{/* //  mt-[370px] lg:mt-[1135px] flex-col"> */}
+{/* <div class="lg:w-full justify-between items-center lg:h-[101px] w-full md:w-full md:mt-[-1210px] lg:mt-[-1240px]  */}
+{/* // md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] mt-[-400px]  */}
+{/* // lg:pl-[26px] lg:pr-1   h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.67px] bg-white flex-row flex"> */}
+    {/*  */}
+        {/* <div class=" w-[56.33px] text-black text-[8px] font-medium lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">MTN SME</div> */}
+        {/* <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight leading-[10.40px]">100GB</div> */}
+        {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base  lg:leading-tight md:w-[103.70px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div> */}
+    {/*  */}
+{/* </div> */}
+{/*  */}
+{/*  */}
+{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] */}
+{/* //  pr-[1.33px] pt-3 pb-[11.67px] bg-white md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] */}
+  {/* // justify-between items-center  inline-flex"> */}
+    {/*  */}
+        {/* <div class="w-[56.33px] text-black text-[8px] font-medium lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">MTN SME2</div> */}
+        {/* <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div> */}
+        {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div> */}
+    {/* </div> */}
+{/*  */}
+{/*  */}
+{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px]  items-center inline-flex"> */}
+    {/*  */}
+        {/* <div class="w-[56.33px] text-black text-[8px] font-medium lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">MTN CG</div> */}
+        {/* <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div> */}
+        {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3  leading-[10.40px]">(₦10,000.00)</div> */}
+    {/* </div> */}
+{/*  */}
+{/*  */}
+{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px]  pt-3 pb-[11.66px] bg-white justify-between items-center inline-flex"> */}
+    {/*  */}
+        {/* <div class="w-[56.33px] text-black text-[8px] font-medium lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">MTN GIFTING</div> */}
+        {/* <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div> */}
+        {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div> */}
+{/* </div> */}
+{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px]  pt-[7px] pb-[6.66px] bg-white justify-between items-center inline-flex"> */}
+    {/*  */}
+        {/* <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight font-medium md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">MTN DIRECT COUPON</div> */}
+        {/* <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3  leading-[10.40px]">100GB</div> */}
+        {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight leading-[10.40px]">(₦10,000.00)</div> */}
+    {/*  */}
+{/* </div> */}
+{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] justify-between items-center lg:gap-[198px] md:w-full pl-[8.67px] pr-[1.33px] md:h-[57.86px] pt-[7px] pb-[6.66px] md:pl-[14.90px] md:pr-[2.29px] gap-[66px] inline-flex"> */}
+{/*  */}
+    {/* <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight font-medium md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">MTN GENERAL BUNDLES</div> */}
+    {/* <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div> */}
+    {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div> */}
+{/*  */}
+{/* </div> */}
+{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] pt-3 pb-[11.67px] bg-white justify-between items-center inline-flex"> */}
+    {/*  */}
+        {/* <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 font-medium leading-[10.40px]">AIRTEL CG</div> */}
+        {/* <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div> */}
+        {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div> */}
+    {/*  */}
+{/* </div> */}
+{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] pb-[6.67px] bg-white justify-between items-center inline-flex"> */}
+    {/*  */}
+        {/* <div class="w-[56.33px] text-black text-[8px] font-medium lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">AIRTEL GIFTING</div> */}
+        {/* <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div> */}
+        {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div> */}
+    {/*  */}
+{/* </div> */}
+{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] justify-between items-center md:w-full pl-[8.67px] pr-[1.33px]  md:h-[57.86px] pt-[7px] pb-[6.66px] md:pl-[14.90px] md:pr-[2.29px] gap-[66px] inline-flex"> */}
+{/*  */}
+    {/* <div class="w-[56.33px] text-black text-[8px] font-medium lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">AIRTEL GENERAL BUNDLE</div> */}
+    {/* <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div> */}
+    {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div> */}
+{/*  */}
+{/* </div> */}
+{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] pb-[11.67px] bg-white justify-between items-center inline-flex"> */}
+    {/*  */}
+        {/* <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 font-medium leading-[10.40px]">GLO CG</div> */}
+        {/* <div class="w-[53.33px] text-black text-[8px] lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 font-medium leading-[10.40px]">100GB</div> */}
+        {/* <div class="w-[60.33px] text-black text-[8px] lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 font-medium leading-[10.40px]">(₦10,000.00)</div> */}
+    {/*  */}
+{/* </div> */}
+{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] pt-3 pb-[11.66px] bg-white justify-between items-center inline-flex"> */}
+    {/*  */}
+        {/* <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 font-medium leading-[10.40px]">GLO GIFTING</div> */}
+        {/* <div class="w-[53.33px] text-black text-[8px] lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3  font-medium leading-[10.40px]">100GB</div> */}
+        {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div> */}
+    {/*  */}
+{/* </div> */}
+{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.67px] bg-white  md:w-full md:h-[57.86px]  md:pl-[14.90px] md:pr-[2.29px] justify-between items-center inline-flex"> */}
+    {/*  */}
+        {/* <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 font-medium leading-[10.40px]">GLO GENERAL BUNDLES</div> */}
+        {/* <div class="w-[53.33px] text-black text-[8px] lg:w-40 lg:text-base lg:leading-tight font-medium md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div> */}
+        {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div> */}
+    {/*  */}
+{/* </div> */}
+{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between md:w-full  md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex"> */}
+    {/*  */}
+        {/* <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight font-medium md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">9MOBILE SME</div> */}
+        {/* <div class="w-[53.33px] text-black text-[8px] lg:w-40 lg:text-base lg:leading-tight font-medium md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div> */}
+        {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3  leading-[10.40px]">(₦10,000.00)</div> */}
+    {/*  */}
+{/* </div> */}
+{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex"> */}
+    {/*  */}
+        {/* <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 font-medium leading-[10.40px]">9MOBILE CG</div> */}
+        {/* <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div> */}
+        {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div> */}
+{/*  */}
+{/* </div> */}
+{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] justify-between items-center gap-[66px] md:w-full md:h-[57.86px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.66px] md:pl-[14.90px] md:pr-[2.29px] inline-flex"> */}
+{/*  */}
+    {/* <div class="w-[56.33px] text-black text-[8px] font-medium lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">9MOBILE GENERAL BUNDLES</div> */}
+    {/* <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div> */}
+    {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div> */}
+ {/*  */}
+{/* </div> */}
+{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] justify-between items-center inline-flex"> */}
+    {/*  */}
+        {/* <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight font-medium md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">SMILE BIGGA</div> */}
+        {/* <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div> */}
+        {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div> */}
+    {/*  */}
+{/* </div> */}
+{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.66px] bg-white justify-between md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex"> */}
+    {/*  */}
+        {/* <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight font-medium md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">SMILE UNLIMITED</div> */}
+        {/* <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight leading-[10.40px]">100GB</div> */}
+        {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div> */}
+    {/*  */}
+{/* </div> */}
+{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex"> */}
+    {/*  */}
+        {/* <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight font-medium md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">SMILE DAILY</div> */}
+        {/* <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div> */}
+        {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div> */}
+    {/*  */}
+{/* </div> */}
+{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.67px] bg-white justify-between md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex"> */}
+    {/*  */}
+        {/* <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight font-medium md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">SMILE WEEKLY</div> */}
+        {/* <div class="w-[53.33px] text-black text-[8px] lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 font-medium leading-[10.40px]">100GB</div> */}
+        {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div> */}
+    {/*  */}
+{/* </div> */}
+{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.67px] bg-white justify-between md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex"> */}
+    {/*  */}
+        {/* <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 font-medium leading-[10.40px]">SMILE NIGHT</div> */}
+        {/* <div class="w-[53.33px] text-black text-[8px] lg:w-40 lg:text-base lg:leading-tight font-medium md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div> */}
+        {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3  leading-[10.40px]">(₦10,000.00)</div> */}
+    {/*  */}
+{/* </div> */}
+{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.66px] bg-white justify-between md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px]  items-center inline-flex"> */}
+    {/*  */}
+        {/* <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 font-medium leading-[10.40px]">SMILEVOICE ONLY</div> */}
+        {/* <div class="w-[53.33px] text-black text-[8px] lg:w-40 lg:text-base lg:leading-tight font-medium md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div> */}
+        {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div> */}
+    {/* </div> */}
+{/*  */}
+{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.67px] bg-white justify-between md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex"> */}
+    {/*  */}
+        {/* <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight font-medium md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">SMILE FREEDOM</div> */}
+        {/* <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div> */}
+        {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div> */}
+    {/* </div> */}
+{/*  */}
+{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[7px] pr-[3px] pt-[7.02px] pb-[6.64px] bg-white justify-between md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex"> */}
+    {/*  */}
+        {/* <div class="w-[56.33px] text-black text-[8px] font-medium lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">SPECTRANET DATA</div> */}
+        {/* <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div> */}
+        {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div> */}
+    {/* </div> */}
+{/*  */}
+{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[7px] pr-[3px] pt-[7.02px] pb-[6.64px] bg-white justify-between md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex"> */}
+    {/*  */}
+        {/* <div class="w-[56.33px] text-black text-[8px] font-medium lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">SPECTRANET DATA</div> */}
+        {/* <div class="w-[53.33px] text-black text-[8px] font-medium  lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div> */}
+        {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div> */}
+    {/* </div> */}
+{/*  */}
+{/*  */}
+    {/* <footer className="flex justify-center text-center gap-[20px] mt-[200px] mb-[50px] md:mt-[300px] */}
+    {/* //  lg:mb-[30px] lg:mt-[500px]"> */}
+            {/* <p className="text-[8px] md:text-[12px] lg:text-[12px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]"> */}
+              {/* You need help? */}
+            {/* </p> */}
+{/*  */}
+            {/* <Link to="/ContactUs"> */}
+              {/* <div */}
+                {/* // className={`${ */}
+                  {/* // isDarkMode ? "border " : "bg-[#04177f]" */}
+                {/* // } text-[8px] p-1 text-white rounded-[8px] lg:text-[12px]`} */}
+              {/* // > */}
+                {/* Contact Us */}
+              {/* </div> */}
+            {/* </Link> */}
+          {/* </footer> */}
+{/*  */}
+{/*  */}
+{/* </div> */}
 {/* </div> */}
 </div>
+
 )}
 
 
@@ -1038,154 +1425,155 @@ className={`${styles.viewTransact} ${
 >
 
 
-<div className="flex  justify-start items-center lg:w-full relative bg-white  md:mt-[-60px]  lg:mt-[-100px] mt-[-35px] flex-col">
+<div className="flex  justify-start items-center lg:h-[1030px] md:h-[700px] h-[480px]  mb-10 border-b-[1.2px]
+ lg:w-full relative bg-white  md:mt-[-109px]  lg:mt-[-150px] mt-[-85px] flex-col">
 <div className={`${  
   toggleSideBar
 ? "lg:gap-[325px]"
 : "lg:gap-[400px]"}
-lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px]  lg:h-[101px] 
+lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px]  lg:h-[101px] 
 lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.67px] bg-white justify-between md:justify-between
  lg:justify-start 
 items-center inline-flex`}>
     
-        <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium leading-[10.40px]">WAEC PIN</div>
-        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100</div>
-        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
+        <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium leading-[10.40px]">WAEC PIN</div>
+        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[11px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100</div>
+        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[11px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
     
 </div>
 <div class={`${
     toggleSideBar
     ? "lg:gap-[325px]"
     : "lg:gap-[400px]"}
-  lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px]
+  lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px]
  lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white 
  justify-between md:justify-between lg:justify-start  items-center inline-flex`}>
     
-        <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium leading-[10.40px]">NECO PIN</div>
-        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100</div>
-        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
+        <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium leading-[10.40px]">NECO PIN</div>
+        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[11px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100</div>
+        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[11px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
     
 </div>
 <div class={`${
     toggleSideBar
     ? "lg:gap-[325px]"
     : "lg:gap-[400px]"}
-  lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px]
+  lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px]
  lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px]
   pt-3 pb-[11.67px] bg-white justify-between md:justify-between lg:justify-start  items-center inline-flex`}>
     
-        <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium  leading-[10.40px]">JAMB PIN</div>
-        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium  leading-[10.40px]">100</div>
-        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium  leading-[10.40px]">(₦10,000.00)</div>
+        <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium  leading-[10.40px]">JAMB PIN</div>
+        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[11px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium  leading-[10.40px]">100</div>
+        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[11px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium  leading-[10.40px]">(₦10,000.00)</div>
     </div>
 
 <div class={`${
     toggleSideBar
     ? "lg:gap-[325px]"
     : "lg:gap-[400px]"}
-  lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px]
+  lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px]
  lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px]
   pt-3 pb-[11.67px] bg-white justify-between md:justify-between lg:justify-start  items-center inline-flex`}>
     
-        <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium  leading-[10.40px]">NABTEB PIN</div>
-        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium  leading-[10.40px]">100</div>
-        <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium  leading-[10.40px]">(₦10,000.00)</div>
+        <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium  leading-[10.40px]">NABTEB PIN</div>
+        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[11px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium  leading-[10.40px]">100</div>
+        <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[11px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium  leading-[10.40px]">(₦10,000.00)</div>
     
 </div>
 <div class={`${
     toggleSideBar
     ? "lg:gap-[325px]"
     : "lg:gap-[400px]"}
-  lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px]
+  lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px]
  lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.66px] bg-white
   justify-between md:justify-between lg:justify-start  items-center inline-flex`}>
     
-        <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[7px] font-medium  leading-[9.10px]">GOTV SUBSCRIPTION</div>
-        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium  leading-[10.40px]">100</div>
-        <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium  leading-[10.40px]">(₦10,000.00)</div>
+        <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[7px] font-medium  leading-[9.10px]">GOTV SUBSCRIPTION</div>
+        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[11px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium  leading-[10.40px]">100</div>
+        <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[11px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium  leading-[10.40px]">(₦10,000.00)</div>
     
 </div>
 <div class={`${
     toggleSideBar
     ? "lg:gap-[325px]"
     : "lg:gap-[400px]"}
-  lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px]
+  lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px]
  lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] lg:justify-start  pr-[1.33px] pt-2 pb-[7.67px] bg-white
   justify-between md:justify-between items-center inline-flex`}>
     
-        <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[7px] font-medium leading-[9.10px]">DSTV SUBSCRIPTION</div>
-        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100</div>
-        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
+        <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[7px] font-medium leading-[9.10px]">DSTV SUBSCRIPTION</div>
+        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[11px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100</div>
+        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[11px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
     
 </div>
 <div class={`${
     toggleSideBar
     ? "lg:gap-[325px]"
     : "lg:gap-[400px]"}
-  lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] 
+  lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px] 
 lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.67px] bg-white
  justify-between md:justify-between items-center lg:justify-start  inline-flex`}>
     
-        <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[7px] font-medium  leading-[9.10px]">STARTIME SUBSCRIPTION</div>
-        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium  leading-[10.40px]">100</div>
-        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium  leading-[10.40px]">(₦10,000.00)</div>
+        <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[7px] font-medium  leading-[9.10px]">STARTIME SUBSCRIPTION</div>
+        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[11px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium  leading-[10.40px]">100</div>
+        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[11px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium  leading-[10.40px]">(₦10,000.00)</div>
     
 </div>
 <div class={`${
     toggleSideBar
     ? "lg:gap-[325px]"
     : "lg:gap-[400px]"}
-  lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px]
+  lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px]
  lg:pl-[26px] lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.67px] bg-white
   justify-between md:justify-between lg:justify-start  items-center inline-flex`}>
     
-        <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[96.82px]  md:text-[9.17px] md:leading-3 w-[56.33px] text-black text-[7px] font-medium leading-[9.10px]">SHOWMAX SUBSCRIPTION</div>
-        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100</div>
-        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
+        <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[96.82px]  md:text-[11px] md:leading-3 w-[56.33px] text-black text-[7px] font-medium leading-[9.10px]">SHOWMAX SUBSCRIPTION</div>
+        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[11px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100</div>
+        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[11px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
     
 </div>
 <div class={`${
     toggleSideBar
     ? "lg:gap-[325px]"
     : "lg:gap-[400px]"}
-  lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
+  lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px] lg:pl-[26px]
  lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.67px] bg-white justify-between
  md:justify-between lg:justify-start  items-center inline-flex`}>
     
-        <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium leading-[10.40px]">ELECTRICITY BILLS</div>
-        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100</div>
-        <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
+        <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium leading-[10.40px]">ELECTRICITY BILLS</div>
+        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[11px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100</div>
+        <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[11px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
     
 </div>
 <div class={`${
     toggleSideBar
     ? "lg:gap-[325px]"
     : "lg:gap-[400px]"}
-  lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
+  lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px] lg:pl-[26px]
  lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
  md:justify-between lg:justify-start  items-center inline-flex `}>
     
-        <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium leading-[10.40px]">BULK SMS</div>
-        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100</div>
-        <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
+        <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium leading-[10.40px]">BULK SMS</div>
+        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[11px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100</div>
+        <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[11px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
     </div>
 
 <div class={`${
     toggleSideBar
     ? "lg:gap-[325px]"
     : "lg:gap-[400px]"}
-  lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px] lg:pr-1
+  lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px] lg:pl-[26px] lg:pr-1
  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] lg:justify-start  pt-2 pb-[7.67px] bg-white
   justify-between md:justify-between items-center inline-flex`}>
     
-        <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[96.82px]  md:text-[9.17px] md:leading-3 w-[56.33px] text-black text-[7px] font-medium leading-[9.10px]">RECHARGE CARD PRINTING</div>
-        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100</div>
-        <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
+        <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[96.82px]  md:text-[11px] md:leading-3 w-[56.33px] text-black text-[7px] font-medium leading-[9.10px]">RECHARGE CARD PRINTING</div>
+        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[11px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100</div>
+        <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[11px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
     </div>
 
 
-    <footer className="flex justify-center lg:ml-[-20px] text-center gap-[20px] mt-[200px] mb-[50px]
-     md:mt-[300px] lg:mb-[30px] lg:mt-[200px]">
+    <footer className="flex justify-center lg:ml-[-20px] text-center gap-[20px] mt-[70px] mb-[50px]
+     md:mt-[200px] lg:mb-[30px] lg:mt-[200px]">
             <p className="text-[8px] md:text-[12px] lg:text-[12px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
               You need help?
             </p>
@@ -1194,7 +1582,7 @@ lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.67
               <div
                 className={`${
                   isDarkMode ? "border " : "bg-[#04177f]"
-                } text-[8px] p-1 text-white rounded-[8px] lg:text-[12px]`}
+                } text-[8px] p-1 text-white rounded-[8px] lg:w-[100px] w-[70px] lg:text-[12px]`}
               >
                 Contact Us
               </div>
@@ -1204,7 +1592,7 @@ lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.67
 </div>
 </div>
 )}
-  {/* ?</div> */}
+  </div>
 
         </>
         </DashBoardLayout>

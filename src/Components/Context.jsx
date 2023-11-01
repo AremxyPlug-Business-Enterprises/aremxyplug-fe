@@ -682,6 +682,8 @@ export const Context = ({ children }) => {
   const [walletName, setWalletName] = useState("");
   const [accountId, setAccountId] = useState("");
   const [numberPins, setNumberPins] = useState("");
+  const [emailId, setEmailId] = useState("");
+   
   
   //=============point redeem==============
   const [inputValue, setInputValue] = useState("");
@@ -713,8 +715,10 @@ export const Context = ({ children }) => {
   const [showDropdownGOTV, setShowDropdownGOTV] = useState(false);
   const formatNumberWithCommas = (number) => {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');};
-  const [GOTVMobileNumber, setGOTVMobileNumber] = useState('');
+  const [mobileNumber, setMobileNumber] = useState('');
   const [cardName, setCardName] = useState('');
+  const [smartCard, setSmartCard] = useState('');
+  const [tvEmail, setTvEmail] = useState('')
 
     //==========DSTV===========
   const [selectedOptionDstv, setSelectedOptionDstv] = useState('');
@@ -722,7 +726,6 @@ export const Context = ({ children }) => {
   const [confirmDstvPopup, setConfirmDstvPopup] = useState(false);
   const [inputPinDstv, setInputPinDstv] = useState(false);
   const [dstvSuccessful, setDstvSuccessful] = useState(false);
-  const [dstvMobileNumber, setDstvMobileNumber] = useState('');
 
   //============= EDUCATION PINS ========================
 
@@ -1008,6 +1011,9 @@ const [walletBalance, setWalletBalance] = useState('');
     setAccountId,
     numberPins, 
     setNumberPins,
+    emailId, 
+    setEmailId,
+
 
 
     //point redeem
@@ -1058,10 +1064,15 @@ const [walletBalance, setWalletBalance] = useState('');
     showDropdownGOTV,
     setShowDropdownGOTV,
     formatNumberWithCommas,
-    GOTVMobileNumber,
-    setGOTVMobileNumber,
+    mobileNumber,
+    setMobileNumber,
     cardName,
     setCardName,
+    smartCard,
+    setSmartCard,
+    tvEmail,
+    setTvEmail,
+    
     confirmDstvPopup,
     setConfirmDstvPopup,
     inputPinDstv,
@@ -1072,8 +1083,6 @@ const [walletBalance, setWalletBalance] = useState('');
     setSelectedOptionDstv,
     showDropdownDstv,
     setShowDropdownDstv,
-    dstvMobileNumber,
-    setDstvMobileNumber,
     
 
   //====== EDUCATION PINS
