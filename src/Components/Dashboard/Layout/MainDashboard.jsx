@@ -18,8 +18,13 @@ import { RecentTransaction } from "../DashboardComponents/RecentTransaction";
 import { Link } from "react-router-dom";
 
 export const MainDashboard = () => {
-  const { setHideNavbar, toggleSideBar, isDarkMode } =
-    useContext(ContextProvider);
+  const {
+    setHideNavbar,
+    toggleSideBar,
+    isDarkMode,
+    setToggleSideBar,
+    setLogout,
+  } = useContext(ContextProvider);
   const [visible, setVisibility] = useState(true);
   const [activeButtons, setActiveButtons] = useState([false, false, false]);
   const [blur, setBlur] = useState(false);
@@ -87,12 +92,17 @@ export const MainDashboard = () => {
     return;
   };
 
+  const closeTabs = () => {
+    setLogout(false);
+    setToggleSideBar(false);
+  };
+
   return (
     <div>
       {/* ==============TOP BAR========== */}
       <TopBar />
 
-      <div className="w-[100%] ">
+      <div className="w-[100%] " onClick={closeTabs}>
         {/* ============SIDE BAR========= */}
         {toggleSideBar && (
           <div className="absolute top-0 left-0 z-50">
@@ -510,19 +520,20 @@ export const MainDashboard = () => {
                 <p>Withdraw</p>
               </div>
             </Link>
-            <Link to="/currencyConversion"
+            <Link
+              to="/currencyConversion"
               className={`${
                 isDarkMode ? " border bg-[#000]" : "bg-[#04177f]"
               } ${styles.button}`}
             >
-            <div className="flex items-center gap-[10%]">
-              <img
-                className="w-[11px] h-[11px] md:h-[20px] md:w-[20px] lg:w-[51px] lg:h-[51px]"
-                src="./Images/dashboardImages/convert.png"
-                alt="topup"
-              />
-              <p>Convert</p>
-            </div>
+              <div className="flex items-center gap-[10%]">
+                <img
+                  className="w-[11px] h-[11px] md:h-[20px] md:w-[20px] lg:w-[51px] lg:h-[51px]"
+                  src="./Images/dashboardImages/convert.png"
+                  alt="topup"
+                />
+                <p>Convert</p>
+              </div>
             </Link>
           </div>
 
