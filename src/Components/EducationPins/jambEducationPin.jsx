@@ -146,7 +146,7 @@ const jambReceipt = () => {
 };
   return (
     <DashBoardLayout>
-      <div className='flex flex-col lg:h-[700px] justify-between'>
+      <div className='flex flex-col justify-between h-[110%] '>
    <div className=''>
     {/* Hero-section */}
  <HeroComponent/>
@@ -171,14 +171,14 @@ const jambReceipt = () => {
       {/* Input for Request of examination pins  */}
       <form action=''>
       <div  className='flex flex-col gap-[20px]  md:h-[172.73px] md:gap-[14.67px] 
-      md:w-[80%] lg:gap-[25px] lg:h-[296px] lg:mb-[30px] mb-[30px]'>
+       lg:gap-[25px] lg:h-[296px] lg:mb-[30px] mb-[30px]'>
         {/* container for the first two input */}
         <div className=' w-[100%]
         flex flex-col md:flex-row gap-[20px] 
         md:gap-[12.91px] lg:gap-[22px]'>
 
           {/* First Step Confirm exam type */}
-     <div className='relative flex flex-col w-[100%] gap-[5.868px] md:w-1/2 md:gap-[5.868px]  
+     <div className='relative flex flex-col w-[100%] md:w-1/2 gap-[5.868px]  md:gap-[5.868px]  
      lg:gap-[10px]'>
       {/* header */}
       <h2 className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px]  
@@ -195,7 +195,7 @@ const jambReceipt = () => {
   hover:bg-[#EDEAEA]'>
       <h2 
       className='font-[500] text-[8px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] 
-      lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px] cursor-pointer'>
+      lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer'>
       {examType}
         </h2>
         <img  
@@ -234,7 +234,7 @@ const jambReceipt = () => {
       </div>
 
       {/* Quantity input Two / RightSide */}
-      <div className='relative gap-[5.868px] flex flex-col w-[100%] md:w-1/2  
+      <div className='relative gap-[5.868px] md:w-1/2 flex flex-col w-[100%]  
       md:gap-[5.868px] lg:gap-[10px] '>
       {/* header */}
       <h2 className='  font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px]
@@ -251,7 +251,7 @@ const jambReceipt = () => {
   lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
   border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
       <h2 className='font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
-      lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px] cursor-pointer'>
+      lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer'>
       {quantityResult}
         </h2>
         <img 
@@ -292,10 +292,10 @@ const jambReceipt = () => {
      </div>
     {/* container for Phone number and Email */}
      <div className=' w-[100%] 
-     flex flex-col  md:flex-row gap-[20px] md:gap-[12.91px] lg:gap-[22px] '>
+     flex flex-col  md:flex-row  gap-[20px] md:gap-[12.91px] lg:gap-[22px]'>
       {/* LeftSide */}
        <div className=' container-phone gap-[5.868px] 
-       flex flex-col md:w-1/2 md:gap-[10px] z-0'>
+       flex flex-col md:w-1/2  md:gap-[10px] z-0'>
      <h2 className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px]
        md:text-[9.389px] md:leading-[12.206px]
      lg:text-[16px] lg:leading-[20.8px] '>
@@ -315,8 +315,10 @@ const jambReceipt = () => {
     }
   
      })}
-     className='h-[29.927px] lg:h-[51px]  md:h-[29.93px] w-[100%] border-[0.4px] border-[#9C9C9C] 
-     pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
+     className='h-[29.927px] lg:h-[51px]  md:h-[29.93px] w-[100%] border-[0.4px] border-[#9C9C9C]
+    font-[500] text-[14.389px] leading-[18.206px] text-black
+     lg:text-[16px] lg:leading-[20.8px]
+   pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
      focus:outline-none 
      md:pt-[8.802px] md:pb-[7.042px] 
      md:pr-[5.282px] md:pl-[5.867px] 
@@ -346,6 +348,8 @@ const jambReceipt = () => {
      < input 
      
      className='flex h-[29.927px] lg:h-[51px] md:h-[29.93px] w-[100%]
+   font-[500]  lg:text-[16px] lg:leading-[20.8px] text-[#7E7E7E]
+     text-[14.389px] leading-[18.206px] tracking-[0.4px]
       pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
       border-[0.4px] border-[#9C9C9C] focus:outline-none self-center
      md:pt-[8.802px] md:pb-[7.042px] 
@@ -396,7 +400,7 @@ const jambReceipt = () => {
   focus:outline-none text-start
     text-[8px] leading-[10.4px]
    font-[500]  md:text-[9.389px] md:leading-[12.206px]
-  lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px]'
+  lg:text-[16px] text-black lg:leading-[20.8px]'
   maxLength={7}>
   {waecAmount}
    </div>
@@ -405,7 +409,7 @@ const jambReceipt = () => {
     </div>
       {/* payment method */}
       <div className=' relative gap-[5.868px]
-       flex w-[100%] flex-col md:w-1/2  md:gap-[5.868px] lg:gap-[10px]'>
+       flex w-[100%] flex-col md:w-1/2   md:gap-[10px]'>
       {/* header */}
       <h2 className='font-[600] text-[8px] leading-[10.4px]
        text-[#7E7E7E]  md:text-[9.389px] md:leading-[12.206px]
@@ -422,7 +426,7 @@ const jambReceipt = () => {
   border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
       <h2 className='font-[500] text-[8px] leading-[10.4px]
        md:text-[9.389px] md:leading-[12.206px]
-      lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px] cursor-pointer'>
+      lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer'>
       {paymentResult + '' + walletBalance }
         </h2>
         <img 
@@ -491,7 +495,8 @@ const jambReceipt = () => {
                     src={closeIcon}
                     alt=""
                     onClick={() => setEducationProceed(false)}
-                    className=" w-[18px] h-[18px]  md:w-[25px] md:h-[25px] lg:w-[35px] lg:h-[35px]"
+                    className=" w-[18px] h-[18px]  md:w-[25px] cursor-pointer
+                    md:h-[25px] lg:w-[35px] lg:h-[35px]"
                   />
                 </div>
 
@@ -686,8 +691,9 @@ const jambReceipt = () => {
               >
                 <img
                   onClick={() => setEducationConfirm(false)}
-                  className="absolute cursor-pointer right-2 w-[18px] 
-                  h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[45px] lg:h-[45px] "
+                  className="absolute cursor-pointer top-[5.5px] 
+                  right-2 w-[18px] h-[18px] 
+                  md:w-[35px] md:h-[25px] lg:w-[45px] lg:h-[45px]"
                   src={closeIcon}
                   alt=""
                 />
@@ -779,7 +785,8 @@ const jambReceipt = () => {
                       setTransactSuccessPopUp(false);
                       window.location.reload();
                     }}
-                    className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
+                    className=" w-[18px] h-[18px]  cursor-pointer
+                    md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                     src="/Images/transferImages/close-circle.png"
                     alt=""
                   />
@@ -996,7 +1003,7 @@ const jambReceipt = () => {
           </div>
 
       </form>
-
+</div>
       
 
       <div className=" flex gap-[5.729px]  md:gap-[14.896px]
@@ -1007,7 +1014,7 @@ const jambReceipt = () => {
                 You need help?
               </p>
               <Link to ="/contactUs"
-                className="font-[500] text-white text-[10px]  py-[4.865px] 
+                className="font-extrabold text-white text-[10px]  py-[4.865px] 
                 px-[12.594px] leading-[10.4px] rounded-[5.156px] bg-[#04177F]
                 lg:text-[12px] lg:leading-[14.4px] 
                  md:text-[4.583px]  md:py-[4.865px] 
@@ -1017,7 +1024,7 @@ const jambReceipt = () => {
                 Contact Us
               </Link>
             </div>
-    </div>
+    
     </div>
     </DashBoardLayout>
   )

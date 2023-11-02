@@ -681,11 +681,23 @@ export const Context = ({ children }) => {
   const [recipientNames, setRecipientNames] = useState("");
   const [walletName, setWalletName] = useState("");
 
+  const [accountId, setAccountId] = useState("");
+  const [numberPins, setNumberPins] = useState("");
+  const [emailId, setEmailId] = useState("");
+   
+  
   //=============point redeem==============
   const [inputValue, setInputValue] = useState("");
   const [outputValue, setOutputValue] = useState("");
-  const [realinputValue, setRealInputValue] = useState("");
-  const [realoutputValue, setRealOutputValue] = useState("");
+  // const [realinputValue, setRealInputValue] = useState("");
+  // const [realoutputValue, setRealOutputValue] = useState("");
+
+  //==============electricity subscrition===========
+  const [meterNumber, setMeterNumber] = useState('');
+  const [verifiedName, setVerifiedName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [ikedcEmail, setEmail] = useState('');
+  const [ikedcamount, setIkedcamount] = useState('');
 
   //=============Currency conversion==============
   const [convertedAmount, setConvertedAmount] = useState("");
@@ -695,59 +707,39 @@ export const Context = ({ children }) => {
   const [activeButtonOne, setActiveButtonsOne] = useState([true, false]);
 
   //=============TV-subscription==============
+
+  //==========GOTV===========
   const [confirmGotvPopup, setConfirmGotvPopup] = useState(false);
-  const handleGotv = (event) => {
-    event.preventDefault();
-    setConfirmGotvPopup(true);
-  };
   const [inputPinGotv, setInputPinGotv] = useState(false);
-  const handleInputGotv = (event) => {
-    event.preventDefault();
-    setConfirmGotvPopup(false);
-    setInputPinGotv(true);
-  };
   const [gotvSuccessful, setGotvSuccessful] = useState(false);
-  const handleGotvSuccessful = (event) => {
-    event.preventDefault();
-    setInputPinGotv(false);
-    setGotvSuccessful(true);
-  };
-
-  const [selectedOptionGOTV, setSelectedOptionGOTV] = useState("");
-
+  const [selectedOptionGOTV, setSelectedOptionGOTV] = useState('');
   const [showDropdownGOTV, setShowDropdownGOTV] = useState(false);
-  const handleOptionClickGOTV = (option) => {
-    setSelectedOptionGOTV(option);
-    setShowDropdownGOTV(false);
-    setInitialValueGOTV(false);
-  };
-
   const formatNumberWithCommas = (number) => {
-    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  };
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');};
+  const [mobileNumber, setMobileNumber] = useState('');
+  const [cardName, setCardName] = useState('');
+  const [smartCard, setSmartCard] = useState('');
+  const [tvEmail, setTvEmail] = useState('')
 
-  const getNumericValue = (option) => {
-    const numericPart = option.match(/\d+/);
-    if (numericPart) {
-      return formatNumberWithCommas(
-        parseInt(numericPart[0], numericPart[2], 10)
-      );
-    }
-    return "";
-  };
-  const [initialValueGOTV, setInitialValueGOTV] = useState(true);
+    //==========DSTV===========
+  const [selectedOptionDstv, setSelectedOptionDstv] = useState('');
+  const [showDropdownDstv, setShowDropdownDstv] = useState(false);
+  const [confirmDstvPopup, setConfirmDstvPopup] = useState(false);
+  const [inputPinDstv, setInputPinDstv] = useState(false);
+  const [dstvSuccessful, setDstvSuccessful] = useState(false);
 
   //============= EDUCATION PINS ========================
 
-  const [quantityResult, setQuantityResult] = useState("");
-  const [waecActive, setWaecActive] = useState(false);
-  const [paymentResult, setPaymentResult] = useState("");
-  const [methodActive, setMethodActive] = useState(false);
-  const [examType, setExamType] = useState("");
-  const [examActive, setExamActive] = useState(false);
-  const [educationPinPhone, setEducationPinPhone] = useState("");
-  const [educationPinEmail, setEducationPinEmail] = useState("");
-  const [waecAmount, setWaecAmount] = useState("₦");
+  const [quantityResult, setQuantityResult] = useState('');
+const [waecActive, setWaecActive] = useState(false);
+const [paymentResult, setPaymentResult] = useState('');
+const [methodActive, setMethodActive] = useState(false);
+const [examType, setExamType] = useState('');
+const [examActive, setExamActive] = useState(false);
+const [educationPinPhone, setEducationPinPhone]= useState('');
+const[ educationPinEmail, setEducationPinEmail] = useState('');
+const [waecAmount, setWaecAmount] = useState('₦');
+const [walletBalance, setWalletBalance] = useState('');
 
   const hold = {
     firstDrop,
@@ -1016,12 +1008,33 @@ export const Context = ({ children }) => {
     setRecipientNames,
     walletName,
     setWalletName,
+    accountId, 
+    setAccountId,
+    numberPins, 
+    setNumberPins,
+    emailId, 
+    setEmailId,
+
+
 
     //point redeem
     inputValue,
     setInputValue,
     outputValue,
     setOutputValue,
+
+
+    //electricity subscription
+    meterNumber,
+   setMeterNumber,
+   verifiedName,
+    setVerifiedName,
+    phoneNumber, 
+    setPhoneNumber,
+    ikedcEmail, 
+    setEmail,
+    ikedcamount,
+     setIkedcamount,
 
     //currency
     convertedAmount,
@@ -1034,50 +1047,65 @@ export const Context = ({ children }) => {
     setSelectedOne,
     setActiveButtonsOne,
     activeButtonOne,
-    realinputValue,
-    setRealInputValue,
-    realoutputValue,
-    setRealOutputValue,
 
     //TV-subscription
     confirmGotvPopup,
     setConfirmGotvPopup,
-    handleGotv,
+    // handleGotv,
     inputPinGotv,
     setInputPinGotv,
-    handleInputGotv,
+    // handleInputGotv,
     gotvSuccessful,
     setGotvSuccessful,
-    handleGotvSuccessful,
+    // handleGotvSuccessful,
     selectedOptionGOTV,
     setSelectedOptionGOTV,
     showDropdownGOTV,
     setShowDropdownGOTV,
-    handleOptionClickGOTV,
-    getNumericValue,
     formatNumberWithCommas,
-    initialValueGOTV,
-    setInitialValueGOTV,
+    mobileNumber,
+    setMobileNumber,
+    cardName,
+    setCardName,
+    smartCard,
+    setSmartCard,
+    tvEmail,
+    setTvEmail,
+    
+    confirmDstvPopup,
+    setConfirmDstvPopup,
+    inputPinDstv,
+    setInputPinDstv,
+    dstvSuccessful,
+    setDstvSuccessful,
+    selectedOptionDstv,
+    setSelectedOptionDstv,
+    showDropdownDstv,
+    setShowDropdownDstv,
+    
 
-    //====== EDUCATION PINS
-    quantityResult,
-    setQuantityResult,
-    paymentResult,
-    setPaymentResult,
-    waecActive,
-    setWaecActive,
-    methodActive,
-    setMethodActive,
-    examType,
-    setExamType,
-    examActive,
-    setExamActive,
-    educationPinPhone,
-    setEducationPinPhone,
-    educationPinEmail,
-    setEducationPinEmail,
-    waecAmount,
-    setWaecAmount,
+  //====== EDUCATION PINS
+  quantityResult, 
+  setQuantityResult,
+  paymentResult, 
+  setPaymentResult,
+  waecActive, 
+  setWaecActive,
+  methodActive, 
+  setMethodActive,
+  examType, 
+  setExamType,
+  examActive,
+   setExamActive,
+   educationPinPhone, 
+   setEducationPinPhone,
+   educationPinEmail, 
+  setEducationPinEmail,
+  waecAmount, 
+  setWaecAmount,
+  walletBalance, 
+  setWalletBalance
+
   };
 
   return (

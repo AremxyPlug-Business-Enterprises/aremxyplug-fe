@@ -13,14 +13,10 @@ import { useContext } from "react";
 import { ContextProvider } from "../../../Context";
 import { Link } from "react-router-dom";
 import WalletModal from "../../../Wallet/WalletModal";
-import DataRollPopUp from "./DataTopUp-Images/DataRollPopUp.svg"
-import DataVoucherPopUp from "./DataTopUp-Images/DataVoucherPopUp.svg"
-import DataSchedulePopUp from "./DataTopUp-Images/DataSchedulePopUp.svg"
-import BulkDataPopUp from "./DataTopUp-Images/BulkDataPopUp.svg"
-
-
-
-
+import DataRollPopUp from "./DataTopUp-Images/DataRollPopUp.svg";
+import DataVoucherPopUp from "./DataTopUp-Images/DataVoucherPopUp.svg";
+import DataSchedulePopUp from "./DataTopUp-Images/DataSchedulePopUp.svg";
+import BulkDataPopUp from "./DataTopUp-Images/BulkDataPopUp.svg";
 
 const DataTopUpPage = () => {
   const [popupVisible, setPopupVisible] = useState(false);
@@ -87,7 +83,7 @@ const DataTopUpPage = () => {
             isDarkMode
               ? "bg-[#000] text-[#fff] border-[#fff]"
               : "bg-[#ffffff] text-[#000] "
-          } `}
+          } flex flex-col justify-between h-full `}
         >
           <div
             id="DataTopUp"
@@ -125,7 +121,7 @@ const DataTopUpPage = () => {
             />
           </div>
 
-          <section className="md:mt-[30px] mt-[30px] lg:mt-[50px]">
+          <section className="">
             <div className="text-[8px] flex gap-[2.5%] md:text-[18px] lg:text-[20px] justify-between md:justify-start md:gap-[5%]">
               <div
                 onClick={() => {
@@ -310,21 +306,24 @@ const DataTopUpPage = () => {
             </div>
           </section>
 
-          <footer className="flex justify-center text-center gap-[20px] mt-[220px] mb-[50px] md:mt-[750px] lg:mb-[30px] 2xl:mt-[500px]">
-            <p className="text-[8px] md:text-[12px] lg:text-[20px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
-              You need help?
-            </p>
-
+          <div
+            className={`${
+              isDarkMode ? "" : ""
+            } flex gap-[15px] justify-center items-center mt-[100%] md:mt-[38%] lg:mt-[26%] lg:mb-[%]`}
+          >
+            <div className="text-[10px] md:text-[12px] lg:text-[14px]">
+              You need help ?
+            </div>
             <Link to="/ContactUs">
               <div
                 className={`${
-                  isDarkMode ? "border " : "bg-[#04177f]"
-                } text-[8px] p-1 text-white rounded-[8px] lg:text-[18px]`}
+                  isDarkMode ? "border" : "bg-[#04177f]"
+                } text-[10px] p-1 text-white rounded-[8px] lg:text-[18px]`}
               >
                 Contact Us
               </div>
             </Link>
-          </footer>
+          </div>
 
           {/* ================Popup======================= */}
 
@@ -385,11 +384,11 @@ const DataTopUpPage = () => {
                   <img
                     src={DataRollPopUp}
                     alt=""
-                    className="img mx-auto mt-[20px] md:mt-[5%] md:w-[30%] md:h-[70%] md:mx-auto w-[143px] h-[100px] lg:w-[300px] lg:h-[200px] lg:mx-auto lg:mt-[8%] 2xl:mt-[10%] 2xl:mx-auto"
+                    className="img mobile-desktop mx-auto mt-[20px] md:mt-[5%] md:w-[30%] md:h-[70%] md:mx-auto w-[143px] h-[100px] lg:w-[300px] lg:h-[200px] lg:mx-auto lg:mt-[8%] 2xl:mt-[10%] 2xl:mx-auto"
                   />
                 </div>
               </div>
-              <div className="mt-[40px] flex flex-col gap-[5px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
+              <div className="mobile-desktop mt-[40px] flex flex-col gap-[5px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
                 <p className="text-[8px] font-extrabold text-end float-right ml-[60%] md:ml-[70%] md:text-[12px] mt-[10px] lg:text-[13px] 2xl:text-[15px]">
                   Coming Soon...
                 </p>
@@ -424,11 +423,11 @@ const DataTopUpPage = () => {
                   <img
                     src={DataVoucherPopUp}
                     alt=""
-                    className="img mx-auto mt-[20px] md:mt-[5%] md:w-[30%] md:h-[70%] md:mx-auto w-[143px] h-[100px] lg:w-[300px] lg:h-[200px] lg:mx-auto lg:mt-[8%] 2xl:mt-[10%] 2xl:mx-auto"
+                    className="img mobile-desktop mx-auto mt-[20px] md:mt-[5%] md:w-[30%] md:h-[70%] md:mx-auto w-[143px] h-[100px] lg:w-[300px] lg:h-[200px] lg:mx-auto lg:mt-[8%] 2xl:mt-[10%] 2xl:mx-auto"
                   />
                 </div>
               </div>
-              <div className="mt-[30px] flex flex-col gap-[5px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
+              <div className="mobile-desktop mt-[30px] flex flex-col gap-[5px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
                 <p className="text-[8px] font-extrabold text-end float-right ml-[60%] md:ml-[70%] md:text-[12px] mt-[10px] lg:text-[13px] 2xl:text-[15px]">
                   Coming Soon...
                 </p>
@@ -463,11 +462,11 @@ const DataTopUpPage = () => {
                   <img
                     src={DataSchedulePopUp}
                     alt=""
-                    className="img mx-auto mt-[20px] md:mt-[5%] md:w-[30%] md:h-[70%] md:mx-auto w-[143px] h-[100px] lg:w-[300px] lg:h-[200px] lg:mx-auto lg:mt-[8%] 2xl:mt-[10%] 2xl:mx-auto"
+                    className="img mobile-desktop mx-auto mt-[20px] md:mt-[5%] md:w-[30%] md:h-[70%] md:mx-auto w-[143px] h-[100px] lg:w-[300px] lg:h-[200px] lg:mx-auto lg:mt-[8%] 2xl:mt-[10%] 2xl:mx-auto"
                   />
                 </div>
               </div>
-              <div className="mt-[30px] flex flex-col gap-[5px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
+              <div className="mobile-desktop mt-[30px] flex flex-col gap-[5px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
                 <p className="text-[8px] font-extrabold text-end float-right ml-[60%] md:ml-[70%] md:text-[12px] mt-[10px] lg:text-[13px] 2xl:text-[15px]">
                   Coming Soon...
                 </p>
@@ -502,11 +501,11 @@ const DataTopUpPage = () => {
                   <img
                     src={BulkDataPopUp}
                     alt=""
-                    className="img mx-auto mt-[20px] md:mt-[5%] md:w-[30%] md:h-[70%] md:mx-auto w-[143px] h-[100px] lg:w-[300px] lg:h-[200px] lg:mx-auto lg:mt-[8%] 2xl:mt-[10%] 2xl:mx-auto"
+                    className="img mobile-desktop mx-auto mt-[20px] md:mt-[5%] md:w-[30%] md:h-[70%] md:mx-auto w-[143px] h-[100px] lg:w-[300px] lg:h-[200px] lg:mx-auto lg:mt-[8%] 2xl:mt-[10%] 2xl:mx-auto"
                   />
                 </div>
               </div>
-              <div className="mt-[30px] flex flex-col gap-[5px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
+              <div className="mobile-desktop mt-[30px] flex flex-col gap-[5px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
                 <p className="text-[8px] font-extrabold text-end float-right ml-[60%] md:ml-[70%] md:text-[12px] mt-[10px] lg:text-[13px] 2xl:text-[15px]">
                   Coming Soon...
                 </p>

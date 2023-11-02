@@ -5,21 +5,32 @@ import { ContextProvider } from "../../Context";
 import { Modal } from "../../Screens/Modal/Modal";
 
 
- const ConfirmGotvPopup = () => {
+ const ConfirmDstvPopup = () => {
   
    const {
-     confirmGotvPopup,
-     setConfirmGotvPopup,
+     confirmDstvPopup,
+     setConfirmDstvPopup,
      toggleSideBar,
      handleInputGotv,
-     getNumericValue,
-     GOTVMobileNumber,
-     selectedOptionGOTV,
+     cardName,
+     smartCard,
+     tvEmail,
+     mobileNumber,
+     formatNumberWithCommas,
+     selectedOptionDstv,
   } = useContext(ContextProvider)
+
+  const getNumericValue = (option) => {
+    const numericPart = option.match(/\d+/);
+    if (numericPart) {
+      return formatNumberWithCommas(parseInt(numericPart[0], 10));
+    }
+    return '';
+  };
 
     return(
        <>
-       {confirmGotvPopup &&
+       {confirmDstvPopup &&
             (
             <Modal >
               
@@ -29,7 +40,7 @@ import { Modal } from "../../Screens/Modal/Modal";
             } w-[90%]`}
           >
         <div className="flex justify-end pr-2 mt-1 mb-3 md:mt-2 md:mb-2 lg:mb-0 lg:mt-1">
-        <img  onClick={()=>setConfirmGotvPopup(false)}
+        <img  onClick={()=>setConfirmDstvPopup(false)}
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[26px] lg:h-[26px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
@@ -53,27 +64,27 @@ import { Modal } from "../../Screens/Modal/Modal";
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <span className="text-[#7C7C7C]">Package</span>
-                    <span>{selectedOptionGOTV}</span>
+                    <span>{selectedOptionDstv}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <span className="text-[#7C7C7C]">Smartcard / IUC Number</span>
-                    <span>1234567890</span>
+                    <span>{smartCard}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <span className="text-[#7C7C7C]">Card Name</span>
-                    <span>Aremxyplug</span>
+                    <span>{cardName}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <span className="text-[#7C7C7C]">Phone Number</span>
-                    <span>{GOTVMobileNumber}</span>
+                    <span>{mobileNumber}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <span className="text-[#7C7C7C]">Email</span>
-                    <span>Habib@aremxy.com</span>
+                    <span>{tvEmail}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <span className="text-[#7C7C7C]">Amount</span>
-                    <span>{'₦'+ getNumericValue(selectedOptionGOTV)}</span>
+                    <span>{'₦'+ getNumericValue(selectedOptionDstv)}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <span className="text-[#7C7C7C]">Payment Method</span>
@@ -121,4 +132,4 @@ import { Modal } from "../../Screens/Modal/Modal";
 }
 
 
-export default ConfirmGotvPopup
+export default ConfirmDstvPopup
