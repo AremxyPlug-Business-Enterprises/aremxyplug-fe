@@ -82,12 +82,7 @@ const handleBalance = (product) => {
   useContext(ContextProvider);
 
 
-
-  
-// 
-// 
-        // 
-        // 
+ 
         const handleSelectedOption = (event) => {
           const clickedoption = event.target.value;
           setSelected(clickedoption);
@@ -222,12 +217,16 @@ gap-[5px] mt-[-0%] lg:mt-[25px] bg-indigo-300
       setIsOpen1(false)
     }}
     className={`cursor-pointer ${styles.filter} ${
-      isDarkMode ? "border" : ""} ${ 
-          toggleSideBar ? "lg:mt-[-10px] md:mt-[-10px]  md:w-[135px] lg:w-[170px]" : "lg:mt-[4px] md:mt-[] md:w-[] lg:w-[]" } 
-        flex items-center gap-[1px] mt-[1px] cursor-pointer px-[2px] rounded-[3px] md:px-[8px]`}
+      isDarkMode ? "border" : ""
+    } ${ 
+          toggleSideBar
+           ? "lg:mt-[-10px] md:mt-[-10px]  md:w-[135px] lg:w-[170px]" : "lg:mt-[4px] md:mt-[] md:w-[] lg:w-[]"
+           } 
+        flex items-center gap-[1px] mt-[1px]  px-[2px] rounded-[3px] md:px-[8px]`}
   >
     <div className={`text-[#04177f] text-[9px] md:text-[16px] lg:text-[20px] whitespace-nowrap`}>Filter by Date </div>
     <img
+    
       className="w-[15px] h-[15px] md:w-[17px] md:h-[17px] lg:w-[20px] lg:h-[20px]"
       src="./Images/Dashboardimages/dateImg.png"
       alt=""
@@ -441,7 +440,7 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
 toggleSideBar ? "lg:left-[670px] md:left-[410px] " : "lg:left-[550px] md:left-[310px]"
 }
  flex  justify-center   text-center gap-[20px] 
- mt-[290px] mb-[50px] md:mt-[460px] lg:mb-[30px] left-[125px]  absolute 
+ mt-[330px] mb-[50px] md:mt-[460px] lg:mb-[30px] left-[125px]  absolute 
   z-index-2 onset-[500px] lg:mt-[750px]`}>
             <p className="text-[8px] md:text-[12px] lg:text-[12px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
               You need help?
@@ -451,7 +450,7 @@ toggleSideBar ? "lg:left-[670px] md:left-[410px] " : "lg:left-[550px] md:left-[3
               <div
                 className={`${
                   isDarkMode ? "border " : "bg-[#04177f]"
-                } text-[8px] p-1 text-white rounded-[10px] lg:w-[100px] lg:text-[12px]`}
+                } text-[8px] p-1 text-white rounded-[7px] w-[70px] lg:w-[100px] lg:text-[12px]`}
               >
                 Contact Us
               </div>
