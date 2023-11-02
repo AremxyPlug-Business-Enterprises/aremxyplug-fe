@@ -287,7 +287,7 @@ border-opacity-30 justify-start items-center gap-[52.80px] inline-flex">
           </div>
           
         </div>
-        { calender && <div className="mt-[30px] lg:mt-[50px]"><Calender/></div> }
+        { calender && <div className="mt-[30px] md:mt-[40px] lg:mt-[50px]"><Calender/></div> }
         
 
         
@@ -710,8 +710,10 @@ w-3 h-3 lg:h-5 md:w-[13px]  md:h-[13px]" src={normal} alt="" /> </button>
         md:pt-[17.51px] md:pb-[16.36px] lg:pt-[30.5px] lg:pb-[28.5px] p-[0px] text-[#7C7C7C] gap-2  border-none"
               >
                 <p
-                  className="lg:text-[16px] font-[600] lg:leading-[20.8px] justify-start items-center  flex md:w-[65.729px] md:h-[17.76px]
-        py-[4px] px-[12px] text-white bg-green-300 md:text-[9.167px] lg:w-[104px] lg:h-[31px] md:leading-[11.917px] md:rounded-[3.438px]"
+                  className="lg:text-[16px] font-[600] lg:leading-[20.8px] justify-start items-center 
+                   flex md:w-[65.729px] md:h-[17.76px]
+        py-[4px] px-[12px] text-white bg-green-300 md:text-[9.167px] lg:w-[104px]
+         lg:h-[31px] md:leading-[11.917px] md:rounded-[3.438px]"
                 >
                   Successful
                 </p>
@@ -988,7 +990,7 @@ w-3 h-3 lg:h-5 md:w-[13px]  md:h-[13px]" src={normal} alt="" /> </button>
 
 <tr className={`${
   toggleSideBar
-  ? "lg:pr-[16px]" : "lg:pr-[27px]"
+  ? "lg:pr-[2px]" : "lg:pr-[27px]"
 }
 flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
             lg:pl-[28px] lg:gap-[64px] border-b-2`}>
@@ -1058,8 +1060,13 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
         md:pt-[17.51px] md:pb-[16.36px] lg:pt-[30.5px] lg:pb-[28.5px] p-[0px] text-[#7C7C7C] gap-2 border-none"
               >
                 <p
-                  className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px] md:w-[65.729px] md:h-[17.76px]
-        py-[4px] px-[12px] text-white bg-amber-200 md:text-[9.167px] lg:w-[104px] lg:h-[31px] md:leading-[11.917px] md:rounded-[3.438px]"
+                  className={`${
+                    toggleSideBar
+                    ? "lg:w-[123px]" : "lg:w-[104px]"
+                  }
+                  lg:text-[16px] text-center font-[600] lg:leading-[20.8px] md:w-[65.729px] md:h-[17.76px]
+        py-[4px] px-[12px] text-white bg-amber-200 md:text-[9.167px]  lg:h-[31px]
+         md:leading-[11.917px] md:rounded-[3.438px]`}
                 >
                   Pending
                 </p>
@@ -1075,7 +1082,7 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
 
 <tr className={`${
   toggleSideBar
-  ? "lg:pr-[16px]" : "lg:pr-[27px]"
+  ? "lg:pr-[2px]" : "lg:pr-[27px]"
 }
 flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
             lg:pl-[28px] lg:gap-[64px] border-b-2`}>
@@ -1145,8 +1152,13 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
         md:pt-[17.51px] md:pb-[16.36px] lg:pt-[30.5px] lg:pb-[28.5px] p-[0px] text-[#7C7C7C] gap-2 border-none"
               >
                 <p
-                  className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px] md:w-[65.729px] md:h-[17.76px]
-        py-[4px] px-[12px] text-white bg-red-300 md:text-[9.167px] lg:w-[104px] lg:h-[31px] md:leading-[11.917px] md:rounded-[3.438px]"
+                  className={`${
+                    toggleSideBar
+                    ? "lg:w-[124px]" : "lg:w-[104px]"  
+                  }
+                  lg:text-[16px] text-center font-[600] lg:leading-[20.8px] md:w-[65.729px] md:h-[17.76px]
+        py-[4px] px-[12px] text-white bg-red-300 md:text-[9.167px]  lg:h-[31px]
+         md:leading-[11.917px] md:rounded-[3.438px]`}
                 >
                   Failed
                 </p>
@@ -1161,7 +1173,7 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
 
 <tr className={`${
   toggleSideBar
-  ? "lg:pr-[16px]" : "lg:pr-[27px]"
+  ? "lg:pr-[2px]" : "lg:pr-[27px]"
 }
 flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
             lg:pl-[28px] lg:gap-[64px] border-b-2`}>
@@ -1235,9 +1247,15 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
         md:pt-[17.51px] md:pb-[16.36px] lg:pt-[30.5px] lg:pb-[28.5px] gap-2 p-[0px] text-[#7C7C7C]  border-none`}
               >
                 <p
-                  className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px]
-                   md:w-[65.729px] md:h-[17.76px] lg:w-[104px] lg:h-[31px]
-        py-[4px] px-[12px] bg-amber-200 text-white md:text-[9.167px] md:leading-[11.917px] md:rounded-[3.438px]"
+                  className={ `${
+                    toggleSideBar
+                    ? "lg:w-[124px]" : "lg:w-[104px]"  
+                                     
+                  }
+                  lg:text-[16px] font-[600] lg:leading-[20.8px]
+                   md:w-[65.729px] md:h-[17.76px] lg:h-[31px]
+        py-[4px] px-[12px] bg-amber-200 text-white md:text-[9.167px] md:leading-[11.917px]
+        text-center md:rounded-[3.438px] `}
                 >
                   Pending
                 </p>
