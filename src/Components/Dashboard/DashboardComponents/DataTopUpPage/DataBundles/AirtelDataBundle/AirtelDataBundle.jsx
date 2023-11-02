@@ -335,7 +335,7 @@ const AirtelDataBundle = () => {
             isDarkMode
               ? "bg-[#000] text-[#fff] border-[#fff]"
               : "bg-[#ffffff] text-[#000] "
-          } flex flex-col justify-between h-full `}
+          }`}
         >
           <div
             id="DataBundle"
@@ -1191,11 +1191,14 @@ const AirtelDataBundle = () => {
             </button>
           </div>
 
-          {/* =======================FOOTER=================================== */}
-          <div
+          
+        </section>
+
+        {/* =======================FOOTER=================================== */}
+        <div
             className={`${
               isDarkMode ? "" : ""
-            } flex gap-[15px] justify-center items-center mt-[100%] md:mt-[38%] lg:mt-[26%] lg:mb-[%]`}
+            } flex gap-[15px] justify-center items-center mt-[100%] pb-[5%] md:pb-[2%] md:mt-[40%] lg:mt-[40%] lg:pb-0`}
           >
             <div className="text-[10px] md:text-[12px] lg:text-[14px]">
               You need help ?
@@ -1210,7 +1213,6 @@ const AirtelDataBundle = () => {
               </div>
             </Link>
           </div>
-        </section>
       </div>
     </DashBoardLayout>
   );
