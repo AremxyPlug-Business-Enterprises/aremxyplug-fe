@@ -36,10 +36,10 @@ export const SmileReceipt = () => {
     useContext(ContextProvider);  
 
   const contentRef = useRef(null);
-
+  
   const handleChange = () => {
-    setSelectedNetworkProduct(false);
-    setSelectedOption(false);
+    setSelectedNetworkProduct('');
+    setSelectedOption('');
     setSelectedAmount('');
     setRecipientNames('');
     setAccountId('');
