@@ -81,7 +81,7 @@ const AddWallet = ({onClick}) => {
     setAddAccount(false);
   }
   const handleAddAccount =()=> {
-  const availableCountries = ['United States', 'United Kingdom', 'Australia', 'Kenya', 'European Union']
+  const availableCountries = ['Nigeria']
   const available = availableCountries.includes(countryName);
   if (available){
     setAddAccount(true);

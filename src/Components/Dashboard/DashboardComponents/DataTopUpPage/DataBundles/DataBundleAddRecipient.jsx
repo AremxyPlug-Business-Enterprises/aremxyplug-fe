@@ -130,7 +130,7 @@ const DataBundleAddRecipient = () => {
     setRecipientNumber(false);
     setRecipientName(event.target.value);
   };
-
+  
   return (
     <DashBoardLayout>
       <div className={airtimestyles.AirtimeTops1}>
@@ -147,7 +147,7 @@ const DataBundleAddRecipient = () => {
                 isDarkMode
                   ? "bg-[#000] text-[#fff] border-[#fff]"
                   : "bg-[#ffffff] text-[#000] "
-              } `}
+              }  flex flex-col justify-between h-full`}
             >
               <div
                 id="DataBundle"
@@ -163,7 +163,7 @@ const DataBundleAddRecipient = () => {
                     hassle or hidden fee.
                   </p>
                 </div>
-
+                
                 <div className="w-[91px] h-[66px] lg:w-[199px] lg:h-[199px] lg:mt-[40px]">
                   <img
                     src={DataBundle}
@@ -411,12 +411,24 @@ const DataBundleAddRecipient = () => {
             </button>
           </div>
         </div>
-        <div className={airtimestyles.help}>
-          <h2>You need help?</h2>
-          <Link to={`/ContactUs`} className={airtimestyles.btnContact}>
-            Contact Us
-          </Link>
-        </div>
+        <div
+            className={`${
+              isDarkMode ? "" : ""
+            } flex gap-[15px] justify-center items-center mt-[100%] pb-[5%] md:pb-[2%] md:mt-[40%] lg:mt-[40%] lg:pb-0`}
+          >
+            <div className="text-[10px] md:text-[12px] lg:text-[14px]">
+              You need help ?
+            </div>
+            <Link to="/ContactUs">
+              <div
+                className={`${
+                  isDarkMode ? "border" : "bg-[#04177f]"
+                } text-[10px] p-1 text-white rounded-[8px] lg:text-[18px]`}
+              >
+                Contact Us
+              </div>
+            </Link>
+          </div>
       </div>
     </DashBoardLayout>
   );

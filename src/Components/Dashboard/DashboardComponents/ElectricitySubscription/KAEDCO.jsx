@@ -123,7 +123,7 @@ const KAEDCO = () => {
     const [proceed, setProceed] = useState(false);
     
     const handleProceed = (e) => {
-      setProceed(true);
+      
       // e.preventDefault();
   
       const { error } = schema.validate({

@@ -235,6 +235,10 @@ export const Router = () => {
         <Route path="/AirtelReceipt" element={<AirtelReceipt/>} />
         <Route path="/EtisalatReceipt" element={<EtisalatReceipt/>} />
         <Route path="/GloReceipt" element={<GloReceipt/>} />
+        <Route path="/DataBundleSelectRecipient" element={<DataBundleSelectRecipient/>} />
+        <Route path="/DataBundleAddRecipient" element={<DataBundleAddRecipient/>} />
+        <Route path="/TvSubscription" element={<TvSubscription/>} />
+        <Route path="/GoTv" element={<GoTv/>} />
         <Route path="/EducationPins" element={<EducationMain/>}/>
         <Route path="/WaecEducationPin" element={<WaecEducationPin/>}/>
         <Route path="/NecoEducationPin" element={<NecoEducationPins/>}/>

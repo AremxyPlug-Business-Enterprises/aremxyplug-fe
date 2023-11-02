@@ -48,12 +48,12 @@ const Wallet = () => {
                 <img src='./Images/wallet/walletBanner.png' alt="" className='h-full'/>
               </div>
             </div>
-            <div className="w-full h-[102.28px] lg:h-[186px] mt-4 flex flex-col justify-between md:mt-6 md:h-[106.5px] lg:mt-12">
-              <div className='lg:mb-8 flex items-center gap-1 mb-5'>
-                  <h2 className='text-[8.62px] font-bold lg:text-[15px]'>Select Wallets</h2>
-                  <div className='lg:w-6 lg:h-6 w-4 h-4'>
-                      <img src='./Images/wallet/arrow-square-right.svg' alt="" className='h-full'/>
-                  </div>
+            <div className="w-full h-[122.28px] lg:h-[200px] mt-10 flex flex-col justify-between md:mt-6 md:h-[106.5px] lg:mt-16">
+              <div className='lg:mb-16 flex items-center gap-1 mb-10'>
+                <h2 className='md:text-[18px] lg:text-[20px] text-[#7c7c7c] text-[10px] leading-[130%]'>Select Wallets</h2>
+                <div className='lg:w-6 lg:h-6 w-4 h-4'>
+                  <img src='./Images/wallet/arrow-square-right.svg' alt="" className='h-full'/>
+                </div>
               </div>
               <div className='w-full h-[61.64px] flex justify-between md:h-[65.85px] lg:h-[115px]'>
                 <div className='md:w-[130px] w-[80.24px] flex justify-center items-center rounded-[5px] lg:rounded-[9px] lg:w-[172px]' style={{boxShadow:`0px 0px 11.495177268981934px 0px #00000040`}}>
@@ -84,15 +84,15 @@ const Wallet = () => {
                 </div>
               </div>
             </div>
-            <div className='mt-4 lg:mt-12'>
-              <div className='lg:mb-8 flex items-center gap-1 mb-5'>
-                  <h2 className='text-[8.62px] font-bold lg:text-[15px]'>Quick Wallets FAQs</h2>
+            <div className='mt-10 lg:mt-16'>
+              <div className='lg:mb-16 flex items-center gap-1 mb-10'>
+                  <h2 className='md:text-[18px] lg:text-[20px] text-[#7c7c7c] text-[10px] leading-[130%]'>Quick Wallets FAQs</h2>
                   <div className='lg:w-6 lg:h-6 w-4 h-4'>
-                      <img src='./Images/wallet/arrow-square-right.svg' alt="" className='h-full'/>
+                    <img src='./Images/wallet/arrow-square-right.svg' alt="" className='h-full'/>
                   </div>
               </div>
               <div>
-                  {faqList.map((faqItem) => (
+                { faqList.map((faqItem) => (
                   <FaqCard 
                     key={faqItem.id} 
                     faqItem={faqItem}
@@ -115,13 +115,13 @@ const Wallet = () => {
               <div className='w-full h-full flex flex-col justify-between'>
                 <h2 className='text-[10px] text-center pt-[5%] text-[#04177f] font-extrabold md:text-[16px] lg:text-[25px] md:pt-[3%]'>This Feature is Currently Not Available.</h2>
                 <div className='flex justify-center items-center mt-[10%] lg:mt-[5%]'>
-                  <div className='mx-auto w-[135px] h-[96px] md:w-[171px] md:h-[148px] md:mt-[0] lg:w-[350px] lg:h-[280px] lg:mt-[5%]'>
+                  <div className='mx-auto mt-[] w-[135px] h-[96px] md:w-[220px] md:h-[200px] md:mt-[5%] lg:w-[350px] lg:h-[280px] lg:mt-[5%]'>
                     <img src="./Images/wallet/comingSoon.png" alt=""/>
                   </div>
                 </div>
-                <div className='flex md:justify-center md:items-center flex-col-reverse md:flex-row gap-0 pb-[5%] mt-[3%]' >
-                  <button className='w-full md:w-fit text-[10px] leading-[15px] bg-primary px-[28.6px] py-[10px] text-white rounded-[7px] md:text-[12px] md:leading-[18px] lg:text-base lg:leading-[24px]' onClick={()=>setShowCryptoModal(false)}>Okay</button>
-                  <h2 className='text-right text-[10px] leading-[15px] px-[28.6px] py-[10px] rounded-[7px] md:text-[12px] md:leading-[18px] lg:text-base lg:leading-[24px]'>Coming soon...</h2>
+                <div className='flex md:justify-center md:items-center flex-col gap-0 md:pb-[5%] mt-[3%]' >
+                  <h2 className='text-[8px] font-extrabold float-right ml-[80%] md:ml-[70%] md:text-[12px] lg:text-[13px] lg:ml-[80%] mb-1 md:mb-0'>Coming soon...</h2>
+                  <button className='bg-primary text-white text-[10px] h-[40px] rounded-[5px] flex items-center justify-center md:mx-auto md:w-[20%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[30%] lg:mx-auto' onClick={()=>setShowCryptoModal(false)}>Okay</button>
                 </div>
               </div>
             </WalletModal>
