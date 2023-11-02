@@ -638,8 +638,12 @@ w-3 h-3 lg:h-5 md:w-[13px]  md:h-[13px]" src={normal} alt="" /> </button>
                 Status
               </th>
             </tr>
-            <tr className="flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
-            lg:pl-[28px] lg:pr-[27px] lg:gap-[64px] border-b-2">
+            <tr className={`${
+               toggleSideBar
+                ? "lg:pr-[16px]" : "lg:pr-[27px]"
+            }
+            flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
+            lg:pl-[28px] lg:pr-[16px] lg:gap-[64px] border-b-2`}>
 
 
               <td
@@ -721,8 +725,12 @@ w-3 h-3 lg:h-5 md:w-[13px]  md:h-[13px]" src={normal} alt="" /> </button>
             
 
 
-        <tr className="flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
-            lg:pl-[28px] lg:pr-[27px] lg:gap-[64px] border-b-2">
+        <tr className={`${
+           toggleSideBar
+           ? "lg:pr-[16px]" : "lg:pr-[27px]"
+        }
+        flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
+            lg:pl-[28px] lg:gap-[64px] border-b-2`}>
 
 
               <td
@@ -803,8 +811,12 @@ w-3 h-3 lg:h-5 md:w-[13px]  md:h-[13px]" src={normal} alt="" /> </button>
             </tr>
 
 
-            <tr className="flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
-            lg:pl-[28px] lg:pr-[27px] lg:gap-[64px] border-b-2">
+            <tr className={`${
+               toggleSideBar
+               ? "lg:pr-[16px]" : "lg:pr-[27px]"
+            }
+            flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
+            lg:pl-[28px] lg:gap-[64px] border-b-2`}>
 
 
               <td
@@ -888,8 +900,12 @@ w-3 h-3 lg:h-5 md:w-[13px]  md:h-[13px]" src={normal} alt="" /> </button>
 
 
 
- <tr className="flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
-            lg:pl-[28px] lg:pr-[27px] lg:gap-[64px] border-b-2">
+ <tr className={`${
+   toggleSideBar
+   ? "lg:pr-[16px]" : "lg:pr-[27px]"
+ }
+ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
+            lg:pl-[28px] lg:gap-[64px] border-b-2`}>
 
 
               <td
@@ -970,8 +986,12 @@ w-3 h-3 lg:h-5 md:w-[13px]  md:h-[13px]" src={normal} alt="" /> </button>
             </tr>
 
 
-<tr className="flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
-            lg:pl-[28px] lg:pr-[27px] lg:gap-[64px] border-b-2">
+<tr className={`${
+  toggleSideBar
+  ? "lg:pr-[16px]" : "lg:pr-[27px]"
+}
+flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
+            lg:pl-[28px] lg:gap-[64px] border-b-2`}>
 
 
               <td
@@ -1053,8 +1073,12 @@ w-3 h-3 lg:h-5 md:w-[13px]  md:h-[13px]" src={normal} alt="" /> </button>
 
 
 
-<tr className="flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
-            lg:pl-[28px] lg:pr-[27px] lg:gap-[64px] border-b-2">
+<tr className={`${
+  toggleSideBar
+  ? "lg:pr-[16px]" : "lg:pr-[27px]"
+}
+flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
+            lg:pl-[28px] lg:gap-[64px] border-b-2`}>
 
 
               <td
@@ -1135,8 +1159,12 @@ w-3 h-3 lg:h-5 md:w-[13px]  md:h-[13px]" src={normal} alt="" /> </button>
             </tr>
 
 
-<tr className="flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
-            lg:pl-[28px] lg:pr-[27px] lg:gap-[64px] border-b-2">
+<tr className={`${
+  toggleSideBar
+  ? "lg:pr-[16px]" : "lg:pr-[27px]"
+}
+flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
+            lg:pl-[28px] lg:gap-[64px] border-b-2`}>
 
 
               <td
@@ -1199,8 +1227,12 @@ w-3 h-3 lg:h-5 md:w-[13px]  md:h-[13px]" src={normal} alt="" /> </button>
               </td>
               
               <td
-                className="w-1/5 flex justify-start items-center
-        md:pt-[17.51px] md:pb-[16.36px] lg:pt-[30.5px] lg:pb-[28.5px] p-[0px] text-[#7C7C7C] gap-2 border-none"
+                className={`${
+                  toggleSideBar
+                 ? "" : ""
+                }
+                w-1/5 flex justify-start items-center
+        md:pt-[17.51px] md:pb-[16.36px] lg:pt-[30.5px] lg:pb-[28.5px] gap-2 p-[0px] text-[#7C7C7C]  border-none`}
               >
                 <p
                   className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px]
@@ -1221,15 +1253,15 @@ w-3 h-3 lg:h-5 md:w-[13px]  md:h-[13px]" src={normal} alt="" /> </button>
             {/* CONTACT US */}
             <div className="flex md:gap-[14.896px] py-[10.865px] items-center mt-10 justify-center px-[8.594px]">
               <p
-                className="font-[500]  lg:text-[12px] lg:leading-[15.6px]  md:text-[6.875px]
+                className="font-[500]  lg:text-[12px] lg:leading-[15.6px]  md:text-[8.875px]
   text-[#707070] md:leading-[8.938px]"
               >
                 You need help?
               </p>
               <Link to = "/contactUs"
-               className="font-[500] text-white lg:text-[8px] lg:leading-[10.4px] 
-  md:text-[4.583px]  py-[2.865px] 
- px-[8.594px] md:leading-[5.985px] rounded-[5.156px] lg:py-[5px]
+               className="font-[500] text-white lg:text-[13px] md:text-[9px] lg:leading-[10.4px] 
+    py-[2.865px] 
+ px-[8.594px] md:leading-[5.985px] md:rounded lg:py-[5px]
  lg:px-[15px] lg:rounded-  bg-[#04177F]"
               >
                 Contact Us
