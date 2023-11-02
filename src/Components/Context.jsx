@@ -229,6 +229,13 @@ export const Context = ({ children }) => {
       checkbox,
     } = state;
 
+    if (password !== confirmPassword) {
+      setErrors({
+        confirmPassword: "Password and Confirm Password do not match",
+      });
+      return;
+    }
+
     const { error } = schema.validate({
       fullName,
       userName,
@@ -249,18 +256,6 @@ export const Context = ({ children }) => {
         }, {})
       );
     } else {
-      setVerification(true);
-      setState({
-        country: "",
-        fullName: "",
-        userName: "",
-        email: "",
-        phoneNumber: "",
-        IVcode: "",
-        password: "",
-        confirmPassword: "",
-      });
-
       const data = {
         fullname: fullName,
         username: userName,
@@ -270,23 +265,38 @@ export const Context = ({ children }) => {
         password: password,
         country: country,
       };
-
       const config = {
-        headers: { "Content-Type": "Application/json" },
+        headers: { "Content-Type": "application/json" },
       };
-
       const url = "https://aremxyplug.onrender.com/api/v1/signup";
-
       axios
         .post(url, data, config)
         .then((response) => {
-          console.log(response.data);
+          console.log(response);
+          if (response.status === 200) {
+            setVerification(true);
+            setState({
+              country: "",
+              fullName: "",
+              userName: "",
+              email: "",
+              phoneNumber: "",
+              password: "",
+              confirmPassword: "",
+            });
+            setErrors({});
+          } else if (response.status === 500) {
+            alert(response.data);
+          } else if (response.status === 409) {
+            alert("Input already in use: " + response.data);
+          } else {
+            console.log(response.data);
+          }
         })
         .catch((error) => {
-          console.log(error.message);
+          console.error(error);
+          alert(error.response.data.error);
         });
-
-      setErrors({});
     }
   };
   // ========End for SignUp.jsx======
@@ -708,6 +718,7 @@ export const Context = ({ children }) => {
 
   //=============TV-subscription==============
 
+
   //==========GOTV===========
   const [confirmGotvPopup, setConfirmGotvPopup] = useState(false);
   const [inputPinGotv, setInputPinGotv] = useState(false);
@@ -729,8 +740,7 @@ export const Context = ({ children }) => {
   const [dstvSuccessful, setDstvSuccessful] = useState(false);
 
   //============= EDUCATION PINS ========================
-
-  const [quantityResult, setQuantityResult] = useState('');
+const [quantityResult, setQuantityResult] = useState('');
 const [waecActive, setWaecActive] = useState(false);
 const [paymentResult, setPaymentResult] = useState('');
 const [methodActive, setMethodActive] = useState(false);
@@ -1014,8 +1024,6 @@ const [walletBalance, setWalletBalance] = useState('');
     setNumberPins,
     emailId, 
     setEmailId,
-
-
 
     //point redeem
     inputValue,
