@@ -132,7 +132,7 @@ const handleBalance = (product) => {
 
 
 {/* Sales summary */}
-    <div class="flex gap-[8px] md:gap-[10px] lg:mt-[25px] mt-[6px] md:mt-[10] flex-row">
+    <div className="flex gap-[8px] md:gap-[10px] lg:mt-[25px] mt-[6px] md:mt-[10] flex-row">
         <div class="text-neutral-500 text-[11px] lg:text-[20px] md:text-[14px] font-semibold ">Sales Summary</div>
         <div class="w-4 h-4 lg:h-6 lg:mt-1 lg:w-6 md:w-[15.75px] md:h-[15.75px] justify-center items-center inline-flex">
             <img src={arrowsales} class="w-4 h-4 lg:h-6 lg:w-6 md:mt-[8px] mt-1  md:w-[15.75px] md:h-[15.75px] relative" alt="" />
@@ -152,7 +152,7 @@ const handleBalance = (product) => {
 gap-[5px] mt-[-0%] lg:mt-[25px] bg-indigo-300
  bg-opacity-20 md:rounded-[11.46px] lg:rounded-[20px] rounded-[6px]
   justify-center lg:w-full w-full md:w-full md:mt-[9px] md:h-[68.75px] 
-  md:px-[140.10px] md:py-[14.32px]  items-center inline-flex">
+  md:px-[140.10px] md:py-[14.32px] relative items-center inline-flex">
 
 
         <div className="lg:justify-start lg:items-center gap-[10px] md:gap-[5.73px] lg:gap-[5.73px] flex">
@@ -201,38 +201,29 @@ gap-[5px] mt-[-0%] lg:mt-[25px] bg-indigo-300
     md:h-[41.25px] md:pl-[9.17px] md:pr-[277.40px] md:pt-[8.39px] lg:w-full
     md:pb-[6.40px] bg-white shadow border-t border-b border-black
     border-opacity-30 justify-start items-center gap-[52.80px] inline-flex`}>
-    <div
-  className={`${
-    toggleSideBar
-      ? "lg:gap-[px] lg:text-[20px] md:mt-2"
-      : "lg:gap-[118px] lg:text-[23px] md:mt-6"
-      
-  } my-[10%] flex text-[9px] font-extrabold gap-[8px] 
-  mt-[25px] lg:mt-9 md:mt-6 md:my-[5%] whitespace-nowrap  md:text-[16px] md:gap-[39px] `}
->
-  <div
-    onClick={() => {
-      setCalender((prev) => !prev);
-      setIsOpen5(false)
-      setIsOpen1(false)
-    }}
-    className={`cursor-pointer ${styles.filter} ${
-      isDarkMode ? "border" : ""
-    } ${ 
-          toggleSideBar
-           ? "lg:mt-[-10px] md:mt-[-10px]  md:w-[135px] lg:w-[170px]" : "lg:mt-[4px] md:mt-[] md:w-[] lg:w-[]"
-           } 
-        flex items-center gap-[1px] mt-[1px]  px-[2px] rounded-[3px] md:px-[8px]`}
-  >
-    <div className={`text-[#04177f] text-[9px] md:text-[16px] lg:text-[20px] whitespace-nowrap`}>Filter by Date </div>
-    <img
     
-      className="w-[15px] h-[15px] md:w-[17px] md:h-[17px] lg:w-[20px] lg:h-[20px]"
-      src="./Images/Dashboardimages/dateImg.png"
-      alt=""
-    />
-  </div>
-  </div>
+
+  
+  
+  {/* filter by date */}
+
+  <div onClick={() => {
+  setCalender((prev) => !prev);
+  setIsOpen5(false)
+  setIsOpen1(false)
+}}  className={`cursor-pointer ${styles.filter}  ${
+  isDarkMode ? "border" : ""} flex  md:gap-[6px] items-center justify-center md:w-[145px] lg:w-[170px] lg:mt-[1px] gap-[1px]  
+   px-[2px] rounded-[3px] md:px-[8px] mt-[-1px] md:mt-[1px] flex-row`}>
+        <div class="text-[#04177f] text-[9px] lg:text-[20px] flex items-center md:text-[16px] 
+        whitespace-nowrap font-bold relative">Filter by Date</div>
+        <div class="w-4 h-4 lg:h-6 lg:mt-1 lg:w-6 md:w-[15.75px] md:h-[15.75px] justify-center items-center inline-flex">
+            <img src="./Images/Dashboardimages/dateImg.png" className=" md:mt-[1px] lg:mt-[-2px]
+             mt-[-2px] w-[12px] h-[12px] md:w-[17px] md:h-[17px] lg:w-[20px] lg:h-[20px] relative" alt="" />
+
+        
+        </div>
+
+        </div>
 
     
     
@@ -440,7 +431,7 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
 toggleSideBar ? "lg:left-[670px] md:left-[410px] " : "lg:left-[550px] md:left-[310px]"
 }
  flex  justify-center   text-center gap-[20px] 
- mt-[330px] mb-[50px] md:mt-[460px] lg:mb-[30px] left-[125px]  absolute 
+ mt-[485px] mb-[50px] md:mt-[460px] lg:mb-[30px] left-[118px]  absolute 
   z-index-2 onset-[500px] lg:mt-[750px]`}>
             <p className="text-[8px] md:text-[12px] lg:text-[12px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
               You need help?
@@ -469,7 +460,7 @@ toggleSideBar ? "lg:left-[670px] md:left-[410px] " : "lg:left-[550px] md:left-[3
             
             lg:ml-[510px] pl-[-50px] lg:top-[585px] md:w-[300px] lg:pl-[-500px]
            left-[65px] w-[62%] lg:w-full 
-           top-[280px] md:top-[400px] absolute flex-col lg:items-start inline-flex`}>
+           top-[280px] md:top-[406px] absolute flex-col lg:items-start inline-flex`}>
 
             <div 
             onClick={() => {
