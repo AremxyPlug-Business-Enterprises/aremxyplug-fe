@@ -125,9 +125,8 @@ const QuickFeatures = () => {
           />
           <p>Digital Services</p>
         </div>
-        <Link to ="/My-Referral">
-        <div
-          className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
+        <Link to ="/My-Referral"
+      className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
             styles.feature
           }`}
         >
@@ -137,8 +136,7 @@ const QuickFeatures = () => {
             alt="/"
           />
           <p>Referrals</p>
-        </div>
-        </Link>
+   </Link>
         <div
           className={`${
             isDarkMode ? " border text-white" : "text-[#000] bg-[#fff] "
