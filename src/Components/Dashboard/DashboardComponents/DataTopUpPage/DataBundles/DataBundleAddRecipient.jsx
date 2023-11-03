@@ -414,7 +414,7 @@ const DataBundleAddRecipient = () => {
         <div
             className={`${
               isDarkMode ? "" : ""
-            } flex gap-[15px] justify-center items-center mt-[100%] pb-[5%] md:pb-[2%] md:mt-[40%] lg:mt-[40%] lg:pb-0`}
+            } flex gap-[15px] justify-center items-center mt-[100%] pb-[25%] md:pb-[2%] md:mt-[40%] lg:mt-[40%] lg:pb-0`}
           >
             <div className="text-[10px] md:text-[12px] lg:text-[14px]">
               You need help ?
