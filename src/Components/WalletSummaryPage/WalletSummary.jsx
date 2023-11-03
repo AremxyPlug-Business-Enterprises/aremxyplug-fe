@@ -171,7 +171,7 @@ px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px]">
         gap-[5px] mt-[20%] lg:mt-[150px] bg-indigo-300
          bg-opacity-20 md:rounded-[11.46px] lg:rounded-[20px] rounded-[6px]
           justify-center lg:w-full w-full md:w-full md:mt-[100px] md:h-[68.75px] 
-          md:px-[140.10px] md:py-[14.32px] relative items-center inline-flex">
+          md:px-[140.10px] md:py-[14.32px]  items-center inline-flex">
 
         
           
@@ -287,7 +287,7 @@ border-opacity-30 justify-start items-center gap-[52.80px] inline-flex">
           </div>
           
         </div>
-        { calender && <div className="mt-[30px] md:mt-[63px] lg:mt-[50px]"><Calender/></div> }
+        { calender && <div className="mt-[35px] md:mt-[30px] lg:mt-[50px]"><Calender/></div> }
         
 
         
@@ -386,7 +386,7 @@ border-opacity-30 justify-start items-center gap-[52.80px] inline-flex">
           
           lg:ml-[510px] pl-[-50px] lg:top-[603px] md:w-[300px] lg:pl-[-500px]
            left-[65px] w-[62%] lg:w-full 
-           top-[277px] md:top-[411px] absolute flex-col md:ml-[300px] lg:items-start inline-flex`}>
+           top-[284px] md:top-[412px] absolute flex-col md:ml-[300px] lg:items-start inline-flex`}>
             <div onClick={() =>{
               setIsOpen1((prev) => !prev);
               handleSelect (<img className="w-3 h-3 lg:w-[29.27px] lg:h-[29.27px] ml-[-1px] mt-[-1px]
@@ -1682,7 +1682,7 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
            
         {/* filter by status dropdown */}
         {isOpen2 && (
-          <div className="flex absolute lg:top-[705px] top-[310px] md:top-[460px] 
+          <div className="flex absolute lg:top-[705px] top-[319px] md:top-[465px] 
            ml-[50px] md:ml-[40px]  lg:ml-[60px] flex-col">
             
             <div  

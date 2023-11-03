@@ -431,7 +431,7 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
 toggleSideBar ? "lg:left-[670px] md:left-[410px] " : "lg:left-[550px] md:left-[310px]"
 }
  flex  justify-center   text-center gap-[20px] 
- mt-[485px] mb-[50px] md:mt-[460px] lg:mb-[30px] left-[118px]  absolute 
+ mt-[355px] mb-[50px] md:mt-[460px] lg:mb-[30px] left-[130px]  absolute 
   z-index-2 onset-[500px] lg:mt-[750px]`}>
             <p className="text-[8px] md:text-[12px] lg:text-[12px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
               You need help?
@@ -825,7 +825,7 @@ toggleSideBar ? "lg:left-[670px] md:left-[410px] " : "lg:left-[550px] md:left-[3
 
 {/* data top-up dropdown */}
 {isOpen3 && (
-  <div className=' bg-white  h-[1150px] shadow lg:h-full  w-full '>
+  <div className=' bg-white  lg:h-full  w-full '>
   {/* <div */}
     {/* // className={`${ */}
       {/* // isDarkMode ? "bg-black border text-[#fff]" : "bg-[#fff]" */}
@@ -834,7 +834,7 @@ toggleSideBar ? "lg:left-[670px] md:left-[410px] " : "lg:left-[550px] md:left-[3
 
 
   <div className="flex  justify-start items-center lg:w-full shadow relative bg-white  md:mt-[-108px]
-    lg:mt-[-152px] mt-[-85px] lg:h-[1590px] md:h-[1230px] h-[1050px] border lg:mb-5 mb-10 border-b-[1.2px] flex-col">
+    lg:mt-[-152px] mt-[-85px] lg:h-[1590px] md:h-[1390px]  h-[1050px] border lg:mb-5 md:mb-5 mb-3 border-b-[1.2px] flex-col">
   <div className={`${  
     toggleSideBar
   ? "lg:gap-[325px]"
