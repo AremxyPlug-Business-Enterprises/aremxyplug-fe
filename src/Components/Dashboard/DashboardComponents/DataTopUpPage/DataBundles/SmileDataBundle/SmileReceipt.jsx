@@ -24,6 +24,8 @@ export const SmileReceipt = () => {
     setRecipientNames,
     accountId,
     setAccountId,
+    emailId, 
+    setEmailId,
   }
    = useContext(ContextProvider);
 
@@ -34,13 +36,14 @@ export const SmileReceipt = () => {
     useContext(ContextProvider);  
 
   const contentRef = useRef(null);
-
+  
   const handleChange = () => {
-    setSelectedNetworkProduct(false);
-    setSelectedOption(false);
+    setSelectedNetworkProduct('');
+    setSelectedOption('');
     setSelectedAmount('');
     setRecipientNames('');
     setAccountId('');
+    setEmailId('');
   }
 
 
@@ -168,14 +171,10 @@ export const SmileReceipt = () => {
                   <p className="text-[#0008]">Product</p>
                   <span>{selectedNetworkProduct}</span>
                 </div> */}
+
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Product & Plan</p>
                   <span>{selectedOption}</span>
-                </div>
-
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Registered Email</p>
-                  <span>Aremxyplug.com</span>
                 </div>
 
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -183,6 +182,11 @@ export const SmileReceipt = () => {
                   <span>{accountId}</span>
                 </div>
 
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                  <p className="text-[#0008]">Email ID</p>
+                  <span>{emailId}</span>
+                </div>
+                
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Phone Number</p>
                   <span>{recipientPhoneNumber}</span>

@@ -229,6 +229,13 @@ export const Context = ({ children }) => {
       checkbox,
     } = state;
 
+    if (password !== confirmPassword) {
+      setErrors({
+        confirmPassword: "Password and Confirm Password do not match",
+      });
+      return;
+    }
+
     const { error } = schema.validate({
       fullName,
       userName,
@@ -249,18 +256,6 @@ export const Context = ({ children }) => {
         }, {})
       );
     } else {
-      setVerification(true);
-      setState({
-        country: "",
-        fullName: "",
-        userName: "",
-        email: "",
-        phoneNumber: "",
-        IVcode: "",
-        password: "",
-        confirmPassword: "",
-      });
-
       const data = {
         fullname: fullName,
         username: userName,
@@ -270,23 +265,38 @@ export const Context = ({ children }) => {
         password: password,
         country: country,
       };
-
       const config = {
-        headers: { "Content-Type": "Application/json" },
+        headers: { "Content-Type": "application/json" },
       };
-
       const url = "https://aremxyplug.onrender.com/api/v1/signup";
-
       axios
         .post(url, data, config)
         .then((response) => {
-          console.log(response.data);
+          console.log(response);
+          if (response.status === 200) {
+            setVerification(true);
+            setState({
+              country: "",
+              fullName: "",
+              userName: "",
+              email: "",
+              phoneNumber: "",
+              password: "",
+              confirmPassword: "",
+            });
+            setErrors({});
+          } else if (response.status === 500) {
+            alert(response.data);
+          } else if (response.status === 409) {
+            alert("Input already in use: " + response.data);
+          } else {
+            console.log(response.data);
+          }
         })
         .catch((error) => {
-          console.log(error.message);
+          console.error(error);
+          alert(error.response.data.error);
         });
-
-      setErrors({});
     }
   };
   // ========End for SignUp.jsx======
@@ -340,6 +350,7 @@ export const Context = ({ children }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isValue, SetIsValue] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
+  const [logout, setLogout] = useState(false);
   const date = new Date();
   const sidebarRef = useRef(null);
 
@@ -680,9 +691,11 @@ export const Context = ({ children }) => {
   const [selectedAmount, setSelectedAmount] = useState("");
   const [recipientNames, setRecipientNames] = useState("");
   const [walletName, setWalletName] = useState("");
+
   const [accountId, setAccountId] = useState("");
   const [numberPins, setNumberPins] = useState("");
-  
+  const [emailId, setEmailId] = useState("");
+
   //=============point redeem==============
   const [inputValue, setInputValue] = useState("");
   const [outputValue, setOutputValue] = useState("");
@@ -690,11 +703,11 @@ export const Context = ({ children }) => {
   const [realoutputValue, setRealOutputValue] = useState("");
 
   //==============electricity subscrition===========
-  const [meterNumber, setMeterNumber] = useState('');
-  const [verifiedName, setVerifiedName] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [ikedcEmail, setEmail] = useState('');
-  const [ikedcamount, setIkedcamount] = useState('');
+  const [meterNumber, setMeterNumber] = useState("");
+  const [verifiedName, setVerifiedName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [ikedcEmail, setEmail] = useState("");
+  const [ikedcamount, setIkedcamount] = useState("");
 
   //=============Currency conversion==============
   const [convertedAmount, setConvertedAmount] = useState("");
@@ -709,17 +722,18 @@ export const Context = ({ children }) => {
   const [confirmGotvPopup, setConfirmGotvPopup] = useState(false);
   const [inputPinGotv, setInputPinGotv] = useState(false);
   const [gotvSuccessful, setGotvSuccessful] = useState(false);
-  const [selectedOptionGOTV, setSelectedOptionGOTV] = useState('');
+  const [selectedOptionGOTV, setSelectedOptionGOTV] = useState("");
   const [showDropdownGOTV, setShowDropdownGOTV] = useState(false);
   const formatNumberWithCommas = (number) => {
-  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');};
-  const [mobileNumber, setMobileNumber] = useState('');
-  const [cardName, setCardName] = useState('');
-  const [smartCard, setSmartCard] = useState('');
-  const [tvEmail, setTvEmail] = useState('')
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+  const [mobileNumber, setMobileNumber] = useState("");
+  const [cardName, setCardName] = useState("");
+  const [smartCard, setSmartCard] = useState("");
+  const [tvEmail, setTvEmail] = useState("");
 
-    //==========DSTV===========
-  const [selectedOptionDstv, setSelectedOptionDstv] = useState('');
+  //==========DSTV===========
+  const [selectedOptionDstv, setSelectedOptionDstv] = useState("");
   const [showDropdownDstv, setShowDropdownDstv] = useState(false);
   const [confirmDstvPopup, setConfirmDstvPopup] = useState(false);
   const [inputPinDstv, setInputPinDstv] = useState(false);
@@ -882,6 +896,8 @@ const [necoQuantityActive, setNecoQuantityActive] = useState(false);
     handleToggle,
     volumeValueToggle,
     isValue,
+    logout,
+    setLogout,
 
     // Login
     showModal2,
@@ -1030,35 +1046,34 @@ const [necoQuantityActive, setNecoQuantityActive] = useState(false);
     setRecipientNames,
     walletName,
     setWalletName,
-    accountId, 
+    accountId,
     setAccountId,
-    numberPins, 
+    numberPins,
     setNumberPins,
-
+    emailId,
+    setEmailId,
 
     //point redeem
     inputValue,
     setInputValue,
     outputValue,
     setOutputValue,
-    realinputValue, 
+    realinputValue,
     setRealInputValue,
-    realoutputValue, 
+    realoutputValue,
     setRealOutputValue,
-
-
 
     //electricity subscription
     meterNumber,
-   setMeterNumber,
-   verifiedName,
+    setMeterNumber,
+    verifiedName,
     setVerifiedName,
-    phoneNumber, 
+    phoneNumber,
     setPhoneNumber,
-    ikedcEmail, 
+    ikedcEmail,
     setEmail,
     ikedcamount,
-     setIkedcamount,
+    setIkedcamount,
 
     //currency
     convertedAmount,
@@ -1075,10 +1090,13 @@ const [necoQuantityActive, setNecoQuantityActive] = useState(false);
     //TV-subscription
     confirmGotvPopup,
     setConfirmGotvPopup,
+    // handleGotv,
     inputPinGotv,
     setInputPinGotv,
+    // handleInputGotv,
     gotvSuccessful,
     setGotvSuccessful,
+    // handleGotvSuccessful,
     selectedOptionGOTV,
     setSelectedOptionGOTV,
     showDropdownGOTV,
@@ -1092,7 +1110,7 @@ const [necoQuantityActive, setNecoQuantityActive] = useState(false);
     setSmartCard,
     tvEmail,
     setTvEmail,
-    
+
     confirmDstvPopup,
     setConfirmDstvPopup,
     inputPinDstv,

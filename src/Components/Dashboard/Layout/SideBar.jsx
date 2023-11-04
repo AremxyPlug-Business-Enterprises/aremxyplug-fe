@@ -227,15 +227,15 @@ export const SideBar = () => {
                         <div>Data Top-up</div>
                       </li>
                     </Link>
-                    <Link to ="/EducationPins">
-                    <li className="flex gap-[5%] hover:underline text-[#fff] pt-1 pb-1  font-medium md:text-[11px] lg:pt-[6%] lg:pb-[6%] lg:pl-[%] lg:text-[14px] ">
-                      <img
-                        className="w-[8.5px] h-[8.5px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
-                        src="./Images/dashboardImages/sideArrow.png"
-                        alt="/"
-                      />
-                      <div>Education pins</div>
-                    </li>
+                    <Link to="/EducationPins">
+                      <li className="flex gap-[5%] hover:underline text-[#fff] pt-1 pb-1  font-medium md:text-[11px] lg:pt-[6%] lg:pb-[6%] lg:pl-[%] lg:text-[14px] ">
+                        <img
+                          className="w-[8.5px] h-[8.5px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
+                          src="./Images/dashboardImages/sideArrow.png"
+                          alt="/"
+                        />
+                        <div>Education pins</div>
+                      </li>
                     </Link>
                     <li className="flex gap-[5%] hover:underline text-[#fff] pt-1 pb-1 font-medium md:text-[11px] lg:pt-[6%] lg:pb-[6%] lg:pl-[%] lg:text-[14px] ">
                       <img
@@ -246,14 +246,14 @@ export const SideBar = () => {
                       <div>Tv Subscription</div>
                     </li>
                     <Link to="/electricity-subscription">
-                    <li className="flex gap-[5%] hover:underline text-#fff] pt-1 pb-1 font-medium md:text-[11px] lg:pt-[6%] lg:pb-[6%] lg:pl-[%] lg:text-[14px] ">
-                      <img
-                        className="w-[8.5px] h-[8.5px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
-                        src="./Images/dashboardImages/sideArrow.png"
-                        alt="/"
-                      />
-                      <div>Electricity Bills</div>
-                    </li>
+                      <li className="flex gap-[5%] hover:underline text-#fff] pt-1 pb-1 font-medium md:text-[11px] lg:pt-[6%] lg:pb-[6%] lg:pl-[%] lg:text-[14px] ">
+                        <img
+                          className="w-[8.5px] h-[8.5px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
+                          src="./Images/dashboardImages/sideArrow.png"
+                          alt="/"
+                        />
+                        <div>Electricity Bills</div>
+                      </li>
                     </Link>
                     <li className="flex gap-[5%] hover:underline text-[#fff] pt-1 pb-1 font-medium md:text-[11px] lg:pt-[6%] lg:pb-[6%] lg:pl-[%] lg:text-[14px] ">
                       <img
@@ -488,14 +488,14 @@ export const SideBar = () => {
                   className="flex justify-between"
                 >
                   <Link to="/My-Referral">
-                  <div className="flex gap-[3.4px] items-center cursor-pointer lg:gap-[11px]">
-                    <img
-                      className="w-[8.3px] h-[8.3px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
-                      src="./Images/dashboardImages/referrals.png"
-                      alt="icon"
-                    />
-                  <p>My Referrals</p>
-                  </div>
+                    <div className="flex gap-[3.4px] items-center cursor-pointer lg:gap-[11px]">
+                      <img
+                        className="w-[8.3px] h-[8.3px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
+                        src="./Images/dashboardImages/referrals.png"
+                        alt="icon"
+                      />
+                      <p>My Referrals</p>
+                    </div>
                   </Link>
                 </div>
                 <div className="flex gap-[3.4px] cursor-pointer lg:gap-[11px]">
