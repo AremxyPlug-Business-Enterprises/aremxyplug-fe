@@ -69,11 +69,14 @@ export const TopBar = () => {
             <DarkModeToggle />
             <p>Dark</p>
           </div>
+          <Link to="/notifications">
           <img
             className="cursor-pointer w-[12px] h-[12px] md:w-[16px] md:h-[16px] lg:w-[28px] lg:h-[28px]"
             src="./Images/dashboardImages/notificationlarge.png"
             alt="notification"
+            notifications
           />
+          </Link>
           <img
             onClick={toggleTrueFalse2}
             className="cursor-pointer w-[20px] h-[10px] md:w-[40px] md:h-[20px] rounded-[2.3px] lg:w-[65px] lg:h-[34px]"
