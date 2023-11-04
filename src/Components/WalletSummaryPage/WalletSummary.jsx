@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import arrowsquare1 from "./assets/arrow-square-right.png";
 
 import arrow7 from "./assets/arrow-down7.svg";
-// import filter from "./assets/document-filter.svg";
+
 import menus from "./assets/menu.png";
 import arrow9 from "./assets/arrow-down9.svg";
 import arrows from "./assets/arrow-square-right1.svg";
@@ -21,7 +21,7 @@ import arrowF from "./assets/arrow-square-rightF.png";
 import arrowG from "./assets/arrow-square-rightH.png";
 import group5 from "./assets/Group (5).svg";
 import flags from "./assets/Country Flags.png";
-// import group4 from "./assets/Group (1).png";
+
 import EUR from "./assets/EUR.svg";
 import flags3 from "./assets/Country Flags (3).png";
 import group10 from "./assets/Group (2).png";
@@ -42,10 +42,6 @@ import { Calender } from "../Dashboard/DashboardComponents/Calender";
 import group1 from "./assets/Group.png";
 
 export default function WalletSummaryPage() {
-  // const handleButton = () => {
-  // const searchInput = document.querySelector('.searchInput');
-  // alert('Searching for: ' + searchInput.value);
-  // };
 
   const [calender, setCalender] = useState(false);
 
@@ -94,15 +90,6 @@ export default function WalletSummaryPage() {
     setSelectedProduct(product);
   };
 
-  // const toggleDropdown1 = () => {
-  // setIsOpen1(true);
-  // setIsOpen2(false);
-  // };
-  //
-  // const toggleDropdown2 = () => {
-  // setIsOpen2(true);
-  // setIsOpen1(false);
-  // };
 
   return (
     <DashBoardLayout>
@@ -130,9 +117,6 @@ px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px]"
           className=" lg:top-[385px] md:top-[283px] top-[188px] gap-[8px]
          absolute lg:justify-start md:gap-[7px] lg:items-center lg:gap-[5px] inline-flex"
         >
-          {/* <div className="text-neutral-500 lg:text-[20px] text-[11px] md:mt-[5px] md:text-[13px] font-semibold "> */}
-          {/* Wallet Summary */}
-          {/* </div> */}
           <p className={styles.InOutText}>Wallet Summary</p>
           <div
             className="lg:w-6 lg:h-6 w-[13px] h-[13px] lg:justify-center md:w-[13.75px]
@@ -166,13 +150,6 @@ px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px]"
               >
                 {selectedCountry}
 
-                {/* <img */}
-                {/* // src={group1} */}
-                {/* // className="lg:w-[29.27px] lg:h-[29.27px] ml-[-1.5px] left-[-11px] */}
-                {/* //  lg:top-[0.91px] w-2.5 h-[9.41px] top-[0.31px] lg:left-[10px]  */}
-                {/* // md:w-[16.77px] md:h-[15.73px] md:left-0 md:top-[0.52px] absolute" */}
-                {/* // alt="" */}
-                {/* // /> */}
               </div>
             </div>
             <div className="justify-start items-start mt-[5px] md:mt-[12px] gap-[5.5px] lg:gap-[11px] md:gap-[6.30px]  flex">
@@ -261,10 +238,12 @@ border-opacity-30 justify-start items-center gap-[52.80px] inline-flex"
             </div>
           </div>
         </div>
-        { calender && <div className="mt-[30px] md:mt-[63px] lg:mt-[50px]"><Calender/></div> }
-        
+        {calender && (
+          <div className="mt-[35px] md:mt-[30px] lg:mt-[50px]">
+            <Calender />
+          </div>
+        )}
 
-        
         <div className="mt-[-5%] lg:mt-[1%] md:mt-[-6%]   mb-[10%]">
           {/* ==============================Sale Analysis Indicator====================== */}
           <div
@@ -361,13 +340,23 @@ border-opacity-30 justify-start items-center gap-[52.80px] inline-flex"
           
           lg:ml-[510px] pl-[-50px] lg:top-[603px] md:w-[300px] lg:pl-[-500px]
            left-[65px] w-[62%] lg:w-full 
-           top-[277px] md:top-[411px] absolute flex-col md:ml-[300px] lg:items-start inline-flex`}>
-            <div onClick={() =>{
-              setIsOpen1((prev) => !prev);
-              handleSelect (<img className="w-3 h-3 lg:w-[29.27px] lg:h-[29.27px] ml-[-1px] mt-[-1px]
-               md:w-[16.77px] md:h-[15.73px] " src={group5} alt="" />)
+           top-[284px] md:top-[412px] absolute flex-col md:ml-[300px] lg:items-start inline-flex`}
+          >
+            <div
+              onClick={() => {
+                setIsOpen1((prev) => !prev);
+                handleSelect(
+                  <img
+                    className="w-3 h-3 lg:w-[29.27px] lg:h-[29.27px] ml-[-1px] mt-[-1px]
+               md:w-[16.77px] md:h-[15.73px] "
+                    src={group5}
+                    alt=""
+                  />
+                );
 
-            handleBalance( <div className="text-neutral-500 lg:mt-[5px] md:mt-[2px] text-[9px] md:text-[13px]
+                handleBalance(
+                  <div
+                    className="text-neutral-500 lg:mt-[5px] md:mt-[2px] text-[9px] md:text-[13px]
              lg:text-xl
              lg:font-medium 
             md:leading-3 lg:leading-tight"
@@ -692,10 +681,8 @@ w-3 h-3 lg:h-5 md:w-[13px]  md:h-[13px]"
                 Status
               </th>
             </tr>
-            <tr className={`${
-               toggleSideBar
-                ? "lg:pr-[16px]" : "lg:pr-[27px]"
-            }
+            <tr
+              className={`${toggleSideBar ? "lg:pr-[16px]" : "lg:pr-[27px]"}
             flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
             lg:pl-[28px] lg:pr-[16px] lg:gap-[64px] border-b-2`}
             >
@@ -776,13 +763,9 @@ w-3 h-3 lg:h-5 md:w-[13px]  md:h-[13px]"
                 />
               </td>
             </tr>
-            
 
-
-        <tr className={`${
-           toggleSideBar
-           ? "lg:pr-[16px]" : "lg:pr-[27px]"
-        }
+            <tr
+              className={`${toggleSideBar ? "lg:pr-[16px]" : "lg:pr-[27px]"}
         flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
             lg:pl-[28px] lg:gap-[64px] border-b-2`}
             >
@@ -862,11 +845,8 @@ w-3 h-3 lg:h-5 md:w-[13px]  md:h-[13px]"
               </td>
             </tr>
 
-
-            <tr className={`${
-               toggleSideBar
-               ? "lg:pr-[16px]" : "lg:pr-[27px]"
-            }
+            <tr
+              className={`${toggleSideBar ? "lg:pr-[16px]" : "lg:pr-[27px]"}
             flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
             lg:pl-[28px] lg:gap-[64px] border-b-2`}
             >
@@ -945,16 +925,9 @@ w-3 h-3 lg:h-5 md:w-[13px]  md:h-[13px]"
                 />
               </td>
             </tr>
-</Link>
 
-
-
-
-
- <tr className={`${
-   toggleSideBar
-   ? "lg:pr-[16px]" : "lg:pr-[27px]"
- }
+            <tr
+              className={`${toggleSideBar ? "lg:pr-[16px]" : "lg:pr-[27px]"}
  flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
             lg:pl-[28px] lg:gap-[64px] border-b-2`}
             >
@@ -1033,13 +1006,9 @@ w-3 h-3 lg:h-5 md:w-[13px]  md:h-[13px]"
                 />
               </td>
             </tr>
-            </Link>
 
-
-<tr className={`${
-  toggleSideBar
-  ? "lg:pr-[2px]" : "lg:pr-[27px]"
-}
+            <tr
+              className={`${toggleSideBar ? "lg:pr-[2px]" : "lg:pr-[27px]"}
 flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
             lg:pl-[28px] lg:gap-[64px] border-b-2`}
             >
@@ -1120,14 +1089,9 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
                 />
               </td>
             </tr>
-</Link>
 
-
-
-<tr className={`${
-  toggleSideBar
-  ? "lg:pr-[2px]" : "lg:pr-[27px]"
-}
+            <tr
+              className={`${toggleSideBar ? "lg:pr-[2px]" : "lg:pr-[27px]"}
 flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
             lg:pl-[28px] lg:gap-[64px] border-b-2`}
             >
@@ -1208,13 +1172,9 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
                 />
               </td>
             </tr>
-</Link>
 
-
-<tr className={`${
-  toggleSideBar
-  ? "lg:pr-[2px]" : "lg:pr-[27px]"
-}
+            <tr
+              className={`${toggleSideBar ? "lg:pr-[2px]" : "lg:pr-[27px]"}
 flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
             lg:pl-[28px] lg:gap-[64px] border-b-2`}
             >
@@ -1298,7 +1258,6 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
               </td>
             </tr>
 
-    
             {/* CONTACT US */}
             <div className="flex md:gap-[14.896px] py-[10.865px] items-center mt-10 justify-center px-[8.594px]">
               <p
@@ -1320,37 +1279,14 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
           </table>
         </div>
 
-        {/* <div className="flex lg:h-7 lg:w-[100%] flex-col lg:gap-5 md:gap-3 md:mt-[10px]  items-center justify-center lg:mt-[30px]"> */}
-        {/* <div className="md:w-[52.88px] hidden lg:h-10 md:h-[15.44px] md:px-[3.44px] md:py-[1.72px] lg:ml-[-70px] lg:w-[100px] md:gap-[2.86px] lg:px-1.5 lg:py-[3px] bg-white shadow border border-black border-opacity-30 justify-start items-center lg:gap-[5px]  md:flex lg:flex"> */}
-        {/* <div className="text-neutral-500 lg:text-xs md:text-[6.88px] md:leading-[8.94px] md:mt-[10px] font-medium lg:leading-none"> */}
-        {/* ---The End--- */}
-        {/* </div> */}
-        {/* </div> */}
-        {/* <div className="justify-start items-center hidden md:block lg:w-[100%] lg:ml-[950px]  lg:gap-[26px] md:w-[108.08px] md:h-[11.73px] md:gap-[14.90px] lg:flex"> */}
-        {/* <div className="text-black lg:text-xs md:text-[6.88px] md:leading-[8.94px]  font-medium lg:leading-none"> */}
-        {/* You need help? */}
-        {/* </div> */}
-        {/* <div className="lg:px-[15px] hidden  lg:py-[5px] bg-blue-900 lg:rounded-[9px] justify-center items-center lg:gap-2.5 md:px-[8.59px] md:py-[2.86px] md:rounded-[5.16px] md:gap-[5.73px] md:flex"> */}
-        {/* <div className="text-white lg:text-[8px] font-medium lg:leading-[10.40px] md:text-[4.58px] md:leading-[5.96px]"> */}
-        {/* Contact Us */}
-        {/* </div> */}
-        {/* </div> */}
-        {/* </div> */}
-        {/* </div> */}
 
         {/* table for mobile view */}
 
-        {/* <div */}
-        {/* // className={`${styles.viewTransact} ${ */}
-        {/* // isDarkMode ? "bg-black border" : "bg-white" */}
-        {/* // }`} */}
-        {/* // > */}
         <div className=" h-[1110px]">
           <div
             className="md:hidden flex flex-col h-[1030px] mt-9  w-full p-[20px] border-x-[1.2px] border-b-[1.2px]
  border-gray-500 border-opacity-[25%] my-[50px] shadow-md"
           >
-            
             <div
               className="flex justify-between pb-[31.5px] border-b-[1px] border-b-[black]
    border-opacity-[20%]"
@@ -1404,7 +1340,6 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
               </div>
             </div>
 
-            
             <div
               className="flex justify-between py-[31.5px] border-b-[1px] border-b-[black]
    border-opacity-[20%]"
@@ -1452,10 +1387,7 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
                 </div>
               </div>
             </div>
-          </Link>
-                      
-          <Link to="/wallet-successful-receipt">
- 
+
             <div
               className=" flex justify-between py-[31.5px] border-b-[1px]
                border-b-[black]   border-opacity-[20%]"
@@ -1501,7 +1433,7 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
                 </div>
               </div>
             </div>
-            
+
             <div
               className="flex justify-between py-[31.5px] border-b-[1px] border-b-[black]
    border-opacity-[20%]"
@@ -1548,7 +1480,7 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
                 </div>
               </div>
             </div>
-            
+
             <div
               className="flex justify-between py-[31.5px] border-b-[1px] border-b-[black]
    border-opacity-[20%]"
@@ -1598,7 +1530,7 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
                 </div>
               </div>
             </div>
-            
+
             <div
               className="flex justify-between py-[31.5px] border-b-[1px] border-b-[black]
    border-opacity-[20%]"
@@ -1646,7 +1578,7 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
                 </div>
               </div>
             </div>
-            
+
             <div
               className="flex justify-between py-[31.5px] border-b-[black]
    border-opacity-[20%]"
@@ -1693,38 +1625,41 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
                 </div>
               </div>
             </div>
-           </Link>
 
             <div className="flex justify-center text-center gap-[20px] mt-[15px] mb-[30px]">
               <p className="text-[8px]  font-[500] leading-[9.1px] mt-[5px]">
                 You need help?
               </p>
 
-            <Link to="/ContactUs">
-              <div
-                className={`${
-                  isDarkMode ? "border " : "bg-[#04177f]"
-                } text-[8px] p-1 text-white rounded-[8px]`}
-              >
-                Contact Us
-              </div>
-            </Link>
-          </div>
+              <Link to="/ContactUs">
+                <div
+                  className={`${
+                    isDarkMode ? "border " : "bg-[#04177f]"
+                  } text-[8px] p-1 text-white rounded-[8px]`}
+                >
+                  Contact Us
+                </div>
+              </Link>
+            </div>
           </div>
         </div>
 
         {/* filter by status dropdown */}
         {isOpen2 && (
-          <div className="flex absolute lg:top-[705px] top-[310px] md:top-[460px] 
-           ml-[50px] md:ml-[40px]  lg:ml-[60px] flex-col">
-            
-            <div  
-          
-          className="border border-b bg-white lg:w-[375px] lg:h-[53px] md:w-[250.84px] md:h-[39.22px]
-           w-[189px] h-[25.70px] justify-around items-center flex relative shadow">
-              <div onClick={() => { 
-                setIsOpen2((prev) => !prev);
-                handleClick('All Transactions'); }} className="lg:w-[325px] text-neutral-500 lg:text-xl font-medium 
+          <div
+            className="flex absolute lg:top-[705px] top-[319px] md:top-[465px] 
+           ml-[50px] md:ml-[40px]  lg:ml-[60px] flex-col"
+          >
+            <div
+              className="border border-b bg-white lg:w-[375px] lg:h-[53px] md:w-[250.84px] md:h-[39.22px]
+           w-[189px] h-[25.70px] justify-around items-center flex relative shadow"
+            >
+              <div
+                onClick={() => {
+                  setIsOpen2((prev) => !prev);
+                  handleClick("All Transactions");
+                }}
+                className="lg:w-[325px] text-neutral-500 lg:text-xl font-medium 
               lg:leading-tight md:w-[186.20px] md:text-[16px] md:leading-3 w-[163.80px]
                text-[10px] leading-[10.48px] "
               >
