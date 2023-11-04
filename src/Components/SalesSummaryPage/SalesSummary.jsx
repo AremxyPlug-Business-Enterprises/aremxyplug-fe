@@ -78,10 +78,10 @@ export default function SalesSummaryPage() {
     setSelected(clickedoption);
     setBlur(
       clickedoption === "USD" ||
-      clickedoption === "GBP" ||
-      clickedoption === "AUD" ||
-      clickedoption === "KES" ||
-      clickedoption === "EUR"
+        clickedoption === "GBP" ||
+        clickedoption === "AUD" ||
+        clickedoption === "KES" ||
+        clickedoption === "EUR"
     );
     return;
   };
@@ -176,8 +176,9 @@ gap-[5px] mt-[-0%] lg:mt-[25px] bg-indigo-300
 
           {/* filter by date and product*/}
           <div
-            className={`${toggleSideBar ? " md:w-[550px] " : "  md:w-full"
-              } w-full h-6 pl-[0.33px] mt-[2px] lg:mt-[30px]  md:py-[11px] pr-[86.66px] py-[2.67px]
+            className={`${
+              toggleSideBar ? " md:w-[550px] " : "  md:w-full"
+            } w-full h-6 pl-[0.33px] mt-[2px] lg:mt-[30px]  md:py-[11px] pr-[86.66px] py-[2.67px]
     lg:h-[72px] lg:pl-4 lg:pr-[459.30px] lg:gap-[50.53px] lg:py-[11px]
     md:h-[41.25px] md:pl-[9.17px] md:pr-[277.40px] md:pt-[8.39px] lg:w-full
     md:pb-[6.40px] bg-white shadow border-t border-b border-black
@@ -191,8 +192,9 @@ gap-[5px] mt-[-0%] lg:mt-[25px] bg-indigo-300
                 setIsOpen5(false);
                 setIsOpen1(false);
               }}
-              className={`cursor-pointer ${styles.filter}  ${isDarkMode ? "border" : ""
-                } flex  md:gap-[6px] items-center justify-center md:w-[145px] lg:w-[170px] lg:mt-[1px] gap-[1px]  
+              className={`cursor-pointer ${styles.filter}  ${
+                isDarkMode ? "border" : ""
+              } flex  md:gap-[6px] items-center justify-center md:w-[145px] lg:w-[170px] lg:mt-[1px] gap-[1px]  
    px-[2px] rounded-[3px] md:px-[8px] mt-[-1px] md:mt-[1px] flex-row`}
             >
               <div
@@ -276,9 +278,11 @@ gap-[5px] mt-[-0%] lg:mt-[25px] bg-indigo-300
               </select>
 
               <div
-                className={`${styles.inflowOutflow} ${isDarkMode ? "border " : " bg-[#D5F6E3]"
-                  }  text-[7px] ${toggleSideBar ? "lg:text-[14px]" : "lg:text-[px]"
-                  }`}
+                className={`${styles.inflowOutflow} ${
+                  isDarkMode ? "border " : " bg-[#D5F6E3]"
+                }  text-[7px] ${
+                  toggleSideBar ? "lg:text-[14px]" : "lg:text-[px]"
+                }`}
               >
                 <div className="flex gap-1 md:items-center ">
                   <p className={`${toggleSideBar ? "lg:text-[18px]" : ""}`}>
@@ -294,8 +298,9 @@ gap-[5px] mt-[-0%] lg:mt-[25px] bg-indigo-300
               </div>
 
               <div
-                className={`${styles.inflowOutflow} ${isDarkMode ? "border " : " bg-[#92abfe81]"
-                  }  text-[7px]`}
+                className={`${styles.inflowOutflow} ${
+                  isDarkMode ? "border " : " bg-[#92abfe81]"
+                }  text-[7px]`}
               >
                 <div className="flex gap-1 md:items-center">
                   <p className={`${toggleSideBar ? "lg:text-[18px]" : ""}`}>
@@ -311,8 +316,9 @@ gap-[5px] mt-[-0%] lg:mt-[25px] bg-indigo-300
               </div>
 
               <div
-                className={`${styles.inflowOutflow} ${isDarkMode ? "border " : " bg-[#FDCECE]"
-                  } text-[7px]`}
+                className={`${styles.inflowOutflow} ${
+                  isDarkMode ? "border " : " bg-[#FDCECE]"
+                } text-[7px]`}
               >
                 <div className="flex gap-1 md:items-center">
                   <p className={`${toggleSideBar ? "lg:text-[18px]" : ""}`}>
@@ -372,10 +378,11 @@ gap-[5px] mt-[-0%] lg:mt-[25px] bg-indigo-300
 
           {isOpen1 && (
             <div
-              className={`${toggleSideBar
+              className={`${
+                toggleSideBar
                   ? "lg:left-[430px] md:left-[225px]"
                   : "lg:left-[230px] md:left-[60px] "
-                } 
+              } 
  flex absolute lg:h-[300px] md:ml-[100px] left-[80px] md:left-[225px]
    lg:w-full md:h-[150px] h-[200px] md:top-[470px]  lg:top-[710px]  top-[332px] flex-col`}
             >
@@ -436,25 +443,24 @@ gap-[5px] mt-[-0%] lg:mt-[25px] bg-indigo-300
           {/* contact us */}
           <div className="md:ml-[-1000px] ">
             <footer
-              className={`${toggleSideBar
+              className={`${
+                toggleSideBar
                   ? "lg:left-[670px] md:left-[410px] "
                   : "lg:left-[550px] md:left-[310px]"
-                }
- flex  justify-center   text-center gap-[20px] 
-<<<<<<< HEAD
- mt-[330px] mb-[50px] md:mt-[460px] lg:mb-[30px] left-[125px]  absolute 
-  z-index-2 onset-[500px] lg:mt-[750px]`}
+              }
+ flex justify-center text-center gap-[20px] 
             >
-              ======= mt-[485px] mb-[50px] md:mt-[460px] lg:mb-[30px]
-              left-[118px] absolute z-index-2 onset-[500px] lg:mt-[750px]`}>
-              >>>>>>> 4b4b7db70a45ed2c1bb82d7972ecd6bc7a63205c
+            mt-[485px] mb-[50px] md:mt-[460px] lg:mb-[30px]
+              left-[118px] absolute z-index-2 onset-[500px] lg:mt-[750px]`}
+            >
               <p className="text-[8px] md:text-[12px] lg:text-[12px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
                 You need help?
               </p>
               <Link to="/ContactUs">
                 <div
-                  className={`${isDarkMode ? "border " : "bg-[#04177f]"
-                    } text-[8px] p-1 text-white rounded-[7px] w-[70px] lg:w-[100px] lg:text-[12px]`}
+                  className={`${
+                    isDarkMode ? "border " : "bg-[#04177f]"
+                  } text-[8px] p-1 text-white rounded-[7px] w-[70px] lg:w-[100px] lg:text-[12px]`}
                 >
                   Contact Us
                 </div>
@@ -464,10 +470,11 @@ gap-[5px] mt-[-0%] lg:mt-[25px] bg-indigo-300
 
           {isOpen5 && (
             <div
-              className={`${toggleSideBar
+              className={`${
+                toggleSideBar
                   ? "md:left-[390px] lg:left-24"
                   : "md:left-[300px] lg:left-1"
-                }
+              }
             
             lg:ml-[510px] pl-[-50px] lg:top-[585px] md:w-[300px] lg:pl-[-500px]
            left-[65px] w-[62%] lg:w-full 
@@ -722,16 +729,18 @@ gap-[5px] mt-[-0%] lg:mt-[25px] bg-indigo-300
           {isOpen2 && (
             <div className="h-[1110px] lg:h-full">
               <div
-                className={`${styles.viewTransact} ${isDarkMode ? "bg-black border" : "bg-white"
-                  }`}
+                className={`${styles.viewTransact} ${
+                  isDarkMode ? "bg-black border" : "bg-white"
+                }`}
               >
                 <div
                   className="flex  justify-start items-center lg:w-full relative bg-white  md:mt-[-107px]
     lg:mt-[-150px] mt-[-85px] lg:h-[1100px] md:h-[700px] h-[450px]  mb-10 border-b-[1.2px] flex-col"
                 >
                   <div
-                    className={`${toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
-                      }
+                    className={`${
+                      toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
+                    }
   lg:w-full md:w-full md:h-[70.86px] md:pl-[14.90px]  md:pr-[9.29px]  lg:h-[101px] 
   lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px]  pr-[1.33px] pt-3 pb-[11.67px] bg-white 
   justify-between md:justify-between
@@ -749,8 +758,9 @@ gap-[5px] mt-[-0%] lg:mt-[25px] bg-indigo-300
                     </div>
                   </div>
                   <div
-                    class={`${toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
-                      }
+                    class={`${
+                      toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
+                    }
     lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px]
    lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white 
    justify-between md:justify-between lg:justify-start  items-center inline-flex`}
@@ -766,8 +776,9 @@ gap-[5px] mt-[-0%] lg:mt-[25px] bg-indigo-300
                     </div>
                   </div>
                   <div
-                    class={`${toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
-                      }
+                    class={`${
+                      toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
+                    }
     lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px]
    lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px]
     pt-3 pb-[11.67px] bg-white justify-between md:justify-between  md:whitespace-nowrap lg:justify-start  items-center inline-flex`}
@@ -784,8 +795,9 @@ gap-[5px] mt-[-0%] lg:mt-[25px] bg-indigo-300
                   </div>
 
                   <div
-                    class={`${toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
-                      }
+                    class={`${
+                      toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
+                    }
     lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px]
    lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px]
     pt-3 pb-[11.67px] bg-white justify-between md:justify-between lg:justify-start md:whitespace-nowrap
@@ -802,8 +814,9 @@ gap-[5px] mt-[-0%] lg:mt-[25px] bg-indigo-300
                     </div>
                   </div>
                   <div
-                    class={`${toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
-                      }
+                    class={`${
+                      toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
+                    }
     lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px]
    lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.66px] bg-white
     justify-between md:justify-between lg:justify-start  md:whitespace-nowrap items-center inline-flex`}
@@ -819,8 +832,9 @@ gap-[5px] mt-[-0%] lg:mt-[25px] bg-indigo-300
                     </div>
                   </div>
                   <div
-                    class={`${toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
-                      }
+                    class={`${
+                      toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
+                    }
     lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px]
    lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] lg:justify-start  pr-[1.33px] pt-2 pb-[7.67px] bg-white
     justify-between md:justify-between md:whitespace-nowrap items-center inline-flex`}
@@ -836,8 +850,9 @@ gap-[5px] mt-[-0%] lg:mt-[25px] bg-indigo-300
                     </div>
                   </div>
                   <div
-                    class={`${toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
-                      }
+                    class={`${
+                      toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
+                    }
     lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px] 
   lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.67px] bg-white
    justify-between md:justify-between items-center lg:justify-start  md:whitespace-nowrap inline-flex`}
@@ -853,8 +868,9 @@ gap-[5px] mt-[-0%] lg:mt-[25px] bg-indigo-300
                     </div>
                   </div>
                   <div
-                    class={`${toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
-                      }
+                    class={`${
+                      toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
+                    }
     lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px]
    lg:pl-[26px] lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.67px] bg-white
     justify-between md:justify-between lg:justify-start  md:whitespace-nowrap items-center inline-flex`}
@@ -870,8 +886,9 @@ gap-[5px] mt-[-0%] lg:mt-[25px] bg-indigo-300
                     </div>
                   </div>
                   <div
-                    class={`${toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
-                      }
+                    class={`${
+                      toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
+                    }
     lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px] lg:pl-[26px]
    lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.67px] bg-white justify-between
    md:justify-between lg:justify-start  md:whitespace-nowrap items-center inline-flex`}
@@ -887,8 +904,9 @@ gap-[5px] mt-[-0%] lg:mt-[25px] bg-indigo-300
                     </div>
                   </div>
                   <div
-                    class={`${toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
-                      }
+                    class={`${
+                      toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
+                    }
     lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px] lg:pl-[26px]
    lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
    md:justify-between lg:justify-start items-center inline-flex `}
@@ -914,8 +932,9 @@ gap-[5px] mt-[-0%] lg:mt-[25px] bg-indigo-300
 
                     <Link to="/ContactUs">
                       <div
-                        className={`${isDarkMode ? "border " : "bg-[#04177f]"
-                          } text-[8px] p-1 text-white md:text-[10px] rounded-[8px] lg:w-[100px] w-[70px] lg:text-[12px]`}
+                        className={`${
+                          isDarkMode ? "border " : "bg-[#04177f]"
+                        } text-[8px] p-1 text-white md:text-[10px] rounded-[8px] lg:w-[100px] w-[70px] lg:text-[12px]`}
                       >
                         Contact Us
                       </div>
@@ -940,8 +959,9 @@ gap-[5px] mt-[-0%] lg:mt-[25px] bg-indigo-300
     lg:mt-[-152px] mt-[-85px] lg:h-[1590px] md:h-[1230px] h-[1050px] border lg:mb-5 mb-10 border-b-[1.2px] flex-col"
               >
                 <div
-                  className={`${toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
-                    }
+                  className={`${
+                    toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
+                  }
   lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px]  lg:h-[101px] 
   lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px]  pr-[1.33px] pt-3 pb-[11.67px] bg-white 
   justify-between md:justify-between
@@ -1392,8 +1412,9 @@ gap-[5px] mt-[-0%] lg:mt-[25px] bg-indigo-300
 
                   <Link to="/ContactUs">
                     <div
-                      className={`${isDarkMode ? "border " : "bg-[#04177f]"
-                        } text-[8px] p-1 text-white rounded-[8px] lg:w-[100px] w-[70px] lg:text-[12px]`}
+                      className={`${
+                        isDarkMode ? "border " : "bg-[#04177f]"
+                      } text-[8px] p-1 text-white rounded-[8px] lg:w-[100px] w-[70px] lg:text-[12px]`}
                     >
                       Contact Us
                     </div>
@@ -1607,16 +1628,18 @@ gap-[5px] mt-[-0%] lg:mt-[25px] bg-indigo-300
           {isOpen4 && (
             <div className="h-[1110px] lg:h-full">
               <div
-                className={`${styles.viewTransact} ${isDarkMode ? "bg-black border" : "bg-white"
-                  }`}
+                className={`${styles.viewTransact} ${
+                  isDarkMode ? "bg-black border" : "bg-white"
+                }`}
               >
                 <div
                   className="flex  justify-start items-center lg:h-[1030px] md:h-[700px] h-[480px]  mb-10 border-b-[1.2px]
  lg:w-full relative bg-white  md:mt-[-109px]  lg:mt-[-150px] mt-[-85px] flex-col"
                 >
                   <div
-                    className={`${toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
-                      }
+                    className={`${
+                      toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
+                    }
 lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px]  lg:h-[101px] 
 lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.67px] bg-white justify-between md:justify-between
  lg:justify-start 
@@ -1633,8 +1656,9 @@ items-center inline-flex`}
                     </div>
                   </div>
                   <div
-                    class={`${toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
-                      }
+                    class={`${
+                      toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
+                    }
   lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px]
  lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white 
  justify-between md:justify-between lg:justify-start  items-center inline-flex`}
@@ -1650,8 +1674,9 @@ items-center inline-flex`}
                     </div>
                   </div>
                   <div
-                    class={`${toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
-                      }
+                    class={`${
+                      toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
+                    }
   lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px]
  lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px]
   pt-3 pb-[11.67px] bg-white justify-between md:justify-between lg:justify-start  items-center inline-flex`}
@@ -1668,8 +1693,9 @@ items-center inline-flex`}
                   </div>
 
                   <div
-                    class={`${toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
-                      }
+                    class={`${
+                      toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
+                    }
   lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px]
  lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px]
   pt-3 pb-[11.67px] bg-white justify-between md:justify-between lg:justify-start  items-center inline-flex`}
@@ -1685,8 +1711,9 @@ items-center inline-flex`}
                     </div>
                   </div>
                   <div
-                    class={`${toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
-                      }
+                    class={`${
+                      toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
+                    }
   lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px]
  lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.66px] bg-white
   justify-between md:justify-between lg:justify-start  items-center inline-flex`}
@@ -1702,8 +1729,9 @@ items-center inline-flex`}
                     </div>
                   </div>
                   <div
-                    class={`${toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
-                      }
+                    class={`${
+                      toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
+                    }
   lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px]
  lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] lg:justify-start  pr-[1.33px] pt-2 pb-[7.67px] bg-white
   justify-between md:justify-between items-center inline-flex`}
@@ -1719,8 +1747,9 @@ items-center inline-flex`}
                     </div>
                   </div>
                   <div
-                    class={`${toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
-                      }
+                    class={`${
+                      toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
+                    }
   lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px] 
 lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.67px] bg-white
  justify-between md:justify-between items-center lg:justify-start  inline-flex`}
@@ -1736,8 +1765,9 @@ lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.67
                     </div>
                   </div>
                   <div
-                    class={`${toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
-                      }
+                    class={`${
+                      toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
+                    }
   lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px]
  lg:pl-[26px] lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.67px] bg-white
   justify-between md:justify-between lg:justify-start  items-center inline-flex`}
@@ -1753,8 +1783,9 @@ lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.67
                     </div>
                   </div>
                   <div
-                    class={`${toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
-                      }
+                    class={`${
+                      toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
+                    }
   lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px] lg:pl-[26px]
  lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.67px] bg-white justify-between
  md:justify-between lg:justify-start  items-center inline-flex`}
@@ -1770,8 +1801,9 @@ lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.67
                     </div>
                   </div>
                   <div
-                    class={`${toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
-                      }
+                    class={`${
+                      toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
+                    }
   lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px] lg:pl-[26px]
  lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
  md:justify-between lg:justify-start  items-center inline-flex `}
@@ -1788,8 +1820,9 @@ lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.67
                   </div>
 
                   <div
-                    class={`${toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
-                      }
+                    class={`${
+                      toggleSideBar ? "lg:gap-[325px]" : "lg:gap-[400px]"
+                    }
   lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px] lg:pl-[26px] lg:pr-1
  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] lg:justify-start  pt-2 pb-[7.67px] bg-white
   justify-between md:justify-between items-center inline-flex`}
@@ -1815,8 +1848,9 @@ lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.67
 
                     <Link to="/ContactUs">
                       <div
-                        className={`${isDarkMode ? "border " : "bg-[#04177f]"
-                          } text-[8px] p-1 text-white rounded-[8px] lg:w-[100px] w-[70px] lg:text-[12px]`}
+                        className={`${
+                          isDarkMode ? "border " : "bg-[#04177f]"
+                        } text-[8px] p-1 text-white rounded-[8px] lg:w-[100px] w-[70px] lg:text-[12px]`}
                       >
                         Contact Us
                       </div>
