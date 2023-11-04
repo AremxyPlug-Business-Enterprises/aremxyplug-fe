@@ -298,7 +298,11 @@ const DataBundleSelectRecipient = () => {
                     toggleSideBar
                       ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
                       : "lg:w-[40%]"
+<<<<<<< HEAD
                   } lg:ml-[10%] lg:mr-[10%] grow pt-[10px] md:mt-[1%] bottom-0 pb-[20px] rounded-tr-[8px] rounded-br-[8px] rounded-bl-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:mb-[18%] md:overflow-auto`}
+=======
+                  } lg:ml-[10%] lg:mr-[10%] grow pt-[10px] md:mt-[1%] bottom-0 md:top-[15%] lg:top-[25%] pb-[20px] rounded-tr-[8px] rounded-br-[8px] rounded-bl-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:mb-[18%] md:overflow-auto`}
+>>>>>>> 4b4b7db70a45ed2c1bb82d7972ecd6bc7a63205c
                 >
                   <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
                     <img
@@ -760,7 +764,11 @@ const DataBundleSelectRecipient = () => {
         <div
           className={`${
             isDarkMode ? "" : ""
+<<<<<<< HEAD
           } flex gap-[15px] justify-center items-center mt-[100%] pb-[5%] md:pb-[2%] md:mt-[40%] lg:mt-[40%] lg:pb-0`}
+=======
+          } flex gap-[15px] justify-center items-center mt-[100%] pb-[25%] md:pb-[2%] md:mt-[40%] lg:mt-[40%] lg:pb-0`}
+>>>>>>> 4b4b7db70a45ed2c1bb82d7972ecd6bc7a63205c
         >
           <div className="text-[10px] md:text-[12px] lg:text-[14px]">
             You need help ?

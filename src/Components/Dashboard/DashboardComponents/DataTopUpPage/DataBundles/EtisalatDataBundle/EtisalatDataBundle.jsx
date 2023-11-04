@@ -1173,12 +1173,20 @@ const EtisalatDataBundle = () => {
 
          
         </section>
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> 4b4b7db70a45ed2c1bb82d7972ecd6bc7a63205c
          {/* =======================FOOTER=================================== */}
          <div
             className={`${
               isDarkMode ? "" : ""
+<<<<<<< HEAD
             } flex gap-[15px] justify-center items-center mt-[100%] pb-[5%] md:pb-[2%] md:mt-[40%] lg:mt-[40%] lg:pb-0`}
+=======
+            } flex gap-[15px] justify-center items-center mt-[100%] pb-[25%] md:pb-[12%] md:mt-[40%] lg:mt-[40%] lg:pb-0`}
+>>>>>>> 4b4b7db70a45ed2c1bb82d7972ecd6bc7a63205c
           >
             <div className="text-[10px] md:text-[12px] lg:text-[14px]">
               You need help ?

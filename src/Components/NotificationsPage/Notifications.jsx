@@ -41,6 +41,7 @@ return (
               <div className="Frame758532592 lg:w-full lg:h-28 lg:gap-16 md:w-full md:h-16 md:gap-10 w-full
                h-12 justify-start items-start gap-5 inline-flex">
   <div className="Frame758532587 w-14 h-12  md:w-20 md:h-16 lg:w-40 lg:h-28 lg:rounded-xl relative bg-indigo-400 rounded md:rounded-lg">
+<<<<<<< HEAD
     <div className="Frame758532588 left-[15.21px] top-[5.08px] absolute flex-col justify-start
      items-end gap-1.5 md:gap-2.5 lg:gap-4 inline-flex">
       
@@ -56,23 +57,52 @@ return (
   </div>
   <div className="Frame758532588 w-14 h-12 md:w-20 md:h-16 lg:w-40 lg:h-28 lg:rounded-xl relative bg-purple-500 rounded md:rounded-lg">
     <div className="Frame758532588 left-[14.21px] top-[5.08px] absolute flex-col justify-start items-center lg:gap-4 md:gap-2.5 gap-1.5 inline-flex">
+=======
+    <div className="Frame758532588 left-[15.21px] top-[5.08px] lg:left-[37px] lg:top-[13px] md:left-[21.44px]
+     md:top-[7.79px]    absolute flex-col justify-start
+     items-end gap-1.5 md:gap-2.5 lg:gap-4 inline-flex">
+      <img className='Star w-5 h-5 md:w-8 md:h-8 lg:w-12 lg:h-12' src={star} alt="" />
+        <div className="General text-white text-[6px] md:text-[8px] lg:text-[10px] font-semibold ">General</div>
+    </div>
+    <div className="Group13108 w-2 h-2 md:w-3 md:h-3 lg:w-5 lg:h-5 md:left-[63.38px] md:top-[1.76px] lg:left-[108px] lg:top-[3px]  left-[44.04px] top-[1.22px] absolute">
+      <div className="Ellipse147 w-2 h-2 md:w-3 md:h-3 lg:w-5 lg:h-5  left-0 top-0 absolute bg-red-400 rounded-full" />
+      <div className="lg:left-[7px] lg:top-[3px] md:left-[4.11px] md:top-[1.76px] left-[2.86px] top-[1.22px] absolute text-white text-[5px] md:text-[7px] lg:text-[9px] font-semibold ">5</div>
+    </div>
+  </div>
+  <div className="Frame758532588 w-14 h-12 md:w-20 md:h-16 lg:w-40 lg:h-28 lg:rounded-xl lg:px-9 
+  lg:py-3 md:px-5 md:py-2 relative bg-purple-500 rounded md:rounded-lg">
+    <div className="Frame758532588 left-[14.21px] top-[5.08px] absolute flex-col justify-start
+     items-center lg:gap-4 md:gap-2.5 gap-1.5 inline-flex">
+>>>>>>> 4b4b7db70a45ed2c1bb82d7972ecd6bc7a63205c
     <img className='arrange w-5 h-5 md:w-8 md:h-8 lg:w-12 lg:h-12' src={arrange} alt="" />
       <div className="Telecom text-white text-[6px] md:text-[8px] lg:text-[10px] font-semibold ">Telecom</div>
     </div>
   </div>
+<<<<<<< HEAD
   <div className="Frame758532589 w-14 h-12 md:w-20 md:h-16 lg:w-40 lg:h-28 lg:rounded-xl relative bg-green-400 rounded md:rounded-lg">
+=======
+  <div className="Frame758532589 w-14 h-12 md:w-20 md:h-16 lg:w-40 lg:h-28 lg:rounded-xl lg:px-7 lg:py-3 md:px-4 md:py-2 relative bg-green-400 rounded md:rounded-lg">
+>>>>>>> 4b4b7db70a45ed2c1bb82d7972ecd6bc7a63205c
     <div className="Frame758532588 left-[11.71px] top-[5.08px] absolute flex-col justify-start items-center lg:gap-4 md:gap-2.5 gap-1.5 inline-flex">
     <img className='wallet w-5 h-5 md:w-8 md:h-8 lg:w-12 lg:h-12' src={wallet} alt="" />
       <div className="Payments text-white text-[6px] md:text-[8px] lg:text-[10px] font-semibold ">Payments</div>
     </div>
   </div>
+<<<<<<< HEAD
   <div className="Frame758532590 w-14 h-12 md:w-20 md:h-16 lg:w-40 lg:h-28 lg:rounded-xl relative bg-amber-300 rounded md:rounded-lg">
+=======
+  <div className="Frame758532590 w-14 h-12 md:w-20 md:h-16 lg:w-40 lg:h-28 lg:rounded-xl lg:px-5 lg:py-3 md:px-3 md:py-2 relative bg-amber-300 rounded md:rounded-lg">
+>>>>>>> 4b4b7db70a45ed2c1bb82d7972ecd6bc7a63205c
     <div className="Frame758532588 left-[8.21px] top-[5.08px] absolute flex-col justify-start items-center lg:gap-4 md:gap-2.5 gap-1.5 inline-flex">
     <img className='cards w-5 h-5 md:w-8 md:h-8 lg:w-12 lg:h-12' src={cards} alt="" />
       <div className="CardIssuing text-white text-[6px] md:text-[8px] lg:text-[10px] font-semibold">Card Issuing</div>
     </div>
   </div>
+<<<<<<< HEAD
   <div className="Frame758532591 w-14 h-12 md:w-20 md:h-16 lg:w-40 lg:h-28 lg:rounded-xl relative bg-teal-300 rounded md:rounded-lg">
+=======
+  <div className="Frame758532591 w-14 h-12 md:w-20 md:h-16 lg:w-40 lg:h-28 lg:rounded-xl lg:px-2.5 lg:py-3 md:px-1.5 md:py-2 relative bg-teal-300 rounded md:rounded-lg">
+>>>>>>> 4b4b7db70a45ed2c1bb82d7972ecd6bc7a63205c
     <div className="Frame758532588 left-[4.21px] top-[5.08px] absolute flex-col justify-start items-center lg:gap-4 md:gap-2.5 gap-1.5 inline-flex">
     <img className='charts w-5 h-5 md:w-8 md:h-8 lg:w-12 lg:h-12 ' src={charts} alt="" />
       <div className="NewsUpdate text-white text-[6px] md:text-[8px] lg:text-[10px] font-semibold ">News & Update</div>

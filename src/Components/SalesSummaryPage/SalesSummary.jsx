@@ -55,6 +55,7 @@ export default function SalesSummaryPage() {
       className="lg:w-[29.27px] lg:h-[29.27px]  ml-[-1.5px] left-[21px] lg:top-[0.91px]
            w-3 h-[10.41px] top-[8px] lg:left-[3px] md:w-[16.77px] md:h-[16.77px]
             // md:left-[12px] md:top-[12px] absolute"
+<<<<<<< HEAD
       alt=""
     />
   );
@@ -104,6 +105,84 @@ export default function SalesSummaryPage() {
           <div className="w-[91px] md:h-full md:w-[150px] lg:w-[220px] h-[70px] lg:h-[180px]">
             <img src={receiptA} alt="" className="h-full" />
           </div>
+=======
+          alt=""
+        />
+);
+        const handleSelect = (product) => {
+        setSelectedCountry(product); };
+
+        const [selectedBalance, setSelectedBalance] = useState(<div>(₦50,000.00)</div>);
+const handleBalance = (product) => {
+  setSelectedBalance(product); };
+
+        
+
+
+
+        const [ setBlur] = useState(false);
+        const [selected, setSelected] = useState("");
+        const { isDarkMode, toggleSideBar } =
+  useContext(ContextProvider);
+
+
+ 
+        const handleSelectedOption = (event) => {
+          const clickedoption = event.target.value;
+          setSelected(clickedoption);
+          setBlur(
+            clickedoption === "USD" ||
+              clickedoption === "GBP" ||
+              clickedoption === "AUD" ||
+              clickedoption === "KES" ||
+              clickedoption === "EUR"
+          );
+          return;
+        };
+      //  
+        
+
+
+
+
+
+    return (
+
+        <DashBoardLayout>
+        <>
+        <div class="flex gap-[25px] lg:w-full lg:h-[1850px] md:h-[1200px] h-[800px] md:w-full w-full flex-col">
+
+        <div className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] bg-gradient-to-r from-yellow-300 to-rose-400 flex px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px]">
+                <div className="py-[13px] lg:py-[40px]">
+                  <h2 className="text-[9px] md:text-[13.75px] font-bold mb-3 lg:text-[24px] lg:mb-4">
+                  MANAGE ALL YOUR TRANSACTIONS AT A <br /> TIME WITHOUT ANY HASSLE.
+                  </h2>
+                  <h2 className="text-[6px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3">
+                  Select, filter, and manage all your transactions at a time,
+                   download all <br/> transactions stats and keep a record track.
+                    
+                  </h2>
+                </div>
+                <div className="w-[91px] md:h-full md:w-[150px] lg:w-[220px] h-[70px] lg:h-[180px]">
+                  <img
+                    src={receiptA}
+                    alt=""
+                    className="h-full"
+                  />
+                </div>
+              </div>
+
+
+
+
+{/* Sales summary */}
+    <div className="flex gap-[8px] md:gap-[10px] lg:mt-[25px] mt-[6px] md:mt-[10] flex-row">
+        <div class="text-neutral-500 text-[11px] lg:text-[20px] md:text-[14px] font-semibold ">Sales Summary</div>
+        <div class="w-4 h-4 lg:h-6 lg:mt-1 lg:w-6 md:w-[15.75px] md:h-[15.75px] justify-center items-center inline-flex">
+            <img src={arrowsales} class="w-4 h-4 lg:h-6 lg:w-6 md:mt-[8px] mt-1  md:w-[15.75px] md:h-[15.75px] relative" alt="" />
+
+        
+>>>>>>> 4b4b7db70a45ed2c1bb82d7972ecd6bc7a63205c
         </div>
 
         {/* Sales summary */}
@@ -130,13 +209,13 @@ export default function SalesSummaryPage() {
 gap-[5px] mt-[-0%] lg:mt-[25px] bg-indigo-300
  bg-opacity-20 md:rounded-[11.46px] lg:rounded-[20px] rounded-[6px]
   justify-center lg:w-full w-full md:w-full md:mt-[9px] md:h-[68.75px] 
-  md:px-[140.10px] md:py-[14.32px]  items-center inline-flex"
-        >
-          <div className="lg:justify-start lg:items-center gap-[10px] md:gap-[5.73px] lg:gap-[5.73px] flex">
-            <div className="lg:w-[70px] lg:h-[70px] w-6 h-6 md:w-[40.10px] md:h-[40.10px] lg:gap-[5.73px]  bg-white rounded-full relative">
-              <div className="lg:w-[70px] lg:h-[70px] left-0 top-0 w-6 h-6 md:w-[40.10px] md:h-[40.10px]  absolute bg-white rounded-full"></div>
-              <div
-                className="lg:w-[29.27px] lg:h-[29.27px]  top-[-1px] lg:left-[20px]
+  md:px-[140.10px] md:py-[14.32px] relative items-center inline-flex">
+
+
+        <div className="lg:justify-start lg:items-center gap-[10px] md:gap-[5.73px] lg:gap-[5.73px] flex">
+              <div className="lg:w-[70px] lg:h-[70px] w-6 h-6 md:w-[40.10px] md:h-[40.10px] lg:gap-[5.73px]  bg-white rounded-full relative">
+                <div className="lg:w-[70px] lg:h-[70px] left-0 top-0 w-6 h-6 md:w-[40.10px] md:h-[40.10px]  absolute bg-white rounded-full"></div>
+                <div className="lg:w-[29.27px] lg:h-[29.27px]  top-[-1px] lg:left-[20px]
                   ml-[-1.5px] left-[-12px] lg:top-[20px] w-3 h-[10.41px] md:w-[16.77px] md:h-[16.77px]
                  md:left-[2px] md:top-[0.52px] absolute"
               >
@@ -169,6 +248,7 @@ gap-[5px] mt-[-0%] lg:mt-[25px] bg-indigo-300
     lg:h-[72px] lg:pl-4 lg:pr-[459.30px] lg:gap-[50.53px] lg:py-[11px]
     md:h-[41.25px] md:pl-[9.17px] md:pr-[277.40px] md:pt-[8.39px] lg:w-full
     md:pb-[6.40px] bg-white shadow border-t border-b border-black
+<<<<<<< HEAD
     border-opacity-30 justify-start items-center gap-[52.80px] inline-flex`}
         >
           <div
@@ -206,6 +286,35 @@ gap-[5px] mt-[-0%] lg:mt-[25px] bg-indigo-300
               />
             </div>
           </div>
+=======
+    border-opacity-30 justify-start items-center gap-[52.80px] inline-flex`}>
+    
+
+  
+  
+  {/* filter by date */}
+
+  <div onClick={() => {
+  setCalender((prev) => !prev);
+  setIsOpen5(false)
+  setIsOpen1(false)
+}}  className={`cursor-pointer ${styles.filter}  ${
+  isDarkMode ? "border" : ""} flex  md:gap-[6px] items-center justify-center md:w-[145px] lg:w-[170px] lg:mt-[1px] gap-[1px]  
+   px-[2px] rounded-[3px] md:px-[8px] mt-[-1px] md:mt-[1px] flex-row`}>
+        <div class="text-[#04177f] text-[9px] lg:text-[20px] flex items-center md:text-[16px] 
+        whitespace-nowrap font-bold relative">Filter by Date</div>
+        <div class="w-4 h-4 lg:h-6 lg:mt-1 lg:w-6 md:w-[15.75px] md:h-[15.75px] justify-center items-center inline-flex">
+            <img src="./Images/Dashboardimages/dateImg.png" className=" md:mt-[1px] lg:mt-[-2px]
+             mt-[-2px] w-[12px] h-[12px] md:w-[17px] md:h-[17px] lg:w-[20px] lg:h-[20px] relative" alt="" />
+
+        
+        </div>
+
+        </div>
+
+    
+    
+>>>>>>> 4b4b7db70a45ed2c1bb82d7972ecd6bc7a63205c
 
           {/* filter by product */}
           <div
@@ -443,9 +552,14 @@ gap-[5px] mt-[-0%] lg:mt-[25px] bg-indigo-300
                 : "lg:left-[550px] md:left-[310px]"
             }
  flex  justify-center   text-center gap-[20px] 
+<<<<<<< HEAD
  mt-[330px] mb-[50px] md:mt-[460px] lg:mb-[30px] left-[125px]  absolute 
   z-index-2 onset-[500px] lg:mt-[750px]`}
           >
+=======
+ mt-[485px] mb-[50px] md:mt-[460px] lg:mb-[30px] left-[118px]  absolute 
+  z-index-2 onset-[500px] lg:mt-[750px]`}>
+>>>>>>> 4b4b7db70a45ed2c1bb82d7972ecd6bc7a63205c
             <p className="text-[8px] md:text-[12px] lg:text-[12px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
               You need help?
             </p>
@@ -472,6 +586,7 @@ gap-[5px] mt-[-0%] lg:mt-[25px] bg-indigo-300
             
             lg:ml-[510px] pl-[-50px] lg:top-[585px] md:w-[300px] lg:pl-[-500px]
            left-[65px] w-[62%] lg:w-full 
+<<<<<<< HEAD
            top-[280px] md:top-[400px] absolute flex-col lg:items-start inline-flex`}
           >
             <div
@@ -480,6 +595,14 @@ gap-[5px] mt-[-0%] lg:mt-[25px] bg-indigo-300
                 handleSelect(
                   <img
                     className="lg:w-[29.27px] w-3 lg:h-[29.45px]
+=======
+           top-[280px] md:top-[406px] absolute flex-col lg:items-start inline-flex`}>
+
+            <div 
+            onClick={() => {
+              setIsOpen5((prev) => !prev);
+              handleSelect( <img className='lg:w-[29.27px] w-3 lg:h-[29.45px]
+>>>>>>> 4b4b7db70a45ed2c1bb82d7972ecd6bc7a63205c
             h-3 lg:left-0 lg:top-[0.91px] ml-[19px] lg:mt-[2px] lg:ml-[2px] mt-[7px] md:w-[16.77px]
             md:h-[16.77px] md:ml-[11px] md:mt-[12px] "
                     src={flagpage}
