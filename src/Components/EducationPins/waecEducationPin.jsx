@@ -28,7 +28,7 @@ import WaecReceipt from './ReceiptEducationPins/waecReceipt';
 export default function WaecEducationPin() {
   const { isDarkMode } = useContext(ContextProvider);
   const {quantityResult, setQuantityResult} = useContext(ContextProvider);
-const {waecActive, setWaecActive} = useContext(ContextProvider);
+const {quantityActive, setQuantityActive} = useContext(ContextProvider);
 const {paymentResult, setPaymentResult} = useContext(ContextProvider);
 const {methodActive, setMethodActive} = useContext(ContextProvider);
 const {examType, setExamType} = useContext(ContextProvider);
@@ -37,7 +37,7 @@ const { transactSuccessPopUp, setTransactSuccessPopUp } =
 useContext(ContextProvider);
 const {educationPinPhone, setEducationPinPhone} = useContext(ContextProvider);
 const {educationPinEmail, setEducationPinEmail} = useContext(ContextProvider);
- const {waecAmount, setWaecAmount} = useContext(ContextProvider);
+ const {educationAmount, setEducationAmount} = useContext(ContextProvider);
  const {walletBalance, setWalletBalance } = useContext(ContextProvider);
 
 // UseStates
@@ -49,8 +49,8 @@ const [receipt] = useState(false);
 
 
 //==========  QUANTITY RESULT SLIP CHECKERS ==============
-function clickDropDown(){
-  setWaecActive(!waecActive);
+function waecQuantityDropDown(){
+  setQuantityActive(!quantityActive);
 document.querySelector('.imgdrop').classList.toggle('DropIt');
 }
 const options = [
@@ -65,7 +65,7 @@ const options = [
 
 // WALLET 
 
-function methodDropDown(){
+function waecMethodDropDown(){
   setMethodActive(!methodActive);
 document.querySelector('.methodDrop').classList.toggle('DropIt');
 }
@@ -85,7 +85,7 @@ const Exams  = [
   { examType :'NABTEB (₦100)', path : "/NabtebEducationPin", id : 3 },
 { examType :'JAMB (₦100)', path : "/JambEducationPin", id : 4 }
  ]
-function examDropDown(){
+function waecExamDropDown(){
   setExamActive(!examActive);
 document.querySelector('.Examdrop').classList.toggle('DropIt');
 }
@@ -191,7 +191,7 @@ const waecReceipt = () => {
     </h2>
     {/* input */}
 <div 
- onClick={examDropDown}
+ onClick={waecExamDropDown}
 className=' w-[100%] flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
 md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] 
 lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] border-[0.4px] border-[#9C9C9C]
@@ -245,7 +245,7 @@ hover:bg-[#EDEAEA]'>
     </h2>
     {/* input */}
 <div 
-onClick={clickDropDown}
+onClick={waecQuantityDropDown}
 className=' flex  justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
  md:pt-[8.802px] md:pb-[7.042px] 
 md:pr-[5.282px] md:pl-[5.867px] 
@@ -262,7 +262,7 @@ border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
        </div>
        {/* drop down */}
        
-      {waecActive && (
+      {quantityActive && (
          <div className='absolute lg:top-[90px] md:top-[60px] top-[50px] z-[1] 
          flex flex-col w-[100%] lg:h-225px md:h-[210px]  
          '>
@@ -270,8 +270,8 @@ border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
             return (
               <h2 onClick={(e =>{
                 setQuantityResult(option.quantity)
-                setWaecActive(false);
-                setWaecAmount(option.Amount)
+                setQuantityActive(false);
+                setEducationAmount(option.Amount)
               document.querySelector('.imgdrop').classList.remove('DropIt');
          
               })}
@@ -324,9 +324,9 @@ border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
    md:pt-[8.802px] md:pb-[7.042px] 
    md:pr-[5.282px] md:pl-[5.867px] 
    lg:pt-[14px] lg:pb-[15.5px] lg:pr-[16px] lg:pl-[10px]
-   placeholder:text-[8px] placeholder:leading-[10.4px] 
+   placeholder:text-[14.389px] placeholder:leading-[18.809.4px] 
    lg:placeholder:text-[16px] lg:placeholder:leading-[20.8px] placeholder:text-[#7E7E7E]
-   md:placeholder:text-[9.389px] md:placeholder:leading-[12.206px]'
+   md:placeholder:text-[14.389px] md:placeholder:leading-[18.206px]'
     type="tel" name='phone' id='phone' maxLength={11} placeholder=''
     value={educationPinPhone} onChange={(e)=>{
       setEducationPinPhone(e.target.value);
@@ -354,11 +354,10 @@ border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
     border-[0.4px] border-[#9C9C9C] focus:outline-none self-center
    md:pt-[8.802px] md:pb-[7.042px] 
    md:pr-[5.282px] md:pl-[5.867px] 
-   placeholder:text-[8px] placeholder:leading-[10.4px]
    lg:pt-[14px] lg:pb-[15.5px] lg:pr-[16px] lg:pl-[10px] 
+   placeholder:text-[14.389px] placeholder:leading-[18.809.4px] 
    lg:placeholder:text-[16px] lg:placeholder:leading-[20.8px] placeholder:text-[#7E7E7E]
-   md:placeholder:text-[9.389px] md:placeholder:leading-[12.206px]
-    md:placeholder:text-[#7E7E7E]'
+   md:placeholder:text-[14.389px] md:placeholder:leading-[18.206px]'
     value={educationPinEmail}
    onChange={(e) =>{
     setEducationPinEmail(e.target.value)
@@ -389,7 +388,7 @@ border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
     </h2>
     {/* input */}
     <div
-      onchange={setWaecAmount}
+      onchange={setEducationAmount}
      className='h-[29.927px]  lg:h-[51px] md:h-[29.93px]
         md:pt-[8.802px] md:pb-[7.042px] 
        pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
@@ -400,7 +399,7 @@ border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
    font-[500]  md:text-[9.389px] md:leading-[12.206px]
   lg:text-[16px] text-black lg:leading-[20.8px]'
   maxLength={7}>
-  {waecAmount}
+  {educationAmount}
    </div>
 
 
@@ -416,7 +415,7 @@ border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
     </h2>
     {/* input */}
 <div 
- onClick={methodDropDown}
+ onClick={waecMethodDropDown}
 className='flex  justify-between  pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
 md:pt-[8.802px] md:pb-[7.042px] 
 md:pr-[5.282px] md:pl-[5.867px] 
@@ -587,7 +586,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px]  md:text-[12px]
                        md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] font-[500]">
-                   {waecAmount}
+                   {educationAmount}
                       </h2>
                     </div>
                   </div>
@@ -969,7 +968,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
              ListOfResultCheckers={quantityResult}
              PhoneNumber={educationPinPhone}
             Email={educationPinEmail}
-            Amount={waecAmount}
+            Amount={educationAmount}
             walletbalance ={walletBalance}
            walletName={paymentResult}
           />
@@ -986,7 +985,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
               !educationPinPhone ||
               !educationPinEmail ||
               !paymentResult ||
-              !waecAmount
+              !educationAmount
                 ? "bg-[#63616188] cursor-not-allowed"
                 : "bg-primary"
             }`}
@@ -1000,7 +999,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
               !educationPinPhone ||
               !educationPinEmail ||
               !paymentResult ||
-              !waecAmount
+              !educationAmount
             }
           >
             Proceed
@@ -1011,15 +1010,16 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
 </div>
     
 
-    <div className=" flex gap-[5.729px]  md:gap-[14.896px] py-[30.865px] justify-center px-[8.594px] ">
+    <div className=" flex gap-[5.729px]  md:gap-[14.896px] 
+     justify-center px-[8.594px] mb-[80px]">
               <p className="font-[500] text-[10px] text-black 
               leading-[10.4px] lg:text-[16px] lg:leading-[15.6px]  md:text-[6.875px]
             ] md:leading-[12.938px] self-center">
                 You need help?
               </p>
               <Link to ="/contactUs"
-                className="font-extrabold text-white text-[10px]  py-[4.865px] 
- px-[12.594px] leading-[10.4px] rounded-[5.156px] bg-[#04177F]
+                className="font-[500] text-white text-[10px]  py-[4.865px] 
+ px-[10.594px] leading-[10.4px] rounded-[5.156px] bg-[#04177F]
  lg:text-[12px] lg:leading-[14.4px] 
   md:text-[4.583px]  md:py-[4.865px] 
  md:px-[14.594px] md:leading-[5.985px]  lg:py-[10px]

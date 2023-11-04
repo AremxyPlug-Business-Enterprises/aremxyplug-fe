@@ -62,6 +62,9 @@ import WithdrawToOtherBanks from "./Components/Dashboard/DashboardComponents/Wit
 import WalletSummaryPage from "./Components/WalletSummaryPage/WalletSummary";
 import SalesSummaryPage from "./Components/SalesSummaryPage/SalesSummary";
 import NotificationsPage from "./Components/NotificationsPage/Notifications";
+import { WalletSuccessfulReceipt} from "./Components/WalletSummaryPage/WalletSuccessfulReceipt";
+import {WalletFailedReceipt} from "./Components/WalletSummaryPage/WalletFailedReceipt";
+import {WalletPendingReceipt} from "./Components/WalletSummaryPage/WalletPendingReceipt";
 import { WithdrawToOtherBankReceipt } from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToOtherBanksPopUp/WithdrawToOtherBankReceipt";
 import AirtelDataBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/AirtelDataBundle/AirtelDataBundle";
 import GloDataBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/GloDataBundle/GloDataBundle";
@@ -170,6 +173,10 @@ export const Router = () => {
         <Route path="/wallet-summary" element={<WalletSummaryPage/>} />
         <Route path="/sales-summary" element={<SalesSummaryPage />} />
         <Route path="/notifications" element={<NotificationsPage />} />
+        <Route path="/wallet-successful-receipt" element={<WalletSuccessfulReceipt />} />
+        <Route path="/wallet-failed-receipt" element={<WalletFailedReceipt />} />
+        <Route path="/wallet-pending-receipt" element={<WalletPendingReceipt />} />
+
         <Route
           path="/withdraw-to-account"
           element={<WithdrawToMyAccountPage />}

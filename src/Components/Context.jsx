@@ -740,16 +740,42 @@ export const Context = ({ children }) => {
   const [dstvSuccessful, setDstvSuccessful] = useState(false);
 
   //============= EDUCATION PINS ========================
-  const [quantityResult, setQuantityResult] = useState("");
-  const [waecActive, setWaecActive] = useState(false);
-  const [paymentResult, setPaymentResult] = useState("");
-  const [methodActive, setMethodActive] = useState(false);
-  const [examType, setExamType] = useState("");
-  const [examActive, setExamActive] = useState(false);
-  const [educationPinPhone, setEducationPinPhone] = useState("");
-  const [educationPinEmail, setEducationPinEmail] = useState("");
-  const [waecAmount, setWaecAmount] = useState("₦");
-  const [walletBalance, setWalletBalance] = useState("");
+//===============WAEC PINS================
+  const [quantityResult, setQuantityResult] = useState('');
+const [quantityActive, setQuantityActive] = useState(false);
+const [paymentResult, setPaymentResult] = useState('');
+const [methodActive, setMethodActive] = useState(false);
+const [examType, setExamType] = useState('');
+const [examActive, setExamActive] = useState(false);
+const [educationPinPhone, setEducationPinPhone]= useState('');
+const[ educationPinEmail, setEducationPinEmail] = useState('');
+const [educationAmount, setEducationAmount] = useState('₦');
+const [walletBalance, setWalletBalance] = useState('');
+
+ //==============  NECO PINS  ================
+ const [necoQuantityResult, setNecoQuantityResult] = useState('');
+const [necoQuantityActive, setNecoQuantityActive] = useState(false);
+ const [necoPaymentResult, setNecoPaymentResult] = useState('');
+ const [necoMethodActive, setNecoMethodActive] = useState(false);
+ const [necoExamType, setNecoExamType] = useState('');
+ const [necoExamActive, setNecoExamActive] = useState(false);
+ const [necoEducationPinPhone, setNecoEducationPinPhone]= useState('');
+ const[ necoEducationPinEmail, setNecoEducationPinEmail] = useState('');
+ const [necoEducationAmount, setNecoEducationAmount] = useState('₦');
+ const [necoWalletBalance, setNecoWalletBalance] = useState('');
+
+ // ============== JAMB PINS ================
+ const [jambQuantityResult, setJambQuantityResult] = useState('');
+ const [jambQuantityActive, setJambQuantityActive] = useState(false);
+  const [jambPaymentResult, setJambPaymentResult] = useState('');
+  const [jambMethodActive, setJambMethodActive] = useState(false);
+  const [jambExamType, setJambExamType] = useState('');
+  const [jambExamActive, setJambExamActive] = useState(false);
+  const [jambEducationPinPhone, setJambEducationPinPhone]= useState('');
+  const[ jambEducationPinEmail, setJambEducationPinEmail] = useState('');
+  const [jambEducationAmount, setJambEducationAmount] = useState('₦');
+  const [jambWalletBalance, setJambWalletBalance] = useState('');
+
 
   const hold = {
     firstDrop,
@@ -1095,28 +1121,78 @@ export const Context = ({ children }) => {
     setSelectedOptionDstv,
     showDropdownDstv,
     setShowDropdownDstv,
+    
 
-    //====== EDUCATION PINS
-    quantityResult,
-    setQuantityResult,
-    paymentResult,
-    setPaymentResult,
-    waecActive,
-    setWaecActive,
-    methodActive,
-    setMethodActive,
-    examType,
-    setExamType,
-    examActive,
-    setExamActive,
-    educationPinPhone,
-    setEducationPinPhone,
-    educationPinEmail,
-    setEducationPinEmail,
-    waecAmount,
-    setWaecAmount,
-    walletBalance,
-    setWalletBalance,
+  //====== EDUCATION PINS
+  //=======WAEC PINS
+  quantityResult, 
+  setQuantityResult,
+  quantityActive,
+  setQuantityActive,
+  paymentResult, 
+  setPaymentResult,
+  methodActive, 
+  setMethodActive,
+  examType, 
+  setExamType,
+  examActive,
+   setExamActive,
+   educationPinPhone, 
+   setEducationPinPhone,
+   educationPinEmail, 
+  setEducationPinEmail,
+  educationAmount, 
+  setEducationAmount,
+  walletBalance, 
+  setWalletBalance,
+
+//======NECO PINS ==========
+ necoQuantityResult, 
+  setNecoQuantityResult,
+  necoQuantityActive, 
+  setNecoQuantityActive,
+  necoPaymentResult, 
+  setNecoPaymentResult,
+ necoMethodActive, 
+  setNecoMethodActive,
+  necoExamType, 
+  setNecoExamType,
+  necoExamActive,
+   setNecoExamActive,
+   necoEducationPinPhone, 
+   setNecoEducationPinPhone,
+   necoEducationPinEmail, 
+  setNecoEducationPinEmail,
+  necoEducationAmount, 
+  setNecoEducationAmount,
+  necoWalletBalance, 
+  setNecoWalletBalance,
+ 
+  //==========   JAMB PINS =========
+  jambQuantityResult, 
+  setJambQuantityResult,
+  jambQuantityActive, 
+  setJambQuantityActive,
+  jambPaymentResult, 
+  setJambPaymentResult,
+ jambMethodActive, 
+  setJambMethodActive,
+  jambExamType, 
+  setJambExamType,
+  jambExamActive,
+   setJambExamActive,
+   jambEducationPinPhone, 
+   setJambEducationPinPhone,
+   jambEducationPinEmail, 
+  setJambEducationPinEmail,
+  jambEducationAmount, 
+  setJambEducationAmount,
+  jambWalletBalance, 
+  setJambWalletBalance,
+
+  //========= NABTEB PINS =======
+  
+
   };
 
   return (
