@@ -15,12 +15,12 @@ export default function NabtebReceipt() {
         educationPinEmail,
         paymentResult,
         setExamType,
-        waecAmount,
+        educationAmount,
         setQuantityResult,
         setEducationPinEmail,
         setEducationPinPhone,
         setPaymentResult,
-        setWaecAmount,
+        setEducationAmount,
         setWalletBalance
         
         }
@@ -40,7 +40,7 @@ export default function NabtebReceipt() {
             setEducationPinPhone('');
             setEducationPinEmail('');
            setPaymentResult('');
-           setWaecAmount('₦');
+           setEducationAmount('₦');
            setWalletBalance('')
           }
         
@@ -178,7 +178,7 @@ export default function NabtebReceipt() {
                 <div className="flex text-[10px] md:text-[14px] w-[90%] 
                 mx-auto justify-between  lg:text-[16px] font-[500]">
                   <p className="text-[#0008]">Amount</p>
-                  <span>{waecAmount}</span>
+                  <span>{educationAmount}</span>
                 </div>            
               </div>
 

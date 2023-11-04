@@ -9,19 +9,19 @@ import AremxyPlugIcon from '../imagesEducation/AremxyPlug.svg'
 
 export default function NecoReceipt() {
     const {
-        examType,
-        quantityResult,
-        educationPinPhone,
-        educationPinEmail,
-        paymentResult,
-        setExamType,
-        waecAmount,
-        setQuantityResult,
-        setEducationPinEmail,
-        setEducationPinPhone,
-        setPaymentResult,
-        setWaecAmount,
-        setWalletBalance
+        necoExamType,
+        necoQuantityResult,
+        necoEducationPinPhone,
+        necoEducationPinEmail,
+        necoPaymentResult,
+        setNecoExamType,
+        necoEducationAmount,
+        setNecoQuantityResult,
+        setNecoEducationPinEmail,
+        setNecoEducationPinPhone,
+        setNecoPaymentResult,
+        setNecoEducationAmount,
+        setNecoWalletBalance
         }
          = useContext(ContextProvider);
   
@@ -34,13 +34,13 @@ export default function NecoReceipt() {
           const contentRef = useRef(null);
   
           const currentNecoChanges = () => {
-            setQuantityResult(false);
-        setExamType(false);
-        setEducationPinPhone('');
-        setEducationPinEmail('');
-       setPaymentResult('');
-       setWaecAmount('₦');
-       setWalletBalance('');
+            setNecoQuantityResult(false);
+        setNecoExamType(false);
+        setNecoEducationPinPhone('');
+        setNecoEducationPinEmail('');
+       setNecoPaymentResult('');
+       setNecoEducationAmount('₦');
+       setNecoWalletBalance('');
           }
         
         //   Share function
@@ -135,9 +135,9 @@ export default function NecoReceipt() {
             You have successfully purchased{" "}
             <span className=" font-extrabold text-[10.9px] md:text-[14.9px] lg:text-[16.9px]   
             ">
-            {examType} {" "}
+            {necoExamType} {" "}
             </span>
-            from your {paymentResult} to{" "}
+            from your {necoPaymentResult} to{" "}
           </p>
           <div className="flex flex-col gap-7  md:gap-10">
             {/* ========================Recipient Info================== */}
@@ -161,7 +161,7 @@ export default function NecoReceipt() {
               <div className="flex text-[10px] md:text-[14px] w-[90%] 
               mx-auto justify-between  lg:text-[16px] font-[500]">
                 <p className="text-[#7C7C7C]">Quantity</p>
-                <span>{quantityResult}</span>
+                <span>{necoQuantityResult}</span>
               </div>
               {/* <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#0008]">Plan</p>
@@ -171,17 +171,17 @@ export default function NecoReceipt() {
               <div className="flex text-[10px] md:text-[14px] w-[90%] 
               mx-auto justify-between  lg:text-[16px] font-[500]">
                 <p className="text-[#0008]">Phone Number</p>
-                <span>{educationPinPhone}</span>
+                <span>{necoEducationPinPhone}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] 
               mx-auto justify-between  lg:text-[16px] font-[500]">
                 <p className="text-[#0008]">Email</p>
-                <span>{educationPinEmail}</span>
+                <span>{necoEducationPinEmail}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  
               lg:text-[16px] font-[500]">
                 <p className="text-[#7C7C7C]">Amount</p>
-                <span>{waecAmount}</span>
+                <span>{necoEducationAmount}</span>
               </div>            
             </div>
 
@@ -203,7 +203,7 @@ export default function NecoReceipt() {
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
               justify-between  lg:text-[16px] font-[500]">
                 <p className="text-[#7C7C7C]">Wallet Type</p>
-              {paymentResult}
+              {necoPaymentResult}
               </div>
             </div>
 
