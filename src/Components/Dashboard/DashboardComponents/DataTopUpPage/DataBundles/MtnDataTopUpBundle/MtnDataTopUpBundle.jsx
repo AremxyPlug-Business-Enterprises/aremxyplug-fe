@@ -586,7 +586,7 @@ const MtnDataTopUpBundle = () => {
           )}
 
           {/* =========================PRODUCTS============================== */}
-          
+
           <div className="grid grid-cols-1 mt-[25px] md:grid-cols-2 gap-y-[20px] md:gap-x-[58.68px] lg:gap-x-[100px] md:gap-y-[15px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[20px]">
             <div className="relative">
               <h2 className="lg:text-[18px] lg:leading-[24px] mb-1 text-[10px] md:text-[12px] font-[600] leading-[12px]">
@@ -1301,27 +1301,23 @@ const MtnDataTopUpBundle = () => {
         </section>
         {/* =======================FOOTER=================================== */}
         <div
-            className={`${
-              isDarkMode ? "" : ""
-<<<<<<< HEAD
-            } flex gap-[15px] justify-center items-center mt-[100%] pb-[5%] md:pb-[2%] md:mt-[40%] lg:mt-[40%] lg:pb-0`}
-=======
-            } flex gap-[15px] justify-center items-center mt-[100%] pb-[25%] md:pb-[12%] md:mt-[40%] lg:mt-[40%] lg:pb-0`}
->>>>>>> 4b4b7db70a45ed2c1bb82d7972ecd6bc7a63205c
-          >
-            <div className="text-[10px] md:text-[12px] lg:text-[14px]">
-              You need help ?
-            </div>
-            <Link to="/ContactUs">
-              <div
-                className={`${
-                  isDarkMode ? "border" : "bg-[#04177f]"
-                } text-[10px] p-1 text-white rounded-[8px] lg:text-[18px]`}
-              >
-                Contact Us
-              </div>
-            </Link>
+          className={`${
+            isDarkMode ? "" : ""
+          } flex gap-[15px] justify-center items-center mt-[100%] pb-[25%] md:pb-[12%] md:mt-[40%] lg:mt-[40%] lg:pb-0`}
+        >
+          <div className="text-[10px] md:text-[12px] lg:text-[14px]">
+            You need help ?
           </div>
+          <Link to="/ContactUs">
+            <div
+              className={`${
+                isDarkMode ? "border" : "bg-[#04177f]"
+              } text-[10px] p-1 text-white rounded-[8px] lg:text-[18px]`}
+            >
+              Contact Us
+            </div>
+          </Link>
+        </div>
       </div>
     </DashBoardLayout>
   );
