@@ -639,6 +639,8 @@ w-3 h-3 lg:h-5 md:w-[13px]  md:h-[13px]" src={normal} alt="" /> </button>
                 Status
               </th>
             </tr>
+            
+            <Link to="/wallet-successful-receipt">
             <tr className={`${
                toggleSideBar
                 ? "lg:pr-[16px]" : "lg:pr-[27px]"
@@ -725,9 +727,9 @@ w-3 h-3 lg:h-5 md:w-[13px]  md:h-[13px]" src={normal} alt="" /> </button>
 />
               </td>
             </tr>
-            
+            </Link>
 
-
+            <Link to="/wallet-successful-receipt">
         <tr className={`${
            toggleSideBar
            ? "lg:pr-[16px]" : "lg:pr-[27px]"
@@ -812,8 +814,8 @@ w-3 h-3 lg:h-5 md:w-[13px]  md:h-[13px]" src={normal} alt="" /> </button>
 />
               </td>
             </tr>
-
-
+          </Link>
+          <Link to="/wallet-successful-receipt">
             <tr className={`${
                toggleSideBar
                ? "lg:pr-[16px]" : "lg:pr-[27px]"
@@ -898,11 +900,11 @@ w-3 h-3 lg:h-5 md:w-[13px]  md:h-[13px]" src={normal} alt="" /> </button>
 />
               </td>
             </tr>
+</Link>
 
 
 
-
-
+<Link to="/wallet-successful-receipt">
  <tr className={`${
    toggleSideBar
    ? "lg:pr-[16px]" : "lg:pr-[27px]"
@@ -987,8 +989,9 @@ w-3 h-3 lg:h-5 md:w-[13px]  md:h-[13px]" src={normal} alt="" /> </button>
 />
               </td>
             </tr>
+            </Link>
 
-
+            <Link to="/wallet-pending-receipt">
 <tr className={`${
   toggleSideBar
   ? "lg:pr-[2px]" : "lg:pr-[27px]"
@@ -1078,9 +1081,9 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
 />
               </td>
             </tr>
+</Link>
 
-
-
+<Link to="/wallet-failed-receipt">
 <tr className={`${
   toggleSideBar
   ? "lg:pr-[2px]" : "lg:pr-[27px]"
@@ -1170,8 +1173,9 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
 />
               </td>
             </tr>
+</Link>
 
-
+<Link to="/wallet-pending-receipt">
 <tr className={`${
   toggleSideBar
   ? "lg:pr-[2px]" : "lg:pr-[27px]"
@@ -1267,7 +1271,7 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
 />
               </td>
             </tr>
-
+</Link>
     
             {/* CONTACT US */}
             <div className="flex md:gap-[14.896px] py-[10.865px] items-center mt-10 justify-center px-[8.594px]">
@@ -1339,6 +1343,7 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
             className="md:hidden flex flex-col h-[1030px] mt-9  w-full p-[20px] border-x-[1.2px] border-b-[1.2px]
  border-gray-500 border-opacity-[25%] my-[50px] shadow-md"
           >
+          <Link to="/wallet-successful-receipt">
             
             <div
               className="flex justify-between pb-[31.5px] border-b-[1px] border-b-[black]
@@ -1386,8 +1391,9 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
               </div>
               </div>
             </div>
-
-            
+            </Link>
+           <Link to="/wallet-successful-receipt">
+              
             <div
               className="flex justify-between py-[31.5px] border-b-[1px] border-b-[black]
    border-opacity-[20%]"
@@ -1431,8 +1437,11 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
               </div>
             </div>
             </div>
-
+          </Link>
             
+          
+          <Link to="/wallet-successful-receipt">
+             
             <div
               className=" flex justify-between py-[31.5px] border-b-[1px]
                border-b-[black]   border-opacity-[20%]"
@@ -1477,7 +1486,10 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
               </div>
             </div>
             </div>
-            
+             </Link>
+
+<Link to="/wallet-successful-receipt">
+               
             <div
               className="flex justify-between py-[31.5px] border-b-[1px] border-b-[black]
    border-opacity-[20%]"
@@ -1520,7 +1532,11 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
               </div>
             </div>
             </div>
-            
+            </Link>
+             
+
+<Link to="/wallet-pending-receipt">
+               
             <div
               className="flex justify-between py-[31.5px] border-b-[1px] border-b-[black]
    border-opacity-[20%]"
@@ -1571,6 +1587,9 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
               
             </div>
             </div>
+            </Link>
+
+<Link to="/wallet-failed-receipt">
             
             <div
               className="flex justify-between py-[31.5px] border-b-[1px] border-b-[black]
@@ -1616,7 +1635,10 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
               </div>
             </div>
             </div>
-            
+            </Link>
+
+<Link to="/wallet-pending-receipt">
+
             <div
               className="flex justify-between py-[31.5px] border-b-[black]
    border-opacity-[20%]"
@@ -1659,6 +1681,7 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
               </div>
             </div>
             </div>
+           </Link>
 
             <div className="flex justify-center text-center gap-[20px] mt-[15px] mb-[30px]">
             <p className="text-[8px]  font-[500] leading-[9.1px] mt-[5px]">
@@ -1668,7 +1691,7 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
             <Link to="/ContactUs">
               <div
                 className={`${
-                  isDarkMode ? "border " : "bg-[#04177f]"
+                  isDarkMode ? "border" : "bg-[#04177f]"
                 } text-[8px] p-1 text-white rounded-[8px]`}
               >
                 Contact Us
