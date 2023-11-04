@@ -273,7 +273,7 @@ export const Context = ({ children }) => {
         .post(url, data, config)
         .then((response) => {
           console.log(response);
-          if (response.status === 200) {
+          if (response.status === 201) {
             setVerification(true);
             setState({
               country: "",
@@ -285,8 +285,8 @@ export const Context = ({ children }) => {
               confirmPassword: "",
             });
             setErrors({});
-          } else if (response.status === 500) {
-            alert(response.data);
+          } else if (response.status === 200) {
+            alert("User Exist Already");
           } else if (response.status === 409) {
             alert("Input already in use: " + response.data);
           } else {

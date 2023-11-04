@@ -18,13 +18,8 @@ import { RecentTransaction } from "../DashboardComponents/RecentTransaction";
 import { Link } from "react-router-dom";
 
 export const MainDashboard = () => {
-  const {
-    setHideNavbar,
-    toggleSideBar,
-    isDarkMode,
-    setToggleSideBar,
-    setLogout,
-  } = useContext(ContextProvider);
+  const { setHideNavbar, toggleSideBar, isDarkMode } =
+    useContext(ContextProvider);
   const [visible, setVisibility] = useState(true);
   const [activeButtons, setActiveButtons] = useState([false, false, false]);
   const [blur, setBlur] = useState(false);
@@ -92,17 +87,12 @@ export const MainDashboard = () => {
     return;
   };
 
-  const closeTabs = () => {
-    setLogout(false);
-    setToggleSideBar(false);
-  };
-
   return (
     <div>
       {/* ==============TOP BAR========== */}
       <TopBar />
 
-      <div className="w-[100%] " onClick={closeTabs}>
+      <div className="w-[100%]">
         {/* ============SIDE BAR========= */}
         {toggleSideBar && (
           <div className="absolute top-0 left-0 z-50">
