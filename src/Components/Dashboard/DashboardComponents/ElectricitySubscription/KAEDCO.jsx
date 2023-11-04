@@ -743,7 +743,7 @@ const KAEDCO = () => {
                to confirm the bills / token. You can contact us for any further assistance.
               </p>
             </div>
-            <div className="flex w-[70%] mx-auto items-center gap-[6%] md:gap-[20px] justify-center md:w-[20%] lg:my-[5%]">
+            <div className="flex w-[70%] my-6  mx-auto items-center gap-[6%] md:gap-[20px] justify-center md:w-[20%] lg:my-[5%]">
               <button
                 onClick={() => {
                   setSuccessPopup(false);
