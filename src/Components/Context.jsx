@@ -776,6 +776,17 @@ const [necoQuantityActive, setNecoQuantityActive] = useState(false);
   const [jambEducationAmount, setJambEducationAmount] = useState('₦');
   const [jambWalletBalance, setJambWalletBalance] = useState('');
 
+  // ============== NABTEB PINS =============
+  const [nabtebQuantityResult, setNabtebQuantityResult] = useState('');
+ const [nabtebQuantityActive, setNabtebQuantityActive] = useState(false);
+  const [nabtebPaymentResult, setNabtebPaymentResult] = useState('');
+  const [nabtebMethodActive, setNabtebMethodActive] = useState(false);
+  const [nabtebExamType, setNabtebExamType] = useState('');
+  const [nabtebExamActive, setNabtebExamActive] = useState(false);
+  const [nabtebEducationPinPhone, setNabtebEducationPinPhone]= useState('');
+  const[ nabtebEducationPinEmail, setNabtebEducationPinEmail] = useState('');
+  const [nabtebEducationAmount, setNabtebEducationAmount] = useState('₦');
+  const [nabtebWalletBalance, setNabtebWalletBalance] = useState('');
 
   const hold = {
     firstDrop,
@@ -1191,7 +1202,26 @@ const [necoQuantityActive, setNecoQuantityActive] = useState(false);
   setJambWalletBalance,
 
   //========= NABTEB PINS =======
-  
+nabtebQuantityResult, 
+  setNabtebQuantityResult,
+  nabtebQuantityActive, 
+  setNabtebQuantityActive,
+  nabtebPaymentResult, 
+  setNabtebPaymentResult,
+ nabtebMethodActive, 
+  setNabtebMethodActive,
+  nabtebExamType, 
+  setNabtebExamType,
+  nabtebExamActive,
+   setNabtebExamActive,
+   nabtebEducationPinPhone, 
+   setNabtebEducationPinPhone,
+   nabtebEducationPinEmail, 
+  setNabtebEducationPinEmail,
+  nabtebEducationAmount, 
+  setNabtebEducationAmount,
+  nabtebWalletBalance, 
+  setNabtebWalletBalance,
 
   };
 

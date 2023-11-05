@@ -26,32 +26,32 @@ import NabtebReceipt from './ReceiptEducationPins/nabtebReceipt';
 
 export default function NabtebEducationPins() {
   const { isDarkMode } = useContext(ContextProvider);
-  const {quantityResult, setQuantityResult} = useContext(ContextProvider);
-const {quantityActive, setQuantityActive} = useContext(ContextProvider);
-const {paymentResult, setPaymentResult} = useContext(ContextProvider);
-const {methodActive, setMethodActive} = useContext(ContextProvider);
-const {examType, setExamType} = useContext(ContextProvider);
-const {examActive, setExamActive} = useContext(ContextProvider);
+  const {nabtebQuantityResult, setNabtebQuantityResult} = useContext(ContextProvider);
+const {nabtebQuantityActive, setNabtebQuantityActive} = useContext(ContextProvider);
+const {nabtebPaymentResult, setNabtebPaymentResult} = useContext(ContextProvider);
+const {nabtebMethodActive, setNabtebMethodActive} = useContext(ContextProvider);
+const {nabtebExamType, setNabtebExamType} = useContext(ContextProvider);
+const {nabtebExamActive, setNabtebExamActive} = useContext(ContextProvider);
 const { transactSuccessPopUp, setTransactSuccessPopUp } =
 useContext(ContextProvider);
-const {educationPinPhone, setEducationPinPhone} = useContext(ContextProvider);
-const {educationPinEmail, setEducationPinEmail} = useContext(ContextProvider);
-const {educationAmount, setEducationAmount} = useContext(ContextProvider);
-const {walletBalance, setWalletBalance } = useContext(ContextProvider);
+const {nabtebEducationPinPhone, setNabtebEducationPinPhone} = useContext(ContextProvider);
+const {nabtebEducationPinEmail, setNabtebEducationPinEmail} = useContext(ContextProvider);
+const {nabtebEducationAmount, setNabtebEducationAmount} = useContext(ContextProvider);
+const {nabtebWalletBalance, setNabtebWalletBalance } = useContext(ContextProvider);
 
 // UseStates
-const [imageState, setImageState] = useState(arrowDown);
-const [educationProceed, setEducationProceed] = useState(false);
+const [nabtebImageState, setNabtebImageState] = useState(arrowDown);
+const [nabtebEducationProceed, setNabtebEducationProceed] = useState(false);
 const [errors, setErrors] = useState({});
-const [educationConfirm, setEducationConfirm] = useState(false);
+const [nabtebEducationConfirm, setNabtebEducationConfirm] = useState(false);
 
 const [receipt] = useState(false);
 
 function nabtebQuantityDropDown(){
-  setQuantityActive(!quantityActive);
+  setNabtebQuantityActive(!nabtebQuantityActive);
 document.querySelector('.imgdrop').classList.toggle('DropIt');
 }
-const options = [
+const nabtebOptions = [
   {quantity :  '1 Piece Of Result Checker', Amount : "₦100", id : 1},
   {quantity :  '2 Piece Of Result Checker', Amount : "₦200", id : 2},
   {quantity :  '3 Piece Of Result Checker', Amount : "₦300", id : 3},
@@ -64,10 +64,10 @@ const options = [
 // WALLET 
 
 function nabtebMethodDropDown(){
-  setMethodActive(!methodActive);
+  setNabtebMethodActive(!nabtebMethodActive);
 document.querySelector('.methodDrop').classList.toggle('DropIt');
 }
-const [methodOptions,setMethodOptions] = useState([
+const [nabtebMethodOptions,setNabtebMethodOptions] = useState([
  {method : 'NGN Wallet', balance :" (50,000.00)", flag : nigerianFlag, id : 1},
 {method : 'USD Wallet ', balance :'(0.00)', flag : americaFlag, id : 2 },
 {method : 'EUR Wallet', balance :'(0.00)', flag : britainFlag, id : 3 },
@@ -77,14 +77,14 @@ const [methodOptions,setMethodOptions] = useState([
 ])
 
 // CONFIRM EXAM TYPE
-const Exams  = [
+const nabtebExams  = [
 { examType :'NABTEB (₦100)',   id : 1},
 { examType :'NECO (₦100)', path :  "/NecoEducationPin", id : 2 },
 { examType :'WAEC (₦100)', path : "/WaecEducationPin", id : 3 },
 { examType :'JAMB (₦100)', path : "/JambEducationPin", id : 4 }
  ]
 function nabtebExamDropDown(){
-  setExamActive(!examActive);
+  setNabtebExamActive(!nabtebExamActive);
 document.querySelector('.Examdrop').classList.toggle('DropIt');
 }
 // FUNCTION OTP FOR THE POPPINS
@@ -99,8 +99,8 @@ const {
 
 const nabtebProceed = (e) => {
  const { error } = schema.validate({
-    educationPinPhone,
-    educationPinEmail
+    nabtebEducationPinPhone,
+    nabtebEducationPinEmail
   });
 
   if (error) {
@@ -111,20 +111,20 @@ const nabtebProceed = (e) => {
       }, {})
     );
   } else {
-    setEducationProceed(true);
+    setNabtebEducationProceed(true);
     setErrors({});
   }
 };
 
 const schema = Joi.object({
-  educationPinPhone: Joi.string()
+  nabtebEducationPinPhone: Joi.string()
     .pattern(new RegExp(/^\d{11,}/))
     .required()
     .messages({
       "string.pattern.base": "Phone number should be 11 digits ",
     }),
     
-    educationPinEmail: Joi.string()
+    nabtebEducationPinEmail: Joi.string()
     .pattern(new RegExp(/^[^\s@]+@[^\s@]+\.[^\s@]+$/))
     .required()
     .messages({ "string.pattern.base": "Invalid email " })
@@ -132,8 +132,8 @@ const schema = Joi.object({
 });
 
 const confirmButton = () => {
-  setEducationProceed(false);
-  setEducationConfirm(true);
+  setNabtebEducationProceed(false);
+  setNabtebEducationConfirm(true);
 };
 
 const nabtebTransactionSuccessClose = () => {
@@ -145,7 +145,7 @@ const nabtebReceipt = () => {
 
   return (
     <DashBoardLayout>
-    <div className='flex flex-col h-[110%] justify-between '>
+    <div className='flex flex-col h-[140%] lg:h-[120%] justify-between '>
  <div className=''>
   {/* Hero-section */}
 <HeroComponent/>
@@ -195,22 +195,22 @@ hover:bg-[#EDEAEA]'>
     <h2 
     className='font-[500] text-[8px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] 
     lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer'>
-    {examType}
+    {nabtebExamType}
       </h2>
       <img  
       className='Examdrop md:h-[14.083px] md:w-[14.083px] lg:h-[24px] 
       lg:w-[24px] h-[14px] w-[14px]'
       src= {arrowDown} alt="" />
        </div>
-       {examActive && (
+       {nabtebExamActive && (
          <div className='absolute lg:top-[90px] md:top-[60px] top-[50px] z-[3]  
          flex flex-col w-[100%] lg:h-225px md:h-[210px] '>
-          {(Exams.map(exam => {
+          {(nabtebExams.map(exam => {
             return (
                <a href={exam.path}
                onClick={(e =>{
-          setExamType(exam.examType);
-                 setExamActive(false);
+          setNabtebExamType(exam.examType);
+                 setNabtebExamActive(false);
              document.querySelector('.Examdrop').classList.remove('DropIt');
              console.log(e);
               })}
@@ -250,7 +250,7 @@ lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]
 border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
     <h2 className='font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
     lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer'>
-    {quantityResult}
+    {nabtebQuantityResult}
       </h2>
       <img 
        className='imgdrop md:h-[14.038px] md:w-[14.038px] 
@@ -259,16 +259,16 @@ border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
        </div>
        {/* drop down */}
        
-      {quantityActive && (
+      {nabtebQuantityActive && (
          <div className='absolute z-[2] lg:top-[90px] md:top-[60px] top-[50px]  
           flex flex-col w-[100%]   
         '>
-          {(options.map(option => {
+          {(nabtebOptions.map(option => {
             return (
               <h2 onClick={(e =>{
-                setQuantityResult(option.quantity)
-                setQuantityActive(false);
-                setEducationAmount(option.Amount)
+                setNabtebQuantityResult(option.quantity)
+                setNabtebQuantityActive(false);
+                setNabtebEducationAmount(option.Amount)
               document.querySelector('.imgdrop').classList.remove('DropIt');
          
               })}
@@ -326,12 +326,12 @@ border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
      lg:placeholder:text-[16px] lg:placeholder:leading-[20.8px] placeholder:text-[#7E7E7E]
      md:placeholder:text-[14.389px] md:placeholder:leading-[18.206px]'
     type="tel" name='phone' id='phone' maxLength={11} placeholder=''
-    value={educationPinPhone} onChange={(e)=>{
-      setEducationPinPhone(e.target.value);
+    value={nabtebEducationPinPhone} onChange={(e)=>{
+      setNabtebEducationPinPhone(e.target.value);
     }}/>
-     {errors.educationPinPhone && (
+     {errors.nabtebEducationPinPhone && (
             <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-              {errors.educationPinPhone}
+              {errors.nabtebEducationPinPhone}
             </div>
           )}
    </div>
@@ -357,16 +357,16 @@ border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
    placeholder:text-[14.389px] placeholder:leading-[18.809.4px] 
    lg:placeholder:text-[16px] lg:placeholder:leading-[20.8px] placeholder:text-[#7E7E7E]
    md:placeholder:text-[14.389px] md:placeholder:leading-[18.206px]'
-    value={educationPinEmail}
+    value={nabtebEducationPinEmail}
    onChange={(e) =>{
-    setEducationPinEmail(e.target.value)
+    setNabtebEducationPinEmail(e.target.value)
    }}
     type="Email" 
     placeholder='example@gmail.com'/>
     
-    {errors.educationPinEmail && (
+    {errors.nabtebEducationPinEmail && (
             <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-              {errors.educationPinEmail}
+              {errors.nabtebEducationPinEmail}
             </div>
           )}
               
@@ -388,7 +388,7 @@ border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
     </h2>
     {/* input */}
     <div
-      onchange={setEducationAmount}
+      onchange={setNabtebEducationAmount}
      className='h-[29.927px] lg:h-[51px] md:h-[29.93px]
         md:pt-[8.802px] md:pb-[7.042px] 
        pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
@@ -399,7 +399,7 @@ border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
    font-[500]  md:text-[9.389px] md:leading-[12.206px]
   lg:text-[16px] text-black lg:leading-[20.8px]'
   maxLength={7}>
-  {educationAmount}
+  {nabtebEducationAmount}
    </div>
 
 
@@ -424,30 +424,30 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
     <h2 className='font-[500] text-[8px] leading-[10.4px]
      md:text-[9.389px] md:leading-[12.206px]
     lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer'>
-    {paymentResult +  walletBalance}
+    {nabtebPaymentResult +  nabtebWalletBalance}
       </h2>
       <img 
      
       className='methodDrop h-[14px] w-[14px] md:h-[14.038px] md:w-[14.038px] lg:h-[24px] lg:w-[24px]'
-      src={imageState} alt="" />
+      src={nabtebImageState} alt="" />
        </div>
        {/* drop down */}
        
-      {methodActive && (
+      {nabtebMethodActive && (
          <div className=' flex flex-col w-[100%]
          absolute z-0 lg:top-[90px] md:top-[60px] top-[50px]'>
 
-        {(methodOptions.map(methodOption => {
+        {(nabtebMethodOptions.map(methodOption => {
             return (
         <div 
         onClick={(e =>{
-        onchange={setMethodOptions}
-          setPaymentResult(methodOption.method);
-          setWalletBalance(methodOption.balance);
-          setImageState(methodOption.flag);
-          setMethodActive(false);
+       setNabtebPaymentResult(methodOption.method);
+          setNabtebWalletBalance(methodOption.balance);
+          setNabtebImageState(methodOption.flag);
+          setNabtebMethodActive(false);
        document.querySelector('.methodDrop').classList.remove('DropIt');
         })}
+        onChange={setNabtebMethodOptions}
         className='
           flex gap-[10px] lg:py-[15px] py-[10px] pl-[10px]
         cursor-pointer items-center bg-white  hover:bg-[#EDEAEA]
@@ -475,7 +475,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
     </div>
     {/* end of */}
     </div>
-    {educationProceed && (
+    {nabtebEducationProceed && (
           <Modal>
             <div
               className={`confirm mx-[5%] ${
@@ -484,14 +484,17 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                 toggleSideBar
                   ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
                   : "lg:w-[40%]"
-              } lg:ml-[10%] lg:mr-[10%] grow  md:mt-[1%] mb-0 pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:mb-[18%] md:overflow-auto`}
+              } lg:ml-[10%] lg:mr-[10%] grow 
+              md:mt-[1%] mb-0 pb-[20px] rounded-tr-[8px] 
+              rounded-tl-[8px] relative md:rounded-[11.5px] 
+              md:mx-auto md:my-auto md:mb-[18%] md:overflow-auto`}
             >
               <div className="w-full flex justify-end border-b-[6px] items-center
                border-primary px-[12px] h-[35px] md:h-[45px] lg:h-[60px] lg:border-b-[10px]">
                 <img
                   src={closeIcon}
                   alt=""
-                  onClick={() => setEducationProceed(false)}
+                  onClick={() => setNabtebEducationProceed(false)}
                   className="w-[18px] h-[18px]  md:w-[25px] cursor-pointer
                    md:h-[25px] lg:w-[35px] lg:h-[35px]"
                 />
@@ -506,7 +509,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                   You are about to purchase{" "}
                   <span className="font-[600] lg:text-[16.9px] md:leading-[14.9px] text-[10.9px]">
                     NABTEB PINS (₦100)</span> from
-                  your {paymentResult} to
+                  your {nabtebPaymentResult} to
                 </h2>
 
          <div className="flex flex-col gap-[15px] px-[20px] mt-[50px] md:gap-[25px]">
@@ -538,7 +541,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] 
                       md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] font-[500]">
-                        {quantityResult}
+                        {nabtebQuantityResult}
                       </h2>
                     </div>
                   </div>
@@ -553,7 +556,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] 
                       md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] font-[500]">
-                        {educationPinPhone}
+                        {nabtebEducationPinPhone}
                       </h2>
                     </div>
                   </div>
@@ -566,7 +569,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] md:text-[12px] md:leading-[11.92px] 
                       lg:text-[16px] lg:leading-[24px] font-[500]">
-                      {educationPinEmail}
+                      {nabtebEducationPinEmail}
                       </h2>
                     </div>
                   </div>
@@ -579,7 +582,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] md:text-[12px] md:leading-[11.92px] 
                       lg:text-[16px] lg:leading-[24px] font-[500]">
-                   {educationAmount}
+                   {nabtebEducationAmount}
                       </h2>
                     </div>
                   </div>
@@ -592,7 +595,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] md:text-[12px]
                        md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] font-[500]">
-                      {paymentResult}
+                      {nabtebPaymentResult}
                       </h2>
                     </div>
                   </div>
@@ -631,14 +634,14 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                       <div className="bg-white rounded-full h-[27px] w-[27px] flex justify-center items-center">
                         <img
                           className="w-[16px] h-[16px]"
-                          src={imageState}
+                          src={nabtebImageState}
                           alt="/"
                         />
                       </div>
                       <p className="text-[10px] md:text-[14px]  lg:text-[16px] font-[600]">
                         Available Balance{" "}
                         <span className="text-[#0003] font-[500]">
-                          {walletBalance}
+                          {nabtebWalletBalance}
                         </span>
                       </p>
                     </div>
@@ -668,7 +671,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
         )}
 
         {/* CONFIRM TRANSACTION */}
-{educationConfirm && (
+{nabtebEducationConfirm && (
           <Modal>
             <div
               className={`confirm2 ${styles.inputPin} ${
@@ -678,7 +681,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
               } md:w-[55%] w-[90%] md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
             >
               <img
-                onClick={() => setEducationConfirm(false)}
+                onClick={() => setNabtebEducationConfirm(false)}
                 className="absolute cursor-pointer md:top-[5.5px] top-[5.5px]
                      right-2 w-[18px] h-[18px] 
                  md:w-[35px] md:h-[25px] lg:w-[45px] lg:h-[45px]"
@@ -730,7 +733,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
               <button
                 onClick={(e) => {
                   e.preventDefault();
-                  setEducationConfirm(false);
+                  setNabtebEducationConfirm(false);
                   inputPinHandler(e);
                 }}
                 disabled={inputPin.length !== 4}
@@ -798,7 +801,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                     lg:text-[16.9px]">
                  NABTEB PIN (₦100) {' '}
                   </span>
-                  from your {paymentResult} to{" "}
+                  from your {nabtebPaymentResult} to{" "}
                 </p>
 
                 <div className="flex items-center justify-between">
@@ -831,7 +834,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                   <div className="flex gap-1">
                     <h2 className="text-[10px] leading-[12px] md:text-[12px] md:leading-[11.92px] 
                     lg:text-[16px] lg:leading-[24px] font-[500]">
-                      {quantityResult}
+                      {nabtebQuantityResult}
                     </h2>
                   </div>
                 </div>
@@ -846,7 +849,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                   <div className="flex gap-1">
                     <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] 
                     md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] font-[500]">
-                      {educationPinPhone}
+                      {nabtebEducationPinPhone}
                     </h2>
                   </div>
                 </div>
@@ -859,7 +862,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                   <div className="flex gap-1">
                     <h2 className="text-[10px] leading-[12px]  md:text-[12px] md:leading-[11.92px]
                      lg:text-[16px] lg:leading-[24px] font-[500]">
-                     {educationPinEmail}
+                  {nabtebEducationPinEmail}
                     </h2>
                   </div>
                 </div>
@@ -883,7 +886,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                   <div className="flex gap-1">
                     <h2 className="text-[10px] leading-[12px]  md:text-[12px] md:leading-[11.92px] 
                     lg:text-[16px] lg:leading-[24px] font-[500]">
-                      {paymentResult}
+                      {nabtebPaymentResult}
                     </h2>
                   </div>
                 </div>
@@ -954,28 +957,28 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
  {receipt && (
           <NabtebReceipt
              Exam ="NABTEB"
-            ExamType={examType}
-             ListOfResultCheckers={quantityResult}
-             PhoneNumber={educationPinPhone}
-            Email={educationPinEmail}
-            Amount={educationAmount}
-            walletBalance = {walletBalance}
-           walletName={paymentResult}
+            ExamType={nabtebExamType}
+             ListOfResultCheckers={nabtebQuantityResult}
+             PhoneNumber={nabtebEducationPinPhone}
+            Email={nabtebEducationPinEmail}
+            Amount={nabtebEducationAmount}
+            walletBalance = {nabtebWalletBalance}
+           walletName={nabtebPaymentResult}
           />
         )}
                
-               <div className="py-[30px] lg:py-[60px] mt-10">
+               <div className="py-[30px] lg:py-[60px] mt-10 lg:mb-[200px] mb-[50px] md:mb-[100px]">
           <button
-            className={`font-extrabold h-[43px] w-[100%] py-[3.534px] px-[5.301px] mb-[40px] md:mb-[0px] rounded-[4.241px]
+            className={`font-extrabold h-[43px] w-[100%] py-[3.534px] px-[5.301px]  md:mb-[0px] rounded-[4.241px]
             md:w-[95.649px] text-white md:py-[5.868px] md:px-[8.802px]  md:h-auto
            md:text-[9.389px] md:leading-[14px] md:rounded-[7.042px]
            lg:text-[16px] lg:leading-[24px] lg:py-[10px] lg:px-[15px] lg:w-[163px] lg:rounded-[12px] ${
-              !examType ||
-              !quantityResult ||
-              !educationPinPhone ||
-              !educationPinEmail ||
-              !paymentResult ||
-              !educationAmount
+              !nabtebExamType ||
+              !nabtebQuantityResult ||
+              !nabtebEducationPinPhone ||
+              !nabtebEducationPinEmail ||
+              !nabtebPaymentResult ||
+              !nabtebEducationAmount
                 ? "bg-[#63616188] cursor-not-allowed"
                 : "bg-primary"
             }`}
@@ -984,12 +987,12 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
               e.preventDefault();
             }}
             disabled={
-              !examType ||
-              !quantityResult ||
-              !educationPinPhone ||
-              !educationPinEmail ||
-              !paymentResult ||
-              !educationAmount
+              !nabtebExamType ||
+              !nabtebQuantityResult ||
+              !nabtebEducationPinPhone ||
+              !nabtebEducationPinEmail ||
+              !nabtebPaymentResult ||
+              !nabtebEducationAmount
             }
           >
             Proceed
@@ -1000,8 +1003,8 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
 </div>
     
 
-    <div className="flex gap-[5.729px]  md:gap-[14.896px] 
-   justify-center px-[8.594px] mb-[80px]">
+    <div className="flex gap-[8.729px]  md:gap-[14.896px] 
+   justify-center px-[8.594px] mb-[130px]">
             <p className="font-[500] text-[10px] text-black 
               leading-[10.4px] lg:text-[16px] lg:leading-[15.6px]  md:text-[6.875px]
             ] md:leading-[12.938px] self-center">
