@@ -27,7 +27,7 @@ export const SignUp = () => {
     changeHandler,
     handleFocus,
     handleBlur,
-    handleSubmit,
+    // handleSubmit,
     setShowPassword,
     setShowPasswordTwo,
     checkboxChecked,
@@ -404,7 +404,8 @@ export const SignUp = () => {
         </div>
 
         <button
-          onClick={handleSubmit}
+          // onClick={handleSubmit}
+          onClick={() => alert("Sign up unavailable at the moment")}
           // disabled={true}
           className="hover:cursor-pointer px-[35px] py-[10px] flex justify-center item-center mb-[5%] lg:mb-[2%] bg-[#0003]  text-white p-[%] rounded-[4px] mx-auto text-center mt-[7%] text-[9px] lg:px-[37px] lg:mt-[3%] lg:w-[140px] lg:h-[42px] lg:text-[14px] lg:rounded-lg"
         >
