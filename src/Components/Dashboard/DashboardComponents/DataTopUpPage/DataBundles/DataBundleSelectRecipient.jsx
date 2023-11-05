@@ -12,7 +12,7 @@ import Joi from "joi";
 import arrowDown from "../../../../AirTimePage/Images/arrow-down.svg";
 import call from "../../../../AirTimePage/Images/call.svg";
 import user from "../../../../AirTimePage/Images/user.svg";
-import Delete from "./DataBundles-Images/Deleted.svg"
+import Delete from "./DataBundles-Images/Deleted.svg";
 
 const DataBundleSelectRecipient = () => {
   const { isDarkMode } = useContext(ContextProvider);
@@ -28,8 +28,6 @@ const DataBundleSelectRecipient = () => {
   const [confirm, setConfirm] = useState(false);
   const [deleted, setdeleted] = useState(false);
   const [successDeleted, setSuccessDeleted] = useState(false);
-
-
 
   const [showPopup, setShowPopup] = useState(false);
   const [activeImage, setActiveImage] = useState(null);
@@ -56,36 +54,35 @@ const DataBundleSelectRecipient = () => {
     setContinue(true);
 
     const { error } = schema.validate({
-        recipientNumber,
-      });
-  
-      if (error) {
-        setErrors(
-          error.details.reduce((acc, curr) => {
-            acc[curr.path[0]] = curr.message;
-            return acc;
-          }, {})
-        );
-      } else {
-        setContinue(true);
-        setErrors({});
-      }
+      recipientNumber,
+    });
+
+    if (error) {
+      setErrors(
+        error.details.reduce((acc, curr) => {
+          acc[curr.path[0]] = curr.message;
+          return acc;
+        }, {})
+      );
+    } else {
+      setContinue(true);
+      setErrors({});
+    }
   };
 
   const handleConfirm = () => {
     setConfirm(true);
-    setContinue(false)
-  }
+    setContinue(false);
+  };
 
   const handleDelete = () => {
-   setdeleted(true)
-  }
+    setdeleted(true);
+  };
 
   const handleSuccessDelete = () => {
-    setSuccessDeleted(true)
-    setdeleted(false)
-
-   }
+    setSuccessDeleted(true);
+    setdeleted(false);
+  };
 
   const networkList = [
     {
@@ -172,8 +169,6 @@ const DataBundleSelectRecipient = () => {
 
     setInputValue(numericValue);
   };
-
-  
 
   return (
     <DashBoardLayout>
@@ -280,7 +275,10 @@ const DataBundleSelectRecipient = () => {
                         Edit Recipient
                       </div>
                       <hr className="w-full h-[5px]" />
-                      <div onClick={handleDelete} className="text-[#FA6B6B] text-[10px] px-[5px] py-[5px]">
+                      <div
+                        onClick={handleDelete}
+                        className="text-[#FA6B6B] text-[10px] px-[5px] py-[5px]"
+                      >
                         Delete Recipient
                       </div>
                     </div>
@@ -298,7 +296,7 @@ const DataBundleSelectRecipient = () => {
                     toggleSideBar
                       ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
                       : "lg:w-[40%]"
-                  } lg:ml-[10%] lg:mr-[10%] grow pt-[10px] md:mt-[1%] top-[20%] pb-[20px] rounded-tr-[8px] rounded-br-[8px] rounded-bl-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:mb-[18%] md:overflow-auto`}
+                  } lg:ml-[10%] lg:mr-[10%] grow pt-[10px] md:mt-[1%] bottom-0 md:top-[15%] lg:top-[25%] pb-[20px] rounded-tr-[8px] rounded-br-[8px] rounded-bl-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:mb-[18%] md:overflow-auto`}
                 >
                   <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
                     <img
@@ -310,7 +308,7 @@ const DataBundleSelectRecipient = () => {
                       src="/Images/login/arpLogo.png"
                       alt=""
                     />
-                    
+
                     <img
                       onClick={() => {
                         setEdit(false);
@@ -334,61 +332,64 @@ const DataBundleSelectRecipient = () => {
                     className={`${airtimestyles.mainGrid} px-[20px] mt-[50px] flex flex-col justify-between h-[40%] lg:mt-[20px]`}
                   >
                     <div className="">
-                        <div className="relative w-full">
-                          <h2 className="text-[10px] font-semibold mb-1 md:text-[14px]" >
-                            Select Network
-                          </h2>
-                          <div onClick={handleShowList} className={`input border`}>
-                            <div className="text-[10px] md:text-[14px] font-semibold text-[#7C7C7C] flex justify-between py-[8px] px-[10px]">
-                              {selected ? (
-                                <li
-                                  onClick={handleShowList}
-                                  className={airtimestyles.labelInput}
-                                >
-                                  <div className={airtimestyles.network}>
-                                    {networkImage && (
-                                      <img src={networkImage} alt="" />
-                                    )}
-                                  </div>
-                                  <h2 className={airtimestyles.head2}>
-                                    {networkName}
-                                  </h2>
-                                </li>
-                              ) : (
-                                <h2
-                                  onClick={handleShowList}
-                                  className={airtimestyles.head6}
-                                >
-                                  Select Network
-                                </h2>
-                              )}
-                              <button
-                                className={airtimestyles.btnDrop}
+                      <div className="relative w-full">
+                        <h2 className="text-[10px] font-semibold mb-1 md:text-[14px]">
+                          Select Network
+                        </h2>
+                        <div
+                          onClick={handleShowList}
+                          className={`input border`}
+                        >
+                          <div className="text-[10px] md:text-[14px] font-semibold text-[#7C7C7C] flex justify-between py-[8px] px-[10px]">
+                            {selected ? (
+                              <li
                                 onClick={handleShowList}
+                                className={airtimestyles.labelInput}
                               >
-                                <img src={arrowDown} alt="" />
-                              </button>
-                            </div>
+                                <div className={airtimestyles.network}>
+                                  {networkImage && (
+                                    <img src={networkImage} alt="" />
+                                  )}
+                                </div>
+                                <h2 className={airtimestyles.head2}>
+                                  {networkName}
+                                </h2>
+                              </li>
+                            ) : (
+                              <h2
+                                onClick={handleShowList}
+                                className={airtimestyles.head6}
+                              >
+                                Select Network
+                              </h2>
+                            )}
+                            <button
+                              className={airtimestyles.btnDrop}
+                              onClick={handleShowList}
+                            >
+                              <img src={arrowDown} alt="" />
+                            </button>
                           </div>
-                          {showList && (
-                            <div className="network w-full">
-                              {networkList.map((item) => (
-                                <Network
-                                  key={item.id}
-                                  image={item.image}
-                                  name={item.name}
-                                  onClick={() =>
-                                    handleSelectNetwork(
-                                      item.name,
-                                      item.image,
-                                      item.discount
-                                    )
-                                  }
-                                />
-                              ))}
-                            </div>
-                          )}
                         </div>
+                        {showList && (
+                          <div className="network w-full">
+                            {networkList.map((item) => (
+                              <Network
+                                key={item.id}
+                                image={item.image}
+                                name={item.name}
+                                onClick={() =>
+                                  handleSelectNetwork(
+                                    item.name,
+                                    item.image,
+                                    item.discount
+                                  )
+                                }
+                              />
+                            ))}
+                          </div>
+                        )}
+                      </div>
                     </div>
 
                     <div className="md:mt-[20px]">
@@ -406,10 +407,10 @@ const DataBundleSelectRecipient = () => {
                             required
                             placeholder="Add recipient phone number"
                             value={inputValue}
-                  onChange={(event) => {
-                    handleChange(event);
-                    setRecipientNumber(event.target.value);
-                  }}
+                            onChange={(event) => {
+                              handleChange(event);
+                              setRecipientNumber(event.target.value);
+                            }}
                           />
                           <div className={airtimestyles.call}>
                             <img src={call} alt="" />
@@ -422,7 +423,7 @@ const DataBundleSelectRecipient = () => {
                         </div>
                       )}
                     </div>
-                    
+
                     <div className="md:mt-[20px]">
                       <div>
                         <h2 className="text-[10px] font-semibold mb-1 md:text-[14px]">
@@ -452,7 +453,9 @@ const DataBundleSelectRecipient = () => {
                     </div>
                   </div>
 
-                  <div className={`w-full h-[38px] mt-[80px] px-[20px] mx-auto lg:mt-[110px]`}>
+                  <div
+                    className={`w-full h-[38px] mt-[80px] px-[20px] mx-auto lg:mt-[110px]`}
+                  >
                     <button
                       className={`${
                         recipientNumber.length < 11
@@ -546,7 +549,9 @@ const DataBundleSelectRecipient = () => {
                     </div>
                   </div>
 
-                  <div className={`w-full h-[38px] mt-[100px] px-[20px] md:mx-[35%]`}>
+                  <div
+                    className={`w-full h-[38px] mt-[100px] px-[20px] md:mx-[35%]`}
+                  >
                     <button
                       className={`${
                         recipientNumber.length < 11
@@ -584,9 +589,8 @@ const DataBundleSelectRecipient = () => {
 
                     <img
                       onClick={() => {
-                        setConfirm(false)
+                        setConfirm(false);
                         window.location.reload();
-
                       }}
                       className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[35px] lg:h-[35px] "
                       src="/Images/transferImages/close-circle.png"
@@ -596,24 +600,27 @@ const DataBundleSelectRecipient = () => {
 
                   <hr className="h-[6px] bg-[#04177f] lg:mt-[2%] border-none mt-[2%] md:mt-[6%] md:h-[10px]" />
                   <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[3%] lg:my-[%]">
-                  Successful
+                    Successful
                   </p>
                   <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
-                  <img
-                  className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[125px] lg:h-[125px]"
-                  src="./Gif/checkMarkGif.gif"
-                  alt="/"
-                />
+                    <img
+                      className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[125px] lg:h-[125px]"
+                      src="./Gif/checkMarkGif.gif"
+                      alt="/"
+                    />
 
-                <p className="text-[10px] text-[#2ED173] font-semibold md:text-[14px]">New recipient contact has been added successfully.</p>
-
+                    <p className="text-[10px] text-[#2ED173] font-semibold md:text-[14px]">
+                      New recipient contact has been added successfully.
+                    </p>
                   </div>
 
-                  <div className={`w-full h-[38px] mt-[40px] px-[20px] items-center`}>
+                  <div
+                    className={`w-full h-[38px] mt-[40px] px-[20px] items-center`}
+                  >
                     <button
                       className={`bg-[#04177F] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
                       onClick={() => {
-                        setConfirm(false)
+                        setConfirm(false);
                         window.location.reload();
                       }}
                     >
@@ -624,8 +631,7 @@ const DataBundleSelectRecipient = () => {
               </Modal>
             )}
 
-
-{deleted && (
+            {deleted && (
               <Modal>
                 <div
                   className={`confirm2 ${styles.inputPin} ${
@@ -647,9 +653,8 @@ const DataBundleSelectRecipient = () => {
 
                     <img
                       onClick={() => {
-                        setConfirm(false)
+                        setConfirm(false);
                         window.location.reload();
-
                       }}
                       className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[45px] lg:h-[45px] "
                       src="/Images/transferImages/close-circle.png"
@@ -659,23 +664,23 @@ const DataBundleSelectRecipient = () => {
 
                   <hr className="h-[6px] bg-[#04177f] lg:mt-[2%] border-none mt-[2%] md:mt-[2%] md:h-[10px]" />
                   <p className="text-[10px] md:text-[14px] lg:text-[18px] font-extrabold text-center my-[3%] lg:my-[%]">
-                  Are you sure you want to delete this recipient permanently?
-
+                    Are you sure you want to delete this recipient permanently?
                   </p>
                   <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
-                  <img
-                  className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[120px] lg:h-[120px]"
-                  src={Delete}
-                  alt="/"
-                />
-
+                    <img
+                      className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[120px] lg:h-[120px]"
+                      src={Delete}
+                      alt="/"
+                    />
                   </div>
 
-                  <div className={`w-full h-[38px] mt-[40px] px-[20px] flex md:mx-[10%]`}>
+                  <div
+                    className={`w-full h-[38px] mt-[40px] px-[20px] flex md:mx-[10%]`}
+                  >
                     <button
                       className={`bg-[#04177F] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
                       onClick={() => {
-                        handleSuccessDelete()
+                        handleSuccessDelete();
                       }}
                     >
                       Yes
@@ -683,7 +688,7 @@ const DataBundleSelectRecipient = () => {
                     <button
                       className={`bg-[#fff] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-[#F95252] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
                       onClick={() => {
-                        setdeleted(false)
+                        setdeleted(false);
                       }}
                     >
                       Cancel
@@ -693,8 +698,7 @@ const DataBundleSelectRecipient = () => {
               </Modal>
             )}
 
-
-{successDeleted && (
+            {successDeleted && (
               <Modal>
                 <div
                   className={`confirm2 ${styles.inputPin} ${
@@ -716,9 +720,8 @@ const DataBundleSelectRecipient = () => {
 
                     <img
                       onClick={() => {
-                        setConfirm(false)
+                        setConfirm(false);
                         window.location.reload();
-
                       }}
                       className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[45px] lg:h-[45px] "
                       src="/Images/transferImages/close-circle.png"
@@ -728,23 +731,27 @@ const DataBundleSelectRecipient = () => {
 
                   <hr className="h-[6px] bg-[#04177f] lg:mt-[2%] border-none mt-[2%] md:mt-[2%] md:h-[10px]" />
                   <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[3%] lg:my-[%]">
-                  Successful
+                    Successful
                   </p>
-                  <p className="text-[10px] md:text-[14px] px-[20px] lg:text-[18px] font-extrabold text-center my-[1%] lg:my-[%]">Recipicient *****2345 has been deleted successfully. You can add recipient again anytime!</p>
+                  <p className="text-[10px] md:text-[14px] px-[20px] lg:text-[18px] font-extrabold text-center my-[1%] lg:my-[%]">
+                    Recipicient *****2345 has been deleted successfully. You can
+                    add recipient again anytime!
+                  </p>
                   <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[5%]">
-                  <img
-                  className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[120px] lg:h-[120px]"
-                  src="./Gif/checkMarkGif.gif"
-                  alt="/"
-                />
-
+                    <img
+                      className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[120px] lg:h-[120px]"
+                      src="./Gif/checkMarkGif.gif"
+                      alt="/"
+                    />
                   </div>
 
-                  <div className={`w-full h-[38px] mt-[40px] px-[20px] md:mx-[35%] md:mt-[10px]`}>
+                  <div
+                    className={`w-full h-[38px] mt-[40px] px-[20px] md:mx-[35%] md:mt-[10px]`}
+                  >
                     <button
                       className={`bg-[#04177F] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
                       onClick={() => {
-                        setSuccessDeleted(false)
+                        setSuccessDeleted(false);
                         window.location.reload();
                       }}
                     >
@@ -754,13 +761,12 @@ const DataBundleSelectRecipient = () => {
                 </div>
               </Modal>
             )}
-
           </div>
         </div>
         <div
           className={`${
             isDarkMode ? "" : ""
-          } flex gap-[15px] justify-center items-center mt-[100%] md:mt-[38%] lg:mt-[26%] lg:mb-[%]`}
+          } flex gap-[15px] justify-center items-center mt-[100%] pb-[25%] md:pb-[2%] md:mt-[40%] lg:mt-[40%] lg:pb-0`}
         >
           <div className="text-[10px] md:text-[12px] lg:text-[14px]">
             You need help ?

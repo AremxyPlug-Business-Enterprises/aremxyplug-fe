@@ -61,6 +61,10 @@ import MtnDataTopUpBundle from "./Components/Dashboard/DashboardComponents/DataT
 import WithdrawToOtherBanks from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToOtherBanks";
 import WalletSummaryPage from "./Components/WalletSummaryPage/WalletSummary";
 import SalesSummaryPage from "./Components/SalesSummaryPage/SalesSummary";
+import NotificationsPage from "./Components/NotificationsPage/Notifications";
+import { WalletSuccessfulReceipt} from "./Components/WalletSummaryPage/WalletSuccessfulReceipt";
+import {WalletFailedReceipt} from "./Components/WalletSummaryPage/WalletFailedReceipt";
+import {WalletPendingReceipt} from "./Components/WalletSummaryPage/WalletPendingReceipt";
 import { WithdrawToOtherBankReceipt } from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToOtherBanksPopUp/WithdrawToOtherBankReceipt";
 import AirtelDataBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/AirtelDataBundle/AirtelDataBundle";
 import GloDataBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/GloDataBundle/GloDataBundle";
@@ -168,6 +172,11 @@ export const Router = () => {
         <Route path="/withdraw" element={<WithdrawPage />} />
         <Route path="/wallet-summary" element={<WalletSummaryPage/>} />
         <Route path="/sales-summary" element={<SalesSummaryPage />} />
+        <Route path="/notifications" element={<NotificationsPage />} />
+        <Route path="/wallet-successful-receipt" element={<WalletSuccessfulReceipt />} />
+        <Route path="/wallet-failed-receipt" element={<WalletFailedReceipt />} />
+        <Route path="/wallet-pending-receipt" element={<WalletPendingReceipt />} />
+
         <Route
           path="/withdraw-to-account"
           element={<WithdrawToMyAccountPage />}
@@ -233,6 +242,10 @@ export const Router = () => {
         <Route path="/AirtelReceipt" element={<AirtelReceipt/>} />
         <Route path="/EtisalatReceipt" element={<EtisalatReceipt/>} />
         <Route path="/GloReceipt" element={<GloReceipt/>} />
+        <Route path="/DataBundleSelectRecipient" element={<DataBundleSelectRecipient/>} />
+        <Route path="/DataBundleAddRecipient" element={<DataBundleAddRecipient/>} />
+        <Route path="/TvSubscription" element={<TvSubscription/>} />
+        <Route path="/GoTv" element={<GoTv/>} />
         <Route path="/EducationPins" element={<EducationMain/>}/>
         <Route path="/WaecEducationPin" element={<WaecEducationPin/>}/>
         <Route path="/NecoEducationPin" element={<NecoEducationPins/>}/>

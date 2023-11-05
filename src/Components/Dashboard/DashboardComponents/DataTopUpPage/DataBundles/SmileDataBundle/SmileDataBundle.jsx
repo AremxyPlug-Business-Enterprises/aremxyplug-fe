@@ -172,9 +172,9 @@ const SmileDataBundle = () => {
   const [showAccountId, setShowAccountId] = useState("");
 
   const isEmailOrNumberValid = (input) => {
-    const textRegex = /^.{6}$/;
+    const textRegex = /^[A-Za-z\d]{6,15}$/;
     const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{3}$/i;
-    const numberRegex = /^\d{10}$/;
+    const numberRegex = /^\d{11}$/;
 
     if (emailRegex.test(input)) {
       return true;
@@ -198,7 +198,7 @@ const SmileDataBundle = () => {
       setAccountIdInputColor("#2ED173");
       setInput("");
     } else {
-      setErrorMessage("Invalid Email, Smile Account ID");
+      setErrorMessage("Invalid Email Or Smile Account ID");
       setShowAccountId(false);
       setAccountIdInputColor("#F95252");
     }
@@ -462,7 +462,7 @@ const SmileDataBundle = () => {
             isDarkMode
               ? "bg-[#000] text-[#fff] border-[#fff]"
               : "bg-[#ffffff] text-[#000] "
-          } flex flex-col justify-between h-full`}
+          }`}
         >
           <div
             id="DataBundle"
@@ -487,7 +487,7 @@ const SmileDataBundle = () => {
               />
             </div>
           </div>
-
+          
           {/* =========================Select/Add Recipient===================== */}
 
           <div className="flex gap-[10%] mt-[40px] md:w-full md:justify-between md:gap-[10%] ">
@@ -1424,11 +1424,14 @@ const SmileDataBundle = () => {
             </button>
           </div>
 
-          {/* =======================FOOTER=================================== */}
-          <div
+          
+        </section>
+        
+        {/* =======================FOOTER=================================== */}
+        <div
             className={`${
               isDarkMode ? "" : ""
-            } flex gap-[15px] justify-center items-center mt-[100%] md:mt-[38%] lg:mt-[26%] lg:mb-[%]`}
+            } flex gap-[15px] justify-center items-center mt-[100%] pb-[25%] md:pb-[12%] md:mt-[40%] lg:mt-[40%] lg:pb-0`}
           >
             <div className="text-[10px] md:text-[12px] lg:text-[14px]">
               You need help ?
@@ -1443,7 +1446,6 @@ const SmileDataBundle = () => {
               </div>
             </Link>
           </div>
-        </section>
       </div>
     </DashBoardLayout>
   );

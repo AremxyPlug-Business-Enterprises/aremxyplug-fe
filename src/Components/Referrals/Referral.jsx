@@ -1,4 +1,5 @@
 import React from "react";
+import '../../App.css';
 import { DashBoardLayout } from "../Dashboard/Layout/DashBoardLayout";
 import Refer1 from "../Referrals/referralImage/Excellent Review.svg";
 import copyRefer from "../Referrals/referralImage/copy.svg";
@@ -32,7 +33,7 @@ export default function Referral() {
     const handleCopyTextTwo = (e) => {
       setCopyTextTwo(e.target.value);
     }
- 
+  
     const copyToClipBoardTwo = () => {
         // copy(copyTextTwo);
         alert(`You have copied "${copyTextTwo}"`);
@@ -42,9 +43,8 @@ export default function Referral() {
     <DashBoardLayout>
       <div className="">
         {/* RECTANGLE1 // CONTENT ONE CONTAINER */}
-
-        <div
-          className="rectangle1 flex justify-between items-center gap-[18.34px] h-[88.53px] w-[100%]  
+<div
+         className="rectangle1 flex justify-between items-center gap-[18.34px] h-[88.53px] w-[100%]  
    pt-[2.665px] pr-[20px] pb-[2.668px] pl-[16.664px] lg:mb-[60px] mb-[30px] rounded-[6.667px] 
    md:pt-[5.581px] md:pb-[4.586px] md:pr-[34.371px] md:pl-[28.646px] md:gap-[31.514px] md:h-[112.29px]
    md:rounded-[11.458px] lg:py-[8px] lg:pl-[60px] lg:pr-[50px] lg:gap-[55px] lg:h-[196px]

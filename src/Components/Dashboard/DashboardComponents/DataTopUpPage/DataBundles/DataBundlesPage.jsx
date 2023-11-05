@@ -36,20 +36,24 @@ const DataBundlesPage = () => {
     setSelectedAmount,
     setRecipientNames,
     toggleSideBar,
+    setAccountId,
+    setEmailId,
   } = useContext(ContextProvider);
 
   const handleChange = () => {
-    setSelectedNetworkProduct(false);
-    setSelectedOption(false);
+    setSelectedNetworkProduct("");
+    setSelectedOption("");
     setSelectedAmount("");
     setRecipientNames("");
+    setAccountId("")
+    setEmailId("")
   };
 
   const handleCodes = () => {
     setCodes(false);
     setCodes(true);
   };
-
+  
   return (
     <DashBoardLayout>
       <div
@@ -64,7 +68,7 @@ const DataBundlesPage = () => {
             isDarkMode
               ? "bg-[#000] text-[#fff] border-[#fff]"
               : "bg-[#ffffff] text-[#000] "
-          } flex flex-col justify-between h-full`}
+          }`}
         >
           <div
             id="DataBundle"
@@ -233,6 +237,9 @@ const DataBundlesPage = () => {
               <div
                 id="Network"
                 className="rounded-[4px] relative flex flex-col justify-center items-center"
+                onClick={() => {
+                  handleChange();
+                }}
               >
                 <img src={Smile} alt="" className="w-full" />
                 <img
@@ -247,6 +254,9 @@ const DataBundlesPage = () => {
               <div
                 id="Network"
                 className="rounded-[4px] relative flex flex-col justify-center items-center"
+                onClick={() => {
+                  handleChange();
+                }}
               >
                 <img src={Spectranet} alt="" className="w-full" />
                 <img
@@ -360,11 +370,12 @@ const DataBundlesPage = () => {
               )
             </Modal>
           )}
-
-          <div
+          
+        </section>
+        <div
             className={`${
               isDarkMode ? "" : ""
-            } flex gap-[15px] justify-center items-center mt-[100%] md:mt-[38%] lg:mt-[26%] lg:mb-[%]`}
+            } flex gap-[15px] justify-center items-center mt-[100%] pb-[25%] md:pb-[2%] md:mt-[40%] lg:mt-[40%] lg:pb-0`}
           >
             <div className="text-[10px] md:text-[12px] lg:text-[14px]">
               You need help ?
@@ -379,7 +390,6 @@ const DataBundlesPage = () => {
               </div>
             </Link>
           </div>
-        </section>
       </div>
     </DashBoardLayout>
   );

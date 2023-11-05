@@ -1,15 +1,14 @@
-import React from "react";
-import { useContext, useRef } from "react";
-import { ContextProvider } from '../../../../../Context';
-import { DashBoardLayout } from '../../../../Layout/DashBoardLayout';
+
 import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import { useContext } from "react";
+import { ContextProvider } from  "../Context";
+import { DashBoardLayout } from "../Dashboard/Layout/DashBoardLayout";
+import { useRef } from "react";
 
 
-
-
-export const SmileReceipt = () => { 
+export const WalletSuccessfulReceipt = () => { 
 
   const {
     selectedNetworkProduct,
@@ -22,10 +21,6 @@ export const SmileReceipt = () => {
     setSelectedOption,
     setSelectedAmount,
     setRecipientNames,
-    accountId,
-    setAccountId,
-    emailId, 
-    setEmailId,
   }
    = useContext(ContextProvider);
 
@@ -36,14 +31,12 @@ export const SmileReceipt = () => {
     useContext(ContextProvider);  
 
   const contentRef = useRef(null);
-  
+
   const handleChange = () => {
-    setSelectedNetworkProduct('');
-    setSelectedOption('');
+    setSelectedNetworkProduct(false);
+    setSelectedOption(false);
     setSelectedAmount('');
     setRecipientNames('');
-    setAccountId('');
-    setEmailId('');
   }
 
 
@@ -77,9 +70,7 @@ export const SmileReceipt = () => {
       console.log("Web Share API not supported.");
     }
   };
-  
 
-  
   // ==============Save Pdf Function==============
   const handleSaveAsPDFClick = () => {
     const content = contentRef.current;
@@ -103,12 +94,12 @@ export const SmileReceipt = () => {
           <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
             <Link to="/">
               <img
-                className=" w-[30px] h-[15px] md:w-[40px] md:h-[20px] lg:w-[50px] lg:h-[25px]"
+                className="  w-[30px] h-[15px] md:w-[40px] md:h-[20px] lg:w-[50px] lg:h-[25px]"
                 src="/Images/login/arpLogo.png"
                 alt=""
               />
             </Link>
-            <Link to="/SmileDataBundle">
+            <Link to="/wallet-summary">
               {" "}
               <img
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
@@ -165,38 +156,20 @@ export const SmileReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Network</p>
-                  <span>SMILE</span>
+                  <span>MTN</span>
                 </div>
-                {/* <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Product</p>
                   <span>{selectedNetworkProduct}</span>
-                </div> */}
-
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Product & Plan</p>
-                  <span>{selectedOption}</span>
                 </div>
-
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Account ID</p>
-                  <span>{accountId}</span>
-                </div>
-
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Email ID</p>
-                  <span>{emailId}</span>
-                </div>
-                
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Phone Number</p>
-                  <span>{recipientPhoneNumber}</span>
-                </div>
-
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Recipient Name</p>
                   <span>{recipientNames}</span>
                 </div>
-                
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                  <p className="text-[#0008]">Phone Number</p>
+                  <span>{recipientPhoneNumber}</span>
+                </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Amount</p>
                   <span>{selectedAmount}</span>
@@ -215,7 +188,7 @@ export const SmileReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Customer Name</p>
-                  <span>Aremxyplug</span>
+                  <span className="whitespace-nowrap">Aremxyplug</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Wallet Type</p>
@@ -235,11 +208,11 @@ export const SmileReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Product</p>
-                  <span>Data  Top-up</span>
+                  <span>{selectedNetworkProduct}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Description</p>
-                  <span>SMILE {selectedNetworkProduct}</span>
+                  <span>Data  Top-up</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Order Number</p>
@@ -263,11 +236,7 @@ export const SmileReceipt = () => {
               onClick={() => {
                 handleShareClick();
               }}
-              className={`${
-                toggleSideBar
-                  ? "md:w-[45%]"
-                  : "md:w-[35%]"
-              } bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px]  md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+              className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
             >
               Share Receipt
             </button>
@@ -275,18 +244,12 @@ export const SmileReceipt = () => {
               onClick={() => {
                 handleSaveAsPDFClick();
               }}
-              className={`${
-                toggleSideBar
-                  ? "md:w-[45%]"
-                  : "md:w-[35%]"
-              } bg-[#ffffff] border-[1px] w-[111px] border-[#0003] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+              className={`bg-[#ffffff] border-[1px] w-[111px] border-[#0003] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
             >
               Save as PDF
             </button>
           </div>
         </div>
-
-
         <div
           className={`${
             isDarkMode ? "mb-[1%]" : "mb-[5%]"
@@ -310,3 +273,19 @@ export const SmileReceipt = () => {
     </DashBoardLayout>
   );
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
