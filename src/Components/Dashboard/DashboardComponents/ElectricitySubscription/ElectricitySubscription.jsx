@@ -121,7 +121,7 @@ const ElectricitySubscription = () => {
             </div>
             </Link>
         </div>
-        <div className="flex flex-row items-center justify-center mt-[200px] md:mt-[38%] lg:mt-[75%] gap-2">
+        <div className="flex flex-row items-center justify-center mt-[200px] mb-[70px] md:mt-[38%] lg:mt-[75%] gap-2">
           <div className="text-[8px] lg:text-[12px] font-[600] text-black">
             You need help?
           </div>
