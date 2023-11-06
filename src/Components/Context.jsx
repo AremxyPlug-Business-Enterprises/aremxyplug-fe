@@ -273,7 +273,7 @@ export const Context = ({ children }) => {
         .post(url, data, config)
         .then((response) => {
           console.log(response);
-          if (response.status === 200) {
+          if (response.status === 201) {
             setVerification(true);
             setState({
               country: "",
@@ -285,8 +285,8 @@ export const Context = ({ children }) => {
               confirmPassword: "",
             });
             setErrors({});
-          } else if (response.status === 500) {
-            alert(response.data);
+          } else if (response.status === 200) {
+            alert("User Exist Already");
           } else if (response.status === 409) {
             alert("Input already in use: " + response.data);
           } else {
@@ -776,6 +776,17 @@ const [necoQuantityActive, setNecoQuantityActive] = useState(false);
   const [jambEducationAmount, setJambEducationAmount] = useState('₦');
   const [jambWalletBalance, setJambWalletBalance] = useState('');
 
+  // ============== NABTEB PINS =============
+  const [nabtebQuantityResult, setNabtebQuantityResult] = useState('');
+ const [nabtebQuantityActive, setNabtebQuantityActive] = useState(false);
+  const [nabtebPaymentResult, setNabtebPaymentResult] = useState('');
+  const [nabtebMethodActive, setNabtebMethodActive] = useState(false);
+  const [nabtebExamType, setNabtebExamType] = useState('');
+  const [nabtebExamActive, setNabtebExamActive] = useState(false);
+  const [nabtebEducationPinPhone, setNabtebEducationPinPhone]= useState('');
+  const[ nabtebEducationPinEmail, setNabtebEducationPinEmail] = useState('');
+  const [nabtebEducationAmount, setNabtebEducationAmount] = useState('₦');
+  const [nabtebWalletBalance, setNabtebWalletBalance] = useState('');
 
   const hold = {
     firstDrop,
@@ -1191,7 +1202,26 @@ const [necoQuantityActive, setNecoQuantityActive] = useState(false);
   setJambWalletBalance,
 
   //========= NABTEB PINS =======
-  
+nabtebQuantityResult, 
+  setNabtebQuantityResult,
+  nabtebQuantityActive, 
+  setNabtebQuantityActive,
+  nabtebPaymentResult, 
+  setNabtebPaymentResult,
+ nabtebMethodActive, 
+  setNabtebMethodActive,
+  nabtebExamType, 
+  setNabtebExamType,
+  nabtebExamActive,
+   setNabtebExamActive,
+   nabtebEducationPinPhone, 
+   setNabtebEducationPinPhone,
+   nabtebEducationPinEmail, 
+  setNabtebEducationPinEmail,
+  nabtebEducationAmount, 
+  setNabtebEducationAmount,
+  nabtebWalletBalance, 
+  setNabtebWalletBalance,
 
   };
 

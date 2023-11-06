@@ -149,7 +149,7 @@ const waecReceipt = () => {
 
   return (
     <DashBoardLayout>
-    <div className='flex flex-col h-[110%] justify-between '>
+    <div className='flex flex-col lg:h-[120%] h-[140%] justify-between'>
  <div className=''>
   {/* Hero-section */}
 <HeroComponent/>
@@ -974,9 +974,9 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
           />
         )}
                
-               <div className="py-[30px] lg:py-[60px] mt-10 md:mb-[200px] mb-[100px]">
+               <div className="py-[30px] lg:py-[60px] mt-10 lg:mb-[200px] mb-[50px] md:mb-[100px]">
           <button
-            className={`font-extrabold h-[43px] w-[100%] py-[3.534px] px-[5.301px] mb-[40px] md:mb-[0px] rounded-[4.241px]
+            className={`font-extrabold h-[43px] w-[100%] py-[3.534px] px-[5.301px] md:mb-[0px] rounded-[4.241px]
             md:w-[95.649px] text-white md:py-[5.868px] md:px-[8.802px] md:h-auto
            md:text-[9.389px] md:leading-[14px] md:rounded-[7.042px]
            lg:text-[16px] lg:leading-[24px] lg:py-[10px] lg:px-[15px] lg:w-[163px] lg:rounded-[12px] ${
@@ -1010,8 +1010,8 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
 </div>
     
 
-    <div className=" flex gap-[5.729px]  md:gap-[14.896px] 
-     justify-center px-[8.594px] mb-[80px]">
+    <div className=" flex gap-[8.729px]  md:gap-[14.896px] 
+     justify-center px-[8.594px] mb-[130px]">
               <p className="font-[500] text-[10px] text-black 
               leading-[10.4px] lg:text-[16px] lg:leading-[15.6px]  md:text-[6.875px]
             ] md:leading-[12.938px] self-center">

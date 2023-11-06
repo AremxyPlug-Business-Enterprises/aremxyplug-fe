@@ -9,19 +9,19 @@ import AremxyPlugIcon from '../imagesEducation/AremxyPlug.svg';
 
 export default function NabtebReceipt() {
     const {
-        examType,
-        quantityResult,
-        educationPinPhone,
-        educationPinEmail,
-        paymentResult,
-        setExamType,
-        educationAmount,
-        setQuantityResult,
-        setEducationPinEmail,
-        setEducationPinPhone,
-        setPaymentResult,
-        setEducationAmount,
-        setWalletBalance
+        nabtebExamType,
+        nabtebQuantityResult,
+        nabtebEducationPinPhone,
+        nabtebEducationPinEmail,
+        nabtebPaymentResult,
+        nabtebEducationAmount,
+        setNabtebExamType,
+        setNabtebQuantityResult,
+        setNabtebEducationPinEmail,
+        setNabtebEducationPinPhone,
+        setNabtebPaymentResult,
+        setNabtebEducationAmount,
+        setNabtebWalletBalance
         
         }
          = useContext(ContextProvider);
@@ -35,13 +35,13 @@ export default function NabtebReceipt() {
           const contentRef = useRef(null);
   
           const currentNabtebChanges = () => {
-            setQuantityResult('');
-            setExamType('');
-            setEducationPinPhone('');
-            setEducationPinEmail('');
-           setPaymentResult('');
-           setEducationAmount('₦');
-           setWalletBalance('')
+            setNabtebQuantityResult('');
+            setNabtebExamType('');
+            setNabtebEducationPinPhone('');
+            setNabtebEducationPinEmail('');
+           setNabtebPaymentResult('');
+           setNabtebEducationAmount('₦');
+           setNabtebWalletBalance('')
           }
         
         //   Share function
@@ -135,9 +135,9 @@ export default function NabtebReceipt() {
           lg:text-[16px]  lg:leading-[24px font-[500] md:mb-7">
               You have successfully purchased{" "}
               <span className="font-extrabold text-[10.9px] md:text-[14.9px] lg:text-[16.9px]">
-              {examType} {" "}
+              {nabtebExamType} {" "}
               </span>
-              from your {paymentResult} to{" "}
+              from your {nabtebPaymentResult} to{" "}
             </p>
             <div className="flex flex-col  gap-7  md:gap-10">
               {/* ========================Recipient Info================== */}
@@ -158,7 +158,7 @@ export default function NabtebReceipt() {
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between 
                  lg:text-[16px] font-[500]">
                   <p className="text-[#0008]">Quantity</p>
-                  <span>{quantityResult}</span>
+                  <span>{nabtebQuantityResult}</span>
                 </div>
                 {/* <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Plan</p>
@@ -168,17 +168,17 @@ export default function NabtebReceipt() {
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
                 justify-between  lg:text-[16px] font-[500]">
                   <p className="text-[#0008]">Phone Number</p>
-                  <span>{educationPinPhone}</span>
+                  <span>{nabtebEducationPinPhone}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] 
                 mx-auto justify-between  lg:text-[16px] font-[500]">
                   <p className="text-[#0008]">Email</p>
-                  <span>{educationPinEmail}</span>
+                  <span>{nabtebEducationPinEmail}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] 
                 mx-auto justify-between  lg:text-[16px] font-[500]">
                   <p className="text-[#0008]">Amount</p>
-                  <span>{educationAmount}</span>
+                  <span>{nabtebEducationAmount}</span>
                 </div>            
               </div>
 
@@ -200,7 +200,7 @@ export default function NabtebReceipt() {
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto \
                 justify-between  lg:text-[16px] font-[500]">
                   <p className="text-[#0008]">Wallet Type</p>
-                {paymentResult}
+                {nabtebPaymentResult}
                 </div>
               </div>
 
