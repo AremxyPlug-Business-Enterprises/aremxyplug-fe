@@ -85,6 +85,8 @@ export default function WalletSummaryPage() {
     setSelectedBalance(product);
   };
 
+  
+
   const [selectedProduct, setSelectedProduct] = useState("Filter By Status");
   const handleClick = (product) => {
     setSelectedProduct(product);
@@ -127,7 +129,8 @@ px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px]"
         </div>
 
         {/* available Balance */}
-
+        
+         
         <div
           onClick={() => {
             setIsOpen1((prev) => !prev);
@@ -138,11 +141,13 @@ px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px]"
         gap-[5px] mt-[20%] lg:mt-[150px] bg-indigo-300
          bg-opacity-20 md:rounded-[11.46px] lg:rounded-[20px] rounded-[6px]
           justify-center lg:w-full w-full md:w-full md:mt-[100px] md:h-[68.75px] 
-          md:px-[140.10px] md:py-[14.32px]  items-center inline-flex"
+          md:px-[140.10px] md:py-[14.32px]  items-center flex-col flex"
         >
-          <div className="lg:justify-start lg:items-center gap-[10px] md:gap-[5.73px] lg:gap-[5.73px] flex">
-            <div className="lg:w-[70px] lg:h-[70px] w-6 h-6 md:w-[40.10px] md:h-[40.10px] lg:gap-[5.73px] relative">
-              <div className="lg:w-[70px] lg:h-[70px] left-0 top-0 w-6 h-6 md:w-[40.10px] md:h-[40.10px]  absolute bg-white rounded-full"></div>
+          <div className="lg:justify-start cursor-pointer lg:items-center relative gap-[10px] md:gap-[5.73px] 
+          lg:gap-[5.73px] flex">
+            <div className="lg:w-[70px] lg:h-[70px] w-6 h-6 md:w-[40.10px] md:h-[40.10px] lg:gap-[5.73px] ">
+              <div className="lg:w-[70px] lg:h-[70px] left-0 top-0 w-6 h-6 md:w-[40.10px] md:h-[40.10px]
+                 bg-white rounded-full"></div>
               <div
                 className="lg:w-[29.27px] lg:h-[29.27px]  lg:top-[20px]
                  w-4 h-4 top-[6.86px] md:w-[16.77px] lg:left-[20px] md:h-[16.77px]
@@ -160,15 +165,299 @@ px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px]"
                 {selectedBalance}
               </div>
             </div>
-          </div>
-          <div className="lg:w-6 lg:h-6 w-[13.75px] md:mt-[5px] mt-[0px] h-[13.75px] md:w-[13.75px] md:h-[13.75px] lg:justify-center lg:items-center flex">
+          
+<div className="lg:w-6 lg:h-6 w-[13.75px] md:mt-[10px] mt-[0px] h-[13.75px] md:w-[13.75px] md:h-[13.75px] lg:justify-center lg:items-center flex">
             {isOpen1 ? (
               <img src={arrowdown33} alt="Arrow Down 33" />
             ) : (
               <img src={arrow7} alt="Arrow 7" />
             )}
           </div>
+          {/* dropdown */}
+          <div className="flex lg:top-[95px] cursor-pointer md:w-full w-full lg:w-full 
+ top-[34px] md:top-[54.35px] z-20 flex-col absolute">
+          {isOpen1 && (
+          <div
+            className=" top-[80px]  w-full flex flex-col
+          
+          "
+          >
+            <div
+              onClick={() => {
+                setIsOpen1((prev) => !prev);
+                if (isOpen1) {
+                  // Set isOpen5 to false when it's true
+                  setIsOpen1(true);
+                }
+            
+                handleSelect(
+                  <img
+                    className="w-3 h-3 lg:w-[29.27px] lg:h-[29.27px] ml-[-1px] mt-[-1px]
+               md:w-[16.77px] md:h-[15.73px] "
+                    src={group5}
+                    alt=""
+                  />
+                );
+
+                handleBalance(
+                  <div
+                    className="text-neutral-500 lg:mt-[5px] md:mt-[2px] text-[9px] md:text-[13px]
+             lg:text-xl
+             lg:font-medium 
+            md:leading-3 lg:leading-tight"
+                  >
+                    (50,000.00)
+                  </div>
+                );
+              }}
+              className="lg:pl-2.5 lg:w-[370px] border border-b md:w-[214.84px] 
+            lg:pt-[7px] md:h-[35px] lg:h-[47px] h-[30px] 
+            justify-start items-center pt-[3px] pb-[px] bg-white shadow gap-[5px] pl-2 md:pl-2 md:gap-[5px] 
+              flex-row  md:pt-1 md:pb-[4.43px] inline-flex"
+            >
+              <div
+                className="lg:w-[29.27px] w-[16.77px] lg:h-[27.45px]
+                   h-[16.77px] lg:left-0 lg:top-[0.91px] md:w-[16.77px]
+                    md:h-[16.77px] md:left-1 md:top-[0.52px]"
+              >
+                <img src={group5} alt="" />
+              </div>
+
+              <div
+                className="text-neutral-500 text-[9px] md:text-[13px] lg:text-xl lg:font-medium 
+                  md:leading-3 lg:leading-tight"
+              >
+                NGN Wallet (50,000.00)
+              </div>
+            </div>
+            <div
+              onClick={() => {
+                setIsOpen1((prev) => !prev);
+                if (isOpen1) {
+                  // Set isOpen5 to false when it's true
+                  setIsOpen1(true);
+                }
+                handleSelect(
+                  <img
+                    className="w-3 h-3 lg:w-[29.27px] lg:h-[29.27px] ml-[-1px]
+            mt-[-1px] md:w-[16.77px] md:h-[15.73px]"
+                    src={flags}
+                    alt=""
+                  />
+                );
+                handleBalance(
+                  <div
+                    className="text-neutral-500 md:mt-[2px] lg:text-xl md:text-[13px] text-[9px]
+            font-medium  md:leading-3 leading-tight"
+                  >
+                    (0.00)
+                  </div>
+                );
+              }}
+              className="lg:pl-2.5 md:w-[214.84px] border border-b mt-[0.0px] 
+             h-[30px] lg:h-[45px] lg:w-[370px] lg:pb-[7.73px] bg-white shadow 
+             justify-start items-center md:h-[35px] lg:mt-[-3px] flex-row pl-2 md:pl-2 gap-[5px] 
+               md:gap-[5px] lg:gap-[5px] md:pt-1   inline-flex"
+            >
+              <div
+                className="lg:w-[28.77px] w-[16.77px] lg:h-[26.09px]
+                   h-[16.77px] lg:left-[0.50px] lg:top-[3.18px] md:w-[16.77px]
+                    md:h-[16.77px] md:left-0 md:top-[0.52px] "
+              >
+                <img src={flags} alt="" />
+              </div>
+
+              <div
+                className="text-neutral-500 lg:text-xl md:text-[13px] text-[9px]
+                 font-medium  md:leading-3 leading-tight"
+              >
+                USD Wallet (0.00)
+              </div>
+            </div>
+            <div
+              onClick={() => {
+                setIsOpen1((prev) => !prev);
+                if (isOpen1) {
+                  // Set isOpen5 to false when it's true
+                  setIsOpen1(true);
+                }
+                handleSelect(
+                  <img
+                    className="lg:w-[29.27px] w-3 h-3
+                   lg:h-[29.27px] lg:left-0 lg:top-0 lg:mt-[-1px] mt-[-1px] ml-[-1px]
+                   md:w-[16.77px] md:h-[16.77px] md:left-0 md:top-[0.52px] "
+                    src={EUR}
+                    alt=""
+                  />
+                );
+                handleBalance(
+                  <div
+                    className="text-neutral-500 md:mt-[2px] lg:text-xl text-[9px] md:text-[13px]
+                 font-medium  md:leading-3 leading-tight"
+                  >
+                    (0.00)
+                  </div>
+                );
+              }}
+              className="lg:pl-2.5 lg:h-[45px]
+             border border-b md:w-[214.84px] pl-2 md:pl-2 h-[30px] 
+            justify-start items-center lg:pt-[7px] lg:w-[370px] lg:pb-[7.73px] bg-white 
+            shadow md:h-[35px]  gap-[5px] md:gap-[5px] lg:gap-[5px] flex-row 
+             md:pt-1  inline-flex"
+            >
+              <img
+                className="lg:w-[29.27px] w-[16.77px] h-[16.77px]
+                   lg:h-[29.27px] lg:left-0 lg:top-0 lg:mt-[-1px]
+                   md:w-[16.77px] md:h-[16.77px] md:left-0 md:top-[0.52px] "
+                src={EUR}
+                alt=""
+              />
+
+              <div
+                className="text-neutral-500 lg:text-xl text-[9px] md:text-[13px]
+                 font-medium  md:leading-3 leading-tight"
+              >
+                EUR Wallet (0.00)
+              </div>
+            </div>
+            <div
+              onClick={() => {
+                setIsOpen1((prev) => !prev);
+                if (isOpen1) {
+                  // Set isOpen5 to false when it's true
+                  setIsOpen1(true);
+                }
+                handleSelect(
+                  <img
+                    className="md:w-[16.77px] md:h-[15.73px] w-3 h-3 lg:w-[29.27px] lg:h-[29.27px]
+               ml-[-1px] mt-[-1px] "
+                    src={flags3}
+                    alt=""
+                  />
+                );
+                handleBalance(
+                  <div
+                    className="text-neutral-500 md:mt-[2px]
+            lg:text-xl
+             text-[9px] md:text-[13px] font-medium 
+                 md:leading-3 leading-tight"
+                  >
+                    (0.00)
+                  </div>
+                );
+              }}
+              className="lg:pl-2.5 lg:w-[370px] md:w-[214.84px] pl-2 md:pl-2 border border-b lg:h-[45px] h-[30px]
+             justify-start items-center lg:pt-[7px] lg:pb-[7.73px] bg-white shadow 
+               md:h-[35px] flex-row gap-[5px]
+                lg:gap-[5px] md:gap-[5px] md:pt-1 inline-flex"
+            >
+              <img
+                className="lg:w-[29.27px] w-[16.77px] h-[16.77px]
+                   lg:h-[29.27px] lg:left-[0.50px] lg:top-[0.51px]
+                   md:w-[16.77px] md:h-[16.77px] md:left-0 md:top-[0.52px] "
+                src={flags3}
+                alt=""
+              />
+
+              <div
+                className="text-neutral-500 lg:text-xl text-[9px] md:text-[13px] font-medium 
+                 md:leading-3 leading-tight"
+              >
+                GBP Wallet (0.00)
+              </div>
+            </div>
+            <div
+              onClick={() => {
+                setIsOpen1((prev) => !prev);
+                if (isOpen1) {
+                  // Set isOpen5 to false when it's true
+                  setIsOpen1(true);
+                }
+                handleSelect(
+                  <img
+                    className="w-3 h-3 lg:w-[29.27px] lg:h-[29.27px] ml-[-1px] 
+              mt-[-1px] md:w-[16.77px] md:h-[15.73px] "
+                    src={group10}
+                    alt=""
+                  />
+                );
+                handleBalance(
+                  <div
+                    className="text-neutral-500 md:mt-[2px] lg:text-xl text-[9px] md:text-[13px] font-medium 
+            md:leading-3 leading-tight"
+                  >
+                    (0.00)
+                  </div>
+                );
+              }}
+              className="lg:pl-2.5 md:w-[214.84px]
+             border border-b lg:pt-[7px] lg:pb-[7.73px]
+             lg:h-[45px] h-[30px] justify-start items-center lg:gap-[5px] lg:w-[370px] bg-white shadow
+              md:h-[35px] pl-2 md:pl-2
+               md:pt-1  flex-row gap-[5px] md:gap-[5px] inline-flex"
+            >
+              <div
+                className="lg:w-[29.27px] lg:h-[29.27px] lg:left-[0.50px] 
+                  lg:top-[0.51px] h-[16.77px] w-[16.77px] md:w-[16.77px] md:h-[16.77px]
+                   md:left-0 md:top-[0.52px]"
+              >
+                <img src={group10} alt="" />
+              </div>
+
+              <div
+                className="text-neutral-500 lg:text-xl text-[9px] md:text-[13px] font-medium 
+                 md:leading-3 leading-tight"
+              >
+                AUD Wallet (0.00)
+              </div>
+            </div>
+            <div
+              onClick={() => {
+                setIsOpen1((prev) => !prev);
+                if (isOpen1) {
+                  // Set isOpen5 to false when it's true
+                  setIsOpen1(true);
+                }
+                handleSelect(
+                  <img
+                    className="mt-[-1px] md:w-[16.77px] md:h-[15.73px]
+              w-3 h-3 lg:w-[29.27px] lg:h-[29.27px] ml-[-1px]"
+                    src={country5}
+                    alt=""
+                  />
+                );
+                handleBalance(
+                  <div className="text-neutral-500 lg:text-xl md:mt-[2px] text-[9px] md:text-[13px] font-medium  md:leading-3 leading-tight">
+                    (0.00)
+                  </div>
+                );
+              }}
+              className="lg:pl-2.5 md:w-[214.84px] border border-b lg:pt-[7px] lg:w-[370px] lg:h-[45px] h-[30px]
+             justify-start items-center lg:pb-[7.73px] bg-white shadow lg:gap-[5px] md:h-[35px]
+               flex-row gap-[5px] md:gap-[5px] md:pt-1 pl-2 md:pl-2 inline-flex"
+            >
+              <img
+                className="lg:w-[29.27px]  md:w-[16.77px] md:h-[16.77px] w-[16.77px] h-[16.77px] 
+                   lg:h-[29.27px] lg:left-[0.50px] 
+                  lg:top-[0.51px]  md:left-0 md:top-[0.52px]"
+                src={country5}
+                alt=""
+              />
+
+              <div className="text-neutral-500 lg:text-xl text-[9px] md:text-[13px] font-medium  md:leading-3 leading-tight">
+                KES Wallet (0.00)
+              </div>
+            </div>
+          </div>
+        )}
+
+          </div>
+
         </div>
+        </div>
+        
+        
+        {/* end of available balance */}
         <div
           class="w-full h-6 pl-[0.33px] mt-[10px] lg:mt-[30px] md:mt-[12px] pr-[86.66px] py-[2.67px]
 lg:h-[72px] lg:pl-4 lg:pr-[459.30px] lg:gap-[50.53px] lg:py-[11px]
@@ -209,13 +498,20 @@ border-opacity-30 justify-start items-center gap-[52.80px] inline-flex"
               />
             </div>
           </div>
+
+         {/* filter by product container */}
+          <div className="flex cursor-pointer flex-col relative">
+
+
+          {/* filter by product */}
           <div
             onClick={() => {
               setIsOpen2((prev) => !prev);
               setCalender(false);
               setIsOpen1(false);
             }}
-            className="lg:self-stretch justify-start lg:mt-[7px] mt-[5px] items-center lg:gap-2.5 gap-[5.73px] md:gap-[5.73px] inline-flex"
+            className="lg:self-stretch justify-start lg:mt-[7px] mt-[5px] items-center lg:gap-2.5 gap-[5.73px]
+             md:gap-[5.73px] inline-flex"
           >
             <div className="lg:justify-start lg:items-center lg:gap-[5px] md:gap-[2.86px] gap-[2.86px] flex">
               <div
@@ -224,7 +520,8 @@ border-opacity-30 justify-start items-center gap-[52.80px] inline-flex"
               >
                 <img src={menus} alt="" />
               </div>
-              <div className="text-neutral-500 whitespace-nowrap lg:whitespace-nowrap lg:text-[20px] md:mt-[-2px] text-[10px] md:text-[16px] md:whitespace-nowrap font-semibold ">
+              <div className="text-neutral-500 whitespace-nowrap lg:whitespace-nowrap lg:text-[20px]
+               md:mt-[-2px] text-[10px] md:text-[16px] md:whitespace-nowrap font-semibold ">
                 {selectedProduct}
               </div>
             </div>
@@ -236,6 +533,110 @@ border-opacity-30 justify-start items-center gap-[52.80px] inline-flex"
                 <img src={arrow9} alt="Arrow 9" />
               )}
             </div>
+          </div>
+          {/* end of filter by product */}
+
+          {/* dropdown */}
+          {isOpen2 && (
+          <div
+            className="flex cursor-pointer absolute lg:top-[55px] top-[22.35px] md:top-[35px]
+            flex-col"
+          >
+            <div
+              className="border border-b bg-white lg:w-[375px] lg:h-[53px] md:w-[250.84px] md:h-[39.22px]
+           w-[189px] h-[25.70px] justify-around items-center flex relative shadow"
+            >
+              <div
+                onClick={() => {
+                  setIsOpen2((prev) => !prev);
+                  handleClick("All Transactions");
+                }}
+                className="lg:w-[325px] text-neutral-500 lg:text-xl font-medium 
+              lg:leading-tight md:w-[186.20px] md:text-[16px] md:leading-3 w-[163.80px]
+               text-[10px] leading-[10.48px] "
+              >
+                All Transactions
+              </div>
+            </div>
+            <div
+              onClick={() => {
+                setIsOpen2((prev) => !prev);
+                handleClick("Successful");
+              }}
+              className="lg:w-[375px] lg:h-[53px] border border-b  md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px] justify-around items-center flex relative bg-white shadow"
+            >
+              <div
+                class="lg:w-[325px] text-neutral-500 lg:text-xl 
+              font-medium lg:leading-tight md:w-[186.20px]  md:text-[16px]
+               md:leading-3 w-[163.80px] text-[10px] leading-[10.48px]"
+              >
+                Successful
+              </div>
+            </div>
+
+            <div
+              onClick={() => {
+                setIsOpen2((prev) => !prev);
+                handleClick("Failed");
+              }}
+              className="lg:w-[375px] lg:h-[53px] border border-b md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px] justify-around items-center flex relative bg-white shadow"
+            >
+              <div
+                class="lg:w-[325px] text-neutral-500 lg:text-xl font-medium 
+              lg:leading-tight md:w-[186.20px]  md:text-[16px] md:leading-3 w-[163.80px]
+               text-[10px] leading-[10.48px]"
+              >
+                Failed
+              </div>
+            </div>
+            <div
+              onClick={() => {
+                setIsOpen2((prev) => !prev);
+                handleClick("Pending");
+              }}
+              className="lg:w-[375px] lg:h-[53px] border border-b md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px]  justify-around items-center flex relative bg-white shadow"
+            >
+              <div
+                class="lg:w-[325px] text-neutral-500 lg:text-xl
+               font-medium lg:leading-tight md:w-[186.20px]  md:text-[16px]
+                md:leading-3 w-[163.80px] text-[10px] leading-[10.48px]"
+              >
+                Pending
+              </div>
+            </div>
+            <div
+              onClick={() => {
+                setIsOpen2((prev) => !prev);
+                handleClick("Refunded");
+              }}
+              className="lg:w-[375px] lg:h-[53px] border border-b md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px] justify-around items-center flex relative bg-white shadow"
+            >
+              <div
+                class="lg:w-[325px] text-neutral-500 lg:text-xl
+               font-medium lg:leading-tight md:w-[186.20px]  md:text-[16px] 
+               md:leading-3 w-[163.80px] text-[10px] leading-[10.48px]"
+              >
+                Refunded
+              </div>
+            </div>
+            <div
+              onClick={() => {
+                setIsOpen2((prev) => !prev);
+                handleClick("Canceled");
+              }}
+              className="lg:w-[375px] lg:h-[53px] border border-b md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px] justify-around items-center flex relative bg-white shadow"
+            >
+              <div
+                class="lg:w-[325px] text-neutral-500 lg:text-xl
+               font-medium lg:leading-tight md:w-[186.20px]  md:text-[16px] md:leading-3 w-[163.80px] text-[10px] 
+               leading-[10.48px]"
+              >
+                Canceled
+              </div>
+            </div>
+          </div>
+        )}
+
           </div>
         </div>
         {calender && (
@@ -330,261 +731,6 @@ border-opacity-30 justify-start items-center gap-[52.80px] inline-flex"
           </div>
         </div>
 
-        {isOpen1 && (
-          <div
-            className={`${
-              toggleSideBar
-                ? "lg:left-[110px] md:left-[90px]"
-                : "lg:left-[-30px] md:left-[-5px]"
-            }
-          
-          lg:ml-[510px] pl-[-50px] lg:top-[603px] md:w-[300px] lg:pl-[-500px]
-           left-[65px] w-[62%] lg:w-full 
-           top-[284px] md:top-[412px] absolute flex-col md:ml-[300px] lg:items-start inline-flex`}
-          >
-            <div
-              onClick={() => {
-                setIsOpen1((prev) => !prev);
-                handleSelect(
-                  <img
-                    className="w-3 h-3 lg:w-[29.27px] lg:h-[29.27px] ml-[-1px] mt-[-1px]
-               md:w-[16.77px] md:h-[15.73px] "
-                    src={group5}
-                    alt=""
-                  />
-                );
-
-                handleBalance(
-                  <div
-                    className="text-neutral-500 lg:mt-[5px] md:mt-[2px] text-[9px] md:text-[13px]
-             lg:text-xl
-             lg:font-medium 
-            md:leading-3 lg:leading-tight"
-                  >
-                    (50,000.00)
-                  </div>
-                );
-              }}
-              className="lg:pl-2.5 lg:w-[370px] border border-b md:w-[214.84px] 
-            lg:pt-[7px] md:h-[35px] lg:h-[47px] h-[30px] 
-            justify-start items-center pt-[3px] pb-[px] bg-white shadow gap-[5px] pl-2 md:pl-2 md:gap-[5px] 
-              flex-row  md:pt-1 md:pb-[4.43px] inline-flex"
-            >
-              <div
-                className="lg:w-[29.27px] w-[16.77px] lg:h-[27.45px]
-                   h-[16.77px] lg:left-0 lg:top-[0.91px] md:w-[16.77px]
-                    md:h-[16.77px] md:left-1 md:top-[0.52px]"
-              >
-                <img src={group5} alt="" />
-              </div>
-
-              <div
-                className="text-neutral-500 text-[9px] md:text-[13px] lg:text-xl lg:font-medium 
-                  md:leading-3 lg:leading-tight"
-              >
-                NGN Wallet (50,000.00)
-              </div>
-            </div>
-            <div
-              onClick={() => {
-                setIsOpen1((prev) => !prev);
-                handleSelect(
-                  <img
-                    className="w-3 h-3 lg:w-[29.27px] lg:h-[29.27px] ml-[-1px]
-            mt-[-1px] md:w-[16.77px] md:h-[15.73px]"
-                    src={flags}
-                    alt=""
-                  />
-                );
-                handleBalance(
-                  <div
-                    className="text-neutral-500 md:mt-[2px] lg:text-xl md:text-[13px] text-[9px]
-            font-medium  md:leading-3 leading-tight"
-                  >
-                    (0.00)
-                  </div>
-                );
-              }}
-              className="lg:pl-2.5 md:w-[214.84px] border border-b mt-[0.0px] 
-             h-[30px] lg:h-[45px] lg:w-[370px] lg:pb-[7.73px] bg-white shadow 
-             justify-start items-center md:h-[35px] lg:mt-[-3px] flex-row pl-2 md:pl-2 gap-[5px] 
-               md:gap-[5px] lg:gap-[5px] md:pt-1   inline-flex"
-            >
-              <div
-                className="lg:w-[28.77px] w-[16.77px] lg:h-[26.09px]
-                   h-[16.77px] lg:left-[0.50px] lg:top-[3.18px] md:w-[16.77px]
-                    md:h-[16.77px] md:left-0 md:top-[0.52px] "
-              >
-                <img src={flags} alt="" />
-              </div>
-
-              <div
-                className="text-neutral-500 lg:text-xl md:text-[13px] text-[9px]
-                 font-medium  md:leading-3 leading-tight"
-              >
-                USD Wallet (0.00)
-              </div>
-            </div>
-            <div
-              onClick={() => {
-                setIsOpen1((prev) => !prev);
-                handleSelect(
-                  <img
-                    className="lg:w-[29.27px] w-3 h-3
-                   lg:h-[29.27px] lg:left-0 lg:top-0 lg:mt-[-1px] mt-[-1px] ml-[-1px]
-                   md:w-[16.77px] md:h-[16.77px] md:left-0 md:top-[0.52px] "
-                    src={EUR}
-                    alt=""
-                  />
-                );
-                handleBalance(
-                  <div
-                    className="text-neutral-500 md:mt-[2px] lg:text-xl text-[9px] md:text-[13px]
-                 font-medium  md:leading-3 leading-tight"
-                  >
-                    (0.00)
-                  </div>
-                );
-              }}
-              className="lg:pl-2.5 lg:h-[45px]
-             border border-b md:w-[214.84px] pl-2 md:pl-2 h-[30px] 
-            justify-start items-center lg:pt-[7px] lg:w-[370px] lg:pb-[7.73px] bg-white 
-            shadow md:h-[35px]  gap-[5px] md:gap-[5px] lg:gap-[5px] flex-row 
-             md:pt-1  inline-flex"
-            >
-              <img
-                className="lg:w-[29.27px] w-[16.77px] h-[16.77px]
-                   lg:h-[29.27px] lg:left-0 lg:top-0 lg:mt-[-1px]
-                   md:w-[16.77px] md:h-[16.77px] md:left-0 md:top-[0.52px] "
-                src={EUR}
-                alt=""
-              />
-
-              <div
-                className="text-neutral-500 lg:text-xl text-[9px] md:text-[13px]
-                 font-medium  md:leading-3 leading-tight"
-              >
-                EUR Wallet (0.00)
-              </div>
-            </div>
-            <div
-              onClick={() => {
-                setIsOpen1((prev) => !prev);
-                handleSelect(
-                  <img
-                    className="md:w-[16.77px] md:h-[15.73px] w-3 h-3 lg:w-[29.27px] lg:h-[29.27px]
-               ml-[-1px] mt-[-1px] "
-                    src={flags3}
-                    alt=""
-                  />
-                );
-                handleBalance(
-                  <div
-                    className="text-neutral-500 md:mt-[2px]
-            lg:text-xl
-             text-[9px] md:text-[13px] font-medium 
-                 md:leading-3 leading-tight"
-                  >
-                    (0.00)
-                  </div>
-                );
-              }}
-              className="lg:pl-2.5 lg:w-[370px] md:w-[214.84px] pl-2 md:pl-2 border border-b lg:h-[45px] h-[30px]
-             justify-start items-center lg:pt-[7px] lg:pb-[7.73px] bg-white shadow 
-               md:h-[35px] flex-row gap-[5px]
-                lg:gap-[5px] md:gap-[5px] md:pt-1 inline-flex"
-            >
-              <img
-                className="lg:w-[29.27px] w-[16.77px] h-[16.77px]
-                   lg:h-[29.27px] lg:left-[0.50px] lg:top-[0.51px]
-                   md:w-[16.77px] md:h-[16.77px] md:left-0 md:top-[0.52px] "
-                src={flags3}
-                alt=""
-              />
-
-              <div
-                className="text-neutral-500 lg:text-xl text-[9px] md:text-[13px] font-medium 
-                 md:leading-3 leading-tight"
-              >
-                GBP Wallet (0.00)
-              </div>
-            </div>
-            <div
-              onClick={() => {
-                setIsOpen1((prev) => !prev);
-                handleSelect(
-                  <img
-                    className="w-3 h-3 lg:w-[29.27px] lg:h-[29.27px] ml-[-1px] 
-              mt-[-1px] md:w-[16.77px] md:h-[15.73px] "
-                    src={group10}
-                    alt=""
-                  />
-                );
-                handleBalance(
-                  <div
-                    className="text-neutral-500 md:mt-[2px] lg:text-xl text-[9px] md:text-[13px] font-medium 
-            md:leading-3 leading-tight"
-                  >
-                    (0.00)
-                  </div>
-                );
-              }}
-              className="lg:pl-2.5 md:w-[214.84px]
-             border border-b lg:pt-[7px] lg:pb-[7.73px]
-             lg:h-[45px] h-[30px] justify-start items-center lg:gap-[5px] lg:w-[370px] bg-white shadow
-              md:h-[35px] pl-2 md:pl-2
-               md:pt-1  flex-row gap-[5px] md:gap-[5px] inline-flex"
-            >
-              <div
-                className="lg:w-[29.27px] lg:h-[29.27px] lg:left-[0.50px] 
-                  lg:top-[0.51px] h-[16.77px] w-[16.77px] md:w-[16.77px] md:h-[16.77px]
-                   md:left-0 md:top-[0.52px]"
-              >
-                <img src={group10} alt="" />
-              </div>
-
-              <div
-                className="text-neutral-500 lg:text-xl text-[9px] md:text-[13px] font-medium 
-                 md:leading-3 leading-tight"
-              >
-                AUD Wallet (0.00)
-              </div>
-            </div>
-            <div
-              onClick={() => {
-                setIsOpen1((prev) => !prev);
-                handleSelect(
-                  <img
-                    className="mt-[-1px] md:w-[16.77px] md:h-[15.73px]
-              w-3 h-3 lg:w-[29.27px] lg:h-[29.27px] ml-[-1px]"
-                    src={country5}
-                    alt=""
-                  />
-                );
-                handleBalance(
-                  <div className="text-neutral-500 lg:text-xl md:mt-[2px] text-[9px] md:text-[13px] font-medium  md:leading-3 leading-tight">
-                    (0.00)
-                  </div>
-                );
-              }}
-              className="lg:pl-2.5 md:w-[214.84px] border border-b lg:pt-[7px] lg:w-[370px] lg:h-[45px] h-[30px]
-             justify-start items-center lg:pb-[7.73px] bg-white shadow lg:gap-[5px] md:h-[35px]
-               flex-row gap-[5px] md:gap-[5px] md:pt-1 pl-2 md:pl-2 inline-flex"
-            >
-              <img
-                className="lg:w-[29.27px]  md:w-[16.77px] md:h-[16.77px] w-[16.77px] h-[16.77px] 
-                   lg:h-[29.27px] lg:left-[0.50px] 
-                  lg:top-[0.51px]  md:left-0 md:top-[0.52px]"
-                src={country5}
-                alt=""
-              />
-
-              <div className="text-neutral-500 lg:text-xl text-[9px] md:text-[13px] font-medium  md:leading-3 leading-tight">
-                KES Wallet (0.00)
-              </div>
-            </div>
-          </div>
-        )}
 
         <div className={styles.mainGrid}>
           <div className={styles.mainGridCol}>
@@ -596,7 +742,7 @@ border-opacity-30 justify-start items-center gap-[52.80px] inline-flex"
                 <img
                   className="justify-center items-center lg:w-5 mt-[0px]
        md:mt-[0px] lg:mt-[0px] 
-w-3 h-3 lg:h-5 md:w-[13px]  md:h-[13px]"
+w-4 h-3 lg:h-5 md:w-[13px]  md:h-[13px]"
                   src={normal}
                   alt=""
                 />{" "}
@@ -610,22 +756,24 @@ w-3 h-3 lg:h-5 md:w-[13px]  md:h-[13px]"
               />
 
               <div
-                className="border md:gap-2 gap-1 flex flex-row
-                             lg:gap-2 lg:h-[45px] md:h-[35px] h-[25px] justify-between items-center
-                             shadow border-r-0 bg-white border-opacity-50"
+              
+                className="border md:gap-2 m-[-11px] lg:w-[120px] w-[65px] md:w-[95px] pr-10 gap-1 flex flex-row
+                             lg:gap-2 lg:h-[45px] md:h-[35px] h-[25px] justify-between  items-center
+                             shadow lg:m-[-14px] border-r-0 bg-white border-opacity-50"
               >
-                <button
+                <button 
                   className="text-neutral-500 md:text-[13px] 
-                             lg:text-[20px] text-[9px] mt-[4px] ml-3  font-medium "
+                             lg:text-[20px] text-[9px] mt-[4px] ml-3 flex gap-1 font-medium "
                 >
                   Search
-                </button>
-                <button className=" h-[13.3px] w-[13.3px] mt-[3px] md:mt-0 md:h-[15px] md:w-[15px] lg:w-[24px] lg:h-[24px]">
+               
+                <div className=" h-[13.3px] w-[13.3px] mt-[3px] md:mt-0 md:h-[15px] md:w-[15px] lg:w-[24px] lg:h-[24px]">
                   <img
                     className=" h-[13.3px] w-[13.3px] mt-[-2px] md:mt-[3px] md:h-[15px] md:w-[15px] lg:w-[24px] lg:h-[24px] "
                     src={refresh}
                     alt="dropdown"
                   />
+                </div>
                 </button>
               </div>
             </div>
@@ -693,7 +841,7 @@ w-3 h-3 lg:h-5 md:w-[13px]  md:h-[13px]"
     lg:pt-[30.5px] lg:pb-[28.5px] p-[0px] border-none"
               >
                 <p
-                  className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px] 
+                  className="lg:text-[16px]  text-left font-[600] lg:leading-[20.8px] 
     md:text-[9.167px] md:leading-[11.917px] "
                 >
                   Virtual Account
@@ -767,7 +915,7 @@ w-3 h-3 lg:h-5 md:w-[13px]  md:h-[13px]"
             </tr>
             </Link>
 
-            <Link to="/wallet-successful-receipt">
+            <Link to="/wallet-refunded-receipt">
             <tr
               className={`${toggleSideBar ? "lg:pr-[16px]" : "lg:pr-[27px]"}
         flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
@@ -837,9 +985,9 @@ w-3 h-3 lg:h-5 md:w-[13px]  md:h-[13px]"
               >
                 <p
                   className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px] md:w-[65.729px] md:h-[17.76px]
-        py-[4px] px-[12px] text-white bg-green-300 md:text-[9.167px] lg:w-[104px] lg:h-[31px] md:leading-[11.917px] md:rounded-[3.438px]"
+        py-[4px] px-[12px] text-white bg-[#A6D9FF] md:text-[9.167px] lg:w-[104px] lg:h-[31px] md:leading-[11.917px] md:rounded-[3.438px]"
                 >
-                  Successful
+                  Refunded
                 </p>
                 <img
                   className="w-[10px] h-[10px] md:w-[10px] md:h-[10px] lg:w-[15px] lg:h-[15px]"
@@ -933,7 +1081,7 @@ w-3 h-3 lg:h-5 md:w-[13px]  md:h-[13px]"
             </tr>
           </Link>
 
-          <Link to="/wallet-successful-receipt">
+          <Link to="/wallet-cancelled-receipt">
             <tr
               className={`${toggleSideBar ? "lg:pr-[16px]" : "lg:pr-[27px]"}
  flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
@@ -1003,9 +1151,9 @@ w-3 h-3 lg:h-5 md:w-[13px]  md:h-[13px]"
               >
                 <p
                   className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px] md:w-[65.729px] md:h-[17.76px]
-        py-[4px] px-[12px]  text-white bg-green-300 md:text-[9.167px] lg:w-[104px] lg:h-[31px] md:leading-[11.917px] md:rounded-[3.438px]"
+        py-[4px] px-[12px]  text-white  bg-red-300 md:text-[9.167px] lg:w-[104px] lg:h-[31px] md:leading-[11.917px] md:rounded-[3.438px]"
                 >
-                  Successful
+                  Cancelled
                 </p>
                 <img
                   className="w-[10px] h-[10px] md:w-[10px] md:h-[10px] lg:w-[15px] lg:h-[15px] "
@@ -1358,7 +1506,7 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
             </div>
           </Link>
 
-          <Link to="/wallet-successful-receipt">
+          <Link to="/wallet-Refunded-receipt">
             <div
               className="flex justify-between py-[31.5px] border-b-[1px] border-b-[black]
    border-opacity-[20%]"
@@ -1389,9 +1537,9 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
                   </div>
                   <div
                     className="mt-0 font-medium text-white self-end  text-[9.167px] leading-[11.167px] cursor-pointer
-                   py-[2.122px] px-[4.245px] rounded-sm bg-green-300"
+                   py-[2.122px] px-[4.245px] rounded-sm bg-[#A6D9FF]"
                   >
-                    Successful
+                    Refunded
                   </div>
                 </div>
 
@@ -1408,7 +1556,7 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
             </div>
              </Link>
 
-             <Link to="/wallet-successful-receipt">
+             <Link to="/wallet-Successful-receipt">
             <div
               className=" flex justify-between py-[31.5px] border-b-[1px]
                border-b-[black]   border-opacity-[20%]"
@@ -1456,7 +1604,7 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
             </div>
              </Link>
 
-             <Link to="/wallet-successful-receipt">
+             <Link to="/wallet-cancelled-receipt">
             <div
               className="flex justify-between py-[31.5px] border-b-[1px] border-b-[black]
    border-opacity-[20%]"
@@ -1488,9 +1636,9 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
 
                   <div
                     className="font-medium text-white self-end text-[9.167px] leading-[11.167px] cursor-pointer
-                   py-[2.122px] px-[4.245px] rounded-sm bg-green-300"
+                   py-[2.122px] px-[4.245px] rounded-sm  bg-red-300"
                   >
-                    Successful
+                    Cancelled
                   </div>
                 </div>
                 <div className="flex flex-row">
@@ -1674,105 +1822,6 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
         </div>
 
         {/* filter by status dropdown */}
-        {isOpen2 && (
-          <div
-            className="flex absolute lg:top-[705px] top-[319px] md:top-[465px] 
-           ml-[50px] md:ml-[40px]  lg:ml-[60px] flex-col"
-          >
-            <div
-              className="border border-b bg-white lg:w-[375px] lg:h-[53px] md:w-[250.84px] md:h-[39.22px]
-           w-[189px] h-[25.70px] justify-around items-center flex relative shadow"
-            >
-              <div
-                onClick={() => {
-                  setIsOpen2((prev) => !prev);
-                  handleClick("All Transactions");
-                }}
-                className="lg:w-[325px] text-neutral-500 lg:text-xl font-medium 
-              lg:leading-tight md:w-[186.20px] md:text-[16px] md:leading-3 w-[163.80px]
-               text-[10px] leading-[10.48px] "
-              >
-                All Transactions
-              </div>
-            </div>
-            <div
-              onClick={() => {
-                setIsOpen2((prev) => !prev);
-                handleClick("Successful");
-              }}
-              className="lg:w-[375px] lg:h-[53px] border border-b  md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px] justify-around items-center flex relative bg-white shadow"
-            >
-              <div
-                class="lg:w-[325px] text-neutral-500 lg:text-xl 
-              font-medium lg:leading-tight md:w-[186.20px]  md:text-[16px]
-               md:leading-3 w-[163.80px] text-[10px] leading-[10.48px]"
-              >
-                Successful
-              </div>
-            </div>
-
-            <div
-              onClick={() => {
-                setIsOpen2((prev) => !prev);
-                handleClick("Failed");
-              }}
-              className="lg:w-[375px] lg:h-[53px] border border-b md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px] justify-around items-center flex relative bg-white shadow"
-            >
-              <div
-                class="lg:w-[325px] text-neutral-500 lg:text-xl font-medium 
-              lg:leading-tight md:w-[186.20px]  md:text-[16px] md:leading-3 w-[163.80px]
-               text-[10px] leading-[10.48px]"
-              >
-                Failed
-              </div>
-            </div>
-            <div
-              onClick={() => {
-                setIsOpen2((prev) => !prev);
-                handleClick("Pending");
-              }}
-              className="lg:w-[375px] lg:h-[53px] border border-b md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px]  justify-around items-center flex relative bg-white shadow"
-            >
-              <div
-                class="lg:w-[325px] text-neutral-500 lg:text-xl
-               font-medium lg:leading-tight md:w-[186.20px]  md:text-[16px]
-                md:leading-3 w-[163.80px] text-[10px] leading-[10.48px]"
-              >
-                Pending
-              </div>
-            </div>
-            <div
-              onClick={() => {
-                setIsOpen2((prev) => !prev);
-                handleClick("Refunded");
-              }}
-              className="lg:w-[375px] lg:h-[53px] border border-b md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px] justify-around items-center flex relative bg-white shadow"
-            >
-              <div
-                class="lg:w-[325px] text-neutral-500 lg:text-xl
-               font-medium lg:leading-tight md:w-[186.20px]  md:text-[16px] 
-               md:leading-3 w-[163.80px] text-[10px] leading-[10.48px]"
-              >
-                Refunded
-              </div>
-            </div>
-            <div
-              onClick={() => {
-                setIsOpen2((prev) => !prev);
-                handleClick("Canceled");
-              }}
-              className="lg:w-[375px] lg:h-[53px] border border-b md:w-[250.84px] md:h-[39.22px] w-[189px] h-[25.70px] justify-around items-center flex relative bg-white shadow"
-            >
-              <div
-                class="lg:w-[325px] text-neutral-500 lg:text-xl
-               font-medium lg:leading-tight md:w-[186.20px]  md:text-[16px] md:leading-3 w-[163.80px] text-[10px] 
-               leading-[10.48px]"
-              >
-                Canceled
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </DashBoardLayout>
   );
