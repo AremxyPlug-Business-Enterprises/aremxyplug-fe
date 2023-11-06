@@ -121,7 +121,9 @@ export const WalletPendingReceipt = () => {
                 hour12: true,
               })}
             </span>
-            <p className="text-[9px] text-[#0008] px-[20px] text-center my-2 md:text-[14px] lg:text-[14px]">
+            <div className="border rounded-[8px] border-amber-300 bg-orange-100 mx-4 h-[45px] my-5 flex justify-center items-center px-[4%] md:h-[65px] lg:h-[75px]">
+
+            <p className="text-[9px] text-amber-500  px-[20px] text-center my-2 md:text-[14px] lg:text-[14px]">
             Your transaction is under process please wait while the system is confirmed.
 
 {" "}
@@ -130,6 +132,7 @@ export const WalletPendingReceipt = () => {
               </span>
               {/* from your {walletName + " Wallet"} to{" "} */}
             </p>
+            </div>
             <div className="flex flex-col gap-3">
               {/* ========================Recipient Info================== */}
               <div className="flex flex-col gap-[3px] w-[90%] mx-auto lg:gap-[5px]">
