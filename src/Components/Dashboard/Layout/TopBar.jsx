@@ -1,5 +1,4 @@
 import React from "react";
-import { useState } from "react";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { ContextProvider } from "../../Context";
@@ -7,10 +6,18 @@ import DarkModeToggle from "../DashboardComponents/DarkModeToggle";
 import styles from "./Dashboard.module.css";
 
 export const TopBar = () => {
-  const { setToggleSideBar, isDarkMode, toggleSideBar } =
+  const { setToggleSideBar, isDarkMode, toggleSideBar, logout, setLogout } =
     useContext(ContextProvider);
-  const [logout, setLogout] = useState(false);
-  
+
+  const toggleTrueFalse = () => {
+    setToggleSideBar(true);
+    setLogout(false);
+  };
+  const toggleTrueFalse2 = () => {
+    setToggleSideBar(false);
+    setLogout((prev) => !prev);
+  };
+
   return (
     <div
       className={`${styles.topbar} ${
@@ -22,7 +29,7 @@ export const TopBar = () => {
       } `}
     >
       <img
-        onClick={() => setToggleSideBar(true)}
+        onClick={toggleTrueFalse}
         className="cursor-pointer w-[21px] h-[21px] md:h-[30.9px] md:w-[30.9px] lg:h-[52px] lg:w-[52px]"
         src="./Images/dashboardImages/menularge.png"
         alt="/harmburger"
@@ -71,7 +78,7 @@ export const TopBar = () => {
           />
           </Link>
           <img
-            onClick={() => setLogout((prev) => !prev)}
+            onClick={toggleTrueFalse2}
             className="cursor-pointer w-[20px] h-[10px] md:w-[40px] md:h-[20px] rounded-[2.3px] lg:w-[65px] lg:h-[34px]"
             src="./Images/dashboardImages/largedoor.png"
             alt="notification"

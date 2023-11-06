@@ -1,22 +1,22 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./LoginForm.css";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import FirstModal from "../Screens/CustomersPages/Password/FirstModal";
 import { ContextProvider } from "../Context";
 import { primaryColor } from "../Screens/cardIssuing/cardIssuing";
-
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import LoginPopUp from "./LoginPopUp";
 import Joi from "joi";
 import axios from "axios";
+import { Loader } from "../Loader/Loader";
+import { Modal } from "../Screens/Modal/Modal";
 
 function LoginForm() {
   const { setOpenTranspin, setOpenResetTranspin, setOpen2StepVerification } =
     useContext(ContextProvider);
-  // The state handling whether input is user name or email starts here
   const [usernameORemail, setUsernameORemail] = useState("username");
-  // The satate handling whether input is user name or email ends here
+  const [loading, setLoading] = useState(false);
 
   // Check if login data exist starts here
   function checkUsername() {
@@ -54,8 +54,8 @@ function LoginForm() {
   const [toolTipOffset, setToolTipOffset] = useState("");
   const [errors, setErrors] = useState({});
 
-  const [redirect, setRedirect] = useState(false);
-  const navigate = useNavigate();
+  // const [redirect, setRedirect] = useState(false);
+  // const navigate = useNavigate();
 
   useEffect(() => {
     const handleResize = () => {
@@ -135,92 +135,130 @@ function LoginForm() {
     }
   };
 
+  // ==========Login Handler===========
   const submitHandler = async (e) => {
     e.preventDefault();
+
+    // ========Login form validation starts here=======
     if (usernameORemail === "username") {
       try {
-        const loginData = {username: username, password: password}
-        const {data} = await axios.post('https://aremxyplug.onrender.com/api/v1/login', loginData);
-        console.log(data);
-        setOpenTranspin(true);
-        setUsername("");
-        setPassword("");
-        setErrors({});
-        setRedirect(true);
-      } catch {
-        alert('Error Logging In')
-      }
-      // ========Login form validation starts her=======
-      const schema = Joi.object({
-        username: Joi.string()
-          .pattern(new RegExp(/^[a-zA-Z0-9_]{3,30}$/))
-          .required()
-          .messages({ "string.pattern.base": "Invalid Username" }),
-      });
+        const schema = Joi.object({
+          username: Joi.string()
+            .pattern(new RegExp(/^[a-zA-Z0-9_]{3,30}$/))
+            .required()
+            .messages({ "string.pattern.base": "Invalid Username" }),
+        });
 
-      const { error } = schema.validate({ username });
-      if (error) {
-        // Handle validation error
-        setErrors(
-          error.details.reduce((acc, curr) => {
-            acc[curr.path[0]] = curr.message;
-            return acc;
-          }, {})
-        );
-      } else {
-        console.log("Form submitted successfully");
-        if (checkbox === true) {
-          localStorage.setItem("aremxyUsername", JSON.stringify(username));
-          localStorage.setItem("aremxyPassword", JSON.stringify(password));
+        const { error } = schema.validate({ username });
+        if (error) {
+          // Handle validation error
+          setErrors(
+            error.details.reduce((acc, curr) => {
+              acc[curr.path[0]] = curr.message;
+              return acc;
+            }, {})
+          );
+        } else {
+          setLoading(true);
+          const loginData = { username: username, password: password };
+          const config = {
+            headers: { "Content-Type": "application/json" },
+          };
+          await axios
+            .post(
+              "https://aremxyplug.onrender.com/api/v1/login",
+              loginData,
+              config
+            )
+            .then((response) => {
+              console.log(response);
+              if (response.status === 201) {
+                setOpenTranspin(true);
+              } else if (response.status === 404) {
+                alert("User not found");
+              } else if (response.status === 401) {
+                alert("Incorrect Password");
+              } else {
+                console.log(response.data);
+              }
+            })
+            .catch((error) => {
+              console.error(error);
+              alert("User Not Found");
+            });
+          if (checkbox === true) {
+            localStorage.setItem("aremxyUsername", JSON.stringify(username));
+            localStorage.setItem("aremxyPassword", JSON.stringify(password));
+          }
         }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
       }
-      // ======Login form validation ends here=====
-    };
+    }
 
     if (usernameORemail === "email") {
       try {
-        const loginData = {email: email, password: password}
-        const {data} = await axios.post('https://aremxyplug.onrender.com/api/v1/login', loginData);
-        console.log(data);
-        setOpenTranspin(true);
-        setEmail("");
-        setPassword("");
-        setErrors({});
-        setRedirect(true);
-      } catch (error) {
-        alert('Error Logging In');
-      }
-      // ========Login form validation starts here=======
-      const schema = Joi.object({
-        email: Joi.string()
-          .pattern(new RegExp(/^\S+@\S+\.\S+$/))
-          .required()
-          .messages({ "string.pattern.base": "Invalid email" }),
-      });
-      const { error } = schema.validate({ email });
-      if (error) {
-        // Handle validation error
-        setErrors(
-          error.details.reduce((acc, curr) => {
-            acc[curr.path[0]] = curr.message;
-            return acc;
-          }, {})
-        );
-      } else {
-        console.log("Form submitted successfully");
-        if (checkbox === true) {
-          localStorage.setItem("aremxyEmail", JSON.stringify(email));
-          localStorage.setItem("aremxyPassword", JSON.stringify(password));
+        const schema = Joi.object({
+          email: Joi.string()
+            .pattern(new RegExp(/^\S+@\S+\.\S+$/))
+            .required()
+            .messages({ "string.pattern.base": "Invalid email" }),
+        });
+        const { error } = schema.validate({ email });
+        if (error) {
+          // Handle validation error
+          setErrors(
+            error.details.reduce((acc, curr) => {
+              acc[curr.path[0]] = curr.message;
+              return acc;
+            }, {})
+          );
+        } else {
+          setLoading(true);
+          const loginData = { email: email, password: password };
+          const config = {
+            headers: { "Content-Type": "application/json" },
+          };
+          await axios
+            .post(
+              "https://aremxyplug.onrender.com/api/v1/login",
+              loginData,
+              config
+            )
+            .then((response) => {
+              console.log(response);
+              if (response.status === 201) {
+                setOpenTranspin(true);
+              } else if (response.status === 404) {
+                alert("User not found");
+              } else if (response.status === 401) {
+                alert("Incorrect Password");
+              } else {
+                console.log(response.data);
+              }
+            })
+            .catch((error) => {
+              console.error(error);
+              alert("User Not Found");
+            });
+          if (checkbox === true) {
+            localStorage.setItem("aremxyEmail", JSON.stringify(email));
+            localStorage.setItem("aremxyPassword", JSON.stringify(password));
+          }
         }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
       }
-
-      // ======Login form validation ends here=====
-    };
+    }
   };
 
-  if (redirect) {
-    navigate("/dashboard", { replace: true });
-  }
+  // if (redirect) {
+  //   navigate("/dashboard", { replace: true });
+  // }
 
   return (
     <div
@@ -342,7 +380,7 @@ function LoginForm() {
                 onFocus={() => handleFocus(2)}
                 onBlur={() => handleBlur(2)}
               >
-                { passwordHidden === "password" ? (
+                {passwordHidden === "password" ? (
                   <img
                     src="./Images/login/eyeIcon2.png"
                     alt="icon"
@@ -464,6 +502,11 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
           </Link>
         </div>
       </div>
+      {loading && (
+        <Modal>
+          <Loader />
+        </Modal>
+      )}
     </div>
   );
 }
