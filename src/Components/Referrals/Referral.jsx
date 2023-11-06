@@ -89,9 +89,9 @@ export default function Referral() {
           </div>
         </div>
         {/* INPUT_CONTENT */}
-        <div className="flex flex-col gap-[20px] lg:gap-[25px] mb-[30px]">
+        <div className="flex flex-col gap-[20px] lg:gap-[25px] mb-[50px]">
           {/* INPUT_ONE */}
-          <div className="flex flex-col gap-[2.667px] lg:gap-[8px]">
+          <div className="flex flex-col gap-[5.667px] md:gap-[8px] lg:gap-[10px]">
             <h2
               className="font-[600] text-[8px] leading-[12px] 
   md:text-[9.167px] md:leading-[14px]
@@ -100,7 +100,7 @@ export default function Referral() {
               Your Referral Link is:
             </h2>
             <div
-              className="flex  h-[18px] items-center
+              className="flex  h-[23px] items-center
           w-[100%] md:h-[30.94px]  
     lg:h-[54px] "
             >
@@ -108,7 +108,7 @@ export default function Referral() {
 
               <div className="copy-content1 flex items-center  w-[75%] h-[100%]  border-l-[1px] border-y-[1px] 
           border-[#7C7C7C] pl-[5px]  lg:pl-[18px]  md:pl-[13px]
-         lg:rounded-s-[22px] rounded-s-[7.333px] md:rounded-s-[12.607px] overflow-x-scroll md:overflow-auto">
+         lg:rounded-s-[22px] rounded-s-[9.333px] md:rounded-s-[12.607px] overflow-x-scroll md:overflow-auto">
               <p
               onChange={handleCopyTextOne}
                 className="font-[600]  text-[#7C7C7C] text-[7px] leading-[11px]
@@ -123,7 +123,7 @@ export default function Referral() {
               onClick={copyToClipBoardOne}
                 className="flex justify-center 
        gap-[10px] w-[25%] h-[100%] bg-[#04177F] items-center 
-       rounded-e-[7.333px] lg:rounded-e-[22px] md:rounded-e-[12.607px]"
+       rounded-e-[9.333px] lg:rounded-e-[22px] md:rounded-e-[12.607px]"
               >
                 <img
                   src={copyRefer}
@@ -140,7 +140,7 @@ export default function Referral() {
             </div>
           </div>
           {/* INPUT_TWO */}
-          <div className="flex flex-col gap-[2.667px] lg:gap-[8px]">
+          <div className="flex flex-col gap-[5.667px] md:gap-[8px] lg:gap-[10px]">
             <h2
               className="font-[600] text-[8px] leading-[12px]
  md:text-[9.167px] md:leading-[14px]
@@ -149,14 +149,14 @@ lg:text-[16px] lg:leading-[24px]"
               Your Referral code is:
             </h2>
             <div
-              className="flex  h-[18px] items-center
+              className="flex  h-[23px] items-center
               w-[100%] md:h-[30.94px]  
         lg:h-[54px] "
             >
               {/* THE REFER LINK 2*/}
          <div className="copy-content2 flex items-center  w-[75%] h-[100%]  border-l-[1px] border-y-[1px] 
           border-[#7C7C7C] pl-[5px] lg:pl-[18px] md:pl-[13px]
-         lg:rounded-s-[22px] rounded-s-[7.333px] md:rounded-s-[12.607px]">
+         lg:rounded-s-[22px] rounded-s-[9.333px] md:rounded-s-[12.607px]">
               <p
              onChange={handleCopyTextTwo}
                 className="font-[600]  text-[#7C7C7C] text-[7px] leading-[11px]
@@ -171,7 +171,7 @@ lg:text-[16px] lg:leading-[24px]"
              onClick={copyToClipBoardTwo}
                 className="copy-btn2 flex justify-center 
        gap-[10px] w-[25%] h-[100%] bg-[#04177F] items-center
-        rounded-e-[7.333px] lg:rounded-e-[22px] md:rounded-e-[12.607px]"
+        rounded-e-[9.333px] lg:rounded-e-[22px] md:rounded-e-[12.607px]"
               >
                 <img
                   src={copyRefer}
@@ -190,13 +190,14 @@ lg:text-[16px] lg:leading-[24px]"
           </div>
 
           {/* CHECK POINT AND SHARE BUTTON */}
-          <div className="flex flex-col md:flex md:flex-row md:justify-between">
+          <div className="flex flex-col pt-[10px] gap-[20px] md:gap-[0px] 
+          md:flex md:flex-row md:justify-between">
             {/* CHECK POINT BALANCE BUTTON */}
 
             <Link to ="/point-balance"
              className="md:self-center text-center font-[600] leading-[10.4px] text-[8px] 
     shadow-[2.29167px]
-     text-white rounded-[5.729px]  py-[5px] bg-[#04177F]  lg:px-[104px] lg:py-[15px]
+     text-white rounded-[5.729px]  py-[10px] bg-[#04177F]  lg:px-[104px] lg:py-[15px]
      md:pt-[9.394px] md:pr-[59.579px] md:pb-[8.824px] md:pl-[59.888px]
        lg:text-[16px] lg:leading-[24px] lg:rounded-[10px] 
      "
@@ -257,11 +258,11 @@ lg:text-[16px] lg:leading-[24px]"
         {/* REFERRAL ANALYSIS */}
         <div className="flex flex-col mb-[30px]">
           {/* Referral heading */}
-          <div className="flex gap-[3px] mb-[8px] lg:mb-[15px]">
+          <div className="flex gap-[3px] mb-[13px] md:gap-[18px] lg:mb-[23px]">
             <p
-              className="font-[600] text-[8px] text-[#7C7C7C] leading-[12px]
-md:text-[11.458px] md:leading-[17px]
-lg:text-[20px] lg:leading-[30px]"
+              className="font-[600] text-[12px] text-[#7C7C7C] leading-[16px]
+md:text-[16.458px] md:leading-[22px]
+lg:text-[24px] lg:leading-[30px]"
             >
               Referral Analysis
             </p>
@@ -624,8 +625,8 @@ lg:text-[20px] lg:leading-[30px]"
               <img src={walletRefer} alt="View transaction icon" />
             </div> */}
             {/* CONTACT US */}
-            <div className="flex gap-[5.729px] py-[2.865px] justify-center px-[8.594px] ">
-              <p className="font-[500] text-[8px] text-[#707070] leading-[10.4px]">
+            <div className="flex gap-[8.729px] py-[2.865px] justify-center px-[8.594px] ">
+              <p className="font-[500] self-center text-[8px] text-[#707070] leading-[10.4px]">
                 You need help?
               </p>
               <Link to ="/contactUs"
@@ -641,13 +642,16 @@ lg:text-[20px] lg:leading-[30px]"
           <div className='Refer hidden md:flex 
    '>
          <table
-            className="mt-[0px] lg:h-[700px] md:h-[401.04px]  
+            className="mt-[0px] lg:h-[700px] md:h-[401.04px]   
      md:shadow-lg border-collapse font-[inter] "
           >
-            {/* ROW ONE */}
+            {/* HEADER ROW */}
+           
             <tr
-              className="flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]  
-              md:pt-[6.316px] md:pb-[5.746px] lg:pl-[28px] lg:pr-[27px] lg:gap-[64px] 
+              className="flex w-[100%] md:pl-[16.038px] 
+              md:pr-[15.473px]
+              lg:pl-[28px] lg:pr-[27px]  md:gap-[36.67px]  
+              md:pt-[6.316px] md:pb-[5.746px] lg:gap-[64px] 
               lg:pt-[11px] lg:pb-[10px]
                bg-[#CED9FF]"
             >
@@ -680,9 +684,13 @@ lg:text-[20px] lg:leading-[30px]"
                 Status
               </th>
             </tr>
-            <tr className="flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
-            lg:pl-[28px] lg:pr-[27px] lg:gap-[64px]">
-              <td
+            {/* ROW ONE */}
+            <div className="flex flex-col md:pl-[16.038px] 
+            md:pr-[15.473px] 
+            lg:pl-[28px] lg:pr-[27px] ">
+            <tr className="flex w-[100%] border-b-[1.5px] border-[#000000] border-opacity-[20%] 
+            md:gap-[36.67px] lg:gap-[64px]">
+              <td 
                 className="w-1/5 lg:pt-[30.5px] lg:pb-[28.5px]    
     md:pt-[17.51px] md:pb-[16.36px] p-[0px]"
               >
@@ -738,9 +746,11 @@ lg:text-[20px] lg:leading-[30px]"
               </td>
             </tr>
             {/* ROW TWO */}
-
-            <tr className="flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
-            lg:pl-[28px] lg:pr-[27px] lg:gap-[64px]">
+            
+            <tr className="flex w-[100%] border-b-[1.5px]
+             border-[#000000] border-opacity-[20%]
+             md:gap-[36.67px]
+             lg:gap-[64px]">
               <td
                 className="w-1/5    md:pt-[17.51px] md:pb-[16.36px]
     lg:pt-[30.5px] lg:pb-[28.5px] p-[0px]"
@@ -801,8 +811,9 @@ lg:text-[20px] lg:leading-[30px]"
             </tr>
             {/* ROW THREE */}
 
-            <tr className="flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
-            lg:pl-[28px] lg:pr-[27px] lg:gap-[64px]">
+            <tr className="flex w-[100%]  md:gap-[36.67px]
+            border-b-[1.5px] border-[#000000] border-opacity-[20%]
+            lg:gap-[64px]">
               <td className="w-1/5  lg:pt-[30.5px] lg:pb-[28.5px]  md:pt-[17.51px] md:pb-[16.36px]
               p-[0px]">
                 <p
@@ -859,8 +870,9 @@ lg:text-[20px] lg:leading-[30px]"
             </tr>
             {/* ROW FOUR */}
 
-            <tr className="flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
-            lg:pl-[28px] lg:pr-[27px] lg:gap-[64px]">
+            <tr className="flex w-[100%] md:gap-[36.67px]
+            border-b-[1.5px] border-[#000000] border-opacity-[20%]
+            lg:gap-[64px]">
               <td
                 className="w-1/5 md:pt-[17.51px] md:pb-[16.36px]
     lg:pt-[30.5px] lg:pb-[28.5px] p-[0px]"
@@ -919,8 +931,9 @@ lg:text-[20px] lg:leading-[30px]"
             </tr>
             {/* ROW FIVE */}
 
-            <tr className="flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
-            lg:pl-[28px] lg:pr-[27px] lg:gap-[64px]">
+            <tr className="flex w-[100%] md:gap-[36.67px]
+            border-b-[1.5px] border-[#000000] border-opacity-[20%]
+             lg:gap-[64px]">
               <td className="w-1/5     md:pt-[17.51px] md:pb-[16.36px] lg:pt-[30.5px] lg:pb-[28.5px]
               p-[0px]">
                 <p
@@ -979,8 +992,8 @@ lg:text-[20px] lg:leading-[30px]"
             </tr>
             {/* ROW SIX */}
 
-            <tr className="flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
-            lg:pl-[28px] lg:pr-[27px] lg:gap-[64px]">
+            <tr className="flex w-[100%]  md:gap-[36.67px]
+             lg:gap-[64px]">
               <td
                 className="w-1/5  md:pb-[16.36px] md:pt-[17.51px]
     lg:pt-[30.5px] lg:pb-[28.5px] p-[0px]"
@@ -1036,22 +1049,22 @@ lg:text-[20px] lg:leading-[30px]"
                 </p>
               </td>
             </tr>
-
+</div>
          
 
             {/* CONTACT US */}
-            <div className="flex md:gap-[14.896px] py-[10.865px] justify-center px-[8.594px]">
+            <div className="flex md:gap-[14.896px] py-[20.865px] justify-center px-[8.594px]">
               <p
-                className="font-[500]  lg:text-[12px] lg:leading-[15.6px]  md:text-[6.875px]
-  text-[#707070] md:leading-[8.938px]"
+                className="font-[500] self-center  lg:text-[12px] lg:leading-[16.6px]  md:text-[8.875px]
+  text-[#707070] md:leading-[12.938px]"
               >
                 You need help?
               </p>
               <Link to = "/contactUs"
                
-                className="font-[500] text-white lg:text-[8px] lg:leading-[10.4px] 
-  md:text-[4.583px]  py-[2.865px] 
- px-[8.594px] md:leading-[5.985px] rounded-[5.156px] lg:py-[5px]
+                className="font-[500] text-white lg:text-[10px] lg:leading-[16px] 
+  md:text-[8px]  py-[2.865px] 
+ px-[8.594px] md:leading-[12px] rounded-[5.156px] lg:py-[5px]
  lg:px-[15px] lg:rounded-  bg-[#04177F]"
               >
                 Contact Us
