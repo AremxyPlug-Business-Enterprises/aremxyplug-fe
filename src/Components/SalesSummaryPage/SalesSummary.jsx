@@ -658,7 +658,7 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
 <div className=' '>
 <footer className="
  flex  justify-center   text-center gap-[20px] 
- mt-[375px] mb-[50px] md:mt-[480px] lg:mb-[30px]  
+ mt-[370px] mb-[50px] md:mt-[480px] lg:mb-[30px]  
   z-index-2 onset-[500px] lg:mt-[760px]">
             <p className="text-[8px] md:text-[12px] lg:text-[12px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
               You need help?
@@ -695,7 +695,7 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
   
   
   <div className="flex  justify-start items-center lg:w-full relative bg-white  md:mt-[-655px]
-    lg:mt-[-959px] mt-[-521px] lg:h-[1100px] md:h-[700px] h-[450px] lg:mb-80 md:mb-40 mb-40 border-b-[1.2px] flex-col">
+    lg:mt-[-967px] mt-[-526px] lg:h-[1100px] md:h-[700px] h-[453px] lg:mb-80 md:mb-40 mb-40 border-b-[1.2px] flex-col">
   <div className={`${  
     toggleSideBar
   ? "lg:gap-[325px]"
@@ -863,7 +863,7 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
 
 
   <div className="flex  justify-start items-center lg:w-full shadow relative bg-white  md:mt-[-658px]
-    lg:mt-[-962px] mt-[-527px] lg:h-[1590px] md:h-[1390px]  h-[1050px] border lg:mb-80 md:mb-60 mb-40 border-b-[1.2px] flex-col">
+    lg:mt-[-967px] mt-[-527px] lg:h-[1590px] md:h-[1390px]  h-[1050px] border lg:mb-80 md:mb-60 mb-40 border-b-[1.2px] flex-col">
   <div className={`${  
     toggleSideBar
   ? "lg:gap-[325px]"
@@ -1246,7 +1246,7 @@ className={`${styles.viewTransact} ${
 
 
 <div className="flex  justify-start items-center lg:h-[1030px] md:h-[700px] h-[480px] lg:mb-80 md:mb-40  mb-40 border-b-[1.2px]
- lg:w-full relative bg-white  md:mt-[-653px]  lg:mt-[-968px] mt-[-521px] flex-col">
+ lg:w-full relative bg-white  md:mt-[-655px]  lg:mt-[-968px] mt-[-524px] flex-col">
 <div className={`${  
   toggleSideBar
 ? "lg:gap-[325px]"
