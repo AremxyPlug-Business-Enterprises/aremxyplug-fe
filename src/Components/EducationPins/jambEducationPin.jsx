@@ -146,7 +146,7 @@ const jambReceipt = () => {
 };
   return (
     <DashBoardLayout>
-      <div className='flex flex-col justify-between h-[110%] '>
+      <div className='flex flex-col justify-between h-[140%] lg:h-[120%]'>
    <div className=''>
     {/* Hero-section */}
  <HeroComponent/>
@@ -969,10 +969,10 @@ const jambReceipt = () => {
             />
           )}
                  
-                 <div className="py-[30px] lg:py-[60px] mt-10">
+                 <div className="py-[30px] lg:py-[60px] mt-10 lg:mb-[200px] mb-[50px] md:mb-[100px]">
             <button
               className={`font-extrabold h-[43px] w-[100%] py-[3.534px] px-[5.301px] 
-              mb-[40px] md:mb-[0px] rounded-[4.241px] md:h-auto
+             md:mb-[0px] rounded-[4.241px] md:h-auto
               md:w-[95.649px] text-white md:py-[5.868px] md:px-[8.802px] 
              md:text-[9.389px] md:leading-[14px] md:rounded-[7.042px]
              lg:text-[16px] lg:leading-[24px] lg:py-[10px] lg:px-[15px] lg:w-[163px] lg:rounded-[12px] ${
@@ -1006,8 +1006,8 @@ const jambReceipt = () => {
 </div>
       
 
-      <div className=" flex gap-[5.729px]  md:gap-[14.896px]
-       justify-center px-[8.594px] mb-[80px]">
+      <div className=" flex gap-[8.729px]  md:gap-[14.896px]
+       justify-center px-[8.594px] mb-[130px]">
               <p className="font-[500] text-[10px] text-black 
               leading-[10.4px] lg:text-[16px] lg:leading-[15.6px]  md:text-[6.875px]
             ] md:leading-[12.938px] self-center">
