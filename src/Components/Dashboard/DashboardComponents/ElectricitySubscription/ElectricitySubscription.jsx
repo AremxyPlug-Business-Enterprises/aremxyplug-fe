@@ -58,7 +58,7 @@ const ElectricitySubscription = () => {
                   />
                 </div>
 
-      <div className={` ${toggleSideBar ? "lg:gap-[97px] md:gap-[27px]" : "lg:gap-[130px] md:gap-[70px]"} grid grid-cols-2  md:grid-cols-5 pt-[20px] lg:mt-[70px]  gap-8   lg:leading-[19px] text-[#000000]`}>
+      <div className={` ${toggleSideBar ? "lg:gap-[97px] md:gap-[27px]" : "lg:gap-[150px] md:gap-[70px]"} grid grid-cols-2  md:grid-cols-5 pt-[20px] lg:mt-[70px]  gap-8   lg:leading-[19px] text-[#000000]`}>
             <Link to= "/ikedc"  >
             <div className="flex flex-col justify-between items-center rounded-md border-[1px] pb-3 lg:pb-5 px-4 w-[144px]  h-[94px] md:w-[94px] md:h-[94px] lg:w-[160px] lg:h-[160px]">
                 <div><img className="w-[42.9px] lg:w-[82px] lg:h-[100px] h-[53px] pt-2" src={bill1} alt="" /></div>
@@ -121,7 +121,7 @@ const ElectricitySubscription = () => {
             </div>
             </Link>
         </div>
-        <div className="flex flex-row items-center justify-center mt-[200px] mb-[70px] md:mt-[38%] lg:mt-[75%] gap-2">
+        <div className="flex flex-row items-center justify-center mt-[200px] mb-[20px] md:mt-[38%] lg:mt-[75%] gap-2">
           <div className="text-[8px] lg:text-[12px] font-[600] text-black">
             You need help?
           </div>
