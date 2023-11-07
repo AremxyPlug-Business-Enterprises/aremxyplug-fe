@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
@@ -8,7 +7,7 @@ import { DashBoardLayout } from "../Dashboard/Layout/DashBoardLayout";
 import { useRef } from "react";
 
 
-export const WalletSuccessfulReceipt = () => { 
+export const WalletCancelledReceipt = () => { 
 
   const {
     selectedNetworkProduct,
@@ -40,20 +39,6 @@ export const WalletSuccessfulReceipt = () => {
   }
 
 
-
-
-  // ===============Copy to Clipboard Function============
-//   const handleCopyClick = () => {
-//     const text = textRef.current.innerText;
-//     navigator.clipboard
-//       .writeText(text)
-//       .then(() => {
-//         alert("Copied to clipboard");
-//       })
-//       .catch((err) => {
-//         console.error("Error copying text: ", err);
-//       });
-//   };
 
   // ==============Share pdf Function=============
   const handleShareClick = () => {
@@ -123,7 +108,7 @@ export const WalletSuccessfulReceipt = () => {
               />
             </div>
             <h3 className="font-extrabold text-[12px] mt-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
-              Purchase Successful on
+              Purchase Failed on
             </h3>
             <span className="text-[11px] text-[#0008] font-extrabold flex justify-center items-center">
               {date.toLocaleDateString(undefined, {
@@ -136,14 +121,17 @@ export const WalletSuccessfulReceipt = () => {
                 hour12: true,
               })}
             </span>
-            <div className="border rounded-[8px] border-green-500 bg-emerald-100 mx-4 h-[45px] my-5 flex justify-center items-center px-[4%] md:h-[65px] lg:h-[75px]">
+            <div className="border rounded-[8px] bg-red-600 bg-opacity-20 border-red-600 mx-4 h-[45px] my-5 flex justify-center items-center px-[4%] md:h-[65px] lg:h-[75px]">
+            <p className="text-[9px] text-[#E62E05] px-[20px] text-center my-2 md:text-[14px] lg:text-[14px]">
+            Purchase Cancelled due to an unexpected error that occur. Please try again.
 
-            <p className="text-[9px] text-green-500 px-[20px] text-center my-2 md:text-[14px] lg:text-[14px]">
-              You have successfully purchased {"MTN VTU Airtime ₦10,000.00 "}
+
+
+{" "}
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[16px]">
               {selectedOption} {" "}
               </span>
-              from your {walletName + " Wallet"} to{" "}
+              {/* from your {walletName + " Wallet"} to{" "} */}
             </p>
             </div>
             <div className="flex flex-col gap-3">
@@ -276,6 +264,8 @@ export const WalletSuccessfulReceipt = () => {
     </DashBoardLayout>
   );
 };
+
+
 
 
 
