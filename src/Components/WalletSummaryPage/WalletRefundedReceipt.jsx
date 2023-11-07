@@ -10,12 +10,12 @@ import { useRef } from "react";
 export const WalletRefundedReceipt = () => { 
 
   const {
-    selectedNetworkProduct,
+    // selectedNetworkProduct,
     selectedOption,
-    recipientPhoneNumber,
-    recipientNames,
-    selectedAmount,
-    walletName,
+    // recipientPhoneNumber,
+    // recipientNames,
+    // selectedAmount,
+    // walletName,
     setSelectedNetworkProduct,
     setSelectedOption,
     setSelectedAmount,
