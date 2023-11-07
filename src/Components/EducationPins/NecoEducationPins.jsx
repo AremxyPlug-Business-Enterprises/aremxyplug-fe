@@ -357,8 +357,7 @@ const necoReceipt = () => {
      md:pr-[5.282px] md:pl-[5.867px] 
     lg:pt-[14px] lg:pb-[15.5px] lg:pr-[16px] lg:pl-[10px] 
      lg:placeholder:text-[16px] lg:placeholder:leading-[20.8px] placeholder:text-[#7E7E7E]
-     md:placeholder:text-[10.389px] md:placeholder:leading-[16.206px]
-      md:placeholder:text-[#7E7E7E]'
+     placeholder:text-[14.389px] placeholder:leading-[18.809.4px]'
       value={necoEducationPinEmail}
       onChange={(e) =>{
         setNecoEducationPinEmail(e.target.value);
