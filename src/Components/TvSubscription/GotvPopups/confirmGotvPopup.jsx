@@ -1,10 +1,8 @@
 import React from "react";
 import "../../TvSubscription/TvSubscription.css";
 import { useContext } from "react";
-import { useState } from "react";
 import { ContextProvider } from "../../Context";
 import { Modal } from "../../Screens/Modal/Modal";
-import arrowDown from '../../../Components/EducationPins/imagesEducation/arrow-down.svg';
 import arrowRight from "../../../Components/EducationPins/imagesEducation/educationArrowRight.svg";
 
 const ConfirmGotvPopup = () => {
@@ -22,6 +20,7 @@ const ConfirmGotvPopup = () => {
     cardName,
     imageState,
     tvWalletBalance,
+    flagResult,
   } = useContext(ContextProvider)
 
 
@@ -101,7 +100,7 @@ const ConfirmGotvPopup = () => {
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <span className="text-[#7C7C7C]">Payment Method</span>
-                    <span>Nigerian NGN Wallet</span>
+                    <span>{flagResult}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <span className="text-[#7C7C7C]">Transaction Fee</span>

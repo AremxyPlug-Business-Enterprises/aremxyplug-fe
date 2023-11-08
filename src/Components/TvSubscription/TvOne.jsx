@@ -36,10 +36,6 @@ const GoTv = () => {
     setMobileNumber,
   } = useContext(ContextProvider)
 
-  const handleGotv = (event) => {
-    event.preventDefault();
-    setConfirmGotvPopup(true)
-  }
 
   const handleOptionClickGOTV = (option) => {
     setSelectedOptionGOTV(option);
@@ -82,6 +78,11 @@ const GoTv = () => {
 
   };
 
+  // function waecQuantityDropDown(){
+  //   setQuantityActive(!quantityActive);
+  // document.querySelector('.imgdrop').classList.toggle('DropIt');
+  // }
+
   const handleCardName = (e) => {
     const inputValue = e.target.value;
     setCardName(inputValue);
@@ -95,28 +96,66 @@ const GoTv = () => {
     setTvEmail(inputValue);
   }
 
+  // const handleGotv = (event) => {
+  //   event.preventDefault();
+  //   setConfirmGotvPopup(true)
+  // }
+  const handleGotv = (event) => {
+    event.preventDefault();
+    
+    const { error } = schema.validate({
+      mobileNumber,
+      tvEmail
+    });
+  
+    if (error) {
+      setGOTVErrorMessage(
+        error.details.reduce((acc, curr) => {
+          acc[curr.path[0]] = curr.message;
+          return acc;
+        }, {})
+      );
+    } else {
+      setConfirmGotvPopup(true);
+      setGOTVErrorMessage(" ");
+    }
+  }
+
   const [GOTVErrorMessage, setGOTVErrorMessage] = useState('');
 
-  const GOTVSchema = Joi.object({
-    mobileNumber: Joi.string().regex(/^\d{11}$/).required(),
+ 
+  // const GOTVSchema = Joi.object({
+  //   mobileNumber: Joi.string().regex(/^\d{11}$/).required(),
+  // });
+
+  const schema = Joi.object({
+    mobileNumber: Joi.string().regex(/^\d{11}$/).required()
+      .messages({
+        "string.pattern.base": "Phone number should be 11 digits ",
+      }),
+      tvEmail: Joi.string()
+      .pattern(new RegExp(/^[^\s@]+@[^\s@]+\.[^\s@]+$/))
+      .required()
+      .messages({ "string.pattern.base": "Invalid email " 
+    })
   });
 
   const handleGOTVMobileNumberChange = (e) => {
     const inputValue = e.target.value;
     setMobileNumber(inputValue);
 
-    const validation = GOTVSchema.validate({ mobileNumber: inputValue });
+    // const validation = GOTVSchema.validate({ mobileNumber: inputValue });
 
-    if (validation.error) {
-      setGOTVErrorMessage('Incorrect Phone Number..');
-    } else {
-      setGOTVErrorMessage('');
-    }
+    // if (validation.error) {
+    //   setGOTVErrorMessage('Incorrect Phone Number..');
+    // } else {
+    //   setGOTVErrorMessage('');
+    // }
   };
 
   const { flagResult, setFlagResult } = useContext(ContextProvider);
   const { methodPayment, setMethodPayment } = useContext(ContextProvider);
-  const [imageState, setImageState] = useContext(ContextProvider);
+  const [imageState, setImageState] = useState(arrowDown);
   const { tvWalletBalance, setTvWalletBalance } = useContext(ContextProvider);
 
 
@@ -168,18 +207,21 @@ const GoTv = () => {
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[8px] lg:text-[16px] md:text-[11.46px] font-semibold">
                 Confirm Decoder Type</label>
               {/* <button className="border-[0.23px] lg:border-[0.4px] w-full md:w-1/2 h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C]">Gotv</button> */}
-              <div className="relative dropdown-toggle flex items-center cursor-pointer outline-0 border-[0.23px] lg:border-[0.4px] w-full h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center" onClick={() => setConfirmDecoderGOTV(!confirmDecoderGOTV)}>
+              <div className="relative  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[500] text-[8px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] hover:bg-[#EDEAEA] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center" onClick={() => setConfirmDecoderGOTV(!confirmDecoderGOTV)}>
                 {selectedDecoderGOTV}
-                <img className="absolute left-[90%] self-center align-middle" src={arrowDown} alt="" />
+                <img className="absolute left-[90%] lg:left-[94%] self-center align-middle" src={arrowDown} alt="" />
               </div>
 
               {confirmDecoderGOTV && (
                 <ul className="dropdown-options absolute top-[102%] w-full bg-white cursor-pointer">
                   {decoders.map((option, index) => (
                     <li
-                      className={`dropdownCSS h-[30px] md:h-[35px] lg:h-[50px] font-medium text-[12.93px] flex items-center text-[#7C7C7C] pl-[9px]`}
+                      className={`text-[8px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
+                      md:text-[13.227px] md:leading-[17.195px] 
+                      shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] bg-white
+                      lg:text-[16px] lg:leading-[20.8px] cursor-pointer hover:bg-[#EDEAEA] dropdownCSS h-[30px] md:h-[35px] lg:h-[50px] flex items-center`}
                       key={index}
-
                       onClick={() => handleDecoderClickGOTV(option)}
                     >
                       {option}
@@ -193,16 +235,20 @@ const GoTv = () => {
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[8px] lg:text-[16px] md:text-[11.46px] font-semibold">
                 Select Package</label>
 
-              <div className="dropdown-toggle flex items-center cursor-pointer outline-0 border-[0.23px] lg:border-[0.4px] w-full h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center" onClick={() => setShowDropdownGOTV(!showDropdownGOTV)}>
+              <div className=" flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[500] text-[8px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] hover:bg-[#EDEAEA] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center" onClick={() => setShowDropdownGOTV(!showDropdownGOTV)}>
                 {selectedOptionGOTV}
-                <img className="absolute left-[90%] self-center align-middle" src={arrowDown} alt="" />
+                <img className="absolute left-[90%] lg:left-[94%] self-center align-middle" src={arrowDown} alt="" />
               </div>
 
               {showDropdownGOTV && (
                 <ul className="dropdown-options absolute top-[100%] w-full bg-white cursor-pointer">
                   {options.map((option, index) => (
                     <li
-                      className={`dropdownCSS h-[30px] md:h-[35px] lg:h-[50px] font-medium text-[12.93px] flex items-center text-[#7C7C7C] pl-[9px]`}
+                      className={`text-[8px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
+                      md:text-[13.227px] md:leading-[17.195px] 
+                      shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] bg-white
+                      lg:text-[16px] lg:leading-[20.8px] cursor-pointer hover:bg-[#EDEAEA] dropdownCSS `}
                       key={index}
                       onClick={() => handleOptionClickGOTV(option)}
                     >
@@ -220,14 +266,16 @@ const GoTv = () => {
             <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[8px] lg:text-[16px] md:text-[11.46px] font-semibold">
                 Smart Card / IUC Number</label>
-              <input type="tel" style={{ backgroundColor: smartCard.length !== 10 ? '#FFD8D8' : 'white' }} maxLength={10} onChange={handleSmartCard} placeholder="1234567890" className="outline-0 border-[0.23px] lg:border-[0.4px] w-full h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] " />
+              <input type="tel" style={{ backgroundColor: smartCard.length !== 10 ? '#FFD8D8' : 'white' }} maxLength={10} onChange={handleSmartCard} placeholder="1234567890" className=" flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[500] text-[8px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] hover:bg-[#EDEAEA] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center" />
             </div>
 
             <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[8px] lg:text-[16px] md:text-[11.46px] font-semibold">
                 Card Name</label>
               <input type="text"
-                onChange={handleCardName} placeholder="Aremxyplug" className="outline-0 border-[0.23px] lg:border-[0.4px] w-full h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] " />
+                onChange={handleCardName} placeholder="Aremxyplug" className=" flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[500] text-[8px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] hover:bg-[#EDEAEA] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center" />
             </div>
           </div>
           <div className="flex flex-col md:flex-row gap-[20px] md:gap-[12px] lg:gap-[22px] md:my-2 lg:my-4">
@@ -236,14 +284,16 @@ const GoTv = () => {
                 Phone Number</label>
               <input id="val" value={mobileNumber} onChange={handleGOTVMobileNumberChange}
                 style={{ backgroundColor: GOTVErrorMessage ? '#FFD8D8' : 'white' }}
-                type="tel" maxLength={11} placeholder="7744115566" className="outline-0 border-[0.23px] lg:border-[0.4px] w-full h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] " />
-              {GOTVErrorMessage && <p className="text-[#F95252] text-[9px] md:text-[12px] lg:text-[14px] md:hidden font-semibold ">{GOTVErrorMessage}</p>}
+                type="tel" maxLength={11} placeholder="7744115566" className=" flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[500] text-[8px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] hover:bg-[#EDEAEA] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center" />
+              {GOTVErrorMessage.mobileNumber && <p className="text-[#F95252] text-[9px] md:text-[12px] lg:text-[14px] font-semibold ">{GOTVErrorMessage.mobileNumber}</p>}
 
             </div>
             <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
               <label htmlFor="Email" className="text-[#7E7E7E] text-[8px] lg:text-[16px] md:text-[11.46px] font-semibold">
                 Email</label>
-              <input type="email" onChange={handleTvEmail} required placeholder="Habib@aremxy.com" className="outline-0 border-[0.23px] lg:border-[0.4px] w-full h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px]" />
+              <input type="email" onChange={handleTvEmail} required placeholder="Habib@aremxy.com" className=" flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[500] text-[8px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] hover:bg-[#EDEAEA] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center" />
             </div>
 
           </div>
@@ -255,7 +305,8 @@ const GoTv = () => {
 
               <input
                 type="text"
-                className="text-[#7e7e7e71] outline-0 border-[0.23px] lg:border-[0.4px] w-full h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px]"
+                className=" flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[500] text-[8px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] 
+                lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] hover:bg-[#EDEAEA] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center"
                 value={'₦' + getNumericValue(selectedOptionGOTV)}
               />
 
@@ -311,8 +362,6 @@ const GoTv = () => {
             </div>
           </div>
         </div>
-
-        {GOTVErrorMessage && <p className="text-[#F95252] text-[9px] md:text-[12px] lg:text-[14px] max-[500px]:hidden mt-3 font-semibold ">{GOTVErrorMessage}</p>}
 
         <button onClick={handleGotv}
           disabled={mobileNumber.length !== 11 || !cardName || !tvEmail || !smartCard || !selectedDecoderGOTV || !selectedOptionGOTV}

@@ -738,10 +738,10 @@ export const Context = ({ children }) => {
   const [confirmDstvPopup, setConfirmDstvPopup] = useState(false);
   const [inputPinDstv, setInputPinDstv] = useState(false);
   const [dstvSuccessful, setDstvSuccessful] = useState(false);
-  const { flagResult, setFlagResult } = useState('');
-  const { methodPayment, setMethodPayment } = useState('');
-  const [imageState, setImageState] = useState("");
-  const { tvWalletBalance, setTvWalletBalance } = useState('');
+  const [flagResult, setFlagResult ]= useState('');
+  const [ methodPayment, setMethodPayment ] = useState(false);
+  const [imageState, setImageState] = useState(" ");
+  const [ tvWalletBalance, setTvWalletBalance ] = useState('');
 
   //============= EDUCATION PINS ========================
   //===============WAEC PINS================
