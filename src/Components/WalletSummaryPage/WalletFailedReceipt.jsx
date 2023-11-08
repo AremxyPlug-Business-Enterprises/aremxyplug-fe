@@ -162,7 +162,7 @@ export const WalletFailedReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Amount</p>
-                  <span>v₦10,000.00</span>
+                  <span>₦10,000.00</span>
                 </div>            
               </div>
 
