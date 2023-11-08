@@ -123,7 +123,7 @@ const IKEDC = () => {
     const [proceed, setProceed] = useState(false);
     
     const handleProceed = (e) => {
-      setProceed(true);
+      
       // e.preventDefault();
   
       const { error } = schema.validate({
@@ -283,7 +283,7 @@ const IKEDC = () => {
         <div className="text-[10px]  lg:text-[16px]  font-[600] mt-[10px] text-[#7E7E7E] "> Select <span className="text-[#04177F] font-[700]">Postpaid</span> MeterType if you get a bill at the end of the month.</div>
 
         {/* input sections */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-1 lg:gap-4 items-center lg:mt-[20px] ">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-1 md:gap-6 lg:gap-6 items-center lg:mt-[20px] ">
         <div className=" flex flex-col mt-[20px] gap-1">
             <div className="text-[#7E7E7E] text-[10px] lg:text-[16px]  font-[600]">Select Meter Type</div>
             <div
@@ -298,7 +298,7 @@ const IKEDC = () => {
                 </button>
               </div>
               {showProductList && (
-                <div className="border md:rounded-[10px] text-[10px] md:text-[12px] lg:text-[16px] mt-3 lg:mt-6 w-[90%]  rounded-[4px] absolute  bg-[#FFF] z-[10]">
+                <div className="border md:rounded-[10px] text-[10px] md:text-[12px] lg:text-[16px] mt-14 lg:mt-20 w-[90%]  rounded-[4px] absolute  bg-[#FFF] z-[10]">
                   {productList.map((item) => (
                     <div
                       key={item.name}
@@ -462,7 +462,7 @@ const IKEDC = () => {
             Proceed
           </div>
 
-          <footer className="flex justify-center text-center gap-[20px] mt-[220px] mb-[50px] md:mt-[750px] lg:mb-[30px] lg:mt-[950px]">
+          <div className="flex justify-center text-center gap-[20px] mt-[100px] pb-[30px] md:mt-[750px]  lg:mt-[850px]">
             <p className="text-[8px] md:text-[12px] lg:text-[20px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
               You need help?
             </p>
@@ -476,7 +476,7 @@ const IKEDC = () => {
                 Contact Us
               </div>
             </Link>
-          </footer>
+          </div>
 
           {/* Confirmation Transaction Popup */}
           {proceed && (
@@ -742,7 +742,7 @@ const IKEDC = () => {
                to confirm the bills / token. You can contact us for any further assistance.
               </p>
             </div>
-            <div className="flex w-[70%] mx-auto items-center gap-[6%] md:gap-[20px] justify-center md:w-[20%] lg:my-[5%]">
+            <div className="flex w-[70%] my-6  mx-auto items-center gap-[6%] md:gap-[20px] justify-center md:w-[20%] lg:my-[5%]">
               <button
                 onClick={() => {
                   setSuccessPopup(false);

@@ -22,10 +22,10 @@ export const SpectranetReceipt = () => {
     setSelectedOption,
     setSelectedAmount,
     setRecipientNames,
-    // accountId,
-    setAccountId,
     numberPins, 
     setNumberPins,
+    emailId, 
+    setEmailId,
   }
    = useContext(ContextProvider);
 
@@ -42,7 +42,7 @@ export const SpectranetReceipt = () => {
     setSelectedOption(false);
     setSelectedAmount('');
     setRecipientNames('');
-    setAccountId('');
+    setEmailId('');
     setNumberPins('');
   }
 
@@ -179,12 +179,12 @@ export const SpectranetReceipt = () => {
                 {/* <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Registered Email</p>
                   <span>Aremxyplug.com</span>
-                </div>
+                </div> */}
 
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Account ID</p>
-                  <span>{accountId}</span>
-                </div> */}
+                  <p className="text-[#0008]">Email ID</p>
+                  <span>{emailId}</span>
+                </div>
 
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Phone Number</p>
@@ -203,7 +203,7 @@ export const SpectranetReceipt = () => {
                 
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Amount</p>
-                  <span>{selectedAmount}</span>
+                  <span>₦{parseFloat(selectedAmount.replace("₦", "").replace(",", "")) * parseFloat(numberPins)}</span>
                 </div>            
               </div>
 

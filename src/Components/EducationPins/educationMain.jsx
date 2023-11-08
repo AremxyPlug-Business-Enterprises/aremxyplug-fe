@@ -12,14 +12,14 @@ export default function EducationMain() {
   return (
        
   <DashBoardLayout>
-      <div className=' flex flex-col  md:h-[900px] h-[700px] justify-between '>
-    <div>
+    <div className=' flex flex-col lg:h-[1000px] h-[110%]  justify-between'>
+    <div className='flex flex-col'>
          {/* hero section */}
  <HeroComponent/>
-       
-      <div className='flex text-[8px] leading-[12px] mb-[20px] lg:gap-[15px] md:gap-[5.87px]  md:mb-[40px]' >
-    <h2 className='font-[500] md:text-[11.737px] md:leading-[18px]
-    lg:text-[20px] text-[#7C7C7C] lg:leading-[30px]'>
+       <div className='flex  mb-[20px] lg:gap-[15px] items-center
+      md:gap-[8.87px] gap-[5px]  md:mb-[40px]' >
+  <h2 className='font-[500] md:text-[14.737px] md:leading-[20px]
+    lg:text-[20px] text-[#7C7C7C] lg:leading-[30px] text-[9px] leading-[14px]'>
      Select Exam Type
     </h2>
     
@@ -33,7 +33,7 @@ export default function EducationMain() {
         {/* WAEC Examination */}
         <Link to = "/WaecEducationPin"
         className="md:w-1/4  md:h-[100%] h-[70px] w-[144px]">
-       <div className='flex h-[100%] p-[5.868px] gap-[2.35px] md:p-[5.868px] md:gap-[2.347px] rounded-[2.934px]
+       <div className='flex h-[100%] p-[5.868px] gap-[3.35px] md:p-[5.868px] md:gap-[2.347px] rounded-[2.934px]
        border-[0.587px] border-[solid] border-[black] border-opacity-[30%]
       shadow-[0px_0.58686px_0.34722px_0px_rgba(0,0,0,0.25)]
        lg:shadow-[0px_1px_4px_0px_rgba(0,0,0,0.25)] 
@@ -57,7 +57,7 @@ export default function EducationMain() {
        {/* Neco Examination */}
        <Link to = "/NecoEducationPin"
        className="md:w-1/4 md:h-[100%] h-[70px] w-[144px]">
-        <div className='flex h-[100%] p-[5.868px] gap-[2.35px] md:p-[5.868px] md:gap-[2.347px] rounded-[2.934px]
+        <div className='flex h-[100%] p-[5.868px] gap-[3.35px] md:p-[5.868px] md:gap-[2.347px] rounded-[2.934px]
        border-[0.587px] border-[solid] border-[black] border-opacity-[30%]
       shadow-[0px_0.58686px_0.34722px_0px_rgba(0,0,0,0.25)]
        lg:shadow-[0px_1px_4px_0px_rgba(0,0,0,0.25)] 
@@ -79,7 +79,7 @@ export default function EducationMain() {
        {/* Nabteb Examination */}
        <Link to = "/NabtebEducationPin"
        className="md:w-1/4 md:h-[100%] h-[70px] w-[144px] ">
-       <div className='flex h-[100%] p-[5.868px] gap-[2.35px] md:p-[5.868px] md:gap-[2.347px] rounded-[2.934px]
+       <div className='flex h-[100%] p-[5.868px] gap-[3.35px] md:p-[5.868px] md:gap-[2.347px] rounded-[2.934px]
        border-[0.587px] border-[solid] border-[black] border-opacity-[30%]
       shadow-[0px_0.58686px_0.34722px_0px_rgba(0,0,0,0.25)]
        lg:shadow-[0px_1px_4px_0px_rgba(0,0,0,0.25)] 
@@ -101,7 +101,7 @@ export default function EducationMain() {
        {/* Jamb Examination */}
        <Link to = "/JambEducationPin"
         className="md:w-1/4 md:h-[100%] h-[70px] w-[144px]">
-        <div className='flex h-[100%] p-[5.868px] gap-[2.35px] md:p-[5.868px] md:gap-[2.347px]
+        <div className='flex h-[100%] p-[5.868px] gap-[3.35px] md:p-[5.868px] md:gap-[2.347px]
          rounded-[2.934px]
        border-[0.587px] border-[solid] border-[black] border-opacity-[30%]
       shadow-[0px_0.58686px_0.34722px_0px_rgba(0,0,0,0.25)]
@@ -123,24 +123,26 @@ export default function EducationMain() {
        </Link>
       </div>
       </div>
+  
       {/* contact us */}
-      <div className="flex gap-[5.729px]  md:gap-[14.896px] py-[30.865px] justify-center px-[8.594px] ">
-            <p className="font-[500] text-[10px] text-black 
+      <div className=" flex gap-[5.729px]  md:gap-[14.896px]
+        justify-center px-[8.594px] mb-[80px]">
+              <p className="font-[500] text-[10px] text-black 
               leading-[10.4px] lg:text-[16px] lg:leading-[15.6px]  md:text-[6.875px]
             ] md:leading-[12.938px] self-center">
-              You need help?
-            </p>
-            <Link to ="/contactUs"
-              className="font-[500] text-white text-[10px]  py-[4.865px] 
-              px-[12.594px] leading-[10.4px] rounded-[5.156px] bg-[#04177F]
-              lg:text-[12px] lg:leading-[14.4px] 
-               md:text-[4.583px]  md:py-[4.865px] 
-              md:px-[14.594px] md:leading-[5.985px]  lg:py-[10px]
-              lg:px-[16px] lg:rounded-[9px]"
-            >
-              Contact Us
-            </Link>
-          </div>
+                You need help?
+              </p>
+              <Link to ="/contactUs"
+                className="font-[500] text-white text-[10px]  py-[4.865px] 
+                px-[10.594px] leading-[10.4px] rounded-[5.156px] bg-[#04177F]
+                lg:text-[12px] lg:leading-[14.4px] 
+                 md:text-[4.583px]  md:py-[4.865px] 
+                md:px-[14.594px] md:leading-[5.985px]  lg:py-[10px]
+                lg:px-[16px] lg:rounded-[9px]"
+              >
+                Contact Us
+              </Link>
+            </div>
       </div>
  </DashBoardLayout>
       

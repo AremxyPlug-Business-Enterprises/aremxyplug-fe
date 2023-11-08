@@ -63,6 +63,10 @@ const FiatWallet = () => {
         setCurrentId(index);
         setClicked(!clicked);
       }
+
+      const refresh =()=> {
+        window.location.reload();
+      }
       // check if the countries in the list is among the already existing countries
       const notAvailableCountries = ['United States', 'United Kingdom', 'Kenya', 'Australia', 'European Union']
       const notAvailable = notAvailableCountries.includes(selection);
@@ -73,12 +77,12 @@ const FiatWallet = () => {
         <>
         <div className='flex flex-col justify-between h-full'>
           <div>
-            <div className="w-full h-[65.33px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] bg-[#ff4343]/[0.5] flex px-[16px] lg:px-[50px] justify-around lg:rounded-[20px]">
+            <div className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] bg-[#ff4343]/[0.5] flex px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px]">
               <div className='py-[13px] lg:py-[40px]'>
                 <h2 className='text-[8px] md:text-[13.75px] md:leading-[20.63px] font-bold mb-2 lg:text-[24px] lg:mb-4'>FIAT WALLETS</h2>
-                <h2 className='text-[6.6px] md:text-[11.46px] md:leading-[15px] lg:text-[20px] lg:leading-[26px] mb-3'>The below Fiat Currency Wallets are reserved for your account only.</h2>
+                <h2 className='text-[7px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3"'>The below Fiat Currency Wallets are reserved for your account only.</h2>
               </div>
-              <div className='h-full ml-[15px]'>
+              <div className='w-[91px] h-[66px] lg:w-[254px] lg:h-[170px]'>
                 <img src='./Images/wallet/fiatBanner.png' alt="" className='h-full'/>
               </div>
             </div>
@@ -87,24 +91,24 @@ const FiatWallet = () => {
                 <div className="w-full relative">
                   <input type="text" name="" placeholder='Search for Wallets, e.g; NGN or Nigeria' className='text-[7px] leading-[10.5px] p-[4px] md:text-[9.17px] md:leading-[11.97px] w-full h-full outline-none placeholder:text-[7px] placeHolder:leading-[10.5px] rounded-[4px] border block px-1 md:placeholder:text-[9.17px] lg:placeholder:text-base lg:placeholder:leading-[20px] lg:rounded-[12px] lg:text-base lg:leading-[20px] lg:p-3'/>
                   <div className='absolute right-[4px] bottom-[3px] lg:right-[7px] lg:bottom-[10px] w-[12px] h-[12px] md:w-[11.46px] md:h-[11.46px] md:bottom-1 lg:w-[20px] lg:h-[20px]'>
-                      <img src="./Images/wallet/search-status.svg" alt="searchIcon" className='w-full h-full'/>  
+                    <img src="./Images/wallet/search-status.svg" alt="searchIcon" className='w-full h-full'/>  
                   </div>
                 </div>
               </div>
               <div className="w-[40%] lg:w-[35%] border flex h-[20px] md:h-[23px] lg:h-[48px] rounded-[4px] items-center justify-between px-1 lg:rounded-[12px] lg:px-3">
-                <button className='text-[7px] leading-[10.5px] block md:text-[9.17px] lg:rounded-[12px] lg:text-base lg:leading-[20px] h-full'>Refresh Wallet Balances</button>
+                <button className='text-[7px] leading-[10.5px] block md:text-[9.17px] lg:rounded-[12px] lg:text-base lg:leading-[20px] h-full' onClick={refresh}>Refresh Wallet Balances</button>
                   <div className='w-[12px] h-[12px] md:w-[11.46px] md:h-[11.46px] lg:w-[20px] lg:h-[20px]'>
-                      <img src="./Images/wallet/refresh-square-2.svg" alt="searchIcon" className='w-full h-full object-cover'/>  
+                    <img src="./Images/wallet/refresh-square-2.svg" alt="searchIcon" className='w-full h-full object-cover'/>  
                   </div>
               </div>
             </div>
             <div className='mt-[25.39px] md:mt-[35px] lg:mt-[60px] flex items-center justify-between'>
-              <button className='bg-primary text-white text-[7px] leading-[10.5px] rounded-[4px] md:rounded-[7px] md:text-[9.17px] md:leading-[13.75px] flex items-center lg:text-[16px] lg:leading-[24px] justify-center py-[5px] w-[85.5px] md:w-[124px] lg:w-[231px] lg:py-[10px]'>
+              <Link to='/top-up' className='bg-primary text-white text-[7px] leading-[10.5px] rounded-[4px] md:rounded-[7px] md:text-[9.17px] md:leading-[13.75px] flex items-center lg:text-[16px] lg:leading-[24px] justify-center py-[5px] w-[85.5px] md:w-[124px] lg:w-[231px] lg:py-[10px]'>
                 <div className='mr-1 w-[11.38px] h-[11.38px] md:w-[19.48px] md:h-[19.48px] lg:w-[34px] lg:h-[34px]'>
                   <img src="./Images/wallet/card-add.png" alt="" className='object-cover w-full'/>
                 </div>
                 <h2>Add Money</h2>
-              </button>
+              </Link>
               <button className='bg-primary text-white text-[7px] leading-[10.5px] md:text-[9.17px] md:leading-[13.75px] rounded-[4px] md:rounded-[7px] flex items-center lg:text-[16px] lg:leading-[24px] justify-center py-[5px] w-[85.5px] md:w-[124px] lg:w-[231px] lg:py-[10px]' onClick={() => setAddWalletModal(true)}>
                 <div className='mr-1 w-[11.38px] h-[11.38px] md:w-[19.48px] md:h-[19.48px] lg:w-[34px] lg:h-[34px]'>
                   <img src="./Images/wallet/wallet-add.png" alt="" className='object-cover w-full'/>

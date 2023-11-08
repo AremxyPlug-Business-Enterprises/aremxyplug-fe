@@ -229,6 +229,13 @@ export const Context = ({ children }) => {
       checkbox,
     } = state;
 
+    if (password !== confirmPassword) {
+      setErrors({
+        confirmPassword: "Password and Confirm Password do not match",
+      });
+      return;
+    }
+
     const { error } = schema.validate({
       fullName,
       userName,
@@ -249,18 +256,6 @@ export const Context = ({ children }) => {
         }, {})
       );
     } else {
-      setVerification(true);
-      setState({
-        country: "",
-        fullName: "",
-        userName: "",
-        email: "",
-        phoneNumber: "",
-        IVcode: "",
-        password: "",
-        confirmPassword: "",
-      });
-
       const data = {
         fullname: fullName,
         username: userName,
@@ -270,23 +265,38 @@ export const Context = ({ children }) => {
         password: password,
         country: country,
       };
-
       const config = {
-        headers: { "Content-Type": "Application/json" },
+        headers: { "Content-Type": "application/json" },
       };
-
       const url = "https://aremxyplug.onrender.com/api/v1/signup";
-
       axios
         .post(url, data, config)
         .then((response) => {
-          console.log(response.data);
+          console.log(response);
+          if (response.status === 201) {
+            setVerification(true);
+            setState({
+              country: "",
+              fullName: "",
+              userName: "",
+              email: "",
+              phoneNumber: "",
+              password: "",
+              confirmPassword: "",
+            });
+            setErrors({});
+          } else if (response.status === 200) {
+            alert("User Exist Already");
+          } else if (response.status === 409) {
+            alert("Input already in use: " + response.data);
+          } else {
+            console.log(response.data);
+          }
         })
         .catch((error) => {
-          console.log(error.message);
+          console.error(error);
+          alert(error.response.data.error);
         });
-
-      setErrors({});
     }
   };
   // ========End for SignUp.jsx======
@@ -340,6 +350,7 @@ export const Context = ({ children }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isValue, SetIsValue] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
+  const [logout, setLogout] = useState(false);
   const date = new Date();
   const sidebarRef = useRef(null);
 
@@ -680,8 +691,10 @@ export const Context = ({ children }) => {
   const [selectedAmount, setSelectedAmount] = useState("");
   const [recipientNames, setRecipientNames] = useState("");
   const [walletName, setWalletName] = useState("");
+
   const [accountId, setAccountId] = useState("");
   const [numberPins, setNumberPins] = useState("");
+  const [emailId, setEmailId] = useState("");
 
   //=============point redeem==============
   const [inputValue, setInputValue] = useState("");
@@ -690,11 +703,11 @@ export const Context = ({ children }) => {
   const [realoutputValue, setRealOutputValue] = useState("");
 
   //==============electricity subscrition===========
-  const [meterNumber, setMeterNumber] = useState('');
-  const [verifiedName, setVerifiedName] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [ikedcEmail, setEmail] = useState('');
-  const [ikedcamount, setIkedcamount] = useState('');
+  const [meterNumber, setMeterNumber] = useState("");
+  const [verifiedName, setVerifiedName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [ikedcEmail, setEmail] = useState("");
+  const [ikedcamount, setIkedcamount] = useState("");
 
   //=============Currency conversion==============
   const [convertedAmount, setConvertedAmount] = useState("");
@@ -709,41 +722,75 @@ export const Context = ({ children }) => {
   const [confirmGotvPopup, setConfirmGotvPopup] = useState(false);
   const [inputPinGotv, setInputPinGotv] = useState(false);
   const [gotvSuccessful, setGotvSuccessful] = useState(false);
-  const [selectedOptionGOTV, setSelectedOptionGOTV] = useState('');
+  const [selectedOptionGOTV, setSelectedOptionGOTV] = useState("");
   const [showDropdownGOTV, setShowDropdownGOTV] = useState(false);
   const formatNumberWithCommas = (number) => {
-    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
-  const [mobileNumber, setMobileNumber] = useState('');
-  const [cardName, setCardName] = useState('');
-  const [smartCard, setSmartCard] = useState('');
-  const [tvEmail, setTvEmail] = useState('')
-  const [methodPayment, setMethodPayment] = useState(false);
-  const [flagResult, setFlagResult] = useState('');
-  const [tvWalletBalance, setTvWalletBalance] = useState('');
-  const [imageState, setImageState] = useState('');
-
-
+  const [mobileNumber, setMobileNumber] = useState("");
+  const [cardName, setCardName] = useState("");
+  const [smartCard, setSmartCard] = useState("");
+  const [tvEmail, setTvEmail] = useState("");
 
   //==========DSTV===========
-  const [selectedOptionDstv, setSelectedOptionDstv] = useState('');
+  const [selectedOptionDstv, setSelectedOptionDstv] = useState("");
   const [showDropdownDstv, setShowDropdownDstv] = useState(false);
   const [confirmDstvPopup, setConfirmDstvPopup] = useState(false);
   const [inputPinDstv, setInputPinDstv] = useState(false);
   const [dstvSuccessful, setDstvSuccessful] = useState(false);
+  const { flagResult, setFlagResult } = useState('');
+  const { methodPayment, setMethodPayment } = useState('');
+  const [imageState, setImageState] = useState("");
+  const { tvWalletBalance, setTvWalletBalance } = useState('');
 
   //============= EDUCATION PINS ========================
-
+  //===============WAEC PINS================
   const [quantityResult, setQuantityResult] = useState('');
-  const [waecActive, setWaecActive] = useState(false);
+  const [quantityActive, setQuantityActive] = useState(false);
   const [paymentResult, setPaymentResult] = useState('');
   const [methodActive, setMethodActive] = useState(false);
   const [examType, setExamType] = useState('');
   const [examActive, setExamActive] = useState(false);
   const [educationPinPhone, setEducationPinPhone] = useState('');
   const [educationPinEmail, setEducationPinEmail] = useState('');
-  const [waecAmount, setWaecAmount] = useState('₦');
+  const [educationAmount, setEducationAmount] = useState('₦');
   const [walletBalance, setWalletBalance] = useState('');
+
+  //==============  NECO PINS  ================
+  const [necoQuantityResult, setNecoQuantityResult] = useState('');
+  const [necoQuantityActive, setNecoQuantityActive] = useState(false);
+  const [necoPaymentResult, setNecoPaymentResult] = useState('');
+  const [necoMethodActive, setNecoMethodActive] = useState(false);
+  const [necoExamType, setNecoExamType] = useState('');
+  const [necoExamActive, setNecoExamActive] = useState(false);
+  const [necoEducationPinPhone, setNecoEducationPinPhone] = useState('');
+  const [necoEducationPinEmail, setNecoEducationPinEmail] = useState('');
+  const [necoEducationAmount, setNecoEducationAmount] = useState('₦');
+  const [necoWalletBalance, setNecoWalletBalance] = useState('');
+
+  // ============== JAMB PINS ================
+  const [jambQuantityResult, setJambQuantityResult] = useState('');
+  const [jambQuantityActive, setJambQuantityActive] = useState(false);
+  const [jambPaymentResult, setJambPaymentResult] = useState('');
+  const [jambMethodActive, setJambMethodActive] = useState(false);
+  const [jambExamType, setJambExamType] = useState('');
+  const [jambExamActive, setJambExamActive] = useState(false);
+  const [jambEducationPinPhone, setJambEducationPinPhone] = useState('');
+  const [jambEducationPinEmail, setJambEducationPinEmail] = useState('');
+  const [jambEducationAmount, setJambEducationAmount] = useState('₦');
+  const [jambWalletBalance, setJambWalletBalance] = useState('');
+
+  // ============== NABTEB PINS =============
+  const [nabtebQuantityResult, setNabtebQuantityResult] = useState('');
+  const [nabtebQuantityActive, setNabtebQuantityActive] = useState(false);
+  const [nabtebPaymentResult, setNabtebPaymentResult] = useState('');
+  const [nabtebMethodActive, setNabtebMethodActive] = useState(false);
+  const [nabtebExamType, setNabtebExamType] = useState('');
+  const [nabtebExamActive, setNabtebExamActive] = useState(false);
+  const [nabtebEducationPinPhone, setNabtebEducationPinPhone] = useState('');
+  const [nabtebEducationPinEmail, setNabtebEducationPinEmail] = useState('');
+  const [nabtebEducationAmount, setNabtebEducationAmount] = useState('₦');
+  const [nabtebWalletBalance, setNabtebWalletBalance] = useState('');
 
   const hold = {
     firstDrop,
@@ -864,6 +911,8 @@ export const Context = ({ children }) => {
     handleToggle,
     volumeValueToggle,
     isValue,
+    logout,
+    setLogout,
 
     // Login
     showModal2,
@@ -1016,7 +1065,8 @@ export const Context = ({ children }) => {
     setAccountId,
     numberPins,
     setNumberPins,
-
+    emailId,
+    setEmailId,
 
     //point redeem
     inputValue,
@@ -1027,8 +1077,6 @@ export const Context = ({ children }) => {
     setRealInputValue,
     realoutputValue,
     setRealOutputValue,
-
-
 
     //electricity subscription
     meterNumber,
@@ -1057,10 +1105,13 @@ export const Context = ({ children }) => {
     //TV-subscription
     confirmGotvPopup,
     setConfirmGotvPopup,
+    // handleGotv,
     inputPinGotv,
     setInputPinGotv,
+    // handleInputGotv,
     gotvSuccessful,
     setGotvSuccessful,
+    // handleGotvSuccessful,
     selectedOptionGOTV,
     setSelectedOptionGOTV,
     showDropdownGOTV,
@@ -1083,6 +1134,7 @@ export const Context = ({ children }) => {
     imageState,
     setImageState,
 
+
     confirmDstvPopup,
     setConfirmDstvPopup,
     inputPinDstv,
@@ -1096,12 +1148,13 @@ export const Context = ({ children }) => {
 
 
     //====== EDUCATION PINS
+    //=======WAEC PINS
     quantityResult,
     setQuantityResult,
+    quantityActive,
+    setQuantityActive,
     paymentResult,
     setPaymentResult,
-    waecActive,
-    setWaecActive,
     methodActive,
     setMethodActive,
     examType,
@@ -1112,10 +1165,76 @@ export const Context = ({ children }) => {
     setEducationPinPhone,
     educationPinEmail,
     setEducationPinEmail,
-    waecAmount,
-    setWaecAmount,
+    educationAmount,
+    setEducationAmount,
     walletBalance,
-    setWalletBalance
+    setWalletBalance,
+
+    //======NECO PINS ==========
+    necoQuantityResult,
+    setNecoQuantityResult,
+    necoQuantityActive,
+    setNecoQuantityActive,
+    necoPaymentResult,
+    setNecoPaymentResult,
+    necoMethodActive,
+    setNecoMethodActive,
+    necoExamType,
+    setNecoExamType,
+    necoExamActive,
+    setNecoExamActive,
+    necoEducationPinPhone,
+    setNecoEducationPinPhone,
+    necoEducationPinEmail,
+    setNecoEducationPinEmail,
+    necoEducationAmount,
+    setNecoEducationAmount,
+    necoWalletBalance,
+    setNecoWalletBalance,
+
+    //==========   JAMB PINS =========
+    jambQuantityResult,
+    setJambQuantityResult,
+    jambQuantityActive,
+    setJambQuantityActive,
+    jambPaymentResult,
+    setJambPaymentResult,
+    jambMethodActive,
+    setJambMethodActive,
+    jambExamType,
+    setJambExamType,
+    jambExamActive,
+    setJambExamActive,
+    jambEducationPinPhone,
+    setJambEducationPinPhone,
+    jambEducationPinEmail,
+    setJambEducationPinEmail,
+    jambEducationAmount,
+    setJambEducationAmount,
+    jambWalletBalance,
+    setJambWalletBalance,
+
+    //========= NABTEB PINS =======
+    nabtebQuantityResult,
+    setNabtebQuantityResult,
+    nabtebQuantityActive,
+    setNabtebQuantityActive,
+    nabtebPaymentResult,
+    setNabtebPaymentResult,
+    nabtebMethodActive,
+    setNabtebMethodActive,
+    nabtebExamType,
+    setNabtebExamType,
+    nabtebExamActive,
+    setNabtebExamActive,
+    nabtebEducationPinPhone,
+    setNabtebEducationPinPhone,
+    nabtebEducationPinEmail,
+    setNabtebEducationPinEmail,
+    nabtebEducationAmount,
+    setNabtebEducationAmount,
+    nabtebWalletBalance,
+    setNabtebWalletBalance,
 
   };
 

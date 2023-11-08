@@ -27,33 +27,33 @@ import AremxyPlugIcon from './imagesEducation/AremxyPlug.svg';
  
 export default function JambEducationPin() {
   const { isDarkMode } = useContext(ContextProvider);
-  const {quantityResult, setQuantityResult} = useContext(ContextProvider);
-const {waecActive, setWaecActive} = useContext(ContextProvider);
-const {paymentResult, setPaymentResult} = useContext(ContextProvider);
-const {methodActive, setMethodActive} = useContext(ContextProvider);
-const {examType, setExamType} = useContext(ContextProvider);
-const {examActive, setExamActive} = useContext(ContextProvider);
+  const {jambQuantityResult, setJambQuantityResult} = useContext(ContextProvider);
+const {jambQuantityActive, setJambQuantityActive} = useContext(ContextProvider);
+const {jambPaymentResult, setJambPaymentResult} = useContext(ContextProvider);
+const {jambMethodActive, setJambMethodActive} = useContext(ContextProvider);
+const {jambExamType, setJambExamType} = useContext(ContextProvider);
+const {jambExamActive, setJambExamActive} = useContext(ContextProvider);
 const { transactSuccessPopUp, setTransactSuccessPopUp } =
 useContext(ContextProvider);
-const {educationPinPhone, setEducationPinPhone} = useContext(ContextProvider);
-const {waecAmount, setWaecAmount} = useContext(ContextProvider);
-const {educationPinEmail, setEducationPinEmail} = useContext(ContextProvider);
-const {walletBalance, setWalletBalance } = useContext(ContextProvider);
+const {jambEducationPinPhone, setJambEducationPinPhone} = useContext(ContextProvider);
+const {jambEducationAmount, setJambEducationAmount} = useContext(ContextProvider);
+const {jambEducationPinEmail, setJambEducationPinEmail} = useContext(ContextProvider);
+const {jambWalletBalance, setJambWalletBalance } = useContext(ContextProvider);
 // UseStates
-const [imageState, setImageState] = useState(arrowDown);
-const [educationProceed, setEducationProceed] = useState(false);
+const [jambImageState, setJambImageState] = useState(arrowDown);
+const [jambEducationProceed, setJambEducationProceed] = useState(false);
 const [errors, setErrors] = useState({});
-const [educationConfirm, setEducationConfirm] = useState(false);
+const [jambEducationConfirm, setJambEducationConfirm] = useState(false);
 const [receipt] = useState(false);
 
 
 
 //==========  QUANTITY RESULT SLIP CHECKERS ==============
-function clickDropDown(){
-  setWaecActive(!waecActive);
+function jambQuantityDropDown(){
+  setJambQuantityActive(!jambQuantityActive);
 document.querySelector('.imgdrop').classList.toggle('DropIt');
 }
-const options = [
+const jambOptions = [
   {quantity :  '1 Piece Of Result Checker', Amount : "₦100", id : 1},
   {quantity :  '2 Piece Of Result Checker', Amount : "₦200", id : 2},
   {quantity :  '3 Piece Of Result Checker', Amount : "₦300", id : 3},
@@ -65,11 +65,11 @@ const options = [
 
 // WALLET 
 
-function methodDropDown(){
-  setMethodActive(!methodActive);
+function jambMethodDropDown(){
+  setJambMethodActive(!jambMethodActive);
 document.querySelector('.methodDrop').classList.toggle('DropIt');
 }
-const [methodOptions,setMethodOptions] = useState([
+const [jambMethodOptions,setJambMethodOptions] = useState([
  {method : 'NGN Wallet', balance :" (50,000.00)", flag : nigerianFlag, id : 1},
 {method : 'USD Wallet ', balance :'(0.00)', flag : americaFlag, id : 2 },
 {method : 'EUR Wallet', balance :'(0.00)', flag : britainFlag, id : 3 },
@@ -79,14 +79,14 @@ const [methodOptions,setMethodOptions] = useState([
 ])
 
 // CONFIRM EXAM TYPE
-const Exams  = [
+const jambExams  = [
 { examType :'JAMB (₦100)',  id : 1},
   { examType :'NECO (₦100)', path :  "/NecoEducationPin", id : 2 },
   { examType :'NABTEB (₦100)', path : "/NabtebEducationPin", id : 3 },
 { examType :'WAEC (₦100)', path : "/WaecEducationPin", id : 4 }
  ]
-function examDropDown(){
-  setExamActive(!examActive);
+function jambExamDropDown(){
+  setJambExamActive(!jambExamActive);
 document.querySelector('.Examdrop').classList.toggle('DropIt');
 }
 // FUNCTION OTP FOR THE POPPINS
@@ -103,8 +103,8 @@ const jambProceed = () => {
   
 
   const { error } = schema.validate({
-    educationPinPhone,
-    educationPinEmail
+    jambEducationPinPhone,
+    jambEducationPinEmail
   });
 
   if (error) {
@@ -115,7 +115,7 @@ const jambProceed = () => {
       }, {})
     );
   } else {
-    setEducationProceed(true);
+    setJambEducationProceed(true);
     setErrors({});
   }
 };
@@ -134,8 +134,8 @@ const schema = Joi.object({
 });
 
 const confirmButton = () => {
-  setEducationProceed(false);
-  setEducationConfirm(true);
+  setJambEducationProceed(false);
+  setJambEducationConfirm(true);
 };
 
 const jambTransactionSuccessClose = () => {
@@ -146,7 +146,7 @@ const jambReceipt = () => {
 };
   return (
     <DashBoardLayout>
-      <div className='flex flex-col justify-between h-[110%] '>
+      <div className='flex flex-col justify-between h-[140%] lg:h-[120%]'>
    <div className=''>
     {/* Hero-section */}
  <HeroComponent/>
@@ -188,31 +188,31 @@ const jambReceipt = () => {
       </h2>
       {/* input */}
   <div 
-   onClick={examDropDown}
+   onClick={jambExamDropDown}
   className=' w-[100%] flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
   md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] 
   lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] border-[0.4px] border-[#9C9C9C]
   hover:bg-[#EDEAEA]'>
       <h2 
       className='font-[500] text-[8px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] 
-      lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px] cursor-pointer'>
-      {examType}
+      lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer'>
+      {jambExamType}
         </h2>
         <img  
         className='Examdrop md:h-[14.083px] md:w-[14.083px] lg:h-[24px] 
         lg:w-[24px] h-[14px] w-[14px]'
         src= {arrowDown} alt="" />
          </div>
-         {examActive && (
+         {jambExamActive && (
            <div className='absolute lg:top-[90px] md:top-[60px] top-[50px] z-[3]  
            flex flex-col w-[100%] lg:h-225px md:h-[210px]  
            '>
-            {(Exams.map(exam => {
+            {(jambExams.map(exam => {
               return (
                  <a href={exam.path}
                  onClick={(e =>{
-            setExamType(exam.examType);
-                   setExamActive(false);
+            setJambExamType(exam.examType);
+                   setJambExamActive(false);
                document.querySelector('.Examdrop').classList.remove('DropIt');
                console.log(e);
                 })}
@@ -244,15 +244,15 @@ const jambReceipt = () => {
       </h2>
       {/* input */}
   <div 
-  onClick={clickDropDown}
+  onClick={jambQuantityDropDown}
   className=' flex  justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
    md:pt-[8.802px] md:pb-[7.042px] 
   md:pr-[5.282px] md:pl-[5.867px] 
   lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
   border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
       <h2 className='font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
-      lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px] cursor-pointer'>
-      {quantityResult}
+      lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer'>
+      {jambQuantityResult}
         </h2>
         <img 
          className='imgdrop md:h-[14.038px] md:w-[14.038px] 
@@ -261,16 +261,16 @@ const jambReceipt = () => {
          </div>
          {/* drop down */}
          
-        {waecActive && (
+        {jambQuantityActive && (
            <div className='absolute z-[2] lg:top-[90px] md:top-[60px] top-[50px]   
            flex flex-col w-[100%] lg:h-225px md:h-[210px]  
           '>
-            {(options.map(option => {
+            {(jambOptions.map(option => {
               return (
                 <h2 onClick={(e =>{
-                  setQuantityResult(option.quantity)
-                  setWaecActive(false);
-                  setWaecAmount(option.Amount);
+                  setJambQuantityResult(option.quantity)
+                  setJambQuantityActive(false);
+                  setJambEducationAmount(option.Amount);
                 document.querySelector('.imgdrop').classList.remove('DropIt');
            
                 })}
@@ -292,7 +292,7 @@ const jambReceipt = () => {
      </div>
     {/* container for Phone number and Email */}
      <div className=' w-[100%] 
-     flex flex-col  md:flex-row  gap-[20px] md:gap-[12.91px] lg:gap-[22px] '>
+     flex flex-col  md:flex-row  gap-[20px] md:gap-[12.91px] lg:gap-[22px]'>
       {/* LeftSide */}
        <div className=' container-phone gap-[5.868px] 
        flex flex-col md:w-1/2  md:gap-[10px] z-0'>
@@ -316,23 +316,23 @@ const jambReceipt = () => {
   
      })}
      className='h-[29.927px] lg:h-[51px]  md:h-[29.93px] w-[100%] border-[0.4px] border-[#9C9C9C]
-     lg:text-[16px] lg:leading-[20.8px] text-[#7E7E7E]
-     text-[10.389px] leading-[16.206px] 
-     pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
+    font-[500] text-[14.389px] leading-[18.206px] text-black
+     lg:text-[16px] lg:leading-[20.8px]
+   pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
      focus:outline-none 
      md:pt-[8.802px] md:pb-[7.042px] 
      md:pr-[5.282px] md:pl-[5.867px] 
      lg:pt-[14px] lg:pb-[15.5px] lg:pr-[16px] lg:pl-[10px]
-     placeholder:text-[8px] placeholder:leading-[10.4px] 
+     placeholder:text-[14.389px] placeholder:leading-[18.809.4px] 
      lg:placeholder:text-[16px] lg:placeholder:leading-[20.8px] placeholder:text-[#7E7E7E]
-     md:placeholder:text-[9.389px] md:placeholder:leading-[12.206px]'
+     md:placeholder:text-[14.389px] md:placeholder:leading-[18.206px]'
       type="tel" name='phone' id='phone' maxLength={11} placeholder=''
-      value={educationPinPhone} onChange={(e)=>{
-        setEducationPinPhone(e.target.value);
+      value={jambEducationPinPhone} onChange={(e)=>{
+        setJambEducationPinPhone(e.target.value);
       }}/>
-     {errors.educationPinPhone && (
+     {errors.jambEducationPinPhone && (
               <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                {errors.educationPinPhone}
+                {errors.jambEducationPinPhone}
               </div>
             )}
      </div>
@@ -348,28 +348,28 @@ const jambReceipt = () => {
      < input 
      
      className='flex h-[29.927px] lg:h-[51px] md:h-[29.93px] w-[100%]
-     lg:text-[16px] lg:leading-[20.8px] text-[#7E7E7E]
-     text-[10.389px] leading-[16.206px]
+   font-[500]  lg:text-[16px] lg:leading-[20.8px] text-[#000]
+     text-[14.389px] leading-[18.206px] tracking-[0.4px]
       pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
       border-[0.4px] border-[#9C9C9C] focus:outline-none self-center
      md:pt-[8.802px] md:pb-[7.042px] 
      md:pr-[5.282px] md:pl-[5.867px] 
-     placeholder:text-[8px] placeholder:leading-[10.4px]
      lg:pt-[14px] lg:pb-[15.5px] lg:pr-[16px] lg:pl-[10px] 
+     placeholder:text-[14.389px] placeholder:leading-[18.809.4px] 
      lg:placeholder:text-[16px] lg:placeholder:leading-[20.8px] placeholder:text-[#7E7E7E]
-     md:placeholder:text-[9.389px] md:placeholder:leading-[12.206px]
-      md:placeholder:text-[#7E7E7E]'
+     md:placeholder:text-[14.389px] md:placeholder:leading-[18.206px]'
+   
       type="Email" 
       placeholder='example@gmail.com'
-      value={educationPinEmail}
+      value={jambEducationPinEmail}
       onChange={(e) => {
-        setEducationPinEmail(e.target.value)
+        setJambEducationPinEmail(e.target.value)
       }}
     />
       
-      {errors.educationPinEmail && (
+      {errors.jambEducationPinEmail && (
               <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                {errors.educationPinEmail}
+                {errors.jambEducationPinEmail}
               </div>
             )}
      </div>
@@ -391,7 +391,7 @@ const jambReceipt = () => {
     </h2>
     {/* input */}
     <div
-      onchange={setWaecAmount}
+      onchange={setJambEducationAmount}
      className='h-[29.927px]  lg:h-[51px] md:h-[29.93px]
         md:pt-[8.802px] md:pb-[7.042px] 
        pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
@@ -400,9 +400,9 @@ const jambReceipt = () => {
   focus:outline-none text-start
     text-[8px] leading-[10.4px]
    font-[500]  md:text-[9.389px] md:leading-[12.206px]
-  lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px]'
+  lg:text-[16px] text-black lg:leading-[20.8px]'
   maxLength={7}>
-  {waecAmount}
+  {jambEducationAmount}
    </div>
 
 
@@ -418,7 +418,7 @@ const jambReceipt = () => {
       </h2>
       {/* input */}
   <div 
-   onClick={methodDropDown}
+   onClick={jambMethodDropDown}
   className='flex  justify-between  pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
   md:pt-[8.802px] md:pb-[7.042px] 
   md:pr-[5.282px] md:pl-[5.867px] 
@@ -426,32 +426,32 @@ const jambReceipt = () => {
   border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
       <h2 className='font-[500] text-[8px] leading-[10.4px]
        md:text-[9.389px] md:leading-[12.206px]
-      lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px] cursor-pointer'>
-      {paymentResult + '' + walletBalance }
+      lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer'>
+      {jambPaymentResult + '' + jambWalletBalance }
         </h2>
         <img 
        
         className='methodDrop h-[14px] w-[14px] md:h-[14.038px] 
         md:w-[14.038px] lg:h-[24px] lg:w-[24px]'
-        src={imageState} alt="" />
+        src={jambImageState} alt="" />
          </div>
          {/* drop down */}
          
-        {methodActive && (
+        {jambMethodActive && (
            <div className='absolute lg:top-[90px] md:top-[60px] top-[50px] 
            flex flex-col w-[100%]'>
 
-          {(methodOptions.map(methodOption => {
+          {(jambMethodOptions.map(methodOption => {
               return (
           <div 
           onClick={(e =>{
-          onchange={setMethodOptions}
-            setPaymentResult(methodOption.method);
-            setWalletBalance(methodOption.balance);
-            setImageState(methodOption.flag);
-            setMethodActive(false);
+         setJambPaymentResult(methodOption.method);
+            setJambWalletBalance(methodOption.balance);
+            setJambImageState(methodOption.flag);
+            setJambMethodActive(false);
          document.querySelector('.methodDrop').classList.remove('DropIt');
           })}
+          onChange={setJambMethodOptions}
           className='flex gap-[10px] md:py-[15px] py-[10px] pl-[10px]
           shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] bg-white
           cursor-pointer hover:bg-[#EDEAEA] items-center' 
@@ -478,7 +478,7 @@ const jambReceipt = () => {
       </div>
       {/* end of */}
       </div>
-      {educationProceed && (
+      {jambEducationProceed && (
             <Modal>
               <div
                 className={`confirm mx-[5%] ${
@@ -494,7 +494,7 @@ const jambReceipt = () => {
                   <img
                     src={closeIcon}
                     alt=""
-                    onClick={() => setEducationProceed(false)}
+                    onClick={() => setJambEducationProceed(false)}
                     className=" w-[18px] h-[18px]  md:w-[25px] cursor-pointer
                     md:h-[25px] lg:w-[35px] lg:h-[35px]"
                   />
@@ -510,7 +510,7 @@ const jambReceipt = () => {
                     You are about to purchase{" "}
                     <span className="font-[600] lg:text-[16.9px] md:text-[14.9px] text-[10.9px]">
                       JAMB PIN (₦100) {' '} </span> from
-                    your {paymentResult} to
+                    your {jambPaymentResult} to
                   </h2>
 
            <div className="flex flex-col gap-[15px] px-[20px] mt-[50px] md:gap-[25px]">
@@ -545,7 +545,7 @@ const jambReceipt = () => {
                       <div className="flex gap-1">
                         <h2 className="text-[10px] leading-[12px] md:text-[12px] md:leading-[11.92px] 
                         lg:text-[16px] lg:leading-[24px] font-[500]">
-                          {quantityResult}
+                          {jambQuantityResult}
                         </h2>
                       </div>
                     </div>
@@ -561,7 +561,7 @@ const jambReceipt = () => {
                       <div className="flex gap-1">
                         <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] 
                         md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] font-[500]">
-                          {educationPinPhone}
+                          {jambEducationPinPhone}
                         </h2>
                       </div>
                     </div>
@@ -575,7 +575,7 @@ const jambReceipt = () => {
                       <div className="flex gap-1">
                         <h2 className="text-[10px] leading-[12px] md:text-[12px] md:leading-[11.92px] 
                         lg:text-[16px] lg:leading-[24px] font-[500]">
-                          {educationPinEmail}
+                          {jambEducationPinEmail}
                         </h2>
                       </div>
                     </div>
@@ -589,7 +589,7 @@ const jambReceipt = () => {
                       <div className="flex gap-1">
                         <h2 className="text-[10px] leading-[12px]  md:text-[12px] md:leading-[11.92px] 
                         lg:text-[16px] lg:leading-[24px] font-[500]">
-                       {waecAmount}
+                       {jambEducationAmount}
                         </h2>
                       </div>
                     </div>
@@ -603,7 +603,7 @@ const jambReceipt = () => {
                       <div className="flex gap-1">
                         <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] 
                         md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] font-[500]">
-                        {paymentResult}
+                        {jambPaymentResult}
                         </h2>
                       </div>
                     </div>
@@ -643,14 +643,14 @@ const jambReceipt = () => {
                         <div className="bg-white rounded-full h-[27px] w-[27px] flex justify-center items-center">
                           <img
                             className="w-[16px] h-[16px]"
-                            src={imageState}
+                            src={jambImageState}
                             alt="/"
                           />
                         </div>
                         <p className="text-[10px] md:text-[14px]  lg:text-[16px] font-[500]">
                           Available Balance{" "}
                           <span className="text-[#0003] font-[500]">
-                           {walletBalance}
+                           {jambWalletBalance}
                           </span>
                         </p>
                       </div>
@@ -680,7 +680,7 @@ const jambReceipt = () => {
           )}
 
           {/* CONFIRM TRANSACTION */}
- {educationConfirm && (
+ {jambEducationConfirm && (
             <Modal>
               <div
                 className={`confirm2 ${styles.inputPin} ${
@@ -690,7 +690,7 @@ const jambReceipt = () => {
                 } md:w-[55%] w-[90%] md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
               >
                 <img
-                  onClick={() => setEducationConfirm(false)}
+                  onClick={() => setJambEducationConfirm(false)}
                   className="absolute cursor-pointer top-[5.5px] 
                   right-2 w-[18px] h-[18px] 
                   md:w-[35px] md:h-[25px] lg:w-[45px] lg:h-[45px]"
@@ -742,7 +742,7 @@ const jambReceipt = () => {
                 <button
                   onClick={(e) => {
                     e.preventDefault();
-                    setEducationConfirm(false);
+                    setJambEducationConfirm(false);
                     inputPinHandler(e);
                   }}
                   disabled={inputPin.length !== 4}
@@ -809,7 +809,7 @@ const jambReceipt = () => {
                     lg:text-[16.9px]">
                     JAMB (₦100) {' '}
                     </span>
-                    from your {paymentResult} to{" "}
+                    from your {jambPaymentResult} to{" "}
                   </p>
 
                   <div className="flex items-center justify-between">
@@ -840,7 +840,7 @@ const jambReceipt = () => {
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] md:text-[12px] md:leading-[11.92px] 
                       lg:text-[16px] lg:leading-[24px] font-[500]">
-                        {quantityResult}
+                        {jambQuantityResult}
                       </h2>
                     </div>
                   </div>
@@ -855,7 +855,7 @@ const jambReceipt = () => {
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] md:text-[12px] md:leading-[11.92px] 
                       lg:text-[16px] lg:leading-[24px] font-[500]">
-                        {educationPinPhone}
+                        {jambEducationPinPhone}
                       </h2>
                     </div>
                   </div>
@@ -868,7 +868,7 @@ const jambReceipt = () => {
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] md:text-[12px] md:leading-[11.92px] 
                       lg:text-[16px] lg:leading-[24px] font-[500]">
-                        {educationPinEmail}
+                        {jambEducationPinEmail}
                       </h2>
                     </div>
                   </div>
@@ -892,7 +892,7 @@ const jambReceipt = () => {
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] md:text-[12px] md:leading-[11.92px] 
                       lg:text-[16px] lg:leading-[24px] font-[500]">
-                        {paymentResult}
+                        {jambPaymentResult}
                       </h2>
                     </div>
                   </div>
@@ -959,29 +959,29 @@ const jambReceipt = () => {
    {receipt && (
             <JambReceipt
                Exam ="JAMB"
-              ExamType={examType}
-               ListOfResultCheckers={quantityResult}
-               PhoneNumber={educationPinPhone}
-              Email={educationPinEmail}
-             walletName={paymentResult}
-             walletBalance ={walletBalance}
-             Amount ={waecAmount}
+              ExamType={jambExamType}
+               ListOfResultCheckers={jambQuantityResult}
+               PhoneNumber={jambEducationPinPhone}
+              Email={jambEducationPinEmail}
+             walletName={jambPaymentResult}
+             walletBalance ={jambWalletBalance}
+             Amount ={jambEducationAmount}
             />
           )}
                  
-                 <div className="py-[30px] lg:py-[60px] mt-10">
+                 <div className="py-[30px] lg:py-[60px] mt-10 lg:mb-[200px] mb-[50px] md:mb-[100px]">
             <button
               className={`font-extrabold h-[43px] w-[100%] py-[3.534px] px-[5.301px] 
-              mb-[40px] md:mb-[0px] rounded-[4.241px] md:h-auto
+             md:mb-[0px] rounded-[4.241px] md:h-auto
               md:w-[95.649px] text-white md:py-[5.868px] md:px-[8.802px] 
              md:text-[9.389px] md:leading-[14px] md:rounded-[7.042px]
              lg:text-[16px] lg:leading-[24px] lg:py-[10px] lg:px-[15px] lg:w-[163px] lg:rounded-[12px] ${
-                !examType ||
-                !quantityResult ||
-                !educationPinPhone ||
-                !educationPinEmail ||
-                !waecAmount ||
-                !paymentResult
+                !jambExamType ||
+                !jambQuantityResult ||
+                !jambEducationPinPhone ||
+                !jambEducationPinEmail ||
+                !jambEducationAmount ||
+                !jambPaymentResult
                   ? "bg-[#63616188] cursor-not-allowed"
                   : "bg-primary"
               }`}
@@ -990,12 +990,12 @@ const jambReceipt = () => {
                 e.preventDefault();
               }}
               disabled={
-                !examType ||
-                !quantityResult ||
-                !educationPinPhone ||
-                !educationPinEmail ||
-                !waecAmount ||
-                !paymentResult
+                !jambExamType ||
+                !jambQuantityResult ||
+                !jambEducationPinPhone ||
+                !jambEducationPinEmail ||
+                !jambEducationAmount ||
+                !jambPaymentResult
               }
             >
               Proceed
@@ -1006,8 +1006,8 @@ const jambReceipt = () => {
 </div>
       
 
-      <div className=" flex gap-[5.729px]  md:gap-[14.896px]
-       py-[30.865px] justify-center px-[8.594px] ">
+      <div className=" flex gap-[8.729px]  md:gap-[14.896px]
+       justify-center px-[8.594px] mb-[130px]">
               <p className="font-[500] text-[10px] text-black 
               leading-[10.4px] lg:text-[16px] lg:leading-[15.6px]  md:text-[6.875px]
             ] md:leading-[12.938px] self-center">
@@ -1015,7 +1015,7 @@ const jambReceipt = () => {
               </p>
               <Link to ="/contactUs"
                 className="font-[500] text-white text-[10px]  py-[4.865px] 
-                px-[12.594px] leading-[10.4px] rounded-[5.156px] bg-[#04177F]
+                px-[10.594px] leading-[10.4px] rounded-[5.156px] bg-[#04177F]
                 lg:text-[12px] lg:leading-[14.4px] 
                  md:text-[4.583px]  md:py-[4.865px] 
                 md:px-[14.594px] md:leading-[5.985px]  lg:py-[10px]
