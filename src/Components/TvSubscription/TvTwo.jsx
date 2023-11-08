@@ -18,22 +18,22 @@ import GotvSuccessfulPopup from "./GotvPopups/GotvSuccessfulPopup";
         showDropdownDstv,
         setShowDropdownDstv,
         setCardName,
+        setSmartCard,
+        setTvEmail,
         setConfirmDstvPopup,
         formatNumberWithCommas,
-        dstvMobileNumber,
-        setDstvMobileNumber,
+        mobileNumber,
+        setMobileNumber,
      } = useContext(ContextProvider) 
      
      const handleDstv = (event) =>{
       event.preventDefault();
       setConfirmDstvPopup(true)
    }
-   const [initialValueDstv, setInitialValueDstv] = useState(true)
 
    const handleOptionClickDstv = (option) => {
     setSelectedOptionDstv(option);
-    setShowDropdownDstv(false); 
-    setInitialValueDstv(false);
+    setShowDropdownDstv(false);
   };
 
   const options = [
@@ -75,6 +75,16 @@ const handleCardName = (e) => {
   const inputValue = e.target.value;
   setCardName(inputValue);
 }
+
+const handleSmartCard = (e) => {
+  const inputValue = e.target.value;
+  setSmartCard(inputValue);
+}
+const handleTvEmail = (e) => {
+  const inputValue = e.target.value;
+  setTvEmail(inputValue);
+}
+
  
   const [dstvErrorMessage, setDstvErrorMessage] = useState('');
 
@@ -84,7 +94,7 @@ const handleCardName = (e) => {
 
   const handleDstvMobileNumberChange = (e) => {
     const inputValue = e.target.value;
-    setDstvMobileNumber(inputValue);
+    setMobileNumber(inputValue);
 
     const validation = DstvSchema.validate({ mobileNumber: inputValue });
 
@@ -178,7 +188,7 @@ const handleCardName = (e) => {
                 <div className="flex flex-col gap-[3px] lg:gap-[5px]">
                     <label htmlFor="decoderType" className="text-[#7E7E7E] text-[8px] lg:text-[18px] md:text-[11.46px] font-semibold">
                     Smart Card / IUC Number</label>
-                    <input type="number" max='10' placeholder="1234567890" className="outline-0 border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[375px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] "/>
+                    <input type="number" onChange={handleSmartCard} max='10' placeholder="1234567890" className="outline-0 border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[375px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] "/>
                 </div>
                 
                 <div className="flex flex-col gap-[3px] lg:gap-[5px]">
@@ -191,7 +201,7 @@ const handleCardName = (e) => {
                 <div className="flex flex-col gap-[3px] lg:gap-[5px]">
                     <label htmlFor="decoderType" className="text-[#7E7E7E] text-[8px] lg:text-[18px] md:text-[11.46px] font-semibold">
                         Phone Number</label>
-                        <input id="val" value={dstvMobileNumber} onChange={handleDstvMobileNumberChange}
+                        <input id="val" value={mobileNumber} onChange={handleDstvMobileNumberChange}
                         style={{ backgroundColor: dstvErrorMessage ? '#FFD8D8' : 'white' }}
                         type="tel" maxLength={11} placeholder="7744115566" className="outline-0 border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[375px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] "/>
              {dstvErrorMessage && <p className="text-[#F95252] text-[9px] md:text-[12px] lg:text-[14px] md:hidden font-semibold ">{dstvErrorMessage}</p>}           
@@ -200,7 +210,7 @@ const handleCardName = (e) => {
                 <div className="flex flex-col gap-[3px] lg:gap-[5px]">
                     <label htmlFor="Email" className="text-[#7E7E7E] text-[8px] lg:text-[18px] md:text-[11.46px] font-semibold">
                         Email</label>
-                        <input type="email" placeholder="Habib@aremxy.com" className="outline-0 border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[375px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px]"/>
+                        <input type="email" onChange={handleTvEmail} placeholder="Habib@aremxy.com" className="outline-0 border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[375px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px]"/>
                 </div>
                 
             </div>
@@ -208,21 +218,13 @@ const handleCardName = (e) => {
                 <div className="flex flex-col gap-[3px] lg:gap-[5px]">
                     <label htmlFor="decoderType" className="text-[#7E7E7E] text-[8px] lg:text-[18px] md:text-[11.46px] font-semibold">
                         Amount</label>
-                    
-                {initialValueDstv && (
-                <input
-                  type="text"
-                  className="text-[#7E7E7E] outline-0 border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[375px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px]"
-                  value={`₦1,100`}
-                />
-            )}
-                {selectedOptionDstv && (
+                 
                 <input
                   type="text"
                   className="text-[#7E7E7E] outline-0 border-[0.23px] lg:border-[0.4px] w-full md:w-[220px] lg:w-[375px] h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px]"
                   value={'₦'+ getNumericValue(selectedOptionDstv)}
                 />
-            )}
+            
                </div>
                 
                 <div className="flex flex-col gap-[3px] lg:gap-[5px]">
@@ -236,7 +238,7 @@ const handleCardName = (e) => {
           {dstvErrorMessage && <p className="text-[#F95252] text-[9px] md:text-[12px] lg:text-[14px] max-[500px]:hidden mt-3 font-semibold ">{dstvErrorMessage}</p>}           
 
             <button onClick={handleDstv}
-            disabled={dstvMobileNumber.length !== 11}
+            disabled={mobileNumber.length !== 11}
              className="mt-[38px] md:mt-[30px] lg:mt-[25px] rounded-[6px] md:rounded-[10px] lg:rounded-[15px] bg-[#04177F] h-[43px] md:h-[30px] lg:h-[40px] flex items-center font-semibold text-[12px] md:text-[11px] lg:text-[16px] text-[#fff] w-full md:w-[100px] lg:w-[170px] justify-center">
                 Proceed</button>
             

@@ -47,47 +47,47 @@ const QuickFeatures = () => {
           />{" "}
           <p>Data Topup</p>
         </Link>
-        <Link to = "/EducationPins">
-        <div
-          className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
-            styles.feature
-          }`}
-        >
-          <img
-            className="h-[25px] w-[25px] md:w-[] md:h-[] lg:h-[85px] lg:w-[85px]"
-            src="./Images/Dashboardimages/feature3.png"
-            alt="/"
-          />
-          <p>Education Pins</p>
-        </div>
+        <Link to="/EducationPins">
+          <div
+            className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
+              styles.feature
+            }`}
+          >
+            <img
+              className="h-[25px] w-[25px] md:w-[] md:h-[] lg:h-[85px] lg:w-[85px]"
+              src="./Images/Dashboardimages/feature3.png"
+              alt="/"
+            />
+            <p>Education Pins</p>
+          </div>
         </Link>
-        <Link to= "/TvSubscription">
-        <div
-          className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
-            styles.feature
-          }`}
-        >
-          <img
-            className="h-[25px] w-[25px] md:w-[] md:h-[] lg:h-[79px] lg:w-[79px]"
-            src="./Images/Dashboardimages/feature4.png"
-            alt="/"
-          />
-          <p>TV Subscriptions</p>
-        </div>
+        <Link to="/TvSubscription">
+          <div
+            className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
+              styles.feature
+            }`}
+          >
+            <img
+              className="h-[25px] w-[25px] md:w-[] md:h-[] lg:h-[79px] lg:w-[79px]"
+              src="./Images/Dashboardimages/feature4.png"
+              alt="/"
+            />
+            <p>TV Subscriptions</p>
+          </div>
         </Link>
         <Link to="/electricity-subscription">
-        <div
-          className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
-            styles.feature
-          }`}
-        >
-          <img
-            className="h-[25px] w-[25px] md:w-[] md:h-[] lg:h-[79px] lg:w-[79px]"
-            src="./Images/Dashboardimages/feature5.png"
-            alt="/"
-          />
-          <p>Electricity Bills</p>
-        </div>
+          <div
+            className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
+              styles.feature
+            }`}
+          >
+            <img
+              className="h-[25px] w-[25px] md:w-[] md:h-[] lg:h-[79px] lg:w-[79px]"
+              src="./Images/Dashboardimages/feature5.png"
+              alt="/"
+            />
+            <p>Electricity Bills</p>
+          </div>
         </Link>
         <div
           className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
@@ -125,7 +125,8 @@ const QuickFeatures = () => {
           />
           <p>Digital Services</p>
         </div>
-        <div
+        <Link
+          to="/My-Referral"
           className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
             styles.feature
           }`}
@@ -136,7 +137,7 @@ const QuickFeatures = () => {
             alt="/"
           />
           <p>Referrals</p>
-        </div>
+        </Link>
         <div
           className={`${
             isDarkMode ? " border text-white" : "text-[#000] bg-[#fff] "

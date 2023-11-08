@@ -26,33 +26,33 @@ import NecoReceipt from './ReceiptEducationPins/necoReceipt';
 
 export default function NecoEducationPins() {
   const { isDarkMode } = useContext(ContextProvider);
-  const {quantityResult, setQuantityResult} = useContext(ContextProvider);
-const {waecActive, setWaecActive} = useContext(ContextProvider);
-const {paymentResult, setPaymentResult} = useContext(ContextProvider);
-const {methodActive, setMethodActive} = useContext(ContextProvider);
-const {examType, setExamType} = useContext(ContextProvider);
-const {examActive, setExamActive} = useContext(ContextProvider);
+  const {necoQuantityResult, setNecoQuantityResult} = useContext(ContextProvider);
+const {necoQuantityActive, setNecoQuantityActive} = useContext(ContextProvider);
+const {necoPaymentResult, setNecoPaymentResult} = useContext(ContextProvider);
+const {necoMethodActive, setNecoMethodActive} = useContext(ContextProvider);
+const {necoExamType, setNecoExamType} = useContext(ContextProvider);
+const {necoExamActive, setNecoExamActive} = useContext(ContextProvider);
 const { transactSuccessPopUp, setTransactSuccessPopUp } =
 useContext(ContextProvider);
-const {educationPinPhone, setEducationPinPhone} = useContext(ContextProvider);
-const {educationPinEmail, setEducationPinEmail} = useContext(ContextProvider);
-const {waecAmount, setWaecAmount} = useContext(ContextProvider);
-const {walletBalance, setWalletBalance } = useContext(ContextProvider);
+const {necoEducationPinPhone, setNecoEducationPinPhone} = useContext(ContextProvider);
+const {necoEducationPinEmail, setNecoEducationPinEmail} = useContext(ContextProvider);
+const {necoEducationAmount, setNecoEducationAmount} = useContext(ContextProvider);
+const {necoWalletBalance, setNecoWalletBalance } = useContext(ContextProvider);
 
 // UseStates
-const [imageState, setImageState] = useState(arrowDown);
-const [educationProceed, setEducationProceed] = useState(false);
+const [necoImageState, setNecoImageState] = useState(arrowDown);
+const [necoEducationProceed, setNecoEducationProceed] = useState(false);
 const [errors, setErrors] = useState({});
-const [educationConfirm, setEducationConfirm] = useState(false);
+const [necoEducationConfirm, setNecoEducationConfirm] = useState(false);
 const [receipt] = useState(false);
 
 
 //==========  QUANTITY RESULT SLIP CHECKERS ==============
-function clickDropDown(){
-  setWaecActive(!waecActive);
+function necoQuantityDropDown(){
+  setNecoQuantityActive(!necoQuantityActive);
 document.querySelector('.imgdrop').classList.toggle('DropIt');
 }
-const options = [
+const necoOptions = [
   {quantity :  '1 Piece Of Result Checker', Amount : "₦100", id : 1},
   {quantity :  '2 Piece Of Result Checker', Amount : "₦200", id : 2},
   {quantity :  '3 Piece Of Result Checker', Amount : "₦300", id : 3},
@@ -64,11 +64,11 @@ const options = [
 
 // WALLET 
 
-function methodDropDown(){
-  setMethodActive(!methodActive);
+function necoMethodDropDown(){
+  setNecoMethodActive(!necoMethodActive);
 document.querySelector('.methodDrop').classList.toggle('DropIt');
 }
-const [methodOptions,setMethodOptions] = useState([
+const [necoMethodOptions,setNecoMethodOptions] = useState([
  {method : 'NGN Wallet', balance :" (50,000.00)", flag : nigerianFlag, id : 1},
 {method : 'USD Wallet ', balance :'(0.00)', flag : americaFlag, id : 2 },
 {method : 'EUR Wallet', balance :'(0.00)', flag : britainFlag, id : 3 },
@@ -78,14 +78,14 @@ const [methodOptions,setMethodOptions] = useState([
 ])
 
 // CONFIRM EXAM TYPE
-const Exams  = [
+const necoExams  = [
 { examType :'NECO (₦100)',  id : 1},
   { examType :'WAEC (₦100)', path :  "/WaecEducationPin", id : 2 },
   { examType :'NABTEB (₦100)', path : "/NabtebEducationPin", id : 3 },
 { examType :'JAMB (₦100)', path : "/JambEducationPin", id : 4 }
  ]
-function examDropDown(){
-  setExamActive(!examActive);
+function necoExamDropDown(){
+  setNecoExamActive(!necoExamActive);
 document.querySelector('.Examdrop').classList.toggle('DropIt');
 }
 // FUNCTION OTP FOR THE POPPINS
@@ -102,8 +102,8 @@ const necoProceed = () => {
   
 
   const { error } = schema.validate({
-    educationPinPhone,
-    educationPinEmail
+    necoEducationPinPhone,
+    necoEducationPinEmail
   });
 
   if (error) {
@@ -114,27 +114,27 @@ const necoProceed = () => {
       }, {})
     );
   } else {
-    setEducationProceed(true);
+    setNecoEducationProceed(true);
     setErrors({});
   }
 };
 
 const schema = Joi.object({
-  educationPinPhone: Joi.string()
+  necoEducationPinPhone: Joi.string()
     .pattern(new RegExp(/^\d{11,}/))
     .required()
     .messages({
       "string.pattern.base": "Phone number should be 11 digits ",
     }),
-    educationPinEmail: Joi.string()
+    necoEducationPinEmail: Joi.string()
     .pattern(new RegExp(/^[^\s@]+@[^\s@]+\.[^\s@]+$/))
     .required()
     .messages({ "string.pattern.base": "Invalid email " })
 });
 
 const confirmButton = () => {
-  setEducationProceed(false);
-  setEducationConfirm(true);
+  setNecoEducationProceed(false);
+  setNecoEducationConfirm(true);
 };
 
 const waecTransactionSuccessClose = () => {
@@ -148,7 +148,7 @@ const necoReceipt = () => {
 
   return (
     <DashBoardLayout>
-   <div className='flex flex-col h-[110%] justify-between '>
+   <div className='flex flex-col lg:h-[120%] h-[140%] justify-between '>
    <div className=''>
     {/* Hero-section */}
  <HeroComponent/>
@@ -190,31 +190,31 @@ const necoReceipt = () => {
       </h2>
       {/* input */}
   <div 
-   onClick={examDropDown}
+   onClick={necoExamDropDown}
   className=' w-[100%] flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
   md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] 
   lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] border-[0.4px] border-[#9C9C9C]
   hover:bg-[#EDEAEA]'>
       <h2 
       className='font-[500] text-[8px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] 
-      lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px] cursor-pointer'>
-      {examType}
+      lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer'>
+      {necoExamType}
         </h2>
         <img  
         className='Examdrop md:h-[14.083px] md:w-[14.083px] lg:h-[24px] 
         lg:w-[24px] h-[14px] w-[14px]'
         src= {arrowDown} alt="" />
          </div>
-         {examActive && (
+         {necoExamActive && (
            <div className='absolute lg:top-[90px] md:top-[60px] top-[50px] z-[5]  flex flex-col 
            w-[100%] lg:h-225px md:h-[210px]  
           '>
-            {(Exams.map(exam => {
+            {(necoExams.map(exam => {
               return (
                  <a href={exam.path}
                  onClick={(e =>{
-            setExamType(exam.examType);
-                   setExamActive(false);
+            setNecoExamType(exam.examType);
+                   setNecoExamActive(false);
                document.querySelector('.Examdrop').classList.remove('DropIt');
                console.log(e);
                 })}
@@ -247,15 +247,15 @@ const necoReceipt = () => {
       </h2>
       {/* input */}
   <div 
-  onClick={clickDropDown}
+  onClick={necoQuantityDropDown}
   className=' flex  justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
    md:pt-[8.802px] md:pb-[7.042px] 
   md:pr-[5.282px] md:pl-[5.867px] 
   lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
   border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
       <h2 className='font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
-      lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px] cursor-pointer'>
-      {quantityResult}
+      lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer'>
+      {necoQuantityResult}
         </h2>
         <img 
          className='imgdrop md:h-[14.038px] md:w-[14.038px] 
@@ -264,16 +264,16 @@ const necoReceipt = () => {
          </div>
          {/* drop down */}
          
-        {waecActive && (
+        {necoQuantityActive && (
            <div className='absolute z-[2] lg:top-[90px] md:top-[60px] top-[50px] flex flex-col
            w-[100%] lg:h-225px md:h-[210px]  
           '>
-            {(options.map(option => {
+            {(necoOptions.map(option => {
               return (
                 <h2 onClick={(e =>{
-                  setQuantityResult(option.quantity)
-                  setWaecActive(false);
-                  setWaecAmount(option.Amount);
+                  setNecoQuantityResult(option.quantity)
+                  setNecoQuantityActive(false);
+                  setNecoEducationAmount(option.Amount);
                 document.querySelector('.imgdrop').classList.remove('DropIt');
            
                 })}
@@ -317,24 +317,24 @@ const necoReceipt = () => {
     }
   
      })}
-     className='h-[29.927px] lg:h-[51px]  md:h-[29.93px] w-[100%] border-[0.4px] border-[#9C9C9C] 
-     lg:text-[16px] lg:leading-[20.8px] text-[#7E7E7E]
-     text-[10.389px] leading-[16.206px]
-     pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
+     className='h-[29.927px] lg:h-[51px] font-[500]  md:h-[29.93px] w-[100%] border-[0.4px] border-[#9C9C9C] 
+     text-[14.389px] leading-[18.206px]
+     lg:text-[16px] lg:leading-[20.8px] text-black
+ pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
      focus:outline-none 
      md:pt-[8.802px] md:pb-[7.042px] 
      md:pr-[5.282px] md:pl-[5.867px] 
      lg:pt-[14px] lg:pb-[15.5px] lg:pr-[16px] lg:pl-[10px]
-     placeholder:text-[8px] placeholder:leading-[10.4px] 
+     placeholder:text-[14.389px] placeholder:leading-[18.809.4px] 
      lg:placeholder:text-[16px] lg:placeholder:leading-[20.8px] placeholder:text-[#7E7E7E]
-     md:placeholder:text-[9.389px] md:placeholder:leading-[12.206px]'
+     md:placeholder:text-[14.389px] md:placeholder:leading-[18.206px]'
       type="tel" name='phone' id='phone' maxLength={11} placeholder=''
-      value={educationPinPhone} onChange={(e)=>{
-        setEducationPinPhone(e.target.value);
+      value={necoEducationPinPhone} onChange={(e)=>{
+        setNecoEducationPinPhone(e.target.value);
       }}/>
-     {errors.educationPinPhone && (
+     {errors.necoEducationPinPhone && (
               <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                {errors.educationPinPhone}
+                {errors.necoEducationPinPhone}
               </div>
             )}
      </div>
@@ -348,26 +348,26 @@ const necoReceipt = () => {
      </h2>
      
      < input className='flex h-[29.927px] lg:h-[51px] md:h-[29.93px] w-[100%]
-     lg:text-[16px] lg:leading-[20.8px] text-[#7E7E7E]
-     text-[10.389px] leading-[16.206px]
+     text-[14.389px] font-[500] leading-[18.206px] tracking-[0.4px]
+     lg:text-[16px] lg:leading-[20.8px] text-black
+     
      pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
       border-[0.4px] border-[#9C9C9C] focus:outline-none self-center
      md:pt-[8.802px] md:pb-[7.042px] 
      md:pr-[5.282px] md:pl-[5.867px] 
     lg:pt-[14px] lg:pb-[15.5px] lg:pr-[16px] lg:pl-[10px] 
      lg:placeholder:text-[16px] lg:placeholder:leading-[20.8px] placeholder:text-[#7E7E7E]
-     md:placeholder:text-[10.389px] md:placeholder:leading-[16.206px]
-      md:placeholder:text-[#7E7E7E]'
-      value={educationPinEmail}
+     placeholder:text-[14.389px] placeholder:leading-[18.809.4px]'
+      value={necoEducationPinEmail}
       onChange={(e) =>{
-        setEducationPinEmail(e.target.value);
+        setNecoEducationPinEmail(e.target.value);
       }}
       type="Email" 
       placeholder='example@gmail.com'
     />
-      {errors.educationPinEmail && (
+      {errors.necoEducationPinEmail && (
               <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                {errors.educationPinEmail}
+                {errors.necoEducationPinEmail}
               </div>
             )}
     
@@ -389,7 +389,7 @@ const necoReceipt = () => {
       </h2>
       {/* input */}
       <div
-      onchange={setWaecAmount}
+      onchange={setNecoEducationAmount}
      className='h-[29.927px]  lg:h-[51px] md:h-[29.93px]
         md:pt-[8.802px] md:pb-[7.042px] 
        pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
@@ -398,9 +398,9 @@ const necoReceipt = () => {
   focus:outline-none text-start
     text-[8px] leading-[10.4px]
    font-[500]  md:text-[9.389px] md:leading-[12.206px]
-  lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px]'
+  lg:text-[16px] text-black lg:leading-[20.8px]'
   maxLength={7}>
-  {waecAmount}
+  {necoEducationAmount}
    </div>
    
    
@@ -418,7 +418,7 @@ const necoReceipt = () => {
       </h2>
       {/* input */}
   <div 
-   onClick={methodDropDown}
+   onClick={necoMethodDropDown}
   className=' flex justify-between  pr-[13px] pl-[10.876px] w-[100%]
   pt-[8.802px] pb-[7.042px] 
  lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
@@ -426,33 +426,33 @@ const necoReceipt = () => {
 
       <h2 className='font-[500] text-[8px] leading-[10.4px]
        md:text-[9.389px] md:leading-[12.206px]
-        lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px] 
+        lg:text-[16px] text-black lg:leading-[20.8px] 
         cursor-pointer'>
-      {paymentResult + walletBalance}
+      {necoPaymentResult + necoWalletBalance}
         </h2>
         <img 
        
         className='methodDrop h-[14px] w-[14px] md:h-[14.038px] 
         md:w-[14.038px] lg:h-[24px] lg:w-[24px]'
-        src={imageState} alt="" />
+        src={necoImageState} alt="" />
          </div>
          {/* drop down */}
          
-        {methodActive && (
+        {necoMethodActive && (
            <div className=' flex flex-col w-[100%]  absolute z-[1] lg:top-[90px] md:top-[60px]
             top-[50px]'>
 
-          {(methodOptions.map(methodOption => {
+          {(necoMethodOptions.map(methodOption => {
               return (
           <div 
           onClick={(e =>{
-          onchange={setMethodOptions}
-            setPaymentResult(methodOption.method);
-            setWalletBalance(methodOption.balance);
-            setImageState(methodOption.flag);
-            setMethodActive(false);
+            setNecoPaymentResult(methodOption.method);
+            setNecoWalletBalance(methodOption.balance);
+            setNecoImageState(methodOption.flag);
+            setNecoMethodActive(false);
          document.querySelector('.methodDrop').classList.remove('DropIt');
           })}
+          onChange={setNecoMethodOptions}
           className='flex gap-[10px] lg:py-[15px] py-[10px]  pl-[10px]
           cursor-pointer bg-white hover:bg-[#EDEAEA] items-center 
           shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]' 
@@ -479,7 +479,7 @@ const necoReceipt = () => {
       </div>
       {/* end of */}
       </div>
-      {educationProceed && (
+      {necoEducationProceed && (
             <Modal>
               <div
                 className={`confirm mx-[5%] ${
@@ -497,7 +497,7 @@ const necoReceipt = () => {
                   <img
                     src={closeIcon}
                     alt=""
-                    onClick={() => setEducationProceed(false)}
+                    onClick={() => setNecoEducationProceed(false)}
                     className="w-[18px] h-[18px]  md:w-[25px] cursor-pointer
                     md:h-[25px] lg:w-[35px] lg:h-[35px]"
                   />
@@ -512,7 +512,7 @@ const necoReceipt = () => {
                   text-[10px] leading-[12px] text-center mt-[26px] mx-[10px] mb-[20px] font-[500]">
                     You are about to purchase{" "}
                     <span className="font-[600]">NECO PIN (₦100){" "}</span> from
-                    your {paymentResult} to
+                    your {necoPaymentResult} to
                   </h2>
 
            <div className="flex flex-col gap-[15px] px-[20px] mt-[50px] md:gap-[25px]">
@@ -545,7 +545,7 @@ const necoReceipt = () => {
                       <div className="flex gap-1">
                         <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] 
                         md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] font-[500]">
-                          {quantityResult}
+                          {necoQuantityResult}
                         </h2>
                       </div>
                     </div>
@@ -560,7 +560,7 @@ const necoReceipt = () => {
                       <div className="flex gap-1">
                         <h2 className="text-[10px] leading-[12px]
                          md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] font-[500]">
-                          {educationPinPhone}
+                          {necoEducationPinPhone}
                         </h2>
                       </div>
                     </div>
@@ -573,7 +573,7 @@ const necoReceipt = () => {
                       <div className="flex gap-1">
                         <h2 className="text-[10px] leading-[12px]  
                         md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] font-[500]">
-                        {educationPinEmail}
+                        {necoEducationPinEmail}
                         </h2>
                       </div>
                     </div>
@@ -586,7 +586,7 @@ const necoReceipt = () => {
                       <div className="flex gap-1">
                         <h2 className="text-[10px] leading-[12px]  md:text-[12px] md:leading-[11.92px] 
                         lg:text-[16px] lg:leading-[24px] font-[500]">
-                       {waecAmount}
+                       {necoEducationAmount}
                         </h2>
                       </div>
                     </div>
@@ -599,7 +599,7 @@ const necoReceipt = () => {
                       <div className="flex gap-1">
                         <h2 className="text-[10px] leading-[12px]  md:text-[12px] 
                         md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] font-[500]">
-                        {paymentResult}
+                        {necoPaymentResult}
                         </h2>
                       </div>
                     </div>
@@ -638,14 +638,14 @@ const necoReceipt = () => {
                         <div className="bg-white rounded-full h-[27px] w-[27px] flex justify-center items-center">
                           <img
                             className="w-[16px] h-[16px]"
-                            src={imageState}
+                            src={necoImageState}
                             alt="/"
                           />
                         </div>
                         <p className="text-[10px] md:text-[14px]  lg:text-[16px] font-[500]">
                           Available Balance{" "}
                           <span className="text-[#0003]">
-                             {walletBalance}
+                             {necoWalletBalance}
                           </span>
                         </p>
                       </div>
@@ -676,7 +676,7 @@ const necoReceipt = () => {
           )}
 
           {/* CONFIRM TRANSACTION */}
- {educationConfirm && (
+ {necoEducationConfirm && (
             <Modal>
               <div
                 className={`confirm2 ${styles.inputPin} ${
@@ -686,7 +686,7 @@ const necoReceipt = () => {
                 } md:w-[55%] w-[90%] md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
               >
                 <img
-                  onClick={() => setEducationConfirm(false)}
+                  onClick={() => setNecoEducationConfirm(false)}
                   className="absolute cursor-pointer top-[5.5px] 
                   right-2 w-[18px] h-[18px] 
                   md:w-[35px] md:h-[25px] lg:w-[45px] lg:h-[45px]"
@@ -738,7 +738,7 @@ const necoReceipt = () => {
                 <button
                   onClick={(e) => {
                     e.preventDefault();
-                    setEducationConfirm(false);
+                    setNecoEducationConfirm(false);
                     inputPinHandler(e);
                   }}
                   disabled={inputPin.length !== 4}
@@ -806,7 +806,7 @@ const necoReceipt = () => {
                     lg:text-[16.9px]">
                     NECO PIN (₦100) {' '}
                     </span>
-                    from your {paymentResult} to{" "}
+                    from your {necoPaymentResult} to{" "}
                   </p>
 
                   <div className="flex items-center justify-between">
@@ -837,7 +837,7 @@ const necoReceipt = () => {
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px]  md:text-[12px] md:leading-[11.92px] 
                       lg:text-[16px] lg:leading-[24px] font-[500]">
-                        {quantityResult}
+                        {necoQuantityResult}
                       </h2>
                     </div>
                   </div>
@@ -852,7 +852,7 @@ const necoReceipt = () => {
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] md:text-[12px] md:leading-[11.92px] 
                       lg:text-[16px] lg:leading-[24px] font-[500]">
-                        {educationPinPhone}
+                        {necoEducationPinPhone}
                       </h2>
                     </div>
                   </div>
@@ -865,7 +865,7 @@ const necoReceipt = () => {
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px]
                        md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] font-[500]">
-                       {educationPinEmail}
+                       {necoEducationPinEmail}
                       </h2>
                     </div>
                   </div>
@@ -889,7 +889,7 @@ const necoReceipt = () => {
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] md:text-[12px] 
                       md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] font-[500]">
-                        {paymentResult}
+                        {necoPaymentResult}
                       </h2>
                     </div>
                   </div>
@@ -962,29 +962,29 @@ const necoReceipt = () => {
     {receipt && (
             <NecoReceipt
                Exam ="WAEC"
-              ExamType={examType}
-               ListOfResultCheckers={quantityResult}
-               PhoneNumber={educationPinPhone}
-               Amount ={waecAmount}
-              Email={educationPinEmail}
-             walletBalance= {walletBalance}
-             walletName={paymentResult}
+              ExamType={necoExamType}
+               ListOfResultCheckers={necoQuantityResult}
+               PhoneNumber={necoEducationPinPhone}
+               Amount ={necoEducationAmount}
+              Email={necoEducationPinEmail}
+             walletBalance= {necoWalletBalance}
+             walletName={necoPaymentResult}
             />
           )}
                  
-                 <div className="py-[30px] lg:py-[60px] mt-10 lg:mb-[0px] mb-[40px] md:mb-[0px] ">
+                 <div className="py-[30px] lg:py-[60px] mt-10 lg:mb-[200px] mb-[50px] md:mb-[100px]">
             <button
               className={`font-extrabold h-[43px] w-[100%] py-[3.534px] px-[5.301px] 
               mb-[40px] md:mb-[0px] rounded-[4.241px] md:h-auto
               md:w-[95.649px] text-white md:py-[5.868px] md:px-[8.802px] 
              md:text-[9.389px] md:leading-[14px] md:rounded-[7.042px] 
              lg:text-[16px] lg:leading-[24px] lg:py-[10px] lg:px-[15px] lg:w-[163px] lg:rounded-[12px] ${
-                !examType ||
-                !quantityResult ||
-                !educationPinPhone ||
-                !educationPinEmail ||
-                !paymentResult ||
-                !waecAmount
+                !necoExamType ||
+                !necoQuantityResult ||
+                !necoEducationPinPhone ||
+                !necoEducationPinEmail ||
+                !necoPaymentResult ||
+                !necoEducationAmount
                   ? "bg-[#63616188] cursor-not-allowed"
                   : "bg-primary"
               }`}
@@ -993,11 +993,13 @@ const necoReceipt = () => {
                 e.preventDefault();
               }}
               disabled={
-                !examType ||
-                !quantityResult ||
-                !educationPinPhone ||
-                !educationPinEmail ||
-                !paymentResult
+                !necoExamType ||
+                !necoQuantityResult ||
+                !necoEducationPinPhone ||
+                !necoEducationPinEmail ||
+                !necoPaymentResult ||
+                !necoEducationAmount
+
               }
             >
               Proceed
@@ -1008,7 +1010,8 @@ const necoReceipt = () => {
 </div>
       
 
-      <div className=" flex gap-[5.729px]  md:gap-[14.896px] py-[30.865px] justify-center px-[8.594px] ">
+      <div className=" flex gap-[8.729px]  md:gap-[14.896px] 
+       justify-center px-[8.594px] mb-[130px]">
               <p className="font-[500] text-[10px] text-black 
               leading-[10.4px] lg:text-[16px] lg:leading-[15.6px]  md:text-[6.875px]
             ] md:leading-[12.938px] self-center">
@@ -1016,7 +1019,7 @@ const necoReceipt = () => {
               </p>
               <Link to ="/contactUs"
                 className="font-[500] text-white text-[10px]  py-[4.865px] 
- px-[12.594px] leading-[10.4px] rounded-[5.156px] bg-[#04177F]
+ px-[10.594px] leading-[10.4px] rounded-[5.156px] bg-[#04177F]
  lg:text-[12px] lg:leading-[14.4px] 
   md:text-[4.583px]  md:py-[4.865px] 
  md:px-[14.594px] md:leading-[5.985px]  lg:py-[10px]

@@ -76,7 +76,10 @@ const PointBalance = () => {
                             <BsEyeFill className='text-[10px] lg:text-[17px] lg:leading-[25.5px] text-[#92abfe] cursor-pointer' onClick={()=>setTransPoints(!transPoints)}/>
                         </div>
                         <div className='text-center mt-2 lg:mt-7'>
-                            <Link className='inline-block py-[2px] px-1 rounded-[3px] bg-primary text-white text-[8px] leading-[12px] lg:text-[12px] lg:leading-[18px] lg:px-2 md:rounded-[6px]'>View Referrals</Link>
+                            <Link to='/My-Referral'
+                            className='inline-block py-[2px] px-1 rounded-[3px] bg-primary text-white 
+                            text-[8px] leading-[12px]
+                             lg:text-[12px] lg:leading-[18px] lg:px-2 md:rounded-[6px]'>View Referrals</Link>
                         </div>
                     </div>
                     <div className='rounded-[5px] md:rounded-[8px] md:p-2 px-[3px] py-2 bg-[#a5ffcb] lg:py-4 lg:rounded-[12px] flex flex-col justify-between'>
