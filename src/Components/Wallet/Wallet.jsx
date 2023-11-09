@@ -48,7 +48,7 @@ const Wallet = () => {
                 <img src='./Images/wallet/walletBanner.png' alt="" className='h-full'/>
               </div>
             </div>
-            <div className="w-full h-[122.28px] lg:h-[200px] mt-10 flex flex-col justify-between md:mt-6 md:h-[106.5px] lg:mt-16">
+            <div className="w-full h-[122.28px] lg:h-[200px] flex flex-col justify-between md:h-[106.5px] md:mt-9 mt-8 lg:mt-14">
               <div className='lg:mb-16 flex items-center gap-1 mb-10'>
                 <h2 className='md:text-[18px] lg:text-[20px] text-[#7c7c7c] text-[10px] leading-[130%]'>Select Wallets</h2>
                 <div className='lg:w-6 lg:h-6 w-4 h-4'>
@@ -84,7 +84,7 @@ const Wallet = () => {
                 </div>
               </div>
             </div>
-            <div className='mt-10 lg:mt-16'>
+            <div className='md:mt-9 mt-8 lg:mt-14'>
               <div className='lg:mb-16 flex items-center gap-1 mb-10'>
                   <h2 className='md:text-[18px] lg:text-[20px] text-[#7c7c7c] text-[10px] leading-[130%]'>Quick Wallets FAQs</h2>
                   <div className='lg:w-6 lg:h-6 w-4 h-4'>

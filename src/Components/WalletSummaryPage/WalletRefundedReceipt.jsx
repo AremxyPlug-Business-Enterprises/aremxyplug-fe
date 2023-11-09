@@ -7,7 +7,7 @@ import { DashBoardLayout } from "../Dashboard/Layout/DashBoardLayout";
 import { useRef } from "react";
 
 
-export const WalletFailedReceipt = () => { 
+export const WalletRefundedReceipt = () => { 
 
   const {
     // selectedNetworkProduct,
@@ -108,7 +108,7 @@ export const WalletFailedReceipt = () => {
               />
             </div>
             <h3 className="font-extrabold text-[12px] mt-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
-              Purchase Failed on
+              Purchase Refunded on
             </h3>
             <span className="text-[11px] text-[#0008] font-extrabold flex justify-center items-center">
               {date.toLocaleDateString(undefined, {
@@ -121,10 +121,12 @@ export const WalletFailedReceipt = () => {
                 hour12: true,
               })}
             </span>
-            <div className="border rounded-[8px] border-red-500 bg-red-200 mx-4 h-[45px] my-5 flex justify-center items-center px-[4%] md:h-[65px] lg:h-[75px]">
-            
-            <p className="text-[9px] text-red-500 px-[20px] text-center my-2 md:text-[14px] lg:text-[14px]">
-            Purchase Failed due to an unexpected error that occured. Please try again.
+            <div className="border rounded-[8px] border-blue-900 bg-[#A6D9FF] mx-4 h-[45px] my-5 flex justify-center items-center px-[4%] md:h-[65px] lg:h-[75px]">
+
+            <p className="text-[9px] text-blue-900 px-[20px] text-center my-2 md:text-[14px] lg:text-[14px]">
+            Transaction was unsuccessful and your wallet has been refunded. Please try again.
+
+
 {" "}
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[16px]">
               {selectedOption} {" "}
@@ -268,6 +270,7 @@ export const WalletFailedReceipt = () => {
     </DashBoardLayout>
   );
 };
+
 
 
 

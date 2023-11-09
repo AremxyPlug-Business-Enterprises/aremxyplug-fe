@@ -148,7 +148,7 @@ const necoReceipt = () => {
 
   return (
     <DashBoardLayout>
-   <div className='flex flex-col h-[110%] justify-between '>
+   <div className='flex flex-col lg:h-[120%] h-[140%] justify-between '>
    <div className=''>
     {/* Hero-section */}
  <HeroComponent/>
@@ -357,8 +357,7 @@ const necoReceipt = () => {
      md:pr-[5.282px] md:pl-[5.867px] 
     lg:pt-[14px] lg:pb-[15.5px] lg:pr-[16px] lg:pl-[10px] 
      lg:placeholder:text-[16px] lg:placeholder:leading-[20.8px] placeholder:text-[#7E7E7E]
-     md:placeholder:text-[10.389px] md:placeholder:leading-[16.206px]
-      md:placeholder:text-[#7E7E7E]'
+     placeholder:text-[14.389px] placeholder:leading-[18.809.4px]'
       value={necoEducationPinEmail}
       onChange={(e) =>{
         setNecoEducationPinEmail(e.target.value);
@@ -973,7 +972,7 @@ const necoReceipt = () => {
             />
           )}
                  
-                 <div className="py-[30px] lg:py-[60px] mt-10 lg:mb-[0px] mb-[40px] md:mb-[0px] ">
+                 <div className="py-[30px] lg:py-[60px] mt-10 lg:mb-[200px] mb-[50px] md:mb-[100px]">
             <button
               className={`font-extrabold h-[43px] w-[100%] py-[3.534px] px-[5.301px] 
               mb-[40px] md:mb-[0px] rounded-[4.241px] md:h-auto
@@ -1011,8 +1010,8 @@ const necoReceipt = () => {
 </div>
       
 
-      <div className=" flex gap-[5.729px]  md:gap-[14.896px] 
-       justify-center px-[8.594px] mb-[80px]">
+      <div className=" flex gap-[8.729px]  md:gap-[14.896px] 
+       justify-center px-[8.594px] mb-[130px]">
               <p className="font-[500] text-[10px] text-black 
               leading-[10.4px] lg:text-[16px] lg:leading-[15.6px]  md:text-[6.875px]
             ] md:leading-[12.938px] self-center">

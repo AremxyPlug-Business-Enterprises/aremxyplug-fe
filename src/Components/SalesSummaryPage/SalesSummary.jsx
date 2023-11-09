@@ -142,22 +142,24 @@ const handleBalance = (product) => {
 
         </div>
         {/* available balance */}
-        <div                 onClick={() => {
-                setIsOpen5((prev) => !prev);
-                setCalender(false)
-                setIsOpen1(false)
-
-              }}
- className="lg:px-[] lg:py-[25px] lg:h-[120px] py-[10px] lg:gap-2.5  
+        <div 
+             className="lg:px-[] lg:py-[25px] lg:h-[120px] py-[10px] lg:gap-2.5  
 gap-[5px] mt-[-0%] lg:mt-[25px] bg-indigo-300
  bg-opacity-20 md:rounded-[11.46px] lg:rounded-[20px] rounded-[6px]
   justify-center lg:w-full w-full md:w-full md:mt-[9px] md:h-[68.75px] 
-  md:px-[140.10px] md:py-[14.32px] relative items-center inline-flex">
+  md:px-[140.10px] md:py-[14.32px]  items-center flex-col flex">
 
 
-        <div className="lg:justify-start lg:items-center gap-[10px] md:gap-[5.73px] lg:gap-[5.73px] flex">
-              <div className="lg:w-[70px] lg:h-[70px] w-6 h-6 md:w-[40.10px] md:h-[40.10px] lg:gap-[5.73px]  bg-white rounded-full relative">
-                <div className="lg:w-[70px] lg:h-[70px] left-0 top-0 w-6 h-6 md:w-[40.10px] md:h-[40.10px]  absolute bg-white rounded-full"></div>
+        <div onClick={() => {
+                          setIsOpen5((prev) => !prev);
+                          setCalender(false)
+                          setIsOpen1(false)
+                        }}
+        className="lg:justify-start lg:items-center cursor-pointer relative gap-[10px] md:gap-[5.73px] lg:gap-[5.73px] flex">
+              <div className="lg:w-[70px] lg:h-[70px] w-6 h-6 md:w-[40.10px] md:h-[40.10px] lg:gap-[5.73px]
+                bg-white rounded-full relative">
+                <div className="lg:w-[70px] lg:h-[70px] left-0 top-0 w-6 h-6 md:w-[40.10px] md:h-[40.10px]
+                  absolute bg-white rounded-full"></div>
                 <div className="lg:w-[29.27px] lg:h-[29.27px]  top-[-1px] lg:left-[20px]
                   ml-[-1.5px] left-[-12px] lg:top-[20px] w-3 h-[10.41px] md:w-[16.77px] md:h-[16.77px]
                  md:left-[2px] md:top-[0.52px] absolute">
@@ -177,9 +179,9 @@ gap-[5px] mt-[-0%] lg:mt-[25px] bg-indigo-300
                 {selectedBalance}
                 </div>
               </div>
-            </div>
+            
             <div
-              className="lg:w-6 lg:h-6 w-[13.75px] md:mt-[5px] mt-[0px] h-[13.75px] md:w-[13.75px] md:h-[13.75px] lg:justify-center lg:items-center flex"
+              className="lg:w-6 lg:h-6 w-[13.75px] md:mt-[5px] mt-[4px] h-[13.75px] md:w-[13.75px] md:h-[13.75px] lg:justify-center lg:items-center flex"
             >
                {isOpen5 ? (
     <img src={arrows} alt="Arrow " />
@@ -187,9 +189,235 @@ gap-[5px] mt-[-0%] lg:mt-[25px] bg-indigo-300
     <img src={arrow00} alt="Arrows" />
   )}
             </div>
+            {isOpen5 && (
+               
+ 
+          <div className="
+            
+              lg:top-[95px] z-20  
+            w-full md:w-full lg:w-full cursor-pointer
+           top-[34px] md:top-[54.35px] absolute flex-col lg:items-start flex">
+
+            <div 
+            onClick={() => {
+              setIsOpen5((prev) => !prev);
+              if (isOpen5) {
+      // Set isOpen5 to false when it's true
+      setIsOpen5(true);
+    }
+              
+              handleSelect( <img className='lg:w-[29.27px] w-3 lg:h-[29.45px]
+            h-3 lg:left-0 lg:top-[0.91px] ml-[19px] lg:mt-[2px] lg:ml-[2px] mt-[7px] md:w-[16.77px]
+            md:h-[16.77px] md:ml-[11px] md:mt-[12px] ' src={flagpage} alt="" />
+);   
+          handleBalance(    <div className="text-neutral-500 text-[9px] lg:mt-[5px] md:text-[13px] lg:text-xl lg:font-medium 
+          md:leading-3 lg:leading-tight">
+         (50,000.00)
+        </div>
+)
+          }}
+
+            className="lg:pl-2.5 lg:w-[370px] border border-b md:w-[214.84px] 
+            lg:pt-[7px] md:h-[35px] lg:h-[47px] h-[30px] 
+            justify-start items-center pt-[3px] pb-[px] bg-white shadow gap-[5px] pl-2 md:pl-2 md:gap-[5px] 
+              flex-row  md:pt-1 md:pb-[4.43px] inline-flex">
+              
+                <img className='lg:w-[29.27px] w-3 lg:h-[29.45px]
+                    h-3 lg:left-0 lg:top-[0.91px] md:w-[16.77px]
+                    md:h-[16.77px] ' src={flagpage} alt="" />
+                  
+                
+                <div className="text-neutral-500 text-[9px] md:text-[13px] lg:text-xl lg:font-medium 
+                  md:leading-3 lg:leading-tight">
+                  NGN Wallet (50,000.00)
+                </div>
+              
+            </div>
+            <div 
+            onClick={() => {
+              setIsOpen5((prev) => !prev);
+              if (isOpen5) {
+                // Set isOpen5 to false when it's true
+                setIsOpen5(true);
+              }
+          
+              handleSelect(   <img className='lg:w-[28.77px] w-3 lg:h-[26.09px]
+            h-3 lg:left-[0.50px] lg:top-[3.18px] md:w-[16.77px]
+            md:h-[16.77px] md:ml-[11px] ml-[19px] mt-[7px] lg:mt-[2px] lg:ml-[2px] md:mt-[12px]' src={flagpage1} alt="" />
+); 
+          handleBalance(<div className="text-neutral-500 lg:text-xl md:text-[13px] text-[9px]
+          font-medium  md:leading-3 leading-tight">
+           (0.00)
+         </div>
+)
+          }}
+            className="lg:pl-2.5 md:w-[214.84px] border border-b mt-[0.0px] 
+             h-[30px] lg:h-[45px] lg:w-[370px] lg:pb-[7.73px] bg-white shadow 
+             justify-start items-center md:h-[35px] lg:mt-[-3px] flex-row pl-2 md:pl-2 gap-[5px] 
+               md:gap-[5px] lg:gap-[5px] md:pt-1   inline-flex">
+              
+                
+                  
+                  
+                  
+                    <img className='lg:w-[28.77px] w-3 lg:h-[26.09px]
+                    h-3 lg:left-[0.50px] lg:top-[3.18px] md:w-[16.77px]
+                    md:h-[16.77px] ' src={flagpage1} alt="" />
+                  
+                
+                <div className="text-neutral-500 lg:text-xl md:text-[13px] text-[9px]
+                 font-medium  md:leading-3 leading-tight">
+                  USD Wallet (0.00)
+                </div>
+              
+            </div>
+            <div onClick={() => {
+              setIsOpen5((prev) => !prev);
+              if (isOpen5) {
+                // Set isOpen5 to false when it's true
+                setIsOpen5(true);
+              }
+          
+              handleSelect(                  <img
+                    src={flagpage2}
+                    className="lg:w-[29.27px] w-3 md:h-[16.77px] md:w-[16.77px]
+                      lg:h-[29.27px] ml-[19px] mt-[7px] md:ml-[11px] md:mt-[12px] h-3 lg:mt-[2px] lg:ml-[2px] "
+                    alt=""
+                  />
+); 
+            handleBalance(                 <div className="text-neutral-500 lg:text-xl text-[9px] md:text-[13px]
+            font-medium  md:leading-3 leading-tight">
+            (0.00)
+           </div>
+)
+          }} 
+            className="lg:pl-2.5 lg:h-[45px] border border-b md:w-[214.84px] pl-2 md:pl-2 h-[30px] 
+            justify-start items-center lg:pt-[7px] lg:w-[370px] lg:pb-[7.73px] bg-white 
+            shadow md:h-[35px]  gap-[5px] md:gap-[5px] lg:gap-[5px] flex-row 
+             md:pt-1  inline-flex">
+              
+                <div>
+                  <img
+                    src={flagpage2}
+                    className="lg:w-[29.27px] w-3 md:h-[16.77px] md:w-[16.77px]
+                     lg:mt-[-1px] lg:h-[29.27px] h-3 lg:left-0 lg:top-0 "
+                    alt=""
+                  />
+                  </div>
+
+                 <div className="text-neutral-500 lg:text-xl text-[9px] md:text-[13px]
+                 font-medium  md:leading-3 leading-tight">
+                  EUR Wallet (0.00)
+                </div>
+              
+            </div>
+            <div onClick={() => {
+              setIsOpen5((prev) => !prev);
+              if (isOpen5) {
+                // Set isOpen5 to false when it's true
+                setIsOpen5(true);
+              }
+          
+              handleSelect(                  <img  className="lg:w-[29.27px] w-3 h-3
+                   lg:h-[29.27px] lg:left-[0.50px] lg:top-[0.51px]
+                   md:w-[16.77px] md:h-[16.77px] ml-[19px] mt-[7px]
+                   lg:mt-[2px] lg:ml-[2px] md:ml-[11px] md:mt-[12px] " src={flagpage3} alt="" />
+); 
+            handleBalance(                <div className="text-neutral-500 lg:text-xl text-[9px] md:text-[13px] font-medium 
+            md:leading-3 leading-tight">
+            (0.00)
+           </div>
+)
+          }} className="lg:pl-2.5
+             lg:w-[370px] md:w-[214.84px] pl-2 md:pl-2 border border-b lg:h-[45px] h-[30px]
+             justify-start items-center lg:pt-[7px] lg:pb-[7.73px] bg-white shadow 
+               md:h-[35px] flex-row gap-[5px]
+                lg:gap-[5px] md:gap-[5px] md:pt-1 inline-flex">
+              
+                
+                  <img  className="lg:w-[29.27px] w-3 h-3
+                   lg:h-[29.27px] lg:left-[0.50px] lg:top-[0.51px]
+                   md:w-[16.77px] md:h-[16.77px]  " src={flagpage3} alt="" />
+                  
+
+                
+                <div className="text-neutral-500 lg:text-xl text-[9px] md:text-[13px] font-medium 
+                 md:leading-3 leading-tight">
+                  GBP Wallet (0.00)
+                </div>
+              
+            </div>
+            <div onClick={() => {
+              setIsOpen5((prev) => !prev);
+              if (isOpen5) {
+                // Set isOpen5 to false when it's true
+                setIsOpen5(true);
+              }
+          
+              handleSelect( <img className='lg:w-[29.27px] ml-[19px] mt-[7px] lg:h-[29.27px] lg:left-[0.50px] 
+                  lg:top-[0.51px] h-3 w-3 md:w-[16.77px] md:h-[16.77px]
+                  md:ml-[11px] md:mt-[12px] lg:mt-[2px] lg:ml-[2px]' src={flagpage4} alt="" />
+); 
+            handleBalance(                <div className="text-neutral-500 lg:text-xl text-[9px] md:text-[13px] font-medium 
+            md:leading-3 leading-tight">
+            (0.00)
+           </div>
+)
+          }} className="lg:pl-2.5 md:w-[214.84px] border border-b lg:pt-[7px] lg:pb-[7.73px]
+             lg:h-[45px] h-[30px] justify-start items-center lg:gap-[5px] lg:w-[370px] bg-white shadow
+              md:h-[35px] pl-2 md:pl-2
+               md:pt-1  flex-row gap-[5px] md:gap-[5px] inline-flex">
+              
+
+                  <img className='lg:w-[29.27px] lg:h-[29.27px] lg:left-[0.50px] 
+                  lg:top-[0.51px] h-3 w-3 md:w-[16.77px] md:h-[16.77px]
+                  ' src={flagpage4} alt="" />
+                
+                <div className="text-neutral-500 lg:text-xl text-[9px] md:text-[13px] font-medium 
+                 md:leading-3 leading-tight">
+                  AUD Wallet (0.00)
+                </div>
+              
+            </div>
+            <div onClick={() => {
+              setIsOpen5((prev) => !prev);
+              if (isOpen5) {
+                // Set isOpen5 to false when it's true
+                setIsOpen5(true);
+              }
+          
+              handleSelect(  <img className="lg:w-[29.27px] ml-[19px] mt-[7px] md:w-[16.77px] 
+              md:h-[16.77px] w-3 h-3 lg:mt-[2px] lg:ml-[2px]
+                   lg:h-[29.27px]
+                   md:ml-[11px] md:mt-[12px]  " src={flagpage5} alt="" />
+); 
+            handleBalance( <div className="text-neutral-500 lg:text-xl text-[9px] md:text-[13px] font-medium  md:leading-3 leading-tight">
+            (0.00)
+          </div>
+)
+          }} className="lg:pl-2.5 md:w-[214.84px] border border-b lg:pt-[7px] lg:w-[370px] lg:h-[45px] h-[30px]
+             justify-start items-center lg:pb-[7.73px] bg-white shadow lg:gap-[5px] md:h-[35px]
+               flex-row gap-[5px] md:gap-[5px] md:pt-1 pl-2 md:pl-2 inline-flex">
+              
+                
+                  <img className="lg:w-[29.27px]  md:w-[16.77px] md:h-[16.77px] w-3 h-3 
+                   lg:h-[29.27px] lg:left-[0.50px] 
+                  lg:top-[0.51px] md:left-0 md:top-[0.52px]  " src={flagpage5} alt="" />
+
+                <div className="text-neutral-500 lg:text-xl text-[9px] md:text-[13px] font-medium  md:leading-3 leading-tight">
+                  KES Wallet (0.00)
+                </div>
+                
+            </div>
+            
+          </div>
+)}
+{/* </div> */}
+
+            </div>
           
             </div>
-      
+            
 
 
 
@@ -212,7 +440,8 @@ gap-[5px] mt-[-0%] lg:mt-[25px] bg-indigo-300
   setIsOpen5(false)
   setIsOpen1(false)
 }}  className={`cursor-pointer ${styles.filter}  ${
-  isDarkMode ? "border" : ""} flex  md:gap-[6px] items-center justify-center md:w-[145px] lg:w-[170px] lg:mt-[1px] gap-[1px]  
+  isDarkMode ? "border" : ""} flex  md:gap-[6px] items-center justify-center md:w-[145px] 
+  lg:w-[170px] lg:mt-[1px] gap-[1px]  relative
    px-[2px] rounded-[3px] md:px-[8px] mt-[-1px] md:mt-[1px] flex-row`}>
         <div class="text-[#04177f] text-[9px] lg:text-[20px] flex items-center md:text-[16px] 
         whitespace-nowrap font-bold relative">Filter by Date</div>
@@ -229,6 +458,7 @@ gap-[5px] mt-[-0%] lg:mt-[25px] bg-indigo-300
     
 
         {/* filter by product */}
+        <div className='flex flex-col cursor-pointer relative'>
         <div  onClick={() => {
    setIsOpen1((prev) => !prev);
    setCalender(false)
@@ -255,11 +485,52 @@ gap-[5px] mt-[-0%] lg:mt-[25px] bg-indigo-300
                 </div>
             </div>
         </div>
+
+        {/*filter by product dropdown */}
+        {isOpen1 && (
+  <div className="flex absolute cursor-pointer lg:h-[300px]  md:h-[150px] h-[200px] md:top-[32px] 
+   lg:top-[43px]  top-[19px] flex-col">
+    <div class="w-44 h-[29px] md:w-[200px] lg:w-[230px] md:h-[35px] lg:h-[40px]  bg-white shadow">
+        
+        <div class="w-[199.37px] ml-[5px] md:w-[199.37px] lg:w-[196px] justify-start items-center inline-flex">
+            <div onClick={() => {
+             
+    setIsOpen2((prev) => !prev);
+    setIsOpen3(false); setIsOpen4(false);setIsOpen1(false);
+  handleClick('Airtime Top-up'); }}class="w-[186.20px] text-neutral-500 justify-start md:w-[131px] 
+   items-center text-[9px] md:text-[12px] lg:text-[16px] font-medium  md:leading-3 leading-[10.48px] flex">Airtime Top-up</div>
+        </div>
+    </div>
+    <hr class="bg-slate-500 h-[1px] w-[176px] Lg:w-[198px]"></hr>
+    <div class="w-44 h-[29px] md:w-[200px] md:h-[35px] lg:w-[230px] lg:h-[40px] bg-white shadow">
+        
+        <div class="w-[199.37px] ml-[5px] md:w-[199.37px]  justify-start items-center inline-flex">
+            <div onClick={() => {
+    setIsOpen3((prev) => !prev);
+    setIsOpen2(false); setIsOpen4(false); setIsOpen1(false);
+handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] md:text-[12px] md:w-[131px] items-center lg:text-[16px] font-medium  md:leading-3 leading-[10.48px]">Data Top-up</div>
+        </div>
+    </div>
+    <hr class="bg-slate-500 h-[1px] w-[176px] lg:w-[198px]"></hr>
+    <div class="w-44 h-[29px] md:w-[200px] lg:h-[40px] lg:w-[230px] md:h-[35px] bg-white shadow">
+        
+        <div class="w-[199.37px] ml-[5px] md:w-[199.37px]  justify-start items-center inline-flex">
+            <div onClick={() => {
+    setIsOpen4((prev) => !prev);
+    setIsOpen3(false); setIsOpen2(false); setIsOpen1(false);
+                handleClick('Bills Payment'); }}  class="w-[131.60px] text-neutral-500 text-[9px] md:text-[12px] md:w-[131px] items-center lg:text-[16px] font-medium  md:leading-3 leading-[10.48px]">Bills Payments</div>
+        </div>
+    </div>
+    <hr class="bg-slate-500 h-[1px] w-[176px] lg:w-[198px]"></hr>
+  </div>
+)}
+
+        </div>
     </div>
     
 
 
-    { calender && <div className="mt-[260px] md:mt-[336px] absolute  z-50 lg:mt-[575px]"><Calender/></div> }
+    { calender && <div className="mt-[257px] md:mt-[336px] absolute  z-50 lg:mt-[557px]"><Calender/></div> }
    
     <div className="mt-[-17%] lg:mt-[-3%] md:mt-[-13%]  mb-[10%]">
 
@@ -378,61 +649,17 @@ gap-[5px] mt-[-0%] lg:mt-[25px] bg-indigo-300
 
 
 
-{/* main dropdown */}
-
-{isOpen1 && (
-  <div className={`${
-    toggleSideBar
-      ? "lg:left-[430px] md:left-[225px]"
-      : "lg:left-[230px] md:left-[60px] "
-      
-  } 
- flex absolute lg:h-[300px] md:ml-[100px] left-[80px] md:left-[225px]
-   lg:w-full md:h-[150px] h-[200px] md:top-[470px]  lg:top-[710px]  top-[332px] flex-col`}>
-    <div class="w-44 h-[29px] md:w-[200px] md:h-[35px] lg:h-[40px]  bg-white shadow">
-        
-        <div class="w-[199.37px] ml-[5px] md:w-[199.37px] justify-start items-center inline-flex">
-            <div onClick={() => {
-             
-    setIsOpen2((prev) => !prev);
-    setIsOpen3(false); setIsOpen4(false);setIsOpen1(false);
-  handleClick('Airtime Top-up'); }}class="w-[186.20px] text-neutral-500 md:w-[131px] items-center text-[9px] md:text-[12px] lg:text-[16px] font-medium  md:leading-3 leading-[10.48px]">Airtime Top-up</div>
-        </div>
-    </div>
-    <hr class="bg-slate-500 h-[1px] w-[176px] Lg:w-[198px]"></hr>
-    <div class="w-44 h-[29px] md:w-[200px] md:h-[35pxpx] lg:h-[40px] bg-white shadow">
-        
-        <div class="w-[199.37px] ml-[5px] md:w-[199.37px]  justify-start items-center inline-flex">
-            <div onClick={() => {
-    setIsOpen3((prev) => !prev);
-    setIsOpen2(false); setIsOpen4(false); setIsOpen1(false);
-handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] md:text-[12px] md:w-[131px] items-center lg:text-[16px] font-medium  md:leading-3 leading-[10.48px]">Data Top-up</div>
-        </div>
-    </div>
-    <hr class="bg-slate-500 h-[1px] w-[176px] lg:w-[198px]"></hr>
-    <div class="w-44 h-[29px] md:w-[200px] lg:h-[40px] md:h-[35px] bg-white shadow">
-        
-        <div class="w-[199.37px] ml-[5px] md:w-[199.37px]  justify-start items-center inline-flex">
-            <div onClick={() => {
-    setIsOpen4((prev) => !prev);
-    setIsOpen3(false); setIsOpen2(false); setIsOpen1(false);
-                handleClick('Bills Payment'); }}  class="w-[131.60px] text-neutral-500 text-[9px] md:text-[12px] md:w-[131px] items-center lg:text-[16px] font-medium  md:leading-3 leading-[10.48px]">Bills Payments</div>
-        </div>
-    </div>
-    <hr class="bg-slate-500 h-[1px] w-[176px] lg:w-[198px]"></hr>
-  </div>
-)}
 
 
 
-{/* contact us */}
-<div className='md:ml-[-1000px] '>
-<footer className={`${
-toggleSideBar ? "lg:left-[670px] md:left-[410px] " : "lg:left-[550px] md:left-[310px]"
-}
+
+
+{/*main contact us */}
+<div className=' '>
+<footer className="
  flex  justify-center   text-center gap-[20px] 
- mt-[355px] mb-[50px] md:mt-[460px] lg:mb-[30px] left-[130px]  absolute 
-  z-index-2 onset-[500px] lg:mt-[750px]`}>
+ mt-[370px] mb-[50px] md:mt-[480px] lg:mb-[30px]  
+  z-index-2 onset-[500px] lg:mt-[760px]">
             <p className="text-[8px] md:text-[12px] lg:text-[12px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
               You need help?
             </p>
@@ -452,199 +679,6 @@ toggleSideBar ? "lg:left-[670px] md:left-[410px] " : "lg:left-[550px] md:left-[3
 
 
 
-  {isOpen5 && (
-          <div className={`${
-             toggleSideBar
-            ? "md:left-[390px] lg:left-24"
-            : "md:left-[300px] lg:left-1"}
-            
-            lg:ml-[510px] pl-[-50px] lg:top-[585px] md:w-[300px] lg:pl-[-500px]
-           left-[65px] w-[62%] lg:w-full 
-           top-[280px] md:top-[406px] absolute flex-col lg:items-start inline-flex`}>
-
-            <div 
-            onClick={() => {
-              setIsOpen5((prev) => !prev);
-              handleSelect( <img className='lg:w-[29.27px] w-3 lg:h-[29.45px]
-            h-3 lg:left-0 lg:top-[0.91px] ml-[19px] lg:mt-[2px] lg:ml-[2px] mt-[7px] md:w-[16.77px]
-            md:h-[16.77px] md:ml-[11px] md:mt-[12px] ' src={flagpage} alt="" />
-);   
-          handleBalance(    <div className="text-neutral-500 text-[9px] lg:mt-[5px] md:text-[13px] lg:text-xl lg:font-medium 
-          md:leading-3 lg:leading-tight">
-         (50,000.00)
-        </div>
-)
-          }}
-
-            className="lg:pl-2.5 lg:w-[370px] border border-b md:w-[214.84px] 
-            lg:pt-[7px] md:h-[35px] lg:h-[47px] h-[30px] 
-            justify-start items-center pt-[3px] pb-[px] bg-white shadow gap-[5px] pl-2 md:pl-2 md:gap-[5px] 
-              flex-row  md:pt-1 md:pb-[4.43px] inline-flex">
-              
-                <img className='lg:w-[29.27px] w-3 lg:h-[29.45px]
-                    h-3 lg:left-0 lg:top-[0.91px] md:w-[16.77px]
-                    md:h-[16.77px] ' src={flagpage} alt="" />
-                  
-                
-                <div className="text-neutral-500 text-[9px] md:text-[13px] lg:text-xl lg:font-medium 
-                  md:leading-3 lg:leading-tight">
-                  NGN Wallet (50,000.00)
-                </div>
-              
-            </div>
-            <div 
-            onClick={() => {
-              setIsOpen5((prev) => !prev);
-              handleSelect(   <img className='lg:w-[28.77px] w-3 lg:h-[26.09px]
-            h-3 lg:left-[0.50px] lg:top-[3.18px] md:w-[16.77px]
-            md:h-[16.77px] md:ml-[11px] ml-[19px] mt-[7px] lg:mt-[2px] lg:ml-[2px] md:mt-[12px]' src={flagpage1} alt="" />
-); 
-          handleBalance(                <div className="text-neutral-500 lg:text-xl md:text-[13px] text-[9px]
-          font-medium  md:leading-3 leading-tight">
-           (0.00)
-         </div>
-)
-          }}
-            className="lg:pl-2.5 md:w-[214.84px] border border-b mt-[0.0px] 
-             h-[30px] lg:h-[45px] lg:w-[370px] lg:pb-[7.73px] bg-white shadow 
-             justify-start items-center md:h-[35px] lg:mt-[-3px] flex-row pl-2 md:pl-2 gap-[5px] 
-               md:gap-[5px] lg:gap-[5px] md:pt-1   inline-flex">
-              
-                
-                  
-                  
-                  
-                    <img className='lg:w-[28.77px] w-3 lg:h-[26.09px]
-                    h-3 lg:left-[0.50px] lg:top-[3.18px] md:w-[16.77px]
-                    md:h-[16.77px] ' src={flagpage1} alt="" />
-                  
-                
-                <div className="text-neutral-500 lg:text-xl md:text-[13px] text-[9px]
-                 font-medium  md:leading-3 leading-tight">
-                  USD Wallet (0.00)
-                </div>
-              
-            </div>
-            <div onClick={() => {
-              setIsOpen5((prev) => !prev);
-              handleSelect(                  <img
-                    src={flagpage2}
-                    className="lg:w-[29.27px] w-3 md:h-[16.77px] md:w-[16.77px]
-                      lg:h-[29.27px] ml-[19px] mt-[7px] md:ml-[11px] md:mt-[12px] h-3 lg:mt-[2px] lg:ml-[2px] "
-                    alt=""
-                  />
-); 
-            handleBalance(                 <div className="text-neutral-500 lg:text-xl text-[9px] md:text-[13px]
-            font-medium  md:leading-3 leading-tight">
-            (0.00)
-           </div>
-)
-          }} 
-            className="lg:pl-2.5 lg:h-[45px] border border-b md:w-[214.84px] pl-2 md:pl-2 h-[30px] 
-            justify-start items-center lg:pt-[7px] lg:w-[370px] lg:pb-[7.73px] bg-white 
-            shadow md:h-[35px]  gap-[5px] md:gap-[5px] lg:gap-[5px] flex-row 
-             md:pt-1  inline-flex">
-              
-                <div>
-                  <img
-                    src={flagpage2}
-                    className="lg:w-[29.27px] w-3 md:h-[16.77px] md:w-[16.77px]
-                     lg:mt-[-1px] lg:h-[29.27px] h-3 lg:left-0 lg:top-0 "
-                    alt=""
-                  />
-                  </div>
-
-                 <div className="text-neutral-500 lg:text-xl text-[9px] md:text-[13px]
-                 font-medium  md:leading-3 leading-tight">
-                  EUR Wallet (0.00)
-                </div>
-              
-            </div>
-            <div onClick={() => {
-              setIsOpen5((prev) => !prev);
-              handleSelect(                  <img  className="lg:w-[29.27px] w-3 h-3
-                   lg:h-[29.27px] lg:left-[0.50px] lg:top-[0.51px]
-                   md:w-[16.77px] md:h-[16.77px] ml-[19px] mt-[7px]
-                   lg:mt-[2px] lg:ml-[2px] md:ml-[11px] md:mt-[12px] " src={flagpage3} alt="" />
-); 
-            handleBalance(                <div className="text-neutral-500 lg:text-xl text-[9px] md:text-[13px] font-medium 
-            md:leading-3 leading-tight">
-            (0.00)
-           </div>
-)
-          }} className="lg:pl-2.5
-             lg:w-[370px] md:w-[214.84px] pl-2 md:pl-2 border border-b lg:h-[45px] h-[30px]
-             justify-start items-center lg:pt-[7px] lg:pb-[7.73px] bg-white shadow 
-               md:h-[35px] flex-row gap-[5px]
-                lg:gap-[5px] md:gap-[5px] md:pt-1 inline-flex">
-              
-                
-                  <img  className="lg:w-[29.27px] w-3 h-3
-                   lg:h-[29.27px] lg:left-[0.50px] lg:top-[0.51px]
-                   md:w-[16.77px] md:h-[16.77px]  " src={flagpage3} alt="" />
-                  
-
-                
-                <div className="text-neutral-500 lg:text-xl text-[9px] md:text-[13px] font-medium 
-                 md:leading-3 leading-tight">
-                  GBP Wallet (0.00)
-                </div>
-              
-            </div>
-            <div onClick={() => {
-              setIsOpen5((prev) => !prev);
-              handleSelect( <img className='lg:w-[29.27px] ml-[19px] mt-[7px] lg:h-[29.27px] lg:left-[0.50px] 
-                  lg:top-[0.51px] h-3 w-3 md:w-[16.77px] md:h-[16.77px]
-                  md:ml-[11px] md:mt-[12px] lg:mt-[2px] lg:ml-[2px]' src={flagpage4} alt="" />
-); 
-            handleBalance(                <div className="text-neutral-500 lg:text-xl text-[9px] md:text-[13px] font-medium 
-            md:leading-3 leading-tight">
-            (0.00)
-           </div>
-)
-          }} className="lg:pl-2.5 md:w-[214.84px] border border-b lg:pt-[7px] lg:pb-[7.73px]
-             lg:h-[45px] h-[30px] justify-start items-center lg:gap-[5px] lg:w-[370px] bg-white shadow
-              md:h-[35px] pl-2 md:pl-2
-               md:pt-1  flex-row gap-[5px] md:gap-[5px] inline-flex">
-              
-
-                  <img className='lg:w-[29.27px] lg:h-[29.27px] lg:left-[0.50px] 
-                  lg:top-[0.51px] h-3 w-3 md:w-[16.77px] md:h-[16.77px]
-                  ' src={flagpage4} alt="" />
-                
-                <div className="text-neutral-500 lg:text-xl text-[9px] md:text-[13px] font-medium 
-                 md:leading-3 leading-tight">
-                  AUD Wallet (0.00)
-                </div>
-              
-            </div>
-            <div onClick={() => {
-              setIsOpen5((prev) => !prev);
-              handleSelect(  <img className="lg:w-[29.27px] ml-[19px] mt-[7px] md:w-[16.77px] 
-              md:h-[16.77px] w-3 h-3 lg:mt-[2px] lg:ml-[2px]
-                   lg:h-[29.27px]
-                   md:ml-[11px] md:mt-[12px]  " src={flagpage5} alt="" />
-); 
-            handleBalance( <div className="text-neutral-500 lg:text-xl text-[9px] md:text-[13px] font-medium  md:leading-3 leading-tight">
-            (0.00)
-          </div>
-)
-          }} className="lg:pl-2.5 md:w-[214.84px] border border-b lg:pt-[7px] lg:w-[370px] lg:h-[45px] h-[30px]
-             justify-start items-center lg:pb-[7.73px] bg-white shadow lg:gap-[5px] md:h-[35px]
-               flex-row gap-[5px] md:gap-[5px] md:pt-1 pl-2 md:pl-2 inline-flex">
-              
-                
-                  <img className="lg:w-[29.27px]  md:w-[16.77px] md:h-[16.77px] w-3 h-3 
-                   lg:h-[29.27px] lg:left-[0.50px] 
-                  lg:top-[0.51px] md:left-0 md:top-[0.52px]  " src={flagpage5} alt="" />
-
-                <div className="text-neutral-500 lg:text-xl text-[9px] md:text-[13px] font-medium  md:leading-3 leading-tight">
-                  KES Wallet (0.00)
-                </div>
-              
-            </div>
-          </div>
-        )}
 
 
 
@@ -660,8 +694,8 @@ toggleSideBar ? "lg:left-[670px] md:left-[410px] " : "lg:left-[550px] md:left-[3
   >
   
   
-  <div className="flex  justify-start items-center lg:w-full relative bg-white  md:mt-[-107px]
-    lg:mt-[-150px] mt-[-85px] lg:h-[1100px] md:h-[700px] h-[450px]  mb-10 border-b-[1.2px] flex-col">
+  <div className="flex  justify-start items-center lg:w-full relative bg-white  md:mt-[-655px]
+    lg:mt-[-967px] mt-[-526px] lg:h-[1100px] md:h-[700px] h-[453px] lg:mb-80 md:mb-40 mb-40 border-b-[1.2px] flex-col">
   <div className={`${  
     toggleSideBar
   ? "lg:gap-[325px]"
@@ -797,7 +831,7 @@ toggleSideBar ? "lg:left-[670px] md:left-[410px] " : "lg:left-[550px] md:left-[3
   
   
   
-      <footer className="flex justify-center lg:ml-[-20px] text-center gap-[20px] mt-[100px] mb-[50px]
+      <footer className="flex justify-center  text-center gap-[20px] mt-[100px] mb-[50px]
        md:mt-[200px] lg:mb-[30px] lg:mt-[185px]">
               <p className="text-[8px] md:text-[12px] lg:text-[12px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
                 You need help?
@@ -826,15 +860,10 @@ toggleSideBar ? "lg:left-[670px] md:left-[410px] " : "lg:left-[550px] md:left-[3
 {/* data top-up dropdown */}
 {isOpen3 && (
   <div className=' bg-white  lg:h-full  w-full '>
-  {/* <div */}
-    {/* // className={`${ */}
-      {/* // isDarkMode ? "bg-black border text-[#fff]" : "bg-[#fff]" */}
-    {/* // } ${styles.Chart}`} */}
-  {/* // > */}
 
 
-  <div className="flex  justify-start items-center lg:w-full shadow relative bg-white  md:mt-[-108px]
-    lg:mt-[-152px] mt-[-85px] lg:h-[1590px] md:h-[1390px]  h-[1050px] border lg:mb-5 md:mb-5 mb-3 border-b-[1.2px] flex-col">
+  <div className="flex  justify-start items-center lg:w-full shadow relative bg-white  md:mt-[-658px]
+    lg:mt-[-967px] mt-[-527px] lg:h-[1590px] md:h-[1390px]  h-[1050px] border lg:mb-80 md:mb-60 mb-40 border-b-[1.2px] flex-col">
   <div className={`${  
     toggleSideBar
   ? "lg:gap-[325px]"
@@ -1178,7 +1207,7 @@ toggleSideBar ? "lg:left-[670px] md:left-[410px] " : "lg:left-[550px] md:left-[3
 
 
       
-      <footer className="flex justify-center lg:ml-[-20px] text-center gap-[20px] mt-[100px] mb-[50px]
+      <footer className="flex justify-center  text-center  gap-[20px] mt-[100px] mb-[50px]
        md:mt-[200px] lg:mb-[30px] lg:mt-[150px]">
               <p className="text-[8px] md:text-[12px] lg:text-[12px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
                 You need help?
@@ -1199,205 +1228,6 @@ toggleSideBar ? "lg:left-[670px] md:left-[410px] " : "lg:left-[550px] md:left-[3
   
 
 
-{/* <div className="flex md:mt-[1150px] md:z-50 bg-white md:mb-[300px] lg:w-full md:w-full w-full md:h-[1800px] */}
-  {/* // relative h-[1500px] */}
-{/* //  mt-[370px] lg:mt-[1135px] flex-col"> */}
-{/* <div class="lg:w-full justify-between items-center lg:h-[101px] w-full md:w-full md:mt-[-1210px] lg:mt-[-1240px]  */}
-{/* // md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] mt-[-400px]  */}
-{/* // lg:pl-[26px] lg:pr-1   h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.67px] bg-white flex-row flex"> */}
-    {/*  */}
-        {/* <div class=" w-[56.33px] text-black text-[8px] font-medium lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">MTN SME</div> */}
-        {/* <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight leading-[10.40px]">100GB</div> */}
-        {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base  lg:leading-tight md:w-[103.70px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div> */}
-    {/*  */}
-{/* </div> */}
-{/*  */}
-{/*  */}
-{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] */}
-{/* //  pr-[1.33px] pt-3 pb-[11.67px] bg-white md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] */}
-  {/* // justify-between items-center  inline-flex"> */}
-    {/*  */}
-        {/* <div class="w-[56.33px] text-black text-[8px] font-medium lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">MTN SME2</div> */}
-        {/* <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div> */}
-        {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div> */}
-    {/* </div> */}
-{/*  */}
-{/*  */}
-{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px]  items-center inline-flex"> */}
-    {/*  */}
-        {/* <div class="w-[56.33px] text-black text-[8px] font-medium lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">MTN CG</div> */}
-        {/* <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div> */}
-        {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3  leading-[10.40px]">(₦10,000.00)</div> */}
-    {/* </div> */}
-{/*  */}
-{/*  */}
-{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px]  pt-3 pb-[11.66px] bg-white justify-between items-center inline-flex"> */}
-    {/*  */}
-        {/* <div class="w-[56.33px] text-black text-[8px] font-medium lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">MTN GIFTING</div> */}
-        {/* <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div> */}
-        {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div> */}
-{/* </div> */}
-{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px]  pt-[7px] pb-[6.66px] bg-white justify-between items-center inline-flex"> */}
-    {/*  */}
-        {/* <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight font-medium md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">MTN DIRECT COUPON</div> */}
-        {/* <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3  leading-[10.40px]">100GB</div> */}
-        {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight leading-[10.40px]">(₦10,000.00)</div> */}
-    {/*  */}
-{/* </div> */}
-{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] justify-between items-center lg:gap-[198px] md:w-full pl-[8.67px] pr-[1.33px] md:h-[57.86px] pt-[7px] pb-[6.66px] md:pl-[14.90px] md:pr-[2.29px] gap-[66px] inline-flex"> */}
-{/*  */}
-    {/* <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight font-medium md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">MTN GENERAL BUNDLES</div> */}
-    {/* <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div> */}
-    {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div> */}
-{/*  */}
-{/* </div> */}
-{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] pt-3 pb-[11.67px] bg-white justify-between items-center inline-flex"> */}
-    {/*  */}
-        {/* <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 font-medium leading-[10.40px]">AIRTEL CG</div> */}
-        {/* <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div> */}
-        {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div> */}
-    {/*  */}
-{/* </div> */}
-{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] pb-[6.67px] bg-white justify-between items-center inline-flex"> */}
-    {/*  */}
-        {/* <div class="w-[56.33px] text-black text-[8px] font-medium lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">AIRTEL GIFTING</div> */}
-        {/* <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div> */}
-        {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div> */}
-    {/*  */}
-{/* </div> */}
-{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] justify-between items-center md:w-full pl-[8.67px] pr-[1.33px]  md:h-[57.86px] pt-[7px] pb-[6.66px] md:pl-[14.90px] md:pr-[2.29px] gap-[66px] inline-flex"> */}
-{/*  */}
-    {/* <div class="w-[56.33px] text-black text-[8px] font-medium lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">AIRTEL GENERAL BUNDLE</div> */}
-    {/* <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div> */}
-    {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div> */}
-{/*  */}
-{/* </div> */}
-{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] pb-[11.67px] bg-white justify-between items-center inline-flex"> */}
-    {/*  */}
-        {/* <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 font-medium leading-[10.40px]">GLO CG</div> */}
-        {/* <div class="w-[53.33px] text-black text-[8px] lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 font-medium leading-[10.40px]">100GB</div> */}
-        {/* <div class="w-[60.33px] text-black text-[8px] lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 font-medium leading-[10.40px]">(₦10,000.00)</div> */}
-    {/*  */}
-{/* </div> */}
-{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] pt-3 pb-[11.66px] bg-white justify-between items-center inline-flex"> */}
-    {/*  */}
-        {/* <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 font-medium leading-[10.40px]">GLO GIFTING</div> */}
-        {/* <div class="w-[53.33px] text-black text-[8px] lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3  font-medium leading-[10.40px]">100GB</div> */}
-        {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div> */}
-    {/*  */}
-{/* </div> */}
-{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.67px] bg-white  md:w-full md:h-[57.86px]  md:pl-[14.90px] md:pr-[2.29px] justify-between items-center inline-flex"> */}
-    {/*  */}
-        {/* <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 font-medium leading-[10.40px]">GLO GENERAL BUNDLES</div> */}
-        {/* <div class="w-[53.33px] text-black text-[8px] lg:w-40 lg:text-base lg:leading-tight font-medium md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div> */}
-        {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div> */}
-    {/*  */}
-{/* </div> */}
-{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between md:w-full  md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex"> */}
-    {/*  */}
-        {/* <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight font-medium md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">9MOBILE SME</div> */}
-        {/* <div class="w-[53.33px] text-black text-[8px] lg:w-40 lg:text-base lg:leading-tight font-medium md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div> */}
-        {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3  leading-[10.40px]">(₦10,000.00)</div> */}
-    {/*  */}
-{/* </div> */}
-{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex"> */}
-    {/*  */}
-        {/* <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 font-medium leading-[10.40px]">9MOBILE CG</div> */}
-        {/* <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div> */}
-        {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div> */}
-{/*  */}
-{/* </div> */}
-{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] justify-between items-center gap-[66px] md:w-full md:h-[57.86px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.66px] md:pl-[14.90px] md:pr-[2.29px] inline-flex"> */}
-{/*  */}
-    {/* <div class="w-[56.33px] text-black text-[8px] font-medium lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">9MOBILE GENERAL BUNDLES</div> */}
-    {/* <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div> */}
-    {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div> */}
- {/*  */}
-{/* </div> */}
-{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] justify-between items-center inline-flex"> */}
-    {/*  */}
-        {/* <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight font-medium md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">SMILE BIGGA</div> */}
-        {/* <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div> */}
-        {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div> */}
-    {/*  */}
-{/* </div> */}
-{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.66px] bg-white justify-between md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex"> */}
-    {/*  */}
-        {/* <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight font-medium md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">SMILE UNLIMITED</div> */}
-        {/* <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base md:w-[91.67px]  md:text-[9.17px] md:leading-3 lg:leading-tight leading-[10.40px]">100GB</div> */}
-        {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div> */}
-    {/*  */}
-{/* </div> */}
-{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex"> */}
-    {/*  */}
-        {/* <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight font-medium md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">SMILE DAILY</div> */}
-        {/* <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div> */}
-        {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div> */}
-    {/*  */}
-{/* </div> */}
-{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.67px] bg-white justify-between md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex"> */}
-    {/*  */}
-        {/* <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight font-medium md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">SMILE WEEKLY</div> */}
-        {/* <div class="w-[53.33px] text-black text-[8px] lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 font-medium leading-[10.40px]">100GB</div> */}
-        {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div> */}
-    {/*  */}
-{/* </div> */}
-{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.67px] bg-white justify-between md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex"> */}
-    {/*  */}
-        {/* <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 font-medium leading-[10.40px]">SMILE NIGHT</div> */}
-        {/* <div class="w-[53.33px] text-black text-[8px] lg:w-40 lg:text-base lg:leading-tight font-medium md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div> */}
-        {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3  leading-[10.40px]">(₦10,000.00)</div> */}
-    {/*  */}
-{/* </div> */}
-{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.66px] bg-white justify-between md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px]  items-center inline-flex"> */}
-    {/*  */}
-        {/* <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 font-medium leading-[10.40px]">SMILEVOICE ONLY</div> */}
-        {/* <div class="w-[53.33px] text-black text-[8px] lg:w-40 lg:text-base lg:leading-tight font-medium md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div> */}
-        {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div> */}
-    {/* </div> */}
-{/*  */}
-{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.67px] bg-white justify-between md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex"> */}
-    {/*  */}
-        {/* <div class="w-[56.33px] text-black text-[8px] lg:w-[169px] lg:text-base lg:leading-tight font-medium md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">SMILE FREEDOM</div> */}
-        {/* <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div> */}
-        {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div> */}
-    {/* </div> */}
-{/*  */}
-{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[7px] pr-[3px] pt-[7.02px] pb-[6.64px] bg-white justify-between md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex"> */}
-    {/*  */}
-        {/* <div class="w-[56.33px] text-black text-[8px] font-medium lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">SPECTRANET DATA</div> */}
-        {/* <div class="w-[53.33px] text-black text-[8px] font-medium lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div> */}
-        {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div> */}
-    {/* </div> */}
-{/*  */}
-{/* <div class="lg:w-full lg:h-[101px] lg:pl-[26px] lg:pr-1 w-full h-[33.67px] pl-[7px] pr-[3px] pt-[7.02px] pb-[6.64px] bg-white justify-between md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] items-center inline-flex"> */}
-    {/*  */}
-        {/* <div class="w-[56.33px] text-black text-[8px] font-medium lg:w-[169px] lg:text-base lg:leading-tight md:w-[96.82px] md:text-[9.17px] md:leading-3 leading-[10.40px]">SPECTRANET DATA</div> */}
-        {/* <div class="w-[53.33px] text-black text-[8px] font-medium  lg:w-40 lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[9.17px] md:leading-3 leading-[10.40px]">100GB</div> */}
-        {/* <div class="w-[60.33px] text-black text-[8px] font-medium lg:w-[181px] lg:text-base lg:leading-tight md:w-[91.67px] md:text-[9.17px] md:leading-3 leading-[10.40px]">(₦10,000.00)</div> */}
-    {/* </div> */}
-{/*  */}
-{/*  */}
-    {/* <footer className="flex justify-center text-center gap-[20px] mt-[200px] mb-[50px] md:mt-[300px] */}
-    {/* //  lg:mb-[30px] lg:mt-[500px]"> */}
-            {/* <p className="text-[8px] md:text-[12px] lg:text-[12px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]"> */}
-              {/* You need help? */}
-            {/* </p> */}
-{/*  */}
-            {/* <Link to="/ContactUs"> */}
-              {/* <div */}
-                {/* // className={`${ */}
-                  {/* // isDarkMode ? "border " : "bg-[#04177f]" */}
-                {/* // } text-[8px] p-1 text-white rounded-[8px] lg:text-[12px]`} */}
-              {/* // > */}
-                {/* Contact Us */}
-              {/* </div> */}
-            {/* </Link> */}
-          {/* </footer> */}
-{/*  */}
-{/*  */}
-{/* </div> */}
-{/* </div> */}
 </div>
 
 )}
@@ -1415,8 +1245,8 @@ className={`${styles.viewTransact} ${
 >
 
 
-<div className="flex  justify-start items-center lg:h-[1030px] md:h-[700px] h-[480px]  mb-10 border-b-[1.2px]
- lg:w-full relative bg-white  md:mt-[-109px]  lg:mt-[-150px] mt-[-85px] flex-col">
+<div className="flex  justify-start items-center lg:h-[1030px] md:h-[700px] h-[480px] lg:mb-80 md:mb-40  mb-40 border-b-[1.2px]
+ lg:w-full relative bg-white  md:mt-[-655px]  lg:mt-[-968px] mt-[-524px] flex-col">
 <div className={`${  
   toggleSideBar
 ? "lg:gap-[325px]"
@@ -1562,7 +1392,7 @@ lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.67
     </div>
 
 
-    <footer className="flex justify-center lg:ml-[-20px] text-center gap-[20px] mt-[70px] mb-[50px]
+    <footer className="flex justify-center  text-center gap-[20px] mt-[70px] mb-[50px]
      md:mt-[200px] lg:mb-[30px] lg:mt-[200px]">
             <p className="text-[8px] md:text-[12px] lg:text-[12px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
               You need help?
