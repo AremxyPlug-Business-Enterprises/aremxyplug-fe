@@ -227,3 +227,11 @@ html {
 .DropIt {
   animation : openDropDown 0.3s ease 1 forwards;
 }
+.ProfileHero{
+  background: linear-gradient(91deg, rgba(29, 255, 255, 0.84) 6.85%, #AC43FF 102.32%);
+
+}
+.activeTab{
+border-bottom : 2px solid #04177F;
+border-radius : 10px;
+  }
