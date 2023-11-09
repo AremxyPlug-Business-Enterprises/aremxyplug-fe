@@ -6,6 +6,10 @@
   );
 }
 
+#Transaction {
+  background: linear-gradient(92deg, #FFDA44 4.68%, #FF748D 55.04%);
+}
+
 #DataBundle {
   background: linear-gradient(92deg, #0cbc8b 4.68%, #367cff 55.04%);
 }
@@ -180,6 +184,14 @@
     border-radius: 15px;
     height: 550px;
     box-shadow: 0px 0px 16.952381610870361px 0px rgba(0, 0, 0, 0.25);
+  }
+
+  .transaction {
+    gap: 11%;
+  }
+
+  .transaction2 {
+    margin-top: 20px;
   }
 }
 
