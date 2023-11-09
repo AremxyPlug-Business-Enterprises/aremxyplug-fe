@@ -498,6 +498,7 @@ export const SideBar = () => {
                     </div>
                   </Link>
                 </div>
+                <Link to = '/ProfileSettingMain'>
                 <div className="flex gap-[3.4px] cursor-pointer lg:gap-[11px]">
                   <img
                     className="w-[8.3px] h-[8.3px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
@@ -506,6 +507,7 @@ export const SideBar = () => {
                   />
                   <p>Profile Settings</p>
                 </div>
+                </Link>
                 <div className="flex gap-[3.4px] cursor-pointer lg:gap-[11px]">
                   <img
                     className="w-[8.3px] h-[8.3px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"

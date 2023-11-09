@@ -118,6 +118,7 @@ import { KedcoReceipt } from "./Components/Dashboard/DashboardComponents/Electri
 import KEDCO from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/KEDCO";
 import PHED from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/PHED";
 import { PhedReceipt } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/phedReceipt";
+import ProfileSettingsMain from "./Components/My Profile & Account Settings/ProfileSettingsMain";
 
 export const Router = () => {
   return (
@@ -268,6 +269,7 @@ export const Router = () => {
         <Route path="/SpectranetReceipt" element={<SpectranetReceipt/>} />
         <Route path="/DataBundleSelectRecipient" element={<DataBundleSelectRecipient/>} />
         <Route path="/DataBundleAddRecipient" element={<DataBundleAddRecipient/>} />
+        <Route path="/ProfileSettingMain"element={<ProfileSettingsMain/>} />  
       </Routes>
     </div>
   );
