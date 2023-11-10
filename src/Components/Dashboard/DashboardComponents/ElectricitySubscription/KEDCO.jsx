@@ -359,7 +359,7 @@ const KEDCO = () => {
         <div className="flex flex-col mt-[10px]">
             <div className="text-[#7E7E7E] text-[10px] lg:text-[16px]  font-[600]" >Amount</div>
             <div>
-              <input type="text"  value={ikedcamount} onChange={handleIkedcAmount} className=" w-full lg:h-[51px] lg:text-[16px]  text-[#7E7E7E] pl-[9px] text-[10px] font-[500]  border-[1px] h-[30px]" />
+              <input type="number"  value={ikedcamount} onChange={handleIkedcAmount} className=" w-full lg:h-[51px] lg:text-[16px]  text-[#7E7E7E] pl-[9px] text-[10px] font-[500]  border-[1px] h-[30px]" />
             </div>
         </div>
 
@@ -464,7 +464,7 @@ const KEDCO = () => {
             Proceed
           </div>
 
-          <footer className="flex justify-center text-center gap-[20px] mt-[170px] pb-[30px] md:mt-[750px]  lg:mt-[850px]">
+          <footer className="flex justify-center text-center gap-[20px] mt-[170px] pb-[2%] md:mt-[750px]  lg:mt-[850px]">
             <p className="text-[8px] md:text-[12px] lg:text-[20px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
               You need help?
             </p>

@@ -1,13 +1,17 @@
+import React from "react";
+import { useContext, useRef } from "react";
+import { ContextProvider } from '../../../../Context';
+import { DashBoardLayout } from '../../../Layout/DashBoardLayout';
 import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-import { useContext } from "react";
-import { ContextProvider } from  "../Context";
-import { DashBoardLayout } from "../Dashboard/Layout/DashBoardLayout";
-import { useRef } from "react";
+import { useLocation } from "react-router-dom";
 
 
-export const WalletFailedReceipt = () => { 
+
+
+
+export const PendingReceipt = () => {
 
   const {
     // selectedNetworkProduct,
@@ -15,11 +19,11 @@ export const WalletFailedReceipt = () => {
     // recipientPhoneNumber,
     // recipientNames,
     // selectedAmount,
-    // walletName,
-    setSelectedNetworkProduct,
-    setSelectedOption,
-    setSelectedAmount,
-    setRecipientNames,
+    walletName,
+    // setSelectedNetworkProduct,
+    // setSelectedOption,
+    // setSelectedAmount,
+    // setRecipientNames,
   }
    = useContext(ContextProvider);
 
@@ -31,14 +35,56 @@ export const WalletFailedReceipt = () => {
 
   const contentRef = useRef(null);
 
-  const handleChange = () => {
-    setSelectedNetworkProduct(false);
-    setSelectedOption(false);
-    setSelectedAmount('');
-    setRecipientNames('');
+  // const handleChange = () => {
+  //   setSelectedNetworkProduct(false);
+  //   setSelectedOption(false);
+  //   setSelectedAmount('');
+  //   setRecipientNames('');
+  // }
+
+  // if (!props.location || !props.location.state || !props.location.state.transaction) {
+  //   // Handle the case where the transaction data is missing
+  //   return <div>Error: Transaction data not found</div>;
+  // }
+
+  // Access the transaction data safely
+  // const { transaction } = props.location.state;
+
+
+
+  // if (!transaction) {
+  //   // Handle the case where transaction data is missing or null
+  //   return (
+  //     <div>
+  //       <p>Error: Transaction data not found.</p>
+  //     </div>
+  //   );
+  // }
+
+
+  const location = useLocation();
+
+  if (!location.state || !location.state.transaction) {
+    return <div>Error: Transaction data not found</div>;
   }
 
+  const transaction = location.state.transaction;
 
+
+
+
+  // ===============Copy to Clipboard Function============
+//   const handleCopyClick = () => {
+//     const text = textRef.current.innerText;
+//     navigator.clipboard
+//       .writeText(text)
+//       .then(() => {
+//         alert("Copied to clipboard");
+//       })
+//       .catch((err) => {
+//         console.error("Error copying text: ", err);
+//       });
+//   };
 
   // ==============Share pdf Function=============
   const handleShareClick = () => {
@@ -56,6 +102,8 @@ export const WalletFailedReceipt = () => {
     }
   };
 
+
+  
   // ==============Save Pdf Function==============
   const handleSaveAsPDFClick = () => {
     const content = contentRef.current;
@@ -79,18 +127,17 @@ export const WalletFailedReceipt = () => {
           <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
             <Link to="/">
               <img
-                className="  w-[30px] h-[15px] md:w-[40px] md:h-[20px] lg:w-[50px] lg:h-[25px]"
+                className=" w-[30px] h-[15px] md:w-[40px] md:h-[20px] lg:w-[50px] lg:h-[25px]"
                 src="/Images/login/arpLogo.png"
                 alt=""
               />
             </Link>
-            <Link to="/wallet-summary">
+            <Link to="/TransactionPage">
               {" "}
               <img
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
-                onClick={handleChange}
               />
             </Link>
           </div>
@@ -108,7 +155,7 @@ export const WalletFailedReceipt = () => {
               />
             </div>
             <h3 className="font-extrabold text-[12px] mt-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
-              Purchase Failed on
+            Purchase Failed  on
             </h3>
             <span className="text-[11px] text-[#0008] font-extrabold flex justify-center items-center">
               {date.toLocaleDateString(undefined, {
@@ -121,17 +168,13 @@ export const WalletFailedReceipt = () => {
                 hour12: true,
               })}
             </span>
-            <div className="border rounded-[8px] border-red-500 bg-red-200 mx-4 h-[45px] my-5 flex justify-center items-center px-[4%] md:h-[65px] lg:h-[75px]">
-            
-            <p className="text-[9px] text-red-500 px-[20px] text-center my-2 md:text-[14px] lg:text-[14px]">
-            Purchase Failed due to an unexpected error that occured. Please try again.
-{" "}
+            <p className="text-[9px] text-[#0008] px-[20px] text-center my-2 md:text-[14px] lg:text-[14px] bg-[#FFF1D6] text-[#F09E00] mx-[10px] border-[#FFC24C] border-[1px] rounded-[10px] py-[10px]">
+            Your transaction is under process please wait while the system are confirm.{" "}
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[16px]">
               {selectedOption} {" "}
               </span>
-              {/* from your {walletName + " Wallet"} to{" "} */}
+              from your {walletName + " Wallet"} to{" "}
             </p>
-            </div>
             <div className="flex flex-col gap-3">
               {/* ========================Recipient Info================== */}
               <div className="flex flex-col gap-[3px] w-[90%] mx-auto lg:gap-[5px]">
@@ -145,24 +188,27 @@ export const WalletFailedReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Network</p>
-                  <span>MTN</span>
+                  <span>{transaction.network}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Product</p>
-                  <span>MTN VTU</span>
+                  <span>{transaction.product}</span>
+                </div>
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                  <p className="text-[#0008]">Plan</p>
+                  <span></span>
+                </div>
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                  <p className="text-[#0008]">Recipient Name</p>
+                  <span>{transaction.recipientname}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Phone Number</p>
-                  <span>7741235545</span>
-                </div>
-
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Recipient Name</p>
-                  <span>Pranay</span>
+                  <span>{transaction.phonenumber}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Amount</p>
-                  <span>₦10,000.00</span>
+                  <span>{transaction.amount}</span>
                 </div>            
               </div>
 
@@ -178,11 +224,11 @@ export const WalletFailedReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Customer Name</p>
-                  <span className="whitespace-nowrap">Aremxyplug</span>
+                  <span>Aremxyplug</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Wallet Type</p>
-                  <span>Nigerian NGN Wallet</span>
+                  <span>{walletName + " Wallet"}</span>
                 </div>
               </div>
 
@@ -198,25 +244,20 @@ export const WalletFailedReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Product</p>
-                  <span>MTN VTU</span>
+                  <span>{transaction.product}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Description</p>
-                  <span>Airtime Top-up</span>
+                  <span>{transaction.description}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Order Number</p>
-                  <span>1256478999</span>
+                  <span>{transaction.orderNo}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Transaction ID</p>
                   <span>0331njokdhtf55</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Reference Number</p>
-                  <span>235488526097423118APDA</span>
-                </div>
-
               </div>
             </div>
             <div className="rounded-[8px] bg-[#E2F3FF] mx-4 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
@@ -245,6 +286,8 @@ export const WalletFailedReceipt = () => {
             </button>
           </div>
         </div>
+
+
         <div
           className={`${
             isDarkMode ? "mb-[1%]" : "mb-[5%]"
@@ -268,20 +311,4 @@ export const WalletFailedReceipt = () => {
     </DashBoardLayout>
   );
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

@@ -153,12 +153,12 @@ const DataTopUpPage = () => {
 
             <div className="mt-[10%] flex flex-col gap-[20px] md:mt-[2%] md:gap-[0px] 2xl:mt-[5%]">
               <Link to="/data-bundles">
-                <div className="Datatopup flex justify-between h-[50px] lg:h-[80px] md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[5px] gap-[8px] md:mt-[30px]">
+                <div className="Datatopup flex justify-between md:items-center h-[50px] md:h-[70px] lg:h-[90px] border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[5px] gap-[8px] md:mt-[30px]">
                   <div className="flex gap-[10px]">
                     <img
                       src={DataBundles}
                       alt=""
-                      className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:mt-[20px] lg:h-[20px] 2xl:mt-[25px]"
+                      className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:mt-[20px] lg:h-[20px] 2xl:mt-[25px] md:mb-[25px] lg:mb-[15px]"
                     />
 
                     <div className="">
@@ -175,7 +175,7 @@ const DataTopUpPage = () => {
                   <img
                     src={DataType}
                     alt=""
-                    className="w-[12px] h-[12px] mb-[12.5px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px] "
+                    className="w-[12px] h-[12px] mb-[12.5px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px]  md:mb-[20px] lg:mb-[10px]"
                   />
                 </div>
               </Link>
@@ -184,15 +184,15 @@ const DataTopUpPage = () => {
                 onClick={() => {
                   showDataRoll();
                 }}
-                className="Datatopup flex justify-between h-[50px] lg:h-[80px] md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[5px] gap-[8px] md:mt-[30px]"
+                className="Datatopup flex justify-between h-[50px] md:h-[70px] lg:h-[90px] md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[5px] gap-[8px] md:mt-[30px]"
               >
                 <div className="flex gap-[10px]">
                   <img
                     src={DataRoll}
                     alt=""
-                    className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px] 2xl:mt-[25px]"
+                    className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px] 2xl:mt-[25px] md:mb-[25px]"
                   />
-
+                  
                   <div className="">
                     <p className="text-[10px] md:text-[13px] font-[500] lg:text-[18px] 2xl:text-[22px]">
                       Data Roll
@@ -207,7 +207,7 @@ const DataTopUpPage = () => {
                 <img
                   src={DataType}
                   alt=""
-                  className="w-[12px] h-[12px] mb-[12.5px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px]"
+                  className="w-[12px] h-[12px] mb-[12.5px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px] md:mb-[20px] lg:mb-[10px]"
                 />
               </div>
 
@@ -215,13 +215,13 @@ const DataTopUpPage = () => {
                 onClick={() => {
                   showDataVoucher();
                 }}
-                className="Datatopup flex justify-between h-[50px] lg:h-[80px] md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[5px] gap-[8px] md:mt-[30px]"
+                className="Datatopup flex justify-between h-[50px] md:h-[70px] lg:h-[90px] md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[5px] gap-[8px] md:mt-[30px]"
               >
                 <div className="flex gap-[10px]">
                   <img
                     src={DataVoucher}
                     alt=""
-                    className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px] 2xl:mt-[25px]"
+                    className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px] 2xl:mt-[25px] md:mb-[25px]"
                   />
 
                   <div className="">
@@ -238,7 +238,7 @@ const DataTopUpPage = () => {
                 <img
                   src={DataType}
                   alt=""
-                  className="w-[12px] h-[12px] mb-[12.5px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px]"
+                  className="w-[12px] h-[12px] mb-[12.5px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px] md:mb-[20px] lg:mb-[10px]"
                 />
               </div>
 
@@ -246,13 +246,13 @@ const DataTopUpPage = () => {
                 onClick={() => {
                   showDataSchedule();
                 }}
-                className="Datatopup flex justify-between h-[50px] lg:h-[80px] md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[5px] gap-[8px] md:mt-[30px]"
+                className="Datatopup flex justify-between h-[50px] md:h-[70px] lg:h-[90px] md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[5px] gap-[8px] md:mt-[30px]"
               >
                 <div className="flex gap-[10px]">
                   <img
                     src={DataSchedule}
                     alt=""
-                    className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px] 2xl:mt-[25px]"
+                    className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px] 2xl:mt-[25px] md:mb-[25px]"
                   />
 
                   <div className="">
@@ -269,7 +269,7 @@ const DataTopUpPage = () => {
                 <img
                   src={DataType}
                   alt=""
-                  className="w-[12px] h-[12px] mb-[12.5px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px]"
+                  className="w-[12px] h-[12px] mb-[12.5px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px] md:mb-[20px] lg:mb-[10px]"
                 />
               </div>
 
@@ -277,13 +277,13 @@ const DataTopUpPage = () => {
                 onClick={() => {
                   showBulkData();
                 }}
-                className="Datatopup flex justify-between h-[50px] lg:h-[80px] md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[5px] gap-[8px] md:mt-[30px]"
+                className="Datatopup flex justify-between h-[50px] md:h-[70px] lg:h-[90px] md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[5px] gap-[8px] md:mt-[30px]"
               >
                 <div className="flex gap-[10px]">
                   <img
                     src={BulkData}
                     alt=""
-                    className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px] 2xl:mt-[25px]"
+                    className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px] 2xl:mt-[25px] md:mb-[25px]"
                   />
 
                   <div className="">
@@ -300,7 +300,7 @@ const DataTopUpPage = () => {
                 <img
                   src={DataType}
                   alt=""
-                  className="w-[12px] h-[12px] mb-[12.5px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px]"
+                  className="w-[12px] h-[12px] mb-[12.5px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px] md:mb-[20px] lg:mb-[10px]"
                 />
               </div>
             </div>
