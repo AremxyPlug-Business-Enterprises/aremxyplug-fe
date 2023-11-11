@@ -119,6 +119,7 @@ import KEDCO from "./Components/Dashboard/DashboardComponents/ElectricitySubscri
 import PHED from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/PHED";
 import { PhedReceipt } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/phedReceipt";
 import ProfileSettingsMain from "./Components/My Profile & Account Settings/ProfileSettingsMain";
+import EditProfile from "./Components/My Profile & Account Settings/My Profile Page/EditProfile";
 
 export const Router = () => {
   return (
@@ -270,6 +271,7 @@ export const Router = () => {
         <Route path="/DataBundleSelectRecipient" element={<DataBundleSelectRecipient/>} />
         <Route path="/DataBundleAddRecipient" element={<DataBundleAddRecipient/>} />
         <Route path="/ProfileSettingMain"element={<ProfileSettingsMain/>} />  
+        <Route path="/EditProfile" element= {<EditProfile/>} />
       </Routes>
     </div>
   );
