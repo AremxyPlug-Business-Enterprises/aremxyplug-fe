@@ -246,8 +246,8 @@ const PHED = () => {
           isDarkMode
             ? "bg-[#000] text-[#fff] border-[#fff]"
             : "bg-[#ffffff] text-[#000] "
-        }  flex flex-col w-full `}>
-
+        }  flex flex-col w-full justify-between h-full `}>
+          <div>
         {/* top part after nav bar */}
         <div className="flex flex-row w-full pt-[10px]  h-[90px] md:h-[112.29px] lg:h-[196px] lg:px-[50px]  px-[16px] rounded-lg md:rounded-[11.5px] lg:rounded-[20px] justify-between  py-0 bg-gradient-to-r from-[#FFA733] via-[#58FF4A] to-[#98B0FF]">
           <div className="flex flex-col gap-2  ">
@@ -461,6 +461,7 @@ const PHED = () => {
             }
           >
             Proceed
+          </div>
           </div>
 
           <footer className="flex justify-center text-center gap-[20px] mt-[170px] pb-[2%] md:mt-[750px]  lg:mt-[850px]">

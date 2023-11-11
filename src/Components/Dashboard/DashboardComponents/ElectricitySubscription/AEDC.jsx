@@ -208,14 +208,17 @@ const AEDC = () => {
        
     };
     const handleIkedcAmount = (event) => {
-      const newValue = event.target.value;
+     
       // setIkedcamount(newValue);
-      if (newValue.startsWith('₦')) {
+      const newValue = event.target.value;
+      if (newValue.startsWith(`₦`)) {
         setIkedcamount(newValue);
       } else {
         setIkedcamount(`₦${newValue}`);
       }
-       
+     
+     
+     
     };
     const [successPopup, setSuccessPopup] = useState(false);
 
@@ -246,8 +249,8 @@ const AEDC = () => {
           isDarkMode
             ? "bg-[#000] text-[#fff] border-[#fff]"
             : "bg-[#ffffff] text-[#000] "
-        }  flex flex-col w-full `}>
-
+        }  flex flex-col w-full justify-between h-full `}>
+          <div>
         {/* top part after nav bar */}
         <div className="flex flex-row w-full pt-[10px]  h-[90px] md:h-[112.29px] lg:h-[196px] lg:px-[50px]  px-[16px] rounded-lg md:rounded-[11.5px] lg:rounded-[20px] justify-between  py-0 bg-gradient-to-r from-[#FFA733] via-[#58FF4A] to-[#98B0FF]">
           <div className="flex flex-col gap-2  ">
@@ -279,7 +282,7 @@ const AEDC = () => {
             </div>
                 
 
-        </div>
+        
         <div className="text-[10px]  lg:text-[16px]  font-[600] mt-[20px] text-[#7E7E7E] "> Select <span className="text-[#04177F] font-[700]">Prepaid</span> MeterType if you load token on your meter.</div>
         <div className="text-[10px]  lg:text-[16px]  font-[600] mt-[10px] text-[#7E7E7E] "> Select <span className="text-[#04177F] font-[700]">Postpaid</span> MeterType if you get a bill at the end of the month.</div>
 
@@ -462,8 +465,10 @@ const AEDC = () => {
           >
             Proceed
           </div>
+          </div>
+          </div>
 
-          <footer className="flex justify-center text-center pb-[2%] gap-[20px] mt-[170px]  md:mt-[750px]  lg:mt-[850px]">
+          <footer className="flex justify-center text-center pb-[10%] gap-[20px] mt-[170px]  md:mt-[750px]  lg:mt-[850px]">
             <p className="text-[8px] md:text-[12px] lg:text-[20px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
               You need help?
             </p>
