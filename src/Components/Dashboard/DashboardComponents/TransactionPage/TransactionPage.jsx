@@ -903,9 +903,9 @@ const TransactionPage = () => {
 
 <div key={index}>
                 
-                {/* <Link  to={`/${transaction.status === 'Successful' ? 'SuccessfullReceipt' : transaction.status === 'Failed' ? 'FailedReceipt' : 'PendingReceipt'}`}
+                <Link  to={`/${transaction.status === 'Successful' ? 'SuccessfullReceipt' : transaction.status === 'Failed' ? 'FailedReceipt' : 'PendingReceipt'}`}
   state={{ transaction }}
-                > */}
+                >
                   <div
                     key={index}
                     className="flex justify-between pb-[31.5px] py-[20px] border-b-[1px] border-b-[black]
@@ -985,7 +985,7 @@ const TransactionPage = () => {
                     </div>
                   </div>
                   
-                {/* </Link> */}
+                </Link>
              
                 </div>
                 
@@ -1043,9 +1043,9 @@ const TransactionPage = () => {
             {filteredTransactions.map((transaction, index) => (
               <div key={index}>
                 
-              {/* <Link  to={`/${transaction.status === 'Successful' ? 'SuccessfullReceipt' : transaction.status === 'Failed' ? 'FailedReceipt' : 'PendingReceipt'}`}
+              <Link  to={`/${transaction.status === 'Successful' ? 'SuccessfullReceipt' : transaction.status === 'Failed' ? 'FailedReceipt' : 'PendingReceipt'}`}
 state={{ transaction }}
-              > */}
+              >
               <div
                 className={`${
                   toggleSideBar
@@ -1117,7 +1117,7 @@ state={{ transaction }}
                   />
                 </div>
               </div>
-              {/* </Link> */}
+              </Link>
               
                 </div>
             ))}
