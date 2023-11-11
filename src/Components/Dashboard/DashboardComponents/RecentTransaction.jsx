@@ -97,13 +97,14 @@ export const RecentTransaction = () => {
           <div>Date & Time</div>
           <div>Status</div>
         </div>
-
+        
         <div className={`${styles.viewTransactions} `}>
           <img
             className={styles.noTransactions}
             src="./Images/Dashboardimages/noTransactionFound.png"
             alt=""
           />
+          <Link to="/TransactionPage">
           <div className={styles.viewAll}>
             <div className={styles.viewText}>View all transactions</div>
             <img
@@ -112,6 +113,7 @@ export const RecentTransaction = () => {
               alt=""
             />
           </div>
+          </Link>
           <div
             className={`${
               isDarkMode ? "" : "text-[#0003]"
