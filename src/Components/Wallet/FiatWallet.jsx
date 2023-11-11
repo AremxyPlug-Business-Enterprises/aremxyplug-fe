@@ -12,6 +12,9 @@ const FiatWallet = () => {
   const [currentId, setCurrentId] = useState(null);
   const [selection, setSelection] = useState('');
   const [addWalletModal, setAddWalletModal] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+
+  console.log(inputValue)
 
   const amt = 10000
 
@@ -94,14 +97,20 @@ const FiatWallet = () => {
             <div className='md:mt-9 mt-8 lg:mt-14 flex items-center w-full gap-[28px]'>
               <div className='w-[60%] lg:w-[65%] h-[22px] md:h-[25px] lg:h-[51px]'>
                 <div className="w-full relative">
-                  <input type="text" name="" placeholder='Search for Wallets, e.g; NGN or Nigeria' className='text-[7px] leading-[10.5px] p-[4px] md:text-[9.17px] md:leading-[11.97px] w-full h-full outline-none placeholder:text-[7px] placeHolder:leading-[10.5px] rounded-[4px] border block px-1 md:placeholder:text-[9.17px] lg:placeholder:text-base lg:placeholder:leading-[20px] lg:rounded-[12px] lg:text-base lg:leading-[20px] lg:p-3'/>
+                  <input 
+                    type="text" 
+                    value={inputValue}
+                    onChange={(event) => setInputValue(event.target.value)}
+                    placeholder='Search for Wallets, e.g; NGN or Nigeria' 
+                    className='text-[7px] leading-[10.5px] p-[4px] md:text-[9.17px] md:leading-[11.97px] w-full h-full outline-none placeholder:text-[7px] placeHolder:leading-[10.5px] rounded-[4px] border block px-1 md:placeholder:text-[9.17px] lg:placeholder:text-base lg:placeholder:leading-[20px] lg:rounded-[12px] lg:text-base lg:leading-[20px] lg:p-3'
+                  />
                   <div className='absolute right-[4px] bottom-[3px] lg:right-[7px] lg:bottom-[10px] w-[12px] h-[12px] md:w-[11.46px] md:h-[11.46px] md:bottom-1 lg:w-[20px] lg:h-[20px]'>
                     <img src="./Images/wallet/search-status.svg" alt="searchIcon" className='w-full h-full'/>  
                   </div>
                 </div>
               </div>
-              <div className="w-[40%] lg:w-[35%] border flex h-[20px] md:h-[23px] lg:h-[48px] rounded-[4px] items-center justify-between px-1 lg:rounded-[12px] lg:px-3">
-                <button className='text-[7px] leading-[10.5px] block md:text-[9.17px] lg:rounded-[12px] lg:text-base lg:leading-[20px] h-full' onClick={refresh}>Refresh Wallet Balances</button>
+              <div className="w-[40%] lg:w-[35%] border flex h-[20px] md:h-[23px] lg:h-[48px] rounded-[4px] items-center justify-between px-1 lg:rounded-[12px] lg:px-3 cursor-pointer" onClick={refresh}>
+                <button className='text-[7px] leading-[10.5px] block md:text-[9.17px] lg:rounded-[12px] lg:text-base lg:leading-[20px] h-full'>Refresh Wallet Balances</button>
                   <div className='w-[12px] h-[12px] md:w-[11.46px] md:h-[11.46px] lg:w-[20px] lg:h-[20px]'>
                     <img src="./Images/wallet/refresh-square-2.svg" alt="searchIcon" className='w-full h-full object-cover'/>  
                   </div>
@@ -137,7 +146,7 @@ const FiatWallet = () => {
               </div>
               <div className="flex flex-col gap-2">
                 {countryList.map((country) => (
-                  <div className="grid grid-cols-3 text-[7px] leading-[10.5px] pb-[8px] md:text-[10px] md:leading-[15px] border-b last:border-b-0 last:pb-0 lg:text-[16px] lg:leading-[24px] cursor-pointer lg:pb-3 lg:pt-2" key={country.id}>
+                  <div className={`${country.name.toLowerCase().startsWith(inputValue.toLowerCase()) || country.code.toLowerCase().startsWith(inputValue.toLowerCase()) ? 'grid' : 'hidden'} grid-cols-3 text-[7px] leading-[10.5px] pb-[8px] md:text-[10px] md:leading-[15px] border-b last:border-b-0 last:pb-0 lg:text-[16px] lg:leading-[24px] cursor-pointer lg:pb-3 lg:pt-2`} key={country.id}>
                     <h2 className='text-slate-400'>{country.name}</h2>
                     <div className='flex gap-1 items-center justify-center lg:gap-2' onClick={() => handleSelection(country.name)}>
                       <div className='w-[10px] h-[10px] md:w-[15px] md:h-[15px] lg:w-[20px] lg:h-[20px] rounded-full overflow-hidden flex items-center justify-center'>
@@ -199,7 +208,13 @@ const FiatWallet = () => {
                 <div className='mt-[25.39px] md:mt-[35px] lg:mt-[60px] flex items-center w-full gap-[28px]'>
                   <div className='w-[60%] lg:w-[65%] h-[22px] md:h-[25px] lg:h-[51px]'>
                     <div className="w-full relative">
-                      <input type="text" name="" placeholder='Search for Wallets, e.g; NGN or Nigeria' className='text-[7px] leading-[10.5px] p-[4px] md:text-[9.17px] md:leading-[11.97px] w-full h-full outline-none placeholder:text-[7px] placeHolder:leading-[10.5px] rounded-[4px] border block px-1 md:placeholder:text-[9.17px] lg:placeholder:text-base lg:placeholder:leading-[20px] lg:rounded-[12px] lg:text-base lg:leading-[20px] lg:p-3'/>
+                      <input 
+                        type="text"
+                        value={inputValue}
+                        onChange={(event) => setInputValue(event.target.value)}
+                        placeholder='Search for Wallets, e.g; NGN or Nigeria' 
+                        className='text-[7px] leading-[10.5px] p-[4px] md:text-[9.17px] md:leading-[11.97px] w-full h-full outline-none placeholder:text-[7px] placeHolder:leading-[10.5px] rounded-[4px] border block px-1 md:placeholder:text-[9.17px] lg:placeholder:text-base lg:placeholder:leading-[20px] lg:rounded-[12px] lg:text-base lg:leading-[20px] lg:p-3'
+                      />
                       <div className='absolute right-[4px] bottom-[3px] lg:right-[7px] lg:bottom-[10px] w-[12px] h-[12px] md:w-[11.46px] md:h-[11.46px] md:bottom-1 lg:w-[20px] lg:h-[20px]'>
                           <img src="./Images/wallet/search-status.svg" alt="searchIcon" className='w-full h-full'/>  
                       </div>
@@ -240,7 +255,9 @@ const FiatWallet = () => {
                   </div>
                   <div className="flex flex-col gap-2">
                     {countryList.map((country) => (
-                      <div className="grid grid-cols-3 text-[7px] leading-[10.5px] pb-[8px] md:text-[10px] md:leading-[15px] border-b last:border-b-0 last:pb-0 lg:text-[16px] lg:leading-[24px] cursor-pointer lg:pb-3 lg:pt-2" key={country.id}>
+                      <div 
+                        className={`${country.name.toLowerCase().startsWith(inputValue.toLowerCase()) || country.code.toLowerCase().startsWith(inputValue.toLowerCase()) ? 'grid' : 'hidden'} grid-cols-3 text-[7px] leading-[10.5px] pb-[8px] md:text-[10px] md:leading-[15px] border-b last:border-b-0 last:pb-0 lg:text-[16px] lg:leading-[24px] cursor-pointer lg:pb-3 lg:pt-2`} 
+                        key={country.id}>
                         <h2 className='text-slate-400'>{country.name}</h2>
                         <div className='flex gap-1 items-center justify-center lg:gap-2' onClick={() => handleSelection(country.name)}>
                           <div className='w-[10px] h-[10px] md:w-[15px] md:h-[15px] lg:w-[20px] lg:h-[20px] rounded-full overflow-hidden flex items-center justify-center'>
