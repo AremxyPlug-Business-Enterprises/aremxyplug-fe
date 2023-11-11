@@ -119,6 +119,11 @@ import KEDCO from "./Components/Dashboard/DashboardComponents/ElectricitySubscri
 import PHED from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/PHED";
 import { PhedReceipt } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/phedReceipt";
 import ProfileSettingsMain from "./Components/My Profile & Account Settings/ProfileSettingsMain";
+import EditProfile from "./Components/My Profile & Account Settings/My Profile Page/EditProfile";
+import TransactionPage from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionPage";
+import { SuccessfullReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/SuccessfullReceipt";
+import { FailedReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/FailedReceipt";
+import { PendingReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/PendingReceipt";
 
 export const Router = () => {
   return (
@@ -270,6 +275,11 @@ export const Router = () => {
         <Route path="/DataBundleSelectRecipient" element={<DataBundleSelectRecipient/>} />
         <Route path="/DataBundleAddRecipient" element={<DataBundleAddRecipient/>} />
         <Route path="/ProfileSettingMain"element={<ProfileSettingsMain/>} />  
+        <Route path="/EditProfile" element= {<EditProfile/>} />
+        <Route path="/TransactionPage" element={<TransactionPage/>} />
+        <Route path="/SuccessfullReceipt" element={<SuccessfullReceipt/>} />
+        <Route path="/FailedReceipt" element={<FailedReceipt/>} />
+        <Route path="/PendingReceipt" element={<PendingReceipt/>} />
       </Routes>
     </div>
   );
