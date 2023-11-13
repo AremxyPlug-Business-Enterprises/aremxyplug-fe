@@ -411,7 +411,8 @@ function LoginForm() {
             </div>
             {/* Password ends here*/}
             <p
-              className="text-[#04177F] lg:text-[14px] md:text-[8.02px] text-[8.02px] font-semibold my-2 cursor-pointer tracking-wider"
+              className="text-[#04177F] lg:text-[14px] md:text-[8.02px] text-[8.02px]
+              font-semibold my-2 cursor-pointer tracking-wider"
               onClick={() => setShowModal(!showModal)}
             >
               Forgot password ?
