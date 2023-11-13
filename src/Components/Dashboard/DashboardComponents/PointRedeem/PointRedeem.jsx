@@ -132,8 +132,9 @@ const [text, setText] =useState(false);
           isDarkMode
             ? "bg-[#000] text-[#fff] border-[#fff]"
             : "bg-[#ffffff] text-[#000] "
-        }  flex flex-col w-full`}
+        }  flex flex-col justify-between w-full h-full`}
       >
+        <div>
         {/* top part after nav bar */}
         <div className="flex flex-row w-full pt-[20px]  h-[90px] md:h-[112.29px] lg:h-[196px] lg:px-[50px]  px-[16px] rounded-lg md:rounded-[11.5px] lg:rounded-[20px] justify-between  py-2 bg-gradient-to-r from-[#92ABFE] to-[#FFF741]">
           <div className="flex flex-col gap-2  ">
@@ -282,8 +283,9 @@ const [text, setText] =useState(false);
             Proceed
           </div>
         </div>
+        </div>
 
-        <div className="flex flex-row items-center justify-center md:mt-[750px] mt-[190px] mb-[20px] lg:mt-[980px] gap-2">
+        <div className="flex flex-row items-center justify-center md:mt-[750px] mt-[190px] pb-[10%] lg:mt-[980px] gap-2">
           <div className="text-[8px] lg:text-[12px] font-[600] text-black">
             You need help?
           </div>
@@ -448,7 +450,7 @@ const [text, setText] =useState(false);
               </span>{" "}
               Points to <br></br>
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">
-                &#8358;{outputValue}{" "}
+                {outputValue}{" "}
               </span>
               from your PTS balance to{" "}
             </p>
