@@ -8,13 +8,11 @@ import html2canvas from "html2canvas";
 import { useLocation } from "react-router-dom";
 
 
-
-
-
-export const FailedReceipt = () => {
+export const RefundedReceipt = () => {
 
   const {
     walletName,
+
   }
    = useContext(ContextProvider);
 
@@ -26,7 +24,6 @@ export const FailedReceipt = () => {
 
   const contentRef = useRef(null);
 
-
   const location = useLocation();
 
   if (!location.state || !location.state.transaction) {
@@ -34,6 +31,9 @@ export const FailedReceipt = () => {
   }
 
   const transaction = location.state.transaction;
+
+
+
 
   // ===============Copy to Clipboard Function============
 //   const handleCopyClick = () => {
@@ -117,7 +117,7 @@ export const FailedReceipt = () => {
               />
             </div>
             <h3 className="font-extrabold text-[12px] mt-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
-            Purchase Failed  on
+            Purchase Refunded  on
             </h3>
             <span className="text-[11px] text-[#0008] font-extrabold flex justify-center items-center">
               {date.toLocaleDateString(undefined, {
@@ -130,8 +130,8 @@ export const FailedReceipt = () => {
                 hour12: true,
               })}
             </span>
-            <p className="text-[9px] text-[#0008] px-[20px] text-center my-2 md:text-[14px] lg:text-[14px] bg-[#FDCECE] text-[#F95252] mx-[10px] border-[#F93232] border-[1px] rounded-[10px] py-[10px]">
-            Purchase Failed due to an unexpected error that occured. Please try again.{" "}
+            <p className="text-[9px] text-[#0008] px-[20px] text-center my-2 md:text-[14px] lg:text-[14px] bg-[#A6D9FF] text-[#04177F] mx-[10px] border-[#04177F] border-[1px] rounded-[10px] py-[10px]">
+            Transaction was unsuccessful and your wallet has been refunded. Please try again.{" "}
             </p>
             <div className="flex flex-col gap-3">
               {/* ========================Recipient Info================== */}

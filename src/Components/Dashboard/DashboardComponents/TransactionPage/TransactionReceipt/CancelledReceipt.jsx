@@ -7,14 +7,11 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { useLocation } from "react-router-dom";
 
-
-
-
-
-export const FailedReceipt = () => {
+export const CancelledReceipt = () => {
 
   const {
     walletName,
+
   }
    = useContext(ContextProvider);
 
@@ -34,6 +31,9 @@ export const FailedReceipt = () => {
   }
 
   const transaction = location.state.transaction;
+
+
+
 
   // ===============Copy to Clipboard Function============
 //   const handleCopyClick = () => {
@@ -130,8 +130,8 @@ export const FailedReceipt = () => {
                 hour12: true,
               })}
             </span>
-            <p className="text-[9px] text-[#0008] px-[20px] text-center my-2 md:text-[14px] lg:text-[14px] bg-[#FDCECE] text-[#F95252] mx-[10px] border-[#F93232] border-[1px] rounded-[10px] py-[10px]">
-            Purchase Failed due to an unexpected error that occured. Please try again.{" "}
+            <p className="text-[9px] text-[#0008] px-[20px] text-center my-2 md:text-[14px] lg:text-[14px] bg-[#EFC6BE] text-[#E62E05] mx-[10px] border-[#E62E05] border-[1px] rounded-[10px] py-[10px]">
+            Purchase Cancelled due to an unexpected error that occur. Please try again.{" "}
             </p>
             <div className="flex flex-col gap-3">
               {/* ========================Recipient Info================== */}
