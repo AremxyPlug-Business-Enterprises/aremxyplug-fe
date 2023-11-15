@@ -1,0 +1,79 @@
+.firstBox {
+background-image: url("./assets/firstbox.svg");
+height: 900px;
+width: 100%;
+background-size: contain;
+background-position: contain;
+background-repeat: no-repeat;
+
+}
+
+.secondBox {
+background-image: url("./assets/tigerbox.svg"); 
+height: 900px;
+width: 100%; 
+background-size: contain;
+background-position: contain;  
+background-repeat: no-repeat;
+margin-top: -230% ;
+}
+
+.thirdBox {
+background-image: url("./assets/tesla.box.svg");
+height: 900px;
+width: 100%; 
+background-size: contain;
+background-position: contain; 
+background-repeat: no-repeat;
+    }
+
+    .fourthBox {
+    background-image: url("./assets/centralbox.svg");
+    height: 900px;
+    width: 100%; 
+    background-size: contain;
+    background-position: contain;
+    background-repeat: no-repeat;
+        }
+
+    .fifthBox {
+    background-image: url("./assets/abcbox.svg");
+    height: 900px;
+    width: 100%; 
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+            }
+
+
+
+/* TABLET view */
+
+@media (min-width: 768px){
+    .secondbox{
+    background: url("./assets/tigerbox.svg"); 
+    background-repeat: no-repeat;
+    background-size:cover;
+    /* background-position:  ; */
+    width: 100%;
+    height: 560px;
+    margin-top: -20%;
+    }
+}
+
+
+/* DESKTOP VIEW */
+
+@media (min-width: 1024px){
+    .secondBox{
+    background: url("./assets/tigerbox.svg"); 
+    background-repeat: no-repeat;
+    background-size:contain;
+    background-position: center;
+    width: 100%;
+    height: 900px;
+    margin-top: -20%;
+    }
+}   
+
+
