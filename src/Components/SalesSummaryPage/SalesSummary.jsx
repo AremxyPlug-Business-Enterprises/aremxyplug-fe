@@ -3,14 +3,7 @@ import { DashBoardLayout } from '../Dashboard/Layout/DashBoardLayout';
 import receiptA from "./assets/cash receipt from online shopping on mobile phone (3)A.png";
 import arrowsales from "./assets/arrow-square-rightsales.png";
 import flagsales from "./assets/Country Flags (5)sales.png";
-// import filtersales from "./assets/document-filtersales.png";
-// import downsales from "./assets/arrow-downsales.png";
 import menusales from "./assets/menusales.png";
-// import squaresales from "./assets/arrow-square-rightsalesA.png";
-// import salesA from "./assets/arrow-downsalesA.png";
-// import salesB from "./assets/arrow-downsalesB.png";
-// import salesC from "./assets/arrow-downsalesC.png";
-// import salesD from "./assets/arrow-downsalesD.svg";
 import arrow44 from "./assets/arrow-down@4x.png";
 import arrow11 from "./assets/arrow-down@1x.png";
 import arrow00 from "./assets/arrow-down@0x.png";
@@ -575,7 +568,7 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
               alt="dropdown"
             />
           </div>
-          <div className="text-center">&#8358;96,001,55</div>
+          <div className="text-center">&#8358;0</div>
         </div>
 
         <div
@@ -593,7 +586,7 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
               alt="dropdown"
             />
           </div>
-          <div className="text-center">10,000</div>
+          <div className="text-center">0</div>
         </div>
 
         <div
@@ -611,7 +604,7 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
               alt="dropdown"
             />
           </div>
-          <div className="text-center">&#8358;96,001,55</div>
+          <div className="text-center">&#8358;0</div>
         </div>
       </div>
 
@@ -956,32 +949,6 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
           <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[12px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[7px] font-medium  leading-[9.10px]">AIRTEL CG</div>
           <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium  leading-[10.40px]">100GB</div>
           <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium  leading-[10.40px]">(₦10,000.00)</div>
-      
-  </div>
-  <div class={`${
-      toggleSideBar
-      ? "lg:gap-[325px]"
-      : "lg:gap-[400px]"}
-    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px]
-   lg:pl-[26px] lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.67px] bg-white
-    justify-between md:justify-between lg:justify-start  md:whitespace-nowrap items-center inline-flex`}>
-      
-          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[96.82px]  md:text-[12px] md:leading-3 w-[56.33px] text-black text-[7px] font-medium whitespace-nowrap leading-[9.10px]">AIRTEL GIFTING</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
-      
-  </div>
-  <div class={`${
-      toggleSideBar
-      ? "lg:gap-[325px]"
-      : "lg:gap-[400px]"}
-    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
-   lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.67px] bg-white justify-between
-   md:justify-between lg:justify-start  md:whitespace-nowrap items-center inline-flex`}>
-      
-          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[12px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium leading-[10.40px]">GLO CG</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
-          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
       
   </div>
   <div class={`${
