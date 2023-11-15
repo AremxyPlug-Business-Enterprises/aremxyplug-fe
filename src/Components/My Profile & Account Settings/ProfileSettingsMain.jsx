@@ -20,8 +20,31 @@ const settingsTab = [
     <DashBoardLayout>
         <ProfileHero/>
      <div>
-        <div className='flex w-[100%] lg:gap-[91px] border-b-[2px]
-         border-[#D9D9D999] border-opacity-[60%] py-[20px] justify-between'>
+        <div className='hidden md:flex md:flex-row  md:w-[100%] md:gap-[53.4px] lg:gap-[91px]  
+        border-b-[2px] border-[#D9D9D999] border-opacity-[60%] md:py-[10px] lg:py-[15px] 
+        justify-between'>
+            {(settingsTab.map(Tab =>{
+                return (
+                    <h2 ref = {getTab}
+                    // onClick={(ref) => {
+                    //     if(ref.current){
+                    //       ref.current.classList.add('activeTab')
+                    //      }else{
+                    //       ref.current.classList.remove('activeTab');
+                    //      }
+                    //     }
+                    // } 
+                    className='w-1/4 lg:p-[20px] font-[600] text-[#A3A3A3] md:text-[9.389px]
+                    md:leading-[14px]
+                    lg:text-[16px] lg:leading-[24px]  cursor-pointer' key={Tab.id}>
+                   {Tab.Setting}
+                    </h2>
+                )
+            }))}
+
+        </div>
+        {/* <div className='flex flex-col  w-[100%] md:gap-[53.4px] lg:gap-[91px]  
+        border-b-[2px] border-[#D9D9D999] border-opacity-[60%] md:py-[10px] lg:py-[15px] justify-between '>
             {(settingsTab.map(Tab =>{
                 return (
                     <h2 ref = {getTab}
@@ -33,14 +56,15 @@ const settingsTab = [
                          }
                         }
                     } 
-                    className='w-1/4 lg:p-[20px] font-[600] text-[#A3A3A3] 
-                    lg:text-[16px] lg:leading-[24px] cursor-pointer' key={Tab.id}>
+                    className='w-1/4 lg:p-[20px] font-[600] text-[#A3A3A3] md:text-[9.389px]
+                    md:leading-[14px]
+                    lg:text-[16px] lg:leading-[24px]  cursor-pointer' key={Tab.id}>
                    {Tab.Setting}
                     </h2>
                 )
             }))}
 
-        </div>
+        </div> */}
         <ProfileUpdate/>
      </div>
     </DashBoardLayout>

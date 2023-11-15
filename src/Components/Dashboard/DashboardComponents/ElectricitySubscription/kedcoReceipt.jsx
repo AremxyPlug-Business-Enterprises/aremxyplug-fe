@@ -117,7 +117,7 @@ export const KedcoReceipt = () => {
               </span>{" "}
              <br></br>
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
-                ({ikedcamount}){" "}
+                ( &#8358;{ikedcamount}){" "}
               </span>
               From your NGN Nigerian Wallet to{" "}
             </p>
@@ -166,7 +166,7 @@ export const KedcoReceipt = () => {
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Amount</p>
-                <span>{ikedcamount}</span>
+                <span> &#8358;{ikedcamount}</span>
               </div>
               
             </div>
