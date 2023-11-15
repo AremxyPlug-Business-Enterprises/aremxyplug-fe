@@ -27,9 +27,9 @@ const ElectricitySubscription = () => {
           isDarkMode
             ? "bg-[#000] text-[#fff] border-[#fff]"
             : "bg-[#ffffff] text-[#000] "
-        }  flex flex-col w-full `}
+        }  flex flex-col justify-between h-full w-full `}
         >
-
+          <div>
          {/* top part after nav bar */}
         <div className="flex flex-row  w-full pt-[10px]  h-[90px] md:h-[112.29px] lg:h-[196px] lg:px-[50px]  px-[16px] rounded-lg md:rounded-[11.5px] lg:rounded-[20px] justify-between  py-0 bg-gradient-to-r from-[#FFA733] via-[#58FF4A] to-[#98B0FF]">
           <div className="flex flex-col gap-2  ">
@@ -58,7 +58,7 @@ const ElectricitySubscription = () => {
                   />
                 </div>
 
-      <div className={` ${toggleSideBar ? "lg:gap-[97px] md:gap-[27px]" : "lg:gap-[150px] md:gap-[70px]"} grid grid-cols-2  md:grid-cols-5 pt-[20px] lg:mt-[70px]  gap-8   lg:leading-[19px] text-[#000000]`}>
+      <div className={`${toggleSideBar ?  "md:gap-5 lg:gap-10 " : "md:gap-10 lg:gap-20 xl:gap-[120px]"   } mt-[20px] flex flex-wrap w-full justify-between lg:mt-[70px] gap-6 `}> 
             <Link to= "/ikedc"  >
             <div className="flex flex-col justify-between items-center rounded-md border-[1px] pb-3 lg:pb-5 px-4 w-[144px]  h-[94px] md:w-[94px] md:h-[94px] lg:w-[160px] lg:h-[160px]">
                 <div><img className="w-[42.9px] lg:w-[82px] lg:h-[100px] h-[53px] pt-2" src={bill1} alt="" /></div>
@@ -121,7 +121,8 @@ const ElectricitySubscription = () => {
             </div>
             </Link>
         </div>
-        <div className="flex flex-row items-center justify-center mt-[200px] mb-[20px] md:mt-[38%] lg:mt-[75%] gap-2">
+        </div>
+        <div className="flex flex-row items-center justify-center mt-[200px] pb-[10%] md:mt-[38%] lg:mt-[75%] gap-2">
           <div className="text-[8px] lg:text-[12px] font-[600] text-black">
             You need help?
           </div>
