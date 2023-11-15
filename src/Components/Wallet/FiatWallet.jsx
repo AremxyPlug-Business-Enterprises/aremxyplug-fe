@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { BsEyeFill } from 'react-icons/bs'
 import { Navigate } from 'react-router-dom'
 import AddWallet from './AddWallet';
-import AddAccount from './AddAccount'
+import CurrencyConversionModal from '../CurrencyConversion/CurrencyConversionModal';
  
 const FiatWallet = () => {
   const [showModal, setShowModal] = useState(false);
@@ -13,8 +13,6 @@ const FiatWallet = () => {
   const [selection, setSelection] = useState('');
   const [addWalletModal, setAddWalletModal] = useState(false);
   const [inputValue, setInputValue] = useState('');
-
-  console.log(inputValue)
 
   const amt = 10000
 
@@ -301,7 +299,14 @@ const FiatWallet = () => {
               </div>
             </div>
             {addWalletModal && <AddWallet onClick={() => setAddWalletModal(false)}/>}
-            { showModal && <AddAccount onClick={closeModal}/> }
+            { showModal && 
+              <CurrencyConversionModal 
+                title='Fiat Wallet'
+                tag='This Currency is currently not available'
+                onClick={closeModal}
+                image='./Images/wallet/businessAccount.png'
+              /> 
+            }
           </> :
           <>
             <Navigate to={`/new-wallet`} replace={true}/>
