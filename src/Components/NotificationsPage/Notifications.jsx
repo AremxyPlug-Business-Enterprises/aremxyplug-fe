@@ -37,10 +37,13 @@ export default function NotificationsPage() {
       justify-between items-center lg:rounded-[20px]"
           >
             <div className="py-[13px] mt-2 lg:py-[40px]">
-              <h2 className="text-[9px] md:text-[13.75px] font-bold mb-3 lg:text-[24px] lg:mb-4">
+              <h2 className="text-[10px] mb-2 font-bold uppercase w-[110%] md:text-[12px] md:w-[70%] lg:w-[70%] lg:text-[20px] 
+              2xl:w-[80%] 2xl:text-[24px] lg:mb-4">
                 GET NOTIFIED AND STAY UP TO DATE WITH <br /> AREMXYPLUG.
               </h2>
-              <h2 className="text-[7px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3">
+              <h2 className="text-[7px] font-[400] leading-[9px] mb-3 md:text-[9px] md:leading-[12.2px]
+               w-[100%] md:w-[80%] lg:w-[75%] 2xl:w-[85%] 2xl:mt-[5px] lg:mt-[20px] lg:text-[16px]
+               lg:leading-[26px] 2xl:text-[20px] lg:mb-[20px]">
                 Be extraordinaire updated, never miss out on any of our official
                 updates, trends, news, announcements, and opportunities.
               </h2>
