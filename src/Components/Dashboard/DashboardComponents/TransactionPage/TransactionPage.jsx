@@ -22,7 +22,7 @@ const TransactionPage = () => {
 
   const [isActive, setIsActive] = useState(false);
 
-  const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState("NGN");
   const [selectedCategory, setSelectedCategory] = useState("");
 
   const [activeCategory, setActiveCategory] = useState("");
@@ -588,7 +588,11 @@ const TransactionPage = () => {
                   <div className="flex justify-start py-[10px] pl-[5px] gap-[5px]">
                     <p
                       onClick={() => handleCategoryFilter("All Categories")}
-                      className="text-[#7C7C7C] bg-[#F2FAFF] rounded-[2px] text-[10px] lg:text-[15px] px-[5px] font-semibold"
+                      className={`rounded-[2px] text-[10px] lg:text-[15px] px-[5px] font-semibold ${
+                        activeCategory === "All Categories"
+                          ? "text-[#fff] bg-[#04177F]"
+                          : "text-[#7C7C7C] bg-[#F2FAFF]"
+                      }`}
                     >
                       All Categories
                     </p>
@@ -1114,7 +1118,7 @@ const TransactionPage = () => {
                   />
                 </div>
                 <div className="text-center">
-                  {selected === "NGN" ? "₦0.00" : "0.00"}
+                {selected === "NGN" ? "₦0.00" : "0.00"}
                 </div>
               </div>
 
@@ -1152,7 +1156,7 @@ const TransactionPage = () => {
                   />
                 </div>
                 <div className="text-center">
-                  {selected === "NGN" ? "₦0.00" : "0.00"}
+                {selected === "NGN" ? "₦0.00" : "0.00"}
                 </div>
               </div>
             </div>
