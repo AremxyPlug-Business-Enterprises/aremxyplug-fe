@@ -14,16 +14,7 @@ import { useLocation } from "react-router-dom";
 export const PendingReceipt = () => {
 
   const {
-    // selectedNetworkProduct,
-    selectedOption,
-    // recipientPhoneNumber,
-    // recipientNames,
-    // selectedAmount,
     walletName,
-    // setSelectedNetworkProduct,
-    // setSelectedOption,
-    // setSelectedAmount,
-    // setRecipientNames,
   }
    = useContext(ContextProvider);
 
@@ -170,10 +161,6 @@ export const PendingReceipt = () => {
             </span>
             <p className="text-[9px] text-[#0008] px-[20px] text-center my-2 md:text-[14px] lg:text-[14px] bg-[#FFF1D6] text-[#F09E00] mx-[10px] border-[#FFC24C] border-[1px] rounded-[10px] py-[10px]">
             Your transaction is under process please wait while the system are confirm.{" "}
-              <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[16px]">
-              {selectedOption} {" "}
-              </span>
-              from your {walletName + " Wallet"} to{" "}
             </p>
             <div className="flex flex-col gap-3">
               {/* ========================Recipient Info================== */}

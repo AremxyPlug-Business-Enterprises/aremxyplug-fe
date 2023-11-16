@@ -210,7 +210,7 @@ const PHED = () => {
     const handleIkedcAmount = (event) => {
       const newValue = event.target.value;
       // setIkedcamount(newValue);
-      if (newValue.startsWith('₦')) {
+      if (newValue.startsWith('')) {
         setIkedcamount(newValue);
       } else {
         setIkedcamount(`₦${newValue}`);
@@ -279,7 +279,7 @@ const PHED = () => {
             </div>
                 
 
-        </div>
+        
         <div className="text-[10px]  lg:text-[16px]  font-[600] mt-[20px] text-[#7E7E7E] "> Select <span className="text-[#04177F] font-[700]">Prepaid</span> MeterType if you load token on your meter.</div>
         <div className="text-[10px]  lg:text-[16px]  font-[600] mt-[10px] text-[#7E7E7E] "> Select <span className="text-[#04177F] font-[700]">Postpaid</span> MeterType if you get a bill at the end of the month.</div>
 
@@ -357,8 +357,9 @@ const PHED = () => {
         </div>
         <div className="flex flex-col mt-[10px]">
             <div className="text-[#7E7E7E] text-[10px] lg:text-[16px]  font-[600]" >Amount</div>
-            <div>
-              <input type="number"  value={ikedcamount} onChange={handleIkedcAmount} className=" w-full lg:h-[51px] lg:text-[16px]  text-[#7E7E7E] pl-[9px] text-[10px] font-[500]  border-[1px] h-[30px]" />
+            <div className="flex items-center lg:text-[16px] text-[#7E7E7E] text-[10px] pl-2 border-[1px]">
+            &#8358;
+              <input type="number" name="ikedcamount"  value={ikedcamount} onChange={handleIkedcAmount} className=" w-full outline-none lg:h-[51px] lg:text-[16px]  text-[#7E7E7E] pl-[9px] text-[10px] font-[500]   h-[30px]" />
             </div>
         </div>
 
@@ -464,7 +465,7 @@ const PHED = () => {
           </div>
           </div>
 
-          <footer className="flex justify-center text-center gap-[20px] mt-[170px] pb-[2%] md:mt-[750px]  lg:mt-[850px]">
+          <footer className="flex justify-center text-center gap-[20px] mt-[200px] pb-[2%] md:mt-[750px]  lg:mt-[850px]">
             <p className="text-[8px] md:text-[12px] lg:text-[20px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
               You need help?
             </p>
@@ -479,7 +480,7 @@ const PHED = () => {
               </div>
             </Link>
           </footer>
-
+          </div>
           {/* Confirmation Transaction Popup */}
           {proceed && (
             <Modal>
@@ -501,7 +502,7 @@ const PHED = () => {
             <p className="text-[10px] text-[#000] pt-[20px] font-[500] text-center mb-2 md:text-[12px] lg:text-[14px]">
               You are about to Purchase{" "}
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">
-                {selectedNetworkProduct} Meter ({ikedcamount})
+                {selectedNetworkProduct} Meter (&#8358;{ikedcamount})
               </span>{" "}
               {/* Points to <br></br>
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">
@@ -542,7 +543,7 @@ const PHED = () => {
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Amount</p>
-                <span>{ikedcamount}</span>
+                <span>&#8358;{ikedcamount}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Payment Method</p>
@@ -688,7 +689,7 @@ const PHED = () => {
               </span>{" "}
              <br></br>
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
-                ({ikedcamount}){" "}
+                (&#8358;{ikedcamount}){" "}
               </span>
               From your NGN Nigerian Wallet to{" "}
             </p>
