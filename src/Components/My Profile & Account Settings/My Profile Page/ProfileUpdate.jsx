@@ -197,7 +197,7 @@ export default function ProfileUpdate() {
        </div>
      <Link to ='/EditProfile'
      className='lg:w-[163px] w-[100%] py-[15.534px] rounded-[2.241px]  md:w-[95.649px] md:py-[5.868px] 
-     lg:py-[10px] bg-[#04177F] md:rounded-[7.042px] lg:rounded-[12px]'>
+     lg:py-[10px] bg-[#04177F] md:rounded-[7.042px] lg:rounded-[12px] mt-[30px] md:mt-[0px]'>
       <p className='font-[600] text-white text-center 
       text-[12px] leading-[18px]
       md:text-[9.389px] md:leading-[14px] lg:text-[16px] lg:leading-[24px]'>
