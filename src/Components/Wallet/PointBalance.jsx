@@ -36,7 +36,7 @@ const PointBalance = () => {
       answer: "No, you don't need a bank account to carry out transactions on AremxyPlug. However, you can link your bank account to your AremxyPlug account to make transactions more convenient."
     },
   ]
-
+  
   return (
     <DashBoardLayout>
         <div className="flex flex-col justify-between h-full">
@@ -66,7 +66,7 @@ const PointBalance = () => {
                             <BsEyeFill className='text-[10px] lg:text-[17px] lg:leading-[25.5px] text-[#92abfe] cursor-pointer' onClick={()=>setRefPoints(!refPoints)}/>
                         </div>
                         <div className='text-center mt-2 lg:mt-7'>
-                            <Link className='inline-block py-[2px] px-1 rounded-[3px] bg-primary text-white text-[8px] leading-[12px] lg:text-[12px] lg:leading-[18px] lg:px-2 md:rounded-[6px]'>View Transaction</Link>
+                            <Link to="/TransactionPage" className='inline-block py-[2px] px-1 rounded-[3px] bg-primary text-white text-[8px] leading-[12px] lg:text-[12px] lg:leading-[18px] lg:px-2 md:rounded-[6px]'>View Transaction</Link>
                         </div>
                     </div>
                     <div className='rounded-[5px] md:rounded-[8px] md:p-2 px-[3px] py-2 bg-[#ffe7c9] lg:rounded-[12px] lg:py-4 flex flex-col justify-between'>

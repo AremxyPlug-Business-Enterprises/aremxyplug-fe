@@ -124,6 +124,8 @@ import TransactionPage from "./Components/Dashboard/DashboardComponents/Transact
 import { SuccessfullReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/SuccessfullReceipt";
 import { FailedReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/FailedReceipt";
 import { PendingReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/PendingReceipt";
+import { RefundedReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/RefundedReceipt";
+import { CancelledReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/CancelledReceipt";
 
 export const Router = () => {
   return (
@@ -280,6 +282,8 @@ export const Router = () => {
         <Route path="/SuccessfullReceipt" element={<SuccessfullReceipt/>} />
         <Route path="/FailedReceipt" element={<FailedReceipt/>} />
         <Route path="/PendingReceipt" element={<PendingReceipt/>} />
+        <Route path="/RefundedReceipt" element={<RefundedReceipt/>} />
+        <Route path="/CancelledReceipt" element={<CancelledReceipt/>} />
       </Routes>
     </div>
   );

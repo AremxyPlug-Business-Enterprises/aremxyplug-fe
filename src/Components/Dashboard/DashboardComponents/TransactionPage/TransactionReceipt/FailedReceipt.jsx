@@ -14,16 +14,7 @@ import { useLocation } from "react-router-dom";
 export const FailedReceipt = () => {
 
   const {
-    // selectedNetworkProduct,
-    selectedOption,
-    // recipientPhoneNumber,
-    // recipientNames,
-    // selectedAmount,
     walletName,
-    // setSelectedNetworkProduct,
-    // setSelectedOption,
-    // setSelectedAmount,
-    // setRecipientNames,
   }
    = useContext(ContextProvider);
 
@@ -35,32 +26,6 @@ export const FailedReceipt = () => {
 
   const contentRef = useRef(null);
 
-  // const handleChange = () => {
-  //   setSelectedNetworkProduct(false);
-  //   setSelectedOption(false);
-  //   setSelectedAmount('');
-  //   setRecipientNames('');
-  // }
-
-  // if (!props.location || !props.location.state || !props.location.state.transaction) {
-  //   // Handle the case where the transaction data is missing
-  //   return <div>Error: Transaction data not found</div>;
-  // }
-
-  // Access the transaction data safely
-  // const { transaction } = props.location.state;
-
-
-
-  // if (!transaction) {
-  //   // Handle the case where transaction data is missing or null
-  //   return (
-  //     <div>
-  //       <p>Error: Transaction data not found.</p>
-  //     </div>
-  //   );
-  // }
-
 
   const location = useLocation();
 
@@ -69,9 +34,6 @@ export const FailedReceipt = () => {
   }
 
   const transaction = location.state.transaction;
-
-
-
 
   // ===============Copy to Clipboard Function============
 //   const handleCopyClick = () => {
@@ -170,10 +132,6 @@ export const FailedReceipt = () => {
             </span>
             <p className="text-[9px] text-[#0008] px-[20px] text-center my-2 md:text-[14px] lg:text-[14px] bg-[#FDCECE] text-[#F95252] mx-[10px] border-[#F93232] border-[1px] rounded-[10px] py-[10px]">
             Purchase Failed due to an unexpected error that occured. Please try again.{" "}
-              <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[16px]">
-              {selectedOption} {" "}
-              </span>
-              from your {walletName + " Wallet"} to{" "}
             </p>
             <div className="flex flex-col gap-3">
               {/* ========================Recipient Info================== */}
