@@ -7,6 +7,7 @@ import messageQuestion from "../ProfileImages/message-question.svg";
 import { Link } from 'react-router-dom';
 
 
+
 export default function ProfileUpdate() {
     // const [profilePage, setProfilePage] = useState(true);
   return (
@@ -173,10 +174,12 @@ export default function ProfileUpdate() {
    lg:text-[16px] lg:leading-[20.8px] gap-[10px] cursor-default'>
     About AremxyPlug
   </h2>
+  <Link to = "/About-us">
   <img 
   className='cursor-pointer h-[12px] w-[12px]   
   md:h-[14.083px] md:w-[14.083px] lg:h-[24px] lg:w-[24px]'
   src={messageQuestion} alt="" />
+  </Link>
    </div>
    {/* Faq */}
    <div className='flex gap-[5px] md:gap-[8px]'>
@@ -186,10 +189,12 @@ export default function ProfileUpdate() {
    lg:text-[16px] lg:leading-[20.8px] gap-[10px] cursor-default'>
    FAQ’s
   </h2>
+  <Link to = '/faq'>
   <img 
   className='cursor-pointer h-[12px] w-[12px] md:h-[14.083px] md:w-[14.083px] 
   lg:h-[24px] lg:w-[24px]'
   src={messageQuestion} alt="" />
+  </Link>
    </div>
         </div>
         {/* end of 2nd part */}
