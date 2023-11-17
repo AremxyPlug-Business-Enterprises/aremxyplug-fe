@@ -92,9 +92,11 @@ export const TopBar = () => {
                 : "bg-[#ffffff] text-[#000] "
             }`}
           >
+            <Link to = "/ProfileSettingMain">
             <li className="z-[99px] ursor-pointer hover:underline pt-1 pb-1 pl-1 text-[5px] font-medium border-b-[0.22px] md:border-b-[0.335px] md:text-[8px] lg:pt-[6%] lg:pb-[6%] lg:pl-[6%] lg:border-b-[0.6px] lg:text-[14px] ">
               My Profile
             </li>
+            </Link>
             <li className="cursor-pointer hover:underline pt-1 pb-1 pl-1 text-[5px] font-medium border-b-[0.22px] md:border-b-[0.335px] md:text-[8px] lg:pt-[6%] lg:pb-[6%] lg:pl-[6%] lg:border-b-[0.6px] lg:text-[14px] ">
               Contact Support
             </li>
