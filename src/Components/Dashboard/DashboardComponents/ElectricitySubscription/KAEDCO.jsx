@@ -464,7 +464,7 @@ const KAEDCO = () => {
             Proceed
           </div>
           </div>
-          <footer className="flex justify-center text-center gap-[20px] mt-[200px] pb-[2%] md:mt-[750px]  lg:mt-[850px]">
+          <footer className="flex justify-center text-center gap-[20px] mt-[200px] pb-[10%] md:mt-[750px]  lg:mt-[850px]">
             <p className="text-[8px] md:text-[12px] lg:text-[20px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
               You need help?
             </p>
