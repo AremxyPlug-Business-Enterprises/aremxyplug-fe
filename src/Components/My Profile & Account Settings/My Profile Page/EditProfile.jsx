@@ -72,16 +72,16 @@ gap-[5.868px] lg:gap-[10px] cursor-default'>
    habib@aremxy.com
      </p>
      </div>
-      <button className='text-[12px] leading-[18px]
+      <Link to="/ChangeEmail" className='text-[12px] leading-[18px]
       md:text-[9.389px]  md:leading-[14px]
         lg:w-[163px] md:rounded-[12px] rounded-[4.241px]
        font-[600] lg:text-[16px] lg:leading-[24px]
        bg-[#04177F] py-[10px]
        text-white text-center'>
         Change
-        </button>
+        </Link>
         </div>
-    
+        
     {/* SELECT PHONE NUMBER CHANGE */}
     <div className='flex flex-col w-[100%] md:w-[50%] 
 gap-[5.868px] lg:gap-[10px] cursor-default'>
@@ -103,13 +103,13 @@ gap-[5.868px] lg:gap-[10px] cursor-default'>
      09087654321
      </p>
      </div>
-     <button className='text-[12px] leading-[18px] md:text-[9.389px]  md:leading-[14px]
+     <Link to="/ChangePhonenumber" className='text-[12px] leading-[18px] md:text-[9.389px]  md:leading-[14px]
      lg:w-[163px] md:rounded-[12px] rounded-[4.241px]
        font-[600] lg:text-[16px] lg:leading-[24px]
        bg-[#04177F] py-[10px] 
        text-white text-center'>
         Change
-        </button>
+        </Link>
     </div>
     </div>
        </div>

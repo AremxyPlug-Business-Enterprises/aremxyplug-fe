@@ -284,8 +284,8 @@ const ChangePhoneNumber = () => {
                   Your Phone Number has been updated successfully.{" "}
                 </p>
               </div>
-
-              <button
+              
+              <button 
                 onClick={(e) => {
                   e.preventDefault();
                   setVerify(false);
