@@ -6,7 +6,16 @@ import ArrowRight from  '../../EducationPins/imagesEducation/educationArrowRight
 import EditPic from '../ProfileImages/ProfilePic.svg';
 import changePic from '../ProfileImages/pickPinIcon.svg';
 import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { ContextProvider } from '../../Context';
+import { Modal } from '../../Screens/Modal/Modal';
+import cameraProfile from '../ProfileImages/cameraProfile.svg';
+import galleryProfile from '../ProfileImages/galleryProfile.svg';
+
+
 export default function EditProfile() {
+  const {openImage, setOpenImage} = useContext(ContextProvider);
+   
   return (
     <div>
        <DashBoardLayout>
@@ -29,10 +38,15 @@ export default function EditProfile() {
       <img src={EditPic} className='h-[48px] w-[46.753px] rounded-[48px]
       lg:h-[150px] lg:w-[150px] 
       md:h-[88.801px]  md:w-[88.801px]
+
       md:rounded-[88.201px] lg:rounded-[150px]' alt="profilePic"/>
-   <img  src={changePic}
+   <img  onClick={(e) => {
+  setOpenImage(true);
+  console.log(e);
+   }}
+   src={changePic}
    className='absolute bottom-0 right-0 h-[25px] w-[25px] 
-   md:h-[25.82px] md:w-[25.82px] lg:h-[44px] lg:w-[44px]'  
+   md:h-[25.82px] md:w-[25.82px] lg:h-[44px] lg:w-[44px] cursor-pointer'  
    alt="" />
    </div>
    {/* Profile text */}
@@ -134,6 +148,49 @@ gap-[5.868px] lg:gap-[10px] cursor-default'>
               </Link>
             </div>
             </div>
+            {openImage && (
+            <Modal>
+            <div
+            onClick={(e)=>{
+              if(e){
+                 console.log(e);
+                  }else if(!e){
+                   setOpenImage(false);
+                    }
+                    }} 
+            className='mx-[19px] md:mx-[0px] flex justify-center lg:w-[30%] md:w-[50%] w-[100%]  md:h-[404px]
+            h-[237.07px] bg-white rounded-[8px]
+            lg:rounded-[12px] shadow-[0px_0px_11.73611px_0px_rgba(0,0,0,0.25)]
+ lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)]'>
+              <div className='flex lg:gap-[69px] gap-[40.49px] items-center '>
+                {/* CAMERA SELECTION */}
+              <div className='flex flex-col md:gap-[11px] gap-[6.45px]  cursor-pointer'>
+                <img 
+                className='lg:p-[41.5px] p-[25.23px] bg-[#F4F4F4] border-[1px]
+                 border-[#9C9C9C]  
+                rounded-full md:shadow-2xl'
+                src={cameraProfile} alt="" />
+                <h2 className='text-center  font-[400] text-[8px] leading-[12px] 
+                lg:text-[16px] lg:leading-[24px] '>
+                  Camera
+                </h2>
+                </div>
+                {/* GALLERY SELECTION*/}
+                <div className='flex flex-col md:gap-[11px] gap-[6.45px]  cursor-pointer'>
+                <img className='lg:p-[41.5px]  p-[25.23px] bg-[#F4F4F4] border-[1px]
+                 border-[#9C9C9C]    
+                 rounded-full md:shadow-2xl'
+                src={galleryProfile} alt="" />
+                <h2 className='text-center font-[400] text-[8px] leading-[12px] 
+                lg:text-[16px] lg:leading-[24px]'>
+                 Gallery
+                </h2>
+                </div>
+                
+                  </div>
+                </div>
+                </Modal>
+        ) }
        </DashBoardLayout>
     </div>
   )
