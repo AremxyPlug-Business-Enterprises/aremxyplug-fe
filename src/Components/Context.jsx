@@ -787,6 +787,7 @@ const [necoQuantityActive, setNecoQuantityActive] = useState(false);
   const[ nabtebEducationPinEmail, setNabtebEducationPinEmail] = useState('');
   const [nabtebEducationAmount, setNabtebEducationAmount] = useState('₦');
   const [nabtebWalletBalance, setNabtebWalletBalance] = useState('');
+  const [openImage, setOpenImage] = useState(false);
 
   const hold = {
     firstDrop,
@@ -1223,6 +1224,9 @@ nabtebQuantityResult,
   nabtebWalletBalance, 
   setNabtebWalletBalance,
 
+// ========== PROFILE SETTINGS ========
+openImage,
+setOpenImage,
   };
 
   return (
