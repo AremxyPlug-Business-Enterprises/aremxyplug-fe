@@ -126,6 +126,8 @@ import { FailedReceipt } from "./Components/Dashboard/DashboardComponents/Transa
 import { PendingReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/PendingReceipt";
 import { RefundedReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/RefundedReceipt";
 import { CancelledReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/CancelledReceipt";
+import ChangeEmail from "./Components/My Profile & Account Settings/My Profile Page/ChangeEmail";
+import ChangePhoneNumber from "./Components/My Profile & Account Settings/My Profile Page/ChangePhoneNumber";
 
 export const Router = () => {
   return (
@@ -284,6 +286,8 @@ export const Router = () => {
         <Route path="/PendingReceipt" element={<PendingReceipt/>} />
         <Route path="/RefundedReceipt" element={<RefundedReceipt/>} />
         <Route path="/CancelledReceipt" element={<CancelledReceipt/>} />
+        <Route path="/ChangeEmail" element={<ChangeEmail/>} />
+        <Route path="/ChangePhoneNumber" element={<ChangePhoneNumber/>} />
       </Routes>
     </div>
   );

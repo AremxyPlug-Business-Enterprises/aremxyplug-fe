@@ -7,6 +7,7 @@ import messageQuestion from "../ProfileImages/message-question.svg";
 import { Link } from 'react-router-dom';
 
 
+
 export default function ProfileUpdate() {
     // const [profilePage, setProfilePage] = useState(true);
   return (
@@ -173,10 +174,12 @@ export default function ProfileUpdate() {
    lg:text-[16px] lg:leading-[20.8px] gap-[10px] cursor-default'>
     About AremxyPlug
   </h2>
+  <Link to = "/About-us">
   <img 
   className='cursor-pointer h-[12px] w-[12px]   
   md:h-[14.083px] md:w-[14.083px] lg:h-[24px] lg:w-[24px]'
   src={messageQuestion} alt="" />
+  </Link>
    </div>
    {/* Faq */}
    <div className='flex gap-[5px] md:gap-[8px]'>
@@ -186,10 +189,12 @@ export default function ProfileUpdate() {
    lg:text-[16px] lg:leading-[20.8px] gap-[10px] cursor-default'>
    FAQ’s
   </h2>
+  <Link to = '/faq'>
   <img 
   className='cursor-pointer h-[12px] w-[12px] md:h-[14.083px] md:w-[14.083px] 
   lg:h-[24px] lg:w-[24px]'
   src={messageQuestion} alt="" />
+  </Link>
    </div>
         </div>
         {/* end of 2nd part */}
@@ -197,7 +202,7 @@ export default function ProfileUpdate() {
        </div>
      <Link to ='/EditProfile'
      className='lg:w-[163px] w-[100%] py-[15.534px] rounded-[2.241px]  md:w-[95.649px] md:py-[5.868px] 
-     lg:py-[10px] bg-[#04177F] md:rounded-[7.042px] lg:rounded-[12px]'>
+     lg:py-[10px] bg-[#04177F] md:rounded-[7.042px] lg:rounded-[12px] mt-[30px] md:mt-[0px]'>
       <p className='font-[600] text-white text-center 
       text-[12px] leading-[18px]
       md:text-[9.389px] md:leading-[14px] lg:text-[16px] lg:leading-[24px]'>
