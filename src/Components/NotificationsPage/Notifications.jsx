@@ -75,15 +75,18 @@ export default function NotificationsPage() {
                   alt=""
                 />
                 {isOpen1 && (
-                <img className=" lg:w-[20px] lg:h-[20px] w-[9px] h-[9px] ml-[45px] mt-[-47px]
-                 md:mt-[-62px] md:ml-[67px]
-                 lg:mt-[-110px] lg:ml-[106px]" src={five} alt="" />
+                 <div className="Group13108 lg:w-5 lg:h-5 lg:mt-[-109px] lg:ml-[107px] md:mt-[-61px] md:ml-[67px]
+                  mt-[-46px] ml-[45px] flex flex-col ">
+                 <div className="Ellipse147 lg:w-5 lg:h-5 w-[9px] h-[9px] left-0 top-0  bg-red-400 rounded-full" />
+                 <div className=" lg:ml-[6px] lg:mt-[-17px] mt-[-8px] ml-[4px] md:ml-[3px] text-white lg:text-xs text-[5px]
+                  font-semibold font-['Poppins']">6</div>
+             </div>
                 )}
               </div>
               {isOpen1 && (
                 <div
-                  className="w-[53px] h-px bg-[#04177f] rounded-[5.87px] lg:w-[125px] lg:h-[2px]
-            lg:mt-[145px]  md:w-[77px] mt-[60px] md:mt-[85px] lg:rounded-[10px]"
+                  className="w-[55px] h-px bg-[#04177f] rounded-[5.87px] lg:w-[127px] lg:h-[2px]
+            lg:mt-[145px]  md:w-[79px] mt-[59.555px] md:mt-[84.255px] lg:rounded-[10px]"
                 />
               )}
             
@@ -113,8 +116,8 @@ export default function NotificationsPage() {
               </div>
               {isOpen2 && (
                 <div
-                  className="w-[53px]  h-px bg-[#04177f] rounded-[5.87px] lg:w-[125px] lg:h-[2px]
-            lg:mt-[145px]  md:w-[77px] mt-[60px] md:mt-[85px] lg:rounded-[10px]"
+                  className="w-[55px]  h-px bg-[#04177f] rounded-[5.87px] lg:w-[127px] lg:h-[2px]
+            lg:mt-[146px]  md:w-[79px] mt-[60px] md:mt-[85px] lg:rounded-[10px]"
                 />
               )}
 
@@ -143,8 +146,8 @@ export default function NotificationsPage() {
               </div>
               {isOpen3 && (
                 <div
-                  className="w-[53px] h-px bg-[#04177f] rounded-[5.87px] lg:w-[125px] lg:h-[2px]
-            lg:mt-[145px]  md:w-[77px]  mt-[60px] md:mt-[85px] lg:rounded-[10px]"
+                  className="w-[55px] h-px bg-[#04177f] rounded-[5.87px] lg:w-[127px] lg:h-[2px]
+            lg:mt-[146px]  md:w-[79px]  mt-[60px] md:mt-[85px] lg:rounded-[10px]"
                 />
               )}
 
@@ -166,15 +169,15 @@ export default function NotificationsPage() {
                   src={cards}
                   alt=""
                 />
-                {isOpen4 && (
-                <img className="lg:mt-[-110px] lg:ml-[106px] lg:w-[20px] lg:h-[20px] lg:top-[4px] w-[9px] h-[9px] ml-[45px]
-                md:mt-[-62px] md:ml-[67px] mt-[-47px] lg:left-[920px]" src={five} alt="" />
-                )}
+                {/* {isOpen4 && ( */}
+                {/* // <img className="lg:mt-[-110px] lg:ml-[106px] lg:w-[20px] lg:h-[20px] lg:top-[4px] w-[9px] h-[9px] ml-[45px] */}
+                {/* // md:mt-[-62px] md:ml-[67px] mt-[-47px] lg:left-[920px]" src={five} alt="" /> */}
+                {/* // )} */}
               </div>
               {isOpen4 && (
                 <div
-                  className="w-[53px]  h-px bg-[#04177f] rounded-[5.87px] lg:w-[125px] lg:h-[2px]
-            lg:mt-[145px] md:w-[77px] mt-[60px] md:mt-[85px] lg:rounded-[10px]"
+                  className="w-[55px]  h-px bg-[#04177f] rounded-[5.87px] lg:w-[127px] lg:h-[2px]
+            lg:mt-[56px] md:w-[79px] mt-[22px] md:mt-[32px] lg:rounded-[10px]"
                 />
               )}
 
@@ -196,15 +199,15 @@ export default function NotificationsPage() {
                   src={charts}
                   alt=""
                 />
-                {isOpen5 && (
-                <img className="lg:mt-[-110px] lg:ml-[106px] lg:w-[20px] lg:h-[20px] lg:top-[4px] w-[9px] h-[9px] ml-[45px] mt-[-47px]
-                md:mt-[-62px] md:ml-[67px] lg:left-[1193px]" src={five} alt="" />
-                )}
+                {/* {isOpen5 && ( */}
+                {/* // <img className="lg:mt-[-110px] lg:ml-[106px] lg:w-[20px] lg:h-[20px] lg:top-[4px] w-[9px] h-[9px] ml-[45px] mt-[-47px] */}
+                {/* // md:mt-[-62px] md:ml-[67px] lg:left-[1193px]" src={five} alt="" /> */}
+                {/* // )} */}
               </div>
               {isOpen5 && (
                 <div
-                  className="w-[53px] h-px bg-[#04177f] rounded-[5.87px] lg:w-[125px] lg:h-[2px]
-            lg:mt-[145px] md:w-[77px] mt-[60px] md:mt-[85px] lg:rounded-[10px]"
+                  className="w-[55px] h-px bg-[#04177f] rounded-[5.87px] lg:w-[127px] lg:h-[2px]
+            lg:mt-[56px] md:w-[79px] mt-[22px] md:mt-[32px] lg:rounded-[10px]"
                 />
               )}
 
@@ -862,47 +865,41 @@ export default function NotificationsPage() {
           )}
                     {/* fifth flow */}
                     {isOpen5 && (
-            <div className=" flex flex-col  mt-[20px] lg:mt-[100px] md:mt-[60px]
-             items-center  ">
-              <div className="firstBox w-full  ">
-              </div>
-
-              <div className="secondBox w-full ">
-              </div>
-
-              <div className="thirdBox w-full">
-              </div>
-
-              <div className="fourthBox w-full ">
-              </div>
-
-              <div className="fifthBox w-full ">
-              </div>
-
-              <div
-                className=" flex gap-[5.729px] mt-[45px] md:gap-[14.896px]
-        justify-center px-[8.594px] mb-[80px]"
-              >
-                <p
-                  className="font-[500] text-[10px] text-black 
-              leading-[10.4px] lg:text-[16px] lg:leading-[15.6px]  md:text-[6.875px]
-            ] md:leading-[12.938px] self-center"
-                >
-                  You need help?
-                </p>
-                <Link
-                  to="/contactUs"
-                  className="font-[500] text-white text-[10px]  py-[4.865px] 
-                px-[10.594px] leading-[10.4px] rounded-[5.156px] bg-[#04177F]
-                lg:text-[12px] lg:leading-[14.4px] 
-                 md:text-[4.583px]  md:py-[4.865px] 
-                md:px-[14.594px] md:leading-[5.985px]  lg:py-[10px]
-                lg:px-[16px] lg:rounded-[9px]"
-                >
-                  Contact Us
-                </Link>
-              </div>
-            </div>
+                                  <div className={`${styles.viewTransactions}  `}>
+                                  <img
+                                    className={styles.noTransactions}
+                                    src="./Images/Dashboardimages/noTransactionFound.png"
+                                    alt=""
+                                  />
+                                  {/* <div className={styles.viewAll}> */}
+                                  {/* <div className={styles.viewText}>View all transactions</div> */}
+                                  {/* <img */}
+                                  {/* // className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]" */}
+                                  {/* // src="./Images/Dashboardimages/empty-wallet-add.png" */}
+                                  {/* // alt="" */}
+                                  {/* // /> */}
+                                  {/* </div> */}
+                                  <div
+                                    className={`${
+                                      isDarkMode ? "" : "text-[#0003]"
+                                    } text-lg   text-opacity-30 mt-[-20px] lg:text-2xl  font-semibold `}
+                                  >
+                                    No Notification Found !
+                                  </div>
+                                  <div className="flex gap-[15px] mt-[150px] items-center">
+                                    <div className="text-xs font-medium ">You need help ?</div>
+                                    <Link to="/ContactUs">
+                                      <div
+                                        className={`${isDarkMode ? "border " : "bg-[#04177f]"} ${
+                                          styles.contactus
+                                        }`}
+                                      >
+                                        Contact Us
+                                      </div>
+                                    </Link>
+                                  </div>
+                                </div>
+                    
           )}
 
           </div>
