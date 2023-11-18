@@ -25,7 +25,8 @@ export default function EditProfile() {
        <div className='flex flex-col gap-[20px] md:gap-[30px] lg:gap-[40px]'>
         {/* Edit Profile */}
        <div className='flex lg:gap-[10px] gap-[5.87px]'>
-    <h2 className='text-[#7C7C7C] font-[500] md:text-[11.736px] md:leading-[18px]
+    <h2 className='text-[#7C7C7C] font-[500] text-[8px] leading-[10.4px] 
+    md:text-[11.736px] md:leading-[18px]
     lg:text-[20px] lg:leading-[30px]'>
       Edit Profile
       </h2>
