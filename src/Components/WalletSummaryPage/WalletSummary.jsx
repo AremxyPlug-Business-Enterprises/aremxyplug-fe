@@ -47,37 +47,43 @@ export default function WalletSummaryPage() {
 
   const [isOpen1, setIsOpen1] = useState("");
 
-  const [isOpen2, setIsOpen2] = useState("");
-  const [isOpen3, setIsOpen3] = useState(true);
+  
+  const [isOpen3, setIsOpen3] = useState("");
   const [isOpen4, setIsOpen4] = useState("");
   const [isOpen5, setIsOpen5] = useState("");
   const [isOpen6, setIsOpen6] = useState("");
   const [isOpen7, setIsOpen7] = useState("");
   const [isOpen8, setIsOpen8] = useState("");
+  const [isOpen9, setIsOpen9] = useState(true);
+
+  const [showStatus, setShowStatus] = useState(false);
 
 
 
 
 
+  
+
+  
 
 
 
-
-
-  const [setBlur] = useState(false);
+  
   const [selected, setSelected] = useState("");
   const { isDarkMode, toggleSideBar } = useContext(ContextProvider);
 
   const handleSelectedOption = (event) => {
     const clickedoption = event.target.value;
     setSelected(clickedoption);
-    setBlur(
-      clickedoption === "USD" ||
-        clickedoption === "GBP" ||
-        clickedoption === "AUD" ||
-        clickedoption === "KES" ||
-        clickedoption === "EUR"
-    );
+    
+  
+    // (
+      // clickedoption === "USD" ||
+        // clickedoption === "GBP" ||
+        // clickedoption === "AUD" ||
+        // clickedoption === "KES" ||
+        // clickedoption === "EUR"
+    // );
     return;
   };
 
@@ -103,8 +109,7 @@ export default function WalletSummaryPage() {
   
 
   const [selectedProduct, setSelectedProduct] = useState("Filter By Status");
-  const handleClick = (product) => {
-    setSelectedProduct(product);
+  const handleClick = (product) => { setSelectedProduct(product);
   };
 
 
@@ -176,10 +181,10 @@ export default function WalletSummaryPage() {
           onClick={() => {
             setIsOpen1((prev) => !prev);
             setCalender(false);
-            setIsOpen2(false);
+            setShowStatus(false);
             setIsOpen4(false); setIsOpen5(false);
             setIsOpen6(false); setIsOpen7(false);
-            setIsOpen8(false);
+            setIsOpen8(false); setIsOpen9(false);
             setIsOpen3(false); 
 
           }}
@@ -523,10 +528,10 @@ border-opacity-30 justify-start items-center gap-[52.80px] inline-flex"
               onClick={() => {
                 setCalender((prev) => !prev);
                 setIsOpen1(false);
-                setIsOpen2(false);
+                setShowStatus(false);
                 setIsOpen4(false); setIsOpen5(false);setIsOpen1(false);
                 setIsOpen6(false); setIsOpen7(false);setIsOpen8(false);
-                setIsOpen3(false); 
+                setIsOpen3(false); setIsOpen9(false);
 
               }}
               className={`cursor-pointer ${styles.filter} ${
@@ -553,17 +558,24 @@ border-opacity-30 justify-start items-center gap-[52.80px] inline-flex"
           <div className="flex cursor-pointer flex-col relative">
 
 
-          {/* filter by product */}
+          {/* filter by status */}
           <div
-            onClick={() => {
-              setIsOpen2((prev) => !prev);
-              setCalender(false);
-              setIsOpen1(false);
-              setIsOpen4(false); setIsOpen5(false);setIsOpen1(false);
-              setIsOpen6(false); setIsOpen7(false);setIsOpen8(false);
-              setIsOpen3(false); 
-
-            }}
+          onClick={() => {
+            setShowStatus(true);
+           setIsOpen9(true); 
+            
+setCalender(false);
+setIsOpen1(false);
+          }}
+            // onClick={() => {
+              // setIsOpen2((prev) => !prev);
+              // setCalender(false);
+              // setIsOpen1(false);
+              // setIsOpen4(false); setIsOpen5(false);
+              // setIsOpen6(false); setIsOpen7(false);setIsOpen8(false);
+              // setIsOpen3(false); 
+// 
+            // }}
             className="lg:self-stretch justify-start lg:mt-[7px] mt-[5px] items-center lg:gap-2.5 gap-[5.73px]
              md:gap-[5.73px] inline-flex"
           >
@@ -581,7 +593,7 @@ border-opacity-30 justify-start items-center gap-[52.80px] inline-flex"
             </div>
 
             <div className="lg:w-[19.85px] w-[11.37px] lg:h-[19.85px] h-[11.37px] md:w-[18px] md:h-[18px] lg:justify-center lg:items-center relative flex">
-              {isOpen2 ? (
+              {showStatus ? (
                 <img src={arrowdown22} alt="Arrow Down 22" />
               ) : (
                 <img src={arrow9} alt="Arrow 9" />
@@ -591,7 +603,7 @@ border-opacity-30 justify-start items-center gap-[52.80px] inline-flex"
           {/* end of filter by product */}
 
           {/* dropdown */}
-          {isOpen2 && (
+          {showStatus && (
           <div
             className="flex cursor-pointer absolute lg:top-[55px] top-[22.35px] md:top-[35px]
             flex-col"
@@ -603,9 +615,11 @@ border-opacity-30 justify-start items-center gap-[52.80px] inline-flex"
               <div
                 onClick={() => {
                   setIsOpen3((prev) => !prev);
+                  
+
                   setIsOpen4(false); setIsOpen5(false);setIsOpen1(false);
                    setIsOpen6(false); setIsOpen7(false);setIsOpen8(false);
-                   setIsOpen2(false); setCalender(false)
+                   setShowStatus(false); setCalender(false); setIsOpen9(false); 
                   handleClick("All Transactions");
                 }}
                 className="lg:w-[325px] text-neutral-500 lg:text-xl font-medium 
@@ -618,9 +632,11 @@ border-opacity-30 justify-start items-center gap-[52.80px] inline-flex"
             <div
               onClick={() => {
                 setIsOpen4((prev) => !prev);
+                
+
                 setIsOpen3(false); setIsOpen5(false);setIsOpen1(false);
                 setIsOpen6(false); setIsOpen7(false);setIsOpen8(false);
-                setIsOpen2(false); setCalender(false)
+                setShowStatus(false); setCalender(false); setIsOpen9(false); 
 
                 handleClick("Successful");
               }}
@@ -640,7 +656,7 @@ border-opacity-30 justify-start items-center gap-[52.80px] inline-flex"
                 setIsOpen5((prev) => !prev);
                 setIsOpen4(false); setIsOpen3(false);setIsOpen1(false);
                 setIsOpen6(false); setIsOpen7(false);setIsOpen8(false);
-                setIsOpen2(false); setCalender(false)
+                setShowStatus(false); setCalender(false); setIsOpen9(false);
 
                 handleClick("Failed");
               }}
@@ -659,7 +675,7 @@ border-opacity-30 justify-start items-center gap-[52.80px] inline-flex"
                 setIsOpen6((prev) => !prev);
                 setIsOpen4(false); setIsOpen5(false);setIsOpen1(false);
                 setIsOpen3(false); setIsOpen7(false);setIsOpen3(false);
-                setIsOpen2(false); setCalender(false)
+                setShowStatus(false); setCalender(false); setIsOpen8(false); setIsOpen9(false);
 
                 handleClick("Pending");
               }}
@@ -678,7 +694,7 @@ border-opacity-30 justify-start items-center gap-[52.80px] inline-flex"
                 setIsOpen7((prev) => !prev);
                 setIsOpen4(false); setIsOpen5(false);setIsOpen1(false);
                 setIsOpen6(false); setIsOpen3(false);setIsOpen8(false);
-                setIsOpen2(false); setCalender(false)
+                setShowStatus(false); setCalender(false); setIsOpen9(false);
 
                 handleClick("Refunded");
               }}
@@ -697,7 +713,7 @@ border-opacity-30 justify-start items-center gap-[52.80px] inline-flex"
                 setIsOpen8((prev) => !prev);
                 setIsOpen4(false); setIsOpen5(false);setIsOpen1(false);
                 setIsOpen6(false); setIsOpen7(false);setIsOpen3(false);
-                setIsOpen2(false); setCalender(false)
+                setShowStatus(false); setCalender(false); setIsOpen9(false);
 
                 handleClick("Canceled");
               }}
@@ -758,13 +774,15 @@ border-opacity-30 justify-start items-center gap-[52.80px] inline-flex"
                   alt="dropdown"
                 />
               </div>
-              <div className="text-center">&#8358;0</div>
+              <div className="text-center">
+                {selected === "NGN" ? "₦0.00" : "0.00"}
+                </div>
             </div>
 
             <div
               className={`${styles.inflowOutflow} ${
                 isDarkMode ? "border " : " bg-[#92abfe81]"
-              }  text-[7px]`}
+              }  text-[7px] md:text-[12px]`}
             >
               <div className="flex gap-1 md:items-center">
                 <p className={`${toggleSideBar ? "lg:text-[18px]" : ""}`}>
@@ -782,7 +800,7 @@ border-opacity-30 justify-start items-center gap-[52.80px] inline-flex"
             <div
               className={`${styles.inflowOutflow} ${
                 isDarkMode ? "border " : " bg-[#FDCECE]"
-              } text-[7px]`}
+              } text-[7px] md:text-[12px]`}
             >
               <div className="flex gap-1 md:items-center">
                 <p className={`${toggleSideBar ? "lg:text-[18px]" : ""}`}>
@@ -794,7 +812,9 @@ border-opacity-30 justify-start items-center gap-[52.80px] inline-flex"
                   alt="dropdown"
                 />
               </div>
-              <div className="text-center">&#8358;0</div>
+              <div className="text-center">
+                {selected === "NGN" ? "₦0.00" : "0.00"}
+                </div>
             </div>
           </div>
 
@@ -832,13 +852,13 @@ w-4 h-3 lg:h-5 md:w-[13px]  md:h-[13px]"
                 placeholder="Search for Transactions, e.g; Order Number"
               />
 
-              <div
+              <button
               
                 className="border md:gap-2 m-[-11px] lg:w-[120px] w-[65px] md:w-[95px] pr-10 gap-1 flex flex-row
                              lg:gap-2 lg:h-[45px] md:h-[35px] h-[25px] justify-between  items-center
                              shadow lg:m-[-14px] border-r-0 bg-white border-opacity-50"
               >
-                <button 
+                <div 
                   className="text-neutral-500 md:text-[13px] 
                              lg:text-[20px] text-[9px] mt-[4px] ml-3 flex gap-1 font-medium "
                 >
@@ -851,8 +871,9 @@ w-4 h-3 lg:h-5 md:w-[13px]  md:h-[13px]"
                     alt="dropdown"
                   />
                 </div>
-                </button>
+               
               </div>
+              </button>
             </div>
           </div>
         </div>
@@ -861,7 +882,7 @@ w-4 h-3 lg:h-5 md:w-[13px]  md:h-[13px]"
 
         {/* all transactions table */}
         {isOpen3 && (
-        <div className="mt-[30px] hidden md:flex ">
+        <div className="mt-[30px] lg:h-[100px] hidden md:flex ">
           <table
             className="mt-[0px] lg:h-[700px] md:h-[401.04px]  
      md:shadow-lg border-collapse "
@@ -1522,9 +1543,675 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
           </table>
         </div>
         )}
+
+
+{/* fixed table */}
+{isOpen9 && (
+        <div className="mt-[30px] lg:h-[100px] hidden md:flex ">
+          <table
+            className="mt-[0px] lg:h-[700px] md:h-[401.04px]  
+     md:shadow-lg border-collapse "
+          >
+            <tr
+              className="flex  w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]  
+              md:pt-[6.316px] md:pb-[5.746px] lg:pl-[28px] lg:pr-[27px] lg:gap-[64px] 
+              lg:pt-[11px] lg:pb-[10px]
+               bg-[#CED9FF]"
+            >
+              <th
+                className="text-left lg:text-[16px] lg:leading-[20.8px]  
+              w-1/5  md:text-[9.167px] md:leading-[11.917px] border-none"
+              >
+                Products
+              </th>
+              <th
+                className="text-left w-1/5 md:text-[9.167px] md:leading-[11.917px] 
+        lg:text-[16px] lg:leading-[20.8px] border-none"
+              >
+                Description
+              </th>
+              <th
+                className="text-left w-1/5 md:text-[9.167px] md:leading-[11.917px] 
+        lg:text-[16px] lg:leading-[20.8px] border-none"
+              >
+                Order No
+              </th>
+              <th
+                className="text-left w-1/5 md:text-[9.167px] md:leading-[11.917px] 
+        lg:text-[16px] lg:leading-[20.8px] border-none"
+              >
+                Amount
+              </th>
+              <th
+                className="text-left w-1/5 md:text-[9.167px] md:leading-[11.917px] 
+        lg:text-[16px] lg:leading-[20.8px] border-none"
+              >
+                Date & Time
+              </th>
+              <th
+                className="text-left w-1/5  md:text-[9.167px] md:leading-[11.917px]
+        lg:text-[16px] lg:leading-[20.8px] border-none"
+              >
+                Status
+              </th>
+            </tr>
+
+            <Link to="/wallet-successful-receipt">
+            <tr
+              className={`${toggleSideBar ? "lg:pr-[16px]" : "lg:pr-[27px]"}
+            flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
+            lg:pl-[28px] lg:pr-[16px] lg:gap-[64px] border-b-2`}
+            >
+              <td
+                className="w-1/5 flex-start   md:pt-[17.51px] md:pb-[16.36px]
+    lg:pt-[30.5px] lg:pb-[28.5px] p-[0px] border-none"
+              >
+                <p
+                  className="lg:text-[16px]  text-left font-[600] lg:leading-[20.8px] 
+    md:text-[9.167px] md:leading-[11.917px] "
+                >
+                  Virtual Account
+                </p>
+              </td>
+              <td
+                className="w-1/5 flex-start   md:pt-[17.51px] md:pb-[16.36px]
+    lg:pt-[30.5px] lg:pb-[28.5px] p-[0px] text-[#7C7C7C]  border-none"
+              >
+                <p
+                  className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px] 
+    md:text-[9.167px] md:leading-[11.917px] "
+                >
+                  NGN Wallet Top-up
+                </p>
+              </td>
+              <td
+                className="w-1/5 flex-start   md:pt-[17.51px] md:pb-[16.36px]
+    lg:pt-[30.5px] lg:pb-[28.5px] p-[0px] text-[#7C7C7C]  border-none"
+              >
+                <p
+                  className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px] 
+    md:text-[9.167px] md:leading-[11.917px]"
+                >
+                  0000000
+                </p>
+              </td>
+              <td
+                className="w-1/5 flex-start   md:pt-[17.51px] md:pb-[16.36px]
+    lg:pt-[30.5px] lg:pb-[28.5px] p-[0px] text-[#7C7C7C]  border-none"
+              >
+                <p
+                  className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px] 
+    md:text-[9.167px] md:leading-[11.917px]"
+                >
+                  ₦1,000.00
+                </p>
+              </td>
+
+              <td
+                className="w-1/5 lg:pt-[30.5px] lg:pb-[28.5px]    
+    md:pt-[17.51px] md:pb-[16.36px] p-[0px] text-[#7C7C7C]  border-none"
+              >
+                <p
+                  className=" text-left font-[600] leading-[20.8px] border-none
+      md:text-[9.167px] md:leading-[11.917px] lg:text-[16px] lg:leading-[20.8px]"
+                >
+                  <span className="md:block">May 21, 2023,</span>
+                  <span className="md:block">07:21:00pm</span>
+                </p>
+              </td>
+
+              <td
+                className="w-1/5 flex justify-start items-center
+        md:pt-[17.51px] md:pb-[16.36px] lg:pt-[30.5px] lg:pb-[28.5px] p-[0px] text-[#7C7C7C] gap-2  border-none"
+              >
+                <p
+                  className="lg:text-[16px] font-[600] lg:leading-[20.8px] justify-start items-center 
+                   flex md:w-[65.729px] md:h-[17.76px]
+        py-[4px] px-[12px] text-white bg-green-300 md:text-[9.167px] lg:w-[104px]
+         lg:h-[31px] md:leading-[11.917px] md:rounded-[3.438px]"
+                >
+                  Successful
+                </p>
+                <img
+                  className="w-[10px] h-[10px] md:w-[10px] text-end md:h-[10px] lg:w-[15px] lg:h-[15px]"
+                  src={arrows}
+                  alt="/"
+                />
+              </td>
+            </tr>
+            </Link>
+
+            <Link to="/wallet-refunded-receipt">
+            <tr
+              className={`${toggleSideBar ? "lg:pr-[16px]" : "lg:pr-[27px]"}
+        flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
+            lg:pl-[28px] lg:gap-[64px] border-b-2`}
+            >
+              <td
+                className="w-1/5 flex-start   md:pt-[17.51px] md:pb-[16.36px]
+    lg:pt-[30.5px] lg:pb-[28.5px] p-[0px] border-none"
+              >
+                <p
+                  className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px] 
+    md:text-[9.167px] md:leading-[11.917px]"
+                >
+                  Withdrawal
+                </p>
+              </td>
+              <td
+                className="w-1/5 flex-start   md:pt-[17.51px] md:pb-[16.36px]
+    lg:pt-[30.5px] lg:pb-[28.5px] p-[0px] text-[#7C7C7C]  border-none"
+              >
+                <p
+                  className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px] 
+    md:text-[9.167px] md:leading-[11.917px]"
+                >
+                  From USD Wallet to <br /> Bank
+                </p>
+              </td>
+              <td
+                className="w-1/5 flex-start   md:pt-[17.51px] md:pb-[16.36px]
+    lg:pt-[30.5px] lg:pb-[28.5px] p-[0px] text-[#7C7C7C]  border-none"
+              >
+                <p
+                  className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px] 
+    md:text-[9.167px] md:leading-[11.917px]"
+                >
+                  0000000
+                </p>
+              </td>
+              <td
+                className="w-1/5 flex-start   md:pt-[17.51px] md:pb-[16.36px]
+    lg:pt-[30.5px] lg:pb-[28.5px] p-[0px] text-[#7C7C7C]  border-none"
+              >
+                <p
+                  className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px] 
+    md:text-[9.167px] md:leading-[11.917px]"
+                >
+                  ₦25,000.00
+                </p>
+              </td>
+
+              <td
+                className="w-1/5 lg:pt-[30.5px] lg:pb-[28.5px]    
+    md:pt-[17.51px] md:pb-[16.36px] p-[0px] text-[#7C7C7C]  border-none"
+              >
+                <p
+                  className=" text-left font-[600] leading-[20.8px] border-none
+      md:text-[9.167px] md:leading-[11.917px] lg:text-[16px] lg:leading-[20.8px]"
+                >
+                  <span className="md:block">May 21, 2023,</span>
+                  <span className="md:block">07:21:00pm</span>
+                </p>
+              </td>
+
+              <td
+                className="w-1/5 flex justify-start items-center
+        md:pt-[17.51px] md:pb-[16.36px] lg:pt-[30.5px] lg:pb-[28.5px] p-[0px] text-[#7C7C7C] gap-2  border-none"
+              >
+                <p
+                  className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px] md:w-[65.729px] md:h-[17.76px]
+        py-[4px] px-[12px] text-white bg-[#A6D9FF] md:text-[9.167px] lg:w-[104px] lg:h-[31px] md:leading-[11.917px] md:rounded-[3.438px]"
+                >
+                  Refunded
+                </p>
+                <img
+                  className="w-[10px] h-[10px] md:w-[10px] md:h-[10px] lg:w-[15px] lg:h-[15px]"
+                  src={arrows2}
+                  alt="/"
+                />
+              </td>
+            </tr>
+          </Link>
+
+          <Link to="/wallet-successful-receipt">
+            <tr
+              className={`${toggleSideBar ? "lg:pr-[16px]" : "lg:pr-[27px]"}
+            flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
+            lg:pl-[28px] lg:gap-[64px] border-b-2`}
+            >
+              <td
+                className="w-1/5 flex-start   md:pt-[17.51px] md:pb-[16.36px]
+    lg:pt-[30.5px] lg:pb-[28.5px] p-[0px] border-none"
+              >
+                <p
+                  className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px] 
+    md:text-[9.167px] md:leading-[11.917px]"
+                >
+                  Card Payment
+                </p>
+              </td>
+              <td
+                className="w-1/5 flex-start   md:pt-[17.51px] md:pb-[16.36px]
+    lg:pt-[30.5px] lg:pb-[28.5px] p-[0px] text-[#7C7C7C]  border-none"
+              >
+                <p
+                  className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px] 
+    md:text-[9.167px] md:leading-[11.917px]"
+                >
+                  NGN Wallet Top-up
+                </p>
+              </td>
+              <td
+                className="w-1/5 flex-start   md:pt-[17.51px] md:pb-[16.36px]
+    lg:pt-[30.5px] lg:pb-[28.5px] p-[0px] text-[#7C7C7C]  border-none"
+              >
+                <p
+                  className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px] 
+    md:text-[9.167px] md:leading-[11.917px]"
+                >
+                  0000000
+                </p>
+              </td>
+              <td
+                className="w-1/5 flex-start   md:pt-[17.51px] md:pb-[16.36px]
+    lg:pt-[30.5px] lg:pb-[28.5px] p-[0px] text-[#7C7C7C]  border-none"
+              >
+                <p
+                  className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px] 
+    md:text-[9.167px] md:leading-[11.917px]"
+                >
+                  ₦25,000.00
+                </p>
+              </td>
+
+              <td
+                className="w-1/5 lg:pt-[30.5px] lg:pb-[28.5px]    
+    md:pt-[17.51px] md:pb-[16.36px] p-[0px] text-[#7C7C7C]  border-none"
+              >
+                <p
+                  className=" text-left font-[600] leading-[20.8px] border-none
+      md:text-[9.167px] md:leading-[11.917px] lg:text-[16px] lg:leading-[20.8px]"
+                >
+                  <span className="md:block">May 21, 2023,</span>
+                  <span className="md:block">07:21:00pm</span>
+                </p>
+              </td>
+
+              <td
+                className="w-1/5 flex justify-start items-center
+        md:pt-[17.51px] md:pb-[16.36px] lg:pt-[30.5px] lg:pb-[28.5px] p-[0px] text-[#7C7C7C] gap-2 border-none"
+              >
+                <p
+                  className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px] md:w-[65.729px] md:h-[17.76px]
+        py-[4px] px-[12px] text-white bg-green-300 md:text-[9.167px] md:leading-[11.917px] lg:w-[104px] lg:h-[31px] md:rounded-[3.438px]"
+                >
+                  Successful
+                </p>
+                <img
+                  className="w-[10px] h-[10px] md:w-[10px] md:h-[10px] lg:w-[15px] lg:h-[15px] "
+                  src={arrows3}
+                  alt="/"
+                />
+              </td>
+            </tr>
+          </Link>
+
+          <Link to="/wallet-cancelled-receipt">
+            <tr
+              className={`${toggleSideBar ? "lg:pr-[16px]" : "lg:pr-[27px]"}
+ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
+            lg:pl-[28px] lg:gap-[64px] border-b-2`}
+            >
+              <td
+                className="w-1/5 flex-start   md:pt-[17.51px] md:pb-[16.36px]
+    lg:pt-[30.5px] lg:pb-[28.5px] p-[0px] border-none"
+              >
+                <p
+                  className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px] 
+    md:text-[9.167px] md:leading-[11.917px] "
+                >
+                  Money Transfer
+                </p>
+              </td>
+              <td
+                className="w-1/5 flex-start   md:pt-[17.51px] md:pb-[16.36px]
+    lg:pt-[30.5px] lg:pb-[28.5px] p-[0px] text-[#7C7C7C]  border-none"
+              >
+                <p
+                  className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px] 
+    md:text-[9.167px] md:leading-[11.917px]"
+                >
+                  From NGN Wallet to <br /> AremxyPlug
+                </p>
+              </td>
+              <td
+                className="w-1/5 flex-start   md:pt-[17.51px] md:pb-[16.36px]
+    lg:pt-[30.5px] lg:pb-[28.5px] p-[0px] text-[#7C7C7C]  border-none"
+              >
+                <p
+                  className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px] 
+    md:text-[9.167px] md:leading-[11.917px]"
+                >
+                  0000000
+                </p>
+              </td>
+              <td
+                className="w-1/5 flex-start   md:pt-[17.51px] md:pb-[16.36px]
+    lg:pt-[30.5px] lg:pb-[28.5px] p-[0px] text-[#7C7C7C]  border-none"
+              >
+                <p
+                  className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px] 
+    md:text-[9.167px] md:leading-[11.917px]"
+                >
+                  ₦25,000.00
+                </p>
+              </td>
+
+              <td
+                className="w-1/5 lg:pt-[30.5px] lg:pb-[28.5px]    
+    md:pt-[17.51px] md:pb-[16.36px] p-[0px] text-[#7C7C7C]  border-none"
+              >
+                <p
+                  className=" text-left font-[600] leading-[20.8px] border-none
+      md:text-[9.167px] md:leading-[11.917px] lg:text-[16px] lg:leading-[20.8px]"
+                >
+                  <span className="md:block">May 21, 2023,</span>
+                  <span className="md:block">07:21:00pm</span>
+                </p>
+              </td>
+
+              <td
+                className="w-1/5 flex justify-start items-center
+        md:pt-[17.51px] md:pb-[16.36px] lg:pt-[30.5px] lg:pb-[28.5px] p-[0px] text-[#7C7C7C] gap-2  border-none"
+              >
+                <p
+                  className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px] md:w-[65.729px] md:h-[17.76px]
+        py-[4px] px-[12px]  text-white  bg-red-300 md:text-[9.167px] lg:w-[104px] lg:h-[31px] md:leading-[11.917px] md:rounded-[3.438px]"
+                >
+                  Cancelled
+                </p>
+                <img
+                  className="w-[10px] h-[10px] md:w-[10px] md:h-[10px] lg:w-[15px] lg:h-[15px] "
+                  src={arrows4}
+                  alt="/"
+                />
+              </td>
+            </tr>
+            </Link>
+
+            <Link to="/wallet-pending-receipt">
+            <tr
+              className={`${toggleSideBar ? "lg:pr-[2px]" : "lg:pr-[27px]"}
+flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
+            lg:pl-[28px] lg:gap-[64px] border-b-2`}
+            >
+              <td
+                className="w-1/5 flex-start border-none  md:pt-[17.51px] md:pb-[16.36px]
+    lg:pt-[30.5px] lg:pb-[28.5px] p-[0px]"
+              >
+                <p
+                  className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px] 
+    md:text-[9.167px] md:leading-[11.917px] "
+                >
+                  Money Transfer
+                </p>
+              </td>
+              <td
+                className="w-1/5 flex-start   md:pt-[17.51px] md:pb-[16.36px]
+    lg:pt-[30.5px] lg:pb-[28.5px] p-[0px] border-none"
+              >
+                <p
+                  className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px] 
+    md:text-[9.167px] md:leading-[11.917px] text-[#7C7C7C] "
+                >
+                  From NGN Wallet to <br /> Bank
+                </p>
+              </td>
+              <td
+                className="w-1/5 flex-start   md:pt-[17.51px] md:pb-[16.36px]
+    lg:pt-[30.5px] lg:pb-[28.5px] p-[0px] text-[#7C7C7C]  border-none"
+              >
+                <p
+                  className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px] 
+    md:text-[9.167px] md:leading-[11.917px]"
+                >
+                  0000000
+                </p>
+              </td>
+              <td
+                className="w-1/5 flex-start   md:pt-[17.51px] md:pb-[16.36px]
+    lg:pt-[30.5px] lg:pb-[28.5px] p-[0px] text-[#7C7C7C]  border-none"
+              >
+                <p
+                  className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px] 
+    md:text-[9.167px] md:leading-[11.917px]"
+                >
+                  ₦50,000.00
+                </p>
+              </td>
+
+              <td
+                className="w-1/5 lg:pt-[30.5px] lg:pb-[28.5px]    
+    md:pt-[17.51px] md:pb-[16.36px] p-[0px] text-[#7C7C7C]  border-none"
+              >
+                <p
+                  className=" text-left font-[600] leading-[20.8px] border-none
+      md:text-[9.167px] md:leading-[11.917px] lg:text-[16px] lg:leading-[20.8px]"
+                >
+                  <span className="md:block">May 21, 2023,</span>
+                  <span className="md:block">07:21:00pm</span>
+                </p>
+              </td>
+
+              <td
+                className="w-1/5 flex justify-start items-center
+        md:pt-[17.51px] md:pb-[16.36px] lg:pt-[30.5px] lg:pb-[28.5px] p-[0px] text-[#7C7C7C] gap-2 border-none"
+              >
+                <p
+                  className={`${toggleSideBar ? "lg:w-[123px]" : "lg:w-[104px]"}
+                  lg:text-[16px] text-center font-[600] lg:leading-[20.8px] md:w-[65.729px] md:h-[17.76px]
+        py-[4px] px-[12px] text-white bg-amber-200 md:text-[9.167px]  lg:h-[31px]
+         md:leading-[11.917px] md:rounded-[3.438px]`}
+                >
+                  Pending
+                </p>
+                <img
+                  className="w-[10px] h-[10px] md:w-[10px] md:h-[10px] lg:w-[15px] lg:h-[15px] "
+                  src={arrows5}
+                  alt="/"
+                />
+              </td>
+            </tr>
+            </Link>
+
+            <Link to="/wallet-failed-receipt">
+            <tr
+              className={`${toggleSideBar ? "lg:pr-[2px]" : "lg:pr-[27px]"}
+flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
+            lg:pl-[28px] lg:gap-[64px] border-b-2`}
+            >
+              <td
+                className="w-1/5 flex-start border-none  md:pt-[17.51px] md:pb-[16.36px]
+    lg:pt-[30.5px] lg:pb-[28.5px] p-[0px]"
+              >
+                <p
+                  className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px] 
+    md:text-[9.167px] md:leading-[11.917px] "
+                >
+                  Money Transfer
+                </p>
+              </td>
+              <td
+                className="w-1/5 flex-start   md:pt-[17.51px] md:pb-[16.36px]
+    lg:pt-[30.5px] lg:pb-[28.5px] p-[0px] text-[#7C7C7C]  border-none"
+              >
+                <p
+                  className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px] 
+    md:text-[9.167px] md:leading-[11.917px]"
+                >
+                  From NGN Wallet to <br /> AremxyPlug
+                </p>
+              </td>
+              <td
+                className="w-1/5 flex-start   md:pt-[17.51px] md:pb-[16.36px]
+    lg:pt-[30.5px] lg:pb-[28.5px] p-[0px] text-[#7C7C7C]  border-none"
+              >
+                <p
+                  className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px] 
+    md:text-[9.167px] md:leading-[11.917px]"
+                >
+                  0000000
+                </p>
+              </td>
+              <td
+                className="w-1/5 flex-start   md:pt-[17.51px] md:pb-[16.36px]
+    lg:pt-[30.5px] lg:pb-[28.5px] p-[0px] text-[#7C7C7C]  border-none"
+              >
+                <p
+                  className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px] 
+    md:text-[9.167px] md:leading-[11.917px]"
+                >
+                  $60,000.00
+                </p>
+              </td>
+
+              <td
+                className="w-1/5 lg:pt-[30.5px] lg:pb-[28.5px]    
+    md:pt-[17.51px] md:pb-[16.36px] p-[0px] text-[#7C7C7C]  border-none"
+              >
+                <p
+                  className=" text-left font-[600] leading-[20.8px] border-none
+      md:text-[9.167px] md:leading-[11.917px] lg:text-[16px] lg:leading-[20.8px]"
+                >
+                  <span className="md:block">May 21, 2023,</span>
+                  <span className="md:block">07:21:00pm</span>
+                </p>
+              </td>
+
+              <td
+                className="w-1/5 flex justify-start items-center
+        md:pt-[17.51px] md:pb-[16.36px] lg:pt-[30.5px] lg:pb-[28.5px] p-[0px] text-[#7C7C7C] gap-2 border-none"
+              >
+                <p
+                  className={`${toggleSideBar ? "lg:w-[124px]" : "lg:w-[104px]"}
+                  lg:text-[16px] text-center font-[600] lg:leading-[20.8px] md:w-[65.729px] md:h-[17.76px]
+        py-[4px] px-[12px] text-white bg-red-300 md:text-[9.167px]  lg:h-[31px]
+         md:leading-[11.917px] md:rounded-[3.438px]`}
+                >
+                  Failed
+                </p>
+                <img
+                  className="w-[10px] h-[10px] md:w-[10px] md:h-[10px] lg:w-[15px] lg:h-[15px] "
+                  src={arrows6}
+                  alt="/"
+                />
+              </td>
+            </tr>
+          </Link>
+
+          <Link to="/wallet-pending-receipt">
+            <tr
+              className={`${toggleSideBar ? "lg:pr-[2px]" : "lg:pr-[27px]"}
+flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
+            lg:pl-[28px] lg:gap-[64px] border-b-2`}
+            >
+              <td
+                className="w-1/5 flex-start border-none  md:pt-[17.51px] md:pb-[16.36px]
+    lg:pt-[30.5px] lg:pb-[28.5px] p-[0px]"
+              >
+                <p
+                  className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px] 
+    md:text-[9.167px] md:leading-[11.917px] "
+                >
+                  International Transfer
+                </p>
+              </td>
+              <td
+                className="w-1/5 flex-start   md:pt-[17.51px] md:pb-[16.36px]
+    lg:pt-[30.5px] lg:pb-[28.5px] p-[0px] text-[#7C7C7C]  border-none"
+              >
+                <p
+                  className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px] 
+    md:text-[9.167px] md:leading-[11.917px]"
+                >
+                  From USD Wallet to <br /> Bank
+                </p>
+              </td>
+              <td
+                className="w-1/5 flex-start   md:pt-[17.51px] md:pb-[16.36px]
+    lg:pt-[30.5px] lg:pb-[28.5px] p-[0px] text-[#7C7C7C]  border-none"
+              >
+                <p
+                  className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px] 
+    md:text-[9.167px] md:leading-[11.917px]"
+                >
+                  0000000
+                </p>
+              </td>
+              <td
+                className="w-1/5 flex-start   md:pt-[17.51px] md:pb-[16.36px]
+    lg:pt-[30.5px] lg:pb-[28.5px] p-[0px] text-[#7C7C7C]  border-none"
+              >
+                <p
+                  className="lg:text-[16px] text-left font-[600] lg:leading-[20.8px] 
+    md:text-[9.167px] md:leading-[11.917px]"
+                >
+                  ₦10,000.00
+                </p>
+              </td>
+
+              <td
+                className="w-1/5 lg:pt-[30.5px] lg:pb-[28.5px]    
+    md:pt-[17.51px] md:pb-[16.36px] p-[0px] text-[#7C7C7C]  border-none"
+              >
+                <p
+                  className=" text-left font-[600] leading-[20.8px] border-none
+      md:text-[9.167px] md:leading-[11.917px] lg:text-[16px] lg:leading-[20.8px]"
+                >
+                  <span className="md:block">May 21, 2023,</span>
+                  <span className="md:block">07:21:00pm</span>
+                </p>
+              </td>
+
+              <td
+                className={`${toggleSideBar ? "" : ""}
+                w-1/5 flex justify-start items-center
+        md:pt-[17.51px] md:pb-[16.36px] lg:pt-[30.5px] lg:pb-[28.5px] gap-2 p-[0px] text-[#7C7C7C]  border-none`}
+              >
+                <p
+                  className={`${toggleSideBar ? "lg:w-[124px]" : "lg:w-[104px]"}
+                  lg:text-[16px] font-[600] lg:leading-[20.8px]
+                   md:w-[65.729px] md:h-[17.76px] lg:h-[31px]
+        py-[4px] px-[12px] bg-amber-200 text-white md:text-[9.167px] md:leading-[11.917px]
+        text-center md:rounded-[3.438px] `}
+                >
+                  Pending
+                </p>
+                <img
+                  className="w-[10px] h-[10px] md:w-[10px] md:h-[10px] lg:w-[15px] lg:h-[15px] "
+                  src={arrows7}
+                  alt="/"
+                />
+              </td>
+            </tr>
+            </Link>
+
+            {/* CONTACT US */}
+            <div className="flex md:gap-[14.896px] py-[10.865px] items-center mt-10 justify-center px-[8.594px]">
+              <p
+                className="font-[500]  lg:text-[12px] lg:leading-[15.6px]  md:text-[8.875px]
+  text-[#707070] md:leading-[8.938px]"
+              >
+                You need help?
+              </p>
+              <Link
+                to="/contactUs"
+                className="font-[500] text-white lg:text-[13px] md:text-[9px] lg:leading-[10.4px] 
+    py-[2.865px] 
+ px-[8.594px] md:leading-[5.985px] md:rounded lg:py-[5px]
+ lg:px-[15px] lg:rounded-  bg-[#04177F]"
+              >
+                Contact Us
+              </Link>
+            </div>
+          </table>
+        </div>
+)}
+
 {/* Refunded table */}
 {isOpen7 && (
-<div className="mt-[30px] hidden md:flex ">
+<div className="mt-[30px] lg:h-[100px] md:h-[5px] hidden md:flex ">
           <table
             className="mt-[0px] lg:h-[300px] md:h-[101.04px]  
      md:shadow-lg border-collapse "
@@ -1930,7 +2617,7 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
 )}
         {/* successful table */}
         {isOpen4 && (
-        <div className="mt-[30px] hidden md:flex ">
+        <div className="mt-[30px] lg:h-[100px] md:h-[5px] hidden mb-[-0px] md:flex ">
           <table
             className="mt-[0px] lg:h-[400px] md:h-[301.04px]  
      md:shadow-lg border-collapse "
@@ -2342,7 +3029,7 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
         )}
         {/* pending table */}
         {isOpen6 && (
-        <div className="mt-[30px] hidden md:flex ">
+        <div className="mt-[30px] lg:h-[100px] md:h-[5px] hidden md:flex ">
           <table
             className="mt-[0px] lg:h-[400px] md:h-[201.04px]  
      md:shadow-lg border-collapse "
@@ -2760,7 +3447,7 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
         )}
         {/* cancelled */}
         {isOpen8 && (
-        <div className="mt-[30px] hidden md:flex ">
+        <div className="mt-[30px] lg:h-[100px] md:h-[5px] hidden md:flex ">
           <table
             className="mt-[0px] lg:h-[300px] md:h-[101.04px]  
      md:shadow-lg border-collapse "
@@ -3167,7 +3854,7 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
         )}
         {/* failed */}
         {isOpen5 && (
-        <div className="mt-[30px] hidden md:flex ">
+        <div className="mt-[30px] lg:h-[100px] md:h-[5px] hidden md:flex ">
           <table
             className="mt-[0px] lg:h-[300px] md:h-[201.04px]  
      md:shadow-lg border-collapse "
@@ -3593,7 +4280,7 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
         <div className=" h-[1110px]">
           <div
             className="md:hidden flex flex-col h-[1030px] mt-9  w-full p-[20px] border-x-[1.2px] border-b-[1.2px]
- border-gray-500 border-opacity-[25%] my-[50px] shadow-md"
+ border-gray-500 border-opacity-[25%] my-[50px] mb-[-300px] shadow-md"
           >  
           <Link to="/wallet-successful-receipt">
             <div
@@ -3965,13 +4652,395 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
           </div>
         </div>
         )}
+  
+
+      {/* fixed table */}
+
+      {isOpen9 && (
+               <div className=" h-[1110px]">
+          <div
+            className="md:hidden flex flex-col h-[1030px] mt-9 w-full p-[20px] border-x-[1.2px] border-b-[1.2px]
+ border-gray-500 border-opacity-[25%] my-[50px] mb-[-300px] shadow-md"
+          >  
+          <Link to="/wallet-successful-receipt">
+            <div
+              className="flex justify-between pb-[31.5px] border-b-[1px] border-b-[black]
+   border-opacity-[20%]"
+            >
+              <div className="flex flex-col gap-[7.648px]">
+                <h2 className="font-medium text-neutral-500 text-[9.167px] leading-[11.167px]">
+                  Order No : 0000000
+                </h2>
+                <h2 className="font-medium text-black text-[9.167px] leading-[11.167px]">
+                  Product : Virtual Account
+                </h2>
+                <p className="font-medium text-neutral-500 text-[9.167px] leading-[11.167px]">
+                  Description : NGN Wallet Top-up
+                </p>
+                <p className="font-medium text-neutral-500  text-[9.167px] leading-[11.167px]">
+                  Amount : ₦1,000.00
+                </p>
+              </div>
+              {/* rightSide */}
+              <div className="flex flex-col gap-[13.473px]">
+                <div className="flex flex-row justify-end gap-[5px] items-center">
+                  <p className="font-medium text-neutral-500 self-start text-[9.167px] leading-[11.167px] cursor-pointer">
+                    Status:{" "}
+                  </p>
+                  <div className="mt-[-8px]">
+                    <span
+                      className="font-medium text-white self-end text-[9.167px] leading-[11.167px] cursor-pointer
+                  py-[2.122px] px-[4.245px]  rounded-sm bg-green-300"
+                    >
+                      Successful
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex flex-row">
+                  <div>
+                    <p className="font-medium text-[10px] text-neutral-500 leading-[13px]">
+                      <span className="block">Date & Time:</span>
+                      <span className="block">May 21st, 2023,</span>
+                      <span className="block">07:21:00pm</span>
+                    </p>
+                  </div>
+                  <div className="w-[13.41px] mt-7 h-[12.06px]">
+                    <img
+                      className="w-[13.41px] h-[12.06px]"
+                      src={arrowA}
+                      alt=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Link>
+
+          <Link to="/wallet-Refunded-receipt">
+            <div
+              className="flex justify-between py-[31.5px] border-b-[1px] border-b-[black]
+   border-opacity-[20%]"
+            >
+              {/* left */}
+              <div className="flex flex-col gap-[7.648px]">
+                <h2 className="font-medium text-neutral-500 text-[9.167px] leading-[11.167px]">
+                  Order No : 0000000
+                </h2>
+                <h2 className="font-medium text-black text-[9.167px] leading-[11.167px]">
+                  Product : Withdrawal
+                </h2>
+                <p className="font-medium text-neutral-500 text-[9.167px] leading-[11.167px]">
+                  Description : From USD Wallet <br />
+                  to Bank
+                </p>
+                <h2 className="font-medium text-neutral-500 text-[9.167px] leading-[11.167px]">
+                  Amount : ₦25,000.00
+                </h2>
+              </div>
+              {/* rightSide */}
+              <div className="flex flex-col gap-[15.473px]">
+                <div className="flex flex-row gap-[5px]">
+                  <div>
+                    <p className="font-medium text-neutral-500 mt-0 self-end text-[9.167px] leading-[11.167px] cursor-pointer">
+                      Status:{" "}
+                    </p>
+                  </div>
+                  <div
+                    className="mt-0 font-medium text-white self-end  text-[9.167px] leading-[11.167px] cursor-pointer
+                   py-[2.122px] px-[4.245px] rounded-sm bg-[#A6D9FF]"
+                  >
+                    Refunded
+                  </div>
+                </div>
+
+                <div className="flex flex-row">
+                  <p className="font-medium text-neutral-500 text-[10px] leading-[13px]">
+                    <span className="block">Date & Time:</span>
+                    <span className="block">May 21st, 2023,</span>
+                    <span className="block">07:21:00pm</span>
+                  </p>
+
+                  <img className="w-3 mt-7 h-3" src={arrowB} alt="" />
+                </div>
+              </div>
+            </div>
+             </Link>
+
+             <Link to="/wallet-Successful-receipt">
+            <div
+              className=" flex justify-between py-[31.5px] border-b-[1px]
+               border-b-[black]   border-opacity-[20%]"
+            >
+              {/* left */}
+              <div className="flex flex-col gap-[7.648px]">
+                <h2 className="font-medium text-neutral-500 text-[9.167px] leading-[11.167px]">
+                  Order No : 0000000
+                </h2>
+                <h2 className="font-medium text-black text-[9.167px] leading-[11.167px]">
+                  Product : Card Payment
+                </h2>
+                <p className="font-medium text-neutral-500 text-[9.167px] leading-[11.167px]">
+                  Description : NGN Wallet Top-up
+                </p>
+                <h2 className="font-medium text-neutral-500 text-[9.167px] leading-[11.167px]">
+                  Amount : ₦25,000.00
+                </h2>
+              </div>
+              {/* rightSide */}
+              <div className="flex flex-col gap-[13.473px]">
+                <div className="flex flex-row justify-end items-center gap-[5px]">
+                  <div>
+                    <p className="font-medium  self-end text-[9.167px] text-neutral-500 leading-[11.167px] cursor-pointer">
+                      Status:
+                    </p>
+                  </div>
+
+                  <div
+                    className="font-medium text-white self-end text-[9.167px] leading-[11.167px] cursor-pointer
+                  py-[2.122px] px-[4.245px] rounded-sm bg-green-300"
+                  >
+                    Successful
+                  </div>
+                </div>
+                <div className="flex flex-row">
+                  <p className="font-medium text-[10px] text-neutral-500 leading-[13px]">
+                    <span className="block">Date & Time:</span>
+                    <span className="block">May 21st, 2023,</span>
+                    <span className="block">07:21:00pm</span>
+                  </p>
+                  <img className="w-3 mt-7 h-3" src={arrowC} alt="" />
+                </div>
+              </div>
+            </div>
+             </Link>
+
+             <Link to="/wallet-cancelled-receipt">
+            <div
+              className="flex justify-between py-[31.5px] border-b-[1px] border-b-[black]
+   border-opacity-[20%]"
+            >
+              {/* left */}
+              <div className="flex flex-col gap-[7.648px]">
+                <h2 className="font-medium text-neutral-500 text-[9.167px] leading-[11.167px]">
+                  Order No : 0000000
+                </h2>
+                <h2 className="font-medium text-black text-[9.167px] leading-[11.167px]">
+                  Product : Money Transfer
+                </h2>
+                <p className="font-medium text-neutral-500 text-[9.167px] leading-[11.167px]">
+                  Description : From NGN Wallet <br />
+                  to AremxyPlug
+                </p>
+                <h2 className="font-medium text-neutral-500 text-[9.167px] leading-[11.167px]">
+                  Amount : ₦25,000.00
+                </h2>
+              </div>
+              {/* rightSide */}
+              <div className="flex flex-col gap-[13.473px]">
+                <div className="flex flex-row justify-end items-center gap-[5px]">
+                  <div>
+                    <p className="font-medium text-neutral-500 self-end text-[9.167px] leading-[11.167px] cursor-pointer">
+                      Status:
+                    </p>
+                  </div>
+
+                  <div
+                    className="font-medium text-white self-end text-[9.167px] leading-[11.167px] cursor-pointer
+                   py-[2.122px] px-[4.245px] rounded-sm  bg-red-300"
+                  >
+                    Cancelled
+                  </div>
+                </div>
+                <div className="flex flex-row">
+                  <p className="font-[500] text-[10px] text-neutral-500 leading-[13px]">
+                    <span className="block">Date & Time:</span>
+                    <span className="block">May 21st, 2023,</span>
+                    <span className="block">07:21:00pm</span>
+                  </p>
+                  <img className="w-3 mt-7 h-3" src={arrowD} alt="" />
+                </div>
+              </div>
+            </div>
+            </Link>
+
+            <Link to="/wallet-pending-receipt">
+            <div
+              className="flex justify-between py-[31.5px] border-b-[1px] border-b-[black]
+   border-opacity-[20%]"
+            >
+              {/* left */}
+              <div className="flex flex-col gap-[7.648px]">
+                <h2 className="font-medium text-neutral-500 text-[9.167px] leading-[11.167px]">
+                  Order No : 0000000
+                </h2>
+                <h2 className="font-medium text-black text-[9.167px] leading-[11.167px]">
+                  Product : Money Transfer
+                </h2>
+                <p className="font-medium text-neutral-500 text-[9.167px] leading-[11.167px]">
+                  Description : From NGN Wallet
+                  <br />
+                  to Bank
+                </p>
+                <h2 className="font-medium text-neutral-500 text-[9.167px] leading-[11.167px]">
+                  Amount : ₦50,000.00
+                </h2>
+              </div>
+              {/* rightSide */}
+              <div className="flex flex-col gap-[13.473px]">
+                <div className="flex flex-row justify-end items-center gap-[12px]">
+                  <div className="mt-[5px">
+                    <p className="font-medium text-neutral-500 justify-start  flex  text-[9.167px] leading-[11.167px] cursor-pointer">
+                      Status:
+                    </p>{" "}
+                  </div>
+                  <div
+                    className="font-medium text-white self-end text-[9.167px] leading-[11.167px] cursor-pointer
+                  py-[2.122px] px-[4.245px] bg-amber-200 rounded-sm  "
+                  >
+                    Pending
+                  </div>
+                </div>
+
+                <div className="flex flex-row">
+                  <p className="font-medium text-[10px] text-neutral-500 leading-[13px]">
+                    <span className="block">Date & Time:</span>
+                    <span className="block">May 21st, 2023,</span>
+                    <span className="block">07:21:00pm</span>
+                  </p>
+                  <div>
+                    <img className="w-3 mt-7 h-3" src={arrowE} alt="" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            </Link>
+            
+            <Link to="/wallet-failed-receipt">
+            <div
+              className="flex justify-between py-[31.5px] border-b-[1px] border-b-[black]
+   border-opacity-[20%]"
+            >
+              {/* left */}
+              <div className="flex flex-col gap-[7.648px]">
+                <h2 className="font-medium text-neutral-500 text-[9.167px] leading-[11.167px]">
+                  Order No : 0000000
+                </h2>
+                <h2 className="font-medium text-black text-[9.167px] leading-[11.167px]">
+                  Product : Money Transfer
+                </h2>
+                <p className="font-medium text-neutral-500 text-[9.167px] leading-[11.167px]">
+                  Description : From USD Wallet
+                  <br />
+                  to AremxyPlug
+                </p>
+                <h2 className="font-medium text-neutral-500 text-[9.167px] leading-[11.167px]">
+                  Amount : $60,000.00
+                </h2>
+              </div>
+              {/* rightSide */}
+              <div className="flex flex-col gap-[13.473px]">
+                <div className="flex flex-row justify-end items-center gap-[20px]">
+                  <div>
+                    <p className="font-medium text-neutral-500 text-[9.167px] leading-[11.167px] cursor-pointer">
+                      Status:
+                    </p>{" "}
+                  </div>
+                  <div
+                    className="font-medium text-white self-end text-[9.167px]
+                    leading-[11.167px] cursor-pointer
+                  py-[2.122px] px-[4.245px] bg-red-300 rounded-sm "
+                  >
+                    Failed
+                  </div>
+                </div>
+                <div className="flex flex-row">
+                  <p className="font-medium text-[10px] text-neutral-500 leading-[13px]">
+                    <span className="block">Date & Time:</span>
+                    <span className="block">May 21st, 2023,</span>
+                    <span className="block">07:21:00pm</span>
+                  </p>
+                  <img className="w-3 mt-7 h-3" src={arrowF} alt="" />
+                </div>
+              </div>
+            </div>
+           </Link>
+
+           <Link to="/wallet-pending-receipt">
+            <div
+              className="flex justify-between py-[31.5px] border-b-[black]
+   border-opacity-[20%]"
+            >
+              {/* left */}
+              <div className="flex flex-col gap-[7.648px]">
+                <h2 className="font-medium text-neutral-500 text-[9.167px] leading-[11.167px]">
+                  Order No : 0000000
+                </h2>
+                <h2 className="font-medium text-black text-[9.167px] leading-[11.167px]">
+                  Product : International Transfer
+                </h2>
+                <p className="font-medium text-neutral-500 text-[9.167px] leading-[11.167px]">
+                  Description : From USD Wallet <br />
+                  to Bank
+                </p>
+                <h2 className="font-medium text-neutral-500 text-[9.167px] leading-[11.167px]">
+                  Amount : $60,000.00
+                </h2>
+              </div>
+              {/* rightSide */}
+              <div className="flex flex-col gap-[13.473px]">
+                <div className="flex flex-row justify-end items-center gap-[11px]">
+                  <div>
+                    <p className="font-medium text-neutral-500 self-end text-[9.167px] leading-[11.167px] cursor-pointer">
+                      Status:{" "}
+                    </p>{" "}
+                  </div>
+                  <div
+                    className="font-medium text-white self-end items-center text-[9.167px] 
+                  leading-[11.167px] cursor-pointer
+                  py-[2.122px] px-[4.245px] bg-amber-200 rounded-sm "
+                  >
+                    Pending
+                  </div>
+                </div>
+                <div className="flex flex-row">
+                  <p className="font-medium text-[10px] text-neutral-500 leading-[13px]">
+                    <span className="block">Date & Time:</span>
+                    <span className="block">May 21st, 2023,</span>
+                    <span className="block">07:21:00pm</span>
+                  </p>
+                  <img className="w-3 mt-7 h-3" src={arrowG} alt="" />
+                </div>
+              </div>
+            </div>
+             </Link>
+            <div className="flex justify-center text-center gap-[20px] mt-[15px] mb-[30px]">
+              <p className="text-[8px]  font-[500] leading-[9.1px] mt-[5px]">
+                You need help?
+              </p>
+
+              <Link to="/ContactUs">
+                <div
+                  className={`${
+                    isDarkMode ? "border " : "bg-[#04177f]"
+                  } text-[8px] p-1 text-white rounded-[8px]`}
+                >
+                  Contact Us
+                </div>
+              </Link>
+            </div>
+          </div>
+        </div>
+
+      )}
 
         {/* cancelled mobile table */}
         {isOpen8 && (
-        <div className=" h-[1110px]">
+        <div className=" h-[800px]">
           <div
-            className="md:hidden flex flex-col h-[660px] mt-9  w-full p-[20px] border-x-[1.2px] border-b-[1.2px]
- border-gray-500 border-opacity-[25%] my-[50px] shadow-md"
+            className="md:hidden flex flex-col h-[660px] mt-9 mb-0 border-b-[1.2px] w-full p-[20px]
+             
+ border-gray-500 border-opacity-[25%] shadow-md"
           >  
 
              <Link to="/wallet-cancelled-receipt">
@@ -4191,9 +5260,9 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
 
         {/* pending mobile table */}
         {isOpen6 && (
-        <div className=" h-[1110px]">
+        <div className=" h-[800px]">
           <div
-            className="md:hidden flex flex-col h-[660px] mt-9  w-full p-[20px] border-x-[1.2px] border-b-[1.2px]
+            className="md:hidden flex flex-col h-[660px] mt-9  w-full p-[20px]  border-b-[1.2px]
  border-gray-500 border-opacity-[25%] my-[50px] shadow-md"
           >  
 
@@ -4222,7 +5291,7 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
               {/* rightSide */}
               <div className="flex flex-col gap-[13.473px]">
                 <div className="flex flex-row justify-end items-center gap-[12px]">
-                  <div className="mt-[5px">
+                  <div className="mt-[5px]">
                     <p className="font-medium text-neutral-500 justify-start  flex  text-[9.167px] leading-[11.167px] cursor-pointer">
                       Status:
                     </p>{" "}
@@ -4424,10 +5493,10 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
 
         {/* failed mobile table */}
         {isOpen5 && (
-        <div className=" h-[1110px]">
+        <div className="h-[800px] ">
           <div
-            className="md:hidden flex flex-col h-[660px] mt-9  w-full p-[20px] border-x-[1.2px] border-b-[1.2px]
- border-gray-500 border-opacity-[25%] my-[50px] shadow-md"
+            className="md:hidden flex flex-col h-[660px] mt-9 w-full p-[20px] border-b-[1.2px]
+ border-gray-500 border-opacity-[25%]  shadow-md"
           >  
             
             <Link to="/wallet-failed-receipt">
@@ -4651,10 +5720,11 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
     
     {/* refunded mobile table */}
     {isOpen7 && (
-<div className=" h-[1110px]">
+<div className=" h-[800px]">
           <div
-            className="md:hidden flex flex-col h-[660px] mt-9  w-full p-[20px] border-x-[1.2px] border-b-[1.2px]
- border-gray-500 border-opacity-[25%] my-[50px] shadow-md"
+            className="md:hidden flex flex-col h-[660px] mt-9  mb-0 
+             w-full p-[20px] border-b-[1.2px]
+ border-gray-500 border-opacity-[25%]  shadow-md"
           >  
 
           <Link to="/wallet-Refunded-receipt">
@@ -4878,10 +5948,10 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
 
       {/* successful mobile table */}
       {isOpen4 && (
-      <div className=" h-[1110px]">
+      <div className=" h-[800px]">
           <div
-            className="md:hidden flex flex-col h-[600px] mt-9  w-full p-[20px] border-x-[1.2px] border-b-[1.2px]
- border-gray-500 border-opacity-[25%] my-[50px] shadow-md"
+            className="md:hidden flex flex-col h-[600px] mt-9  w-full p-[20px] border-b-[1.2px]
+ border-gray-500 border-opacity-[25%]  shadow-md"
           >  
           <Link to="/wallet-successful-receipt">
             <div

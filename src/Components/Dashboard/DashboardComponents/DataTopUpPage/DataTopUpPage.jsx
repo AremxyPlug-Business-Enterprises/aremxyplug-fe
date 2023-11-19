@@ -100,7 +100,7 @@ const DataTopUpPage = () => {
                 or hidden fee.
               </p>
             </div>
-
+            
             <div className="w-[91px] h-[66px] lg:w-[199px] lg:h-[199px] lg:mt-[40px]">
               <img
                 src={DataTopUp}
@@ -109,7 +109,6 @@ const DataTopUpPage = () => {
               />
             </div>
           </div>
-
           <div className="flex items-center my-[10%] gap-[8px] md:my-[5%] md:text-[18px] lg:text-[20px]">
             <p className="text-[#7c7c7c] text-[10px] leading-[130%] md:text-[18px] lg:text-[20px] 2xl:text-[28px]">
               Select Data Type
