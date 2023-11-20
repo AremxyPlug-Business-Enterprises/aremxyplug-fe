@@ -69,7 +69,7 @@ const handleBalance = (product) => {
 
 
 
-        const [ setBlur] = useState(false);
+        
         const [selected, setSelected] = useState("");
         const { isDarkMode, toggleSideBar } =
   useContext(ContextProvider);
@@ -79,13 +79,13 @@ const handleBalance = (product) => {
         const handleSelectedOption = (event) => {
           const clickedoption = event.target.value;
           setSelected(clickedoption);
-          setBlur(
-            clickedoption === "USD" ||
-              clickedoption === "GBP" ||
-              clickedoption === "AUD" ||
-              clickedoption === "KES" ||
-              clickedoption === "EUR"
-          );
+          // (
+            // clickedoption === "USD" ||
+              // clickedoption === "GBP" ||
+              // clickedoption === "AUD" ||
+              // clickedoption === "KES" ||
+              // clickedoption === "EUR"
+          // );
           return;
         };
       //  
@@ -590,7 +590,9 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
               alt="dropdown"
             />
           </div>
-          <div className="text-center">&#8358;0</div>
+          <div className="text-center">
+                {selected === "NGN" ? "₦0.00" : "0.00"}
+                </div>
         </div>
 
         <div
@@ -626,7 +628,9 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
               alt="dropdown"
             />
           </div>
-          <div className="text-center">&#8358;0</div>
+          <div className="text-center">
+                {selected === "NGN" ? "₦0.00" : "0.00"}
+                </div>
         </div>
       </div>
 
@@ -878,7 +882,8 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
 
 
   <div className="flex  justify-start items-center lg:w-full shadow relative bg-white  md:mt-[-658px]
-    lg:mt-[-967px] mt-[-527px] lg:h-[1590px] md:h-[1390px]  h-[1050px] border lg:mb-80 md:mb-60 mb-40 border-b-[1.2px] flex-col">
+    lg:mt-[-967px] mt-[-527px] lg:h-[1590px] md:h-[1390px]  h-[1050px]
+     border lg:mb-80 md:mb-60 mb-40 border-b-[1.2px] flex-col">
   <div className={`${  
     toggleSideBar
   ? "lg:gap-[325px]"
