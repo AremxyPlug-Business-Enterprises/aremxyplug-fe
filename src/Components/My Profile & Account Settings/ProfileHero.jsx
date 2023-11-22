@@ -25,7 +25,7 @@ export default function ProfileHero() {
      lg:text-[20px] lg:leading-[26px]"
            >
              <span className="md:block">
-             Manage, edit, and secure your profile and account 
+             Manage, edit, and secure your profile and account {' '}
  </span>
          <span className="md:block">
          settings without limitations, explore the world of  {' '}

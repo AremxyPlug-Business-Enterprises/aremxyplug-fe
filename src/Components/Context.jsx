@@ -787,7 +787,18 @@ const [necoQuantityActive, setNecoQuantityActive] = useState(false);
   const[ nabtebEducationPinEmail, setNabtebEducationPinEmail] = useState('');
   const [nabtebEducationAmount, setNabtebEducationAmount] = useState('₦');
   const [nabtebWalletBalance, setNabtebWalletBalance] = useState('');
+ 
+    // PROFILE & ACCOUNT SETTINGS =========
+  //============ Profile Page =========
   const [openImage, setOpenImage] = useState(false);
+  const [profilePage, setProfilePage] = useState(true);
+
+  // ======== Account Verification Page ============
+  const [verificationOpen, setVerificationOpen] = useState(false);
+  const [idVerificationOpen, setIdVerificationOpen] = useState(true);
+  const [bvnVerificationOpen, setBvnVerificationOpen] = useState(false);
+  const [accountUpgradeOpen, setAccountUpgradeOpen] = useState(false);
+
 
   const hold = {
     firstDrop,
@@ -1224,9 +1235,22 @@ nabtebQuantityResult,
   nabtebWalletBalance, 
   setNabtebWalletBalance,
 
-// ========== PROFILE SETTINGS ========
+// ========= PROFILE & ACCOUNT SETTINGS ===========
+// ========== Profile Page ========
 openImage,
 setOpenImage,
+profilePage,
+setProfilePage,
+
+// ========= Account verification Page =====
+verificationOpen,
+setVerificationOpen,
+idVerificationOpen,
+setIdVerificationOpen,
+bvnVerificationOpen,
+setBvnVerificationOpen,
+accountUpgradeOpen,
+setAccountUpgradeOpen
   };
 
   return (
