@@ -9,7 +9,8 @@ import AccountVerficationPage from './Account Verification/AccountVerficationPag
 
 export default function ProfileSettingsMain() {
 const {profilePage, setProfilePage} = useContext(ContextProvider);
-const {verificationOpen, setVerificationOpen} = useContext(ContextProvider)
+const {verificationOpen, setVerificationOpen} = useContext(ContextProvider);
+
 return (
     <DashBoardLayout>
         <ProfileHero/>
@@ -23,9 +24,11 @@ return (
             onClick={() => {
                setProfilePage(true);
                setVerificationOpen(false);
+              
             }}
             className='flex flex-col md:w-1/4 w-[50%]  lg:gap-[23px] cursor-pointer 
           md:border-none border-b-[1.7px] border-[#D9D9D999] border-opacity-[60%]'>
+
          <h2 className=' font-[600] text-[#A3A3A3] py-[8px] text-start pl-[10px]
          text-[9.389px] lg:p-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
                     My Profile

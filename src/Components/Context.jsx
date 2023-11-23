@@ -798,7 +798,7 @@ const [necoQuantityActive, setNecoQuantityActive] = useState(false);
   const [idVerificationOpen, setIdVerificationOpen] = useState(true);
   const [bvnVerificationOpen, setBvnVerificationOpen] = useState(false);
   const [accountUpgradeOpen, setAccountUpgradeOpen] = useState(false);
-
+  const [dropDownGender, setDropDownGender] = useState(false);
 
   const hold = {
     firstDrop,
@@ -1250,7 +1250,9 @@ setIdVerificationOpen,
 bvnVerificationOpen,
 setBvnVerificationOpen,
 accountUpgradeOpen,
-setAccountUpgradeOpen
+setAccountUpgradeOpen,
+dropDownGender,
+setDropDownGender,
   };
 
   return (
