@@ -1,71 +1,83 @@
-import React from 'react';
-// import { useContext } from 'react';
+import React, {useContext} from 'react';
 import '../../App.css';
-import { useRef } from 'react';
 import { DashBoardLayout } from '../Dashboard/Layout/DashBoardLayout';
 import ProfileHero from './ProfileHero';
 import ProfileUpdate from './My Profile Page/ProfileUpdate';
+import { ContextProvider } from '../Context';
+import AccountVerficationPage from './Account Verification/AccountVerficationPage';
+
 
 export default function ProfileSettingsMain() {
+const {profilePage, setProfilePage} = useContext(ContextProvider);
+const {verificationOpen, setVerificationOpen} = useContext(ContextProvider);
 
-const settingsTab = [
- { Setting : 'My Profile', Path : {},  id : 1},
-  { Setting :'Account Verification', Path : {}, id : 2},
-   {Setting : 'Business KYC / KYB', Path : {}, id : 3},
-  { Setting : 'Authentication Settings', Path : {}, id : 4 }
-];
- const getTab = useRef(null)
-  
-  return (
+return (
     <DashBoardLayout>
         <ProfileHero/>
      <div>
-        <div className='hidden md:flex md:flex-row  md:w-[100%] md:gap-[53.4px] lg:gap-[91px]  
-        border-b-[2px] border-[#D9D9D999] border-opacity-[60%] md:py-[10px] lg:py-[15px] 
+        <div className='flex flex-wrap md:flex-nowrap  mt-[23px] md:w-[100%]  
+        md:gap-[53.4px] lg:gap-[91px] 
+        md:border-b-[2px] md:border-[#D9D9D999] border-opacity-[60%]   
         justify-between'>
-            {(settingsTab.map(Tab =>{
-                return (
-                    <h2 ref = {getTab}
-                    // onClick={(ref) => {
-                    //     if(ref.current){
-                    //       ref.current.classList.add('activeTab')
-                    //      }else{
-                    //       ref.current.classList.remove('activeTab');
-                    //      }
-                    //     }
-                    // } 
-                    className='w-1/4 lg:p-[20px] font-[600] text-[#A3A3A3] md:text-[9.389px]
-                    md:leading-[14px]
-                    lg:text-[16px] lg:leading-[24px]  cursor-pointer' key={Tab.id}>
-                   {Tab.Setting}
+            {/* Profile Tab */}
+            <div 
+            onClick={() => {
+               setProfilePage(true);
+               setVerificationOpen(false);
+              
+            }}
+            className='flex flex-col md:w-1/4 w-[50%]  lg:gap-[23px] cursor-pointer 
+          md:border-none border-b-[1.7px] border-[#D9D9D999] border-opacity-[60%]'>
+
+         <h2 className=' font-[600] text-[#A3A3A3] py-[8px] text-start pl-[10px]
+         text-[9.389px] lg:p-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
+                    My Profile
                     </h2>
-                )
-            }))}
+                    {/* Profile Cursor */}
+                    {profilePage && (
+                    <div className='flex w-[100%] md:w-[60%]
+                     h-[2px] rounded-[10px]  bg-[#04177F]'></div>
+                    )}
+                    </div>
+                    {/* ACCOUNT VERIFICATION TAB */}
+                    <div 
+                    onClick={() => {
+                        setProfilePage(false);
+                        setVerificationOpen(true);
+                    }}
+                    className='flex flex-col md:w-1/4 w-[50%]  lg:gap-[23px] cursor-pointer 
+                    md:border-none border-b-[1.7px] border-[#D9D9D999] border-opacity-[60%]'>
+                    <h2  className=' font-[600] text-[#A3A3A3] text-center md:text-start
+                    text-[9.389px] lg:p-[10px] py-[8px]
+                  leading-[14px] lg:text-[16px] lg:leading-[24px]  cursor-pointer'>
+                    Account Verification
+                    </h2>
+                    {/* VERIFICATION CURSOR */}
+                    {verificationOpen && (
+                    <div className='flex w-[100%] md:w-[60%]  h-[2px] rounded-[10px]  bg-[#04177F]'></div>
+                    )}
+                    </div>
+                    <div className='md:w-1/4 w-[50%] md:pt-[0px] pt-[30px] 
+                    md:border-none border-b-[1.7px] border-[#D9D9D999] border-opacity-[60%]'>
+                    <h2  className='lg:p-[10px] font-[600] text-[#A3A3A3] 
+                     text-[9.389px] leading-[14px]   py-[8px] text-start pl-[10px]
+                    lg:text-[16px] lg:leading-[24px]  cursor-pointer'>
+                    Business KYC / KYB
+                    </h2>
+                    </div>
+                    <div className='md:w-1/4 w-[50%] md:pt-[0px] pt-[30px]
+                    md:border-none border-b-[1.7px] border-[#D9D9D999] border-opacity-[60%]'>
+                    <h2  className=' lg:p-[10px] font-[600] text-[#A3A3A3] 
+                    text-[9.389px] leading-[14px] md:text-start text-center py-[8px]
+                    lg:text-[16px] lg:leading-[24px]  cursor-pointer'>
+                    Authentication Settings
+                    </h2>
+                    </div>
 
         </div>
-        {/* <div className='flex flex-col  w-[100%] md:gap-[53.4px] lg:gap-[91px]  
-        border-b-[2px] border-[#D9D9D999] border-opacity-[60%] md:py-[10px] lg:py-[15px] justify-between '>
-            {(settingsTab.map(Tab =>{
-                return (
-                    <h2 ref = {getTab}
-                    onClick={(ref) => {
-                        if(ref.current){
-                          ref.current.classList.add('activeTab')
-                         }else{
-                          ref.current.classList.remove('activeTab');
-                         }
-                        }
-                    } 
-                    className='w-1/4 lg:p-[20px] font-[600] text-[#A3A3A3] md:text-[9.389px]
-                    md:leading-[14px]
-                    lg:text-[16px] lg:leading-[24px]  cursor-pointer' key={Tab.id}>
-                   {Tab.Setting}
-                    </h2>
-                )
-            }))}
-
-        </div> */}
+       
         <ProfileUpdate/>
+        <AccountVerficationPage/>
      </div>
     </DashBoardLayout>
   )
