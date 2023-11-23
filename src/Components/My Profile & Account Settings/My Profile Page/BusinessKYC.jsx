@@ -6,9 +6,10 @@ import BusinessKyc from "../ProfileImages/BusinessKyc.svg";
 
 const BusinessKYC = () => {
   const { isDarkMode } = useContext(ContextProvider);
-
+   const {businessPopUp, setBusinessPopUp} = useContext(ContextProvider);
   return (
     <div>
+      {businessPopUp && (
       <WalletModal>
         <div className="text-center flex justify-center item-center md:mt-[-20px] lg:mt-[15px] 2xl:mt-[-15px]">
           <div
@@ -31,7 +32,9 @@ const BusinessKYC = () => {
           <p className="text-[8px] font-extrabold text-end float-right ml-[60%] md:ml-[70%] md:text-[12px] mt-[10px] lg:text-[13px] 2xl:text-[15px]">
             Coming Soon...
           </p>
-          <button
+          <button onClick={() => {
+            setBusinessPopUp(false);
+          }}
             className={` ${
               isDarkMode ? "border" : "bg-[#04177f] "
             } cursor-pointer text-white text-[10px] h-[40px] rounded-[5px] md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[25%] lg:mx-auto`}
@@ -40,6 +43,7 @@ const BusinessKYC = () => {
           </button>
         </div>
       </WalletModal>
+      )}
     </div>
   );
 };
