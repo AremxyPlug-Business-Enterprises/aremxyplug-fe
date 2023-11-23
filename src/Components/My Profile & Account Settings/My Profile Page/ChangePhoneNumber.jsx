@@ -16,6 +16,9 @@ import PopUpGreen from "../ProfileImages/PopUpGreen.svg";
 import PopUpGreenTab from "../ProfileImages/PopUpGreenTab.svg";
 import PopUpGreenDeskTop from "../ProfileImages/PopUpGreenDeskTop.svg";
 import Joi from "joi";
+import BusinessKYC from "./BusinessKYC";
+import Success from "../ProfileImages/success.gif"
+
 
 const ChangePhoneNumber = () => {
   const { isDarkMode } = useContext(ContextProvider);
@@ -30,6 +33,8 @@ const ChangePhoneNumber = () => {
     toggleVisibility,
     isVisible,
   } = useContext(ContextProvider);
+
+  const [kyc, setKyc] = useState("")
 
   const [countdown, setCountdown] = useState(60);
   const [resendActive, setResendActive] = useState(false);
@@ -125,7 +130,9 @@ const ChangePhoneNumber = () => {
           </div>
           {/* </Link> */}
 
-          <div>
+          <div 
+          onClick={() => setKyc(true)}
+          >
             <p className="text-[#9C9C9C] text-[10px] md:text-[14px] lg:text-[18px] font-semibold">
               Kindly Input Your New Phone Number
             </p>
@@ -265,9 +272,9 @@ const ChangePhoneNumber = () => {
               }relative md:w-[55%] w-[90%] flex flex-col justify-between md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
             >
               <div className="absolute z-0 right-0" style={{ zIndex: 0 }}>
-              <img src={PopUpGreen} alt="" className="md:hidden" />
-                <img src={PopUpGreenTab} alt="" className="hidden md:block lg:hidden" />
-                <img src={PopUpGreenDeskTop} alt="" className="hidden lg:block" />
+              <img src={PopUpGreen} alt="" className="md:hidden rounded-tr-[10px]" />
+                <img src={PopUpGreenTab} alt="" className="hidden md:block lg:hidden rounded-tr-[10px]" />
+                <img src={PopUpGreenDeskTop} alt="" className="hidden lg:block rounded-tr-[20px]" />
               </div>
 
               <div className="relative z-10">
@@ -283,6 +290,10 @@ const ChangePhoneNumber = () => {
                   Your Phone Number has been updated successfully.{" "}
                 </p>
               </div>
+
+              <div>
+                <img src={Success} alt="" className="absolute top-[25%] left-[32%] h-[50%] lg:left-[36.5%] md:top-[32%]"/>
+              </div>
               
               <button 
                 onClick={(e) => {
@@ -297,6 +308,10 @@ const ChangePhoneNumber = () => {
               </button>
             </div>
           </Modal>
+        )}
+
+        {kyc && (
+            <BusinessKYC></BusinessKYC>
         )}
 
         <div

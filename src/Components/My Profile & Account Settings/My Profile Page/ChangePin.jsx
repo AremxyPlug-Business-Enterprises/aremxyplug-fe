@@ -14,6 +14,8 @@ import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import Cancel from "../ProfileImages/Cancel.svg";
 import ChangePassword from "./ChangePassword";
+import Success from "../ProfileImages/success.gif"
+
 
 const ChangePin = () => {
   const { toggleSideBar, isDarkMode } = useContext(ContextProvider);
@@ -299,16 +301,16 @@ const ChangePin = () => {
                 }relative md:w-[55%] w-[90%] flex flex-col justify-between md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
               >
                 <div className="absolute z-0 right-0" style={{ zIndex: 0 }}>
-                  <img src={PopUpGreen} alt="" className="md:hidden" />
+                  <img src={PopUpGreen} alt="" className="md:hidden rounded-tr-[10px]" />
                   <img
                     src={PopUpGreenTab}
                     alt=""
-                    className="hidden md:block lg:hidden"
+                    className="hidden md:block lg:hidden rounded-tr-[10px]"
                   />
                   <img
                     src={PopUpGreenDeskTop}
                     alt=""
-                    className="hidden lg:block"
+                    className="hidden lg:block rounded-tr-[20px]"
                   />
                 </div>
 
@@ -325,6 +327,10 @@ const ChangePin = () => {
                     You have successfully changed your transaction PIN.
                   </p>
                 </div>
+
+                <div>
+                <img src={Success} alt="" className="absolute top-[25%] left-[32%] h-[50%] lg:left-[36.5%] md:top-[33%]"/>
+              </div>
 
                 <button
                   onClick={(e) => {
@@ -540,16 +546,16 @@ const ChangePin = () => {
                     }relative md:w-[55%] w-[90%] flex flex-col justify-between md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
                   >
                     <div className="absolute z-0 right-0" style={{ zIndex: 0 }}>
-                      <img src={PopUpGreen} alt="" className="md:hidden" />
+                      <img src={PopUpGreen} alt="" className="md:hidden rounded-tr-[10px]" />
                       <img
                         src={PopUpGreenTab}
                         alt=""
-                        className="hidden md:block lg:hidden"
+                        className="hidden md:block lg:hidden rounded-tr-[10px]"
                       />
                       <img
                         src={PopUpGreenDeskTop}
                         alt=""
-                        className="hidden lg:block"
+                        className="hidden lg:block rounded-tr-[20px]"
                       />
                     </div>
 
@@ -566,6 +572,10 @@ const ChangePin = () => {
                         Your transaction PIN has been reset successfully.
                       </p>
                     </div>
+
+                    <div>
+                <img src={Success} alt="" className="absolute top-[25%] left-[32%] h-[50%] lg:left-[36.5%]"/>
+              </div>
 
                     <button
                       onClick={(e) => {
@@ -712,16 +722,16 @@ const ChangePin = () => {
                 }relative md:w-[55%] w-[90%] flex flex-col justify-between md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
               >
                 <div className="absolute z-0 right-0" style={{ zIndex: 0 }}>
-                  <img src={PopUpGreen} alt="" className="md:hidden" />
+                  <img src={PopUpGreen} alt="" className="md:hidden rounded-tr-[10px]" />
                   <img
                     src={PopUpGreenTab}
                     alt=""
-                    className="hidden md:block lg:hidden"
+                    className="hidden md:block lg:hidden rounded-tr-[10px]"
                   />
                   <img
                     src={PopUpGreenDeskTop}
                     alt=""
-                    className="hidden lg:block"
+                    className="hidden lg:block rounded-tr-[20px]"
                   />
                 </div>
 
@@ -738,6 +748,10 @@ const ChangePin = () => {
                     You have successfully changed your transaction PIN.
                   </p>
                 </div>
+
+                <div>
+                <img src={Success} alt="" className="absolute top-[25%] left-[32%] h-[50%] lg:left-[36.5%] md:top-[33%]"/>
+              </div>
 
                 <button
                   onClick={(e) => {

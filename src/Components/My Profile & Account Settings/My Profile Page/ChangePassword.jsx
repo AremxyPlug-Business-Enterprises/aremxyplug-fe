@@ -6,6 +6,8 @@ import PopUpGreenTab from "../ProfileImages/PopUpGreenTab.svg";
 import PopUpGreenDeskTop from "../ProfileImages/PopUpGreenDeskTop.svg";
 import { Modal } from "../../Screens/Modal/Modal";
 import styles from "../../../Components/Dashboard/DashboardComponents/TransferComponent/transfer.module.css";
+import Success from "../ProfileImages/success.gif"
+
 
 const ChangePassword = () => {
   const { toggleSideBar } = useContext(ContextProvider);
@@ -124,13 +126,13 @@ const ChangePassword = () => {
             }relative md:w-[55%] w-[90%] flex flex-col justify-between md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
           >
             <div className="absolute z-0 right-0" style={{ zIndex: 0 }}>
-              <img src={PopUpGreen} alt="" className="md:hidden" />
+              <img src={PopUpGreen} alt="" className="md:hidden rounded-tr-[10px]" />
               <img
                 src={PopUpGreenTab}
                 alt=""
-                className="hidden md:block lg:hidden"
+                className="hidden md:block lg:hidden rounded-tr-[10px]"
               />
-              <img src={PopUpGreenDeskTop} alt="" className="hidden lg:block" />
+              <img src={PopUpGreenDeskTop} alt="" className="hidden lg:block rounded-tr-[20px]" />
             </div>
 
             <div className="relative z-10">
@@ -146,6 +148,10 @@ const ChangePassword = () => {
                 You have successfully changed your Password.
               </p>
             </div>
+
+            <div>
+                <img src={Success} alt="" className="absolute top-[25%] left-[32%] h-[50%] lg:left-[36.5%] md:top-[31%]"/>
+              </div>
 
             <button
               onClick={(e) => {

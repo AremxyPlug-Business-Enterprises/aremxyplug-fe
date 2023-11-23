@@ -15,6 +15,7 @@ import Cancel from "../ProfileImages/Cancel.svg";
 import PopUpGreen from "../ProfileImages/PopUpGreen.svg";
 import PopUpGreenTab from "../ProfileImages/PopUpGreenTab.svg"
 import PopUpGreenDeskTop from "../ProfileImages/PopUpGreenDeskTop.svg"
+import Success from "../ProfileImages/success.gif"
 
 const ChangeEmail = () => {
   const { isDarkMode } = useContext(ContextProvider);
@@ -244,9 +245,9 @@ const ChangeEmail = () => {
               }relative md:w-[55%] w-[90%] flex flex-col justify-between md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
             >
               <div className="absolute z-0 right-0" style={{ zIndex: 0 }}>
-                <img src={PopUpGreen} alt="" className="md:hidden" />
-                <img src={PopUpGreenTab} alt="" className="hidden md:block lg:hidden" />
-                <img src={PopUpGreenDeskTop} alt="" className="hidden lg:block" />
+                <img src={PopUpGreen} alt="" className="md:hidden rounded-tr-[10px]" />
+                <img src={PopUpGreenTab} alt="" className="hidden md:block lg:hidden rounded-tr-[10px]" />
+                <img src={PopUpGreenDeskTop} alt="" className="hidden lg:block rounded-tr-[20px]" />
               </div>
 
               <div className="relative z-10">
@@ -263,6 +264,10 @@ const ChangeEmail = () => {
                 </p>
               </div>
 
+              <div>
+                <img src={Success} alt="" className="absolute top-[25%] left-[32%] h-[50%] lg:left-[36.5%]"/>
+              </div>
+              
               <button
                 onClick={(e) => {
                   e.preventDefault();
@@ -274,7 +279,7 @@ const ChangeEmail = () => {
               >
                 Done
               </button>
-            </div>
+              </div>
           </Modal>
         )}
 
