@@ -1,5 +1,4 @@
 import { React, useState, useEffect } from "react";
-import { DashBoardLayout } from "../../Dashboard/Layout/DashBoardLayout";
 import Email from "../ProfileImages/Email.svg";
 import { Modal } from "../../Screens/Modal/Modal";
 import styles from "../../../Components/Dashboard/DashboardComponents/TransferComponent/transfer.module.css";
@@ -135,9 +134,10 @@ const ChangePin = () => {
   };
 
   const [changePassword, setChangePassword] = useState("");
-
+  const {authenticationOpen} = useContext(ContextProvider);
   return (
-    <DashBoardLayout>
+     <div>
+   { authenticationOpen && (
       <div
         className={`bg-[#FFF] relative lg:ml-[20px] 2xl:ml-0 ${
           isDarkMode
@@ -794,7 +794,8 @@ const ChangePin = () => {
           </Link>
         </div>
       </div>
-    </DashBoardLayout>
+   )}
+   </div>
   );
 };
 

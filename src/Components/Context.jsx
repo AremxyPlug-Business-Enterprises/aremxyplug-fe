@@ -799,7 +799,15 @@ const [necoQuantityActive, setNecoQuantityActive] = useState(false);
   const [bvnVerificationOpen, setBvnVerificationOpen] = useState(false);
   const [accountUpgradeOpen, setAccountUpgradeOpen] = useState(false);
   const [dropDownGender, setDropDownGender] = useState(false);
+   
+  //========== BUSINESS KYC =============
+  const [businessPopUp, setBusinessPopUp] = useState(false);
 
+  // ========  ACCOUNT UPGRADE ===========
+  const [accountUpgrade, setAccountUpgrade]  = useState(false);
+
+  //============ AUTHETICATION SETTINGS ========
+  const [authenticationOpen, setAuthenticationOpen] = useState(false);
   const hold = {
     firstDrop,
     secondDrop,
@@ -1253,6 +1261,18 @@ accountUpgradeOpen,
 setAccountUpgradeOpen,
 dropDownGender,
 setDropDownGender,
+
+//========== Business PopUp =======
+businessPopUp,
+setBusinessPopUp,
+
+// ========== Account upgrade ========
+accountUpgrade,
+setAccountUpgrade,
+
+//======== AUTHENTICATION  SETTING =======
+authenticationOpen,
+setAuthenticationOpen,
   };
 
   return (

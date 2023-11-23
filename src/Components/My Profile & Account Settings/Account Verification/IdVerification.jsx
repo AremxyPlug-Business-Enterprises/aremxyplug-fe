@@ -20,7 +20,7 @@ export default function IdVerification() {
     <div>
         { idVerificationOpen && (
         <div className={`${verificationOpen
-            ? 'block': 'hidden'}`}>
+            ? 'block' : 'hidden'}`}>
          <div className='flex md:gap-[25px] gap-[11px] lg:mb-[50px] mb-[35px]'>
             {/* ICON == NOT VERIFIED */}
     <div className=' flex gap-[5px] py-[23px] pr-[4px] pl-[5px] md:py-[25px] md:pr-[41px] md:pl-[16px] bg-white

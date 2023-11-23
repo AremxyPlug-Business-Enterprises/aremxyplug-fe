@@ -1,17 +1,19 @@
 import React from "react";
 import Email from "../ProfileImages/Email.svg";
 import "../My Profile Page/Profile.css";
-import { DashBoardLayout } from "../../Dashboard/Layout/DashBoardLayout";
 import { useContext } from "react";
 import { ContextProvider } from "../../Context";
 
 const AccountUpgrade = () => {
     const { toggleSideBar } = useContext(ContextProvider);
-
-    
+   const {accountUpgrade} = useContext(ContextProvider);
+    const {verificationOpen} = useContext(ContextProvider);
 
   return (
-    <DashBoardLayout>
+       <div>
+        { accountUpgrade && (
+          <div className= {`${verificationOpen
+            ? 'block'  : 'hidden'}`}>
         <div className="px-20px flex flex-col h-full justify-between">
         <div className="flex items-center my-[10%] gap-[8px] md:my-[5%] md:text-[18px] lg:text-[px]">
           <p className="text-[#7c7c7c] text-[10px] leading-[130%] md:text-[14px] lg:text-[18px] 2xl:text-[28px]">
@@ -152,7 +154,9 @@ const AccountUpgrade = () => {
           </div>
         </div>
       </div>
-    </DashBoardLayout>
+      </div>
+        )}
+    </div>
   );
 };
 

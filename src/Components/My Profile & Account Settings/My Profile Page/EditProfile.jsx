@@ -173,7 +173,7 @@ gap-[5.868px] lg:gap-[10px] cursor-default'>
               src={closeCircle} alt="" />
              </div>
          <div className='flex justify-center items-center w-[100%] h-[100%] 
-         lg:gap-[69px] gap-[40.49px]'>
+         lg:gap-[69px] md:gap-[30px] gap-[40.49px]'>
              {/* CAMERA SELECTION */}
               <div className='flex flex-col md:gap-[11px] gap-[6.45px]  cursor-pointer'>
                 <img 
