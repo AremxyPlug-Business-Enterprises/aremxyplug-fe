@@ -128,6 +128,8 @@ import { RefundedReceipt } from "./Components/Dashboard/DashboardComponents/Tran
 import { CancelledReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/CancelledReceipt";
 import ChangeEmail from "./Components/My Profile & Account Settings/My Profile Page/ChangeEmail";
 import ChangePhoneNumber from "./Components/My Profile & Account Settings/My Profile Page/ChangePhoneNumber";
+import ChangePin from "./Components/My Profile & Account Settings/My Profile Page/ChangePin";
+import AccountUpgrade from "./Components/My Profile & Account Settings/My Profile Page/AccountUpgrade";
 
 export const Router = () => {
   return (
@@ -288,6 +290,8 @@ export const Router = () => {
         <Route path="/CancelledReceipt" element={<CancelledReceipt/>} />
         <Route path="/ChangeEmail" element={<ChangeEmail/>} />
         <Route path="/ChangePhoneNumber" element={<ChangePhoneNumber/>} />
+        <Route path="/ChangePin" element={<ChangePin/>} />
+        <Route path="/AccountUpgrade" element={<AccountUpgrade/>} />
       </Routes>
     </div>
   );

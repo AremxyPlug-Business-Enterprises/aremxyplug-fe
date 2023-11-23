@@ -20,7 +20,7 @@ export const RecentTransaction = () => {
           alt="/"
         />
       </div>
-
+      
       <div
         className={`${
           toggleSideBar
@@ -43,7 +43,7 @@ export const RecentTransaction = () => {
             alt=""
           />
         </div>
-        <Link>
+        <Link to="/TransactionPage">
           {" "}
           <div
             className={`${
