@@ -805,7 +805,7 @@ const [necoQuantityActive, setNecoQuantityActive] = useState(false);
   const [idLGA, setIdLGA] = useState('');
   const [idNumber, setIdNumber] = useState('');
   const [idPostalCode, setIdPostalCode] = useState('');
- 
+
 
   //========== BUSINESS KYC =============
   const [businessPopUp, setBusinessPopUp] = useState(false);
@@ -1280,6 +1280,9 @@ idNumber,
 setIdNumber,
 idPostalCode,
 setIdPostalCode,
+// ==========  BVN ========
+
+
 
 
 //========== Business PopUp =======

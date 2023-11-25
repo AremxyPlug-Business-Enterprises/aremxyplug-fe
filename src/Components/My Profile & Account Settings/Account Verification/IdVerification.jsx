@@ -1,15 +1,22 @@
 import React, {useContext, useState} from 'react';
 import '../../../App.css';
-import { ContextProvider } from '../../Context'
+import styles from "../../../Components/Dashboard/DashboardComponents/TransferComponent/transfer.module.css";
+import { ContextProvider } from '../../Context';
 import NotVerifiedIcon from '../ProfileImages/NotVerifiedIcon.svg';
  import messageIcon from '../ProfileImages/message-question.svg';
  import ArrowDown from '../ProfileImages/arrow-down.svg';
  import UploadDoc from '../ProfileImages/document-upload.svg';
-import idVerified from '../ProfileImages/user-tick.svg';
+import Pending from '../ProfileImages/Pending.svg';
 import { Modal } from '../../Screens/Modal/Modal';
 import frontView from '../ProfileImages/UploadFront.svg';
 import closeIcon from '../ProfileImages/Cancel.svg';
 import BackView from '../ProfileImages/UploadBackView.svg';
+import PopUpGreen from "../ProfileImages/PopUpGreen.svg";
+import PopUpGreenTab from "../ProfileImages/PopUpGreenTab.svg"
+import PopUpGreenDeskTop from "../ProfileImages/PopUpGreenDeskTop.svg"
+import Success from "../ProfileImages/success.gif"
+
+
 export default function IdVerification() {
   const {verificationOpen} = useContext(ContextProvider)
     const {idVerificationOpen} = useContext(ContextProvider);
@@ -22,10 +29,13 @@ export default function IdVerification() {
     const {idNumber, setIdNumber} = useContext(ContextProvider);
     const {idPostalCode, setIdPostalCode} = useContext(ContextProvider);
    const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
-   const [idStatus, setIdStatus] = useState('Not Verified')
+   const [idStatus, setIdStatus] = useState('Not Verified');
     const [errorSubmit, setErrorSubmit] = useState(false);
     const [idFrontView, setIdFrontView] = useState(false);
     const [idBackView, setIdBackView] = useState(false);
+      const [idPopVerified, setIdPopVerified] = useState(false);
+ const {toggleSideBar} = useContext(ContextProvider);
+
     // Genders
     const genderInfo = ['Male', 'Female', 'Others..'];
     const [genderResult, setGenderResult] = useState('');
@@ -44,17 +54,17 @@ export default function IdVerification() {
   //  CUSTOM VALIDITY FORHOUSE ADDRESS
   const validAddress = (e) => {
     const addAddress = e.target.value;
-    e.target.setCustomValidity(addAddress ? '' : 'Your Address must be inputed');
+    e.target.setCustomValidity(addAddress ? '' : 'Your Address must be entered');
   }
   //  CUSTOM VALIDITY FOR CITY
   const validCity  = (e) => {
     const addCity = e.target.value;
-    e.target.setCustomValidity(addCity ? '' : 'Your City must be inputed')
+    e.target.setCustomValidity(addCity ? '' : 'Your City must be entered')
   }
   // CUSTOM VALIDITY FOR STATE
   const validState  = (e) => {
     const addState = e.target.value;
-    e.target.setCustomValidity(addState ? '' : 'Your City must be inputed')
+    e.target.setCustomValidity(addState ? '' : 'Your Status must be entered')
   }
   //CUSTOM VALIDITY FOR ID
   const validId = (e) => {
@@ -75,11 +85,13 @@ const checkform = () =>{
     idLGA &&
     idPostalCode &&
     idNumber ){
-     setVerifyImage(idVerified);
-      setIdStatus('Verified');
+     setVerifyImage(Pending);
+      setIdStatus('Pending');
       setErrorSubmit(false);
-    }
-    
+    setTimeout(()=> {
+     setIdPopVerified(true);
+    },2000)
+  }
  else {
      setErrorSubmit(true);
      setVerifyImage(NotVerifiedIcon);
@@ -89,7 +101,7 @@ const checkform = () =>{
 
   
   return (
-    <div className='flex flex-col mb-[100px]'>
+    <div className='flex flex-col pb-[100px]'>
         { idVerificationOpen && (
         <div className={`  ${verificationOpen
             ? 'block' : 'hidden'}`}>
@@ -398,9 +410,9 @@ border-[0.4px] border-[solid] border-[#9C9C9C] cursor-pointer'>
         Submit
         </button>
        { errorSubmit  && (
-        <h2 className={`font-[500] lg:text-[13px] lg:leading-[18px] md:text-[10px] md:leading-[14px] 
-        text-[9px] leading-[13px] text-red-600` }>
-          Fill all the forms to proceed
+        <h2 className={`font-[500] lg:text-[14px] lg:leading-[18px] md:text-[14px] md:leading-[18px] 
+        text-[12px] leading-[16px] text-red-600` }>
+          Fill the forms complete to proceed
        </h2>
        )}
        
@@ -426,7 +438,10 @@ border-[0.4px] border-[solid] border-[#9C9C9C] cursor-pointer'>
       </h2>
       <img className='lg:h-[200px] lg:w-[197px] h-[91px] w-[89px]'
     src={frontView} alt="" />
-      <button className='font-[600] text-white md:w-[30%] text-[12px] leading-[18px] 
+      <button onClick={(e) => {
+        e.preventDefault();
+      }}
+       className='font-[600] text-white md:w-[30%] text-[12px] leading-[18px] 
       lg:text-[16px] 
       lg:leading-[24px] bg-[#04177F]  w-[80%] py-[10px]
       lg:rounded-[12px] lg:py-[10px] rounded-[4.61px]'>
@@ -456,7 +471,10 @@ border-[0.4px] border-[solid] border-[#9C9C9C] cursor-pointer'>
             </h2>
             <img className='lg:h-[200px] lg:w-[197px] h-[91px] w-[89px]'
           src={BackView} alt="" />
-            <button className='font-[600] text-white md:w-[30%] text-[12px] leading-[18px] 
+            <button onClick={(e) =>{
+              e.preventDefault();
+            }} 
+            className='font-[600] text-white md:w-[30%] text-[12px] leading-[18px] 
             lg:text-[16px] 
             lg:leading-[24px] bg-[#04177F]  w-[80%] py-[10px]
             lg:rounded-[12px] lg:py-[10px] rounded-[4.61px]'>
@@ -467,7 +485,58 @@ border-[0.4px] border-[solid] border-[#9C9C9C] cursor-pointer'>
       </Modal>
           )}
     </form>  
-      
+    {idPopVerified && (
+          <Modal className="">
+            <div
+              className={`confirm2 ${styles.inputPin} ${
+                toggleSideBar
+                  ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
+                  : "lg:w-[40%]"
+              }relative md:w-[55%] w-[90%] flex flex-col justify-between md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
+            >
+              <div className="absolute z-0 right-0" style={{ zIndex: 0 }}>
+                <img src={PopUpGreen} alt="" className="md:hidden rounded-tr-[10px]" />
+                <img src={PopUpGreenTab} alt="" className="hidden md:block lg:hidden rounded-tr-[10px]" />
+                <img src={PopUpGreenDeskTop} alt="" className="hidden lg:block rounded-tr-[20px]" />
+              </div>
+
+              <div className="relative z-10">
+               
+
+                <p
+                  className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] 
+                  font-semibold text-center mt-[4%] lg:my-[%] z-[1000] ${styles.overlayText}`}
+                >
+                  Your request has been submitted successfully. 
+                  You can check your ID Status in the next 24 hours.
+                </p>
+              </div>
+
+              <div>
+                <img src={Success} alt="" className="absolute top-[25%] left-[32%] h-[50%] lg:left-[36.5%]"/>
+              </div>
+              
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIdPopVerified(false);
+                 setGenderResult('');
+                  setIdAddress('')
+                  setIdCity('')
+                  setIdState('')
+                  setIdLGA('')
+                  setIdPostalCode('')
+                  setIdNumber('');
+                }}
+                className={`my-[5%] bg-[#04177f] w-[90%] flex 
+                justify-center items-center mx-auto cursor-pointer text-[10px] 
+                font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+              >
+                Done
+              </button>
+              </div>
+          </Modal>
+        )}
         </div>
         )}
         </div>
