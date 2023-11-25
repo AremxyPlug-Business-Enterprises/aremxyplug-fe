@@ -1,0 +1,31 @@
+<svg width="62" height="62" viewBox="0 0 62 62" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="62" height="62" fill="#AAAAAA"/>
+<g id="DESK - TOP UP - ADD MONEY - FIAT PAGE">
+<rect width="1440" height="1557" transform="translate(-420 -642)" fill="white"/>
+<g id="Frame 758532543">
+<g id="Frame 758532541" filter="url(#filter0_d_0_1)">
+<rect width="193" height="112" transform="translate(-16 -25)" fill="white"/>
+<g id="vuesax/bold/user-edit">
+<g id="vuesax/bold/user-edit_2">
+<g id="user-edit">
+<path id="Vector" d="M31 5.1665C23.87 5.1665 18.0834 10.9532 18.0834 18.0832C18.0834 25.2132 23.87 30.9998 31 30.9998C38.13 30.9998 43.9167 25.2132 43.9167 18.0832C43.9167 10.9532 38.13 5.1665 31 5.1665ZM36.6059 16.8173L29.6309 23.7923C29.3725 24.0507 28.83 24.309 28.4684 24.3865L25.8075 24.7482C24.8259 24.8773 24.1542 24.2057 24.3092 23.2498L24.6967 20.589C24.7484 20.2273 25.0067 19.6848 25.2909 19.4265L32.2659 12.4515C33.4542 11.2632 34.875 10.6948 36.6317 12.4515C38.3625 14.234 37.7942 15.629 36.6059 16.8173Z" fill="#FFD427"/>
+<path id="Vector_2" d="M31 36.1665C18.0575 36.1665 7.51746 44.8465 7.51746 55.5415C7.51746 56.2648 8.08579 56.8332 8.80912 56.8332H53.1908C53.9141 56.8332 54.4825 56.2648 54.4825 55.5415C54.4825 44.8465 43.9425 36.1665 31 36.1665Z" fill="#FFD427"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<filter id="filter0_d_0_1" x="-26" y="-31" width="213" height="132" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="4"/>
+<feGaussianBlur stdDeviation="5"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_0_1"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_0_1" result="shape"/>
+</filter>
+</defs>
+</svg>
