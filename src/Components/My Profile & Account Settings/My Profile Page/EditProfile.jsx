@@ -173,14 +173,14 @@ gap-[5.868px] lg:gap-[10px] cursor-default'>
               src={closeCircle} alt="" />
              </div>
          <div className='flex justify-center items-center w-[100%] h-[100%] 
-         lg:gap-[69px] gap-[40.49px]'>
+         lg:gap-[69px] md:gap-[30px] gap-[40.49px]'>
              {/* CAMERA SELECTION */}
               <div className='flex flex-col md:gap-[11px] gap-[6.45px]  cursor-pointer'>
                 <img 
                 className='lg:p-[41.5px] p-[25.23px] bg-[#F4F4F4] border-[1px]
                  border-[#9C9C9C]  
                 rounded-full md:shadow-2xl'
-                src={cameraProfile} alt="" />
+                src={cameraProfile} alt=""/>
                 <h2 className='text-center  font-[400] text-[8px] leading-[12px] 
                 lg:text-[16px] lg:leading-[24px] '>
                   Camera
@@ -191,7 +191,7 @@ gap-[5.868px] lg:gap-[10px] cursor-default'>
                 <img className='lg:p-[41.5px]  p-[25.23px] bg-[#F4F4F4] border-[1px]
                  border-[#9C9C9C]    
                  rounded-full md:shadow-2xl'
-                src={galleryProfile} alt="" />
+                src={galleryProfile} alt=""/>
                 <h2 className='text-center font-[400] text-[8px] leading-[12px] 
                 lg:text-[16px] lg:leading-[24px]'>
                  Gallery

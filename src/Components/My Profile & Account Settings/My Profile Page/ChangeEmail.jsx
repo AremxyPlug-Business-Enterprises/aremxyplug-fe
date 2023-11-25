@@ -15,6 +15,7 @@ import Cancel from "../ProfileImages/Cancel.svg";
 import PopUpGreen from "../ProfileImages/PopUpGreen.svg";
 import PopUpGreenTab from "../ProfileImages/PopUpGreenTab.svg"
 import PopUpGreenDeskTop from "../ProfileImages/PopUpGreenDeskTop.svg"
+import Success from "../ProfileImages/success.gif"
 
 const ChangeEmail = () => {
   const { isDarkMode } = useContext(ContextProvider);
@@ -91,6 +92,7 @@ const ChangeEmail = () => {
         <section>
           <ProfileHero></ProfileHero>
 
+        {/* <Link to="/ChangePin"> */}
           <div className="flex items-center my-[10%] gap-[8px] md:my-[5%] md:text-[18px] lg:text-[px]">
             <p className="text-[#7c7c7c] text-[10px] leading-[130%] md:text-[14px] lg:text-[18px] 2xl:text-[28px]">
               Change Email
@@ -101,6 +103,7 @@ const ChangeEmail = () => {
               className="w-[12px] h-[12px] md:w-[14.083px] md:h-[14.083px] lg:w-[24px] lg:h-[24px]"
             />
           </div>
+          {/* </Link> */}
 
           <div>
             <p className="text-[#9C9C9C] text-[10px] md:text-[14px] lg:text-[18px] font-semibold">
@@ -242,9 +245,9 @@ const ChangeEmail = () => {
               }relative md:w-[55%] w-[90%] flex flex-col justify-between md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
             >
               <div className="absolute z-0 right-0" style={{ zIndex: 0 }}>
-                <img src={PopUpGreen} alt="" className="md:hidden" />
-                <img src={PopUpGreenTab} alt="" className="hidden md:block lg:hidden" />
-                <img src={PopUpGreenDeskTop} alt="" className="hidden lg:block" />
+                <img src={PopUpGreen} alt="" className="md:hidden rounded-tr-[10px]" />
+                <img src={PopUpGreenTab} alt="" className="hidden md:block lg:hidden rounded-tr-[10px]" />
+                <img src={PopUpGreenDeskTop} alt="" className="hidden lg:block rounded-tr-[20px]" />
               </div>
 
               <div className="relative z-10">
@@ -261,6 +264,10 @@ const ChangeEmail = () => {
                 </p>
               </div>
 
+              <div>
+                <img src={Success} alt="" className="absolute top-[25%] left-[32%] h-[50%] lg:left-[36.5%]"/>
+              </div>
+              
               <button
                 onClick={(e) => {
                   e.preventDefault();
@@ -268,11 +275,11 @@ const ChangeEmail = () => {
                   setEmailId("");
                   setEmailInputColor("");
                 }}
-                className={`my-[5%] bg-[#04177f] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                className={`my-[5%] bg-[#04177f] w-[90%] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
               >
                 Done
               </button>
-            </div>
+              </div>
           </Modal>
         )}
 
