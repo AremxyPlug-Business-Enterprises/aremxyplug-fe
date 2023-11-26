@@ -731,18 +731,32 @@ export const Context = ({ children }) => {
   const [cardName, setCardName] = useState("");
   const [smartCard, setSmartCard] = useState("");
   const [tvEmail, setTvEmail] = useState("");
-
+  const [flagResult, setFlagResult ]= useState('');
+  const [ methodPayment, setMethodPayment ] = useState(false);
+  const [imageState, setImageState] = useState(" ");
+  const [tvWalletBalance, setTvWalletBalance] = useState('');
+  
   //==========DSTV===========
   const [selectedOptionDstv, setSelectedOptionDstv] = useState("");
   const [showDropdownDstv, setShowDropdownDstv] = useState(false);
   const [confirmDstvPopup, setConfirmDstvPopup] = useState(false);
   const [inputPinDstv, setInputPinDstv] = useState(false);
   const [dstvSuccessful, setDstvSuccessful] = useState(false);
-  const [flagResult, setFlagResult ]= useState('');
-  const [ methodPayment, setMethodPayment ] = useState(false);
-  const [imageState, setImageState] = useState(" ");
-  const [ tvWalletBalance, setTvWalletBalance ] = useState('');
 
+  //=========SHOWMAX===========
+  const [selectedOptionShowmax, setSelectedOptionShowmax] = useState("");
+  const [showDropdownShowmax, setShowDropdownShowmax] = useState(false);
+  const [confirmShowmaxPopup, setConfirmShowmaxPopup] = useState(false);
+  const [inputPinShowmax, setInputPinShowmax] = useState(false);
+  const [showmaxSuccessful, setShowmaxSuccessful] = useState(false);
+
+  //=========STARTIMES===========
+  const [selectedOptionStarTimes, setSelectedOptionStarTimes] = useState("");
+  const [showDropdownStarTimes, setShowDropdownStarTimes] = useState(false);
+  const [confirmStarTimesPopup, setConfirmStarTimesPopup] = useState(false);
+  const [inputPinStarTimes, setInputPinStarTimes] = useState(false);
+  const [starTimesSuccessful, setStarTimesSuccessful] = useState(false);
+    
   //============= EDUCATION PINS ========================
   //===============WAEC PINS================
   const [quantityResult, setQuantityResult] = useState('');
@@ -1102,20 +1116,8 @@ export const Context = ({ children }) => {
     setActiveButtonsOne,
     activeButtonOne,
 
-    //TV-subscription
-    confirmGotvPopup,
-    setConfirmGotvPopup,
-    // handleGotv,
-    inputPinGotv,
-    setInputPinGotv,
-    // handleInputGotv,
-    gotvSuccessful,
-    setGotvSuccessful,
-    // handleGotvSuccessful,
-    selectedOptionGOTV,
-    setSelectedOptionGOTV,
-    showDropdownGOTV,
-    setShowDropdownGOTV,
+    //=====TV-subscription
+    //=====general
     formatNumberWithCommas,
     mobileNumber,
     setMobileNumber,
@@ -1134,7 +1136,21 @@ export const Context = ({ children }) => {
     imageState,
     setImageState,
 
+    //=======GOTV
+    confirmGotvPopup,
+    setConfirmGotvPopup,
+    inputPinGotv,
+    setInputPinGotv,
+    gotvSuccessful,
+    setGotvSuccessful,
+    selectedOptionGOTV,
+    setSelectedOptionGOTV,
+    showDropdownGOTV,
+    setShowDropdownGOTV,
 
+ 
+
+    //=======DSTV
     confirmDstvPopup,
     setConfirmDstvPopup,
     inputPinDstv,
@@ -1145,6 +1161,30 @@ export const Context = ({ children }) => {
     setSelectedOptionDstv,
     showDropdownDstv,
     setShowDropdownDstv,
+
+    //=======SHOWMAX
+    confirmShowmaxPopup,
+    setConfirmShowmaxPopup,
+    inputPinShowmax,
+    setInputPinShowmax,
+    showmaxSuccessful,
+    setShowmaxSuccessful,
+    selectedOptionShowmax,
+    setSelectedOptionShowmax,
+    showDropdownShowmax,
+    setShowDropdownShowmax,
+
+    //=======STARTIMES
+    confirmStarTimesPopup,
+    setConfirmStarTimesPopup,
+    inputPinStarTimes,
+    setInputPinStarTimes,
+    starTimesSuccessful,
+    setStarTimesSuccessful,
+    selectedOptionStarTimes,
+    setSelectedOptionStarTimes,
+    showDropdownStarTimes,
+    setShowDropdownStarTimes,
 
 
     //====== EDUCATION PINS
