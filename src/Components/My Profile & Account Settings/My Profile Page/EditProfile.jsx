@@ -180,7 +180,7 @@ gap-[5.868px] lg:gap-[10px] cursor-default'>
                 className='lg:p-[41.5px] p-[25.23px] bg-[#F4F4F4] border-[1px]
                  border-[#9C9C9C]  
                 rounded-full md:shadow-2xl'
-                src={cameraProfile} alt="" />
+                src={cameraProfile} alt=""/>
                 <h2 className='text-center  font-[400] text-[8px] leading-[12px] 
                 lg:text-[16px] lg:leading-[24px] '>
                   Camera
@@ -191,7 +191,7 @@ gap-[5.868px] lg:gap-[10px] cursor-default'>
                 <img className='lg:p-[41.5px]  p-[25.23px] bg-[#F4F4F4] border-[1px]
                  border-[#9C9C9C]    
                  rounded-full md:shadow-2xl'
-                src={galleryProfile} alt="" />
+                src={galleryProfile} alt=""/>
                 <h2 className='text-center font-[400] text-[8px] leading-[12px] 
                 lg:text-[16px] lg:leading-[24px]'>
                  Gallery
