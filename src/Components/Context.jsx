@@ -799,7 +799,14 @@ const [necoQuantityActive, setNecoQuantityActive] = useState(false);
   const [bvnVerificationOpen, setBvnVerificationOpen] = useState(false);
   const [accountUpgradeOpen, setAccountUpgradeOpen] = useState(false);
   const [dropDownGender, setDropDownGender] = useState(false);
-   
+  const [idAddress, setIdAddress] = useState('');
+  const [idState, setIdState] = useState('');
+  const [idCity, setIdCity] = useState('');
+  const [idLGA, setIdLGA] = useState('');
+  const [idNumber, setIdNumber] = useState('');
+  const [idPostalCode, setIdPostalCode] = useState('');
+
+
   //========== BUSINESS KYC =============
   const [businessPopUp, setBusinessPopUp] = useState(false);
 
@@ -1261,6 +1268,22 @@ accountUpgradeOpen,
 setAccountUpgradeOpen,
 dropDownGender,
 setDropDownGender,
+idAddress,
+setIdAddress,
+idCity,
+setIdCity,
+idState,
+setIdState,
+idLGA,
+setIdLGA,
+idNumber,
+setIdNumber,
+idPostalCode,
+setIdPostalCode,
+// ==========  BVN ========
+
+
+
 
 //========== Business PopUp =======
 businessPopUp,

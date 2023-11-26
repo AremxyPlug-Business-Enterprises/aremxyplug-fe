@@ -100,8 +100,6 @@ const VirtualAccount = () => {
 
             </div>
 
-
-    
             <div className="mt-[25.39px] md:mt-[35px] lg:mt-[60px] px-2 py-2 flex flex-col gap-2" style={{boxShadow: `0px 0px 6.666667461395264px 0px rgba(0, 0, 0, 0.25)`}}>
               <div className='flex justify-between items-baseline font-bold text-[8px] leading-[12px] md:text-[9.17px] md:leading-[11.92px] border-b py-1 lg:text-[16px] lg:leading-[24px]'>
                 <h2 className='font-bold'>Country</h2>
