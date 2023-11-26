@@ -3,6 +3,7 @@ import React from 'react'
 import styles from './AirtimeVtu.module.css'
 import { DashBoardLayout } from '../Dashboard/Layout/DashBoardLayout';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 const SelectRecipient = () => {
 
@@ -10,6 +11,38 @@ const SelectRecipient = () => {
     // const {recipientName, setRecipientName} = useContext(ContextProvider);
     // const {recipientNumber, setRecipientNumber} = useContext(ContextProvider);
     // const {networkImage, setNetworkImage} = useContext(ContextProvider);
+
+    // const [errors, setErrors] = useState({});
+    // const [showList, setShowList] = useState(false);
+    // const [selected, setSelected] = useState(false);
+    // const [confirm, setConfirm] = useState(false);
+    const [deleted, setDeleted] = useState(false);
+    // const [successDeleted, setSuccessDeleted] = useState(false);
+  
+    const [showPopup, setShowPopup] = useState(false);
+    const [activeImage, setActiveImage] = useState(null);
+    const [edit, setEdit] = useState("");
+    // const [continueState, setContinue] = useState("");
+
+    const handleRecipient = (index) => {
+        if (activeImage === index) {
+          // If the same image is clicked again, close the pop-up
+          setActiveImage(null);
+          setShowPopup(false);
+        } else {
+          setActiveImage(index);
+          setShowPopup(true);
+        }
+    };
+
+    const handleEdit = () => {
+        setEdit(true);
+    };
+
+    const handleDelete = () => {
+        setDeleted(true);
+    };
+
 
   return (
     <DashBoardLayout>
@@ -58,8 +91,33 @@ const SelectRecipient = () => {
                             <p className='lg:text-[14.05px] lg:font-medium lg:leading-[21.07px] text-[#7C7C7C] text-[9px] font-semibold leading-3 md:text-[8px]'>
                                 Aremxyplug</p>
                         </div>
-                        <div className='h-[16px] w-[16px] my-auto lg:w-[50px] lg:h-[25px]'>
+                        <div
+                            onClick={() => {
+                                handleRecipient(index);
+                            }}
+                            className='h-[16px] w-[16px] my-auto lg:w-[50px] lg:h-[25px]'
+                        >
                             <img src='./Images/airtimeTopUp/Frame.png' alt="" className='h-full'/>
+                            {showPopup && activeImage === index && (
+                                <div
+                                className="input border absolute bg-white top-[8px] right-[17px] w-[100px] h-[60px] z-50 flex flex-col justify-center items-start py-[5px]"
+                                style={{ boxShadow: "0 0 5px rgba(0, 0, 0, 0.2)" }}
+                                >
+                                <div
+                                    onClick={handleEdit}
+                                    className="text-[10px] text-[#7C7C7C] px-[5px] py-[5px]"
+                                >
+                                    Edit Recipient
+                                </div>
+                                <hr className="w-full h-[5px]" />
+                                <div
+                                    onClick={handleDelete}
+                                    className="text-[#FA6B6B] text-[10px] px-[5px] py-[5px]"
+                                >
+                                    Delete Recipient
+                                </div>
+                                </div>
+                            )}
                         </div>
                     </div>
                     <div className='w-[100%] mx-auto flex justify-between border py-2 px-2 rounded-[7px] md:rounded-[7px] lg:py-2 lg:px-5'>

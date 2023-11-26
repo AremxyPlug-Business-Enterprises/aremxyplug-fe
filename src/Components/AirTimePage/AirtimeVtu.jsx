@@ -602,10 +602,10 @@ const AirtimeVtu = () => {
                     alt=""
                     />
                     <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
-                    <h2 className="text-[12px] my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
+                    <h2 className="text-[10px] my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
                     Confirm Transaction
                     </h2>
-                    <p className="text-[8px] text-[#0008] text-center mb-2 md:text-[12px] lg:text-[14px]">
+                    <p className="text-[10px] mx-[10px] text-[#0008] text-center mb-4 md:text-[12px] lg:text-[14px]">
                     You are about to purchase{" "}
                     <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">
                     {networkName + ' ' + selectedProduct} Airtime &#8358;{amount}.00{" "}
@@ -613,14 +613,14 @@ const AirtimeVtu = () => {
                     from your NGN wallet to{" "}
                     </p>
 
-                    <div className="flex flex-col gap-3 mt-3">
+                    <div className="flex flex-col gap-2 mt-3">
                         <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                             <p className="text-[#0008]">Network</p>
                             <span className='flex gap-1'>
-                                <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
+                                <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[10px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
                                 <img src={networkImage} alt="" className='w-full h-full object-cover'/>
                                 </div> 
-                                <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">{networkName}</h2>
+                                <h2 className="text-[10px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">{networkName}</h2>
                             </span>
                         </div>
                         <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -774,7 +774,7 @@ const AirtimeVtu = () => {
                     />
                     </div>
                     <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
-                    <h2 className="text-[12px] my-[4%] text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%]">
+                    <h2 className="text-[12px] my-[3%] text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%]">
                     Transaction Successful
                     </h2>
                     <img
@@ -782,45 +782,45 @@ const AirtimeVtu = () => {
                     src="./Gif/checkMarkGif.gif"
                     alt="/"
                     />
-                    <p className="text-[8px] text-[#0008] text-center mb-10 md:text-[14px] lg:text-[12px]">
+                    <p className="text-[10px] text-[#0008] mx-[10px] text-center mb-5 md:text-[14px] lg:text-[12px]">
                     You have successfully purchased{" "}
-                    <span className="text-[#000] font-extrabold text-[8px] md:text-[14px] lg:text-[12px]">
+                    <span className="text-[#000] font-extrabold text-[10px] md:text-[14px] lg:text-[12px]">
                     {networkName + ' ' + selectedProduct} Airtime &#8358;{amount}.00{" "}
                     </span>
                     from your NGN wallet to{" "}
                     </p>
 
-                    <div className="flex flex-col gap-2 lg:gap-4">
-                    <div className="flex text-[8px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
+                    <div className="flex flex-col gap-1 lg:gap-4">
+                    <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                             <p className="text-[#0008]">Network</p>
                             <span className='flex gap-1'>
                                 <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
                                 <img src={networkImage} alt="" className='w-full h-full object-cover'/>
                                 </div> 
-                                <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">{networkName}</h2>
+                                <h2 className="text-[10px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">{networkName}</h2>
                             </span>
                         </div>
-                        <div className="flex text-[8px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
+                        <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                             <p className="text-[#0008]">Product</p>
                             <span>{networkName + ' ' + selectedProduct}</span>
                         </div>
-                        <div className="flex text-[8px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
+                        <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                             <p className="text-[#0008]">Phone Number</p>
                             <span>{recipientNumber}</span>
                         </div>
-                        <div className="flex text-[8px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
+                        <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                             <p className="text-[#0008]">Recipient Name</p>
                             <span>{recipientName}</span>
                         </div>
-                        <div className="flex text-[8px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
+                        <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                             <p className="text-[#0008]">Payment Method</p>
                             <span>{factorWalletName(name)}</span>
                         </div>
-                        <div className="flex text-[8px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
+                        <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                             <p className="text-[#0008]">Amount</p>
                             <span>&#8358;{amount}</span>
                         </div>
-                        <div className="flex text-[8px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[12px]">
+                        <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[12px]">
                             <p className="text-[#0008]">Order Number</p>
                             <span>122555556464564</span>
                         </div>
