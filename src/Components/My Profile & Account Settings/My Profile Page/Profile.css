@@ -18,7 +18,13 @@
 
 }
 
+@media (min-width: 768px) {
+    .upgrade {
+        margin-top: -20%;
 
+    }
+
+}
 
 
 @media (min-width: 845px) {
@@ -28,10 +34,21 @@
 
 }
 
-
 @media (min-width: 1020px) {
     .business {
         height: 160px;
+    }
+
+    .upgrade {
+        margin-top: -17%;
+    }
+
+}
+
+@media (min-width: 1440px) {
+    .upgrade {
+        margin-top: -12.5%;
+
     }
 
 }
