@@ -27,7 +27,7 @@ const BusinessKYC = () => {
         <img
               src={BusinessKyc}
               alt=""
-              className="business img mx-auto mt-[20px] md:mt-[10%] md:w-[30%] md:mx-auto w-[143px] h-[120px] lg:w-[40%] lg:h-[250px] lg:mx-[150px] lg:mt-[10%] 2xl:mt-[10%] 2xl:mx-[180px]"
+              className="business img mx-auto mt-[20px] md:mt-[10%] md:w-[30%] md:mx-auto w-[143px] h-[120px] lg:w-[40%] lg:h-[50px] lg:mx-[150px] lg:mt-[10%] 2xl:mt-[10%] 2xl:mx-[180px]"
             />
         <div className="mt-[20px] flex flex-col gap-[5px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
           <p className="text-[8px] font-extrabold text-end float-right ml-[60%] md:ml-[70%] md:text-[12px] mt-[10px] lg:text-[13px] 2xl:text-[15px]">
