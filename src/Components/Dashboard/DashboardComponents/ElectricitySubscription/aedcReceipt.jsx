@@ -117,7 +117,7 @@ export const AedcReceipt = () => {
               </span>{" "}
              <br></br>
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
-                ({ikedcamount}){" "}
+                (&#8358;{ikedcamount}){" "}
               </span>
               From your NGN Nigerian Wallet to{" "}
             </p>
@@ -166,7 +166,7 @@ export const AedcReceipt = () => {
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Amount</p>
-                <span>{ikedcamount}</span>
+                <span>&#8358;{ikedcamount}</span>
               </div>
               
             </div>
@@ -262,7 +262,7 @@ export const AedcReceipt = () => {
         <div
           className={`${
             isDarkMode ? "mb-[1%]" : "mb-[5%]"
-          } flex gap-[15px] justify-center items-center mt-[80px] lg:mb-[%]`}
+          } flex gap-[15px] justify-center items-center mt-[80px] pb-[5%]`}
         >
           <div className="text-[10px] md:text-[12px] lg:text-[16px]">
             You need help ?

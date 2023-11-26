@@ -143,7 +143,7 @@ export const WalletSuccessfulReceipt = () => {
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[16px]">
               {selectedOption} {" "}
               </span>
-              from your {walletName + " Wallet"} to{" "}
+              from your NGN {walletName + " Wallet"} to{" "}
             </p>
             </div>
             <div className="flex flex-col gap-3">

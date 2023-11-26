@@ -4,7 +4,7 @@ import { DashBoardLayout } from '../Dashboard/Layout/DashBoardLayout';
 import FaqCard from './FaqCard';
 import './faq.css'
 import { Link } from 'react-router-dom';
-import WalletModal from './WalletModal';
+import CurrencyConversionModal from '../CurrencyConversion/CurrencyConversionModal';
 
 const Wallet = () => {
   const [clicked, setClicked] = useState(true);
@@ -44,11 +44,11 @@ const Wallet = () => {
                 <h2 className='text-[10px] md:text-[13.75px] font-bold mb-3 lg:text-[24px] lg:mb-4'>WALLETS OVERVIEW.</h2>
                 <h2 className='text-[7px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3'>Please select wallet type from the available options below.</h2>
               </div>
-              <div className='w-[91px] h-[66px] lg:w-[254px] lg:h-[170px]'>
+              <div className='h-[66px] lg:h-[170px]'>
                 <img src='./Images/wallet/walletBanner.png' alt="" className='h-full'/>
               </div>
             </div>
-            <div className="w-full h-[122.28px] lg:h-[200px] mt-10 flex flex-col justify-between md:mt-6 md:h-[106.5px] lg:mt-16">
+            <div className="w-full h-[122.28px] lg:h-[200px] flex flex-col justify-between md:h-[106.5px] md:mt-9 mt-8 lg:mt-14">
               <div className='lg:mb-16 flex items-center gap-1 mb-10'>
                 <h2 className='md:text-[18px] lg:text-[20px] text-[#7c7c7c] text-[10px] leading-[130%]'>Select Wallets</h2>
                 <div className='lg:w-6 lg:h-6 w-4 h-4'>
@@ -84,7 +84,7 @@ const Wallet = () => {
                 </div>
               </div>
             </div>
-            <div className='mt-10 lg:mt-16'>
+            <div className='md:mt-9 mt-8 lg:mt-14'>
               <div className='lg:mb-16 flex items-center gap-1 mb-10'>
                   <h2 className='md:text-[18px] lg:text-[20px] text-[#7c7c7c] text-[10px] leading-[130%]'>Quick Wallets FAQs</h2>
                   <div className='lg:w-6 lg:h-6 w-4 h-4'>
@@ -109,23 +109,13 @@ const Wallet = () => {
           </div>
         </div>
         {/* crypto popup */}
-        {showCryptoModal &&
-          <>
-            <WalletModal>
-              <div className='w-full h-full flex flex-col justify-between'>
-                <h2 className='text-[10px] text-center pt-[5%] text-[#04177f] font-extrabold md:text-[16px] lg:text-[25px] md:pt-[3%]'>This Feature is Currently Not Available.</h2>
-                <div className='flex justify-center items-center mt-[10%] lg:mt-[5%]'>
-                  <div className='mx-auto mt-[] w-[135px] h-[96px] md:w-[220px] md:h-[200px] md:mt-[5%] lg:w-[350px] lg:h-[280px] lg:mt-[5%]'>
-                    <img src="./Images/wallet/comingSoon.png" alt=""/>
-                  </div>
-                </div>
-                <div className='flex md:justify-center md:items-center flex-col gap-0 md:pb-[5%] mt-[3%]' >
-                  <h2 className='text-[8px] font-extrabold float-right ml-[80%] md:ml-[70%] md:text-[12px] lg:text-[13px] lg:ml-[80%] mb-1 md:mb-0'>Coming soon...</h2>
-                  <button className='bg-primary text-white text-[10px] h-[40px] rounded-[5px] flex items-center justify-center md:mx-auto md:w-[20%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[30%] lg:mx-auto' onClick={()=>setShowCryptoModal(false)}>Okay</button>
-                </div>
-              </div>
-            </WalletModal>
-          </>
+        { showCryptoModal &&
+          <CurrencyConversionModal
+            title='Crypto Wallets'
+            image='./Images/wallet/comingSoon.png'
+            onClick={()=>setShowCryptoModal(false)}
+            tag='This Feature is Currently Not Available.'
+          />
         }
     </DashBoardLayout>
   );

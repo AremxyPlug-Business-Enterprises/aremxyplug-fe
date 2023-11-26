@@ -157,14 +157,16 @@ export const SideBar = () => {
                   onClick={() => dropHandler("dropdown1")}
                   className="flex justify-between items-center"
                 >
-                  <div className="flex gap-[3.4px] items-center cursor-pointer lg:gap-[11px]">
-                    <img
-                      className="w-[8.3px] h-[8.3px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
-                      src="./Images/dashboardImages/transaction.png"
-                      alt="icon"
-                    />
-                    <p>Transaction</p>
-                  </div>
+                  <Link to="/TransactionPage">
+                    <div className="flex gap-[3.4px] items-center cursor-pointer lg:gap-[11px]">
+                      <img
+                        className="w-[8.3px] h-[8.3px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
+                        src="./Images/dashboardImages/transaction.png"
+                        alt="icon"
+                      />
+                      <p>Transaction</p>
+                    </div>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -498,13 +500,23 @@ export const SideBar = () => {
                     </div>
                   </Link>
                 </div>
+                <Link to="/ProfileSettingMain">
+                  <div className="flex gap-[3.4px] cursor-pointer lg:gap-[11px]">
+                    <img
+                      className="w-[8.3px] h-[8.3px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
+                      src="./Images/dashboardImages/profileSettings.png"
+                      alt="icon"
+                    />
+                    <p>Profile Settings</p>
+                  </div>
+                </Link>
                 <div className="flex gap-[3.4px] cursor-pointer lg:gap-[11px]">
                   <img
                     className="w-[8.3px] h-[8.3px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
-                    src="./Images/dashboardImages/profileSettings.png"
+                    src="./Images/notification.png"
                     alt="icon"
                   />
-                  <p>Profile Settings</p>
+                  <p>Notifications</p>
                 </div>
                 <div className="flex gap-[3.4px] cursor-pointer lg:gap-[11px]">
                   <img

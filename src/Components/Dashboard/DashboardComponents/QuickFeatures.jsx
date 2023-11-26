@@ -138,7 +138,7 @@ const QuickFeatures = () => {
           />
           <p>Referrals</p>
         </Link>
-        <div
+        <Link to ="/ProfileSettingMain"
           className={`${
             isDarkMode ? " border text-white" : "text-[#000] bg-[#fff] "
           } ${styles.feature}`}
@@ -149,7 +149,7 @@ const QuickFeatures = () => {
             alt="/"
           />
           <p>My Profile</p>
-        </div>
+        </Link>
       </div>
     </div>
   );
