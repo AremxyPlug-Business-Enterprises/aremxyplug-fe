@@ -3,8 +3,6 @@ import { DashBoardLayout } from "../Dashboard/Layout/DashBoardLayout";
 import stack from "./assets/stack.svg";
 import starbox from "./assets/startbox.svg";
 import arrangebox from "./assets/arrangebox.svg";
-// import star from "./assets/star.svg";
-// import arrange from "./assets/arrange.svg";
 import wallet from "./assets/walletbox.svg";
 import cards from "./assets/cardbox.svg";
 import charts from "./assets/chartbox.svg";

@@ -128,12 +128,9 @@ import { RefundedReceipt } from "./Components/Dashboard/DashboardComponents/Tran
 import { CancelledReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/CancelledReceipt";
 import ChangeEmail from "./Components/My Profile & Account Settings/My Profile Page/ChangeEmail";
 import ChangePhoneNumber from "./Components/My Profile & Account Settings/My Profile Page/ChangePhoneNumber";
-<<<<<<< HEAD
 import LaunchPage from "./Components/NotificationsPage/LaunchPage";
-=======
 import ChangePin from "./Components/My Profile & Account Settings/My Profile Page/ChangePin";
 import AccountUpgrade from "./Components/My Profile & Account Settings/My Profile Page/AccountUpgrade";
->>>>>>> f014e0567ca5cd48a5b465768e3c02c8d317f7c8
 
 export const Router = () => {
   return (
