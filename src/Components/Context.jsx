@@ -787,8 +787,34 @@ const [necoQuantityActive, setNecoQuantityActive] = useState(false);
   const[ nabtebEducationPinEmail, setNabtebEducationPinEmail] = useState('');
   const [nabtebEducationAmount, setNabtebEducationAmount] = useState('₦');
   const [nabtebWalletBalance, setNabtebWalletBalance] = useState('');
+ 
+    // PROFILE & ACCOUNT SETTINGS =========
+  //============ Profile Page =========
   const [openImage, setOpenImage] = useState(false);
+  const [profilePage, setProfilePage] = useState(true);
 
+  // ======== Account Verification Page ============
+  const [verificationOpen, setVerificationOpen] = useState(false);
+  const [idVerificationOpen, setIdVerificationOpen] = useState(true);
+  const [bvnVerificationOpen, setBvnVerificationOpen] = useState(false);
+  const [accountUpgradeOpen, setAccountUpgradeOpen] = useState(false);
+  const [dropDownGender, setDropDownGender] = useState(false);
+  const [idAddress, setIdAddress] = useState('');
+  const [idState, setIdState] = useState('');
+  const [idCity, setIdCity] = useState('');
+  const [idLGA, setIdLGA] = useState('');
+  const [idNumber, setIdNumber] = useState('');
+  const [idPostalCode, setIdPostalCode] = useState('');
+
+
+  //========== BUSINESS KYC =============
+  const [businessPopUp, setBusinessPopUp] = useState(false);
+
+  // ========  ACCOUNT UPGRADE ===========
+  const [accountUpgrade, setAccountUpgrade]  = useState(false);
+
+  //============ AUTHETICATION SETTINGS ========
+  const [authenticationOpen, setAuthenticationOpen] = useState(false);
   const hold = {
     firstDrop,
     secondDrop,
@@ -1224,9 +1250,52 @@ nabtebQuantityResult,
   nabtebWalletBalance, 
   setNabtebWalletBalance,
 
-// ========== PROFILE SETTINGS ========
+// ========= PROFILE & ACCOUNT SETTINGS ===========
+// ========== Profile Page ========
 openImage,
 setOpenImage,
+profilePage,
+setProfilePage,
+
+// ========= Account verification Page =====
+verificationOpen,
+setVerificationOpen,
+idVerificationOpen,
+setIdVerificationOpen,
+bvnVerificationOpen,
+setBvnVerificationOpen,
+accountUpgradeOpen,
+setAccountUpgradeOpen,
+dropDownGender,
+setDropDownGender,
+idAddress,
+setIdAddress,
+idCity,
+setIdCity,
+idState,
+setIdState,
+idLGA,
+setIdLGA,
+idNumber,
+setIdNumber,
+idPostalCode,
+setIdPostalCode,
+// ==========  BVN ========
+
+
+
+
+//========== Business PopUp =======
+businessPopUp,
+setBusinessPopUp,
+
+// ========== Account upgrade ========
+accountUpgrade,
+setAccountUpgrade,
+
+//======== AUTHENTICATION  SETTING =======
+authenticationOpen,
+setAuthenticationOpen,
   };
 
   return (

@@ -8,9 +8,11 @@ import "./topUp.css";
 import { DashBoardLayout } from "../../Dashboard/Layout/DashBoardLayout";
 import { Link } from "react-router-dom";
 import TopupModal from "../../topup/TopupModal";
+import CurrencyConversionModal from '../../CurrencyConversion/CurrencyConversionModal';
 
 // FUNDING METHODS DATA STARTS HERE
 const data = [
+
   {
     image: "./Images/top_up/user.png",
     title: "Virtual Accounts",
@@ -44,6 +46,7 @@ function TopUpScreen() {
 
   const [paymentType, setPaymentType] = useState("fiat");
   const [showCryptoModal1, setShowCryptoModal1] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const setNav = () => {
     setHideNavbar(true);
@@ -57,35 +60,43 @@ function TopUpScreen() {
     // eslint-disable-next-line
   }, []);
 
+  const Element = ({isDarkMode, data}) => {
+    return (
+      <div className={` ${isDarkMode ? "Style11 ":"Style1 "} mt-[25px] lg:mt-[27px] cursor-pointer`}>
+        <div className="flex items-center">
+          <img src={data.image} alt="." className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"/>
+          <div className="lg:ml-[10px] md:ml-[7px] ml-[4px]">
+            <p className="text-[10px] md:text-[18px]">{data.title}</p>
+            <p className={`${isDarkMode ? "text-[#fff]":"text-[#7c7c7c]"} text-[8px]  md:text-[16px]`}>{data.content}</p>
+          </div>
+        </div>
+        <img src="Images/top_up/arrowR.png" alt="/" className="ml-[1%] w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]" />
+      </div>
+    )
+  }
+
   return (
     <DashBoardLayout>
       <div className="flex flex-col justify-between h-full">
         <div>
           {/* TOP BANNER STARTS HERE */}
-          <div className="w-full h-[65.33px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] items-center flex px-[16px] lg:px-[50px] justify-around lg:rounded-[20px]"
-            style={{
-                backgroundColor: "#a1e8ff"
-            }}
-            >
-              <div className='py-[13px] lg:py-[40px]'>
-                <h2 className='text-[#000] text-[8px] md:text-[13.75px] md:leading-[20.63px] font-bold mb-2 lg:text-[24px] lg:mb-4'>TOP UP YOUR WALLET</h2>
-                <h2 className='text-[#000] md:text-[11.46px] md:leading-[15px] lg:text-[20px] lg:leading-[26px] mb-3'>Please select the available funding methods to add money to your wallets.
-
-
-</h2>
-              </div>
-              <div className='h-[90%] ml-[15px] '>
-                <img src='./Images/top_up/phone.png' alt="" className='h-full'/>
-              </div>
+          <div className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] bg-[#61CCFF] flex items-center px-[16px] lg:px-[50px] justify-between lg:rounded-[20px] bg-[#a1e8ff]">
+            <div className='py-[13px] lg:py-[40px]'>
+              <h2 className='text-[10px] md:text-[13.75px] font-bold mb-3 lg:text-[24px] lg:mb-4'>TOP UP YOUR WALLET</h2>
+              <h2 className='text-[7px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3'>Please select the available funding methods to add money to your wallets.</h2>
             </div>
+            <div className='h-[66px] lg:h-[170px]'>
+              <img src='./Images/top_up/phone.png' alt="" className='h-full'/>
+            </div>
+          </div>
           {/* TOP BANNER ENDS HERE */}
 
           {/* FIAT AND CRYPTO BUTTON STARTS HERE */}
           <div className="flex justify-center md:justify-start py-[20px] md:py-[28.65px] lg:py-[50px] ">
-            {paymentType === "fiat" ? (
+            { paymentType === "fiat" ? (
               <div
                 className="inline-flex lg:rounded-tr-[12px] lg:rounded-br-[12px] lg:rounded-bl-[12px] 
-             ounded-tr-[4.902px] cursor-pointer py-[8.17px] px-[14%] rounded-tr-[5px] rounded-br-[5px] 
+             rounded-tr-[4.902px] cursor-pointer py-[8.17px] px-[14%] rounded-tr-[5px] rounded-br-[5px] 
              rounded-bl-[5px] md:py-[14px] md:px-[5%] md:rounded-tr-[10px] md:rounded-br-[10px] md:rounded-bl-[10px] lg:px-[3%] lg:py-[18px]
               "
                 style={{
@@ -163,31 +174,44 @@ cursor-pointer py-[8.17px] px-[14%] rounded-tr-[5px] rounded-br-[5px] rounded-bl
           </div>
 
          
-            <div >
+            <div>
               {/* FUNDING METHODS STARTS HERE */}
-              {data.map((data, index) => (
-                <Link to="/virtual-account">
-                            <div key={index.toString()} className={` ${isDarkMode ? "Style11 ":"Style1 "} mt-[25px] lg:mt-[27px]`}>
-                  <div className="flex items-center">
-                    <img
-                      src={data.image}
-                      alt="."
-                      className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                    />
-                    <div className="lg:ml-[10px] md:ml-[7px] ml-[4px]">
-                      <p className="text-[10px] md:text-[18px]">{data.title}</p>
-                      <p className={`    ${isDarkMode ? "text-[#fff]":"text-[#7c7c7c]"} text-[8px]  md:text-[16px]`}> {data.content}</p>
-                    </div>
-                  </div>
-                  <img
-                    src="Images/top_up/arrowR.png"
-                    alt="/"
-                    className="ml-[1%] w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                  />
-                </div>
-                </Link>
-
-              ))}
+              <Link to='/virtual-account'>
+                <Element
+                  data={data[0]}
+                  isDarkMode={isDarkMode}
+                />
+              </Link>
+              <Element
+                data={data[1]}
+                isDarkMode={isDarkMode}
+              />
+              <div className='cursor-pointer' onClick={() => setShowModal(true)}>
+                <Element
+                  data={data[2]}
+                  isDarkMode={isDarkMode}
+                />
+              </div>
+              <div className='cursor-pointer' onClick={() => setShowModal(true)}>
+                <Element
+                  data={data[3]}
+                  isDarkMode={isDarkMode}
+                />
+              </div>
+              <div className='cursor-pointer' onClick={() => setShowModal(true)}>
+                <Element
+                  data={data[4]}
+                  isDarkMode={isDarkMode}
+                />
+              </div>
+              { showModal && 
+                <CurrencyConversionModal
+                  title='Top Up'
+                  image='./Images/wallet/comingSoon.png'
+                  onClick={()=> setShowModal(false)}
+                  tag='This meathod is currently not available    '
+                />
+              }
               {/* FUNDING METHODS ENDS HERE */}
             </div>
             </div>

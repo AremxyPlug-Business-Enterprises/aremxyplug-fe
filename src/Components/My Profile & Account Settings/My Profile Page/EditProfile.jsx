@@ -11,7 +11,7 @@ import { ContextProvider } from '../../Context';
 import { Modal } from '../../Screens/Modal/Modal';
 import cameraProfile from '../ProfileImages/cameraProfile.svg';
 import galleryProfile from '../ProfileImages/galleryProfile.svg';
-
+import closeCircle from '../../EducationPins/imagesEducation/close-circle.svg';
 
 export default function EditProfile() {
   const {openImage, setOpenImage} = useContext(ContextProvider);
@@ -25,7 +25,8 @@ export default function EditProfile() {
        <div className='flex flex-col gap-[20px] md:gap-[30px] lg:gap-[40px]'>
         {/* Edit Profile */}
        <div className='flex lg:gap-[10px] gap-[5.87px]'>
-    <h2 className='text-[#7C7C7C] font-[500] md:text-[11.736px] md:leading-[18px]
+    <h2 className='text-[#7C7C7C] font-[500] text-[8px] leading-[10.4px] 
+    md:text-[11.736px] md:leading-[18px]
     lg:text-[20px] lg:leading-[30px]'>
       Edit Profile
       </h2>
@@ -86,14 +87,17 @@ gap-[5.868px] lg:gap-[10px] cursor-default'>
    habib@aremxy.com
      </p>
      </div>
-      <Link to="/ChangeEmail" className='text-[12px] leading-[18px]
+     <Link to = '/ChangeEmail'
+      className='lg:w-[163px] md:w-[150px] w-[100%]'>
+     <button className='w-[100%] text-[12px] leading-[18px]
       md:text-[9.389px]  md:leading-[14px]
-        lg:w-[163px] md:rounded-[12px] rounded-[4.241px]
+         md:rounded-[12px] rounded-[4.241px]
        font-[600] lg:text-[16px] lg:leading-[24px]
        bg-[#04177F] py-[10px]
        text-white text-center'>
-        Change
-        </Link>
+        Change Email
+      </button>
+      </Link>
         </div>
         
     {/* SELECT PHONE NUMBER CHANGE */}
@@ -117,12 +121,15 @@ gap-[5.868px] lg:gap-[10px] cursor-default'>
      09087654321
      </p>
      </div>
-     <Link to="/ChangePhonenumber" className='text-[12px] leading-[18px] md:text-[9.389px]  md:leading-[14px]
-     lg:w-[163px] md:rounded-[12px] rounded-[4.241px]
+     <Link to = '/ChangePhoneNumber'
+     className='lg:w-[163px] md:w-[150px] w-[100%]'>
+    <button className='w-[100%] text-[12px] leading-[18px] md:text-[9.389px]  md:leading-[14px]
+   md:rounded-[12px] rounded-[4.241px]
        font-[600] lg:text-[16px] lg:leading-[24px]
        bg-[#04177F] py-[10px] 
        text-white text-center'>
-        Change
+        Change Phone No
+        </button>
         </Link>
     </div>
     </div>
@@ -151,25 +158,29 @@ gap-[5.868px] lg:gap-[10px] cursor-default'>
             {openImage && (
             <Modal>
             <div
-            onClick={(e)=>{
-              if(e){
-                 console.log(e);
-                  }else if(!e){
-                   setOpenImage(false);
-                    }
-                    }} 
-            className='mx-[19px] md:mx-[0px] flex justify-center lg:w-[30%] md:w-[50%] w-[100%]  md:h-[404px]
+            className='mx-[19px] md:mx-[0px] flex flex-col lg:w-[40%] 
+            md:w-[50%] w-[100%]  md:h-[404px] 
             h-[237.07px] bg-white rounded-[8px]
             lg:rounded-[12px] shadow-[0px_0px_11.73611px_0px_rgba(0,0,0,0.25)]
  lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)]'>
-              <div className='flex lg:gap-[69px] gap-[40.49px] items-center '>
-                {/* CAMERA SELECTION */}
+  {/* CANCEL ICON */}
+   <div onClick={() => {
+    setOpenImage(false);
+   }}
+   className=' flex justify-end p-[10px]'>
+              <img 
+              className='lg:h-[32px] w-[32px] cursor-pointer'
+              src={closeCircle} alt="" />
+             </div>
+         <div className='flex justify-center items-center w-[100%] h-[100%] 
+         lg:gap-[69px] md:gap-[30px] gap-[40.49px]'>
+             {/* CAMERA SELECTION */}
               <div className='flex flex-col md:gap-[11px] gap-[6.45px]  cursor-pointer'>
                 <img 
                 className='lg:p-[41.5px] p-[25.23px] bg-[#F4F4F4] border-[1px]
                  border-[#9C9C9C]  
                 rounded-full md:shadow-2xl'
-                src={cameraProfile} alt="" />
+                src={cameraProfile} alt=""/>
                 <h2 className='text-center  font-[400] text-[8px] leading-[12px] 
                 lg:text-[16px] lg:leading-[24px] '>
                   Camera
@@ -180,13 +191,14 @@ gap-[5.868px] lg:gap-[10px] cursor-default'>
                 <img className='lg:p-[41.5px]  p-[25.23px] bg-[#F4F4F4] border-[1px]
                  border-[#9C9C9C]    
                  rounded-full md:shadow-2xl'
-                src={galleryProfile} alt="" />
+                src={galleryProfile} alt=""/>
                 <h2 className='text-center font-[400] text-[8px] leading-[12px] 
                 lg:text-[16px] lg:leading-[24px]'>
                  Gallery
                 </h2>
                 </div>
                 
+                  
                   </div>
                 </div>
                 </Modal>
