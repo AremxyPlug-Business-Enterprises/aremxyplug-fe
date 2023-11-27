@@ -8,7 +8,7 @@ const AccountUpgrade = () => {
     const { toggleSideBar } = useContext(ContextProvider);
    const {accountUpgrade} = useContext(ContextProvider);
     const {verificationOpen} = useContext(ContextProvider);
-
+    
   return (
        <div>
         { accountUpgrade && (
