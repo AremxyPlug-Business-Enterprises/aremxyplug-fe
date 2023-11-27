@@ -119,7 +119,7 @@ const AirtimeVtuReceipt = () => {
                 hour12: true,
               })}
             </span>
-            <p className="text-[9px] text-[#0008] text-center my-2 md:text-[14px] lg:text-[14px]">
+            <p className="text-[9px] text-[#0008] text-center mx-[10px] my-2 md:text-[14px] lg:text-[14px]">
               You have successfully purchased{" "}
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[16px]">
               {networkName + ' ' + selectedProduct} Airtime &#8358;{amount}.00{" "}
