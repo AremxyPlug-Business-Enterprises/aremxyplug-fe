@@ -79,34 +79,42 @@ export default function IdVerification() {
 }
 
 const checkform = () =>{
+
   if(genderResult &&
+    idResult &&
     idAddress &&
     idCity &&
     idState &&
     idLGA &&
     idPostalCode &&
-    idNumber ){
+    idNumber){
      setVerifyImage(Pending);
       setIdStatus('Pending');
       setErrorSubmit(false);
     setTimeout(()=> {
      setIdPopVerified(true);
+     
     },2000)
   }
- else {
+ else   {
+  
      setErrorSubmit(true);
      setVerifyImage(NotVerifiedIcon);
      setIdStatus('Not Verified');
+     
     }
   }
 
   
   return (
-    <div className='flex flex-col pb-[100px]'>
+    <div className='flex flex-col '>
         { idVerificationOpen && (
-        <div className={`  ${verificationOpen
-            ? 'block' : 'hidden'}`}>
-         <div className='flex md:gap-[25px] gap-[11px] lg:mb-[50px] mb-[35px]'>
+        <div className={`flex flex-col  ${verificationOpen
+            ? 'block' : 'hidden'}
+            ${idVerificationOpen
+            ? ' pb-[100px] lg:pb-[150px]'
+             : 'pb-[0px]'}`}>
+         <div className='flex md:gap-[25px] gap-[11px] lg:pt-[50px]  pt-[35px] lg:mb-[50px] mb-[35px]'>
             {/* ICON == NOT VERIFIED */}
     <div className=' flex gap-[5px] py-[23px] pr-[12px] pl-[12px] md:py-[25px] md:pr-[41px] md:pl-[16px] bg-white
    shadow-[0px_2.34722px_5.86806px_0px_rgba(0,0,0,0.25)]
@@ -136,7 +144,8 @@ const checkform = () =>{
          </div>
          {/* Forms */}
          
-      <form onSubmit={(e) => {
+      <form 
+      onSubmit={(e) => {
         e.preventDefault();
       }} action="">
         {/* Container for all Forms */}
@@ -217,7 +226,7 @@ const checkform = () =>{
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px]
       focus:outline-none'
     placeholder=''
-    type="text" onInvalid={validAddress} required/>
+    type="text" onInvalid={validAddress}  required/>
    
     </div>
     {/* STATE */}
@@ -235,7 +244,7 @@ const checkform = () =>{
     lg:py-[15.5px] lg:pl-[10px] border-[0.4px]
     text-[8px] leading-[10.4px] 
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px] focus:outline-none'
-    placeholder=''
+    placeholder='' 
     type="text" onInvalid={validState} required/>
    
     </div>
@@ -259,7 +268,7 @@ const checkform = () =>{
     text-[8px] leading-[10.4px] 
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px] focus:outline-none'
     placeholder=''
-    type="text" onInvalid={validCity} required/>
+    type="text" onInvalid={validCity}   required/>
    
     </div>
     {/* LGA */}
@@ -279,7 +288,7 @@ const checkform = () =>{
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px]
       focus:outline-none'
     placeholder=''
-    type="text" onInvalid={validLGA} required/>
+    type="text"  onInvalid={validLGA}  required/>
    
     </div>
       </div>
@@ -303,7 +312,7 @@ const checkform = () =>{
     text-[8px] leading-[10.4px] 
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px] focus:outline-none'
     placeholder=''
-    type="text" inputMode='numeric'/>
+    type="text" inputMode='numeric' required/>
     </div>
 
     {/* ID TYPE & ID NUMBER */}
@@ -367,7 +376,7 @@ const checkform = () =>{
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px]
       focus:outline-none'
     placeholder=''
-    type="text" inputMode='numeric' maxLength={11} onInvalid={validId} required/>
+    type="text" inputMode='numeric' maxLength={11} onInvalid={validId}  required/>
    
     </div>
       </div>
@@ -582,6 +591,7 @@ Confirming your identity ensures that the person accessing the account is indeed
                   setIdLGA('')
                   setIdPostalCode('')
                   setIdNumber('');
+                  setIdResult('');
                 }}
                 className={`my-[5%] bg-[#04177f] w-[90%] flex 
                 justify-center items-center mx-auto cursor-pointer text-[10px] 
