@@ -36,7 +36,6 @@
 .transferMoneyPop {
     position: absolute;
     height: 505px;
-    bottom: 0%;
     flex-shrink: 0;
     border-radius: 8px;
     background: #fff;
@@ -1410,7 +1409,9 @@
         margin: auto;
         align-items: center; 
         display: flex;
+        justify-content: center;
         gap: 1px;
+        padding: 0 70px;
     }
     .FlexPut1 .conPut1 h2 {
         font-size: 10px;
@@ -1418,13 +1419,12 @@
         line-height: 10px;
         letter-spacing: 0em;
         position: relative;
-        left: 60px;
+        left: 0;
     }
     .FlexPut1 .FlexImg1 img {
         width: 13px;
         height: 13px;
         position: relative;
-        right: 80px;
         top: .1px;
     }
     .airtimeTop .mainGrid {
@@ -1836,6 +1836,7 @@
         justify-content: space-between;
         gap: 350px;
         height: 100%;
+        margin: 0 auto;
     }
     .AirtimeTops1 {
         display: flex;

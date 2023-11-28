@@ -532,8 +532,9 @@ const AirtimeVtu = () => {
                 (
                 <div
                     className={`${styles.transferMoneyPop} ${
-                    toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-                    } w-[90%] overflow-auto`}
+                    toggleSideBar ? "xl:w-[65%] xl:ml-[17%] lg:ml-[20%] lg:w-[40%]"
+                    : "lg:w-[40%]"
+                } w-[90%] xl:w-[80%] overflow-auto`}
                 >
                     <img
                     onClick={()=> setCodes(false)}
@@ -556,22 +557,22 @@ const AirtimeVtu = () => {
                     </h2>
                     <div className='flex flex-col gap-1 mb-5'>
                         <button
-                            className={`bg-[#FAF8F8] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%]`}
+                            className={`bg-[#FAF8F8] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:my-[1%]`}
                             >
                             MTN Airtime Balance Code - *310#
                         </button>
                         <button
-                            className={`bg-[#FAF8F8] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%]`}
+                            className={`bg-[#FAF8F8] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:my-[1%]`}
                             >
                             AIRTEL Airtime Balance Code - *310#
                         </button>
                         <button
-                            className={`bg-[#FAF8F8] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%]`}
+                            className={`bg-[#FAF8F8] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:my-[1%]`}
                             >
                             GLO Airtime Balance Code - *310#
                         </button>
                         <button
-                            className={`bg-[#FAF8F8] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%]`}
+                            className={`bg-[#FAF8F8] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:my-[1%]`}
                             >
                             9MOBILE Airtime Balance Code - *310#
                         </button>
@@ -833,7 +834,17 @@ const AirtimeVtu = () => {
                     </div>
                     <div className="flex w-[70%] mx-auto items-center gap-[5%] md:w-[60%] lg:my-[5%]">
                     <button
-                        onClick={() => setTransactSuccessPopUp(false)}
+                        onClick={() => {
+                            setTransactSuccessPopUp(false);
+                            // window.location.reload();
+                            setSelected("");
+                            setRecipientNumber("");
+                            setRecipientName("");
+                            setSelectedProduct("");
+                            setAmount("");
+                            setDiscount("");
+                            setPaymentSelected("");
+                          }}
                         className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
                     >
                         Done
