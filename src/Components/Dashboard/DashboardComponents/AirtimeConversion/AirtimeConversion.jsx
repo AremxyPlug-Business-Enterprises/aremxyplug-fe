@@ -120,7 +120,12 @@ const schema = Joi.object({
     .messages({
       "string.pattern.base": "Phone number should be 11 digits ",
     }),
-   
+    inputValue: Joi.string()
+    .pattern(new RegExp(/^\d{4,}/))
+    .required()
+    .messages({
+      "string.pattern.base": "Minimum amount to convert is 1000",
+    }),
     
 });
 
@@ -250,6 +255,11 @@ const [inputValue, setInputValue] = useState('');
               className="w-[100%] outline-none text-[8px] lg:text-[16px] leading-[20.8px  font-[600]  text-[#000]"
               placeholder="Amount to Convert"
             />{" "}
+            {errors.inputValue && (
+              <div className="text-[12px] text-red-500 italic lg:text-[14px]">
+                {errors.inputValue}
+              </div>
+            )}
           </div>
           <div className="h-[30px] md:h-[40px] lg:h-[60px]  w-[15%] md:w-[8%] gap-2 lg:gap-4 flex flex-row pl-[17px] lg:pl-[35px] py-2 bg-primary items-center   ">
             <div>
@@ -320,12 +330,28 @@ const [inputValue, setInputValue] = useState('');
         <div className="flex flex-col justify-center md:items-center">
           <div
             onClick={handleProceed}
-            className='text-[12px] mt-[30px] md:mt-[40px] md:w-fit bg-[#04177f] lg:px-12 lg:text-[16px] lg:px md:py-1 md:rounded-md md:px-6   py-3 rounded-md font-[600] text-center text-white'
+            className={` ${
+              (inputValue.length < 4 ? "bg-[#0008]" : "bg-[#04177f]",
+              resultValue.length < 4 ? "bg-[#0008]" : "bg-[#04177f]")
+              
+            } text-[12px] mt-[50px] md:mt-[40px] md:w-fit lg:px-12 lg:text-[16px] lg:px md:py-1 md:rounded-md md:px-6   py-3 rounded-md font-[600] text-center text-white
+            ${
+              !recipientNumber ||
+              !inputValue ||
+              !selected 
+                ? "bg-[#63616188] cursor-not-allowed"
+                : "bg-primary"
+            }`
+          }
+          disabled={
+            !recipientNumber ||
+              !inputValue ||
+              !selected 
+          }
           >
             Proceed
           </div>
         </div>
-
                         </div> :
                         <div></div>
                     }
