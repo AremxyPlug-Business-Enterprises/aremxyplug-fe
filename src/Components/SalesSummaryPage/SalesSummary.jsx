@@ -70,7 +70,7 @@ const handleBalance = (product) => {
 
 
         
-        const [selected, setSelected] = useState("");
+        const [selected, setSelected] = useState("NGN");
         const { isDarkMode, toggleSideBar } =
   useContext(ContextProvider);
 
@@ -101,14 +101,14 @@ const handleBalance = (product) => {
         <>
         <div class="flex gap-[25px] lg:w-full lg:h-[1850px] md:h-[1200px] h-[800px] md:w-full w-full flex-col">
         <div
-            id="Transaction"
-            className="w-full h-[90px] bg-gradient-to-r from-yellow-300 to-rose-400 md:h-[112.29px] lg:h-[196px] md:rounded-[11.5px] rounded-[7px] md:mt-[-1px] px-[5px] lg:ml-[-20px] lg:w-[102%] 2xl:w-full 2xl:ml-0 lg:gap-[50px] pt-[10px] lg:px-[30px] lg:rounded-[20px] lg:py-[20px] pb-[16px] flex justify-between items-center"
+            // id="Transaction"
+            className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] bg-gradient-to-r from-yellow-300 to-rose-400 md:rounded-[11.5px] rounded-[7px] md:mt-[-1px] px-[5px] lg:ml-[-20px] lg:w-[102%] 2xl:w-full 2xl:ml-0 lg:gap-[50px] pt-[10px] lg:px-[30px] lg:rounded-[20px] lg:py-[20px] pb-[16px] flex justify-between items-center"
           >
             <div className="w-[100%] pt-[19px] lg:pt-[20px] pl-[8.5px] md:pl-[9px]">
-              <p className="text-[10px] mb-2 font-bold uppercase w-[110%] md:text-[12px] md:w-[70%] lg:w-[70%] lg:text-[20px] 2xl:w-[80%] 2xl:text-[24px] lg:mb-4">
+              <p className="text-[10px] mb-2 font-bold uppercase w-[100%] md:text-[12px] md:w-[70%] lg:w-[70%] lg:text-[20px] 2xl:w-[80%] 2xl:text-[24px] lg:mb-4">
                 MANAGE ALL YOUR TRANSACTIONS AT A TIME WITHOUT ANY HASSLE.
               </p>
-              <p className="text-[7px] font-[400] leading-[9px] mb-3 md:text-[9px] md:leading-[12.2px] w-[100%] md:w-[80%] lg:w-[75%] 2xl:w-[85%] 2xl:mt-[5px] lg:mt-[20px] lg:text-[16px] lg:leading-[26px] 2xl:text-[20px] lg:mb-[20px]">
+              <p className="text-[7px] font-[400] leading-[9px] mb-3 md:text-[9px] md:leading-[12.2px] w-[90%] md:w-[80%] lg:w-[75%] 2xl:w-[85%] 2xl:mt-[5px] lg:mt-[20px] lg:text-[16px] lg:leading-[26px] 2xl:text-[20px] lg:mb-[20px]">
                 Select, filter, and manage all your transactions at a time,
                 download all transactions stats and keep a record track.
               </p>
@@ -122,26 +122,6 @@ const handleBalance = (product) => {
               />
             </div>
           </div>
-
-        {/* <div className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] bg-gradient-to-r from-yellow-300 to-rose-400 flex px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px]"> */}
-                {/* <div className="py-[13px] lg:py-[40px]"> */}
-                  {/* <h2 className="text-[9px] md:text-[13.75px] font-bold mb-3 lg:text-[24px] lg:mb-4"> */}
-                  {/* MANAGE ALL YOUR TRANSACTIONS AT A <br /> TIME WITHOUT ANY HASSLE. */}
-                  {/* </h2> */}
-                  {/* <h2 className="text-[6px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3"> */}
-                  {/* Select, filter, and manage all your transactions at a time, */}
-                   {/* download all <br/> transactions stats and keep a record track. */}
-                    {/*  */}
-                  {/* </h2> */}
-                {/* </div> */}
-                {/* <div className="w-[91px] md:h-full md:w-[150px] lg:w-[220px] h-[70px] lg:h-[180px]"> */}
-                  {/* <img */}
-                    {/* // src={receiptA} */}
-                    {/* // alt="" */}
-                    {/* // className="h-full" */}
-                  {/* // /> */}
-                {/* </div> */}
-              {/* </div> */}
 
 
 

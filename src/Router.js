@@ -129,6 +129,9 @@ import { CancelledReceipt } from "./Components/Dashboard/DashboardComponents/Tra
 import ChangeEmail from "./Components/My Profile & Account Settings/My Profile Page/ChangeEmail";
 import ChangePhoneNumber from "./Components/My Profile & Account Settings/My Profile Page/ChangePhoneNumber";
 import AirtimeConversion from "./Components/Dashboard/DashboardComponents/AirtimeConversion/AirtimeConversion";
+import LaunchPage from "./Components/NotificationsPage/LaunchPage";
+import ChangePin from "./Components/My Profile & Account Settings/My Profile Page/ChangePin";
+import AccountUpgrade from "./Components/My Profile & Account Settings/My Profile Page/AccountUpgrade";
 
 export const Router = () => {
   return (
@@ -186,6 +189,8 @@ export const Router = () => {
         <Route path="/wallet-summary" element={<WalletSummaryPage/>} />
         <Route path="/sales-summary" element={<SalesSummaryPage />} />
         <Route path="/notifications" element={<NotificationsPage />} />
+        <Route path="/launch-page" element={<LaunchPage />} />
+
         <Route path="/wallet-successful-receipt" element={<WalletSuccessfulReceipt />} />
         <Route path="/wallet-failed-receipt" element={<WalletFailedReceipt />} />
         <Route path="/wallet-pending-receipt" element={<WalletPendingReceipt />} />
@@ -288,8 +293,11 @@ export const Router = () => {
         <Route path="/PendingReceipt" element={<PendingReceipt/>} />
         <Route path="/RefundedReceipt" element={<RefundedReceipt/>} />
         <Route path="/CancelledReceipt" element={<CancelledReceipt/>} />
+        <Route path="/LaunchPage" element={<LaunchPage/>} />
         <Route path="/ChangeEmail" element={<ChangeEmail/>} />
         <Route path="/ChangePhoneNumber" element={<ChangePhoneNumber/>} />
+        <Route path="/ChangePin" element={<ChangePin/>} />
+        <Route path="/AccountUpgrade" element={<AccountUpgrade/>} />
       </Routes>
     </div>
   );

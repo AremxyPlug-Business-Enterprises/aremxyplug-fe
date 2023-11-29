@@ -47,7 +47,7 @@ const PointBalance = () => {
                         <h2 className='text-[8px] md:text-[13.75px] font-bold mb-3 lg:text-[24px] lg:mb-4'>POINT BALANCE.</h2>
                         <h2 className='text-[7.5px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3'>The below point balances are your total earned points from all your transactions and referrals.</h2>
                     </div>
-                    <div className='w-[91px] h-[66px] lg:w-[254px] lg:h-[170px] grow'>
+                    <div className='h-[66px] lg:h-[170px]'>
                         <img src='./Images/wallet/fiatBanner.png' alt="" className='h-full'/>
                     </div>
                 </div>

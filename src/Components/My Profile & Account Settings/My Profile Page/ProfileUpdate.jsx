@@ -1,18 +1,19 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import '../../../App.css';
 import ProfilePic from '../ProfileImages/ProfilePic.svg';
 import pickPinIcon from '../ProfileImages/pickPinIcon.svg';
 import  naijaFlag from "../../EducationPins/imagesEducation/Nigeriaflag.svg";
 import messageQuestion from "../ProfileImages/message-question.svg";
 import { Link } from 'react-router-dom';
-
+import { ContextProvider } from '../../Context';
 
 
 export default function ProfileUpdate() {
-    // const [profilePage, setProfilePage] = useState(true);
+  const {profilePage} = useContext(ContextProvider);
+
   return (
     <div>
-     
+     {profilePage && (
  <div className='flex flex-col justify-between md:h-[1000px] h-[900px]  mt-[40px]'>
   <div>
     <div className='flex flex-col gap-[20px] md:gap-[30px] lg:gap-[40px]'>
@@ -233,7 +234,7 @@ export default function ProfileUpdate() {
               </Link>
             </div>
     </div>
-   
+     )}
 
     </div>
     
