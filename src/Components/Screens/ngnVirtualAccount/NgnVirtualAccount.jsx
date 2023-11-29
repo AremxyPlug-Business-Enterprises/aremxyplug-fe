@@ -29,7 +29,7 @@ function NgnVirtualAccount() {
     const text_1 = `Bank Name: ${value_1}`
     const text_2 = `Account Name: ${value_2}`;
     const text_3 = `Account Number: ${value_3}`;
-    const combineText = text_1 +'\n' + text_2 + '\n' + text_3;
+    const combineText = `${text_1}\n${text_2}\n${text_3}`
 
     navigator.clipboard.writeText(combineText)
     .then(() => {
