@@ -8,12 +8,14 @@ const AccountUpgrade = () => {
     const { toggleSideBar } = useContext(ContextProvider);
    const {accountUpgrade} = useContext(ContextProvider);
     const {verificationOpen} = useContext(ContextProvider);
-
+    
   return (
        <div>
         { accountUpgrade && (
-          <div className= {`${verificationOpen
-            ? 'block'  : 'hidden'}`}>
+          <div className= {`flex flex-col ${verificationOpen
+            ? 'block'  : 'hidden'} ${accountUpgrade
+            ? 'pb-[100px] lg:pb-[150px]'
+             :  'pb-[0px]'}`}>
         <div className="px-20px flex flex-col h-full justify-between">
         <div className="flex items-center my-[10%] gap-[8px] md:my-[5%] md:text-[18px] lg:text-[px]">
           <p className="text-[#7c7c7c] text-[10px] leading-[130%] md:text-[14px] lg:text-[18px] 2xl:text-[28px]">

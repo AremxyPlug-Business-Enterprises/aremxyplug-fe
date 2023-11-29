@@ -15,7 +15,7 @@ import PopUpGreen from "../ProfileImages/PopUpGreen.svg";
 import PopUpGreenTab from "../ProfileImages/PopUpGreenTab.svg"
 import PopUpGreenDeskTop from "../ProfileImages/PopUpGreenDeskTop.svg"
 import Success from "../ProfileImages/success.gif"
-
+import QueryId from '../ProfileImages/IdCustomerQuery.svg';
 
 export default function IdVerification() {
   const {verificationOpen} = useContext(ContextProvider)
@@ -34,6 +34,7 @@ export default function IdVerification() {
     const [idFrontView, setIdFrontView] = useState(false);
     const [idBackView, setIdBackView] = useState(false);
       const [idPopVerified, setIdPopVerified] = useState(false);
+      const [idCustomerQuery, setIdCustomerQuery] = useState(false);
  const {toggleSideBar} = useContext(ContextProvider);
 
     // Genders
@@ -64,7 +65,7 @@ export default function IdVerification() {
   // CUSTOM VALIDITY FOR STATE
   const validState  = (e) => {
     const addState = e.target.value;
-    e.target.setCustomValidity(addState ? '' : 'Your Status must be entered')
+    e.target.setCustomValidity(addState ? '' : 'Your State must be entered')
   }
   //CUSTOM VALIDITY FOR ID
   const validId = (e) => {
@@ -78,34 +79,42 @@ export default function IdVerification() {
 }
 
 const checkform = () =>{
+
   if(genderResult &&
+    idResult &&
     idAddress &&
     idCity &&
     idState &&
     idLGA &&
     idPostalCode &&
-    idNumber ){
+    idNumber){
      setVerifyImage(Pending);
       setIdStatus('Pending');
       setErrorSubmit(false);
     setTimeout(()=> {
      setIdPopVerified(true);
+     
     },2000)
   }
- else {
+ else   {
+  
      setErrorSubmit(true);
      setVerifyImage(NotVerifiedIcon);
      setIdStatus('Not Verified');
+     
     }
   }
 
   
   return (
-    <div className='flex flex-col pb-[100px]'>
+    <div className='flex flex-col '>
         { idVerificationOpen && (
-        <div className={`  ${verificationOpen
-            ? 'block' : 'hidden'}`}>
-         <div className='flex md:gap-[25px] gap-[11px] lg:mb-[50px] mb-[35px]'>
+        <div className={`flex flex-col  ${verificationOpen
+            ? 'block' : 'hidden'}
+            ${idVerificationOpen
+            ? ' pb-[100px] lg:pb-[150px]'
+             : 'pb-[0px]'}`}>
+         <div className='flex md:gap-[25px] gap-[11px] lg:pt-[50px]  pt-[35px] lg:mb-[50px] mb-[35px]'>
             {/* ICON == NOT VERIFIED */}
     <div className=' flex gap-[5px] py-[23px] pr-[12px] pl-[12px] md:py-[25px] md:pr-[41px] md:pl-[16px] bg-white
    shadow-[0px_2.34722px_5.86806px_0px_rgba(0,0,0,0.25)]
@@ -126,13 +135,17 @@ const checkform = () =>{
         lg:text-[16px] lg:leading-[20.8px]'>
         Why Account Verification with my ID Document?
        </h2>
-        <img src={messageIcon} alt="" 
-        className='h-[14.083px] w-[14.083px] lg:h-[24px] lg:w-[24px]'/>
+        <img onClick={() => {
+          setIdCustomerQuery(true);
+        }}
+         src={messageIcon} alt="" 
+        className='h-[14.083px] w-[14.083px] lg:h-[24px] lg:w-[24px] cursor-pointer'/>
     </div>
          </div>
          {/* Forms */}
          
-      <form onSubmit={(e) => {
+      <form 
+      onSubmit={(e) => {
         e.preventDefault();
       }} action="">
         {/* Container for all Forms */}
@@ -213,7 +226,7 @@ const checkform = () =>{
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px]
       focus:outline-none'
     placeholder=''
-    type="text" onInvalid={validAddress} required/>
+    type="text" onInvalid={validAddress}  required/>
    
     </div>
     {/* STATE */}
@@ -231,7 +244,7 @@ const checkform = () =>{
     lg:py-[15.5px] lg:pl-[10px] border-[0.4px]
     text-[8px] leading-[10.4px] 
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px] focus:outline-none'
-    placeholder=''
+    placeholder='' 
     type="text" onInvalid={validState} required/>
    
     </div>
@@ -255,7 +268,7 @@ const checkform = () =>{
     text-[8px] leading-[10.4px] 
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px] focus:outline-none'
     placeholder=''
-    type="text" onInvalid={validCity} required/>
+    type="text" onInvalid={validCity}   required/>
    
     </div>
     {/* LGA */}
@@ -275,7 +288,7 @@ const checkform = () =>{
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px]
       focus:outline-none'
     placeholder=''
-    type="text" onInvalid={validLGA} required/>
+    type="text"  onInvalid={validLGA}  required/>
    
     </div>
       </div>
@@ -299,7 +312,7 @@ const checkform = () =>{
     text-[8px] leading-[10.4px] 
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px] focus:outline-none'
     placeholder=''
-    type="text" inputMode='numeric'/>
+    type="text" inputMode='numeric' required/>
     </div>
 
     {/* ID TYPE & ID NUMBER */}
@@ -363,7 +376,7 @@ const checkform = () =>{
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px]
       focus:outline-none'
     placeholder=''
-    type="text" inputMode='numeric' maxLength={11} onInvalid={validId} required/>
+    type="text" inputMode='numeric' maxLength={11} onInvalid={validId}  required/>
    
     </div>
       </div>
@@ -418,6 +431,57 @@ border-[0.4px] border-[solid] border-[#9C9C9C] cursor-pointer'>
        
        
         </div>
+        {idCustomerQuery && (
+          <Modal>
+            <div className='bg-white flex flex-col  lg:h-[890px] lg:w-[70%] lg:rounded-[20px]
+            lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] justify-center items-center lg:gap-[100px]'>
+          <div className='flex flex-col lg:gap-[25px] items-center'>
+       <p className='font-[400] text-[8px] text-center leading-[10.4px] 
+   lg:text-[16px] lg:leading-[20.8px'>
+    ID Verification confirms your identity using a Government-issued ID document. 
+    </p>
+    <p className='font-[400] text-[8px] text-center leading-[10.4px] 
+   lg:text-[16px] lg:leading-[20.8px'>
+This verification protects you and us from fraudulent activities.
+ Your information remains confidential and is used solely for verification.
+ </p>
+ <img src={QueryId} alt="" 
+          className='lg:w-[294px] lg:h-[234px]'/>
+          </div>
+          {/*  */}
+          
+          <div className='flex flex-col lg:gap-[40px] mb-[50px]'>
+            {/* Header */}
+   <h2 className='font-[700] lg:text-[16px] lg:leading-[19.2px] text-center'>
+   Why do we need your ID document for account verification?
+   </h2>
+   {/* Paragraph */}
+   <div className='flex flex-col lg:gap-[20px]'>
+  <p className='font-[700] lg:text-[16px] lg:leading-[19.2px] text-center'>
+  1. Security: Your safety is our priority. Verifying your ID helps us
+   protect your account from unauthorized access and potential fraud.
+</p>
+<p className='font-[700] lg:text-[16px] lg:leading-[19.2px] text-center'>
+2. Trust: We want to build a trusted relationship with you. 
+Confirming your identity ensures that the person accessing the account is indeed you.
+</p>
+   </div>
+
+          </div>
+          <div className='flex'>
+   <button onClick={() => {
+    setIdCustomerQuery(false);
+   }} 
+   className='font-[600] bg-[#04177F] md:w-[163px] lg:py-[13px] text-white lg:rounded-[12px]
+   lg:text-[16px] lg:leading-[24px] '>
+    Okay
+   </button>
+          </div>
+ </div>
+          
+            
+          </Modal>
+        )}
     {idFrontView && (
 <Modal>
   <div className='flex flex-col rounded-[8px] w-[100%] h-[257.07px]  md:h-[404px] 
@@ -527,6 +591,7 @@ border-[0.4px] border-[solid] border-[#9C9C9C] cursor-pointer'>
                   setIdLGA('')
                   setIdPostalCode('')
                   setIdNumber('');
+                  setIdResult('');
                 }}
                 className={`my-[5%] bg-[#04177f] w-[90%] flex 
                 justify-center items-center mx-auto cursor-pointer text-[10px] 
