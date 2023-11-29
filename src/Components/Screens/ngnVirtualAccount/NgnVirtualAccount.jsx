@@ -26,10 +26,10 @@ function NgnVirtualAccount() {
     const value_2 = accNameRef.current.innerText;
     const value_3 = accNoRef.current.innerText;
 
-    const text_1 = 'Bank Name: '+ {value_1}
-    const text_2 = 'Account Name: '+ {value_2};
-    const text_3 = 'Account Number: '+ {value_3};
-    const combineText = text_1 +'\n' + text_2 + '\n' + text_3
+    const text_1 = `Bank Name: ${value_1}`
+    const text_2 = `Account Name: ${value_2}`;
+    const text_3 = `Account Number: ${value_3}`;
+    const combineText = text_1 +'\n' + text_2 + '\n' + text_3;
 
     navigator.clipboard.writeText(combineText)
     .then(() => {
@@ -37,7 +37,7 @@ function NgnVirtualAccount() {
     .catch((error) => console.log('Unable to copy details', error));
   }
 
-  const handleShareCombineText = async () => {
+  const handleShareCombineText = () => {
 
     const value_1 = bankNameRef.current.innerText;
     const value_2 = accNameRef.current.innerText;
@@ -50,12 +50,9 @@ function NgnVirtualAccount() {
     };
 
     if (navigator.share) {
-      try{
-        await navigator.share(combineText);
-        console.log('Details shared successfully')
-      } catch (error) {
-        console.error('Error sharing details: ', error.message)
-      }    
+      navigator.share(combineText)
+      .then(() => console.log('Details shared successfully'))
+      .catch(() => console.log('navigator.share is not supported'))   
     } else {
       console.log('navigator.share is not supported')
     }
