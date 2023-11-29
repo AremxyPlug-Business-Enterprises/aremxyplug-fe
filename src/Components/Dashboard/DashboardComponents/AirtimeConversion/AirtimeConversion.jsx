@@ -25,7 +25,7 @@ const AirtimeConversion = () => {
   const [selected, setSelected] = useState(false);
   const [networkName, setNetworkName] = useState('');
   const [recipientNumber, setRecipientNumber] = useState('');
-  const [text, setText] = useState(false);
+  
   const networkList = [
     {
         id:1,
@@ -278,7 +278,11 @@ const [inputValue, setInputValue] = useState('');
           <div className="">
             Minimum 1000
           </div>
-          <div>  </div>
+          <div> 
+          {selected.map((item) => (
+                                <Network key={item.id} image={item.image}  />
+                            ))}
+          </div>
         </div>
         </div>
         <div className="mt-[15px] flex flex-row lg:mt-[20px]">
