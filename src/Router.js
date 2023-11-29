@@ -128,6 +128,7 @@ import { RefundedReceipt } from "./Components/Dashboard/DashboardComponents/Tran
 import { CancelledReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/CancelledReceipt";
 import ChangeEmail from "./Components/My Profile & Account Settings/My Profile Page/ChangeEmail";
 import ChangePhoneNumber from "./Components/My Profile & Account Settings/My Profile Page/ChangePhoneNumber";
+import AirtimeConversion from "./Components/Dashboard/DashboardComponents/AirtimeConversion/AirtimeConversion";
 
 export const Router = () => {
   return (
@@ -238,6 +239,7 @@ export const Router = () => {
         <Route path="/ikedc" element={<IKEDC />} />
         <Route path="/aedc" element={<AEDC />} />
         <Route path="/ekedc" element={<EKEDC />} />
+        <Route path="/airtime-conversion" element={<AirtimeConversion />} />
         <Route path="/electricity-subscription" element={<ElectricitySubscription/>} />
         <Route path="/global-transfer" element={<GlobalTransfer />} />
         <Route path="/point-redeem" element={<PointRedeem />} />
