@@ -22,7 +22,7 @@ return (
         <div className='flex flex-wrap md:flex-nowrap  mt-[23px] md:w-[100%]  
         md:gap-[53.4px] lg:gap-[91px] 
         md:border-b-[2px] md:border-[#D9D9D999] border-opacity-[60%]   
-        justify-between'>
+        justify-between '>
             {/* Profile Tab */}
             <div 
             onClick={() => {

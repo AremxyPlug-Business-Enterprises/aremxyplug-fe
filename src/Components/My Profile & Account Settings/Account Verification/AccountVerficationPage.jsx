@@ -84,7 +84,7 @@ src={Arrowright} alt="" />
      justify-center px-[8.594px] mb-[130px]
      ${verificationOpen
      ? 'block'
-    :  'hidden'}`}>
+    :  'hidden'}`} >
               <p className="font-[500] text-[10px] text-black 
               leading-[10.4px] lg:text-[16px] lg:leading-[15.6px]  md:text-[6.875px]
             ] md:leading-[12.938px] self-center">
