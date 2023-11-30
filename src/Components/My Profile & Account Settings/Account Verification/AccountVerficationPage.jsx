@@ -13,8 +13,8 @@ export default function AccountVerficationPage() {
     const {accountUpgrade, setAccountUpgrade} = useContext(ContextProvider);
   return (
     
-    <div className='flex flex-col justify-between lg:h-[120%] h-[140%]'>
-      <div>
+    <div className='flex flex-col '>
+      <div className=''>
         { verificationOpen && (
         <div>
        <div className='flex lg:gap-[10px] lg:py-[50px] py-[35px]'> 
