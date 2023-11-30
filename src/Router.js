@@ -132,6 +132,7 @@ import AirtimeConversion from "./Components/Dashboard/DashboardComponents/Airtim
 import LaunchPage from "./Components/NotificationsPage/LaunchPage";
 import ChangePin from "./Components/My Profile & Account Settings/My Profile Page/ChangePin";
 import AccountUpgrade from "./Components/My Profile & Account Settings/My Profile Page/AccountUpgrade";
+import ToAremxyPlug from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/ToAremxyPlug"
 
 export const Router = () => {
   return (
@@ -176,6 +177,7 @@ export const Router = () => {
         <Route path="/virtual-account" element={<VirtualAccount />} />
         <Route path="/personal-account" element={<PersonalAccountPage />} />
         <Route path="/business-account" element={<BusinessAccountPage />} />
+        <Route path="/to-aremxyplug" element={<ToAremxyPlug />} />
         <Route path="/airtime-topup" element={<AirTime />} />
         <Route path="/airtime-vtu" element={<AirtimeVtu />} />
         <Route path="/airtime-vtu-receipt" element={<AirtimeVtuReceipt />} />
