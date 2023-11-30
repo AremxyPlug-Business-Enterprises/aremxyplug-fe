@@ -112,7 +112,7 @@ const checkform = () =>{
         <div className={`flex flex-col  ${verificationOpen
             ? 'block' : 'hidden'}
             ${idVerificationOpen
-            ? ' pb-[100px] lg:pb-[150px]'
+            ? ' pb-[150px] lg:pb-[300px]'
              : 'pb-[0px]'}`}>
          <div className='flex md:gap-[25px] gap-[11px] lg:pt-[50px]  pt-[35px] lg:mb-[50px] mb-[35px] '>
             {/* ICON == NOT VERIFIED */}
@@ -435,10 +435,11 @@ border-[0.4px] border-[solid] border-[#9C9C9C] cursor-pointer'>
         </div>
         {idCustomerQuery && (
           <Modal>
-            <div className='bg-white flex flex-col  lg:h-[890px] md:h-[504.893px] md:rounded-[11.736px]
-            md:shadow-[0px_0px_11.73611px_0px_rgba(0,0,0,0.25)] md:w-[80%] lg:w-[70%] lg:rounded-[20px]
-            lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] justify-center items-center md:gap-[50px] lg:gap-[100px]'>
-          <div className='flex flex-col lg:gap-[25px] md:gap-[15px] items-center'>
+            <div className='bg-white flex flex-col  lg:h-[890px] md:h-[604.893px] md:rounded-[11.736px] mx-[19px]
+            shadow-[0px_0px_8.3274px_0px_rgba(0 0 0,0.25)] rounded-[8px] h-[600px] px-[18px] md:px-[30px]
+            md:shadow-[0px_0px_11.73611px_0px_rgba(0,0,0,0.25)] md:w-[80%] lg:w-[70%] lg:rounded-[20px] md:mx-[0px]
+            lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] justify-center items-center gap-[18px] md:gap-[50px] lg:gap-[100px]'>
+          <div className='flex flex-col lg:gap-[25px] gap-[10px] md:gap-[15px] items-center'>
        <p className='font-[400] text-[13px] text-center leading-[16.206px] 
    lg:text-[16px] lg:leading-[20.8px]'>
     ID Verification confirms your identity using a Government-issued ID document. 
@@ -449,37 +450,39 @@ This verification protects you and us from fraudulent activities.
  Your information remains confidential and is used solely for verification.
  </p>
  <img src={QueryId} alt="" 
-          className='lg:w-[294px] lg:h-[234px] md:w-[172px] md:h-[135.893px]'/>
+          className='lg:w-[294px] lg:h-[234px] md:w-[172px]
+           md:h-[135.893px] w-[172.521px] h-[135.893px]'/>
           </div>
           {/*  */}
           
-          <div className='flex flex-col lg:gap-[40px] md:gap-[23.47px] mb-[50px]'>
+          <div className='flex flex-col gap-[20px] lg:gap-[40px] md:gap-[23.47px] mb-[50px] mt-[18px]'>
             {/* Header */}
    <h2 className='font-[700] lg:text-[16px] lg:leading-[19.2px] text-[13px] leading-[16.206px] 
    text-center'>
    Why do we need your ID document for account verification?
    </h2>
    {/* Paragraph */}
-   <div className='flex flex-col lg:gap-[20px]'>
-  <p className='font-[700] lg:text-[16px] lg:leading-[19.2px] 
-  text-center  text-[13px] leading-[16.206px]'>
-  1. Security: Your safety is our priority. Verifying your ID helps us
+   <div className='flex flex-col gap-[10px]  md:gap-[20px]'>
+  <p className='font-[500] lg:text-[16px] lg:leading-[19.2px] 
+  text-left  text-[13px] leading-[16.206px]'>
+  <span className='font-[700]'>1. Security: </span>Your safety is our priority. Verifying your ID helps us
    protect your account from unauthorized access and potential fraud.
 </p>
-<p className='font-[700] lg:text-[16px] lg:leading-[19.2px]
- text-center   text-[13px] leading-[16.206px]'>
-2. Trust: We want to build a trusted relationship with you. 
+<p className='font-[500] lg:text-[16px] lg:leading-[19.2px]
+ text-left   text-[13px] leading-[16.206px]'>
+   <span className='font-[700]'>2. Trust:</span> We want to build a trusted relationship with you. 
 Confirming your identity ensures that the person accessing the account is indeed you.
 </p>
    </div>
 
           </div>
-          <div className='flex'>
+          <div className='flex w-[100%] md:justify-center'>
    <button onClick={() => {
     setIdCustomerQuery(false);
    }} 
-   className='font-[600] bg-[#04177F] md:w-[163px] md:py-[5.868px] lg:py-[13px] text-white lg:rounded-[12px]
-   lg:text-[16px] lg:leading-[24px] md:rounded-[7.042px]'>
+   className='font-[600] bg-[#04177F] w-[100%] md:w-[163px] md:py-[5.868px] lg:py-[13px]
+    text-white lg:rounded-[12px] py-[16.531px]
+   lg:text-[16px] lg:leading-[24px] md:rounded-[7.042px] rounded-[4.61px]'>
     Okay
    </button>
           </div>
