@@ -37,7 +37,7 @@ const GoTv = () => {
     decoderActive,
     setDecoderActive,
     setDecoderType,
-    decoderType,
+    // decoderType,
   } = useContext(ContextProvider)
 
 
@@ -107,10 +107,10 @@ const GoTv = () => {
       { decoderType :'StarTimes', path : "/StarTimes", id : 3 },
     { decoderType :'Showmax', path : "/Showmax", id : 4 }
      ]
-    function GotvDropDown(){
-      setDecoderActive(!decoderActive);
-    document.querySelector('.Decoderdrop').classList.toggle('DropIt');
-  }
+  //   function GotvDropDown(){
+  //     setDecoderActive(!decoderActive);
+  //   document.querySelector('.Decoderdrop').classList.toggle('DropIt');
+  // }
   
 
 
@@ -227,7 +227,7 @@ const GoTv = () => {
                 <img className="absolute left-[90%] lg:left-[94%] self-center align-middle" src={arrowDown} alt="" />
               </div>
 
-              {/* {confirmDecoderGOTV && (
+              {confirmDecoderGOTV && (
                 <ul className="dropdown-options absolute top-[102%] w-full bg-white cursor-pointer">
                   {decoders.map((option, index) => (
                     <li
@@ -242,7 +242,7 @@ const GoTv = () => {
                     </li>
                   ))}
                 </ul>
-              )} */}
+              )}
               {decoderActive && (
          <div className='absolute lg:top-[90px] md:top-[60px]  top-[50px] z-[2]  flex flex-col w-[100%] lg:h-225px md:h-[210px]  
         '>
