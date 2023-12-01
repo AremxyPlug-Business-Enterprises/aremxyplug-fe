@@ -37,7 +37,7 @@ import { Modal } from "../../Screens/Modal/Modal";
     return '';
   };
 
-  const valueWithoutTilde = selectedOptionGOTV.split(" ~ ")[0];
+  const valueWithoutTilde = selectedOptionDstv.split(" ~ ")[0];
   const trimmedValue = valueWithoutTilde.trim();
 
     return(
@@ -130,7 +130,7 @@ import { Modal } from "../../Screens/Modal/Modal";
                   </p>
                 </div>
                 <img
-                  src={arrowRight}
+                  src=""
                   alt=""
                   className="w-[12px] h-[12px] md:w-[50px] md:h-[20px] lg:w-[80px] lg:h-[30px]"
                 />

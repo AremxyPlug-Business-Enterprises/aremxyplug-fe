@@ -34,6 +34,10 @@ const GoTv = () => {
     setSmartCard,
     setTvEmail,
     setMobileNumber,
+    decoderActive,
+    setDecoderActive,
+    setDecoderType,
+    decoderType,
   } = useContext(ContextProvider)
 
 
@@ -96,10 +100,20 @@ const GoTv = () => {
     setTvEmail(inputValue);
   }
 
-  // const handleGotv = (event) => {
-  //   event.preventDefault();
-  //   setConfirmGotvPopup(true)
-  // }
+ 
+  const Decoders  = [
+    { decoderType :'GOtv',  id : 1},
+      { decoderType :'DStv', path :  "/DsTv", id : 2 },
+      { decoderType :'StarTimes', path : "/StarTimes", id : 3 },
+    { decoderType :'Showmax', path : "/Showmax", id : 4 }
+     ]
+    function GotvDropDown(){
+      setDecoderActive(!decoderActive);
+    document.querySelector('.Decoderdrop').classList.toggle('DropIt');
+  }
+  
+
+
   const handleGotv = (event) => {
     event.preventDefault();
     
@@ -213,7 +227,7 @@ const GoTv = () => {
                 <img className="absolute left-[90%] lg:left-[94%] self-center align-middle" src={arrowDown} alt="" />
               </div>
 
-              {confirmDecoderGOTV && (
+              {/* {confirmDecoderGOTV && (
                 <ul className="dropdown-options absolute top-[102%] w-full bg-white cursor-pointer">
                   {decoders.map((option, index) => (
                     <li
@@ -228,7 +242,33 @@ const GoTv = () => {
                     </li>
                   ))}
                 </ul>
-              )}
+              )} */}
+              {decoderActive && (
+         <div className='absolute lg:top-[90px] md:top-[60px]  top-[50px] z-[2]  flex flex-col w-[100%] lg:h-225px md:h-[210px]  
+        '>
+          {(Decoders.map(decoder => {
+            return (
+               <a href={decoder.path}
+               onClick={(e =>{
+          setDecoderType(decoder.decoderType);
+                 setDecoderActive(false);
+             document.querySelector('.Examdrop').classList.remove('DropIt');
+             console.log(e);
+              })}
+              className=' text-[8px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
+         md:text-[13.227px] md:leading-[17.195px] 
+         shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] bg-white
+         lg:text-[16px] lg:leading-[20.8px] cursor-pointer hover:bg-[#EDEAEA]' 
+         key= {decoders.id}>
+      <h2>{decoder.examType}   </h2>
+         </a>
+        
+            )
+          }))}
+         
+          
+             </div>
+      )}
             </div>
 
             <div className="relative flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">

@@ -45,7 +45,7 @@ import { Link } from "react-router-dom";
 
     return(
        <>
-       {StarTimesSuccessful &&
+       {starTimesSuccessful &&
             (
             <Modal>
            

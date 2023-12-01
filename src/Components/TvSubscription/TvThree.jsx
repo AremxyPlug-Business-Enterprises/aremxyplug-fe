@@ -51,15 +51,15 @@ const StarTimes = () => {
   };
 
   const options = [
-    `Nova Monthly (₦1,200)`,
+    `Nova Monthly (₦1200)`,
     `Basic Weekly (₦600)`,
-    `Basic Monthly (₦2,100)`,
+    `Basic Monthly (₦2100)`,
     `Smart Weekly (₦900) `,
-    `Smart Monthly (₦2,800)`,
-    `Classic Weekly (₦1,200)`,
-    `Classic Monthly (₦3,100)`,
-    `Super Weekly (₦1,800)`,
-    `Super Monthly (₦5,300)`,
+    `Smart Monthly (₦2800)`,
+    `Classic Weekly (₦1200)`,
+    `Classic Monthly (₦3100)`,
+    `Super Weekly (₦1800)`,
+    `Super Monthly (₦5300)`,
   ]
 
   const decoders = [

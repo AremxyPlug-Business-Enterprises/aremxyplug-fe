@@ -17,12 +17,11 @@ import { Link } from "react-router-dom";
      cardName,
      smartCard,
      tvEmail,
-     
-     selectedOptionGOTV,
+     selectedOptionShowmax,
   } = useContext(ContextProvider)
 
   
-  const valueWithoutTilde = selectedOptionGOTV.split(" ~ ")[0];
+  const valueWithoutTilde = selectedOptionShowmax.split(" ~ ")[0];
   const trimmedValue = valueWithoutTilde.trim();
   
   // const CopyButton = ({ textToCopy }) => {

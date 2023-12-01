@@ -735,6 +735,8 @@ export const Context = ({ children }) => {
   const [ methodPayment, setMethodPayment ] = useState(false);
   const [imageState, setImageState] = useState(" ");
   const [tvWalletBalance, setTvWalletBalance] = useState('');
+  const [decoderType, setDecoderType] = useState("");
+  const [decoderActive, setdecoderActive] = useState(false);
   
   //==========DSTV===========
   const [selectedOptionDstv, setSelectedOptionDstv] = useState("");
@@ -1162,6 +1164,10 @@ export const Context = ({ children }) => {
     setTvWalletBalance,
     imageState,
     setImageState,
+    decoderType,
+    setDecoderType,
+    decoderActive,
+    setdecoderActive,
 
     //=======GOTV
     confirmGotvPopup,

@@ -130,6 +130,8 @@ import ChangeEmail from "./Components/My Profile & Account Settings/My Profile P
 import ChangePhoneNumber from "./Components/My Profile & Account Settings/My Profile Page/ChangePhoneNumber";
 import ChangePin from "./Components/My Profile & Account Settings/My Profile Page/ChangePin";
 import AccountUpgrade from "./Components/My Profile & Account Settings/My Profile Page/AccountUpgrade";
+import StarTimes from "./Components/TvSubscription/TvThree";
+import Showmax from "./Components/TvSubscription/TvFour";
 
 export const Router = () => {
   return (
@@ -273,6 +275,8 @@ export const Router = () => {
         <Route path="/TvSubscription" element={<TvSubscription/>}/>
         <Route path="/GoTv" element={<GoTv/>}/>
         <Route path="/DsTv" element={<DsTv/>}/>
+        <Route path="/StarTimes" element={<StarTimes/>}/>
+        <Route path="/Showmax" element={<Showmax/>}/>
         <Route path="/SuccessfulConversion" element={<SuccessfulReceipt/>}/>
         <Route path="/SmileDataBundle" element={<SmileDataBundle/>} />
         <Route path="/Smilereceipt" element={<SmileReceipt/>} />

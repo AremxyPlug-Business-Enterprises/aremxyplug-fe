@@ -50,11 +50,13 @@ const Showmax = () => {
     return '';
   };
 
+  
+
   const options = [
-    `Showmax (₦2,900)`,
-    `Showmax Mobile (₦1,200)`,
-    `Showmax Pro (₦6,300)`,
-    `Showmax Pro Mobile (₦3,200)`,
+    `Showmax (₦2900)`,
+    `Showmax Mobile (₦1200)`,
+    `Showmax Pro (₦6300)`,
+    `Showmax Pro Mobile (₦3200)`,
   ]
 
   const decoders = [
