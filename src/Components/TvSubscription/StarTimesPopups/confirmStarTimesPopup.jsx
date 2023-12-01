@@ -5,18 +5,18 @@ import { ContextProvider } from "../../Context";
 import { Modal } from "../../Screens/Modal/Modal";
 import arrowRight from "../../../Components/EducationPins/imagesEducation/educationArrowRight.svg";
 
-const ConfirmGotvPopup = () => {
+const ConfirmStarTimesPopup = () => {
 
   const {
-    confirmGotvPopup,
-    setConfirmGotvPopup,
+    confirmStarTimesPopup,
+    setConfirmStarTimesPopup,
     toggleSideBar,
     formatNumberWithCommas,
-    setInputPinGotv,
+    setInputPinStarTimes,
     mobileNumber,
     tvEmail,
     smartCard,
-    selectedOptionGOTV,
+    selectedOptionStarTimes,
     cardName,
     imageState,
     tvWalletBalance,
@@ -25,10 +25,10 @@ const ConfirmGotvPopup = () => {
 
 
 
-  const handleInputGotv = (event) => {
+  const handleInputStarTimes = (event) => {
     event.preventDefault();
-    setConfirmGotvPopup(false);
-    setInputPinGotv(true);
+    setConfirmStarTimesPopup(false);
+    setInputPinStarTimes(true);
   }
   const getNumericValue = (option) => {
     const numericPart = option.match(/\d+/);
@@ -38,12 +38,12 @@ const ConfirmGotvPopup = () => {
     return '';
   };
 
-  const valueWithoutTilde = selectedOptionGOTV.split(" ~ ")[0];
+  const valueWithoutTilde = selectedOptionStarTimes.split(" ~ ")[0];
   const trimmedValue = valueWithoutTilde.trim();
 
   return (
     <>
-      {confirmGotvPopup &&
+      {confirmStarTimesPopup &&
         (
           <Modal >
 
@@ -52,7 +52,7 @@ const ConfirmGotvPopup = () => {
                 } w-[90%]`}
             >
               <div className="flex justify-end pr-2 mt-1 mb-3 md:mt-2 md:mb-2 lg:mb-0 lg:mt-1">
-                <img onClick={() => setConfirmGotvPopup(false)}
+                <img onClick={() => setConfirmStarTimesPopup(false)}
                   className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[26px] lg:h-[26px]"
                   src="/Images/transferImages/close-circle.png"
                   alt=""
@@ -72,11 +72,11 @@ const ConfirmGotvPopup = () => {
 
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <span className="text-[#7C7C7C]">Decoder Type</span>
-                    <span>GOtv</span>
+                    <span>StarTimes</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <span className="text-[#7C7C7C]">Package</span>
-                    <span>{selectedOptionGOTV}</span>
+                    <span>{selectedOptionStarTimes}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <span className="text-[#7C7C7C]">Smartcard / IUC Number</span>
@@ -96,7 +96,7 @@ const ConfirmGotvPopup = () => {
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <span className="text-[#7C7C7C]">Amount</span>
-                    <span>{'₦' + getNumericValue(selectedOptionGOTV)}</span>
+                    <span>{'₦' + getNumericValue(selectedOptionStarTimes)}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <span className="text-[#7C7C7C]">Payment Method</span>
@@ -113,6 +113,22 @@ const ConfirmGotvPopup = () => {
                 </div>
               </div>
 
+              {/* <div className="bg-[#F6F7F7] h-[45px] my-5 lg:my-8 flex justify-between items-center px-[4%]">
+              <div className="flex gap-2 items-center">
+                <div className="bg-white rounded-full h-[27px] w-[27px] flex justify-center items-center">
+                  <img className="w-[16px] h-[16px]" src="./Images/currencyImages/nigeria.svg" alt="/" />
+                </div>
+                <p className="text-[10px] md:text-[14px]  lg:text-[16px]">
+                  Available Balance{" "}
+                  <span className="text-[#0003]">0</span>
+                </p>
+              </div>
+              <img
+                className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
+                src="./Images/currencyImages/right.svg"
+                alt="/"
+              />
+            </div> */}
               <div className="my-[5px] flex justify-between items-center gap-2 bg-slate-200 -mx-[20px] px-[15px] h-[49px] py-[20px]">
                 <div className="flex gap-2 items-center">
                   <div className="bg-white rounded-full h-[27px] w-[27px] flex justify-center items-center">
@@ -136,7 +152,7 @@ const ConfirmGotvPopup = () => {
                 />
               </div>
               <button
-                onClick={handleInputGotv}
+                onClick={handleInputStarTimes}
                 className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] lg:rounded-[12px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
               >
                 Confirmed
@@ -149,4 +165,4 @@ const ConfirmGotvPopup = () => {
 }
 
 
-export default ConfirmGotvPopup
+export default ConfirmStarTimesPopup
