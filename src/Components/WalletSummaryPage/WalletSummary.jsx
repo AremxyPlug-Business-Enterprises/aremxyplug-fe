@@ -69,12 +69,15 @@ export default function WalletSummaryPage() {
 
 
   
-  const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState("NGN");
   const { isDarkMode, toggleSideBar } = useContext(ContextProvider);
 
   const handleSelectedOption = (event) => {
     const clickedoption = event.target.value;
     setSelected(clickedoption);
+    
+  
+    
     
   
     // (
@@ -116,18 +119,17 @@ export default function WalletSummaryPage() {
   return (
     <DashBoardLayout>
       <div className="w-full h-full">
-      <div
-            id="Transaction"
-            className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] md:rounded-[11.5px] rounded-[7px]
-             md:mt-[-1px] px-[5px] lg:ml-[-20px] bg-gradient-to-r from-yellow-300 to-rose-400 lg:w-[102%] 2xl:w-full 2xl:ml-0 lg:gap-[50px]
-              pt-[10px] lg:px-[30px] lg:rounded-[20px] lg:py-[20px] pb-[16px] flex justify-between items-center"
+
+
+          <div
+            // id="Transaction"
+            className="w-full h-[90px] md:h-[112.29px] bg-gradient-to-r from-yellow-300 to-rose-400  lg:h-[196px] md:rounded-[11.5px] rounded-[7px] md:mt-[-1px] px-[5px] lg:ml-[-20px] lg:w-[102%] 2xl:w-full 2xl:ml-0 lg:gap-[50px] pt-[10px] lg:px-[30px] lg:rounded-[20px] lg:py-[20px] pb-[16px] flex justify-between items-center"
           >
             <div className="w-[100%] pt-[19px] lg:pt-[20px] pl-[8.5px] md:pl-[9px]">
-              <p className="text-[10px] mb-2 font-bold uppercase w-[110%] md:text-[12px] md:w-[70%]
-               lg:w-[70%] lg:text-[20px] 2xl:w-[80%] 2xl:text-[24px] lg:mb-4">
+              <p className="text-[10px] mb-2 font-bold uppercase w-[100%] md:text-[12px] md:w-[70%] lg:w-[70%] lg:text-[20px] 2xl:w-[80%] 2xl:text-[24px] lg:mb-4">
                 MANAGE ALL YOUR TRANSACTIONS AT A TIME WITHOUT ANY HASSLE.
               </p>
-              <p className="text-[7px] font-[400] leading-[9px] mb-3 md:text-[9px] md:leading-[12.2px] w-[100%] md:w-[80%] lg:w-[75%] 2xl:w-[85%] 2xl:mt-[5px] lg:mt-[20px] lg:text-[16px] lg:leading-[26px] 2xl:text-[20px] lg:mb-[20px]">
+              <p className="text-[7px] font-[400] leading-[9px] mb-3 md:text-[9px] md:leading-[12.2px] w-[90%] md:w-[80%] lg:w-[75%] 2xl:w-[85%] 2xl:mt-[5px] lg:mt-[20px] lg:text-[16px] lg:leading-[26px] 2xl:text-[20px] lg:mb-[20px]">
                 Select, filter, and manage all your transactions at a time,
                 download all transactions stats and keep a record track.
               </p>
@@ -137,29 +139,11 @@ export default function WalletSummaryPage() {
               <img
                 src={cash}
                 alt=""
-                className="w-[55.482px] h-full md:w-[98px] md:h-[px] lg:w-[166.447px] lg:h-[150px]"
+                className="w-[67.482px] h-[60px] md:w-[98px] md:h-[px] lg:w-[196.447px] lg:h-[150px]"
               />
             </div>
           </div>
 
-        {/* <div */}
-          {/* // className="w-full h-[90px] md:h-[112.29px] lg:h-[196px]  */}
-{/* // rounded-[7px] md:rounded-[11.5px] bg-gradient-to-r from-yellow-300 to-rose-400 flex  */}
-{/* // px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px]" */}
-        {/* // > */}
-          {/* <div className="py-[13px] lg:py-[40px]"> */}
-            {/* <h2 className="text-[9px] md:text-[13.75px] font-bold mb-3 lg:text-[22px] lg:mb-4"> */}
-              {/* MANAGE ALL YOUR TRANSACTIONS AT A <br /> TIME WITHOUT ANY HASSLE. */}
-            {/* </h2> */}
-            {/* <h2 className="text-[6px] md:text-[11.46px] lg:text-[16px] whitespace-nowrap lg:leading-[26px] mb-3"> */}
-              {/* Select, filter, and manage all your transactions at a time, */}
-              {/* download all transactions stats and keep a <br/> record track. */}
-            {/* </h2> */}
-          {/* </div> */}
-          {/* <div className="w-[91px] h-[66px] lg:w-[220px] lg:h-[180px]"> */}
-            {/* <img src={cash} alt="" className="h-full" /> */}
-          {/* </div> */}
-        {/* </div> */}
 
         <div
           className=" lg:top-[385px] md:top-[283px] top-[188px] gap-[8px]
@@ -182,10 +166,10 @@ export default function WalletSummaryPage() {
             setIsOpen1((prev) => !prev);
             setCalender(false);
             setShowStatus(false);
-            setIsOpen4(false); setIsOpen5(false);
-            setIsOpen6(false); setIsOpen7(false);
-            setIsOpen8(false); setIsOpen9(false);
-            setIsOpen3(false); 
+            // setIsOpen4(false); setIsOpen5(false);
+            // setIsOpen6(false); setIsOpen7(false);
+            // setIsOpen8(false); setIsOpen9(false);
+            // setIsOpen3(false); 
 
           }}
           className="lg:px-[] lg:py-[25px] lg:h-[120px] py-[10px] lg:gap-2.5 lg:top-[455px] 
@@ -526,7 +510,7 @@ border-opacity-30 justify-start items-center gap-[52.80px] inline-flex"
           >
             <div
               onClick={() => {
-                setCalender((prev) => !prev);
+                setCalender(true);
                 setIsOpen1(false);
                 setShowStatus(false);
                 setIsOpen4(false); setIsOpen5(false);setIsOpen1(false);
@@ -561,8 +545,8 @@ border-opacity-30 justify-start items-center gap-[52.80px] inline-flex"
           {/* filter by status */}
           <div
           onClick={() => {
-            setShowStatus(true);
-           setIsOpen9(true); 
+            setShowStatus((prev) => !prev);
+          //  setIsOpen9(true); 
             
 setCalender(false);
 setIsOpen1(false);
@@ -614,7 +598,7 @@ setIsOpen1(false);
             >
               <div
                 onClick={() => {
-                  setIsOpen3((prev) => !prev);
+                  setIsOpen3(true);
                   
 
                   setIsOpen4(false); setIsOpen5(false);setIsOpen1(false);
@@ -631,7 +615,7 @@ setIsOpen1(false);
             </div>
             <div
               onClick={() => {
-                setIsOpen4((prev) => !prev);
+                setIsOpen4(true);
                 
 
                 setIsOpen3(false); setIsOpen5(false);setIsOpen1(false);
@@ -653,7 +637,7 @@ setIsOpen1(false);
 
             <div
               onClick={() => {
-                setIsOpen5((prev) => !prev);
+                setIsOpen5(true);
                 setIsOpen4(false); setIsOpen3(false);setIsOpen1(false);
                 setIsOpen6(false); setIsOpen7(false);setIsOpen8(false);
                 setShowStatus(false); setCalender(false); setIsOpen9(false);
@@ -672,7 +656,7 @@ setIsOpen1(false);
             </div>
             <div
               onClick={() => {
-                setIsOpen6((prev) => !prev);
+                setIsOpen6(true);
                 setIsOpen4(false); setIsOpen5(false);setIsOpen1(false);
                 setIsOpen3(false); setIsOpen7(false);setIsOpen3(false);
                 setShowStatus(false); setCalender(false); setIsOpen8(false); setIsOpen9(false);
@@ -691,7 +675,7 @@ setIsOpen1(false);
             </div>
             <div
               onClick={() => {
-                setIsOpen7((prev) => !prev);
+                setIsOpen7(true);
                 setIsOpen4(false); setIsOpen5(false);setIsOpen1(false);
                 setIsOpen6(false); setIsOpen3(false);setIsOpen8(false);
                 setShowStatus(false); setCalender(false); setIsOpen9(false);
@@ -710,7 +694,7 @@ setIsOpen1(false);
             </div>
             <div
               onClick={() => {
-                setIsOpen8((prev) => !prev);
+                setIsOpen8(true);
                 setIsOpen4(false); setIsOpen5(false);setIsOpen1(false);
                 setIsOpen6(false); setIsOpen7(false);setIsOpen3(false);
                 setShowStatus(false); setCalender(false); setIsOpen9(false);
@@ -5038,7 +5022,7 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
         {isOpen8 && (
         <div className=" h-[800px]">
           <div
-            className="md:hidden flex flex-col h-[660px] mt-9 mb-0 border-b-[1.2px] w-full p-[20px]
+            className="md:hidden flex flex-col h-[660px] mt-3 mb-0 border-b-[1.2px] w-full p-[20px]
              
  border-gray-500 border-opacity-[25%] shadow-md"
           >  
@@ -5262,7 +5246,7 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
         {isOpen6 && (
         <div className=" h-[800px]">
           <div
-            className="md:hidden flex flex-col h-[660px] mt-9  w-full p-[20px]  border-b-[1.2px]
+            className="md:hidden flex flex-col h-[660px] mt-3  w-full p-[20px]  border-b-[1.2px]
  border-gray-500 border-opacity-[25%] my-[50px] shadow-md"
           >  
 
@@ -5495,7 +5479,7 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
         {isOpen5 && (
         <div className="h-[800px] ">
           <div
-            className="md:hidden flex flex-col h-[660px] mt-9 w-full p-[20px] border-b-[1.2px]
+            className="md:hidden flex flex-col h-[660px] mt-3 w-full p-[20px] border-b-[1.2px]
  border-gray-500 border-opacity-[25%]  shadow-md"
           >  
             
@@ -5722,7 +5706,7 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
     {isOpen7 && (
 <div className=" h-[800px]">
           <div
-            className="md:hidden flex flex-col h-[660px] mt-9  mb-0 
+            className="md:hidden flex flex-col h-[660px] mt-3  mb-0 
              w-full p-[20px] border-b-[1.2px]
  border-gray-500 border-opacity-[25%]  shadow-md"
           >  
@@ -5950,7 +5934,7 @@ flex w-[100%] md:pl-[16.038px] md:pr-[15.473px] md:gap-[36.67px]
       {isOpen4 && (
       <div className=" h-[800px]">
           <div
-            className="md:hidden flex flex-col h-[600px] mt-9  w-full p-[20px] border-b-[1.2px]
+            className="md:hidden flex flex-col h-[600px] mt-3  w-full p-[20px] border-b-[1.2px]
  border-gray-500 border-opacity-[25%]  shadow-md"
           >  
           <Link to="/wallet-successful-receipt">
