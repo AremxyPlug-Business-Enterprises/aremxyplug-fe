@@ -8,17 +8,24 @@ import OtpInput from "react-otp-input";
 import { AiFillEyeInvisible } from "react-icons/ai";
 
 
-export const InputDstvPopup = () => {
+export const InputStarTimesPopup = () => {
     const {
-      inputPinDstv,
-      setInputDstv,
+      inputPinStarTimes,
+      setInputStarTimes,
       inputPin,
       setInputPin,
       toggleSideBar,
       toggleVisibility,
       isVisible,
-      handleDstvSuccessful,
+      setInputPinStarTimes,
+      setStarTimesSuccessful,
    } = useContext(ContextProvider)
+
+   const handleStarTimesSuccessful = (event) =>{
+    event.preventDefault();;
+    setInputPinStarTimes(false);
+    setStarTimesSuccessful(true);
+  }
 
    const [isFocused, setIsFocused] = useState(false);
       const handleFocus = () => {
@@ -29,12 +36,12 @@ export const InputDstvPopup = () => {
         setIsFocused(false);
       };
 
-      const cancelInputDstv = () => {
-        setInputDstv(false)
+      const cancelInputStarTimes = () => {
+        setInputStarTimes(false)
       }
    return(
     <>
-    {inputPinDstv &&
+    {inputPinStarTimes &&
             (
             <Modal>
          
@@ -43,7 +50,7 @@ export const InputDstvPopup = () => {
             } md:w-[55%] w-[90%]`}
             >
             <div className=" pr-3 lg:pr-5 flex justify-end">
-            <img  onClick={cancelInputDstv}
+            <img  onClick={cancelInputStarTimes}
                 className="w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px] self-center"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
@@ -94,7 +101,7 @@ export const InputDstvPopup = () => {
               </p>
             </div>
             <button
-              onClick={handleDstvSuccessful}
+              onClick={handleStarTimesSuccessful}
               disabled={inputPin.length !== 4 ? true : false}
               className={`${
                 inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"

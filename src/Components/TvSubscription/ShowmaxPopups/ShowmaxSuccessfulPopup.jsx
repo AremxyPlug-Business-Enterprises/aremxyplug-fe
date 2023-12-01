@@ -6,19 +6,24 @@ import { Modal } from "../../Screens/Modal/Modal";
 import { Link } from "react-router-dom";
 
 
- const DstvSuccessfulPopup = () => {
+ const ShowmaxSuccessfulPopup = () => {
   
    const {
-     dstvSuccessful, 
-     setDstvSuccessful,
+     showmaxSuccessful, 
+     setShowmaxSuccessful,
      toggleSideBar,
      mobileNumber,
      flagResult,
      cardName,
      smartCard,
      tvEmail,
+     selectedOptionShowmax,
   } = useContext(ContextProvider)
 
+  
+  const valueWithoutTilde = selectedOptionShowmax.split(" ~ ")[0];
+  const trimmedValue = valueWithoutTilde.trim();
+  
   // const CopyButton = ({ textToCopy }) => {
   //   const handleCopyClick = () => {
   //     navigator.clipboard.writeText(textToCopy)
@@ -40,7 +45,7 @@ import { Link } from "react-router-dom";
 
     return(
        <>
-       {dstvSuccessful &&
+       {showmaxSuccessful &&
             (
             <Modal>
            
@@ -50,14 +55,14 @@ import { Link } from "react-router-dom";
         <div className="flex justify-between items-center mx-[3%] my-[2%] md:my-[1%]">
         <Link to="/">
               <img
-                onClick={()=>setDstvSuccessful(false)}
+                onClick={()=>setShowmaxSuccessful(false)}
                 className=" w-[15px] h-[10px] md:w-[24px] md:h-[15px] lg:w-[42px] lg:h-[25px]"
                 src="/Images/login/arpLogo.png"
                 alt=""
               />
             </Link>
               <img
-                onClick={()=>setDstvSuccessful(false)}
+                onClick={()=>setShowmaxSuccessful(false)}
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
@@ -73,17 +78,17 @@ import { Link } from "react-router-dom";
               alt="/"
             />
             <div className="text-[#7C7C7C] text-[8px] text-center mb-2 md:pb-2 lg:pb-3 md:text-[14px] lg:text-[12px]">You have successfully subscribed &nbsp;
-               <span className="text-black font-extrabold text-[10px] md:text-[16px] lg:text-[14px]"> <code>plan</code></span>&nbsp;
+              <span className="text-black font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">{trimmedValue}</span>&nbsp;
                Monthly From Your NGN Wallet to
             </div>
             <div className="flex flex-col gap-2 lg:gap-4 ">
             <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[14px]">
                     <span className="text-[#7C7C7C]">Decoder Type</span>
-                    <span>Dstv</span>
+                    <span>Showmax</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[14px]">
                     <span className="text-[#7C7C7C]">Package</span>
-                    <span>GOtv Smallie (₦1,100) ~ Monthly</span>
+                    <span>{selectedOptionShowmax}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[14px]">
                     <span className="text-[#7C7C7C]">Smartcard / IUC Number</span>
@@ -120,7 +125,7 @@ import { Link } from "react-router-dom";
         <div className="flex w-full justify-center items-center gap-[10px] md:gap-[8.59px] lg:gap-[15px] md:pb-2">
               
                 <button
-                onClick={()=>setDstvSuccessful(false)} 
+                onClick={()=>setShowmaxSuccessful(false)} 
                 className={`bg-[#04177f] w-[111px] lg:w-[200px] md:w-[99px] h-[40px] md:h-[24px] lg:h-[42px] lg:my-[2%] flex justify-center items-center cursor-pointer text-[12px] md:text-[12px] lg:text-[16px] font-semibold text-white rounded-[6px] md:rounded-[7px] lg:rounded-[12px]`}
               >
                 Done
@@ -141,4 +146,4 @@ import { Link } from "react-router-dom";
 }
 
 
-export default DstvSuccessfulPopup
+export default ShowmaxSuccessfulPopup

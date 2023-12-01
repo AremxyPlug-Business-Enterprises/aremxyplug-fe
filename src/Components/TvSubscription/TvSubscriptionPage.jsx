@@ -35,8 +35,13 @@ export const TvSubscription = () =>{
                 <Link to='/DsTv'>
                 <img src="./Images/TvSubscription/dstv.svg" alt="" className="md:w-[118px] lg:w-[270px] md:h-[94px] lg:h-[250px]"/>
                 </Link>
+                <Link to='/StarTimes'>
                 <img src="./Images/TvSubscription/starTimes.svg" alt="" className="md:w-[118px] lg:w-[270px] md:h-[94px] lg:h-[250px]"/>
+                </Link>
+                <Link to='/Showmax'>
                 <img src="./Images/TvSubscription/showmax.svg" alt="" className="md:w-[118px] lg:w-[270px] md:h-[94px] lg:h-[250px]"/>
+                </Link>
+                
             </div>
 
             <div className="flex justify-center items-center mt-[62.3%] md:mt-[38%] lg:mt-[30%] mb-[40px] gap-2">
