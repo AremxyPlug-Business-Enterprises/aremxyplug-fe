@@ -11,7 +11,7 @@ import message from "../AirtimeConversion/images/message-question.png";
 import call from "../AirtimeConversion/images/call.png";
 import flag from "../AirtimeConversion/images/Country Flags.png"
 import flow from "../AirtimeConversion/images/Frame 758532433.png"
-import mtn from "../AirtimeConversion/images/mtn.svg"
+
 import flow1 from "../AirtimeConversion/images/convert-card.png"
 import clock from "../AirtimeConversion/images/clock.png"
 import Joi from "joi";
@@ -25,6 +25,7 @@ const AirtimeConversion = () => {
   const [selected, setSelected] = useState(false);
   const [networkName, setNetworkName] = useState('');
   const [recipientNumber, setRecipientNumber] = useState('');
+  const [proceed, setProceed] = useState(false);
   
   const networkList = [
     {
@@ -89,7 +90,7 @@ const handlePhoneNumber = (event) => {
   setRecipientNumber(newValue);
    
 };
-// const [proceed, setProceed] = useState(false);
+
 
 const handleProceed = (e) => {
   
@@ -97,6 +98,7 @@ const handleProceed = (e) => {
 
   const { error } = schema.validate({
     recipientNumber,
+    inputValue,
     
   });
 
@@ -108,7 +110,7 @@ const handleProceed = (e) => {
       }, {})
     );
   } else {
-    // setProceed(true);
+    setProceed(true);
     setErrors({});
   }
 };
@@ -279,9 +281,7 @@ const [inputValue, setInputValue] = useState('');
             Minimum 1000
           </div>
           <div> 
-          {selected.map((item) => (
-                                <Network key={item.id} image={item.image}  />
-                            ))}
+          { networkImage && <img src={networkImage} alt="" className='w-full h-full object-cover'/>}
           </div>
         </div>
         </div>
@@ -318,7 +318,7 @@ const [inputValue, setInputValue] = useState('');
 
         <div className='flex flex-col gap-2 mt-3 text-[#7C7C7C] items-center text-[8px] lg:text-[16px]'>
           <div className='flex items-center gap-2 '>
-            <div><img src={mtn} className='w-[8px] h-[8px] lg:w-[15px] lg:h-[15px]' alt="" /></div>
+            <div>{ networkImage && <img src={networkImage} alt="" className='w-full h-full object-cover'/>}</div>
             <div> ₦1,000 MTN ~ 90%</div>
             <div className='flex '> 
               <div><img src={flow1} alt="" /></div>
@@ -341,22 +341,21 @@ const [inputValue, setInputValue] = useState('');
             } text-[12px] mt-[50px] md:mt-[40px] md:w-fit lg:px-12 lg:text-[16px] lg:px md:py-1 md:rounded-md md:px-6   py-3 rounded-md font-[600] text-center text-white
             ${
               !recipientNumber ||
-              !inputValue ||
-              !selected 
+              !inputValue 
                 ? "bg-[#63616188] cursor-not-allowed"
                 : "bg-primary"
             }`
           }
           disabled={
             !recipientNumber ||
-              !inputValue ||
-              !selected 
+              !inputValue 
           }
           >
             Proceed
           </div>
         </div>
-                        </div> :
+
+                    </div> :
                         <div></div>
                     }
                     { activeTab === 'tab_2' && 
@@ -382,7 +381,12 @@ const [inputValue, setInputValue] = useState('');
 
             </div>
 
-
+            {proceed && (
+          <WalletModal>
+                <div className='text-red'>ttttttttttttt</div>
+          </WalletModal>
+        )}
+           
             <div>
             <div className="flex flex-row items-center justify-center md:mt-[750px] mt-[190px] pb-[10%] lg:mt-[980px] gap-2">
           <div className="text-[8px] lg:text-[12px] font-[600] text-black">
