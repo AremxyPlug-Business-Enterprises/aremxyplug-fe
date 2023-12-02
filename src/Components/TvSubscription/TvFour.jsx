@@ -7,9 +7,9 @@ import { useState } from "react";
 import arrowDown from '../EducationPins/imagesEducation/arrow-down.svg';
 import { ContextProvider } from "../Context";
 import { Link } from "react-router-dom";
-import ConfirmDstvPopup from "./DstvPopups/confirmDstvPopup";
-import { InputDstvPopup } from "./DstvPopups/inputPinDstv"
-import GotvSuccessfulPopup from "./GotvPopups/GotvSuccessfulPopup";
+import ConfirmShowmaxPopup from "./ShowmaxPopups/confirmShowmaxPopup";
+import { InputShowmaxPopup } from "./ShowmaxPopups/inputPinShowmax"
+import ShowmaxSuccessfulPopup from "./ShowmaxPopups/ShowmaxSuccessfulPopup";
 import nigerianFlag from '../../Components/EducationPins/imagesEducation/Nigeriaflag.svg';
 import americaFlag from '../../Components/EducationPins/imagesEducation/Usa.svg';
 import britainFlag from '../../Components/EducationPins/imagesEducation/Britain.svg';
@@ -17,14 +17,14 @@ import euroFlag from '../../Components/EducationPins/imagesEducation/GBP.svg';
 import austriaFlag from '../../Components/EducationPins/imagesEducation/Austria.svg';
 import kenyaFlag from '../../Components/EducationPins/imagesEducation/Kenya.svg';
 
-const DsTv = () => {
+const Showmax = () => {
 
   const {
-    setConfirmDstvPopup,
-    selectedOptionDstv,
-    setSelectedOptionDstv,
-    showDropdownDstv,
-    setShowDropdownDstv,
+    setConfirmShowmaxPopup,
+    selectedOptionShowmax,
+    showDropdownShowmax,
+    setShowDropdownShowmax,
+    setSelectedOptionShowmax,
     formatNumberWithCommas,
     mobileNumber,
     setCardName,
@@ -37,6 +37,11 @@ const DsTv = () => {
   } = useContext(ContextProvider)
 
 
+  const handleOptionClickShowmax = (option) => {
+    setSelectedOptionShowmax(option);
+    setShowDropdownShowmax(false);
+  };
+
   const getNumericValue = (option) => {
     const numericPart = option.match(/\d+/);
     if (numericPart) {
@@ -45,41 +50,25 @@ const DsTv = () => {
     return '';
   };
 
-  // const handleDstv = (event) =>{
-  //       event.preventDefault();
-  //       setConfirmDstvPopup(true)
-  //     }
-    
-  const handleOptionClickDstv = (option) => {
-        setSelectedOptionDstv(option);
-        setShowDropdownDstv(false);
-      };
-    
-      const options = [
-        `Dstv Padi (₦2500)`,
-        `Dstv Yanga (₦3500)`,
-        `Dstv Confam (₦6300)`,
-        `Dstv Padi Extra (₦5050) `,
-        `Dstv Yanga Extra (₦5850) `,
-        `Dstv Asia (₦8300)`,
-        `Dstv Confam Extra (₦8200)`,
-        `Dstv Compact (₦10500)`,
-        `Dstv Compact Plus (₦16600)`,
-        `Dstv Compact Extra View (₦23900)`,
-        `Dstv Premium (₦24500)`,
-        `Dstv Premium Asia (₦27500)`,
-      ]
-    
-      const decoders = [
-        `DStv`,
-      ]
+  
 
-  const [selectedDecoderDstv, setSelectedDecoderDstv] = useState('');
+  const options = [
+    `Showmax (₦2900)`,
+    `Showmax Mobile (₦1200)`,
+    `Showmax Pro (₦6300)`,
+    `Showmax Pro Mobile (₦3200)`,
+  ]
 
-  const [confirmDecoderDstv, setConfirmDecoderDstv] = useState(false);
-  const handleDecoderClickDstv = (option) => {
-    setSelectedDecoderDstv(option);
-    setConfirmDecoderDstv(false);
+  const decoders = [
+    `Showmax`,
+  ]
+
+  const [selectedDecoderShowmax, setSelectedDecoderShowmax] = useState('');
+
+  const [confirmDecoderShowmax, setConfirmDecoderShowmax] = useState(false);
+  const handleDecoderClickShowmax = (option, index) => {
+    setSelectedDecoderShowmax(option);
+    setConfirmDecoderShowmax(false);
 
   };
 
@@ -101,7 +90,8 @@ const DsTv = () => {
     setTvEmail(inputValue);
   }
 
-  const handleDstv = (event) => {
+ 
+  const handleShowmax = (event) => {
     event.preventDefault();
     
     const { error } = schema.validate({
@@ -110,22 +100,22 @@ const DsTv = () => {
     });
   
     if (error) {
-      setGOTVErrorMessage(
+      setShowmaxErrorMessage(
         error.details.reduce((acc, curr) => {
           acc[curr.path[0]] = curr.message;
           return acc;
         }, {})
       );
     } else {
-    setConfirmDstvPopup(true);
-      setGOTVErrorMessage(" ");
+      setConfirmShowmaxPopup(true);
+      setShowmaxErrorMessage(" ");
     }
-  } 
+  }
 
-  const [GOTVErrorMessage, setGOTVErrorMessage] = useState('');
+  const [ShowmaxErrorMessage, setShowmaxErrorMessage] = useState('');
 
  
-  // const GOTVSchema = Joi.object({
+  // const ShowmaxSchema = Joi.object({
   //   mobileNumber: Joi.string().regex(/^\d{11}$/).required(),
   // });
 
@@ -141,10 +131,17 @@ const DsTv = () => {
     })
   });
 
-  const handleGOTVMobileNumberChange = (e) => {
+  const handleShowmaxMobileNumberChange = (e) => {
     const inputValue = e.target.value;
     setMobileNumber(inputValue);
 
+    // const validation = ShowmaxSchema.validate({ mobileNumber: inputValue });
+
+    // if (validation.error) {
+    //   setShowmaxErrorMessage('Incorrect Phone Number..');
+    // } else {
+    //   setShowmaxErrorMessage('');
+    // }
   };
 
   const { flagResult, setFlagResult } = useContext(ContextProvider);
@@ -189,8 +186,8 @@ const DsTv = () => {
         <div className=" mx-auto flex gap-1.5 py-[25.29px] lg:py-[37px] md:py-[28.64px]">
           <div className="text-[#7E7E7E] text-[8px] lg:text-[16px] md:text-[11.46px] font-medium">
             <span>Subscribe Your</span>
-            <span>Gotv</span>
-            <span> GOTV Decoder Instantly</span>
+            <span>Showmax</span>
+            <span> Showmax Decoder Instantly</span>
           </div>
           <img src="./Images/currencyImages/right.svg" alt="" className="lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px]" />
         </div>
@@ -200,13 +197,14 @@ const DsTv = () => {
             <div className="relative flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[8px] lg:text-[16px] md:text-[11.46px] font-semibold">
                 Confirm Decoder Type</label>
+              {/* <button className="border-[0.23px] lg:border-[0.4px] w-full md:w-1/2 h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C]">Showmax</button> */}
               <div className="relative  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[500] text-[8px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] hover:bg-[#EDEAEA] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center" onClick={() => setConfirmDecoderDstv(!confirmDecoderDstv)}>
-                {selectedDecoderDstv}
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] hover:bg-[#EDEAEA] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center" onClick={() => setConfirmDecoderShowmax(!confirmDecoderShowmax)}>
+                {selectedDecoderShowmax}
                 <img className="absolute left-[90%] lg:left-[94%] self-center align-middle" src={arrowDown} alt="" />
               </div>
 
-              {confirmDecoderDstv && (
+              {confirmDecoderShowmax && (
                 <ul className="dropdown-options absolute top-[102%] w-full bg-white cursor-pointer">
                   {decoders.map((option, index) => (
                     <li
@@ -215,7 +213,7 @@ const DsTv = () => {
                       shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] bg-white
                       lg:text-[16px] lg:leading-[20.8px] cursor-pointer hover:bg-[#EDEAEA] dropdownCSS h-[30px] md:h-[35px] lg:h-[50px] flex items-center`}
                       key={index}
-                      onClick={() => handleDecoderClickDstv(option)}
+                      onClick={() => handleDecoderClickShowmax(option)}
                     >
                       {option}
                     </li>
@@ -229,12 +227,12 @@ const DsTv = () => {
                 Select Package</label>
 
               <div className=" flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[500] text-[8px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] hover:bg-[#EDEAEA] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center" onClick={() => setShowDropdownDstv(!showDropdownDstv)}>
-                {selectedOptionDstv}
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] hover:bg-[#EDEAEA] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center" onClick={() => setShowDropdownShowmax(!showDropdownShowmax)}>
+                {selectedOptionShowmax}
                 <img className="absolute left-[90%] lg:left-[94%] self-center align-middle" src={arrowDown} alt="" />
               </div>
 
-              {    showDropdownDstv && (
+              {showDropdownShowmax && (
                 <ul className="dropdown-options absolute top-[100%] w-full bg-white cursor-pointer">
                   {options.map((option, index) => (
                     <li
@@ -243,7 +241,7 @@ const DsTv = () => {
                       shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] bg-white
                       lg:text-[16px] lg:leading-[20.8px] cursor-pointer hover:bg-[#EDEAEA] dropdownCSS `}
                       key={index}
-                      onClick={() => handleOptionClickDstv(option)}
+                      onClick={() => handleOptionClickShowmax(option)}
                     >
                       {option}
                     </li>
@@ -275,11 +273,11 @@ const DsTv = () => {
             <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[8px] lg:text-[16px] md:text-[11.46px] font-semibold">
                 Phone Number</label>
-              <input id="val" value={mobileNumber} onChange={handleGOTVMobileNumberChange}
-                style={{ backgroundColor: GOTVErrorMessage ? '#FFD8D8' : 'white' }}
+              <input id="val" value={mobileNumber} onChange={handleShowmaxMobileNumberChange}
+                style={{ backgroundColor: ShowmaxErrorMessage ? '#FFD8D8' : 'white' }}
                 type="tel" maxLength={11} placeholder="7744115566" className=" flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[500] text-[8px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] hover:bg-[#EDEAEA] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center" />
-              {GOTVErrorMessage.mobileNumber && <p className="text-[#F95252] text-[9px] md:text-[12px] lg:text-[14px] font-semibold ">{GOTVErrorMessage.mobileNumber}</p>}
+              {ShowmaxErrorMessage.mobileNumber && <p className="text-[#F95252] text-[9px] md:text-[12px] lg:text-[14px] font-semibold ">{ShowmaxErrorMessage.mobileNumber}</p>}
 
             </div>
             <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
@@ -300,7 +298,7 @@ const DsTv = () => {
                 type="text"
                 className=" flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[500] text-[8px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] 
                 lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] hover:bg-[#EDEAEA] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center"
-                value={'₦' + getNumericValue(selectedOptionDstv)}
+                value={'₦' + getNumericValue(selectedOptionShowmax)}
               />
 
             </div>
@@ -356,10 +354,10 @@ const DsTv = () => {
           </div>
         </div>
 
-        <button onClick={handleDstv}
-          disabled={mobileNumber.length !== 11 || !cardName || !tvEmail || !smartCard || !selectedDecoderDstv || !selectedOptionDstv}
+        <button onClick={handleShowmax}
+          disabled={mobileNumber.length !== 11 || !cardName || !tvEmail || !smartCard || !selectedDecoderShowmax || !selectedOptionShowmax}
           className={`
-             ${mobileNumber.length !== 11 || !cardName || !tvEmail || !smartCard || !selectedDecoderDstv || !selectedOptionDstv
+             ${mobileNumber.length !== 11 || !cardName || !tvEmail || !smartCard || !selectedDecoderShowmax || !selectedOptionShowmax
               ? "bg-[#63616188] "
               : "bg-primary"
             }
@@ -375,11 +373,11 @@ const DsTv = () => {
           </Link>
         </div>
       </DashBoardLayout>
-      <ConfirmDstvPopup/>
-      <InputDstvPopup/>
-      <GotvSuccessfulPopup />
+      <ConfirmShowmaxPopup />
+      <InputShowmaxPopup />
+      <ShowmaxSuccessfulPopup />
     </div>
   )
 }
 
-export default DsTv
+export default Showmax

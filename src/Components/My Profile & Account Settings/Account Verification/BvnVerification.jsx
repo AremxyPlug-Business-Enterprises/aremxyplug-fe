@@ -54,7 +54,7 @@ console.log(bvnDateOfBirth);
         {bvnVerificationOpen && (
     <div className= {` flex flex-col ${verificationOpen
       ? 'block'  : 'hidden'} ${bvnVerificationOpen
-      ? 'pb-[100px] lg:pb-[150px]'
+      ? 'pb-[150px] lg:pb-[300px]'
        : 'pb-[0px]'}`}>
       
       <div className='flex lg:gap-[10px] lg:py-[50px] py-[35px] '> 
@@ -90,7 +90,7 @@ src={Arrowright} alt="" />
         <img onClick={()=>{
           setBvnQuery(true);
         }} src={messageIcon} alt="" 
-        className='h-[14.083px] w-[14.083px] lg:h-[24px] lg:w-[24px]'/>
+        className='h-[14.083px] w-[14.083px] lg:h-[24px] lg:w-[24px] cursor-pointer'/>
     </div>
      </div>
      {/* FORMS ON BVN */}
@@ -157,7 +157,7 @@ src={Arrowright} alt="" />
     onChange={(e => {
       setBvnDateOfBirth(e.target.value);
    })}
-    className=' font-[500] w-[100%] py-[10.33px] pl-[5.867px] 
+    className=' font-[500] w-[100%] py-[10.33px] pl-[5.867px] bg-white
     lg:py-[15.5px] lg:pl-[10px] border-[0.4px] 
     md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px]
     text-[8px] leading-[10.4px] lg:pr-[16px] pr-[9px]
@@ -208,10 +208,11 @@ src={Arrowright} alt="" />
    {/* ========== MODALS ========= */}
    {bvnQuery && (
           <Modal>
-            <div className='bg-white flex flex-col lg:px-[80px] md:px-[40px] md:rounded-[11.736px] rounded-[8px] lg:h-[980px] h-[650px] px-[18px] md:w-[80%]  lg:w-[70%] lg:rounded-[20px]
+            <div className='bg-white flex flex-col lg:px-[80px] md:px-[40px] md:rounded-[11.736px] rounded-[8px] lg:h-[890px] h-[650px] px-[18px] md:w-[80%]  lg:w-[70%] lg:rounded-[20px]
              md:shadow-[0px_0px_11.73611px_0px_rgba(0,0,0,0.25)] md:h-[704.653px] mx-[19px] md:mx-[0px]
             lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] justify-center items-center '>
-          <div className='flex flex-col lg:gap-[25px] md:gap-[15px] gap-[10px]  items-center'>
+          <div className='flex flex-col   items-center'>
+            <div className='flex flex-col  md:gap-[20px] gap-[10px]'>
        <p className='font-[400] text-[13px] text-center leading-[16.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
    BVN (Bank Verification Number) validates your bank details for security.
@@ -222,12 +223,13 @@ src={Arrowright} alt="" />
 This verification enhance security, prevent fraud, and ensure accurate payouts. 
 Your personal data is securely encrypted.
  </p>
+ </div>
  <img src={BvnQueryImage} alt="" 
           className='lg:w-[460px] lg:h-[490.72px] md:h-[290px] md:w-[290px] w-[100%] h-[206.742px] cursor-pointer' />
           </div>
           {/*  */}
           
-          <div className='flex flex-col md:gap-[23.47px] lg:gap-[40px] mb-[50px]'>
+          <div className='flex flex-col gap-[20px] md:gap-[23.47px] lg:gap-[40px] mb-[50px]'>
             {/* Header */}
    <h2 className='font-[700] lg:text-[16px] lg:leading-[19.2px] text-center
    text-[13px] leading-[16.4px] '>
@@ -235,24 +237,24 @@ Your personal data is securely encrypted.
    </h2>
    {/* Paragraph */}
    <div className='flex flex-col md:gap-[20px] gap-[10px] items-center'>
-  <p className='font-[500] lg:text-[16px] lg:leading-[19.2px] text-center
+  <p className='font-[500] lg:text-[16px] lg:leading-[19.2px] text-left
   text-[13px] leading-[16.4px] '>
- <span className='font-700'>1. Security:</span>  We take your financial security seriously. 
+ <span className='font-[700]'>1. Security:</span>  We take your financial security seriously. 
   Verifying your BVN helps us confirm your bank details, 
   ensuring that your transactions are secure.
 
 
 </p>
-<p className='font-[500] lg:text-[16px] lg:leading-[19.2px] text-center
+<p className='font-[500] lg:text-[16px] lg:leading-[19.2px] text-left
 text-[13px] leading-[16.4px]'>
-<span className='font-700'>2. Accuracy: </span>To provide you with the best service, we need accurate information.
+<span className='font-[700]'>2. Accuracy: </span>To provide you with the best service, we need accurate information.
  Verifying your BVN ensures precise payouts and helps prevent errors in your transactions.
 
 </p>
    </div>
 
           </div>
-          <div className='flex w-[100%]'>
+          <div className='flex w-[100%] md:justify-center'>
    <button onClick={() => {
     setBvnQuery(false);
    }} 
@@ -320,23 +322,30 @@ text-[13px] leading-[16.4px]'>
         )}
         {bvnPhoneMessage && (
           <Modal>
-          <div className='flex flex-col lg:gap-[44px] md:gap-[25px] lg:h-[465px] md:w-[55%]
-          lg:rounded-[12px] lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)]
+          <div className='flex flex-col lg:gap-[44px] md:gap-[25px] gap-[20px] lg:h-[465px] h-[330px] w-[100%] md:w-[55%]
+          shadow-[0px_0px_8.3274px_0px_rgba(0,0,0,0.25)] rounded-[8px] px-[18px] md:px-[0px]
+          lg:rounded-[12px] lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] mx-[19px] md:mx-[0px]
            bg-white md:shadow-[0px_0px_11.73611px_0px_rgba(0,0,0,0.25)]
           items-center justify-center'>
-      <h2 className='font-[600] lg:text-[16px] lg:leading-[24px] md:text-[9.389px] md:leading-[14px]'>
+      <h2 className='font-[600] lg:text-[16px] lg:leading-[24px]  text-[13px] text-center leading-[16.206px] '>
       The phone number associated with your BVN for verification.
       </h2>
+      <div className='flex justify-center  w-[100%]'>
       <img src={BvnMessageImage} alt="" 
-      className='lg:w-[223px] lg:h-[223px] md:h-[130.858px] md:w-[130.858px]'/>
+      className='lg:w-[223px] lg:h-[223px] md:h-[130.858px] 
+      md:w-[130.858px] h-[130.858px] w-[130.858px]'/>
+      </div>
       {/* OKAY BUTTON PHONE MESSAGE */}
+      <div className='flex w-[100%] md:justify-center'>
       <button onClick={() =>{
         setBvnPhoneMessage(false);
       }}
-      className='font-[600] lg:py-[10px] md:py-[5.868px] md:w-[163px] text-white bg-[#04177F] 
-      lg:rounded-[12px] lg:text-[16px] lg:leading-[24px] md:text-[9.389px] md:leading-[14px]'>
+      className='font-[600] lg:py-[13px] md:py-[5.868px] py-[16.531px]  md:w-[163px] w-[100%]
+       text-white bg-[#04177F]  rounded-[4.61px]
+      lg:rounded-[12px] lg:text-[16px] lg:leading-[24px]  text-[13px]  leading-[16.206px] '>
      Okay
       </button>
+      </div>
           </div>
          </Modal>
         )}

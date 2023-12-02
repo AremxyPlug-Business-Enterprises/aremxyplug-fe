@@ -5,18 +5,18 @@ import { ContextProvider } from "../../Context";
 import { Modal } from "../../Screens/Modal/Modal";
 import arrowRight from "../../../Components/EducationPins/imagesEducation/educationArrowRight.svg";
 
-const ConfirmGotvPopup = () => {
+const ConfirmShowmaxPopup = () => {
 
   const {
-    confirmGotvPopup,
-    setConfirmGotvPopup,
+    confirmShowmaxPopup,
+    setConfirmShowmaxPopup,
     toggleSideBar,
     formatNumberWithCommas,
-    setInputPinGotv,
+    setInputPinShowmax,
     mobileNumber,
     tvEmail,
     smartCard,
-    selectedOptionGOTV,
+    selectedOptionShowmax,
     cardName,
     imageState,
     tvWalletBalance,
@@ -25,10 +25,10 @@ const ConfirmGotvPopup = () => {
 
 
 
-  const handleInputGotv = (event) => {
+  const handleInputShowmax = (event) => {
     event.preventDefault();
-    setConfirmGotvPopup(false);
-    setInputPinGotv(true);
+    setConfirmShowmaxPopup(false);
+    setInputPinShowmax(true);
   }
   const getNumericValue = (option) => {
     const numericPart = option.match(/\d+/);
@@ -38,21 +38,21 @@ const ConfirmGotvPopup = () => {
     return '';
   };
 
-  const valueWithoutTilde = selectedOptionGOTV.split(" ~ ")[0];
+  const valueWithoutTilde = selectedOptionShowmax.split(" ~ ")[0];
   const trimmedValue = valueWithoutTilde.trim();
 
   return (
     <>
-      {confirmGotvPopup &&
+      {confirmShowmaxPopup &&
         (
           <Modal >
 
-            <div
-              className={`confirmConversion mx-auto  ${toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+            <div 
+              className={`confirmConversion mx- auto  ${toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
                 } w-[90%]`}
             >
               <div className="flex justify-end pr-2 mt-1 mb-3 md:mt-2 md:mb-2 lg:mb-0 lg:mt-1">
-                <img onClick={() => setConfirmGotvPopup(false)}
+                <img onClick={() => setConfirmShowmaxPopup(false)}
                   className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[26px] lg:h-[26px]"
                   src="/Images/transferImages/close-circle.png"
                   alt=""
@@ -72,11 +72,11 @@ const ConfirmGotvPopup = () => {
 
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <span className="text-[#7C7C7C]">Decoder Type</span>
-                    <span>GOtv</span>
+                    <span>Showmax</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <span className="text-[#7C7C7C]">Package</span>
-                    <span>{selectedOptionGOTV}</span>
+                    <span>{selectedOptionShowmax}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <span className="text-[#7C7C7C]">Smartcard / IUC Number</span>
@@ -96,7 +96,7 @@ const ConfirmGotvPopup = () => {
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <span className="text-[#7C7C7C]">Amount</span>
-                    <span>{'₦' + getNumericValue(selectedOptionGOTV)}</span>
+                    <span>{'₦' + getNumericValue(selectedOptionShowmax)}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <span className="text-[#7C7C7C]">Payment Method</span>
@@ -136,7 +136,7 @@ const ConfirmGotvPopup = () => {
                 />
               </div>
               <button
-                onClick={handleInputGotv}
+                onClick={handleInputShowmax}
                 className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] lg:rounded-[12px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
               >
                 Confirmed
@@ -149,4 +149,4 @@ const ConfirmGotvPopup = () => {
 }
 
 
-export default ConfirmGotvPopup
+export default ConfirmShowmaxPopup
