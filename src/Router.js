@@ -132,7 +132,12 @@ import AirtimeConversion from "./Components/Dashboard/DashboardComponents/Airtim
 import LaunchPage from "./Components/NotificationsPage/LaunchPage";
 import ChangePin from "./Components/My Profile & Account Settings/My Profile Page/ChangePin";
 import AccountUpgrade from "./Components/My Profile & Account Settings/My Profile Page/AccountUpgrade";
-import ToAremxyPlug from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/ToAremxyPlug"
+import GlobalTransferSelectRecipient from "./Components/Add&SelectRecipient/GlobalSelectRecipient/GlobalTransferSelectRecipient";
+import GlobalTransferAddRecipient from "./Components/Add&SelectRecipient/GlobalAddRecipient/GlobalTransferAddRecipient";
+import StarTimes from "./Components/TvSubscription/TvThree";
+import Showmax from "./Components/TvSubscription/TvFour";
+import ToAremxyPlug from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/ToAremxyPlug";
+import ToAremxyMain from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/ToAremxyMain"
 
 export const Router = () => {
   return (
