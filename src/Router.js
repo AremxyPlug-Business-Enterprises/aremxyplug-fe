@@ -131,6 +131,9 @@ import ChangePhoneNumber from "./Components/My Profile & Account Settings/My Pro
 import LaunchPage from "./Components/NotificationsPage/LaunchPage";
 import ChangePin from "./Components/My Profile & Account Settings/My Profile Page/ChangePin";
 import AccountUpgrade from "./Components/My Profile & Account Settings/My Profile Page/AccountUpgrade";
+import CardPayment from "./Components/Dashboard/DashboardComponents/CardPaymentPage/Cardpayment";
+import AddNewCardPayment from "./Components/Dashboard/DashboardComponents/CardPaymentPage/AddNewCardPayment";
+import ExistingCardPage from "./Components/Dashboard/DashboardComponents/CardPaymentPage/ExistingCardPage";
 
 export const Router = () => {
   return (
@@ -296,6 +299,9 @@ export const Router = () => {
         <Route path="/ChangePhoneNumber" element={<ChangePhoneNumber/>} />
         <Route path="/ChangePin" element={<ChangePin/>} />
         <Route path="/AccountUpgrade" element={<AccountUpgrade/>} />
+        <Route path="/CardPayment" element={<CardPayment/>} />
+        <Route path="/AddNewCardPayment" element={<AddNewCardPayment/>} />
+        <Route path="/ExistingCardPage" element={<ExistingCardPage/>} />
       </Routes>
     </div>
   );
