@@ -5,16 +5,19 @@ import { Link } from 'react-router-dom'
 import arrowdown from "../AirtimeConversion/images/arrow-down.png"
 import { ContextProvider } from '../../../Context';
 import { useContext } from "react";
-import cloud from "../AirtimeConversion/images/cloud storage convert.png";
+import cloud from "../AirtimeConversion/images/cloud storage convert (1).png";
 import WalletModal from '../../../Wallet/WalletModal';
 import message from "../AirtimeConversion/images/message-question.png";
 import call from "../AirtimeConversion/images/call.png";
-import flag from "../AirtimeConversion/images/Country Flags.png"
-import flow from "../AirtimeConversion/images/Frame 758532433.png"
-
+import flag from "../AirtimeConversion/images/Country Flags (1).png"
+import flow from "../AirtimeConversion/images/Frame (5).png"
+import { Modal } from "../../../Screens/Modal/Modal";
 import flow1 from "../AirtimeConversion/images/convert-card.png"
 import clock from "../AirtimeConversion/images/clock.png"
-import Joi from "joi";
+// import Joi from "joi";
+import arrow from "../AirtimeConversion/images/arrow.png"
+import boy from "../AirtimeConversion/images/Digital banking and online currency exchange.png"
+
 
 const AirtimeConversion = () => {
   const [activeTab, setActiveTab] = useState('tab_1');
@@ -24,7 +27,8 @@ const AirtimeConversion = () => {
   const [networkImage, setNetworkImage] = useState('');
   const [selected, setSelected] = useState(false);
   const [networkName, setNetworkName] = useState('');
-  const [recipientNumber, setRecipientNumber] = useState('');
+  
+  
   const [proceed, setProceed] = useState(false);
   
   const networkList = [
@@ -37,13 +41,13 @@ const AirtimeConversion = () => {
     {
         id:2,
         name:'AIRTEL',
-        image: require('../AirtimeConversion/images/Airtel_logo-01 2.png'),
+        image: require('../AirtimeConversion/images/Airtel_logo-01 2 (2).png'),
         discount: 4,
     },
     {
         id:3,
         name:'GLO',
-        image: require('../AirtimeConversion/images/640px-Glo_button 1.png'),
+        image: require('../AirtimeConversion/images/640px-Glo_button 1 (1).png'),
         discount: 3,
     },
     {
@@ -77,62 +81,64 @@ const Network =({name, image, onClick})=> {
   return (
     <li className="pl-[4px] lg:pl-[14px] lg:pr-[16px] border-b flex items-center py-[3px] gap-1 last:border-b-0 md:py-[6px] cursor-pointer lg:gap-2 lg:h-[45px]" onClick={onClick}>
       <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
-        <img src={image} alt="" className='w-full h-full object-cover'/>
+        <img src={image} alt="" className='w-[25px] object-cover'/>
       </div> 
       <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">{name}</h2>
     </li>
   )
 }
 
-const [errors, setErrors] = useState({});
+// const [errors, setErrors] = useState({});
 const handlePhoneNumber = (event) => {
   const newValue = event.target.value;
-  setRecipientNumber(newValue);
+  setRecipientNumberA(newValue);
    
 };
 
 
-const handleProceed = (e) => {
+const handleProceed = () => {
   
-  // e.preventDefault();
+  
 
-  const { error } = schema.validate({
-    recipientNumber,
-    inputValue,
+  // const { error } = schema.validate({
+  //   recipientNumber,
     
-  });
+    
+  // });
 
-  if (error) {
-    setErrors(
-      error.details.reduce((acc, curr) => {
-        acc[curr.path[0]] = curr.message;
-        return acc;
-      }, {})
-    );
-  } else {
+  // if (error) {
+  //   setErrors(
+  //     error.details.reduce((acc, curr) => {
+  //       acc[curr.path[0]] = curr.message;
+  //       return acc;
+  //     }, {})
+  //   );
+  // } else {
     setProceed(true);
-    setErrors({});
-  }
+  //   setErrors({});
+    
+  // }
 };
 
-const schema = Joi.object({
-  phoneNumber: Joi.string()
-    .pattern(new RegExp(/^\d{11,}/))
-    .required()
-    .messages({
-      "string.pattern.base": "Phone number should be 11 digits ",
-    }),
-    inputValue: Joi.string()
-    .pattern(new RegExp(/^\d{4,}/))
-    .required()
-    .messages({
-      "string.pattern.base": "Minimum amount to convert is 1000",
-    }),
+// const schema = Joi.object({
+//   phoneNumber: Joi.string()
+//     .pattern(new RegExp(/^\d{11,}/))
+//     .required()
+//     .messages({
+//       "string.pattern.base": "Phone number should be 11 digits ",
+//     }),
+   
     
-});
+// });
 
-const [inputValue, setInputValue] = useState('');
-  const [resultValue, setResultValue] = useState('');
+const { 
+  setInputValue, 
+  inputValue, 
+  resultValue,
+  setResultValue,
+  recipientNumberA, 
+  setRecipientNumberA
+} = useContext(ContextProvider);
 
   // Function to handle input changes
   const handleInputChange = (event) => {
@@ -161,7 +167,7 @@ const [inputValue, setInputValue] = useState('');
             <div className="flex flex-row w-full pt-[20px]  h-[90px] md:h-[112.29px] lg:h-[196px] lg:px-[50px]  px-[16px] rounded-lg md:rounded-[11.5px] lg:rounded-[20px] justify-between  py-2 bg-gradient-to-r from-[#FFBE6E] to-[#FFF741]">
           <div className="flex flex-col gap-2  ">
             <div className="text-[8px] font-[600]  md:text-[13.75px] md:leading-[20.63px] lg:pt-[25px] lg:text-[24px] lg:leading-[36px] text-[#000000] leading-[12px]">
-            CONVERT AIRTIME TO REAL MONEY WITH AREMXYPLUG. <br /> AREMXYPLUG.
+            CONVERT AIRTIME TO REAL MONEY WITH AREMXYPLUG. <br /> 
             </div>
             <div className="text-[6.67px] font-[400] md:text-[11.46px] md:leading-[14.9px] lg:text-[20px] lg:leading-[26px] text-[#000000] leading-[8.67px]">
             Convert your bulk airtime to real money, withdrawn to your <br />
@@ -188,7 +194,7 @@ const [inputValue, setInputValue] = useState('');
         </ul>
 
         <div className=''>
-                    { activeTab === 'tab_1' ? 
+                    
                         <div className='flex flex-col gap-[0px]'>
                           <div className='grid grid-cols-1 md:grid-cols-2 items-center gap-0'>
                                      <div className="font-[500] text-[10px] py-1 mt-[30px] md:mt-[30px] lg:mt-[50px] text-center px-4 md:text-[9.17px] lg:text-[16px] leading-[20.8px] lg:px-6 lg:w-fit  md:flex md:flex-row md:w-fit md:py-1 lg:py-3 rounded-sm md:rounded-sm lg:rounded-md md:leading-[11.5px] bg-primary text-white">
@@ -205,11 +211,11 @@ const [inputValue, setInputValue] = useState('');
         <div>
                     <div>
                         <h2 className='lg:text-[16px] lg:leading-[24px] font-bold mb-1 text-[8px] leading-[12px]'>Select Network</h2>
-                        <div className="border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between">
+                        <div onClick={handleShowList} className="border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between">
                             { selected ? 
                                 <li className="flex items-center py-[3px] gap-1 md:py-[6px] cursor-pointer lg:gap-2 lg:h-[45px]">
                                     <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
-                                        { networkImage && <img src={networkImage} alt="" className='w-full h-full object-cover'/>}
+                                        { networkImage && <img src={networkImage} alt="" className='w-[20px] object-cover'/>}
                                     </div> 
                                     <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">{networkName}</h2>
                                 </li>
@@ -217,7 +223,7 @@ const [inputValue, setInputValue] = useState('');
                                 <h2 className='lg:text-[16px]  lg:leading-[24px] text-[#7C7C7C] text-[8px] leading-[12px]'>Select Network</h2>
                             }
                             <button className='lg:w-6 lg:h-6 w-[11px] h-[11px]' onClick={handleShowList}>
-                                <img src={arrowdown} alt="" className='w-full h-full'/>
+                                <img src={arrow} alt="" className='w-full h-full'/>
                             </button>
                         </div>
                     </div>
@@ -231,20 +237,20 @@ const [inputValue, setInputValue] = useState('');
         </div>
         <div>
                     
-                    <div className='lg:text-[16px] lg:leading-[24px] flex gap-2 mb-1 text-[8px] leading-[12px]' >
+                    <div className='lg:text-[16px] lg:leading-[24px] items-center flex gap-2 mb-1 text-[8px] leading-[12px]' >
                       <div className='font-bold'>Phone Number </div>
                       <div> <img src={message} alt="" /></div>
                     </div>
                     <div className="border w-full h-[30px] rounded-[4px] pr-[8px] pl-[4px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between">
-                        <input type='text' className='lg:text-[16px] lg:leading-[24px] grow outline-none text-[8px] leading-[12px]' placeholder='Add recipient phone number' onChange={handlePhoneNumber} value={recipientNumber}/>
+                        <input type='text' className='lg:text-[16px] lg:leading-[24px] grow outline-none text-[8px] leading-[12px]' placeholder='Add recipient phone number' onChange={handlePhoneNumber} value={recipientNumberA}/>
                         <div className='lg:w-6 lg:h-6 w-[11px] h-[11px]'>
                             <img src={call} alt="" className='w-full h-full'/>
                         </div>
-                        {errors.phoneNumber && (
+                        {/* {errors.phoneNumber && (
               <div className="text-[12px] text-red-500 italic lg:text-[14px]">
                 {errors.recipientNumber}
               </div>
-            )}
+            )} */}
                     </div>
                 </div>
         </div>
@@ -257,18 +263,18 @@ const [inputValue, setInputValue] = useState('');
               className="w-[100%] outline-none text-[8px] lg:text-[16px] leading-[20.8px  font-[600]  text-[#000]"
               placeholder="Amount to Convert"
             />{" "}
-            {errors.inputValue && (
+            {/* {errors.inputValue && (
               <div className="text-[12px] text-red-500 italic lg:text-[14px]">
                 {errors.inputValue}
               </div>
-            )}
+            )} */}
           </div>
           <div className="h-[30px] md:h-[40px] lg:h-[60px]  w-[15%] md:w-[8%] gap-2 lg:gap-4 flex flex-row pl-[17px] lg:pl-[35px] py-2 bg-primary items-center   ">
             <div>
               {" "}
               <img
                 src={flow}
-                className="md:w-[13.75px]  md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
+                className=" w-[11px] h-[11px] md:w-[13.75px]  md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
                 alt=""
               />{" "}
             </div>
@@ -281,7 +287,7 @@ const [inputValue, setInputValue] = useState('');
             Minimum 1000
           </div>
           <div> 
-          { networkImage && <img src={networkImage} alt="" className='w-full h-full object-cover'/>}
+          { networkImage && <img src={networkImage} alt="" className='w-[20px]  object-cover'/>}
           </div>
         </div>
         </div>
@@ -318,7 +324,7 @@ const [inputValue, setInputValue] = useState('');
 
         <div className='flex flex-col gap-2 mt-3 text-[#7C7C7C] items-center text-[8px] lg:text-[16px]'>
           <div className='flex items-center gap-2 '>
-            <div>{ networkImage && <img src={networkImage} alt="" className='w-full h-full object-cover'/>}</div>
+            <div>{ networkImage && <img src={networkImage} alt="" className='w-[20px] object-cover'/>}</div>
             <div> ₦1,000 MTN ~ 90%</div>
             <div className='flex '> 
               <div><img src={flow1} alt="" /></div>
@@ -333,31 +339,25 @@ const [inputValue, setInputValue] = useState('');
 
         <div className="flex flex-col justify-center md:items-center">
           <div
-            onClick={handleProceed}
+            onClick ={ () => {
+              handleProceed()
+            } }
             className={` ${
               (inputValue.length < 4 ? "bg-[#0008]" : "bg-[#04177f]",
               resultValue.length < 4 ? "bg-[#0008]" : "bg-[#04177f]")
               
             } text-[12px] mt-[50px] md:mt-[40px] md:w-fit lg:px-12 lg:text-[16px] lg:px md:py-1 md:rounded-md md:px-6   py-3 rounded-md font-[600] text-center text-white
-            ${
-              !recipientNumber ||
-              !inputValue 
-                ? "bg-[#63616188] cursor-not-allowed"
-                : "bg-primary"
-            }`
-          }
-          disabled={
-            !recipientNumber ||
-              !inputValue 
+           `
           }
           >
             Proceed
           </div>
         </div>
+       
 
-                    </div> :
+                    </div> 
                         <div></div>
-                    }
+                    
                     { activeTab === 'tab_2' && 
                         <WalletModal>
                         <div className='rounded-[8px] px-3 relative lg:rounded-[11.5px] md:rounded-[6px] flex md:mt-8 flex-col ' >
@@ -372,6 +372,7 @@ const [inputValue, setInputValue] = useState('');
                                 <h2 className='w-full md:w-fit text-right text-[10px] leading-[15px] py-[10px] md:text-[12px] md:leading-[18px] lg:text-base lg:leading-[24px]'>Coming soon...</h2>
                                 <button className='w-full text-[10px] md:w-fit leading-[15px] bg-primary px-[28.6px] py-[10px] text-white rounded-[7px] md:text-[12px] md:leading-[18px] lg:text-base lg:leading-[24px]' onClick={handleTab1}>Okay</button>
                             </div>
+                            
                         </div>
                     </WalletModal>
                     }
@@ -381,11 +382,6 @@ const [inputValue, setInputValue] = useState('');
 
             </div>
 
-            {proceed && (
-          <WalletModal>
-                <div className='text-red'>ttttttttttttt</div>
-          </WalletModal>
-        )}
            
             <div>
             <div className="flex flex-row items-center justify-center md:mt-[750px] mt-[190px] pb-[10%] lg:mt-[980px] gap-2">
@@ -401,6 +397,22 @@ const [inputValue, setInputValue] = useState('');
             </div>
 
             </div>
+            
+            {proceed && (
+          <Modal>
+                <div className='text-red h-[320px] w-[300px] md:w-[321px] md:h-[300px] lg:w-[562px] lg:h-[420px] bg-white rounded-tl-md rounded-tr-md  flex flex-col items-center gap-4'>
+                  <div className='text-[10px] mt-4 font-[600] md:text-[12px] lg:text-[16px] text-[#000000] '>Airtime Conversion</div>
+                  <div className='text-[10px] lg:text-[12px] mt-1 text-[#04177F]'>Note!!!</div>
+                  <div className='text-[8px] lg:text-[12px] font-[600] text-center w-[280px] lg:w-[409px] text-[#000000] rounded-md border-[0.5px] border-[
+#7C7C7C] bg-[#FFF0BA] py-2 px-3 '>Kindly Contact Airtime Team to Complete Airtime Conversion  Transaction.</div>
+                  <div><img src={boy} className='w-[85px] h-[85px] lg:w-[150px] lg:h-[150px]' alt="" /></div>
+                  <Link to="/contact-team">
+                  <div className='text-white mt-3 bg-primary lg:text-[16px] lg:py-1 w-[250px] md:w-[93px] lg:w-[163px] rounded-md md:py-1 md:rounded-lg md:px-1 py-3 text-center  text-[12px] font-[600]'>Contact Team</div>
+                  </Link>
+                </div>               
+          </Modal>
+        )}
+           
 
         </DashBoardLayout>
         

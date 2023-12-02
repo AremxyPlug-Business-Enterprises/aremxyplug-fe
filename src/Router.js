@@ -132,6 +132,7 @@ import AirtimeConversion from "./Components/Dashboard/DashboardComponents/Airtim
 import LaunchPage from "./Components/NotificationsPage/LaunchPage";
 import ChangePin from "./Components/My Profile & Account Settings/My Profile Page/ChangePin";
 import AccountUpgrade from "./Components/My Profile & Account Settings/My Profile Page/AccountUpgrade";
+import ContactTeam from "./Components/Dashboard/DashboardComponents/AirtimeConversion/ContactTeam";
 
 export const Router = () => {
   return (
@@ -245,6 +246,7 @@ export const Router = () => {
         <Route path="/aedc" element={<AEDC />} />
         <Route path="/ekedc" element={<EKEDC />} />
         <Route path="/airtime-conversion" element={<AirtimeConversion />} />
+        <Route path="/contact-team" element={<ContactTeam />} />
         <Route path="/electricity-subscription" element={<ElectricitySubscription/>} />
         <Route path="/global-transfer" element={<GlobalTransfer />} />
         <Route path="/point-redeem" element={<PointRedeem />} />

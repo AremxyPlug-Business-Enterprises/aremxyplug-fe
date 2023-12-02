@@ -709,6 +709,11 @@ export const Context = ({ children }) => {
   const [ikedcEmail, setEmail] = useState("");
   const [ikedcamount, setIkedcamount] = useState("");
 
+  //------------Airtime Conversion---------
+  const [inputValueA, setInputValueA] = useState('');
+  const [resultValue, setResultValue] = useState('');
+  const [recipientNumberA, setRecipientNumberA] = useState('');
+
   //=============Currency conversion==============
   const [convertedAmount, setConvertedAmount] = useState("");
   const [initialValue, setInitialValue] = useState("");
@@ -1112,6 +1117,14 @@ const [necoQuantityActive, setNecoQuantityActive] = useState(false);
     setEmail,
     ikedcamount,
     setIkedcamount,
+
+    //Airtime Conversion
+    inputValueA,
+    setInputValueA,
+    resultValue,
+    setResultValue,
+    recipientNumberA,
+     setRecipientNumberA,
 
     //currency
     convertedAmount,
