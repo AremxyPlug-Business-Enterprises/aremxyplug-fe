@@ -135,7 +135,9 @@ import AccountUpgrade from "./Components/My Profile & Account Settings/My Profil
 import StarTimes from "./Components/TvSubscription/TvThree";
 import Showmax from "./Components/TvSubscription/TvFour";
 import ToAremxyPlug from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/ToAremxyPlug";
+import ContactTeam from "./Components/Dashboard/DashboardComponents/AirtimeConversion/ContactTeam";
 import ToAremxyMain from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/ToAremxyMain"
+
 
 export const Router = () => {
   return (
@@ -251,6 +253,7 @@ export const Router = () => {
         <Route path="/aedc" element={<AEDC />} />
         <Route path="/ekedc" element={<EKEDC />} />
         <Route path="/airtime-conversion" element={<AirtimeConversion />} />
+        <Route path="/contact-team" element={<ContactTeam />} />
         <Route path="/electricity-subscription" element={<ElectricitySubscription/>} />
         <Route path="/global-transfer" element={<GlobalTransfer />} />
         <Route path="/point-redeem" element={<PointRedeem />} />
