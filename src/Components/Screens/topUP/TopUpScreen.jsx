@@ -241,7 +241,7 @@ cursor-pointer py-[8.17px] px-[14%] rounded-tr-[5px] rounded-br-[5px] rounded-bl
                   title='Payment Link'
                   image='./Images/top_up/nfcPayment.png'
                   onClick={()=> setShowModal_3(false)}
-                  tag='This meathod is currently not available    '
+                  tag='This Feature is currently not available'
                 />
               }
               { showModal_4 && 
@@ -249,7 +249,7 @@ cursor-pointer py-[8.17px] px-[14%] rounded-tr-[5px] rounded-br-[5px] rounded-bl
                   title='Scan QR Code'
                   image='./Images/top_up/scanningCode.png'
                   onClick={()=> setShowModal_4(false)}
-                  tag='This meathod is currently not available    '
+                  tag='This Feature is currently not available'
                 />
               }
               {/* FUNDING METHODS ENDS HERE */}

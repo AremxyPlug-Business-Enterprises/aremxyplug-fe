@@ -310,6 +310,13 @@ const AirtimeVtu = () => {
 
       const handleReceipt =()=> {
         setTransactSuccessPopUp(false);
+        setSelected("");
+        setRecipientNumber("");
+        setRecipientName("");
+        setSelectedProduct("");
+        setAmount("");
+        setDiscount("");
+        setPaymentSelected("");
       }
 
       const handleCodes =()=> {
