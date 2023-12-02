@@ -3,6 +3,7 @@ import { ContextProvider } from "../../../../Context";
 import styles from "../../TransferComponent/transfer.module.css";
 import { ConfirmOtherTransaction } from "./OtherBankPopUp/OtherBankPopUp/ConfirmOtherTransaction";
 import { Modal } from "../../../../Screens/Modal/Modal";
+import { Link } from "react-router-dom";
 // import { useNavigate } from "react-router-dom";
 
 export default function GlobalTransfer() {
@@ -192,11 +193,13 @@ export default function GlobalTransfer() {
       <div className="flex gap-[10%] lg:gap-[3%]">
         <div className="w-full flex items-center justify-between border text-[10px] rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
           <p>Select Recipient</p>
+          <Link to = '/GlobalTransferSelectRecipient'>
           <img
             className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
             src="./Images/otherBanksImages/weight.png"
             alt=""
           />
+          </Link>
         </div>
         <div className="w-full flex items-center justify-between border text-[10px]  rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
           <p>Add Recipient</p>
