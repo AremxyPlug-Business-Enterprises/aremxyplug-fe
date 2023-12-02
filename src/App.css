@@ -235,4 +235,6 @@ html {
 border-bottom : 2px solid #04177F;
 border-radius : 10px;
   }
-  
+  .RecipientHero{
+    background: linear-gradient(91deg, #367CFF 0.39%, #69FFD2 101.71%);
+  }

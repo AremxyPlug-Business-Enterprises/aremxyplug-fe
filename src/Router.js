@@ -132,8 +132,9 @@ import AirtimeConversion from "./Components/Dashboard/DashboardComponents/Airtim
 import LaunchPage from "./Components/NotificationsPage/LaunchPage";
 import ChangePin from "./Components/My Profile & Account Settings/My Profile Page/ChangePin";
 import AccountUpgrade from "./Components/My Profile & Account Settings/My Profile Page/AccountUpgrade";
-import ToAremxyPlug from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/ToAremxyPlug"
-
+import ToAremxyPlug from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/ToAremxyPlug";
+import GlobalTransferSelectRecipient from "./Components/Add&SelectRecipient/GlobalSelectRecipient/GlobalTransferSelectRecipient";
+import GlobalTransferAddRecipient from "./Components/Add&SelectRecipient/GlobalAddRecipient/GlobalTransferAddRecipient";
 export const Router = () => {
   return (
     <div>
@@ -300,6 +301,8 @@ export const Router = () => {
         <Route path="/ChangePhoneNumber" element={<ChangePhoneNumber/>} />
         <Route path="/ChangePin" element={<ChangePin/>} />
         <Route path="/AccountUpgrade" element={<AccountUpgrade/>} />
+     <Route path="/GlobalTransferSelectRecipient" element={<GlobalTransferSelectRecipient/>}/>
+     <Route path="/GlobalTransferAddRecipient" element={<GlobalTransferAddRecipient/>}/>
       </Routes>
     </div>
   );
