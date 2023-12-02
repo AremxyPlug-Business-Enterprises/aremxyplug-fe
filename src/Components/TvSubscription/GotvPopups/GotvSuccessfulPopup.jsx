@@ -12,7 +12,12 @@ import { Link } from "react-router-dom";
      gotvSuccessful, 
      setGotvSuccessful,
      toggleSideBar,
-     GOTVMobileNumber,
+     mobileNumber,
+     flagResult,
+     cardName,
+     smartCard,
+     tvEmail,
+     
      selectedOptionGOTV,
   } = useContext(ContextProvider)
 
@@ -88,23 +93,23 @@ import { Link } from "react-router-dom";
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[14px]">
                     <span className="text-[#7C7C7C]">Smartcard / IUC Number</span>
-                    <span>1234567890</span>
+                    <span>{smartCard}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[14px]">
                     <span className="text-[#7C7C7C]">Card Name</span>
-                    <span>Aremxyplug</span>
+                    <span>{cardName}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[14px]">
                     <span className="text-[#7C7C7C]">Phone Number</span>
-                    <span>{GOTVMobileNumber}</span>
+                    <span>{mobileNumber}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[14px]">
                     <span className="text-[#7C7C7C]">Email</span>
-                    <span>Habib@aremxy.com</span>
+                    <span>{tvEmail}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                     <span className="text-[#7C7C7C]">Payment Method</span>
-                    <span>Nigerian NGN Wallet</span>
+                    <span>{flagResult}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                     <span className="text-[#7C7C7C]">Order Number</span>

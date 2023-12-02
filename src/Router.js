@@ -132,9 +132,8 @@ import AirtimeConversion from "./Components/Dashboard/DashboardComponents/Airtim
 import LaunchPage from "./Components/NotificationsPage/LaunchPage";
 import ChangePin from "./Components/My Profile & Account Settings/My Profile Page/ChangePin";
 import AccountUpgrade from "./Components/My Profile & Account Settings/My Profile Page/AccountUpgrade";
-import ToAremxyPlug from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/ToAremxyPlug";
-import GlobalTransferSelectRecipient from "./Components/Add&SelectRecipient/GlobalSelectRecipient/GlobalTransferSelectRecipient";
-import GlobalTransferAddRecipient from "./Components/Add&SelectRecipient/GlobalAddRecipient/GlobalTransferAddRecipient";
+import ToAremxyPlug from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/ToAremxyPlug"
+
 export const Router = () => {
   return (
     <div>
@@ -179,6 +178,7 @@ export const Router = () => {
         <Route path="/personal-account" element={<PersonalAccountPage />} />
         <Route path="/business-account" element={<BusinessAccountPage />} />
         <Route path="/to-aremxyplug" element={<ToAremxyPlug />} />
+        <Route path="/to-aremxymain" element={<ToAremxyMain />} />
         <Route path="/airtime-topup" element={<AirTime />} />
         <Route path="/airtime-vtu" element={<AirtimeVtu />} />
         <Route path="/airtime-vtu-receipt" element={<AirtimeVtuReceipt />} />
@@ -281,6 +281,8 @@ export const Router = () => {
         <Route path="/TvSubscription" element={<TvSubscription/>}/>
         <Route path="/GoTv" element={<GoTv/>}/>
         <Route path="/DsTv" element={<DsTv/>}/>
+        <Route path="/StarTimes" element={<StarTimes/>}/>
+        <Route path="/Showmax" element={<Showmax/>}/>
         <Route path="/SuccessfulConversion" element={<SuccessfulReceipt/>}/>
         <Route path="/SmileDataBundle" element={<SmileDataBundle/>} />
         <Route path="/Smilereceipt" element={<SmileReceipt/>} />
