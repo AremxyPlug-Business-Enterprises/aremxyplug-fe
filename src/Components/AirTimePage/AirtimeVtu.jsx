@@ -313,7 +313,7 @@ const AirtimeVtu = () => {
         setSelected("");
         setRecipientNumber("");
         setRecipientName("");
-        setSelectedProduct("");
+        setSelectedProduct("");     
         setAmount("");
         setDiscount("");
         setPaymentSelected("");
