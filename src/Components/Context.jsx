@@ -713,6 +713,8 @@ export const Context = ({ children }) => {
   const [inputValueA, setInputValueA] = useState('');
   const [resultValue, setResultValue] = useState('');
   const [recipientNumberA, setRecipientNumberA] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
 
   //=============Currency conversion==============
   const [convertedAmount, setConvertedAmount] = useState("");
@@ -1145,6 +1147,10 @@ export const Context = ({ children }) => {
     setResultValue,
     recipientNumberA,
      setRecipientNumberA,
+     firstName,
+     setFirstName,
+     lastName, 
+     setLastName,
 
     //currency
     convertedAmount,
