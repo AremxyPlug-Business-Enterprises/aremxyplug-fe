@@ -1,12 +1,11 @@
 import React, { useContext, useState } from "react";
 import { ContextProvider } from "../../../../Context";
 import styles from "../../TransferComponent/transfer.module.css";
-import { ConfirmOtherTransaction } from "./OtherBankPopUp/OtherBankPopUp/ConfirmOtherTransaction";
+import { ConfirmOtherTransaction } from "../TransferToOtherBankPages/OtherBankPopUp/OtherBankPopUp/ConfirmOtherTransaction";
 import { Modal } from "../../../../Screens/Modal/Modal";
-import { Link } from "react-router-dom";
 // import { useNavigate } from "react-router-dom";
 
-export default function GlobalTransfer() {
+export default function ToAremxyMain() {
   const {
     showList,
     setShowList,
@@ -19,7 +18,6 @@ export default function GlobalTransfer() {
     globalBankName,
     globalAccountNumber,
     globalCountry,
-    globalAccountName,
     setGlobalCountry,
     globalTransferErrors,
     handleGlobalInputChange,
@@ -192,38 +190,41 @@ export default function GlobalTransfer() {
       {/* ==========================Select/Add Recipient====================== */}
       <div className="flex gap-[10%] lg:gap-[3%]">
         <div className="w-full flex items-center justify-between border text-[10px] rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
-          <p>Select Recipient</p>
-          <Link to = '/GlobalTransferSelectRecipient'>
+          <p>Select User</p>
           <img
             className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
             src="./Images/otherBanksImages/weight.png"
             alt=""
           />
-          </Link>
         </div>
         <div className="w-full flex items-center justify-between border text-[10px]  rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
-          <p>Add Recipient</p>
+          <p>Add User</p>
           <img
             className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
             src="./Images/otherBanksImages/add-square.png"
             alt=""
           />
         </div>
-      </div>
-      <div className="bg-[#04177f] text-[#fff] text-[10px] h-[20px] flex justify-center items-center rounded-[2px] lg:w-[45%] lg:h-[38px] lg:text-[16px]">
-        Real-time Bank Network Tracker
-      </div>
+       </div>
+        <div className="flex text-[#7c7c7c] text-[10px] leading-[130%] items-center my-[5%] gap-[8px] md:my-[5%] md:text-[18px] lg:text-[20px]">
+            <p>User Details </p>
+            <img
+              className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
+              src="./Images/Dashboardimages/arrowright.png"
+              alt="/"
+            />
+        </div>
       <div className="flex flex-col gap-[20px] md:grid md:grid-cols-2">
-        {/* =====================Bank Name=================== */}
+        {/* =====================Email or Username=================== */}
 
         <div className={` ${styles.inputBox}`}>
           <p className="text-[10px] font-extrabold md:text-[14px] lg:text-[20px]">
-            Bank Name
+            Email or Username
           </p>
           <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
             <input
               onChange={handleGlobalInputChange}
-              name="bankName"
+              name="username"
               value={globalBankName}
               className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
               type="text"
@@ -241,15 +242,15 @@ export default function GlobalTransfer() {
           )}
         </div>
 
-        {/* ======================Account Number================== */}
+        {/* ======================Phone Number================== */}
         <div className={styles.inputBox}>
           <p className="text-[10px] font-extrabold md:text-[14px] lg:text-[20px]">
-            Account Number
+            Phone Number
           </p>
           <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
             <input
               onChange={handleGlobalInputChange}
-              name="accountNumber"
+              name="phoneNumber"
               value={globalAccountNumber}
               className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
               type="number"
@@ -261,29 +262,6 @@ export default function GlobalTransfer() {
             </div>
           )}
         </div>
-
-        {/* =======================Account Name==================== */}
-        <div className={` ${styles.inputBox}`}>
-          <p className="text-[10px] font-extrabold md:text-[14px] lg:text-[20px]">
-            Account Name
-          </p>
-          <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
-            <input
-              onChange={handleGlobalInputChange}
-              name="accountName"
-              value={globalAccountName}
-              className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
-              type="text"
-            />
-          </div>
-          {globalTransferErrors.accountName && (
-            <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-              {globalTransferErrors.accountName}
-            </div>
-          )}
-        </div>
-
-        {/* <p>{state.accountName}</p> */}
 
         {/* =========================Amount To Transfer==================== */}
         <div className={` ${styles.inputBox}`}>

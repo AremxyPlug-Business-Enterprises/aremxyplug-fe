@@ -132,10 +132,14 @@ import AirtimeConversion from "./Components/Dashboard/DashboardComponents/Airtim
 import LaunchPage from "./Components/NotificationsPage/LaunchPage";
 import ChangePin from "./Components/My Profile & Account Settings/My Profile Page/ChangePin";
 import AccountUpgrade from "./Components/My Profile & Account Settings/My Profile Page/AccountUpgrade";
+import GlobalTransferSelectRecipient from "./Components/Add&SelectRecipient/GlobalSelectRecipient/GlobalTransferSelectRecipient";
+import GlobalTransferAddRecipient from "./Components/Add&SelectRecipient/GlobalAddRecipient/GlobalTransferAddRecipient";
 import StarTimes from "./Components/TvSubscription/TvThree";
 import Showmax from "./Components/TvSubscription/TvFour";
 import ToAremxyPlug from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/ToAremxyPlug";
 import ContactTeam from "./Components/Dashboard/DashboardComponents/AirtimeConversion/ContactTeam";
+import ToAremxyMain from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/ToAremxyMain"
+
 import { AirtimeReceipt } from "./Components/Dashboard/DashboardComponents/AirtimeConversion/AirtimeReceipt";
 
 export const Router = () => {
@@ -182,6 +186,7 @@ export const Router = () => {
         <Route path="/personal-account" element={<PersonalAccountPage />} />
         <Route path="/business-account" element={<BusinessAccountPage />} />
         <Route path="/to-aremxyplug" element={<ToAremxyPlug />} />
+        <Route path="/to-aremxymain" element={<ToAremxyMain />} />
         <Route path="/airtime-topup" element={<AirTime />} />
         <Route path="/airtime-vtu" element={<AirtimeVtu />} />
         <Route path="/airtime-vtu-receipt" element={<AirtimeVtuReceipt />} />
@@ -308,6 +313,8 @@ export const Router = () => {
         <Route path="/ChangePhoneNumber" element={<ChangePhoneNumber/>} />
         <Route path="/ChangePin" element={<ChangePin/>} />
         <Route path="/AccountUpgrade" element={<AccountUpgrade/>} />
+     <Route path="/GlobalTransferSelectRecipient" element={<GlobalTransferSelectRecipient/>}/>
+     <Route path="/GlobalTransferAddRecipient" element={<GlobalTransferAddRecipient/>}/>
       </Routes>
     </div>
   );
