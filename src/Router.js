@@ -142,9 +142,6 @@ import FundWithCard from "./Components/Dashboard/DashboardComponents/CardPayment
 import { CardPaymentReceipt } from "./Components/Dashboard/DashboardComponents/CardPaymentPage/CardPaymentReceipt";
 import GlobalTransferSelectRecipient from "./Components/Add&SelectRecipient/GlobalSelectRecipient/GlobalTransferSelectRecipient";
 import GlobalTransferAddRecipient from "./Components/Add&SelectRecipient/GlobalAddRecipient/GlobalTransferAddRecipient";
-import StarTimes from "./Components/TvSubscription/TvThree";
-import Showmax from "./Components/TvSubscription/TvFour";
-import ToAremxyPlug from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/ToAremxyPlug";
 import ContactTeam from "./Components/Dashboard/DashboardComponents/AirtimeConversion/ContactTeam";
 import ToAremxyMain from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/ToAremxyMain";
 import { AremxyMainReceipt } from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/AremxyMainReceipt";
