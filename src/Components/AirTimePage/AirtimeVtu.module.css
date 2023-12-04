@@ -6,6 +6,9 @@
 .transferMoneyPop::-webkit-scrollbar {
     display: none;
 }
+.balanceMoneyPop::-webkit-scrollbar {
+    display: none;
+}
 .successfulTwo::-webkit-scrollbar {
     display: none;
 }
@@ -38,6 +41,14 @@
     height: 505px;
     flex-shrink: 0;
     bottom: 0%;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+}
+.balanceMoneyPop {
+    position: absolute;
+    height: 505px;
+    flex-shrink: 0;
     border-radius: 8px;
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
@@ -651,6 +662,12 @@
       background: #fff;
       box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
     }
+    .balanceMoneyPop {
+      height: 620px;
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+    }
     .inputPin {
         bottom: 30%;
         width: 481.25px;
@@ -673,6 +690,12 @@
 /* ==================Laptop View ============================ */
 @media (min-width: 1024px) {
     .transferMoneyPop {
+      height: 560px;
+      border-radius: 20px;
+      background: #fff;
+      box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+    }
+    .balanceMoneyPop {
       height: 560px;
       border-radius: 20px;
       background: #fff;

@@ -140,6 +140,15 @@ import Showmax from "./Components/TvSubscription/TvFour";
 import ToAremxyPlug from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/ToAremxyPlug";
 import FundWithCard from "./Components/Dashboard/DashboardComponents/CardPaymentPage/FundWithCard";
 import { CardPaymentReceipt } from "./Components/Dashboard/DashboardComponents/CardPaymentPage/CardPaymentReceipt";
+import GlobalTransferSelectRecipient from "./Components/Add&SelectRecipient/GlobalSelectRecipient/GlobalTransferSelectRecipient";
+import GlobalTransferAddRecipient from "./Components/Add&SelectRecipient/GlobalAddRecipient/GlobalTransferAddRecipient";
+import StarTimes from "./Components/TvSubscription/TvThree";
+import Showmax from "./Components/TvSubscription/TvFour";
+import ToAremxyPlug from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/ToAremxyPlug";
+import ContactTeam from "./Components/Dashboard/DashboardComponents/AirtimeConversion/ContactTeam";
+import ToAremxyMain from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/ToAremxyMain";
+import { AremxyMainReceipt } from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/AremxyMainReceipt";
+
 
 export const Router = () => {
   return (
@@ -185,6 +194,8 @@ export const Router = () => {
         <Route path="/personal-account" element={<PersonalAccountPage />} />
         <Route path="/business-account" element={<BusinessAccountPage />} />
         <Route path="/to-aremxyplug" element={<ToAremxyPlug />} />
+        <Route path="/to-aremxymain" element={<ToAremxyMain />} />
+        <Route path="/to-aremxymain-receipt" element={<AremxyMainReceipt />} />
         <Route path="/airtime-topup" element={<AirTime />} />
         <Route path="/airtime-vtu" element={<AirtimeVtu />} />
         <Route path="/airtime-vtu-receipt" element={<AirtimeVtuReceipt />} />
@@ -254,6 +265,7 @@ export const Router = () => {
         <Route path="/aedc" element={<AEDC />} />
         <Route path="/ekedc" element={<EKEDC />} />
         <Route path="/airtime-conversion" element={<AirtimeConversion />} />
+        <Route path="/contact-team" element={<ContactTeam />} />
         <Route path="/electricity-subscription" element={<ElectricitySubscription/>} />
         <Route path="/global-transfer" element={<GlobalTransfer />} />
         <Route path="/point-redeem" element={<PointRedeem />} />
@@ -314,6 +326,8 @@ export const Router = () => {
         <Route path="/ExistingCardPage" element={<ExistingCardPage/>} />
         <Route path="/FundWithCard" element={<FundWithCard/>} />
         <Route path="/CardPaymentReceipt" element={<CardPaymentReceipt/>}/>
+     <Route path="/GlobalTransferSelectRecipient" element={<GlobalTransferSelectRecipient/>}/>
+     <Route path="/GlobalTransferAddRecipient" element={<GlobalTransferAddRecipient/>}/>
       </Routes>
     </div>
   );
