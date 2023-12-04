@@ -131,13 +131,13 @@ select {
   }
   .balance1 {
     width: 100%;
-    height: 250px;
+    height: 280px;
     border-radius: 8.32px;
     padding: 3%;
   }
   .balance2 {
     width: 100%;
-    height: 250px;
+    height: 280px;
     border-radius: 8.32px;
     padding: 3%;
   }
@@ -208,6 +208,14 @@ select {
   }
 }
 
+/* =========Ipad Air=========== */
+@media (min-width: 820px) and (max-width: 1180px) {
+  .balance1 {
+    height: 400px;
+    background-color: black;
+  }
+}
+
 /* =================Surface Pro 7================ */
 @media (min-width: 912px) and (max-width: 1368px) {
   .sidebar {
@@ -246,13 +254,13 @@ select {
 
   .balance1 {
     width: 100%;
-    height: 270px;
+    height: 300px;
     border-radius: 8.32px;
     padding: 3%;
   }
 
   .balance2 {
-    height: 280px;
+    height: 290px;
   }
 
   .GVA {

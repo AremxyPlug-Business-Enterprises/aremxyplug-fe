@@ -200,7 +200,7 @@ export const MainDashboard = () => {
               <p
                 className={`${
                   toggleSideBar ? "lg:text-[18px]" : "lg:text-[23px]"
-                } ${styles.walletText}`}
+                } ${styles.walletText} font-extrabold`}
               >
                 Available Balance
               </p>
@@ -427,25 +427,25 @@ export const MainDashboard = () => {
                 <div
                   className={`${styles.virtualaccounttxt} ${
                     toggleSideBar ? "lg:text-[10px] lg:mt-[1%]" : ""
-                  } flex text-[10px] gap-[90px] md:gap-[110px] md:font-extrabold md:text-[15px]`}
+                  } flex text-[10px] gap-[90px] md:gap-[110px]  md:text-[15px]`}
                 >
-                  <div>Bank Name</div>
+                  <div className="md:font-extrabold">Bank Name</div>
                   <div>SBI</div>
                 </div>
                 <div
                   className={`${styles.virtualaccounttxt} ${
                     toggleSideBar ? "lg:text-[10px]" : ""
-                  }  flex text-[10px] gap-[75px] md:gap-[80px] md:text-[15px] lg:font-extrabold`}
+                  }  flex text-[10px] gap-[75px] md:gap-[80px] md:text-[15px] `}
                 >
-                  <div>Account Name</div>
+                  <div className="md:font-extrabold">Account Name</div>
                   <div>Habib Kamaldeen</div>
                 </div>
                 <div
                   className={`${styles.virtualaccounttxt} ${
                     toggleSideBar ? "lg:text-[10px]" : ""
-                  }  flex text-[10px] gap-[65px] md:gap-[60px] md:text-[15px] lg:font-extrabold`}
+                  }  flex text-[10px] gap-[65px] md:gap-[60px] md:text-[15px] `}
                 >
-                  <div>Account Number</div>
+                  <div className="md:font-extrabold">Account Number</div>
                   <div className="flex items-center gap-[10px]">
                     <div ref={textRef}>1400 00xx xxxx</div>
                     <div
