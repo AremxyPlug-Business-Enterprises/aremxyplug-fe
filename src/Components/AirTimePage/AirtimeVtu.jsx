@@ -310,13 +310,6 @@ const AirtimeVtu = () => {
 
       const handleReceipt =()=> {
         setTransactSuccessPopUp(false);
-        setSelected("");
-        setRecipientNumber("");
-        setRecipientName("");
-        setSelectedProduct("");     
-        setAmount("");
-        setDiscount("");
-        setPaymentSelected("");
       }
 
       const handleCodes =()=> {
@@ -538,7 +531,7 @@ const AirtimeVtu = () => {
                 <Modal>
                 (
                 <div
-                    className={`${styles.transferMoneyPop} ${
+                    className={`${styles.balanceMoneyPop} ${
                     toggleSideBar ? "xl:w-[65%] xl:ml-[17%] lg:ml-[20%] lg:w-[40%]"
                     : "lg:w-[40%]"
                 } w-[90%] xl:w-[80%] overflow-auto`}
