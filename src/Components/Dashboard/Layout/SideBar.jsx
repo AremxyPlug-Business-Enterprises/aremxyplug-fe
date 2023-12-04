@@ -517,7 +517,7 @@ export const SideBar = () => {
                 <div className="flex gap-[3.4px] cursor-pointer lg:gap-[11px]">
                   <img
                     className="w-[8.3px] h-[8.3px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
-                    src="./Images/notification.png"
+                    src="./Images/notifyIcon.png"
                     alt="icon"
                   />
                   <p>Notifications</p>
