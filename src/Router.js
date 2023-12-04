@@ -138,7 +138,8 @@ import StarTimes from "./Components/TvSubscription/TvThree";
 import Showmax from "./Components/TvSubscription/TvFour";
 import ToAremxyPlug from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/ToAremxyPlug";
 import ContactTeam from "./Components/Dashboard/DashboardComponents/AirtimeConversion/ContactTeam";
-import ToAremxyMain from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/ToAremxyMain"
+import ToAremxyMain from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/ToAremxyMain";
+import { AremxyMainReceipt } from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/AremxyMainReceipt";
 
 
 export const Router = () => {
@@ -186,6 +187,7 @@ export const Router = () => {
         <Route path="/business-account" element={<BusinessAccountPage />} />
         <Route path="/to-aremxyplug" element={<ToAremxyPlug />} />
         <Route path="/to-aremxymain" element={<ToAremxyMain />} />
+        <Route path="/to-aremxymain-receipt" element={<AremxyMainReceipt />} />
         <Route path="/airtime-topup" element={<AirTime />} />
         <Route path="/airtime-vtu" element={<AirtimeVtu />} />
         <Route path="/airtime-vtu-receipt" element={<AirtimeVtuReceipt />} />
