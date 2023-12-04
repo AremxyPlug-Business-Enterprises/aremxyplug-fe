@@ -117,7 +117,7 @@ select {
   .walletText {
     font-size: 18.093px;
     font-style: normal;
-    font-weight: 600;
+    font-weight: 800;
     line-height: normal;
     text-align: center;
     margin-top: 6%;
@@ -236,7 +236,7 @@ select {
   }
 
   /* .walletText { */
-  /* font-size: 25.5px; */
+  /* font-size: 25.5px; */ex
   /* } */
 
   .dashboard {
@@ -446,7 +446,7 @@ select {
   .walletText {
     font-size: 23.093px;
     font-style: normal;
-    font-weight: 600;
+    font-weight: 800;
     line-height: normal;
     text-align: center;
     margin-top: 10%;
