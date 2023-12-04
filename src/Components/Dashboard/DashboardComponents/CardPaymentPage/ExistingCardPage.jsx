@@ -320,12 +320,13 @@ const ExistingCardPage = () => {
                         className="input border absolute bg-white top-[10px] right-[5px] w-[100px] h-[75px] md:h-[100px] md:w-[150px] rounded-[5px] z-50 flex flex-col justify-center items-start py-[5px]"
                         style={{ boxShadow: "0 0 5px rgba(0, 0, 0, 0.2)" }}
                       >
+                        <Link to="/FundWithCard">
                         <div
-                          //   onClick={handleFundWithCard}
                           className="text-[10px] md:text-[12px] lg:text-[14px] text-[#000000] px-[5px] py-[5px]"
                         >
                           Fund with Card
                         </div>
+                        </Link>
                         <hr className="w-full h-[5px]" />
                         <div
                           onClick={handleDefaultCard}

@@ -138,6 +138,8 @@ import ExistingCardPage from "./Components/Dashboard/DashboardComponents/CardPay
 import StarTimes from "./Components/TvSubscription/TvThree";
 import Showmax from "./Components/TvSubscription/TvFour";
 import ToAremxyPlug from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/ToAremxyPlug";
+import FundWithCard from "./Components/Dashboard/DashboardComponents/CardPaymentPage/FundWithCard";
+import { CardPaymentReceipt } from "./Components/Dashboard/DashboardComponents/CardPaymentPage/CardPaymentReceipt";
 
 export const Router = () => {
   return (
@@ -310,6 +312,8 @@ export const Router = () => {
         <Route path="/CardPayment" element={<CardPayment/>} />
         <Route path="/AddNewCardPayment" element={<AddNewCardPayment/>} />
         <Route path="/ExistingCardPage" element={<ExistingCardPage/>} />
+        <Route path="/FundWithCard" element={<FundWithCard/>} />
+        <Route path="/CardPaymentReceipt" element={<CardPaymentReceipt/>}/>
       </Routes>
     </div>
   );
