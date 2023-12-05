@@ -180,7 +180,7 @@ cursor-pointer py-[8.17px] px-[14%] rounded-tr-[5px] rounded-br-[5px] rounded-bl
               className="ml-[1%] w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
             />
           </div>
-
+          
          
             <div>
               {/* FUNDING METHODS STARTS HERE */}
@@ -190,10 +190,12 @@ cursor-pointer py-[8.17px] px-[14%] rounded-tr-[5px] rounded-br-[5px] rounded-bl
                   isDarkMode={isDarkMode}
                 />
               </Link>
+              <Link to="/CardPayment">
               <Element
                 data={data[1]}
                 isDarkMode={isDarkMode}
               />
+              </Link>
               <div className='cursor-pointer' onClick={() => setShowModal_1(true)}>
                 <Element
                   data={data[2]}
