@@ -10,6 +10,7 @@ import closeIcon from '../../My Profile & Account Settings/ProfileImages/Cancel.
 import { Modal } from '../../Screens/Modal/Modal';
 import SuccessIcon from '../../My Profile & Account Settings/ProfileImages/success.gif';
 import AremxyLogo from '../../EducationPins/imagesEducation/AremxyPlug.svg';
+import { Link } from 'react-router-dom';
 
 export default function GlobalTransferAddRecipient() {
 const [accountNumber, setAccountNumber] =  useState('');
@@ -30,6 +31,8 @@ const saveRecipientButton = () => {
   return (
     
         <DashBoardLayout>
+          <div className='flex flex-col justify-between md:h-[1100px] h-[750px] '>
+          <div>
             <RecipientHero/>
             <div className='flex flex-col lg:gap-[50px] gap-[20px]'>
                 {/* FIRST HEADING TEXT */}
@@ -61,7 +64,7 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
     <h2 className=' font-[600] text-left text-[9px] leading-[12px] lg:text-[16px] lg:leading-[20.8px] '>
     Select Country
     </h2>
-    <div className='flex justify-between py-[8.178px] pl-[3.172px] pr-[10px] lg:py-[14px] lg:pl-[16px] lg:pr-[10px]
+    <div className='flex justify-between py-[8.178px] pl-[5.868px] pr-[10px] lg:py-[14px] lg:pl-[16px] lg:pr-[10px]
     md:border-[1px]  border-[0.5px] rounded-[3.197px] border-[solid] border-[#7C7C7C] lg:rounded-[10px] bg-white'>
       <div className='flex lg:gap-[10px] gap-[5px]'>
     <img src={Nigerianflag} alt="" 
@@ -89,7 +92,7 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
           setAccountNumber(e.target.value);
          }}  
          className='w-[100%] font-[500] text-[9px] leading-[12px]  lg:text-[16px] lg:leading-[20.8px]
-         placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] py-[8.178px] pl-[3.167px] pr-[20px] lg:pl-[10px] lg:py-[16px] border-[0.5px]
+         placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] py-[8.178px] pl-[5.868px] pr-[20px] lg:pl-[10px] lg:py-[16px] border-[0.5px]
           rounded-[3.197px] md:border-[1px] border-[solid] border-[#7C7C7C] lg:rounded-[10px] focus:outline-none'
          placeholder='' inputMode='numeric' maxLength={12} />
          <img src={AccountRecipient} alt="" 
@@ -110,9 +113,9 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
           setAccountName(e.target.value);
          }}  
          className='w-[100%] font-[500] text-[9px] leading-[12px]  lg:text-[16px] lg:leading-[20.8px]
-         placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] py-[8.178px] pl-[3.167px] pr-[20px] lg:pl-[10px] lg:py-[16px] border-[0.5px]
+         placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] py-[8.178px] pl-[5.868px] pr-[20px] lg:pl-[10px] lg:py-[16px] border-[0.5px]
           rounded-[3.197px] md:border-[1px] border-[solid] border-[#7C7C7C] lg:rounded-[10px] focus:outline-none'
-         placeholder='' inputMode='numeric'  />
+         placeholder=''  />
          <img src={AccountRecipient} alt="" 
          className='absolute h-[12px] w-[12px] top-[7.997px] right-[7.997px] md:top-[16px] 
          md:right-[16px] lg:w-[20px] lg:h-[20px]'/>
@@ -133,9 +136,9 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
           setBankName(e.target.value);
          }}  
          className='w-[100%] font-[500] text-[9px] leading-[12px]  lg:text-[16px] lg:leading-[20.8px]
-         placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] py-[8.178px] pl-[3.167px] pr-[20px] lg:pl-[10px] lg:py-[16px] border-[0.5px]
+         placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] py-[8.178px] pl-[5.868px] pr-[20px] lg:pl-[10px] lg:py-[16px] border-[0.5px]
           rounded-[3.197px] md:border-[1px] border-[solid] border-[#7C7C7C] lg:rounded-[10px] focus:outline-none'
-         placeholder='' inputMode='numeric'  />
+         placeholder=''   />
          <img src={Bank} alt="" 
          className='absolute h-[12px] w-[12px] top-[7.997px] right-[7.997px] md:top-[16px] 
          md:right-[16px] lg:w-[20px] lg:h-[20px]'/>
@@ -152,7 +155,7 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
   <button onClick={() => {
     saveRecipientButton();
   }}
-  className='bg-[#04177F] md:mt-[0px] mt-[60px] md:py-[10px] rounded-[4.21px] py-[16px] lg:w-[163px] md:w-[150px] text-white text-center
+  className='bg-[#04177F] md:mt-[40px] mt-[60px] md:py-[10px] rounded-[4.21px] py-[16px] lg:w-[163px] md:w-[150px] text-white text-center
   lg:rounded-[12px] font-[600] text-[11px] ledaing-[15px] lg:text-[16px] lg:leading-[24px] '>
    Save Account
   </button>
@@ -160,7 +163,7 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
     </form>
     {confirmRecipient && (
           <Modal>
-            <div className='h-[100%] flex items-end md:mx-[0px] mx-[19px]'>
+            <div className='h-[100%] flex justify-center md:items-center items-end md:mx-[0px] mx-[19px]'>
           <div className='flex flex-col lg:w-[50%] h-[420px]  lg:h-[680px] bg-white rounded-t-[8px] lg:rounded-[20px]
           lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] pb-[40px] md:pb-[80px] '>
     <div className='flex justify-end w-[100%] md:py-[15px] py-[10px] pr-[14px] border-b-[10px]  md:border-b-[15px] border-[solid] border-[#04177F]'>
@@ -222,7 +225,7 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
   setChangeRecipientSuccess(true);
   setConfirmRecipient(false)
 }}
-className='bg-[#04177F] w-[100%] lg:py-[10px] py-[16px] lg:w-[163px]
+className='bg-[#04177F] w-[100%] lg:py-[10px] py-[13px] lg:w-[163px]
  md:w-[150px] text-white text-center rounded-[4.41px]
   lg:rounded-[12px] font-[600] lg:text-[16px] lg:leading-[24px]'>
  Confirmed
@@ -235,25 +238,24 @@ className='bg-[#04177F] w-[100%] lg:py-[10px] py-[16px] lg:w-[163px]
         )}
         {changeRecipientSuccess && (
           <Modal>
-            <div className='h-[100%] flex items-end md:mx-[0px] mx-[19px]'>
-          <div className='flex flex-col  lg:w-[50%] h-[370px] lg:h-[680px] bg-white lg:rounded-[20px]
+            <div className='h-[100%] w-[100%] md:justify-center flex md:items-center items-end md:mx-[0px] mx-[19px]'>
+          <div className='flex flex-col  lg:w-[50%] h-[370px] w-[100%] lg:h-[680px] bg-white lg:rounded-[20px]
           shadow-[0px_0px_6.933px_0px_rgba(0,0,0,0.25)] rounded-t-[8px]
-          lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] pb-[80px]'>
+          lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] pb-[30px] md:pb-[80px]'>
   <div className='flex justify-between w-[100%] border-b-[15px] border-[solid] border-[#04177F] lg:p-[15px] p-[10px]'>
   <img src={AremxyLogo} alt="" 
    className='lg:h-[24.818px] lg:w-[41.825px] h-[16px] w-[16px] 
    '/>
    <img src={closeIcon} alt="" 
-   className='lg:h-[32px] lg:w-[32px]  h-[16px] w-[16px]
-   '/>
+   className='lg:h-[32px] lg:w-[32px]  h-[16px] w-[16px]'/>
   </div>
-  <div className='flex flex-col justify-between  lg:w-[100%] lg:pt-[20px]  items-center h-[100%]'>
-  <div className='flex flex-col items-center lg:w-[80%] lg:gap-[40px]'>
+  <div className='flex flex-col justify-between  lg:w-[100%] lg:pt-[20px] pt-[30px]  items-center h-[100%]'>
+  <div className='flex flex-col items-center lg:w-[80%] lg:gap-[40px] gap-[20px]'>
    <h2 className='font-[600] text-center text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
     Successful
     </h2>
     <img src={SuccessIcon} alt=""
-    className='lg:w-[135px] lg:h-[135px] h-[50px] w-[67px]' />
+    className='lg:w-[135px] lg:h-[135px] h-[100px] w-[100px]'/>
     <p className='font-[600] text-[#2ED173] text-center text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
     New recipient account has been added successfully.
 
@@ -262,8 +264,9 @@ className='bg-[#04177F] w-[100%] lg:py-[10px] py-[16px] lg:w-[163px]
   <button onClick={() => {
     setChangeRecipientSuccess(false);
   }}
-className='bg-[#04177F] lg:py-[10px] lg:w-[163px] md:w-[150px] text-white text-center
-  lg:rounded-[12px] font-[600] lg:text-[16px] lg:leading-[24px]'>
+className='bg-[#04177F] w-[80%] lg:py-[10px] py-[13px] lg:w-[163px]
+md:w-[150px] text-white text-center rounded-[4.41px]
+ lg:rounded-[12px] font-[600] lg:text-[16px] lg:leading-[24px]'>
  Continue
 </button>
   </div>
@@ -271,6 +274,26 @@ className='bg-[#04177F] lg:py-[10px] lg:w-[163px] md:w-[150px] text-white text-c
           </div>
           </Modal>
         )}
+        </div>
+        </div>
+        <div className=" flex gap-[8.729px]  md:gap-[14.896px]
+       justify-center px-[8.594px] mb-[70px] md:mb-[130px]">
+              <p className="font-[500] text-[10px] text-black 
+              leading-[10.4px] lg:text-[16px] lg:leading-[15.6px]  md:text-[6.875px]
+            ] md:leading-[12.938px] self-center">
+                You need help?
+              </p>
+              <Link to ="/contactUs"
+                className="font-[500] text-white text-[10px]  py-[4.865px] 
+                px-[10.594px] leading-[10.4px] rounded-[5.156px] bg-[#04177F]
+                lg:text-[12px] lg:leading-[14.4px] 
+                 md:text-[4.583px]  md:py-[4.865px] 
+                md:px-[14.594px] md:leading-[5.985px]  lg:py-[10px]
+                lg:px-[16px] lg:rounded-[9px]"
+              >
+                Contact Us
+              </Link>
+            </div>
         </div>
           
       

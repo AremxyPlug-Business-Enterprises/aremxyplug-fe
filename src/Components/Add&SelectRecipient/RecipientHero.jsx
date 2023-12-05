@@ -19,9 +19,9 @@ export default function RecipientHero() {
            </h2>
            {/* sub-text */}
            <p
-             className="font-[400] text-[10px] leading-[14px] 
-     md:text-[14.75px] md:leading-[20.917px]
-     lg:text-[20px] lg:leading-[30.8px] "
+             className="font-[400] text-[9px] leading-[12px] 
+     md:text-[12.75px] md:leading-[16.917px]
+     lg:text-[18px] lg:leading-[24.8px] "
            >
             Transfer money from your wallets to any bank accounts globally without any 
             hassle or hidden fee.
