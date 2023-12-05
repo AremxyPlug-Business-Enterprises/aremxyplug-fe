@@ -1187,8 +1187,8 @@ export const Context = ({ children }) => {
      setLastName,
      airEmail, 
      setairEmail,
-    //  homeAdress,
-    // sethomeAdress,
+     homeAdress,
+    sethomeAdress,
 
 
     //currency
