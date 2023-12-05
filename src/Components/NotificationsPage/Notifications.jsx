@@ -17,6 +17,10 @@ import folder from "./assets/folder.svg";
 import five from "./assets/five.svg";
 import envelope from "./assets/envelope.svg";
 import bin from "./assets/bin.svg";
+import deletingfiles from "./assets/deletingfile.svg";
+import VuesaxBoldEye from "./assets/cancel.svg";
+import WalletModal from "../Wallet/WalletModal";
+
 
 export default function NotificationsPage() {
   const { isDarkMode } = useContext(ContextProvider);
@@ -244,10 +248,24 @@ export default function NotificationsPage() {
 
   
 
+  
+  const [isAllRead, setIsAllRead] = useState(true);
+  const [buttonText, setButtonText] = useState('Mark all as Read');
+
+  const handleButtonClick = () => {
+    setIsAllRead((prevIsAllRead) => !prevIsAllRead);
 
 
+    
+    // Update button text based on the new state
+    setButtonText(isAllRead ? 'Mark all as Unread' : 'Mark all as Read');
 
+    // Additional click handlers
+    handleCombinedClick();
+    handleCombinedClick3();
+  };
 
+    
 
 
 
@@ -345,6 +363,27 @@ export default function NotificationsPage() {
     setBackgroundColor14("bg-white") 
     setBackgroundColor15("bg-white") 
   };
+
+  const [activeBtn, setActiveBtn] = useState([true, false]);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const handleClick = (index) => {
+    const clickedBtn = activeBtn.map((isActive, i) => i === index);
+    setActiveBtn(clickedBtn);
+    setActiveIndex(index);
+  };
+
+  const resetActiveButton = () => {
+    hidePopup();
+    handleClick(0);
+  };
+  const hidePopup = () => {
+    setPopupVisible(false);
+  };
+  const showPopup = () => {
+    setPopupVisible(true);
+  };
+  const [popupVisible, setPopupVisible] = useState(false);
 
 
   return (
@@ -546,7 +585,7 @@ export default function NotificationsPage() {
             {/* first flow */}
             {isOpen1 &&  (
               <div
-                className="flex flex-col w-full lg:w-full md:w-full mt-[50px] lg:mt-[100px]
+                className="flex flex-col relative w-full lg:w-full md:w-full mt-[50px] lg:mt-[100px]
          md:mt-[70px] md:gap-[45px] lg:gap-10 gap-[20.64px] "
               >
                 <div
@@ -559,9 +598,12 @@ items-end  "
              lg:rounded-[6px] lg:border-[0.2px] border-solid p-1 w-24 md:w-[120px]   border shadow rounded gap-1.5 lg:shadow-[0px_0px_1px_#00000040]"
                   >
                     <div
+                    id="colorReset"
                       onClick={() => {
                         handleCombinedClick();
                         handleCombinedClick3();
+                        handleButtonClick()
+                        
                       }}
                       className="flex lg:w-[171px] items-center lg:gap-[14px] gap-2  flex-[0_0_auto]"
                     >
@@ -571,10 +613,10 @@ items-end  "
                         src={envelope}
                       />
                       <div
-                        className="lg:w-[133px] w-[67px] md:w-[78px] mt-[-1.00px] font-medium text-zinc-500  text-text-color-fade
-                 lg:text-[16px] tracking-[0] text-[8px] md:text-[10px] leading-[normal]"
+                        className="lg:w-[133px] w-[67px] md:w-[78px] whitespace-nowrap mt-[-1.00px] font-medium text-zinc-500  text-text-color-fade
+                 lg:text-[15px] tracking-[0] text-[8px] md:text-[10px] leading-[normal]"
                       >
-                        Mark all as Read
+                        {buttonText}
                       </div>
                     </div>
                   </div>
@@ -602,6 +644,7 @@ items-end  "
 <div className="flex flex-col lg:gap-7 gap-3 md:gap-5">
                 
                 <div
+                id="colorReset"
                   className={`flex justify-between  items-center w-full 
                   border-b lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md
                    lg:rounded-xl shadow  border-[#d9d9d999] ${backgroundColor}`}
@@ -655,6 +698,10 @@ items-end  "
                             </div>
                           </div>
                           <div
+                           onClick={() => {
+                            handleClick(1)
+                            showPopup();
+                          }}
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
           justify-center items-center gap-1.5 flex"
                           >
@@ -688,8 +735,91 @@ items-end  "
                       />
                     </div>
                   </div>
+
                 </div>
+
+                {popupVisible && (
+                <WalletModal>
+                <div className="text-center flex justify-center item-center md:mt-[-20px] lg:mt-[15px] 2xl:mt-[-15px]">
+                <div
+                  className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
+                    flex flex-col justify-center z-[100] lg:ml-[10px] md:w-full`}>
+                      <img className=" w-[25px] h-[25px] inline-flex justify-end items-end"  src={VuesaxBoldEye} alt=""/>
+                  <div className="w-full h-[22px]  bg-[#04177f]" />
+                  <div>
+                    <p className="text-[10px] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[3%]">
+                    Are you sure you want to delete this Notification?
+                    </p>
+                    {/* <p className="text-[10px] md:text-[16px] font-[600] text-[#04177F] lg:text-[16px]"> */}
+                      {/* This Feature is Currently Not Available. */}
+                    {/* </p> */}
+                  </div>
+                  <img
+                    src={deletingfiles}
+                    alt=""
+                    className="img mx-auto mt-[30px] md:mt-[15%] md:w-[220px] md:mx-[100px] w-[143px] h-[67px] lg:w-[300px] lg:h-[200px] lg:mx-[150px] lg:mt-[10%] 2xl:mt-[10%] 2xl:mx-[180px]"
+                  />
+                </div>
+              </div>
+              <div className="mt-[40px] justify-center items-center flex gap-[3px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
+                {/* <p className="text-[8px] font-extrabold text-end float-right ml-[60%] md:ml-[70%] md:text-[12px] mt-[10px] lg:text-[13px] 2xl:text-[15px]"> */}
+                  {/* Coming Soon... */}
+                {/* </p> */}
+                <button
+                  className={` ${
+                    isDarkMode ? "border" : "bg-[#04177f] "
+                  } cursor-pointer text-white text-[10px] h-[40px]  lg:rounded-xl lg:w-40 lg:h-9 lg:px-3.5 lg:py-2.5 
+                  rounded-[5px]
+                   md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] 
+                   lg:my-[3%]  lg:text-[20px]  lg:mx-auto`}
+                  // onClick={resetActiveButton}
+                  // handleClick={activeIndex}
+                >
+                  Yes
+                </button>
+
+
                 
+                <button onClick={resetActiveButton}
+                        handleClick={activeIndex}
+ className="Frame1469 cursor-pointer  w-40 h-9 px-3.5 py-2.5 rounded-xl border border-red-600 
+                justify-center items-center gap-2.5 flex">
+    <div  className="Cancel text-red-500 text-base font-semibold ">Cancel</div>
+
+                </button>
+              </div>
+              </WalletModal>
+                )}
+                                  {/* pop-up */}
+                                  {/* <div className="absolute w-full z-50 h-[465px] bg-red-200 rounded-[20px] top-[-40px]  */}
+                                  {/* // flex justify-center items-center "> */}
+      {/* <div className=" h-[22px] top-[60px] left-0 bg-[#04177f]" /> */}
+      {/*  */}
+      {/* <img className=" w-[25px] h-[25px] top-[10px]  flex justify-end items-start"  src={VuesaxBoldEye} alt=""/> */}
+        {/*  */}
+        {/* <div className="flex flex-col items-center gap-[40px] absolute top-0 left-0"> */}
+          {/* <div className="flex flex-col justify-center items-center gap-[10px] relative flex-[0_0_auto]"> */}
+            {/* <p className=" w-[388px] h-[44px] mt-[120.00px]  font-semibold text-black text-[16px] text-right tracking-[0] leading-[20.8px]"> */}
+              {/* Are you sure you want to delete this Notification? */}
+            {/* </p> */}
+            {/* <img className="relative w-[150px] h-[150px]" alt="Deleting files" src={deletingfiles} /> */}
+          {/* </div> */}
+          {/* <div className="flex items-start gap-[20px] relative flex-[0_0_auto]"> */}
+            {/* <div className="flex w-[163px] h-[38px] items-center justify-center gap-[10px] px-[15px] py-[10px] relative bg-primary-colormain rounded-[12px]"> */}
+              {/* <div className="relative w-fit mt-[-4.00px] mb-[-2.00px]  font-semibold text-white text-[16px] tracking-[0] leading-[normal]"> */}
+                {/* Yes */}
+              {/* </div> */}
+            {/* </div> */}
+            {/* <div className="flex w-[163px] h-[38px] items-center justify-center gap-[10px] px-[15px] py-[10px] relative rounded-[12px] border border-solid border-danger"> */}
+              {/* <div className="relative w-fit mt-[-4.00px] mb-[-2.00px] [font-family:'Poppins-SemiBold',Helvetica] font-semibold text-variable-collection-text-danger text-[16px] tracking-[0] leading-[normal]"> */}
+                {/* Cancel */}
+              {/* </div> */}
+            {/* </div> */}
+          {/* </div> */}
+          {/* </div> */}
+          {/*  */}
+                {/* </div> */}
+
 
                 <div
                   className={` flex w-full justify-between items-center lg:h-[230px] h-[100px] md:h-[150px]
@@ -1240,7 +1370,7 @@ items-end  "
                   className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${backgroundColor6} w-full justify-between
                    items-center`}
                 >
-  <Link to="/launch-page">
+  <Link to="/launch-page2">
 
 
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
@@ -1337,7 +1467,7 @@ items-end  "
                   className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${backgroundColor7} w-full justify-between
                    items-center`}
                 >
-  <Link to="/launch-page">
+  <Link to="/launch-page2">
 
 
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
@@ -1430,7 +1560,7 @@ items-end  "
                   className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${backgroundColor8} w-full justify-between
                    items-center`}
                 >
-  <Link to="/launch-page">
+  <Link to="/launch-page2">
 
 
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
@@ -1525,7 +1655,7 @@ items-end  "
                   className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-sm md:rounded-md lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${backgroundColor9} w-full justify-between
                    items-center`}
                 >
-  <Link to="/launch-page">
+  <Link to="/launch-page2">
 
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
                     <div className="font-semibold text-text-color-fade text-zinc-500 lg:text-base md:text-xs  text-[8px] ">
@@ -1619,7 +1749,7 @@ items-end  "
                   className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${backgroundColor10} w-full justify-between
                    items-center`}
                 >
-  <Link to="/launch-page">
+  <Link to="/launch-page2">
 
 
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
@@ -1779,7 +1909,7 @@ items-end  "
                   className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${backgroundColor11} w-full justify-between
                    items-center`}
                 >
-  <Link to="/launch-page">
+  <Link to="/launch-page3">
 
 
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
@@ -1872,7 +2002,7 @@ items-end  "
                   className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${backgroundColor12} w-full justify-between
                    items-center`}
                 >
-  <Link to="/launch-page">
+  <Link to="/launch-page3">
 
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
                     <div className="font-semibold text-text-color-fade text-zinc-500 lg:text-base md:text-xs  text-[8px] ">
@@ -1964,7 +2094,7 @@ items-end  "
                   className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${backgroundColor13} w-full justify-between
                    items-center`}
                 >
- <Link to="/launch-page">
+ <Link to="/launch-page3">
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
                     <div className="font-semibold text-text-color-fade text-zinc-500 lg:text-base md:text-xs  text-[8px] ">
                       New Launch!!
@@ -2055,7 +2185,7 @@ items-end  "
                   className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${backgroundColor14} w-full justify-between
                    items-center`}
                 >
-                   <Link to="/launch-page">
+                   <Link to="/launch-page3">
 
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
                     <div className="font-semibold text-text-color-fade text-zinc-500 lg:text-base md:text-xs  text-[8px] ">
@@ -2147,7 +2277,7 @@ items-end  "
                   className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${backgroundColor15} w-full justify-between
                    items-center`}
                 >
- <Link to="/launch-page">
+ <Link to="/launch-page3">
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
                     <div className="font-semibold text-text-color-fade text-zinc-500 lg:text-base md:text-xs  text-[8px] ">
                       New Launch!!
