@@ -146,6 +146,7 @@ import ContactTeam from "./Components/Dashboard/DashboardComponents/AirtimeConve
 import ToAremxyMain from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/ToAremxyMain";
 import { AremxyMainReceipt } from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/AremxyMainReceipt";
 
+import { AirtimeReceipt } from "./Components/Dashboard/DashboardComponents/AirtimeConversion/AirtimeReceipt";
 
 export const Router = () => {
   return (
@@ -253,7 +254,7 @@ export const Router = () => {
        <Route path="/phed-receipt" element={<PhedReceipt/>} />
        <Route path="/bedc" element={<BEDC />} />
        <Route path="/phed" element={<PHED />} />
-       <Route path="/kedco" element={<KEDCO/>} />
+       <Route path="/kedco" element={<KEDCO/>} /> 
        <Route path="/jed" element={<JED />} />
        <Route path="/ibedc" element={<IBEDC />} />
        <Route path="/eedc" element={<EEDC />} />
@@ -262,6 +263,7 @@ export const Router = () => {
         <Route path="/aedc" element={<AEDC />} />
         <Route path="/ekedc" element={<EKEDC />} />
         <Route path="/airtime-conversion" element={<AirtimeConversion />} />
+        <Route path="/airtime-receipt" element={<AirtimeReceipt />} />
         <Route path="/contact-team" element={<ContactTeam />} />
         <Route path="/electricity-subscription" element={<ElectricitySubscription/>} />
         <Route path="/global-transfer" element={<GlobalTransfer />} />

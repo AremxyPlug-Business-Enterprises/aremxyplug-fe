@@ -211,8 +211,8 @@
   }
 
   .successfulTwo {
-    bottom: 30%;
-    width: 80%;
+    top: 10%;
+    width: 60%;
     height: 600px;
     border-radius: 15px;
   }
