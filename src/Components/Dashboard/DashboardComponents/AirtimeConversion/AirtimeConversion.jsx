@@ -14,7 +14,7 @@ import flow from "../AirtimeConversion/images/Frame (5).png"
 import { Modal } from "../../../Screens/Modal/Modal";
 import flow1 from "../AirtimeConversion/images/convert-card.png"
 import clock from "../AirtimeConversion/images/clock.png"
-// import Joi from "joi";
+import Joi from "joi";
 import arrow from "../AirtimeConversion/images/arrow.png"
 import boy from "../AirtimeConversion/images/Digital banking and online currency exchange.png"
 
@@ -27,7 +27,7 @@ const AirtimeConversion = () => {
   const [networkImage, setNetworkImage] = useState('');
   const [selected, setSelected] = useState(false);
   const [networkName, setNetworkName] = useState('');
-  
+ 
   
   const [proceed, setProceed] = useState(false);
   
@@ -88,7 +88,7 @@ const Network =({name, image, onClick})=> {
   )
 }
 
-// const [errors, setErrors] = useState({});
+const [errors, setErrors] = useState({});
 const handlePhoneNumber = (event) => {
   const newValue = event.target.value;
   setRecipientNumberA(newValue);
@@ -100,36 +100,43 @@ const handleProceed = () => {
   
   
 
-  // const { error } = schema.validate({
-  //   recipientNumber,
+  const { error } = schema.validate({
+    recipientNumberA,
+    inputValue,
     
     
-  // });
+  });
 
-  // if (error) {
-  //   setErrors(
-  //     error.details.reduce((acc, curr) => {
-  //       acc[curr.path[0]] = curr.message;
-  //       return acc;
-  //     }, {})
-  //   );
-  // } else {
+  if (error) {
+    setErrors(
+      error.details.reduce((acc, curr) => {
+        acc[curr.path[0]] = curr.message;
+        return acc;
+      }, {})
+    );
+  } else {
     setProceed(true);
-  //   setErrors({});
+    setErrors({});
     
-  // }
+  }
 };
 
-// const schema = Joi.object({
-//   phoneNumber: Joi.string()
-//     .pattern(new RegExp(/^\d{11,}/))
-//     .required()
-//     .messages({
-//       "string.pattern.base": "Phone number should be 11 digits ",
-//     }),
-   
+const schema = Joi.object({
+
+  recipientNumberA: Joi.string()
+    .pattern(new RegExp(/^\d{11,}/))
+    .required()
+    .messages({
+      "string.pattern.base": "Phone number should be 11 digits ",
+    }),
+   inputValue: Joi.string()
+    .pattern(new RegExp(/^\d{3,}/))
+    .required()
+    .messages({
+      "string.pattern.base": "Minimum amount to convert is 1000 ",
+    }),
     
-// });
+});
 
 const { 
   setInputValue, 
@@ -246,12 +253,13 @@ const {
                         <div className='lg:w-6 lg:h-6 w-[11px] h-[11px]'>
                             <img src={call} alt="" className='w-full h-full'/>
                         </div>
-                        {/* {errors.phoneNumber && (
-              <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                {errors.recipientNumber}
-              </div>
-            )} */}
+                        
                     </div>
+                    {errors.recipientNumberA && (
+              <div className="text-[12px] text-red-500 italic lg:text-[14px]">
+                {errors.recipientNumberA}
+              </div>
+            )}
                 </div>
         </div>
         <div className="mt-[20px] md:mt-[30px] lg:mt-[50px] flex flex-row ">
@@ -263,11 +271,7 @@ const {
               className="w-[100%] outline-none text-[8px] lg:text-[16px] leading-[20.8px  font-[600]  text-[#000]"
               placeholder="Amount to Convert"
             />{" "}
-            {/* {errors.inputValue && (
-              <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                {errors.inputValue}
-              </div>
-            )} */}
+            
           </div>
           <div className="h-[30px] md:h-[40px] lg:h-[60px]  w-[15%] md:w-[8%] gap-2 lg:gap-4 flex flex-row pl-[17px] lg:pl-[35px] py-2 bg-primary items-center   ">
             <div>
@@ -335,17 +339,22 @@ const {
             <div><img src={clock} className='w-[8px] h-[8px] lg:w-[15px] lg:h-[15px]' alt="" /></div>
             <div className='leading-[8px]'>Completion Time - 2 hr, 09:00am - 10:00pm UTC+1.</div>
           </div>
-        </div>
+          {errors.inputValue && (
+              <div className="text-[10px] text-red-500 italic lg:text-[14px]">
+                {errors.inputValue}
+              </div>
+            )}
 
+        </div>
+        
         <div className="flex flex-col justify-center md:items-center">
           <div
             onClick ={ () => {
               handleProceed()
             } }
             className={` ${
-              (inputValue.length < 4 ? "bg-[#0008]" : "bg-[#04177f]",
-              resultValue.length < 4 ? "bg-[#0008]" : "bg-[#04177f]")
-              
+              !inputValue.length || resultValue.length < 4 ? "bg-[#0008]" : "bg-[#04177f]"
+             
             } text-[12px] mt-[50px] md:mt-[40px] md:w-fit lg:px-12 lg:text-[16px] lg:px md:py-1 md:rounded-md md:px-6   py-3 rounded-md font-[600] text-center text-white
            `
           }
