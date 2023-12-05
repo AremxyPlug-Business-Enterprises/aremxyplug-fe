@@ -430,11 +430,19 @@ export const Context = ({ children }) => {
     accountNumber: "",
     bankName: "",
   });
+  const [mainTransferState, setMainTransferState] = useState({
+    emailUsername: "",
+    userPhoneNumber: "",
+  });
 
   const handleGlobalInputChange = (e) => {
     const { name, value } = e.target;
     setGlobalTransferState({
       ...globalTransferState,
+      [name]: value,
+    });
+    setMainTransferState({
+      ...mainTransferState,
       [name]: value,
     });
   };
@@ -449,6 +457,8 @@ export const Context = ({ children }) => {
         "string.pattern.base": "Account number should be 10 digits ",
       }),
     accountName: Joi.string().required(),
+    emailUsername: Joi.string().required(),
+    userPhoneNumber: Joi.string().required(),
     amtToTransfer: Joi.string()
       .pattern(new RegExp(/\d{4,}/))
       .required()
@@ -460,6 +470,7 @@ export const Context = ({ children }) => {
   const ProceedToGlobalTransfer = (e) => {
     e.preventDefault();
     const { accountNumber, accountName, bankName } = globalTransferState;
+    const { emailUsername, userPhoneNumber } = mainTransferState;
 
     const { error } = globalTransferSchema.validate({
       globalCountry,
@@ -467,6 +478,11 @@ export const Context = ({ children }) => {
       accountNumber,
       accountName,
       amtToTransfer,
+    });
+
+    const { error2 } = globalTransferSchema.validate({
+      emailUsername,
+      userPhoneNumber,
     });
 
     if (error) {
@@ -480,11 +496,25 @@ export const Context = ({ children }) => {
       setOtherBankConfirmation(true);
       setGlobalTransferErrors({});
     }
+
+    if (error2) {
+      setGlobalTransferErrors(
+        error2.details.reduce((acc, curr) => {
+          acc[curr.path[0]] = curr.message;
+          return acc;
+        }, {})
+      );
+    } else {
+      setOtherBankConfirmation(true);
+      setGlobalTransferErrors({});
+    }
   };
 
   const globalBankName = globalTransferState.bankName;
   const globalAccountNumber = globalTransferState.accountNumber;
   const globalAccountName = globalTransferState.accountName;
+  const globalEmailUsername = mainTransferState.emailUsername;
+  const globalUserPhoneNumber = mainTransferState.userPhoneNumber;
 
   // ===================End of Global Transfer======================
 
@@ -1025,6 +1055,8 @@ export const Context = ({ children }) => {
     globalAccountNumber,
     globalAccountName,
     handleGlobalInputChange,
+    globalEmailUsername,
+    globalUserPhoneNumber,
 
     // ===========International transfer ==============
     internationalBankConfirmation,

@@ -132,13 +132,19 @@ import AirtimeConversion from "./Components/Dashboard/DashboardComponents/Airtim
 import LaunchPage from "./Components/NotificationsPage/LaunchPage";
 import ChangePin from "./Components/My Profile & Account Settings/My Profile Page/ChangePin";
 import AccountUpgrade from "./Components/My Profile & Account Settings/My Profile Page/AccountUpgrade";
-import GlobalTransferSelectRecipient from "./Components/Add&SelectRecipient/GlobalSelectRecipient/GlobalTransferSelectRecipient";
-import GlobalTransferAddRecipient from "./Components/Add&SelectRecipient/GlobalAddRecipient/GlobalTransferAddRecipient";
+import CardPayment from "./Components/Dashboard/DashboardComponents/CardPaymentPage/Cardpayment";
+import AddNewCardPayment from "./Components/Dashboard/DashboardComponents/CardPaymentPage/AddNewCardPayment";
+import ExistingCardPage from "./Components/Dashboard/DashboardComponents/CardPaymentPage/ExistingCardPage";
 import StarTimes from "./Components/TvSubscription/TvThree";
 import Showmax from "./Components/TvSubscription/TvFour";
 import ToAremxyPlug from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/ToAremxyPlug";
+import FundWithCard from "./Components/Dashboard/DashboardComponents/CardPaymentPage/FundWithCard";
+import { CardPaymentReceipt } from "./Components/Dashboard/DashboardComponents/CardPaymentPage/CardPaymentReceipt";
+import GlobalTransferSelectRecipient from "./Components/Add&SelectRecipient/GlobalSelectRecipient/GlobalTransferSelectRecipient";
+import GlobalTransferAddRecipient from "./Components/Add&SelectRecipient/GlobalAddRecipient/GlobalTransferAddRecipient";
 import ContactTeam from "./Components/Dashboard/DashboardComponents/AirtimeConversion/ContactTeam";
-import ToAremxyMain from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/ToAremxyMain"
+import ToAremxyMain from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/ToAremxyMain";
+import { AremxyMainReceipt } from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/AremxyMainReceipt";
 
 import { AirtimeReceipt } from "./Components/Dashboard/DashboardComponents/AirtimeConversion/AirtimeReceipt";
 
@@ -187,6 +193,7 @@ export const Router = () => {
         <Route path="/business-account" element={<BusinessAccountPage />} />
         <Route path="/to-aremxyplug" element={<ToAremxyPlug />} />
         <Route path="/to-aremxymain" element={<ToAremxyMain />} />
+        <Route path="/to-aremxymain-receipt" element={<AremxyMainReceipt />} />
         <Route path="/airtime-topup" element={<AirTime />} />
         <Route path="/airtime-vtu" element={<AirtimeVtu />} />
         <Route path="/airtime-vtu-receipt" element={<AirtimeVtuReceipt />} />
@@ -313,6 +320,11 @@ export const Router = () => {
         <Route path="/ChangePhoneNumber" element={<ChangePhoneNumber/>} />
         <Route path="/ChangePin" element={<ChangePin/>} />
         <Route path="/AccountUpgrade" element={<AccountUpgrade/>} />
+        <Route path="/CardPayment" element={<CardPayment/>} />
+        <Route path="/AddNewCardPayment" element={<AddNewCardPayment/>} />
+        <Route path="/ExistingCardPage" element={<ExistingCardPage/>} />
+        <Route path="/FundWithCard" element={<FundWithCard/>} />
+        <Route path="/CardPaymentReceipt" element={<CardPaymentReceipt/>}/>
      <Route path="/GlobalTransferSelectRecipient" element={<GlobalTransferSelectRecipient/>}/>
      <Route path="/GlobalTransferAddRecipient" element={<GlobalTransferAddRecipient/>}/>
       </Routes>

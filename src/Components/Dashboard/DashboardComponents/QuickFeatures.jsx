@@ -101,7 +101,8 @@ const QuickFeatures = () => {
           />
           <p>Payments</p>
         </div>
-        <div
+        <Link
+          to="/Cardissuing"
           className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
             styles.feature
           }`}
@@ -112,8 +113,9 @@ const QuickFeatures = () => {
             alt="/"
           />
           <p>Card Issuing</p>
-        </div>
-        <div
+        </Link>
+        <Link
+          to="/DigitalServices"
           className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
             styles.feature
           }`}
@@ -124,7 +126,7 @@ const QuickFeatures = () => {
             alt="/"
           />
           <p>Digital Services</p>
-        </div>
+        </Link>
         <Link
           to="/My-Referral"
           className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
@@ -138,7 +140,8 @@ const QuickFeatures = () => {
           />
           <p>Referrals</p>
         </Link>
-        <Link to ="/ProfileSettingMain"
+        <Link
+          to="/ProfileSettingMain"
           className={`${
             isDarkMode ? " border text-white" : "text-[#000] bg-[#fff] "
           } ${styles.feature}`}
