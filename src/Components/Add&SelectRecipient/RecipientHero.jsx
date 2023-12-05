@@ -11,16 +11,16 @@ export default function RecipientHero() {
        <div className="flex flex-col gap-[5.016px]  w-[70%] lg:gap-[15px] md:gap-[8.802px]">
            {/* header */}
            <h2
-             className="font-[600] capitalize leading-[12px] text-[8px] text-[#000] 
-    md:text-[14.75px] md:leading-[22px]
+             className="font-[600] capitalize leading-[14px] text-[10px] text-[#000] 
+    md:text-[14.75px] md:leading-[20px]
      lg:text-[24px] lg:leading-[36px]"
            >
           transfer money to other banks.
            </h2>
            {/* sub-text */}
            <p
-             className="font-[400] text-[12.300px] leading-[16.1px] 
-     md:text-[15.167px]  md:leading-[120.917px]
+             className="font-[400] text-[10px] leading-[14px] 
+     md:text-[14.75px] md:leading-[20.917px]
      lg:text-[20px] lg:leading-[30.8px] "
            >
             Transfer money from your wallets to any bank accounts globally without any 
