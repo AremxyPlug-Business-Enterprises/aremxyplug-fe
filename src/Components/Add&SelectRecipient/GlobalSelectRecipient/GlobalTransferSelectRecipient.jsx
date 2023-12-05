@@ -10,6 +10,14 @@ import SearchIcon from '../RecipientImages/search-status.svg';
 import NoRecordImage from '../RecipientImages/NoRecordImage.svg';
 import { Link } from 'react-router-dom';
 export default function GlobalTransferSelectRecipient() {
+
+// const focusSearch = (e) => {
+//   const inputAccount = document.querySelector('.focusSearch');
+//  inputAccount.addEventListener('click', function() {
+//     inputAccount.focus();
+//   })
+// }
+
   return (
 
   <DashBoardLayout>
@@ -48,32 +56,36 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
      </div>
 
    {/* ADD RECIPIENTS */}
-   <div className='flex md:w-[50%] justify-between lg:py-[14px] lg:pl-[16px] lg:pr-[10px]
+   <Link to = '/GlobalTransferAddRecipient'
+    className='flex md:w-[50%] justify-between lg:py-[14px] lg:pl-[16px] lg:pr-[10px]
    shadow-[0px_0px_1.468px_0px_rgba(0,0,0,0.25)]  py-[8.178px] pl-[3.671px] pr-[7px]
    md:border-[1px] border-[0.5px] border-[solid] rounded-[3.671px] border-[#7C7C7C] lg:rounded-[10px] bg-white'>
   <h2 className='font-[600] text-[9px] leading-[12px] lg:text-[16px] lg:leading-[20.8px]'>
   Add Recipient
     </h2>
-    <Link to = '/GlobalTransferAddRecipient'>
     <img src={AddRecipientIcon} alt='' 
     className='lg:w-[24px] lg:h-[24px] h-[12px] w-[12px]'/>
-    </Link>
-   </div>
+  </Link>
 
 
 
     </div>
     </div>
-    <div className='relative w-[50%]  '>
-         <input type="text" className='w-[100%] font-[500] text-[9px] leading-[12px]
+    <div className='relative md:w-[50%] w-[60%]  '>
+         <input type="text" className='focusSearch w-[100%] font-[500] text-[9px] leading-[12px]
           lg:text-[16px] lg:leading-[20.8px] placeholder-[9px] placeholder:leading-[12px]
          placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] lg:p-[10px] lg:pr-[20px] p-[5.868px] pr-[20px] md:border-[1px]
          border-[0.338px]
          border-[solid] border-[#7C7C7C] rounded-[4.052px] lg:rounded-[10px] focus:outline-none'
          placeholder='Search Account Number or Name' />
-         <img src={SearchIcon} alt="" 
+         <img 
+         onClick={(e) => {
+         document.querySelector('.focusSearch').focus();
+         console.log(e);
+         }}
+         src={SearchIcon} alt="" 
          className='absolute md:top-[10px] md:right-[10px] top-[7.997px] right-[7.997px] 
-          lg:w-[20px] lg:h-[20px] h-[12px] w-[12px]'/>
+          lg:w-[20px] lg:h-[20px] h-[12px] w-[12px] cursor-pointer'/>
     </div>
 
 
