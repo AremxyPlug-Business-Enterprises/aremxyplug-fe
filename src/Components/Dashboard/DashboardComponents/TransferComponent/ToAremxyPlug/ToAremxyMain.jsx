@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { ContextProvider } from "../../../../Context";
 import styles from "../../TransferComponent/transfer.module.css";
-import { ConfirmOtherTransaction } from "../TransferToOtherBankPages/OtherBankPopUp/OtherBankPopUp/ConfirmOtherTransaction";
+import { ToConfirmAremxyMain } from "./ToConfirmAremxyMain";
 import { Modal } from "../../../../Screens/Modal/Modal";
 // import { useNavigate } from "react-router-dom";
 
@@ -15,8 +15,8 @@ export default function ToAremxyMain() {
     toggleSideBar,
     amtToTransfer,
     setAmtToTransfer,
-    globalBankName,
-    globalAccountNumber,
+    globalEmailUsername,
+    globalUserPhoneNumber,
     globalCountry,
     setGlobalCountry,
     globalTransferErrors,
@@ -224,8 +224,8 @@ export default function ToAremxyMain() {
           <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
             <input
               onChange={handleGlobalInputChange}
-              name="username"
-              value={globalBankName}
+              name="emailUsername"
+              value={globalEmailUsername}
               className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
               type="text"
             />
@@ -235,9 +235,9 @@ export default function ToAremxyMain() {
               alt="dropdown"
             />
           </div>
-          {globalTransferErrors.bankName && (
+          {globalTransferErrors.emailUsername && (
             <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-              {globalTransferErrors.bankName}
+              {globalTransferErrors.emailUsername}
             </div>
           )}
         </div>
@@ -250,15 +250,15 @@ export default function ToAremxyMain() {
           <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
             <input
               onChange={handleGlobalInputChange}
-              name="phoneNumber"
-              value={globalAccountNumber}
+              name="userPhoneNumber"
+              value={globalUserPhoneNumber}
               className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
               type="number"
             />
           </div>
-          {globalTransferErrors.accountNumber && (
+          {globalTransferErrors.userPhoneNumber && (
             <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-              {globalTransferErrors.accountNumber}
+              {globalTransferErrors.userPhoneNumber}
             </div>
           )}
         </div>
@@ -385,7 +385,7 @@ export default function ToAremxyMain() {
           </div>
         </Modal>
       )}
-      <ConfirmOtherTransaction />
+      <ToConfirmAremxyMain />
     </div>
   );
 }
