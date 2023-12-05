@@ -26,10 +26,16 @@ const ContactTeam = () => {
   
 
   const handleSuccess = () =>{
-    setSuccess(true);
+    if (firstName && lastName && airEmail && homeAdress) {
+      setSuccess(true);
+    }
+    else {
+      setSuccess(false);
+    }
   }
   
-
+  
+  
   const handlePhoneNumber = (event) => {
     const newValue = event.target.value;
     setRecipientNumberA(newValue);
@@ -60,6 +66,9 @@ const ContactTeam = () => {
     toggleSideBar,
     setFirstName,
     setLastName,
+    airEmail, 
+    homeAdress,
+   
   } = useContext(ContextProvider);
   
 
@@ -202,7 +211,7 @@ const handleShowList =()=> {
                       
                     </div>
                     <div className="border w-full h-[30px] rounded-[4px] pr-[8px] pl-[4px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between">
-                        <input type='text' className='lg:text-[16px] lg:leading-[24px] grow outline-none text-[8px] font-bold leading-[12px]' placeholder='Email Address' />
+                        <input type='text' className='lg:text-[16px] lg:leading-[24px] grow outline-none text-[8px] font-bold leading-[12px]' placeholder='Email Address ' value={airEmail} />
                         <div className='lg:w-6 lg:h-6 w-[11px] h-[11px]'>
                             <img src={sms} alt="" className='w-full h-full'/>
                         </div>
@@ -216,7 +225,7 @@ const handleShowList =()=> {
                       
                     </div>
                     <div className="border w-full h-[30px] rounded-[4px] pr-[8px] pl-[4px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between">
-                        <input type='text' className='lg:text-[16px] lg:leading-[24px] grow outline-none text-[8px] font-bold leading-[12px]' placeholder='Home Address' />
+                        <input type='text' className='lg:text-[16px] lg:leading-[24px] grow outline-none text-[8px] font-bold leading-[12px]' placeholder='Home Address' value={ homeAdress}/>
                         <div className='lg:w-6 lg:h-6 w-[11px] h-[11px]'>
                             <img src={home} alt="" className='w-full h-full'/>
                         </div>
@@ -314,7 +323,16 @@ const handleShowList =()=> {
 
           </div>
 
-          <div onClick={handleSuccess} className='text-white  bg-primary lg:text-[16px] lg:py-1 w-full md:w-[93px] lg:w-[163px] rounded-md md:py-1 md:rounded-lg md:px-1 py-3 text-center mt-[40px] text-[12px] font-[600]'>Contact Team</div>
+          <div onClick={handleSuccess} className='text-white  bg-primary lg:text-[16px] lg:py-1 w-full md:w-[93px] lg:w-[163px] rounded-md md:py-1 md:rounded-lg md:px-1 py-3 text-center mt-[40px] text-[12px] font-[600]'
+          disabled={
+              
+            !firstName ||
+            !lastName ||
+            !airEmail ||
+            !homeAdress
+
+          }
+          >Contact Team</div>
 
         </div>
 
@@ -323,7 +341,9 @@ const handleShowList =()=> {
             You need help?
           </div>
           <Link to="/ContactUs">
-            <div className="bg-primary text-white lg:text-[8px] text-[7px] px-2 py-1 leading-[10.5px] rounded-lg text-center">
+            <div className="bg-primary text-white lg:text-[8px] text-[7px] px-2 py-1 leading-[10.5px] rounded-lg text-center"
+             
+            >
               Contact us
             </div>
           </Link>
@@ -370,7 +390,9 @@ const handleShowList =()=> {
                   <div className='text-[#04177F] font-bold' >Phone: +2347066096932.</div>
                 </div>
                 <Link to="/airtime-receipt">
-                <div  className='text-white  bg-primary lg:text-[16px] lg:py-1 w-[300px]  md:w-[93px] lg:w-[163px] rounded-md md:py-1 md:rounded-lg md:px-1 py-3 text-center mt-[20px] mb-[25px] text-[12px] font-[600]'>Done</div>
+                <div  className='text-white  bg-primary lg:text-[16px] lg:py-1 w-[300px]  md:w-[93px] lg:w-[163px] rounded-md md:py-1 md:rounded-lg md:px-1 py-3 text-center mt-[20px] mb-[25px] text-[12px] font-[600]'
+                
+                >Done</div>
                 </Link>
            </div>
 
@@ -379,6 +401,8 @@ const handleShowList =()=> {
           </div>
         </Modal>
       )}
+
+
     </DashBoardLayout> );
 }
  
