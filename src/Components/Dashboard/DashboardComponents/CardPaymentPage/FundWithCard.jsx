@@ -22,8 +22,8 @@ import { Link } from "react-router-dom";
 
 const FundWithCard = () => {
 
-    const { isDarkMode, toggleSideBar, toggleVisibility, isVisible, inputPin, setInputPin, inputPinHandler } = useContext(ContextProvider);
-    const [showPayment, setShowPayment] = useState(false);
+  const { isDarkMode, toggleSideBar, toggleVisibility, isVisible, inputPin, setInputPin, inputPinHandler } = useContext(ContextProvider);
+  const [showPayment, setShowPayment] = useState(false);
   const { walletName, setWalletName } = useContext(ContextProvider);
   const [paymentSelected, setPaymentSelected] = useState("");
   const [showCard, setShowCard] = useState(false);
@@ -248,7 +248,7 @@ const FundWithCard = () => {
                 handleShowPayment();
               }}
             >
-              <div className="flex justify-between items-center border w-[50%] h-8 px-2 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px] mt-[10%]">
+              <div className="flex justify-between items-center border w-[50%] md:w-[30%] h-8 px-2 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px] mt-[10%]">
                 {paymentSelected ? (
                   <li
                     onClick={() => {
@@ -265,7 +265,7 @@ const FundWithCard = () => {
                     onClick={() => {
                       handleShowPayment();
                     }}
-                    className="text-[10px] md:text-[12px] lg:text-[14px] text-[#929292]"
+                    className="text-[10px] md:text-[13px] lg:text-[16px] text-[#929292]"
                   >
                     Select currency
                   </h2>
@@ -316,7 +316,7 @@ const FundWithCard = () => {
               </div>
             )}
           </div>
-
+          
 
           <div>
             <div
@@ -324,7 +324,7 @@ const FundWithCard = () => {
                 handleShowCard();
               }}
             >
-              <div className="flex justify-between items-center border w-full h-8 px-2 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px] mt-[10%]">
+              <div className="flex justify-between items-center border w-full md:w-[50%] h-8 px-2 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px] mt-[5%] md:mt-[5%] lg:mt-[4%]">
                 {cardSelected ? (
                   <li
                     onClick={() => {
@@ -343,7 +343,7 @@ const FundWithCard = () => {
                     onClick={() => {
                         handleShowCard();
                     }}
-                    className="text-[10px] md:text-[12px] lg:text-[14px] text-[#929292]"
+                    className="text-[10px] md:text-[13px] lg:text-[16px] text-[#929292]"
                   >
                     Select Card
                   </h2>
@@ -393,14 +393,16 @@ const FundWithCard = () => {
             )}
           </div>
 
-          <div className="border-[1px] w-full mt-[5%] rounded-[5px] flex justify-between py-[5px] px-[10px]">
-            <input type="number" className="outline-none relative text-[14px] pl-[4%]" value={amount} placeholder="10,000" onChange={handleAmount}/>
+          <div className="border-[1px] w-full md:w-[50%] mt-[5%] rounded-[5px] flex justify-between py-[5px] px-[10px]">
+            <input type="number" className="outline-none relative text-[14px] md:text-[16px] lg:text-[18px] pl-[4%]" value={amount} placeholder="10,000" onChange={handleAmount}/>
             <div className="absolute text-[14px]">₦</div>
             <img src={FundAmount} alt="" />
           </div>
 
 
-          <div className="py-[30px] lg:py-[60px] mt-10">
+          <div className={`py-[30px] lg:py-[60px] mt-10  ${
+                toggleSideBar ? "md:mx-[15%]" : "md:mx-[15%]"
+                 }`}>
             <button
               className={`w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[600] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px] ${
                 !paymentSelected ||
@@ -509,7 +511,7 @@ const FundWithCard = () => {
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-center mt-[50%]">
+                  <div className="flex items-center justify-center mt-[50%] md:mt-[45%]">
                     <button
                       className="w-full md:w-fit bg-primary text-white rounded-md px-[28px] text-[10px] md:text-[12px] leading-[15px] lg:text-[16px] lg:leading-[24px] py-[15px] md:py-[10px]"
                       onClick={() => {
@@ -615,7 +617,7 @@ const FundWithCard = () => {
             >
 
 
-              <div className="w-full flex justify-between border-b-[8px] border-primary px-[12px] md:h-[25px] lg:border-b-[10px] lg:mt-[20px]">
+              <div className="w-full flex justify-between px-[12px] md:h-[25px] lg:border-b-[10px] lg:mt-[20px]">
 
                 <img src={Logo} alt="" />
                 <img
@@ -631,6 +633,8 @@ const FundWithCard = () => {
                 />
               </div>
 
+              <hr className="h-[6px] bg-[#04177f] lg:mt-[10%] border-none mt-[8%] md:mt-[3%] md:h-[10px]" />
+
               <div>
                 <h2 className="lg:text-[16px] lg:leading-[24px] text-center mb-1 text-[14px] md:text-[13px] font-[600] mt-[20px] leading-[12px]">
                 Transaction Successful
@@ -638,7 +642,7 @@ const FundWithCard = () => {
 
                 <div className="flex flex-col justify-center items-center">
                   <img src={Success} alt="" className=""/>
-                  <p className="text-[10px] text-[#2ED173] font-semibold">Your NGN Wallet has been Credited Successfully With</p>
+                  <p className="text-[10px] md:text-[12px] lg:text-[14px] text-[#2ED173] font-semibold">Your NGN Wallet has been Credited Successfully With</p>
                 </div>
                 
 
@@ -699,8 +703,7 @@ const FundWithCard = () => {
                     </div>
                   </div> */}
 
-<div className="flex w-full justify-center mx-auto px-[50px] items-center gap-[5%] md:gap-[10%] mt-[50%] md:w-[50%] lg:gap-[10%] lg:mx-auto  lg:my-[5%] md:mt-[40px]">
-                  {/* <Link to="/MtnDataTopUpBundle"> */}
+<div className="flex w-full justify-center mx-auto px-[50px] items-center gap-[5%] md:gap-[10%] mt-[50%] md:w-[50%] lg:gap-[10%] lg:mx-auto  lg:my-[5%] md:mt-[50%]">
                     <button
                       onClick={() => {
                         setSuccessful(false);
@@ -710,7 +713,6 @@ const FundWithCard = () => {
                     >
                       Done
                     </button>
-                  {/* </Link> */}
 
                   <Link to="/CardPaymentReceipt">
                     <button

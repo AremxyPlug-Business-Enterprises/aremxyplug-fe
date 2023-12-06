@@ -9,11 +9,6 @@ import html2canvas from "html2canvas";
 export const CardPaymentReceipt = () => { 
 
   const {
-    selectedNetworkProduct,
-    selectedOption,
-    recipientPhoneNumber,
-    recipientNames,
-    selectedAmount,
     walletName,
     setSelectedNetworkProduct,
     setSelectedOption,
@@ -99,7 +94,7 @@ export const CardPaymentReceipt = () => {
                 alt=""
               />
             </Link>
-            <Link to="/MtnDataTopUpBundle">
+            <Link to="/FundWithCard">
               {" "}
               <img
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
@@ -155,31 +150,11 @@ export const CardPaymentReceipt = () => {
                   <span>MTN</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Product</p>
-                  <span>{selectedNetworkProduct}</span>
+                  <p className="text-[#0008]">Wallet Type</p>
+                  <span>{walletName + " Wallet"}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Plan</p>
-                  <span>{selectedOption}</span>
-                </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Recipient Name</p>
-                  <span>{recipientNames}</span>
-                </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Phone Number</p>
-                  <span>{recipientPhoneNumber}</span>
-                </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Amount</p>
-                  <span>{selectedAmount}</span>
-                </div>            
-              </div>
-
-              {/* ===================Sender Info====================== */}
-              <div className="flex flex-col gap-[3px] w-[90%] mx-auto lg:gap-[5px]">
                 <div className="flex gap-[5px] items-center text-[10px] lg:text-[16px] font-extrabold">
-                  <p>Sender Info</p>
+                  <p>Card Info</p>
                   <img
                     className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
                     src="./Images/Dashboardimages/arrowright.png"
@@ -187,13 +162,13 @@ export const CardPaymentReceipt = () => {
                   />
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Customer Name</p>
-                  <span>Aremxyplug</span>
+                  <p className="text-[#0008]">Card Holder Name</p>
+                  <span>Habib Kamaldeen</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Wallet Type</p>
-                  <span>{walletName + " Wallet"}</span>
-                </div>
+                  <p className="text-[#0008]">Card Number</p>
+                  <span>*****5488</span>
+                </div>       
               </div>
 
               {/* ===================Transaction Info==================== */}
@@ -208,11 +183,11 @@ export const CardPaymentReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Product</p>
-                  <span>Data  Top-up</span>
+                  <span>Card Payment</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Description</p>
-                  <span>{selectedNetworkProduct}</span>
+                  <span>{walletName} Wallet Top Up</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Order Number</p>
