@@ -364,28 +364,59 @@ export default function NotificationsPage() {
     setBackgroundColor15("bg-white") 
   };
 
-  const [activeBtn, setActiveBtn] = useState([true, false]);
-  const [activeIndex, setActiveIndex] = useState(0);
+  // const [activeBtn, setActiveBtn] = useState([true, false]);
+  // const [activeIndex, setActiveIndex] = useState(0);
+// 
+  // const handleClick = (index) => {
+    // const clickedBtn = activeBtn.map((isActive, i) => i === index);
+    // setActiveBtn(clickedBtn);
+    // setActiveIndex(index);
+  // };
+// 
+  // const resetActiveButton = () => {
+    // hidePopup();
+    // handleClick(0);
+  // };
+  // const hidePopup = () => {
+    // setPopupVisible(false);
+  // };
+  // const showPopup = () => {
+    // setPopupVisible(true);
+  // };
+  // const [popupVisible, setPopupVisible] = useState(false);
 
-  const handleClick = (index) => {
-    const clickedBtn = activeBtn.map((isActive, i) => i === index);
-    setActiveBtn(clickedBtn);
-    setActiveIndex(index);
-  };
+  
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+    // const {finalDelete, setFinalDelete} = useState(true);
+  
+    const openModal = () => {
+      setIsModalOpen(true);
+    };
+  
+    const closeModal = () => {
+      setIsModalOpen(false);
+    };
+  
+    const handleDelete = () => {
+      // setFinalDelete(false)
+      setIsModalOpen(false); // Close the modal immediately
+      setShowSuccessMessage(true);
+    };
 
-  const resetActiveButton = () => {
-    hidePopup();
-    handleClick(0);
-  };
-  const hidePopup = () => {
-    setPopupVisible(false);
-  };
-  const showPopup = () => {
-    setPopupVisible(true);
-  };
-  const [popupVisible, setPopupVisible] = useState(false);
+    // Reset the success message after a delay
+    // useEffect(() => {
+      // let timeout;
+      // if (showSuccessMessage) {
+        // timeout = setTimeout(() => {
+          // setShowSuccessMessage(false);
+        // }, 2000); // Adjust the delay time (in milliseconds) as needed
+      // };
+    // 
+      // return () => clearTimeout(timeout);
+    // }, [showSuccessMessage]);
 
-
+  
   return (
     <DashBoardLayout>
       <>
@@ -642,7 +673,7 @@ items-end  "
 
 {/* child */}
 <div className="flex flex-col lg:gap-7 gap-3 md:gap-5">
-                
+{/* {finalDelete && ( */}
                 <div
                 id="colorReset"
                   className={`flex justify-between  items-center w-full 
@@ -698,10 +729,11 @@ items-end  "
                             </div>
                           </div>
                           <div
-                           onClick={() => {
-                            handleClick(1)
-                            showPopup();
-                          }}
+                          //  onClick={() => {
+                            // handleClick(1)
+                            // showPopup();
+                          // }}
+                          onClick={openModal}
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
           justify-center items-center gap-1.5 flex"
                           >
@@ -737,22 +769,22 @@ items-end  "
                   </div>
 
                 </div>
-
-                {popupVisible && (
+{/* )} */}
+                {isModalOpen && (
                 <WalletModal>
+                  
                 <div className="text-center flex justify-center item-center md:mt-[-20px] lg:mt-[15px] 2xl:mt-[-15px]">
                 <div
                   className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
                     flex flex-col justify-center z-[100] lg:ml-[10px] md:w-full`}>
-                      <img className=" w-[25px] h-[25px] inline-flex justify-end items-end"  src={VuesaxBoldEye} alt=""/>
+                      <img 
+                      onClick={closeModal}
+                      className=" w-[25px] h-[25px] inline-flex justify-end items-end"  src={VuesaxBoldEye} alt=""/>
                   <div className="w-full h-[22px]  bg-[#04177f]" />
                   <div>
                     <p className="text-[10px] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[3%]">
                     Are you sure you want to delete this Notification?
                     </p>
-                    {/* <p className="text-[10px] md:text-[16px] font-[600] text-[#04177F] lg:text-[16px]"> */}
-                      {/* This Feature is Currently Not Available. */}
-                    {/* </p> */}
                   </div>
                   <img
                     src={deletingfiles}
@@ -762,6 +794,52 @@ items-end  "
                 </div>
               </div>
               <div className="mt-[40px] justify-center items-center flex gap-[3px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
+                <button
+                  className={` ${
+                    isDarkMode ? "border" : "bg-[#04177f] "
+                  } cursor-pointer text-white text-[10px] h-[40px]  lg:rounded-xl lg:w-40 lg:h-9 lg:px-3.5 lg:py-2.5 
+                  rounded-[5px]
+                   md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] 
+                   lg:my-[3%]  lg:text-[20px]  lg:mx-auto`}
+                   onClick={handleDelete}
+                >
+                  Yes
+                </button>
+
+
+                
+                <button 
+                // onClick={resetActiveButton}
+                        // handleClick={activeIndex}
+                        onClick={closeModal}
+ className="Frame1469 cursor-pointer  w-40 h-9 px-3.5 py-2.5 rounded-xl border border-red-600 
+                justify-center items-center gap-2.5 flex">
+    <div  className="Cancel text-red-500 text-base font-semibold ">Cancel</div>
+
+                </button>
+              </div>
+              </WalletModal>
+                )}
+
+{showSuccessMessage && (
+                                <WalletModal>
+                <div className="text-center flex justify-center item-center md:mt-[-20px] lg:mt-[15px] 2xl:mt-[-15px]">
+                <div
+                  className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
+                    flex flex-col justify-center z-[100] lg:ml-[10px] md:w-full`}>
+                      <img className=" w-[25px] h-[25px] inline-flex justify-end items-end"  src={VuesaxBoldEye} alt=""/>
+                  <div className="w-full h-[22px]  bg-[#04177f]" />
+                  <div>
+                    <p className="text-[10px] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[18px] lg:pt-[3%]">
+                    Notification has been deleted successfully.
+                    </p>
+                    {/* <p className="text-[10px] md:text-[16px] font-[600] text-[#04177F] lg:text-[16px]"> */}
+                      {/* This Feature is Currently Not Available. */}
+                    {/* </p> */}
+                  </div>
+                </div>
+              </div>
+              <div className="mt-[40px] justify-center items-center flex gap-[3px] pb-[5%] 2xl:mt-[1%] lg:mt-[300px] md:mt-[5%] md:pr-[10px]">
                 {/* <p className="text-[8px] font-extrabold text-end float-right ml-[60%] md:ml-[70%] md:text-[12px] mt-[10px] lg:text-[13px] 2xl:text-[15px]"> */}
                   {/* Coming Soon... */}
                 {/* </p> */}
@@ -772,24 +850,18 @@ items-end  "
                   rounded-[5px]
                    md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] 
                    lg:my-[3%]  lg:text-[20px]  lg:mx-auto`}
-                  // onClick={resetActiveButton}
-                  // handleClick={activeIndex}
+                   onClick={() => setShowSuccessMessage(false)}
                 >
-                  Yes
+                  Done
                 </button>
 
 
                 
-                <button onClick={resetActiveButton}
-                        handleClick={activeIndex}
- className="Frame1469 cursor-pointer  w-40 h-9 px-3.5 py-2.5 rounded-xl border border-red-600 
-                justify-center items-center gap-2.5 flex">
-    <div  className="Cancel text-red-500 text-base font-semibold ">Cancel</div>
-
-                </button>
               </div>
               </WalletModal>
-                )}
+)}
+
+            
                                   {/* pop-up */}
                                   {/* <div className="absolute w-full z-50 h-[465px] bg-red-200 rounded-[20px] top-[-40px]  */}
                                   {/* // flex justify-center items-center "> */}
@@ -2450,4 +2522,5 @@ items-end  "
       </>
     </DashBoardLayout>
   );
-}
+                    }
+                  
