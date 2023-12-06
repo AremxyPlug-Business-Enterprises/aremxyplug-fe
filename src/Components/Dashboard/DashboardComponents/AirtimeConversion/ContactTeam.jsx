@@ -12,27 +12,63 @@ import arrow from "../AirtimeConversion/images/arrow.png"
 import { useState } from 'react'
 import call from "../AirtimeConversion/images/call.png";
 import receive from '../AirtimeConversion/images/received.png'
+import { Modal } from "../../../Screens/Modal/Modal";
+import styles from "../TransferComponent/transfer.module.css";
+
 const ContactTeam = () => {
 
     const [showList, setShowList] = useState(false);
   const [networkImage, setNetworkImage] = useState('');
   const [selected, setSelected] = useState(false);
   const [networkName, setNetworkName] = useState('');
+  const [success, setSuccess] = useState('')
+
   
 
+  const handleSuccess = () =>{
+    if (firstName && lastName && airEmail && homeAdress) {
+      setSuccess(true);
+    }
+    else {
+      setSuccess(false);
+    }
+  }
+  
+  
+  
   const handlePhoneNumber = (event) => {
     const newValue = event.target.value;
     setRecipientNumberA(newValue);
      
   };
 
+  const handlefirstName = (event) => {
+    const newValue = event.target.value;
+    setFirstName(newValue);
+     
+  };
+  const handlelastName = (event) => {
+    const newValue = event.target.value;
+    setLastName(newValue);
+     
+  };
+
+
   const { 
+    firstName,
+    lastName,
     setInputValue, 
     inputValue, 
     resultValue,
     setResultValue,
     recipientNumberA, 
-    setRecipientNumberA
+    setRecipientNumberA,
+    toggleSideBar,
+    setFirstName,
+    setLastName,
+    airEmail, 
+    homeAdress,
+   
   } = useContext(ContextProvider);
   
 
@@ -134,7 +170,7 @@ const handleShowList =()=> {
                     </div>
         </div>
 
-        <div className='text-[10px] flex flex-col gap-2 items-center md:items-start'>
+        <div className='text-[10px] md:text-[12px] lg:text-[16px] flex flex-col gap-2 items-center md:items-start'>
             <div className='font-[600]'>The team incharge will reach out to you as soon as possible.</div>
             <div>Verified Email: <span className='text-[#04177F] font-[600]'>airtimeconversion@aremxyplug.com</span></div>
             <div>Completion Time - 2 hours, from 09:00am - 10:00pm UTC+1.</div>
@@ -147,7 +183,7 @@ const handleShowList =()=> {
                       
                     </div>
                     <div className="border w-full h-[30px] rounded-[4px] pr-[8px] pl-[4px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between">
-                        <input type='text' className='lg:text-[16px] lg:leading-[24px] grow outline-none text-[8px] font-bold leading-[12px]' placeholder='First Name' />
+                        <input type='text' className='lg:text-[16px] lg:leading-[24px] grow outline-none text-[8px] font-bold leading-[12px]' placeholder='First Name' onChange={handlefirstName} value={firstName} />
                         <div className='lg:w-6 lg:h-6 w-[11px] h-[11px]'>
                             <img src={frame} alt="" className='w-full h-full'/>
                         </div>
@@ -161,7 +197,7 @@ const handleShowList =()=> {
                       
                     </div>
                     <div className="border w-full h-[30px] rounded-[4px] pr-[8px] pl-[4px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between">
-                        <input type='text' className='lg:text-[16px] lg:leading-[24px] grow outline-none text-[8px] font-bold leading-[12px]' placeholder='Last Name' />
+                        <input type='text' className='lg:text-[16px] lg:leading-[24px] grow outline-none text-[8px] font-bold leading-[12px]' placeholder='Last Name' onChange={handlelastName} value={lastName} />
                         <div className='lg:w-6 lg:h-6 w-[11px] h-[11px]'>
                             <img src={frame} alt="" className='w-full h-full'/>
                         </div>
@@ -175,7 +211,7 @@ const handleShowList =()=> {
                       
                     </div>
                     <div className="border w-full h-[30px] rounded-[4px] pr-[8px] pl-[4px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between">
-                        <input type='text' className='lg:text-[16px] lg:leading-[24px] grow outline-none text-[8px] font-bold leading-[12px]' placeholder='Email Address' />
+                        <input type='text' className='lg:text-[16px] lg:leading-[24px] grow outline-none text-[8px] font-bold leading-[12px]' placeholder='Email Address ' value={airEmail} />
                         <div className='lg:w-6 lg:h-6 w-[11px] h-[11px]'>
                             <img src={sms} alt="" className='w-full h-full'/>
                         </div>
@@ -189,7 +225,7 @@ const handleShowList =()=> {
                       
                     </div>
                     <div className="border w-full h-[30px] rounded-[4px] pr-[8px] pl-[4px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between">
-                        <input type='text' className='lg:text-[16px] lg:leading-[24px] grow outline-none text-[8px] font-bold leading-[12px]' placeholder='Home Address' />
+                        <input type='text' className='lg:text-[16px] lg:leading-[24px] grow outline-none text-[8px] font-bold leading-[12px]' placeholder='Home Address' value={ homeAdress}/>
                         <div className='lg:w-6 lg:h-6 w-[11px] h-[11px]'>
                             <img src={home} alt="" className='w-full h-full'/>
                         </div>
@@ -287,7 +323,16 @@ const handleShowList =()=> {
 
           </div>
 
-          <div className='text-white  bg-primary lg:text-[16px] lg:py-1 w-full md:w-[93px] lg:w-[163px] rounded-md md:py-1 md:rounded-lg md:px-1 py-3 text-center mt-[40px] text-[12px] font-[600]'>Contact Team</div>
+          <div onClick={handleSuccess} className='text-white  bg-primary lg:text-[16px] lg:py-1 w-full md:w-[93px] lg:w-[163px] rounded-md md:py-1 md:rounded-lg md:px-1 py-3 text-center mt-[40px] text-[12px] font-[600]'
+          disabled={
+              
+            !firstName ||
+            !lastName ||
+            !airEmail ||
+            !homeAdress
+
+          }
+          >Contact Team</div>
 
         </div>
 
@@ -296,12 +341,68 @@ const handleShowList =()=> {
             You need help?
           </div>
           <Link to="/ContactUs">
-            <div className="bg-primary text-white lg:text-[8px] text-[7px] px-2 py-1 leading-[10.5px] rounded-lg text-center">
+            <div className="bg-primary text-white lg:text-[8px] text-[7px] px-2 py-1 leading-[10.5px] rounded-lg text-center"
+             
+            >
               Contact us
             </div>
           </Link>
         </div>
         </div>
+
+        {success && (
+        <Modal>
+          <div
+            className={`${styles.successfulTwo} ${
+              toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+            } md:w-[45%] w-[90%] overflow-auto`}
+          >
+            <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
+              <img
+                onClick={() => setSuccess(false)}
+                className=" w-[18px]   md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[25px]"
+                src="/Images/login/arpLogo.png"
+                alt=""
+              />
+
+              <img
+                onClick={() => setSuccess(false)}
+                className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
+                src="/Images/transferImages/close-circle.png"
+                alt=""
+              />
+            </div>
+            <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
+            <h2 className="text-[12px] my-[4%] text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%]">
+               Successful
+            </h2>
+            <img
+              className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[60px] lg:h-[60px]"
+              src="./Gif/checkMarkGif.gif"
+              alt="/"
+            />
+           <div className='text-[10px] md:text-[12px]  flex flex-col text-[#4A4A4A] gap-6 items-center text-center'>
+                <div className='font-[600] text-[#000000]'>Your request has been sent successfully. <br /> The team incharge will reach out to you as soon as possible.</div>
+                <div>Only expect a further email from the Verified Email <br /> "airtimeconversion@aremxyplug.com" to complete the Airtime <br /> conversion transaction.</div>
+                <div>Please beware of falling into victim, no AremxyPlug team will <br /> never reach out to you via DM for your transaction PIN, or any <br /> personal transaction purpose. <br /> Please contact us if you have any further enquiry or need any immediate assistance.</div>
+                <div className='flex flex-col gap-2'>
+                  <div className='text-[#04177F] font-bold'>Email Us: support@aremxyplug.com,</div>
+                  <div className='text-[#04177F] font-bold' >Phone: +2347066096932.</div>
+                </div>
+                <Link to="/airtime-receipt">
+                <div  className='text-white  bg-primary lg:text-[16px] lg:py-1 w-[300px]  md:w-[93px] lg:w-[163px] rounded-md md:py-1 md:rounded-lg md:px-1 py-3 text-center mt-[20px] mb-[25px] text-[12px] font-[600]'
+                
+                >Done</div>
+                </Link>
+           </div>
+
+            
+
+          </div>
+        </Modal>
+      )}
+
+
     </DashBoardLayout> );
 }
  
