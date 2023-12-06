@@ -55,31 +55,13 @@ export default function WalletSummaryPage() {
   const [isOpen7, setIsOpen7] = useState("");
   const [isOpen8, setIsOpen8] = useState("");
   const [isOpen9, setIsOpen9] = useState(true);
-
   const [showStatus, setShowStatus] = useState(false);
-
-
-
-
-
-  
-
-  
-
-
-
-  
   const [selected, setSelected] = useState("NGN");
   const { isDarkMode, toggleSideBar } = useContext(ContextProvider);
 
   const handleSelectedOption = (event) => {
     const clickedoption = event.target.value;
     setSelected(clickedoption);
-    
-  
-    
-    
-  
     // (
       // clickedoption === "USD" ||
         // clickedoption === "GBP" ||
@@ -108,13 +90,9 @@ export default function WalletSummaryPage() {
   const handleBalance = (product) => {
     setSelectedBalance(product);
   };
-
-  
-
   const [selectedProduct, setSelectedProduct] = useState("Filter By Status");
   const handleClick = (product) => { setSelectedProduct(product);
   };
-
 
   return (
     <DashBoardLayout>
