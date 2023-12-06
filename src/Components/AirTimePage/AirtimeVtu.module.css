@@ -179,7 +179,7 @@
 .FlexPut1 {
     margin: auto 0;
     border-radius: 10px;
-    width: 47%;
+    width: 46.5%;
     height: 51px;
     border: none;
     background: #04177F;
@@ -221,7 +221,7 @@
 }
 .mainGrid .mainGridCol {
     display: grid;
-    grid-template-columns: 47% 47%;
+    grid-template-columns: 46.5% 46.5%;
     width: 100%;
     column-gap: 60px;
 }
@@ -816,7 +816,7 @@
     .FlexPut1 {
         margin: auto 0;
         border-radius: 6px;
-        width: 45.7%;
+        width: 43%;
         height: 30px;
         border: none;
         background: #04177F;
@@ -856,7 +856,7 @@
     }
     .mainGrid .mainGridCol {
         display: grid;
-        grid-template-columns: 45.7% 45.7%;
+        grid-template-columns: 43% 43%;
         width: 100%;
         column-gap: 60px;
     }

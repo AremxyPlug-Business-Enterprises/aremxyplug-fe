@@ -1,19 +1,16 @@
-import React, { useContext } from "react";
-import { ContextProvider } from "../../../../Context";
+import React from "react";
 import { DashBoardLayout } from "../../../Layout/DashBoardLayout";
 import { Link } from "react-router-dom";
-import styles from "../../../DashboardComponents/component.module.css";
+import style from "../../../../AirTimePage/AirtimeVtu.module.css";
 import ToAremxyMain from "./ToAremxyMain";
 
 
 const ToAremxyPlug = () => {
-  const { isDarkMode } =
-    useContext(ContextProvider);
 
   return (
     <DashBoardLayout>
-      <div className="flex flex-col justify-between lg:gap-[200px] lg:h-full">
-        <div className="">
+      <div className={style.AirtimeTops}>
+        <div className={style.airtimeTop}>
           <div
             style={{
               background:
@@ -39,19 +36,9 @@ const ToAremxyPlug = () => {
           </div>
           <ToAremxyMain/>
         </div>
-        <div className="flex gap-[15px] justify-center items-center lg:my-10">
-          <div className="text-[8px] md:text-[12px] lg:text-[16px]">
-            You need help ?
-          </div>
-          <Link to="/ContactUs">
-            <div
-              className={`${isDarkMode ? "border " : "bg-[#04177f]"} ${
-                styles.contactus
-              }`}
-            >
-              Contact Us
-            </div>
-          </Link>
+        <div className={style.help}>
+                <h2>You need help?</h2>
+                <Link to={`/ContactUs`} className={style.btnContact}>Contact Us</Link>
         </div>
       </div>
     </DashBoardLayout>
