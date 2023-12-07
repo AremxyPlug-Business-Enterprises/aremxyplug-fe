@@ -205,8 +205,8 @@ export const CardPaymentReceipt = () => {
               </p>
             </div>
           </div>
-
-          <div className="flex w-full px-[20px] mx-auto mb-[5%] md:w-[60%] ">
+          
+          <div className="flex w-full px-[20px] mx-auto mb-[5%] md:w-[80%] ">
             <button
               onClick={() => {
                 handleShareClick();
