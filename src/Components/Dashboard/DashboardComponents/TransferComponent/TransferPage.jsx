@@ -12,6 +12,7 @@ export const TransferPage = () => {
   const [activeBtn, setActiveBtn] = useState([true, false]);
   const [fiatTransfer, setFiatTransfer] = useState(true);
   const [cryptoTransfer, setCryptoTransfer] = useState(false);
+  const [bulkTransfer, setBulkTransfer] = useState(false);
 
   const handleClick = (index) => {
     const clickedBtn = activeBtn.map((isActive, i) => i === index);
@@ -140,31 +141,34 @@ export const TransferPage = () => {
                   />
                 </div>
               </Link>
-              <div
-                className={`${isDarkMode ? "border" : "bg-[#fff]"} ${
-                  styles.toMyAcct
-                }`}
-              >
-                <div className="flex gap-[5px] items-center">
+              <Link to="/to-aremxyplug">
+                <div
+                  className={`${isDarkMode ? "border" : "bg-[#fff]"} ${
+                    styles.toMyAcct
+                  }`}
+                >
+                  <div className="flex gap-[5px] items-center">
+                    <img
+                      className="w-[18px] h-[13px] md:w-[] md:h-[] lg:w-[30px] lg:h-[20px]"
+                      src="Images/Dashboardimages/tf3.png"
+                      alt="/"
+                    />
+                    <div>
+                      <p className="text-[10px] md:text-[18px]">To AremxyPlug</p>
+                      <p className="text-[8px] text-[#7c7c7c] md:text-[16px]">
+                        Transfer money from your wallets to any AremxyPlug user.
+                      </p>
+                    </div>
+                  </div>
                   <img
-                    className="w-[18px] h-[13px] md:w-[] md:h-[] lg:w-[30px] lg:h-[20px]"
-                    src="Images/Dashboardimages/tf3.png"
+                    className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
+                    src="./Images/Dashboardimages/arrowright.png"
                     alt="/"
                   />
-                  <div>
-                    <p className="text-[10px] md:text-[18px]">To AremxyPlug</p>
-                    <p className="text-[8px] text-[#7c7c7c] md:text-[16px]">
-                      Transfer money from your wallets to any AremxyPlug user.
-                    </p>
-                  </div>
                 </div>
-                <img
-                  className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                  src="./Images/Dashboardimages/arrowright.png"
-                  alt="/"
-                />
-              </div>
+              </Link>  
               <div
+                onClick={()=> setBulkTransfer(true)}
                 className={`${isDarkMode ? "border" : "bg-[#fff]"} ${
                   styles.toMyAcct
                 }`}
@@ -216,6 +220,45 @@ export const TransferPage = () => {
                 <div
                   onClick={() => {
                     setCryptoTransfer(false);
+                    handleClick(0);
+                  }}
+                  className={` ${
+                    isDarkMode ? "border" : "bg-[#04177f] "
+                  } cursor-pointer text-white text-[10px] h-[40px] rounded-[5px] flex items-center justify-center md:mx-auto md:w-[20%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[30%] lg:mx-auto`}
+                >
+                  Okay
+                </div>
+              </div>
+            </div>
+          </Modal>
+        )}
+
+        {/* ============Bulk transfer modal============= */}
+        {bulkTransfer && (
+          <Modal>
+            <div
+              className={` mt-6 ${
+                isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
+              } ${styles.cryptoTopUp} flex flex-col justify-between `}
+            >
+              <div className="text-[10px] text-center pt-[4%] text-[#000] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[5%]">
+                Bulk Transfer
+              </div>
+              <div className="text-[10px] text-center pt-[1%] pb-[2%] text-[#04177f] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[1%] lg:pb-[0%]">
+                This Feature is Currently Not Available.
+              </div>
+              <img
+                className="mx-auto mt-[] w-[90px] h-[115px] md:w-[100px] md:h-[150px] md:mt-[4%] lg:w-[150px] lg:h-[200px] lg:mt-[4%]"
+                src="./Images/transferImages/messages.png"
+                alt="/"
+              />
+              <div className="mx-[6%] flex flex-col gap-[5px] pb-[5%]">
+                <div className="text-[8px] font-extrabold float-right ml-[80%] md:ml-[70%] md:text-[12px] lg:text-[13px] lg:ml-[80%]">
+                  Coming soon...
+                </div>
+                <div
+                  onClick={() => {
+                    setBulkTransfer(false);
                     handleClick(0);
                   }}
                   className={` ${

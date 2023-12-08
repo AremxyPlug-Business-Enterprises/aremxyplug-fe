@@ -1,8 +1,8 @@
 import React from "react";
 import { DashBoardLayout } from "../Dashboard/Layout/DashBoardLayout";
-import Frame from "./assets/Frames.svg";
 import { Link } from "react-router-dom/dist/react-router-dom.development";
-
+// import Frame from "./assets/Frames.svg";
+import faq from "./assets/faq.svg";
 
 
 
@@ -22,22 +22,43 @@ const LaunchPage = () => {
         <DashBoardLayout>
           
 <div className="flex justify-around lg:gap-[60px] gap-[20px] items-center flex-col">
-<div className="Frame758532675 w-full lg:h-96 h-44 flex-col lg:gap-10 gap-5 justify-center items-center flex">
-  <h2 className="NewLaunch text-black lg:text-3xl text-xs text-center items-center justify-center font-medium flex">New Launch</h2>
-  <div className="Frame758532674 flex-col lg:gap-3 gap-1 w-full justify-center items-center flex">
-    <img className="Frame self-stretch object-cover w-full h-full flex justify-center items-center" 
-    src={Frame} alt="" />
-    <p className="whitespace-nowrap justify-center items-center text-[10px] text-right text-black
-     lg:text-base font-medium">
-      We are excited to launch our global platform for all things telecom,<br/>
-      <span className="flex justify-center items-center" >payments, and Digital services.</span> 
-    </p>
-  </div>
+  <div className="Frame758532675 h-3 flex-col justify-center items-center gap-6 flex">
+            <div className="NewLaunch text-black text-md font-medium lg:text-3xl md:text-lg">New Launch</div>
+        </div>
+        <div
+            className="w-full h-[90px] shadow md:h-[112.29px] lg:h-[196px] md:rounded-[11.5px]
+            bg-gradient-to-b from-indigo-300 to-purple-600  rounded-lg flex px-[16px] lg:px-[50px]
+      justify-between items-center lg:rounded-[20px]"
+          >
+            <div className="py-[13px] mt-2 lg:py-[40px]">
+              <h2
+                className="text-[8px] whitespace-nowrap mb-2 w-52 text-white  font-semibold md:text-[12px] md:w-[70%] lg:w-[70%] lg:text-[20px] 
+              2xl:w-[80%] 2xl:text-[24px] lg:mb-4"
+              >
+                We are excited to lunch our global platform for all things<br /> telecom, payments, and Digital services.
+              </h2>
+              <h2
+                className="text-neutral-800 text-[5px] font-medium  leading-[9px] mb-3 md:text-[9px] md:leading-[12.2px]
+               w-[100%] md:w-[80%] lg:w-[75%] 2xl:w-[85%] 2xl:mt-[5px] lg:mt-[20px] lg:text-[16px]
+               lg:leading-[26px] 2xl:text-[20px] lg:mb-[20px]"
+              >
+                August 10th, 2023 12 :00:00am
+              </h2>
+            </div>
+            <div className="md:w-24 md:h-16 w-14 h-10 lg:w-44 lg:h-28">
+              <img
+                src={faq}
+                alt=""
+                className="md:w-24 md:h-16 w-14 h-10 lg:w-44 lg:h-28 "
+              />
+            </div>
+          
+
 </div>
 
 
 <div className="flex lg:gap-7 gap-4 flex-col">
-  <h1 className="font-medium lg:text-base text-xs leading-8">
+  <h1 className="font-medium lg:text-base text-xs lg:leading-[40px] leading-8">
     Welcome to the future of seamless communication and cutting-edge technology! We're thrilled to unveil our latest array of telecom and digital products designed to redefine connectivity and elevate your digital experience.<br/>
 At the heart of our launch is a commitment to transform the way you connect, communicate, and collaborate. Here's a glimpse of what's in store:<br/>
 1. Lightning-Fast Connectivity: Say goodbye to buffering and lagging. Our next-generation network infrastructure ensures lightning-fast speeds, enabling you to stream, download, and communicate without interruptions.<br/>
@@ -55,8 +76,8 @@ Get ready to elevate your digital experience like never before. Stay tuned for t
 
 </div>
 <div
-                  className=" flex gap-[5.729px] mt-[85px] md:gap-[14.896px]
-        justify-center px-[8.594px] mb-[80px]"
+                  className=" flex gap-[5.729px] mt-[95px] lg:mt-[370px] md:gap-[14.896px]
+        justify-center px-[8.594px] mb-10"
                 >
                   <p
                     className="font-[500] text-[10px] text-black 

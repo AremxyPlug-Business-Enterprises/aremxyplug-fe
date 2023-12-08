@@ -17,6 +17,10 @@ import folder from "./assets/folder.svg";
 import five from "./assets/five.svg";
 import envelope from "./assets/envelope.svg";
 import bin from "./assets/bin.svg";
+import deletingfiles from "./assets/deletingfile.svg";
+import VuesaxBoldEye from "./assets/cancel.svg";
+import WalletModal from "../Wallet/WalletModal";
+
 
 export default function NotificationsPage() {
   const { isDarkMode } = useContext(ContextProvider);
@@ -75,7 +79,157 @@ export default function NotificationsPage() {
     setBackgroundColor3("bg-white") 
     setBackgroundColor4("bg-white") 
     setBackgroundColor5("bg-white") 
+    
   };
+
+
+  const [Color1, setColor1] = useState("bg-red-400");
+
+  const switchColor1 = () => {
+    setColor1((prevColor) =>
+      prevColor === "bg-red-400" ? "bg-white" : "bg-white"
+    );
+  };
+
+  const [Color2, setColor2] = useState("bg-red-400");
+  const switchColor2 = () => {
+    setColor2((prevColor) =>
+      prevColor === "bg-red-400" ? "bg-white" : "bg-white"
+    );
+  };
+
+  const [Color3, setColor3] = useState("bg-red-400");
+  const switchColor3 = () => {
+    setColor3((prevColor) =>
+      prevColor === "bg-red-400" ? "bg-white" : "bg-white"
+    );
+  };
+
+  const [Color4, setColor4] = useState("bg-red-400");
+  const switchColor4 = () => {
+    setColor4((prevColor) =>
+      prevColor === "bg-red-400" ? "bg-white" : "bg-white"
+    );
+  };
+
+  const [Color5, setColor5] = useState("bg-red-400");
+  const switchColor5 = () => {
+    setColor5((prevColor) =>
+      prevColor === "bg-red-400" ? "bg-white" : "bg-white"
+    );
+  };
+
+  const [Color6, setColor6] = useState("bg-red-400");
+  const switchColor6 = () => {
+    setColor6((prevColor) =>
+      prevColor === "bg-red-400" ? "bg-white" : "bg-white"
+    );
+  };
+
+  const handleCombinedClick3 = () => {
+    
+    setColor1("bg-white") 
+    setColor2("bg-white") 
+    setColor3("bg-white") 
+    setColor4("bg-white") 
+    setColor5("bg-white") 
+    setColor6("bg-white") 
+  };
+
+
+  const [Color7, setColor7] = useState("bg-red-400");
+  const switchColor7 = () => {
+    setColor7((prevColor) =>
+      prevColor === "bg-red-400" ? "bg-white" : "bg-white"
+    );
+  };
+
+  const [Color8, setColor8] = useState("bg-red-400");
+  const switchColor8 = () => {
+    setColor8((prevColor) =>
+      prevColor === "bg-red-400" ? "bg-white" : "bg-white"
+    );
+  };
+
+  const [Color9, setColor9] = useState("bg-red-400");
+  const switchColor9 = () => {
+    setColor9((prevColor) =>
+      prevColor === "bg-red-400" ? "bg-white" : "bg-white"
+    );
+  };
+
+  const [Color10, setColor10] = useState("bg-red-400");
+  const switchColor10 = () => {
+    setColor10((prevColor) =>
+      prevColor === "bg-red-400" ? "bg-white" : "bg-white"
+    );
+  };
+
+  const [Color11, setColor11] = useState("bg-red-400");
+  const switchColor11 = () => {
+    setColor11((prevColor) =>
+      prevColor === "bg-red-400" ? "bg-white" : "bg-white"
+    );
+  };
+
+  const handleCombinedClick4 = () => {
+    
+    setColor7("bg-white") 
+    setColor8("bg-white") 
+    setColor9("bg-white") 
+    setColor10("bg-white") 
+    setColor11("bg-white") 
+ 
+  };
+
+
+  const [Color12, setColor12] = useState("bg-red-400");
+  const switchColor12 = () => {
+    setColor12((prevColor) =>
+      prevColor === "bg-red-400" ? "bg-white" : "bg-white"
+    );
+  };
+
+  const [Color13, setColor13] = useState("bg-red-400");
+  const switchColor13 = () => {
+    setColor13((prevColor) =>
+      prevColor === "bg-red-400" ? "bg-white" : "bg-white"
+    );
+  };
+
+  const [Color14, setColor14] = useState("bg-red-400");
+  const switchColor14 = () => {
+    setColor14((prevColor) =>
+      prevColor === "bg-red-400" ? "bg-white" : "bg-white"
+    );
+  };
+
+  const [Color15, setColor15] = useState("bg-red-400");
+  const switchColor15 = () => {
+    setColor15((prevColor) =>
+      prevColor === "bg-red-400" ? "bg-white" : "bg-white"
+    );
+  };
+
+  const [Color16, setColor16] = useState("bg-red-400");
+  const switchColor16 = () => {
+    setColor16((prevColor) =>
+      prevColor === "bg-red-400" ? "bg-white" : "bg-white"
+    );
+  };
+
+  const handleCombinedClick5 = () => {
+    
+    setColor12("bg-white") 
+    setColor13("bg-white") 
+    setColor14("bg-white") 
+    setColor15("bg-white") 
+    setColor16("bg-white") 
+ 
+  };
+
+
+
 
   const [isOpen1, setIsOpen1] = useState(true);   
   const [isOpen6, setIsOpen6] = useState(false);
@@ -88,29 +242,30 @@ export default function NotificationsPage() {
   const [isOpen5, setIsOpen5] = useState(false);
   const [isOpen10, setIsOpen10] = useState(false);
   const [isOpen11, setIsOpen11] = useState(false);
-  const [isOpen13, setIsOpen13] = useState(true);
-  const [isOpen14, setIsOpen14] = useState(true);
-  const [isOpen15, setIsOpen15] = useState(true);
+  // const [isOpen13, setIsOpen13] = useState(true);
+  // const [isOpen14, setIsOpen14] = useState(true);
+  // const [isOpen15, setIsOpen15] = useState(true);
+
+  
+
+  
+  const [isAllRead, setIsAllRead] = useState(true);
+  const [buttonText, setButtonText] = useState('Mark all as Read');
+
+  const handleButtonClick = () => {
+    setIsAllRead((prevIsAllRead) => !prevIsAllRead);
 
 
+    
+    // Update button text based on the new state
+    setButtonText(isAllRead ? 'Mark all as Unread' : 'Mark all as Read');
 
+    // Additional click handlers
+    handleCombinedClick();
+    handleCombinedClick3();
+  };
 
-
-  const [isOpen12, setIsOpen12] = useState(true);
- const [isOpen16, setIsOpen16] = useState(true);
-  const [isOpen17, setIsOpen17] = useState(true);
-  const [isOpen18, setIsOpen18] = useState(true);
-  const [isOpen19, setIsOpen19] = useState(true);
-  const [isOpen20, setIsOpen20] = useState(true);
-
-
-const [isOpen21, setIsOpen21] = useState(true);
-const [isOpen22, setIsOpen22] = useState(true);
-const [isOpen23, setIsOpen23] = useState(true);
-const [isOpen24, setIsOpen24] = useState(true);
-const [isOpen25, setIsOpen25] = useState(true);
-
-
+    
 
 
 
@@ -147,7 +302,7 @@ const [isOpen25, setIsOpen25] = useState(true);
 
   const changeColor10 = () => {
     setBackgroundColor10((prevColor) =>
-      prevColor === "bg-sky-100" ? "bg-white" : "white"
+      prevColor === "bg-sky-100" ? "bg-white" : "bg-white"
     );
   };
 
@@ -202,14 +357,66 @@ const [isOpen25, setIsOpen25] = useState(true);
 
 
   const handleCombinedClick2 = () => {
-    setBackgroundColor6("bg-white") 
-    setBackgroundColor7("bg-white") 
-    setBackgroundColor8("bg-white") 
-    setBackgroundColor9("bg-white") 
-    setBackgroundColor10("bg-white") 
+    setBackgroundColor11("bg-white") 
+    setBackgroundColor12("bg-white") 
+    setBackgroundColor13("bg-white") 
+    setBackgroundColor14("bg-white") 
+    setBackgroundColor15("bg-white") 
   };
 
+  // const [activeBtn, setActiveBtn] = useState([true, false]);
+  // const [activeIndex, setActiveIndex] = useState(0);
+// 
+  // const handleClick = (index) => {
+    // const clickedBtn = activeBtn.map((isActive, i) => i === index);
+    // setActiveBtn(clickedBtn);
+    // setActiveIndex(index);
+  // };
+// 
+  // const resetActiveButton = () => {
+    // hidePopup();
+    // handleClick(0);
+  // };
+  // const hidePopup = () => {
+    // setPopupVisible(false);
+  // };
+  // const showPopup = () => {
+    // setPopupVisible(true);
+  // };
+  // const [popupVisible, setPopupVisible] = useState(false);
 
+  
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+    // const {finalDelete, setFinalDelete} = useState(true);
+  
+    const openModal = () => {
+      setIsModalOpen(true);
+    };
+  
+    const closeModal = () => {
+      setIsModalOpen(false);
+    };
+  
+    const handleDelete = () => {
+      // setFinalDelete(false)
+      setIsModalOpen(false); // Close the modal immediately
+      setShowSuccessMessage(true);
+    };
+
+    // Reset the success message after a delay
+    // useEffect(() => {
+      // let timeout;
+      // if (showSuccessMessage) {
+        // timeout = setTimeout(() => {
+          // setShowSuccessMessage(false);
+        // }, 2000); // Adjust the delay time (in milliseconds) as needed
+      // };
+    // 
+      // return () => clearTimeout(timeout);
+    // }, [showSuccessMessage]);
+
+  
   return (
     <DashBoardLayout>
       <>
@@ -407,9 +614,9 @@ const [isOpen25, setIsOpen25] = useState(true);
 
 
             {/* first flow */}
-            {isOpen1 && isOpen13 && (
+            {isOpen1 &&  (
               <div
-                className="flex flex-col w-full lg:w-full md:w-full mt-[50px] lg:mt-[100px]
+                className="flex flex-col relative w-full lg:w-full md:w-full mt-[50px] lg:mt-[100px]
          md:mt-[70px] md:gap-[45px] lg:gap-10 gap-[20.64px] "
               >
                 <div
@@ -422,7 +629,13 @@ items-end  "
              lg:rounded-[6px] lg:border-[0.2px] border-solid p-1 w-24 md:w-[120px]   border shadow rounded gap-1.5 lg:shadow-[0px_0px_1px_#00000040]"
                   >
                     <div
-                      onClick={handleCombinedClick}
+                    id="colorReset"
+                      onClick={() => {
+                        handleCombinedClick();
+                        handleCombinedClick3();
+                        handleButtonClick()
+                        
+                      }}
                       className="flex lg:w-[171px] items-center lg:gap-[14px] gap-2  flex-[0_0_auto]"
                     >
                       <img
@@ -431,22 +644,14 @@ items-end  "
                         src={envelope}
                       />
                       <div
-                        className="lg:w-[133px] w-[67px] md:w-[78px] mt-[-1.00px] font-medium text-zinc-500  text-text-color-fade
-                 lg:text-[16px] tracking-[0] text-[8px] md:text-[10px] leading-[normal]"
+                        className="lg:w-[133px] w-[67px] md:w-[78px] whitespace-nowrap mt-[-1.00px] font-medium text-zinc-500  text-text-color-fade
+                 lg:text-[15px] tracking-[0] text-[8px] md:text-[10px] leading-[normal]"
                       >
-                        Mark all as Read
+                        {buttonText}
                       </div>
                     </div>
                   </div>
                   <div
-                    onClick={() => {
-                      setIsOpen13((prev) => !prev);
-                      setIsOpen1(false);
-                      setIsOpen2(false);
-                      setIsOpen3(false);
-                      setIsOpen4(false);
-                      setIsOpen5(false);
-                    }}
                     className="flex items-center lg:gap-[14px] cursor-pointer    lg:p-[8px]
               flex-[0_0_auto] bg-white lg:rounded-[6px]  border-red-500 
                lg:border-[0.2px] border-solid border-variable-collection- text-danger p-1
@@ -466,10 +671,14 @@ items-end  "
                   </div>
                 </div>
 
-                
+{/* child */}
+<div className="flex flex-col lg:gap-7 gap-3 md:gap-5">
+{/* {finalDelete && ( */}
                 <div
-                  className={`flex justify-between items-center w-full 
-                  border-b  border-[#d9d9d999] ${backgroundColor}`}
+                id="colorReset"
+                  className={`flex justify-between  items-center w-full 
+                  border-b lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md
+                   lg:rounded-xl shadow  border-[#d9d9d999] ${backgroundColor}`}
                 >
                   <Link to="/launch-page">
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
@@ -500,14 +709,17 @@ items-end  "
                         alt=""
                       />
 
-                      {isOpen6 && isOpen12 &&(
+                      {isOpen6 && (
                         <div
                           className="Frame758532672 w-[100px] md:w-[180px] lg:w-[190px] mt-[-38px] md:mt-[-80px] 
                     ml-[-52px] md:ml-[-82px] lg:ml-[-40px] z-50 shadow flex-col lg:mt-[-85px]
                justify-start items-start flex"
                         >
                           <div
-                            onClick={changeColor}
+                            onClick={() => {
+                              changeColor();
+                              switchColor1();
+                            }}
                             className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
          h-[23px] justify-center md:h-[40px] lg:h-[41px]
         items-center gap-1.5 flex"
@@ -517,19 +729,11 @@ items-end  "
                             </div>
                           </div>
                           <div
-                            onClick={() => {
-                              setIsOpen12((prev) => !prev);
-                              setIsOpen7(false);
-                              setIsOpen8(false);
-                              setIsOpen9(false);
-                              setIsOpen10(false);
-                              setIsOpen11(false);
-                              setIsOpen16(false);
-                              setIsOpen17(false);
-                              setIsOpen18(false);
-                              setIsOpen19(false);
-                              setIsOpen20(false);
-                            }}
+                          //  onClick={() => {
+                            // handleClick(1)
+                            // showPopup();
+                          // }}
+                          onClick={openModal}
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
           justify-center items-center gap-1.5 flex"
                           >
@@ -558,17 +762,140 @@ items-end  "
                       </div>
 
                       <div
-                        className="Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
-               bg-red-400 rounded-full"
+                        className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
+               bg-red-400 rounded-full ${Color1}`}
                       />
                     </div>
                   </div>
-                </div>
-                
 
-{isOpen16 && (
+                </div>
+{/* )} */}
+                {isModalOpen && (
+                <WalletModal>
+                  
+                <div className="text-center flex justify-center item-center md:mt-[-20px] lg:mt-[15px] 2xl:mt-[-15px]">
                 <div
-                  className={` flex w-full justify-between items-center  border-b  border-[#d9d9d999] ${backgroundColor1} `}
+                  className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
+                    flex flex-col justify-center z-[100] lg:ml-[10px] md:w-full`}>
+                      <img 
+                      onClick={closeModal}
+                      className=" w-[25px] h-[25px] inline-flex justify-end items-end"  src={VuesaxBoldEye} alt=""/>
+                  <div className="w-full h-[22px]  bg-[#04177f]" />
+                  <div>
+                    <p className="text-[10px] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[3%]">
+                    Are you sure you want to delete this Notification?
+                    </p>
+                  </div>
+                  <img
+                    src={deletingfiles}
+                    alt=""
+                    className="img mx-auto mt-[30px] md:mt-[15%] md:w-[220px] md:mx-[100px] w-[143px] h-[67px] lg:w-[300px] lg:h-[200px] lg:mx-[150px] lg:mt-[10%] 2xl:mt-[10%] 2xl:mx-[180px]"
+                  />
+                </div>
+              </div>
+              <div className="mt-[40px] justify-center items-center flex gap-[3px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
+                <button
+                  className={` ${
+                    isDarkMode ? "border" : "bg-[#04177f] "
+                  } cursor-pointer text-white text-[10px] h-[40px]  lg:rounded-xl lg:w-40 lg:h-9 lg:px-3.5 lg:py-2.5 
+                  rounded-[5px]
+                   md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] 
+                   lg:my-[3%]  lg:text-[20px]  lg:mx-auto`}
+                   onClick={handleDelete}
+                >
+                  Yes
+                </button>
+
+
+                
+                <button 
+                // onClick={resetActiveButton}
+                        // handleClick={activeIndex}
+                        onClick={closeModal}
+ className="Frame1469 cursor-pointer  w-40 h-9 px-3.5 py-2.5 rounded-xl border border-red-600 
+                justify-center items-center gap-2.5 flex">
+    <div  className="Cancel text-red-500 text-base font-semibold ">Cancel</div>
+
+                </button>
+              </div>
+              </WalletModal>
+                )}
+
+{showSuccessMessage && (
+                                <WalletModal>
+                <div className="text-center flex justify-center item-center md:mt-[-20px] lg:mt-[15px] 2xl:mt-[-15px]">
+                <div
+                  className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
+                    flex flex-col justify-center z-[100] lg:ml-[10px] md:w-full`}>
+                      <img className=" w-[25px] h-[25px] inline-flex justify-end items-end"  src={VuesaxBoldEye} alt=""/>
+                  <div className="w-full h-[22px]  bg-[#04177f]" />
+                  <div>
+                    <p className="text-[10px] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[18px] lg:pt-[3%]">
+                    Notification has been deleted successfully.
+                    </p>
+                    {/* <p className="text-[10px] md:text-[16px] font-[600] text-[#04177F] lg:text-[16px]"> */}
+                      {/* This Feature is Currently Not Available. */}
+                    {/* </p> */}
+                  </div>
+                </div>
+              </div>
+              <div className="mt-[40px] justify-center items-center flex gap-[3px] pb-[5%] 2xl:mt-[1%] lg:mt-[300px] md:mt-[5%] md:pr-[10px]">
+                {/* <p className="text-[8px] font-extrabold text-end float-right ml-[60%] md:ml-[70%] md:text-[12px] mt-[10px] lg:text-[13px] 2xl:text-[15px]"> */}
+                  {/* Coming Soon... */}
+                {/* </p> */}
+                <button
+                  className={` ${
+                    isDarkMode ? "border" : "bg-[#04177f] "
+                  } cursor-pointer text-white text-[10px] h-[40px]  lg:rounded-xl lg:w-40 lg:h-9 lg:px-3.5 lg:py-2.5 
+                  rounded-[5px]
+                   md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] 
+                   lg:my-[3%]  lg:text-[20px]  lg:mx-auto`}
+                   onClick={() => setShowSuccessMessage(false)}
+                >
+                  Done
+                </button>
+
+
+                
+              </div>
+              </WalletModal>
+)}
+
+            
+                                  {/* pop-up */}
+                                  {/* <div className="absolute w-full z-50 h-[465px] bg-red-200 rounded-[20px] top-[-40px]  */}
+                                  {/* // flex justify-center items-center "> */}
+      {/* <div className=" h-[22px] top-[60px] left-0 bg-[#04177f]" /> */}
+      {/*  */}
+      {/* <img className=" w-[25px] h-[25px] top-[10px]  flex justify-end items-start"  src={VuesaxBoldEye} alt=""/> */}
+        {/*  */}
+        {/* <div className="flex flex-col items-center gap-[40px] absolute top-0 left-0"> */}
+          {/* <div className="flex flex-col justify-center items-center gap-[10px] relative flex-[0_0_auto]"> */}
+            {/* <p className=" w-[388px] h-[44px] mt-[120.00px]  font-semibold text-black text-[16px] text-right tracking-[0] leading-[20.8px]"> */}
+              {/* Are you sure you want to delete this Notification? */}
+            {/* </p> */}
+            {/* <img className="relative w-[150px] h-[150px]" alt="Deleting files" src={deletingfiles} /> */}
+          {/* </div> */}
+          {/* <div className="flex items-start gap-[20px] relative flex-[0_0_auto]"> */}
+            {/* <div className="flex w-[163px] h-[38px] items-center justify-center gap-[10px] px-[15px] py-[10px] relative bg-primary-colormain rounded-[12px]"> */}
+              {/* <div className="relative w-fit mt-[-4.00px] mb-[-2.00px]  font-semibold text-white text-[16px] tracking-[0] leading-[normal]"> */}
+                {/* Yes */}
+              {/* </div> */}
+            {/* </div> */}
+            {/* <div className="flex w-[163px] h-[38px] items-center justify-center gap-[10px] px-[15px] py-[10px] relative rounded-[12px] border border-solid border-danger"> */}
+              {/* <div className="relative w-fit mt-[-4.00px] mb-[-2.00px] [font-family:'Poppins-SemiBold',Helvetica] font-semibold text-variable-collection-text-danger text-[16px] tracking-[0] leading-[normal]"> */}
+                {/* Cancel */}
+              {/* </div> */}
+            {/* </div> */}
+          {/* </div> */}
+          {/* </div> */}
+          {/*  */}
+                {/* </div> */}
+
+
+                <div
+                  className={` flex w-full justify-between items-center lg:h-[230px] h-[100px] md:h-[150px]
+                   lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow   border-b  border-[#d9d9d999] ${backgroundColor1} `}
                 >
   <Link to="/launch-page">
 
@@ -606,7 +933,11 @@ items-end  "
                justify-start items-start flex"
                         >
                           <div
-                            onClick={changeColor1}
+                                                        onClick={() => {
+                                                          changeColor1();
+                                                          switchColor2();
+                                                        }}
+                            
                             className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
          h-[23px] justify-center md:h-[40px] lg:h-[41px]
         items-center gap-1.5 flex"
@@ -616,19 +947,6 @@ items-end  "
                             </div>
                           </div>
                           <div
-                          onClick={() => {
-                            setIsOpen16((prev) => !prev);
-                            setIsOpen7(false);
-                            setIsOpen8(false);
-                            setIsOpen9(false);
-                            setIsOpen10(false);
-                            setIsOpen11(false);
-                            setIsOpen12(false);
-                            setIsOpen17(false);
-                            setIsOpen18(false);
-                            setIsOpen19(false);
-                            setIsOpen20(false);
-                          }}
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
           justify-center items-center gap-1.5 flex"
                           >
@@ -657,20 +975,19 @@ items-end  "
                       </div>
 
                       <div
-                        className="Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
-               bg-red-400 rounded-full"
+                        className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
+               bg-red-400 rounded-full ${Color2}`}
                       />
                     </div>
                   </div>
                 </div>
               
-)}
 
-{isOpen17 && (
+
   
 
                 <div
-                  className={`flex  border-b  border-[#d9d9d999] ${backgroundColor2} w-full justify-between 
+                  className={`flex  border-b  lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow   border-[#d9d9d999] ${backgroundColor2} w-full justify-between 
                   items-center `}
                 >
   <Link to="/launch-page">
@@ -710,7 +1027,11 @@ items-end  "
                justify-start items-start flex"
                         >
                           <div
-                            onClick={changeColor2}
+                                                        onClick={() => {
+                                                          changeColor2();
+                                                          switchColor3();
+                                                        }}
+                            
                             className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
          h-[23px] justify-center md:h-[40px] lg:h-[41px]
         items-center gap-1.5 flex"
@@ -720,19 +1041,6 @@ items-end  "
                             </div>
                           </div>
                           <div
-                                                    onClick={() => {
-                                                      setIsOpen17((prev) => !prev);
-                                                      setIsOpen7(false);
-                                                      setIsOpen8(false);
-                                                      setIsOpen9(false);
-                                                      setIsOpen10(false);
-                                                      setIsOpen11(false);
-                                                      setIsOpen12(false);
-                                                      setIsOpen16(false);
-                                                      setIsOpen18(false);
-                                                      setIsOpen19(false);
-                                                      setIsOpen20(false);
-                                                    }}
                           
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
           justify-center items-center gap-1.5 flex"
@@ -762,20 +1070,20 @@ items-end  "
                       </div>
 
                       <div
-                        className="Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
-               bg-red-400 rounded-full"
+                        className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
+               bg-red-400 rounded-full ${Color3}`}
                       />
                     </div>
                   </div>
                 </div>
                 
-)}
 
-{isOpen18 && (
+
+
   
 
                 <div
-                  className={`flex border-b border-[#d9d9d999] ${backgroundColor3} w-full justify-between
+                  className={`flex border-b lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow  border-[#d9d9d999] ${backgroundColor3} w-full justify-between
                    items-center`}
                 >
   <Link to="/launch-page">
@@ -815,7 +1123,11 @@ items-end  "
                justify-start items-start flex"
                         >
                           <div
-                            onClick={changeColor3}
+                                                      onClick={() => {
+                                                        changeColor3();
+                                                        switchColor4();
+                                                      }}
+                          
                             className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
          h-[23px] justify-center md:h-[40px] lg:h-[41px]
         items-center gap-1.5 flex"
@@ -825,19 +1137,6 @@ items-end  "
                             </div>
                           </div>
                           <div
-                                                    onClick={() => {
-                                                      setIsOpen18((prev) => !prev);
-                                                      setIsOpen7(false);
-                                                      setIsOpen8(false);
-                                                      setIsOpen9(false);
-                                                      setIsOpen10(false);
-                                                      setIsOpen11(false);
-                                                      setIsOpen12(false);
-                                                      setIsOpen17(false);
-                                                      setIsOpen16(false);
-                                                      setIsOpen19(false);
-                                                      setIsOpen20(false);
-                                                    }}
                           
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
           justify-center items-center gap-1.5 flex"
@@ -867,20 +1166,20 @@ items-end  "
                       </div>
 
                       <div
-                        className="Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
-               bg-red-400 rounded-full"
+                        className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
+               bg-red-400 rounded-full ${Color4}`}
                       />
                     </div>
                   </div>
                 </div>
                 
-)}
 
-{isOpen19 && (
+
+
   
 
                 <div
-                  className={`flex  border-b  border-[#d9d9d999] ${backgroundColor4} w-full justify-between
+                  className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow   border-b  border-[#d9d9d999] ${backgroundColor4} w-full justify-between
                    items-center`}
                 >
   <Link to="/launch-page">
@@ -920,7 +1219,11 @@ items-end  "
                justify-start items-start flex"
                         >
                           <div
-                            onClick={changeColor4}
+                                                        onClick={() => {
+                                                          changeColor4();
+                                                          switchColor5();
+                                                        }}
+                            
                             className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
          h-[23px] justify-center md:h-[40px] lg:h-[41px]
         items-center gap-1.5 flex"
@@ -930,19 +1233,6 @@ items-end  "
                             </div>
                           </div>
                           <div
-                                                    onClick={() => {
-                                                      setIsOpen19((prev) => !prev);
-                                                      setIsOpen7(false);
-                                                      setIsOpen8(false);
-                                                      setIsOpen9(false);
-                                                      setIsOpen10(false);
-                                                      setIsOpen11(false);
-                                                      setIsOpen12(false);
-                                                      setIsOpen17(false);
-                                                      setIsOpen18(false);
-                                                      setIsOpen16(false);
-                                                      setIsOpen20(false);
-                                                    }}
                           
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
           justify-center items-center gap-1.5 flex"
@@ -972,20 +1262,20 @@ items-end  "
                       </div>
 
                       <div
-                        className="Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
-               bg-red-400 rounded-full"
+                        className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
+               bg-red-400 rounded-full ${Color5}`}
                       />
                     </div>
                   </div>
                 </div>
                 
-)}
 
-{isOpen20 && (
+
+
   
 
                 <div
-                  className={`flex  border-b  border-[#d9d9d999] ${backgroundColor5} w-full justify-between
+                  className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${backgroundColor5} w-full justify-between
                    items-center`}
                 >
   <Link to="/launch-page">
@@ -1025,7 +1315,11 @@ items-end  "
                justify-start items-start flex"
                         >
                           <div
-                            onClick={changeColor5}
+                                                        onClick={() => {
+                                                          changeColor5();
+                                                          switchColor6();
+                                                        }}
+                            
                             className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
          h-[23px] justify-center md:h-[40px] lg:h-[41px]
         items-center gap-1.5 flex"
@@ -1035,19 +1329,6 @@ items-end  "
                             </div>
                           </div>
                           <div
-                                                    onClick={() => {
-                                                      setIsOpen20((prev) => !prev);
-                                                      setIsOpen7(false);
-                                                      setIsOpen8(false);
-                                                      setIsOpen9(false);
-                                                      setIsOpen10(false);
-                                                      setIsOpen11(false);
-                                                      setIsOpen12(false);
-                                                      setIsOpen17(false);
-                                                      setIsOpen18(false);
-                                                      setIsOpen19(false);
-                                                      setIsOpen16(false);
-                                                    }}
                           
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
           justify-center items-center gap-1.5 flex"
@@ -1077,43 +1358,33 @@ items-end  "
                       </div>
 
                       <div
-                        className="Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
-               bg-red-400 rounded-full"
+                        className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
+               bg-red-400 rounded-full ${Color6}`}
                       />
                     </div>
                   </div>
                 </div>
 
-      )}
-      
-                <div
-                  className=" flex gap-[5.729px] mt-[90px] md:gap-[14.896px]
-        justify-center px-[8.594px] mb-[80px]"
-                >
-                  <p
-                    className="font-[500] text-[10px] text-black 
-              leading-[10.4px] lg:text-[16px] lg:leading-[15.6px]   md:text-[6.875px]
-            ] md:leading-[12.938px] self-center"
-                  >
-                    You need help?
-                  </p>
-                  <Link
-                    to="/contactUs"
-                    className="font-[500] text-white text-[10px]  py-[4.865px] 
-                px-[10.594px] leading-[10.4px] rounded-[5.156px] bg-[#04177F]
-                lg:text-[12px] lg:leading-[14.4px] 
-                 md:text-[4.583px]  md:py-[4.865px] 
-                md:px-[14.594px] md:leading-[5.985px]  lg:py-[10px]
-                lg:px-[16px] lg:rounded-[9px]"
-                  >
-                    Contact Us
+    
+                <div className="flex gap-[15px] mt-[150px] lg:mt-[300px] mb-10 md:mt-[200px] justify-center items-center">
+                  <div className="text-xs font-medium ">You need help ?</div>
+                  <Link to="/ContactUs">
+                    <div
+                      className={`${isDarkMode ? "border " : "bg-[#04177f]"} ${
+                        styles.contactus
+                      }`}
+                    >
+                      Contact Us
+                    </div>
                   </Link>
                 </div>
+
+              </div>
               </div>
             )}
 
             {/* second flow */}
-            {isOpen2 && isOpen14 && (
+            {isOpen2 && (
               <div
                 className="flex flex-col w-full lg:w-full md:w-full mt-[50px] lg:mt-[100px]
          md:mt-[70px] md:gap-[45px] lg:gap-10 gap-[20.64px] "
@@ -1125,7 +1396,11 @@ items-end  "
              lg:rounded-[6px] lg:border-[0.2px] border-solid p-1 w-24 md:w-[120px]   border shadow rounded gap-1.5 lg:shadow-[0px_0px_1px_#00000040]"
                   >
                     <div
-                      onClick={handleCombinedClick1}
+                                            onClick={() => {
+                                              handleCombinedClick1();
+                                              handleCombinedClick4();
+                                            }}
+                      
                       className="flex lg:w-[171px] items-center lg:gap-[14px] gap-2  flex-[0_0_auto]"
                     >
                       <img
@@ -1142,14 +1417,6 @@ items-end  "
                     </div>
                   </div>
                   <div
-                    onClick={() => {
-                      setIsOpen14((prev) => !prev);
-                      setIsOpen1(false);
-                      setIsOpen2(false);
-                      setIsOpen3(false);
-                      setIsOpen4(false);
-                      setIsOpen5(false);
-                    }}
                     className="flex items-center lg:gap-[14px] cursor-pointer    lg:p-[8px]
               flex-[0_0_auto] bg-white lg:rounded-[6px]  border-red-500 
                lg:border-[0.2px] border-solid border-variable-collection- text-danger p-1
@@ -1168,14 +1435,14 @@ items-end  "
                     </div>
                   </div>
                 </div>
-{isOpen21 && (
-                
+
+                <div  className="flex flex-col lg:gap-7 gap-3 md:gap-5">
 
                 <div
-                  className={`flex  border-b  border-[#d9d9d999] ${backgroundColor6} w-full justify-between
+                  className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${backgroundColor6} w-full justify-between
                    items-center`}
                 >
-  <Link to="/launch-page">
+  <Link to="/launch-page2">
 
 
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
@@ -1213,7 +1480,11 @@ items-end  "
                justify-start items-start flex"
                         >
                           <div
-                           onClick={changeColor6}
+                                                                                 onClick={() => {
+                                                                                  changeColor6();
+                                                                                  switchColor7();
+                                                                                }}
+                          
                             className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
          h-[23px] justify-center md:h-[40px] lg:h-[41px]
         items-center gap-1.5 flex"
@@ -1223,14 +1494,6 @@ items-end  "
                             </div>
                           </div>
                           <div
-                                                                              onClick={() => {
-                                                                                setIsOpen21((prev) => !prev);
-                                                                                setIsOpen22(false);
-                                                                                setIsOpen23(false);
-                                                                                setIsOpen24(false);
-                                                                                setIsOpen25(false);
-
-                                                                              }}
                           
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
           justify-center items-center gap-1.5 flex"
@@ -1259,24 +1522,24 @@ items-end  "
                       </div>
 
                       <div
-                        className="Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
-               bg-red-400 rounded-full"
+                        className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
+               bg-red-400 rounded-full ${Color7}`}
                       />
                     </div>
                   </div>
                 </div>
             
 
-)}
 
-{isOpen22 && (
+
+
 
 
                 <div
-                  className={`flex  border-b  border-[#d9d9d999] ${backgroundColor7} w-full justify-between
+                  className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${backgroundColor7} w-full justify-between
                    items-center`}
                 >
-  <Link to="/launch-page">
+  <Link to="/launch-page2">
 
 
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
@@ -1313,7 +1576,10 @@ items-end  "
                justify-start items-start flex"
                         >
                           <div
-                          onClick={changeColor7}
+                           onClick={() => {
+                            changeColor7();
+                            switchColor8();
+                          }}
                             className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
          h-[23px] justify-center md:h-[40px] lg:h-[41px]
         items-center gap-1.5 flex"
@@ -1323,13 +1589,6 @@ items-end  "
                             </div>
                           </div>
                           <div
-                           onClick={() => {
-                            setIsOpen22((prev) => !prev);
-                            setIsOpen21(false);
-                            setIsOpen23(false);
-                            setIsOpen24(false);
-                            setIsOpen25(false);
-                          }}
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
           justify-center items-center gap-1.5 flex"
                           >
@@ -1357,23 +1616,23 @@ items-end  "
                       </div>
 
                       <div
-                        className="Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
-               bg-red-400 rounded-full"
+                        className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
+               bg-red-400 rounded-full ${Color8}`}
                       />
                     </div>
                   </div>
                 </div>
 
-)}
 
-{isOpen23 && (
+
+
 
 
                 <div
-                  className={`flex  border-b  border-[#d9d9d999] ${backgroundColor8} w-full justify-between
+                  className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${backgroundColor8} w-full justify-between
                    items-center`}
                 >
-  <Link to="/launch-page">
+  <Link to="/launch-page2">
 
 
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
@@ -1411,7 +1670,10 @@ items-end  "
                justify-start items-start flex"
                         >
                           <div
-                          onClick={changeColor8}
+                           onClick={() => {
+                            changeColor8();
+                            switchColor9();
+                          }}
                             className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
          h-[23px] justify-center md:h-[40px] lg:h-[41px]
         items-center gap-1.5 flex"
@@ -1421,13 +1683,6 @@ items-end  "
                             </div>
                           </div>
                           <div
-                           onClick={() => {
-                            setIsOpen23((prev) => !prev);
-                            setIsOpen21(false);
-                            setIsOpen22(false);
-                            setIsOpen24(false);
-                            setIsOpen25(false);
-                          }}
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
           justify-center items-center gap-1.5 flex"
                           >
@@ -1455,24 +1710,24 @@ items-end  "
                       </div>
 
                       <div
-                        className="Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
-               bg-red-400 rounded-full"
+                        className={`first-letter:Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
+               bg-red-400 rounded-full ${Color9}`}
                       />
                     </div>
                   </div>
                 </div>
                 
-)}
 
 
-{isOpen24 && (
+
+
   
 
 <div
-                  className={`flex  border-b  border-[#d9d9d999] ${backgroundColor9} w-full justify-between
+                  className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-sm md:rounded-md lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${backgroundColor9} w-full justify-between
                    items-center`}
                 >
-  <Link to="/launch-page">
+  <Link to="/launch-page2">
 
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
                     <div className="font-semibold text-text-color-fade text-zinc-500 lg:text-base md:text-xs  text-[8px] ">
@@ -1509,7 +1764,10 @@ items-end  "
                justify-start items-start flex"
                         >
                           <div
-                          onClick={changeColor9}
+                           onClick={() => {
+                            changeColor9();
+                            switchColor10();
+                          }}
                             className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
          h-[23px] justify-center md:h-[40px] lg:h-[41px]
         items-center gap-1.5 flex"
@@ -1520,13 +1778,6 @@ items-end  "
                           </div>
                           
                           <div
-                           onClick={() => {
-                            setIsOpen24((prev) => !prev);
-                            setIsOpen23(false);
-                            setIsOpen22(false);
-                            setIsOpen21(false);
-                            setIsOpen25(false);
-                          }}
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
           justify-center items-center gap-1.5 flex"
                           >
@@ -1554,23 +1805,23 @@ items-end  "
                       </div>
 
                       <div
-                        className="Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
-               bg-red-400 rounded-full"
+                        className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
+               bg-red-400 rounded-full ${Color10}`}
                       />
                     </div>
                   </div>
                 </div>
 
-)}
 
-{isOpen25 && (
+
+
 
 
 <div
-                  className={`flex  border-b  border-[#d9d9d999] ${backgroundColor10} w-full justify-between
+                  className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${backgroundColor10} w-full justify-between
                    items-center`}
                 >
-  <Link to="/launch-page">
+  <Link to="/launch-page2">
 
 
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
@@ -1608,7 +1859,10 @@ items-end  "
                justify-start items-start flex"
                         >
                           <div
-                          onClick={changeColor10}
+                           onClick={() => {
+  changeColor10();
+  switchColor11();
+}}
                             className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
          h-[23px] justify-center md:h-[40px] lg:h-[41px]
         items-center gap-1.5 flex"
@@ -1618,13 +1872,6 @@ items-end  "
                             </div>
                           </div>
                           <div
-                           onClick={() => {
-                            setIsOpen25((prev) => !prev);
-                            setIsOpen24(false);
-                            setIsOpen23(false);
-                            setIsOpen22(false);
-                            setIsOpen21(false);
-                          }}
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
           justify-center items-center gap-1.5 flex"
                           >
@@ -1652,43 +1899,34 @@ items-end  "
                       </div>
 
                       <div
-                        className="Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
-               bg-red-400 rounded-full"
+                        className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
+               bg-red-400 rounded-full ${Color11}`}
                       />
                     </div>
                   </div>
                 </div>
 
-)}
-                <div
-                  className=" flex gap-[5.729px] mt-[90px] md:gap-[14.896px]
-        justify-center px-[8.594px] mb-[80px]"
-                >
-                  <p
-                    className="font-[500] text-[10px] text-black 
-              leading-[10.4px] lg:text-[16px] lg:leading-[15.6px]  md:text-[6.875px]
-            ] md:leading-[12.938px] self-center"
-                  >
-                    You need help?
-                  </p>
-                  <Link
-                    to="/contactUs"
-                    className="font-[500] text-white text-[10px]  py-[4.865px] 
-                px-[10.594px] leading-[10.4px] rounded-[5.156px] bg-[#04177F]
-                lg:text-[12px] lg:leading-[14.4px] 
-                 md:text-[4.583px]  md:py-[4.865px] 
-                md:px-[14.594px] md:leading-[5.985px]  lg:py-[10px]
-                lg:px-[16px] lg:rounded-[9px]"
-                  >
-                    Contact Us
+
+                <div className="flex gap-[15px]  mt-[150px] lg:mt-[300px] mb-10 md:mt-[200px] justify-center items-center">
+                  <div className="text-xs font-medium ">You need help ?</div>
+                  <Link to="/ContactUs">
+                    <div
+                      className={`${isDarkMode ? "border " : "bg-[#04177f]"} ${
+                        styles.contactus
+                      }`}
+                    >
+                      Contact Us
+                    </div>
                   </Link>
                 </div>
+
+              </div>
               </div>
             )}
             {/* third flow */}
-            {isOpen3 && isOpen15 && (
+            {isOpen3 && (
               <div
-                className="flex flex-col w-full lg:w-full  md:w-full mt-[50px] lg:mt-[100px] md:mt-[60px]
+                className="flex flex-col w-full lg:w-full  md:w-full mt-[50px] lg:mt-[100px] md:mt-[70px]
               md:gap-[45px] lg:gap-10 gap-[20.64px] "
               >
                 <div className="flex  lg:gap-[35px] lg:mt-[-80px] mt-[-40px] gap-[15px] md:gap-[25px] md:mt-[-60px] justify-end items-end  ">
@@ -1698,7 +1936,11 @@ items-end  "
              lg:rounded-[6px] lg:border-[0.2px] border-solid p-1 w-24 md:w-[120px]   border shadow rounded gap-1.5 lg:shadow-[0px_0px_1px_#00000040]"
                   >
                     <div
-                      onClick={handleCombinedClick2}
+                                            onClick={() => {
+                                              handleCombinedClick2();
+                                              handleCombinedClick5();
+                                            }}
+                      
                       className="flex lg:w-[171px] items-center lg:gap-[14px] gap-2  flex-[0_0_auto]"
                     >
                       <img
@@ -1715,14 +1957,6 @@ items-end  "
                     </div>
                   </div>
                   <div
-                    onClick={() => {
-                      setIsOpen15((prev) => !prev);
-                      setIsOpen1(false);
-                      setIsOpen2(false);
-                      setIsOpen3(false);
-                      setIsOpen4(false);
-                      setIsOpen5(false);
-                    }}
                     className="flex items-center lg:gap-[14px] cursor-pointer    lg:p-[8px]
               flex-[0_0_auto] bg-white lg:rounded-[6px]  border-red-500 
                lg:border-[0.2px] border-solid border-variable-collection- text-danger p-1
@@ -1742,12 +1976,12 @@ items-end  "
                   </div>
                 </div>
                 
-
+<div  className="flex flex-col lg:gap-7 gap-3 md:gap-5">
                 <div
-                  className={`flex  border-b  border-[#d9d9d999] ${backgroundColor11} w-full justify-between
+                  className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${backgroundColor11} w-full justify-between
                    items-center`}
                 >
-  <Link to="/launch-page">
+  <Link to="/launch-page3">
 
 
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
@@ -1785,7 +2019,11 @@ items-end  "
                justify-start items-start flex"
                         >
                           <div
-                           onClick={changeColor11}
+                                                      onClick={() => {
+                                                        changeColor11();
+                                                        switchColor12();
+                                                      }}
+                            
                             className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
          h-[23px] justify-center md:h-[40px] lg:h-[41px]
         items-center gap-1.5 flex"
@@ -1822,8 +2060,8 @@ items-end  "
                       </div>
 
                       <div
-                        className="Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
-               bg-red-400 rounded-full"
+                        className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
+               bg-red-400 rounded-full ${Color12}`}
                       />
                     </div>
                   </div>
@@ -1833,10 +2071,10 @@ items-end  "
   
 
 <div
-                  className={`flex  border-b  border-[#d9d9d999] ${backgroundColor12} w-full justify-between
+                  className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${backgroundColor12} w-full justify-between
                    items-center`}
                 >
-  <Link to="/launch-page">
+  <Link to="/launch-page3">
 
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
                     <div className="font-semibold text-text-color-fade text-zinc-500 lg:text-base md:text-xs  text-[8px] ">
@@ -1873,7 +2111,11 @@ items-end  "
                justify-start items-start flex"
                         >
                           <div
-                           onClick={changeColor12}
+                                                      onClick={() => {
+                                                        changeColor12();
+                                                        switchColor13();
+                                                      }}
+                            
                             className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
          h-[23px] justify-center md:h-[40px] lg:h-[41px]
         items-center gap-1.5 flex"
@@ -1910,8 +2152,8 @@ items-end  "
                       </div>
 
                       <div
-                        className="Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
-               bg-red-400 rounded-full"
+                        className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
+               bg-red-400 rounded-full ${Color13}`}
                       />
                     </div>
                   </div>
@@ -1921,10 +2163,10 @@ items-end  "
  
 
 <div
-                  className={`flex  border-b  border-[#d9d9d999] ${backgroundColor13} w-full justify-between
+                  className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${backgroundColor13} w-full justify-between
                    items-center`}
                 >
- <Link to="/launch-page">
+ <Link to="/launch-page3">
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
                     <div className="font-semibold text-text-color-fade text-zinc-500 lg:text-base md:text-xs  text-[8px] ">
                       New Launch!!
@@ -1960,7 +2202,11 @@ items-end  "
                justify-start items-start flex"
                         >
                           <div
-                           onClick={changeColor13}
+                                                      onClick={() => {
+                                                        changeColor13();
+                                                        switchColor14();
+                                                      }}
+                            
                             className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
          h-[23px] justify-center md:h-[40px] lg:h-[41px]
         items-center gap-1.5 flex"
@@ -1997,8 +2243,8 @@ items-end  "
                       </div>
 
                       <div
-                        className="Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
-               bg-red-400 rounded-full"
+                        className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
+               bg-red-400 rounded-full ${Color14}`}
                       />
                     </div>
                   </div>
@@ -2008,10 +2254,10 @@ items-end  "
   
 
 <div
-                  className={`flex  border-b  border-[#d9d9d999] ${backgroundColor14} w-full justify-between
+                  className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${backgroundColor14} w-full justify-between
                    items-center`}
                 >
-                   <Link to="/launch-page">
+                   <Link to="/launch-page3">
 
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
                     <div className="font-semibold text-text-color-fade text-zinc-500 lg:text-base md:text-xs  text-[8px] ">
@@ -2048,7 +2294,11 @@ items-end  "
                justify-start items-start flex"
                         >
                           <div
-                           onClick={changeColor14}
+                                                      onClick={() => {
+                                                        changeColor14();
+                                                        switchColor15();
+                                                      }}
+                            
                             className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
          h-[23px] justify-center md:h-[40px] lg:h-[41px]
         items-center gap-1.5 flex"
@@ -2085,8 +2335,8 @@ items-end  "
                       </div>
 
                       <div
-                        className="Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
-               bg-red-400 rounded-full"
+                        className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
+               bg-red-400 rounded-full ${Color15}`}
                       />
                     </div>
                   </div>
@@ -2096,10 +2346,10 @@ items-end  "
   
 
 <div
-                  className={`flex  border-b  border-[#d9d9d999] ${backgroundColor15} w-full justify-between
+                  className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${backgroundColor15} w-full justify-between
                    items-center`}
                 >
- <Link to="/launch-page">
+ <Link to="/launch-page3">
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
                     <div className="font-semibold text-text-color-fade text-zinc-500 lg:text-base md:text-xs  text-[8px] ">
                       New Launch!!
@@ -2134,7 +2384,11 @@ items-end  "
                justify-start items-start flex"
                         >
                           <div
-                           onClick={changeColor15}
+                                                      onClick={() => {
+                                                        changeColor15();
+                                                        switchColor16();
+                                                      }}
+                            
                             className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
          h-[23px] justify-center md:h-[40px] lg:h-[41px]
         items-center gap-1.5 flex"
@@ -2171,36 +2425,27 @@ items-end  "
                       </div>
 
                       <div
-                        className="Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
-               bg-red-400 rounded-full"
+                        className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
+               bg-red-400 rounded-full ${Color16}`}
                       />
                     </div>
                   </div>
                 </div>
 
-                <div
-                  className=" flex gap-[5.729px] mt-[90px] md:gap-[14.896px]
-        justify-center px-[8.594px] mb-[80px]"
-                >
-                  <p
-                    className="font-[500] text-[10px] text-black 
-              leading-[10.4px] lg:text-[16px] lg:leading-[15.6px]  md:text-[6.875px]
-            ] md:leading-[12.938px] self-center"
-                  >
-                    You need help?
-                  </p>
-                  <Link
-                    to="/contactUs"
-                    className="font-[500] text-white text-[10px]  py-[4.865px] 
-                px-[10.594px] leading-[10.4px] rounded-[5.156px] bg-[#04177F]
-                lg:text-[12px] lg:leading-[14.4px] 
-                 md:text-[4.583px]  md:py-[4.865px] 
-                md:px-[14.594px] md:leading-[5.985px]  lg:py-[10px]
-                lg:px-[16px] lg:rounded-[9px]"
-                  >
-                    Contact Us
+                <div className="flex gap-[15px]  mt-[150px] lg:mt-[300px] mb-10 md:mt-[200px] justify-center items-center">
+                  <div className="text-xs font-medium ">You need help ?</div>
+                  <Link to="/ContactUs">
+                    <div
+                      className={`${isDarkMode ? "border " : "bg-[#04177f]"} ${
+                        styles.contactus
+                      }`}
+                    >
+                      Contact Us
+                    </div>
                   </Link>
                 </div>
+
+              </div>
               </div>
             )}
 
@@ -2212,14 +2457,6 @@ items-end  "
                   src="./Images/Dashboardimages/noTransactionFound.png"
                   alt=""
                 />
-                {/* <div className={styles.viewAll}> */}
-                {/* <div className={styles.viewText}>View all transactions</div> */}
-                {/* <img */}
-                {/* // className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]" */}
-                {/* // src="./Images/Dashboardimages/empty-wallet-add.png" */}
-                {/* // alt="" */}
-                {/* // /> */}
-                {/* </div> */}
                 <div
                   className={`${
                     isDarkMode ? "" : "text-[#0003]"
@@ -2227,7 +2464,7 @@ items-end  "
                 >
                   No Notification Found !
                 </div>
-                <div className="flex gap-[15px] mt-[290px] lg:mt-[900px] md:mt-[600px] items-center">
+                <div className="flex gap-[15px] mt-[390px] lg:mt-[1050px] lg:mb-10 mb-5 md:mt-[700px] items-center">
                   <div className="text-xs font-medium ">You need help ?</div>
                   <Link to="/ContactUs">
                     <div
@@ -2266,7 +2503,7 @@ items-end  "
                 >
                   No Notification Found !
                 </div>
-                <div className="flex gap-[15px] mt-[290px] lg:mt-[900px] md:mt-[600px] items-center">
+                <div className="flex gap-[15px] mt-[390px] lg:mt-[1050px] lg:mb-10 mb-5 md:mt-[700px] items-center">
                   <div className="text-xs font-medium ">You need help ?</div>
                   <Link to="/ContactUs">
                     <div
@@ -2285,4 +2522,5 @@ items-end  "
       </>
     </DashBoardLayout>
   );
-}
+                    }
+                  

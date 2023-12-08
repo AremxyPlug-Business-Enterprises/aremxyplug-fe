@@ -6,12 +6,17 @@ import { Modal } from "../../Screens/Modal/Modal";
 import { Link } from "react-router-dom";
 
 
- const GotvSuccessfulPopup = () => {
+ const DstvSuccessfulPopup = () => {
   
    const {
-     gotvSuccessful, 
-     setGotvSuccessful,
+     dstvSuccessful, 
+     setDstvSuccessful,
      toggleSideBar,
+     mobileNumber,
+     flagResult,
+     cardName,
+     smartCard,
+     tvEmail,
   } = useContext(ContextProvider)
 
   // const CopyButton = ({ textToCopy }) => {
@@ -35,7 +40,7 @@ import { Link } from "react-router-dom";
 
     return(
        <>
-       {gotvSuccessful &&
+       {dstvSuccessful &&
             (
             <Modal>
            
@@ -45,14 +50,14 @@ import { Link } from "react-router-dom";
         <div className="flex justify-between items-center mx-[3%] my-[2%] md:my-[1%]">
         <Link to="/">
               <img
-                onClick={()=>setGotvSuccessful(false)}
+                onClick={()=>setDstvSuccessful(false)}
                 className=" w-[15px] h-[10px] md:w-[24px] md:h-[15px] lg:w-[42px] lg:h-[25px]"
                 src="/Images/login/arpLogo.png"
                 alt=""
               />
             </Link>
               <img
-                onClick={()=>setGotvSuccessful(false)}
+                onClick={()=>setDstvSuccessful(false)}
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
@@ -74,7 +79,7 @@ import { Link } from "react-router-dom";
             <div className="flex flex-col gap-2 lg:gap-4 ">
             <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[14px]">
                     <span className="text-[#7C7C7C]">Decoder Type</span>
-                    <span>decoder</span>
+                    <span>Dstv</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[14px]">
                     <span className="text-[#7C7C7C]">Package</span>
@@ -82,23 +87,23 @@ import { Link } from "react-router-dom";
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[14px]">
                     <span className="text-[#7C7C7C]">Smartcard / IUC Number</span>
-                    <span>1234567890</span>
+                    <span>{smartCard}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[14px]">
                     <span className="text-[#7C7C7C]">Card Name</span>
-                    <span>Aremxyplug</span>
+                    <span>{cardName}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[14px]">
                     <span className="text-[#7C7C7C]">Phone Number</span>
-                    <span>7741235545</span>
+                    <span>{mobileNumber}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[14px]">
                     <span className="text-[#7C7C7C]">Email</span>
-                    <span>Habib@aremxy.com</span>
+                    <span>{tvEmail}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                     <span className="text-[#7C7C7C]">Payment Method</span>
-                    <span>Nigerian NGN Wallet</span>
+                    <span>{flagResult}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                     <span className="text-[#7C7C7C]">Order Number</span>
@@ -115,7 +120,7 @@ import { Link } from "react-router-dom";
         <div className="flex w-full justify-center items-center gap-[10px] md:gap-[8.59px] lg:gap-[15px] md:pb-2">
               
                 <button
-                onClick={()=>setGotvSuccessful(false)} 
+                onClick={()=>setDstvSuccessful(false)} 
                 className={`bg-[#04177f] w-[111px] lg:w-[200px] md:w-[99px] h-[40px] md:h-[24px] lg:h-[42px] lg:my-[2%] flex justify-center items-center cursor-pointer text-[12px] md:text-[12px] lg:text-[16px] font-semibold text-white rounded-[6px] md:rounded-[7px] lg:rounded-[12px]`}
               >
                 Done
@@ -136,4 +141,4 @@ import { Link } from "react-router-dom";
 }
 
 
-export default GotvSuccessfulPopup
+export default DstvSuccessfulPopup

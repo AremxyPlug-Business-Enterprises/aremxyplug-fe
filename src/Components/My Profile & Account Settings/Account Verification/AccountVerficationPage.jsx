@@ -13,8 +13,8 @@ export default function AccountVerficationPage() {
     const {accountUpgrade, setAccountUpgrade} = useContext(ContextProvider);
   return (
     
-    <div className='flex flex-col justify-between lg:h-[120%] h-[140%]'>
-      <div>
+    <div className='flex flex-col '>
+      <div className=''>
         { verificationOpen && (
         <div>
        <div className='flex lg:gap-[10px] lg:py-[50px] py-[35px]'> 
@@ -84,7 +84,7 @@ src={Arrowright} alt="" />
      justify-center px-[8.594px] mb-[130px]
      ${verificationOpen
      ? 'block'
-    :  'hidden'}`}>
+    :  'hidden'}`} >
               <p className="font-[500] text-[10px] text-black 
               leading-[10.4px] lg:text-[16px] lg:leading-[15.6px]  md:text-[6.875px]
             ] md:leading-[12.938px] self-center">

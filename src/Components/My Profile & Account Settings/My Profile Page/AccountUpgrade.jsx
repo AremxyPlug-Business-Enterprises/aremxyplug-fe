@@ -14,7 +14,7 @@ const AccountUpgrade = () => {
         { accountUpgrade && (
           <div className= {`flex flex-col ${verificationOpen
             ? 'block'  : 'hidden'} ${accountUpgrade
-            ? 'pb-[100px] lg:pb-[150px]'
+            ? 'pb-[150px] lg:pb-[300px]'
              :  'pb-[0px]'}`}>
         <div className="px-20px flex flex-col h-full justify-between">
         <div className="flex items-center my-[10%] gap-[8px] md:my-[5%] md:text-[18px] lg:text-[px]">

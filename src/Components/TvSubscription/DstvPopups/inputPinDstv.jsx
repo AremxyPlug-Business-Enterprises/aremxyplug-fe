@@ -8,16 +8,16 @@ import OtpInput from "react-otp-input";
 import { AiFillEyeInvisible } from "react-icons/ai";
 
 
-export const InputGotvPopup = () => {
+export const InputDstvPopup = () => {
     const {
-      inputPinGotv,
-      setInputGotv,
+      inputPinDstv,
+      setInputDstv,
       inputPin,
       setInputPin,
       toggleSideBar,
       toggleVisibility,
       isVisible,
-      handleGotvSuccessful,
+      handleDstvSuccessful,
    } = useContext(ContextProvider)
 
    const [isFocused, setIsFocused] = useState(false);
@@ -29,12 +29,12 @@ export const InputGotvPopup = () => {
         setIsFocused(false);
       };
 
-      const cancelInputGotv = () => {
-        setInputGotv(false)
+      const cancelInputDstv = () => {
+        setInputDstv(false)
       }
    return(
     <>
-    {inputPinGotv &&
+    {inputPinDstv &&
             (
             <Modal>
          
@@ -43,7 +43,7 @@ export const InputGotvPopup = () => {
             } md:w-[55%] w-[90%]`}
             >
             <div className=" pr-3 lg:pr-5 flex justify-end">
-            <img  onClick={cancelInputGotv}
+            <img  onClick={cancelInputDstv}
                 className="w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px] self-center"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
@@ -94,7 +94,7 @@ export const InputGotvPopup = () => {
               </p>
             </div>
             <button
-              onClick={handleGotvSuccessful}
+              onClick={handleDstvSuccessful}
               disabled={inputPin.length !== 4 ? true : false}
               className={`${
                 inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
