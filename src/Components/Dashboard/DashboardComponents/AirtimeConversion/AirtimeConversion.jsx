@@ -17,7 +17,8 @@ import clock from "../AirtimeConversion/images/clock.png"
 import Joi from "joi";
 import arrow from "../AirtimeConversion/images/arrow.png"
 import boy from "../AirtimeConversion/images/Digital banking and online currency exchange.png"
-
+import styles from "../TransferComponent/transfer.module.css";
+import mtn from "../AirtimeConversion/images/mtn.svg"
 
 const AirtimeConversion = () => {
   const [activeTab, setActiveTab] = useState('tab_1');
@@ -27,7 +28,23 @@ const AirtimeConversion = () => {
   const [networkImage, setNetworkImage] = useState('');
   const [selected, setSelected] = useState(false);
   const [networkName, setNetworkName] = useState('');
- 
+  const [Pop, setPop] = useState('');
+  const [showListR, setShowListR] = useState(false);
+ const [ussd, setUssd] = useState('');
+
+ const handleussdPop = () => {
+   setUssd(true);
+ }
+  const handlePop = () =>{
+   setPop(true);
+  }
+  const handleClear =() =>{
+    setPop(false);
+    setRInputValue(false);
+    setRResultValue(false);
+    setUssd(false);
+  }
+
   
   const [proceed, setProceed] = useState(false);
   
@@ -77,6 +94,26 @@ const handleSelectNetwork =(name, image, val)=> {
   setShowList(false);
   setSelected(true);
 }
+const handleShowListR =()=> {
+  setShowListR(!showList);
+  setNetworkName('');
+  setNetworkImage('');
+  setSelected(false);
+}
+
+const [RInputValue, setRInputValue ] = useState('');
+const [ResultValue, setRResultValue ] = useState('');
+const handleRealInputChange = (event) => {
+  const value = event.target.value;
+
+  // Update the input value
+  setRInputValue(value);
+
+  // Calculate 90% of the input value and update the result value
+  const ninetyPercent = (parseFloat(value) * 0.9).toFixed(2);
+  setRResultValue(ninetyPercent);
+};
+
 const Network =({name, image, onClick})=> {
   return (
     <li className="pl-[4px] lg:pl-[14px] lg:pr-[16px] border-b flex items-center py-[3px] gap-1 last:border-b-0 md:py-[6px] cursor-pointer lg:gap-2 lg:h-[45px]" onClick={onClick}>
@@ -139,6 +176,7 @@ const schema = Joi.object({
 });
 
 const { 
+  toggleSideBar,
   setInputValue, 
   inputValue, 
   resultValue,
@@ -204,11 +242,11 @@ const {
                     
                         <div className='flex flex-col gap-[0px]'>
                           <div className='grid grid-cols-1 md:grid-cols-2 items-center gap-0'>
-                                     <div className="font-[500] text-[10px] py-1 mt-[30px] md:mt-[30px] lg:mt-[50px] text-center px-4 md:text-[9.17px] lg:text-[16px] leading-[20.8px] lg:px-6 lg:w-fit  md:flex md:flex-row md:w-fit md:py-1 lg:py-3 rounded-sm md:rounded-sm lg:rounded-md md:leading-[11.5px] bg-primary text-white">
+                                     <div onClick={handlePop} className="font-[500] text-[10px] py-1 mt-[30px] md:mt-[30px] lg:mt-[50px] text-center px-4 md:text-[9.17px] lg:text-[16px] leading-[20.8px] lg:px-6 lg:w-fit  md:flex md:flex-row md:w-fit md:py-1 lg:py-3 rounded-sm md:rounded-sm lg:rounded-md md:leading-[11.5px] bg-primary text-white">
                                      Real-time Airtime Conversion Check Rate
                                      </div>
         <div
-         
+         onClick={handleussdPop}
           className="font-[500] text-[10px] py-1 mt-[30px] md:mt-[30px] lg:mt-[50px] text-center px-4 md:text-[9.17px] lg:text-[16px] leading-[20.8px] lg:px-6 lg:w-fit  md:flex md:flex-row md:w-fit md:py-1 lg:py-3 rounded-sm md:rounded-sm lg:rounded-md md:leading-[11.5px] bg-primary text-white"
         >
           Airtime Transfer USSD Codes
@@ -422,7 +460,206 @@ const {
           </Modal>
         )}
            
+           {Pop && (
+        <Modal>
+          <div
+            className={`${styles.redeemrate} ${
+              toggleSideBar
+                ? " lg:ml-[20%] lg:w-[40%] "
+                : "lg:w-[562px] md:w-[500px]"
+            } w-[90%] overflow-auto flex flex-col gap-0`}
+          >
+            <img
+              onClick={handleClear}
+                className="absolute right-6 md:right-[23%] lg:right-[35%] w-[18px] h-[18px] my-[1%] md:w-[30px] md:h-[30px] lg:w-[25px] lg:h-[25px]"
+              src="/Images/transferImages/close-circle.png"
+              alt=""
+            />
+            <hr className="h-[6px] bg-[#04177f] w-full border-none mt-[4%] md:mt-[8%] md:h-[8px] lg:h-[10px] lg:mt-[8%]" />
+            <div className="flex flex-col text-center items-center justify-center pt-[30px] md:pt-[30px] lg:pt-[1px]">
+              <div className="font-[500] flex items-center justify-center w-[100%] text-center text-[10px] py-1 mt-[30px] md:mt-[30px] lg:mt-[50px]   md:text-[9.17px] lg:text-[16px] leading-[20.8px] lg:px-6 lg:w-fit  md:flex md:flex-row md:w-fit md:py-1 md:px-4 lg:py-3 rounded-sm md:rounded-sm lg:rounded-md md:leading-[11.5px] bg-primary text-white">
+                Real-time Airtime Conversion Tracker
+              </div>
+              <div></div>
+            </div>
+            <div className="flex flex-col px-3  md:px-6 ">
+              <div className=" pt-[30px] md:pt-[70px]">
+                <div className="font-bold flex text-[#000] text-[10px] leading-[130%] items-center  gap-[8px]  md:text-[12px] lg:text-[15px]">
+                  <p>Amount</p>
+                  <img
+                    className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
+                    src="./Images/Dashboardimages/arrowright.png"
+                    alt="/"
+                  />
+                </div>
+                <div className="mt-[20px] md:mt-[30px] lg:mt-[10px] flex flex-row ">
+                  <div className="border-[1px] w-[85%] md:w-[85%] h-[30px] md:h-[40px] lg:h-[50px] px-2 py-0 md:pt-1 lg:pt-4 border-slate-200">
+                    <input
+                      type="number"
+                      value={RInputValue}
+                      onChange={handleRealInputChange}
+                      className="w-[100%] outline-none text-[10px] lg:text-[16px] leading-[20.8px  font-[600]  text-[#000]"
+                      placeholder="Amount to Convert"
+                    />{" "}
+                  </div>
+                  <div className="h-[30px] md:h-[40px] lg:h-[50px] w-[15%] md:w-[15%] gap-2 lg:gap-4 flex flex-row justify-center px-3 py-2 bg-primary items-center   ">
+                    <div>
+                    <img className=" h-[12px] w-[12px] md:w-[15px] md:h-[15px] lg:w-[24px] lg:h-[24px] " src={mtn} alt="" />
+                    </div>
+                    <div onClick={handleShowListR}>
+                      {" "}
+                      <img
+                        src={arrowdown}
+                        className=" h-[9px] w-[9px] md:w-[15px] md:h-[15px] lg:w-[24px] lg:h-[24px] "
+                        alt=""
+                      />{" "}
+                      { showListR && 
+                        <div className='border md:rounded-[10px] lg:mt-2 mt-1 rounded-[4px]'>
+                            {networkList.map((item) => (
+                                <Network key={item.id} image={item.image}  onClick={()=>handleSelectNetwork(item.name, item.image, item.discount)}/>
+                            ))}
+                        </div> 
+                    }
+                    </div>
+                    
+                  </div>
+                </div>
+                <div className="flex flex-col items-center mt-[20px] md:mt-[20px] lg:mt-[20px] text-[#7C7C7C] lg:text-[16px] leading-[20.8px] gap-2 lg:gap-4 font-[500] text-[10px] md:text-[9.2px] ">
+                  <div className="flex flex-row gap-2 items-center border-[1px] py-0 px-8 md:py-2 md:px-2 rounded-md md:rounded-xl border-[#000000] text-[#29B8FC] ">
+                    <div>
+                    MTN ₦1,000 ~ 90% 
+                    </div>
+                    <div>
+                    <img className=" h-[9px] w-[9px] md:w-[15px] md:h-[15px] lg:w-[24px] lg:h-[24px] " src={mtn} alt="" />
+                    </div>
+                  </div>
+                </div>
+                <div className="font-bold flex mt-8 text-[#000] text-[10px] leading-[130%] items-center  gap-[8px]  md:text-[12px] lg:text-[15px]">
+                  <p>Receiver</p>
+                  <img
+                    className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
+                    src="./Images/Dashboardimages/arrowright.png"
+                    alt="/"
+                  />
+                </div>
+                <div className="mt-[7px] flex flex-row lg:mt-[10px]">
+                <div className="border-[1px] w-[85%] md:w-[92%]  text-[8px] lg:text-[16px] h-[30px] md:h-[40px] font-[400] text-[#7C7C7C] lg:h-[50px] px-2 py-0 pt-2 md:pt-3 lg:pt-4 border-slate-200">
+          <input
+              type="number"
+              value={ResultValue}
+              readOnly          
+              className="w-[100%] outline-none text-[8px] lg:text-[16px] leading-[20.8px  font-[600]  text-[#000]"
+              placeholder="Amount to Receive"
+            />{" "}
+            {/* {!resultValue ? <p>Amount to Receive</p> : <div>&#8358;{}</div>} */}
+          </div>
+                  <div className="h-[30px] md:h-[40px] lg:h-[50px] w-[15%] md:w-[15%] gap-2 lg:gap-4 flex flex-row px-3 py-2 bg-primary items-center   ">
+                    <div>
+                      {" "}
+                      <img
+                        src={flag}
+                        className=" md:w-[15px] md:h-[15px] lg:w-[24px] lg:h-[24px]"
+                        alt="flag"
+                      />{" "}
+                    </div>
+                    <div>
+                      {" "}
+                      <img
+                        src={arrowdown}
+                        className=" h-[12px] w-[12px]  md:w-[15px] md:h-[15px] lg:w-[24px] lg:h-[24px]"
+                        alt="arrow"
+                      />{" "}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <button
+                  onClick={handleClear}
+                  className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center mt-14 items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:mt-[30px]`}
+                >
+                  Okay
+                </button>
+              </div>
+            </div>
+          </div>
+        </Modal>
+      )}
 
+        
+{ussd && (
+        <Modal>
+          <div
+            className={`${styles.redeemrate} ${
+              toggleSideBar
+                ? " lg:ml-[20%] lg:w-[40%] "
+                : "lg:w-[562px] md:w-[500px]"
+            } w-[90%] overflow-auto flex flex-col gap-0`}
+          >
+            <img
+              onClick={handleClear}
+                className="absolute right-6 md:right-[23%] lg:right-[35%] w-[18px] h-[18px] my-[1%] md:w-[30px] md:h-[30px] lg:w-[25px] lg:h-[25px]"
+              src="/Images/transferImages/close-circle.png"
+              alt=""
+            />
+            <hr className="h-[6px] bg-[#04177f] w-full border-none mt-[8%] md:mt-[8%] md:h-[8px] lg:h-[10px] lg:mt-[8%]" />
+            <div className="flex flex-col text-center items-center justify-center pt-[30px] md:pt-[30px] lg:pt-[1px]">
+              <div className="font-[500] flex items-center justify-center w-[100%] text-center text-[10px] py-1 mt-[30px] md:mt-[20px] lg:mt-[50px]   md:text-[12px] lg:text-[16px] leading-[20.8px] lg:px-6 lg:w-fit  md:flex md:flex-row md:w-fit md:py-1 md:px-4 lg:py-3 rounded-sm md:rounded-sm lg:rounded-md md:leading-[11.5px] bg-primary text-white">
+              Airtime Transfer USSD Codes
+              </div>
+              <div></div>
+            </div>
+            <div className="flex flex-col px-3  md:px-6 ">
+              <div className='flex flex-col gap-2 items-center mt-3'>
+              <div className='text-[10px] '>Airtime transfer/send ussd codes.</div>
+              <div className='text-[10px] font-bold text-primary'>Tap the Dial button to transfer/send airtime:</div>
+              </div>
+              <div className=' flex flex-col gap-3'>
+              <div>
+                <button
+                  
+                  className={`bg-slate-100  w-[88%] flex justify-center mt-5 items-center mx-auto cursor-pointer text-[14px] font-[500] h-[40px] text-[#000000] rounded-[6px] md:rounded-[8px] md:text-[16px] lg:text-[14px]  lg:mt-[30px]`}
+                >
+                  MTN Airtime Transfer Code - *321*1#
+                </button>
+              </div>
+              <div>
+                <button
+                  
+                  className={`bg-slate-100  w-[88%] flex justify-center  items-center mx-auto cursor-pointer text-[14px] font-[500] h-[40px] text-[#000000] rounded-[6px]  md:rounded-[8px]  lg:text-[14px]  lg:mt-[30px]`}
+                >
+                  AIRTEL Airtime Transfer Code - *321# 
+                </button>
+              </div>
+              <div>
+                <button
+                  
+                  className={`bg-slate-100  w-[88%] flex justify-center  items-center mx-auto cursor-pointer text-[14px] font-[500] h-[40px] text-[#000000] rounded-[6px]  md:rounded-[8px]  lg:text-[14px]  lg:mt-[30px]`}
+                >
+                  GLO Airtime Transfer Code - *321# 
+                </button>
+              </div>
+              <div>
+                <button
+                  
+                  className={`bg-slate-100  w-[88%] flex justify-center  items-center mx-auto cursor-pointer text-[12px]  font-[500] h-[40px] text-[#000000] rounded-[6px]  md:rounded-[8px] lg:text-[14px]  lg:mt-[30px]`}
+                >
+                  9MOBILE Airtime Transfer Code - *321#
+                </button>
+              </div>
+              </div>
+              <div>
+                <button
+                  onClick={handleClear}
+                  className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center mt-10 items-center mx-auto md:w-[25%] cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px]  md:rounded-[8px]  lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:mt-[30px]`}
+                >
+                  Okay
+                </button>
+              </div>
+            </div>
+          </div>
+        </Modal>
+      )}
         </DashBoardLayout>
         
      );

@@ -21,10 +21,8 @@ const ContactTeam = () => {
   const [networkImage, setNetworkImage] = useState('');
   const [selected, setSelected] = useState(false);
   const [networkName, setNetworkName] = useState('');
-  const [success, setSuccess] = useState('')
-
-  
-
+  const [success, setSuccess] = useState('');
+   
   const handleSuccess = () =>{
     if (firstName && lastName && airEmail && homeAdress) {
       setSuccess(true);
