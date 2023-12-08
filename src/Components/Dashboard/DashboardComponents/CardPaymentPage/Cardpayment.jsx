@@ -62,14 +62,14 @@ const CardPayment = () => {
               className="w-[12px] h-[12px] md:w-[14.083px] md:h-[14.083px] lg:w-[24px] lg:h-[24px]"
             />
           </div>
-
+          
           <Link to="/AddNewCardPayment">
           <div
             id="Card"
             className="flex justify-center py-[10px] gap-[5px] rounded-[5px]"
           >
             <img src={AddNewCard} alt="" />
-            <p className="text-[10px] font-semibold ">Add New Card</p>
+            <p className="text-[10px] md:text-[14px] lg:text-[16px] font-semibold ">Add New Card</p>
           </div>
           </Link>
 
@@ -79,7 +79,7 @@ const CardPayment = () => {
             className="flex justify-center py-[10px] gap-[5px] rounded-[5px] mt-[10px]"
           >
             <img src={FundCard} alt="" />
-            <p className="text-[10px] font-semibold ">
+            <p className="text-[10px] md:text-[14px] lg:text-[16px] font-semibold ">
               Fund with Existing Card
             </p>
           </div>
