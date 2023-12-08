@@ -3,6 +3,7 @@ import { ContextProvider } from "../../../../Context";
 import styles from "../../TransferComponent/transfer.module.css";
 import { ToConfirmAremxyMain } from "./ToConfirmAremxyMain";
 import { Modal } from "../../../../Screens/Modal/Modal";
+import { Link } from "react-router-dom";
 // import { useNavigate } from "react-router-dom";
 
 export default function ToAremxyMain() {
@@ -189,21 +190,29 @@ export default function ToAremxyMain() {
       </div>
       {/* ==========================Select/Add Recipient====================== */}
       <div className="flex gap-[10%] lg:gap-[3%]">
-        <div className="w-full flex items-center justify-between border text-[10px] rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
-          <p>Select User</p>
-          <img
-            className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
-            src="./Images/otherBanksImages/weight.png"
-            alt=""
-          />
+        <div className="w-full">
+          <Link to="/aremxy-select-user">
+          <div className="w-full flex items-center justify-between border text-[10px] rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
+            <p>Select User</p>
+            <img
+              className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
+              src="./Images/otherBanksImages/weight.png"
+              alt=""
+            />
+          </div>
+          </Link>
         </div>
-        <div className="w-full flex items-center justify-between border text-[10px]  rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
-          <p>Add User</p>
-          <img
-            className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
-            src="./Images/otherBanksImages/add-square.png"
-            alt=""
-          />
+        <div className="w-full">
+          <Link to="/aremxy-add-user">
+          <div className="w-full flex items-center justify-between border text-[10px]  rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
+            <p>Add User</p>
+            <img
+              className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
+              src="./Images/otherBanksImages/add-square.png"
+              alt=""
+            />
+          </div>
+          </Link>
         </div>
        </div>
         <div className="flex text-[#7c7c7c] text-[10px] leading-[130%] items-center my-[5%] gap-[8px] md:my-[5%] md:text-[18px] lg:text-[20px]">
