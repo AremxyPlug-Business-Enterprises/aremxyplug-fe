@@ -135,6 +135,7 @@ import LaunchPage3 from "./Components/NotificationsPage/LaunchPage3";
 
 import ChangePin from "./Components/My Profile & Account Settings/My Profile Page/ChangePin";
 import AccountUpgrade from "./Components/My Profile & Account Settings/My Profile Page/AccountUpgrade";
+import PaymentPage from "./Components/Screens/paymentPage/PaymentPage";
 import CardPayment from "./Components/Dashboard/DashboardComponents/CardPaymentPage/Cardpayment";
 import AddNewCardPayment from "./Components/Dashboard/DashboardComponents/CardPaymentPage/AddNewCardPayment";
 import ExistingCardPage from "./Components/Dashboard/DashboardComponents/CardPaymentPage/ExistingCardPage";
@@ -148,7 +149,6 @@ import GlobalTransferAddRecipient from "./Components/Add&SelectRecipient/GlobalA
 import ContactTeam from "./Components/Dashboard/DashboardComponents/AirtimeConversion/ContactTeam";
 import ToAremxyMain from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/ToAremxyMain";
 import { AremxyMainReceipt } from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/AremxyMainReceipt";
-
 import { AirtimeReceipt } from "./Components/Dashboard/DashboardComponents/AirtimeConversion/AirtimeReceipt";
 
 export const Router = () => {
@@ -324,6 +324,7 @@ export const Router = () => {
         <Route path="/ChangePhoneNumber" element={<ChangePhoneNumber/>} />
         <Route path="/ChangePin" element={<ChangePin/>} />
         <Route path="/AccountUpgrade" element={<AccountUpgrade/>} />
+        <Route path="/payment-page" element={<PaymentPage/>}/>
         <Route path="/CardPayment" element={<CardPayment/>} />
         <Route path="/AddNewCardPayment" element={<AddNewCardPayment/>} />
         <Route path="/ExistingCardPage" element={<ExistingCardPage/>} />

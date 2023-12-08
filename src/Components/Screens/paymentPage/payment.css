@@ -1,0 +1,146 @@
+.backgroundImage {
+    background: linear-gradient(92deg, #92ABFE 4.68%, #AC43FF 98.66%);
+}
+
+.Style1{
+    display: flex;
+    padding: 5px 12.666px 10.333px 4.998px; 
+    align-items: center; 
+    justify-content: space-between;
+    box-shadow: 0px 0px 3.3333334922790527px 0px rgba(0, 0, 0, 0.25);
+    border-radius: 4px; 
+    background: #FFF;
+}
+
+
+.Style11{
+    display: flex;
+    padding: 5px 12.666px 10.333px 4.998px; 
+    align-items: center; 
+    justify-content: space-between;
+    border:1.5px solid #FFF;
+    border-radius: 4px; 
+    background: #000;
+}
+.Text1{
+    color: #000;
+ 
+    font-size: 8px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal; 
+}
+.Text2{
+    color: var(--new-fade, #7C7C7C);
+   
+    font-size: 7px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal; 
+    margin-top: 3px;
+}
+.Img1{
+    width: 12px;
+    height: 12px; 
+}
+
+
+.textHelp{
+    color: #000;
+
+    font-size: 6.875px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 130%; /* 8.937px */ 
+}
+.textContact{
+    color: #FFF;
+
+    font-size: 4.583px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 130%; /* 5.958px */ 
+}
+.contactBtn{
+    display: flex;
+    padding: 2.865px 8.594px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5.156px;
+    background: var(--primary-color-main, #04177F);
+    margin-left: 3px;
+}
+
+
+@media (min-width: 768px) { 
+
+
+    .Style1{
+        padding: 8.594px 28.645px 8.375px 8.594px; 
+        margin-top: 12px;
+        border-radius: 6.875px;
+        box-shadow: 0px 0px 5.7291669845581055px 0px rgba(0, 0, 0, 0.25);
+        margin-top: 14.32px;
+    }
+    .Text1{
+        font-size: 9.167px; 
+        
+    }
+    .Text2{
+        font-size: 8.049px; 
+    margin-top: 4px;
+    }
+    .Img1{
+        width: 11.458px;
+        height: 11.458px; 
+    }
+    .textHelp {
+        font-size: 6.875px; 
+    }
+    .textContact{
+        font-size: 4.583px; 
+    }
+    .contactBtn{
+        padding: 2.865px 8.594px; 
+        border-radius: 5.156px;
+        margin-left: 4px;
+    }
+ }
+
+
+
+
+
+@media (min-width: 1024px) { 
+    .Style1 {
+        padding: 15px 50px 15px 15px;
+        border-radius: 12px;
+        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
+        margin-top: 25px;
+    }
+    .Text1{
+    font-size: 16px;
+    }
+    .Text2{
+
+
+    font-size: 14.05px;
+
+    margin-top: 5px;
+    }
+    .Img1{
+        width: 20px;
+    height: 20px; 
+    }
+    .textHelp{
+        font-size: 12px; 
+    }
+    .textContact{
+        font-size: 8px; 
+    }
+    .contactBtn{
+        padding: 5px 15px; 
+        border-radius: 9px; 
+        margin-left: 6px;
+    }
+ }
