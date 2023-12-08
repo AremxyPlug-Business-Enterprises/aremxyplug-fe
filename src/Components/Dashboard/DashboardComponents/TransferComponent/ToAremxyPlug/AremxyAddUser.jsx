@@ -110,7 +110,7 @@ const AremxyAddUser = () => {
             </div>
           </div>
             <div className="flex text-[#7c7c7c] text-[10px] leading-[26px] items-center gap-[8px] md:text-[12px] lg:text-[20px]">
-                    <p>Add User Details </p>
+                    <p>Select the user account below </p>
                     <img
                     className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
                     src="./Images/Dashboardimages/arrowright.png"
@@ -255,11 +255,11 @@ const AremxyAddUser = () => {
                     </div>
                         <hr className="h-[6px] bg-[#04177f] border-none mt-[2%] md:mt-[2%] md:h-[10px]" />
                         <h2 className="text-[12px] my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
-                        Please Confirm
+                        Please Confirm!!!
                         </h2>
                         <div className="bg-[#FFF0BA] mx-5 rounded-md h-[55px] my-5 flex justify-between items-center px-[4%] md:h-[75px] lg:h-[85px]">
                             <p className="text-[9px] text-center mx-auto w-[280px] md:text-[14px] md:w-[92%] lg:text-[14px] lg:w-[100%]">
-                            Are you sure you want to add this details to your recipients? Please re-confirm the identity and be informed any successful transactions to a strange details can not be reversed.
+                            Are you sure you want to add this user? Kindly re-confirm the identity, and be informed any funds transfer to any strange accounts cannot be reversed.
                             </p>
                         </div>
                         <div className="flex flex-col gap-2 lg:gap-4">
@@ -268,7 +268,7 @@ const AremxyAddUser = () => {
                                 <span>{globalCountry}</span>
                             </div>
                             <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
-                                <p className="text-[#0008]">Username or Phone Number</p>
+                                <p className="text-[#0008]">Email or Username</p>
                                 <span>{globalEmailUsername}</span>
                             </div>
                             <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
@@ -310,7 +310,7 @@ const AremxyAddUser = () => {
                         alt="/"
                         />
                         <p className="text-[9px] text-[#2ED173] md:text-[16px] font-bold text-center my-[4%] lg:my-[%]">
-                        New recipient contact has been added successfully.
+                        New User account has been added successfully.
                         </p>
                         
                         <Link to="/to-aremxyplug">
@@ -328,7 +328,7 @@ const AremxyAddUser = () => {
             <div className={style.containFlex3}>
                 <button className={`${
                 globalUserPhoneNumber.length < 11 ? "bg-[#0008]" : "bg-[#04177f]"
-                } w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`} onClick={handleSave}>Save
+                } w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`} onClick={handleSave}>Save User
                 </button>
             </div>
         </div>
