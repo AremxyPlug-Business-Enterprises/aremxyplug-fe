@@ -150,7 +150,7 @@ import ContactTeam from "./Components/Dashboard/DashboardComponents/AirtimeConve
 import ToAremxyMain from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/ToAremxyMain";
 import { AremxyMainReceipt } from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/AremxyMainReceipt";
 import AremxyAddUser from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/AremxyAddUser";
-
+import AremxySelectUser from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/AremxySelectUser";
 import { AirtimeReceipt } from "./Components/Dashboard/DashboardComponents/AirtimeConversion/AirtimeReceipt";
 
 export const Router = () => {
@@ -200,6 +200,7 @@ export const Router = () => {
         <Route path="/to-aremxymain" element={<ToAremxyMain />} />
         <Route path="/to-aremxymain-receipt" element={<AremxyMainReceipt />} />
         <Route path="/aremxy-add-user" element={<AremxyAddUser />} />
+        <Route path="/aremxy-select-user" element={<AremxySelectUser />} />
         <Route path="/airtime-topup" element={<AirTime />} />
         <Route path="/airtime-vtu" element={<AirtimeVtu />} />
         <Route path="/airtime-vtu-receipt" element={<AirtimeVtuReceipt />} />

@@ -191,6 +191,7 @@ export default function ToAremxyMain() {
       {/* ==========================Select/Add Recipient====================== */}
       <div className="flex gap-[10%] lg:gap-[3%]">
         <div className="w-full">
+          <Link to="/aremxy-select-user">
           <div className="w-full flex items-center justify-between border text-[10px] rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
             <p>Select User</p>
             <img
@@ -199,6 +200,7 @@ export default function ToAremxyMain() {
               alt=""
             />
           </div>
+          </Link>
         </div>
         <div className="w-full">
           <Link to="/aremxy-add-user">
