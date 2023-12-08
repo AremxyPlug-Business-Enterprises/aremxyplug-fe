@@ -4,7 +4,7 @@ import { ContextProvider } from "../../Context";
 import { Link } from "react-router-dom";
 
 function NgnVirtualAccount() {
-  const { isDarkMode } = useContext(ContextProvider);
+  const { isDarkMode } = useContext(ContextProvider)
 
   const accountNumber = '1234567890';
   const accountName = 'Habib Kamaldeen';
