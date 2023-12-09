@@ -130,8 +130,12 @@ import ChangeEmail from "./Components/My Profile & Account Settings/My Profile P
 import ChangePhoneNumber from "./Components/My Profile & Account Settings/My Profile Page/ChangePhoneNumber";
 import AirtimeConversion from "./Components/Dashboard/DashboardComponents/AirtimeConversion/AirtimeConversion";
 import LaunchPage from "./Components/NotificationsPage/LaunchPage";
+import LaunchPage2 from "./Components/NotificationsPage/LaunchPage2";
+import LaunchPage3 from "./Components/NotificationsPage/LaunchPage3";
+
 import ChangePin from "./Components/My Profile & Account Settings/My Profile Page/ChangePin";
 import AccountUpgrade from "./Components/My Profile & Account Settings/My Profile Page/AccountUpgrade";
+import PaymentPage from "./Components/Screens/paymentPage/PaymentPage";
 import CardPayment from "./Components/Dashboard/DashboardComponents/CardPaymentPage/Cardpayment";
 import AddNewCardPayment from "./Components/Dashboard/DashboardComponents/CardPaymentPage/AddNewCardPayment";
 import ExistingCardPage from "./Components/Dashboard/DashboardComponents/CardPaymentPage/ExistingCardPage";
@@ -145,7 +149,8 @@ import GlobalTransferAddRecipient from "./Components/Add&SelectRecipient/GlobalA
 import ContactTeam from "./Components/Dashboard/DashboardComponents/AirtimeConversion/ContactTeam";
 import ToAremxyMain from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/ToAremxyMain";
 import { AremxyMainReceipt } from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/AremxyMainReceipt";
-
+import AremxyAddUser from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/AremxyAddUser";
+import AremxySelectUser from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/AremxySelectUser";
 import { AirtimeReceipt } from "./Components/Dashboard/DashboardComponents/AirtimeConversion/AirtimeReceipt";
 
 export const Router = () => {
@@ -194,6 +199,8 @@ export const Router = () => {
         <Route path="/to-aremxyplug" element={<ToAremxyPlug />} />
         <Route path="/to-aremxymain" element={<ToAremxyMain />} />
         <Route path="/to-aremxymain-receipt" element={<AremxyMainReceipt />} />
+        <Route path="/aremxy-add-user" element={<AremxyAddUser />} />
+        <Route path="/aremxy-select-user" element={<AremxySelectUser />} />
         <Route path="/airtime-topup" element={<AirTime />} />
         <Route path="/airtime-vtu" element={<AirtimeVtu />} />
         <Route path="/airtime-vtu-receipt" element={<AirtimeVtuReceipt />} />
@@ -208,7 +215,8 @@ export const Router = () => {
         <Route path="/sales-summary" element={<SalesSummaryPage />} />
         <Route path="/notifications" element={<NotificationsPage />} />
         <Route path="/launch-page" element={<LaunchPage />} />
-
+        <Route path="/launch-page2" element={<LaunchPage2 />} />
+        <Route path="/launch-page3" element={<LaunchPage3 />} />
         <Route path="/wallet-successful-receipt" element={<WalletSuccessfulReceipt />} />
         <Route path="/wallet-failed-receipt" element={<WalletFailedReceipt />} />
         <Route path="/wallet-pending-receipt" element={<WalletPendingReceipt />} />
@@ -320,6 +328,7 @@ export const Router = () => {
         <Route path="/ChangePhoneNumber" element={<ChangePhoneNumber/>} />
         <Route path="/ChangePin" element={<ChangePin/>} />
         <Route path="/AccountUpgrade" element={<AccountUpgrade/>} />
+        <Route path="/payment-page" element={<PaymentPage/>}/>
         <Route path="/CardPayment" element={<CardPayment/>} />
         <Route path="/AddNewCardPayment" element={<AddNewCardPayment/>} />
         <Route path="/ExistingCardPage" element={<ExistingCardPage/>} />
