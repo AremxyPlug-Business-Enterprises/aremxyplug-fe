@@ -3,6 +3,7 @@ import "../../TvSubscription/TvSubscription.css";
 import { useContext } from "react";
 import { ContextProvider } from "../../Context";
 import { Modal } from "../../Screens/Modal/Modal";
+import arrowRight from "../../../Components/EducationPins/imagesEducation/educationArrowRight.svg";
 
 
  const ConfirmDstvPopup = () => {
@@ -18,7 +19,7 @@ import { Modal } from "../../Screens/Modal/Modal";
     tvEmail,
     smartCard,
     cardName,
-    imageState,
+    methodImage,
     tvWalletBalance,
     flagResult,
   } = useContext(ContextProvider)
@@ -113,12 +114,12 @@ import { Modal } from "../../Screens/Modal/Modal";
             </div>
         </div>
 
-        <div className="my-[5px] flex justify-between items-center gap-2 bg-slate-200 -mx-[20px] px-[15px] h-[49px] py-[20px]">
+        <div className="bg-[#F6F7F7] h-[45px] my-5 lg:my-8 flex justify-between items-center px-[4%]">
                 <div className="flex gap-2 items-center">
                   <div className="bg-white rounded-full h-[27px] w-[27px] flex justify-center items-center">
                     <img
                       className="w-[16px] h-[16px]"
-                      src={imageState}
+                      src={methodImage}
                       alt="/"
                     />
                   </div>
@@ -130,11 +131,11 @@ import { Modal } from "../../Screens/Modal/Modal";
                   </p>
                 </div>
                 <img
-                  src=""
+                  src={arrowRight}
                   alt=""
                   className="w-[12px] h-[12px] md:w-[50px] md:h-[20px] lg:w-[80px] lg:h-[30px]"
                 />
-          </div>
+              </div>
        
            <button
             onClick={handleInputDstv}

@@ -28,7 +28,7 @@ export const TvSubscription = () =>{
                 </div>
             </div>
 
-            <div id="tvGrid" className="mx-auto">
+            <div id="tvGrid" className="mx-auto flex flex-wrap justify-between  gap-[25px] md:h-[70px] md:flex-row md:flex-nowrap md:gap-[21.27px]  lg:h-[120px]  md:w-[100%] lg:gap-[37px]">
                 <Link to='/GoTv'>
                     <img src="./Images/TvSubscription/goTV.svg" alt="" className="md:w-[118px] lg:w-[270px] md:h-[94px] lg:h-[250px]"/>
                 </Link>
@@ -43,6 +43,7 @@ export const TvSubscription = () =>{
                 </Link>
                 
             </div>
+
 
             <div className="flex justify-center items-center mt-[62.3%] md:mt-[38%] lg:mt-[30%] mb-[40px] gap-2">
            <div className="font-medium text-[10px] md:text-[10px] lg:text-[15px] self-center">You need help ?</div>

@@ -1,6 +1,7 @@
 import React, { createContext, useState, useRef, useEffect } from "react";
 import Joi from "joi";
 import axios from "axios";
+import arrowDown from "../../src/Components/EducationPins/imagesEducation/arrow-down.svg";
 // import { BASE_URL } from "../config";
 
 export const ContextProvider = createContext();
@@ -733,10 +734,10 @@ export const Context = ({ children }) => {
   const [tvEmail, setTvEmail] = useState("");
   const [flagResult, setFlagResult ]= useState('');
   const [ methodPayment, setMethodPayment ] = useState(false);
-  const [imageState, setImageState] = useState(" ");
+  const [methodImage, setMethodImage] = useState(arrowDown);
   const [tvWalletBalance, setTvWalletBalance] = useState('');
   const [decoderType, setDecoderType] = useState("");
-  const [decoderActive, setdecoderActive] = useState(false);
+  const [decoderActive, setDecoderActive] = useState(false);
   
   //==========DSTV===========
   const [selectedOptionDstv, setSelectedOptionDstv] = useState("");
@@ -1162,12 +1163,12 @@ export const Context = ({ children }) => {
     setFlagResult,
     tvWalletBalance,
     setTvWalletBalance,
-    imageState,
-    setImageState,
+    methodImage,
+    setMethodImage,
     decoderType,
     setDecoderType,
     decoderActive,
-    setdecoderActive,
+    setDecoderActive,
 
     //=======GOTV
     confirmGotvPopup,
