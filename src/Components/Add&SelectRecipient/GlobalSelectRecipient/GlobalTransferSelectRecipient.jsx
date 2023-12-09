@@ -206,11 +206,11 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
     className='lg:w-[135px] lg:h-[135px] h-[100px] w-[100px]'/>
     
   </div>
-  <div className='flex md:gap-[30px] gap-[20px]'>
+  <div className='flex md:gap-[30px] gap-[20px] '>
   <button onClick={() => {
     setCurrencyNotAvalaible(false);
   }}
-className='bg-[#04177F] w-[80%] lg:py-[10px] py-[13px] lg:w-[163px]
+className='bg-[#04177F] w-[110px] lg:py-[10px] py-[7px] lg:w-[163px]
 md:w-[150px] text-white text-center rounded-[4.41px]
  lg:rounded-[12px] font-[600] lg:text-[16px] lg:leading-[24px]'>
   Okay
