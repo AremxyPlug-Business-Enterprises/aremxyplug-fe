@@ -2,11 +2,11 @@ import React, { useContext, useState } from "react";
 import { ContextProvider } from "../../../../Context";
 import '../../../../../App.css';
 import style from "../../../../AirTimePage/AirtimeVtu.module.css";
+import styled from "../../../../AirTimePage/AirTime.module.css"
 import styles from "../../TransferComponent/transfer.module.css";
 import { DashBoardLayout } from "../../../Layout/DashBoardLayout";
 import ArrowRight from '../../../../EducationPins/imagesEducation/educationArrowRight.svg';
 import SearchIcon from '../../../../Add&SelectRecipient/RecipientImages/search-status.svg';
-import NoRecordImage from '../../../../Add&SelectRecipient/RecipientImages/NoRecordImage.svg';
 import { Link } from 'react-router-dom';
 
 export default function AremxySelectUser() {
@@ -62,12 +62,36 @@ export default function AremxySelectUser() {
       ];
 
     const [flag, setFlag] = useState("");
+    const [activeTab, setActiveTab] = useState('tab_1');
+    const [showPopup, setShowPopup] = useState(false);
+    const [activeImage, setActiveImage] = useState(null);
+    const active = styled.active;
+    const inactive = styled.inactive;
+
+    const handleTab1 =()=> {
+        setActiveTab('tab_1')
+    }
+
+    const handleTab2 =()=> {
+        setActiveTab('tab_2')
+    }
 
     const handleCountryClick = (name, flag, id, code) => {
         setFlag(flag);
         setShowList(false);
         setMainCountry(name);
         setSelected(true);
+    };
+
+    const handleRecipient = (index) => {
+        if (activeImage === index) {
+          // If the same image is clicked again, close the pop-up
+          setActiveImage(null);
+          setShowPopup(false);
+        } else {
+          setActiveImage(index);
+          setShowPopup(true);
+        }
     };
 
   return (
@@ -210,21 +234,122 @@ export default function AremxySelectUser() {
         </div>
     </div>    
 
-            <div className='Tabs flex flex-col lg:gap-[30px] gap-[8.28px] my-[30px] md:mt-[60px] md:mb-[80px]'>
-                <div className='flex w-[100%] lg:gap-[25px] border-b-[0.33pxpx] md:border-b-[3px] border-[#ECECEC]'>
-                    <h2 className='w-[25%] font-[500] text-center text-[9px] leading-[12px] lg:text-[20px] lg:leading-[30px] py-[5.671px] lg:py-[10px]
-                    bg-[#E2F3FF] md:border-b-[4px] border-b-[1.987px] border-[#04177F] lg:rounded-[6px] rounded-[1.325px]'>
-                    Users
-                    </h2>
-                    <h2 className='w-[25%] font-[500] text-center text-[9px] leading-[12px] lg:text-[20px] 
-                    lg:leading-[30px] lg:py-[10px] py-[5.671px]'>
-                    Favorites
-                    </h2>
-                </div>
-                <div className='flex justify-center '>
-                    <img src={NoRecordImage} alt="" 
-                    className='lg:w-[517px] lg:h-[456px] '/>
-                </div>
+            <ul className={styled.localInter}>
+                <li className={activeTab === 'tab_1' ? active : inactive} onClick={handleTab1}>Users</li>
+                <li className={activeTab === 'tab_2' ? active : inactive} onClick={handleTab2}>Favorites</li>
+            </ul>
+            <div className="">
+                { activeTab === 'tab_1' &&
+                    <div className={styled.containAir}>
+                        {[0, 1, 2, 3].map((index) => (
+                        <div
+                            key={index}
+                            className="w-[100%] mx-auto flex justify-between border py-2 px-2 rounded-[7px] md:rounded-[7px] lg:py-2 lg:px-5"
+                        >
+                            <div className="flex flex-col my-auto gap-[1.67px] md:gap-[2.93px]">
+                            <h2 className="lg:text-[16px] font-medium lg:leading-6 md:text-[9px] text-[9px]">
+                                habib@aremxyplug.com
+                            </h2>
+                            <p className="lg:text-[14.05px] lg:font-medium lg:leading-[21.07px] text-[#7C7C7C] text-[9px] font-semibold leading-3 md:text-[8px]">
+                                0700000000
+                            </p>
+                            </div>
+                            <div
+                            onClick={() => {
+                                handleRecipient(index);
+                            }}
+                            className="relative h-[16px] w-[16px] my-auto lg:w-[50px] lg:h-[25px]"
+                            >
+                            <img
+                                src="./Images/airtimeTopUp/Frame.png"
+                                alt=""
+                                className="h-full"
+                            />
+                            {showPopup && activeImage === index && (
+                                <div
+                                className="input border absolute bg-white top-[8px] right-[17px] lg:top-[20px] lg:right-[50px] w-[150px] h-[100px] z-50 flex flex-col justify-center items-start py-[5px]"
+                                style={{ boxShadow: "0 0 5px rgba(0, 0, 0, 0.2)" }}
+                                >
+                                <div
+                                    className="text-[10px] text-[#7C7C7C] px-[5px] py-[5px]"
+                                >
+                                    Add to Favorites
+                                </div>
+                                <hr className="w-full h-[5px]" />
+                                <div
+                                    className="text-[10px] text-[#7C7C7C] px-[5px] py-[5px]"
+                                >
+                                    Edit User
+                                </div>
+                                <hr className="w-full h-[5px]" />
+                                <div
+                                    className="text-[#FA6B6B] text-[10px] px-[5px] py-[5px]"
+                                >
+                                    Delete User
+                                </div>
+                                </div>
+                            )}
+                            </div>
+                        </div>
+                        ))}
+                    </div>   
+                }
+                { activeTab === 'tab_2' &&
+                    <div className={styled.containAir}>
+                        {[0, 1, 2, 3].map((index) => (
+                        <div
+                            key={index}
+                            className="w-[100%] mx-auto flex justify-between border py-2 px-2 rounded-[7px] md:rounded-[7px] lg:py-2 lg:px-5"
+                        >
+                            <div className="flex flex-col my-auto gap-[1.67px] md:gap-[2.93px]">
+                            <h2 className="lg:text-[16px] font-medium lg:leading-6 md:text-[9px] text-[9px]">
+                                habib@aremxyplug.com
+                            </h2>
+                            <p className="lg:text-[14.05px] lg:font-medium lg:leading-[21.07px] text-[#7C7C7C] text-[9px] font-semibold leading-3 md:text-[8px]">
+                                0700000000
+                            </p>
+                            </div>
+                            <div
+                            onClick={() => {
+                                handleRecipient(index);
+                            }}
+                            className="relative h-[16px] w-[16px] my-auto lg:w-[50px] lg:h-[25px]"
+                            >
+                            <img
+                                src="./Images/airtimeTopUp/Frame.png"
+                                alt=""
+                                className="h-full"
+                            />
+                            {showPopup && activeImage === index && (
+                                <div
+                                className="input border absolute bg-white top-[8px] right-[17px] lg:top-[20px] lg:right-[50px] w-[150px] h-[100px] z-50 flex flex-col justify-center items-start py-[5px]"
+                                style={{ boxShadow: "0 0 5px rgba(0, 0, 0, 0.2)" }}
+                                >
+                                <div
+                                    className="text-[10px] text-[#7C7C7C] px-[5px] py-[5px]"
+                                >
+                                    Remove from Favorites
+                                </div>
+                                <hr className="w-full h-[5px]" />
+                                <div
+                                    className="text-[10px] text-[#7C7C7C] px-[5px] py-[5px]"
+                                >
+                                    Edit User
+                                </div>
+                                <hr className="w-full h-[5px]" />
+                                <div
+                                    className="text-[#FA6B6B] text-[10px] px-[5px] py-[5px]"
+                                >
+                                    Delete User
+                                </div>
+                                </div>
+                            )}
+                            </div>
+                        </div>
+                        ))}
+                    </div>   
+                }
+                
             </div>
         </div>
         <div className={style.help}>

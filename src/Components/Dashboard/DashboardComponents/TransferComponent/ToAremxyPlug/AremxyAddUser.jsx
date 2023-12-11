@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import style from "../../../../AirTimePage/AirtimeVtu.module.css";
 import styles from "../../TransferComponent/transfer.module.css";
 import { Modal } from "../../../../Screens/Modal/Modal";
+import Joi from "joi";
 
 
 const AremxyAddUser = () => {
@@ -15,13 +16,55 @@ const AremxyAddUser = () => {
         selected,
         setSelected,
         toggleSideBar,
-        mainEmailUsername,
-        mainUserPhoneNumber,
         mainCountry,
         setMainCountry,
         mainTransferErrors,
-        handleMainInputChange,
       } = useContext(ContextProvider);
+
+    const [userPhoneNumber, setUserPhoneNumber] =  useState('');
+    const [emailUsername, setEmailUserName] = useState('');
+    const [save, setSave] = useState(false);
+    const [errors, setErrors] = useState({});
+
+    const firmTransferSchema = Joi.object({
+        mainCountry: Joi.string().required(),
+        userPhoneNumber: Joi.string()
+        .pattern(new RegExp(/^\d{11}$/)) // Exactly 10 digits, you can adjust as needed
+        .required()
+        .max(11)
+        .messages({
+          "string.pattern.base": "Phone number should be 11 digits",
+          "any.max": "Phone number should be at most 11 digits",
+        }),
+          emailUsername: Joi.string()
+          .email({ tlds: { allow: false } }) // Use the email validation provided by Joi
+          .required()
+          .messages({
+            "string.email": "Please enter a valid email address",
+          }),
+      });
+
+      const handleSave = (e) => {
+        e.preventDefault();
+      
+        const { error } = firmTransferSchema.validate({
+          emailUsername,
+          userPhoneNumber,
+          mainCountry,
+        });
+      
+        if (error) {
+          setErrors(
+            error.details.reduce((acc, curr) => {
+              acc[curr.path[0]] = curr.message;
+              return acc;
+            }, {})
+          );
+        } else {
+          setSave(true);
+          setErrors({});
+        }
+      };
 
       const countryList = [
         {
@@ -63,7 +106,6 @@ const AremxyAddUser = () => {
       ];
 
     const [flag, setFlag] = useState("");
-    const [save, setSave] = useState(false);
     const [confirm, setConfirm] = useState(false);
 
     const handleCountryClick = (name, flag, id, code) => {
@@ -77,10 +119,6 @@ const AremxyAddUser = () => {
         setSave(false);
         setConfirm(true);
     }
-
-    const handleSave = (e) => {
-        setSave(true);
-    };
 
   return (
     <DashBoardLayout>
@@ -196,16 +234,18 @@ const AremxyAddUser = () => {
                 </p>
                 <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
                     <input
-                    onChange={handleMainInputChange}
                     name="emailUsername"
-                    value={mainEmailUsername}
+                    onChange={(e) => {
+                        setEmailUserName(e.target.value);
+                    }} 
+                    value={emailUsername}
                     className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
                     type="text"
                     />
                 </div>
-                {mainTransferErrors.emailUsername && (
+                {errors.emailUsername && (
                     <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                    {mainTransferErrors.emailUsername}
+                    {errors.emailUsername}
                     </div>
                 )}
                 </div>
@@ -217,16 +257,18 @@ const AremxyAddUser = () => {
                 </p>
                 <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
                     <input
-                    onChange={handleMainInputChange}
+                    onChange={(e) => {
+                        setUserPhoneNumber(e.target.value);
+                       }} 
                     name="userPhoneNumber"
-                    value={mainUserPhoneNumber}
+                    value={userPhoneNumber}
                     className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
                     type="number"
                     />
                 </div>
-                {mainTransferErrors.userPhoneNumber && (
+                {errors.userPhoneNumber && (
                     <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                    {mainTransferErrors.userPhoneNumber}
+                    {errors.userPhoneNumber}
                     </div>
                 )}
                 </div>
@@ -269,11 +311,11 @@ const AremxyAddUser = () => {
                             </div>
                             <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                                 <p className="text-[#0008]">Email or Username</p>
-                                <span>{mainEmailUsername}</span>
+                                <span>{emailUsername}</span>
                             </div>
                             <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                                 <p className="text-[#0008]">Phone Number</p>
-                                <span>{mainUserPhoneNumber}</span>
+                                <span>{userPhoneNumber}</span>
                             </div>
                         </div>
 
@@ -327,7 +369,7 @@ const AremxyAddUser = () => {
             }
             <div className={style.containFlex3}>
                 <button className={`${
-                mainUserPhoneNumber.length < 11 ? "bg-[#0008]" : "bg-[#04177f]"
+                userPhoneNumber.length < 11 ? "bg-[#0008]" : "bg-[#04177f]"
                 } w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`} onClick={handleSave}>Save User
                 </button>
             </div>
