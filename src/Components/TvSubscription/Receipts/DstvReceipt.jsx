@@ -174,7 +174,7 @@ export const DstvReceipt= (receipt) => {
               {/* ===================Sender Info==================== */}
               <div className="flex flex-col gap-[5px] w-[90%] mx-auto lg:gap-[10px]">
                 <div className="flex gap-[5px] items-center text-[10px] lg:text-[16px] font-extrabold">
-                  <p>Sender Info Info</p>
+                  <p>Sender Info</p>
                   <img
                     className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
                     src="./Images/Dashboardimages/arrowright.png"
@@ -196,7 +196,7 @@ export const DstvReceipt= (receipt) => {
               {/* ===================Transaction Info==================== */}
               <div className="flex flex-col gap-[5px] w-[90%] mx-auto lg:gap-[10px]">
                 <div className="flex gap-[5px] items-center text-[10px] lg:text-[16px] font-extrabold">
-                  <p>Sender Info Info</p>
+                  <p>Transaction Info</p>
                   <img
                     className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
                     src="./Images/Dashboardimages/arrowright.png"
