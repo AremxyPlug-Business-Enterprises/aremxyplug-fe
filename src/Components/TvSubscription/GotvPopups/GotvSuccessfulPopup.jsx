@@ -50,7 +50,7 @@ import { Link } from "react-router-dom";
             (
             <Modal>
            
-       <div className={`confirmConversion mx-auto  ${
+       <div className={`confirmTV mx-auto  ${
               toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
             } w-[90%]`}>
         <div className="flex justify-between items-center mx-[3%] my-[2%] md:my-[1%]">
