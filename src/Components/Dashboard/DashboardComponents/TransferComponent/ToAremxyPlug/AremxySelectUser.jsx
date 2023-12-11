@@ -1,16 +1,74 @@
-import React from 'react'
+import React, { useContext, useState } from "react";
+import { ContextProvider } from "../../../../Context";
 import '../../../../../App.css';
 import style from "../../../../AirTimePage/AirtimeVtu.module.css";
+import styles from "../../TransferComponent/transfer.module.css";
 import { DashBoardLayout } from "../../../Layout/DashBoardLayout";
 import ArrowRight from '../../../../EducationPins/imagesEducation/educationArrowRight.svg';
-import Nigerianflag from '../../../../EducationPins/imagesEducation/Nigeriaflag.svg';
-import ImageDrop from '../../../../EducationPins/imagesEducation/arrow-down.svg';
-import AddRecipientIcon from '../../../../Add&SelectRecipient/RecipientImages/AddRecipientIcon.svg';
 import SearchIcon from '../../../../Add&SelectRecipient/RecipientImages/search-status.svg';
 import NoRecordImage from '../../../../Add&SelectRecipient/RecipientImages/NoRecordImage.svg';
 import { Link } from 'react-router-dom';
 
 export default function AremxySelectUser() {
+
+    const {
+        showList,
+        setShowList,
+        selected,
+        setSelected,
+        toggleSideBar,
+        mainCountry,
+        setMainCountry,
+        mainTransferErrors,
+      } = useContext(ContextProvider);
+
+    const countryList = [
+        {
+          id: 1,
+          name: "Nigeria",
+          code: "NGN",
+          flag: require("../../../../Dashboard/DashboardComponents/flagsImages/nigeriaFlag.png"),
+        },
+        {
+          id: 2,
+          name: "United States",
+          code: "USD",
+          flag: require("../../../../Dashboard/DashboardComponents/flagsImages/americaFlag.png"),
+        },
+        {
+          id: 3,
+          name: "United Kingdom",
+          code: "GBP",
+          flag: require("../../../../Dashboard/DashboardComponents/flagsImages/ukFlag.png"),
+        },
+        {
+          id: 4,
+          name: "European",
+          code: "EUR",
+          flag: require("../../../../Dashboard/DashboardComponents/flagsImages/europeanFlag.png"),
+        },
+        {
+          id: 5,
+          name: "Australia",
+          code: "AUD",
+          flag: require("../../../../Dashboard/DashboardComponents/flagsImages/australiaFlag.png"),
+        },
+        {
+          id: 6,
+          name: "Kenya",
+          code: "KES",
+          flag: require("../../../../Dashboard/DashboardComponents/flagsImages/kenyaFlag.png"),
+        },
+      ];
+
+    const [flag, setFlag] = useState("");
+
+    const handleCountryClick = (name, flag, id, code) => {
+        setFlag(flag);
+        setShowList(false);
+        setMainCountry(name);
+        setSelected(true);
+    };
 
   return (
 
@@ -63,43 +121,94 @@ export default function AremxySelectUser() {
                 className='absolute md:top-[10px] md:right-[10px] top-[7.997px] right-[7.997px] 
                 lg:w-[20px] lg:h-[20px] h-[12px] w-[12px] cursor-pointer'/>
             </div>
-            {/* INPUTS TO SELECT COUNTRY */}
-            <div className=''>  
-                <h2 className=' font-[600] text-left lg:mb-[20px] mb-[5.868px] text-[9px] leading-[12px] lg:text-[16px] lg:leading-[20.8px] '>
+    <div className=''>
+            <h2 className=' font-[600] text-left lg:mb-[20px] mb-[5.868px] text-[9px] leading-[12px] lg:text-[16px] lg:leading-[20.8px] '>
                 Select Country
-                </h2>
-                <div className='flex flex-col md:flex-row lg:gap-[100px] md:gap-[90px] gap-[25px] w-[100%] md:justify-between'>
-                {/* CONTAINER FOR SELECT RECIPIENT */}
-                <div className='flex flex-col  md:w-[50%] w-[100%]'>
-                {/* INPUTS TO SELECT RECIPIENT */}
-                <div className='flex justify-between py-[8.178px] pl-[3.672px] pr-[7px] lg:py-[14px] lg:pl-[16px] lg:pr-[10px]
-                md:border-[1px] border-[0.5px] border-[solid] border-[#7C7C7C] rounded-[3.671px] lg:rounded-[10px] bg-white'>
-                <div className='flex lg:gap-[10px] gap-[5.868px]'>
-                <img src={Nigerianflag} alt="" 
-                className='lg:w-[24px] lg:h-[24px] h-[12px] w-[12px]'/>
-                <h2 className='font-[600] text-[9px]  leading-[12px] lg:text-[16px] lg:leading-[20.8px]'>
-                Nigeria
-                </h2>
+            </h2>
+            <div className="flex flex-col gap-[15px] md:flex-row lg:gap-[30px]">
+                {/* =====================Country========================= */}
+                <div className={styles.inputBox}>
+                <div
+                    onClick={() => setShowList(!showList)}
+                    className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]"
+                >
+                    {selected ? (
+                    <div className="flex gap-[7px] items-center">
+                        <img
+                        className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
+                        src={flag}
+                        alt=""
+                        />
+                        <p className="text-[10px] font-extrabold lg:text-[14px]">
+                        {" "}
+                        {mainCountry}
+                        </p>
+                    </div>
+                    ) : (
+                    <p></p>
+                    )}
+                    <img
+                    className=" h-[13.3px] w-[13.3px] lg:w-[24px] lg:h-[24px] "
+                    src="./Images/dashboardImages/arrow-down2.png"
+                    alt="dropdown"
+                    />
                 </div>
-                <img src={ImageDrop}  alt=""
-                className='lg:w-[24px] lg:h-[24px] h-[12px] w-[12px]' />
-                </div>
-                </div>
-
-                {/* ADD RECIPIENTS */}
-                <Link to = '/aremxy-add-user'
-                    className='flex md:w-[50%] justify-between lg:py-[14px] lg:pl-[16px] lg:pr-[10px]
-                shadow-[0px_0px_1.468px_0px_rgba(0,0,0,0.25)]  py-[8.178px] pl-[3.671px] pr-[7px]
-                md:border-[1px] border-[0.5px] border-[solid] rounded-[3.671px] border-[#7C7C7C] lg:rounded-[10px] bg-white'>
-                <h2 className='font-[600] text-[9px] leading-[12px] lg:text-[16px] lg:leading-[20.8px]'>
-                Add User
-                    </h2>
-                    <img src={AddRecipientIcon} alt='' 
-                    className='lg:w-[24px] lg:h-[24px] h-[12px] w-[12px]'/>
-                </Link>
-
-                </div>
+                {mainTransferErrors.country && (
+                    <div className="text-[12px] text-red-500 italic lg:text-[14px]">
+                    {mainTransferErrors.country}
+                    </div>
+                )}
+                {showList && (
+                    <div
+                    className={`${
+                        toggleSideBar
+                        ? "lg:w-[31.5%] lg:top-[100.5%]"
+                        : "lg:w-[38.5%] lg:top-[105.3%]"
+                    }  ${
+                        styles.countryDropDown
+                    } rounded-br-[7px] rounded-bl-[7px] shadow-xl bg-[#fff] border w-[100%] lg:w-full lg:rounded-br-[14px] lg:rounded-bl-[14px]`}
+                    >
+                    {" "}
+                    {countryList.map((country) => (
+                        <div
+                        className=" cursor-pointer border-b flex items-center p-2 gap-[5px] text-[9px]  md:text-[14px] lg:text-[16px]"
+                        key={country.id}
+                        onClick={() =>
+                            handleCountryClick(
+                            country.name,
+                            country.flag,
+                            country.id,
+                            country.code
+                            )
+                        }
+                        >
+                        <img
+                            className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
+                            src={country.flag}
+                            alt="/"
+                        />
+                        {country.name}
+                        </div>
+                    ))}
+                    </div>
+                )}
             </div>
+
+            <div className="w-full">
+            <Link to="/aremxy-add-user">
+            <div className="w-full flex items-center justify-between border text-[10px]  rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
+                <p>Add User</p>
+                <img
+                className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
+                src="./Images/otherBanksImages/add-square.png"
+                alt=""
+                />
+            </div>
+            </Link>
+            </div>          
+       
+        </div>
+    </div>    
 
             <div className='Tabs flex flex-col lg:gap-[30px] gap-[8.28px] my-[30px] md:mt-[60px] md:mb-[80px]'>
                 <div className='flex w-[100%] lg:gap-[25px] border-b-[0.33pxpx] md:border-b-[3px] border-[#ECECEC]'>

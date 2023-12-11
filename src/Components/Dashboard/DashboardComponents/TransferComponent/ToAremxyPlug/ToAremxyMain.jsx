@@ -16,13 +16,13 @@ export default function ToAremxyMain() {
     toggleSideBar,
     amtToTransfer,
     setAmtToTransfer,
-    globalEmailUsername,
-    globalUserPhoneNumber,
-    globalCountry,
-    setGlobalCountry,
-    globalTransferErrors,
-    handleGlobalInputChange,
-    ProceedToGlobalTransfer,
+    mainEmailUsername,
+    mainUserPhoneNumber,
+    mainCountry,
+    setMainCountry,
+    mainTransferErrors,
+    handleMainInputChange,
+    ProceedToMainTransfer,
   } = useContext(ContextProvider);
 
   const [addToRecipient, SetAddToRecipient] = useState(false);
@@ -78,7 +78,7 @@ export default function ToAremxyMain() {
   const handleCountryClick = (name, flag, id, code) => {
     setFlag(flag);
     setShowList(false);
-    setGlobalCountry(name);
+    setMainCountry(name);
     setSelected(true);
     setCountryCode(code);
     setCurrencyAvailable(id !== 1);
@@ -108,7 +108,7 @@ export default function ToAremxyMain() {
                 />
                 <p className="text-[10px] font-extrabold lg:text-[14px]">
                   {" "}
-                  {globalCountry}
+                  {mainCountry}
                 </p>
               </div>
             ) : (
@@ -120,9 +120,9 @@ export default function ToAremxyMain() {
               alt="dropdown"
             />
           </div>
-          {globalTransferErrors.country && (
+          {mainTransferErrors.country && (
             <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-              {globalTransferErrors.country}
+              {mainTransferErrors.country}
             </div>
           )}
           {showList && (
@@ -181,9 +181,9 @@ export default function ToAremxyMain() {
               ""
             )}
           </div>
-          {globalTransferErrors.currency && (
+          {mainTransferErrors.currency && (
             <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-              {globalTransferErrors.currency}
+              {mainTransferErrors.currency}
             </div>
           )}
         </div>
@@ -232,16 +232,16 @@ export default function ToAremxyMain() {
           </p>
           <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
             <input
-              onChange={handleGlobalInputChange}
+              onChange={handleMainInputChange}
               name="emailUsername"
-              value={globalEmailUsername}
+              value={mainEmailUsername}
               className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
               type="text"
             />
           </div>
-          {globalTransferErrors.emailUsername && (
+          {mainTransferErrors.emailUsername && (
             <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-              {globalTransferErrors.emailUsername}
+              {mainTransferErrors.emailUsername}
             </div>
           )}
         </div>
@@ -253,16 +253,17 @@ export default function ToAremxyMain() {
           </p>
           <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
             <input
-              onChange={handleGlobalInputChange}
+              onChange={handleMainInputChange}
               name="userPhoneNumber"
-              value={globalUserPhoneNumber}
+              maxLength="11"
+              value={mainUserPhoneNumber}
               className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
               type="number"
             />
           </div>
-          {globalTransferErrors.userPhoneNumber && (
+          {mainTransferErrors.userPhoneNumber && (
             <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-              {globalTransferErrors.userPhoneNumber}
+              {mainTransferErrors.userPhoneNumber}
             </div>
           )}
         </div>
@@ -281,9 +282,9 @@ export default function ToAremxyMain() {
             />
           </div>
 
-          {globalTransferErrors.amtToTransfer && (
+          {mainTransferErrors.amtToTransfer && (
             <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-              {globalTransferErrors.amtToTransfer}
+              {mainTransferErrors.amtToTransfer}
             </div>
           )}
         </div>
@@ -356,7 +357,7 @@ export default function ToAremxyMain() {
         </div>
       </div>
       <button
-        onClick={ProceedToGlobalTransfer}
+        onClick={ProceedToMainTransfer}
         className={`${
           amtToTransfer.length < 4 ? "bg-[#0008]" : "bg-[#04177f]"
         } my-[5%] w-full flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}

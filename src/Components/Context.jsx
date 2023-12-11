@@ -421,102 +421,144 @@ export const Context = ({ children }) => {
   };
   // ========================End Transfer page==========================
 
-  // ===================Start of Global Transfer====================
-  const [otherBanksConfirmation, setOtherBankConfirmation] = useState(false);
-  const [globalCountry, setGlobalCountry] = useState("");
-  const [globalTransferErrors, setGlobalTransferErrors] = useState({});
-  const [globalTransferState, setGlobalTransferState] = useState({
-    accountName: "",
-    accountNumber: "",
-    bankName: "",
+// ===================Start of Aremxyplug pages====================
+const [emailPhoneNumberConfirmation, setEmailPhoneNumberConfirmation] = useState(false);
+const [mainCountry, setMainCountry] = useState("");
+const [mainTransferErrors, setMainTransferErrors] = useState({});
+const [mainTransferState, setMainTransferState] = useState({
+  emailUsername: "",
+  userPhoneNumber: "",
+});
+
+const handleMainInputChange = (e) => {
+  const { name, value } = e.target;
+  setMainTransferState({
+    ...mainTransferState,
+    [name]: value,
   });
-  const [mainTransferState, setMainTransferState] = useState({
-    emailUsername: "",
-    userPhoneNumber: "",
+};
+
+const mainTransferSchema = Joi.object({
+  mainCountry: Joi.string().required(),
+  userPhoneNumber: Joi.string()
+  .pattern(new RegExp(/^\d{11}$/)) // Exactly 10 digits, you can adjust as needed
+  .required()
+  .max(11)
+  .messages({
+    "string.pattern.base": "Phone number should be 11 digits",
+    "any.max": "Phone number should be at most 11 digits",
+  }),
+    emailUsername: Joi.string()
+    .email({ tlds: { allow: false } }) // Use the email validation provided by Joi
+    .required()
+    .messages({
+      "string.email": "Please enter a valid email address",
+    }),
+  amtToTransfer: Joi.string()
+    .pattern(new RegExp(/\d{4,}/))
+    .required()
+    .messages({
+      "string.pattern.base": "Amount can not be less than 1000",
+    }),
+});
+
+const ProceedToMainTransfer = (e) => {
+  e.preventDefault();
+
+  const { emailUsername, userPhoneNumber } = mainTransferState;
+
+  const { error } = mainTransferSchema.validate({
+    emailUsername,
+    userPhoneNumber,
+    amtToTransfer,
+    mainCountry,
   });
 
-  const handleGlobalInputChange = (e) => {
-    const { name, value } = e.target;
-    setGlobalTransferState({
-      ...globalTransferState,
-      [name]: value,
-    });
-    setMainTransferState({
-      ...mainTransferState,
-      [name]: value,
-    });
-  };
+  if (error) {
+    setMainTransferErrors(
+      error.details.reduce((acc, curr) => {
+        acc[curr.path[0]] = curr.message;
+        return acc;
+      }, {})
+    );
+  } else {
+    setEmailPhoneNumberConfirmation(true);
+    setMainTransferErrors({});
+  }
+};
 
-  const globalTransferSchema = Joi.object({
-    globalCountry: Joi.string().required(),
-    bankName: Joi.string().required(),
-    accountNumber: Joi.string()
-      .pattern(new RegExp(/^\d{10,}/))
-      .required()
-      .messages({
-        "string.pattern.base": "Account number should be 10 digits ",
-      }),
-    accountName: Joi.string().required(),
-    emailUsername: Joi.string().required(),
-    userPhoneNumber: Joi.string().required(),
-    amtToTransfer: Joi.string()
-      .pattern(new RegExp(/\d{4,}/))
-      .required()
-      .messages({
-        "string.pattern.base": "Amount can not be less than 1000",
-      }),
+const mainEmailUsername = mainTransferState.emailUsername;
+const mainUserPhoneNumber = mainTransferState.userPhoneNumber;
+
+// ===================End of Aremxyplug pages======================
+
+// ===================Start of Global Transfer====================
+const [otherBanksConfirmation, setOtherBankConfirmation] = useState(false);
+const [globalCountry, setGlobalCountry] = useState("");
+const [globalTransferErrors, setGlobalTransferErrors] = useState({});
+const [globalTransferState, setGlobalTransferState] = useState({
+  accountName: "",
+  accountNumber: "",
+  bankName: "",
+});
+
+const handleGlobalInputChange = (e) => {
+  const { name, value } = e.target;
+  setGlobalTransferState({
+    ...globalTransferState,
+    [name]: value,
+  });
+};
+
+const globalTransferSchema = Joi.object({
+  globalCountry: Joi.string().required(),
+  bankName: Joi.string().required(),
+  accountNumber: Joi.string()
+    .pattern(new RegExp(/^\d{10,}/))
+    .required()
+    .messages({
+      "string.pattern.base": "Account number should be 10 digits ",
+    }),
+  accountName: Joi.string().required(),
+  amtToTransfer: Joi.string()
+    .pattern(new RegExp(/\d{4,}/))
+    .required()
+    .messages({
+      "string.pattern.base": "Amount can not be less than 1000",
+    }),
+});
+
+const ProceedToGlobalTransfer = (e) => {
+  e.preventDefault();
+  const { accountNumber, accountName, bankName } = globalTransferState;
+
+  const { error } = globalTransferSchema.validate({
+    globalCountry,
+    bankName,
+    accountNumber,
+    accountName,
+    amtToTransfer,
   });
 
-  const ProceedToGlobalTransfer = (e) => {
-    e.preventDefault();
-    const { accountNumber, accountName, bankName } = globalTransferState;
-    const { emailUsername, userPhoneNumber } = mainTransferState;
+  if (error) {
+    setGlobalTransferErrors(
+      error.details.reduce((acc, curr) => {
+        acc[curr.path[0]] = curr.message;
+        return acc;
+      }, {})
+    );
+  } else {
+    setOtherBankConfirmation(true);
+    setGlobalTransferErrors({});
+  }
+};
 
-    const { error } = globalTransferSchema.validate({
-      globalCountry,
-      bankName,
-      accountNumber,
-      accountName,
-      amtToTransfer,
-    });
+const globalBankName = globalTransferState.bankName;
+const globalAccountNumber = globalTransferState.accountNumber;
+const globalAccountName = globalTransferState.accountName;
 
-    const { error2 } = globalTransferSchema.validate({
-      emailUsername,
-      userPhoneNumber,
-    });
+// ===================End of Global Transfer======================
 
-    if (error) {
-      setGlobalTransferErrors(
-        error.details.reduce((acc, curr) => {
-          acc[curr.path[0]] = curr.message;
-          return acc;
-        }, {})
-      );
-    } else {
-      setOtherBankConfirmation(true);
-      setGlobalTransferErrors({});
-    }
-
-    if (error2) {
-      setGlobalTransferErrors(
-        error2.details.reduce((acc, curr) => {
-          acc[curr.path[0]] = curr.message;
-          return acc;
-        }, {})
-      );
-    } else {
-      setOtherBankConfirmation(true);
-      setGlobalTransferErrors({});
-    }
-  };
-
-  const globalBankName = globalTransferState.bankName;
-  const globalAccountNumber = globalTransferState.accountNumber;
-  const globalAccountName = globalTransferState.accountName;
-  const globalEmailUsername = mainTransferState.emailUsername;
-  const globalUserPhoneNumber = mainTransferState.userPhoneNumber;
-
-  // ===================End of Global Transfer======================
 
   // ================Start of Transfer To International Banks =====================
   const [internationalBankConfirmation, setInternationalBankConfirmation] =
@@ -1044,6 +1086,17 @@ export const Context = ({ children }) => {
     toggleVisibility,
     isVisible,
 
+    // ==================Aremxyplug pages==============
+    mainTransferErrors,
+    mainCountry,
+    setMainCountry,
+    handleMainInputChange,
+    mainEmailUsername,
+    mainUserPhoneNumber,
+    emailPhoneNumberConfirmation,
+    setEmailPhoneNumberConfirmation,
+    ProceedToMainTransfer,
+
     // ==================GLobal Transfer==============
     otherBanksConfirmation,
     setOtherBankConfirmation,
@@ -1055,8 +1108,6 @@ export const Context = ({ children }) => {
     globalAccountNumber,
     globalAccountName,
     handleGlobalInputChange,
-    globalEmailUsername,
-    globalUserPhoneNumber,
 
     // ===========International transfer ==============
     internationalBankConfirmation,

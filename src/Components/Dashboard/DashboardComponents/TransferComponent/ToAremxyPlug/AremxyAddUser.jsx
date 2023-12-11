@@ -15,12 +15,12 @@ const AremxyAddUser = () => {
         selected,
         setSelected,
         toggleSideBar,
-        globalEmailUsername,
-        globalUserPhoneNumber,
-        globalCountry,
-        setGlobalCountry,
-        globalTransferErrors,
-        handleGlobalInputChange,
+        mainEmailUsername,
+        mainUserPhoneNumber,
+        mainCountry,
+        setMainCountry,
+        mainTransferErrors,
+        handleMainInputChange,
       } = useContext(ContextProvider);
 
       const countryList = [
@@ -69,7 +69,7 @@ const AremxyAddUser = () => {
     const handleCountryClick = (name, flag, id, code) => {
         setFlag(flag);
         setShowList(false);
-        setGlobalCountry(name);
+        setMainCountry(name);
         setSelected(true);
     };
 
@@ -135,7 +135,7 @@ const AremxyAddUser = () => {
                     />
                     <p className="text-[10px] font-extrabold lg:text-[14px]">
                     {" "}
-                    {globalCountry}
+                    {mainCountry}
                     </p>
                 </div>
                 ) : (
@@ -147,9 +147,9 @@ const AremxyAddUser = () => {
                 alt="dropdown"
                 />
             </div>
-            {globalTransferErrors.country && (
+            {mainTransferErrors.country && (
                 <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                {globalTransferErrors.country}
+                {mainTransferErrors.country}
                 </div>
             )}
             {showList && (
@@ -196,16 +196,16 @@ const AremxyAddUser = () => {
                 </p>
                 <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
                     <input
-                    onChange={handleGlobalInputChange}
+                    onChange={handleMainInputChange}
                     name="emailUsername"
-                    value={globalEmailUsername}
+                    value={mainEmailUsername}
                     className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
                     type="text"
                     />
                 </div>
-                {globalTransferErrors.emailUsername && (
+                {mainTransferErrors.emailUsername && (
                     <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                    {globalTransferErrors.emailUsername}
+                    {mainTransferErrors.emailUsername}
                     </div>
                 )}
                 </div>
@@ -217,16 +217,16 @@ const AremxyAddUser = () => {
                 </p>
                 <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
                     <input
-                    onChange={handleGlobalInputChange}
+                    onChange={handleMainInputChange}
                     name="userPhoneNumber"
-                    value={globalUserPhoneNumber}
+                    value={mainUserPhoneNumber}
                     className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
                     type="number"
                     />
                 </div>
-                {globalTransferErrors.userPhoneNumber && (
+                {mainTransferErrors.userPhoneNumber && (
                     <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                    {globalTransferErrors.userPhoneNumber}
+                    {mainTransferErrors.userPhoneNumber}
                     </div>
                 )}
                 </div>
@@ -265,15 +265,15 @@ const AremxyAddUser = () => {
                         <div className="flex flex-col gap-2 lg:gap-4">
                             <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                                 <p className="text-[#0008]">Country</p>
-                                <span>{globalCountry}</span>
+                                <span>{mainCountry}</span>
                             </div>
                             <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                                 <p className="text-[#0008]">Email or Username</p>
-                                <span>{globalEmailUsername}</span>
+                                <span>{mainEmailUsername}</span>
                             </div>
                             <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                                 <p className="text-[#0008]">Phone Number</p>
-                                <span>{globalUserPhoneNumber}</span>
+                                <span>{mainUserPhoneNumber}</span>
                             </div>
                         </div>
 
@@ -327,7 +327,7 @@ const AremxyAddUser = () => {
             }
             <div className={style.containFlex3}>
                 <button className={`${
-                globalUserPhoneNumber.length < 11 ? "bg-[#0008]" : "bg-[#04177f]"
+                mainUserPhoneNumber.length < 11 ? "bg-[#0008]" : "bg-[#04177f]"
                 } w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`} onClick={handleSave}>Save User
                 </button>
             </div>
