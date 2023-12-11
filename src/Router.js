@@ -135,6 +135,10 @@ import AccountUpgrade from "./Components/My Profile & Account Settings/My Profil
 import StarTimes from "./Components/TvSubscription/TvThree";
 import Showmax from "./Components/TvSubscription/TvFour";
 import ToAremxyPlug from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/ToAremxyPlug";
+import { GotvReceipt } from "./Components/TvSubscription/Receipts/GotvReceipt";
+import { DstvReceipt } from "./Components/TvSubscription/Receipts/DstvReceipt";
+import { StarTimesReceipt } from "./Components/TvSubscription/Receipts/StarTimesReceipt";
+import { ShowmaxReceipt } from "./Components/TvSubscription/Receipts/ShowmaxReceipt";
 
 export const Router = () => {
   return (
@@ -283,7 +287,11 @@ export const Router = () => {
         <Route path="/GoTv" element={<GoTv/>}/>
         <Route path="/DsTv" element={<DsTv/>}/>
         <Route path="/StarTimes" element={<StarTimes/>}/>
-        <Route path="/Showmax" element={<Showmax/>}/>
+        <Route path="/Showmax" element={<Showmax />} />
+        <Route path="/GotvReceipt" element={<GotvReceipt />} />
+        <Route path="/DstvReceipt" element={<DstvReceipt />} />
+        <Route path="/StarTimesReceipt" element={<StarTimesReceipt />} />
+        <Route path="/ShowmaxReceipt" element={<ShowmaxReceipt/>} />
         <Route path="/SuccessfulConversion" element={<SuccessfulReceipt/>}/>
         <Route path="/SmileDataBundle" element={<SmileDataBundle/>} />
         <Route path="/Smilereceipt" element={<SmileReceipt/>} />

@@ -22,8 +22,8 @@ import { Link } from "react-router-dom";
   } = useContext(ContextProvider)
 
   
-  const valueWithoutTilde = selectedOptionGOTV.split(" ~ ")[0];
-  const trimmedValue = valueWithoutTilde.trim();
+  const valueWithoutTilde = selectedOptionGOTV.split(" ~ ");
+  // const trimmedValue = valueWithoutTilde.trim();
   
   // const CopyButton = ({ textToCopy }) => {
   //   const handleCopyClick = () => {
@@ -80,40 +80,42 @@ import { Link } from "react-router-dom";
               src="./Gif/checkMarkGif.gif"
               alt="/"
             />
-            <div className="text-[#7C7C7C] text-[8px] text-center mb-2 md:pb-2 lg:pb-3 md:text-[14px] lg:text-[12px]">You have successfully subscribed &nbsp;
-              <span className="text-black font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">{trimmedValue}</span>&nbsp;
-               Monthly From Your NGN Wallet to
+            <div className="text-[#7C7C7C] font-bold text-[10px] text-center mb-2 md:pb-2 lg:pb-3 md:text-[14px] lg:text-[13px]">You have successfully subscribed &nbsp;
+              <span className="text-black font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">{valueWithoutTilde}</span>&nbsp; From Your NGN Wallet to
             </div>
             <div className="flex flex-col gap-2 lg:gap-4 ">
-            <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[14px]">
+            <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto font-semibold justify-between lg:text-[15px]">
                     <span className="text-[#7C7C7C]">Decoder Type</span>
-                    <span>GOtv</span>
+                    <div className="flex">
+                      <img src="./Images/TvSubscription/gotvIcon.svg" alt="" className="md:w-[60px] md:h-[15px] lg:w-[100px] lg:h-[18.6px]" />
+                      <span>GOtv</span>
+                    </div>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[14px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto font-semibold justify-between lg:text-[15px]">
                     <span className="text-[#7C7C7C]">Package</span>
                     <span>{selectedOptionGOTV}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[14px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto font-semibold justify-between lg:text-[15px]">
                     <span className="text-[#7C7C7C]">Smartcard / IUC Number</span>
                     <span>{smartCard}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[14px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto font-semibold justify-between lg:text-[15px]">
                     <span className="text-[#7C7C7C]">Card Name</span>
                     <span>{cardName}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[14px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto font-semibold justify-between lg:text-[15px]">
                     <span className="text-[#7C7C7C]">Phone Number</span>
                     <span>{mobileNumber}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[14px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto font-semibold justify-between lg:text-[15px]">
                     <span className="text-[#7C7C7C]">Email</span>
                     <span>{tvEmail}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[14px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] font-semibold mx-auto justify-between lg:text-[15px]">
                     <span className="text-[#7C7C7C]">Payment Method</span>
                     <span>{flagResult}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[14px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] font-semibold mx-auto justify-between lg:text-[15px]">
                     <span className="text-[#7C7C7C]">Order Number</span>
                     <span>0124yend44</span>
                 </div>
@@ -134,7 +136,7 @@ import { Link } from "react-router-dom";
                 Done
                   </button>
                   </Link>
-              <Link to='/SuccessfulConversion'>
+              <Link to='/GotvReceipt'>
                 <button
                 style={{boxShadow : '0px 0px 2.0368096828460693px 0px #00000040'}} className={`border-[1px]  w-[111px] lg:w-[200px] md:w-[99px] h-[40px] md:h-[24px] lg:h-[42px] lg:my-[2%] flex justify-center items-center cursor-pointer text-[12px] md:text-[12px] lg:text-[16px] font-semibold rounded-[6px] md:rounded-[7px] lg:rounded-[12px]`}
                 >

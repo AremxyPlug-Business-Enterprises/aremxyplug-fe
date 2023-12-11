@@ -732,6 +732,7 @@ export const Context = ({ children }) => {
   const [cardName, setCardName] = useState("");
   const [smartCard, setSmartCard] = useState("");
   const [tvEmail, setTvEmail] = useState("");
+  const [tvAmount, setTvAmount] = useState("");
   const [flagResult, setFlagResult ]= useState('');
   const [ methodPayment, setMethodPayment ] = useState(false);
   const [methodImage, setMethodImage] = useState(arrowDown);
@@ -1157,6 +1158,8 @@ export const Context = ({ children }) => {
     setSmartCard,
     tvEmail,
     setTvEmail,
+    tvAmount,
+    setTvAmount,
     methodPayment,
     setMethodPayment,
     flagResult,

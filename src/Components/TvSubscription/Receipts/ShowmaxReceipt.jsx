@@ -10,12 +10,16 @@ import { ContextProvider } from "../../Context";
 
 
 
-export const GotvReceipt = (receipt) => {
+export const ShowmaxReceipt= (receipt) => {
   const { toggleSideBar, textRef,
-    convertedAmount,
-    exchangeRate,
-    initialValue,
-      isDarkMode, date } =
+    flagResult,
+    selectedOptionShowmax,
+    tvEmail,
+    tvAmount,
+    mobileNumber,
+    smartCard,
+    cardName,
+    isDarkMode, date } =
     useContext(ContextProvider);
 
   const contentRef = useRef(null);
@@ -63,7 +67,6 @@ export const GotvReceipt = (receipt) => {
     }
   };
 
-  const cvRate = (1/ exchangeRate).toFixed(4)
 
   return (
     <DashBoardLayout>
@@ -81,7 +84,7 @@ export const GotvReceipt = (receipt) => {
                 alt=""
               />
             </Link>
-            <Link to="/fiat">
+            <Link to="/TvSubscription">
               {" "}
               <img
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
@@ -104,7 +107,7 @@ export const GotvReceipt = (receipt) => {
               />
             </div>
             <h3 className="font-extrabold text-[12px] mt-[2%] text-center md:text-[20px] md:my-[7px] lg:text-[16px] lg:my-[10px]">
-              Conversion Successful on
+            Purchase Successful on
             </h3>
             <span className="text-[11px] text-[#0008] font-extrabold flex justify-center items-center">
               {date.toLocaleDateString(undefined, {
@@ -117,18 +120,19 @@ export const GotvReceipt = (receipt) => {
                 hour12: true,
               })}
             </span>
-            <p className="text-[9px] text-[#0008] text-center my-2 md:text-[14px] lg:text-[14px]">
-            You have successfully converted {" "}
-              <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[16px]">
-                &#8358;{convertedAmount}{" "}
-              </span>
-              from your NGN wallet to{" "}
+            <p className=" pt-2 md:pt-4 text-[9px] text-[#0008] font-bold text-center my-2 md:text-[14px] lg:text-[14px]">
+            You have successfully subscribed {" "}
+              <span className="text-[#000] text-[10px] md:text-[16px] lg:text-[16px]">
+                {selectedOptionShowmax}
+              </span>{" "}
+              from your{" "}
+              <span>{flagResult}</span>{" "} to
             </p>
             <div className="flex flex-col gap-3">
               {/* ========================Recipient Info================== */}
-              <div className="flex flex-col gap-[3px] w-[90%] mx-auto lg:gap-[5px]">
+              <div className="flex flex-col gap-[5px] w-[90%] mx-auto lg:gap-[10px]">
                 <div className="flex gap-[5px] items-center text-[10px] lg:text-[16px] font-extrabold">
-                  <p>Wallet Info</p>
+                  <p>Recipient Info</p>
                   <img
                     className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
                     src="./Images/Dashboardimages/arrowright.png"
@@ -136,29 +140,63 @@ export const GotvReceipt = (receipt) => {
                   />
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Wallet Type</p>
-                  <span>United S. USD Wallet</span>
+                  <p className="text-[#0008]">Decoder Type</p>
+                  <span>Showmax</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Amount Converted</p>
-                  <span>{initialValue}</span>
+                  <p className="text-[#0008]">Package</p>
+                  <span>{selectedOptionShowmax}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Amount Received</p>
-                  <span>${convertedAmount}</span>
+                  <p className="text-[#0008]">Smartcard / IUC Number</p>
+                  <span>{smartCard}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Conversion Rate</p>
-                  <span>1 NGN ~ {cvRate} USD</span>
+                  <p className="text-[#0008]">Card Name</p>
+                  <span>{cardName}</span>
+                </div>
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                  <p className="text-[#0008]">Phone</p>
+                  <span>{mobileNumber}</span>
+                </div>
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                  <p className="text-[#0008]">Email</p>
+                  <span>{tvEmail}</span>
+                </div>
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                  <p className="text-[#0008]">Amount</p>
+                  <span>{tvAmount}</span>
                 </div>
               </div>
 
               
 
-              {/* ===================Transaction Info==================== */}
-              <div className="flex flex-col gap-[3px] w-[90%] mx-auto lg:gap-[7px]">
+              {/* ===================Sender Info==================== */}
+              <div className="flex flex-col gap-[5px] w-[90%] mx-auto lg:gap-[10px]">
                 <div className="flex gap-[5px] items-center text-[10px] lg:text-[16px] font-extrabold">
-                  <p>Transaction Info</p>
+                  <p>Sender Info Info</p>
+                  <img
+                    className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
+                    src="./Images/Dashboardimages/arrowright.png"
+                    alt="/"
+                  />
+                </div>
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                  <p className="text-[#0008]">Customer Name</p>
+                  <span>Aremxyplug</span>
+                </div>
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                  <p className="text-[#0008]">Wallet Type</p>
+                  <span>{flagResult}</span>
+                </div>
+                
+              </div>
+
+              
+              {/* ===================Transaction Info==================== */}
+              <div className="flex flex-col gap-[5px] w-[90%] mx-auto lg:gap-[10px]">
+                <div className="flex gap-[5px] items-center text-[10px] lg:text-[16px] font-extrabold">
+                  <p>Sender Info Info</p>
                   <img
                     className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
                     src="./Images/Dashboardimages/arrowright.png"
@@ -167,25 +205,21 @@ export const GotvReceipt = (receipt) => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Product</p>
-                  <span>Currency Conversion</span>
+                  <span>TV Subscriptions</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Description</p>
-                  <span>From NGN Wallet to USD Wallet</span>
+                  <span>Showmax Subscription</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Order Number</p>
                   <span>1256478999</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Transaction ID</p>
-                  <span>0331njokdhtf55</span>
-                </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between items-center lg:text-[16px]">
-                  <p className="text-[#0008]">Session ID</p>
+                  <p className="text-[#0008]">Transaction ID</p>
                   <div className="flex items-center">
                     <span ref={textRef}>
-                      1232455566664654 <br /> 1232455566664654
+                    0331njokdhtf55
                     </span>
                     <div
                       onClick={handleCopyClick}
@@ -195,6 +229,7 @@ export const GotvReceipt = (receipt) => {
                     </div>
                   </div>
                 </div>
+                
               </div>
             </div>
             <div className="rounded-[8px] bg-[#E2F3FF] mx-4 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">

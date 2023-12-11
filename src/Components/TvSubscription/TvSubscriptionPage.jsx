@@ -45,7 +45,7 @@ export const TvSubscription = () =>{
             </div>
 
 
-            <div className="flex justify-center items-center mt-[62.3%] md:mt-[38%] lg:mt-[30%] mb-[40px] gap-2">
+            <div className="flex justify-center items-center mt-[97%] md:mt-[70%] lg:mt-[50%] mb-[40px] gap-2">
            <div className="font-medium text-[10px] md:text-[10px] lg:text-[15px] self-center">You need help ?</div>
             <Link to="/ContactUs">
                 <div className="bluebutton flex bg-[#04177f] text-[8.5px] md:text-[8.5px] lg:text-[12px] text-white">
