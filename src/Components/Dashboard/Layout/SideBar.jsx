@@ -120,7 +120,7 @@ export const SideBar = () => {
               </p>
 
               <div
-                className={`${styles.sidebartxt} flex flex-col gap-[10px] text-[7px] font-semibold ml-[%] my-[7%] md:text-[8px] lg:text-[14px] lg:gap-[15px]`}
+                className={`${styles.sidebartxt} flex flex-col gap-[10px] text-[8px] font-semibold ml-[%] my-[7%] md:text-[8px] lg:text-[14px] lg:gap-[15px]`}
               >
                 <Link
                   to={`/wallet`}
@@ -290,7 +290,7 @@ export const SideBar = () => {
                   onClick={() => dropHandler("dropdown3")}
                   className="flex gap-[3.5px] items-center cursor-pointer justify-between"
                 >
-                  <div className="flex gap-1 lg:gap-[11px]">
+                  <div className="flex gap-1 items-center lg:gap-[11px]">
                     <img
                       className="w-[8.3px] h-[8.3px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
                       src="./Images/dashboardImages/payments.png"
@@ -346,7 +346,8 @@ export const SideBar = () => {
                         <div>Money Transfer</div>
                       </li>
                     </Link>
-
+                    
+                    <Link to="/CardPayment">
                     <li className="flex gap-[5%] hover:underline text-[#fff] pt-1 pb-1 font-medium md:text-[11px] lg:pt-[6%] lg:pb-[6%] lg:pl-[%] lg:text-[14px] ">
                       <img
                         className="w-[8.5px] h-[8.5px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
@@ -355,6 +356,8 @@ export const SideBar = () => {
                       />
                       <div>Card Payments</div>
                     </li>
+                    </Link>
+
                     <li className="flex gap-[5%] hover:underline text-[#fff] pt-1 pb-1 font-medium md:text-[11.5px] lg:pt-[6%] lg:pb-[6%] lg:pl-[%] lg:text-[14px] ">
                       <img
                         className="w-[8.5px] h-[8.5px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
@@ -428,7 +431,7 @@ export const SideBar = () => {
                     </li>
                   </ul>
                 )}
-                <div className="flex gap-[3.4px] cursor-pointer lg:gap-[11px]">
+                <div className="flex gap-[3.4px] items-center cursor-pointer lg:gap-[11px]">
                   <img
                     className="w-[8.3px] h-[8.3px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
                     src="./Images/dashboardImages/digitalServices.png"
@@ -436,7 +439,7 @@ export const SideBar = () => {
                   />
                   <p>Digital Services</p>
                 </div>
-                <div className="flex gap-[3.4px] cursor-pointer lg:gap-[11px]">
+                <div className="flex gap-[3.4px] items-center cursor-pointer lg:gap-[11px]">
                   <img
                     className="w-[8.3px] h-[8.3px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
                     src="./Images/dashboardImages/vtuDevelopment.png"
@@ -512,16 +515,16 @@ export const SideBar = () => {
                     <p>Profile Settings</p>
                   </div>
                 </Link>
-                
-          <Link to="/notifications">
-                <div className="flex gap-[3.4px] cursor-pointer lg:gap-[11px]">
-                  <img
-                    className="w-[8.3px] h-[8.3px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
-                    src="./Images/notification.png"
-                    alt="icon"
-                  />
-                  <p>Notifications</p>
-                </div>
+
+                <Link to="/notifications">
+                  <div className="flex gap-[3.4px] cursor-pointer lg:gap-[11px]">
+                    <img
+                      className="w-[8.3px] h-[8.3px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
+                      src="./Images/notifyIcon.png"
+                      alt="icon"
+                    />
+                    <p>Notifications</p>
+                  </div>
                 </Link>
                 <div className="flex gap-[3.4px] cursor-pointer lg:gap-[11px]">
                   <img

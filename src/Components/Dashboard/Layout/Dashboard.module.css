@@ -50,7 +50,7 @@
 .walletText {
   font-size: 11.093px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 800;
   line-height: normal;
   text-align: center;
   margin-top: 7%;
@@ -108,16 +108,16 @@ select {
 }
 
 /* ================ TABLET VIEW ============== */
-@media (min-width: 768px) {
+@media (min-width: 768px) and (max-width: 1180px) {
   .dashboard {
     width: 157px;
     gap: 6px;
   }
 
   .walletText {
-    font-size: 18.093px;
+    font-size: 20.093px;
     font-style: normal;
-    font-weight: 600;
+    font-weight: 800;
     line-height: normal;
     text-align: center;
     margin-top: 6%;
@@ -131,13 +131,13 @@ select {
   }
   .balance1 {
     width: 100%;
-    height: 250px;
+    height: 280px;
     border-radius: 8.32px;
     padding: 3%;
   }
   .balance2 {
     width: 100%;
-    height: 250px;
+    height: 280px;
     border-radius: 8.32px;
     padding: 3%;
   }
@@ -208,6 +208,14 @@ select {
   }
 }
 
+/* =========Ipad Air=========== */
+@media (min-width: 820px) and (max-width: 1180px) {
+  .balance1 {
+    height: 500px;
+    /* background-color: black; */
+  }
+}
+
 /* =================Surface Pro 7================ */
 @media (min-width: 912px) and (max-width: 1368px) {
   .sidebar {
@@ -227,9 +235,9 @@ select {
     font-size: 20px;
   }
 
-  /* .walletText { */
-  /* font-size: 25.5px; */
-  /* } */
+  .walletText {
+    font-size: 28.5px;
+  }
 
   .dashboard {
     width: 209px;
@@ -246,13 +254,13 @@ select {
 
   .balance1 {
     width: 100%;
-    height: 270px;
+    height: 350px;
     border-radius: 8.32px;
     padding: 3%;
   }
 
   .balance2 {
-    height: 280px;
+    height: 320px;
   }
 
   .GVA {
@@ -438,7 +446,7 @@ select {
   .walletText {
     font-size: 23.093px;
     font-style: normal;
-    font-weight: 600;
+    font-weight: 800;
     line-height: normal;
     text-align: center;
     margin-top: 10%;

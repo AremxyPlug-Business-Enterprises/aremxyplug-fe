@@ -162,7 +162,8 @@ export const SignUp = () => {
               onBlur={() => handleBlur(2)}
             >
               <input
-                className="outline-none flex justify-center items-center text-[12px] h-[15px] w-full lg:h-[25px] lg:text-[16px]"
+                className="outline-none flex justify-center items-center text-[12px] h-[15px] 
+                w-full lg:h-[25px] lg:text-[16px]"
                 type="text"
                 value={state.userName}
                 name="userName"
