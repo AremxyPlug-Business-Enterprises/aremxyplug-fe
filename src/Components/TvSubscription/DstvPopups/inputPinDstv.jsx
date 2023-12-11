@@ -11,14 +11,20 @@ import { AiFillEyeInvisible } from "react-icons/ai";
 export const InputDstvPopup = () => {
     const {
       inputPinDstv,
-      setInputDstv,
       inputPin,
       setInputPin,
+      setInputPinDstv,
       toggleSideBar,
       toggleVisibility,
       isVisible,
-      handleDstvSuccessful,
+      setDstvSuccessful,
    } = useContext(ContextProvider)
+
+   const handleDstvSuccessful = (event) =>{
+    event.preventDefault();
+    setInputPinDstv(false);
+    setDstvSuccessful(true);
+  }
 
    const [isFocused, setIsFocused] = useState(false);
       const handleFocus = () => {
@@ -30,7 +36,7 @@ export const InputDstvPopup = () => {
       };
 
       const cancelInputDstv = () => {
-        setInputDstv(false)
+        setInputPinDstv(false)
       }
    return(
     <>
@@ -100,7 +106,7 @@ export const InputDstvPopup = () => {
                 inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
               } lg:my-[52px] w-[225px] md:w-[94px] lg:w-[163px] flex justify-center items-center mx-auto cursor-pointer text-[12px] md:text-[10px] lg:text-[16px] font-extrabold h-[40px] lg:h-[38px] md:h-[22px] text-white rounded-[6px] md:rounded-[6.88px] lg:rounded-[12px]`}
             >
-              Fund
+              Purchase
             </button>
         </div>
            </Modal>
