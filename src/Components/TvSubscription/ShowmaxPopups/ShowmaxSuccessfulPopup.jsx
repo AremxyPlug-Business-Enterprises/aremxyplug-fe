@@ -126,7 +126,7 @@ import { Link } from "react-router-dom";
         <div className="bg-[#F2FAFF] mx-10 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
             <div className="text-[7px] text-center mx-auto w-[171px] md:text-[14px] md:w-[80%] lg:text-[14px] font-semibold">
             The decoder has been subscribed successfully. Please kindly confirm from the smartcard / iuc. You can contact us for any further assistance.
-            </div>
+            </div>yar
         </div>
 
         <div className="flex w-full justify-center items-center gap-[10px] pb-4 md:gap-[8.59px] lg:gap-[15px] md:pb-2">
