@@ -7,12 +7,15 @@ import ImageDrop from '../../EducationPins/imagesEducation/arrow-down.svg';
 import AddRecipientIcon from '../RecipientImages/AddRecipientIcon.svg';
 import SearchIcon from '../RecipientImages/search-status.svg';
 import NoRecordImage from '../RecipientImages/NoRecordImage.svg';
+import euroFlag from '../../EducationPins/imagesEducation/GBP.svg';
 import nigerianFlag from '../../EducationPins/imagesEducation/Nigeriaflag.svg';
 import americaFlag from '../../EducationPins/imagesEducation/Usa.svg';
 import britainFlag from '../../EducationPins/imagesEducation/Britain.svg';
 import austriaFlag from '../../EducationPins/imagesEducation/Austria.svg';
 import kenyaFlag from '../../EducationPins/imagesEducation/Kenya.svg';
+import optionsRecipient from '../RecipientImages/optionsRecipient.svg'
 import imageCurrencyNotAvalaible from '../RecipientImages/CurrencyNotAvaliable.svg';
+import triangleBank from '../RecipientImages/triangle.svg';
 import { Modal } from '../../Screens/Modal/Modal';
 import { Link } from 'react-router-dom';
 
@@ -21,20 +24,33 @@ export default function GlobalTransferSelectRecipient() {
    const [selectRecipientCountryFlag,setSelectRecipientCountryFlag] = useState(false);
   const [selectRecipientActive, setSelectRecipientActive] = useState(false);
   const [CurrencyNotAvalaible, setCurrencyNotAvalaible]= useState(false);
+   const [knownRecipientSwitch]= useState(true);
+   const [editRecipient, setEditRecipient] = useState(false);
+
 
   const [recipientCountrySelection] = useState([
     {method : 'Nigeria',  flag : nigerianFlag, id : 1},
    {method : 'United states ',  flag : americaFlag, id : 2 },
    {method : 'United Kingdom',flag : britainFlag, id : 3 },
-  //  {method :  'GBP Wallet', balance :'(0.00)', flag : euroFlag, id : 4 },
-   {method : 'Austria',  flag : austriaFlag, id : 4 },
-   {method : 'Kenya', flag : kenyaFlag, id: 5 }
+   {method :  'European',  flag : euroFlag, id : 4 },
+   {method : 'Austria',  flag : austriaFlag, id : 5},
+   {method : 'Kenya', flag : kenyaFlag, id: 6}
    ])
 //========== RECIPIENT DROPDOWN  ==============
 function RecipientDropDown(){
   setSelectRecipientActive(!selectRecipientActive);
 document.querySelector('.SelectRecipientDrop').classList.toggle('DropIt');
 }
+  const [knownRecipient] = useState([
+    {recipientName : 'Habib Kamaldeen', recipientAccountNumber : '0123456789', recipientBank : 'Sporta Bank', img : triangleBank, id: 1},
+    {recipientName : 'Jeremiah', recipientAccountNumber : '0123456789', recipientBank : 'Sporta Bank', img : triangleBank, id: 2}
+  ])
+    const [searchRecipients, setSearchRecipients] = useState('');
+  const [NoRecordFound] = useState(false);
+const filterData = knownRecipient.filter(item =>
+  item.recipientName.toLowerCase().includes(searchRecipients.toLowerCase())
+)
+
 
 // const ChosenRecipient  = () => {
 //   setSelectRecipientActive(false);
@@ -69,12 +85,13 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
     </h2>
     <div className='flex flex-col md:flex-row lg:gap-[100px] md:gap-[90px] gap-[25px] w-[100%] md:justify-between'>
       {/* CONTAINER FOR SELECT RECIPIENT */}
-   <div className='relative flex flex-col  md:w-[50%] w-[100%]'>
+   <div className='relative flex flex-col  md:w-[50%] w-[100%] '>
     {/* INPUTS TO SELECT RECIPIENT */}
     <div  onClick={RecipientDropDown}
     className='flex justify-between py-[8.178px] pl-[3.672px] pr-[7px] lg:py-[14px] lg:pl-[16px] lg:pr-[10px]
-   md:border-[1px] border-[0.5px] border-[solid] border-[#7C7C7C] rounded-[3.671px] lg:rounded-[10px] bg-white'>
-      <div className='flex lg:gap-[10px] gap-[5.868px]'>
+   md:border-[1px] border-[0.5px] border-[solid] border-[#7C7C7C] rounded-[3.671px] 
+   lg:rounded-[10px] bg-white cursor-pointer'>
+      <div className='flex lg:gap-[10px] gap-[5.868px] '>
     <img src={selectRecipientCountryFlag} alt="" 
     className='lg:w-[24px] lg:h-[24px] h-[12px] w-[12px]'/>
    <h2 className='font-[600] text-[9px]  leading-[12px] lg:text-[16px] lg:leading-[20.8px]'>
@@ -140,7 +157,11 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
          placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] lg:p-[10px] lg:pr-[20px] p-[5.868px] pr-[20px] md:border-[1px]
          border-[0.338px]
          border-[solid] border-[#7C7C7C] rounded-[4.052px] lg:rounded-[10px] focus:outline-none'
-         placeholder='Search Account Number or Name' />
+         placeholder='Search Account Number or Name' 
+         value = { searchRecipients }
+         onChange={(e) => {
+           setSearchRecipients(e.target.value);
+         }}/>
          <img 
          onClick={(e) => {
           document.querySelector('.focusSearch').focus();
@@ -164,10 +185,79 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
   Favorites
      </h2>
     </div>
+    { knownRecipientSwitch && (
+      <div className='flex flex-col'>
+   {filterData.map(recipients => {
+    return (
+      <div  onClick={(e => {
+        if( e.target ){
+        setEditRecipient(true);
+        } 
+      })} 
+       className='flex justify-between pr-[19.87px]  py-[5.586px] pl-[4.758px] lg:pr-[60px] lg:py-[14px] lg:pl-[25px] border-[0.5px] 
+      md:border-[1px] border-[solid] border-[#7C7C7C] bg-white lg:rounded-[12px] mt-[20px]
+      shadow-[0px_0px_1.325px_0px_rgba(0,0,0,0.25)] lg:shadow-[] rounded-[3.974px]
+    ' key = {recipients.id}>
+        <div className='flex flex-col gap-[5px]'>
+       <h2 className='text-[#7C7C7C] text-[9px] leading-[12px] lg:text-[16px] lg:leading-[24px] font-[600]'>
+        {recipients.recipientName}
+       </h2>
+       {/* ACCOUNT NUMBER & BANK */}
+       <div className='flex gap-[3px]'>
+   <p className='text-[#7C7C7C]  text-[9px] leading-[12px]
+    lg:text-[16px] lg:leading-[24px] font-[600]'> 
+     {recipients.recipientAccountNumber}
+   </p>
+   <img src={triangleBank} alt=""
+   className='lg:h-[24px] lg:w-[24px] w-[12px] h-[12px] self-center' />
+   <p className='text-[#7C7C7C]  text-[9px] leading-[12px] 
+   lg:text-[16px] lg:leading-[24px] font-[600]'>
+  {recipients.recipientBank}
+   </p>
+       </div>
+        </div>
+
+    <div className='relative flex items-center'>
+      <img
+      src={optionsRecipient} alt="" 
+      className='lg:w-[8px] lg:h-[28px] w-[4px] h-[14px]'/>
+      {editRecipient && (
+        <div className='absolute lg:top-[20px] lg:right-[60px] flex flex-col'>
+   <p onClick={(e => {
+    setEditRecipient(false);
+   })}
+   className='text-[#7C7C7C] lg:w-[160px]  lg:py-[12px] lg:px-[14px] text-[9px] leading-[12px] 
+   lg:text-[16px] lg:leading-[24px] font-[500] bg-white'>
+    Add to favorites
+   </p>
+   <p onClick={(e => {
+    setEditRecipient(false);
+   })}
+    className='text-[#7C7C7C] lg:w-[160px] lg:py-[12px] lg:px-[14px] text-[9px] leading-[12px] 
+   lg:text-[16px] lg:leading-[24px] font-[600] bg-white'>
+    Edit Recipients
+   </p>
+   <p onClick={(e => {
+    setEditRecipient(false);
+   })}
+   className='text-[#FA6B6B] lg:w-[160px] lg:py-[12px] lg:px-[14px] text-[9px] leading-[12px] 
+   lg:text-[16px] lg:leading-[24px] font-[600] bg-white'>
+    Delete Recipients
+   </p>
+        </div>
+      )}
+    </div>
+        </div>
+    )
+   })}
+      </div>
+    )}
+    { NoRecordFound && (
     <div className='flex justify-center '>
-    <img src={NoRecordImage} alt="" 
+<img src={NoRecordImage} alt="" 
     className='lg:w-[517px] lg:h-[456px] '/>
     </div>
+    )}
     </div>
     </div>
     </div> 
@@ -194,24 +284,26 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
               <Modal>
               <div className='h-[100%] w-[100%] md:justify-center flex 
               items-center  md:mx-[0px] mx-[19px]'>
-         <div className='flex flex-col  lg:w-[50%] h-[300px] w-[100%] lg:h-[550px] bg-white lg:rounded-[20px]
+         <div className='flex flex-col  lg:w-[36%] h-[300px] w-[100%] lg:h-[420px] bg-white lg:rounded-[20px]
           shadow-[0px_0px_6.933px_0px_rgba(0,0,0,0.25)] rounded-[8px]
-          lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] pt-[20px] pb-[20px] lg:pb-[80px] lg:pt-[80px]'>
-          <div className='flex flex-col justify-between  lg:w-[100%]   items-center h-[100%]'>
-  <div className='flex flex-col items-center lg:w-[80%] lg:gap-[20px] gap-[10px]'>
+          lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] lg:py-[23px]'>
+          <div className='flex flex-col lg:w-[100%] lg:gap-[20px] gap-[10px]  justify-between 
+           items-center h-[100%]'>
+  
    <h2 className='font-[600] text-[#04177F] text-center text-[10px] leading-[14px] lg:text-[16.647px] lg:leading-[24px]'>
    This Currency is Currently Not Available.
     </h2>
     <img src={imageCurrencyNotAvalaible} alt=""
-    className='lg:w-[135px] lg:h-[135px] h-[100px] w-[100px]'/>
+    className='lg:w-[217.263px] lg:h-[187.283px] h-[100px] w-[100px]'/>
     
-  </div>
-  <div className='flex md:gap-[30px] gap-[20px] '>
+ 
+  <div className='flex lg:gap-[125px] md:gap-[60px] w-[100%] 
+  justify-end gap-[20px] lg:pr-[30px] '>
   <button onClick={() => {
     setCurrencyNotAvalaible(false);
   }}
-className='bg-[#04177F] w-[110px] lg:py-[10px] py-[7px] lg:w-[163px]
-md:w-[150px] text-white text-center rounded-[4.41px]
+className='bg-[#04177F] w-[110px] lg:py-[10px] py-[7px] md:w-[97.02px]
+ text-white text-center rounded-[4.41px]
  lg:rounded-[12px] font-[600] lg:text-[16px] lg:leading-[24px]'>
   Okay
 </button>
