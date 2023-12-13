@@ -11,11 +11,11 @@ export default function RecipientHero() {
        <div className="flex flex-col gap-[5.016px]  w-[70%] lg:gap-[15px] md:gap-[8.802px]">
            {/* header */}
            <h2
-             className="font-[600] capitalize leading-[14px] text-[10px] text-[#000] 
+             className="font-[600]  leading-[14px] text-[10px] text-[#000] 
     md:text-[14.75px] md:leading-[20px]
      lg:text-[24px] lg:leading-[36px]"
            >
-          transfer money to other banks.
+          TRANSFER MONEY TO OTHER BANKS.
            </h2>
            {/* sub-text */}
            <p

@@ -44,6 +44,7 @@ export const MainDashboard = () => {
   const visibilityHandler = () => {
     setVisibility(!visible);
   };
+
   const setNav = () => {
     setHideNavbar(true);
   };
@@ -77,13 +78,14 @@ export const MainDashboard = () => {
   const handleSelectedOption2 = (event) => {
     const clickedoption = event.target.value;
     setSelected2(clickedoption);
-    setBlurThree(
-      clickedoption === "USD" ||
-        clickedoption === "GBP" ||
-        clickedoption === "AUD" ||
-        clickedoption === "KES" ||
-        clickedoption === "EUR"
-    );
+    // setBlurThree(
+    //   clickedoption === "USD" ||
+    //     clickedoption === "GBP" ||
+    //     clickedoption === "AUD" ||
+    //     clickedoption === "KES" ||
+    //     clickedoption === "EUR" ||
+    //     clickedoption === "fiat"
+    // );
     return;
   };
 
@@ -200,7 +202,7 @@ export const MainDashboard = () => {
               <p
                 className={`${
                   toggleSideBar ? "lg:text-[18px]" : "lg:text-[23px]"
-                } ${styles.walletText} font-`}
+                } ${styles.walletText} `}
               >
                 Available Balance
               </p>
@@ -256,11 +258,11 @@ export const MainDashboard = () => {
                         toggleSideBar ? "lg:text-[19px]" : "lg:text-[37px]"
                       } text-[19px] leading-normal `}
                     >
-                      &#8358;5,000.00
+                      ******
                     </span>
                   ) : (
                     <span className="text-[19px] leading-normal lg:text-[37px]">
-                      **********
+                      &#8358;0.00
                     </span>
                   )}
                   <div onClick={visibilityHandler} className=" text-[#92ABFE]">
@@ -287,11 +289,11 @@ export const MainDashboard = () => {
                         toggleSideBar ? "lg:text-[19px]" : "lg:text-[37px]"
                       } text-[19px] leading-normal `}
                     >
-                      5000.00
+                      ******
                     </span>
                   ) : (
-                    <span className="text-[19px] leading-normal lg:text-[37px]">
-                      **********
+                    <span className="flex items-center text-[19px] leading-normal lg:text-[37px]">
+                      5000.00
                     </span>
                   )}
                   <div onClick={visibilityHandler} className=" text-[#92ABFE]">
@@ -317,8 +319,9 @@ export const MainDashboard = () => {
                   onClick={() => {
                     handleClick(0);
                     setBlur(false);
-                    setBlurThree();
+                    // setBlurThree();
                   }}
+                  value="fiat"
                   className={`${styles.fcp2} ${
                     isDarkMode ? " border" : " "
                   } bg-[#92ABFE2E] cursor-pointer w-[17%] md:w-[10%] flex py-[3.92px] justify-center items-center text-[7px] md:text-[10px] font-semibold leading-normal rounded-[10px] lg:text-[13px] lg:w-[16%] lg:py-[7.47px] lg:rounded-[19px] hover:bg-[#04177f] hover:text-white active:bg-[#04177f] ${

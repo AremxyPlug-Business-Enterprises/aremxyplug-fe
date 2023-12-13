@@ -18,7 +18,7 @@ const ConfirmStarTimesPopup = () => {
     smartCard,
     selectedOptionStarTimes,
     cardName,
-    imageState,
+    methodImage,
     tvWalletBalance,
     flagResult,
   } = useContext(ContextProvider)
@@ -129,12 +129,12 @@ const ConfirmStarTimesPopup = () => {
                 alt="/"
               />
             </div> */}
-              <div className="my-[5px] flex justify-between items-center gap-2 bg-slate-200 -mx-[20px] px-[15px] h-[49px] py-[20px]">
+              <div className="bg-[#F6F7F7] h-[45px] my-5 lg:my-8 flex justify-between items-center px-[4%]">
                 <div className="flex gap-2 items-center">
                   <div className="bg-white rounded-full h-[27px] w-[27px] flex justify-center items-center">
                     <img
                       className="w-[16px] h-[16px]"
-                      src={imageState}
+                      src={methodImage}
                       alt="/"
                     />
                   </div>
