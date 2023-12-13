@@ -207,7 +207,7 @@ const Showmax = () => {
         <div className=" mx-auto flex gap-1.5 py-[25.29px] lg:py-[37px] md:py-[28.64px]">
           <div className="flex text-[#7E7E7E] text-[10px] lg:text-[18px] md:text-[13px] font-semibold">
             <span>Subscribe Your</span> &nbsp;
-            <img src="./Images/TvSubscription/showmaxIcon.svg" alt="" className="md:w-[60px] md:h-[15px] lg:w-[80px] lg:h-[16px]"/>
+            <img src="./Images/TvSubscription/showmaxIcon.svg" alt="" className="md:w-[60px] md:h-[20px] lg:w-[90px] lg:h-[27px]"/>
             <span>Decoder Instantly</span>
           </div>
           <img src="./Images/currencyImages/right.svg" alt="" className="lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px]" />
