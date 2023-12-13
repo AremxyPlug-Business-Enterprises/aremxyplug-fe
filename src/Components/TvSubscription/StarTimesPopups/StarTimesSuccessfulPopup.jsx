@@ -63,7 +63,7 @@ import { Link } from "react-router-dom";
                 </Link>
           <Link to='/TvSubscription'>
               <img
-                onClick={()=>setStarTimesSuccessful(false)}
+                    onClick={() => { setStarTimesSuccessful(false);}}
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
@@ -75,14 +75,14 @@ import { Link } from "react-router-dom";
             <div className="text-[12px] my-[4%] font-medium text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%]"
             >Subscription Successful</div>
             <img
-              className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[250px] lg:h-[250px] md:w-[78px] md:h-[78px]"
+              className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[120px] lg:h-[120px] md:w-[78px] md:h-[78px]"
               src="./Gif/checkMarkGif.gif"
               alt="/"
             />
-            <div className="text-[#7C7C7C] font-bold text-[10px] text-center mb-2 md:pb-2 lg:pb-3 md:text-[14px] lg:text-[14px]">You have successfully subscribed &nbsp;
-              <span className="text-black text-[10px] md:text-[16px] lg:text-[14px]">{valueWithoutTilde}</span>&nbsp;
+            <div className="text-[#7C7C7C] w-[97%] mx-auto text-[10px] font-bold text-center mb-2 md:pb-2 lg:pb-3 md:text-[14px] lg:text-[14px]">You have successfully subscribed &nbsp;
+                  <span className="text-black font-bold text-[10px] md:text-[16px] lg:text-[14px]">{valueWithoutTilde}</span>&nbsp;
                   From Your {" "}
-              {flagResult} {" "}   to
+                  {flagResult} {" "} to
             </div>
             <div className="flex flex-col gap-2 lg:gap-4 ">
             <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[15px] font-semibold">
@@ -132,7 +132,8 @@ import { Link } from "react-router-dom";
         <div className="flex w-full justify-center items-center gap-[10px] md:gap-[8.59px] lg:gap-[15px] pb-4 md:pb-2">
         <Link to='/TvSubscription'>
                 <button
-                onClick={()=>setStarTimesSuccessful(false)} 
+                    onClick={() => { setStarTimesSuccessful(false); 
+                      window.location.reload();}} 
                 className={`bg-[#04177f] w-[111px] lg:w-[200px] md:w-[99px] h-[40px] md:h-[24px] lg:h-[42px] lg:my-[2%] flex justify-center items-center cursor-pointer text-[12px] md:text-[12px] lg:text-[16px] font-semibold text-white rounded-[6px] md:rounded-[7px] lg:rounded-[12px]`}
               >
                 Done

@@ -36,7 +36,8 @@ export const InputGotvPopup = () => {
       };
 
       const cancelInputGotv = () => {
-        setInputPinGotv(false)
+        setInputPinGotv(false);
+        window.location.reload();
       }
    return(
     <>
