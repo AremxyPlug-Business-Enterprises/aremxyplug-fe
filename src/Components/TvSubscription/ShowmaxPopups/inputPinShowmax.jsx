@@ -36,7 +36,8 @@ export const InputShowmaxPopup = () => {
       };
 
       const cancelInputShowmax = () => {
-        setInputPinShowmax(false)
+        setInputPinShowmax(false);
+        window.location.reload();
       }
    return(
     <>

@@ -15,8 +15,8 @@ export const ShowmaxReceipt= (receipt) => {
     flagResult,
     selectedOptionShowmax,
     tvEmail,
-    tvAmount,
     mobileNumber,
+    formatNumberWithCommas,
     smartCard,
     cardName,
     isDarkMode, date } =
@@ -67,6 +67,13 @@ export const ShowmaxReceipt= (receipt) => {
     }
   };
 
+  const getNumericValue = (option) => {
+    const numericPart = option.match(/\d+/);
+    if (numericPart) {
+      return formatNumberWithCommas(parseInt(numericPart[0], numericPart[2], 10));
+    }
+    return '';
+  };
 
   return (
     <DashBoardLayout>
@@ -165,7 +172,7 @@ export const ShowmaxReceipt= (receipt) => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Amount</p>
-                  <span>{tvAmount}</span>
+                  <span>{'₦'+ getNumericValue(selectedOptionShowmax)}</span>
                 </div>
               </div>
 

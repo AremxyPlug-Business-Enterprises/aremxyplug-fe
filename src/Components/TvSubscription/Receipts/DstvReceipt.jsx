@@ -14,8 +14,8 @@ export const DstvReceipt= (receipt) => {
   const { toggleSideBar, textRef,
     flagResult,
     selectedOptionDstv,
+    formatNumberWithCommas,
     tvEmail,
-    tvAmount,
     mobileNumber,
     smartCard,
     cardName,
@@ -66,7 +66,13 @@ export const DstvReceipt= (receipt) => {
       });
     }
   };
-
+  const getNumericValue = (option) => {
+    const numericPart = option.match(/\d+/);
+    if (numericPart) {
+      return formatNumberWithCommas(parseInt(numericPart[0], numericPart[2], 10));
+    }
+    return '';
+  };
 
   return (
     <DashBoardLayout>
@@ -165,7 +171,7 @@ export const DstvReceipt= (receipt) => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Amount</p>
-                  <span>{tvAmount}</span>
+                  <span>{'₦'+ getNumericValue(selectedOptionDstv)}</span>
                 </div>
               </div>
 
