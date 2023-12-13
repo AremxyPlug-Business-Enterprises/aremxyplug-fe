@@ -337,10 +337,14 @@ export default function AremxySelectUser() {
                                         md:rounded-[68.201px] lg:rounded-[80px]' alt="profilePic"/>
                                 </div>
                                 <div className="flex flex-col my-auto gap-[1.67px] md:gap-[2.93px]">
-                                    <h2 className="lg:text-[16px] font-medium lg:leading-6 md:text-[9px] text-[9px]">
+                                    <p className='font-[500] text-[12px] leading-[15px] md:text-[9.389px] md:leading-[12.206px] 
+                                    lg:text-[18px] lg:leading-[20.8px]'>
+                                        Habib Kamaldeen
+                                    </p>
+                                    <h2 className="lg:text-[14px] font-medium lg:leading-6 md:text-[9px] text-[9px] text-[#7C7C7C]">
                                         habib@aremxyplug.com
                                     </h2>
-                                    <p className="lg:text-[14.05px] lg:font-medium lg:leading-[21.07px] text-[#7C7C7C] text-[9px] font-semibold leading-3 md:text-[8px]">
+                                    <p className="lg:text-[14px] lg:font-medium lg:leading-[21.07px] text-[#7C7C7C] text-[9px] font-semibold leading-3 md:text-[8px]">
                                         0700000000
                                     </p>
                                 </div>
@@ -403,12 +407,16 @@ export default function AremxySelectUser() {
                                         md:rounded-[68.201px] lg:rounded-[80px]' alt="profilePic"/>
                                 </div>
                                 <div className="flex flex-col my-auto gap-[1.67px] md:gap-[2.93px]">
-                                    <h2 className="lg:text-[16px] font-medium lg:leading-6 md:text-[9px] text-[9px]">
-                                        habib@aremxyplug.com
-                                    </h2>
-                                    <p className="lg:text-[14.05px] lg:font-medium lg:leading-[21.07px] text-[#7C7C7C] text-[9px] font-semibold leading-3 md:text-[8px]">
-                                        0700000000
-                                    </p>
+                                  <p className='font-[500] text-[12px] leading-[15px] md:text-[9.389px] md:leading-[12.206px] 
+                                  lg:text-[18px] lg:leading-[20.8px]'>
+                                      Habib Kamaldeen
+                                  </p>
+                                  <h2 className="lg:text-[14px] font-medium lg:leading-6 md:text-[9px] text-[9px] text-[#7C7C7C]">
+                                      habib@aremxyplug.com
+                                  </h2>
+                                  <p className="lg:text-[14px] lg:font-medium lg:leading-[21.07px] text-[#7C7C7C] text-[9px] font-semibold leading-3 md:text-[8px]">
+                                      0700000000
+                                  </p>
                                 </div>
                             </div>
                             <div className="flex">
@@ -517,7 +525,7 @@ export default function AremxySelectUser() {
                         window.location.reload();
                       }}
                     >
-                      Confirmed
+                      Okay
                     </button>
                   </div>
                 </div>
@@ -576,7 +584,7 @@ export default function AremxySelectUser() {
                         window.location.reload();
                       }}
                     >
-                      Confirmed
+                      Okay
                     </button>
                   </div>
                 </div>
@@ -833,6 +841,10 @@ export default function AremxySelectUser() {
                                 <span>{mainCountry}</span>
                             </div>
                             <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
+                                <p className="text-[#0008]">Customer Name</p>
+                                <span>Habib Kamaldeen</span>
+                            </div>
+                            <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                                 <p className="text-[#0008]">Email or Username</p>
                                 <span>{emailUsername}</span>
                             </div>
@@ -918,7 +930,7 @@ export default function AremxySelectUser() {
 
                   <hr className="h-[6px] bg-[#04177f] lg:mt-[2%] border-none mt-[2%] md:mt-[2%] md:h-[10px]" />
                   <p className="text-[10px] md:text-[14px] lg:text-[18px] font-extrabold text-center my-[3%] lg:my-[%]">
-                    Are you sure you want to delete this recipient permanently?
+                    Are you sure you want to delete this user permanently?
                   </p>
                   <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mt-[6%] mb-[2%]">
                     <img
@@ -987,7 +999,7 @@ export default function AremxySelectUser() {
                     Successful
                   </p>
                   <p className="text-[10px] text-[#04177f] md:text-[14px] px-[20px] lg:text-[18px] font-extrabold text-center my-[1%] lg:my-[%]">
-                    Recipicient *****2345 has been deleted successfully. You can
+                    User *****2345 has been deleted successfully. You can
                     add recipient again anytime!
                   </p>
                   <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[5%]">
