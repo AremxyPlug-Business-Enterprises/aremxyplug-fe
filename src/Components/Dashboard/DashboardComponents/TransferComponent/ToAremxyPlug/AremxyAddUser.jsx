@@ -36,12 +36,14 @@ const AremxyAddUser = () => {
           "string.pattern.base": "Phone number should be 11 digits",
           "any.max": "Phone number should be at most 11 digits",
         }),
-          emailUsername: Joi.string()
-          .email({ tlds: { allow: false } }) // Use the email validation provided by Joi
-          .required()
-          .messages({
-            "string.email": "Please enter a valid email address",
-          }),
+        emailUsername: Joi.alternatives()
+        .try(
+           Joi.string()
+              .lowercase()
+              .email({ tlds: { allow: false } }), 
+           Joi.string().alphanum().min(5).max(10)
+         )
+        .required()
       });
 
       const handleSave = (e) => {
@@ -129,9 +131,9 @@ const AremxyAddUser = () => {
               background:
                 "#B4BEFA",
             }}
-            className="w-full mb-[20px] lg:mb-[40px] h-[90px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] flex px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px]"
+            className="w-full mb-[0px] lg:mb-[20px] h-[90px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] flex px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px]"
           >
-            <div className="py-[13px] lg:py-[40px]">
+            <div className="py-[13px] lg:pb-[40px] ">
               <h2 className="text-[10px] md:text-[13.75px] font-bold mb-3 lg:text-[24px] lg:mb-4">
                 TRANSFER MONEY TO AREMXYPLUG USER.
               </h2>
@@ -148,7 +150,7 @@ const AremxyAddUser = () => {
             </div>
           </div>
             <div className="flex text-[#7c7c7c] text-[10px] leading-[26px] items-center gap-[8px] md:text-[12px] lg:text-[20px]">
-                    <p>Select the user account below </p>
+                    <p>Edit user details to save as recipient</p>
                     <img
                     className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
                     src="./Images/Dashboardimages/arrowright.png"
@@ -242,6 +244,11 @@ const AremxyAddUser = () => {
                     className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
                     type="text"
                     />
+                    <img
+                      className=" h-[13.3px] w-[13.3px] lg:w-[24px] lg:h-[24px] "
+                      src="/Images/transferImages/frame.png"
+                      alt="dropdown"
+                    />
                 </div>
                 {errors.emailUsername && (
                     <div className="text-[12px] text-red-500 italic lg:text-[14px]">
@@ -264,6 +271,11 @@ const AremxyAddUser = () => {
                     value={userPhoneNumber}
                     className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
                     type="number"
+                    />
+                    <img
+                      className=" h-[13.3px] w-[13.3px] lg:w-[24px] lg:h-[24px] "
+                      src="/Images/transferImages/call.png"
+                      alt="dropdown"
                     />
                 </div>
                 {errors.userPhoneNumber && (
