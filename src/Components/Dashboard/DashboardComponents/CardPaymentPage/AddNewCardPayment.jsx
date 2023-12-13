@@ -25,6 +25,8 @@ import Success from "./CardPaymentImages/success.gif";
 import CvvPopUp from "./CardPaymentImages/CvvPopUp.svg";
 import PinPopUp from "./CardPaymentImages/PinPopUp.svg";
 import CardBackground from "./CardPaymentImages/CardBackground.svg";
+import WalletModal from "../../../Wallet/WalletModal";
+import AddCardPopUp from "./CardPaymentImages/AddCardPopUp.svg";
 
 const AddNewCardPayment = () => {
   const { isDarkMode, toggleSideBar } = useContext(ContextProvider);
@@ -35,21 +37,37 @@ const AddNewCardPayment = () => {
   const [expiryDate, setExpiryDate] = useState("");
   const [cvv, setCVV] = useState("");
   const [pin, setPin] = useState("");
-  const [cardName, setCardName] = useState("");
+  const { cardHolderName, setCardHolderName } = useContext(ContextProvider);
   const [addCard, setAddCard] = useState("");
   const [cvvPopUp, setCvvPopUp] = useState("");
   const [pinPopUp, setPinPopUp] = useState("");
+  const [image, setImage] = useState("");
+  const [usd, setUsd] = useState("");
+
 
   const handleShowPayment = () => {
     setShowPayment(!showPayment);
     setWalletName("");
     setPaymentSelected(false);
+    setImage("");
   };
 
-  const handleSelectPayment = (code) => {
+  const handleSelectPayment = (code, flag) => {
     setWalletName(code);
     setShowPayment(false);
     setPaymentSelected(true);
+    setImage(flag);
+
+    if (code === "USD" || code === "GBP" || code === "EUR" || code === "AUD" || code === "KSH") {
+      setUsd(true);
+    } else {
+      setUsd(false);
+    }
+  };
+
+  const handleButtonClick = () => {
+    setUsd(false);
+    setPaymentSelected(false);
   };
 
   const countryList = [
@@ -108,6 +126,15 @@ const AddNewCardPayment = () => {
     );
   };
 
+  const [filteredCountryList, setFilteredCountryList] = useState(countryList);
+
+  const handleSearch = (searchValue) => {
+    const filteredList = countryList.filter((country) =>
+      country.code.toLowerCase().includes(searchValue.toLowerCase())
+    );
+    setFilteredCountryList(filteredList);
+  };
+
   const handleCardNumberChange = (e) => {
     let inputVal = e.target.value.replace(/\s/g, ""); // Remove existing spaces
     inputVal = inputVal.replace(/(\d{4})(?=\d)/g, "$1 "); // Add space after every 4 digits, except the last 4
@@ -146,7 +173,7 @@ const AddNewCardPayment = () => {
 
   const handleCardNameChange = (e) => {
     // Update the state with the input value
-    setCardName(e.target.value);
+    setCardHolderName(e.target.value);
   };
 
   const handleAddCard = (e) => {
@@ -243,7 +270,13 @@ const AddNewCardPayment = () => {
                   <button
                     className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]"
                     onClick={handleShowPayment}
-                  ></button>
+                  >
+                    <img
+                      src={image}
+                      alt=""
+                      className="w-full h-full object-cover"
+                    />
+                  </button>
                 ) : (
                   <button
                     className="lg:w-6 lg:h-6 h-[11px] w-[11px]"
@@ -254,6 +287,7 @@ const AddNewCardPayment = () => {
                 )}
               </div>
             </div>
+
             {showPayment && (
               <div
                 className={`border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute ${
@@ -263,11 +297,16 @@ const AddNewCardPayment = () => {
                 } bg-[#FFF] z-[100]`}
               >
                 <div className="flex flex-row justify-between px-[10px] py-[7px]">
-                  <p className="text-[10px] text-[#7C7C7C]">Search</p>
+                  <input
+                    type="text"
+                    placeholder="Search"
+                    className="text-[10px] text-[#7C7C7C] flex-grow-1 py-1 outline-none rounded-md focus:outline-none"
+                    onChange={(e) => handleSearch(e.target.value)}
+                  />
                   <img src={Search} alt="" />
                 </div>
                 <hr />
-                {countryList.map((country) => (
+                {filteredCountryList.map((country) => (
                   <Payment
                     key={country.id}
                     flag={country.flag}
@@ -310,7 +349,7 @@ const AddNewCardPayment = () => {
                   onChange={handleCardNumberChange}
                   className={`outline-none w-full text-[10px] md:text-[12px] lg:text-[16px]`}
                   placeholder="4444 4444 4444 4444"
-                  maxLength="19"
+                  maxLength="39"
                 />
                 <img src={CardNumber} alt="" />
               </div>
@@ -321,6 +360,7 @@ const AddNewCardPayment = () => {
                 <p className="text-[10px] font-semibold md:text-[12px] lg:text-[16px]">
                   Expiry Date
                 </p>
+                <div alt="" className=""></div>
                 <div
                   className={`border-[1px] rounded-[5px] flex flex-row px-[10px] py-[8px] ${
                     expiryDate.length === 5
@@ -345,7 +385,7 @@ const AddNewCardPayment = () => {
                   <p className="text-[10px] font-semibold md:text-[12px] lg:text-[16px]">
                     CVV
                   </p>
-                  <img onClick={handleCvv} src={Question} alt="" />
+                  <img onClick={handleCvv} src={Question} alt="" className="h-[20px]"/>
                 </div>
                 <div
                   className={`border-[1px] rounded-[5px] flex flex-row px-[10px] py-[8px] ${
@@ -355,7 +395,7 @@ const AddNewCardPayment = () => {
                   <input
                     type="number"
                     className="outline-none w-full text-[10px] md:text-[12px] lg:text-[16px]"
-                    placeholder="151"
+                    placeholder=""
                     value={cvv}
                     onChange={handleCVVChange}
                     maxLength={3}
@@ -369,7 +409,7 @@ const AddNewCardPayment = () => {
                   <p className="text-[10px] font-semibold md:text-[12px] lg:text-[16px]">
                     PIN
                   </p>
-                  <img onClick={handlePin} src={Question} alt="" />
+                  <img onClick={handlePin} src={Question} alt="" className="h-[20px]"/>
                 </div>
                 <div
                   className={`border-[1px] rounded-[5px] flex flex-row px-[10px] py-[8px] ${
@@ -379,12 +419,12 @@ const AddNewCardPayment = () => {
                   <input
                     type="number"
                     className="outline-none w-full text-[10px] md:text-[12px] lg:text-[16px]"
-                    placeholder="1212"
+                    placeholder=""
                     value={pin}
                     onChange={handlePinChange}
                     maxLength={4}
                   />
-                  <img src={CVV} alt="" />
+                  <img src={CVV} alt=""/>
                 </div>
               </div>
             </div>
@@ -399,9 +439,9 @@ const AddNewCardPayment = () => {
               <div className="border-[1px] rounded-[5px] flex px-[10px] py-[10px] mt-[10px] md:w-[60%]">
                 <input
                   type="text"
-                  value={cardName}
+                  value={cardHolderName}
                   className="outline-none w-full text-[10px] md:text-[12px] lg:text-[16px]"
-                  placeholder="Habib Kamaldeen"
+                  placeholder=""
                   onChange={handleCardNameChange}
                 />
                 <img src={CardName} alt="" />
@@ -416,13 +456,13 @@ const AddNewCardPayment = () => {
                 !ExpiryDate ||
                 !CVV ||
                 !Pin ||
-                !cardName ||
+                !cardHolderName ||
                 !paymentSelected
                   ? "bg-[#63616188] cursor-not-allowed"
                   : "bg-primary"
               } w-full md:w-fit text-white mt-[5px] rounded-md px-[28px] text-[10px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[600] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px]
               `}
-              disabled={!CardNumber || !ExpiryDate || !CVV || !Pin || !cardName}
+              disabled={!CardNumber || !ExpiryDate || !CVV || !Pin || !cardHolderName}
               onClick={handleAddCard}
             >
               Add Card
@@ -434,10 +474,45 @@ const AddNewCardPayment = () => {
               toggleSideBar ? "md:w-[61%]" : "md:w-[57%]"
             }`}
           >
-            <img src={Secure} alt="" />
-            <p>Secured by AremxyPlug</p>
+            <img src={Secure} alt="" className="h-[18px]"/>
+            <p className="font-semibold">Secured by AremxyPlug</p>
           </div>
         </section>
+
+        {paymentSelected && usd ? (
+          <WalletModal>
+            <div className="text-center flex justify-center item-center md:mt-[-20px] lg:mt-[15px] 2xl:mt-[-15px]">
+              <div
+                className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
+        flex flex-col justify-center z-[100] lg:ml-[10px] md:w-full`}
+              >
+                <div>
+                  <p className="text-[10px] text-[#04177F] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[3%]">
+                    This Currency is Currently Not Available.
+                  </p>
+                </div>
+                <img
+                  src={AddCardPopUp}
+                  alt=""
+                  className="img mobile-desktop mx-auto mt-[20px] md:mt-[5%] md:w-[30%] md:h-[70%] md:mx-auto w-[143px] h-[100px] lg:w-[300px] lg:h-[200px] lg:mx-auto lg:mt-[8%] 2xl:mt-[10%] 2xl:mx-auto"
+                />
+              </div>
+            </div>
+            <div className="mobile-desktop mt-[20px] flex flex-col gap-[5px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
+              <p className="text-[8px] font-extrabold text-end float-right ml-[60%] md:ml-[70%] md:text-[12px] mt-[10px] lg:text-[13px] 2xl:text-[15px]">
+                Coming Soon...
+              </p>
+              <button
+                className={`${
+                  isDarkMode ? "border" : "bg-[#04177f] "
+                } cursor-pointer text-white text-[10px] h-[40px] rounded-[5px] md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[25%] lg:mx-auto`}
+                onClick={handleButtonClick}
+              >
+                Okay
+              </button>
+            </div>
+          </WalletModal>
+        ) : null}
 
         {addCard && (
           <Modal className="">
@@ -488,35 +563,37 @@ const AddNewCardPayment = () => {
                 />
               </div>
 
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  setAddCard(false);
-                  setCardNumber("");
-                  setExpiryDate("");
-                  setCVV("");
-                  setPin("");
-                  setCardName("");
-                  setPaymentSelected("");
-                }}
-                className={`my-[5%] bg-[#04177f] w-[90%] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
-              >
-                Proceed
-              </button>
+              <Link to="/ExistingCardPage">
+                <button
+                  onClick={(e) => {
+                    // e.preventDefault();
+                    setAddCard(false);
+                    setCardNumber("");
+                    setExpiryDate("");
+                    setCVV("");
+                    setPin("");
+                    setCardHolderName("");
+                    setPaymentSelected("");
+                  }}
+                  className={`my-[5%] bg-[#04177f] w-[90%] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                >
+                  Proceed
+                </button>
+              </Link>
             </div>
           </Modal>
         )}
 
         {cvvPopUp && (
-          <Modal className="">
+          <WalletModal className="">
             <div
-              className={`confirm2 ${styles.inputPin} ${
+              className={` ${
                 toggleSideBar
-                  ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
+                  ? "md:w-[100%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
                   : "lg:w-[40%]"
-              }relative md:w-[55%] w-[90%] flex flex-col justify-between md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
+              }relative md:w-[100%] w-[100%] flex flex-col justify-between md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
             >
-              <div className="absolute z-0 right-0" style={{ zIndex: 0 }}>
+              <div className="absolute z-0 right-0 top-0" style={{ zIndex: 0 }}>
                 <img
                   src={PopUpGreen}
                   alt=""
@@ -552,7 +629,7 @@ const AddNewCardPayment = () => {
                 <img
                   src={CvvPopUp}
                   alt=""
-                  className="absolute top-[35%] left-[32%] h-[30%] lg:left-[36.5%] md:top-[31%]"
+                  className="absolute cvvPopUp top-[35%] left-[32%] md:left-[20%] h-[30%] lg:left-[36.5%] md:top-[43%]"
                 />
               </div>
 
@@ -561,24 +638,24 @@ const AddNewCardPayment = () => {
                   e.preventDefault();
                   setCvvPopUp(false);
                 }}
-                className={`my-[5%] bg-[#04177f] w-[90%] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                className={`okay mt-[50%] bg-[#04177f] w-[100%] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:mt-[60%] md:w-[100%] md:rounded-[8px] md:text-[16px] lg:w-[80%] lg:h-[38px] lg:py-[5%]`}
               >
                 Okay
               </button>
             </div>
-          </Modal>
+          </WalletModal>
         )}
 
         {pinPopUp && (
-          <Modal className="">
+          <WalletModal className="">
             <div
-              className={`confirm2 ${styles.inputPin} ${
+               className={` ${
                 toggleSideBar
-                  ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
+                  ? "md:w-[100%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
                   : "lg:w-[40%]"
-              }relative md:w-[55%] w-[90%] flex flex-col justify-between md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
+              }relative md:w-[100%] w-[100%] flex flex-col justify-between md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
             >
-              <div className="absolute z-0 right-0" style={{ zIndex: 0 }}>
+              <div className="absolute z-0 right-0 top-0" style={{ zIndex: 0 }}>
                 <img
                   src={PopUpGreen}
                   alt=""
@@ -615,7 +692,7 @@ const AddNewCardPayment = () => {
                 <img
                   src={PinPopUp}
                   alt=""
-                  className="absolute top-[35%] left-[32%] h-[40%] lg:left-[36.5%] md:top-[31%]"
+                  className="absolute pinpopup top-[35%] left-[32%] md:left-[30%] h-[30%] lg:left-[36.5%] md:top-[43%]"
                 />
               </div>
 
@@ -624,12 +701,12 @@ const AddNewCardPayment = () => {
                   e.preventDefault();
                   setPinPopUp(false);
                 }}
-                className={`my-[5%] bg-[#04177f] w-[90%] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                className={`okay mt-[50%] bg-[#04177f] w-[100%] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:mt-[50%] md:w-[100%] md:rounded-[8px] md:text-[16px] lg:w-[80%] lg:h-[38px] lg:py-[5%]`}
               >
                 Okay
               </button>
             </div>
-          </Modal>
+          </WalletModal>
         )}
 
         {/* {existingCard && (

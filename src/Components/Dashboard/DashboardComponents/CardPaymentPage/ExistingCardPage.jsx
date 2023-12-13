@@ -21,13 +21,12 @@ import SuccessGif from "./CardPaymentImages/success.gif";
 import DeleteCard from "./CardPaymentImages/DeleteCard.svg";
 
 const ExistingCardPage = () => {
-  const { isDarkMode, toggleSideBar } = useContext(ContextProvider);
+  const { isDarkMode, toggleSideBar, } = useContext(ContextProvider);
   const [showPayment, setShowPayment] = useState(false);
   const { walletName, setWalletName } = useContext(ContextProvider);
-  const [paymentSelected, setPaymentSelected] = useState("");
-  const [usd, setUsd] = useState(""); // new state
+  const { cardPaymentSelected, setCardPaymentSelected } = useContext(ContextProvider);
+  const [usd, setUsd] = useState("");
   const [ngn, setNgn] = useState("");
-  const [gbp, setGbp] = useState("");
   const [noCurrencySelected, setNoCurrencySelected] = useState(true);
   const [showPopup, setShowPopup] = useState(false);
   const [activeImage, setActiveImage] = useState(null);
@@ -35,12 +34,13 @@ const ExistingCardPage = () => {
   const [sucessdefaultCard, setSuccessDefaultCard] = useState("");
   const [deleteCard, setDeleteCard] = useState("");
   const [confirmDeleteCard, setConfirmDeleteCard] = useState("");
+  const [image, setImage] = useState("");
 
   const handleShowPayment = () => {
     setShowPayment(!showPayment);
-    if (!paymentSelected) {
+    if (!cardPaymentSelected) {
       setWalletName("");
-      setPaymentSelected(false);
+      setCardPaymentSelected(false);
       setNoCurrencySelected(true);
     }
   };
@@ -101,18 +101,93 @@ const ExistingCardPage = () => {
     );
   };
 
-  const handleSelectPayment = (code) => {
+
+  const cardList = [
+    {
+      id: 1,
+      short: "ZNT",
+      code: "ZENITH",
+      name: "Umolo Blessing",
+      number: "**********5378",
+      flag: require("./CardPaymentImages/BankLogo.svg").default,
+    },
+    {
+      id: 2,
+      short: "KUD",
+      code: "KUDA",
+      name: "Umolo Blessing",
+      number: "**********8262",
+      flag: require("./CardPaymentImages/BankLogo.svg").default,
+    },
+    {
+      id: 3,
+      short: "ECO",
+      code: "ECOBANK",
+      name: "Blessing Umolo",
+      number: "**********2345",
+      flag: require("./CardPaymentImages/BankLogo.svg").default,
+    },
+    {
+      id: 4,
+      short: "GTB",
+      code: "GTBANK",
+      name: "Johnson",
+      number: "**********9047",
+      flag: require("./CardPaymentImages/BankLogo.svg").default,
+    },
+    {
+      id: 5,
+      short: "FBN",
+      code: "FIRST BANK",
+      name: "Umolo",
+      number: "**********0928",
+      flag: require("./CardPaymentImages/BankLogo.svg").default,
+    },
+    {
+      id: 6,
+      short: "UBA",
+      code: "UNITED BANK OF AFRICA",
+      name: "Blessing",
+      number: "**********0909",
+      flag: require("./CardPaymentImages/BankLogo.svg").default,
+    },
+  ];
+  
+
+
+
+  const [filteredCountryList, setFilteredCountryList] = useState(countryList);
+
+  const handleSearch = (searchValue) => {
+    const filteredList = countryList.filter((country) =>
+      country.code.toLowerCase().includes(searchValue.toLowerCase())
+    );
+    setFilteredCountryList(filteredList);
+  };
+
+  const handleButtonClick = () => {
+    setUsd(false);
+    setCardPaymentSelected(false);
+  };
+
+  const handleSelectPayment = (code, flag) => {
     setWalletName(code);
     setShowPayment(false);
-    setPaymentSelected(true);
+    setCardPaymentSelected(true);
 
-    setUsd(code === "USD");
     setNgn(code === "NGN");
-    setGbp(code === "GBP");
 
     setNoCurrencySelected(
-      !(code === "USD" || code === "NGN" || code === "GBP")
+      !( code === "NGN")
     );
+
+    setImage(flag);
+
+    if (code === "USD" || code === "GBP" || code === "EUR" || code === "AUD" || code === "KSH") {
+      setUsd(true);
+    } else {
+      setUsd(false);
+    }
   };
 
   const handleBank = (index) => {
@@ -190,7 +265,7 @@ const ExistingCardPage = () => {
               }}
             >
               <div className="flex justify-between items-center border w-[50%] h-8 px-2 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px] mt-[10%]">
-                {paymentSelected ? (
+                {cardPaymentSelected ? (
                   <li
                     onClick={() => {
                       handleShowPayment();
@@ -211,11 +286,17 @@ const ExistingCardPage = () => {
                     Select currency
                   </h2>
                 )}
-                {paymentSelected ? (
+                {cardPaymentSelected ? (
                   <button
                     className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]"
                     onClick={handleShowPayment}
-                  ></button>
+                  >
+                    <img
+                      src={image}
+                      alt=""
+                      className="w-full h-full object-cover"
+                    />
+                  </button>
                 ) : (
                   <button
                     className="lg:w-6 lg:h-6 h-[11px] w-[11px]"
@@ -235,11 +316,16 @@ const ExistingCardPage = () => {
                 } bg-[#FFF] z-[100]`}
               >
                 <div className="flex flex-row justify-between px-[10px] py-[7px]">
-                  <p className="text-[10px] text-[#7C7C7C]">Search</p>
+                  <input
+                    type="text"
+                    placeholder="Search"
+                    className="text-[10px] text-[#7C7C7C] flex-grow-1 py-1 outline-none rounded-md focus:outline-none"
+                    onChange={(e) => handleSearch(e.target.value)}
+                  />
                   <img src={Search} alt="" />
                 </div>
                 <hr />
-                {countryList.map((country) => (
+                {filteredCountryList.map((country) => (
                   <Payment
                     key={country.id}
                     flag={country.flag}
@@ -278,31 +364,26 @@ const ExistingCardPage = () => {
             </div>
           )}
 
-          {paymentSelected && walletName === "NGN" && ngn && (
-            <div className="flex flex-col justify-center items-center mt-[30%]">
-              <img src={NoExistingcard} alt="" />
-              <p className="text-center text-[#000000] opacity-[30%] text-[15px] font-semibold">
-                No Existing Card Found !
-              </p>
-            </div>
-          )}
-
-          {paymentSelected && walletName === "USD" && usd && (
+          {cardPaymentSelected && walletName === "NGN" && ngn && (
             <div className="mt-[10%] text-[10px] md:text-[12px] lg:text-[14px] flex flex-col gap-[10px]">
               {[0, 1, 2, 3, 4, 5].map((index) => (
+                <Link to={{
+                  pathname: "/FundWithCard"
+                }}
+                key={index}>
                 <div
-                  key={index}
+                  // key={index}
                   id="USD"
                   className="rounded-[5px] flex justify-between py-[10px] px-[10px]"
                 >
                   <div className="flex flex-row gap-[10px]">
                     <div className="mt-[5%]">
                       <img src={BankLogo} alt="" />
-                      <p className="text-[6px] text-center">SPT</p>
+                      <p className="text-[6px] text-center">{cardList[index].short}</p>
                     </div>
                     <div className="text-[#7C7C7C]">
-                      <p>SPORTA BANK</p>
-                      <p>*****5488</p>
+                      <p>{cardList[index].code}</p>
+                      <p>{cardList[index].number}</p>
                     </div>
                   </div>
                   <div className="relative">
@@ -313,7 +394,7 @@ const ExistingCardPage = () => {
                       }}
                       src={RoundArrowDown}
                       alt=""
-                      className="mt-[-5%] "
+                      className="mt-[-5%] h-[20px]"
                     />
                     {showPopup && activeImage === index && (
                       <div
@@ -321,11 +402,9 @@ const ExistingCardPage = () => {
                         style={{ boxShadow: "0 0 5px rgba(0, 0, 0, 0.2)" }}
                       >
                         <Link to="/FundWithCard">
-                        <div
-                          className="text-[10px] md:text-[12px] lg:text-[14px] text-[#000000] px-[5px] py-[5px]"
-                        >
-                          Fund with Card
-                        </div>
+                          <div className="text-[10px] md:text-[12px] lg:text-[14px] text-[#000000] px-[5px] py-[5px]">
+                            Fund with Card
+                          </div>
                         </Link>
                         <hr className="w-full h-[5px]" />
                         <div
@@ -344,7 +423,9 @@ const ExistingCardPage = () => {
                       </div>
                     )}
                   </div>
+
                 </div>
+                </Link>
               ))}
 
               {defaultcard && (
@@ -525,40 +606,40 @@ const ExistingCardPage = () => {
             </div>
           )}
 
-          {paymentSelected && walletName === "GBP" && gbp && (
-            <WalletModal>
-              <div className="text-center flex justify-center item-center md:mt-[-20px] lg:mt-[15px] 2xl:mt-[-15px]">
-                <div
-                  className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
-                  flex flex-col justify-center z-[100] lg:ml-[10px] md:w-full`}
-                >
-                  <div>
-                    <p className="text-[10px] text-[#04177F] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[3%]">
-                      This Currency is Currently Not Available.
-                    </p>
-                  </div>
-                  <img
-                    src={GBPPopUp}
-                    alt=""
-                    className="img mobile-desktop mx-auto mt-[20px] md:mt-[5%] md:w-[30%] md:h-[70%] md:mx-auto w-[143px] h-[100px] lg:w-[300px] lg:h-[200px] lg:mx-auto lg:mt-[8%] 2xl:mt-[10%] 2xl:mx-auto"
-                  />
+{cardPaymentSelected && usd ? (
+          <WalletModal>
+            <div className="text-center flex justify-center item-center md:mt-[-20px] lg:mt-[15px] 2xl:mt-[-15px]">
+              <div
+                className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
+        flex flex-col justify-center z-[100] lg:ml-[10px] md:w-full`}
+              >
+                <div>
+                  <p className="text-[10px] text-[#04177F] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[3%]">
+                    This Currency is Currently Not Available.
+                  </p>
                 </div>
+                <img
+                  src={GBPPopUp}
+                  alt=""
+                  className="img mobile-desktop mx-auto mt-[20px] md:mt-[5%] md:w-[30%] md:h-[70%] md:mx-auto w-[143px] h-[100px] lg:w-[300px] lg:h-[200px] lg:mx-auto lg:mt-[8%] 2xl:mt-[10%] 2xl:mx-auto"
+                />
               </div>
-              <div className="mobile-desktop mt-[20px] flex flex-col gap-[5px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
-                <p className="text-[8px] font-extrabold text-end float-right ml-[60%] md:ml-[70%] md:text-[12px] mt-[10px] lg:text-[13px] 2xl:text-[15px]">
-                  Coming Soon...
-                </p>
-                <button
-                  className={` ${
-                    isDarkMode ? "border" : "bg-[#04177f] "
-                  } cursor-pointer text-white text-[10px] h-[40px] rounded-[5px] md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[25%] lg:mx-auto`}
-                  onClick={() => setGbp(false)}
-                >
-                  Okay
-                </button>
-              </div>
-            </WalletModal>
-          )}
+            </div>
+            <div className="mobile-desktop mt-[20px] flex flex-col gap-[5px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
+              <p className="text-[8px] font-extrabold text-end float-right ml-[60%] md:ml-[70%] md:text-[12px] mt-[10px] lg:text-[13px] 2xl:text-[15px]">
+                Coming Soon...
+              </p>
+              <button
+                className={`${
+                  isDarkMode ? "border" : "bg-[#04177f] "
+                } cursor-pointer text-white text-[10px] h-[40px] rounded-[5px] md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[25%] lg:mx-auto`}
+                onClick={handleButtonClick}
+              >
+                Okay
+              </button>
+            </div>
+          </WalletModal>
+        ) : null}
         </section>
 
         <div
@@ -585,3 +666,4 @@ const ExistingCardPage = () => {
 };
 
 export default ExistingCardPage;
+

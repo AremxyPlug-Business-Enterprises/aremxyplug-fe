@@ -1,10 +1,11 @@
-import React from "react";
+import {React, useEffect, useState} from "react";
 import { useContext, useRef } from "react";
 import { ContextProvider } from '../../../Context';
 import { DashBoardLayout } from "../../Layout/DashBoardLayout";
 import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import { useLocation } from "react-router-dom";
 
 export const CardPaymentReceipt = () => { 
 
@@ -14,6 +15,10 @@ export const CardPaymentReceipt = () => {
     setSelectedOption,
     setSelectedAmount,
     setRecipientNames,
+    cardPaymentAmount,
+    setCardPaymentSelected,
+    setCardSelected,
+    setCardPaymentAmount
   }
    = useContext(ContextProvider);
 
@@ -30,8 +35,24 @@ export const CardPaymentReceipt = () => {
     setSelectedOption(false);
     setSelectedAmount('');
     setRecipientNames('');
+    setCardPaymentSelected("")
+    setCardSelected("")
+    setCardPaymentAmount("")
   }
 
+  const location = useLocation();
+  const [name, setName] = useState("");
+  const [number, setNumber] = useState("");
+
+useEffect(() => {
+  const searchParams = new URLSearchParams(location.search);
+    const cardName = searchParams.get("name");
+    const cardNumber = searchParams.get("number");
+
+  // Now you can use the 'name' and 'number' variables as needed
+  setName(cardName || "");
+    setNumber(cardNumber || "");
+}, [location.search]);
 
 
 
@@ -94,7 +115,7 @@ export const CardPaymentReceipt = () => {
                 alt=""
               />
             </Link>
-            <Link to="/FundWithCard">
+            <Link to="/CardPayment">
               {" "}
               <img
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
@@ -118,7 +139,7 @@ export const CardPaymentReceipt = () => {
               />
             </div>
             <h3 className="font-extrabold text-[12px] mt-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
-              Purchase Successful on
+            Transaction Successful on
             </h3>
             <span className="text-[11px] text-[#0008] font-extrabold flex justify-center items-center">
               {date.toLocaleDateString(undefined, {
@@ -147,7 +168,7 @@ export const CardPaymentReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Amount</p>
-                  <span>MTN</span>
+                  <span>₦{cardPaymentAmount}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Wallet Type</p>
@@ -163,11 +184,11 @@ export const CardPaymentReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Card Holder Name</p>
-                  <span>Habib Kamaldeen</span>
+                  <span>{name}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Card Number</p>
-                  <span>*****5488</span>
+                  <span>{number}</span>
                 </div>       
               </div>
 

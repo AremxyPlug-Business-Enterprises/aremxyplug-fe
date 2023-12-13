@@ -17,6 +17,10 @@ import { AiFillEye } from "react-icons/ai";
 import Logo from "./CardPaymentImages/AremxyLogo.svg";
 import Success from "./CardPaymentImages/Tick.png";
 import { Link } from "react-router-dom";
+import WalletModal from "../../../Wallet/WalletModal";
+import AddCardPopUp from "./CardPaymentImages/AddCardPopUp.svg";
+// import BankLogo from "./CardPaymentImages/BankLogo.svg";
+
 
 const FundWithCard = () => {
   const {
@@ -27,29 +31,54 @@ const FundWithCard = () => {
     inputPin,
     setInputPin,
     inputPinHandler,
+    // selectedCard,
   } = useContext(ContextProvider);
   const [showPayment, setShowPayment] = useState(false);
   const { walletName, setWalletName } = useContext(ContextProvider);
-  const [paymentSelected, setPaymentSelected] = useState("");
+  const { cardPaymentAmount, setCardPaymentAmount } =
+    useContext(ContextProvider);
+  const { cardPaymentSelected, setCardPaymentSelected } =
+    useContext(ContextProvider);
   const [showCard, setShowCard] = useState(false);
-  const [cardSelected, setCardSelected] = useState("");
+  const { cardSelected, setCardSelected } = useContext(ContextProvider);
   const { cardName, setCardName } = useContext(ContextProvider);
-  const [amount, setAmount] = useState("");
   const [proceed, setProceed] = useState("");
   const [confirm, setConfirm] = useState("");
   const [Successful, setSuccessful] = useState("");
+  // const [image, setImage] = useState("");
+  const [usd, setUsd] = useState("");
 
   const handleShowPayment = () => {
     setShowPayment(!showPayment);
     setWalletName("");
-    setPaymentSelected(false);
+    setCardPaymentSelected(false);
+    setShowCard(false);
   };
 
-  const handleSelectPayment = (code) => {
+  const handleSelectPayment = (code, flag) => {
     setWalletName(code);
     setShowPayment(false);
-    setPaymentSelected(true);
+    setCardPaymentSelected(true);
+    // setImage(flag);
+
+    if (
+      code === "USD" ||
+      code === "GBP" ||
+      code === "EUR" ||
+      code === "AUD" ||
+      code === "KSH"
+    ) {
+      setUsd(true);
+    } else {
+      setUsd(false);
+    }
   };
+
+  const handleButtonClick = () => {
+    setUsd(false);
+    setCardPaymentSelected(false);
+  };
+
 
   const countryList = [
     {
@@ -108,49 +137,85 @@ const FundWithCard = () => {
   };
 
   const handleShowCard = () => {
-    setShowCard(!showPayment);
+    if (cardPaymentSelected && walletName === "NGN") {
+      // Only show card selection if card payment is NGN
+      setShowCard(!showCard);
+    } else {
+      // Hide card selection for other payment options
+      setShowCard(false);
+    }
+
     setCardName("");
     setCardSelected(false);
+    setShowPayment(false);
   };
 
   const handleSelectCard = (code) => {
     setCardName(code);
     setShowCard(false);
     setCardSelected(true);
+
+    const selectedCard = cardList.find((card) => card.code === code);
+
+  setSelectedCardName(selectedCard.name);
+  setSelectedCardNumber(selectedCard.number);
   };
 
   const cardList = [
     {
       id: 1,
-      code: "SPORTA",
+      short: "ZNT",
+      code: "ZENITH",
+      name: "Umolo Blessing",
+      number: "**********5378",
       flag: require("./CardPaymentImages/BankLogo.svg").default,
     },
     {
       id: 2,
-      code: "SPORTA",
+      short: "KUD",
+      code: "KUDA",
+      name: "Umolo Blessing",
+      number: "**********8262",
       flag: require("./CardPaymentImages/BankLogo.svg").default,
     },
     {
       id: 3,
-      code: "SPORTA",
+      short: "ECO",
+      code: "ECOBANK",
+      name: "Blessing Umolo",
+      number: "**********2345",
       flag: require("./CardPaymentImages/BankLogo.svg").default,
     },
     {
       id: 4,
-      code: "SPORTA",
+      short: "GTB",
+      code: "GTBANK",
+      name: "Johnson",
+      number: "**********9047",
       flag: require("./CardPaymentImages/BankLogo.svg").default,
     },
     {
       id: 5,
-      code: "SPORTA",
+      short: "FBN",
+      code: "FIRST BANK",
+      name: "Umolo",
+      number: "**********0928",
       flag: require("./CardPaymentImages/BankLogo.svg").default,
     },
     {
       id: 6,
-      code: "SPORTA",
+      short: "UBA",
+      code: "UNITED BANK OF AFRICA",
+      name: "Blessing",
+      number: "**********0909",
       flag: require("./CardPaymentImages/BankLogo.svg").default,
     },
   ];
+
+
+  const [selectedCardName, setSelectedCardName] = useState("");
+const [selectedCardNumber, setSelectedCardNumber] = useState("");
+
 
   const Card = ({ code, flag, onClick }) => {
     return (
@@ -163,12 +228,30 @@ const FundWithCard = () => {
     );
   };
 
+  const [filteredCountryList, setFilteredCountryList] = useState(countryList);
+
+  const [filteredCardList, setFilteredCardList] = useState(cardList);
+
+  const handleSearch = (searchValue) => {
+    const filteredList = countryList.filter((country) =>
+      country.code.toLowerCase().includes(searchValue.toLowerCase())
+    );
+    setFilteredCountryList(filteredList);
+  };
+
+  const handleCardSearch = (searchCardValue) => {
+    const filteredList = cardList.filter((card) =>
+      card.code.toLowerCase().includes(searchCardValue.toLowerCase())
+    );
+    setFilteredCardList(filteredList);
+  };
+
   const handleAmount = (e) => {
     const value = e.target.value;
 
     const numericValue = value.replace(/\D/g, "").slice(0, 11);
 
-    setAmount(numericValue);
+    setCardPaymentAmount(numericValue);
   };
 
   const handleProceed = () => {
@@ -183,6 +266,13 @@ const FundWithCard = () => {
   const handleSuccessful = () => {
     setSuccessful(true);
   };
+
+
+  const handleDone = () => {
+    setCardPaymentAmount("")
+    setCardPaymentSelected("")
+    setCardSelected("")
+  }
 
   return (
     <DashBoardLayout>
@@ -230,7 +320,7 @@ const FundWithCard = () => {
               }}
             >
               <div className="flex justify-between items-center border w-[50%] md:w-[30%] h-8 px-2 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px] mt-[10%]">
-                {paymentSelected ? (
+                {cardPaymentSelected ? (
                   <li
                     onClick={() => {
                       handleShowPayment();
@@ -238,7 +328,7 @@ const FundWithCard = () => {
                     className={`flex flex-row justify-between w-full`}
                   >
                     <h2 className="text-[#7C7C7C]">{walletName}</h2>
-                    <img src={ArrowDown} alt="" className="" />
+                    {/* <img src={ArrowDown} alt="" className="" /> */}
                   </li>
                 ) : (
                   <h2
@@ -250,11 +340,21 @@ const FundWithCard = () => {
                     Select currency
                   </h2>
                 )}
-                {paymentSelected ? (
+                {cardPaymentSelected ? (
                   <button
                     className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]"
                     onClick={handleShowPayment}
-                  ></button>
+                  >
+                    <img src={ArrowDown} alt="" className="" />
+                    {/* <div classsName="">
+                    <img
+                      src={image}
+                      alt=""
+                      className="w-full h-full object-cover"
+                    />
+                    <img src={ArrowDown} alt="" className="" />
+                    </div> */}
+                  </button>
                 ) : (
                   <button
                     className="lg:w-6 lg:h-6 h-[11px] w-[11px]"
@@ -274,11 +374,16 @@ const FundWithCard = () => {
                 } bg-[#FFF] z-[100]`}
               >
                 <div className="flex flex-row justify-between px-[10px] py-[7px]">
-                  <p className="text-[10px] text-[#7C7C7C]">Search</p>
+                  <input
+                    type="text"
+                    placeholder="Search"
+                    className="text-[10px] text-[#7C7C7C] flex-grow-1 py-1 outline-none rounded-md focus:outline-none"
+                    onChange={(e) => handleSearch(e.target.value)}
+                  />
                   <img src={Search} alt="" />
                 </div>
                 <hr />
-                {countryList.map((country) => (
+                {filteredCountryList.map((country) => (
                   <Payment
                     key={country.id}
                     flag={country.flag}
@@ -297,6 +402,19 @@ const FundWithCard = () => {
             )}
           </div>
 
+
+          {/* <div className="border h-[30px] mt-[5%] rounded-[5px]">
+                    <div className="flex item-center">
+                      <img src={BankLogo} alt="" />
+                      <p className="text-[6px] text-center">{cardList[index].short}</p>
+                      {selectedCard}
+                    </div>
+                    <div className="text-[#7C7C7C]">
+                      <p>{cardList[index].code}</p>
+                      <p>{cardList[index].number}</p>
+                    </div>
+                  </div> */}
+
           <div>
             <div
               onClick={() => {
@@ -304,7 +422,7 @@ const FundWithCard = () => {
               }}
             >
               <div className="flex justify-between items-center border w-full md:w-[50%] h-8 px-2 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px] mt-[5%] md:mt-[5%] lg:mt-[4%]">
-                {cardSelected ? (
+                {cardSelected  ? (
                   <li
                     onClick={() => {
                       handleShowCard();
@@ -343,7 +461,7 @@ const FundWithCard = () => {
               </div>
             </div>
             {showCard && (
-              <div
+              <div 
                 className={`border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute ${
                   toggleSideBar
                     ? "w-[50%] md:w-[44.5%] lg:w-[45%] 2xl:w-[46%]"
@@ -351,16 +469,23 @@ const FundWithCard = () => {
                 } bg-[#FFF] z-[100]`}
               >
                 <div className="flex flex-row justify-between px-[10px] py-[7px]">
-                  <p className="text-[10px] text-[#7C7C7C]">Search</p>
+                  <input
+                    type="text"
+                    placeholder="Search"
+                    className="text-[10px] text-[#7C7C7C] flex-grow-1 py-1 outline-none rounded-md focus:outline-none"
+                    onChange={(e) => handleCardSearch(e.target.value)}
+                  />
                   <img src={Search} alt="" />
                 </div>
                 <hr />
-                {cardList.map((card) => (
+                {filteredCardList.map((card) => (
                   <Card
                     key={card.id}
                     flag={card.flag}
                     code={card.code}
-                    onClick={() => handleSelectCard(card.code, card.flag)}
+                    onClick={() => {
+                      handleSelectCard(card.code, card.flag);
+                    }}
                   />
                 ))}
               </div>
@@ -371,8 +496,8 @@ const FundWithCard = () => {
             <input
               type="number"
               className="outline-none relative text-[14px] md:text-[16px] lg:text-[18px] pl-[4%]"
-              value={amount}
-              placeholder="10,000"
+              value={cardPaymentAmount}
+              placeholder=""
               onChange={handleAmount}
             />
             <div className="absolute text-[14px]">₦</div>
@@ -386,16 +511,53 @@ const FundWithCard = () => {
           >
             <button
               className={`w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[600] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px] ${
-                !paymentSelected || !cardSelected || !amount
+                !cardPaymentSelected || !cardSelected || !cardPaymentAmount
                   ? "bg-[#63616188] cursor-not-allowed"
                   : "bg-primary"
               }`}
               onClick={handleProceed}
-              disabled={!paymentSelected || !cardSelected || !amount}
+              disabled={
+                !cardPaymentSelected || !cardSelected || !cardPaymentAmount
+              }
             >
               Proceed
             </button>
           </div>
+
+          {cardPaymentSelected && usd ? (
+            <WalletModal>
+              <div className="text-center flex justify-center item-center md:mt-[-20px] lg:mt-[15px] 2xl:mt-[-15px]">
+                <div
+                  className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
+        flex flex-col justify-center z-[100] lg:ml-[10px] md:w-full`}
+                >
+                  <div>
+                    <p className="text-[10px] text-[#04177F] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[3%]">
+                      This Currency is Currently Not Available.
+                    </p>
+                  </div>
+                  <img
+                    src={AddCardPopUp}
+                    alt=""
+                    className="img mobile-desktop mx-auto mt-[20px] md:mt-[5%] md:w-[30%] md:h-[70%] md:mx-auto w-[143px] h-[100px] lg:w-[300px] lg:h-[200px] lg:mx-auto lg:mt-[8%] 2xl:mt-[10%] 2xl:mx-auto"
+                  />
+                </div>
+              </div>
+              <div className="mobile-desktop mt-[20px] flex flex-col gap-[5px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
+                <p className="text-[8px] font-extrabold text-end float-right ml-[60%] md:ml-[70%] md:text-[12px] mt-[10px] lg:text-[13px] 2xl:text-[15px]">
+                  Coming Soon...
+                </p>
+                <button
+                  className={`${
+                    isDarkMode ? "border" : "bg-[#04177f] "
+                  } cursor-pointer text-white text-[10px] h-[40px] rounded-[5px] md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[25%] lg:mx-auto`}
+                  onClick={handleButtonClick}
+                >
+                  Okay
+                </button>
+              </div>
+            </WalletModal>
+          ) : null}
 
           {proceed && (
             <Modal>
@@ -414,9 +576,9 @@ const FundWithCard = () => {
                     alt=""
                     onClick={() => {
                       setProceed(false);
-                      setAmount("");
+                      setCardPaymentAmount("");
                       setCardSelected("");
-                      setPaymentSelected("");
+                      setCardPaymentSelected("");
                     }}
                     className="h-[30px] md:h-[120%] lg:h-[400%] lg:mt-[-25px] lg:pb-[20px]"
                   />
@@ -434,7 +596,7 @@ const FundWithCard = () => {
                       </h2>
                       <div className="flex gap-1">
                         <h2 className="text-[12px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          ₦{amount}.00
+                          ₦{cardPaymentAmount}.00
                         </h2>
                       </div>
                     </div>
@@ -445,7 +607,7 @@ const FundWithCard = () => {
                       </h2>
                       <div className="flex gap-1">
                         <h2 className="text-[12px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          ₦{(amount * 0.015).toFixed(2)}
+                          ₦{(cardPaymentAmount * 0.015).toFixed(2)}
                         </h2>
                       </div>
                     </div>
@@ -456,7 +618,7 @@ const FundWithCard = () => {
                       </h2>
                       <div className="flex gap-1">
                         <h2 className="text-[12px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          ₦{(amount * 0.005).toFixed(2)}
+                          ₦{(cardPaymentAmount * 0.005).toFixed(2)}
                         </h2>
                       </div>
                     </div>
@@ -468,9 +630,11 @@ const FundWithCard = () => {
                       <div className="flex gap-1">
                         <h2 className="text-[12px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
                           ₦
-                          {(amount - amount * 0.015 - amount * 0.005).toFixed(
-                            2
-                          )}
+                          {(
+                            cardPaymentAmount -
+                            cardPaymentAmount * 0.015 -
+                            cardPaymentAmount * 0.005
+                          ).toFixed(2)}
                         </h2>
                       </div>
                     </div>
@@ -571,7 +735,7 @@ const FundWithCard = () => {
                     inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
                   } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
                 >
-                  Purchase
+                  Fund
                 </button>
               </div>
             </Modal>
@@ -599,9 +763,9 @@ const FundWithCard = () => {
                     alt=""
                     onClick={() => {
                       setProceed(false);
-                      setAmount("");
+                      setCardPaymentAmount("");
                       setCardSelected("");
-                      setPaymentSelected("");
+                      setCardPaymentSelected("");
                       setSuccessful(false);
                     }}
                     className="h-[20px] md:h-[120%] lg:h-[230%] lg:mt-[-25px] lg:pb-[20px]"
@@ -629,7 +793,7 @@ const FundWithCard = () => {
                       </h2>
                       <div className="flex gap-1">
                         <h2 className="text-[12px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          ₦{amount}.00
+                          ₦{cardPaymentAmount}.00
                         </h2>
                       </div>
                     </div>
@@ -640,7 +804,7 @@ const FundWithCard = () => {
                       </h2>
                       <div className="flex gap-1">
                         <h2 className="text-[12px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          ₦{(amount * 0.015).toFixed(2)}
+                          ₦{(cardPaymentAmount * 0.015).toFixed(2)}
                         </h2>
                       </div>
                     </div>
@@ -651,26 +815,29 @@ const FundWithCard = () => {
                       </h2>
                       <div className="flex gap-1">
                         <h2 className="text-[12px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          ₦{(amount * 0.005).toFixed(2)}
+                          ₦{(cardPaymentAmount * 0.005).toFixed(2)}
                         </h2>
                       </div>
                     </div>
 
                     <div className="flex w-full justify-center mx-auto px-[50px] items-center gap-[5%] md:gap-[10%] md:w-[40%] lg:w-[60%] lg:gap-[10%] lg:mx-auto">
+                      <Link to="/CardPayment">
                       <button
                         onClick={() => {
+                          handleDone()
                           setSuccessful(false);
                           window.location.reload();
                         }}
-                        className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-[600] h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[14px] lg:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%] md:px-[60px] md:h-[30px]`}
+                        className={`bg-[#04177f] w-[100px] px-[30%] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-[600] h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[14px] lg:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%] md:px-[60px] md:h-[30px]`}
                       >
                         Done
                       </button>
+                      </Link>
 
-                      <Link to="/CardPaymentReceipt">
+                      <Link   to={`/CardPaymentReceipt?name=${selectedCardName}&number=${selectedCardNumber}`}>
                         <button
                           // onClick={handleReceipt}
-                          className={`border-[1px] w-[100px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-[600] h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[14px] lg:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%] md:px-[60px] md:h-[30px]`}
+                          className={`border-[1px] w-[100px] px-[30%] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-[600] h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[14px] lg:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%] md:px-[60px] md:h-[30px]`}
                         >
                           Receipt
                         </button>
