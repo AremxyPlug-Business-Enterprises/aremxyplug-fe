@@ -1,7 +1,6 @@
 import React from "react";
 import { useContext } from "react";
 import { ContextProvider } from "../../../../Context";
-import { RiFileCopyFill } from "react-icons/ri";
 import { Modal } from "../../../../Screens/Modal/Modal";
 import { Link } from "react-router-dom";
 import styles from "../../TransferComponent/transfer.module.css";
@@ -14,11 +13,9 @@ export const AremxyMainSuccess = ({
   const {
     toggleSideBar,
     transferFee,
-    textRef,
-    handleCopyClick,
     amtToTransfer,
-    globalEmailUsername,
-    globalUserPhoneNumber,
+    mainEmailUsername,
+    mainUserPhoneNumber,
   } = useContext(ContextProvider);
 
   const handleTransactionSuccessClose = () => {
@@ -70,11 +67,11 @@ export const AremxyMainSuccess = ({
             <div className="flex flex-col gap-2 lg:gap-4">
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                 <p className="text-[#0008]">Username or Email</p>
-                <span>{globalEmailUsername}</span>
+                <span>{mainEmailUsername}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                 <p className="text-[#0008]">Phone Number</p>
-                <span>{globalUserPhoneNumber}</span>
+                <span>{mainUserPhoneNumber}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#0008]">Transfaction fee</p>
@@ -85,26 +82,14 @@ export const AremxyMainSuccess = ({
                 <span>122555556464564</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[14px]">
-                <p className="text-[#0008]">Session ID</p>
-                <div className="flex items-center">
-                  <span ref={textRef}>
-                    1232455566664654 <br /> 1232455566664654
-                  </span>
-                  <div
-                    onClick={handleCopyClick}
-                    className="text-[#92abfec3] text-[13px] font-extrabold lg:text-[14px]"
-                  >
-                    <RiFileCopyFill />
-                  </div>
-                </div>
+                <p className="text-[#0008]">Transaction ID</p>
+                <span>0331njokdhtf55</span>
               </div>
             </div>
 
             <div className="bg-[#F2FAFF] mx-10 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
               <p className="text-[6px] text-center mx-auto w-[171px] md:text-[14px] md:w-[80%] lg:text-[14px]">
-                The transfer has been sent successfully. Please contact the
-                recipient bank with the Session ID if payment not received
-                within 5-15 minutes.
+              The transfer has been sent successfully. Please contact the recipient bank with the Session ID if payment not received within 5-15 minutes.
               </p>
             </div>
             <div className="flex w-[70%] mx-auto items-center gap-[5%] md:w-[60%] lg:my-[5%]">

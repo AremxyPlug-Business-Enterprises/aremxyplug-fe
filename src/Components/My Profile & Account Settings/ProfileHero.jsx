@@ -28,7 +28,7 @@ export default function ProfileHero() {
              Manage, edit, and secure your profile and account settings without limitations,  {' '}
  </span>
          <span className="md:block">
-         settings without limitations, explore the world of  digital possibilities  at your finger tips. {' '}
+         explore the world of  digital possibilities  at your finger tips. {' '}
              </span>
           
            </p>

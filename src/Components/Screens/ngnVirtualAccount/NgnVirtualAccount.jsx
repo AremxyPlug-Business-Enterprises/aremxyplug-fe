@@ -4,7 +4,7 @@ import { ContextProvider } from "../../Context";
 import { Link } from "react-router-dom";
 
 function NgnVirtualAccount() {
-  const { isDarkMode } = useContext(ContextProvider);
+  const { isDarkMode } = useContext(ContextProvider)
 
   const accountNumber = '1234567890';
   const accountName = 'Habib Kamaldeen';
@@ -130,12 +130,12 @@ function NgnVirtualAccount() {
           </div>
 
           <div className='mt-[25.39px] md:mt-[35px] lg:mt-[60px] flex items-center justify-between'>
-            <button className='bg-primary text-white text-[7px] leading-[10.5px] rounded-[4px] md:rounded-[7px] md:text-[9.17px] md:leading-[13.75px] flex items-center lg:text-[16px] lg:leading-[24px] justify-center py-[5px] w-[85.5px] md:w-[124px] lg:w-[231px] lg:py-[10px]'>
+            <Link to='/CardPayment' className='bg-primary text-white text-[7px] leading-[10.5px] rounded-[4px] md:rounded-[7px] md:text-[9.17px] md:leading-[13.75px] flex items-center lg:text-[16px] lg:leading-[24px] justify-center py-[5px] w-[85.5px] md:w-[124px] lg:w-[231px] lg:py-[10px]'>
               <div className='mr-1 w-[11.38px] h-[11.38px] md:w-[19.48px] md:h-[19.48px] lg:w-[34px] lg:h-[34px]'>
                 <img src="./Images/wallet/card-add.png" alt="" className='object-cover w-full'/>
               </div>
               <h2>Fund with card</h2>
-            </button>
+            </Link>
             <button
               onClick={handleCopyCombineText} 
               className='bg-primary text-white text-[7px] leading-[10.5px] md:text-[9.17px] md:leading-[13.75px] rounded-[4px] md:rounded-[7px] flex items-center lg:text-[16px] lg:leading-[24px] justify-center py-[5px] w-[85.5px] md:w-[124px] lg:w-[231px] lg:py-[10px]'

@@ -171,7 +171,7 @@ const DataBundleSelectRecipient = () => {
                     </div>
                 </div>
           <div className="flex text-[#7c7c7c] mt-[5%] text-[10px] leading-[26px] items-center gap-[8px] md:text-[12px] lg:text-[20px]">
-            <p>Add Recipient Details </p>
+            <p>Select Recipient Details </p>
             <img
               className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
               src="./Images/Dashboardimages/arrowright.png"
@@ -611,7 +611,6 @@ const DataBundleSelectRecipient = () => {
                     <img
                       onClick={() => {
                         setConfirm(false);
-                        window.location.reload();
                       }}
                       className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[45px] lg:h-[45px] "
                       src="/Images/transferImages/close-circle.png"

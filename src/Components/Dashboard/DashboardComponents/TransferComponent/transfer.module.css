@@ -4,6 +4,9 @@
 .transferMoneyPop::-webkit-scrollbar {
   display: none;
 }
+.aremxyMoneyPop::-webkit-scrollbar {
+  display: none;
+}
 .transferConfirmation::-webkit-scrollbar {
   display: none;
 }
@@ -41,6 +44,16 @@
 .transferMoneyPop {
   position: absolute;
   height: 505px;
+  flex-shrink: 0;
+  bottom: 0%;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+}
+
+.aremxyMoneyPop {
+  position: absolute;
+  height: 445px;
   flex-shrink: 0;
   bottom: 0%;
   border-radius: 8px;
@@ -191,6 +204,13 @@
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
   }
 
+  .aremxyMoneyPop {
+    height: 600px;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+  }
+
   .transferConfirmation {
     height: 572px;
     bottom: 25%;
@@ -274,6 +294,14 @@
     height: 550px;
     border-radius: 20px;
     background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+  }
+
+  .aremxyMoneyPop {
+    height: 500px;
+    border-radius: 20px;
+    background: #fff;
+    bottom: auto;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
   }
 

@@ -135,12 +135,17 @@ import LaunchPage3 from "./Components/NotificationsPage/LaunchPage3";
 
 import ChangePin from "./Components/My Profile & Account Settings/My Profile Page/ChangePin";
 import AccountUpgrade from "./Components/My Profile & Account Settings/My Profile Page/AccountUpgrade";
+import PaymentPage from "./Components/Screens/paymentPage/PaymentPage";
 import CardPayment from "./Components/Dashboard/DashboardComponents/CardPaymentPage/Cardpayment";
 import AddNewCardPayment from "./Components/Dashboard/DashboardComponents/CardPaymentPage/AddNewCardPayment";
 import ExistingCardPage from "./Components/Dashboard/DashboardComponents/CardPaymentPage/ExistingCardPage";
 import StarTimes from "./Components/TvSubscription/TvThree";
 import Showmax from "./Components/TvSubscription/TvFour";
 import ToAremxyPlug from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/ToAremxyPlug";
+import { GotvReceipt } from "./Components/TvSubscription/Receipts/GotvReceipt";
+import { DstvReceipt } from "./Components/TvSubscription/Receipts/DstvReceipt";
+import { StarTimesReceipt } from "./Components/TvSubscription/Receipts/StarTimesReceipt";
+import { ShowmaxReceipt } from "./Components/TvSubscription/Receipts/ShowmaxReceipt";
 import FundWithCard from "./Components/Dashboard/DashboardComponents/CardPaymentPage/FundWithCard";
 import { CardPaymentReceipt } from "./Components/Dashboard/DashboardComponents/CardPaymentPage/CardPaymentReceipt";
 import GlobalTransferSelectRecipient from "./Components/Add&SelectRecipient/GlobalSelectRecipient/GlobalTransferSelectRecipient";
@@ -148,7 +153,8 @@ import GlobalTransferAddRecipient from "./Components/Add&SelectRecipient/GlobalA
 import ContactTeam from "./Components/Dashboard/DashboardComponents/AirtimeConversion/ContactTeam";
 import ToAremxyMain from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/ToAremxyMain";
 import { AremxyMainReceipt } from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/AremxyMainReceipt";
-
+import AremxyAddUser from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/AremxyAddUser";
+import AremxySelectUser from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/AremxySelectUser";
 import { AirtimeReceipt } from "./Components/Dashboard/DashboardComponents/AirtimeConversion/AirtimeReceipt";
 
 export const Router = () => {
@@ -197,6 +203,8 @@ export const Router = () => {
         <Route path="/to-aremxyplug" element={<ToAremxyPlug />} />
         <Route path="/to-aremxymain" element={<ToAremxyMain />} />
         <Route path="/to-aremxymain-receipt" element={<AremxyMainReceipt />} />
+        <Route path="/aremxy-add-user" element={<AremxyAddUser />} />
+        <Route path="/aremxy-select-user" element={<AremxySelectUser />} />
         <Route path="/airtime-topup" element={<AirTime />} />
         <Route path="/airtime-vtu" element={<AirtimeVtu />} />
         <Route path="/airtime-vtu-receipt" element={<AirtimeVtuReceipt />} />
@@ -303,7 +311,11 @@ export const Router = () => {
         <Route path="/GoTv" element={<GoTv/>}/>
         <Route path="/DsTv" element={<DsTv/>}/>
         <Route path="/StarTimes" element={<StarTimes/>}/>
-        <Route path="/Showmax" element={<Showmax/>}/>
+        <Route path="/Showmax" element={<Showmax />} />
+        <Route path="/GotvReceipt" element={<GotvReceipt />} />
+        <Route path="/DstvReceipt" element={<DstvReceipt />} />
+        <Route path="/StarTimesReceipt" element={<StarTimesReceipt />} />
+        <Route path="/ShowmaxReceipt" element={<ShowmaxReceipt/>} />
         <Route path="/SuccessfulConversion" element={<SuccessfulReceipt/>}/>
         <Route path="/SmileDataBundle" element={<SmileDataBundle/>} />
         <Route path="/Smilereceipt" element={<SmileReceipt/>} />
@@ -324,6 +336,7 @@ export const Router = () => {
         <Route path="/ChangePhoneNumber" element={<ChangePhoneNumber/>} />
         <Route path="/ChangePin" element={<ChangePin/>} />
         <Route path="/AccountUpgrade" element={<AccountUpgrade/>} />
+        <Route path="/payment-page" element={<PaymentPage/>}/>
         <Route path="/CardPayment" element={<CardPayment/>} />
         <Route path="/AddNewCardPayment" element={<AddNewCardPayment/>} />
         <Route path="/ExistingCardPage" element={<ExistingCardPage/>} />
