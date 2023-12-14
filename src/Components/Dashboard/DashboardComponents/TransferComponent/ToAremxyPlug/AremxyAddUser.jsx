@@ -43,7 +43,7 @@ const AremxyAddUser = () => {
               .email({ tlds: { allow: false } }), 
            Joi.string().alphanum().min(5).max(10)
          )
-        .required()
+        .required(),
       });
 
       const handleSave = (e) => {
@@ -150,12 +150,32 @@ const AremxyAddUser = () => {
             </div>
           </div>
             <div className="flex text-[#7c7c7c] text-[10px] leading-[26px] items-center gap-[8px] md:text-[12px] lg:text-[20px]">
-                    <p>Edit user details to save as recipient</p>
+                    <p>Add a user details to save as recipient</p>
                     <img
                     className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
                     src="./Images/Dashboardimages/arrowright.png"
                     alt="/"
                     />
+            </div>
+            <div className='flex md:justify-start justify-center gap-[7.042px] lg:gap-[12px]'>      
+            <div className='relative'>
+                <img src="/Images/transferImages/man-fold.png" className='h-[48px] w-[46.753px] rounded-[48px]
+                lg:h-[100px] lg:w-[100px] 
+                md:h-[68.801px]  md:w-[68.801px]
+                md:rounded-[68.201px] lg:rounded-[100px]' alt="profilePic"/>
+              </div>
+                {/* Profile text */}
+              <div className='flex flex-col justify-center gap-[3.52px] lg:gap-[12px]'>
+                <p className='font-[500] text-[10px] leading-[15px] md:text-[9.389px] md:leading-[12.206px] 
+                lg:text-[16px] lg:leading-[20.8px]'>
+                  Habib Kamaldeen
+                  </p>
+                <p className='font-[500] text-[#7C7C7C] text-[10px] leading-[15px]
+                md:text-[7.042px] md:leading-[9.154px]
+                lg:text-[12px] lg:leading-[15.6px]'>
+                  habib@aremxyplug.com
+                  </p>
+              </div>  
             </div>
             {/* =====================Country========================= */}
             <div className={styles.inputBox}>
@@ -320,6 +340,10 @@ const AremxyAddUser = () => {
                             <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                                 <p className="text-[#0008]">Country</p>
                                 <span>{mainCountry}</span>
+                            </div>
+                            <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
+                                <p className="text-[#0008]">Customer Name</p>
+                                <span>Habib Kamaldeen</span>
                             </div>
                             <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                                 <p className="text-[#0008]">Email or Username</p>

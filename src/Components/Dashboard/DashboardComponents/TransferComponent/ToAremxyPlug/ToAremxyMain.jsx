@@ -238,9 +238,9 @@ export default function ToAremxyMain() {
               className='absolute bottom-0 right-0 h-[25px] w-[25px] 
               md:h-[25.82px] md:w-[25.82px] lg:h-[44px] lg:w-[44px]'  
               alt="" />
-              </div>
+            </div>
               {/* Profile text */}
-              <div className='flex flex-col justify-center gap-[3.52px] lg:gap-[12px]'>
+            <div className='flex flex-col justify-center gap-[3.52px] lg:gap-[12px]'>
               <p className='font-[500] text-[10px] leading-[15px] md:text-[9.389px] md:leading-[12.206px] 
               lg:text-[16px] lg:leading-[20.8px]'>
                 Habib Kamaldeen
@@ -250,8 +250,8 @@ export default function ToAremxyMain() {
               lg:text-[12px] lg:leading-[15.6px]'>
                 habib@aremxyplug.com
                 </p>
-              </div>  
-            </div>
+            </div>  
+          </div>
         </div>
 
       <div className="flex flex-col gap-[20px] md:grid md:grid-cols-2">
