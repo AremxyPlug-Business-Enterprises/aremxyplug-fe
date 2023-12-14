@@ -112,7 +112,7 @@ const checkform = () =>{
         <div className={`flex flex-col  ${verificationOpen
             ? 'block' : 'hidden'}
             ${idVerificationOpen
-            ? ' pb-[150px] lg:pb-[300px]'
+             ? ' pb-[150px] lg:pb-[300px]'
              : 'pb-[0px]'}`}>
          <div className='flex md:gap-[25px] gap-[11px] lg:pt-[50px]  pt-[35px] lg:mb-[50px] mb-[35px] '>
             {/* ICON == NOT VERIFIED */}
@@ -435,10 +435,13 @@ border-[0.4px] border-[solid] border-[#9C9C9C] cursor-pointer'>
         </div>
         {idCustomerQuery && (
           <Modal>
-            <div className='bg-white flex flex-col  lg:h-[890px] md:h-[604.893px] md:rounded-[11.736px] mx-[19px]
-            shadow-[0px_0px_8.3274px_0px_rgba(0 0 0,0.25)] rounded-[8px] h-[600px] px-[18px] md:px-[30px]
-            md:shadow-[0px_0px_11.73611px_0px_rgba(0,0,0,0.25)] md:w-[80%] lg:w-[70%] lg:rounded-[20px] md:mx-[0px]
-            lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] justify-center items-center gap-[18px] md:gap-[50px] lg:gap-[100px]'>
+            <div className='flex bg-white flex-col shadow-[0px_0px_8.3274px_0px_rgba(0 0 0,0.25)] rounded-[8px] 
+             shadow-[0px_0px_8.3274px_0px_rgba(0 0 0,0.25)] md:rounded-[11.736px]  lg:rounded-[20px]   md:w-[50%] 
+            md:shadow-[0px_0px_11.73611px_0px_rgba(0,0,0,0.25) lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] 
+            justify-center items-center  px-[18px] md:px-[30px] 
+            md:mx-[0px] mx-[19px] lg:overflow-y-scroll '>
+            <div className=' flex flex-col w-[100%]  lg:h-[600px] md:h-[665.893px]  
+             h-[600px] gap-[18px] md:gap-[50px] lg:gap-[100px] '>
           <div className='flex flex-col lg:gap-[25px] gap-[10px] md:gap-[15px] items-center'>
        <p className='font-[400] text-[13px] text-center leading-[16.206px] 
    lg:text-[16px] lg:leading-[20.8px]'>
@@ -488,6 +491,7 @@ Confirming your identity ensures that the person accessing the account is indeed
           </div>
  </div>
           
+          </div>
             
           </Modal>
         )}
