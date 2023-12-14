@@ -1,52 +1,66 @@
-import React from "react";
+import { React, useEffect, useState } from "react";
 import { useContext, useRef } from "react";
-import { ContextProvider } from '../../../Context';
+import { ContextProvider } from "../../../Context";
 import { DashBoardLayout } from "../../Layout/DashBoardLayout";
 import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import { useLocation } from "react-router-dom";
 
-export const CardPaymentReceipt = () => { 
-
+export const CardPaymentReceipt = () => {
   const {
     walletName,
     setSelectedNetworkProduct,
     setSelectedOption,
     setSelectedAmount,
     setRecipientNames,
-  }
-   = useContext(ContextProvider);
+    cardPaymentAmount,
+    setCardPaymentSelected,
+    setCardSelected,
+    setCardPaymentAmount,
+  } = useContext(ContextProvider);
 
-  const { 
-    toggleSideBar,
-    isDarkMode,
-    date, } =
-    useContext(ContextProvider);  
+  const { toggleSideBar, isDarkMode, date } = useContext(ContextProvider);
 
   const contentRef = useRef(null);
 
   const handleChange = () => {
     setSelectedNetworkProduct(false);
     setSelectedOption(false);
-    setSelectedAmount('');
-    setRecipientNames('');
-  }
+    setSelectedAmount("");
+    setRecipientNames("");
+    setCardPaymentSelected("");
+    setCardSelected("");
+    setCardPaymentAmount("");
+  };
 
+  const location = useLocation();
+  const [name, setName] = useState("");
+  const [number, setNumber] = useState("");
 
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
 
+    const cardName = searchParams.get("name") || "";
+    const cardNumber = searchParams.get("number") || "";
+
+    // Set the state with the retrieved values
+    setName(cardName);
+    setNumber(cardNumber);
+  }, [location.search]);
 
   // ===============Copy to Clipboard Function============
-//   const handleCopyClick = () => {
-//     const text = textRef.current.innerText;
-//     navigator.clipboard
-//       .writeText(text)
-//       .then(() => {
-//         alert("Copied to clipboard");
-//       })
-//       .catch((err) => {
-//         console.error("Error copying text: ", err);
-//       });
-//   };
+  //   const handleCopyClick = () => {
+  //     const text = textRef.current.innerText;
+  //     navigator.clipboard
+  //       .writeText(text)
+  //       .then(() => {
+  //         alert("Copied to clipboard");
+  //       })
+  //       .catch((err) => {
+  //         console.error("Error copying text: ", err);
+  //       });
+  //   };
 
   // ==============Share pdf Function=============
   const handleShareClick = () => {
@@ -64,8 +78,6 @@ export const CardPaymentReceipt = () => {
     }
   };
 
-
-  
   // ==============Save Pdf Function==============
   const handleSaveAsPDFClick = () => {
     const content = contentRef.current;
@@ -78,6 +90,7 @@ export const CardPaymentReceipt = () => {
       });
     }
   };
+
   return (
     <DashBoardLayout>
       <div className="flex flex-col gap-[35px] lg:gap-[85px]">
@@ -94,7 +107,7 @@ export const CardPaymentReceipt = () => {
                 alt=""
               />
             </Link>
-            <Link to="/FundWithCard">
+            <Link to="/CardPayment">
               {" "}
               <img
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
@@ -118,7 +131,7 @@ export const CardPaymentReceipt = () => {
               />
             </div>
             <h3 className="font-extrabold text-[12px] mt-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
-              Purchase Successful on
+              Transaction Successful on
             </h3>
             <span className="text-[11px] text-[#0008] font-extrabold flex justify-center items-center">
               {date.toLocaleDateString(undefined, {
@@ -132,7 +145,7 @@ export const CardPaymentReceipt = () => {
               })}
             </span>
             <p className="text-[9px] text-[#0008] px-[20px] text-center my-2 md:text-[14px] lg:text-[14px]">
-            Your NGN Wallet has been Credited Successfully With{" "}
+              Your NGN Wallet has been Credited Successfully With{" "}
             </p>
             <div className="flex flex-col gap-3">
               {/* ========================Recipient Info================== */}
@@ -147,7 +160,7 @@ export const CardPaymentReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Amount</p>
-                  <span>MTN</span>
+                  <span>₦{cardPaymentAmount}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Wallet Type</p>
@@ -163,12 +176,12 @@ export const CardPaymentReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Card Holder Name</p>
-                  <span>Habib Kamaldeen</span>
+                  <span>{name}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Card Number</p>
-                  <span>*****5488</span>
-                </div>       
+                  <span>{number}</span>
+                </div>
               </div>
 
               {/* ===================Transaction Info==================== */}
@@ -201,11 +214,13 @@ export const CardPaymentReceipt = () => {
             </div>
             <div className="rounded-[8px] bg-[#E2F3FF] mx-4 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
               <p className="text-[8px] text-center mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[16px]">
-              Earn free points on every successful transactions, redeem your earned points to real money, withdrawn to your bank account instantly.
+                Earn free points on every successful transactions, redeem your
+                earned points to real money, withdrawn to your bank account
+                instantly.
               </p>
             </div>
           </div>
-          
+
           <div className="flex w-full px-[20px] mx-auto mb-[5%] md:w-[80%] ">
             <button
               onClick={() => {
@@ -226,15 +241,13 @@ export const CardPaymentReceipt = () => {
           </div>
         </div>
 
-
         <div
           className={`${
             isDarkMode ? "mb-[1%]" : "mb-[5%]"
           } flex gap-[15px] justify-center items-center lg:mb-[%]`}
         >
-         
-         {/* ===============FOOTER=========== */}
-         <div className="flex gap-2 justify-center items-center mb-[15%] md:mt-40 mt-[50%] lg:mt-[50%]">
+          {/* ===============FOOTER=========== */}
+          <div className="flex gap-2 justify-center items-center mb-[15%] md:mt-40 mt-[50%] lg:mt-[50%]">
             <h2 className="text-[8px] leading-[12px] lg:text-[16px]">
               You need help?
             </h2>

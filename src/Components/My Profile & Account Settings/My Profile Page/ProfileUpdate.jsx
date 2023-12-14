@@ -12,9 +12,9 @@ export default function ProfileUpdate() {
   const {profilePage} = useContext(ContextProvider);
 
   return (
-    <div>
+    <div className=''>
      {profilePage && (
- <div className='flex flex-col justify-between md:h-[1000px] h-[1300px]  mt-[40px]'>
+ <div className='flex flex-col mt-[30px] '>
     <div className='flex flex-col gap-[20px] md:gap-[30px]  lg:gap-[40px]'>
         {/* Profile pic */}
     <div className='flex md:justify-start justify-center gap-[7.042px] lg:gap-[12px]'>
@@ -214,8 +214,8 @@ export default function ProfileUpdate() {
     </div>
     
     {/* ==============     CONTACT US ================= */}
-    <div className=" flex gap-[8.729px]   md:gap-[14.896px] 
-     justify-center px-[8.594px] mb-[130px] ">
+    {/* <div className=" flex gap-[8.729px]   md:gap-[14.896px] 
+     justify-center px-[8.594px] mb-[130px]">
               <p className="font-[500] text-[10px] text-black 
               leading-[10.4px] lg:text-[16px] lg:leading-[15.6px]  md:text-[6.875px]
             ] md:leading-[12.938px] self-center">
@@ -231,8 +231,9 @@ export default function ProfileUpdate() {
               >
                 Contact Us
               </Link>
-            </div>
+            </div> */}
     </div>
+
      )}
 
     </div>
