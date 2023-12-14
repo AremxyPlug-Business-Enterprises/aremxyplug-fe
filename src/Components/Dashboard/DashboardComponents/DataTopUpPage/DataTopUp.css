@@ -377,7 +377,7 @@
 }
 
 
-@media (min-width: 1250px) {
+@media (width: 1250px) {
   .transaction-table {
     gap: 8.7%;
   }

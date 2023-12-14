@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { ContextProvider } from "../../Context";
 import styles from "./component.module.css";
+import "../DashboardComponents/DataTopUpPage/DataTopUp.css";
 // import arrows from "../../WalletSummaryPage/assets/arrow-square-right1.svg";
 // import arrows2 from "../../WalletSummaryPage/assets/arrow-square-right2.png";
 // import arrows3 from "../../WalletSummaryPage/assets/arrow-square-right3.svg";
@@ -755,9 +756,12 @@ style={{
         </div> */}
       </div>
 
-      
 
-      =======Desktop view======
+
+      {/* =======Desktop view====== */}
+
+
+
       {/* <div className="mt-[30px] lg:h-[100px] hidden md:flex ">
         <table
           className="mt-[0px] lg:h-[700px] md:h-[401.04px]  

@@ -68,6 +68,10 @@
         left: 36%;
     }
 
+    .popUp-style {
+        width: 60%;
+    }
+
 
 }
 
@@ -95,6 +99,18 @@
     .pinpopup {
         left: 35%;
     }
+
+    .card-background {
+        left: 70%;
+    }
+
+    .expiry-date {
+        margin-top: 5%;
+    }
+
+    .popUp-style {
+        width: 50%;
+    }
     
 }
 
@@ -103,5 +119,13 @@
   .okay {
     margin-top: 55%;
   }
+
+  .card-background {
+    left: 72.5%;
+}
+
+.popUp-style {
+    width: 60%;
+}
     
 }

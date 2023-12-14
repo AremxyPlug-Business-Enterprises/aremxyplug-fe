@@ -34,10 +34,10 @@ const CardPayment = () => {
             className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] md:rounded-[11.5px] rounded-[7px] md:mt-[-1px] px-[10px] lg:ml-[-20px] lg:w-[102%] 2xl:w-full 2xl:ml-0 lg:gap-[50px] pt-[10px] lg:px-[30px] lg:rounded-[20px] lg:py-[20px] pb-[16px] flex justify-between items-center"
           >
             <div className="w-[100%] pt-[19px] lg:pt-[20px] pl-[8.5px] md:pl-[9px]">
-              <p className="text-[10px] mb-2 font-bold uppercase w-[110%] md:text-[12px] md:w-[70%] lg:w-[70%] lg:text-[20px] 2xl:w-[80%] 2xl:text-[24px] lg:mb-4">
+              <p className="text-[10px] mb-2 font-bold uppercase w-[110%] md:text-[14px] md:w-[70%] lg:w-[70%] lg:text-[20px] 2xl:w-[80%] 2xl:text-[24px] lg:mb-4">
                 card payments.
               </p>
-              <p className="text-[7px] font-[400] leading-[9px] mb-3 md:text-[9px] md:leading-[12.2px] w-[90%] md:w-[65%] lg:w-[75%] 2xl:w-[85%] 2xl:mt-[5px] lg:mt-[20px] lg:text-[16px] lg:leading-[26px] 2xl:text-[20px] lg:mb-[20px]">
+              <p className="text-[8px] font-[400] leading-[9px] mb-3 md:text-[12px] md:leading-[12.2px] w-[90%] md:w-[80%] lg:w-[75%] 2xl:w-[85%] 2xl:mt-[5px] lg:mt-[20px] lg:text-[16px] lg:leading-[26px] 2xl:text-[20px] lg:mb-[20px]">
                 Please add new card or select your existing card to add money to
                 your wallet.
               </p>
@@ -53,7 +53,7 @@ const CardPayment = () => {
           </div>
 
           <div className="flex items-center my-[10%] gap-[8px] md:my-[5%] md:text-[18px] lg:text-[20px]">
-            <p className="text-[#7c7c7c] text-[10px] leading-[130%] md:text-[18px] lg:text-[20px] 2xl:text-[28px]">
+            <p className="text-[#7c7c7c] text-[10px] leading-[130%] md:text-[14px] lg:text-[20px] 2xl:text-[28px]">
               Select Option
             </p>
             <img
@@ -68,7 +68,7 @@ const CardPayment = () => {
             id="Card"
             className="flex justify-center py-[10px] gap-[5px] rounded-[5px]"
           >
-            <img src={AddNewCard} alt="" />
+            <img src={AddNewCard} alt="" className="h-[15px] md:h-[20px] lg:h-[30px]"/>
             <p className="text-[10px] md:text-[14px] lg:text-[16px] font-semibold ">Add New Card</p>
           </div>
           </Link>
@@ -78,7 +78,7 @@ const CardPayment = () => {
             id="Card"
             className="flex justify-center py-[10px] gap-[5px] rounded-[5px] mt-[10px]"
           >
-            <img src={FundCard} alt="" />
+            <img src={FundCard} alt="" className="h-[15px] md:h-[20px] lg:h-[30px]"/>
             <p className="text-[10px] md:text-[14px] lg:text-[16px] font-semibold ">
               Fund with Existing Card
             </p>

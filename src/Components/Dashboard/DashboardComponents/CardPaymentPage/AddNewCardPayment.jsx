@@ -44,7 +44,6 @@ const AddNewCardPayment = () => {
   const [image, setImage] = useState("");
   const [usd, setUsd] = useState("");
 
-
   const handleShowPayment = () => {
     setShowPayment(!showPayment);
     setWalletName("");
@@ -58,7 +57,13 @@ const AddNewCardPayment = () => {
     setPaymentSelected(true);
     setImage(flag);
 
-    if (code === "USD" || code === "GBP" || code === "EUR" || code === "AUD" || code === "KSH") {
+    if (
+      code === "USD" ||
+      code === "GBP" ||
+      code === "EUR" ||
+      code === "AUD" ||
+      code === "KSH"
+    ) {
       setUsd(true);
     } else {
       setUsd(false);
@@ -188,12 +193,6 @@ const AddNewCardPayment = () => {
     setPinPopUp(true);
   };
 
-  // const [existingCard, setExistingCard] = useState("");
-
-  // const handleExistingCard = (e) => {
-  //   setExistingCard(true);
-  // };
-
   return (
     <DashBoardLayout>
       <div
@@ -218,7 +217,7 @@ const AddNewCardPayment = () => {
               <p className="text-[10px] mb-2 font-bold uppercase w-[110%] md:text-[14px] md:w-[70%] lg:w-[70%] lg:text-[20px] 2xl:w-[80%] 2xl:text-[24px] lg:mb-4">
                 ADD NEW CARD.
               </p>
-              <p className="text-[7px] font-[400] leading-[9px] mb-3 md:text-[10px] md:leading-[12.2px] w-[90%] md:w-[65%] lg:w-[75%] 2xl:w-[85%] 2xl:mt-[5px] lg:mt-[20px] lg:text-[16px] lg:leading-[26px] 2xl:text-[20px] lg:mb-[20px]">
+              <p className="text-[7px] font-[400] leading-[9px] mb-3 md:text-[12px] md:leading-[12.2px] w-[90%] md:w-[80%] lg:w-[75%] 2xl:w-[85%] 2xl:mt-[5px] lg:mt-[20px] lg:text-[16px] lg:leading-[26px] 2xl:text-[20px] lg:mb-[20px]">
                 Bind your bank card to add money to your wallet almost
                 instantly.
               </p>
@@ -250,7 +249,7 @@ const AddNewCardPayment = () => {
 
           <div>
             <div onClick={handleShowPayment}>
-              <div className="flex justify-between items-center border w-[50%] md:w-[25%] h-8 px-2 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px] mt-[5%]">
+              <div className="flex justify-between items-center border w-[50%] md:w-[35%] lg:w-[35%] h-8 px-2 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px] mt-[5%]">
                 {paymentSelected ? (
                   <li
                     onClick={handleShowPayment}
@@ -261,7 +260,7 @@ const AddNewCardPayment = () => {
                 ) : (
                   <h2
                     onClick={handleShowPayment}
-                    className="text-[10px] md:text-[12px] lg:text-[14px] text-[#929292]"
+                    className="text-[10px] md:text-[12px] lg:text-[16px] text-[#929292]"
                   >
                     Select currency
                   </h2>
@@ -290,20 +289,20 @@ const AddNewCardPayment = () => {
 
             {showPayment && (
               <div
-                className={`border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute ${
+                className={`border md:rounded-[10px] rounded-[4px] absolute ${
                   toggleSideBar
-                    ? "w-[50%] md:w-[44.5%] lg:w-[45%] 2xl:w-[46%]"
-                    : "w-[50%] md:w-[46%] 2xl:w-[46.5%]"
+                    ? "w-[50%] md:w-[35%] lg:w-[35%] 2xl:w-[46%]"
+                    : "w-[50%] md:w-[35%] lg:w-[35%] 2xl:w-[46%]"
                 } bg-[#FFF] z-[100]`}
               >
                 <div className="flex flex-row justify-between px-[10px] py-[7px]">
                   <input
                     type="text"
                     placeholder="Search"
-                    className="text-[10px] text-[#7C7C7C] flex-grow-1 py-1 outline-none rounded-md focus:outline-none"
+                    className="text-[10px] md:text-[12px] lg:text-[14px] font-semibold text-[#7C7C7C] flex-grow-1 py-1 outline-none rounded-md focus:outline-none"
                     onChange={(e) => handleSearch(e.target.value)}
                   />
-                  <img src={Search} alt="" />
+                  <img src={Search} alt="" classsName="" />
                 </div>
                 <hr />
                 {filteredCountryList.map((country) => (
@@ -329,15 +328,18 @@ const AddNewCardPayment = () => {
             <img
               src={CardBackground}
               alt=""
-              className="absolute opacity-[20%] h-[70%] md:h-full md:opacity-100 right-[-5.5%] z-0"
+              className={` ${
+                toggleSideBar ? "card-background md:left-[60%]" : ""
+              }
+              absolute opacity-[20%] h-[70%] md:h-full md:opacity-100 right-[-5.5%] z-0`}
             />
 
             <div className="mt-[5%] flex flex-col gap-[5px]">
-              <p className="text-[10px] md:text-[12px] lg:text-[16px] font-semibold">
+              <p className="text-[10px] md:text-[14px] lg:text-[18px] font-semibold">
                 Card Number
               </p>
               <div
-                className={`border-[1px] rounded-[5px] flex flex-row px-[10px] py-[8px] md:w-[60%] ${
+                className={`border-[1px] rounded-[5px] flex flex-row px-[10px] py-[8px] md:w-[60%] lg:py-[12px] ${
                   cardNumber.length === 19
                     ? "border-[#B200FF99] bg-opacity-60"
                     : ""
@@ -347,22 +349,26 @@ const AddNewCardPayment = () => {
                   type="text"
                   value={cardNumber}
                   onChange={handleCardNumberChange}
-                  className={`outline-none w-full text-[10px] md:text-[12px] lg:text-[16px]`}
+                  className={`outline-none w-full text-[10px] md:text-[14px] lg:text-[18px]`}
                   placeholder="4444 4444 4444 4444"
                   maxLength="39"
                 />
-                <img src={CardNumber} alt="" />
+                <img
+                  src={CardNumber}
+                  alt=""
+                  className="h-[20px] md:h-[30px] lg:h-[40px]"
+                />
               </div>
             </div>
 
             <div className="flex flex-row gap-[10px] md:w-[60%]">
               <div className="mt-[5%] flex flex-col gap-[5px]">
-                <p className="text-[10px] font-semibold md:text-[12px] lg:text-[16px]">
+                <p className="text-[10px] font-semibold md:text-[14px] lg:text-[18px]">
                   Expiry Date
                 </p>
-                <div alt="" className=""></div>
+                <div alt="" className="md:hidden md:h-[30px] lg:h-[40px]"></div>
                 <div
-                  className={`border-[1px] rounded-[5px] flex flex-row px-[10px] py-[8px] ${
+                  className={`expiry-date border-[1px] rounded-[5px] flex flex-row px-[10px] py-[8px] lg:py-[12px] md:mt-[7%] ${
                     expiryDate.length === 5
                       ? "border-[#B200FF99] bg-opacity-60"
                       : ""
@@ -372,71 +378,93 @@ const AddNewCardPayment = () => {
                     type="text"
                     value={expiryDate}
                     onChange={handleExpiryDateChange}
-                    className="outline-none w-full text-[10px] md:text-[12px] lg:text-[16px]"
+                    className="outline-none w-full text-[10px] md:text-[14px] lg:text-[18px]"
                     placeholder="MM/YY"
                     maxLength={5} // Set max length to ensure only 5 characters are allowed
                   />
-                  <img src={ExpiryDate} alt="" />
+                  <img
+                    src={ExpiryDate}
+                    alt=""
+                    className="h-[20px] md:h-[30px] lg:h-[40px]"
+                  />
                 </div>
               </div>
 
               <div className="mt-[5%] flex flex-col gap-[5px]">
                 <div className="flex flex-row gap-[5px]">
-                  <p className="text-[10px] font-semibold md:text-[12px] lg:text-[16px]">
+                  <p className="text-[10px] font-semibold md:text-[14px] lg:text-[18px]">
                     CVV
                   </p>
-                  <img onClick={handleCvv} src={Question} alt="" className="h-[20px]"/>
+                  <img
+                    onClick={handleCvv}
+                    src={Question}
+                    alt=""
+                    className="h-[20px] md:h-[30px] lg:h-[40px]"
+                  />
                 </div>
                 <div
-                  className={`border-[1px] rounded-[5px] flex flex-row px-[10px] py-[8px] ${
+                  className={`border-[1px] rounded-[5px] flex flex-row px-[10px] py-[8px] lg:py-[12px] ${
                     cvv.length === 3 ? "border-[#B200FF99] bg-opacity-60" : ""
                   }`}
                 >
                   <input
                     type="number"
-                    className="outline-none w-full text-[10px] md:text-[12px] lg:text-[16px]"
+                    className="outline-none w-full text-[10px] md:text-[14px] lg:text-[18px]"
                     placeholder=""
                     value={cvv}
                     onChange={handleCVVChange}
                     maxLength={3}
                   />
-                  <img src={CVV} alt="" />
+                  <img
+                    src={CVV}
+                    alt=""
+                    className="h-[20px] md:h-[30px] lg:h-[40px]"
+                  />
                 </div>
               </div>
 
               <div className="mt-[5%] flex flex-col gap-[5px] z-[1]">
                 <div className="flex flex-row gap-[5px]">
-                  <p className="text-[10px] font-semibold md:text-[12px] lg:text-[16px]">
+                  <p className="text-[10px] font-semibold md:text-[14px] lg:text-[18px]">
                     PIN
                   </p>
-                  <img onClick={handlePin} src={Question} alt="" className="h-[20px]"/>
+                  <img
+                    onClick={handlePin}
+                    src={Question}
+                    alt=""
+                    className="h-[20px] md:h-[30px] lg:h-[40px]"
+                  />
                 </div>
                 <div
-                  className={`border-[1px] rounded-[5px] flex flex-row px-[10px] py-[8px] ${
+                  className={`border-[1px] rounded-[5px] flex flex-row px-[10px] py-[8px] lg:py-[12px] ${
                     pin.length === 4 ? "border-[#B200FF99] bg-opacity-60" : ""
                   }`}
                 >
                   <input
                     type="number"
-                    className="outline-none w-full text-[10px] md:text-[12px] lg:text-[16px]"
+                    className="outline-none w-full text-[10px] md:text-[14px] lg:text-[18px]"
                     placeholder=""
                     value={pin}
                     onChange={handlePinChange}
                     maxLength={4}
                   />
-                  <img src={CVV} alt=""/>
+                  <img
+                    src={Pin}
+                    alt=""
+                    className="h-[20px] md:h-[30px] lg:h-[40px]"
+                  />
                 </div>
               </div>
             </div>
 
             <div className="mt-[5%]">
-              <p className="font-semibold text-[10px] md:text-[12px] lg:text-[16px]">
+              <p className="font-semibold text-[10px] md:text-[14px] lg:text-[18px]">
                 Card Name
               </p>
-              <p className="text-[#7C7C7C] text-[10px] md:text-[10px] lg:text-[12px]">
+              <p className="text-[#7C7C7C] text-[10px] md:text-[12px] lg:text-[14px] md:w-[60%]">
                 The name on your card must be the same with your verified name.
               </p>
-              <div className="border-[1px] rounded-[5px] flex px-[10px] py-[10px] mt-[10px] md:w-[60%]">
+              <div className="border-[1px] rounded-[5px] flex px-[10px] py-[10px] mt-[10px] md:w-[60%] lg:py-[12px]">
                 <input
                   type="text"
                   value={cardHolderName}
@@ -444,7 +472,11 @@ const AddNewCardPayment = () => {
                   placeholder=""
                   onChange={handleCardNameChange}
                 />
-                <img src={CardName} alt="" />
+                <img
+                  src={CardName}
+                  alt=""
+                  className="h-[20px] md:h-[30px] lg:h-[40px]"
+                />
               </div>
             </div>
           </div>
@@ -460,9 +492,11 @@ const AddNewCardPayment = () => {
                 !paymentSelected
                   ? "bg-[#63616188] cursor-not-allowed"
                   : "bg-primary"
-              } w-full md:w-fit text-white mt-[5px] rounded-md px-[28px] text-[10px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[600] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px]
+              } w-full md:w-fit text-white mt-[5px] rounded-md px-[28px] text-[10px] md:px-[30px] md:py-[10px] md:text-[14px] md:font-[600] leading-[15px] lg:text-[18px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px]
               `}
-              disabled={!CardNumber || !ExpiryDate || !CVV || !Pin || !cardHolderName}
+              disabled={
+                !CardNumber || !ExpiryDate || !CVV || !Pin || !cardHolderName
+              }
               onClick={handleAddCard}
             >
               Add Card
@@ -474,7 +508,7 @@ const AddNewCardPayment = () => {
               toggleSideBar ? "md:w-[61%]" : "md:w-[57%]"
             }`}
           >
-            <img src={Secure} alt="" className="h-[18px]"/>
+            <img src={Secure} alt="" className="h-[18px]" />
             <p className="font-semibold">Secured by AremxyPlug</p>
           </div>
         </section>
@@ -487,18 +521,18 @@ const AddNewCardPayment = () => {
         flex flex-col justify-center z-[100] lg:ml-[10px] md:w-full`}
               >
                 <div>
-                  <p className="text-[10px] text-[#04177F] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[3%]">
+                  <p className="text-[10px] text-[#04177F] text-center pt-[5%] md:pt-[10%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[3%]">
                     This Currency is Currently Not Available.
                   </p>
                 </div>
                 <img
                   src={AddCardPopUp}
                   alt=""
-                  className="img mobile-desktop mx-auto mt-[20px] md:mt-[5%] md:w-[30%] md:h-[70%] md:mx-auto w-[143px] h-[100px] lg:w-[300px] lg:h-[200px] lg:mx-auto lg:mt-[8%] 2xl:mt-[10%] 2xl:mx-auto"
+                  className="popUp-style mx-auto mt-[20px] md:mt-[5%] md:w-[70%] md:h-[100%] md:mx-auto w-[143px] h-[100px] lg:mx-auto lg:mt-[8%] 2xl:mt-[10%] 2xl:mx-auto"
                 />
               </div>
             </div>
-            <div className="mobile-desktop mt-[20px] flex flex-col gap-[5px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
+            <div className="mobile-desktop mt-[30px] flex flex-col gap-[5px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
               <p className="text-[8px] font-extrabold text-end float-right ml-[60%] md:ml-[70%] md:text-[12px] mt-[10px] lg:text-[13px] 2xl:text-[15px]">
                 Coming Soon...
               </p>
@@ -649,7 +683,7 @@ const AddNewCardPayment = () => {
         {pinPopUp && (
           <WalletModal className="">
             <div
-               className={` ${
+              className={` ${
                 toggleSideBar
                   ? "md:w-[100%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
                   : "lg:w-[40%]"
@@ -708,69 +742,6 @@ const AddNewCardPayment = () => {
             </div>
           </WalletModal>
         )}
-
-        {/* {existingCard && (
-          <Modal className="">
-            <div
-              className={`confirm2 ${styles.inputPin} ${
-                toggleSideBar
-                  ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
-                  : "lg:w-[40%]"
-              }relative md:w-[55%] w-[90%] flex flex-col justify-between md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
-            >
-              <div className="absolute z-0 right-0" style={{ zIndex: 0 }}>
-                <img
-                  src={PopUpGreen}
-                  alt=""
-                  className="md:hidden rounded-tr-[10px]"
-                />
-                <img
-                  src={PopUpGreenTab}
-                  alt=""
-                  className="hidden md:block lg:hidden rounded-tr-[10px]"
-                />
-                <img
-                  src={PopUpGreenDeskTop}
-                  alt=""
-                  className="hidden lg:block rounded-tr-[20px]"
-                />
-              </div>
-
-              <div className="relative z-10">
-                <p
-                  className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[3%] lg:mt-[3%] z-[1000] ${styles.overlayText}`}
-                >
-                  What is PIN?
-                </p>
-
-                <p
-                  className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[4%] lg:my-[%] z-[1000] ${styles.overlayText}`}
-                >
-                  4 digit PIN to authorize payment from your bank ATM card to
-                  fund your wallet.
-                </p>
-              </div>
-
-              <div>
-                <img
-                  src={PinPopUp}
-                  alt=""
-                  className="absolute top-[35%] left-[32%] h-[40%] lg:left-[36.5%] md:top-[31%]"
-                />
-              </div>
-
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  setExistingCard(false);
-                }}
-                className={`my-[5%] bg-[#04177f] w-[90%] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
-              >
-                Okay
-              </button>
-            </div>
-          </Modal>
-        )} */}
 
         <div
           className={`${

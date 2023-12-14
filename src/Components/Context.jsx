@@ -773,12 +773,8 @@ const globalAccountName = globalTransferState.accountName;
   const [cardPaymentAmount, setCardPaymentAmount] = useState("");
   const [cardPaymentSelected, setCardPaymentSelected] = useState("");
   const [cardHolderName, setCardHolderName] = useState("");
-  const [cardSelected, setCardSelected] = useState(true);
+  const [cardSelected, setCardSelected] = useState("");
   const [selectedCard, setSelectedCard] = useState("");
-
-
-
-
   
 
   //=============point redeem==============
