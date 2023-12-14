@@ -14,8 +14,8 @@ export const AremxyMainReceipt = () => {
     textRef,
     isDarkMode,
     date,
-    globalEmailUsername,
-    globalUserPhoneNumber,
+    mainEmailUsername,
+    mainUserPhoneNumber,
     amtToTransfer,
   } = useContext(ContextProvider);
 
@@ -135,11 +135,11 @@ export const AremxyMainReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Username or Email</p>
-                  <span>{globalEmailUsername}</span>
+                  <span>{mainEmailUsername}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Phone Number</p>
-                  <span>{globalUserPhoneNumber}</span>
+                  <span>{mainUserPhoneNumber}</span>
                 </div>
               </div>
 
