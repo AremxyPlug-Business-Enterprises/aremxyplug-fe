@@ -24,7 +24,8 @@ export default function GlobalTransferSelectRecipient() {
    const [selectRecipientCountryFlag,setSelectRecipientCountryFlag] = useState(false);
   const [selectRecipientActive, setSelectRecipientActive] = useState(false);
   const [CurrencyNotAvalaible, setCurrencyNotAvalaible]= useState(false);
-   const [knownRecipientSwitch]= useState(true);
+   const [favoriteSwitch, setFavoriteSwitch]= useState(false);
+   const [recipientSwitch, setRecipientSwitch] = useState(false);
    const [editRecipient, setEditRecipient] = useState(false);
 
 
@@ -43,13 +44,26 @@ document.querySelector('.SelectRecipientDrop').classList.toggle('DropIt');
 }
   const [knownRecipient] = useState([
     {recipientName : 'Habib Kamaldeen', recipientAccountNumber : '0123456789', recipientBank : 'Sporta Bank', img : triangleBank, id: 1},
-    {recipientName : 'Jeremiah', recipientAccountNumber : '0123456789', recipientBank : 'Sporta Bank', img : triangleBank, id: 2}
+    {recipientName : 'Jeremiah', recipientAccountNumber : '2343454626', recipientBank : 'Sporta Bank', img : triangleBank, id: 2}
   ])
+  function handleElementClick(recipients){
+    setEditRecipient(true);
+    console.log(`elements with clicked id ${recipients}`)
+
+  }
+
+
+  //  function imageEdit(elementId){
+  //   setEditRecipient(true);
+  //   console.log(`elements with clicked id ${elementId}`)
+  //  }
+  
     const [searchRecipients, setSearchRecipients] = useState('');
-  const [NoRecordFound] = useState(false);
+
 const filterData = knownRecipient.filter(item =>
   item.recipientName.toLowerCase().includes(searchRecipients.toLowerCase())
 )
+
 
 
 // const ChosenRecipient  = () => {
@@ -185,21 +199,25 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
   Favorites
      </h2>
     </div>
-    { knownRecipientSwitch && (
+   {filterData.length === 0 ? (
+    <div className='flex justify-center '>
+  <img src={NoRecordImage} alt="" 
+      className='lg:w-[517px] lg:h-[456px] '/>
+      </div>
+     ):
       <div className='flex flex-col'>
    {filterData.map(recipients => {
     return (
-      <div  onClick={(e => {
-        if( e.target ){
-        setEditRecipient(true);
-        } 
-      })} 
+      <div
        className='flex justify-between pr-[19.87px]  py-[5.586px] pl-[4.758px] lg:pr-[60px] lg:py-[14px] lg:pl-[25px] border-[0.5px] 
       md:border-[1px] border-[solid] border-[#7C7C7C] bg-white lg:rounded-[12px] mt-[20px]
       shadow-[0px_0px_1.325px_0px_rgba(0,0,0,0.25)] lg:shadow-[] rounded-[3.974px]
-    ' key = {recipients.id}>
+    ' key = {recipients.id}
+    id={`recipient ${recipients}`}
+   >
         <div className='flex flex-col gap-[5px]'>
-       <h2 className='text-[#7C7C7C] text-[9px] leading-[12px] lg:text-[16px] lg:leading-[24px] font-[600]'>
+       <h2 
+        className='text-[#7C7C7C] text-[9px] leading-[12px] lg:text-[16px] lg:leading-[24px] font-[600]'>
         {recipients.recipientName}
        </h2>
        {/* ACCOUNT NUMBER & BANK */}
@@ -218,28 +236,30 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
         </div>
 
     <div className='relative flex items-center'>
-      <img
-      src={optionsRecipient} alt="" 
-      className='lg:w-[8px] lg:h-[28px] w-[4px] h-[14px]'/>
+      <img onClick={() => {
+        handleElementClick(recipients.id);
+      }}
+       src={optionsRecipient} alt="" 
+      className='lg:w-[8px] lg:h-[28px] w-[4px] h-[14px] cursor-pointer'/>
       {editRecipient && (
         <div className='absolute lg:top-[20px] lg:right-[60px] flex flex-col'>
-   <p onClick={(e => {
+   <p onClick={() => {
     setEditRecipient(false);
-   })}
+   }}
    className='text-[#7C7C7C] lg:w-[160px]  lg:py-[12px] lg:px-[14px] text-[9px] leading-[12px] 
    lg:text-[16px] lg:leading-[24px] font-[500] bg-white'>
     Add to favorites
    </p>
-   <p onClick={(e => {
+   <p onClick={() => {
     setEditRecipient(false);
-   })}
+   }}
     className='text-[#7C7C7C] lg:w-[160px] lg:py-[12px] lg:px-[14px] text-[9px] leading-[12px] 
    lg:text-[16px] lg:leading-[24px] font-[600] bg-white'>
     Edit Recipients
    </p>
-   <p onClick={(e => {
+   <p onClick={() => {
     setEditRecipient(false);
-   })}
+   }}
    className='text-[#FA6B6B] lg:w-[160px] lg:py-[12px] lg:px-[14px] text-[9px] leading-[12px] 
    lg:text-[16px] lg:leading-[24px] font-[600] bg-white'>
     Delete Recipients
@@ -251,13 +271,8 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
     )
    })}
       </div>
-    )}
-    { NoRecordFound && (
-    <div className='flex justify-center '>
-<img src={NoRecordImage} alt="" 
-    className='lg:w-[517px] lg:h-[456px] '/>
-    </div>
-    )}
+  }
+   
     </div>
     </div>
     </div> 
@@ -284,9 +299,9 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
               <Modal>
               <div className='h-[100%] w-[100%] md:justify-center flex 
               items-center  md:mx-[0px] mx-[19px]'>
-         <div className='flex flex-col  lg:w-[36%] h-[300px] w-[100%] lg:h-[420px] bg-white lg:rounded-[20px]
+         <div className='flex flex-col  lg:w-[36%] h-[269px] w-[100%] lg:h-[420px] bg-white lg:rounded-[20px]
           shadow-[0px_0px_6.933px_0px_rgba(0,0,0,0.25)] rounded-[8px]
-          lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] lg:py-[23px]'>
+          lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] lg:py-[23px] lg:px-[0px] py-[10px] px-[24px]'>
           <div className='flex flex-col lg:w-[100%] lg:gap-[20px] gap-[10px]  justify-between 
            items-center h-[100%]'>
   
@@ -297,18 +312,18 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
     className='lg:w-[217.263px] lg:h-[187.283px] h-[100px] w-[100px]'/>
     
  
-  <div className='flex lg:gap-[125px] md:gap-[60px] w-[100%] 
+  <div className='flex flex-col-reverse md:flex-row lg:gap-[125px] md:gap-[60px] w-[100%] 
   justify-end gap-[20px] lg:pr-[30px] '>
   <button onClick={() => {
     setCurrencyNotAvalaible(false);
   }}
-className='bg-[#04177F] w-[110px] lg:py-[10px] py-[7px] md:w-[97.02px]
+className='bg-[#04177F] w-[100%] lg:py-[10px] py-[13px] md:w-[97.02px]
  text-white text-center rounded-[4.41px]
  lg:rounded-[12px] font-[600] lg:text-[16px] lg:leading-[24px]'>
   Okay
 </button>
 <p className='font-[600] text-center text-[10px] leading-[14px] 
-lg:text-[16px] lg:leading-[24px] self-start'>
+lg:text-[16px] lg:leading-[24px] md:self-start self-end'>
 Coming Soon...
 </p>
 </div>
