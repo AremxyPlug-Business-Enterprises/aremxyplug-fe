@@ -377,6 +377,18 @@
 }
 
 
+@media (width: 1250px) {
+  .transaction-table {
+    gap: 8.7%;
+  }
+
+  .transaction-table1 {
+    gap: 9%;
+  }
+}
+  
+
+
 @media (min-width: 1500px) {
   .transaction-table {
     gap: 10%;

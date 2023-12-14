@@ -771,6 +771,14 @@ const globalAccountName = globalTransferState.accountName;
   const [numberPins, setNumberPins] = useState("");
   const [emailId, setEmailId] = useState("");
 
+  // ==================Card Payment===============================
+  const [cardPaymentAmount, setCardPaymentAmount] = useState("");
+  const [cardPaymentSelected, setCardPaymentSelected] = useState("");
+  const [cardHolderName, setCardHolderName] = useState("");
+  const [cardSelected, setCardSelected] = useState("");
+  const [selectedCard, setSelectedCard] = useState("");
+  
+
   //=============point redeem==============
   const [inputValue, setInputValue] = useState("");
   const [outputValue, setOutputValue] = useState("");
@@ -1206,6 +1214,19 @@ const globalAccountName = globalTransferState.accountName;
     setNumberPins,
     emailId,
     setEmailId,
+
+
+    //===============Card payment==============
+    cardPaymentAmount, 
+    setCardPaymentAmount,
+    cardPaymentSelected, 
+    setCardPaymentSelected,
+    cardHolderName, 
+    setCardHolderName,
+    cardSelected, 
+    setCardSelected,
+    selectedCard, 
+    setSelectedCard,
 
     //point redeem
     inputValue,
