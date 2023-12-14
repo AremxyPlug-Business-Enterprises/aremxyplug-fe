@@ -449,12 +449,14 @@ const mainTransferSchema = Joi.object({
     "string.pattern.base": "Phone number should be 11 digits",
     "any.max": "Phone number should be at most 11 digits",
   }),
-    emailUsername: Joi.string()
-    .email({ tlds: { allow: false } }) // Use the email validation provided by Joi
-    .required()
-    .messages({
-      "string.email": "Please enter a valid email address",
-    }),
+  emailUsername: Joi.alternatives()
+  .try(
+     Joi.string()
+        .lowercase()
+        .email({ tlds: { allow: false } }), 
+     Joi.string().alphanum().min(5).max(10)
+   )
+  .required(),
   amtToTransfer: Joi.string()
     .pattern(new RegExp(/\d{4,}/))
     .required()

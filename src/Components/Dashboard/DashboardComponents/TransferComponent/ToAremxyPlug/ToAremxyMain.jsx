@@ -3,6 +3,7 @@ import { ContextProvider } from "../../../../Context";
 import styles from "../../TransferComponent/transfer.module.css";
 import { ToConfirmAremxyMain } from "./ToConfirmAremxyMain";
 import { Modal } from "../../../../Screens/Modal/Modal";
+import pickPinIcon from '../../../../My Profile & Account Settings/ProfileImages/pickPinIcon.svg';
 import { Link } from "react-router-dom";
 // import { useNavigate } from "react-router-dom";
 
@@ -215,14 +216,44 @@ export default function ToAremxyMain() {
           </Link>
         </div>
        </div>
-        <div className="flex text-[#7c7c7c] text-[10px] leading-[130%] items-center my-[5%] gap-[8px] md:my-[5%] md:text-[18px] lg:text-[20px]">
-            <p>User Details </p>
-            <img
-              className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-              src="./Images/Dashboardimages/arrowright.png"
-              alt="/"
-            />
+
+       {/* User details section */}
+        <div className="">
+            <div className="flex text-[#7c7c7c] text-[10px] leading-[130%] items-center my-[5%] gap-[8px] md:my-[5%] md:text-[18px] lg:text-[20px]">
+                <p>User Details </p>
+                <img
+                  className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
+                  src="./Images/Dashboardimages/arrowright.png"
+                  alt="/"
+                />
+            </div>
+
+          <div className='flex md:justify-start justify-center gap-[7.042px] lg:gap-[12px]'>      
+            <div className='relative'>
+              <img src="/Images/transferImages/man-fold.png" className='h-[48px] w-[46.753px] rounded-[48px]
+              lg:h-[150px] lg:w-[150px] 
+              md:h-[88.801px]  md:w-[88.801px]
+              md:rounded-[88.201px] lg:rounded-[150px]' alt="profilePic"/>
+              <img  src={pickPinIcon}
+              className='absolute bottom-0 right-0 h-[25px] w-[25px] 
+              md:h-[25.82px] md:w-[25.82px] lg:h-[44px] lg:w-[44px]'  
+              alt="" />
+            </div>
+              {/* Profile text */}
+            <div className='flex flex-col justify-center gap-[3.52px] lg:gap-[12px]'>
+              <p className='font-[500] text-[10px] leading-[15px] md:text-[9.389px] md:leading-[12.206px] 
+              lg:text-[16px] lg:leading-[20.8px]'>
+                Habib Kamaldeen
+                </p>
+              <p className='font-[500] text-[#7C7C7C] text-[10px] leading-[15px]
+              md:text-[7.042px] md:leading-[9.154px]
+              lg:text-[12px] lg:leading-[15.6px]'>
+                habib@aremxyplug.com
+                </p>
+            </div>  
+          </div>
         </div>
+
       <div className="flex flex-col gap-[20px] md:grid md:grid-cols-2">
         {/* =====================Email or Username=================== */}
 
@@ -237,6 +268,11 @@ export default function ToAremxyMain() {
               value={mainEmailUsername}
               className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
               type="text"
+            />
+            <img
+              className=" h-[13.3px] w-[13.3px] lg:w-[24px] lg:h-[24px] "
+              src="/Images/transferImages/frame.png"
+              alt="dropdown"
             />
           </div>
           {mainTransferErrors.emailUsername && (
@@ -260,6 +296,11 @@ export default function ToAremxyMain() {
               className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
               type="number"
             />
+            <img
+              className=" h-[13.3px] w-[13.3px] lg:w-[24px] lg:h-[24px] "
+              src="/Images/transferImages/call.png"
+              alt="dropdown"
+            />
           </div>
           {mainTransferErrors.userPhoneNumber && (
             <div className="text-[12px] text-red-500 italic lg:text-[14px]">
@@ -280,8 +321,12 @@ export default function ToAremxyMain() {
               type="number"
               className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
             />
+            <img
+              className=" h-[13.3px] w-[13.3px] lg:w-[24px] lg:h-[24px] "
+              src="/Images/transferImages/cycle.png"
+              alt="dropdown"
+            />
           </div>
-
           {mainTransferErrors.amtToTransfer && (
             <div className="text-[12px] text-red-500 italic lg:text-[14px]">
               {mainTransferErrors.amtToTransfer}
@@ -298,11 +343,11 @@ export default function ToAremxyMain() {
             <p className="text-[8px] text-[#0008] md:text-[14px] lg:text-[16px]">
               &#8358;50,000.00
             </p>
-            {/* <img
-                    className="w-[13px] h-[13px] md:w-[24px] md:h-[24px] lg:w-[29px] lg:h-[29px]"
-                    src={flag}
-                    alt="/"
-                  /> */}
+            <img
+              className=" h-[13.3px] w-[13.3px] lg:w-[24px] lg:h-[24px] "
+              src="/Images/transferImages/nigeria.png"
+              alt="dropdown"
+            />
           </div>
         </div>
 

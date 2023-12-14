@@ -97,11 +97,12 @@ const Showmax = () => {
     
     const { error } = schema.validate({
       mobileNumber,
-      tvEmail
+      tvEmail,
+      smartCard,
     });
   
     if (error) {
-      setShowmaxErrorMessage(
+      setErrors(
         error.details.reduce((acc, curr) => {
           acc[curr.path[0]] = curr.message;
           return acc;
@@ -109,11 +110,10 @@ const Showmax = () => {
       );
     } else {
       setConfirmShowmaxPopup(true);
-      setShowmaxErrorMessage(" ");
+      setErrors({});
     }
   }
-
-  const [ShowmaxErrorMessage, setShowmaxErrorMessage] = useState('');
+  const [errors, setErrors] = useState({});
 
  
   // const ShowmaxSchema = Joi.object({
@@ -121,14 +121,18 @@ const Showmax = () => {
   // });
 
   const schema = Joi.object({
+    smartCard: Joi.string().regex(/^\d{10,}$/).required()
+      .messages({
+        "string.pattern.base": "Smart card number should be more than 10 digits",
+      }),
     mobileNumber: Joi.string().regex(/^\d{11}$/).required()
       .messages({
-        "string.pattern.base": "Phone number should be 11 digits ",
+        "string.pattern.base": "Phone number should be 11 digits",
       }),
       tvEmail: Joi.string()
-      .pattern(new RegExp(/^[^\s@]+@[^\s@]+\.[^\s@]+$/))
+      .pattern(new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i))
       .required()
-      .messages({ "string.pattern.base": "Invalid email " 
+      .messages({ "string.pattern.base": "Invalid email" 
     })
   });
 
@@ -294,13 +298,15 @@ const Showmax = () => {
                 })}
                 onChange={handleSmartCard} className=" flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[600] text-[9px] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] hover:bg-[#EDEAEA] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center" />
+            {errors.smartCard && <p className="text-[#F95252] text-[9px] md:text-[12px] lg:text-[14px] font-semibold italic">
+                {errors.smartCard}</p>}
             </div>
 
             <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[10px] lg:text-[17px] md:text-[13px] font-semibold">
                 Card Name</label>
               <input type="text"
-                onChange={handleCardName} className=" flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[600] text-[9px] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
+                onChange={handleCardName} onInput={(event)=> {event.target.value = event.target.value.replace(/[0-9]/g, '')}} className=" flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[600] text-[9px] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] hover:bg-[#EDEAEA] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center" />
             </div>
           </div>
@@ -309,29 +315,19 @@ const Showmax = () => {
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[10px] lg:text-[17px] md:text-[13px] font-semibold">
                 Phone Number</label>
               <input id="val" value={mobileNumber}
-              onInput={(e =>{
-  
-                const numericValue = e.target.value.replace(/\D/g, '');
-                    e.target.value = numericValue
-                   if(numericValue.length === 11){
-                    e.target.style.border = '2px solid green';
-                  }
-                  else if(e.target.value.length < 11){
-                  e.target.style.border = '2px solid red';
-                }
-              
-                })}
                 onChange={handleShowmaxMobileNumberChange}
                 type="tel" maxLength={11} className=" flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[600] text-[9px] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] hover:bg-[#EDEAEA] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center" />
-              {ShowmaxErrorMessage.mobileNumber && <p className="text-[#F95252] text-[9px] md:text-[12px] lg:text-[14px] font-semibold ">{ShowmaxErrorMessage.mobileNumber}</p>}
-
+              {errors.mobileNumber && <p className="text-[#F95252] text-[9px] md:text-[12px] lg:text-[14px] font-semibold italic">
+                {errors.mobileNumber}</p>}
             </div>
             <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
               <label htmlFor="Email" className="text-[#7E7E7E] text-[10px] lg:text-[17px] md:text-[13px] font-semibold">
                 Email</label>
               <input type="email" onChange={handleTvEmail} required className=" flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[600] text-[9px] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] hover:bg-[#EDEAEA] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center" />
+             {errors.tvEmail && <p className="text-[#F95252] text-[9px] md:text-[12px] lg:text-[14px] font-semibold italic">
+                {errors.tvEmail}</p>}
             </div>
 
           </div>
@@ -411,14 +407,15 @@ const Showmax = () => {
             mt-[38px] md:mt-[30px] lg:mt-[25px] rounded-[6px] md:rounded-[10px] lg:rounded-[15px] bg-[#04177F] h-[43px] md:h-[30px] lg:h-[40px] flex items-center font-semibold text-[12px] md:text-[11px] lg:text-[16px] text-[#fff] w-full md:w-[100px] lg:w-[170px] justify-center`}>
           Proceed</button>
 
-        <div className="flex gap-[15px] justify-center items-center mt-[68%] md:mt-[38%] lg:mt-[26%] max-[760px]:pb-[60px]">
-          <div className="font-medium text-[10px] md:text-[10px] lg:text-[15px] self-center">You need help ?</div>
-          <Link to="/ContactUs">
-            <div className="bluebutton flex bg-[#04177f] text-[8.5px] md:text-[8.5px] lg:text-[12px] text-white">
-              <p className="self-center mx-auto align-middle">Contact Us</p>
-            </div>
-          </Link>
-        </div>
+          <footer className="flex justify-center text-center pb-[10%] gap-[20px] mt-[200px]  md:mt-[750px]  lg:mt-[850px]">
+             <div className="font-medium text-[10px] md:text-[10px] lg:text-[15px] self-center">You need help ?</div>
+             <Link to="/ContactUs">
+               <div className="bluebutton flex bg-[#04177f] text-[8.5px] md:text-[8.5px] lg:text-[12px] text-white">
+                 <p className="self-center mx-auto align-middle">Contact Us</p>
+                </div>
+              </Link>
+          </footer>
+
       </DashBoardLayout>
       <ConfirmShowmaxPopup />
       <InputShowmaxPopup />

@@ -14,8 +14,8 @@ export const GotvReceipt = (receipt) => {
   const { toggleSideBar, textRef,
     flagResult,
     selectedOptionGOTV,
+    formatNumberWithCommas,
     tvEmail,
-    tvAmount,
     mobileNumber,
     smartCard,
     cardName,
@@ -67,6 +67,13 @@ export const GotvReceipt = (receipt) => {
     }
   };
 
+  const getNumericValue = (option) => {
+    const numericPart = option.match(/\d+/);
+    if (numericPart) {
+      return formatNumberWithCommas(parseInt(numericPart[0], numericPart[2], 10));
+    }
+    return '';
+  };
 
   return (
     <DashBoardLayout>
@@ -165,7 +172,7 @@ export const GotvReceipt = (receipt) => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Amount</p>
-                  <span>{tvAmount}</span>
+                  <span>{'₦'+ getNumericValue(selectedOptionGOTV)}</span>
                 </div>
               </div>
 

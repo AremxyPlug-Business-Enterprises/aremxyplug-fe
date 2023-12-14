@@ -36,7 +36,8 @@ export const InputDstvPopup = () => {
       };
 
       const cancelInputDstv = () => {
-        setInputPinDstv(false)
+        setInputPinDstv(false);
+        window.location.reload()
       }
    return(
     <>

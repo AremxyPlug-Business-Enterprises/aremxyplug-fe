@@ -36,7 +36,8 @@ export const InputStarTimesPopup = () => {
       };
 
       const cancelInputStarTimes = () => {
-        setInputPinStarTimes(false)
+        setInputPinStarTimes(false);
+        window.location.reload();
       }
    return(
     <>
