@@ -19,7 +19,7 @@ export default function EditProfile() {
   return (
     <div>
        <DashBoardLayout>
-        <div className='flex flex-col justify-between md:h-[1000px] h-[900px] '>
+        <div className='flex flex-col justify-between md:h-[1000px] h-[900px] pb-[20%]'>
           <div className=''>
        <ProfileHero/>
        <div className='flex flex-col gap-[20px] md:gap-[30px] lg:gap-[40px]'>
@@ -137,10 +137,10 @@ gap-[5.868px] lg:gap-[10px] cursor-default'>
        </div>
        {/* CONTACT US */}
        <div className=" flex gap-[8.729px]  md:gap-[14.896px] 
-     justify-center px-[8.594px] mb-[130px]">
+     justify-center px-[8.594px] lg:pt-[20%] lg:pb-[20%]  md:pt-[90%] md:pb-[10%] pt-[40%] pb-[30%]">
               <p className="font-[500] text-[10px] text-black 
               leading-[10.4px] lg:text-[16px] lg:leading-[15.6px]  md:text-[6.875px]
-            ] md:leading-[12.938px] self-center">
+             md:leading-[12.938px] self-center">
                 You need help?
               </p>
               <Link to ="/contactUs"
