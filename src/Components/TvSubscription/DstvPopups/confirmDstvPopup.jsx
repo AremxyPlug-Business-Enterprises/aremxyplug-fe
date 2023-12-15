@@ -70,7 +70,7 @@ import arrowRight from "../../../Components/EducationPins/imagesEducation/educat
                 {flagResult} {" "} to
                 </div>
             
-            <div className="flex flex-col gap-3 mt-4 md:mt-6 lg:mt-7">
+            <div className="flex flex-col gap-3 mt-5 md:mt-6 lg:mt-7">
 
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
                     <span className="text-[#7C7C7C]">Decoder Type</span>
