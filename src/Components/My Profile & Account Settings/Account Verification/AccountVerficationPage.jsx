@@ -4,7 +4,7 @@ import Arrowright from '../../EducationPins/imagesEducation/educationArrowRight.
 import IdVerification from './IdVerification';
 import BvnVerification from './BvnVerification';
 import AccountUpgrade from '../My Profile Page/AccountUpgrade';
-import { Link } from 'react-router-dom';
+
 
 export default function AccountVerficationPage() {
     const {verificationOpen} = useContext(ContextProvider);
@@ -13,10 +13,10 @@ export default function AccountVerficationPage() {
     const {accountUpgrade, setAccountUpgrade} = useContext(ContextProvider);
   return (
     
-    <div className='flex flex-col '>
+    
       <div className=''>
         { verificationOpen && (
-        <div>
+        <div className=''>
        <div className='flex lg:gap-[10px] lg:py-[50px] py-[35px]'> 
      <h2 className='font-[500] text-[#7C7C7C] text-[9.389px] leading-[14px] 
      lg:text-[20px] lg:leading-[30px]'>
@@ -79,8 +79,8 @@ src={Arrowright} alt="" />
         <IdVerification/>
         <BvnVerification/>
         <AccountUpgrade/>
-        </div>
-        <div className={ `flex gap-[8.729px]  md:gap-[14.896px] 
+        
+        {/* <div className={ `flex gap-[8.729px]  md:gap-[14.896px] 
      justify-center px-[8.594px] mb-[130px]
      ${verificationOpen
      ? 'block'
@@ -100,7 +100,7 @@ src={Arrowright} alt="" />
               >
                 Contact Us
               </Link>
-            </div>
+            </div> */}
     </div> 
   )
 }

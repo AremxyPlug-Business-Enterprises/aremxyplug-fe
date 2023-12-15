@@ -611,7 +611,6 @@ const DataBundleSelectRecipient = () => {
                     <img
                       onClick={() => {
                         setConfirm(false);
-                        window.location.reload();
                       }}
                       className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[45px] lg:h-[45px] "
                       src="/Images/transferImages/close-circle.png"
