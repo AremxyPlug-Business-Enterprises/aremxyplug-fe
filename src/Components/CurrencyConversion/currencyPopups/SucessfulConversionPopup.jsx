@@ -71,7 +71,7 @@ const CopyButton = ({ textToCopy }) => {
                    <div className="text-center font-semibold text-[9px] md:text-[9.17px] lg:text-[16px] pt-[23px] md:pt-[15px]"
                    >Conversion Successful</div>
                    <img
-                     className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[150px] lg:h-[150px] md:w-[78px] md:h-[78px]"
+                     className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[70px] lg:h-[70px]"
                      src="./Gif/checkMarkGif.gif"
                      alt="/"
                    />
