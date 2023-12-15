@@ -89,19 +89,17 @@ const QuickFeatures = () => {
             <p>Electricity Bills</p>
           </div>
         </Link>
-        <Link to='/payment-page'>
-          <div
+        <Link to="/payment-page"
             className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
               styles.feature
             }`}
           >
-            <img
-              className="h-[25px] w-[25px] md:w-[] md:h-[] lg:h-[79px] lg:w-[79px]"
-              src="./Images/Dashboardimages/feature6.png"
-              alt="/"
-            />
-            <p>Payments</p>
-          </div>
+          <img
+            className="h-[25px] w-[25px] md:w-[] md:h-[] lg:h-[79px] lg:w-[79px]"
+            src="./Images/Dashboardimages/feature6.png"
+            alt="/"
+          />
+          <p>Payments</p>
         </Link>
         <Link
           to="/Cardissuing"
