@@ -9,29 +9,24 @@ export const ToConfirmAremxyMain = () => {
   const {
     toggleSideBar,
     transferFee,
-    otherBanksConfirmation,
-    setOtherBankConfirmation,
+    emailPhoneNumberConfirmation,
+    setEmailPhoneNumberConfirmation,
     amtToTransfer,
-    globalEmailUsername,
-    globalUserPhoneNumber,
+    mainEmailUsername,
+    mainUserPhoneNumber,
   } = useContext(ContextProvider);
 
   const [otherInputPinPopUp, setOtherInputPinPopUp] = useState(false);
-
-  const totalAmount = (a, b) => {
-    const sum = parseInt(a + b);
-    return sum;
-  };
 
   const pointsEarned = "+2.00";
 
   const handleSwitch = () => {
     setOtherInputPinPopUp(true);
-    setOtherBankConfirmation(false);
+    setEmailPhoneNumberConfirmation(false);
   };
   return (
     <div>
-      {otherBanksConfirmation && (
+      {emailPhoneNumberConfirmation && (
         <Modal>
           (
           <div
@@ -40,7 +35,7 @@ export const ToConfirmAremxyMain = () => {
             } w-[90%]`}
           >
             <img
-              onClick={() => setOtherBankConfirmation(false)}
+              onClick={() => setEmailPhoneNumberConfirmation(false)}
               className="absolute right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px]"
               src="/Images/transferImages/close-circle.png"
               alt=""
@@ -60,11 +55,11 @@ export const ToConfirmAremxyMain = () => {
             <div className="flex flex-col gap-3">
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#0008]">Username or Email</p>
-                <span>{globalEmailUsername}</span>
+                <span>{mainEmailUsername}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#0008]">Phone Number</p>
-                <span>{globalUserPhoneNumber}</span>
+                <span>{mainUserPhoneNumber}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#0008]">Amount to Transfer</p>
@@ -76,11 +71,11 @@ export const ToConfirmAremxyMain = () => {
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#0008]">Vat Fee</p>
-                <span>&#8358;00.00</span>
+                <span>&#8358;0.00</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#0008]">Total Amount</p>
-                <span>&#8358;{totalAmount(amtToTransfer, transferFee)}.00</span>
+                <span>&#8358;{Number(amtToTransfer) + Number(transferFee)}.00</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#0008]">Points Earned</p>

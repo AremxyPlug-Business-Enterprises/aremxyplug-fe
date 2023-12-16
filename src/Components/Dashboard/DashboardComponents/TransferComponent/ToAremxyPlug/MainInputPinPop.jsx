@@ -12,10 +12,7 @@ import { AremxyMainSuccess } from "./AremxyMainSuccess";
 export const MainInputPinPop = ({
   otherInputPinPopUp,
   setOtherInputPinPopUp,
-  accountname,
-  accountnumber,
   transferamount,
-  bankname,
   emailUsername,
   userPhoneNumber,
 }) => {
@@ -103,10 +100,7 @@ export const MainInputPinPop = ({
       <AremxyMainSuccess
         transactSuccessToOtherBank={transactSuccessToOtherBank}
         setTransactSuccessToOtherBank={setTransactSuccessToOtherBank}
-        accountname={accountname}
-        accountnumber={accountnumber}
         transferamount={transferamount}
-        bankname={bankname}
         emailUsername={emailUsername}
         userPhoneNumber={userPhoneNumber}
       />
