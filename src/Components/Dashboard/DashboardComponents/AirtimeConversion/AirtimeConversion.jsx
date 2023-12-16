@@ -194,7 +194,7 @@ const {
   resultValue,
   setResultValue,
   recipientNumberA, 
-  selectedOne,
+  // selectedOne,
   setRecipientNumberA
 } = useContext(ContextProvider);
 
