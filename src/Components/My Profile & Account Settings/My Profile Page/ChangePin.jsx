@@ -7,7 +7,6 @@ import { ContextProvider } from "../../Context";
 import PopUpGreen from "../ProfileImages/PopUpGreen.svg";
 import PopUpGreenTab from "../ProfileImages/PopUpGreenTab.svg";
 import PopUpGreenDeskTop from "../ProfileImages/PopUpGreenDeskTop.svg";
-import { Link } from "react-router-dom";
 import OtpInput from "react-otp-input";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
@@ -821,10 +820,10 @@ const ChangePin = () => {
             {changePassword && <ChangePassword></ChangePassword>}
           </section>
 
-          <div
+          {/* <div
             className={`${
               isDarkMode ? "" : ""
-            } flex gap-[15px] justify-center items-center mt-[100%] pb-[25%] md:pb-[10%] md:mt-[100%] lg:mt-[100%] lg:pb-0`}
+            } flex gap-[15px] justify-center items-center  pb-[25%] md:pb-[10%] md:mt-[100%] lg:mt-[100%] lg:pb-0`}
           >
             <div className="text-[10px] md:text-[12px] lg:text-[14px]">
               You need help ?
@@ -838,7 +837,7 @@ const ChangePin = () => {
                 Contact Us
               </div>
             </Link>
-          </div>
+          </div> */}
         </div>
       )}
     </div>

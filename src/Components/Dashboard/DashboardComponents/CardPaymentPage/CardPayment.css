@@ -60,7 +60,19 @@
         height: 110px;
     }
 
-    
+    .okay {
+        margin-top: 55%;
+    }
+
+    .pinpopup {
+        left: 36%;
+    }
+
+    .popUp-style {
+        width: 60%;
+    }
+
+
 }
 
 
@@ -75,11 +87,45 @@
         box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
         margin-top: -20%;
     }
+
+    .okay {
+        margin-top: 40%;
+    }
+
+    .cvvPopUp {
+        left: 30%;
+    }
+
+    .pinpopup {
+        left: 35%;
+    }
+
+    .card-background {
+        left: 70%;
+    }
+
+    .expiry-date {
+        margin-top: 5%;
+    }
+
+    .popUp-style {
+        width: 50%;
+    }
     
 }
 
 
 @media (min-width: 1440px){
-  
+  .okay {
+    margin-top: 55%;
+  }
+
+  .card-background {
+    left: 72.5%;
+}
+
+.popUp-style {
+    width: 60%;
+}
     
 }
