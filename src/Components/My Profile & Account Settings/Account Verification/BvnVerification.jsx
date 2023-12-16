@@ -324,7 +324,7 @@ text-[13px] leading-[16.4px]'>
         )}
         {bvnPhoneMessage && (
           <Modal>
-          <div className='flex flex-col lg:gap-[44px] md:gap-[25px] gap-[20px] lg:h-[465px] h-[330px] w-[100%] md:w-[55%]
+          <div className='flex flex-col lg:gap-[44px] md:gap-[25px] gap-[20px] lg:h-[465px] h-[330px] w-[100%] md:w-[45%]
           shadow-[0px_0px_8.3274px_0px_rgba(0,0,0,0.25)] rounded-[8px] px-[18px] md:px-[0px]
           lg:rounded-[12px] lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] mx-[19px] md:mx-[0px]
            bg-white md:shadow-[0px_0px_11.73611px_0px_rgba(0,0,0,0.25)]
