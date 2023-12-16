@@ -191,29 +191,30 @@ export default function GlobalTransfer() {
       </div>
       {/* ==========================Select/Add Recipient====================== */}
       <div className="flex gap-[10%] lg:gap-[3%]">
-     
-        <div className="w-full flex items-center justify-between border text-[10px] rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
+      <Link to = '/GlobalTransferSelectRecipient'
+         className="w-full flex items-center justify-between border text-[10px] rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003] cursor-pointer">
           <p>Select Recipient</p>
-          <Link to = '/GlobalTransferSelectRecipient'>
+          
           <img
             className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
             src="./Images/otherBanksImages/weight.png"
             alt=""
-          />
-          </Link>
-           </div>
+          /></Link>
+      
+           
   
        
-        <div className="w-full flex items-center justify-between border text-[10px]  rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
+        <Link to ='/GlobalTransferAddRecipient'
+        className="w-full flex items-center justify-between border text-[10px]  rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003] cursor-pointer">
           <p>Add Recipient</p>
-          <Link to = '/GlobalTransferAddRecipient'>
+          
           <img
             className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
             src="./Images/otherBanksImages/add-square.png"
             alt=""
           />
-          </Link>
-        </div>
+         
+        </Link>
      
       </div>
       <div className="bg-[#04177f] text-[#fff] text-[10px] h-[20px] flex justify-center items-center rounded-[2px] lg:w-[45%] lg:h-[38px] lg:text-[16px]">
