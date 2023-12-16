@@ -18,7 +18,9 @@ import Joi from "joi";
 import arrow from "../AirtimeConversion/images/arrow.png"
 import boy from "../AirtimeConversion/images/Digital banking and online currency exchange.png"
 import styles from "../TransferComponent/transfer.module.css";
-import mtn from "../AirtimeConversion/images/mtn.svg"
+// import mtn from "../AirtimeConversion/images/mtn.svg"
+import { AirtimeSelector } from './airtimeselector';
+// import { image } from 'html2canvas/dist/types/css/types/image';
 
 const AirtimeConversion = () => {
   const [activeTab, setActiveTab] = useState('tab_1');
@@ -29,7 +31,7 @@ const AirtimeConversion = () => {
   const [selected, setSelected] = useState(false);
   const [networkName, setNetworkName] = useState('');
   const [Pop, setPop] = useState('');
-  const [showListR, setShowListR] = useState(false);
+  // const [showListR, setShowListR] = useState(false);
  const [ussd, setUssd] = useState('');
 
  const handleussdPop = () => {
@@ -88,18 +90,28 @@ const handleShowList =()=> {
   setNetworkImage('');
   setSelected(false);
 }
+// const [selectedCountry, setSelectedCountry] = useState("");
+
+// const handleCountrySelect = (country, id) => {
+//   setSelectedCountry(country);
+// };
+const [selectedCountryTwo, setSelectedCountryTwo] = useState("");
+
+const handleCountrySelectTwo = (country, id) => {
+  setSelectedCountryTwo(country);
+};
 const handleSelectNetwork =(name, image, val)=> {
   setNetworkName(name);
   setNetworkImage(image);
   setShowList(false);
   setSelected(true);
 }
-const handleShowListR =()=> {
-  setShowListR(!showList);
-  setNetworkName('');
-  setNetworkImage('');
-  setSelected(false);
-}
+// const handleShowListR =()=> {
+//   setShowListR(!showList);
+//   setNetworkName('');
+//   setNetworkImage('');
+//   setSelected(false);
+// }
 
 const [RInputValue, setRInputValue ] = useState('');
 const [ResultValue, setRResultValue ] = useState('');
@@ -182,6 +194,7 @@ const {
   resultValue,
   setResultValue,
   recipientNumberA, 
+  // selectedOne,
   setRecipientNumberA
 } = useContext(ContextProvider);
 
@@ -368,14 +381,14 @@ const {
           <div className='flex items-center gap-2 '>
             <div>{ networkImage && <img src={networkImage} alt="" className='w-[20px] object-cover'/>}</div>
             <div> ₦1,000 MTN ~ 90%</div>
-            <div className='flex '> 
+            <div className='flex items-center'> 
               <div><img src={flow1} alt="" /></div>
               <div>Transaction Fee - ₦0.00 </div>
             </div>
           </div>
           <div className='flex gap-1 '>
             <div><img src={clock} className='w-[8px] h-[8px] lg:w-[15px] lg:h-[15px]' alt="" /></div>
-            <div className='leading-[8px]'>Completion Time - 2 hr, 09:00am - 10:00pm UTC+1.</div>
+            <div className='leading-[8px]'>Completion Time 0- 2 hr, 09:00am - 10:00pm UTC+1.</div>
           </div>
           {errors.inputValue && (
               <div className="text-[10px] text-red-500 italic lg:text-[14px]">
@@ -406,22 +419,58 @@ const {
                         <div></div>
                     
                     { activeTab === 'tab_2' && 
-                        <WalletModal>
-                        <div className='rounded-[8px] px-3 relative lg:rounded-[11.5px] md:rounded-[6px] flex md:mt-8 flex-col ' >
-                            <h2 className='text-center text-[10px] leading-[15px] mb-[10px] md:text-[12px] md:leading-[18px] lg:text-base lg:leading-[24px]'>International Airtime.</h2>
-                            <h2 className='text-center text-[10px] leading-[15px] mb-[10px] font-semibold md:text-[12px] md:leading-[18px] lg:text-base lg:leading-[24px] text-primary'>This Feature is Currently Not Available.</h2>
-                            <div className='flex justify-center items-center mt-[5%] lg:mt-[5%]'>
-                                <div className='w-[170px] lg:w-[270px] lg:h-[220px] mb-[5%] md:mb-0'>
-                                    <img src="./Images/airtimeTopUp/international-airtime.png" alt="" className='w-full'/>
-                                </div>
-                            </div>
-                            <div className='w-[100%] mb-5 md:flex md:flex-row-reverse bottom-[0px] md:gap-[20px] lg:w-[93%] lg:gap-[30px] flex-col md:justify-center' >
-                                <h2 className='w-full md:w-fit text-right text-[10px] leading-[15px] py-[10px] md:text-[12px] md:leading-[18px] lg:text-base lg:leading-[24px]'>Coming soon...</h2>
-                                <button className='w-full text-[10px] md:w-fit leading-[15px] bg-primary px-[28.6px] py-[10px] text-white rounded-[7px] md:text-[12px] md:leading-[18px] lg:text-base lg:leading-[24px]' onClick={handleTab1}>Okay</button>
-                            </div>
-                            
+                    <WalletModal>
+                    <div className="text-center flex justify-center item-center md:mt-[-20px] lg:mt-[15px] 2xl:mt-[-15px]">
+                      <div
+                        className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
+                          flex flex-col justify-center z-[100] lg:ml-[10px] md:w-full`}
+                      >
+                        <div>
+                          <p className="text-[10px] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[3%]">
+                            International Data
+                          </p>
+                          <p className="text-[10px] md:text-[16px] font-[600] text-[#04177F] lg:text-[16px]">
+                            This Feature is Currently Not Available.
+                          </p>
                         </div>
-                    </WalletModal>
+                        <img
+                          src="./Images/airtimeTopUp/international-airtime.png"
+                          alt=""
+                          className="img mx-auto mt-[30px] md:mt-[15%] md:w-[200px] md:mx-[100px] w-[143px] h-[67px] lg:w-[300px] lg:h-[200px] lg:mx-[150px] lg:mt-[10%] 2xl:mt-[10%] 2xl:mx-[180px]"
+                        />
+                      </div>
+                    </div>
+                    <div className="mt-[40px] flex flex-col gap-[5px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
+                      <p className="text-[8px] font-extrabold text-end float-right ml-[60%] md:ml-[70%] md:text-[12px] mt-[10px] lg:text-[13px] 2xl:text-[15px]">
+                        Coming Soon...
+                      </p>
+                      <button
+                        className={` ${
+                          isDarkMode ? "border" : "bg-[#04177f] "
+                        } cursor-pointer text-white text-[10px] h-[40px] rounded-[5px] md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[25%] lg:mx-auto`}
+                        onClick={handleTab1}
+                        
+                      >
+                        Okay
+                      </button>
+                    </div>
+                  </WalletModal>
+                    //     <WalletModal>
+                    //     <div className='rounded-[8px] px-3 relative lg:rounded-[11.5px] md:rounded-[6px] flex md:mt-8 flex-col ' >
+                    //         <h2 className='text-center text-[10px] leading-[15px] mb-[10px] md:text-[12px] md:leading-[18px] lg:text-base lg:leading-[24px]'>International Airtime.</h2>
+                    //         <h2 className='text-center text-[10px] leading-[15px] mb-[10px] font-semibold md:text-[12px] md:leading-[18px] lg:text-base lg:leading-[24px] text-primary'>This Feature is Currently Not Available.</h2>
+                    //         <div className='flex justify-center items-center mt-[5%] lg:mt-[5%]'>
+                    //             <div className='w-[170px] lg:w-[270px] lg:h-[220px] mb-[5%] md:mb-0'>
+                    //                 <img src="./Images/airtimeTopUp/international-airtime.png" alt="" className='w-full'/>
+                    //             </div>
+                    //         </div>
+                    //         <div className='w-[100%] mb-5 md:flex md:flex-row-reverse gap-[5px] bottom-[0px]   lg:w-[93%] md:mt-12  flex-col ' >
+                    //             <h2 className='text-[8px] font-extrabold md:text-[12px] lg:text-[13px] w-full text-right md:mb-[-20px] lg:mb-[-80px]'>Coming soon...</h2>
+                    //             <button className='w-full text-[10px]  leading-[15px] bg-primary px-[28.6px] py-[10px] text-white rounded-[7px] md:text-[12px] md:leading-[18px] md:w-fit lg:text-base lg:leading-[24px]' onClick={handleTab1}>Okay</button>
+                    //         </div>
+                            
+                    //     </div>
+                    // </WalletModal>
                     }
                     
                    
@@ -447,7 +496,12 @@ const {
             
             {proceed && (
           <Modal>
-                <div className='text-red h-[320px] w-[300px] md:w-[321px] md:h-[300px] lg:w-[562px] lg:h-[420px] bg-white rounded-tl-md rounded-tr-md  flex flex-col items-center gap-4'>
+            <div  className={`${styles.contactTeam} ${
+              toggleSideBar
+              ? ""
+              : "text-red h-[320px] w-[300px] md:w-[321px] md:h-[300px] lg:w-[562px] lg:h-[420px] bg-white rounded-tl-md rounded-tr-md  flex flex-col items-center gap-4"
+              }`}>
+               
                   <div className='text-[10px] mt-4 font-[600] md:text-[12px] lg:text-[16px] text-[#000000] '>Airtime Conversion</div>
                   <div className='text-[10px] lg:text-[12px] mt-1 text-[#04177F]'>Note!!!</div>
                   <div className='text-[8px] lg:text-[12px] font-[600] text-center w-[280px] lg:w-[409px] text-[#000000] rounded-md border-[0.5px] border-[
@@ -456,7 +510,8 @@ const {
                   <Link to="/contact-team">
                   <div className='text-white mt-3 bg-primary lg:text-[16px] lg:py-1 w-[250px] md:w-[93px] lg:w-[163px] rounded-md md:py-1 md:rounded-lg md:px-1 py-3 text-center  text-[12px] font-[600]'>Contact Team</div>
                   </Link>
-                </div>               
+                
+                </div>              
           </Modal>
         )}
            
@@ -475,7 +530,7 @@ const {
               src="/Images/transferImages/close-circle.png"
               alt=""
             />
-            <hr className="h-[6px] bg-[#04177f] w-full border-none mt-[4%] md:mt-[8%] md:h-[8px] lg:h-[10px] lg:mt-[8%]" />
+            <hr className="h-[6px] md: bg-[#04177f] w-full border-none mt-[8%] md:mt-[8%] md:h-[8px] lg:h-[10px] lg:mt-[8%]" />
             <div className="flex flex-col text-center items-center justify-center pt-[30px] md:pt-[30px] lg:pt-[1px]">
               <div className="font-[500] flex items-center justify-center w-[100%] text-center text-[10px] py-1 mt-[30px] md:mt-[30px] lg:mt-[50px]   md:text-[9.17px] lg:text-[16px] leading-[20.8px] lg:px-6 lg:w-fit  md:flex md:flex-row md:w-fit md:py-1 md:px-4 lg:py-3 rounded-sm md:rounded-sm lg:rounded-md md:leading-[11.5px] bg-primary text-white">
                 Real-time Airtime Conversion Tracker
@@ -502,9 +557,9 @@ const {
                       placeholder="Amount to Convert"
                     />{" "}
                   </div>
-                  <div className="h-[30px] md:h-[40px] lg:h-[50px] w-[15%] md:w-[15%] gap-2 lg:gap-4 flex flex-row justify-center px-3 py-2 bg-primary items-center   ">
+                  {/* <div className="h-[30px] md:h-[40px] lg:h-[50px] w-[15%] md:w-[15%] gap-2 lg:gap-4 flex flex-row justify-center px-3 py-2 bg-primary items-center   ">
                     <div>
-                    <img className=" h-[12px] w-[12px] md:w-[15px] md:h-[15px] lg:w-[24px] lg:h-[24px] " src={mtn} alt="" />
+                    <img className=" h-[15px] w-[15px] md:w-[15px] md:h-[15px] lg:w-[24px] lg:h-[24px] " src={mtn} alt="" />
                     </div>
                     <div onClick={handleShowListR}>
                       {" "}
@@ -522,7 +577,11 @@ const {
                     }
                     </div>
                     
-                  </div>
+                  </div> */}
+                  <div className='h-[30px] md:h-[40px] lg:h-[50px]'><AirtimeSelector 
+                  onSelectOne={handleCountrySelectTwo}
+                  selectedCountryOne={selectedCountryTwo}
+                  /></div>
                 </div>
                 <div className="flex flex-col items-center mt-[20px] md:mt-[20px] lg:mt-[20px] text-[#7C7C7C] lg:text-[16px] leading-[20.8px] gap-2 lg:gap-4 font-[500] text-[10px] md:text-[9.2px] ">
                   <div className="flex flex-row gap-2 items-center border-[1px] py-0 px-8 md:py-2 md:px-2 rounded-md md:rounded-xl border-[#000000] text-[#29B8FC] ">
@@ -530,7 +589,7 @@ const {
                     MTN ₦1,000 ~ 90% 
                     </div>
                     <div>
-                    <img className=" h-[9px] w-[9px] md:w-[15px] md:h-[15px] lg:w-[24px] lg:h-[24px] " src={mtn} alt="" />
+                   
                     </div>
                   </div>
                 </div>
@@ -558,7 +617,7 @@ const {
                       {" "}
                       <img
                         src={flag}
-                        className=" md:w-[15px] md:h-[15px] lg:w-[24px] lg:h-[24px]"
+                        className=" h-[14px] w-[15px] md:w-[15px] md:h-[15px] lg:w-[24px] lg:h-[24px]"
                         alt="flag"
                       />{" "}
                     </div>
@@ -566,7 +625,7 @@ const {
                       {" "}
                       <img
                         src={arrowdown}
-                        className=" h-[12px] w-[12px]  md:w-[15px] md:h-[15px] lg:w-[24px] lg:h-[24px]"
+                        className=" h-[14px] w-[14px]  md:w-[15px] md:h-[15px] lg:w-[24px] lg:h-[24px]"
                         alt="arrow"
                       />{" "}
                     </div>
