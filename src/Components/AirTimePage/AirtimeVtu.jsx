@@ -460,6 +460,7 @@ const AirtimeVtu = () => {
                         <h2 className={styles.head3}>Type Amount</h2>
                         <div className={styles.input}>
                             <div className={styles.output}>
+                                <span className="text-gray-500 relative bottom-[1px]">&#8358;</span>
                                 <input type='number' placeholder='Type amount' required className={styles.phone} onChange={(event)=>setAmount(event.target.value)} value={amount.toLocaleString()}/>
                                 <div className={styles.call}>
                                     <img src={money} alt=""/>                            

@@ -315,7 +315,7 @@ export default function ToAremxyMain() {
             Amount To Transfer
           </p>
           <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
-            {" "}
+            <span className="text-gray-500">&#8358;</span>
             <input
               onChange={amountHandler}
               type="number"
