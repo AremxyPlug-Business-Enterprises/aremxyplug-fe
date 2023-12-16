@@ -79,6 +79,9 @@ export default function AremxySelectUser() {
     const [confirm, setConfirm] = useState(false);
     const [userPhoneNumber, setUserPhoneNumber] =  useState('');
     const [emailUsername, setEmailUserName] = useState('');
+    const [miniCountry, setMiniCountry] = useState("");
+    const [select, setSelect] = useState(false);
+    const [showDrop, setShowDrop] = useState(false);
     const active = styled.active;
     const inactive = styled.inactive;
 
@@ -95,6 +98,13 @@ export default function AremxySelectUser() {
         setShowList(false);
         setMainCountry(name);
         setSelected(true);
+    };
+
+    const handleCountryPress = (name, flag, id, code) => {
+        setFlag(flag);
+        setShowDrop(false);
+        setMiniCountry(name);
+        setSelect(true);
     };
 
     const handleRecipient = (index) => {
@@ -156,7 +166,6 @@ export default function AremxySelectUser() {
 
     const handleSave = (e) => {
         e.preventDefault();
-        setEdit(false);
       
         const { error } = firmTransferSchema.validate({
           emailUsername,
@@ -173,6 +182,7 @@ export default function AremxySelectUser() {
           );
         } else {
           setSave(true);
+          setEdit(false);
           setErrors({});
         }
     };
@@ -236,10 +246,10 @@ export default function AremxySelectUser() {
                 {/* =====================Country========================= */}
                 <div className={styles.inputBox}>
                 <div
-                    onClick={() => setShowList(!showList)}
+                    onClick={() => setShowDrop(!showDrop)}
                     className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]"
                 >
-                    {selected ? (
+                    {select ? (
                     <div className="flex gap-[7px] items-center">
                         <img
                         className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
@@ -248,7 +258,7 @@ export default function AremxySelectUser() {
                         />
                         <p className="text-[10px] font-extrabold lg:text-[14px]">
                         {" "}
-                        {mainCountry}
+                        {miniCountry}
                         </p>
                     </div>
                     ) : (
@@ -260,12 +270,12 @@ export default function AremxySelectUser() {
                     alt="dropdown"
                     />
                 </div>
-                {mainTransferErrors.country && (
+                {errors.country && (
                     <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                    {mainTransferErrors.country}
+                    {errors.country}
                     </div>
                 )}
-                {showList && (
+                {showDrop && (
                     <div
                     className={`${
                         toggleSideBar
@@ -281,7 +291,7 @@ export default function AremxySelectUser() {
                         className=" cursor-pointer border-b flex items-center p-2 gap-[5px] text-[9px]  md:text-[14px] lg:text-[16px]"
                         key={country.id}
                         onClick={() =>
-                            handleCountryClick(
+                            handleCountryPress(
                             country.name,
                             country.flag,
                             country.id,
@@ -807,7 +817,7 @@ export default function AremxySelectUser() {
             {save && (
                 <Modal>
                     <div
-                        className={`${style.successfulThree} ${
+                        className={`${style.successfulFour} ${
                         toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
                         } md:w-[45%] w-[90%] overflow-auto`}
                     >
@@ -1000,7 +1010,7 @@ export default function AremxySelectUser() {
                   </p>
                   <p className="text-[10px] text-[#04177f] md:text-[14px] px-[20px] lg:text-[18px] font-extrabold text-center my-[1%] lg:my-[%]">
                     User *****2345 has been deleted successfully. You can
-                    add recipient again anytime!
+                    add user again anytime!
                   </p>
                   <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[5%]">
                     <img
