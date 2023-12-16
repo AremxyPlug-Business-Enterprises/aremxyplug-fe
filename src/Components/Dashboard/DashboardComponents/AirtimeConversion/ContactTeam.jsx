@@ -51,6 +51,16 @@ const ContactTeam = () => {
      
   };
 
+  const handleairEmail = (event) => {
+    const newValue = event.target.value;
+    setairEmail(newValue);
+     
+  };
+  const handlehomeAdress = (event) => {
+    const newValue = event.target.value;
+    sethomeAdress(newValue);
+     
+  };
 
   const { 
     firstName,
@@ -66,6 +76,9 @@ const ContactTeam = () => {
     setLastName,
     airEmail, 
     homeAdress,
+    setairEmail,
+   sethomeAdress,
+
    
   } = useContext(ContextProvider);
   
@@ -209,8 +222,8 @@ const handleShowList =()=> {
                       
                     </div>
                     <div className="border w-full h-[30px] rounded-[4px] pr-[8px] pl-[4px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between">
-                        <input type='text' className='lg:text-[16px] lg:leading-[24px] grow outline-none text-[8px] font-bold leading-[12px]' placeholder='Email Address ' value={airEmail} />
-                        <div className='lg:w-6 lg:h-6 w-[11px] h-[11px]'>
+                        <input type='text' className='lg:text-[16px] lg:leading-[24px] grow outline-none text-[8px] font-bold leading-[12px]' placeholder='Email Address ' onChange={handleairEmail} value={airEmail} />
+                        <div className='lg:w-6 lg:h-6 w-[11px] h-[11px]'> 
                             <img src={sms} alt="" className='w-full h-full'/>
                         </div>
                         
@@ -223,7 +236,7 @@ const handleShowList =()=> {
                       
                     </div>
                     <div className="border w-full h-[30px] rounded-[4px] pr-[8px] pl-[4px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between">
-                        <input type='text' className='lg:text-[16px] lg:leading-[24px] grow outline-none text-[8px] font-bold leading-[12px]' placeholder='Home Address' value={ homeAdress}/>
+                        <input type='text' className='lg:text-[16px] lg:leading-[24px] grow outline-none text-[8px] font-bold leading-[12px]' placeholder='Home Address' onChange={handlehomeAdress} value={ homeAdress}/>
                         <div className='lg:w-6 lg:h-6 w-[11px] h-[11px]'>
                             <img src={home} alt="" className='w-full h-full'/>
                         </div>
@@ -308,13 +321,16 @@ const handleShowList =()=> {
         </div>
           <div className=' text-[#7C7C7C] text-[8px] lg:text-[12px] flex flex-col gap-2 mt-5 font-[500] items-center md:items-start'>
             <div className='flex gap-2 '>
-                <div className=''> <input type="checkbox" id="myCheckbox" name="myCheckbox" className="form-checkbox h-3 w-3 text-black  " /></div>
-                <div>I acknowledge that the details I provided above are correct, and I take the full <br /> responsibility for any inaccuracy.
+                <div className=''> <input type="checkbox" id="myCheckbox" name="myCheckbox" className="form-checkbox h-3 w-3  text-black  " /></div>
+                <div className='font-semibold'>I acknowledge that the details I provided above are correct, and I take the full <br /> responsibility for any inaccuracy.
 </div>
             </div>
             <div className='flex gap-2'>
             <div className=''> <input type="checkbox" id="myCheckbox" name="myCheckbox" className="form-checkbox h-3 w-3 text-black  " /></div>
-                <div>I have read and agreed to AremxyPlug Privacy Policy and Terms & Conditions.</div>
+                <div className='font-semibold '>
+                  <div>I have read and agreed to AremxyPlug <Link to="/privacy-policy"><span className='text-primary  font-bold'>Privacy Policy</span> and </Link><Link to="/terms-and-condition"><span className='text-primary font-bold'>Terms & Conditions.</span></Link> </div>
+                  
+                   </div>
             </div>
 
            

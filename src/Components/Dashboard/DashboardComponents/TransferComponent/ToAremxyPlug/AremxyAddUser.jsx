@@ -11,18 +11,14 @@ import Joi from "joi";
 const AremxyAddUser = () => {
 
     const {
-        showList,
-        setShowList,
-        selected,
-        setSelected,
         toggleSideBar,
-        mainCountry,
-        setMainCountry,
-        mainTransferErrors,
       } = useContext(ContextProvider);
 
     const [userPhoneNumber, setUserPhoneNumber] =  useState('');
     const [emailUsername, setEmailUserName] = useState('');
+    const [mainCountry, setMainCountry] = useState("");
+    const [selected, setSelected] = useState(false);
+    const [showList, setShowList] = useState(false);
     const [save, setSave] = useState(false);
     const [errors, setErrors] = useState({});
 
@@ -207,9 +203,9 @@ const AremxyAddUser = () => {
                 alt="dropdown"
                 />
             </div>
-            {mainTransferErrors.country && (
+            {errors.country && (
                 <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                {mainTransferErrors.country}
+                {errors.country}
                 </div>
             )}
             {showList && (
@@ -308,7 +304,7 @@ const AremxyAddUser = () => {
             {save && (
                 <Modal>
                     <div
-                        className={`${style.successfulThree} ${
+                        className={`${style.successfulFour} ${
                         toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
                         } md:w-[45%] w-[90%] overflow-auto`}
                     >

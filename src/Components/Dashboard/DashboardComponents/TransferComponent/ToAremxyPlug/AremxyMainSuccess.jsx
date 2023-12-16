@@ -89,7 +89,7 @@ export const AremxyMainSuccess = ({
 
             <div className="bg-[#F2FAFF] mx-10 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
               <p className="text-[6px] text-center mx-auto w-[171px] md:text-[14px] md:w-[80%] lg:text-[14px]">
-              The transfer has been sent successfully. Please contact the recipient bank with the Session ID if payment not received within 5-15 minutes.
+              The transfer has been sent successfully. Please contact the recipient user to confirm the payment from his/her wallet.
               </p>
             </div>
             <div className="flex w-[70%] mx-auto items-center gap-[5%] md:w-[60%] lg:my-[5%]">
