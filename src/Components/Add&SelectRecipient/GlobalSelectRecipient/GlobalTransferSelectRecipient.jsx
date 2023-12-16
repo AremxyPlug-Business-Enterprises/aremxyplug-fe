@@ -16,18 +16,21 @@ import kenyaFlag from '../../EducationPins/imagesEducation/Kenya.svg';
 import optionsRecipient from '../RecipientImages/optionsRecipient.svg'
 import imageCurrencyNotAvalaible from '../RecipientImages/CurrencyNotAvaliable.svg';
 import triangleBank from '../RecipientImages/triangle.svg';
+import deleteRecipientsIcon from '../RecipientImages/deleteRecipient.svg';
+import closeIcon from '../../My Profile & Account Settings/ProfileImages/Cancel.svg';
+import AremxyLogo from '../../EducationPins/imagesEducation/AremxyPlug.svg';
 import { Modal } from '../../Screens/Modal/Modal';
 import { Link } from 'react-router-dom';
 
 export default function GlobalTransferSelectRecipient() {
   const [selectRecipientCountry, setSelectRecipientCountry] = useState('');
-   const [selectRecipientCountryFlag,setSelectRecipientCountryFlag] = useState(false);
+   const [selectRecipientCountryFlag,setSelectRecipientCountryFlag] = useState(null);
   const [selectRecipientActive, setSelectRecipientActive] = useState(false);
   const [CurrencyNotAvalaible, setCurrencyNotAvalaible]= useState(false);
-   const [favoriteSwitch, setFavoriteSwitch]= useState(false);
-   const [recipientSwitch, setRecipientSwitch] = useState(false);
-   const [editRecipient, setEditRecipient] = useState(false);
-
+  //  const [favoriteSwitch, setFavoriteSwitch]= useState(false);
+  //  const [recipientSwitch, setRecipientSwitch] = useState(false);
+   const [editRecipient, setEditRecipient] = useState(null);
+  const [deleteRecipient, setDeleteRecipient] = useState(false);
 
   const [recipientCountrySelection] = useState([
     {method : 'Nigeria',  flag : nigerianFlag, id : 1},
@@ -47,16 +50,19 @@ document.querySelector('.SelectRecipientDrop').classList.toggle('DropIt');
     {recipientName : 'Jeremiah', recipientAccountNumber : '2343454626', recipientBank : 'Sporta Bank', img : triangleBank, id: 2}
   ])
   function handleElementClick(recipients){
-    setEditRecipient(true);
+    setEditRecipient(recipients);
+   
     console.log(`elements with clicked id ${recipients}`)
 
   }
-
-
-  //  function imageEdit(elementId){
-  //   setEditRecipient(true);
-  //   console.log(`elements with clicked id ${elementId}`)
-  //  }
+ function  closePopRecipients(){
+  setEditRecipient(null);
+   }
+   function  DeleteSelectRecipients(){
+    setEditRecipient(null);
+    setDeleteRecipient(true);
+     }
+  
   
     const [searchRecipients, setSearchRecipients] = useState('');
 
@@ -142,8 +148,7 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
           {recipientCountry.method}
           </p>
            </div>
-          
-        )
+           )
       }) )}
       </div>
     ) }
@@ -189,12 +194,12 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
 
 
     <div className='Tabs flex flex-col lg:gap-[30px] gap-[8.28px] my-[30px] md:mt-[60px] md:mb-[80px]'>
-    <div className='flex w-[100%] lg:gap-[25px] border-b-[0.33pxpx] md:border-b-[3px] border-[#ECECEC]'>
-     <h2 className='w-[25%] font-[500] text-center text-[9px] leading-[12px] lg:text-[20px] lg:leading-[30px] py-[5.671px] lg:py-[10px]
-     bg-[#E2F3FF] md:border-b-[4px] border-b-[1.987px] border-[#04177F] lg:rounded-[6px] rounded-[1.325px]'>
+    <div className='flex w-[100%] justify-between md:justify-normal lg:gap-[25px] border-b-[2px] md:border-b-[3px] border-[#ECECEC]'>
+     <h2 className='md:w-[25%] w-[50%] font-[500] text-center text-[9px] leading-[12px] lg:text-[20px] lg:leading-[30px] py-[5.671px] lg:py-[10px]
+     bg-[#E2F3FF] md:border-b-[4px] border-b-[2px] border-[#04177F] lg:rounded-[6px] rounded-[1.987px]'>
   Recipients
      </h2>
-     <h2 className='w-[25%] font-[500] text-center text-[9px] leading-[12px] lg:text-[20px] 
+     <h2 className='md:w-[25%] w-[50%] font-[500] text-center text-[9px] leading-[12px] lg:text-[20px] 
       lg:leading-[30px] lg:py-[10px] py-[5.671px]'>
   Favorites
      </h2>
@@ -202,7 +207,7 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
    {filterData.length === 0 ? (
     <div className='flex justify-center '>
   <img src={NoRecordImage} alt="" 
-      className='lg:w-[517px] lg:h-[456px] '/>
+      className='lg:w-[517px] lg:h-[456px]'/>
       </div>
      ):
       <div className='flex flex-col'>
@@ -213,7 +218,6 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
       md:border-[1px] border-[solid] border-[#7C7C7C] bg-white lg:rounded-[12px] mt-[20px]
       shadow-[0px_0px_1.325px_0px_rgba(0,0,0,0.25)] lg:shadow-[] rounded-[3.974px]
     ' key = {recipients.id}
-    id={`recipient ${recipients}`}
    >
         <div className='flex flex-col gap-[5px]'>
        <h2 
@@ -236,31 +240,39 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
         </div>
 
     <div className='relative flex items-center'>
-      <img onClick={() => {
+      <img key={recipients.id}
+       onClick={() => {
         handleElementClick(recipients.id);
       }}
        src={optionsRecipient} alt="" 
       className='lg:w-[8px] lg:h-[28px] w-[4px] h-[14px] cursor-pointer'/>
-      {editRecipient && (
-        <div className='absolute lg:top-[20px] lg:right-[60px] flex flex-col'>
+      {/* FOR OPTIONS TO EDIT RECIPIENTS */}
+      { editRecipient === recipients.id && (
+        <div className='absolute md:top-[15px] md:right-[40px] top-[0px] right-[10px] lg:top-[20px] lg:right-[70px] flex flex-col'>
+          {/* ADD TO FAVORITE */}
    <p onClick={() => {
-    setEditRecipient(false);
+    closePopRecipients();
    }}
-   className='text-[#7C7C7C] lg:w-[160px]  lg:py-[12px] lg:px-[14px] text-[9px] leading-[12px] 
+   className='text-[#7C7C7C] lg:w-[200px]  py-[7.451px] pl-[5.313px] w-[90.36px]  lg:py-[12px] lg:px-[14px] text-[9px] leading-[12px] 
+   shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)] hover:bg-gray-200 cursor-pointer
    lg:text-[16px] lg:leading-[24px] font-[500] bg-white'>
     Add to favorites
    </p>
+   {/* EDIT  */}
    <p onClick={() => {
-    setEditRecipient(false);
+   closePopRecipients();
    }}
-    className='text-[#7C7C7C] lg:w-[160px] lg:py-[12px] lg:px-[14px] text-[9px] leading-[12px] 
+    className='text-[#7C7C7C] lg:w-[200px] py-[7.451px] pl-[5.313px] w-[90.36px] lg:py-[12px] lg:px-[14px] text-[9px] leading-[12px] 
+    shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)] hover:bg-gray-200 cursor-pointer
    lg:text-[16px] lg:leading-[24px] font-[600] bg-white'>
     Edit Recipients
    </p>
+   {/* DELETE  */}
    <p onClick={() => {
-    setEditRecipient(false);
+  DeleteSelectRecipients();
    }}
-   className='text-[#FA6B6B] lg:w-[160px] lg:py-[12px] lg:px-[14px] text-[9px] leading-[12px] 
+   className='text-[#FA6B6B] lg:w-[200px] py-[7.451px] pl-[5.313px] w-[90.36px]  lg:py-[12px] lg:px-[14px] text-[9px] leading-[12px]
+   shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)] hover:bg-gray-200 cursor-pointer
    lg:text-[16px] lg:leading-[24px] font-[600] bg-white'>
     Delete Recipients
    </p>
@@ -332,6 +344,52 @@ Coming Soon...
               </div>
               </Modal>
             )}
+            {deleteRecipient && (
+          <Modal>
+            <div className='h-[100%] w-[100%] md:justify-center flex md:items-center items-end md:mx-[0px] mx-[19px]'>
+          <div className='flex flex-col  lg:w-[50%] h-[290px] w-[100%] lg:h-[465px] bg-white lg:rounded-[20px]
+          shadow-[0px_0px_6.933px_0px_rgba(0,0,0,0.25)] rounded-t-[8px]
+          lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] pb-[10px] md:pb-[20px]'>
+  <div className='flex justify-between w-[100%] border-b-[15px] border-[solid] border-[#04177F] lg:p-[15px] p-[10px]'>
+  <img src={AremxyLogo} alt="" 
+   className='lg:h-[24.818px] lg:w-[41.825px] h-[16px] w-[16px] 
+   '/>
+   <img src={closeIcon} alt="" 
+   className='lg:h-[32px] lg:w-[32px]  h-[16px] w-[16px]'/>
+  </div>
+  <div className='flex flex-col justify-between  lg:w-[100%] lg:pt-[20px] pt-[30px]  items-center h-[100%]'>
+  <div className='flex flex-col items-center lg:w-[80%] lg:gap-[40px] gap-[20px]'>
+   <h2 className='font-[600] text-center text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
+   Are you sure you want to delete this recipient permanently?
+
+    </h2>
+    <img src={deleteRecipientsIcon} alt=""
+    className='lg:w-[135px] lg:h-[135px] h-[100px] w-[100px]'/>
+    
+  </div>
+  <div className='w-[80%] flex gap-[15px] justify-center'>
+    {/* YES TO PROCEED */}
+  <button 
+className='bg-[#04177F] w-[50%] lg:py-[10px] py-[13px] lg:w-[163px]
+md:w-[150px] text-white text-center rounded-[4.41px]
+ lg:rounded-[12px] font-[600] lg:text-[16px] lg:leading-[24px]'>
+ YES
+</button>
+{/* CANCEL */}
+  <button onClick={() => {
+    setDeleteRecipient(false);
+    }}
+className='text-[#F95252] w-[50%] lg:py-[10px] py-[13px] lg:w-[163px]
+md:w-[150px] text-center rounded-[4.41px]
+ lg:rounded-[12px] font-[600] lg:text-[16px] lg:leading-[24px]'>
+ Cancel
+</button>
+</div>
+  </div>
+          </div>
+          </div>
+          </Modal>
+        )}
     </div>
 
   </DashBoardLayout>

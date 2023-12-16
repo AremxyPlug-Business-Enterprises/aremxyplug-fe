@@ -103,7 +103,7 @@ return (
         <BusinessKYC/>
         <ChangePin/>
      </div>
-     <div className=" flex gap-[8.729px]  md:mt-[100%] mt-[70%]   md:gap-[14.896px] 
+     <div className=" flex gap-[8.729px]  md:mt-[100%] mt-[100%]   md:gap-[14.896px] 
      justify-center px-[8.594px]  mb-[50px]">
               <p className="font-[500] text-[10px] text-black 
               leading-[10.4px] lg:text-[16px] lg:leading-[15.6px]  md:text-[6.875px]
