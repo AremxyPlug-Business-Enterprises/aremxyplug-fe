@@ -30,7 +30,7 @@ const cardPaymentData = [
     image: "./Images/paymentPage/cardPayment.svg",
     title: "Card Payments",
     content: "Shop online or in-store, fund your wallet with card without any hassle.",
-    link: '/card-payment'
+    link: '/CardPayment'
   },
   {
     image: "./Images/paymentPage/internationalPayment.svg",
@@ -58,7 +58,7 @@ const PaymentPage =() => {
 
   const Element = ({isDarkMode, data}) => {
     return (
-      <Link to={`/${data.link}`}>
+      <Link to={`${data.link}`}>
         <div className={` ${isDarkMode ? "Style11 ":"Style1 "} mt-[25px] lg:mt-[27px] cursor-pointer`}>
           <div className="flex items-center">
             <img src={data.image} alt="." className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"/>
@@ -79,12 +79,14 @@ const PaymentPage =() => {
         <div>
           {/* TOP BANNER STARTS HERE */}
           <div className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] flex px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px] backgroundImage">
-            <div className='py-[13px] lg:py-[40px]'>
-              <h2 className='text-[10px] md:text-[13.75px] font-bold mb-3 lg:text-[24px] lg:mb-4'>ENJOY QUICK AND SECURE PAYMENT PROCESSING.</h2>
-              <h2 className='text-[7px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3'>To make sure your transactions go off without a hitch, using our user-friendly interface to receive money both locally and internationally.</h2>
+            <div className='py-[13px] lg:py-[40px] flex flex-col justify-center h-full pr-[25px] md:pr-[50px] lg:pr-[75px]'>
+              <div>
+                <h2 className='text-[10px] md:text-[13.75px] font-bold mb-3 lg:text-[24px] lg:mb-4'>ENJOY QUICK AND SECURE PAYMENT PROCESSING.</h2>
+                <h2 className='text-[7px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px]'>To make sure your transactions go off without a hitch, using our user-friendly interface to receive money both locally and internationally.</h2>
+              </div>
             </div>
-            <div className='h-[66px] lg:h-[170px]'>
-              <img src='./Images/paymentPage/paymentBanner.png' alt="" className='h-full'/>
+            <div className='h-[80px] lg:h-[170px] flex items-center justify-end overflow-hidden lg:justify-end'>
+              <img src='./Images/paymentPage/paymentBanner.png' alt="" className='h-full -mb-4 -mr-2'/>
             </div>
           </div>
           {/* TOP BANNER ENDS HERE */}

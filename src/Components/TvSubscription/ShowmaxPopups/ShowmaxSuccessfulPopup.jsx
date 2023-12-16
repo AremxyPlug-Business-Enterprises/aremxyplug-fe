@@ -75,7 +75,7 @@ import { Link } from "react-router-dom";
             <div className="text-[12px] my-[4%] font-medium text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%]"
             >Subscription Successful</div>
             <img
-              className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[120px] lg:h-[120px] md:w-[78px] md:h-[78px]"
+              className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[70px] lg:h-[70px]"
               src="./Gif/checkMarkGif.gif"
               alt="/"
             />
@@ -84,7 +84,7 @@ import { Link } from "react-router-dom";
                   From Your {" "}
                   {flagResult} {" "} to
             </div>
-            <div className="flex flex-col gap-2 lg:gap-4 ">
+            <div className="flex flex-col gap-2 lg:gap-4 mt-4">
             <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[15px] font-semibold">
                     <span className="text-[#7C7C7C]">Decoder Type</span>
                     <div className="flex gap-1">
@@ -140,7 +140,7 @@ import { Link } from "react-router-dom";
                   </button>
             </Link>
               <Link to='/ShowmaxReceipt'>
-                <button
+                <button onClick={()=> {setShowmaxSuccessful(false)}}
                 style={{boxShadow : '0px 0px 2.0368096828460693px 0px #00000040'}} className={`border-[1px]  w-[111px] lg:w-[200px] md:w-[99px] h-[40px] md:h-[24px] lg:h-[42px] lg:my-[2%] flex justify-center items-center cursor-pointer text-[12px] md:text-[12px] lg:text-[16px] font-semibold rounded-[6px] md:rounded-[7px] lg:rounded-[12px]`}
                 >
                   Receipt
