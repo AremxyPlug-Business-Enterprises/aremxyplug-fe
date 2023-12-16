@@ -70,6 +70,16 @@
   background: #fff;
   box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
 }
+.contactTeam {
+    
+  bottom: 0%;
+  flex-shrink: 0;
+
+  background: #fff;
+  box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+}
+
+
 .checkrate {
   height: 600px;
   /* width: 90%; */
@@ -210,6 +220,15 @@
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
   }
+  .contactTeam {
+    
+    top: 20%;
+    flex-shrink: 0;
+  
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+  }
+  
 
   .transferConfirmation {
     height: 572px;
@@ -219,6 +238,15 @@
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
   }
+  .contactTeam {
+    
+    bottom: 25%;
+    flex-shrink: 0;
+   
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+  }
+  
 
   .inputPin {
     bottom: 30%;
@@ -274,6 +302,14 @@
     /* flex-direction: column; */
     grid-template-columns: 1fr 1fr 1fr;
     gap: 25px;
+  }
+  .contactTeam {
+    
+    top: 20%;
+    flex-shrink: 0;
+  
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
   }
   .redeemrate {
     height: 600px;
