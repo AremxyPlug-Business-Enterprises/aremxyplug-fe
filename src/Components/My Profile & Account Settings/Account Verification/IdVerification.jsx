@@ -482,7 +482,7 @@ Confirming your identity ensures that the person accessing the account is indeed
     setIdCustomerQuery(false);
    }} 
    className='font-[600] bg-[#04177F] w-[100%] md:w-[163px] md:py-[5.868px] lg:py-[13px]
-    text-white lg:rounded-[12px] py-[16.531px]
+    text-white lg:rounded-[12px] py-[16.531px] 
    lg:text-[16px] lg:leading-[24px] md:rounded-[7.042px] rounded-[4.61px] md:mb-[40px]'>
     Okay
    </button>
