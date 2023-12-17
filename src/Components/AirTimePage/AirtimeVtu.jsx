@@ -47,6 +47,7 @@ const AirtimeVtu = () => {
     const [confirm, setConfirm] = useState(false);
     const [errors, setErrors] = useState({});
     const [codes, setCodes] = useState(false);
+    const [inputValue, setInputValue] = useState("");
 
 
     if (addRecipient) {
@@ -294,8 +295,6 @@ const AirtimeVtu = () => {
 
       console.log(confirm)
 
-      console.log(recipientName, discount, newAmount, networkImage, selectedProduct, networkName, recipientNumber, name, image)
-
       const {
         transactSuccessPopUp,
         setTransactSuccessPopUp,
@@ -316,6 +315,14 @@ const AirtimeVtu = () => {
         setCodes(false);
         setCodes(true);
       }
+
+      const handleChange = (e) => {
+        const value = e.target.value;
+    
+        const numericValue = value.replace(/\D/g, "").slice(0, 11);
+    
+        setInputValue(numericValue);
+      };
 
   return (
     <DashBoardLayout>
@@ -431,7 +438,13 @@ const AirtimeVtu = () => {
                         <h2 className={styles.head3}>Phone Number <span className={styles.span3}>(Select Recipient)</span></h2>
                         <div className={styles.input}>
                             <div className={styles.output}>
-                                <input type='number' className={styles.phone} required placeholder='Add recipient phone number' onChange={(event)=>setRecipientNumber(event.target.value)} value={recipientNumber}/>
+                                <input type='number' 
+                                className={styles.phone} required 
+                                placeholder='Add recipient phone number'
+                                onChange={(event) => {
+                                handleChange(event);
+                                setRecipientNumber(event.target.value);
+                            }} value={inputValue}/>
                                 <div className={styles.call}>
                                     <img src={call} alt=""/>
                                 </div>
