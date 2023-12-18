@@ -432,7 +432,9 @@ export const SideBar = () => {
                     src="./Images/dashboardImages/digitalServices.png"
                     alt="icon"
                   />
-                  <p>Digital Services</p>
+                  <Link to="/DigitalServices">
+                    <p>Digital Services</p>
+                  </Link>
                 </div>
                 <div className="flex gap-[3.4px] items-center cursor-pointer lg:gap-[11px]">
                   <img
@@ -440,7 +442,9 @@ export const SideBar = () => {
                     src="./Images/dashboardImages/vtuDevelopment.png"
                     alt="icon"
                   />
-                  <p>VTU Development</p>
+                  <Link to="/VTU_DEV">
+                    <p>VTU Development</p>
+                  </Link>
                 </div>
                 <div className="flex gap-[3.4px] cursor-pointer items-center lg:gap-[11px]">
                   <img
@@ -448,7 +452,9 @@ export const SideBar = () => {
                     src="./Images/dashboardImages/businessdev.png"
                     alt="icon"
                   />
-                  <p>Business Development</p>
+                  <Link to="/businessDev">
+                    <p>Business Development</p>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -470,7 +476,9 @@ export const SideBar = () => {
                     src="./Images/dashboardImages/productPricing.png"
                     alt="icon"
                   />
-                  <p>Product Pricing</p>
+                  <Link to="/pricing">
+                    <p>Product Pricing</p>
+                  </Link>
                 </div>
                 <div
                   onClick={() => dropHandler("dropdown5")}
@@ -535,7 +543,9 @@ export const SideBar = () => {
                     src="./Images/dashboardImages/contactSupport.png"
                     alt="icon"
                   />
-                  <p>Contact Support</p>
+                  <Link to="/ContactUs">
+                    <p>Contact Support</p>
+                  </Link>
                 </div>
               </div>
             </div>
