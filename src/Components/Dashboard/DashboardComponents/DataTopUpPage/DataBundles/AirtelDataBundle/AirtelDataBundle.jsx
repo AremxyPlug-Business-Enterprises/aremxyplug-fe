@@ -19,7 +19,6 @@ import Cancel from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/Cancel.svg";
 import "../../../DataTopUpPage/DataTopUp.css";
 import { Modal } from "../../../../../Screens/Modal/Modal";
 import OtpInput from "react-otp-input";
-import styles from "../../../TransferComponent/transfer.module.css";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import { AirtelReceipt } from "./AirtelReceipt";
@@ -439,16 +438,16 @@ const AirtelDataBundle = () => {
             </div>
             <div className="md:w-[50%]"></div>
           </div>
-
+          
           {codes && (
             <Modal>
               (
               <div
-                className={`code ${
-                  toggleSideBar
-                    ? "xl:w-[65%] xl:ml-[17%] lg:ml-[20%] lg:w-[40%]"
-                    : "lg:w-[40%]"
-                } w-[90%] xl:w-[80%] overflow-auto`}
+               className={`code ${
+                toggleSideBar
+                  ? "code1"
+                  : "code01"
+              } overflow-auto`}
               >
                 <img
                   onClick={() => setCodes(false)}
@@ -755,13 +754,13 @@ const AirtelDataBundle = () => {
           {proceed && (
             <Modal>
               <div
-                className={`confirm mx-[5%] ${
+                 className={`${
                   isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
                 } ${
                   toggleSideBar
-                    ? "md:w-[40%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
-                    : "lg:w-[40%]"
-                } lg:ml-[10%] lg:mr-[10%] grow pt-[10px] md:mt-[1%] mb-0 pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:mb-[18%] md:overflow-auto`}
+                    ? "confirm01"
+                    : "confirm"
+                } grow pt-[10px] pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:overflow-auto`}
               >
                 <div className="w-full flex justify-end border-b-[6px] border-primary px-[12px] md:h-[25px] lg:border-b-[10px] lg:mt-[20px]">
                   <img
@@ -792,7 +791,7 @@ const AirtelDataBundle = () => {
                           <img
                             src={AirtelLogo}
                             alt=""
-                            className="w-full h-full object-cover md:h-[15px]"
+                            className="w-full h-full object-cover md:h-[23px]"
                           />
                         </div>
                         <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
@@ -920,21 +919,23 @@ const AirtelDataBundle = () => {
           {confirm && (
             <Modal>
               <div
-                className={`confirm2 ${styles.inputPin} ${
+                className={` ${
                   toggleSideBar
-                    ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
-                    : "lg:w-[40%]"
-                } md:w-[55%] w-[90%] md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
+                    ? "confirm02"
+                    : "confirm2"
+                } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
               >
+                <div className="flex justify-end px-2">
                 <img
                   onClick={() => setConfirm(false)}
-                  className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[45px] lg:h-[45px] "
+                  className="cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[35px] lg:h-[35px] "
                   src={Cancel}
                   alt=""
                 />
+                </div>
 
-                <hr className="h-[6px] bg-[#04177f] lg:mt-[10%] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
-                <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[8%] lg:my-[%]">
+                <hr className="h-[6px] bg-[#04177f] lg:mt-[2%] border-none mt-[2%] md:mt-[2%] md:h-[10px]" />
+                <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[8%] md:my-[5%] lg:my-[3%]">
                   Input PIN to complete transaction
                 </p>
                 <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
@@ -990,16 +991,16 @@ const AirtelDataBundle = () => {
               </div>
             </Modal>
           )}
-
+          
           {transactSuccessPopUp && (
             <Modal>
               {/* <TransactFailedPopUp/> */}
               <div
-                className={`confirm ${styles.successfulTwo} ${
+                className={`${
                   toggleSideBar
-                    ? "md:w-[45%] md:ml-[20%] lg:ml-[20%] lg:w-[40%]"
-                    : "lg:w-[40%]"
-                } md:w-[45%] w-[90%] md:my-auto md:mt-[.5%] mx-auto overflow-auto md:mb-[18%] lg:mx-auto lg:my-auto`}
+                    ? "confirm03 w-[90%]"
+                    : "confirm3 w-[90%]"
+                } bg-white rounded-[12px] md:my-auto mx-auto overflow-auto lg:mx-auto lg:my-auto`}
               >
                 <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
                   <img
@@ -1027,7 +1028,7 @@ const AirtelDataBundle = () => {
                   Purchase Successful
                 </h2>
                 <img
-                  className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[250px] lg:h-[250px]"
+                  className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[100px] lg:h-[100px]"
                   src="./Gif/checkMarkGif.gif"
                   alt="/"
                 />
