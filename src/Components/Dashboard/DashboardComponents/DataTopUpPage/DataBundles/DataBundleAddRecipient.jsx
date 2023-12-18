@@ -296,14 +296,19 @@ const DataBundleAddRecipient = () => {
           </div>
           {save && (
             <Modal>
-              <div
-                className={`save ${airtimestyles.successfulThree} ${
-                  toggleSideBar
-                    ? "md:w-[60%] md:ml-[22%] lg:ml-[20%] lg:w-[40%]"
-                    : "lg:w-[40%]"
-                } md:w-[45%] w-[90%] xl:mt-[20%] 2xl:mt-[15%] overflow-auto`}
-              >
-                <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
+<div
+
+
+className={`mx-[5%] ${
+                    isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
+                  } ${
+                    toggleSideBar
+                      ? "confirmEdit01"
+                      : "confirmEdit"
+                  } grow pt-[10px] pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:overflow-auto`}
+                >
+                  <div className="flex justify-between items-end mx-[3%] my-[2%] lg:my-[1%] ">
+
                   <img
                     onClick={() => setSave(false)}
                     className=" w-[18px] h-[18px] md:w-[25px] md:h-[25px] lg:w-[35px] lg:h-[25px]"
@@ -311,97 +316,146 @@ const DataBundleAddRecipient = () => {
                     alt=""
                   />
 
-                  <img
-                    onClick={() => setSave(false)}
-                    className=" w-[18px] h-[18px] md:w-[25px] md:h-[25px] lg:w-[29px] lg:h-[29px]"
-                    src="/Images/transferImages/close-circle.png"
-                    alt=""
-                  />
-                </div>
-                <hr className="h-[6px] bg-[#04177f] border-none mt-[2%] md:mt-[2%] md:h-[10px]" />
-                <h2 className="text-[12px] my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
-                  Please Confirm
-                </h2>
-                <div className="bg-[#FFF0BA] mx-5 rounded-md h-[55px] my-5 flex justify-between items-center px-[4%] md:h-[75px] lg:h-[85px]">
-                  <p className="text-[9px] text-center mx-auto w-[280px] md:text-[12px] md:w-[92%] lg:text-[14px] lg:w-[100%]">
-                    Are you sure you want to add this details to your
-                    recipients? Please re-confirm the identity and be informed
-                    any successful transactions to a strange details can not be
-                    reversed.
-                  </p>
-                </div>
-                <div className="flex flex-col gap-2 lg:gap-4">
-                  <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
-                    <p className="text-[#0008]">Network</p>
-                    <span className="flex gap-1">
-                      <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[10px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
-                        <img
-                          src={networkImage}
-                          alt=""
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <h2 className="text-[10px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        {networkName}
-                      </h2>
-                    </span>
+                    <img
+                      onClick={() => {
+                        setSave(false);
+                        // window.location.reload();
+                        setSelected("");
+                        setRecipientNumber("");
+                        setRecipientName("");
+                      }}
+                      className=" w-[18px] h-[18px] md:w-[25px] md:h-[25px] lg:w-[29px] lg:h-[29px]"
+                      src="/Images/transferImages/close-circle.png"
+                      alt=""
+                    />
                   </div>
-                  <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
-                    <p className="text-[#0008]">Phone Number</p>
-                    <span>{recipientNumber}</span>
-                  </div>
-                  <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
-                    <p className="text-[#0008]">Recipient Name</p>
-                    <span>{recipientName}</span>
-                  </div>
-                </div>
+                  <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
 
-                <button
-                  onClick={handleConfirm}
-                  className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:mt-[8%] xl:mt-[12%]`}
-                >
-                  Confirmed
-                </button>
-              </div>
+                  <div className="text-center mt-[20px] font-semibold text-[10px] md:text-[12px] lg:text-[16px]">
+                    Please Confirm
+                  </div>
+
+                  <div className="bg-[#FFF0BA] mx-5 h-[80px] my-5 flex justify-between items-center px-[5%] md:h-[75px] md:mx-[20px] md:rounded-[15px] lg:h-[75px]">
+                    <p className="text-[10px] text-[#4A4A4A] font-semibold text-center mx-auto w-[250px] md:text-[9px] md:w-full lg:text-[14px]">
+                      Are you sure you want to add this details to your
+                      recipients? Please re-confirm the identity and be informed
+                      any successful transactions to a strange details can not
+                      be reversed.
+                    </p>
+                  </div>
+
+                  <div className="flex flex-col gap-5 mt-[30px] lg:gap-4 px-[20px]">
+                    <div className="flex items-center justify-between">
+                      <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                        Network
+                      </h2>
+                      <div className="flex gap-2">
+                        <div className="h-[15px] w-[15px]">
+                          {networkImage && <img src={networkImage} alt="" />}
+                        </div>
+                        <h2 className="text-[10px] font-semibold">
+                          {networkName}
+                        </h2>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                        Phone Number
+                      </h2>
+                      <div className="flex gap-1">
+                        <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                          {recipientNumber}
+                        </h2>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                        Recipient Name
+                      </h2>
+                      <div className="flex gap-1">
+                        <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                          {recipientName}
+                        </h2>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    className={`w-full h-[38px] mt-[35px] md:mt-[10%] px-[20px] mx-auto lg:mt-[5%] xl:mt-[5%]`}
+                  >
+                    <button
+                      className={` bg-[#04177f] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:mx-auto md:px-[10%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
+                      onClick={handleConfirm}
+                    >
+                      Confirmed
+                    </button>
+                  </div>
+                </div>
             </Modal>
           )}
           {confirm && (
             <Modal>
               <div
-                className={`confirm1 ${airtimestyles.inputPin} ${
-                  toggleSideBar
-                    ? "md:w-[45%] md:ml-[22%] lg:w-[40%] lg:ml-[20%]"
-                    : "lg:w-[40%]"
-                } md:w-[55%]  xl:mt-[12%] 2xl:mt-[10%] w-[90%]`}
-              >
-                <img
-                  onClick={() => setConfirm(false)}
-                  className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px]"
-                  src="/Images/transferImages/close-circle.png"
-                  alt=""
-                />
-                <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[10%] md:h-[10px] " />
-                <h2 className="text-[12px] font-bold my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
-                  Successful
-                </h2>
-                <img
-                  className="w-[50px] h-[50px] mx-auto lg:w-[70px] lg:h-[70px]"
-                  src="./Gif/checkMarkGif.gif"
-                  alt="/"
-                />
-                <p className="text-[9px] text-[#2ED173] md:text-[16px] md:px-[20px] font-bold text-center my-[4%] lg:my-[%]">
-                  New recipient contact has been added successfully.
-                </p>
+                  className={` ${
+                    toggleSideBar
+                      ? "confirm002"
+                      : "confirm200"
+                  } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto md:overflow-auto rounded-[12px]`}
+                >
+                  <div className="flex justify-between items-center mx-[3%] my-[2%] lg:mt-[3%] xl:mt-0 ">
+                    <img
+                      onClick={() => {
+                        setConfirm(false);
+                        //   window.location.reload();
+                      }}
+                      className=" w-[18px] h-[15px] md:w-[25px] md:h-[15px] lg:w-[35px] lg:h-[22px] "
+                      src="/Images/login/arpLogo.png"
+                      alt=""
+                    />
 
-                <Link to="/data-bundles">
-                  <button
-                    onClick={handleConfirm}
-                    className={`continue bg-[#04177f] mt-[10%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:mt-[20%] 2xl:mt-[10%]`}
+                    <img
+                      onClick={() => {
+                        setConfirm(false);
+                        window.location.reload();
+                      }}
+                      className="cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[35px] lg:h-[35px] "
+                      src="/Images/transferImages/close-circle.png"
+                      alt=""
+                    />
+                  </div>
+
+                  <hr className="h-[6px] bg-[#04177f] lg:mt-[2%] border-none mt-[2%] md:mt-[3%] md:h-[10px]" />
+                  <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[3%] lg:my-[%]">
+                    Successful
+                  </p>
+                  <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
+                    <img
+                      className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[125px] lg:h-[125px]"
+                      src="./Gif/checkMarkGif.gif"
+                      alt="/"
+                    />
+
+                    <p className="text-[10px] text-[#2ED173] font-semibold md:text-[14px]">
+                      New recipient contact has been added successfully.
+                    </p>
+                  </div>
+
+                  <div
+                    className={`w-full h-[38px] mt-[35px] md:mt-[5%] px-[20px] mx-auto lg:mt-[5%] xl:mt-[5%]`}
                   >
-                    Continue
-                  </button>
-                </Link>
-              </div>
+                    <button
+                      className={`bg-[#04177f] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:mx-auto md:px-[10%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
+                      onClick={() => {
+                        setConfirm(false);
+                        window.location.reload();
+                      }}
+                    >
+                      Confirmed
+                    </button>
+                  </div>
+                </div>
             </Modal>
           )}
           <div className={airtimestyles.containFlex3}>
