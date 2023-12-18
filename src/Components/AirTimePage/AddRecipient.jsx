@@ -122,6 +122,9 @@ const AddRecipient = () => {
       const handleConfirm =()=> {
         setSave(false);
         setConfirm(true);
+        setSelected("");
+        setRecipientNumber("");
+        setRecipientName("");
       }
 
   return (
@@ -282,7 +285,12 @@ const AddRecipient = () => {
                             } md:w-[55%] w-[90%]`}
                         >
                             <img
-                            onClick={() => setConfirm(false)}
+                            onClick={() => {
+                                setConfirm(false);
+                                setSelected("");
+                                setRecipientName("");
+                                setRecipientNumber("");
+                            }}
                             className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px]"
                             src="/Images/transferImages/close-circle.png"
                             alt=""

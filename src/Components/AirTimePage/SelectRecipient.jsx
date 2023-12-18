@@ -13,7 +13,7 @@ import call from "../AirTimePage/Images/call.svg";
 import user from "../AirTimePage/Images/user.svg";
 import Delete from "../AirTimePage/Images/Deleted.svg";
 
-const DataBundleSelectRecipient = () => {
+const SelectRecipient = () => {
   const { isDarkMode } = useContext(ContextProvider);
   const { toggleSideBar } = useContext(ContextProvider);
   const { networkName, setNetworkName } = useContext(ContextProvider);
@@ -607,7 +607,7 @@ const DataBundleSelectRecipient = () => {
 
                     <img
                       onClick={() => {
-                        setConfirm(false);
+                        setdeleted(false);
                       }}
                       className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[45px] lg:h-[45px] "
                       src="/Images/transferImages/close-circle.png"
@@ -739,4 +739,4 @@ const DataBundleSelectRecipient = () => {
   );
 };
 
-export default DataBundleSelectRecipient;
+export default SelectRecipient;

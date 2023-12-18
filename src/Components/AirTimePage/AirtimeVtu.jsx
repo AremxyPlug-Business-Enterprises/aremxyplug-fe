@@ -363,8 +363,8 @@ const AirtimeVtu = () => {
                 </div>
             </div>
             <div className={styles.containFlex1}>
-                <div className={styles.FlexPut1}>
-                        <div className={styles.conPut1} onClick={handleCodes} >
+                <div className={styles.FlexPut1} onClick={handleCodes}>
+                        <div className={styles.conPut1}>
                             <h2>Airtime Balance USSD Codes</h2>
                             <div className={styles.FlexImg1}>
                                 <img src={data} alt="" className=''/>
@@ -548,7 +548,7 @@ const AirtimeVtu = () => {
                     className={`${styles.balanceMoneyPop} ${
                     toggleSideBar ? "xl:w-[65%] xl:ml-[17%] lg:ml-[20%] lg:w-[40%]"
                     : "lg:w-[40%]"
-                } w-[90%] xl:w-[80%] overflow-auto`}
+                } w-[90%] xl:w-[40%] overflow-auto`}
                 >
                     <img
                     onClick={()=> setCodes(false)}
@@ -556,10 +556,10 @@ const AirtimeVtu = () => {
                     src="/Images/transferImages/close-circle.png"
                     alt=""
                     />
-                    <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
+                    <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] lg:mt-[6%] md:h-[10px]" />
 
                     <button
-                    className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[50%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[350px] lg:h-[38px] lg:my-[2%]`}
+                    className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[50%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[350px] lg:h-[38px] lg:my-[3%]`}
                     >
                     Airtime Balace USSD Codes
                     </button>
@@ -569,7 +569,7 @@ const AirtimeVtu = () => {
                     <h2 className="text-[12px] my-[5%] text-blue-600 text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
                     Tap the network Dial button to check airtime balance:
                     </h2>
-                    <div className='flex flex-col gap-1 mb-5'>
+                    <div className='flex flex-col gap-2 mb-5'>
                         <button
                             className={`bg-[#FAF8F8] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:my-[1%]`}
                             >
@@ -594,7 +594,7 @@ const AirtimeVtu = () => {
 
                     <button
                     onClick={()=> setCodes(false)}
-                    className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                    className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:mt-[8%]`}
                     >
                     Okay
                     </button>

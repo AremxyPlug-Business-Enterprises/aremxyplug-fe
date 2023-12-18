@@ -130,11 +130,11 @@ export default function ToAremxyMain() {
             <div
               className={`${
                 toggleSideBar
-                  ? "lg:w-[31.5%] lg:top-[100.5%]"
-                  : "lg:w-[38.5%] lg:top-[105.3%]"
+                  ? "lg:w-[35.7%] lg:top-[84.5%]"
+                  : "lg:w-[44%] lg:top-[85%]"
               }  ${
                 styles.countryDropDown
-              } rounded-br-[7px] rounded-bl-[7px] shadow-xl bg-[#fff] border w-[100%] lg:w-full lg:rounded-br-[14px] lg:rounded-bl-[14px]`}
+              } rounded-br-[7px] absolute z-50 top-[250px] rounded-bl-[7px] shadow-xl bg-[#fff] border w-[90%] lg:rounded-br-[14px] lg:rounded-bl-[14px]`}
             >
               {" "}
               {countryList.map((country) => (

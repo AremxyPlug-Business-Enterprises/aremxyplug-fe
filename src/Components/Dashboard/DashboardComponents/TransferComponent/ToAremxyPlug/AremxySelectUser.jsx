@@ -279,11 +279,11 @@ export default function AremxySelectUser() {
                     <div
                     className={`${
                         toggleSideBar
-                        ? "lg:w-[31.5%] lg:top-[100.5%]"
-                        : "lg:w-[38.5%] lg:top-[105.3%]"
+                        ? "lg:w-[35.7%] lg:top-[112%]"
+                        : "lg:w-[44%] lg:top-[112%]"
                     }  ${
                         styles.countryDropDown
-                    } rounded-br-[7px] rounded-bl-[7px] shadow-xl bg-[#fff] border w-[100%] lg:w-full lg:rounded-br-[14px] lg:rounded-bl-[14px]`}
+                    } rounded-br-[7px] absolute z-50 top-[330px] rounded-bl-[7px] shadow-xl bg-[#fff] border w-[90%] lg:rounded-br-[14px] lg:rounded-bl-[14px]`}
                     >
                     {" "}
                     {countryList.map((country) => (
@@ -603,13 +603,13 @@ export default function AremxySelectUser() {
             {edit && (
               <Modal>
                 <div
-                  className={`confirm mx-[5%] ${
+                  className={`confirm mx-auto ${
                     isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
                   } ${
                     toggleSideBar
                       ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
                       : "lg:w-[40%]"
-                  } lg:ml-[10%] lg:mr-[10%] grow pt-[10px] md:mt-[1%] bottom-[20px] md:top-[5%] lg:top-[5%] pb-[20px] rounded-tr-[8px] rounded-br-[8px] rounded-bl-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:mb-[18%] md:overflow-auto`}
+                  } lg:ml-[10%] lg:mr-[10%] grow pt-[10px] md:mt-[1%] bottom-[20px] md:top-[5%] lg:top-[5%] pb-[20px] rounded-tr-[8px] rounded-br-[8px] rounded-bl-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:mb-[18%] md:overflow-auto lg:overflow-hidden`}
                 >
                   <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
                     <img
@@ -704,11 +704,11 @@ export default function AremxySelectUser() {
                         <div
                         className={`${
                             toggleSideBar
-                            ? "lg:w-[31.5%] lg:top-[100.5%]"
-                            : "lg:w-[38.5%] lg:top-[105.3%]"
+                            ? "lg:w-[47.3%] lg:top-[40%]"
+                            : "lg:w-[47%] lg:top-[40%]"
                         }  ${
                             styles.countryDropDown
-                        } rounded-br-[7px] rounded-bl-[7px] shadow-xl bg-[#fff] border w-[100%] lg:w-[50%] md:w-[50%] lg:rounded-br-[14px] lg:rounded-bl-[14px]`}
+                        } rounded-br-[7px] absolute z-50 top-[45px] rounded-bl-[7px] shadow-xl bg-[#fff] border w-[88%] lg:rounded-br-[14px] lg:rounded-bl-[14px]`}
                         >
                         {" "}
                         {countryList.map((country) => (
@@ -915,7 +915,7 @@ export default function AremxySelectUser() {
             {deleted && (
               <Modal>
                 <div
-                  className={`confirm2 ${styles.inputPin} ${
+                  className={`confirm2 ${style.inputPin} ${
                     toggleSideBar
                       ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
                       : "lg:w-[40%]"
@@ -976,7 +976,7 @@ export default function AremxySelectUser() {
             {successDeleted && (
               <Modal>
                 <div
-                  className={`confirm2 ${styles.inputPin} ${
+                  className={`confirm2 ${style.inputPin} ${
                     toggleSideBar
                       ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
                       : "lg:w-[40%]"
