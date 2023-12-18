@@ -114,13 +114,13 @@ export const SideBar = () => {
             {/* ========COLLECTIONS========= */}
             <div>
               <p
-                className={`${styles.sidebartxt} text-[7px] md:text-[7px] lg:text-[14px] font-extrabold`}
+                className={`${styles.sidebartxt} text-[7px] lg:text-[14px] font-extrabold`}
               >
                 COLLECTIONS
               </p>
 
               <div
-                className={`${styles.sidebartxt} flex flex-col gap-[10px] text-[8px] font-semibold ml-[%] my-[7%] md:text-[8px] lg:text-[14px] lg:gap-[15px]`}
+                className={`${styles.sidebartxt} flex flex-col gap-[10px] text-[8px] font-semibold ml-[%] my-[7%] lg:text-[13px] lg:gap-[15px]`}
               >
                 <Link
                   to={`/wallet`}
@@ -180,7 +180,7 @@ export const SideBar = () => {
               </p>
 
               <div
-                className={`${styles.sidebartxt} flex flex-col gap-[10px] text-[8px] font-semibold ml-[%] my-[7%] md:text-[8px] lg:text-[14px] lg:gap-[15px]`}
+                className={`${styles.sidebartxt} flex flex-col gap-[10px] text-[8px] font-semibold ml-[%] my-[7%] lg:text-[13px] lg:gap-[15px]`}
               >
                 <div
                   onClick={() => dropHandler("dropdown2")}
@@ -315,7 +315,7 @@ export const SideBar = () => {
                   )}
                 </div>
                 {dropDownOpen.dropdown3 && (
-                  <ul className=" mt-[px] rounded-[2.5px]  bg-[#f2faff19] w-[100px] md:top-[42%] md:w-[100%] lg:rounded-[6px] lg:top-[41.5%] lg:w-[220px]">
+                  <ul className="rounded-[2.5px]  bg-[#f2faff19] w-[100px] md:top-[42%] md:w-[100%] lg:rounded-[6px] lg:top-[41.5%] lg:w-[220px]">
                     <Link to="/wallet">
                       <li className="flex gap-[5%] hover:underline text-[#fff] pt-1 pb-1 font-medium md:text-[11px] lg:pt-[6%] lg:pb-[6%] lg:pl-[%] lg:text-[14px] ">
                         <img
@@ -440,7 +440,9 @@ export const SideBar = () => {
                     src="./Images/dashboardImages/digitalServices.png"
                     alt="icon"
                   />
-                  <p>Digital Services</p>
+                  <Link to="/DigitalServices">
+                    <p>Digital Services</p>
+                  </Link>
                 </div>
                 <div className="flex gap-[3.4px] items-center cursor-pointer lg:gap-[11px]">
                   <img
@@ -448,7 +450,9 @@ export const SideBar = () => {
                     src="./Images/dashboardImages/vtuDevelopment.png"
                     alt="icon"
                   />
-                  <p>VTU Development</p>
+                  <Link to="/VTU_DEV">
+                    <p>VTU Development</p>
+                  </Link>
                 </div>
                 <div className="flex gap-[3.4px] cursor-pointer items-center lg:gap-[11px]">
                   <img
@@ -456,7 +460,9 @@ export const SideBar = () => {
                     src="./Images/dashboardImages/businessdev.png"
                     alt="icon"
                   />
-                  <p>Business Development</p>
+                  <Link to="/businessDev">
+                    <p>Business Development</p>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -464,13 +470,13 @@ export const SideBar = () => {
             {/* =======FEATURES======== */}
             <div>
               <p
-                className={`${styles.sidebartxt} text-[7px] md:text-[7px] lg:text-[14px] font-extrabold`}
+                className={`${styles.sidebartxt} text-[7px] lg:text-[14px] font-extrabold`}
               >
                 FEATURES
               </p>
 
               <div
-                className={`${styles.sidebartxt} flex flex-col gap-[10px] text-[7px] font-semibold ml-[%] my-[7%] md:text-[11px] lg:text-[14px] lg:gap-[15px]`}
+                className={`${styles.sidebartxt} flex flex-col gap-[10px] text-[8px] font-semibold my-[7%] lg:text-[13px] lg:gap-[15px]`}
               >
                 <div className="flex gap-[3.4px] cursor-pointer lg:gap-[11px]">
                   <img
@@ -478,7 +484,9 @@ export const SideBar = () => {
                     src="./Images/dashboardImages/productPricing.png"
                     alt="icon"
                   />
-                  <p>Product Pricing</p>
+                  <Link to="/pricing">
+                    <p>Product Pricing</p>
+                  </Link>
                 </div>
                 <div
                   onClick={() => dropHandler("dropdown5")}
@@ -543,7 +551,9 @@ export const SideBar = () => {
                     src="./Images/dashboardImages/contactSupport.png"
                     alt="icon"
                   />
-                  <p>Contact Support</p>
+                  <Link to="/ContactUs">
+                    <p>Contact Support</p>
+                  </Link>
                 </div>
               </div>
             </div>
