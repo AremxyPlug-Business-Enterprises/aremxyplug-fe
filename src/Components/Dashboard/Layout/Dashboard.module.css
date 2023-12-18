@@ -115,7 +115,7 @@ select {
   }
 
   .walletText {
-    font-size: 20.093px;
+    font-size: 26.093px;
     font-style: normal;
     font-weight: 800;
     line-height: normal;
@@ -235,10 +235,6 @@ select {
     font-size: 20px;
   }
 
-  .walletText {
-    font-size: 28.5px;
-  }
-
   .dashboard {
     width: 209px;
     gap: 9px;
@@ -264,7 +260,7 @@ select {
   }
 
   .GVA {
-    font-size: 25px;
+    font-size: 24px;
   }
 
   .virtualaccounttxt {
@@ -293,10 +289,6 @@ select {
     border-radius: 15px;
   }
 
-  /* .ttwc { */
-  /* gap: 10%; */
-  /* } */
-
   .button {
     gap: 10px;
     width: 25%;
@@ -320,10 +312,6 @@ select {
   .logouttxt {
     font-size: 18px;
   }
-
-  .sidebartxt {
-    font-size: 13px;
-  }
 }
 
 /* ===================Surface Duo======================== */
@@ -345,10 +333,6 @@ select {
   .viewWallet {
     font-size: 10px;
   }
-
-  /* .walletText { */
-  /* font-size: 16px; */
-  /* } */
 
   .viewBalance {
     display: flex;
@@ -392,7 +376,6 @@ select {
   .button {
     display: flex;
     width: 20%;
-    /* padding: 21.226px 46.293px; */
     padding-top: 21.226px;
     padding-bottom: 21.226px;
     justify-content: center;
@@ -444,7 +427,7 @@ select {
   }
 
   .walletText {
-    font-size: 23.093px;
+    font-size: 24px;
     font-style: normal;
     font-weight: 800;
     line-height: normal;
@@ -493,9 +476,5 @@ select {
 
   .navSide {
     gap: 50px;
-  }
-
-  .GVA {
-    font-size: 20px;
   }
 }
