@@ -13,7 +13,7 @@ import call from "../AirTimePage/Images/call.svg";
 import user from "../AirTimePage/Images/user.svg";
 import Delete from "../AirTimePage/Images/Deleted.svg";
 
-const DataBundleSelectRecipient = () => {
+const SelectRecipient = () => {
   const { isDarkMode } = useContext(ContextProvider);
   const { toggleSideBar } = useContext(ContextProvider);
   const { networkName, setNetworkName } = useContext(ContextProvider);
@@ -46,28 +46,6 @@ const DataBundleSelectRecipient = () => {
 
   const handleEdit = () => {
     setEdit(true);
-  };
-
-  const handleContinue = (e) => {
-    e.preventDefault();
-    setEdit(false);
-    setContinue(true);
-
-    const { error } = schema.validate({
-      recipientNumber,
-    });
-
-    if (error) {
-      setErrors(
-        error.details.reduce((acc, curr) => {
-          acc[curr.path[0]] = curr.message;
-          return acc;
-        }, {})
-      );
-    } else {
-      setContinue(true);
-      setErrors({});
-    }
   };
 
   const handleConfirm = () => {
@@ -136,6 +114,7 @@ const DataBundleSelectRecipient = () => {
   };
 
   const schema = Joi.object({
+    networkName: Joi.string().required(),
     recipientNumber: Joi.string()
       .pattern(new RegExp(/^\d{11,}/))
       .required()
@@ -143,6 +122,28 @@ const DataBundleSelectRecipient = () => {
         "string.pattern.base": "Phone number should be 11 digits ",
       }),
   });
+
+  const handleContinue = (e) => {
+    e.preventDefault();
+
+    const { error } = schema.validate({
+      networkName,
+      recipientNumber,
+    });
+
+    if (error) {
+      setErrors(
+        error.details.reduce((acc, curr) => {
+          acc[curr.path[0]] = curr.message;
+          return acc;
+        }, {})
+      );
+    } else {
+      setContinue(true);
+      setEdit(false);
+      setErrors({});
+    }
+  };
 
   const [inputValue, setInputValue] = useState("");
 
@@ -222,7 +223,7 @@ const DataBundleSelectRecipient = () => {
                   />
                   {showPopup && activeImage === index && (
                     <div
-                      className="input border absolute bg-white top-[8px] right-[17px] w-[100px] h-[60px] z-50 flex flex-col justify-center items-start py-[5px]"
+                      className="input border absolute bg-white top-[8px] right-[17px] lg:top-[20px] lg:right-[50px] w-[100px] h-[60px] z-50 flex flex-col justify-center items-start py-[5px]"
                       style={{ boxShadow: "0 0 5px rgba(0, 0, 0, 0.2)" }}
                     >
                       <div
@@ -431,13 +432,9 @@ const DataBundleSelectRecipient = () => {
             {continueState && (
               <Modal>
                 <div
-                  className={`confirm mx-[5%] ${
-                    isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
-                  } ${
-                    toggleSideBar
-                      ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
-                      : "lg:w-[40%]"
-                  } lg:ml-[10%] lg:mr-[10%] grow pt-[10px] md:mt-[5%] mb-0 pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:mb-[5%]`}
+                  className={`${airtimestyles.successfulThree} ${
+                  toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+                  } md:w-[45%] w-[90%] overflow-auto`}
                 >
                   <div className="flex justify-end items-end mx-[3%] my-[2%] lg:my-[1%] ">
                     <img
@@ -507,7 +504,7 @@ const DataBundleSelectRecipient = () => {
                   </div>
 
                   <div
-                    className={`w-full h-[38px] mt-[100px] px-[20px] md:mx-[35%]`}
+                    className={`w-full h-[38px] mt-[100px] lg:mt-[50px] px-[20px] md:mx-[35%]`}
                   >
                     <button
                       className={`${
@@ -527,7 +524,7 @@ const DataBundleSelectRecipient = () => {
             {confirm && (
               <Modal>
                 <div
-                  className={`confirm2 ${styles.inputPin} ${
+                  className={`confirm2 ${airtimestyles.inputPin} ${
                     toggleSideBar
                       ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
                       : "lg:w-[40%]"
@@ -591,7 +588,7 @@ const DataBundleSelectRecipient = () => {
             {deleted && (
               <Modal>
                 <div
-                  className={`confirm2 ${styles.inputPin} ${
+                  className={`confirm2 ${airtimestyles.inputPin} ${
                     toggleSideBar
                       ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
                       : "lg:w-[40%]"
@@ -610,7 +607,7 @@ const DataBundleSelectRecipient = () => {
 
                     <img
                       onClick={() => {
-                        setConfirm(false);
+                        setdeleted(false);
                       }}
                       className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[45px] lg:h-[45px] "
                       src="/Images/transferImages/close-circle.png"
@@ -657,7 +654,7 @@ const DataBundleSelectRecipient = () => {
             {successDeleted && (
               <Modal>
                 <div
-                  className={`confirm2 ${styles.inputPin} ${
+                  className={`confirm2 ${airtimestyles.inputPin} ${
                     toggleSideBar
                       ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
                       : "lg:w-[40%]"
@@ -689,7 +686,7 @@ const DataBundleSelectRecipient = () => {
                   <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[3%] lg:my-[%]">
                     Successful
                   </p>
-                  <p className="text-[10px] md:text-[14px] px-[20px] lg:text-[18px] font-extrabold text-center my-[1%] lg:my-[%]">
+                  <p className="text-[10px] text-[#04177f] md:text-[14px] px-[20px] lg:text-[18px] font-extrabold text-center my-[1%] lg:my-[%]">
                     Recipicient *****2345 has been deleted successfully. You can
                     add recipient again anytime!
                   </p>
@@ -742,4 +739,4 @@ const DataBundleSelectRecipient = () => {
   );
 };
 
-export default DataBundleSelectRecipient;
+export default SelectRecipient;
