@@ -284,7 +284,6 @@ const FundWithCard = () => {
   const location = useLocation();
 
   const codeValue = location?.search
-
     ? new URLSearchParams(location.search).get("codeValue")
     : null;
 
@@ -295,21 +294,21 @@ const FundWithCard = () => {
   useEffect(() => {
     // Read from the query parameter to check if card payment was selected
     const searchParams = new URLSearchParams(location.search);
-    const cardPaymentSelectedFromQuery = searchParams.get('cardPaymentSelected');
+    const cardPaymentSelectedFromQuery = searchParams.get(
+      "cardPaymentSelected"
+    );
 
     // Check if card payment was selected on the previous page
-    if (cardPaymentSelectedFromQuery === 'true') {
+    if (cardPaymentSelectedFromQuery === "true") {
       setCardPaymentSelected(true);
     } else {
       setCardPaymentSelected(false);
     }
-  },);
-
+  });
 
   // console.log("code:", code);
   // console.log("number:", number);
   // console.log("name:", name);
-
 
   return (
     <DashBoardLayout>
@@ -364,7 +363,6 @@ const FundWithCard = () => {
                     }}
                     className={`flex flex-row justify-between w-full`}
                   >
-
                     <h2 className="text-[#7C7C7C]">{walletName}</h2>
                   </li>
                 ) : (
@@ -457,7 +455,7 @@ const FundWithCard = () => {
               }}
             >
               <div className="flex justify-between items-center border w-full md:w-[50%] h-8 px-2 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px] mt-[5%] md:mt-[5%] lg:mt-[4%]">
-                {cardSelected  ? (
+                {cardSelected ? (
                   <li
                     onClick={() => {
                       handleShowCard();
@@ -465,12 +463,12 @@ const FundWithCard = () => {
                     className={`flex flex-row justify-between w-full`}
                   >
                     <div className="flex items-center gap-[10px]">
-                    {/* <img src={BankLogo} alt="" /> */}
-                    <img
-                      src={flag}
-                      alt=""
-                      className="w-full h-full object-cover"
-                    />
+                      {/* <img src={BankLogo} alt="" /> */}
+                      <img
+                        src={flag}
+                        alt=""
+                        className="w-full h-full object-cover"
+                      />
                       <h2 className="text-[#7C7C7C]">{cardName}</h2>
                       <h2 className="text-[#7C7C7C]">{selectedCard.code}</h2>
                     </div>
@@ -490,12 +488,13 @@ const FundWithCard = () => {
                       className="w-full h-full object-cover"
                     /> */}
 
-                    <div>
-                    {flag}
-                    </div>
-                   {code}
+                    <img
+                      src={flag}
+                      alt=""
+                      className="w-full h-full object-cover"
+                    />
+                    {code}
                   </h2>
-                  
                 )}
                 {cardSelected ? (
                   <button
@@ -513,7 +512,7 @@ const FundWithCard = () => {
               </div>
             </div>
             {showCard && (
-              <div 
+              <div
                 className={`border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute ${
                   toggleSideBar
                     ? "w-[50%] md:w-[44.5%] lg:w-[45%] 2xl:w-[46%]"
