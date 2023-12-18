@@ -242,6 +242,27 @@ export default function NotificationsPage() {
   const [isOpen5, setIsOpen5] = useState(false);
   const [isOpen10, setIsOpen10] = useState(false);
   const [isOpen11, setIsOpen11] = useState(false);
+  const [isOpen12, setIsOpen12] = useState(false);
+  const [isOpen13, setIsOpen13] = useState(false);
+  const [isOpen14, setIsOpen14] = useState(false);
+  const [isOpen15, setIsOpen15] = useState(false);
+  const [isOpen16, setIsOpen16] = useState(false);
+  const [isOpen17, setIsOpen17] = useState(false);
+  const [isOpen18, setIsOpen18] = useState(false);
+  const [isOpen19, setIsOpen19] = useState(false);
+  const [isOpen20, setIsOpen20] = useState(false);
+  const [isOpen21, setIsOpen21] = useState(false);
+
+
+
+
+
+
+
+
+
+
+
   
 
   
@@ -703,7 +724,7 @@ export default function NotificationsPage() {
 items-end  "
                 >
                   <div
-                    className="flex flex-col lg:w-[187px]  cursor-pointer items-start lg:gap-[10px] lg:p-[8px]
+                    className="flex flex-col lg:w-[187px] cursor-pointer items-start lg:gap-[10px] lg:p-[8px]
               bg-white border-neutral-400
              lg:rounded-[6px] lg:border-[0.2px] border-solid p-1 w-24 md:w-[120px] border shadow rounded gap-1.5 lg:shadow-[0px_0px_1px_#00000040]"
                   >
@@ -783,7 +804,7 @@ items-end  "
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between ">
                     <div className="flex flex-col">
                       <img
-                        className="lg:w-[150px] lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
+                        className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
                    flex justify-center 
                    md:h-[100px]"
                         src={faq}
@@ -792,8 +813,9 @@ items-end  "
 
                       {isOpen6 && (
                         <div
-                          className="Frame758532672 w-[100px] md:w-[180px] lg:w-[190px] mt-[-38px] md:mt-[-80px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] z-50 shadow flex-col lg:mt-[-85px]
+                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px]
+                           top-[50px] md:top-[75px] 
+                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[125px]
                justify-start items-start flex"
                         >
                           <div
@@ -832,7 +854,7 @@ items-end  "
                           setIsOpen10(false);
                           setIsOpen11(false);
                         }}
-                        className="Frame758532418 cursor-pointer  flex-col justify-center items-start gap-0.5 flex"
+                        className="Frame758532418 relative cursor-pointer  flex-col justify-center items-start gap-0.5 flex"
                       >
                         <div className="Ellipse141 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
                         <div className="Ellipse142 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
@@ -840,7 +862,7 @@ items-end  "
                       </div>
 
                       <div
-                        className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
+                        className={`Ellipse147 w-1.5 h-1.5 relative md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
                bg-red-400 rounded-full ${Color1}`}
                       />
                     </div>
@@ -1176,7 +1198,7 @@ items-end  "
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
-                        className="lg:w-[150px] lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
+                        className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
                    flex justify-center 
                    md:h-[100px]"
                         src={faq}
@@ -1184,8 +1206,9 @@ items-end  "
                       />
                       {isOpen7 && (
                         <div
-                          className="Frame758532672 w-[100px] md:w-[180px] lg:w-[190px] mt-[-38px] md:mt-[-80px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] z-50 shadow flex-col lg:mt-[-85px]
+                          className="Frame758532672 w-[100px] absolute md:w-[180px] lg:w-[190px] top-[160px]
+                           md:top-[245px] 
+                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[370px]
                justify-start items-start flex"
                         >
                           <div
@@ -1214,7 +1237,7 @@ items-end  "
                         </div>
                       )}
                     </div>
-                    <div className="flex justify-end cursor-pointer items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
+                    <div className="flex justify-end cursor-pointer  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
                       <div
                         onClick={() => {
                           setIsOpen7((prev) => !prev);
@@ -1232,7 +1255,7 @@ items-end  "
                       </div>
 
                       <div
-                        className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
+                        className={`Ellipse147  w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
                bg-red-400 rounded-full ${Color2}`}
                       />
                     </div>
@@ -1270,7 +1293,7 @@ items-end  "
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
-                        className="lg:w-[150px] lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
+                        className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
                    flex justify-center 
                    md:h-[100px]"
                         src={faq}
@@ -1279,8 +1302,8 @@ items-end  "
 
                       {isOpen8 && (
                         <div
-                          className="Frame758532672 w-[100px] md:w-[180px] lg:w-[190px] mt-[-38px] md:mt-[-80px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] z-50 shadow flex-col lg:mt-[-85px]
+                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] top-[270px] md:top-[410px] 
+                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[630px]
                justify-start items-start flex"
                         >
                           <div
@@ -1366,7 +1389,7 @@ items-end  "
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
-                        className="lg:w-[150px] lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
+                        className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
                    flex justify-center 
                    md:h-[100px]"
                         src={faq}
@@ -1375,8 +1398,9 @@ items-end  "
 
                       {isOpen9 && (
                         <div
-                          className="Frame758532672 w-[100px] md:w-[180px] lg:w-[190px] mt-[-38px] md:mt-[-80px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] z-50 shadow flex-col lg:mt-[-85px]
+                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px]
+                           top-[385px] md:top-[580px] 
+                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[895px]
                justify-start items-start flex"
                         >
                           <div
@@ -1462,7 +1486,7 @@ items-end  "
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
-                        className="lg:w-[150px] lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
+                        className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
                    flex justify-center 
                    md:h-[100px]"
                         src={faq}
@@ -1471,8 +1495,9 @@ items-end  "
 
                       {isOpen10 && (
                         <div
-                          className="Frame758532672 w-[100px] md:w-[180px] lg:w-[190px] mt-[-38px] md:mt-[-80px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] z-50 shadow flex-col lg:mt-[-85px]
+                          className="Frame758532672 w-[100px] absolute md:w-[180px] lg:w-[190px] top-[495px]
+                           md:top-[750px] 
+                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px]  shadow flex-col lg:top-[1155px]
                justify-start items-start flex"
                         >
                           <div
@@ -1501,7 +1526,8 @@ items-end  "
                         </div>
                       )}
                     </div>
-                    <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
+                    <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] 
+                    flex-col-reverse">
                       <div
                         onClick={() => {
                           setIsOpen10((prev) => !prev);
@@ -1558,7 +1584,7 @@ items-end  "
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
-                        className="lg:w-[150px] lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
+                        className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
                    flex justify-center 
                    md:h-[100px]"
                         src={faq}
@@ -1567,8 +1593,9 @@ items-end  "
 
                       {isOpen11 && (
                         <div
-                          className="Frame758532672 w-[100px] md:w-[180px] lg:w-[190px] mt-[-38px] md:mt-[-80px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] z-50 shadow flex-col lg:mt-[-85px]
+                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] top-[610px]
+                           md:top-[920px] 
+                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[1415px]
                justify-start items-start flex"
                         >
                           <div
@@ -1908,17 +1935,18 @@ items-end  "
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
-                        className="lg:w-[150px] lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
+                        className="lg:w-[150px] lg:h-[150px] relative mt-[5px] w-[50px] h-[50px] md:w-[100px]
                    flex justify-center 
                    md:h-[100px]"
                         src={file}
                         alt=""
                       />
 
-                      {isOpen6 && (
+                      {isOpen12 && (
                         <div
-                          className="Frame758532672 w-[100px] md:w-[180px] lg:w-[190px] mt-[-38px] md:mt-[-80px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] z-50 shadow flex-col lg:mt-[-85px]
+                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] top-[168px]
+                           md:top-[240px] 
+                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[380px]
                justify-start items-start flex"
                         >
                           <div
@@ -1950,11 +1978,11 @@ items-end  "
                     <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
                       <div
                         onClick={() => {
-                          setIsOpen6((prev) => !prev);
-                          setIsOpen7(false);
-                          setIsOpen8(false);
-                          setIsOpen9(false);
-                          setIsOpen10(false);
+                          setIsOpen12((prev) => !prev);
+                          setIsOpen13(false);
+                          setIsOpen14(false);
+                          setIsOpen15(false);
+                          setIsOpen16(false);
                         }}
                         className="Frame758532418 cursor-pointer  flex-col justify-center items-start gap-0.5 flex"
                       >
@@ -2005,16 +2033,17 @@ items-end  "
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
-                        className="lg:w-[150px] lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
+                        className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
                    flex justify-center 
                    md:h-[100px]"
                         src={file}
                         alt=""
                       />
-                      {isOpen7 && (
+                      {isOpen13 && (
                         <div
-                          className="Frame758532672 w-[100px] md:w-[180px] lg:w-[190px] mt-[-38px] md:mt-[-80px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] z-50 shadow flex-col lg:mt-[-85px]
+                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] top-[278px]
+                           md:top-[398px] 
+                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px]  shadow flex-col lg:top-[635px]
                justify-start items-start flex"
                         >
                           <div
@@ -2044,11 +2073,11 @@ items-end  "
                     <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
                       <div
                         onClick={() => {
-                          setIsOpen7((prev) => !prev);
-                          setIsOpen6(false);
-                          setIsOpen8(false);
-                          setIsOpen9(false);
-                          setIsOpen10(false);
+                          setIsOpen13((prev) => !prev);
+                          setIsOpen14(false);
+                          setIsOpen15(false);
+                          setIsOpen12(false);
+                          setIsOpen16(false);
                         }}
                         className="Frame758532418 cursor-pointer flex-col justify-center items-start gap-0.5 flex"
                       >
@@ -2098,17 +2127,18 @@ items-end  "
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
-                        className="lg:w-[150px] lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
+                        className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
                    flex justify-center 
                    md:h-[100px]"
                         src={file}
                         alt=""
                       />
 
-                      {isOpen8 && (
+                      {isOpen14 && (
                         <div
-                          className="Frame758532672 w-[100px] md:w-[180px] lg:w-[190px] mt-[-38px] md:mt-[-80px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] z-50 shadow flex-col lg:mt-[-85px]
+                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] top-[390px]
+                           md:top-[577px] 
+                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[900px]
                justify-start items-start flex"
                         >
                           <div
@@ -2138,11 +2168,11 @@ items-end  "
                     <div className="flex justify-end items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
                       <div
                         onClick={() => {
-                          setIsOpen8((prev) => !prev);
-                          setIsOpen6(false);
-                          setIsOpen7(false);
-                          setIsOpen9(false);
-                          setIsOpen10(false);
+                          setIsOpen14((prev) => !prev);
+                          setIsOpen15(false);
+                          setIsOpen16(false);
+                          setIsOpen13(false);
+                          setIsOpen12(false);
                         }}
                         className="Frame758532418 cursor-pointer  flex-col justify-center items-start gap-0.5 flex"
                       >
@@ -2192,17 +2222,18 @@ items-end  "
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
-                        className="lg:w-[150px] lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
+                        className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
                    flex justify-center 
                    md:h-[100px]"
                         src={file}
                         alt=""
                       />
 
-                      {isOpen9 && (
+                      {isOpen15 && (
                         <div
-                          className="Frame758532672 w-[100px] md:w-[180px] lg:w-[190px] mt-[-38px] md:mt-[-80px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] z-50 shadow flex-col lg:mt-[-85px]
+                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] 
+                          top-[500px] md:top-[740px] 
+                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[1153px]
                justify-start items-start flex"
                         >
                           <div
@@ -2233,11 +2264,11 @@ items-end  "
                     <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
                       <div
                         onClick={() => {
-                          setIsOpen9((prev) => !prev);
-                          setIsOpen6(false);
-                          setIsOpen7(false);
-                          setIsOpen8(false);
-                          setIsOpen10(false);
+                          setIsOpen15((prev) => !prev);
+                          setIsOpen16(false);
+                          setIsOpen14(false);
+                          setIsOpen13(false);
+                          setIsOpen12(false);
                         }}
                         className="Frame758532418 cursor-pointer flex-col justify-center items-start gap-0.5 flex"
                       >
@@ -2287,17 +2318,18 @@ items-end  "
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
-                        className="lg:w-[150px] lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
+                        className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
                    flex justify-center 
                    md:h-[100px]"
                         src={file}
                         alt=""
                       />
 
-                      {isOpen10 && (
+                      {isOpen16 && (
                         <div
-                          className="Frame758532672 w-[100px] md:w-[180px] lg:w-[190px] mt-[-38px] md:mt-[-80px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] z-50 shadow flex-col lg:mt-[-85px]
+                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] top-[618px]
+                           md:top-[910px] 
+                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px]  shadow flex-col lg:top-[1408px]
                justify-start items-start flex"
                         >
                           <div
@@ -2327,11 +2359,11 @@ items-end  "
                     <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
                       <div
                         onClick={() => {
-                          setIsOpen10((prev) => !prev);
-                          setIsOpen6(false);
-                          setIsOpen7(false);
-                          setIsOpen8(false);
-                          setIsOpen9(false);
+                          setIsOpen16((prev) => !prev);
+                          setIsOpen15(false);
+                          setIsOpen14(false);
+                          setIsOpen13(false);
+                          setIsOpen12(false);
                         }}
                         className="Frame758532418 cursor-pointer flex-col justify-center items-start gap-0.5 flex"
                       >
@@ -2405,7 +2437,7 @@ items-end  "
                   <div
                     className="flex flex-col lg:w-[187px]  cursor-pointer items-start lg:gap-[10px] lg:p-[8px]
               bg-white border-neutral-400
-             lg:rounded-[6px] lg:border-[0.2px] border-solid p-1 w-24 md:w-[120px]   border shadow rounded gap-1.5 lg:shadow-[0px_0px_1px_#00000040]"
+             lg:rounded-[6px] lg:border-[0.2px] border-solid p-1 w-24 md:w-[120px]  border shadow rounded gap-1.5 lg:shadow-[0px_0px_1px_#00000040]"
                   >
                     <div
                                             onClick={() => {
@@ -2474,11 +2506,11 @@ items-end  "
                   />
                 </div>
               </div>
-              <div className="mt-[40px] justify-center hidden md:flex items-center lg:flex md:flex gap-[3px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
+              <div className="mt-[40px] justify-center hidden items-center lg:flex md:flex gap-[3px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
                 <button
                   className={` ${
                     isDarkMode ? "border" : "bg-[#04177f] "
-                  } cursor-pointer text-white text-[10px] h-[40px]  lg:rounded-xl lg:w-40 lg:h-9 lg:px-3.5 lg:py-2.5 
+                  } cursor-pointer text-white text-[10px] h-[40px] lg:rounded-xl lg:w-40 lg:h-9 lg:px-3.5 lg:py-2.5 
                   rounded-[5px]
                    md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] 
                    lg:my-[3%]  lg:text-[20px]  lg:mx-auto`}
@@ -2614,17 +2646,18 @@ items-end  "
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
-                        className="lg:w-[150px] lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
+                        className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
                    flex justify-center 
                    md:h-[100px]"
                         src={folder}
                         alt=""
                       />
 
-                      {isOpen6 && (
+                      {isOpen17 && (
                         <div
-                          className="Frame758532672 w-[100px] md:w-[180px] lg:w-[190px] mt-[-38px] md:mt-[-80px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] z-50 shadow flex-col lg:mt-[-85px]
+                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] top-[168px]
+                           md:top-[240px] 
+                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[390px]
                justify-start items-start flex"
                         >
                           <div
@@ -2655,11 +2688,11 @@ items-end  "
                     <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
                       <div
                         onClick={() => {
-                          setIsOpen6((prev) => !prev);
-                          setIsOpen7(false);
-                          setIsOpen8(false);
-                          setIsOpen9(false);
-                          setIsOpen10(false);
+                          setIsOpen17((prev) => !prev);
+                          setIsOpen18(false);
+                          setIsOpen19(false);
+                          setIsOpen20(false);
+                          setIsOpen21(false);
                         }}
                         className="Frame758532418 cursor-pointer flex-col justify-center items-start gap-0.5 flex"
                       >
@@ -2706,17 +2739,18 @@ items-end  "
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
-                        className="lg:w-[150px] lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
+                        className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
                    flex justify-center 
                    md:h-[100px]"
                         src={folder}
                         alt=""
                       />
 
-                      {isOpen7 && (
+                      {isOpen18 && (
                         <div
-                          className="Frame758532672 w-[100px] md:w-[180px] lg:w-[190px] mt-[-38px] md:mt-[-80px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] z-50 shadow flex-col lg:mt-[-85px]
+                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] top-[280px]
+                           md:top-[410px] 
+                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[735px]
                justify-start items-start flex"
                         >
                           <div
@@ -2747,11 +2781,11 @@ items-end  "
                     <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
                       <div
                         onClick={() => {
-                          setIsOpen7((prev) => !prev);
-                          setIsOpen6(false);
-                          setIsOpen8(false);
-                          setIsOpen9(false);
-                          setIsOpen10(false);
+                          setIsOpen18((prev) => !prev);
+                          setIsOpen17(false);
+                          setIsOpen19(false);
+                          setIsOpen20(false);
+                          setIsOpen21(false);
                         }}
                         className="Frame758532418 cursor-pointer flex-col justify-center items-start gap-0.5 flex"
                       >
@@ -2797,17 +2831,18 @@ items-end  "
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
-                        className="lg:w-[150px] lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
+                        className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
                    flex justify-center 
                    md:h-[100px]"
                         src={folder}
                         alt=""
                       />
 
-                      {isOpen8 && (
+                      {isOpen19 && (
                         <div
-                          className="Frame758532672 w-[100px] md:w-[180px] lg:w-[190px] mt-[-38px] md:mt-[-80px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] z-50 shadow flex-col lg:mt-[-85px]
+                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] top-[393px] 
+                          md:top-[580px] 
+                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[989px]
                justify-start items-start flex"
                         >
                           <div
@@ -2838,11 +2873,11 @@ items-end  "
                     <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
                       <div
                         onClick={() => {
-                          setIsOpen8((prev) => !prev);
-                          setIsOpen6(false);
-                          setIsOpen7(false);
-                          setIsOpen9(false);
-                          setIsOpen10(false);
+                          setIsOpen19((prev) => !prev);
+                          setIsOpen17(false);
+                          setIsOpen18(false);
+                          setIsOpen20(false);
+                          setIsOpen21(false);
                         }}
                         className="Frame758532418 cursor-pointer flex-col justify-center items-start gap-0.5 flex"
                       >
@@ -2889,17 +2924,17 @@ items-end  "
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
-                        className="lg:w-[150px] lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
+                        className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
                    flex justify-center 
                    md:h-[100px]"
                         src={folder}
                         alt=""
                       />
 
-                      {isOpen9 && (
+                      {isOpen20 && (
                         <div
-                          className="Frame758532672 w-[100px] md:w-[180px] lg:w-[190px] mt-[-38px] md:mt-[-80px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] z-50 shadow flex-col lg:mt-[-85px]
+                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] top-[507px] md:top-[750px] 
+                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px]  shadow flex-col lg:top-[1245px]
                justify-start items-start flex"
                         >
                           <div
@@ -2927,14 +2962,14 @@ items-end  "
                         </div>
                       )}
                     </div>
-                    <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
+                    <div className="flex justify-end relative  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
                       <div
                         onClick={() => {
-                          setIsOpen9((prev) => !prev);
-                          setIsOpen6(false);
-                          setIsOpen7(false);
-                          setIsOpen8(false);
-                          setIsOpen10(false);
+                          setIsOpen20((prev) => !prev);
+                          setIsOpen21(false);
+                          setIsOpen17(false);
+                          setIsOpen18(false);
+                          setIsOpen19(false);
                         }}
                         className="Frame758532418 cursor-pointer flex-col justify-center items-start gap-0.5 flex"
                       >
@@ -2980,16 +3015,16 @@ items-end  "
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
-                        className="lg:w-[150px] lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
+                        className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
                    flex justify-center 
                    md:h-[100px]"
                         src={folder}
                         alt=""
                       />
-                      {isOpen10 && (
+                      {isOpen21 && (
                         <div
-                          className="Frame758532672 w-[100px] md:w-[180px] lg:w-[190px] mt-[-38px] md:mt-[-80px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] z-50 shadow flex-col lg:mt-[-85px]
+                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] top-[618px] md:top-[920px] 
+                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px]  shadow flex-col lg:top-[1505px]
                justify-start items-start flex"
                         >
                           <div
@@ -3017,14 +3052,14 @@ items-end  "
                         </div>
                       )}
                     </div>
-                    <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
+                    <div className="flex justify-end relative  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
                       <div
                         onClick={() => {
-                          setIsOpen10((prev) => !prev);
-                          setIsOpen6(false);
-                          setIsOpen7(false);
-                          setIsOpen8(false);
-                          setIsOpen9(false);
+                          setIsOpen21((prev) => !prev);
+                          setIsOpen20(false);
+                          setIsOpen17(false);
+                          setIsOpen18(false);
+                          setIsOpen19(false);
                         }}
                         className="Frame758532418 cursor-pointer flex-col justify-center items-start gap-0.5 flex"
                       >
@@ -3035,7 +3070,7 @@ items-end  "
 
                       <div
                         className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
-               bg-red-400 rounded-full ${Color16}`}
+               bg-red-400 relative rounded-full ${Color16}`}
                       />
                     </div>
                   </div>

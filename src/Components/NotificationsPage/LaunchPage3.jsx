@@ -1,10 +1,11 @@
 import React from "react";
 import { DashBoardLayout } from "../Dashboard/Layout/DashBoardLayout";
 import { Link } from "react-router-dom/dist/react-router-dom.development";
-import folder from "./assets/folder.svg";
+
 import styles from "../Dashboard/DashboardComponents/./component.module.css";
 import { useContext } from "react";
 import { ContextProvider } from "../Context";
+import stars from "./assets/stars.svg";
 
 
 
@@ -41,17 +42,22 @@ const LaunchPage3 = () => {
                     and Transfer to any<br /> Nigerian Bank Account
 
               </h2>
-              <h2
-                className="text-[5px] font-[400] leading-[9px] mb-3 md:text-[9px] md:leading-[12.2px]
-               w-[100%] md:w-[80%] lg:w-[75%] 2xl:w-[85%] 2xl:mt-[5px] lg:mt-[20px] lg:text-[14px]
-               lg:leading-[26px] 2xl:text-[20px] lg:mb-[20px]"
-              >
-                August 10th, 2023 12 :00:00am
-              </h2>
+              <div className="Frame758532683 w-14 h-5 px-3.5 py-1 lg:w-32 lg:h-12 lg:px-12 lg:py-4 md:w-24 md:h-9 md:px-6 md:py-2 md:gap-1.5
+               bg-orange-400 rounded lg:rounded-md justify-center items-center gap-1 inline-flex">
+    <div className="Explore text-white text-xs lg:text-base font-medium leading-3 tracking-tight">Explore</div>
+</div>
+
+              {/* <h2 */}
+                {/* // className="text-[5px] font-[400] leading-[9px] mb-3 md:text-[9px] md:leading-[12.2px] */}
+              {/* //  w-[100%] md:w-[80%] lg:w-[75%] 2xl:w-[85%] 2xl:mt-[5px] lg:mt-[20px] lg:text-[14px] */}
+              {/* //  lg:leading-[26px] 2xl:text-[20px] lg:mb-[20px]" */}
+              {/* // > */}
+                {/* August 10th, 2023 12 :00:00am */}
+              {/* </h2> */}
             </div>
             <div className="md:w-24 md:h-16 w-14 h-10 lg:w-44 lg:h-28">
               <img
-                src={folder}
+                src={stars}
                 alt=""
                 className="md:w-24 md:h-16 w-14 h-10 lg:w-44 lg:h-28 "
               />
