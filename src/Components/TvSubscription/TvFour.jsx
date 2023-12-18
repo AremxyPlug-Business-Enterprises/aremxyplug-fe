@@ -207,7 +207,7 @@ const Showmax = () => {
         <div className=" mx-auto flex gap-1.5 py-[25.29px] lg:py-[37px] md:py-[28.64px]">
           <div className="flex text-[#7E7E7E] text-[10px] lg:text-[18px] md:text-[13px] font-semibold">
             <span>Subscribe Your</span> &nbsp;
-            <img src="./Images/TvSubscription/showmaxIcon.svg" alt="" className="md:w-[60px] md:h-[15px] lg:w-[80px] lg:h-[16px]"/>
+            <img src="./Images/TvSubscription/showmaxIcon.svg" alt="" className="md:w-[60px] md:h-[20px] lg:w-[90px] lg:h-[27px]"/>
             <span>Decoder Instantly</span>
           </div>
           <img src="./Images/currencyImages/right.svg" alt="" className="lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px]" />
@@ -316,6 +316,18 @@ const Showmax = () => {
                 Phone Number</label>
               <input id="val" value={mobileNumber}
                 onChange={handleShowmaxMobileNumberChange}
+                onInput={(e =>{
+    
+                  const numericValue = e.target.value.replace(/\D/g, '');
+                      e.target.value = numericValue
+                     if(numericValue.length === 11){
+                      e.target.style.border = '2px solid green';
+                    }
+                    else if(e.target.value.length < 11){
+                    e.target.style.border = '2px solid red';
+                  }
+                
+                   })}
                 type="tel" maxLength={11} className=" flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[600] text-[9px] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] hover:bg-[#EDEAEA] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center" />
               {errors.mobileNumber && <p className="text-[#F95252] text-[9px] md:text-[12px] lg:text-[14px] font-semibold italic">
@@ -324,7 +336,7 @@ const Showmax = () => {
             <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
               <label htmlFor="Email" className="text-[#7E7E7E] text-[10px] lg:text-[17px] md:text-[13px] font-semibold">
                 Email</label>
-              <input type="email" onChange={handleTvEmail} required className=" flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[600] text-[9px] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
+              <input type="email" onChange={handleTvEmail} placeholder="example@gmail.com" required className=" flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[600] text-[9px] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] hover:bg-[#EDEAEA] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center" />
              {errors.tvEmail && <p className="text-[#F95252] text-[9px] md:text-[12px] lg:text-[14px] font-semibold italic">
                 {errors.tvEmail}</p>}

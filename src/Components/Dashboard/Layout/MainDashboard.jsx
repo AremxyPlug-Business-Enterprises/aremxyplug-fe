@@ -28,6 +28,7 @@ export const MainDashboard = () => {
   const textRef = useRef(null);
   const [selected, setSelected] = useState("");
   const [selected2, setSelected2] = useState("");
+  const [symbol, setSymbol] = useState("₦");
 
   const handleCopyClick = () => {
     const text = textRef.current.innerText;
@@ -86,6 +87,19 @@ export const MainDashboard = () => {
     //     clickedoption === "EUR" ||
     //     clickedoption === "fiat"
     // );
+    clickedoption === "NGN"
+      ? setSymbol("₦")
+      : clickedoption === "USD"
+      ? setSymbol("$")
+      : clickedoption === "GBP"
+      ? setSymbol("£")
+      : clickedoption === "AUD"
+      ? setSymbol("AU$")
+      : clickedoption === "KES"
+      ? setSymbol("KSh")
+      : clickedoption === "EUR"
+      ? setSymbol("€")
+      : setSymbol("");
     return;
   };
 
@@ -201,7 +215,7 @@ export const MainDashboard = () => {
               </Link>
               <p
                 className={`${
-                  toggleSideBar ? "lg:text-[18px]" : "lg:text-[23px]"
+                  toggleSideBar ? "lg:text-[18px]" : "lg:text-[24px]"
                 } ${styles.walletText} `}
               >
                 Available Balance
@@ -262,7 +276,7 @@ export const MainDashboard = () => {
                     </span>
                   ) : (
                     <span className="text-[19px] leading-normal lg:text-[37px]">
-                      &#8358;0.00
+                      {symbol}0.00
                     </span>
                   )}
                   <div onClick={visibilityHandler} className=" text-[#92ABFE]">
@@ -383,8 +397,8 @@ export const MainDashboard = () => {
                 <div className="flex mt-[8%] gap-[30px] md:mt-[5%] lg:mt-[9%]">
                   <p
                     className={`${styles.GVA} ${
-                      toggleSideBar ? "lg:text-[10px]" : "lg:text-[21px]"
-                    } text-[11px] font-extrabold md:text-[17px] `}
+                      toggleSideBar ? "lg:text-[10px]" : "lg:text-[24px]"
+                    } text-[11px] font-extrabold `}
                   >
                     Global Virtual Accounts
                   </p>

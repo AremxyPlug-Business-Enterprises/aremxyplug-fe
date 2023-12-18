@@ -154,7 +154,7 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
          className='w-[100%] font-[500] text-[9px] leading-[12px]  lg:text-[16px] lg:leading-[20.8px]
          placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] py-[8.178px] pl-[5.868px] pr-[20px] lg:pl-[10px] lg:py-[16px] border-[0.5px]
           rounded-[3.197px] md:border-[1px] border-[solid] border-[#7C7C7C] lg:rounded-[10px] focus:outline-none'
-         placeholder='' inputMode='numeric' maxLength={12} />
+         placeholder='' inputMode='numeric' maxLength={10} />
          <img src={AccountRecipient} alt="" 
          className='absolute h-[12px] w-[12px] top-[7.997px] 
          right-[7.997px] md:top-[16px] md:right-[16px] lg:w-[20px] lg:h-[20px]'/>
@@ -238,7 +238,8 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
      <h2 className='font-[600] text-center text-[10px] leading-[14px] lg:text-[16px] lg:leading-[20.8px]'>
      Please Confirm!!!
      </h2>
-     <p className='font-[500] text-center text-[10px] leading-[14px] lg:text-[16px] lg:leading-[20.8px]'>
+     <p className='font-[500] text-center text-[10px] leading-[14px] lg:text-[16px]
+      lg:leading-[20.8px] py-[5px] px-[10px] bg-[#FFF0BA] rounded-[8px]'>
      Are you sure you want to add this account to your recipients? 
      Kindly re-confirm the identity, and be informed any funds transfer to any strange accounts 
      cannot be reversed.
@@ -365,9 +366,9 @@ md:w-[150px] text-white text-center rounded-[4.41px]
               <Modal>
               <div className='h-[100%] w-[100%] md:justify-center flex 
               items-center  md:mx-[0px] mx-[19px]'>
-         <div className='flex flex-col  lg:w-[36%] h-[300px] w-[100%] lg:h-[420px] bg-white lg:rounded-[20px]
+         <div className='flex flex-col  lg:w-[36%] h-[269px]  w-[100%] lg:h-[420px] bg-white lg:rounded-[20px]
           shadow-[0px_0px_6.933px_0px_rgba(0,0,0,0.25)] rounded-[8px]
-          lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] lg:py-[23px] '>
+          lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] lg:py-[23px] lg:px-[0px] py-[10px] px-[24px]'>
           <div className='flex flex-col lg:w-[100%] lg:gap-[20px] gap-[10px]  justify-between  items-center h-[100%]'>
   
    <h2 className='font-[600] text-[#04177F] text-center text-[10px] leading-[14px] lg:text-[16.647px] lg:leading-[24px]'>
@@ -376,17 +377,18 @@ md:w-[150px] text-white text-center rounded-[4.41px]
     <img src={imageCurrencyNotAvalaible} alt=""
     className='lg:w-[217.263px] lg:h-[187.283px] h-[100px] w-[100px]'/>
   
-  <div className='flex lg:gap-[125px] md:gap-[60px] w-[100%] justify-end gap-[20px] lg:pr-[30px]'>
+  <div className='flex flex-col-reverse md:flex-row lg:gap-[125px] md:gap-[60px] w-[100%] 
+  justify-end gap-[20px] lg:pr-[30px]'>
   <button onClick={() => {
     setAddCurrencyNotAvalaible(false);
   }}
-className='bg-[#04177F] w-[110px] lg:py-[10px] py-[7px] md:w-[97.02px]
+className='bg-[#04177F] w-[100%] lg:py-[10px] py-[13px] md:w-[97.02px]
  text-white text-center rounded-[4.41px]
  lg:rounded-[12px] font-[600] lg:text-[16px] lg:leading-[24px]'>
   Okay
 </button>
 <p className='font-[600]  text-[10px] leading-[14px] 
-lg:text-[16px] lg:leading-[24px] self-start'>
+lg:text-[16px] lg:leading-[24px] md:self-start self-end'>
 Coming Soon...
 </p>
 </div>
