@@ -26,115 +26,106 @@ export default function NotificationsPage() {
   const { isDarkMode } = useContext(ContextProvider);
 
 
-  const [backgroundColor, setBackgroundColor] = useState("bg-sky-100");
-  const changeColor = () => {
-    setBackgroundColor((prevColor) =>
-      prevColor === "bg-sky-100" ? "bg-white" : "bg-white"
-    );
-  };
+  // const [backgroundColor, setBackgroundColor] = useState("bg-sky-100");
+  // const changeColor = () => {
+    // setBackgroundColor((prevColor) =>
+      // prevColor === "bg-sky-100" ? "bg-white" : "bg-white"
+    // );
+  // };
+// 
+  // const [backgroundColor1, setBackgroundColor1] = useState("bg-sky-100");
 
-  const [backgroundColor1, setBackgroundColor1] = useState("bg-sky-100");
+  // const changeColor1 = () => {
+    // setBackgroundColor1((prevColor) =>
+      // prevColor === "bg-sky-100" ? "bg-white" : "bg-white"
+    // );
+  // };
 
-  const changeColor1 = () => {
-    setBackgroundColor1((prevColor) =>
-      prevColor === "bg-sky-100" ? "bg-white" : "bg-white"
-    );
-  };
+  // const [backgroundColor2, setBackgroundColor2] = useState("bg-sky-100");
 
-  const [backgroundColor2, setBackgroundColor2] = useState("bg-sky-100");
+  // const changeColor2 = () => {
+    // setBackgroundColor2((prevColor) =>
+      // prevColor === "bg-sky-100" ? "bg-white" : "bg-white"
+    // );
+  // };
+  // const [backgroundColor3, setBackgroundColor3] = useState("bg-sky-100");
 
-  const changeColor2 = () => {
-    setBackgroundColor2((prevColor) =>
-      prevColor === "bg-sky-100" ? "bg-white" : "bg-white"
-    );
-  };
-  const [backgroundColor3, setBackgroundColor3] = useState("bg-sky-100");
+  // const changeColor3 = () => {
+    // setBackgroundColor3((prevColor) =>
+      // prevColor === "bg-sky-100" ? "bg-white" : "bg-white"
+    // );
+  // };
+  // const [backgroundColor4, setBackgroundColor4] = useState("bg-sky-100");
 
-  const changeColor3 = () => {
-    setBackgroundColor3((prevColor) =>
-      prevColor === "bg-sky-100" ? "bg-white" : "bg-white"
-    );
-  };
-  const [backgroundColor4, setBackgroundColor4] = useState("bg-sky-100");
+  // const changeColor4 = () => {
+    // setBackgroundColor4((prevColor) =>
+      // prevColor === "bg-sky-100" ? "bg-white" : "bg-white"
+    // );
+  // };
+  // const [backgroundColor5, setBackgroundColor5] = useState("bg-sky-100");
 
-  const changeColor4 = () => {
-    setBackgroundColor4((prevColor) =>
-      prevColor === "bg-sky-100" ? "bg-white" : "bg-white"
-    );
-  };
-  const [backgroundColor5, setBackgroundColor5] = useState("bg-sky-100");
+  // const changeColor5 = () => {
+    // setBackgroundColor5((prevColor) =>
+      // prevColor === "bg-sky-100" ? "bg-white" : "bg-white"
+    // );
+  // };
 
-  const changeColor5 = () => {
-    setBackgroundColor5((prevColor) =>
-      prevColor === "bg-sky-100" ? "bg-white" : "bg-white"
-    );
-  };
-
-  const handleCombinedClick = () => {
-    setBackgroundColor("bg-white") 
-
-
-    setBackgroundColor1("bg-white") 
-    setBackgroundColor2("bg-white") 
-    setBackgroundColor3("bg-white") 
-    setBackgroundColor4("bg-white") 
-    setBackgroundColor5("bg-white") 
-    
-  };
+ 
+ 
 
 
-  const [Color1, setColor1] = useState("bg-red-400");
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 
-  const switchColor1 = () => {
-    setColor1((prevColor) =>
-      prevColor === "bg-red-400" ? "bg-white" : "bg-white"
-    );
-  };
 
-  const [Color2, setColor2] = useState("bg-red-400");
-  const switchColor2 = () => {
-    setColor2((prevColor) =>
-      prevColor === "bg-red-400" ? "bg-white" : "bg-white"
-    );
-  };
+  // const [Color1, setColor1] = useState("bg-red-400");
 
-  const [Color3, setColor3] = useState("bg-red-400");
-  const switchColor3 = () => {
-    setColor3((prevColor) =>
-      prevColor === "bg-red-400" ? "bg-white" : "bg-white"
-    );
-  };
+  // const switchColor1 = () => {
+    // setColor1((prevColor) =>
+      // prevColor === "bg-red-400" ? "bg-white" : "bg-white"
+    // );
+  // };
 
-  const [Color4, setColor4] = useState("bg-red-400");
-  const switchColor4 = () => {
-    setColor4((prevColor) =>
-      prevColor === "bg-red-400" ? "bg-white" : "bg-white"
-    );
-  };
+  // const [Color2, setColor2] = useState("bg-red-400");
+  // const switchColor2 = () => {
+    // setColor2((prevColor) =>
+      // prevColor === "bg-red-400" ? "bg-white" : "bg-white"
+    // );
+  // };
 
-  const [Color5, setColor5] = useState("bg-red-400");
-  const switchColor5 = () => {
-    setColor5((prevColor) =>
-      prevColor === "bg-red-400" ? "bg-white" : "bg-white"
-    );
-  };
+  // const [Color3, setColor3] = useState("bg-red-400");
+  // const switchColor3 = () => {
+    // setColor3((prevColor) =>
+      // prevColor === "bg-red-400" ? "bg-white" : "bg-white"
+    // );
+  // };
 
-  const [Color6, setColor6] = useState("bg-red-400");
-  const switchColor6 = () => {
-    setColor6((prevColor) =>
-      prevColor === "bg-red-400" ? "bg-white" : "bg-white"
-    );
-  };
+  // const [Color4, setColor4] = useState("bg-red-400");
+  // const switchColor4 = () => {
+    // setColor4((prevColor) =>
+      // prevColor === "bg-red-400" ? "bg-white" : "bg-white"
+    // );
+  // };
 
-  const handleCombinedClick3 = () => {
-    
-    setColor1("bg-white") 
-    setColor2("bg-white") 
-    setColor3("bg-white") 
-    setColor4("bg-white") 
-    setColor5("bg-white") 
-    setColor6("bg-white") 
-  };
+  // const [Color5, setColor5] = useState("bg-red-400");
+  // const switchColor5 = () => {
+    // setColor5((prevColor) =>
+      // prevColor === "bg-red-400" ? "bg-white" : "bg-white"
+    // );
+  // };
+
+  // const [Color6, setColor6] = useState("bg-red-400");
+  // const switchColor6 = () => {
+    // setColor6((prevColor) =>
+      // prevColor === "bg-red-400" ? "bg-white" : "bg-white"
+    // );
+  // };
+
 
 
   const [Color7, setColor7] = useState("bg-red-400");
@@ -268,22 +259,6 @@ export default function NotificationsPage() {
   
 
   
-  const [isAllRead, setIsAllRead] = useState(true);
-  const [buttonText, setButtonText] = useState('Mark all as Read');
-
-  const handleButtonClick = () => {
-    setIsAllRead((prevIsAllRead) => !prevIsAllRead);
-
-
-    
-    // Update button text based on the new state
-    setButtonText(isAllRead ? 'Mark all as Unread' : 'Mark all as Read');
-
-    // Additional click handlers
-    handleCombinedClick();
-    handleCombinedClick3();
-  };
-
     
 
 
@@ -514,7 +489,58 @@ export default function NotificationsPage() {
     const [showPicture1, setShowPicture1] = useState(false);
     const [showPicture2, setShowPicture2] = useState(false);
 
-   
+    const [isRead, setIsRead] = useState(false);
+
+  const handleClick = () => {
+    setIsRead(!isRead);
+  };
+
+  const [isRead1, setIsRead1] = useState(false);
+
+  const handleClick1 = () => {
+    setIsRead1(!isRead1);
+  };
+
+  const [isRead2, setIsRead2] = useState(false);
+
+  const handleClick2 = () => {
+    setIsRead2(!isRead2);
+  };
+
+  const [isRead3, setIsRead3] = useState(false);
+
+  const handleClick3 = () => {
+    setIsRead3(!isRead3);
+  };
+
+  const [isRead4, setIsRead4] = useState(false);
+
+  const handleClick4 = () => {
+    setIsRead4(!isRead4);
+  };
+  const [isRead5, setIsRead5] = useState(false);
+
+  const handleClick5 = () => {
+    setIsRead5(!isRead5);
+  };
+
+
+  const handleClick6 = () => {
+    setIsRead(!isRead); 
+    setIsRead1(!isRead1); 
+    setIsRead2(!isRead2); 
+    setIsRead3(!isRead3) ;
+    setIsRead4(!isRead4) ;
+    setIsRead5(!isRead5);
+  };
+
+
+
+
+
+
+  
+
 
   
   return (
@@ -723,19 +749,16 @@ export default function NotificationsPage() {
                   className="flex  lg:gap-[35px] lg:mt-[-80px] mt-[-40px] gap-[15px] md:gap-[25px] md:mt-[-60px] justify-end 
 items-end  "
                 >
+                  {isRead && isRead1 && isRead2 && isRead3 && isRead4 && isRead5 ? (
                   <div
-                    className="flex flex-col lg:w-[187px] cursor-pointer items-start lg:gap-[10px] lg:p-[8px]
+                    className="flex flex-col lg:w-[187px] cursor-pointer items-start lg:gap-[7px] lg:p-[8px]
               bg-white border-neutral-400
-             lg:rounded-[6px] lg:border-[0.2px] border-solid p-1 w-24 md:w-[120px] border shadow rounded gap-1.5 lg:shadow-[0px_0px_1px_#00000040]"
+             lg:rounded-[6px] lg:border-[0.2px] border-solid p-1 w-24 md:w-[120px]   border shadow 
+             rounded gap-1.5 lg:shadow-[0px_0px_1px_#00000040]"
                   >
                     <div
-                    id="colorReset"
-                      onClick={() => {
-                        handleCombinedClick();
-                        handleCombinedClick3();
-                        handleButtonClick()
-                        
-                      }}
+                                          onClick={handleClick6}
+                      
                       className="flex lg:w-[171px] items-center lg:gap-[14px] gap-2  flex-[0_0_auto]"
                     >
                       <img
@@ -744,13 +767,42 @@ items-end  "
                         src={envelope}
                       />
                       <div
-                        className="lg:w-[133px] w-[67px] md:w-[78px] whitespace-nowrap mt-[-1.00px] font-medium text-zinc-500  text-text-color-fade
-                 lg:text-[15px] tracking-[0] text-[8px] md:text-[10px] leading-[normal]"
+                        className="lg:w-[133px] w-[67px] md:w-[78px] mt-[-1.00px] font-medium text-zinc-500  text-text-color-fade
+                 lg:text-[16px] tracking-[0] text-[8px] md:text-[10px] whitespace-nowrap leading-[normal]"
                       >
-                        {buttonText}
+                        Mark all as unread
                       </div>
                     </div>
                   </div>
+
+                    ) : (
+
+                  <div
+                    className="flex flex-col lg:w-[187px]  cursor-pointer items-start lg:gap-[10px] lg:p-[8px]
+              bg-white border-neutral-400
+             lg:rounded-[6px] lg:border-[0.2px] border-solid p-1 w-24 md:w-[120px]   border shadow rounded gap-1.5 lg:shadow-[0px_0px_1px_#00000040]"
+                  >
+                    <div
+                                          onClick={handleClick6}
+                      
+                      className="flex lg:w-[171px] items-center lg:gap-[14px] gap-2  flex-[0_0_auto]"
+                    >
+                      <img
+                        className=" lg:w-[24px] lg:h-[18.67px] md:w-[14px] md:h-[11px] w-[10px] h-[8px]"
+                        alt="Vector"
+                        src={envelope}
+                      />
+                      <div
+                        className="lg:w-[133px] w-[67px] md:w-[78px] mt-[-1.00px] font-medium text-zinc-500  text-text-color-fade
+                 lg:text-[16px] tracking-[0] text-[8px] md:text-[10px] leading-[normal]"
+                      >
+                        Mark all as Read
+                      </div>
+                    </div>
+                  </div>
+                  )}
+
+  
                   <div
                   onClick={openModal1}
                     className="flex items-center lg:gap-[14px] cursor-pointer    lg:p-[8px]
@@ -772,7 +824,7 @@ items-end  "
                   </div>
                 </div>
 
-{/* child */}
+
 <div className="flex flex-col lg:gap-7 gap-3 md:gap-5">
 {finalDelete && (
                 <div
@@ -780,7 +832,7 @@ items-end  "
                 id="colorReset"
                   className={`flex justify-between  items-center w-full 
                   border-b lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md
-                   lg:rounded-xl shadow  border-[#d9d9d999] ${backgroundColor}`}
+                   lg:rounded-xl shadow  border-[#d9d9d999]  ${isRead5 ? 'bg-white' :  'bg-sky-100'}`}
                 >
                   <Link to="/launch-page">
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
@@ -818,19 +870,37 @@ items-end  "
                     ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[125px]
                justify-start items-start flex"
                         >
+
+{isRead5 ? (
                           <div
-                            onClick={() => {
-                              changeColor();
-                              switchColor1();
-                            }}
+                              onClick={handleClick5}
+                            
                             className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
          h-[23px] justify-center md:h-[40px] lg:h-[41px]
         items-center gap-1.5 flex"
                           >
                             <div className="MarkAsRead text-zinc-500 text-[8px] md:text-xs font-normal lg:text-sm whitespace-nowrap ">
-                              Mark as Read
+                              Mark as unread
                             </div>
+                            
                           </div>
+                          
+                          ) : (
+                          <div
+                              onClick={handleClick5}
+                            
+                            className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
+         h-[23px] justify-center md:h-[40px] lg:h-[41px]
+        items-center gap-1.5 flex"
+                          >
+                            <div className="MarkAsRead text-zinc-500 text-[8px] md:text-xs font-normal lg:text-sm whitespace-nowrap ">
+                              Mark as read
+                            </div>
+                            
+                          </div>
+                          )}
+
+                          
                           <div
                         
                           onClick={openModal}
@@ -863,7 +933,7 @@ items-end  "
 
                       <div
                         className={`Ellipse147 w-1.5 h-1.5 relative md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
-               bg-red-400 rounded-full ${Color1}`}
+               bg-red-400 rounded-full  ${isRead5 ? 'bg-white' :  'bg-red-400'}`}
                       />
                     </div>
                   </div>
@@ -941,7 +1011,7 @@ items-end  "
 
               <button
               onClick={closeModal}
-              className="Frame1468 md:block ml-8 mt-5 w-56 h-10 px-1 py-0.5 bg-blue-950 rounded
+              className="Frame1468 md:hidden lg:hidden ml-8 mt-5 w-56 h-10 px-1 py-0.5 bg-blue-950 rounded
                justify-center items-center flex">
     <div className="Verify text-white text-xs font-semibold">Verify</div>
 </button>
@@ -1174,7 +1244,8 @@ items-end  "
 { finalDelete1 && (
                 <div
                   className={` flex w-full justify-between items-center lg:h-[230px] h-[100px] md:h-[150px]
-                   lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow   border-b  border-[#d9d9d999] ${backgroundColor1} `}
+                   lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow   border-b 
+                    border-[#d9d9d999]   ${isRead ? 'bg-white' : 'bg-sky-100'} `}
                 >
   <Link to="/launch-page">
 
@@ -1211,20 +1282,43 @@ items-end  "
                     ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[370px]
                justify-start items-start flex"
                         >
+
+{isRead ? (
                           <div
-                                                        onClick={() => {
-                                                          changeColor1();
-                                                          switchColor2();
-                                                        }}
+                              onClick={handleClick}
+                                                        // onClick={() => {
+                                                          // changeColor1();
+                                                          // switchColor2();
+                                                        // }}
                             
                             className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
          h-[23px] justify-center md:h-[40px] lg:h-[41px]
         items-center gap-1.5 flex"
                           >
                             <div className="MarkAsRead text-zinc-500 text-[8px] md:text-xs font-normal lg:text-sm whitespace-nowrap ">
-                              Mark as Read
+                              Mark as unread
                             </div>
+                            
                           </div>
+                          
+                          ) : (
+                          <div
+                              onClick={handleClick}
+                                                        // onClick={() => {
+                                                          // changeColor1();
+                                                          // switchColor2();
+                                                        // }}
+                            
+                            className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
+         h-[23px] justify-center md:h-[40px] lg:h-[41px]
+        items-center gap-1.5 flex"
+                          >
+                            <div className="MarkAsRead text-zinc-500 text-[8px] md:text-xs font-normal lg:text-sm whitespace-nowrap ">
+                              Mark as read
+                            </div>
+                            
+                          </div>
+                          )}
                           <div
                            onClick={openModal}
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
@@ -1256,7 +1350,7 @@ items-end  "
 
                       <div
                         className={`Ellipse147  w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
-               bg-red-400 rounded-full ${Color2}`}
+               bg-red-400 rounded-full  ${isRead ? 'bg-white' :  'bg-red-400'}`}
                       />
                     </div>
                   </div>
@@ -1267,7 +1361,10 @@ items-end  "
   
 { finalDelete2 && (
                 <div
-                  className={`flex  border-b  lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow   border-[#d9d9d999] ${backgroundColor2} w-full justify-between 
+                  className={`flex  border-b  lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 
+                  rounded-md md:rounded-md lg:rounded-xl shadow   border-[#d9d9d999]  
+                  ${isRead1 ? 'bg-white' : 'bg-sky-100'}
+                   w-full justify-between 
                   items-center `}
                 >
   <Link to="/launch-page">
@@ -1306,20 +1403,45 @@ items-end  "
                     ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[630px]
                justify-start items-start flex"
                         >
+
+{isRead1 ? (
                           <div
-                                                        onClick={() => {
-                                                          changeColor2();
-                                                          switchColor3();
-                                                        }}
+                              onClick={handleClick1}
+                                                        // onClick={() => {
+                                                          // changeColor1();
+                                                          // switchColor2();
+                                                        // }}
                             
                             className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
          h-[23px] justify-center md:h-[40px] lg:h-[41px]
         items-center gap-1.5 flex"
                           >
                             <div className="MarkAsRead text-zinc-500 text-[8px] md:text-xs font-normal lg:text-sm whitespace-nowrap ">
-                              Mark as Read
+                              Mark as unread
                             </div>
+                            
                           </div>
+                          
+                          ) : (
+                          <div
+                              onClick={handleClick1}
+                                                        // onClick={() => {
+                                                          // changeColor1();
+                                                          // switchColor2();
+                                                        // }}
+                            
+                            className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
+         h-[23px] justify-center md:h-[40px] lg:h-[41px]
+        items-center gap-1.5 flex"
+                          >
+                            <div className="MarkAsRead text-zinc-500 text-[8px] md:text-xs font-normal lg:text-sm whitespace-nowrap ">
+                              Mark as read
+                            </div>
+                            
+                          </div>
+                          )}
+
+
                           <div
                           onClick={openModal}
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
@@ -1351,7 +1473,7 @@ items-end  "
 
                       <div
                         className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
-               bg-red-400 rounded-full ${Color3}`}
+               bg-red-400 rounded-full  ${isRead1 ? 'bg-white' : 'bg-red-400'}`}
                       />
                     </div>
                   </div>
@@ -1363,7 +1485,9 @@ items-end  "
   
 { finalDelete3 && (
                 <div
-                  className={`flex border-b lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow  border-[#d9d9d999] ${backgroundColor3} w-full justify-between
+                  className={`flex border-b lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md
+                   md:rounded-md lg:rounded-xl shadow  border-[#d9d9d999]  
+                    ${isRead2 ? 'bg-white' : 'bg-sky-100'} w-full justify-between
                    items-center`}
                 >
   <Link to="/launch-page">
@@ -1403,20 +1527,46 @@ items-end  "
                     ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[895px]
                justify-start items-start flex"
                         >
+
+
+{isRead2 ? (
                           <div
-                                                      onClick={() => {
-                                                        changeColor3();
-                                                        switchColor4();
-                                                      }}
-                          
+                              onClick={handleClick2}
+                                                        // onClick={() => {
+                                                          // changeColor1();
+                                                          // switchColor2();
+                                                        // }}
+                            
                             className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
          h-[23px] justify-center md:h-[40px] lg:h-[41px]
         items-center gap-1.5 flex"
                           >
                             <div className="MarkAsRead text-zinc-500 text-[8px] md:text-xs font-normal lg:text-sm whitespace-nowrap ">
-                              Mark as Read
+                              Mark as unread
                             </div>
+                            
                           </div>
+                          
+                          ) : (
+                          <div
+                              onClick={handleClick2}
+                                                        // onClick={() => {
+                                                          // changeColor1();
+                                                          // switchColor2();
+                                                        // }}
+                            
+                            className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
+         h-[23px] justify-center md:h-[40px] lg:h-[41px]
+        items-center gap-1.5 flex"
+                          >
+                            <div className="MarkAsRead text-zinc-500 text-[8px] md:text-xs font-normal lg:text-sm whitespace-nowrap ">
+                              Mark as read
+                            </div>
+                            
+                          </div>
+                          )}
+
+
                           <div
                           onClick={openModal}
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
@@ -1448,7 +1598,7 @@ items-end  "
 
                       <div
                         className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
-               bg-red-400 rounded-full ${Color4}`}
+               bg-red-400 rounded-full  ${isRead2 ? 'bg-white' : 'bg-red-400'}`}
                       />
                     </div>
                   </div>
@@ -1460,7 +1610,8 @@ items-end  "
   
 { finalDelete4 && (
                 <div
-                  className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow   border-b  border-[#d9d9d999] ${backgroundColor4} w-full justify-between
+                  className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md 
+                  lg:rounded-xl shadow   border-b  border-[#d9d9d999]  ${isRead3 ? 'bg-white' : 'bg-sky-100'} w-full justify-between
                    items-center`}
                 >
   <Link to="/launch-page">
@@ -1500,20 +1651,47 @@ items-end  "
                     ml-[-52px] md:ml-[-82px] lg:ml-[-40px]  shadow flex-col lg:top-[1155px]
                justify-start items-start flex"
                         >
+
+
+{isRead3 ? (
                           <div
-                                                        onClick={() => {
-                                                          changeColor4();
-                                                          switchColor5();
-                                                        }}
+                              onClick={handleClick3}
+                                                       
+                                                       
+                                                       
+                                                       
                             
                             className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
          h-[23px] justify-center md:h-[40px] lg:h-[41px]
         items-center gap-1.5 flex"
                           >
                             <div className="MarkAsRead text-zinc-500 text-[8px] md:text-xs font-normal lg:text-sm whitespace-nowrap ">
-                              Mark as Read
+                              Mark as unread
                             </div>
+                            
                           </div>
+                          
+                          ) : (
+                          <div
+                              onClick={handleClick3}
+                                                        
+                                                        
+                                                        
+                                                        
+                            
+                            className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
+         h-[23px] justify-center md:h-[40px] lg:h-[41px]
+        items-center gap-1.5 flex"
+                          >
+                            <div className="MarkAsRead text-zinc-500 text-[8px] md:text-xs font-normal lg:text-sm whitespace-nowrap ">
+                              Mark as read
+                            </div>
+                            
+                          </div>
+                          )}
+
+
+
                           <div
                           onClick={openModal}
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
@@ -1546,7 +1724,7 @@ items-end  "
 
                       <div
                         className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
-               bg-red-400 rounded-full ${Color5}`}
+               bg-red-400 rounded-full  ${isRead3 ? 'bg-white' : 'bg-red-400'}`}
                       />
                     </div>
                   </div>
@@ -1558,7 +1736,8 @@ items-end  "
   
 { finalDelete5 && (
                 <div
-                  className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${backgroundColor5} w-full justify-between
+                  className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md
+                   lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${isRead4 ? 'bg-white' : 'bg-sky-100'} w-full justify-between
                    items-center`}
                 >
   <Link to="/launch-page">
@@ -1598,20 +1777,44 @@ items-end  "
                     ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[1415px]
                justify-start items-start flex"
                         >
+{isRead4 ? (
                           <div
-                                                        onClick={() => {
-                                                          changeColor5();
-                                                          switchColor6();
-                                                        }}
+                              onClick={handleClick4}
+                                                        // onClick={() => {
+                                                          // changeColor1();
+                                                          // switchColor2();
+                                                        // }}
                             
                             className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
          h-[23px] justify-center md:h-[40px] lg:h-[41px]
         items-center gap-1.5 flex"
                           >
                             <div className="MarkAsRead text-zinc-500 text-[8px] md:text-xs font-normal lg:text-sm whitespace-nowrap ">
-                              Mark as Read
+                              Mark as unread
                             </div>
+                            
                           </div>
+                          
+                          ) : (
+                          <div
+                              onClick={handleClick4}
+                                                        // onClick={() => {
+                                                          // changeColor1();
+                                                          // switchColor2();
+                                                        // }}
+                            
+                            className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
+         h-[23px] justify-center md:h-[40px] lg:h-[41px]
+        items-center gap-1.5 flex"
+                          >
+                            <div className="MarkAsRead text-zinc-500 text-[8px] md:text-xs font-normal lg:text-sm whitespace-nowrap ">
+                              Mark as read
+                            </div>
+                            
+                          </div>
+                          )}
+
+
                           <div
                           onClick={openModal}
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
@@ -1643,7 +1846,7 @@ items-end  "
 
                       <div
                         className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
-               bg-red-400 rounded-full ${Color6}`}
+               bg-red-400 rounded-full ${isRead4 ? 'bg-white' : 'bg-red-400'}`}
                       />
                     </div>
                   </div>
