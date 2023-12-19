@@ -760,7 +760,8 @@ const AirtelDataBundle = () => {
                   toggleSideBar
                     ? "confirm01"
                     : "confirm"
-                } grow pt-[10px] pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:overflow-auto`}
+                } grow pt-[10px] pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative 
+                md:rounded-[11.5px] md:mx-auto md:my-auto md:overflow-auto`}
               >
                 <div className="w-full flex justify-end border-b-[6px] border-primary px-[12px] md:h-[25px] lg:border-b-[10px] lg:mt-[20px]">
                   <img
