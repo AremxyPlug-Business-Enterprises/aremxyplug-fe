@@ -242,9 +242,28 @@ export default function NotificationsPage() {
   const [isOpen5, setIsOpen5] = useState(false);
   const [isOpen10, setIsOpen10] = useState(false);
   const [isOpen11, setIsOpen11] = useState(false);
-  // const [isOpen13, setIsOpen13] = useState(true);
-  // const [isOpen14, setIsOpen14] = useState(true);
-  // const [isOpen15, setIsOpen15] = useState(true);
+  const [isOpen12, setIsOpen12] = useState(false);
+  const [isOpen13, setIsOpen13] = useState(false);
+  const [isOpen14, setIsOpen14] = useState(false);
+  const [isOpen15, setIsOpen15] = useState(false);
+  const [isOpen16, setIsOpen16] = useState(false);
+  const [isOpen17, setIsOpen17] = useState(false);
+  const [isOpen18, setIsOpen18] = useState(false);
+  const [isOpen19, setIsOpen19] = useState(false);
+  const [isOpen20, setIsOpen20] = useState(false);
+  const [isOpen21, setIsOpen21] = useState(false);
+
+
+
+
+
+
+
+
+
+
+
+  
 
   
 
@@ -364,31 +383,95 @@ export default function NotificationsPage() {
     setBackgroundColor15("bg-white") 
   };
 
-  // const [activeBtn, setActiveBtn] = useState([true, false]);
-  // const [activeIndex, setActiveIndex] = useState(0);
-// 
-  // const handleClick = (index) => {
-    // const clickedBtn = activeBtn.map((isActive, i) => i === index);
-    // setActiveBtn(clickedBtn);
-    // setActiveIndex(index);
-  // };
-// 
-  // const resetActiveButton = () => {
-    // hidePopup();
-    // handleClick(0);
-  // };
-  // const hidePopup = () => {
-    // setPopupVisible(false);
-  // };
-  // const showPopup = () => {
-    // setPopupVisible(true);
-  // };
-  // const [popupVisible, setPopupVisible] = useState(false);
+  const [isModalOpen1, setIsModalOpen1] = useState(false);
+  const [showSuccessMessage1, setShowSuccessMessage1] = useState(false);
+
+
+  const openModal1 = () => {
+    setIsModalOpen1(true);
+  };
+
+  const closeModal1 = () => {
+    setIsModalOpen1(false);
+  };
+
+      const handleDelete1 = () => {
+      setFinalDelete(false);
+      setFinalDelete1(false);
+      setFinalDelete2(false);
+      setFinalDelete3(false);
+      setFinalDelete4(false);
+      setFinalDelete5(false);
+      setFinalDelete6(false);
+
+
+      setIsModalOpen1(false); // Close the modal immediately
+      setShowSuccessMessage1(true);
+      
+    };
+
+    const [isModalOpen2, setIsModalOpen2] = useState(false);
+    const [showSuccessMessage2, setShowSuccessMessage2] = useState(false);
+          
+          const [deleteAll, setDeleteAll ] = useState(true);
+
+  
+  
+    const openModal2 = () => {
+      setIsModalOpen2(true);
+    };
+  
+    const closeModal2 = () => {
+      setIsModalOpen2(false);
+    };
+  
+        const handleDelete2 = () => {
+          setDeleteAll(false)
+  
+  
+        setIsModalOpen2(false); // Close the modal immediately
+        setShowSuccessMessage2(true);
+      };
+
+      const [isModalOpen3, setIsModalOpen3] = useState(false);
+      const [showSuccessMessage3, setShowSuccessMessage3] = useState(false);
+            
+            const [deleteAll1, setDeleteAll1 ] = useState(true);
+  
+    
+    
+      const openModal3 = () => {
+        setIsModalOpen3(true);
+      };
+    
+      const closeModal3 = () => {
+        setIsModalOpen3(false);
+      };
+    
+          const handleDelete3 = () => {
+            setDeleteAll1(false)
+    
+    
+          setIsModalOpen3(false); // Close the modal immediately
+          setShowSuccessMessage3(true);
+        };
+  
+  
+
+
+
 
   
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-    // const {finalDelete, setFinalDelete} = useState(true);
+    const [finalDelete, setFinalDelete] = useState(true);
+    const [finalDelete1, setFinalDelete1] = useState(true);
+    const [finalDelete2, setFinalDelete2] = useState(true);
+    const [finalDelete3, setFinalDelete3] = useState(true);
+    const [finalDelete4, setFinalDelete4] = useState(true);
+    const [finalDelete5, setFinalDelete5] = useState(true);
+    const [finalDelete6, setFinalDelete6] = useState(true);
+
   
     const openModal = () => {
       setIsModalOpen(true);
@@ -398,23 +481,40 @@ export default function NotificationsPage() {
       setIsModalOpen(false);
     };
   
-    const handleDelete = () => {
-      // setFinalDelete(false)
+    // const handleDelete = () => {
+      // setFinalDelete(false);
+      // setFinalDelete1(false);
+      // setFinalDelete2(false);
+      // setFinalDelete3(false);
+      // setFinalDelete4(false);
+      // setFinalDelete5(false);
+      const handleDelete = (deleteType) => {
+        if (deleteType === 'finalDelete') {
+          setFinalDelete(false);
+          setFinalDelete1(true); 
+          setFinalDelete2(true);
+          setFinalDelete3(true);
+          setFinalDelete4(true);
+          setFinalDelete5(true);
+    // Ensure finalDelete1 is true if finalDelete is set to false
+        } else if (deleteType === 'finalDelete1') {
+          setFinalDelete1(false);
+          setFinalDelete(true); 
+          setFinalDelete2(true);
+          setFinalDelete3(true);
+          setFinalDelete4(true);
+          setFinalDelete5(true);
+// Ensure finalDelete is true if finalDelete1 is set to false
+        }
       setIsModalOpen(false); // Close the modal immediately
       setShowSuccessMessage(true);
     };
 
-    // Reset the success message after a delay
-    // useEffect(() => {
-      // let timeout;
-      // if (showSuccessMessage) {
-        // timeout = setTimeout(() => {
-          // setShowSuccessMessage(false);
-        // }, 2000); // Adjust the delay time (in milliseconds) as needed
-      // };
-    // 
-      // return () => clearTimeout(timeout);
-    // }, [showSuccessMessage]);
+    const [showPicture, setShowPicture] = useState(false);
+    const [showPicture1, setShowPicture1] = useState(false);
+    const [showPicture2, setShowPicture2] = useState(false);
+
+   
 
   
   return (
@@ -624,9 +724,9 @@ export default function NotificationsPage() {
 items-end  "
                 >
                   <div
-                    className="flex flex-col lg:w-[187px]  cursor-pointer items-start lg:gap-[10px] lg:p-[8px]
+                    className="flex flex-col lg:w-[187px] cursor-pointer items-start lg:gap-[10px] lg:p-[8px]
               bg-white border-neutral-400
-             lg:rounded-[6px] lg:border-[0.2px] border-solid p-1 w-24 md:w-[120px]   border shadow rounded gap-1.5 lg:shadow-[0px_0px_1px_#00000040]"
+             lg:rounded-[6px] lg:border-[0.2px] border-solid p-1 w-24 md:w-[120px] border shadow rounded gap-1.5 lg:shadow-[0px_0px_1px_#00000040]"
                   >
                     <div
                     id="colorReset"
@@ -652,6 +752,7 @@ items-end  "
                     </div>
                   </div>
                   <div
+                  onClick={openModal1}
                     className="flex items-center lg:gap-[14px] cursor-pointer    lg:p-[8px]
               flex-[0_0_auto] bg-white lg:rounded-[6px]  border-red-500 
                lg:border-[0.2px] border-solid border-variable-collection- text-danger p-1
@@ -673,8 +774,9 @@ items-end  "
 
 {/* child */}
 <div className="flex flex-col lg:gap-7 gap-3 md:gap-5">
-{/* {finalDelete && ( */}
+{finalDelete && (
                 <div
+                
                 id="colorReset"
                   className={`flex justify-between  items-center w-full 
                   border-b lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md
@@ -687,9 +789,9 @@ items-end  "
                     </div>
 
                     <p className="font-bold text-zinc-500 text-color-fade md:text-xs text-[8px] lg:text-lg whitespace-nowrap tracking-[0] leading-[normal]">
-                      We are excited to lunch our global platform for all things
+                      We are excited to lunch our global platform for all things<br />
                       telecom,
-                      <br /> payments, and Digital services.
+                       payments, and Digital services.
                     </p>
                     <p className="font-medium text-[#9c9c9c] md:text-xs md:font-medium text-[6px] lg:text-xs tracking-[0.09px] leading-[normal]">
                       August 10th, 2023 12 :00:00am
@@ -702,7 +804,7 @@ items-end  "
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between ">
                     <div className="flex flex-col">
                       <img
-                        className="lg:w-[150px] lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
+                        className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
                    flex justify-center 
                    md:h-[100px]"
                         src={faq}
@@ -711,8 +813,9 @@ items-end  "
 
                       {isOpen6 && (
                         <div
-                          className="Frame758532672 w-[100px] md:w-[180px] lg:w-[190px] mt-[-38px] md:mt-[-80px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] z-50 shadow flex-col lg:mt-[-85px]
+                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px]
+                           top-[50px] md:top-[75px] 
+                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[125px]
                justify-start items-start flex"
                         >
                           <div
@@ -729,10 +832,7 @@ items-end  "
                             </div>
                           </div>
                           <div
-                          //  onClick={() => {
-                            // handleClick(1)
-                            // showPopup();
-                          // }}
+                        
                           onClick={openModal}
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
           justify-center items-center gap-1.5 flex"
@@ -754,7 +854,7 @@ items-end  "
                           setIsOpen10(false);
                           setIsOpen11(false);
                         }}
-                        className="Frame758532418 cursor-pointer  flex-col justify-center items-start gap-0.5 flex"
+                        className="Frame758532418 relative cursor-pointer  flex-col justify-center items-start gap-0.5 flex"
                       >
                         <div className="Ellipse141 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
                         <div className="Ellipse142 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
@@ -762,14 +862,14 @@ items-end  "
                       </div>
 
                       <div
-                        className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
+                        className={`Ellipse147 w-1.5 h-1.5 relative md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
                bg-red-400 rounded-full ${Color1}`}
                       />
                     </div>
                   </div>
 
                 </div>
-{/* )} */}
+)}
                 {isModalOpen && (
                 <WalletModal>
                   
@@ -793,15 +893,36 @@ items-end  "
                   />
                 </div>
               </div>
-              <div className="mt-[40px] justify-center items-center flex gap-[3px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
+              {/* desktop and tab view */}
+              <div className="mt-[40px] justify-center hidden items-center  lg:flex gap-[3px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
                 <button
                   className={` ${
                     isDarkMode ? "border" : "bg-[#04177f] "
-                  } cursor-pointer text-white text-[10px] h-[40px]  lg:rounded-xl lg:w-40 lg:h-9 lg:px-3.5 lg:py-2.5 
+                  } cursor-pointer text-white text-[10px] h-[25px] w-[15%] lg:rounded-xl lg:w-40 lg:h-9 lg:px-3.5 lg:py-2.5 
                   rounded-[5px]
                    md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] 
                    lg:my-[3%]  lg:text-[20px]  lg:mx-auto`}
-                   onClick={handleDelete}
+                  //  onClick={handleDelete}
+                  //  onClick={() => handleDelete('finalDelete')}
+                  //  onClick={() => handleDelete('finalDelete1')}
+
+
+                   onClick={() => {
+                    handleDelete('finalDelete')
+                    handleDelete('finalDelete1')
+                    handleDelete('finalDelete2')
+                    handleDelete('finalDelete3')
+                    handleDelete('finalDelete4')
+                    handleDelete('finalDelete5')
+
+
+
+
+                    
+                    
+                  }}
+
+                   
                 >
                   Yes
                 </button>
@@ -809,15 +930,21 @@ items-end  "
 
                 
                 <button 
-                // onClick={resetActiveButton}
-                        // handleClick={activeIndex}
+            
                         onClick={closeModal}
- className="Frame1469 cursor-pointer  w-40 h-9 px-3.5 py-2.5 rounded-xl border border-red-600 
+ className="Frame1469 cursor-pointer w-15  lg:w-40 lg:h-9 h-6 px-3.5 py-2.5 rounded-lg lg:rounded-xl border border-red-600 
                 justify-center items-center gap-2.5 flex">
-    <div  className="Cancel text-red-500 text-base font-semibold ">Cancel</div>
+    <div  className="Cancel text-red-500 lg:text-base text-xs font-semibold ">Cancel</div>
 
                 </button>
               </div>
+
+              <button
+              onClick={closeModal}
+              className="Frame1468 md:block ml-8 mt-5 w-56 h-10 px-1 py-0.5 bg-blue-950 rounded
+               justify-center items-center flex">
+    <div className="Verify text-white text-xs font-semibold">Verify</div>
+</button>
               </WalletModal>
                 )}
 
@@ -833,16 +960,10 @@ items-end  "
                     <p className="text-[10px] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[18px] lg:pt-[3%]">
                     Notification has been deleted successfully.
                     </p>
-                    {/* <p className="text-[10px] md:text-[16px] font-[600] text-[#04177F] lg:text-[16px]"> */}
-                      {/* This Feature is Currently Not Available. */}
-                    {/* </p> */}
                   </div>
                 </div>
               </div>
               <div className="mt-[40px] justify-center items-center flex gap-[3px] pb-[5%] 2xl:mt-[1%] lg:mt-[300px] md:mt-[5%] md:pr-[10px]">
-                {/* <p className="text-[8px] font-extrabold text-end float-right ml-[60%] md:ml-[70%] md:text-[12px] mt-[10px] lg:text-[13px] 2xl:text-[15px]"> */}
-                  {/* Coming Soon... */}
-                {/* </p> */}
                 <button
                   className={` ${
                     isDarkMode ? "border" : "bg-[#04177f] "
@@ -851,7 +972,10 @@ items-end  "
                    md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] 
                    lg:my-[3%]  lg:text-[20px]  lg:mx-auto`}
                    onClick={() => setShowSuccessMessage(false)}
-                >
+                  
+                  
+                   
+          >
                   Done
                 </button>
 
@@ -860,8 +984,7 @@ items-end  "
               </div>
               </WalletModal>
 )}
-
-            
+       
                                   {/* pop-up */}
                                   {/* <div className="absolute w-full z-50 h-[465px] bg-red-200 rounded-[20px] top-[-40px]  */}
                                   {/* // flex justify-center items-center "> */}
@@ -892,7 +1015,163 @@ items-end  "
           {/*  */}
                 {/* </div> */}
 
+                {isModalOpen1 && (
+                <WalletModal>
+                  
+                <div className="text-center flex justify-center item-center md:mt-[-20px] lg:mt-[15px] 
+                2xl:mt-[-15px]">
+                <div
+                  className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
+                    flex flex-col justify-center z-[100] lg:ml-[10px] md:w-full`}>
+                      <img 
+                      onClick={closeModal1}
+                      className=" w-[25px] h-[25px] inline-flex justify-end items-end"  src={VuesaxBoldEye} alt=""/>
+                  <div className="w-full lg:h-[22px] md:h-[15px] h-[10px] bg-[#04177f]" />
+                  <div>
+                    <p className="text-[10px] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[25px]
+                     lg:pt-[3%]">
+                    Are you sure you want to delete all Notifications?
+                    </p>
+                  </div>
+                  <img
+                    src={deletingfiles}
+                    alt=""
+                    className="img mx-auto mt-[30px] md:mt-[15%] md:w-[220px] md:mx-[100px] w-[143px]
+                     h-[67px] lg:w-[300px] lg:h-[200px] md:h-[90px] md:ml-[-150px] lg:mx-[150px] lg:mt-[10%] 2xl:mt-[10%]
+                      2xl:mx-[180px]"
+                  />
+                </div>
+              </div>
 
+              {/* desktop and tab view */}
+              <div className="mt-[40px] hidden md:flex justify-center items-center lg:flex gap-[3px] md:gap-[2px]
+               pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px] ">
+                <button
+                  className={` ${
+                    isDarkMode ? "border" : "bg-[#04177f] "
+                  } cursor-pointer text-white text-[10px] h-[40px]  lg:rounded-xl lg:w-40 lg:h-9 lg:px-3.5 lg:py-2.5 
+                  rounded-[5px]
+                   md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] 
+                   lg:my-[3%]  lg:text-[20px]  lg:mx-auto`}
+                  //  onClick={handleDelete}
+                  //  onClick={() => handleDelete('finalDelete')}
+                  //  onClick={() => handleDelete('finalDelete1')}
+
+
+                   onClick={() => {
+                    handleDelete1('finalDelete')
+                    handleDelete1('finalDelete1')
+                    handleDelete1('finalDelete2')
+                    handleDelete1('finalDelete3')
+                    handleDelete1('finalDelete4')
+                    handleDelete1('finalDelete5')
+                    handleDelete1('finalDelete6')
+
+
+
+                    
+                    
+                  }}
+
+                   
+                >
+                  Yes
+                </button>
+
+
+                
+                <button 
+                      onClick={closeModal1}
+            
+ className="Frame1469 cursor-pointer md:w-[100px] md:ml-[100px]  lg:w-40 lg:h-9 px-3.5 py-2.5 md:h-7 rounded-xl border border-red-600 
+                justify-center items-center gap-2.5 flex">
+    <div  className="Cancel text-red-500 text-base font-semibold ">Cancel</div>
+
+                </button>
+              </div>
+
+              {/* mobile view */}
+              <button
+                                           onClick={() => {
+                                            handleDelete1('finalDelete')
+                                            handleDelete1('finalDelete1')
+                                            handleDelete1('finalDelete2')
+                                            handleDelete1('finalDelete3')
+                                            handleDelete1('finalDelete4')
+                                            handleDelete1('finalDelete5')
+                                            handleDelete1('finalDelete6')
+                                           }}         
+              
+              className="Frame1468 w-56 lg:hidden md:hidden mt-5 ml-7 h-10 px-1 py-0.5 bg-blue-950 rounded justify-center items-center gap-0.5 inline-flex">
+    <div className="Verify text-white text-xs font-semibold">Verify</div>
+</button>
+              </WalletModal>
+                )}
+
+{showSuccessMessage1 && (
+                                <WalletModal>
+                <div className="text-center flex justify-center item-center md:mt-[-20px] lg:mt-[15px] 2xl:mt-[-15px]">
+                <div
+                  className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
+                    flex flex-col justify-center z-[100] lg:ml-[10px] md:w-full`}>
+                      <img
+                      onClick={closeModal1}
+                      
+                      className=" w-[25px] h-[25px] inline-flex justify-end items-end"  src={VuesaxBoldEye} alt=""/>
+                  <div className="w-full h-[22px]  bg-[#04177f]" />
+                  <div>
+                    <p className="text-[10px] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[18px] lg:pt-[3%]">
+                    Notifications has been deleted successfully.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-[40px] justify-center hidden items-center lg:flex md:flex gap-[3px] pb-[5%]
+               2xl:mt-[1%] lg:mt-[300px] md:mt-[55%] md:pr-[10px]">
+                <button
+                  className={` ${
+                    isDarkMode ? "border" : "bg-[#04177f] "
+                  } cursor-pointer text-white text-[10px] h-[40px]  lg:rounded-xl lg:w-40 lg:h-9 lg:px-3.5 lg:py-2.5 
+                  rounded-[5px]
+                   md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] 
+                   lg:my-[3%]  lg:text-[20px]  lg:mx-auto`}
+                   onClick={() => {
+                    setShowSuccessMessage1(false);
+                    setShowPicture(true);
+                  }}
+
+                >
+                  Done
+                </button>
+
+
+                
+              </div>
+              <div className="Frame758532352 md:hidden lg:hidden w-56 h-10 mt-[130px] ml-10 justify-center items-center gap-1 flex">
+    <button
+                       onClick={() => {
+                        setShowSuccessMessage1(false);
+                        setShowPicture(true);
+                      }}
+    
+    className="Frame1468 w-28 h-10 px-1 py-0.5 bg-blue-900 rounded justify-center items-center gap-0.5 flex">
+        <div className="Yes text-white text-xs font-semibold ">Yes</div>
+    </button>
+    <button
+                      onClick={closeModal1}
+    
+    className="Frame1469 w-28 h-10 px-2 py-1.5 bg-white rounded justify-center items-center gap-1.5 flex">
+        <div className="Cancel w-11 h-4 text-red-500 text-xs font-semibold ">Cancel
+      
+        </div>
+    </button>
+</div>
+              </WalletModal>
+)}
+
+
+                
+{ finalDelete1 && (
                 <div
                   className={` flex w-full justify-between items-center lg:h-[230px] h-[100px] md:h-[150px]
                    lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow   border-b  border-[#d9d9d999] ${backgroundColor1} `}
@@ -905,9 +1184,8 @@ items-end  "
                     </div>
 
                     <p className="font-bold text-text-color-fade  text-zinc-500 md:text-xs text-[8px] whitespace-nowrap lg:text-lg tracking-[0] leading-[normal]">
-                      We are excited to lunch our global platform for all things
-                      telecom,
-                      <br /> payments, and Digital services.
+                      We are excited to lunch our global platform for all things<br />
+                      telecom, payments, and Digital services.
                     </p>
                     <p className="font-medium text-[#9c9c9c] md:text-xs md:font-medium text-[6px] lg:text-xs tracking-[0.09px] leading-[normal]">
                       August 10th, 2023 12 :00:00am
@@ -920,7 +1198,7 @@ items-end  "
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
-                        className="lg:w-[150px] lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
+                        className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
                    flex justify-center 
                    md:h-[100px]"
                         src={faq}
@@ -928,8 +1206,9 @@ items-end  "
                       />
                       {isOpen7 && (
                         <div
-                          className="Frame758532672 w-[100px] md:w-[180px] lg:w-[190px] mt-[-38px] md:mt-[-80px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] z-50 shadow flex-col lg:mt-[-85px]
+                          className="Frame758532672 w-[100px] absolute md:w-[180px] lg:w-[190px] top-[160px]
+                           md:top-[245px] 
+                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[370px]
                justify-start items-start flex"
                         >
                           <div
@@ -947,6 +1226,7 @@ items-end  "
                             </div>
                           </div>
                           <div
+                           onClick={openModal}
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
           justify-center items-center gap-1.5 flex"
                           >
@@ -957,7 +1237,7 @@ items-end  "
                         </div>
                       )}
                     </div>
-                    <div className="flex justify-end cursor-pointer items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
+                    <div className="flex justify-end cursor-pointer  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
                       <div
                         onClick={() => {
                           setIsOpen7((prev) => !prev);
@@ -975,17 +1255,17 @@ items-end  "
                       </div>
 
                       <div
-                        className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
+                        className={`Ellipse147  w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
                bg-red-400 rounded-full ${Color2}`}
                       />
                     </div>
                   </div>
                 </div>
-              
+              )}
 
 
   
-
+{ finalDelete2 && (
                 <div
                   className={`flex  border-b  lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow   border-[#d9d9d999] ${backgroundColor2} w-full justify-between 
                   items-center `}
@@ -998,9 +1278,9 @@ items-end  "
                     </div>
 
                     <p className="font-bold text-text-color-fade md:text-xs text-zinc-500 text-[8px] lg:text-lg tracking-[0] whitespace-nowrap leading-[normal]">
-                      We are excited to lunch our global platform for all things
+                      We are excited to lunch our global platform for all things<br />
                       telecom,
-                      <br /> payments, and Digital services.
+                       payments, and Digital services.
                     </p>
                     <p className="font-medium text-[#9c9c9c] md:text-xs md:font-medium text-[6px] lg:text-xs tracking-[0.09px] leading-[normal]">
                       August 10th, 2023 12 :00:00am
@@ -1013,7 +1293,7 @@ items-end  "
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
-                        className="lg:w-[150px] lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
+                        className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
                    flex justify-center 
                    md:h-[100px]"
                         src={faq}
@@ -1022,8 +1302,8 @@ items-end  "
 
                       {isOpen8 && (
                         <div
-                          className="Frame758532672 w-[100px] md:w-[180px] lg:w-[190px] mt-[-38px] md:mt-[-80px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] z-50 shadow flex-col lg:mt-[-85px]
+                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] top-[270px] md:top-[410px] 
+                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[630px]
                justify-start items-start flex"
                         >
                           <div
@@ -1041,7 +1321,7 @@ items-end  "
                             </div>
                           </div>
                           <div
-                          
+                          onClick={openModal}
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
           justify-center items-center gap-1.5 flex"
                           >
@@ -1076,12 +1356,12 @@ items-end  "
                     </div>
                   </div>
                 </div>
-                
+)}        
 
 
 
   
-
+{ finalDelete3 && (
                 <div
                   className={`flex border-b lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow  border-[#d9d9d999] ${backgroundColor3} w-full justify-between
                    items-center`}
@@ -1094,9 +1374,9 @@ items-end  "
                     </div>
 
                     <p className="font-bold text-text-color-fade md:text-xs text-zinc-500 whitespace-nowrap text-[8px] lg:text-lg tracking-[0] leading-[normal]">
-                      We are excited to lunch our global platform for all things
+                      We are excited to lunch our global platform for all things<br />
                       telecom,
-                      <br /> payments, and Digital services.
+                       payments, and Digital services.
                     </p>
                     <p className="font-medium text-[#9c9c9c] md:text-xs md:font-medium text-[6px] lg:text-xs tracking-[0.09px] leading-[normal]">
                       August 10th, 2023 12 :00:00am
@@ -1109,7 +1389,7 @@ items-end  "
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
-                        className="lg:w-[150px] lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
+                        className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
                    flex justify-center 
                    md:h-[100px]"
                         src={faq}
@@ -1118,8 +1398,9 @@ items-end  "
 
                       {isOpen9 && (
                         <div
-                          className="Frame758532672 w-[100px] md:w-[180px] lg:w-[190px] mt-[-38px] md:mt-[-80px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] z-50 shadow flex-col lg:mt-[-85px]
+                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px]
+                           top-[385px] md:top-[580px] 
+                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[895px]
                justify-start items-start flex"
                         >
                           <div
@@ -1137,7 +1418,7 @@ items-end  "
                             </div>
                           </div>
                           <div
-                          
+                          onClick={openModal}
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
           justify-center items-center gap-1.5 flex"
                           >
@@ -1172,12 +1453,12 @@ items-end  "
                     </div>
                   </div>
                 </div>
-                
+)}             
 
 
 
   
-
+{ finalDelete4 && (
                 <div
                   className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow   border-b  border-[#d9d9d999] ${backgroundColor4} w-full justify-between
                    items-center`}
@@ -1190,9 +1471,9 @@ items-end  "
                     </div>
 
                     <p className="font-bold text-text-color-fade md:text-xs text-zinc-500 text-[8px] whitespace-nowrap lg:text-lg tracking-[0] leading-[normal]">
-                      We are excited to lunch our global platform for all things
+                      We are excited to lunch our global platform for all things<br />
                       telecom,
-                      <br /> payments, and Digital services.
+                       payments, and Digital services.
                     </p>
                     <p className="font-medium text-[#9c9c9c] md:text-xs md:font-medium text-[6px] lg:text-xs tracking-[0.09px] leading-[normal]">
                       August 10th, 2023 12 :00:00am
@@ -1205,7 +1486,7 @@ items-end  "
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
-                        className="lg:w-[150px] lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
+                        className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
                    flex justify-center 
                    md:h-[100px]"
                         src={faq}
@@ -1214,8 +1495,9 @@ items-end  "
 
                       {isOpen10 && (
                         <div
-                          className="Frame758532672 w-[100px] md:w-[180px] lg:w-[190px] mt-[-38px] md:mt-[-80px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] z-50 shadow flex-col lg:mt-[-85px]
+                          className="Frame758532672 w-[100px] absolute md:w-[180px] lg:w-[190px] top-[495px]
+                           md:top-[750px] 
+                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px]  shadow flex-col lg:top-[1155px]
                justify-start items-start flex"
                         >
                           <div
@@ -1233,7 +1515,7 @@ items-end  "
                             </div>
                           </div>
                           <div
-                          
+                          onClick={openModal}
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
           justify-center items-center gap-1.5 flex"
                           >
@@ -1244,7 +1526,8 @@ items-end  "
                         </div>
                       )}
                     </div>
-                    <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
+                    <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] 
+                    flex-col-reverse">
                       <div
                         onClick={() => {
                           setIsOpen10((prev) => !prev);
@@ -1268,12 +1551,12 @@ items-end  "
                     </div>
                   </div>
                 </div>
-                
+)}             
 
 
 
   
-
+{ finalDelete5 && (
                 <div
                   className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${backgroundColor5} w-full justify-between
                    items-center`}
@@ -1286,9 +1569,9 @@ items-end  "
                     </div>
 
                     <p className="font-bold text-text-color-fade md:text-xs  text-zinc-500 text-[8px] whitespace-nowrap lg:text-lg tracking-[0] leading-[normal]">
-                      We are excited to lunch our global platform for all things
+                      We are excited to lunch our global platform for all things<br />
                       telecom,
-                      <br /> payments, and Digital services.
+                       payments, and Digital services.
                     </p>
                     <p className="font-medium text-[#9c9c9c] md:text-xs md:font-medium text-[6px] lg:text-xs tracking-[0.09px] leading-[normal]">
                       August 10th, 2023 12 :00:00am
@@ -1301,7 +1584,7 @@ items-end  "
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
-                        className="lg:w-[150px] lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
+                        className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
                    flex justify-center 
                    md:h-[100px]"
                         src={faq}
@@ -1310,8 +1593,9 @@ items-end  "
 
                       {isOpen11 && (
                         <div
-                          className="Frame758532672 w-[100px] md:w-[180px] lg:w-[190px] mt-[-38px] md:mt-[-80px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] z-50 shadow flex-col lg:mt-[-85px]
+                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] top-[610px]
+                           md:top-[920px] 
+                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[1415px]
                justify-start items-start flex"
                         >
                           <div
@@ -1329,7 +1613,7 @@ items-end  "
                             </div>
                           </div>
                           <div
-                          
+                          onClick={openModal}
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
           justify-center items-center gap-1.5 flex"
                           >
@@ -1364,8 +1648,8 @@ items-end  "
                     </div>
                   </div>
                 </div>
-
-    
+)}
+    {finalDelete6 && (
                 <div className="flex gap-[15px] mt-[150px] lg:mt-[300px] mb-10 md:mt-[200px] justify-center items-center">
                   <div className="text-xs font-medium ">You need help ?</div>
                   <Link to="/ContactUs">
@@ -1378,6 +1662,36 @@ items-end  "
                     </div>
                   </Link>
                 </div>
+)}
+
+{showPicture && (
+<div className={`${styles.viewTransactions} mt-[50px] `}>
+                <img
+                  className={styles.noTransactions}
+                  src="./Images/Dashboardimages/noTransactionFound.png"
+                  alt=""
+                />
+                <div
+                  className={`${
+                    isDarkMode ? "" : "text-[#0003]"
+                  } text-lg   text-opacity-30 mt-[-20px] lg:text-2xl  font-semibold `}
+                >
+                  No Notification Found !
+                </div>
+                <div className="flex gap-[15px] mt-[390px] lg:mt-[1050px] lg:mb-10 mb-5 md:mt-[700px] items-center">
+                  <div className="text-xs font-medium ">You need help ?</div>
+                  <Link to="/ContactUs">
+                    <div
+                      className={`${isDarkMode ? "border " : "bg-[#04177f]"} ${
+                        styles.contactus
+                      }`}
+                    >
+                      Contact Us
+                    </div>
+                  </Link>
+                </div>
+              </div>
+)}
 
               </div>
               </div>
@@ -1417,6 +1731,7 @@ items-end  "
                     </div>
                   </div>
                   <div
+                  onClick={openModal2}
                     className="flex items-center lg:gap-[14px] cursor-pointer    lg:p-[8px]
               flex-[0_0_auto] bg-white lg:rounded-[6px]  border-red-500 
                lg:border-[0.2px] border-solid border-variable-collection- text-danger p-1
@@ -1436,6 +1751,160 @@ items-end  "
                   </div>
                 </div>
 
+                {isModalOpen2 && (
+                <WalletModal>
+                  
+                <div className="text-center flex justify-center item-center md:mt-[-20px] lg:mt-[15px] 2xl:mt-[-15px]">
+                <div
+                  className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
+                    flex flex-col justify-center z-[100] lg:ml-[10px] md:w-full`}>
+                      <img 
+                      onClick={closeModal2}
+                      className=" w-[25px] h-[25px] inline-flex justify-end items-end"  src={VuesaxBoldEye} alt=""/>
+                  <div className="w-full h-[22px]  bg-[#04177f]" />
+                  <div>
+                    <p className="text-[10px] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[3%]">
+                    Are you sure you want to delete all Notifications?
+                    </p>
+                  </div>
+                  <img
+                    src={deletingfiles}
+                    alt=""
+                    className="img mx-auto mt-[30px] md:mt-[15%] md:w-[220px] md:mx-[100px] w-[143px] h-[67px] lg:w-[300px] lg:h-[200px] lg:mx-[150px] lg:mt-[10%] 2xl:mt-[10%] 2xl:mx-[180px]"
+                  />
+                </div>
+              </div>
+              <div className="mt-[40px] justify-center hidden  items-center lg:flex md:flex gap-[3px] pb-[5%]
+               2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
+                <button
+                  className={` ${
+                    isDarkMode ? "border" : "bg-[#04177f] "
+                  } cursor-pointer text-white text-[10px] h-[40px]  lg:rounded-xl lg:w-40 lg:h-9 lg:px-3.5 lg:py-2.5 
+                  rounded-[5px]
+                   md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] 
+                   lg:my-[3%]  lg:text-[20px]  lg:mx-auto`}
+                  //  onClick={handleDelete}
+                  //  onClick={() => handleDelete('finalDelete')}
+                  //  onClick={() => handleDelete('finalDelete1')}
+
+
+                   onClick={() => {
+                    handleDelete2('finalDelete')
+                    handleDelete2('finalDelete1')
+                    handleDelete2('finalDelete2')
+                    handleDelete2('finalDelete3')
+                    handleDelete2('finalDelete4')
+                    handleDelete2('finalDelete5')
+                    handleDelete2('finalDelete6')
+                    handleDelete2('deleteAll')              
+
+
+
+
+                    
+                    
+                  }}
+
+                   
+                >
+                  Yes
+                </button>
+
+
+                
+                <button 
+            
+                        onClick={closeModal2}
+ className="Frame1469 cursor-pointer  w-40 h-9 px-3.5 py-2.5 rounded-xl border border-red-600 
+                justify-center items-center gap-2.5 flex">
+    <div  className="Cancel text-red-500 text-base font-semibold ">Cancel</div>
+
+                </button>
+
+              </div>
+              <button
+                                           onClick={() => {
+                                            handleDelete2('finalDelete')
+                                            handleDelete2('finalDelete1')
+                                            handleDelete2('finalDelete2')
+                                            handleDelete2('finalDelete3')
+                                            handleDelete2('finalDelete4')
+                                            handleDelete2('finalDelete5')
+                                            handleDelete2('finalDelete6')
+                    handleDelete2('deleteAll')              
+
+                                           }}         
+              
+              className="Frame1468 w-56 lg:hidden md:hidden mt-5 ml-7 h-10 px-1 py-0.5 bg-blue-950 rounded justify-center items-center gap-0.5 flex">
+    <div className="Verify text-white text-xs font-semibold">Verify</div>
+</button>
+
+              </WalletModal>
+                )}
+
+{showSuccessMessage2 && (
+                                <WalletModal>
+                <div className="text-center flex justify-center item-center md:mt-[-20px] lg:mt-[15px] 2xl:mt-[-15px]">
+                <div
+                  className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
+                    flex flex-col justify-center z-[100] lg:ml-[10px] md:w-full`}>
+                      <img className=" w-[25px] h-[25px] inline-flex justify-end items-end"  src={VuesaxBoldEye} alt=""/>
+                  <div className="w-full h-[22px]  bg-[#04177f]" />
+                  <div>
+                    <p className="text-[10px] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[18px] lg:pt-[3%]">
+                    Notifications has been deleted successfully.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-[40px] justify-center hidden items-center lg:flex md:flex gap-[3px] pb-[5%]
+               2xl:mt-[1%] lg:mt-[300px] md:mt-[55%] md:pr-[10px]">
+                <button
+                  className={` ${
+                    isDarkMode ? "border" : "bg-[#04177f] "
+                  } cursor-pointer text-white text-[10px] h-[40px]  lg:rounded-xl lg:w-40 lg:h-9 lg:px-3.5 lg:py-2.5 
+                  rounded-[5px]
+                   md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] 
+                   lg:my-[3%]  lg:text-[20px]  lg:mx-auto`}
+                   onClick={() => {
+                    setShowSuccessMessage2(false);
+                    setShowPicture1(true);
+                  }}
+
+                >
+                  Done
+                </button>
+
+
+                
+              </div>
+
+              <div className="Frame758532352 md:hidden lg:hidden w-56 h-10 mt-[130px] ml-10 justify-center items-center gap-1 flex">
+    <button
+                       onClick={() => {
+                        setShowSuccessMessage2(false);
+                        setShowPicture1(true);
+                      }}
+    
+    className="Frame1468 w-28 h-10 px-1 py-0.5 bg-blue-900 rounded justify-center items-center gap-0.5 flex">
+        <div className="Yes text-white text-xs font-semibold ">Yes</div>
+    </button>
+    <button
+                      onClick={closeModal2}
+    
+    className="Frame1469 w-28 h-10 px-2 py-1.5 bg-white rounded justify-center items-center gap-1.5 flex">
+        <div className="Cancel w-11 h-4 text-red-500 text-xs font-semibold ">Cancel
+      
+        </div>
+    </button>
+</div>
+
+              </WalletModal>
+)}
+
+
+
+  {deleteAll && (
                 <div  className="flex flex-col lg:gap-7 gap-3 md:gap-5">
 
                 <div
@@ -1450,15 +1919,15 @@ items-end  "
                       New Launch!!
                     </div>
 
-                    <p className="font-bold text-zinc-500 text-color-fade md:text-xs text-[8px] whitespace-nowrap lg:text-lg tracking-[0] leading-[normal]">
+                    <p className="font-bold text-zinc-500 text-color-fade md:text-xs text-[7px] whitespace-nowrap lg:text-lg tracking-[0] leading-[normal]">
                       We are excited to launch our Airtime Top-up and
-                      <br /> Data Top-up features for all local networks
-                      <br /> including MTN, AIRTEL, GLO, and 9MOBILE.
+                       Data Top-up <br /> features for all local networks
+                       including MTN,<br /> AIRTEL, GLO, and 9MOBILE.
                     </p>
-                    <p className="font-medium text-[#9c9c9c] md:text-xs md:font-medium text-[6px] lg:text-xs tracking-[0.09px] leading-[normal]">
+                    <p className="font-medium text-[#9c9c9c] md:text-xs md:font-medium text-[5px] lg:text-xs tracking-[0.09px] leading-[normal]">
                       August 10th, 2023 12 :00:00am
                     </p>
-                    <div className="font-semibold text-main md:text-xs md:font-semibold text-[6px] lg:text-sm text-blue-900 tracking-[0] leading-[normal]">
+                    <div className="font-semibold text-main md:text-xs md:font-semibold text-[5px] lg:text-sm text-blue-900 tracking-[0] leading-[normal]">
                       Buy Now..
                     </div>
                   </div>
@@ -1466,17 +1935,18 @@ items-end  "
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
-                        className="lg:w-[150px] lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
+                        className="lg:w-[150px] lg:h-[150px] relative mt-[5px] w-[50px] h-[50px] md:w-[100px]
                    flex justify-center 
                    md:h-[100px]"
                         src={file}
                         alt=""
                       />
 
-                      {isOpen6 && (
+                      {isOpen12 && (
                         <div
-                          className="Frame758532672 w-[100px] md:w-[180px] lg:w-[190px] mt-[-38px] md:mt-[-80px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] z-50 shadow flex-col lg:mt-[-85px]
+                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] top-[168px]
+                           md:top-[240px] 
+                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[380px]
                justify-start items-start flex"
                         >
                           <div
@@ -1508,11 +1978,11 @@ items-end  "
                     <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
                       <div
                         onClick={() => {
-                          setIsOpen6((prev) => !prev);
-                          setIsOpen7(false);
-                          setIsOpen8(false);
-                          setIsOpen9(false);
-                          setIsOpen10(false);
+                          setIsOpen12((prev) => !prev);
+                          setIsOpen13(false);
+                          setIsOpen14(false);
+                          setIsOpen15(false);
+                          setIsOpen16(false);
                         }}
                         className="Frame758532418 cursor-pointer  flex-col justify-center items-start gap-0.5 flex"
                       >
@@ -1547,15 +2017,15 @@ items-end  "
                       New Launch!!
                     </div>
 
-                    <p className="font-bold text-text-color-fade  text-zinc-500 md:text-xs text-[8px] lg:text-lg tracking-[0] whitespace-nowrap leading-[normal]">
-                      We are excited to launch our Airtime Top-up and
-                      <br /> Data Top-up features for all local networks
-                      <br /> including MTN, AIRTEL, GLO, and 9MOBILE.
+                    <p className="font-bold text-text-color-fade  text-zinc-500 md:text-xs text-[7px] lg:text-lg tracking-[0] whitespace-nowrap leading-[normal]">
+                                           We are excited to launch our Airtime Top-up and     
+                                            Data Top-up <br /> features for all local networks 
+                                            including MTN,<br /> AIRTEL, GLO, and 9MOBILE.     
                     </p>
-                    <p className="font-medium text-[#9c9c9c] md:text-xs md:font-medium text-[6px] lg:text-xs tracking-[0.09px] leading-[normal]">
+                    <p className="font-medium text-[#9c9c9c] md:text-xs md:font-medium text-[5px] lg:text-xs tracking-[0.09px] leading-[normal]">
                       August 10th, 2023 12 :00:00am
                     </p>
-                    <div className="font-semibold text-main md:text-xs md:font-semibold text-[6px] lg:text-sm text-blue-900 tracking-[0] leading-[normal]">
+                    <div className="font-semibold text-main md:text-xs md:font-semibold text-[5px] lg:text-sm text-blue-900 tracking-[0] leading-[normal]">
                       Buy Now..
                     </div>
                   </div>
@@ -1563,16 +2033,17 @@ items-end  "
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
-                        className="lg:w-[150px] lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
+                        className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
                    flex justify-center 
                    md:h-[100px]"
                         src={file}
                         alt=""
                       />
-                      {isOpen7 && (
+                      {isOpen13 && (
                         <div
-                          className="Frame758532672 w-[100px] md:w-[180px] lg:w-[190px] mt-[-38px] md:mt-[-80px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] z-50 shadow flex-col lg:mt-[-85px]
+                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] top-[278px]
+                           md:top-[398px] 
+                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px]  shadow flex-col lg:top-[635px]
                justify-start items-start flex"
                         >
                           <div
@@ -1602,11 +2073,11 @@ items-end  "
                     <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
                       <div
                         onClick={() => {
-                          setIsOpen7((prev) => !prev);
-                          setIsOpen6(false);
-                          setIsOpen8(false);
-                          setIsOpen9(false);
-                          setIsOpen10(false);
+                          setIsOpen13((prev) => !prev);
+                          setIsOpen14(false);
+                          setIsOpen15(false);
+                          setIsOpen12(false);
+                          setIsOpen16(false);
                         }}
                         className="Frame758532418 cursor-pointer flex-col justify-center items-start gap-0.5 flex"
                       >
@@ -1640,15 +2111,15 @@ items-end  "
                       New Launch!!
                     </div>
 
-                    <p className="font-bold text-text-color-fade md:text-xs text-zinc-500 whitespace-nowrap text-[8px] lg:text-lg tracking-[0] leading-[normal]">
-                      We are excited to launch our Airtime Top-up and
-                      <br /> Data Top-up features for all local networks
-                      <br /> including MTN, AIRTEL, GLO, and 9MOBILE.
+                    <p className="font-bold text-text-color-fade md:text-xs text-zinc-500 whitespace-nowrap text-[7px] lg:text-lg tracking-[0] leading-[normal]">
+                                           We are excited to launch our Airtime Top-up and     
+                                            Data Top-up <br /> features for all local networks 
+                                            including MTN,<br /> AIRTEL, GLO, and 9MOBILE.     
                     </p>
-                    <p className="font-medium text-[#9c9c9c] md:text-xs md:font-medium text-[6px] lg:text-xs tracking-[0.09px] leading-[normal]">
+                    <p className="font-medium text-[#9c9c9c] md:text-xs md:font-medium text-[5px] lg:text-xs tracking-[0.09px] leading-[normal]">
                       August 10th, 2023 12 :00:00am
                     </p>
-                    <div className="font-semibold text-main md:text-xs md:font-semibold text-[6px] lg:text-sm text-blue-900 tracking-[0] leading-[normal]">
+                    <div className="font-semibold text-main md:text-xs md:font-semibold text-[5px] lg:text-sm text-blue-900 tracking-[0] leading-[normal]">
                       Buy Now..
                     </div>
                   </div>
@@ -1656,17 +2127,18 @@ items-end  "
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
-                        className="lg:w-[150px] lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
+                        className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
                    flex justify-center 
                    md:h-[100px]"
                         src={file}
                         alt=""
                       />
 
-                      {isOpen8 && (
+                      {isOpen14 && (
                         <div
-                          className="Frame758532672 w-[100px] md:w-[180px] lg:w-[190px] mt-[-38px] md:mt-[-80px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] z-50 shadow flex-col lg:mt-[-85px]
+                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] top-[390px]
+                           md:top-[577px] 
+                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[900px]
                justify-start items-start flex"
                         >
                           <div
@@ -1696,11 +2168,11 @@ items-end  "
                     <div className="flex justify-end items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
                       <div
                         onClick={() => {
-                          setIsOpen8((prev) => !prev);
-                          setIsOpen6(false);
-                          setIsOpen7(false);
-                          setIsOpen9(false);
-                          setIsOpen10(false);
+                          setIsOpen14((prev) => !prev);
+                          setIsOpen15(false);
+                          setIsOpen16(false);
+                          setIsOpen13(false);
+                          setIsOpen12(false);
                         }}
                         className="Frame758532418 cursor-pointer  flex-col justify-center items-start gap-0.5 flex"
                       >
@@ -1734,15 +2206,15 @@ items-end  "
                       New Launch!!
                     </div>
 
-                    <p className="font-bold text-text-color-fade md:text-xs text-zinc-500 whitespace-nowrap text-[8px] lg:text-lg tracking-[0] leading-[normal]">
-                      We are excited to launch our Airtime Top-up and
-                      <br /> Data Top-up features for all local networks
-                      <br /> including MTN, AIRTEL, GLO, and 9MOBILE.
+                    <p className="font-bold text-text-color-fade md:text-xs text-zinc-500 whitespace-nowrap text-[7px] lg:text-lg tracking-[0] leading-[normal]">
+                                           We are excited to launch our Airtime Top-up and     
+                                            Data Top-up <br /> features for all local networks 
+                                            including MTN,<br /> AIRTEL, GLO, and 9MOBILE.     
                     </p>
-                    <p className="font-medium text-[#9c9c9c] md:text-xs md:font-medium text-[6px] lg:text-xs tracking-[0.09px] leading-[normal]">
+                    <p className="font-medium text-[#9c9c9c] md:text-xs md:font-medium text-[5px] lg:text-xs tracking-[0.09px] leading-[normal]">
                       August 10th, 2023 12 :00:00am
                     </p>
-                    <div className="font-semibold text-main md:text-xs md:font-semibold text-[6px] lg:text-sm text-blue-900 tracking-[0] leading-[normal]">
+                    <div className="font-semibold text-main md:text-xs md:font-semibold text-[5px] lg:text-sm text-blue-900 tracking-[0] leading-[normal]">
                       Buy Now..
                     </div>
                   </div>
@@ -1750,17 +2222,18 @@ items-end  "
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
-                        className="lg:w-[150px] lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
+                        className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
                    flex justify-center 
                    md:h-[100px]"
                         src={file}
                         alt=""
                       />
 
-                      {isOpen9 && (
+                      {isOpen15 && (
                         <div
-                          className="Frame758532672 w-[100px] md:w-[180px] lg:w-[190px] mt-[-38px] md:mt-[-80px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] z-50 shadow flex-col lg:mt-[-85px]
+                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] 
+                          top-[500px] md:top-[740px] 
+                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[1153px]
                justify-start items-start flex"
                         >
                           <div
@@ -1791,11 +2264,11 @@ items-end  "
                     <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
                       <div
                         onClick={() => {
-                          setIsOpen9((prev) => !prev);
-                          setIsOpen6(false);
-                          setIsOpen7(false);
-                          setIsOpen8(false);
-                          setIsOpen10(false);
+                          setIsOpen15((prev) => !prev);
+                          setIsOpen16(false);
+                          setIsOpen14(false);
+                          setIsOpen13(false);
+                          setIsOpen12(false);
                         }}
                         className="Frame758532418 cursor-pointer flex-col justify-center items-start gap-0.5 flex"
                       >
@@ -1829,15 +2302,15 @@ items-end  "
                       New Launch!!
                     </div>
 
-                    <p className="font-bold text-text-color-fade md:text-xs text-zinc-500 text-[8px] whitespace-nowrap lg:text-lg tracking-[0] leading-[normal]">
-                      We are excited to launch our Airtime Top-up and
-                      <br /> Data Top-up features for all local networks
-                      <br /> including MTN, AIRTEL, GLO, and 9MOBILE.
+                    <p className="font-bold text-text-color-fade md:text-xs text-zinc-500 text-[7px] whitespace-nowrap lg:text-lg tracking-[0] leading-[normal]">
+                    We are excited to launch our Airtime Top-up and
+                       Data Top-up <br /> features for all local networks
+                       including MTN,<br /> AIRTEL, GLO, and 9MOBILE.
                     </p>
-                    <p className="font-medium text-[#9c9c9c] md:text-xs md:font-medium text-[6px] lg:text-xs tracking-[0.09px] leading-[normal]">
+                    <p className="font-medium text-[#9c9c9c] md:text-xs md:font-medium text-[5px] lg:text-xs tracking-[0.09px] leading-[normal]">
                       August 10th, 2023 12 :00:00am
                     </p>
-                    <div className="font-semibold text-main md:text-xs md:font-semibold text-[6px] lg:text-sm text-blue-900 tracking-[0] leading-[normal]">
+                    <div className="font-semibold text-main md:text-xs md:font-semibold text-[5px] lg:text-sm text-blue-900 tracking-[0] leading-[normal]">
                       Buy Now..
                     </div>
                   </div>
@@ -1845,17 +2318,18 @@ items-end  "
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
-                        className="lg:w-[150px] lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
+                        className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
                    flex justify-center 
                    md:h-[100px]"
                         src={file}
                         alt=""
                       />
 
-                      {isOpen10 && (
+                      {isOpen16 && (
                         <div
-                          className="Frame758532672 w-[100px] md:w-[180px] lg:w-[190px] mt-[-38px] md:mt-[-80px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] z-50 shadow flex-col lg:mt-[-85px]
+                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] top-[618px]
+                           md:top-[910px] 
+                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px]  shadow flex-col lg:top-[1408px]
                justify-start items-start flex"
                         >
                           <div
@@ -1885,11 +2359,11 @@ items-end  "
                     <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
                       <div
                         onClick={() => {
-                          setIsOpen10((prev) => !prev);
-                          setIsOpen6(false);
-                          setIsOpen7(false);
-                          setIsOpen8(false);
-                          setIsOpen9(false);
+                          setIsOpen16((prev) => !prev);
+                          setIsOpen15(false);
+                          setIsOpen14(false);
+                          setIsOpen13(false);
+                          setIsOpen12(false);
                         }}
                         className="Frame758532418 cursor-pointer flex-col justify-center items-start gap-0.5 flex"
                       >
@@ -1921,6 +2395,36 @@ items-end  "
                 </div>
 
               </div>
+              )}
+              {showPicture1 && (
+<div className={`${styles.viewTransactions} mt-[50px] `}>
+                <img
+                  className={styles.noTransactions}
+                  src="./Images/Dashboardimages/noTransactionFound.png"
+                  alt=""
+                />
+                <div
+                  className={`${
+                    isDarkMode ? "" : "text-[#0003]"
+                  } text-lg   text-opacity-30 mt-[-20px] lg:text-2xl  font-semibold `}
+                >
+                  No Notification Found !
+                </div>
+                <div className="flex gap-[15px] mt-[390px] lg:mt-[1050px] lg:mb-10 mb-5 md:mt-[700px] items-center">
+                  <div className="text-xs font-medium ">You need help ?</div>
+                  <Link to="/ContactUs">
+                    <div
+                      className={`${isDarkMode ? "border " : "bg-[#04177f]"} ${
+                        styles.contactus
+                      }`}
+                    >
+                      Contact Us
+                    </div>
+                  </Link>
+                </div>
+              </div>
+)}
+
               </div>
             )}
             {/* third flow */}
@@ -1933,7 +2437,7 @@ items-end  "
                   <div
                     className="flex flex-col lg:w-[187px]  cursor-pointer items-start lg:gap-[10px] lg:p-[8px]
               bg-white border-neutral-400
-             lg:rounded-[6px] lg:border-[0.2px] border-solid p-1 w-24 md:w-[120px]   border shadow rounded gap-1.5 lg:shadow-[0px_0px_1px_#00000040]"
+             lg:rounded-[6px] lg:border-[0.2px] border-solid p-1 w-24 md:w-[120px]  border shadow rounded gap-1.5 lg:shadow-[0px_0px_1px_#00000040]"
                   >
                     <div
                                             onClick={() => {
@@ -1957,6 +2461,8 @@ items-end  "
                     </div>
                   </div>
                   <div
+                  onClick={openModal3}
+
                     className="flex items-center lg:gap-[14px] cursor-pointer    lg:p-[8px]
               flex-[0_0_auto] bg-white lg:rounded-[6px]  border-red-500 
                lg:border-[0.2px] border-solid border-variable-collection- text-danger p-1
@@ -1975,7 +2481,141 @@ items-end  "
                     </div>
                   </div>
                 </div>
+
+                {isModalOpen3 && (
+                <WalletModal>
+                  
+                <div className="text-center flex justify-center item-center md:mt-[-20px] lg:mt-[15px] 2xl:mt-[-15px]">
+                <div
+                  className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
+                    flex flex-col justify-center z-[100] lg:ml-[10px] md:w-full`}>
+                      <img 
+                      onClick={closeModal3}
+                      className=" w-[25px] h-[25px] inline-flex justify-end items-end"  src={VuesaxBoldEye} alt=""/>
+                  <div className=" w-full lg:h-[22px] h-[15px] md-[h-18px] bg-[#04177f]" />
+                  <div>
+                    <p className="text-[10px] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[3%]">
+                    Are you sure you want to delete all Notifications?
+                    </p>
+                  </div>
+                  <img
+                    src={deletingfiles}
+                    alt=""
+                    className="img mx-auto mt-[30px] md:mt-[15%] md:w-[220px] md:mx-[100px] w-[143px] h-[67px]
+                     lg:w-[300px] lg:h-[200px] lg:mx-[150px]  lg:mt-[10%] flex justify-center items-center 2xl:mt-[10%] 2xl:mx-[180px]"
+                  />
+                </div>
+              </div>
+              <div className="mt-[40px] justify-center hidden items-center lg:flex md:flex gap-[3px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
+                <button
+                  className={` ${
+                    isDarkMode ? "border" : "bg-[#04177f] "
+                  } cursor-pointer text-white text-[10px] h-[40px] lg:rounded-xl lg:w-40 lg:h-9 lg:px-3.5 lg:py-2.5 
+                  rounded-[5px]
+                   md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] 
+                   lg:my-[3%]  lg:text-[20px]  lg:mx-auto`}
+
+
+                   onClick={() => {
+                    handleDelete3('deleteAll1')
+
+
+
+
+                    
+                    
+                  }}
+
+                   
+                >
+                  Yes
+                </button>
+
+
                 
+                <button 
+            
+                        onClick={closeModal3}
+ className="Frame1469 cursor-pointer  w-40 h-9 px-3.5 py-2.5 rounded-xl border border-red-600 
+                justify-center items-center gap-2.5 flex">
+    <div  className="Cancel text-red-500 text-base font-semibold ">Cancel</div>
+
+                </button>
+              </div>
+              <button
+                                           onClick={() => {
+                    handleDelete3('deleteAll')              
+
+                                           }}         
+              
+              className="Frame1468 w-56 lg:hidden md:hidden mt-5 ml-7 h-10 px-1 py-0.5 bg-blue-950 rounded justify-center items-center gap-0.5 flex">
+    <div className="Verify text-white text-xs font-semibold">Verify</div>
+</button>
+
+              </WalletModal>
+                )}
+
+{showSuccessMessage3 && (
+                                <WalletModal>
+                <div className="text-center flex justify-center item-center md:mt-[-20px] lg:mt-[15px] 2xl:mt-[-15px]">
+                <div
+                  className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
+                    flex flex-col justify-center z-[100] lg:ml-[10px] md:w-full`}>
+                      <img className=" w-[25px] h-[25px] inline-flex justify-end items-end"  src={VuesaxBoldEye} alt=""/>
+                  <div className="w-full h-[22px]  bg-[#04177f]" />
+                  <div>
+                    <p className="text-[10px] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[18px] lg:pt-[3%]">
+                    Notifications has been deleted successfully.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-[40px] justify-center hidden  items-center lg:flex md:flex gap-[3px] pb-[5%] 
+              2xl:mt-[1%] lg:mt-[300px] md:mt-[55%] md:pr-[10px]">
+                <button
+                  className={` ${
+                    isDarkMode ? "border" : "bg-[#04177f] "
+                  } cursor-pointer text-white text-[10px] h-[40px]  lg:rounded-xl lg:w-40 lg:h-9 lg:px-3.5 lg:py-2.5 
+                  rounded-[5px]
+                   md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] 
+                   lg:my-[3%]  lg:text-[20px]  lg:mx-auto`}
+                   onClick={() => {
+                    setShowSuccessMessage3(false);
+                    setShowPicture2(true);
+                  }}
+
+                >
+                  Done
+                </button>
+
+
+                
+              </div>
+              <div className="Frame758532352 md:hidden lg:hidden w-56 h-10 mt-[130px] ml-10 justify-center items-center gap-1 flex">
+    <button
+                       onClick={() => {
+                        setShowSuccessMessage3(false);
+                        setShowPicture2(true);
+                      }}
+    
+    className="Frame1468 w-28 h-10 px-1 py-0.5 bg-blue-900 rounded justify-center items-center gap-0.5 flex">
+        <div className="Yes text-white text-xs font-semibold ">Yes</div>
+    </button>
+    <button
+                      onClick={closeModal3}
+    
+    className="Frame1469 w-28 h-10 px-2 py-1.5 bg-white rounded justify-center items-center gap-1.5 flex">
+        <div className="Cancel w-11 h-4 text-red-500 text-xs font-semibold ">Cancel
+      
+        </div>
+    </button>
+</div>
+
+              </WalletModal>
+)}
+
+
+{deleteAll1 && (           
 <div  className="flex flex-col lg:gap-7 gap-3 md:gap-5">
                 <div
                   className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${backgroundColor11} w-full justify-between
@@ -1989,15 +2629,16 @@ items-end  "
                       New Launch!!
                     </div>
 
-                    <p className="font-bold text-text-color-fade md:text-xs  text-zinc-500 whitespace-nowrap text-[8px] lg:text-lg tracking-[0] leading-[normal]">
+                    <p className="font-bold text-text-color-fade md:text-xs  text-zinc-500 whitespace-nowrap text-[7px] lg:text-lg tracking-[0] leading-[normal]">
                       We are excited to launch our Local Money Transfer
-                      <br /> product with features like Transfer to Personal
-                      <br /> Account, and Transfer to any Nigerian Bank Account
+                       product with<br /> features like Transfer to Personal
+                       Account, and Transfer<br /> to any Nigerian Bank Account
                     </p>
-                    <p className="font-medium text-[#9c9c9c] md:text-xs md:font-medium text-[6px] lg:text-xs tracking-[0.09px] leading-[normal]">
+                    <p className="font-medium text-[#9c9c9c] md:text-xs md:font-medium text-[5px] lg:text-xs
+                     tracking-[0.09px] leading-[normal]">
                       August 10th, 2023 12 :00:00am
                     </p>
-                    <div className="font-semibold text-main md:text-xs md:font-semibold text-[6px] lg:text-sm text-blue-900 tracking-[0] leading-[normal]">
+                    <div className="font-semibold text-main md:text-xs md:font-semibold text-[5px] lg:text-sm text-blue-900 tracking-[0] leading-[normal]">
                       Transfer Money..
                     </div>
                   </div>
@@ -2005,17 +2646,18 @@ items-end  "
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
-                        className="lg:w-[150px] lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
+                        className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
                    flex justify-center 
                    md:h-[100px]"
                         src={folder}
                         alt=""
                       />
 
-                      {isOpen6 && (
+                      {isOpen17 && (
                         <div
-                          className="Frame758532672 w-[100px] md:w-[180px] lg:w-[190px] mt-[-38px] md:mt-[-80px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] z-50 shadow flex-col lg:mt-[-85px]
+                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] top-[168px]
+                           md:top-[240px] 
+                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[390px]
                justify-start items-start flex"
                         >
                           <div
@@ -2046,11 +2688,11 @@ items-end  "
                     <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
                       <div
                         onClick={() => {
-                          setIsOpen6((prev) => !prev);
-                          setIsOpen7(false);
-                          setIsOpen8(false);
-                          setIsOpen9(false);
-                          setIsOpen10(false);
+                          setIsOpen17((prev) => !prev);
+                          setIsOpen18(false);
+                          setIsOpen19(false);
+                          setIsOpen20(false);
+                          setIsOpen21(false);
                         }}
                         className="Frame758532418 cursor-pointer flex-col justify-center items-start gap-0.5 flex"
                       >
@@ -2081,15 +2723,15 @@ items-end  "
                       New Launch!!
                     </div>
 
-                    <p className="font-bold text-text-color-fade md:text-xs  text-zinc-500 text-[8px] lg:text-lg whitespace-nowrap tracking-[0] leading-[normal]">
+                    <p className="font-bold text-text-color-fade md:text-xs  text-zinc-500 text-[7px] lg:text-lg whitespace-nowrap tracking-[0] leading-[normal]">
                       We are excited to launch our Local Money Transfer
-                      <br /> product with features like Transfer to Personal
-                      <br /> Account, and Transfer to any Nigerian Bank Account
+                       product with<br /> features like Transfer to Personal
+                       Account, and Transfer<br /> to any Nigerian Bank Account
                     </p>
-                    <p className="font-medium text-[#9c9c9c] md:text-xs md:font-medium text-[6px] lg:text-xs tracking-[0.09px] leading-[normal]">
+                    <p className="font-medium text-[#9c9c9c] md:text-xs md:font-medium text-[5px] lg:text-xs tracking-[0.09px] leading-[normal]">
                       August 10th, 2023 12 :00:00am
                     </p>
-                    <div className="font-semibold text-main md:text-xs md:font-semibold text-[6px] lg:text-sm text-blue-900 tracking-[0] leading-[normal]">
+                    <div className="font-semibold text-main md:text-xs md:font-semibold text-[5px] lg:text-sm text-blue-900 tracking-[0] leading-[normal]">
                       Transfer Money..
                     </div>
                   </div>
@@ -2097,17 +2739,18 @@ items-end  "
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
-                        className="lg:w-[150px] lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
+                        className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
                    flex justify-center 
                    md:h-[100px]"
                         src={folder}
                         alt=""
                       />
 
-                      {isOpen7 && (
+                      {isOpen18 && (
                         <div
-                          className="Frame758532672 w-[100px] md:w-[180px] lg:w-[190px] mt-[-38px] md:mt-[-80px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] z-50 shadow flex-col lg:mt-[-85px]
+                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] top-[280px]
+                           md:top-[410px] 
+                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[735px]
                justify-start items-start flex"
                         >
                           <div
@@ -2138,11 +2781,11 @@ items-end  "
                     <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
                       <div
                         onClick={() => {
-                          setIsOpen7((prev) => !prev);
-                          setIsOpen6(false);
-                          setIsOpen8(false);
-                          setIsOpen9(false);
-                          setIsOpen10(false);
+                          setIsOpen18((prev) => !prev);
+                          setIsOpen17(false);
+                          setIsOpen19(false);
+                          setIsOpen20(false);
+                          setIsOpen21(false);
                         }}
                         className="Frame758532418 cursor-pointer flex-col justify-center items-start gap-0.5 flex"
                       >
@@ -2172,15 +2815,15 @@ items-end  "
                       New Launch!!
                     </div>
 
-                    <p className="font-bold text-text-color-fade md:text-xs text-zinc-500 text-[8px] whitespace-nowrap lg:text-lg tracking-[0] leading-[normal]">
+                    <p className="font-bold text-text-color-fade md:text-xs text-zinc-500 text-[7px] whitespace-nowrap lg:text-lg tracking-[0] leading-[normal]">
                       We are excited to launch our Local Money Transfer
-                      <br /> product with features like Transfer to Personal
-                      <br /> Account, and Transfer to any Nigerian Bank Account
+                      product with  <br /> features like Transfer to Personal
+                       Account, and Transfer<br /> to any Nigerian Bank Account
                     </p>
-                    <p className="font-medium text-[#9c9c9c] md:text-xs md:font-medium text-[6px] lg:text-xs tracking-[0.09px] leading-[normal]">
+                    <p className="font-medium text-[#9c9c9c] md:text-xs md:font-medium text-[5px] lg:text-xs tracking-[0.09px] leading-[normal]">
                       August 10th, 2023 12 :00:00am
                     </p>
-                    <div className="font-semibold text-main md:text-xs md:font-semibold text-[6px] lg:text-sm text-blue-900 tracking-[0] leading-[normal]">
+                    <div className="font-semibold text-main md:text-xs md:font-semibold text-[5px] lg:text-sm text-blue-900 tracking-[0] leading-[normal]">
                       Transfer Money..
                     </div>
                   </div>
@@ -2188,17 +2831,18 @@ items-end  "
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
-                        className="lg:w-[150px] lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
+                        className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
                    flex justify-center 
                    md:h-[100px]"
                         src={folder}
                         alt=""
                       />
 
-                      {isOpen8 && (
+                      {isOpen19 && (
                         <div
-                          className="Frame758532672 w-[100px] md:w-[180px] lg:w-[190px] mt-[-38px] md:mt-[-80px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] z-50 shadow flex-col lg:mt-[-85px]
+                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] top-[393px] 
+                          md:top-[580px] 
+                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[989px]
                justify-start items-start flex"
                         >
                           <div
@@ -2229,11 +2873,11 @@ items-end  "
                     <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
                       <div
                         onClick={() => {
-                          setIsOpen8((prev) => !prev);
-                          setIsOpen6(false);
-                          setIsOpen7(false);
-                          setIsOpen9(false);
-                          setIsOpen10(false);
+                          setIsOpen19((prev) => !prev);
+                          setIsOpen17(false);
+                          setIsOpen18(false);
+                          setIsOpen20(false);
+                          setIsOpen21(false);
                         }}
                         className="Frame758532418 cursor-pointer flex-col justify-center items-start gap-0.5 flex"
                       >
@@ -2264,15 +2908,15 @@ items-end  "
                       New Launch!!
                     </div>
 
-                    <p className="font-bold text-text-color-fade md:text-xs   text-zinc-500 text-[8px] whitespace-nowrap lg:text-lg tracking-[0] leading-[normal]">
+                    <p className="font-bold text-text-color-fade md:text-xs   text-zinc-500 text-[7px] whitespace-nowrap lg:text-lg tracking-[0] leading-[normal]">
                       We are excited to launch our Local Money Transfer
-                      <br /> product with features like Transfer to Personal
-                      <br /> Account, and Transfer to any Nigerian Bank Account
+                       product with <br />features like Transfer to Personal
+                      Account, and Transfer<br /> to any Nigerian Bank Account
                     </p>
-                    <p className="font-medium text-[#9c9c9c] md:text-xs md:font-medium text-[6px] lg:text-xs tracking-[0.09px] leading-[normal]">
+                    <p className="font-medium text-[#9c9c9c] md:text-xs md:font-medium text-[5px] lg:text-xs tracking-[0.09px] leading-[normal]">
                       August 10th, 2023 12 :00:00am
                     </p>
-                    <div className="font-semibold text-main md:text-xs md:font-semibold text-[6px] lg:text-sm text-blue-900 tracking-[0] leading-[normal]">
+                    <div className="font-semibold text-main md:text-xs md:font-semibold text-[5px] lg:text-sm text-blue-900 tracking-[0] leading-[normal]">
                       Transfer Money..
                     </div>
                   </div>
@@ -2280,17 +2924,17 @@ items-end  "
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
-                        className="lg:w-[150px] lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
+                        className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
                    flex justify-center 
                    md:h-[100px]"
                         src={folder}
                         alt=""
                       />
 
-                      {isOpen9 && (
+                      {isOpen20 && (
                         <div
-                          className="Frame758532672 w-[100px] md:w-[180px] lg:w-[190px] mt-[-38px] md:mt-[-80px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] z-50 shadow flex-col lg:mt-[-85px]
+                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] top-[507px] md:top-[750px] 
+                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px]  shadow flex-col lg:top-[1245px]
                justify-start items-start flex"
                         >
                           <div
@@ -2318,14 +2962,14 @@ items-end  "
                         </div>
                       )}
                     </div>
-                    <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
+                    <div className="flex justify-end relative  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
                       <div
                         onClick={() => {
-                          setIsOpen9((prev) => !prev);
-                          setIsOpen6(false);
-                          setIsOpen7(false);
-                          setIsOpen8(false);
-                          setIsOpen10(false);
+                          setIsOpen20((prev) => !prev);
+                          setIsOpen21(false);
+                          setIsOpen17(false);
+                          setIsOpen18(false);
+                          setIsOpen19(false);
                         }}
                         className="Frame758532418 cursor-pointer flex-col justify-center items-start gap-0.5 flex"
                       >
@@ -2355,15 +2999,15 @@ items-end  "
                       New Launch!!
                     </div>
 
-                    <p className="font-bold text-text-color-fade md:text-xs   text-zinc-500 text-[8px] whitespace-nowrap lg:text-lg tracking-[0] leading-[normal]">
+                    <p className="font-bold text-text-color-fade md:text-xs   text-zinc-500 text-[7px] whitespace-nowrap lg:text-lg tracking-[0] leading-[normal]">
                       We are excited to launch our Local Money Transfer
-                      <br /> product with features like Transfer to Personal
-                      <br /> Account, and Transfer to any Nigerian Bank Account
+                       product with<br /> features like Transfer to Personal
+                       Account, and Transfer<br /> to any Nigerian Bank Account
                     </p>
-                    <p className="font-medium text-[#9c9c9c] md:text-xs md:font-medium text-[6px] lg:text-xs tracking-[0.09px] leading-[normal]">
+                    <p className="font-medium text-[#9c9c9c] md:text-xs md:font-medium text-[5px] lg:text-xs tracking-[0.09px] leading-[normal]">
                       August 10th, 2023 12 :00:00am
                     </p>
-                    <div className="font-semibold text-main md:text-xs md:font-semibold text-[6px] lg:text-sm text-blue-900 tracking-[0] leading-[normal]">
+                    <div className="font-semibold text-main md:text-xs md:font-semibold text-[5px] lg:text-sm text-blue-900 tracking-[0] leading-[normal]">
                       Transfer Money..
                     </div>
                   </div>
@@ -2371,16 +3015,16 @@ items-end  "
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
-                        className="lg:w-[150px] lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
+                        className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
                    flex justify-center 
                    md:h-[100px]"
                         src={folder}
                         alt=""
                       />
-                      {isOpen10 && (
+                      {isOpen21 && (
                         <div
-                          className="Frame758532672 w-[100px] md:w-[180px] lg:w-[190px] mt-[-38px] md:mt-[-80px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] z-50 shadow flex-col lg:mt-[-85px]
+                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] top-[618px] md:top-[920px] 
+                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px]  shadow flex-col lg:top-[1505px]
                justify-start items-start flex"
                         >
                           <div
@@ -2408,14 +3052,14 @@ items-end  "
                         </div>
                       )}
                     </div>
-                    <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
+                    <div className="flex justify-end relative  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
                       <div
                         onClick={() => {
-                          setIsOpen10((prev) => !prev);
-                          setIsOpen6(false);
-                          setIsOpen7(false);
-                          setIsOpen8(false);
-                          setIsOpen9(false);
+                          setIsOpen21((prev) => !prev);
+                          setIsOpen20(false);
+                          setIsOpen17(false);
+                          setIsOpen18(false);
+                          setIsOpen19(false);
                         }}
                         className="Frame758532418 cursor-pointer flex-col justify-center items-start gap-0.5 flex"
                       >
@@ -2426,7 +3070,7 @@ items-end  "
 
                       <div
                         className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
-               bg-red-400 rounded-full ${Color16}`}
+               bg-red-400 relative rounded-full ${Color16}`}
                       />
                     </div>
                   </div>
@@ -2446,6 +3090,36 @@ items-end  "
                 </div>
 
               </div>
+)}
+              {showPicture2 && (
+<div className={`${styles.viewTransactions} mt-[50px] `}>
+                <img
+                  className={styles.noTransactions}
+                  src="./Images/Dashboardimages/noTransactionFound.png"
+                  alt=""
+                />
+                <div
+                  className={`${
+                    isDarkMode ? "" : "text-[#0003]"
+                  } text-lg   text-opacity-30 mt-[-20px] lg:text-2xl  font-semibold `}
+                >
+                  No Notification Found !
+                </div>
+                <div className="flex gap-[15px] mt-[390px] lg:mt-[1050px] lg:mb-10 mb-5 md:mt-[700px] items-center">
+                  <div className="text-xs font-medium ">You need help ?</div>
+                  <Link to="/ContactUs">
+                    <div
+                      className={`${isDarkMode ? "border " : "bg-[#04177f]"} ${
+                        styles.contactus
+                      }`}
+                    >
+                      Contact Us
+                    </div>
+                  </Link>
+                </div>
+              </div>
+)}
+
               </div>
             )}
 
@@ -2517,6 +3191,9 @@ items-end  "
                 </div>
               </div>
             )}
+
+
+
           </div>
         </div>
       </>
