@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import React, { useState } from 'react';
 import { DashBoardLayout } from "../../Layout/DashBoardLayout";
 import "./CardPayment.css";
 import { useContext } from "react";
@@ -11,11 +11,10 @@ import Search from "./CardPaymentImages/search.svg";
 import ExistingBankPage from "./CardPaymentImages/ExistingBankPage.svg";
 import NoExistingcard from "./CardPaymentImages/NoExistingCard.svg";
 import RoundArrowDown from "./CardPaymentImages/RoundArrowDown.svg";
-import BankLogo from "./CardPaymentImages/BankLogo.svg";
+// import BankLogo from "./CardPaymentImages/BankLogo.svg";
 import GBPPopUp from "./CardPaymentImages/GBPPopUp.svg";
-import WalletModal from "../../../Wallet/WalletModal";
+// import WalletModal from "../../../Wallet/WalletModal";
 import { Modal } from "../../../Screens/Modal/Modal";
-import styles from "../../../Dashboard/DashboardComponents/TransferComponent/transfer.module.css";
 import DefaultCard from "./CardPaymentImages/DefaultCard.svg";
 import SuccessGif from "./CardPaymentImages/success.gif";
 import DeleteCard from "./CardPaymentImages/DeleteCard.svg";
@@ -23,7 +22,7 @@ import { Context } from "../../../Context";
 
 const ExistingCardPage = () => {
   const { isDarkMode, toggleSideBar } = useContext(ContextProvider);
-  const [showPayment, setShowPayment] = useState(false);
+  const [showPayment, setShowPayment] = useState("");
   const { walletName, setWalletName } = useContext(ContextProvider);
   const { cardPaymentSelected, setCardPaymentSelected } =
     useContext(ContextProvider);
@@ -36,6 +35,8 @@ const ExistingCardPage = () => {
   const [sucessdefaultCard, setSuccessDefaultCard] = useState("");
   const [deleteCard, setDeleteCard] = useState("");
   const [confirmDeleteCard, setConfirmDeleteCard] = useState("");
+  
+ 
 
   const handleShowPayment = () => {
     setShowPayment(!showPayment);
@@ -43,6 +44,8 @@ const ExistingCardPage = () => {
       setWalletName("");
       setCardPaymentSelected(false);
       setNoCurrencySelected(true);
+    } else {
+      setNoCurrencySelected(false);
     }
   };
 
@@ -264,7 +267,7 @@ const ExistingCardPage = () => {
                 setShowPopup(false);
               }}
             >
-              <div className="flex justify-between items-center border w-[50%] md:w-[35%] lg:w-[35%] h-8 px-2 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px] mt-[10%]">
+              <div className="flex justify-between items-center border w-[50%] md:w-[35%] lg:w-[35%] h-8 px-2 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px] mt-[10%] xl:w-35%">
                 {cardPaymentSelected ? (
                   <li
                     onClick={() => {
@@ -305,20 +308,20 @@ const ExistingCardPage = () => {
             </div>
             {showPayment && (
               <div
-                className={`border md:rounded-[10px] rounded-[4px] absolute ${
-                  toggleSideBar
-                    ? "w-[50%] md:w-[35%] lg:w-[35%] 2xl:w-[46%]"
-                    : "w-[50%] md:w-[35%] lg:w-[35%] 2xl:w-[46%]"
-                } bg-[#FFF] z-[100]`}
+              className={`border md:rounded-[10px] rounded-[4px] absolute ${
+                toggleSideBar
+                  ? "w-[50%] md:w-[35%] lg:w-[35%] xl:w-[35%]"
+                  : "w-[50%] md:w-[35%] lg:w-[35%] xl:w-[35%]"
+              } bg-[#FFF] z-[100]`}
               >
-                <div className="flex flex-row justify-between px-[10px] py-[7px]">
+                <div className="flex justify-between px-[10px] py-[7px]">
                   <input
                     type="text"
                     placeholder="Search"
-                    className="text-[10px] md:text-[12px] lg:text-[14px] font-semibold text-[#7C7C7C] flex-grow-1 py-1 outline-none rounded-md focus:outline-none"
+                    className="text-[10px] md:text-[12px] lg:text-[14px] font-semibold text-[#7C7C7C] w-[50%] py-1 outline-none rounded-md focus:outline-none"
                     onChange={(e) => handleSearch(e.target.value)}
                   />
-                  <img src={Search} alt="" />
+                  <img src={Search} alt="" classsName="" />
                 </div>
                 <hr />
                 {filteredCountryList.map((country) => (
@@ -363,23 +366,33 @@ const ExistingCardPage = () => {
           {cardPaymentSelected && walletName === "NGN" && ngn && (
             <div className="mt-[5%] lg:mt-0 text-[10px] md:text-[12px] lg:text-[14px] flex flex-col gap-[10px]">
               {cardList.map((card, index) => (
-                <Link
-                  to={`/FundWithCard?codeValue=${encodeURIComponent(
-                    `${card.code}, ${card.name}, ${card.number}`
-                  )}`}
-                  onClick={() => {
-                    console.log(card.code);
-                  }}
-                  key={index}
-                >
+                // <Link
+                //   to={`/FundWithCard?codeValue=${encodeURIComponent(
+                //     `${card.code}, ${card.name}, ${card.number}`
+                //   )}`}
+                //   onClick={(e) => {
+                //     console.log(card.code);
+                //   }}
+                //   key={index}
+                // >
                   <div
                     id="USD"
                     className="rounded-[5px] flex justify-between py-[10px] px-[10px] lg:mt-[2%]"
                   >
+                    <Link
+                  to={`/FundWithCard?codeValue=${encodeURIComponent(
+                    `${card.code}, ${card.name}, ${card.number}, ${card.flag}`
+                  )}`}
+                  onClick={(e) => {
+                    console.log(card.code);
+                    console.log(card.flag)
+                  }}
+                  key={index}
+                >
                     <div className="flex flex-row gap-[10px]">
                       <div className="mt-[5%]">
                         <img
-                          src={BankLogo}
+                          src={card.flag}
                           alt=""
                           className="md:h-[20px] lg:h-[30px]"
                         />
@@ -392,9 +405,10 @@ const ExistingCardPage = () => {
                         <p>{card.number}</p>
                       </div>
                     </div>
-                    <div className="relative">
+                    </Link>
+                    <div className="relative z-1000">
                       <img
-                        onClick={() => {
+                         onClick={() => {
                           handleBank(index);
                           setShowPayment(false);
                         }}
@@ -402,9 +416,10 @@ const ExistingCardPage = () => {
                         alt=""
                         className="mt-[-5%] h-[20px] md:h-[30px] lg:h-[40px]"
                       />
+  
                       {showPopup && activeImage === index && (
                         <div
-                          className="input border absolute bg-white top-[10px] right-[5px] w-[100px] h-[75px] md:h-[100px] md:w-[150px] rounded-[5px] z-50 flex flex-col justify-center items-start py-[5px]"
+                          className="input border absolute bg-white top-[15px] right-[15px] w-[100px] md:top-[20px] md:right-[22px] lg:right-[30px] lg:top-[25px] h-[75px] md:h-[100px] md:w-[150px] rounded-[5px] z-50 flex flex-col justify-center items-start py-[5px]"
                           style={{ boxShadow: "0 0 5px rgba(0, 0, 0, 0.2)" }}
                         >
                           <Link to="/FundWithCard">
@@ -428,38 +443,40 @@ const ExistingCardPage = () => {
                           </div>
                         </div>
                       )}
+                      
                     </div>
+                    
                   </div>
-                </Link>
+                  // </Link>
               ))}
 
               {defaultcard && (
                 <Modal>
                   <div
-                    className={`confirm2 ${styles.inputPin} ${
-                      toggleSideBar
-                        ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
-                        : "lg:w-[40%]"
-                    } md:w-[55%] w-[90%] md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
+                   className={` ${
+                    toggleSideBar
+                      ? "confirm002"
+                      : "confirm200"
+                  } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto md:overflow-auto rounded-[12px]`}
                   >
-                    <hr className="h-[6px] bg-[#04177f] lg:mt-[2%] border-none mt-[6%] md:mt-[2%] md:h-[10px]" />
+                    <hr className="h-[6px] bg-[#04177f] lg:mt-[5%] border-none mt-[6%] md:mt-[6%] md:h-[10px]" />
                     <p className="text-[10px] px-[20px] md:text-[14px] lg:text-[18px] font-extrabold text-center my-[3%] lg:my-[%]">
                       Are you sure you want to make this card as your default
                       card to fund your wallet?
                     </p>
                     <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
                       <img
-                        className="default-card w-[50px] h-[50px] mx-auto mb-[2%] md:h-[100px] md:w-[150px] lg:w-[120px] lg:h-[120px]"
+                        className="default-card w-[100px] h-[100px] mx-auto mb-[2%] md:h-[100px] md:w-[150px]"
                         src={DefaultCard}
                         alt="/"
                       />
                     </div>
 
                     <div
-                      className={`w-full h-[38px] mt-[40px] px-[20px] flex md:mx-[10%]`}
+                      className={`flex flex-row gap-[10px] justify-center items-center w-full h-[38px] mt-[20px] md:mt-[10px] px-[20px] md:justify-center md:items-center mx-auto md:px-[40px]`}
                     >
                       <button
-                        className={`bg-[#04177F] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
+                        className={`bg-[#04177F] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
                         onClick={() => {
                           handleSuccessDefaultCard();
                           setDefaultCard(false);
@@ -468,7 +485,7 @@ const ExistingCardPage = () => {
                         Yes
                       </button>
                       <button
-                        className={`bg-[#fff] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-[#F95252] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
+                        className={`bg-[#fff] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-[#F95252] rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
                         onClick={() => {
                           setDefaultCard(false);
                         }}
@@ -483,13 +500,13 @@ const ExistingCardPage = () => {
               {sucessdefaultCard && (
                 <Modal>
                   <div
-                    className={`confirm2 ${styles.inputPin} ${
-                      toggleSideBar
-                        ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
-                        : "lg:w-[40%]"
-                    } md:w-[55%] w-[90%] md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
+                   className={` ${
+                    toggleSideBar
+                      ? "confirm002"
+                      : "confirm200"
+                  } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto md:overflow-auto rounded-[12px]`}
                   >
-                    <hr className="h-[6px] bg-[#04177f] lg:mt-[5%] border-none mt-[6%] md:mt-[2%] md:h-[10px]" />
+                    <hr className="h-[6px] bg-[#04177f] lg:mt-[5%] border-none mt-[6%] md:mt-[5%] md:h-[10px]" />
                     <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[3%] lg:my-[%]">
                       Successful
                     </p>
@@ -498,17 +515,17 @@ const ExistingCardPage = () => {
                     </p>
                     <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[5%]">
                       <img
-                        className="success-default-card w-[100px] h-[70px] md:w-[150px] md:h-[90px] mx-auto mb-[2%] lg:w-[150px] lg:h-[120px]"
+                        className="success-default-card w-[100px] h-[100px] md:w-[90px] md:h-[90px] mx-auto mb-[2%] lg:w-[150px] lg:h-[120px]"
                         src={SuccessGif}
                         alt="/"
                       />
                     </div>
 
                     <div
-                      className={`w-full h-[38px] mt-[40px] px-[20px] md:mx-[35%] md:mt-[10px]`}
+                      className={`w-full h-[38px] mt-[20px] px-[20px] md:mt-[10px]`}
                     >
                       <button
-                        className={`bg-[#04177F] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
+                        className={`bg-[#04177F] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[20px] lg:text-[16px] md:mx-auto lg:h-[38px] lg:my-[4%]`}
                         onClick={() => {
                           setSuccessDefaultCard(false);
                           // window.location.reload();
@@ -524,29 +541,29 @@ const ExistingCardPage = () => {
               {deleteCard && (
                 <Modal>
                   <div
-                    className={`confirm2 ${styles.inputPin} ${
+                    className={` ${
                       toggleSideBar
-                        ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
-                        : "lg:w-[40%]"
-                    } md:w-[55%] w-[90%] md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
+                        ? "confirm002"
+                        : "confirm200"
+                    } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto md:overflow-auto rounded-[12px]`}
                   >
-                    <hr className="h-[6px] bg-[#04177f] lg:mt-[5%] border-none mt-[6%] md:mt-[5%] md:h-[10px]" />
+                    <hr className="h-[6px] bg-[#04177f] lg:mt-[5%] border-none mt-[6%] md:mt-[6%] md:h-[10px]" />
                     <p className="text-[10px] px-[20px] md:text-[14px] lg:text-[18px] font-extrabold text-center my-[3%] lg:my-[%]">
                       Are you sure you want to delete this card permanently?
                     </p>
                     <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
                       <img
-                        className="delete-card w-[50px] h-[70px] md:h-[100px] mx-auto mb-[2%] lg:w-[120px] lg:h-[120px]"
+                        className="delete-card w-[100px] h-[100px] md:w-[120px] md:h-[120px] mx-auto mb-[2%]"
                         src={DeleteCard}
                         alt="/"
                       />
                     </div>
 
                     <div
-                      className={`w-full h-[38px] mt-[40px] px-[20px] flex md:mx-[10%]`}
+                      className={`flex flex-row gap-[10px] justify-center items-center w-full h-[38px] mt-[20px] md:mt-[10px] px-[20px] mx-auto md:px-[40px]`}
                     >
                       <button
-                        className={`bg-[#04177F] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
+                        className={`bg-[#04177F] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
                         onClick={() => {
                           handleConfirmDeleteCard();
                           setDeleteCard(false);
@@ -555,7 +572,7 @@ const ExistingCardPage = () => {
                         Yes
                       </button>
                       <button
-                        className={`bg-[#fff] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-[#F95252] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
+                        className={`bg-[#fff] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-[#F95252] rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
                         onClick={() => {
                           setDeleteCard(false);
                         }}
@@ -570,33 +587,33 @@ const ExistingCardPage = () => {
               {confirmDeleteCard && (
                 <Modal>
                   <div
-                    className={`confirm2 ${styles.inputPin} ${
+                    className={` ${
                       toggleSideBar
-                        ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
-                        : "lg:w-[40%]"
-                    } md:w-[55%] w-[90%] md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
+                        ? "confirm002"
+                        : "confirm200"
+                    } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto md:overflow-auto rounded-[12px]`}
                   >
                     <hr className=" h-[6px] bg-[#04177f] lg:mt-[5%] border-none mt-[6%] md:mt-[5%] md:h-[10px]" />
                     <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[3%] lg:my-[%]">
                       Successful
                     </p>
-                    <p className="text-[10px] text-[#04177F] md:text-[14px] px-[20px] lg:text-[18px] font-extrabold text-center my-[1%] lg:my-[%]">
+                    <p className="text-[10px] text-[#04177F] md:text-[14px] px-[20px] lg:text-[18px] font-extrabold text-center">
                       Your card *****5488 has been permanently deleted. You can
                       add your card again anytime!
                     </p>
                     <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[5%]">
                       <img
-                        className="confirm-delete-card w-[100px] h-[60px] mx-auto mb-[2%] lg:w-[120px] lg:h-[120px]"
+                        className="success-default-card w-[100px] h-[100px] md:w-[90px] md:h-[90px] mx-auto mb-[2%] lg:w-[150px] lg:h-[120px]"
                         src={SuccessGif}
                         alt="/"
                       />
                     </div>
 
                     <div
-                      className={`w-full h-[38px] mt-[40px] px-[20px] md:mx-[35%] md:mt-[10px]`}
+                      className={`w-full h-[38px] mt-[20px] px-[20px] md:mt-[10px]`}
                     >
                       <button
-                        className={`bg-[#04177F] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
+                        className={`bg-[#04177F] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[20px] lg:text-[16px] md:mx-auto lg:h-[38px] lg:my-[4%]`}
                         onClick={() => {
                           setConfirmDeleteCard(false);
                           // window.location.reload();
@@ -612,25 +629,26 @@ const ExistingCardPage = () => {
           )}
 
           {cardPaymentSelected && usd ? (
-            <WalletModal>
-              <div className="text-center flex justify-center item-center md:mt-[-20px] lg:mt-[15px] 2xl:mt-[-15px]">
-                <div
-                  className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
-      flex flex-col justify-center z-[100] lg:ml-[10px] md:w-full`}
-                >
-                  <div>
-                    <p className="text-[10px] text-[#04177F] text-center pt-[5%] md:pt-[10%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[3%]">
-                      This Currency is Currently Not Available.
-                    </p>
-                  </div>
-                  <img
-                    src={GBPPopUp}
-                    alt=""
-                    className="popUp-style mx-auto mt-[20px] md:mt-[5%] md:w-[70%] md:h-[100%] md:mx-auto w-[143px] h-[100px] lg:mx-auto lg:mt-[8%] 2xl:mt-[10%] 2xl:mx-auto"
-                  />
+            <Modal>
+            <div
+              className={` ${
+                toggleSideBar ? "currencypopup1" : "currencypopup"
+              } bg-white flex flex-col justify-between md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
+            >
+              <div className={`${isDarkMode ? "bg-[#000]" : "bg-[]"} xl:pb-0`}>
+                <div>
+                  <p className="text-[10px] text-[#04177F] text-center pt-[5%] md:pt-[0%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[0%]">
+                    This Currency is Currently Not Available.
+                  </p>
                 </div>
+                <img
+                  src={GBPPopUp}
+                  alt=""
+                  className="popUp-style mx-auto mt-[20px] md:mt-[5%] md:w-[70%] md:h-[100%] md:mx-auto w-[143px] h-[100px] lg:mx-auto lg:mt-[0%] xl:h-[50%] xl:mt-[5%] 2xl:mt-[3%] xl:mx-auto"
+                />
               </div>
-              <div className="mobile-desktop mt-[30px] flex flex-col gap-[5px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
+
+              <div className="mobile-desktop mt-[30px] flex flex-col gap-[5px] pb-[5%] xl:mt-[-10%] 2xl:mt-[-20%] lg:mt-[0%] md:mt-[5%] md:pr-[10px]">
                 <p className="text-[8px] font-extrabold text-end float-right ml-[60%] md:ml-[70%] md:text-[12px] mt-[10px] lg:text-[13px] 2xl:text-[15px]">
                   Coming Soon...
                 </p>
@@ -643,7 +661,8 @@ const ExistingCardPage = () => {
                   Okay
                 </button>
               </div>
-            </WalletModal>
+            </div>
+          </Modal>
           ) : null}
         </section>
 
