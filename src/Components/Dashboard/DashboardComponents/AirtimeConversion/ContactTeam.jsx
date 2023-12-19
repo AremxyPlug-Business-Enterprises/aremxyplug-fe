@@ -184,7 +184,7 @@ const handleShowList =()=> {
         <div className='text-[10px] md:text-[12px] lg:text-[16px] flex flex-col gap-2 items-center md:items-start'>
             <div className='font-[600]'>The team incharge will reach out to you as soon as possible.</div>
             <div>Verified Email: <span className='text-[#04177F] font-[600]'>airtimeconversion@aremxyplug.com</span></div>
-            <div>Completion Time - 2 hours, from 09:00am - 10:00pm UTC+1.</div>
+            <div>Completion Time 0 - 2 hours, from 09:00am - 10:00pm UTC+1.</div>
         </div>
 
         <div className='grid grid-cols-1 md:grid-cols-2 mt-4 md:mt-6 gap-5'>
