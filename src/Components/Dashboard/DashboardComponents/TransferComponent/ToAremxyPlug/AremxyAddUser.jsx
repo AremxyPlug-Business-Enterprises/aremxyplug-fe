@@ -281,8 +281,10 @@ const AremxyAddUser = () => {
                 <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
                     <input
                     onChange={(e) => {
-                        setUserPhoneNumber(e.target.value);
-                       }} 
+                      const value = e.target.value;
+                      const numericValue = value.replace(/\D/g, "").slice(0, 11);
+                      setUserPhoneNumber(numericValue);
+                    }} 
                     name="userPhoneNumber"
                     value={userPhoneNumber}
                     className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
