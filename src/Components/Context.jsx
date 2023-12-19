@@ -800,7 +800,7 @@ const globalAccountName = globalTransferState.accountName;
   const [lastName, setLastName] = useState('');
   const [airEmail, setairEmail] = useState('');
   const [homeAdress, sethomeAdress] = useState('');
-
+ 
   //=============Currency conversion==============
   const [convertedAmount, setConvertedAmount] = useState("");
   const [initialValue, setInitialValue] = useState("");
@@ -1265,7 +1265,7 @@ const globalAccountName = globalTransferState.accountName;
      setairEmail,
      homeAdress,
     sethomeAdress,
-
+   
 
     //currency
     convertedAmount,
