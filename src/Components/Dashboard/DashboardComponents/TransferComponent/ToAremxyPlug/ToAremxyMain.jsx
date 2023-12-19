@@ -294,7 +294,7 @@ export default function ToAremxyMain() {
               maxLength="11"
               value={mainUserPhoneNumber}
               className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
-              type="number"
+              type="text"
             />
             <img
               className=" h-[13.3px] w-[13.3px] lg:w-[24px] lg:h-[24px] "
