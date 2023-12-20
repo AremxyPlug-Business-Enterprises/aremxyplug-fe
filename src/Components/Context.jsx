@@ -349,7 +349,7 @@ export const Context = ({ children }) => {
   // =============Start Dashboard=============
   const [toggleSideBar, setToggleSideBar] = useState("");
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [isValue, SetIsValue] = useState(false);
+  const [isValue, SetIsValue] = useState(true);
   const [showModal2, setShowModal2] = useState(false);
   const [logout, setLogout] = useState(false);
   const date = new Date();
@@ -882,7 +882,7 @@ const globalAccountName = globalTransferState.accountName;
   const [jambQuantityActive, setJambQuantityActive] = useState(false);
   const [jambPaymentResult, setJambPaymentResult] = useState('');
   const [jambMethodActive, setJambMethodActive] = useState(false);
-  const [jambExamType, setJambExamType] = useState('');
+  const [jambExamType, setJambExamType] = useState("");
   const [jambExamActive, setJambExamActive] = useState(false);
   const [jambEducationPinPhone, setJambEducationPinPhone] = useState('');
   const [jambEducationPinEmail, setJambEducationPinEmail] = useState('');
@@ -894,7 +894,7 @@ const globalAccountName = globalTransferState.accountName;
   const [nabtebQuantityActive, setNabtebQuantityActive] = useState(false);
   const [nabtebPaymentResult, setNabtebPaymentResult] = useState('');
   const [nabtebMethodActive, setNabtebMethodActive] = useState(false);
-  const [nabtebExamType, setNabtebExamType] = useState('');
+  const [nabtebExamType, setNabtebExamType] = useState("");
   const [nabtebExamActive, setNabtebExamActive] = useState(false);
   const [nabtebEducationPinPhone, setNabtebEducationPinPhone] = useState('');
   const [nabtebEducationPinEmail, setNabtebEducationPinEmail] = useState('');
@@ -912,19 +912,18 @@ const globalAccountName = globalTransferState.accountName;
   const [bvnVerificationOpen, setBvnVerificationOpen] = useState(false);
   const [accountUpgradeOpen, setAccountUpgradeOpen] = useState(false);
   const [dropDownGender, setDropDownGender] = useState(false);
-  const [idAddress, setIdAddress] = useState('');
-  const [idState, setIdState] = useState('');
-  const [idCity, setIdCity] = useState('');
-  const [idLGA, setIdLGA] = useState('');
-  const [idNumber, setIdNumber] = useState('');
-  const [idPostalCode, setIdPostalCode] = useState('');
-
+  const [idAddress, setIdAddress] = useState("");
+  const [idState, setIdState] = useState("");
+  const [idCity, setIdCity] = useState("");
+  const [idLGA, setIdLGA] = useState("");
+  const [idNumber, setIdNumber] = useState("");
+  const [idPostalCode, setIdPostalCode] = useState("");
 
   //========== BUSINESS KYC =============
   const [businessPopUp, setBusinessPopUp] = useState(false);
 
   // ========  ACCOUNT UPGRADE ===========
-  const [accountUpgrade, setAccountUpgrade]  = useState(false);
+  const [accountUpgrade, setAccountUpgrade] = useState(false);
 
   //============ AUTHETICATION SETTINGS ========
   const [authenticationOpen, setAuthenticationOpen] = useState(false);

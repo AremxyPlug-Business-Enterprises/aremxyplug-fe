@@ -21,7 +21,7 @@ export const MainDashboard = () => {
   const { setHideNavbar, toggleSideBar, isDarkMode } =
     useContext(ContextProvider);
   const [visible, setVisibility] = useState(true);
-  const [activeButtons, setActiveButtons] = useState([false, false, false]);
+  const [activeButtons, setActiveButtons] = useState([true, false, false]);
   const [blur, setBlur] = useState(false);
   const [blurTwo, setBlurTwo] = useState(false);
   const [blurThree, setBlurThree] = useState(false);
@@ -336,11 +336,13 @@ export const MainDashboard = () => {
                     // setBlurThree();
                   }}
                   value="fiat"
-                  className={`${styles.fcp2} ${
+                  className={`${styles.fcp2}  ${
+                    activeButtons[0]
+                      ? "bg-[#04177f] text-[#fff]"
+                      : " bg-[#92ABFE2E]"
+                  } ${
                     isDarkMode ? " border" : " "
-                  } bg-[#92ABFE2E] cursor-pointer w-[17%] md:w-[10%] flex py-[3.92px] justify-center items-center text-[7px] md:text-[10px] font-semibold leading-normal rounded-[10px] lg:text-[13px] lg:w-[16%] lg:py-[7.47px] lg:rounded-[19px] hover:bg-[#04177f] hover:text-white active:bg-[#04177f] ${
-                    activeButtons[0] ? "bg-[#04177f] " : "bg-[#92ABFE2E]"
-                  } `}
+                  } cursor-pointer w-[17%] md:w-[10%] flex py-[3.92px] justify-center items-center text-[7px] md:text-[10px] font-semibold leading-normal rounded-[10px] lg:text-[13px] lg:w-[16%] lg:py-[7.47px] lg:rounded-[19px] `}
                 >
                   Fiat
                 </div>
@@ -353,8 +355,10 @@ export const MainDashboard = () => {
                   }}
                   className={`${styles.fcp2} ${
                     isDarkMode ? " border" : " "
-                  } md:text-[10px] md:w-[10%] bg-[#92ABFE2E] cursor-pointer w-[17%] flex py-[3.92px] justify-center items-center text-[7px] font-semibold leading-normal rounded-[10px] lg:w-[16%] lg:text-[13px] lg:py-[7.47px] lg:rounded-[19px]  hover:bg-[#04177f] hover:text-white active:bg-[#04177f]${
-                    activeButtons[1] ? "bg-[#04177f]" : "bg-[#92ABFE2E]"
+                  } md:text-[10px] md:w-[10%] cursor-pointer w-[17%] flex py-[3.92px] justify-center items-center text-[7px] font-semibold leading-normal rounded-[10px] lg:w-[16%] lg:text-[13px] lg:py-[7.47px] lg:rounded-[19px] ${
+                    activeButtons[1]
+                      ? "bg-[#04177f] text-[#fff]"
+                      : "bg-[#92ABFE2E]"
                   } `}
                 >
                   Crypto
@@ -368,8 +372,10 @@ export const MainDashboard = () => {
                   }}
                   className={`${styles.fcp2} ${
                     isDarkMode ? " border" : " "
-                  } md:text-[10px] md:w-[10%] bg-[#92ABFE2E] cursor-pointer w-[17%] flex py-[3.92px] justify-center items-center text-[7px] font-semibold leading-normal rounded-[10px] lg:w-[16%] lg:text-[13px] lg:py-[7.47px] lg:rounded-[19px] hover:bg-[#04177f] hover:text-white active:bg-[#04177f]${
-                    activeButtons[2] ? "bg-[#04177f]" : "bg-[#92ABFE2E]"
+                  } md:text-[10px] md:w-[10%] cursor-pointer w-[17%] flex py-[3.92px] justify-center items-center text-[7px] font-semibold leading-normal rounded-[10px] lg:w-[16%] lg:text-[13px] lg:py-[7.47px] lg:rounded-[19px] ${
+                    activeButtons[2]
+                      ? "bg-[#04177f] text-[#fff]"
+                      : "bg-[#92ABFE2E]"
                   } `}
                 >
                   Points

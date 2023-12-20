@@ -19,10 +19,11 @@ export const WalletInOutFlows = () => {
   const [blur, setBlur] = useState(false);
   const [selected, setSelected] = useState("");
   // const [setToggleTotalTransaction] = useState(false);
-  const [yAxisValue, setYAxisValue] = useState("volume");
+  const [yAxisValue, setYAxisValue] = useState("value");
+  const [symbol, setSymbol] = useState("₦");
 
   const [activeButtons, setActiveButtons] = useState([
-    false,
+    true,
     false,
     false,
     false,
@@ -87,7 +88,7 @@ export const WalletInOutFlows = () => {
     datasets: [
       {
         label: "data",
-        data: [0,10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+        data: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
         // border: false
         display: false,
         borderWidth: 0,
@@ -132,7 +133,6 @@ export const WalletInOutFlows = () => {
     },
   };
 
-
   const handleSelectedOption = (event) => {
     const clickedoption = event.target.value;
     setSelected(clickedoption);
@@ -143,6 +143,19 @@ export const WalletInOutFlows = () => {
         clickedoption === "KES" ||
         clickedoption === "EUR"
     );
+    clickedoption === "NGN"
+      ? setSymbol("₦")
+      : clickedoption === "USD"
+      ? setSymbol("$")
+      : clickedoption === "GBP"
+      ? setSymbol("£")
+      : clickedoption === "AUD"
+      ? setSymbol("AU$")
+      : clickedoption === "KES"
+      ? setSymbol("KSh")
+      : clickedoption === "EUR"
+      ? setSymbol("€")
+      : setSymbol("");
     return;
   };
 
@@ -190,7 +203,7 @@ export const WalletInOutFlows = () => {
               alt="dropdown"
             />
           </div>
-          <div className="text-center">&#8358;0</div>
+          <div className="text-center">{symbol}0.00</div>
         </div>
 
         <div
@@ -226,7 +239,7 @@ export const WalletInOutFlows = () => {
               alt="dropdown"
             />
           </div>
-          <div className="text-center">&#8358;0</div>
+          <div className="text-center">{symbol}0.00</div>
         </div>
       </div>
 
