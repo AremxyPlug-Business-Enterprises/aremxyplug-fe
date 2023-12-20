@@ -111,10 +111,8 @@ const checkform = () =>{
         { idVerificationOpen && (
         <div className={`flex flex-col  ${verificationOpen
             ? 'block' : 'hidden'}
-            ${idVerificationOpen
-            ? ' pb-[100px] lg:pb-[150px]'
-             : 'pb-[0px]'}`}>
-         <div className='flex md:gap-[25px] gap-[11px] lg:pt-[50px]  pt-[35px] lg:mb-[50px] mb-[35px]'>
+           `}>
+         <div className='flex md:gap-[25px] gap-[11px] lg:pt-[50px]  pt-[35px] lg:mb-[50px] mb-[35px] '>
             {/* ICON == NOT VERIFIED */}
     <div className=' flex gap-[5px] py-[23px] pr-[12px] pl-[12px] md:py-[25px] md:pr-[41px] md:pl-[16px] bg-white
    shadow-[0px_2.34722px_5.86806px_0px_rgba(0,0,0,0.25)]
@@ -383,29 +381,31 @@ const checkform = () =>{
       {/* UPLOAD IMAGES OFOR ID VERIFICATION */}
       <div className='flex lg:gap-[40px] md:w-[60%] w-[100%] md:justify-start justify-between gap-[24px]'>
         {/* FRONT VIEW */}
-    <div className='flex  lg:py-[14px] py-[8.771px] pr-[20.785px] pl-[20px]
+    <div onClick={()=> {
+     setIdFrontView(true);
+   }} 
+    className='flex  lg:py-[14px] py-[8.771px] pr-[20.785px] pl-[20px]
      lg:pr-[28px] lg:pl-[16px] md:gap-[14px] gap-[8.21px]
     border-[0.4px] border-[solid] border-[#9C9C9C] cursor-pointer'>
    <h2 className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
    Upload ID Front View
    </h2>
-   <img onClick={()=> {
-     setIdFrontView(true);
-   }} src={UploadDoc} alt="" 
+   <img src={UploadDoc} alt="" 
    className='lg:h-[24px] lg:w-[24px] h-[12px] w-[12px]'/>
     </div>
 {/* UPLOAD BACK VIEW */}
-<div className='flex py-[8.771px] pr-[20.785px] pl-[20px]
+<div onClick={() => {
+    setIdBackView(true);
+   }}
+ className='flex py-[8.771px] pr-[20.785px] pl-[20px]
   lg:py-[14px] lg:pr-[28px] lg:pl-[16px] gap-[8.21px] md:gap-[14px]
 border-[0.4px] border-[solid] border-[#9C9C9C] cursor-pointer'>
    <h2 className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
    Upload Back View
    </h2>
-   <img onClick={() => {
-    setIdBackView(true);
-   }} src={UploadDoc} alt="" 
+   <img src={UploadDoc} alt="" 
    className='lg:h-[24px] lg:w-[24px] h-[12px] w-[12px]'/>
   
     </div>
@@ -418,7 +418,7 @@ border-[0.4px] border-[solid] border-[#9C9C9C] cursor-pointer'>
         <button onClick={() => {
           checkform();
         }}
-         className={`lg:py-[13px] py-[16.531px] rounded-[4.241px] w-[100%] md:w-[150px] lg:w-[163px] lg:rounded-[12px] bg-[#04177F]
+         className={`lg:py-[13px] md:py-[5.868px] md:rounded-[7.042px] py-[16.531px] rounded-[4.241px] w-[100%] md:w-[150px] lg:w-[163px] lg:rounded-[12px] bg-[#04177F]
          font-[600] text-[12px] leading-[18px] lg:text-[16px] text-center text-white lg:leading-[24px`}>
         Submit
         </button>
@@ -433,59 +433,70 @@ border-[0.4px] border-[solid] border-[#9C9C9C] cursor-pointer'>
         </div>
         {idCustomerQuery && (
           <Modal>
-            <div className='bg-white flex flex-col  lg:h-[890px] lg:w-[70%] lg:rounded-[20px]
-            lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] justify-center items-center lg:gap-[100px]'>
-          <div className='flex flex-col lg:gap-[25px] items-center'>
-       <p className='font-[400] text-[8px] text-center leading-[10.4px] 
-   lg:text-[16px] lg:leading-[20.8px'>
+            <div className='flex bg-white flex-col shadow-[0px_0px_8.3274px_0px_rgba(0 0 0,0.25)] rounded-[8px] 
+             shadow-[0px_0px_8.3274px_0px_rgba(0 0 0,0.25)] md:rounded-[11.736px]  lg:rounded-[20px]   lg:w-[60%] md:w-[60%]
+            md:shadow-[0px_0px_11.73611px_0px_rgba(0,0,0,0.25) lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] 
+            justify-center items-center  px-[18px] md:px-[30px] 
+            md:mx-[0px] mx-[19px] md:overflow-y-scroll md:py-[30px] pt-[30px]'>
+            <div className=' flex flex-col w-[100%]  lg:h-[650px] md:h-[590.893px]  
+             h-[590px] gap-[18px] md:gap-[40px] lg:gap-[70px] lg:justify-normal md:justify-center'>
+          <div className='flex flex-col lg:gap-[25px] gap-[10px] md:gap-[15px] items-center'>
+       <p className='font-[400] text-[13px] text-center leading-[16.206px] 
+   lg:text-[16px] lg:leading-[20.8px]'>
     ID Verification confirms your identity using a Government-issued ID document. 
     </p>
-    <p className='font-[400] text-[8px] text-center leading-[10.4px] 
-   lg:text-[16px] lg:leading-[20.8px'>
+    <p className='font-[400] text-[13px] text-center leading-[16.206px] 
+   lg:text-[16px] lg:leading-[20.8px]'>
 This verification protects you and us from fraudulent activities.
  Your information remains confidential and is used solely for verification.
  </p>
  <img src={QueryId} alt="" 
-          className='lg:w-[294px] lg:h-[234px]'/>
+          className='lg:w-[294px] lg:h-[234px] md:w-[172px]
+           md:h-[135.893px] w-[172.521px] h-[135.893px]'/>
           </div>
           {/*  */}
           
-          <div className='flex flex-col lg:gap-[40px] mb-[50px]'>
+          <div className='flex flex-col gap-[20px] lg:gap-[40px] md:gap-[23.47px] mb-[50px] mt-[18px]'>
             {/* Header */}
-   <h2 className='font-[700] lg:text-[16px] lg:leading-[19.2px] text-center'>
+   <h2 className='font-[700] lg:text-[16px] lg:leading-[19.2px] text-[13px] leading-[16.206px] 
+   text-center'>
    Why do we need your ID document for account verification?
    </h2>
    {/* Paragraph */}
-   <div className='flex flex-col lg:gap-[20px]'>
-  <p className='font-[700] lg:text-[16px] lg:leading-[19.2px] text-center'>
-  1. Security: Your safety is our priority. Verifying your ID helps us
+   <div className='flex flex-col gap-[10px]  md:gap-[20px]'>
+  <p className='font-[500] lg:text-[16px] lg:leading-[19.2px] 
+  text-left  text-[13px] leading-[16.206px]'>
+  <span className='font-[700]'>1. Security: </span>Your safety is our priority. Verifying your ID helps us
    protect your account from unauthorized access and potential fraud.
 </p>
-<p className='font-[700] lg:text-[16px] lg:leading-[19.2px] text-center'>
-2. Trust: We want to build a trusted relationship with you. 
+<p className='font-[500] lg:text-[16px] lg:leading-[19.2px]
+ text-left   text-[13px] leading-[16.206px]'>
+   <span className='font-[700]'>2. Trust:</span> We want to build a trusted relationship with you. 
 Confirming your identity ensures that the person accessing the account is indeed you.
 </p>
    </div>
 
           </div>
-          <div className='flex'>
+          <div className='flex w-[100%] md:justify-center'>
    <button onClick={() => {
     setIdCustomerQuery(false);
    }} 
-   className='font-[600] bg-[#04177F] md:w-[163px] lg:py-[13px] text-white lg:rounded-[12px]
-   lg:text-[16px] lg:leading-[24px] '>
+   className='font-[600] bg-[#04177F] w-[100%] md:w-[163px] md:py-[5.868px] lg:py-[13px]
+    text-white lg:rounded-[12px] py-[16.531px] 
+   lg:text-[16px] lg:leading-[24px] md:rounded-[7.042px] rounded-[4.61px] md:mb-[40px]'>
     Okay
    </button>
           </div>
  </div>
           
+          </div>
             
           </Modal>
         )}
     {idFrontView && (
 <Modal>
-  <div className='flex flex-col rounded-[8px] w-[100%] h-[257.07px]  md:h-[404px] 
-  lg:h-[404px] bg-white md:w-[45%] lg:rounded-[12px] mx-[19px] 
+  <div className='flex flex-col rounded-[8px] w-[100%]   h-[257.07px]  md:h-[350px] 
+  lg:h-[404px] bg-white lg:w-[45%] md:w-[60%] lg:rounded-[12px] mx-[19px] 
   shadow-[0px_0px_11.73611px_0px_rgba(0,0,0,0.25)] md:mx-[0px]
    lg:shadow-[0px_0px_20px_0_px_rgba(0 0,0,0.25)]'>
     <div className='flex justify-end p-[10px]'>
@@ -493,19 +504,19 @@ Confirming your identity ensures that the person accessing the account is indeed
     setIdFrontView(false);
   }} 
   src={closeIcon} alt=""
-  className='h-[32px] w-[32px]  '/>
+  className='h-[32px] w-[32px]  cursor-pointer'/>
   </div>
-  <div className='flex flex-col  lg:gap-[30px] gap-[20px] justify-center items-center '>
+  <div className='flex flex-col h-[100%]   md:gap-[30px] gap-[20px] justify-center items-center'>
     <h2 className=' font-[500] text-center text-[10px] leading-[14.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
       Upload ID Front View
       </h2>
-      <img className='lg:h-[200px] lg:w-[197px] h-[91px] w-[89px]'
+      <img className='lg:h-[200px] lg:w-[197px] md:w-[115.339px] md:h-[117.361px] h-[91px] w-[89px]'
     src={frontView} alt="" />
       <button onClick={(e) => {
         e.preventDefault();
       }}
-       className='font-[600] text-white md:w-[30%] text-[12px] leading-[18px] 
+       className='font-[600] text-white md:w-[150px] text-[12px] leading-[18px] 
       lg:text-[16px] 
       lg:leading-[24px] bg-[#04177F]  w-[80%] py-[10px]
       lg:rounded-[12px] lg:py-[10px] rounded-[4.61px]'>
@@ -517,8 +528,8 @@ Confirming your identity ensures that the person accessing the account is indeed
     )}
     {idBackView && (
       <Modal>
-        <div className='flex flex-col rounded-[8px] w-[100%] h-[257.07px]  md:h-[404px] 
-        lg:h-[404px] bg-white md:w-[45%] lg:rounded-[12px] mx-[19px] 
+        <div className='flex flex-col rounded-[8px] w-[100%] h-[257.07px]  md:h-[350px] 
+        lg:h-[404px] bg-white md:w-[60%] lg:w-[45%] lg:rounded-[12px] mx-[19px] 
         shadow-[0px_0px_11.73611px_0px_rgba(0,0,0,0.25)] md:mx-[0px]
          lg:shadow-[0px_0px_20px_0_px_rgba(0 0,0,0.25)]'>
           <div className='flex justify-end p-[10px]'>
@@ -526,19 +537,19 @@ Confirming your identity ensures that the person accessing the account is indeed
           setIdBackView(false);
         }} 
         src={closeIcon} alt=""
-        className='h-[32px] w-[32px]  '/>
+        className='h-[32px] w-[32px]  cursor-pointer'/>
         </div>
-        <div className='flex flex-col  lg:gap-[30px] gap-[20px] justify-center items-center '>
+        <div className='flex flex-col h-[100%]  md:gap-[30px] gap-[20px] justify-center items-center '>
           <h2 className=' font-[500] text-center text-[10px] leading-[14.4px] 
          lg:text-[16px] lg:leading-[20.8px]'>
             Upload ID Back View
             </h2>
-            <img className='lg:h-[200px] lg:w-[197px] h-[91px] w-[89px]'
+            <img className='lg:h-[200px] lg:w-[197px] md:w-[115.339px] md:h-[117.361px]  h-[91px] w-[89px]'
           src={BackView} alt="" />
             <button onClick={(e) =>{
               e.preventDefault();
             }} 
-            className='font-[600] text-white md:w-[30%] text-[12px] leading-[18px] 
+            className='font-[600] text-white  md:w-[150px] text-[12px] leading-[18px] 
             lg:text-[16px] 
             lg:leading-[24px] bg-[#04177F]  w-[80%] py-[10px]
             lg:rounded-[12px] lg:py-[10px] rounded-[4.61px]'>

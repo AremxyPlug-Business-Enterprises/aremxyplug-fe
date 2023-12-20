@@ -4,7 +4,7 @@ import { ContextProvider } from "../../Context";
 import { Link } from "react-router-dom";
 
 function NgnVirtualAccount() {
-  const { isDarkMode } = useContext(ContextProvider);
+  const { isDarkMode } = useContext(ContextProvider)
 
   const accountNumber = '1234567890';
   const accountName = 'Habib Kamaldeen';
@@ -26,10 +26,10 @@ function NgnVirtualAccount() {
     const value_2 = accNameRef.current.innerText;
     const value_3 = accNoRef.current.innerText;
 
-    const text_1 = 'Bank Name: '+ {value_1}
-    const text_2 = 'Account Name: '+ {value_2};
-    const text_3 = 'Account Number: '+ {value_3};
-    const combineText = text_1 +'\n' + text_2 + '\n' + text_3
+    const text_1 = `Bank Name: ${value_1}`
+    const text_2 = `Account Name: ${value_2}`;
+    const text_3 = `Account Number: ${value_3}`;
+    const combineText = `${text_1}\n${text_2}\n${text_3}`
 
     navigator.clipboard.writeText(combineText)
     .then(() => {
@@ -37,7 +37,7 @@ function NgnVirtualAccount() {
     .catch((error) => console.log('Unable to copy details', error));
   }
 
-  const handleShareCombineText = async () => {
+  const handleShareCombineText = () => {
 
     const value_1 = bankNameRef.current.innerText;
     const value_2 = accNameRef.current.innerText;
@@ -50,12 +50,9 @@ function NgnVirtualAccount() {
     };
 
     if (navigator.share) {
-      try{
-        await navigator.share(combineText);
-        console.log('Details shared successfully')
-      } catch (error) {
-        console.error('Error sharing details: ', error.message)
-      }    
+      navigator.share(combineText)
+      .then(() => console.log('Details shared successfully'))
+      .catch(() => console.log('navigator.share is not supported'))   
     } else {
       console.log('navigator.share is not supported')
     }
@@ -133,12 +130,12 @@ function NgnVirtualAccount() {
           </div>
 
           <div className='mt-[25.39px] md:mt-[35px] lg:mt-[60px] flex items-center justify-between'>
-            <button className='bg-primary text-white text-[7px] leading-[10.5px] rounded-[4px] md:rounded-[7px] md:text-[9.17px] md:leading-[13.75px] flex items-center lg:text-[16px] lg:leading-[24px] justify-center py-[5px] w-[85.5px] md:w-[124px] lg:w-[231px] lg:py-[10px]'>
+            <Link to='/CardPayment' className='bg-primary text-white text-[7px] leading-[10.5px] rounded-[4px] md:rounded-[7px] md:text-[9.17px] md:leading-[13.75px] flex items-center lg:text-[16px] lg:leading-[24px] justify-center py-[5px] w-[85.5px] md:w-[124px] lg:w-[231px] lg:py-[10px]'>
               <div className='mr-1 w-[11.38px] h-[11.38px] md:w-[19.48px] md:h-[19.48px] lg:w-[34px] lg:h-[34px]'>
                 <img src="./Images/wallet/card-add.png" alt="" className='object-cover w-full'/>
               </div>
               <h2>Fund with card</h2>
-            </button>
+            </Link>
             <button
               onClick={handleCopyCombineText} 
               className='bg-primary text-white text-[7px] leading-[10.5px] md:text-[9.17px] md:leading-[13.75px] rounded-[4px] md:rounded-[7px] flex items-center lg:text-[16px] lg:leading-[24px] justify-center py-[5px] w-[85.5px] md:w-[124px] lg:w-[231px] lg:py-[10px]'

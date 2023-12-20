@@ -98,9 +98,10 @@ export default function WalletSummaryPage() {
     <DashBoardLayout>
       <div className="w-full h-full">
 
-      <div
+
+          <div
             // id="Transaction"
-            className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] bg-gradient-to-r from-yellow-300 to-rose-400 md:rounded-[11.5px] rounded-[7px] md:mt-[-1px] px-[5px] lg:ml-[-20px] lg:w-[102%] 2xl:w-full 2xl:ml-0 lg:gap-[50px] pt-[10px] lg:px-[30px] lg:rounded-[20px] lg:py-[20px] pb-[16px] flex justify-between items-center"
+            className="w-full h-[90px] md:h-[112.29px] bg-gradient-to-r from-yellow-300 to-rose-400  lg:h-[196px] md:rounded-[11.5px] rounded-[7px] md:mt-[-1px] px-[5px] lg:ml-[-20px] lg:w-[102%] 2xl:w-full 2xl:ml-0 lg:gap-[50px] pt-[10px] lg:px-[30px] lg:rounded-[20px] lg:py-[20px] pb-[16px] flex justify-between items-center"
           >
             <div className="w-[100%] pt-[19px] lg:pt-[20px] pl-[8.5px] md:pl-[9px]">
               <p className="text-[10px] mb-2 font-bold uppercase w-[100%] md:text-[12px] md:w-[70%] lg:w-[70%] lg:text-[20px] 2xl:w-[80%] 2xl:text-[24px] lg:mb-4">
@@ -116,11 +117,10 @@ export default function WalletSummaryPage() {
               <img
                 src={cash}
                 alt=""
-                className="w-[55.482px] h-full md:w-[98px] md:h-[px] lg:w-[166.447px] lg:h-[150px]"
+                className="w-[67.482px] h-[60px] md:w-[98px] md:h-[px] lg:w-[196.447px] lg:h-[150px]"
               />
             </div>
           </div>
-
 
 
         <div

@@ -7,7 +7,7 @@
 }
 
 #Transaction {
-  background: linear-gradient(92deg, #FFDA44 4.68%, #FF748D 55.04%);
+  background: linear-gradient(92deg, #ffda44 4.68%, #ff748d 55.04%);
 }
 
 #DataBundle {
@@ -58,7 +58,7 @@
 
 .code {
   position: absolute;
-  height: 505px;
+  height: 500px;
   flex-shrink: 0;
   border-radius: 8px;
   background: #fff;
@@ -98,7 +98,8 @@
   box-shadow: 0px 0px 1.33333px 0px rgba(0, 0, 0, 0.25);
 }
 
-.confirm {
+.confirm,
+.confirm01 {
   position: absolute;
   bottom: 0%;
   height: 520px;
@@ -106,6 +107,63 @@
   flex-shrink: 0;
   background: #fff;
   box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+}
+
+.confirmEdit,
+.confirmEdit01 {
+  position: absolute;
+  bottom: 0%;
+  height: 400px;
+  width: 90%;
+  flex-shrink: 0;
+  background: #fff;
+  box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+}
+
+/* 
+.continueState, .continueState01 {
+  position: absolute;
+  bottom: 0%;
+  height: 400px;
+  width: 90%;
+  flex-shrink: 0;
+  background: #fff;
+  box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+} */
+
+.confirm2,
+.confirm02 {
+  bottom: 0%;
+  position: absolute;
+  width: 90%;
+}
+
+.confirm3,
+.confirm03 {
+  position: absolute;
+  width: 90%;
+  height: 60%;
+  padding-bottom: 10px;
+  bottom: 0;
+}
+
+.datapopup1,
+.datapopup01 {
+  margin: 0 auto;
+  padding: 2% 20px;
+  width: 90%;
+  height: 30%;
+  position: absolute;
+  top: 35%;
+  border-radius: 12px;
+}
+
+.confirm200,
+.confirm002 {
+  position: absolute;
+  width: 90%;
+  height: 30%;
+  bottom: 0;
 }
 
 @media (max-width: 425px) {
@@ -146,75 +204,130 @@
   }
 }
 
-/* ==================Surface Pro 7================ */
-@media (min-width: 912px) and (max-width: 1368px) {
-  .Datatopup {
-    display: flex;
-    padding: 8.594px 28.645px 8.375px 8.595px;
-    align-items: center;
-    gap: 203.073px;
-    border-radius: 6.875px;
-    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.65);
-  }
-
-  .Datapopup {
-    position: absolute;
-    top: 37%;
-    width: 50%;
-    height: 360px;
-    border-radius: 8px;
-  }
-
-  .mobile-desktop {
-    margin-top: 5px;
-  }
-}
-
-@media (min-width: 1020px) and (max-width: 1180px) {
-  .img {
-    margin-right: auto;
-    margin-left: auto;
-    margin-top: 1%;
-    margin-bottom: -5%;
-  }
-
-  .confirm {
-    position: absolute;
-    top: 7%;
-    border-radius: 15px;
-    height: 550px;
-    box-shadow: 0px 0px 16.952381610870361px 0px rgba(0, 0, 0, 0.25);
-  }
-
-  .transaction {
-    gap: 11%;
-  }
-
-  .transaction2 {
-    margin-top: 20px;
-  }
-}
-
 @media (min-width: 768px) and (max-width: 820px) {
-  .img {
+  /* .img {
     margin-right: 125px;
     margin-left: 125px;
+  } */
+
+  .confirm002 {
+    width: 50%;
+    height: 35%;
+    top: 0;
+    margin-left: 20%;
   }
 
-  .confirm {
+  .confirm200 {
+    width: 50%;
+    height: 35%;
+    top: 0;
+  }
+
+  .confirmEdit {
     position: absolute;
-    bottom: 0%;
-    height: 620px;
+    top: 0%;
+    height: 400px;
     width: 60%;
     flex-shrink: 0;
     background: #fff;
-    /* margin-left: 22%; */
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
   }
 
+  .confirmEdit01 {
+    position: absolute;
+    top: 0%;
+    height: 400px;
+    width: 50%;
+    flex-shrink: 0;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+    margin-left: 20%;
+  }
+
+  .code01 {
+    width: 60%;
+  }
+
+  .code1 {
+    width: 50%;
+    margin-left: 20%;
+  }
+
+  .img {
+    margin-left: 35%;
+  }
+
+  .datapopup1 {
+    margin: 0 auto;
+    padding: 2.5% 20px;
+    width: 50%;
+    height: 35%;
+    position: absolute;
+    top: 32.5%;
+    border-radius: 12px;
+  }
+
+  .datapopup01 {
+    margin: 0 auto;
+    padding: 2.5% 20px;
+    width: 50%;
+    height: 35%;
+    position: absolute;
+    top: 32.5%;
+    border-radius: 12px;
+    margin-left: 20%;
+  }
+
+  .confirm {
+    position: absolute;
+    top: 0%;
+    height: 50%;
+    width: 50%;
+    flex-shrink: 0;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+  }
+
+  .confirm01 {
+    position: absolute;
+    top: 0%;
+    height: 50%;
+    width: 50%;
+    flex-shrink: 0;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+    margin-left: 22%;
+  }
+
   .confirm2 {
-    margin-bottom: 40%;
-    height: 32%;
+    top: 0%;
+    width: 50%;
+    height: 30%;
+  }
+
+  .confirm02 {
+    top: 0%;
+    width: 50%;
+    height: 30%;
+    margin-left: 20%;
+  }
+
+  .confirm3 {
+    position: absolute;
+    top: 0%;
+    height: 50%;
+    width: 50%;
+    flex-shrink: 0;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+  }
+
+  .confirm03 {
+    width: 50%;
+    height: 50%;
+    padding-bottom: 10px;
+    top: 0%;
+    margin-left: 20%;
   }
 
   .mainGrid {
@@ -263,6 +376,10 @@
   .Datatopup {
     box-shadow: 0px 0px 3.3119657039642334px 0px rgba(0, 0, 0, 0.25);
   }
+
+  .amount1 {
+    padding-right: 5px;
+  }
 }
 
 /* ===================Tablet view ================ */
@@ -278,9 +395,9 @@
 
   .confirm {
     position: absolute;
-    bottom: 0%;
-    height: 620px;
-    width: 60%;
+    top: 0%;
+    /* height: 620px; */
+    /* width: 60%; */
     flex-shrink: 0;
     background: #fff;
     /* margin-left: 25%; */
@@ -288,7 +405,7 @@
   }
 
   .code {
-    height: 620px;
+    height: 500px;
     border-radius: 12px;
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
@@ -307,8 +424,7 @@
     box-shadow: 0px 0px 3.3119657039642334px 0px rgba(0, 0, 0, 0.25);
   }
 
-
-  .transaction-table {
+  /* .transaction-table {
     gap: 11%;
   }
 
@@ -322,21 +438,330 @@
 
   .amount1 {
     padding-right: 5px;
-  }
-
-
+  } */
 }
 
+@media (min-width: 845px) {
+  .confirm {
+    position: absolute;
+    height: 50%;
+    width: 50%;
+    flex-shrink: 0;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+  }
 
-@media (max-width: 845px) {
   .transaction-table {
-    gap: 9.6%;
+    gap: 9.3%;
   }
 
   .transaction-table1 {
-    gap: 6.6%;
+    gap: 9%;
   }
-  
+
+  .transaction-table2 {
+    gap: 6%;
+  }
+
+  .amount {
+    padding-right: 5px;
+  }
+
+  .amount1 {
+    padding-right: 6px;
+  }
+
+  .confirm01 {
+    position: absolute;
+    top: 0%;
+    height: 50%;
+    width: 50%;
+    flex-shrink: 0;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+    margin-left: 20%;
+  }
+
+  .confirm2 {
+    top: 0%;
+    width: 40%;
+    height: 30%;
+  }
+
+  .confirm02 {
+    top: 0%;
+    width: 40%;
+    height: 30%;
+    margin-left: 20%;
+  }
+
+  .confirm3 {
+    position: absolute;
+    top: 0%;
+    height: 50%;
+    width: 50%;
+    flex-shrink: 0;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+  }
+
+  .confirm03 {
+    width: 50%;
+    height: 50%;
+    padding-bottom: 10px;
+    top: 0%;
+    margin-left: 20%;
+  }
+
+  .img {
+    margin-left: 35%;
+  }
+
+  .datapopup1 {
+    margin: 0 auto;
+    padding: 2.5% 20px;
+    width: 45%;
+    height: 35%;
+    position: absolute;
+    top: 32.5%;
+    border-radius: 12px;
+  }
+
+  .datapopup01 {
+    margin: 0 auto;
+    padding: 2.5% 20px;
+    width: 45%;
+    height: 35%;
+    position: absolute;
+    top: 32.5%;
+    border-radius: 12px;
+    margin-left: 20%;
+  }
+
+  .code01 {
+    width: 55%;
+  }
+
+  .code1 {
+    width: 50%;
+    margin-left: 20%;
+  }
+
+  .confirmEdit {
+    position: absolute;
+    top: 0%;
+    height: 400px;
+    width: 60%;
+    flex-shrink: 0;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+  }
+
+  .confirmEdit01 {
+    position: absolute;
+    top: 0%;
+    height: 400px;
+    width: 50%;
+    flex-shrink: 0;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+    margin-left: 20%;
+  }
+
+  .confirm200 {
+    position: absolute;
+    width: 50%;
+    height: 35%;
+    top: 0;
+  }
+
+  .confirm002 {
+    width: 50%;
+    height: 35%;
+    top: 0;
+    margin-left: 20%;
+  }
+}
+
+/* ==================Surface Pro 7================ */
+@media (min-width: 912px) and (max-width: 1368px) {
+  .Datatopup {
+    display: flex;
+    padding: 8.594px 28.645px 8.375px 8.595px;
+    align-items: center;
+    gap: 203.073px;
+    border-radius: 6.875px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.65);
+  }
+
+  .Datapopup {
+    position: absolute;
+    top: 37%;
+    width: 50%;
+    height: 360px;
+    border-radius: 8px;
+  }
+
+  .mobile-desktop {
+    margin-top: 5px;
+  }
+}
+
+@media (min-width: 1020px) and (max-width: 1180px) {
+  /* .img {
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 1%;
+    margin-bottom: -5%;
+  } */
+
+  .confirm2 {
+    top: 0%;
+    width: 35%;
+    height: 30%;
+  }
+
+  .confirm02 {
+    top: 0%;
+    width: 40%;
+    height: 30%;
+    margin-left: 20%;
+  }
+
+  .confirm200 {
+    position: absolute;
+    width: 40%;
+    height: 35%;
+    top: 0;
+  }
+
+  .confirm002 {
+    width: 40%;
+    height: 35%;
+    top: 0;
+    margin-left: 20%;
+  }
+
+  .confirmEdit01 {
+    position: absolute;
+    top: 0%;
+    height: 400px;
+    width: 40%;
+    flex-shrink: 0;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+    margin-left: 20%;
+  }
+
+  .confirmEdit {
+    position: absolute;
+    top: 0%;
+    height: 400px;
+    width: 50%;
+    flex-shrink: 0;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+  }
+
+  .code1 {
+    width: 45%;
+    margin-left: 20%;
+  }
+
+  .code01 {
+    width: 50%;
+  }
+
+  .img {
+    width: 60%;
+    height: 40%;
+  }
+
+  .img2 {
+    width: 40%;
+    height: 40%;
+  }
+
+  .datapopup1 {
+    margin: 0 auto;
+    padding: 1% 20px;
+    width: 40%;
+    height: 36%;
+    position: absolute;
+    top: 32.5%;
+    border-radius: 12px;
+  }
+
+  .datapopup01 {
+    margin: 0 auto;
+    padding: 1.5% 20px;
+    width: 40%;
+    height: 35%;
+    position: absolute;
+    top: 32.5%;
+    border-radius: 12px;
+    margin-left: 20%;
+  }
+
+  .confirm {
+    position: absolute;
+    top: 0%;
+    border-radius: 15px;
+    height: 50%;
+    width: 50%;
+    box-shadow: 0px 0px 16.952381610870361px 0px rgba(0, 0, 0, 0.25);
+  }
+
+  .confirm01 {
+    position: absolute;
+    height: 50%;
+    width: 40%;
+    flex-shrink: 0;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+    margin-left: 20%;
+  }
+
+  .confirm03 {
+    width: 40%;
+    height: 50%;
+    padding-bottom: 10px;
+    top: 0%;
+    margin-left: 20%;
+  }
+
+  .proceed {
+    margin-top: 10%;
+    margin-left: 22%;
+  }
+
+  .transaction {
+    gap: 11%;
+  }
+
+  .transaction2 {
+    margin-top: 20px;
+  }
+
+  .amount {
+    padding-right: 5px;
+  }
+
+  .amount1 {
+    padding-right: 5px;
+  }
+
+  .transaction-table {
+    gap: 10.8%;
+  }
+
+  .transaction-table1 {
+    gap: 10.3%;
+  }
+
+  .transaction-table2 {
+    gap: 8%;
+  }
 }
 
 /* ================Desktop View======================= */
@@ -360,7 +785,7 @@
 
   .confirm {
     position: absolute;
-    bottom: 0%;
+    top: 0%;
     height: 520px;
     width: 50%;
     flex-shrink: 0;
@@ -369,13 +794,286 @@
   }
 
   .code {
-    height: 560px;
+    height: 500px;
     border-radius: 20px;
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
   }
+
+  .transaction-table {
+    gap: 6.5%;
+  }
+
+  .transaction-table1 {
+    gap: 9%;
+  }
+
+  .transaction-table2 {
+    gap: 6.7%;
+  }
 }
 
+@media (width: 1250px) {
+  .transaction-table {
+    gap: 8.5%;
+  }
+
+  .transaction-table1 {
+    gap: 9%;
+  }
+
+  .transaction-table2 {
+    gap: 8.5%;
+  }
+
+  .img {
+    margin-left: 40%;
+  }
+
+  .datapopup1 {
+    margin: 0 auto;
+    padding: 0% 20px;
+    width: 40%;
+    height: 40%;
+    position: absolute;
+    top: 32.5%;
+    border-radius: 12px;
+  }
+
+  .datapopup01 {
+    margin: 0 auto;
+    padding: 0% 20px;
+    width: 40%;
+    height: 40%;
+    position: absolute;
+    top: 32.5%;
+    border-radius: 12px;
+    margin-left: 20%;
+  }
+
+  .code01 {
+    width: 50%;
+  }
+
+  .code1 {
+    width: 45%;
+    margin-left: 20%;
+  }
+
+  .confirmEdit {
+    position: absolute;
+    top: 0%;
+    height: 400px;
+    width: 50%;
+    flex-shrink: 0;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+  }
+
+  .confirm200,
+  .confirm002 {
+    position: absolute;
+    width: 35%;
+    height: 40%;
+    top: 0;
+  }
+
+  .confirmEdit01 {
+    position: absolute;
+    top: 0%;
+    height: 400px;
+    width: 45%;
+    flex-shrink: 0;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+    margin-left: 20%;
+  }
+
+  .confirm2 {
+    top: 0%;
+    width: 35%;
+    height: 30%;
+  }
+
+  .confirm02 {
+    top: 0%;
+    width: 35%;
+    height: 30%;
+    margin-left: 20%;
+  }
+
+  .confirm03 {
+    width: 40%;
+    height: 50%;
+    padding-bottom: 10px;
+    top: 0%;
+    margin-left: 20%;
+  }
+
+  .confirm {
+    position: absolute;
+    top: 0%;
+    border-radius: 15px;
+    height: 50%;
+    width: 50%;
+    box-shadow: 0px 0px 16.952381610870361px 0px rgba(0, 0, 0, 0.25);
+  }
+
+  .confirm01 {
+    position: absolute;
+    height: 50%;
+    width: 40%;
+    flex-shrink: 0;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+    margin-left: 20%;
+  }
+}
+
+@media (min-width: 1440px) {
+  .transaction-table {
+    gap: 9.7%;
+  }
+
+  .transaction-table1 {
+    gap: 9.9%;
+  }
+
+  .transaction-table2 {
+    gap: 9.7%;
+  }
+
+  .proceed {
+    margin-bottom: 20%;
+    margin-left: 27%;
+  }
+
+  .confirm2 {
+    top: 0%;
+    width: 30%;
+    height: 25%;
+  }
+
+  .confirm02 {
+    top: 0%;
+    width: 30%;
+    height: 25%;
+    margin-left: 20%;
+  }
+
+  /* .confirm3 {
+    position: absolute;
+    top: 0%;
+    height: 520px;
+    width: 60%;
+    flex-shrink: 0;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+  } */
+
+  .confirm03 {
+    width: 40%;
+    height: 50%;
+    padding-bottom: 10px;
+    top: 0%;
+    margin-left: 20%;
+  }
+
+  .img {
+    height: 90%;
+    width: 90%;
+    margin-left: 45%;
+    margin-top: 5%;
+  }
+
+  .datapopup1 {
+    margin: 0 auto;
+    padding: 1.5% 20px;
+    width: 40%;
+    height: 40%;
+    position: absolute;
+    top: 32.5%;
+    border-radius: 12px;
+  }
+
+  .datapopup01 {
+    margin: 0 auto;
+    padding: 1.5% 20px;
+    width: 40%;
+    height: 40%;
+    position: absolute;
+    top: 32.5%;
+    border-radius: 12px;
+    margin-left: 20%;
+  }
+
+  .code01 {
+    width: 50%;
+  }
+
+  .code1 {
+    width: 40%;
+    margin-left: 20%;
+  }
+
+  .confirmEdit {
+    position: absolute;
+    top: 0%;
+    height: 400px;
+    width: 50%;
+    flex-shrink: 0;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+  }
+
+  .confirmEdit01 {
+    position: absolute;
+    top: 0%;
+    height: 400px;
+    width: 40%;
+    flex-shrink: 0;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+    margin-left: 20%;
+  }
+
+  .confirm200,
+  .confirm002 {
+    position: absolute;
+    width: 35%;
+    height: 35%;
+    top: 0;
+  }
+
+  .confirm3 {
+    position: absolute;
+    top: 0%;
+    height: 50%;
+    width: 40%;
+    flex-shrink: 0;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+  }
+
+  .confirm {
+    position: absolute;
+    top: 0%;
+    border-radius: 15px;
+    height: 40%;
+    width: 40%;
+    box-shadow: 0px 0px 16.952381610870361px 0px rgba(0, 0, 0, 0.25);
+  }
+
+  .confirm01 {
+    position: absolute;
+    height: 50%;
+    width: 40%;
+    flex-shrink: 0;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+    margin-left: 20%;
+  }
+}
 
 @media (min-width: 1500px) {
   .transaction-table {
@@ -385,5 +1083,129 @@
   .transaction-table1 {
     gap: 10.3%;
   }
-  
+
+  .transaction-table2 {
+    gap: 10.2%;
+  }
+
+  .img {
+    height: 60%;
+    width: 60%;
+    margin-left: 40%;
+    margin-top: 2.5%;
+  }
+
+  .img2 {
+    width: 25%;
+    height: 25%;
+  }
+
+  .datapopup1 {
+    margin: 0 auto;
+    padding: 0% 20px;
+    width: 40%;
+    height: 40%;
+    position: absolute;
+    top: 32.5%;
+    border-radius: 12px;
+  }
+
+  .datapopup01 {
+    margin: 0 auto;
+    padding: 2% 20px;
+    width: 30%;
+    height: 40%;
+    position: absolute;
+    top: 32.5%;
+    border-radius: 12px;
+    margin-left: 17%;
+  }
+
+  .code01 {
+    width: 40%;
+  }
+
+  .code1 {
+    width: 40%;
+    margin-left: 20%;
+  }
+
+  .confirmEdit {
+    position: absolute;
+    top: 0%;
+    height: 400px;
+    width: 40%;
+    flex-shrink: 0;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+  }
+
+  .confirmEdit01 {
+    position: absolute;
+    top: 0%;
+    height: 400px;
+    width: 35%;
+    flex-shrink: 0;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+    margin-left: 20%;
+  }
+
+  .confirm200,
+  .confirm002 {
+    position: absolute;
+    width: 30%;
+    height: 40%;
+    top: 0;
+  }
+
+  .confirm2 {
+    top: 0%;
+    width: 30%;
+    height: 30%;
+  }
+
+  .confirm02 {
+    top: 0%;
+    width: 30%;
+    height: 30%;
+    margin-left: 20%;
+  }
+
+  .confirm3 {
+    position: absolute;
+    top: 0%;
+    height: 50%;
+    width: 40%;
+    flex-shrink: 0;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+  }
+
+  .confirm03 {
+    width: 40%;
+    height: 50%;
+    padding-bottom: 10px;
+    top: 0%;
+    margin-left: 20%;
+  }
+
+  .confirm {
+    position: absolute;
+    top: 0%;
+    border-radius: 15px;
+    height: 50%;
+    width: 40%;
+    box-shadow: 0px 0px 16.952381610870361px 0px rgba(0, 0, 0, 0.25);
+  }
+
+  .confirm01 {
+    position: absolute;
+    height: 50%;
+    width: 40%;
+    flex-shrink: 0;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+    margin-left: 22%;
+  }
 }

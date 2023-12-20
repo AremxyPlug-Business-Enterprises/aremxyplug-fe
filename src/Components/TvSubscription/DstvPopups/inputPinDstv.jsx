@@ -8,17 +8,23 @@ import OtpInput from "react-otp-input";
 import { AiFillEyeInvisible } from "react-icons/ai";
 
 
-export const InputGotvPopup = () => {
+export const InputDstvPopup = () => {
     const {
-      inputPinGotv,
-      setInputGotv,
+      inputPinDstv,
       inputPin,
       setInputPin,
+      setInputPinDstv,
       toggleSideBar,
       toggleVisibility,
       isVisible,
-      handleGotvSuccessful,
+      setDstvSuccessful,
    } = useContext(ContextProvider)
+
+   const handleDstvSuccessful = (event) =>{
+    event.preventDefault();
+    setInputPinDstv(false);
+    setDstvSuccessful(true);
+  }
 
    const [isFocused, setIsFocused] = useState(false);
       const handleFocus = () => {
@@ -29,12 +35,13 @@ export const InputGotvPopup = () => {
         setIsFocused(false);
       };
 
-      const cancelInputGotv = () => {
-        setInputGotv(false)
+      const cancelInputDstv = () => {
+        setInputPinDstv(false);
+        window.location.reload()
       }
    return(
     <>
-    {inputPinGotv &&
+    {inputPinDstv &&
             (
             <Modal>
          
@@ -43,7 +50,7 @@ export const InputGotvPopup = () => {
             } md:w-[55%] w-[90%]`}
             >
             <div className=" pr-3 lg:pr-5 flex justify-end">
-            <img  onClick={cancelInputGotv}
+            <img  onClick={cancelInputDstv}
                 className="w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px] self-center"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
@@ -94,13 +101,13 @@ export const InputGotvPopup = () => {
               </p>
             </div>
             <button
-              onClick={handleGotvSuccessful}
+              onClick={handleDstvSuccessful}
               disabled={inputPin.length !== 4 ? true : false}
               className={`${
                 inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
               } lg:my-[52px] w-[225px] md:w-[94px] lg:w-[163px] flex justify-center items-center mx-auto cursor-pointer text-[12px] md:text-[10px] lg:text-[16px] font-extrabold h-[40px] lg:h-[38px] md:h-[22px] text-white rounded-[6px] md:rounded-[6.88px] lg:rounded-[12px]`}
             >
-              Fund
+              Purchase
             </button>
         </div>
            </Modal>

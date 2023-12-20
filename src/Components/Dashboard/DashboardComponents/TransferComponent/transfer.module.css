@@ -4,6 +4,9 @@
 .transferMoneyPop::-webkit-scrollbar {
   display: none;
 }
+.aremxyMoneyPop::-webkit-scrollbar {
+  display: none;
+}
 .transferConfirmation::-webkit-scrollbar {
   display: none;
 }
@@ -42,6 +45,17 @@
   position: absolute;
   height: 505px;
   flex-shrink: 0;
+  bottom: 0%;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+}
+
+.aremxyMoneyPop {
+  position: absolute;
+  height: 445px;
+  flex-shrink: 0;
+  bottom: 0%;
   border-radius: 8px;
   background: #fff;
   box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
@@ -56,6 +70,16 @@
   background: #fff;
   box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
 }
+.contactTeam {
+    
+  bottom: 0%;
+  flex-shrink: 0;
+
+  background: #fff;
+  box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+}
+
+
 .checkrate {
   height: 600px;
   /* width: 90%; */
@@ -190,6 +214,22 @@
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
   }
 
+  .aremxyMoneyPop {
+    height: 600px;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+  }
+  .contactTeam {
+    
+    top: 20%;
+    flex-shrink: 0;
+  
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+  }
+  
+
   .transferConfirmation {
     height: 572px;
     bottom: 25%;
@@ -198,6 +238,15 @@
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
   }
+  .contactTeam {
+    
+    bottom: 25%;
+    flex-shrink: 0;
+   
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+  }
+  
 
   .inputPin {
     bottom: 30%;
@@ -210,8 +259,8 @@
   }
 
   .successfulTwo {
-    bottom: 30%;
-    width: 80%;
+    top: 10%;
+    width: 60%;
     height: 600px;
     border-radius: 15px;
   }
@@ -254,6 +303,14 @@
     grid-template-columns: 1fr 1fr 1fr;
     gap: 25px;
   }
+  .contactTeam {
+    
+    top: 20%;
+    flex-shrink: 0;
+  
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+  }
   .redeemrate {
     height: 600px;
     /* width: 90%; */
@@ -273,6 +330,14 @@
     height: 550px;
     border-radius: 20px;
     background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+  }
+
+  .aremxyMoneyPop {
+    height: 500px;
+    border-radius: 20px;
+    background: #fff;
+    bottom: auto;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
   }
 

@@ -133,6 +133,7 @@
   justify-content: space-between;
   border-radius: 3.974px;
   box-shadow: 0px 0px 3.3119657039642334px 0px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
 }
 
 .cryptoTopUp {
@@ -373,6 +374,7 @@ td {
     gap: 203.073px;
     border-radius: 6.875px;
     box-shadow: 0px 0px 5.7291669845581055px 0px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
   }
 
   .cryptoTopUp {
@@ -477,6 +479,7 @@ td {
     gap: 354px;
     border-radius: 12px;
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.65);
+    cursor: pointer;
   }
 
   .cryptoTopUp {

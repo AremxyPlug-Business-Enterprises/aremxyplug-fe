@@ -239,14 +239,16 @@ export const SideBar = () => {
                         <div>Education pins</div>
                       </li>
                     </Link>
-                    <li className="flex gap-[5%] hover:underline text-[#fff] pt-1 pb-1 font-medium md:text-[11px] lg:pt-[6%] lg:pb-[6%] lg:pl-[%] lg:text-[14px] ">
+                    <Link to="/TvSubscription">
+                      <li className="flex gap-[5%] hover:underline text-[#fff] pt-1 pb-1 font-medium md:text-[11px] lg:pt-[6%] lg:pb-[6%] lg:pl-[%] lg:text-[14px] ">
                       <img
                         className="w-[8.5px] h-[8.5px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
                         src="./Images/dashboardImages/sideArrow.png"
                         alt="/"
                       />
                       <div>Tv Subscription</div>
-                    </li>
+                      </li>
+                    </Link>
                     <Link to="/electricity-subscription">
                       <li className="flex gap-[5%] hover:underline text-#fff] pt-1 pb-1 font-medium md:text-[11px] lg:pt-[6%] lg:pb-[6%] lg:pl-[%] lg:text-[14px] ">
                         <img
@@ -257,6 +259,7 @@ export const SideBar = () => {
                         <div>Electricity Bills</div>
                       </li>
                     </Link>
+                    <Link to="/airtime-conversion">
                     <li className="flex gap-[5%] hover:underline text-[#fff] pt-1 pb-1 font-medium md:text-[11px] lg:pt-[6%] lg:pb-[6%] lg:pl-[%] lg:text-[14px] ">
                       <img
                         className="w-[8.5px] h-[8.5px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
@@ -265,6 +268,7 @@ export const SideBar = () => {
                       />
                       <div>Airtime Conversion</div>
                     </li>
+                    </Link>
                     <li className="flex gap-[5%] hover:underline text-[#fff] pt-1 pb-1 font-medium md:text-[11px] lg:pt-[6%] lg:pb-[6%] lg:pl-[%] lg:text-[14px] ">
                       <img
                         className="w-[8.5px] h-[8.5px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
@@ -344,7 +348,8 @@ export const SideBar = () => {
                         <div>Money Transfer</div>
                       </li>
                     </Link>
-
+                    
+                    <Link to="/CardPayment">
                     <li className="flex gap-[5%] hover:underline text-[#fff] pt-1 pb-1 font-medium md:text-[11px] lg:pt-[6%] lg:pb-[6%] lg:pl-[%] lg:text-[14px] ">
                       <img
                         className="w-[8.5px] h-[8.5px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
@@ -353,14 +358,17 @@ export const SideBar = () => {
                       />
                       <div>Card Payments</div>
                     </li>
-                    <li className="flex gap-[5%] hover:underline text-[#fff] pt-1 pb-1 font-medium md:text-[11.5px] lg:pt-[6%] lg:pb-[6%] lg:pl-[%] lg:text-[14px] ">
-                      <img
-                        className="w-[8.5px] h-[8.5px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
-                        src="./Images/dashboardImages/sideArrow.png"
-                        alt="/"
-                      />
-                      <div>International Payments</div>
-                    </li>
+                    </Link>
+                    <Link to='/To-other-banks'>
+                      <li className="flex gap-[5%] hover:underline text-[#fff] pt-1 pb-1 font-medium md:text-[11.5px] lg:pt-[6%] lg:pb-[6%] lg:pl-[%] lg:text-[14px] ">
+                        <img
+                          className="w-[8.5px] h-[8.5px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
+                          src="./Images/dashboardImages/sideArrow.png"
+                          alt="/"
+                        />
+                        <div>International Payments</div>
+                      </li>
+                    </Link>
                   </ul>
                 )}
 
