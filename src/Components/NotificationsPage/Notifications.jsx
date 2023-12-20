@@ -525,6 +525,69 @@ export default function NotificationsPage() {
   };
 
 
+
+  const [isRead7, setIsRead7] = useState(false);
+
+  const handleClick7 = () => {
+    setIsRead7(!isRead7);
+  };
+
+  const [isRead8, setIsRead8] = useState(false);
+
+  const handleClick8 = () => {
+    setIsRead8(!isRead8);
+  };
+
+  const [isRead9, setIsRead9] = useState(false);
+
+  const handleClick9 = () => {
+    setIsRead9(!isRead9);
+  };
+
+  const [isRead10, setIsRead10] = useState(false);
+
+  const handleClick10 = () => {
+    setIsRead10(!isRead10);
+  };
+  const [isRead11, setIsRead11] = useState(false);
+
+  const handleClick11 = () => {
+    setIsRead11(!isRead11);
+  };
+
+
+  const [isRead13, setIsRead13] = useState(false);
+
+  const handleClick13 = () => {
+    setIsRead13(!isRead13);
+  };
+
+  const [isRead14, setIsRead14] = useState(false);
+
+  const handleClick14 = () => {
+    setIsRead14(!isRead14);
+  };
+
+  const [isRead15, setIsRead15] = useState(false);
+
+  const handleClick15 = () => {
+    setIsRead15(!isRead15);
+  };
+
+  const [isRead16, setIsRead16] = useState(false);
+
+  const handleClick16 = () => {
+    setIsRead16(!isRead16);
+  };
+  const [isRead17, setIsRead17] = useState(false);
+
+  const handleClick17 = () => {
+    setIsRead17(!isRead17);
+  };
+
+
+
+
   const handleClick6 = () => {
     setIsRead(!isRead); 
     setIsRead1(!isRead1); 
@@ -532,6 +595,24 @@ export default function NotificationsPage() {
     setIsRead3(!isRead3) ;
     setIsRead4(!isRead4) ;
     setIsRead5(!isRead5);
+  };
+
+  const handleClick12 = () => {
+    setIsRead7(!isRead7); 
+    setIsRead8(!isRead8); 
+    setIsRead9(!isRead9); 
+    setIsRead10(!isRead10);
+    setIsRead11(!isRead11);
+  
+  };
+
+  const handleClick18 = () => {
+    setIsRead13(!isRead13); 
+    setIsRead14(!isRead14); 
+    setIsRead15(!isRead15); 
+    setIsRead16(!isRead16);
+    setIsRead17(!isRead17);
+  
   };
 
 
@@ -768,9 +849,9 @@ items-end  "
                       />
                       <div
                         className="lg:w-[133px] w-[67px] md:w-[78px] mt-[-1.00px] font-medium text-zinc-500  text-text-color-fade
-                 lg:text-[16px] tracking-[0] text-[8px] md:text-[10px] whitespace-nowrap leading-[normal]"
+                 lg:text-[15px] tracking-[0] text-[7px] md:text-[9px] whitespace-nowrap leading-[normal]"
                       >
-                        Mark all as unread
+                        Mark all as Unread
                       </div>
                     </div>
                   </div>
@@ -794,7 +875,7 @@ items-end  "
                       />
                       <div
                         className="lg:w-[133px] w-[67px] md:w-[78px] mt-[-1.00px] font-medium text-zinc-500  text-text-color-fade
-                 lg:text-[16px] tracking-[0] text-[8px] md:text-[10px] leading-[normal]"
+                 lg:text-[15px] tracking-[0] text-[7px] md:text-[9px] leading-[normal]"
                       >
                         Mark all as Read
                       </div>
@@ -817,7 +898,7 @@ items-end  "
                     />
                     <div
                       className=" lg:w-fit w-[38px]  md:w-[44px] mt-[-0.20px] font-medium text-variable-collection-text-danger
-               text-red-500 lg:text-[16px] text-[8px] md:text-[9px] tracking-[0] leading-[normal]"
+               text-red-500 lg:text-[15px] text-[7px] md:text-[9px] tracking-[0] leading-[normal]"
                     >
                       Delete all
                     </div>
@@ -1286,10 +1367,6 @@ items-end  "
 {isRead ? (
                           <div
                               onClick={handleClick}
-                                                        // onClick={() => {
-                                                          // changeColor1();
-                                                          // switchColor2();
-                                                        // }}
                             
                             className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
          h-[23px] justify-center md:h-[40px] lg:h-[41px]
@@ -1304,10 +1381,10 @@ items-end  "
                           ) : (
                           <div
                               onClick={handleClick}
-                                                        // onClick={() => {
-                                                          // changeColor1();
-                                                          // switchColor2();
-                                                        // }}
+                                                        
+                                                        
+                                                        
+                                                        
                             
                             className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
          h-[23px] justify-center md:h-[40px] lg:h-[41px]
@@ -1407,10 +1484,6 @@ items-end  "
 {isRead1 ? (
                           <div
                               onClick={handleClick1}
-                                                        // onClick={() => {
-                                                          // changeColor1();
-                                                          // switchColor2();
-                                                        // }}
                             
                             className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
          h-[23px] justify-center md:h-[40px] lg:h-[41px]
@@ -1425,10 +1498,6 @@ items-end  "
                           ) : (
                           <div
                               onClick={handleClick1}
-                                                        // onClick={() => {
-                                                          // changeColor1();
-                                                          // switchColor2();
-                                                        // }}
                             
                             className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
          h-[23px] justify-center md:h-[40px] lg:h-[41px]
@@ -1532,10 +1601,6 @@ items-end  "
 {isRead2 ? (
                           <div
                               onClick={handleClick2}
-                                                        // onClick={() => {
-                                                          // changeColor1();
-                                                          // switchColor2();
-                                                        // }}
                             
                             className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
          h-[23px] justify-center md:h-[40px] lg:h-[41px]
@@ -1550,10 +1615,6 @@ items-end  "
                           ) : (
                           <div
                               onClick={handleClick2}
-                                                        // onClick={() => {
-                                                          // changeColor1();
-                                                          // switchColor2();
-                                                        // }}
                             
                             className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
          h-[23px] justify-center md:h-[40px] lg:h-[41px]
@@ -1780,10 +1841,10 @@ items-end  "
 {isRead4 ? (
                           <div
                               onClick={handleClick4}
-                                                        // onClick={() => {
-                                                          // changeColor1();
-                                                          // switchColor2();
-                                                        // }}
+                                                       
+                                                       
+                                                       
+                                                       
                             
                             className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
          h-[23px] justify-center md:h-[40px] lg:h-[41px]
@@ -1798,10 +1859,10 @@ items-end  "
                           ) : (
                           <div
                               onClick={handleClick4}
-                                                        // onClick={() => {
-                                                          // changeColor1();
-                                                          // switchColor2();
-                                                        // }}
+                                                        
+                                                        
+                                                        
+                                                        
                             
                             className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
          h-[23px] justify-center md:h-[40px] lg:h-[41px]
@@ -1906,17 +1967,17 @@ items-end  "
                 className="flex flex-col w-full lg:w-full md:w-full mt-[50px] lg:mt-[100px]
          md:mt-[70px] md:gap-[45px] lg:gap-10 gap-[20.64px] "
               >
-                <div className="flex  lg:gap-[35px] lg:mt-[-80px] mt-[-40px] gap-[15px] md:gap-[25px] md:mt-[-60px] justify-end items-end  ">
+                <div className="flex  lg:gap-[35px] lg:mt-[-80px] mt-[-40px] gap-[15px] md:gap-[25px] md:mt-[-60px] 
+                justify-end items-end  ">
+                                  {isRead7 && isRead8 && isRead9 && isRead10 && isRead11 ? (
                   <div
-                    className="flex flex-col lg:w-[187px]  cursor-pointer items-start lg:gap-[10px] lg:p-[8px]
+                    className="flex flex-col lg:w-[187px] cursor-pointer items-start lg:gap-[7px] lg:p-[8px]
               bg-white border-neutral-400
-             lg:rounded-[6px] lg:border-[0.2px] border-solid p-1 w-24 md:w-[120px]   border shadow rounded gap-1.5 lg:shadow-[0px_0px_1px_#00000040]"
+             lg:rounded-[6px] lg:border-[0.2px] border-solid p-1 w-24 md:w-[120px]   border shadow 
+             rounded gap-1.5 lg:shadow-[0px_0px_1px_#00000040]"
                   >
                     <div
-                                            onClick={() => {
-                                              handleCombinedClick1();
-                                              handleCombinedClick4();
-                                            }}
+                                          onClick={handleClick12}
                       
                       className="flex lg:w-[171px] items-center lg:gap-[14px] gap-2  flex-[0_0_auto]"
                     >
@@ -1927,12 +1988,40 @@ items-end  "
                       />
                       <div
                         className="lg:w-[133px] w-[67px] md:w-[78px] mt-[-1.00px] font-medium text-zinc-500  text-text-color-fade
-                 lg:text-[16px] tracking-[0] text-[8px] md:text-[10px] leading-[normal]"
+                 lg:text-[15px] tracking-[0] text-[7px] md:text-[9px] whitespace-nowrap leading-[normal]"
+                      >
+                        Mark all as Unread
+                      </div>
+                    </div>
+                  </div>
+
+                    ) : (
+
+                  <div
+                    className="flex flex-col lg:w-[187px]  cursor-pointer items-start lg:gap-[10px] lg:p-[8px]
+              bg-white border-neutral-400
+             lg:rounded-[6px] lg:border-[0.2px] border-solid p-1 w-24 md:w-[120px]   border shadow rounded gap-1.5 lg:shadow-[0px_0px_1px_#00000040]"
+                  >
+                    <div
+                                          onClick={handleClick12}
+                      
+                      className="flex lg:w-[171px] items-center lg:gap-[14px] gap-2  flex-[0_0_auto]"
+                    >
+                      <img
+                        className=" lg:w-[24px] lg:h-[18.67px] md:w-[14px] md:h-[11px] w-[10px] h-[8px]"
+                        alt="Vector"
+                        src={envelope}
+                      />
+                      <div
+                        className="lg:w-[133px] w-[67px] md:w-[78px] mt-[-1.00px] font-medium text-zinc-500  text-text-color-fade
+                 lg:text-[15px] tracking-[0] text-[7px] md:text-[9px] leading-[normal]"
                       >
                         Mark all as Read
                       </div>
                     </div>
                   </div>
+                  )}
+
                   <div
                   onClick={openModal2}
                     className="flex items-center lg:gap-[14px] cursor-pointer    lg:p-[8px]
@@ -1947,7 +2036,7 @@ items-end  "
                     />
                     <div
                       className=" lg:w-fit w-[38px]  md:w-[44px] mt-[-0.20px] font-medium text-variable-collection-text-danger
-               text-red-500 lg:text-[16px] text-[8px] md:text-[9px] tracking-[0] leading-[normal]"
+               text-red-500 lg:text-[15px] text-[7px] md:text-[9px] tracking-[0] leading-[normal]"
                     >
                       Delete all
                     </div>
@@ -2111,7 +2200,8 @@ items-end  "
                 <div  className="flex flex-col lg:gap-7 gap-3 md:gap-5">
 
                 <div
-                  className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${backgroundColor6} w-full justify-between
+                  className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md
+                   lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${isRead7 ? 'bg-white' : 'bg-sky-100'} w-full justify-between
                    items-center`}
                 >
   <Link to="/launch-page2">
@@ -2152,20 +2242,46 @@ items-end  "
                     ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[380px]
                justify-start items-start flex"
                         >
+
+
+                    {isRead7 ? (
                           <div
-                                                                                 onClick={() => {
-                                                                                  changeColor6();
-                                                                                  switchColor7();
-                                                                                }}
-                          
+                              onClick={handleClick7}
+                                                       
+                                                       
+                                                       
+                                                       
+                            
                             className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
          h-[23px] justify-center md:h-[40px] lg:h-[41px]
         items-center gap-1.5 flex"
                           >
                             <div className="MarkAsRead text-zinc-500 text-[8px] md:text-xs font-normal lg:text-sm whitespace-nowrap ">
-                              Mark as Read
+                              Mark as unread
                             </div>
+                            
                           </div>
+                          
+                          ) : (
+                          <div
+                              onClick={handleClick7}
+                                                        
+                                                        
+                                                        
+                                                        
+                            
+                            className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
+         h-[23px] justify-center md:h-[40px] lg:h-[41px]
+        items-center gap-1.5 flex"
+                          >
+                            <div className="MarkAsRead text-zinc-500 text-[8px] md:text-xs font-normal lg:text-sm whitespace-nowrap ">
+                              Mark as read
+                            </div>
+                            
+                          </div>
+                          )}
+
+
                           <div
                           
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
@@ -2196,7 +2312,7 @@ items-end  "
 
                       <div
                         className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
-               bg-red-400 rounded-full ${Color7}`}
+               bg-red-400 rounded-full ${isRead7 ? 'bg-white' : 'bg-red-400'}`}
                       />
                     </div>
                   </div>
@@ -2209,14 +2325,16 @@ items-end  "
 
 
                 <div
-                  className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${backgroundColor7} w-full justify-between
+                  className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md
+                   lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${isRead8 ? 'bg-white' : 'bg-sky-100'} w-full justify-between
                    items-center`}
                 >
   <Link to="/launch-page2">
 
 
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
-                    <div className="font-semibold text-text-color-fade text-zinc-500 lg:text-base md:text-xs  text-[8px] ">
+                    <div className="font-semibold text-text-color-fade text-zinc-500 lg:text-base md:text-xs 
+                     text-[8px] ">
                       New Launch!!
                     </div>
 
@@ -2249,19 +2367,44 @@ items-end  "
                     ml-[-52px] md:ml-[-82px] lg:ml-[-40px]  shadow flex-col lg:top-[635px]
                justify-start items-start flex"
                         >
+
+                        {isRead8 ? (
                           <div
-                           onClick={() => {
-                            changeColor7();
-                            switchColor8();
-                          }}
+                              onClick={handleClick8}
+                                                       
+                                                       
+                                                       
+                                                       
+                            
                             className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
          h-[23px] justify-center md:h-[40px] lg:h-[41px]
         items-center gap-1.5 flex"
                           >
                             <div className="MarkAsRead text-zinc-500 text-[8px] md:text-xs font-normal lg:text-sm whitespace-nowrap ">
-                              Mark as Read
+                              Mark as unread
                             </div>
+                            
                           </div>
+                          
+                          ) : (
+                          <div
+                              onClick={handleClick8}
+                                                        
+                                                        
+                                                        
+                                                        
+                            
+                            className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
+         h-[23px] justify-center md:h-[40px] lg:h-[41px]
+        items-center gap-1.5 flex"
+                          >
+                            <div className="MarkAsRead text-zinc-500 text-[8px] md:text-xs font-normal lg:text-sm whitespace-nowrap ">
+                              Mark as read
+                            </div>
+                            
+                          </div>
+                          )}
+
                           <div
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
           justify-center items-center gap-1.5 flex"
@@ -2291,7 +2434,7 @@ items-end  "
 
                       <div
                         className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
-               bg-red-400 rounded-full ${Color8}`}
+               bg-red-400 rounded-full ${isRead8 ? 'bg-white' : 'bg-red-400'}`}
                       />
                     </div>
                   </div>
@@ -2303,7 +2446,8 @@ items-end  "
 
 
                 <div
-                  className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${backgroundColor8} w-full justify-between
+                  className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md
+                   lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${isRead9 ? 'bg-white' : 'bg-sky-100'} w-full justify-between
                    items-center`}
                 >
   <Link to="/launch-page2">
@@ -2344,19 +2488,44 @@ items-end  "
                     ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[900px]
                justify-start items-start flex"
                         >
+
+                        {isRead9 ? (
                           <div
-                           onClick={() => {
-                            changeColor8();
-                            switchColor9();
-                          }}
+                              onClick={handleClick9}
+                                                       
+                                                       
+                                                       
+                                                       
+                            
                             className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
          h-[23px] justify-center md:h-[40px] lg:h-[41px]
         items-center gap-1.5 flex"
                           >
                             <div className="MarkAsRead text-zinc-500 text-[8px] md:text-xs font-normal lg:text-sm whitespace-nowrap ">
-                              Mark as Read
+                              Mark as unread
                             </div>
+                            
                           </div>
+                          
+                          ) : (
+                          <div
+                              onClick={handleClick9}
+                                                        
+                                                        
+                                                        
+                                                        
+                            
+                            className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
+         h-[23px] justify-center md:h-[40px] lg:h-[41px]
+        items-center gap-1.5 flex"
+                          >
+                            <div className="MarkAsRead text-zinc-500 text-[8px] md:text-xs font-normal lg:text-sm whitespace-nowrap ">
+                              Mark as read
+                            </div>
+                            
+                          </div>
+                          )}
+
                           <div
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
           justify-center items-center gap-1.5 flex"
@@ -2386,7 +2555,7 @@ items-end  "
 
                       <div
                         className={`first-letter:Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
-               bg-red-400 rounded-full ${Color9}`}
+               bg-red-400 rounded-full ${isRead9 ? 'bg-white' : 'bg-red-400'}`}
                       />
                     </div>
                   </div>
@@ -2399,7 +2568,8 @@ items-end  "
   
 
 <div
-                  className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-sm md:rounded-md lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${backgroundColor9} w-full justify-between
+                  className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-sm md:rounded-md
+                   lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${isRead10 ? 'bg-white' : 'bg-sky-100'} w-full justify-between
                    items-center`}
                 >
   <Link to="/launch-page2">
@@ -2439,19 +2609,44 @@ items-end  "
                     ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[1153px]
                justify-start items-start flex"
                         >
+
+                        {isRead10 ? (
                           <div
-                           onClick={() => {
-                            changeColor9();
-                            switchColor10();
-                          }}
+                              onClick={handleClick10}
+                                                       
+                                                       
+                                                       
+                                                       
+                            
                             className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
          h-[23px] justify-center md:h-[40px] lg:h-[41px]
         items-center gap-1.5 flex"
                           >
                             <div className="MarkAsRead text-zinc-500 text-[8px] md:text-xs font-normal lg:text-sm whitespace-nowrap ">
-                              Mark as Read
+                              Mark as unread
                             </div>
+                            
                           </div>
+                          
+                          ) : (
+                          <div
+                              onClick={handleClick10}
+                                                        
+                                                        
+                                                        
+                                                        
+                            
+                            className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
+         h-[23px] justify-center md:h-[40px] lg:h-[41px]
+        items-center gap-1.5 flex"
+                          >
+                            <div className="MarkAsRead text-zinc-500 text-[8px] md:text-xs font-normal lg:text-sm whitespace-nowrap ">
+                              Mark as read
+                            </div>
+                            
+                          </div>
+                          )}
+
                           
                           <div
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
@@ -2482,7 +2677,7 @@ items-end  "
 
                       <div
                         className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
-               bg-red-400 rounded-full ${Color10}`}
+               bg-red-400 rounded-full ${isRead10 ? 'bg-white' : 'bg-red-400'}`}
                       />
                     </div>
                   </div>
@@ -2494,7 +2689,8 @@ items-end  "
 
 
 <div
-                  className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${backgroundColor10} w-full justify-between
+                  className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md
+                   lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${isRead11 ? 'bg-white' : 'bg-sky-100'} w-full justify-between
                    items-center`}
                 >
   <Link to="/launch-page2">
@@ -2535,19 +2731,43 @@ items-end  "
                     ml-[-52px] md:ml-[-82px] lg:ml-[-40px]  shadow flex-col lg:top-[1408px]
                justify-start items-start flex"
                         >
+                        {isRead11 ? (
                           <div
-                           onClick={() => {
-  changeColor10();
-  switchColor11();
-}}
+                              onClick={handleClick11}
+                                                       
+                                                       
+                                                       
+                                                       
+                            
                             className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
          h-[23px] justify-center md:h-[40px] lg:h-[41px]
         items-center gap-1.5 flex"
                           >
                             <div className="MarkAsRead text-zinc-500 text-[8px] md:text-xs font-normal lg:text-sm whitespace-nowrap ">
-                              Mark as Read
+                              Mark as unread
                             </div>
+                            
                           </div>
+                          
+                          ) : (
+                          <div
+                              onClick={handleClick11}
+                                                        
+                                                        
+                                                        
+                                                        
+                            
+                            className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
+         h-[23px] justify-center md:h-[40px] lg:h-[41px]
+        items-center gap-1.5 flex"
+                          >
+                            <div className="MarkAsRead text-zinc-500 text-[8px] md:text-xs font-normal lg:text-sm whitespace-nowrap ">
+                              Mark as read
+                            </div>
+                            
+                          </div>
+                          )}
+
                           <div
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
           justify-center items-center gap-1.5 flex"
@@ -2577,7 +2797,7 @@ items-end  "
 
                       <div
                         className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
-               bg-red-400 rounded-full ${Color11}`}
+               bg-red-400 rounded-full ${isRead11 ? 'bg-white' : 'bg-red-400'}`}
                       />
                     </div>
                   </div>
@@ -2637,16 +2857,15 @@ items-end  "
               md:gap-[45px] lg:gap-10 gap-[20.64px] "
               >
                 <div className="flex  lg:gap-[35px] lg:mt-[-80px] mt-[-40px] gap-[15px] md:gap-[25px] md:mt-[-60px] justify-end items-end  ">
+                  { isRead13 && isRead14 && isRead15 && isRead16 && isRead17 ? (
                   <div
-                    className="flex flex-col lg:w-[187px]  cursor-pointer items-start lg:gap-[10px] lg:p-[8px]
+                    className="flex flex-col lg:w-[187px] cursor-pointer items-start lg:gap-[7px] lg:p-[8px]
               bg-white border-neutral-400
-             lg:rounded-[6px] lg:border-[0.2px] border-solid p-1 w-24 md:w-[120px]  border shadow rounded gap-1.5 lg:shadow-[0px_0px_1px_#00000040]"
+             lg:rounded-[6px] lg:border-[0.2px] border-solid p-1 w-24 md:w-[120px]   border shadow 
+             rounded gap-1.5 lg:shadow-[0px_0px_1px_#00000040]"
                   >
                     <div
-                                            onClick={() => {
-                                              handleCombinedClick2();
-                                              handleCombinedClick5();
-                                            }}
+                                          onClick={handleClick18}
                       
                       className="flex lg:w-[171px] items-center lg:gap-[14px] gap-2  flex-[0_0_auto]"
                     >
@@ -2657,12 +2876,40 @@ items-end  "
                       />
                       <div
                         className="lg:w-[133px] w-[67px] md:w-[78px] mt-[-1.00px] font-medium text-zinc-500  text-text-color-fade
-                 lg:text-[16px] tracking-[0] text-[8px] md:text-[10px] leading-[normal]"
+                 lg:text-[15px] tracking-[0] text-[7px] md:text-[9px] whitespace-nowrap leading-[normal]"
+                      >
+                        Mark all as Unread
+                      </div>
+                    </div>
+                  </div>
+
+                    ) : (
+
+                  <div
+                    className="flex flex-col lg:w-[187px]  cursor-pointer items-start lg:gap-[10px] lg:p-[8px]
+              bg-white border-neutral-400
+             lg:rounded-[6px] lg:border-[0.2px] border-solid p-1 w-24 md:w-[120px]   border shadow rounded gap-1.5 lg:shadow-[0px_0px_1px_#00000040]"
+                  >
+                    <div
+                                          onClick={handleClick18}
+                      
+                      className="flex lg:w-[171px] items-center lg:gap-[14px] gap-2  flex-[0_0_auto]"
+                    >
+                      <img
+                        className=" lg:w-[24px] lg:h-[18.67px] md:w-[14px] md:h-[11px] w-[10px] h-[8px]"
+                        alt="Vector"
+                        src={envelope}
+                      />
+                      <div
+                        className="lg:w-[133px] w-[67px] md:w-[78px] mt-[-1.00px] font-medium text-zinc-500  text-text-color-fade
+                 lg:text-[15px] tracking-[0] text-[7px] md:text-[9px] leading-[normal]"
                       >
                         Mark all as Read
                       </div>
                     </div>
                   </div>
+                  )}
+
                   <div
                   onClick={openModal3}
 
@@ -2678,7 +2925,7 @@ items-end  "
                     />
                     <div
                       className=" lg:w-fit w-[38px]  md:w-[44px] mt-[-0.20px] font-medium text-variable-collection-text-danger
-               text-red-500 lg:text-[16px] text-[8px] md:text-[9px] tracking-[0] leading-[normal]"
+               text-red-500 lg:text-[15px] text-[7px] md:text-[9px] tracking-[0] leading-[normal]"
                     >
                       Delete all
                     </div>
@@ -2821,14 +3068,16 @@ items-end  "
 {deleteAll1 && (           
 <div  className="flex flex-col lg:gap-7 gap-3 md:gap-5">
                 <div
-                  className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${backgroundColor11} w-full justify-between
+                  className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md 
+                  lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${isRead13 ? 'bg-white' : 'bg-sky-100'} w-full justify-between
                    items-center`}
                 >
   <Link to="/launch-page3">
 
 
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
-                    <div className="font-semibold text-text-color-fade text-zinc-500 lg:text-base md:text-xs  text-[8px] ">
+                    <div className="font-semibold text-text-color-fade text-zinc-500 lg:text-base md:text-xs  
+                    text-[8px] ">
                       New Launch!!
                     </div>
 
@@ -2863,20 +3112,45 @@ items-end  "
                     ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[390px]
                justify-start items-start flex"
                         >
+                          {isRead13 ? (
                           <div
-                                                      onClick={() => {
-                                                        changeColor11();
-                                                        switchColor12();
-                                                      }}
+                              onClick={handleClick13}
+                                                       
+                                                       
+                                                       
+                                                       
                             
                             className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
          h-[23px] justify-center md:h-[40px] lg:h-[41px]
         items-center gap-1.5 flex"
                           >
                             <div className="MarkAsRead text-zinc-500 text-[8px] md:text-xs font-normal lg:text-sm whitespace-nowrap ">
-                              Mark as Read
+                              Mark as unread
                             </div>
+                            
                           </div>
+                          
+                          ) : (
+                          <div
+                              onClick={handleClick13}
+                                                        
+                                                        
+                                                        
+                                                        
+                            
+                            className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
+         h-[23px] justify-center md:h-[40px] lg:h-[41px]
+        items-center gap-1.5 flex"
+                          >
+                            <div className="MarkAsRead text-zinc-500 text-[8px] md:text-xs font-normal lg:text-sm whitespace-nowrap ">
+                              Mark as read
+                            </div>
+                            
+                          </div>
+                          )}
+
+
+
                           <div
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
           justify-center items-center gap-1.5 flex"
@@ -2906,7 +3180,7 @@ items-end  "
 
                       <div
                         className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
-               bg-red-400 rounded-full ${Color12}`}
+               bg-red-400 rounded-full ${isRead13 ? 'bg-white' : 'bg-red-400'}`}
                       />
                     </div>
                   </div>
@@ -2916,7 +3190,8 @@ items-end  "
   
 
 <div
-                  className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${backgroundColor12} w-full justify-between
+                  className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md
+                   lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${isRead14 ? 'bg-white' : 'bg-sky-100'} w-full justify-between
                    items-center`}
                 >
   <Link to="/launch-page3">
@@ -2953,23 +3228,47 @@ items-end  "
                         <div
                           className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] top-[280px]
                            md:top-[410px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[735px]
+                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[649px]
                justify-start items-start flex"
                         >
+                          {isRead14 ? (
                           <div
-                                                      onClick={() => {
-                                                        changeColor12();
-                                                        switchColor13();
-                                                      }}
+                              onClick={handleClick14}
+                                                       
+                                                       
+                                                       
+                                                       
                             
                             className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
          h-[23px] justify-center md:h-[40px] lg:h-[41px]
         items-center gap-1.5 flex"
                           >
                             <div className="MarkAsRead text-zinc-500 text-[8px] md:text-xs font-normal lg:text-sm whitespace-nowrap ">
-                              Mark as Read
+                              Mark as unread
                             </div>
+                            
                           </div>
+                          
+                          ) : (
+                          <div
+                              onClick={handleClick14}
+                                                        
+                                                        
+                                                        
+                                                        
+                            
+                            className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
+         h-[23px] justify-center md:h-[40px] lg:h-[41px]
+        items-center gap-1.5 flex"
+                          >
+                            <div className="MarkAsRead text-zinc-500 text-[8px] md:text-xs font-normal lg:text-sm whitespace-nowrap ">
+                              Mark as read
+                            </div>
+                            
+                          </div>
+                          )}
+
+
                           <div
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
           justify-center items-center gap-1.5 flex"
@@ -2999,7 +3298,7 @@ items-end  "
 
                       <div
                         className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
-               bg-red-400 rounded-full ${Color13}`}
+               bg-red-400 rounded-full ${isRead14 ? 'bg-white' : 'bg-red-400'}`}
                       />
                     </div>
                   </div>
@@ -3009,7 +3308,8 @@ items-end  "
  
 
 <div
-                  className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${backgroundColor13} w-full justify-between
+                  className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md 
+                  lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${isRead15 ? 'bg-white' : 'bg-sky-100'} w-full justify-between
                    items-center`}
                 >
  <Link to="/launch-page3">
@@ -3045,23 +3345,47 @@ items-end  "
                         <div
                           className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] top-[393px] 
                           md:top-[580px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[989px]
+                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[910px]
                justify-start items-start flex"
                         >
+                          {isRead15 ? (
                           <div
-                                                      onClick={() => {
-                                                        changeColor13();
-                                                        switchColor14();
-                                                      }}
+                              onClick={handleClick15}
+                                                       
+                                                       
+                                                       
+                                                       
                             
                             className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
          h-[23px] justify-center md:h-[40px] lg:h-[41px]
         items-center gap-1.5 flex"
                           >
                             <div className="MarkAsRead text-zinc-500 text-[8px] md:text-xs font-normal lg:text-sm whitespace-nowrap ">
-                              Mark as Read
+                              Mark as unread
                             </div>
+                            
                           </div>
+                          
+                          ) : (
+                          <div
+                              onClick={handleClick15}
+                                                        
+                                                        
+                                                        
+                                                        
+                            
+                            className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
+         h-[23px] justify-center md:h-[40px] lg:h-[41px]
+        items-center gap-1.5 flex"
+                          >
+                            <div className="MarkAsRead text-zinc-500 text-[8px] md:text-xs font-normal lg:text-sm whitespace-nowrap ">
+                              Mark as read
+                            </div>
+                            
+                          </div>
+                          )}
+
+
                           <div
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
           justify-center items-center gap-1.5 flex"
@@ -3091,7 +3415,7 @@ items-end  "
 
                       <div
                         className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
-               bg-red-400 rounded-full ${Color14}`}
+               bg-red-400 rounded-full ${isRead15 ? 'bg-white' : 'bg-red-400'}`}
                       />
                     </div>
                   </div>
@@ -3101,7 +3425,8 @@ items-end  "
   
 
 <div
-                  className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${backgroundColor14} w-full justify-between
+                  className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md 
+                  lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${isRead16 ? 'bg-white' : 'bg-sky-100'} w-full justify-between
                    items-center`}
                 >
                    <Link to="/launch-page3">
@@ -3137,23 +3462,48 @@ items-end  "
                       {isOpen20 && (
                         <div
                           className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] top-[507px] md:top-[750px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px]  shadow flex-col lg:top-[1245px]
+                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px]  shadow flex-col lg:top-[1168px]
                justify-start items-start flex"
                         >
+
+{isRead16 ? (
                           <div
-                                                      onClick={() => {
-                                                        changeColor14();
-                                                        switchColor15();
-                                                      }}
+                              onClick={handleClick16}
+                                                       
+                                                       
+                                                       
+                                                       
                             
                             className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
          h-[23px] justify-center md:h-[40px] lg:h-[41px]
         items-center gap-1.5 flex"
                           >
                             <div className="MarkAsRead text-zinc-500 text-[8px] md:text-xs font-normal lg:text-sm whitespace-nowrap ">
-                              Mark as Read
+                              Mark as unread
                             </div>
+                            
                           </div>
+                          
+                          ) : (
+                          <div
+                              onClick={handleClick16}
+                                                        
+                                                        
+                                                        
+                                                        
+                            
+                            className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
+         h-[23px] justify-center md:h-[40px] lg:h-[41px]
+        items-center gap-1.5 flex"
+                          >
+                            <div className="MarkAsRead text-zinc-500 text-[8px] md:text-xs font-normal lg:text-sm whitespace-nowrap ">
+                              Mark as read
+                            </div>
+                            
+                          </div>
+                          )}
+
+
                           <div
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
           justify-center items-center gap-1.5 flex"
@@ -3183,7 +3533,7 @@ items-end  "
 
                       <div
                         className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
-               bg-red-400 rounded-full ${Color15}`}
+               bg-red-400 rounded-full ${isRead16 ? 'bg-white' : 'bg-red-400'}`}
                       />
                     </div>
                   </div>
@@ -3193,7 +3543,8 @@ items-end  "
   
 
 <div
-                  className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${backgroundColor15} w-full justify-between
+                  className={`flex lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md
+                   lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${isRead17 ? 'bg-white' : 'bg-sky-100'} w-full justify-between
                    items-center`}
                 >
  <Link to="/launch-page3">
@@ -3227,23 +3578,47 @@ items-end  "
                       {isOpen21 && (
                         <div
                           className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] top-[618px] md:top-[920px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px]  shadow flex-col lg:top-[1505px]
+                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px]  shadow flex-col lg:top-[1425px]
                justify-start items-start flex"
                         >
+                          {isRead17 ? (
                           <div
-                                                      onClick={() => {
-                                                        changeColor15();
-                                                        switchColor16();
-                                                      }}
+                              onClick={handleClick17}
+                                                       
+                                                       
+                                                       
+                                                       
                             
                             className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
          h-[23px] justify-center md:h-[40px] lg:h-[41px]
         items-center gap-1.5 flex"
                           >
                             <div className="MarkAsRead text-zinc-500 text-[8px] md:text-xs font-normal lg:text-sm whitespace-nowrap ">
-                              Mark as Read
+                              Mark as unread
                             </div>
+                            
                           </div>
+                          
+                          ) : (
+                          <div
+                              onClick={handleClick17}
+                                                        
+                                                        
+                                                        
+                                                        
+                            
+                            className="Frame758532670 px-4 py-1 bg-white cursor-pointer border-b border-neutral-400 lg:w-[190px] w-[100px] md:w-[180px]
+         h-[23px] justify-center md:h-[40px] lg:h-[41px]
+        items-center gap-1.5 flex"
+                          >
+                            <div className="MarkAsRead text-zinc-500 text-[8px] md:text-xs font-normal lg:text-sm whitespace-nowrap ">
+                              Mark as read
+                            </div>
+                            
+                          </div>
+                          )}
+
+
                           <div
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
           justify-center items-center gap-1.5 flex"
@@ -3273,7 +3648,7 @@ items-end  "
 
                       <div
                         className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
-               bg-red-400 relative rounded-full ${Color16}`}
+               bg-red-400 relative rounded-full ${isRead17 ? 'bg-white' : 'bg-red-400'}`}
                       />
                     </div>
                   </div>
