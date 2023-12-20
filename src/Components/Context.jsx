@@ -348,7 +348,7 @@ export const Context = ({ children }) => {
   // =============Start Dashboard=============
   const [toggleSideBar, setToggleSideBar] = useState("");
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [isValue, SetIsValue] = useState(false);
+  const [isValue, SetIsValue] = useState(true);
   const [showModal2, setShowModal2] = useState(false);
   const [logout, setLogout] = useState(false);
   const date = new Date();
@@ -740,55 +740,55 @@ export const Context = ({ children }) => {
   const [dstvSuccessful, setDstvSuccessful] = useState(false);
 
   //============= EDUCATION PINS ========================
-//===============WAEC PINS================
-  const [quantityResult, setQuantityResult] = useState('');
-const [quantityActive, setQuantityActive] = useState(false);
-const [paymentResult, setPaymentResult] = useState('');
-const [methodActive, setMethodActive] = useState(false);
-const [examType, setExamType] = useState('');
-const [examActive, setExamActive] = useState(false);
-const [educationPinPhone, setEducationPinPhone]= useState('');
-const[ educationPinEmail, setEducationPinEmail] = useState('');
-const [educationAmount, setEducationAmount] = useState('₦');
-const [walletBalance, setWalletBalance] = useState('');
+  //===============WAEC PINS================
+  const [quantityResult, setQuantityResult] = useState("");
+  const [quantityActive, setQuantityActive] = useState(false);
+  const [paymentResult, setPaymentResult] = useState("");
+  const [methodActive, setMethodActive] = useState(false);
+  const [examType, setExamType] = useState("");
+  const [examActive, setExamActive] = useState(false);
+  const [educationPinPhone, setEducationPinPhone] = useState("");
+  const [educationPinEmail, setEducationPinEmail] = useState("");
+  const [educationAmount, setEducationAmount] = useState("₦");
+  const [walletBalance, setWalletBalance] = useState("");
 
- //==============  NECO PINS  ================
- const [necoQuantityResult, setNecoQuantityResult] = useState('');
-const [necoQuantityActive, setNecoQuantityActive] = useState(false);
- const [necoPaymentResult, setNecoPaymentResult] = useState('');
- const [necoMethodActive, setNecoMethodActive] = useState(false);
- const [necoExamType, setNecoExamType] = useState('');
- const [necoExamActive, setNecoExamActive] = useState(false);
- const [necoEducationPinPhone, setNecoEducationPinPhone]= useState('');
- const[ necoEducationPinEmail, setNecoEducationPinEmail] = useState('');
- const [necoEducationAmount, setNecoEducationAmount] = useState('₦');
- const [necoWalletBalance, setNecoWalletBalance] = useState('');
+  //==============  NECO PINS  ================
+  const [necoQuantityResult, setNecoQuantityResult] = useState("");
+  const [necoQuantityActive, setNecoQuantityActive] = useState(false);
+  const [necoPaymentResult, setNecoPaymentResult] = useState("");
+  const [necoMethodActive, setNecoMethodActive] = useState(false);
+  const [necoExamType, setNecoExamType] = useState("");
+  const [necoExamActive, setNecoExamActive] = useState(false);
+  const [necoEducationPinPhone, setNecoEducationPinPhone] = useState("");
+  const [necoEducationPinEmail, setNecoEducationPinEmail] = useState("");
+  const [necoEducationAmount, setNecoEducationAmount] = useState("₦");
+  const [necoWalletBalance, setNecoWalletBalance] = useState("");
 
- // ============== JAMB PINS ================
- const [jambQuantityResult, setJambQuantityResult] = useState('');
- const [jambQuantityActive, setJambQuantityActive] = useState(false);
-  const [jambPaymentResult, setJambPaymentResult] = useState('');
+  // ============== JAMB PINS ================
+  const [jambQuantityResult, setJambQuantityResult] = useState("");
+  const [jambQuantityActive, setJambQuantityActive] = useState(false);
+  const [jambPaymentResult, setJambPaymentResult] = useState("");
   const [jambMethodActive, setJambMethodActive] = useState(false);
-  const [jambExamType, setJambExamType] = useState('');
+  const [jambExamType, setJambExamType] = useState("");
   const [jambExamActive, setJambExamActive] = useState(false);
-  const [jambEducationPinPhone, setJambEducationPinPhone]= useState('');
-  const[ jambEducationPinEmail, setJambEducationPinEmail] = useState('');
-  const [jambEducationAmount, setJambEducationAmount] = useState('₦');
-  const [jambWalletBalance, setJambWalletBalance] = useState('');
+  const [jambEducationPinPhone, setJambEducationPinPhone] = useState("");
+  const [jambEducationPinEmail, setJambEducationPinEmail] = useState("");
+  const [jambEducationAmount, setJambEducationAmount] = useState("₦");
+  const [jambWalletBalance, setJambWalletBalance] = useState("");
 
   // ============== NABTEB PINS =============
-  const [nabtebQuantityResult, setNabtebQuantityResult] = useState('');
- const [nabtebQuantityActive, setNabtebQuantityActive] = useState(false);
-  const [nabtebPaymentResult, setNabtebPaymentResult] = useState('');
+  const [nabtebQuantityResult, setNabtebQuantityResult] = useState("");
+  const [nabtebQuantityActive, setNabtebQuantityActive] = useState(false);
+  const [nabtebPaymentResult, setNabtebPaymentResult] = useState("");
   const [nabtebMethodActive, setNabtebMethodActive] = useState(false);
-  const [nabtebExamType, setNabtebExamType] = useState('');
+  const [nabtebExamType, setNabtebExamType] = useState("");
   const [nabtebExamActive, setNabtebExamActive] = useState(false);
-  const [nabtebEducationPinPhone, setNabtebEducationPinPhone]= useState('');
-  const[ nabtebEducationPinEmail, setNabtebEducationPinEmail] = useState('');
-  const [nabtebEducationAmount, setNabtebEducationAmount] = useState('₦');
-  const [nabtebWalletBalance, setNabtebWalletBalance] = useState('');
- 
-    // PROFILE & ACCOUNT SETTINGS =========
+  const [nabtebEducationPinPhone, setNabtebEducationPinPhone] = useState("");
+  const [nabtebEducationPinEmail, setNabtebEducationPinEmail] = useState("");
+  const [nabtebEducationAmount, setNabtebEducationAmount] = useState("₦");
+  const [nabtebWalletBalance, setNabtebWalletBalance] = useState("");
+
+  // PROFILE & ACCOUNT SETTINGS =========
   //============ Profile Page =========
   const [openImage, setOpenImage] = useState(false);
   const [profilePage, setProfilePage] = useState(true);
@@ -799,19 +799,18 @@ const [necoQuantityActive, setNecoQuantityActive] = useState(false);
   const [bvnVerificationOpen, setBvnVerificationOpen] = useState(false);
   const [accountUpgradeOpen, setAccountUpgradeOpen] = useState(false);
   const [dropDownGender, setDropDownGender] = useState(false);
-  const [idAddress, setIdAddress] = useState('');
-  const [idState, setIdState] = useState('');
-  const [idCity, setIdCity] = useState('');
-  const [idLGA, setIdLGA] = useState('');
-  const [idNumber, setIdNumber] = useState('');
-  const [idPostalCode, setIdPostalCode] = useState('');
-
+  const [idAddress, setIdAddress] = useState("");
+  const [idState, setIdState] = useState("");
+  const [idCity, setIdCity] = useState("");
+  const [idLGA, setIdLGA] = useState("");
+  const [idNumber, setIdNumber] = useState("");
+  const [idPostalCode, setIdPostalCode] = useState("");
 
   //========== BUSINESS KYC =============
   const [businessPopUp, setBusinessPopUp] = useState(false);
 
   // ========  ACCOUNT UPGRADE ===========
-  const [accountUpgrade, setAccountUpgrade]  = useState(false);
+  const [accountUpgrade, setAccountUpgrade] = useState(false);
 
   //============ AUTHETICATION SETTINGS ========
   const [authenticationOpen, setAuthenticationOpen] = useState(false);
@@ -1159,143 +1158,139 @@ const [necoQuantityActive, setNecoQuantityActive] = useState(false);
     setSelectedOptionDstv,
     showDropdownDstv,
     setShowDropdownDstv,
-    
 
-  //====== EDUCATION PINS
-  //=======WAEC PINS
-  quantityResult, 
-  setQuantityResult,
-  quantityActive,
-  setQuantityActive,
-  paymentResult, 
-  setPaymentResult,
-  methodActive, 
-  setMethodActive,
-  examType, 
-  setExamType,
-  examActive,
-   setExamActive,
-   educationPinPhone, 
-   setEducationPinPhone,
-   educationPinEmail, 
-  setEducationPinEmail,
-  educationAmount, 
-  setEducationAmount,
-  walletBalance, 
-  setWalletBalance,
+    //====== EDUCATION PINS
+    //=======WAEC PINS
+    quantityResult,
+    setQuantityResult,
+    quantityActive,
+    setQuantityActive,
+    paymentResult,
+    setPaymentResult,
+    methodActive,
+    setMethodActive,
+    examType,
+    setExamType,
+    examActive,
+    setExamActive,
+    educationPinPhone,
+    setEducationPinPhone,
+    educationPinEmail,
+    setEducationPinEmail,
+    educationAmount,
+    setEducationAmount,
+    walletBalance,
+    setWalletBalance,
 
-//======NECO PINS ==========
- necoQuantityResult, 
-  setNecoQuantityResult,
-  necoQuantityActive, 
-  setNecoQuantityActive,
-  necoPaymentResult, 
-  setNecoPaymentResult,
- necoMethodActive, 
-  setNecoMethodActive,
-  necoExamType, 
-  setNecoExamType,
-  necoExamActive,
-   setNecoExamActive,
-   necoEducationPinPhone, 
-   setNecoEducationPinPhone,
-   necoEducationPinEmail, 
-  setNecoEducationPinEmail,
-  necoEducationAmount, 
-  setNecoEducationAmount,
-  necoWalletBalance, 
-  setNecoWalletBalance,
- 
-  //==========   JAMB PINS =========
-  jambQuantityResult, 
-  setJambQuantityResult,
-  jambQuantityActive, 
-  setJambQuantityActive,
-  jambPaymentResult, 
-  setJambPaymentResult,
- jambMethodActive, 
-  setJambMethodActive,
-  jambExamType, 
-  setJambExamType,
-  jambExamActive,
-   setJambExamActive,
-   jambEducationPinPhone, 
-   setJambEducationPinPhone,
-   jambEducationPinEmail, 
-  setJambEducationPinEmail,
-  jambEducationAmount, 
-  setJambEducationAmount,
-  jambWalletBalance, 
-  setJambWalletBalance,
+    //======NECO PINS ==========
+    necoQuantityResult,
+    setNecoQuantityResult,
+    necoQuantityActive,
+    setNecoQuantityActive,
+    necoPaymentResult,
+    setNecoPaymentResult,
+    necoMethodActive,
+    setNecoMethodActive,
+    necoExamType,
+    setNecoExamType,
+    necoExamActive,
+    setNecoExamActive,
+    necoEducationPinPhone,
+    setNecoEducationPinPhone,
+    necoEducationPinEmail,
+    setNecoEducationPinEmail,
+    necoEducationAmount,
+    setNecoEducationAmount,
+    necoWalletBalance,
+    setNecoWalletBalance,
 
-  //========= NABTEB PINS =======
-nabtebQuantityResult, 
-  setNabtebQuantityResult,
-  nabtebQuantityActive, 
-  setNabtebQuantityActive,
-  nabtebPaymentResult, 
-  setNabtebPaymentResult,
- nabtebMethodActive, 
-  setNabtebMethodActive,
-  nabtebExamType, 
-  setNabtebExamType,
-  nabtebExamActive,
-   setNabtebExamActive,
-   nabtebEducationPinPhone, 
-   setNabtebEducationPinPhone,
-   nabtebEducationPinEmail, 
-  setNabtebEducationPinEmail,
-  nabtebEducationAmount, 
-  setNabtebEducationAmount,
-  nabtebWalletBalance, 
-  setNabtebWalletBalance,
+    //==========   JAMB PINS =========
+    jambQuantityResult,
+    setJambQuantityResult,
+    jambQuantityActive,
+    setJambQuantityActive,
+    jambPaymentResult,
+    setJambPaymentResult,
+    jambMethodActive,
+    setJambMethodActive,
+    jambExamType,
+    setJambExamType,
+    jambExamActive,
+    setJambExamActive,
+    jambEducationPinPhone,
+    setJambEducationPinPhone,
+    jambEducationPinEmail,
+    setJambEducationPinEmail,
+    jambEducationAmount,
+    setJambEducationAmount,
+    jambWalletBalance,
+    setJambWalletBalance,
 
-// ========= PROFILE & ACCOUNT SETTINGS ===========
-// ========== Profile Page ========
-openImage,
-setOpenImage,
-profilePage,
-setProfilePage,
+    //========= NABTEB PINS =======
+    nabtebQuantityResult,
+    setNabtebQuantityResult,
+    nabtebQuantityActive,
+    setNabtebQuantityActive,
+    nabtebPaymentResult,
+    setNabtebPaymentResult,
+    nabtebMethodActive,
+    setNabtebMethodActive,
+    nabtebExamType,
+    setNabtebExamType,
+    nabtebExamActive,
+    setNabtebExamActive,
+    nabtebEducationPinPhone,
+    setNabtebEducationPinPhone,
+    nabtebEducationPinEmail,
+    setNabtebEducationPinEmail,
+    nabtebEducationAmount,
+    setNabtebEducationAmount,
+    nabtebWalletBalance,
+    setNabtebWalletBalance,
 
-// ========= Account verification Page =====
-verificationOpen,
-setVerificationOpen,
-idVerificationOpen,
-setIdVerificationOpen,
-bvnVerificationOpen,
-setBvnVerificationOpen,
-accountUpgradeOpen,
-setAccountUpgradeOpen,
-dropDownGender,
-setDropDownGender,
-idAddress,
-setIdAddress,
-idCity,
-setIdCity,
-idState,
-setIdState,
-idLGA,
-setIdLGA,
-idNumber,
-setIdNumber,
-idPostalCode,
-setIdPostalCode,
-// ==========  BVN ========
+    // ========= PROFILE & ACCOUNT SETTINGS ===========
+    // ========== Profile Page ========
+    openImage,
+    setOpenImage,
+    profilePage,
+    setProfilePage,
 
+    // ========= Account verification Page =====
+    verificationOpen,
+    setVerificationOpen,
+    idVerificationOpen,
+    setIdVerificationOpen,
+    bvnVerificationOpen,
+    setBvnVerificationOpen,
+    accountUpgradeOpen,
+    setAccountUpgradeOpen,
+    dropDownGender,
+    setDropDownGender,
+    idAddress,
+    setIdAddress,
+    idCity,
+    setIdCity,
+    idState,
+    setIdState,
+    idLGA,
+    setIdLGA,
+    idNumber,
+    setIdNumber,
+    idPostalCode,
+    setIdPostalCode,
+    // ==========  BVN ========
 
+    //========== Business PopUp =======
+    businessPopUp,
+    setBusinessPopUp,
 
+    // ========== Account upgrade ========
+    accountUpgrade,
+    setAccountUpgrade,
 
-//========== Business PopUp =======
-businessPopUp,
-setBusinessPopUp,
-
-// ========== Account upgrade ========
-accountUpgrade,
-setAccountUpgrade,
-
-//======== AUTHENTICATION  SETTING =======
-authenticationOpen,
-setAuthenticationOpen,
+    //======== AUTHENTICATION  SETTING =======
+    authenticationOpen,
+    setAuthenticationOpen,
   };
 
   return (
