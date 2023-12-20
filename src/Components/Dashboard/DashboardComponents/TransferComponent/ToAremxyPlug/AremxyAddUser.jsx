@@ -212,11 +212,11 @@ const AremxyAddUser = () => {
                 <div
                 className={`${
                     toggleSideBar
-                    ? "lg:w-[31.5%] lg:top-[100.5%]"
-                    : "lg:w-[38.5%] lg:top-[105.3%]"
+                    ? "lg:w-[36.7%] lg:top-[122%]"
+                    : "lg:w-[45%] lg:top-[122%]"
                 }  ${
                     styles.countryDropDown
-                } rounded-br-[7px] rounded-bl-[7px] shadow-xl bg-[#fff] border w-[100%] lg:w-[50%] md:w-[50%] lg:rounded-br-[14px] lg:rounded-bl-[14px]`}
+                } rounded-br-[7px] absolute z-50 top-[355px] rounded-bl-[7px] shadow-xl bg-[#fff] border w-[90%] lg:rounded-br-[14px] lg:rounded-bl-[14px]`}
                 >
                 {" "}
                 {countryList.map((country) => (
@@ -281,8 +281,10 @@ const AremxyAddUser = () => {
                 <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
                     <input
                     onChange={(e) => {
-                        setUserPhoneNumber(e.target.value);
-                       }} 
+                      const value = e.target.value;
+                      const numericValue = value.replace(/\D/g, "").slice(0, 11);
+                      setUserPhoneNumber(numericValue);
+                    }} 
                     name="userPhoneNumber"
                     value={userPhoneNumber}
                     className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"

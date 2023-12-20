@@ -23,6 +23,7 @@ import { AiFillEye } from "react-icons/ai";
  import { Modal } from '../Screens/Modal/Modal';
 import JambReceipt from './ReceiptEducationPins/jambReceipt';
 import AremxyPlugIcon from './imagesEducation/AremxyPlug.svg';
+import '../Dashboard/DashboardComponents/DataTopUpPage/DataTopUp.css';
 
  
 export default function JambEducationPin() {
@@ -485,9 +486,10 @@ const jambReceipt = () => {
                   isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
                 } ${
                   toggleSideBar
-                    ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
-                    : "lg:w-[40%]"
-                } lg:ml-[10%] lg:mr-[10%] grow md:mt-[1%] mb-0  pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:mb-[18%] md:overflow-auto`}
+                    ? "confirm01"
+                    : "confirm"
+                } grow pt-[10px] pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative 
+                md:rounded-[11.5px] md:mx-auto md:my-auto md:overflow-auto`}
               >
                 <div className="w-full flex justify-end border-b-[6px] items-center
                  border-primary px-[12px] h-[35px] md:h-[45px] lg:h-[60px] lg:border-b-[10px]">

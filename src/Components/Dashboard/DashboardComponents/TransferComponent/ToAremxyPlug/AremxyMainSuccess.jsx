@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { ContextProvider } from "../../../../Context";
 import { Modal } from "../../../../Screens/Modal/Modal";
 import { Link } from "react-router-dom";
-import styles from "../../TransferComponent/transfer.module.css";
+import styles from "../../../../AirTimePage/AirtimeVtu.module.css";
 // import { TransactFailedPopUp } from "./TransactionFailedPopUp";
 
 export const AremxyMainSuccess = ({
@@ -19,6 +19,11 @@ export const AremxyMainSuccess = ({
   } = useContext(ContextProvider);
 
   const handleTransactionSuccessClose = () => {
+    setTransactSuccessToOtherBank(false);
+    window.location.reload();
+  };
+
+  const handleTransactionSuccessReciept = () => {
     setTransactSuccessToOtherBank(false);
   };
 
@@ -101,7 +106,7 @@ export const AremxyMainSuccess = ({
               </button>
               <Link to="/to-aremxymain-receipt">
                 <button
-                  onClick={handleTransactionSuccessClose}
+                  onClick={handleTransactionSuccessReciept}
                   className={`border-[1px] w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
                 >
                   Receipt

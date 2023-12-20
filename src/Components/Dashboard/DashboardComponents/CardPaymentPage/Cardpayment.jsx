@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import { DashBoardLayout } from "../../Layout/DashBoardLayout";
 import "./CardPayment.css";
 import { useContext } from "react";
@@ -10,8 +10,18 @@ import FundCard from "./CardPaymentImages/FundCard.svg";
 import Card from "./CardPaymentImages/CardPayment.svg"
 import { Link } from "react-router-dom";
 
+
 const CardPayment = () => {
   const { isDarkMode } = useContext(ContextProvider);
+
+  const [reloadPage, setReloadPage] = useState(false);
+
+  useEffect(() => {
+    if (reloadPage) {
+      // Perform any necessary actions before reloading, if needed
+      window.location.reload();
+    }
+  }, [reloadPage]);
 
   return (
     <DashBoardLayout>
@@ -73,7 +83,8 @@ const CardPayment = () => {
           </div>
           </Link>
 
-          <Link to="/ExistingCardpage">
+          <Link to="/ExistingCardpage" onClick={() => setReloadPage(true)}>
+          {/* onClick={() => window.location.reload()} */}
           <div
             id="Card"
             className="flex justify-center py-[10px] gap-[5px] rounded-[5px] mt-[10px]"
