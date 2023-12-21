@@ -298,7 +298,7 @@ export const WalletInOutFlows = () => {
         <div
           className={`text-[7px] flex gap-2 items-center mt-[7%]  md:text-[14px] lg:mt-[4%] lg:text-[18px]  ${
             toggleSideBar ? "lg:ml-[80%]" : " lg:ml-[85%] md:ml-[82%]"
-          } ml-[75%]`}
+          } ml-[75%] mr`}
         >
           <div>Volume</div>
           <div
