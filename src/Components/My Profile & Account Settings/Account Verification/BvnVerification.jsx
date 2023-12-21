@@ -222,7 +222,7 @@ src={Arrowright} alt="" />
             justify-center  items-center px-[18px] md:px-[30px] md:h-[550px]   
             h-[430px] gap-[10px] md:gap-[40px] lg:gap-[50px] lg:justify-normal 
             md:mx-[0px] mx-[19px] overflow-y-scroll lg:pt-[30px]  md:pt-[270px] pt-[270px]'>
-           
+            
           <div className='flex flex-col   items-center '>
             <div className='flex flex-col  md:gap-[20px] gap-[10px]'>
        <p className='font-[400] text-[13px] text-center leading-[16.4px] 
