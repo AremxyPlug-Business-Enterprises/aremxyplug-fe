@@ -215,7 +215,7 @@ src={Arrowright} alt="" />
    {/* ========== MODALS ========= */}
    {bvnQuery && (
           <Modal>
-        <div className='h-[100%] flex flex-col w-[100%] items-center md:justify-center justify-end md:pb-[0px] pb-[30px]'>
+        <div className='h-[100%] flex flex-col w-[100%] items-center md:justify-center justify-end md:pb-[0px] pb-[31px]'>
             <div className='flex bg-white flex-col shadow-[0px_0px_8.3274px_0px_rgba(0 0 0,0.25)] rounded-[8px] 
              shadow-[0px_0px_8.3274px_0px_rgba(0 0 0,0.25)] md:rounded-[11.736px]  lg:rounded-[20px] md:w-[55%]
             md:shadow-[0px_0px_11.73611px_0px_rgba(0,0,0,0.25) lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] 
