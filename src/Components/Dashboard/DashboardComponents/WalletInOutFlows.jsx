@@ -28,7 +28,7 @@ export const WalletInOutFlows = () => {
   const [blur, setBlur] = useState(false);
   const [selected, setSelected] = useState("");
   // const [setToggleTotalTransaction] = useState(false);
- 
+
   const [symbol, setSymbol] = useState("₦");
 
   const [activeButtons, setActiveButtons] = useState([
@@ -320,7 +320,7 @@ export const WalletInOutFlows = () => {
         </div>
 
         {/* ====================Inflow & Outflow indication================ */}
-        <div className="flex float-right mt-[5%] md:mt-[3%] lg:mt-[1%]">
+        <div className="flex float-right mt-[1%] md:mt-[3%] lg:mt-[1%]">
           <div className="flex items-center ">
             <div className="text-2xl text-[#58DA8F] md:text-5xl">
               <RxDotFilled />
@@ -341,7 +341,40 @@ export const WalletInOutFlows = () => {
           options={options}
         /> */}
 
-        <LineChart width={1100} height={360} data={data}>
+        <LineChart
+          width={1100}
+          height={360}
+          data={data}
+          className="hidden lg:block"
+        >
+          <XAxis dataKey="xaxis" />
+          <YAxis dataKey="yaxis" />
+          <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
+          <Line type="linear" dataKey="inflow" stroke="#58DA8F" />
+          <Line type="linear" dataKey="outflow" stroke="#FA6B6B" />
+          <Tooltip />
+          {/* <Legend /> */}
+        </LineChart>
+        <LineChart
+          width={340}
+          height={280}
+          data={data}
+          className="pb-[10%] md:hidden"
+        >
+          <XAxis dataKey="xaxis" />
+          <YAxis dataKey="yaxis" />
+          <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
+          <Line type="linear" dataKey="inflow" stroke="#58DA8F" />
+          <Line type="linear" dataKey="outflow" stroke="#FA6B6B" />
+          <Tooltip />
+          {/* <Legend /> */}
+        </LineChart>
+        <LineChart
+          width={740}
+          height={280}
+          data={data}
+          className="pb-[10%] hidden md:block lg:hidden"
+        >
           <XAxis dataKey="xaxis" />
           <YAxis dataKey="yaxis" />
           <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
