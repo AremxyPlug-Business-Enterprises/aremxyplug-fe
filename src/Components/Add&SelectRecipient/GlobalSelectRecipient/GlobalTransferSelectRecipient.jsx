@@ -196,7 +196,7 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
     <div className='Tabs flex flex-col lg:gap-[30px] gap-[8.28px] my-[30px] md:mt-[60px] md:mb-[80px]'>
     <div className='flex w-[100%] justify-between md:justify-normal lg:gap-[25px] border-b-[2px] md:border-b-[3px] border-[#ECECEC]'>
      <h2 className='md:w-[25%] w-[50%] font-[500] text-center text-[9px] leading-[12px] lg:text-[20px] lg:leading-[30px] py-[5.671px] lg:py-[10px]
-     bg-[#E2F3FF] md:border-b-[3px] border-b-[2px] border-[#04177F] lg:rounded-[6px] rounded-[1.987px]'>
+     bg-[#E2F3FF] md:border-b-[3px] border-b-[2.1px] border-[#04177F] lg:rounded-[6px] rounded-[1.987px]'>
   Recipients
      </h2>
      <h2 className='md:w-[25%] w-[50%] font-[500] text-center text-[9px] leading-[12px] lg:text-[20px] 
