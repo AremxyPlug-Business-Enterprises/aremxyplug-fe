@@ -998,7 +998,7 @@ const FundWithCard = () => {
                           onClick={() => {
                             handleDone();
                             setSuccessful(false);
-                            window.location.reload();
+                            // window.location.reload();
                           }}
                           className={`bg-[#04177f] w-[100px] px-[30%] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-[600] h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[14px] lg:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%] md:px-[60px] md:h-[30px]`}
                         >
