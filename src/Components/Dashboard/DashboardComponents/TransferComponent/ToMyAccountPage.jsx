@@ -31,7 +31,7 @@ export const ToMyAccountPage = () => {
             <img
               src="./Images/transferImages/ToMyAcc.png"
               alt=""
-              className="w-[91px] h-[66px] md:h-[120px] md:w-[90px] lg:w-[199px] lg:h-[199px]"
+              className="w-[91px] h-[66px] md:h-[120px] md:w-[90px] lg:w-[199px] lg:h-[170px]"
             />
           </div>
 

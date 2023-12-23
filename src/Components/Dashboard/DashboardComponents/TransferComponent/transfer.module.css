@@ -23,6 +23,28 @@
   display: none;
 }
 
+.no-spinners::-webkit-inner-spin-button,
+.no-spinners::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.hideArrows {
+  -moz-appearance: textfield;
+}
+
+/* Style to hide arrows in Firefox */
+.hideArrows::-webkit-inner-spin-button,
+.hideArrows::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Style to hide arrows in other browsers */
+.hideArrows[type="number"] {
+  -moz-appearance: textfield;
+}
+
 .transferMoneyBtn {
   border-radius: 4.763px;
   background: #fff;
@@ -71,14 +93,12 @@
   box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
 }
 .contactTeam {
-    
   bottom: 0%;
   flex-shrink: 0;
 
   background: #fff;
   box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
 }
-
 
 .checkrate {
   height: 600px;
@@ -221,14 +241,12 @@
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
   }
   .contactTeam {
-    
     top: 20%;
     flex-shrink: 0;
-  
+
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
   }
-  
 
   .transferConfirmation {
     height: 572px;
@@ -239,14 +257,12 @@
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
   }
   .contactTeam {
-    
     bottom: 25%;
     flex-shrink: 0;
-   
+
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
   }
-  
 
   .inputPin {
     bottom: 30%;
@@ -304,10 +320,9 @@
     gap: 25px;
   }
   .contactTeam {
-    
     top: 20%;
     flex-shrink: 0;
-  
+
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
   }
