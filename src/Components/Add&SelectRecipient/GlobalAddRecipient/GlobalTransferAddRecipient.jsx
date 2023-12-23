@@ -17,6 +17,7 @@ import SuccessIcon from '../../My Profile & Account Settings/ProfileImages/succe
 import AremxyLogo from '../../EducationPins/imagesEducation/AremxyPlug.svg';
 import imageCurrencyNotAvalaible from '../RecipientImages/CurrencyNotAvaliable.svg';
 import { Link } from 'react-router-dom';
+import '../../../App.css';
 
 export default function GlobalTransferAddRecipient() {
 const [accountNumber, setAccountNumber] =  useState('');
@@ -29,7 +30,8 @@ const [addRecipientCountry, setAddRecipientCountry] = useState('');
 const [addRecipientCountryFlag,setAddRecipientCountryFlag] = useState(false);
 const [addRecipientActive, setAddRecipientActive] = useState(false);
 const [addCurrencyNotAvalaible, setAddCurrencyNotAvalaible]= useState(false);
-
+// const [bvnError, setBvnError] = useState({});
+// const [checkAccountDigit, setCheckAccountDigit] = useState('');
 const [recipientCountrySelection] = useState([
  {method : 'Nigeria',  flag : nigerianFlag, id : 1},
 {method : 'United states ',  flag : americaFlag, id : 2 },
@@ -50,9 +52,41 @@ const saveRecipientButton = () => {
    setErrorRecipient(false)
   }else {
   setErrorRecipient(true);
-  
-  }
+   }
 }
+// const handleRecipientAccountChange = (e) => {
+//   const { name, value } = e.target;
+//   setCheckAccountDigit({
+//     [name]: value,
+//   });
+// };
+// const globalTransferSchema = Joi.object({
+//    checkAccountDigit: Joi.string()
+//     .pattern(new RegExp(/^\d{10,}/))
+//     .required()
+//     .messages({
+//       "string.pattern.base": "Account number should be 10 digits ",
+//     })
+//   })
+//   const checkBvnVerification = (e) => {
+//     e.preventDefault();
+//   const { error } = globalTransferSchema.validate({
+//       checkAccountDigit
+//     });
+  
+//     if (error) {
+//       setBvnError(
+//         error.details.reduce((acc, curr) => {
+//           acc[curr.path[0]] = curr.message;
+//           return acc;
+//         }, {})
+//       );
+//     } else {
+//       setOtherBankConfirmation(true);
+//       setGlobalTransferErrors({});
+//     }
+//   };
+  
   return (
     
         <DashBoardLayout>
@@ -90,7 +124,8 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
     Select Country
     </h2>
     <div onClick={AddRecipientDropDown}
-    className='flex justify-between py-[8.178px] pl-[5.868px] pr-[10px] lg:py-[14px] lg:pl-[16px] lg:pr-[10px]
+    className='flex justify-between py-[8.178px] pl-[5.868px] pr-[10px] md:py-[8.02px] md:pr-[8.598px] md:pl-[5.73px]
+     lg:py-[14px] lg:pl-[16px] lg:pr-[10px]
     md:border-[1px]  border-[0.5px] rounded-[3.197px] border-[solid]
      border-[#7C7C7C] lg:rounded-[10px] bg-white cursor-pointer'>
       <div className='flex lg:gap-[10px] gap-[5px]'>
@@ -153,11 +188,12 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
          }}  
          className='w-[100%] font-[500] text-[9px] leading-[12px]  lg:text-[16px] lg:leading-[20.8px]
          placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] py-[8.178px] pl-[5.868px] pr-[20px] lg:pl-[10px] lg:py-[16px] border-[0.5px]
+         md:py-[8.02px] md:pr-[8.598px] md:pl-[5.73px]
           rounded-[3.197px] md:border-[1px] border-[solid] border-[#7C7C7C] lg:rounded-[10px] focus:outline-none'
          placeholder='' inputMode='numeric' maxLength={10} />
          <img src={AccountRecipient} alt="" 
          className='absolute h-[12px] w-[12px] top-[7.997px] 
-         right-[7.997px] md:top-[16px] md:right-[16px] lg:w-[20px] lg:h-[20px]'/>
+         right-[7.997px] md:top-[8.02px] md:right-[8.598px] lg:top-[16px] lg:right-[16px] lg:w-[20px] lg:h-[20px]'/>
          </div>
     </div>
     </div>
@@ -177,11 +213,12 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
          }}  
          className='w-[100%] font-[500] text-[9px] leading-[12px]  lg:text-[16px] lg:leading-[20.8px]
          placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] py-[8.178px] pl-[5.868px] pr-[20px] lg:pl-[10px] lg:py-[16px] border-[0.5px]
+         md:py-[8.02px] md:pr-[8.598px] md:pl-[5.73px]
           rounded-[3.197px] md:border-[1px] border-[solid] border-[#7C7C7C] lg:rounded-[10px] focus:outline-none'
          placeholder=''   />
          <img src={Bank} alt="" 
-         className='absolute h-[12px] w-[12px] top-[7.997px] right-[7.997px] md:top-[16px] 
-         md:right-[16px] lg:w-[20px] lg:h-[20px]'/>
+         className='absolute h-[12px] w-[12px] top-[7.997px] right-[7.997px] lg:top-[16px] 
+         md:top-[8.02px] md:right-[8.598px] lg:right-[16px] lg:w-[20px] lg:h-[20px]'/>
          </div>
     </div>
 
@@ -197,11 +234,12 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
          }}  
          className='w-[100%] font-[500] text-[9px] leading-[12px]  lg:text-[16px] lg:leading-[20.8px]
          placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] py-[8.178px] pl-[5.868px] pr-[20px] lg:pl-[10px] lg:py-[16px] border-[0.5px]
-          rounded-[3.197px] md:border-[1px] border-[solid] border-[#7C7C7C] lg:rounded-[10px] focus:outline-none'
+         md:py-[8.02px] md:pr-[8.598px] md:pl-[5.73px]
+          rounded-[3.197px] md:border-[1px] border-[solid] border-[#7C7C7C] lg:rounded-[10px] focus:outline-none '
          placeholder=''  />
          <img src={AccountRecipient} alt="" 
-         className='absolute h-[12px] w-[12px] top-[7.997px] right-[7.997px] md:top-[16px] 
-         md:right-[16px] lg:w-[20px] lg:h-[20px]'/>
+         className='absolute h-[12px] w-[12px] top-[7.997px] right-[7.997px] md:top-[8.02px] md:right-[8.598px] 
+         lg:top-[16px] lg:right-[16px] lg:w-[20px] lg:h-[20px]'/>
          </div>
     </div>
 </div>
@@ -214,7 +252,7 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
   <button onClick={() => {
     saveRecipientButton();
   }}
-  className='bg-[#04177F] md:mt-[40px] mt-[60px] md:py-[10px] rounded-[4.21px] py-[16px] lg:w-[163px] md:w-[150px] text-white text-center
+  className='bg-[#04177F] md:mt-[40px] mt-[60px] md:py-[9px] lg:py-[10px] rounded-[4.21px] py-[16px] lg:w-[163px] md:w-[150px] text-white text-center
   lg:rounded-[12px] font-[600] text-[11px] ledaing-[15px] lg:text-[16px] lg:leading-[24px] '>
    Save Account
   </button>
@@ -222,23 +260,22 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
     </form>
     {confirmRecipient && (
           <Modal>
-            <div className='h-[100%] flex justify-center md:items-center items-end md:mx-[0px] mx-[19px]'>
-          <div className='flex flex-col lg:w-[50%] h-[420px]  lg:h-[680px] bg-white rounded-t-[8px] lg:rounded-[20px]
-          lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] pb-[40px] md:pb-[80px] '>
+            <div className=' h-[100%] w-[100%] flex justify-center md:items-center items-end md:mx-[0px] mx-[19px]'>
+          <div className='confirmRecipient flex flex-col md:w-[55%] h-[420px]  lg:h-[550px] bg-white rounded-t-[8px] md:rounded-[20px]
+          lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] pb-[40px] md:pb-[80px]'>
     <div className='flex justify-end w-[100%] md:py-[15px] py-[10px] pr-[14px] border-b-[10px]  md:border-b-[15px] border-[solid] border-[#04177F]'>
    <img onClick={()=> {
     setConfirmRecipient(false);
    }} src={closeIcon} alt="" 
-   className='lg:h-[30px] lg:w-[30px] lg:py-[15px] h-[20px] w-[20px]
-   '/>
+   className='lg:h-[35px] lg:w-[35px] h-[20px] w-[20px] '/>
     </div>
-    <div className='flex flex-col gap-[40px] md:gap-[10px] justify-between  lg:w-[100%] lg:pt-[20px] pt-[20px]  items-center h-[100%]'>
-      <div className='flex flex-col lg:w-[80%] w-[80%] lg:gap-[40px] gap-[20px]'>
+    <div className='flex flex-col gap-[50px] lg:gap-[130px] md:gap-[90px] justify-between  lg:w-[100%] lg:pt-[20px] pt-[20px]  items-center h-[100%]'>
+      <div className='flex flex-col lg:w-[80%] w-[80%] lg:gap-[30px] gap-[20px]'>
       {/* HEADER */}
      <h2 className='font-[600] text-center text-[10px] leading-[14px] lg:text-[16px] lg:leading-[20.8px]'>
      Please Confirm!!!
      </h2>
-     <p className='font-[500] text-center text-[10px] leading-[14px] lg:text-[16px]
+     <p className='font-[400] text-[#4A4A4A] text-center text-[10px] leading-[14px] lg:text-[16px]
       lg:leading-[20.8px] py-[5px] px-[10px] bg-[#FFF0BA] rounded-[8px]'>
      Are you sure you want to add this account to your recipients? 
      Kindly re-confirm the identity, and be informed any funds transfer to any strange accounts 
@@ -247,40 +284,40 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
 
   {/* COUNTRY */}
 <div className='flex justify-between'>
- <p className='font-[500] text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
+ <p className='font-[600] text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
   Country</p>
-  <p className='font-[500] text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
+  <p className='font-[600] text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
     Nigeria
     </p>
 </div>
 {/* BANK NAME */}
 <div className='flex justify-between'>
- <p className='font-[500] text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
+<p className='font-[600] text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
   Bank Name</p>
-  <p className='font-[500] text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
+  <p className='font-[600] text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
     {bankName}
     </p>
 </div>
 {/* ACCOUNT NAME */}
 <div className='flex justify-between'>
- <p className='font-[500] text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
+ <p className='font-[600] text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
   Account Name</p>
-  <p className='font-[500] text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
+  <p className='font-[600] text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
     {accountName}
     </p>
 </div>
 {/* ACCOUNT NUMBER */}
 <div className='flex justify-between'>
- <p className='font-[500] text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
+ <p className='font-[600] text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
  Account Number
  </p>
-  <p className='font-[500] text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
+  <p className='font-[600] text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
    {accountNumber}
     </p>
 </div>
 </div>
 {/* CONFIRM BUTTON */}
-<div className='w-[80%] flex justify-center'>
+<div className='w-[80%]  flex justify-center'>
 <button onClick={() => {
   setChangeRecipientSuccess(true);
   setConfirmRecipient(false)
@@ -299,9 +336,9 @@ className='bg-[#04177F] w-[100%] lg:py-[10px] py-[13px] lg:w-[163px]
         {changeRecipientSuccess && (
           <Modal>
             <div className='h-[100%] w-[100%] md:justify-center flex md:items-center items-end md:mx-[0px] mx-[19px]'>
-          <div className='flex flex-col  lg:w-[50%] h-[370px] w-[100%] lg:h-[680px] bg-white lg:rounded-[20px]
-          shadow-[0px_0px_6.933px_0px_rgba(0,0,0,0.25)] rounded-t-[8px]
-          lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] pb-[30px] md:pb-[80px]'>
+          <div className='flex flex-col  md:w-[50%] h-[370px] md:h-[400px] w-[100%] lg:h-[550px] bg-white lg:rounded-[20px]
+          shadow-[0px_0px_6.933px_0px_rgba(0,0,0,0.25)] rounded-t-[8px] md:rounded-[11.458px]
+          lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] pb-[30px] lg:pb-[80px] md:pb-[50px]'>
   <div className='flex justify-between w-[100%] border-b-[15px] border-[solid] border-[#04177F] lg:p-[15px] p-[10px]'>
   <img src={AremxyLogo} alt="" 
    className='lg:h-[24.818px] lg:w-[41.825px] h-[16px] w-[16px] 
@@ -309,7 +346,7 @@ className='bg-[#04177F] w-[100%] lg:py-[10px] py-[13px] lg:w-[163px]
    <img src={closeIcon} alt="" 
    className='lg:h-[32px] lg:w-[32px]  h-[16px] w-[16px]'/>
   </div>
-  <div className='flex flex-col justify-between  lg:w-[100%] lg:pt-[20px] pt-[30px]  items-center h-[100%]'>
+  <div className='flex flex-col justify-between lg:w-[100%] lg:pt-[20px] pt-[30px]  items-center h-[100%]'>
   <div className='flex flex-col items-center lg:w-[80%] lg:gap-[40px] gap-[20px]'>
    <h2 className='font-[600] text-center text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
     Successful
@@ -331,7 +368,7 @@ className='bg-[#04177F] w-[100%] lg:py-[10px] py-[13px] lg:w-[163px]
      setAccountName('')
      setBankName('')
   }}
-className='bg-[#04177F] w-[80%] lg:py-[10px] py-[13px] lg:w-[163px]
+className='bg-[#04177F] w-[80%] md:py-[9px] py-[13px] lg:w-[163px]
 md:w-[150px] text-white text-center rounded-[4.41px]
  lg:rounded-[12px] font-[600] lg:text-[16px] lg:leading-[24px]'>
  Continue
@@ -366,8 +403,9 @@ md:w-[150px] text-white text-center rounded-[4.41px]
               <Modal>
               <div className='h-[100%] w-[100%] md:justify-center flex 
               items-center  md:mx-[0px] mx-[19px]'>
-         <div className='flex flex-col  lg:w-[36%] h-[269px]  w-[100%] lg:h-[420px] bg-white lg:rounded-[20px]
-          shadow-[0px_0px_6.933px_0px_rgba(0,0,0,0.25)] rounded-[8px]
+         <div className='flex flex-col  md:w-[40%] h-[269px]  w-[100%] lg:h-[420px] bg-white lg:rounded-[20px]
+          shadow-[0px_0px_6.933px_0px_rgba(0,0,0,0.25)] md:rounded-[7.153px] rounded-[8px]
+          md:shadow-[0px_0px_11.922px_0px_rgba(0, 0, 0, 0.25)] 
           lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] lg:py-[23px] lg:px-[0px] py-[10px] px-[24px]'>
           <div className='flex flex-col lg:w-[100%] lg:gap-[20px] gap-[10px]  justify-between  items-center h-[100%]'>
   
@@ -382,7 +420,7 @@ md:w-[150px] text-white text-center rounded-[4.41px]
   <button onClick={() => {
     setAddCurrencyNotAvalaible(false);
   }}
-className='bg-[#04177F] w-[100%] lg:py-[10px] py-[13px] md:w-[97.02px]
+className='bg-[#04177F] w-[100%] lg:py-[10px] md:py-[9px] py-[13px] md:w-[97.02px]
  text-white text-center rounded-[4.41px]
  lg:rounded-[12px] font-[600] lg:text-[16px] lg:leading-[24px]'>
   Okay

@@ -196,7 +196,7 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
     <div className='Tabs flex flex-col lg:gap-[30px] gap-[8.28px] my-[30px] md:mt-[60px] md:mb-[80px]'>
     <div className='flex w-[100%] justify-between md:justify-normal lg:gap-[25px] border-b-[2px] md:border-b-[3px] border-[#ECECEC]'>
      <h2 className='md:w-[25%] w-[50%] font-[500] text-center text-[9px] leading-[12px] lg:text-[20px] lg:leading-[30px] py-[5.671px] lg:py-[10px]
-     bg-[#E2F3FF] md:border-b-[4px] border-b-[2px] border-[#04177F] lg:rounded-[6px] rounded-[1.987px]'>
+     bg-[#E2F3FF] md:border-b-[3px] border-b-[2px] border-[#04177F] lg:rounded-[6px] rounded-[1.987px]'>
   Recipients
      </h2>
      <h2 className='md:w-[25%] w-[50%] font-[500] text-center text-[9px] leading-[12px] lg:text-[20px] 
@@ -248,12 +248,12 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
       className='lg:w-[8px] lg:h-[28px] w-[4px] h-[14px] cursor-pointer'/>
       {/* FOR OPTIONS TO EDIT RECIPIENTS */}
       { editRecipient === recipients.id && (
-        <div className='absolute md:top-[15px] md:right-[40px] top-[0px] right-[10px] lg:top-[20px] lg:right-[70px] flex flex-col'>
+        <div className='absolute md:top-[15px] md:right-[10px] top-[0px] right-[10px] lg:top-[10px] lg:right-[10px] flex flex-col'>
           {/* ADD TO FAVORITE */}
    <p onClick={() => {
     closePopRecipients();
    }}
-   className='text-[#7C7C7C] lg:w-[200px]  py-[7.451px] pl-[5.313px] w-[90.36px]  lg:py-[12px] lg:px-[14px] text-[9px] leading-[12px] 
+   className='text-[#7C7C7C] lg:w-[220px] md:w-[180px]  py-[7.451px] pl-[5.313px] w-[90.36px]  lg:py-[12px] lg:px-[14px] text-[9px] leading-[12px] 
    shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)] hover:bg-gray-200 cursor-pointer
    lg:text-[16px] lg:leading-[24px] font-[500] bg-white'>
     Add to favorites
@@ -262,7 +262,7 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
    <p onClick={() => {
    closePopRecipients();
    }}
-    className='text-[#7C7C7C] lg:w-[200px] py-[7.451px] pl-[5.313px] w-[90.36px] lg:py-[12px] lg:px-[14px] text-[9px] leading-[12px] 
+    className='text-[#7C7C7C] lg:w-[220px] md:w-[180px] py-[7.451px] pl-[5.313px] w-[90.36px] lg:py-[12px] lg:px-[14px] text-[9px] leading-[12px] 
     shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)] hover:bg-gray-200 cursor-pointer
    lg:text-[16px] lg:leading-[24px] font-[600] bg-white'>
     Edit Recipients
@@ -271,7 +271,7 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
    <p onClick={() => {
   DeleteSelectRecipients();
    }}
-   className='text-[#FA6B6B] lg:w-[200px] py-[7.451px] pl-[5.313px] w-[90.36px]  lg:py-[12px] lg:px-[14px] text-[9px] leading-[12px]
+   className='text-[#FA6B6B] lg:w-[220px] md:w-[180px] py-[7.451px] pl-[5.313px] w-[90.36px]  lg:py-[12px] lg:px-[14px] text-[9px] leading-[12px]
    shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)] hover:bg-gray-200 cursor-pointer
    lg:text-[16px] lg:leading-[24px] font-[600] bg-white'>
     Delete Recipients
@@ -311,8 +311,9 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
               <Modal>
               <div className='h-[100%] w-[100%] md:justify-center flex 
               items-center  md:mx-[0px] mx-[19px]'>
-         <div className='flex flex-col  lg:w-[36%] h-[269px] w-[100%] lg:h-[420px] bg-white lg:rounded-[20px]
-          shadow-[0px_0px_6.933px_0px_rgba(0,0,0,0.25)] rounded-[8px]
+         <div className='flex flex-col  md:w-[40%] h-[269px]  w-[100%] lg:h-[420px] bg-white lg:rounded-[20px]
+          shadow-[0px_0px_6.933px_0px_rgba(0,0,0,0.25)] md:rounded-[7.153px] rounded-[8px]
+          md:shadow-[0px_0px_11.922px_0px_rgba(0, 0, 0, 0.25)] 
           lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] lg:py-[23px] lg:px-[0px] py-[10px] px-[24px]'>
           <div className='flex flex-col lg:w-[100%] lg:gap-[20px] gap-[10px]  justify-between 
            items-center h-[100%]'>
@@ -329,7 +330,7 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
   <button onClick={() => {
     setCurrencyNotAvalaible(false);
   }}
-className='bg-[#04177F] w-[100%] lg:py-[10px] py-[13px] md:w-[97.02px]
+className='bg-[#04177F] w-[100%] lg:py-[10px] md:py-[9px] py-[13px] md:w-[97.02px]
  text-white text-center rounded-[4.41px]
  lg:rounded-[12px] font-[600] lg:text-[16px] lg:leading-[24px]'>
   Okay
@@ -347,8 +348,8 @@ Coming Soon...
             {deleteRecipient && (
           <Modal>
             <div className='h-[100%] w-[100%] md:justify-center flex md:items-center items-end md:mx-[0px] mx-[19px]'>
-          <div className='flex flex-col  lg:w-[50%] h-[290px] w-[100%] lg:h-[465px] bg-white lg:rounded-[20px]
-          shadow-[0px_0px_6.933px_0px_rgba(0,0,0,0.25)] rounded-t-[8px]
+          <div className='flex flex-col  lg:w-[50%] md:w-[55%] h-[290px] w-[100%] lg:h-[465px] bg-white lg:rounded-[20px]
+          shadow-[0px_0px_6.933px_0px_rgba(0,0,0,0.25)] rounded-t-[8px] md:rounded-[5.729px]
           lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] pb-[10px] md:pb-[20px]'>
   <div className='flex justify-between w-[100%] border-b-[15px] border-[solid] border-[#04177F] lg:p-[15px] p-[10px]'>
   <img src={AremxyLogo} alt="" 
@@ -370,16 +371,16 @@ Coming Soon...
   <div className='w-[80%] flex gap-[15px] justify-center'>
     {/* YES TO PROCEED */}
   <button 
-className='bg-[#04177F] w-[50%] lg:py-[10px] py-[13px] lg:w-[163px]
+className='bg-[#04177F] w-[50%] lg:py-[10px] md:py-[9px] py-[13px] lg:w-[163px]
 md:w-[150px] text-white text-center rounded-[4.41px]
  lg:rounded-[12px] font-[600] lg:text-[16px] lg:leading-[24px]'>
- YES
+ Yes
 </button>
 {/* CANCEL */}
   <button onClick={() => {
     setDeleteRecipient(false);
     }}
-className='text-[#F95252] w-[50%] lg:py-[10px] py-[13px] lg:w-[163px]
+className='text-[#F95252] w-[50%] lg:py-[10px] md:py-[9px] py-[13px] lg:w-[163px]
 md:w-[150px] text-center rounded-[4.41px]
  lg:rounded-[12px] font-[600] lg:text-[16px] lg:leading-[24px]'>
  Cancel
