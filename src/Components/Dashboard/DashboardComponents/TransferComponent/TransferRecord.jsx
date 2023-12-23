@@ -202,15 +202,15 @@ export const TransferRecord = () => {
         <div className={`${styles.accountRecords}`}>
           <div className="text-[7px] flex items-center justify-between w-[100%] h-[16px] bg-[#c3d9ff] p-2 md:h-[47px] md:text-[13px] lg:text-[16px] lg:h-[45px] lg:p-6">
             <h3 className="">Country</h3>
-            <div className="w-[1px] h-[16px] md:h-[47px] bg-[#0003]"></div>
+            {/* <div className="w-[1px] h-[16px] md:h-[47px] bg-[#0003]"></div> */}
             <h3 className="">Currency</h3>
-            <div className="w-[1px] h-[16px] md:h-[47px] bg-[#0003]"></div>
+            {/* <div className="w-[1px] h-[16px] md:h-[47px] bg-[#0003]"></div> */}
             <h3 className="">Bank Name</h3>
-            <div className="w-[1px] h-[16px] md:h-[47px] bg-[#0003]"></div>
+            {/* <div className="w-[1px] h-[16px] md:h-[47px] bg-[#0003]"></div> */}
             <h3 className="">Account Name</h3>
-            <div className="w-[1px] h-[16px] md:h-[47px] bg-[#0003]"></div>
+            {/* <div className="w-[1px] h-[16px] md:h-[47px] bg-[#0003]"></div> */}
             <h3 className="">Account Number</h3>
-            <div className="w-[1px] h-[16px] md:h-[47px] bg-[#0003]"></div>
+            {/* <div className="w-[1px] h-[16px] md:h-[47px] bg-[#0003]"></div> */}
             <h3 className="">Reference No</h3>
           </div>
 
@@ -231,7 +231,7 @@ export const TransferRecord = () => {
 
       {/* =======================Personal Account Table==================== */}
       {personalAccount && (
-        <table className="text-[7px] md:text-[12px] lg:text-[16px]">
+        <table className="border-0 border-collapse text-[7px] md:text-[12px] lg:text-[16px]">
           <thead>
             <tr className="bg-[#c3d9ff] lg:h-[47px]">
               <th>Country</th>
@@ -243,7 +243,7 @@ export const TransferRecord = () => {
             </tr>
           </thead>
 
-          <tbody>
+          <tbody className="border-collapse">
             <tr>
               <td className="">
                 <div className="flex gap-[3px] lg:gap-[10px]">
@@ -344,7 +344,6 @@ export const TransferRecord = () => {
           </tbody>
         </table>
       )}
-
     </div>
   );
 };

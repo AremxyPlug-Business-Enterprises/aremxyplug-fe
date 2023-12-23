@@ -141,7 +141,7 @@ export const PersonalAccountForm = () => {
     beneficiaryAddress: Joi.string().required(),
     beneficiaryCity: Joi.string().required(),
     stateOrProvince: Joi.string().required(),
-    zipCode: Joi.number().integer().min(-30587).max(+30587),
+    zipCode: Joi.number().required(),
     checkbox1: Joi.boolean().required().invalid(false).messages({
       "any.invalid": "Please ensure you acknowledge",
     }),
@@ -770,11 +770,6 @@ export const PersonalAccountForm = () => {
               />
             </svg>
           </div>
-          {errors.zipCode && (
-            <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-              {errors.zipCode}
-            </div>
-          )}
         </div>
 
         {/* ==============================Acknowledgement Checks========================= */}
