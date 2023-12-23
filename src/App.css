@@ -238,3 +238,25 @@ border-radius : 10px;
   .RecipientHero{
     background: linear-gradient(91deg, #367CFF 0.39%, #69FFD2 101.71%);
   }
+  .bvnQuery{
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+  }
+  .bvnQuery::-webkit-scrollbar{
+    width : 5px;
+  }
+  .bnvQuery::-webkit-scrollbar-thumb{
+    background-color: transparent;
+  }
+  .idVerify{
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+  }
+  .idVerify::-webkit-scrollbar{
+    width : 5px;
+  }
+  .idVerify::-webkit-scrollbar-thumb{
+    background-color: transparent;
+  }
