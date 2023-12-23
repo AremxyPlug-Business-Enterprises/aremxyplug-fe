@@ -1,5 +1,6 @@
 import React, {useContext, useState} from 'react';
 import { ContextProvider } from '../../Context';
+import '../../../App.css';
 import styles from "../../../Components/Dashboard/DashboardComponents/TransferComponent/transfer.module.css";
 import Arrowright from '../../EducationPins/imagesEducation/educationArrowRight.svg';
 import { Modal } from '../../Screens/Modal/Modal';
@@ -215,13 +216,13 @@ src={Arrowright} alt="" />
    {/* ========== MODALS ========= */}
    {bvnQuery && (
           <Modal>
-        <div className='h-[100%] flex flex-col w-[100%] items-center md:justify-center justify-end md:pb-[0px] pb-[30px]'>
-            <div className='flex bg-white flex-col shadow-[0px_0px_8.3274px_0px_rgba(0 0 0,0.25)] rounded-[8px] 
+        <div className=' h-[100%] flex flex-col w-[100%] items-center justify-center  '>
+            <div className='bvnQuery flex bg-white flex-col shadow-[0px_0px_8.3274px_0px_rgba(0 0 0,0.25)] rounded-[8px] 
              shadow-[0px_0px_8.3274px_0px_rgba(0 0 0,0.25)] md:rounded-[11.736px]  lg:rounded-[20px] md:w-[55%]
             md:shadow-[0px_0px_11.73611px_0px_rgba(0,0,0,0.25) lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] 
             justify-center  items-center px-[18px] md:px-[30px] md:h-[550px]   
             h-[430px] gap-[10px] md:gap-[40px] lg:gap-[50px] lg:justify-normal 
-            md:mx-[0px] mx-[19px] overflow-y-scroll lg:pt-[30px]  md:pt-[270px] pt-[270px]'>
+            md:mx-[0px] mx-[19px]  lg:pt-[30px]  md:pt-[270px] pt-[270px]'>
             
           <div className='flex flex-col   items-center '>
             <div className='flex flex-col  md:gap-[20px] gap-[10px]'>

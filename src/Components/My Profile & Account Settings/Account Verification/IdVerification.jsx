@@ -433,8 +433,8 @@ border-[0.4px] border-[solid] border-[#9C9C9C] cursor-pointer'>
         </div>
         {idCustomerQuery && (
           <Modal>
-             <div className='h-[100%] flex flex-col w-[100%] items-center md:justify-center justify-end md:pb-[0px] pb-[30px]'>
-            <div className='flex  flex-col bg-white shadow-[0px_0px_8.3274px_0px_rgba(0 0 0,0.25)] rounded-[8px] 
+             <div className='h-[100%] flex flex-col w-[100%] items-center justify-center  pb-[30px]'>
+            <div className='idVerify  flex  flex-col bg-white shadow-[0px_0px_8.3274px_0px_rgba(0 0 0,0.25)] rounded-[8px] 
              shadow-[0px_0px_8.3274px_0px_rgba(0 0 0,0.25)] md:rounded-[11.736px]  lg:rounded-[20px]   md:w-[55%]
             md:shadow-[0px_0px_11.73611px_0px_rgba(0,0,0,0.25) lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] 
             justify-center lg:justify-normal items-center  px-[18px] md:px-[30px] md:h-[550px]   
