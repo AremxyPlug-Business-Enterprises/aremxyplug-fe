@@ -24,6 +24,10 @@
   display: none;
 }
 
+.scroll-bar::-webkit-scrollbar {
+  display: none;
+}
+
 .AirtimeTops1 {
   display: flex;
   flex-direction: column;
@@ -136,25 +140,37 @@
   bottom: 0%;
   position: absolute;
   width: 90%;
+  height: 250px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
 }
 
 .confirm3,
 .confirm03 {
   position: absolute;
   width: 90%;
-  height: 60%;
+  height: 520px;
   padding-bottom: 10px;
   bottom: 0;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0px 0px 5.952381610870361px 0px rgba(0, 0, 0, 0.25);
 }
 
 .datapopup1,
-.datapopup01 {
+.datapopup01,
+.datapopup011 {
   margin: 0 auto;
   padding: 2% 20px;
   width: 90%;
-  height: 30%;
-  position: absolute;
-  top: 35%;
+  height: 270px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   border-radius: 12px;
 }
 
@@ -162,7 +178,7 @@
 .confirm002 {
   position: absolute;
   width: 90%;
-  height: 30%;
+  height: 250px;
   bottom: 0;
 }
 
@@ -212,21 +228,21 @@
 
   .confirm002 {
     width: 50%;
-    height: 35%;
+    height: 300px;
     top: 0;
     margin-left: 20%;
   }
 
   .confirm200 {
     width: 50%;
-    height: 35%;
+    height: 300px;
     top: 0;
   }
 
   .confirmEdit {
     position: absolute;
     top: 0%;
-    height: 400px;
+    height: 500px;
     width: 60%;
     flex-shrink: 0;
     background: #fff;
@@ -236,7 +252,7 @@
   .confirmEdit01 {
     position: absolute;
     top: 0%;
-    height: 400px;
+    height: 500px;
     width: 50%;
     flex-shrink: 0;
     background: #fff;
@@ -254,35 +270,40 @@
   }
 
   .img {
-    margin-left: 35%;
+    margin-left: 25%;
   }
 
   .datapopup1 {
     margin: 0 auto;
-    padding: 2.5% 20px;
+    padding: 2% 20px;
     width: 50%;
-    height: 35%;
-    position: absolute;
-    top: 32.5%;
+    height: 300px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     border-radius: 12px;
   }
 
-  .datapopup01 {
+  .datapopup01,
+  .datapopup011 {
     margin: 0 auto;
-    padding: 2.5% 20px;
+    padding: 2% 20px;
     width: 50%;
-    height: 35%;
-    position: absolute;
-    top: 32.5%;
+    height: 300px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     border-radius: 12px;
-    margin-left: 20%;
+    margin-left: 10%;
   }
 
   .confirm {
     position: absolute;
     top: 0%;
-    height: 50%;
-    width: 50%;
+    height: 572px;
+    width: 60%;
     flex-shrink: 0;
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
@@ -291,42 +312,58 @@
   .confirm01 {
     position: absolute;
     top: 0%;
-    height: 50%;
+    height: 572px;
     width: 50%;
     flex-shrink: 0;
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
-    margin-left: 22%;
+    margin-left: 20%;
   }
 
   .confirm2 {
     top: 0%;
     width: 50%;
-    height: 30%;
+    top: 0;
+    position: absolute;
+    height: 300px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
   }
 
   .confirm02 {
     top: 0%;
+    position: absolute;
     width: 50%;
-    height: 30%;
+    height: 270px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
     margin-left: 20%;
   }
 
   .confirm3 {
     position: absolute;
+    width: 50%;
+    height: 600px;
+    padding-bottom: 10px;
+    top: 0;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0px 0px 5.952381610870361px 0px rgba(0, 0, 0, 0.25);
+  }
+
+  .confirm03 {
+    position: absolute;
     top: 0%;
-    height: 50%;
+    height: 572px;
     width: 50%;
     flex-shrink: 0;
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
-  }
-
-  .confirm03 {
-    width: 50%;
-    height: 50%;
-    padding-bottom: 10px;
-    top: 0%;
     margin-left: 20%;
   }
 
@@ -380,6 +417,10 @@
   .amount1 {
     padding-right: 5px;
   }
+
+  /* .transaction-table21 {
+    gap: 8%;
+  } */
 }
 
 /* ===================Tablet view ================ */
@@ -396,11 +437,10 @@
   .confirm {
     position: absolute;
     top: 0%;
-    /* height: 620px; */
-    /* width: 60%; */
+    height: 572px;
+    width: 60%;
     flex-shrink: 0;
     background: #fff;
-    /* margin-left: 25%; */
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
   }
 
@@ -424,6 +464,18 @@
     box-shadow: 0px 0px 3.3119657039642334px 0px rgba(0, 0, 0, 0.25);
   }
 
+  .datapopup1 {
+    margin: 0 auto;
+    padding: 2% 20px;
+    width: 45%;
+    height: 300px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 12px;
+  }
+
   /* .transaction-table {
     gap: 11%;
   }
@@ -444,8 +496,9 @@
 @media (min-width: 845px) {
   .confirm {
     position: absolute;
-    height: 50%;
-    width: 50%;
+    top: 0%;
+    height: 572px;
+    width: 60%;
     flex-shrink: 0;
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
@@ -463,6 +516,10 @@
     gap: 6%;
   }
 
+  .transaction-table21 {
+    gap: 9%;
+  }
+
   .amount {
     padding-right: 5px;
   }
@@ -474,7 +531,7 @@
   .confirm01 {
     position: absolute;
     top: 0%;
-    height: 50%;
+    height: 572px;
     width: 50%;
     flex-shrink: 0;
     background: #fff;
@@ -484,58 +541,79 @@
 
   .confirm2 {
     top: 0%;
-    width: 40%;
-    height: 30%;
+    width: 45%;
+    bottom: 0%;
+    position: absolute;
+    height: 300px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
   }
 
   .confirm02 {
     top: 0%;
-    width: 40%;
-    height: 30%;
+    position: absolute;
+    width: 50%;
+    height: 270px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
     margin-left: 20%;
   }
 
   .confirm3 {
     position: absolute;
+    width: 50%;
+    height: 600px;
+    padding-bottom: 10px;
+    top: 0;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0px 0px 5.952381610870361px 0px rgba(0, 0, 0, 0.25);
+  }
+
+  .confirm03 {
+    position: absolute;
     top: 0%;
-    height: 50%;
+    height: 572px;
     width: 50%;
     flex-shrink: 0;
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
-  }
-
-  .confirm03 {
-    width: 50%;
-    height: 50%;
-    padding-bottom: 10px;
-    top: 0%;
     margin-left: 20%;
   }
 
   .img {
-    margin-left: 35%;
+    margin-left: 25%;
   }
 
   .datapopup1 {
     margin: 0 auto;
-    padding: 2.5% 20px;
+    padding: 2% 20px;
     width: 45%;
-    height: 35%;
-    position: absolute;
-    top: 32.5%;
+    height: 300px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     border-radius: 12px;
   }
 
-  .datapopup01 {
+  .datapopup01,
+  .datapopup011 {
     margin: 0 auto;
-    padding: 2.5% 20px;
+    padding: 2% 20px;
     width: 45%;
-    height: 35%;
-    position: absolute;
-    top: 32.5%;
+    height: 300px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     border-radius: 12px;
-    margin-left: 20%;
+    margin-left: 10%;
   }
 
   .code01 {
@@ -550,7 +628,7 @@
   .confirmEdit {
     position: absolute;
     top: 0%;
-    height: 400px;
+    height: 500px;
     width: 60%;
     flex-shrink: 0;
     background: #fff;
@@ -560,7 +638,7 @@
   .confirmEdit01 {
     position: absolute;
     top: 0%;
-    height: 400px;
+    height: 500px;
     width: 50%;
     flex-shrink: 0;
     background: #fff;
@@ -571,13 +649,13 @@
   .confirm200 {
     position: absolute;
     width: 50%;
-    height: 35%;
+    height: 300px;
     top: 0;
   }
 
   .confirm002 {
     width: 50%;
-    height: 35%;
+    height: 300px;
     top: 0;
     margin-left: 20%;
   }
@@ -591,7 +669,7 @@
     align-items: center;
     gap: 203.073px;
     border-radius: 6.875px;
-    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.65);
+    box-shadow: 0px 0px 3.3119657039642334px 0px rgba(0, 0, 0, 0.25);
   }
 
   .Datapopup {
@@ -617,27 +695,38 @@
 
   .confirm2 {
     top: 0%;
-    width: 35%;
-    height: 30%;
+    width: 40%;
+    bottom: 0%;
+    position: absolute;
+    height: 300px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
   }
 
   .confirm02 {
     top: 0%;
+    position: absolute;
     width: 40%;
-    height: 30%;
+    height: 270px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
     margin-left: 20%;
   }
 
   .confirm200 {
     position: absolute;
     width: 40%;
-    height: 35%;
+    height: 300px;
     top: 0;
   }
 
   .confirm002 {
     width: 40%;
-    height: 35%;
+    height: 300px;
     top: 0;
     margin-left: 20%;
   }
@@ -645,7 +734,7 @@
   .confirmEdit01 {
     position: absolute;
     top: 0%;
-    height: 400px;
+    height: 500px;
     width: 40%;
     flex-shrink: 0;
     background: #fff;
@@ -656,7 +745,7 @@
   .confirmEdit {
     position: absolute;
     top: 0%;
-    height: 400px;
+    height: 500px;
     width: 50%;
     flex-shrink: 0;
     background: #fff;
@@ -679,43 +768,50 @@
 
   .img2 {
     width: 40%;
-    height: 40%;
+    height: 130px;
   }
 
   .datapopup1 {
     margin: 0 auto;
-    padding: 1% 20px;
-    width: 40%;
-    height: 36%;
-    position: absolute;
-    top: 32.5%;
+    padding: 0% 20px;
+    width: 45%;
+    height: 300px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     border-radius: 12px;
   }
 
-  .datapopup01 {
+  .datapopup01,
+  .datapopup011 {
     margin: 0 auto;
-    padding: 1.5% 20px;
+    padding: 1% 20px;
     width: 40%;
-    height: 35%;
-    position: absolute;
-    top: 32.5%;
+    height: 300px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     border-radius: 12px;
-    margin-left: 20%;
+    margin-left: 10%;
   }
 
   .confirm {
     position: absolute;
     top: 0%;
-    border-radius: 15px;
-    height: 50%;
-    width: 50%;
-    box-shadow: 0px 0px 16.952381610870361px 0px rgba(0, 0, 0, 0.25);
+    height: 572px;
+    width: 60%;
+    flex-shrink: 0;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
   }
 
   .confirm01 {
     position: absolute;
-    height: 50%;
-    width: 40%;
+    top: 0%;
+    height: 572px;
+    width: 50%;
     flex-shrink: 0;
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
@@ -723,10 +819,13 @@
   }
 
   .confirm03 {
-    width: 40%;
-    height: 50%;
-    padding-bottom: 10px;
+    position: absolute;
     top: 0%;
+    height: 572px;
+    width: 50%;
+    flex-shrink: 0;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
     margin-left: 20%;
   }
 
@@ -735,9 +834,9 @@
     margin-left: 22%;
   }
 
-  .transaction {
+  /* .transaction {
     gap: 11%;
-  }
+  } */
 
   .transaction2 {
     margin-top: 20px;
@@ -762,6 +861,10 @@
   .transaction-table2 {
     gap: 8%;
   }
+
+  .transaction-table21 {
+    gap: 10.3%;
+  }
 }
 
 /* ================Desktop View======================= */
@@ -783,11 +886,37 @@
     top: 5%;
   }
 
+  .datapopup1 {
+    margin: 0 auto;
+    padding: 0% 20px;
+    width: 45%;
+    height: 350px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 12px;
+  }
+
+  .datapopup01,
+  .datapopup011 {
+    margin: 0 auto;
+    padding: 1% 20px;
+    width: 40%;
+    height: 350px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 12px;
+    margin-left: 10%;
+  }
+
   .confirm {
     position: absolute;
     top: 0%;
-    height: 520px;
-    width: 50%;
+    height: 550px;
+    width: 40%;
     flex-shrink: 0;
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
@@ -809,11 +938,29 @@
   }
 
   .transaction-table2 {
-    gap: 6.7%;
+    gap: 6.5%;
+  }
+
+  .transaction-table21 {
+    gap: 7%;
+  }
+
+  .confirm200 {
+    position: absolute;
+    width: 40%;
+    height: 380px;
+    top: 0;
+  }
+
+  .confirm002 {
+    width: 40%;
+    height: 380px;
+    top: 0;
+    margin-left: 20%;
   }
 }
 
-@media (width: 1250px) {
+@media (min-width: 1250px) {
   .transaction-table {
     gap: 8.5%;
   }
@@ -823,32 +970,45 @@
   }
 
   .transaction-table2 {
-    gap: 8.5%;
+    gap: 9%;
+  }
+
+  .transaction-table21 {
+    gap: 9%;
+  }
+
+  .amount1 {
+    padding-right: 15px;
   }
 
   .img {
-    margin-left: 40%;
+    margin-left: 25%;
   }
 
   .datapopup1 {
     margin: 0 auto;
-    padding: 0% 20px;
+    padding: 2% 20px;
     width: 40%;
-    height: 40%;
-    position: absolute;
-    top: 32.5%;
+    height: 450px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     border-radius: 12px;
   }
 
-  .datapopup01 {
+  .datapopup01,
+  .datapopup011 {
     margin: 0 auto;
-    padding: 0% 20px;
+    padding: 2% 20px;
     width: 40%;
-    height: 40%;
-    position: absolute;
-    top: 32.5%;
+    height: 450px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     border-radius: 12px;
-    margin-left: 20%;
+    margin-left: 10%;
   }
 
   .code01 {
@@ -863,7 +1023,7 @@
   .confirmEdit {
     position: absolute;
     top: 0%;
-    height: 400px;
+    height: 500px;
     width: 50%;
     flex-shrink: 0;
     background: #fff;
@@ -874,15 +1034,15 @@
   .confirm002 {
     position: absolute;
     width: 35%;
-    height: 40%;
+    height: 400px;
     top: 0;
   }
 
   .confirmEdit01 {
     position: absolute;
     top: 0%;
-    height: 400px;
-    width: 45%;
+    height: 500px;
+    width: 40%;
     flex-shrink: 0;
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
@@ -891,42 +1051,70 @@
 
   .confirm2 {
     top: 0%;
-    width: 35%;
-    height: 30%;
+    width: 40%;
+    bottom: 0%;
+    position: absolute;
+    height: 350px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
   }
 
   .confirm02 {
     top: 0%;
+    position: absolute;
     width: 35%;
-    height: 30%;
+    height: 300px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
     margin-left: 20%;
   }
 
   .confirm03 {
-    width: 40%;
-    height: 50%;
-    padding-bottom: 10px;
+    position: absolute;
     top: 0%;
+    height: 620px;
+    width: 50%;
+    flex-shrink: 0;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
     margin-left: 20%;
   }
 
   .confirm {
     position: absolute;
     top: 0%;
-    border-radius: 15px;
-    height: 50%;
+    height: 620px;
     width: 50%;
-    box-shadow: 0px 0px 16.952381610870361px 0px rgba(0, 0, 0, 0.25);
+    flex-shrink: 0;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
   }
 
   .confirm01 {
     position: absolute;
-    height: 50%;
-    width: 40%;
+    top: 0%;
+    height: 620px;
+    width: 50%;
     flex-shrink: 0;
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
     margin-left: 20%;
+  }
+
+  .confirm3 {
+    position: absolute;
+    width: 50%;
+    height: 700px;
+    padding-bottom: 10px;
+    top: 0;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0px 0px 5.952381610870361px 0px rgba(0, 0, 0, 0.25);
   }
 }
 
@@ -943,6 +1131,10 @@
     gap: 9.7%;
   }
 
+  .transaction-table21 {
+    gap: 10%;
+  }
+
   .proceed {
     margin-bottom: 20%;
     margin-left: 27%;
@@ -951,60 +1143,81 @@
   .confirm2 {
     top: 0%;
     width: 30%;
-    height: 25%;
+    bottom: 0%;
+    position: absolute;
+    height: 325px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
   }
 
   .confirm02 {
     top: 0%;
-    width: 30%;
-    height: 25%;
+    position: absolute;
+    width: 35%;
+    height: 300px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
     margin-left: 20%;
   }
 
-  /* .confirm3 {
+  .confirm03 {
     position: absolute;
     top: 0%;
-    height: 520px;
-    width: 60%;
+    height: 720px;
+    width: 50%;
     flex-shrink: 0;
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
-  } */
-
-  .confirm03 {
-    width: 40%;
-    height: 50%;
-    padding-bottom: 10px;
-    top: 0%;
     margin-left: 20%;
   }
 
   .img {
     height: 90%;
     width: 90%;
-    margin-left: 45%;
+    margin-left: 15%;
     margin-top: 5%;
   }
 
   .datapopup1 {
     margin: 0 auto;
-    padding: 1.5% 20px;
-    width: 40%;
-    height: 40%;
-    position: absolute;
-    top: 32.5%;
+    padding: 2% 20px;
+    width: 35%;
+    height: 470px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     border-radius: 12px;
   }
 
   .datapopup01 {
     margin: 0 auto;
-    padding: 1.5% 20px;
-    width: 40%;
-    height: 40%;
-    position: absolute;
-    top: 32.5%;
+    padding: 0% 20px;
+    width: 35%;
+    height: 450px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     border-radius: 12px;
-    margin-left: 20%;
+    margin-left: 10%;
+  }
+
+  .datapopup011 {
+    margin: 0 auto;
+    padding: 1% 20px;
+    width: 35%;
+    height: 450px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 12px;
+    margin-left: 10%;
   }
 
   .code01 {
@@ -1019,7 +1232,7 @@
   .confirmEdit {
     position: absolute;
     top: 0%;
-    height: 400px;
+    height: 500px;
     width: 50%;
     flex-shrink: 0;
     background: #fff;
@@ -1029,7 +1242,7 @@
   .confirmEdit01 {
     position: absolute;
     top: 0%;
-    height: 400px;
+    height: 500px;
     width: 40%;
     flex-shrink: 0;
     background: #fff;
@@ -1041,33 +1254,37 @@
   .confirm002 {
     position: absolute;
     width: 35%;
-    height: 35%;
+    height: 400px;
     top: 0;
   }
 
   .confirm3 {
     position: absolute;
-    top: 0%;
-    height: 50%;
-    width: 40%;
+    width: 50%;
+    height: 700px;
+    padding-bottom: 10px;
+    top: 0;
     flex-shrink: 0;
+    border-radius: 8px;
     background: #fff;
-    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 0px 5.952381610870361px 0px rgba(0, 0, 0, 0.25);
   }
 
   .confirm {
     position: absolute;
     top: 0%;
-    border-radius: 15px;
-    height: 40%;
-    width: 40%;
-    box-shadow: 0px 0px 16.952381610870361px 0px rgba(0, 0, 0, 0.25);
+    height: 720px;
+    width: 50%;
+    flex-shrink: 0;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
   }
 
   .confirm01 {
     position: absolute;
-    height: 50%;
-    width: 40%;
+    top: 0%;
+    height: 720px;
+    width: 50%;
     flex-shrink: 0;
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
@@ -1077,7 +1294,7 @@
 
 @media (min-width: 1500px) {
   .transaction-table {
-    gap: 10%;
+    gap: 10.8%;
   }
 
   .transaction-table1 {
@@ -1085,40 +1302,62 @@
   }
 
   .transaction-table2 {
-    gap: 10.2%;
+    gap: 11%;
+  }
+
+
+  .transaction-table21 {
+    gap: 11%;
   }
 
   .img {
-    height: 60%;
-    width: 60%;
-    margin-left: 40%;
-    margin-top: 2.5%;
+    height: 70%;
+    width: 70%;
+    margin-left: 20%;
+    margin-top: 4%;
   }
 
   .img2 {
-    width: 25%;
-    height: 25%;
+    width: 40%;
+    height: 180px;
   }
 
   .datapopup1 {
     margin: 0 auto;
-    padding: 0% 20px;
-    width: 40%;
-    height: 40%;
-    position: absolute;
-    top: 32.5%;
+    padding: 2% 20px;
+    width: 30%;
+    height: 450px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     border-radius: 12px;
   }
 
   .datapopup01 {
     margin: 0 auto;
-    padding: 2% 20px;
+    padding: 0% 20px;
     width: 30%;
-    height: 40%;
-    position: absolute;
-    top: 32.5%;
+    height: 420px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     border-radius: 12px;
-    margin-left: 17%;
+    margin-left: 10%;
+  }
+
+  .datapopup011 {
+    margin: 0 auto;
+    padding: 0% 20px;
+    width: 30%;
+    height: 400px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 12px;
+    margin-left: 10%;
   }
 
   .code01 {
@@ -1133,7 +1372,7 @@
   .confirmEdit {
     position: absolute;
     top: 0%;
-    height: 400px;
+    height: 500px;
     width: 40%;
     flex-shrink: 0;
     background: #fff;
@@ -1143,7 +1382,7 @@
   .confirmEdit01 {
     position: absolute;
     top: 0%;
-    height: 400px;
+    height: 500px;
     width: 35%;
     flex-shrink: 0;
     background: #fff;
@@ -1155,57 +1394,75 @@
   .confirm002 {
     position: absolute;
     width: 30%;
-    height: 40%;
+    height: 400px;
     top: 0;
   }
 
   .confirm2 {
     top: 0%;
     width: 30%;
-    height: 30%;
+    bottom: 0%;
+    position: absolute;
+    height: 325px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
   }
 
   .confirm02 {
     top: 0%;
+    position: absolute;
     width: 30%;
-    height: 30%;
+    height: 300px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
     margin-left: 20%;
   }
 
   .confirm3 {
     position: absolute;
-    top: 0%;
-    height: 50%;
-    width: 40%;
+    width: 50%;
+    height: 620px;
+    padding-bottom: 10px;
+    top: 0;
     flex-shrink: 0;
+    border-radius: 8px;
     background: #fff;
-    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 0px 5.952381610870361px 0px rgba(0, 0, 0, 0.25);
   }
 
   .confirm03 {
-    width: 40%;
-    height: 50%;
-    padding-bottom: 10px;
+    position: absolute;
     top: 0%;
+    height: 620px;
+    width: 50%;
+    flex-shrink: 0;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
     margin-left: 20%;
   }
 
   .confirm {
     position: absolute;
     top: 0%;
-    border-radius: 15px;
-    height: 50%;
-    width: 40%;
-    box-shadow: 0px 0px 16.952381610870361px 0px rgba(0, 0, 0, 0.25);
+    height: 620px;
+    width: 50%;
+    flex-shrink: 0;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
   }
 
   .confirm01 {
     position: absolute;
-    height: 50%;
-    width: 40%;
+    top: 0%;
+    height: 620px;
+    width: 50%;
     flex-shrink: 0;
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
-    margin-left: 22%;
+    margin-left: 20%;
   }
 }

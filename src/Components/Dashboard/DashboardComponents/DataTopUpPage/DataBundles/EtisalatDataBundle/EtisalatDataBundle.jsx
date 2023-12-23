@@ -425,7 +425,7 @@ const EtisalatDataBundle = () => {
                   toggleSideBar
                     ? "code1"
                     : "code01"
-                } overflow-auto`}
+                } overflow-auto w-[90%]`}
               >
                 <img
                   onClick={() => setCodes(false)}
