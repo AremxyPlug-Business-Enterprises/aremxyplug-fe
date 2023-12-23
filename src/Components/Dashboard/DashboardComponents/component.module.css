@@ -202,6 +202,16 @@ td {
   padding: 18px 6px;
 }
 
+.currencyUnavailable {
+  height: 340px;
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .currencyUnavailable {
+    height: 370px;
+  }
+}
+
 /* ===================Tablet view ================ */
 @media (min-width: 820px) and (max-width: 1180px) {
   .feature {
@@ -507,5 +517,9 @@ td {
 
   .accountRecords {
     height: 100%;
+  }
+
+  .currencyUnavailable {
+    height: 540px;
   }
 }
