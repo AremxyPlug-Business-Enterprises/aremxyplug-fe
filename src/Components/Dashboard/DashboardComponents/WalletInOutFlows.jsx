@@ -218,10 +218,14 @@ export const WalletInOutFlows = () => {
 
       {blur && (
         <div
-          className={` ${isDarkMode ? "" : ""} ${
+          className={`${
+            styles.currencyUnavailable
+          } z-10 text-[#04177f] pt-[32%] text-[14px] w-[90%] font-extrabold  md:pt-[13%] md:text-[30px] ${
+            isDarkMode ? "" : ""
+          } ${
             toggleSideBar
-              ? "backdrop-blur-[5px] z-50 absolute font-extrabold lg:h-[101%] lg:w-[75%] lg:ml-[-8px] lg:flex lg:justify-center lg:pt-[20%] lg:text-[28px] lg:text-[#04177f]"
-              : "backdrop-blur-[5px] z-50 absolute text-[#04177f] text-[14px] h-[36.5%] w-[90%] font-extrabold flex justify-center pt-[23%] md:h-[42%] md:text-[34px] md:pt-[22%] lg:text-[45px] lg:w-[90%] lg:h-[121%] "
+              ? " backdrop-blur-[5px] absolute lg:h-[101%] lg:w-[75%] lg:ml-[-8px] lg:flex lg:justify-center lg:pt-[20%] lg:text-[28px] lg:text-[#04177f]"
+              : " backdrop-blur-[5px] absolute  flex justify-center lg:text-[45px] lg:w-[90%] lg:h-[121%] "
           } `}
         >
           This Currency Is Currently Not Available...
