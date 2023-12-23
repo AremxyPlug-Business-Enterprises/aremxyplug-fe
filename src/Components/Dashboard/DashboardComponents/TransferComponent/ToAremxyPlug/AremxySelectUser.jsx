@@ -82,6 +82,7 @@ export default function AremxySelectUser() {
     const [miniCountry, setMiniCountry] = useState("");
     const [select, setSelect] = useState(false);
     const [showDrop, setShowDrop] = useState(false);
+    const [currencyAvailable, setCurrencyAvailable] = useState(false);
     const active = styled.active;
     const inactive = styled.inactive;
 
@@ -98,13 +99,17 @@ export default function AremxySelectUser() {
         setShowList(false);
         setMainCountry(name);
         setSelected(true);
+        setCurrencyAvailable(id !== 1);
     };
+
+    const refresh = () => window.location.reload(true);
 
     const handleCountryPress = (name, flag, id, code) => {
         setFlag(flag);
         setShowDrop(false);
         setMiniCountry(name);
         setSelect(true);
+        setCurrencyAvailable(id !== 1);
     };
 
     const handleRecipient = (index) => {
@@ -279,11 +284,11 @@ export default function AremxySelectUser() {
                     <div
                     className={`${
                         toggleSideBar
-                        ? "lg:w-[35.7%] lg:top-[112%]"
-                        : "lg:w-[44%] lg:top-[112%]"
+                        ? "lg:w-[31.5%] lg:top-[100.5%]"
+                        : "lg:w-[38.5%] lg:top-[105.3%]"
                     }  ${
                         styles.countryDropDown
-                    } rounded-br-[7px] absolute z-50 top-[330px] rounded-bl-[7px] shadow-xl bg-[#fff] border w-[90%] lg:rounded-br-[14px] lg:rounded-bl-[14px]`}
+                    } rounded-br-[7px] rounded-bl-[7px] shadow-xl bg-[#fff] border w-[100%] lg:w-full md:w-[50%] lg:rounded-br-[14px] lg:rounded-bl-[14px]`}
                     >
                     {" "}
                     {countryList.map((country) => (
@@ -509,7 +514,7 @@ export default function AremxySelectUser() {
                     />
                   </div>
 
-                  <hr className="h-[6px] bg-[#04177f] lg:mt-[2%] border-none mt-[2%] md:mt-[6%] md:h-[10px]" />
+                  <hr className="h-[6px] bg-[#04177f] lg:mt-[2%] border-none mt-[2%] md:mt-[2%] md:h-[10px]" />
                   <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[3%] lg:my-[%]">
                     Successful
                   </p>
@@ -529,7 +534,7 @@ export default function AremxySelectUser() {
                     className={`w-full h-[38px] mt-[40px] px-[20px] items-center`}
                   >
                     <button
-                      className={`bg-[#04177F] w-full flex justify-center items-center my-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:mx-auto lg:h-[38px] lg:my-[4%]`}
+                      className={`bg-[#04177F] w-full flex justify-center items-center my-auto mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:mx-auto lg:h-[38px] lg:my-[4%]`}
                       onClick={() => {
                         setAdd(false);
                         window.location.reload();
@@ -568,7 +573,7 @@ export default function AremxySelectUser() {
                     />
                   </div>
 
-                  <hr className="h-[6px] bg-[#04177f] lg:mt-[2%] border-none mt-[2%] md:mt-[6%] md:h-[10px]" />
+                  <hr className="h-[6px] bg-[#04177f] lg:mt-[2%] border-none mt-[2%] md:mt-[2%] md:h-[10px]" />
                   <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[3%] lg:my-[%]">
                     Successful
                   </p>
@@ -588,7 +593,7 @@ export default function AremxySelectUser() {
                     className={`w-full h-[38px] mt-[40px] px-[20px] items-center`}
                   >
                     <button
-                      className={`bg-[#04177F] w-full flex justify-center items-center my-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:mx-auto lg:h-[38px] lg:my-[4%]`}
+                      className={`bg-[#04177F] w-full flex justify-center items-center my-auto mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:mx-auto lg:h-[38px] lg:my-[4%]`}
                       onClick={() => {
                         setRemove(false);
                         window.location.reload();
@@ -603,13 +608,13 @@ export default function AremxySelectUser() {
             {edit && (
               <Modal>
                 <div
-                  className={`confirm mx-auto ${
+                  className={`confirm mx-auto my-auto ${
                     isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
                   } ${
                     toggleSideBar
                       ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
                       : "lg:w-[40%]"
-                  } lg:ml-[10%] lg:mr-[10%] grow pt-[10px] md:mt-[1%] bottom-[20px] md:top-[5%] lg:top-[5%] pb-[20px] rounded-tr-[8px] rounded-br-[8px] rounded-bl-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:mb-[18%] md:overflow-auto lg:overflow-hidden`}
+                  } lg:ml-[10%] lg:mr-[10%] grow pt-[10px] bottom-[20px] md:top-auto md:bottom-auto lg:top-[5%] pb-[20px] rounded-tr-[8px] rounded-br-[8px] rounded-bl-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:overflow-auto lg:overflow-hidden`}
                 >
                   <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
                     <img
@@ -704,11 +709,11 @@ export default function AremxySelectUser() {
                         <div
                         className={`${
                             toggleSideBar
-                            ? "lg:w-[47.3%] lg:top-[40%]"
-                            : "lg:w-[47%] lg:top-[40%]"
+                            ? "lg:w-[31.5%] lg:top-[100.5%]"
+                            : "lg:w-[38.5%] lg:top-[105.3%]"
                         }  ${
                             styles.countryDropDown
-                        } rounded-br-[7px] absolute z-50 top-[45px] rounded-bl-[7px] shadow-xl bg-[#fff] border w-[88%] lg:rounded-br-[14px] lg:rounded-bl-[14px]`}
+                        } rounded-br-[7px] rounded-bl-[7px] shadow-xl bg-[#fff] border w-[100%] lg:w-[50%] md:w-[50%] lg:rounded-br-[14px] lg:rounded-bl-[14px]`}
                         >
                         {" "}
                         {countryList.map((country) => (
@@ -1034,6 +1039,32 @@ export default function AremxySelectUser() {
                     >
                       Done
                     </button>
+                  </div>
+                </div>
+              </Modal>
+            )}
+            {currencyAvailable && (
+              <Modal>
+                <div className="bg-white shadow-lg w-[90%] rounded-[8px] h-[269px] flex flex-col items-center py-[4%] gap-[40px] md:h-[360px] lg:w-[562px] lg:gap-[60px] lg:h-[500px] lg:py-[3%] lg:rounded-[px]">
+                  <p className="text-[10px] text-[#04177f] font-extrabold md:text-[16px] lg:text-[25px]">
+                    This Currency is Currently Not Available.
+                  </p>
+                  <img
+                    className="w-[135px] h-[96px] lg:w-[217px] lg:h-[187px]"
+                    src="/Images/addAccountImages/account-unavailable.png"
+                    alt=""
+                  />
+                  <p className="absolute top-[58%] right-[15%] text-[8px] md:text-[12px] md:ml-[70%] lg:text-[14px] lg:top-[73%] lg:right-[33%] lg:ml-[40%] lg:w-[8%]">
+                    Coming Soon...
+                  </p>
+
+                  <div
+                    onClick={refresh}
+                    className={` ${
+                      isDarkMode ? "border" : "bg-[#04177f] "
+                    } cursor-pointer text-white text-[10px] h-[40px] w-[80%] rounded-[5px] flex items-center justify-center md:mx-auto md:w-[20%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[30%] lg:mx-auto`}
+                  >
+                    Okay
                   </div>
                 </div>
               </Modal>

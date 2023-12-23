@@ -215,9 +215,10 @@
   }
 
   .aremxyMoneyPop {
-    height: 600px;
+    height: 550px;
     border-radius: 12px;
     background: #fff;
+    bottom: auto;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
   }
   .contactTeam {
@@ -249,7 +250,8 @@
   
 
   .inputPin {
-    bottom: 30%;
+    bottom: auto;
+    top: auto;
     width: 481.25px;
     height: 350px;
   }
@@ -259,7 +261,8 @@
   }
 
   .successfulTwo {
-    top: 10%;
+    top: auto;
+    bottom: auto;
     width: 60%;
     height: 600px;
     border-radius: 15px;
@@ -351,7 +354,8 @@
 
   .successfulTwo {
     position: absolute;
-    top: 7%;
+    top: auto;
+    bottom: auto;
     border-radius: 15px;
     height: 550px;
     box-shadow: 0px 0px 16.952381610870361px 0px rgba(0, 0, 0, 0.25);
@@ -378,7 +382,8 @@
   .inputPin {
     height: 405px;
     position: absolute;
-    top: 18%;
+    bottom: auto;
+    top: auto;
     border-radius: 20px;
   }
 
