@@ -521,10 +521,8 @@ const MtnDataTopUpBundle = () => {
               (
               <div
                 className={`code ${
-                  toggleSideBar
-                    ? "code1"
-                    : "code01"
-                } overflow-auto`}
+                  toggleSideBar ? "code1" : "code01"
+                } overflow-auto w-[90%]`}
               >
                 <img
                   onClick={() => setCodes(false)}
@@ -846,12 +844,10 @@ const MtnDataTopUpBundle = () => {
           {proceed && (
             <Modal>
               <div
-                className={`${
+                className={`scroll-bar ${
                   isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
                 } ${
-                  toggleSideBar
-                    ? "confirm01"
-                    : "confirm"
+                  toggleSideBar ? "confirm01" : "confirm"
                 } grow pt-[10px] pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:overflow-auto`}
               >
                 <div className="w-full flex justify-end border-b-[6px] border-primary px-[12px] md:h-[25px] lg:border-b-[10px] lg:mt-[20px]">
@@ -1012,18 +1008,16 @@ const MtnDataTopUpBundle = () => {
             <Modal>
               <div
                 className={` ${
-                  toggleSideBar
-                    ? "confirm02"
-                    : "confirm2"
+                  toggleSideBar ? "confirm02" : "confirm2"
                 } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
               >
                 <div className="flex justify-end px-2">
-                <img
-                  onClick={() => setConfirm(false)}
-                  className="cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[35px] lg:h-[35px] "
-                  src={Cancel}
-                  alt=""
-                />
+                  <img
+                    onClick={() => setConfirm(false)}
+                    className="cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[35px] lg:h-[35px] "
+                    src={Cancel}
+                    alt=""
+                  />
                 </div>
 
                 <hr className="h-[6px] bg-[#04177f] lg:mt-[2%] border-none mt-[2%] md:mt-[2%] md:h-[10px]" />
@@ -1088,10 +1082,8 @@ const MtnDataTopUpBundle = () => {
             <Modal>
               {/* <DataBundleFailedPopUp/> */}
               <div
-                className={`${
-                  toggleSideBar
-                    ? "confirm03 w-[90%]"
-                    : "confirm3 w-[90%]"
+                className={`scroll-bar ${
+                  toggleSideBar ? "confirm03 w-[90%]" : "confirm3 w-[90%]"
                 } bg-white rounded-[12px] md:my-auto mx-auto overflow-auto lg:mx-auto lg:my-auto`}
               >
                 <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
@@ -1238,7 +1230,7 @@ const MtnDataTopUpBundle = () => {
                     contact us for any further assistance.
                   </p>
                 </div>
-                <div className="flex w-full justify-center mx-auto px-[50px] items-center gap-[5%] md:gap-[10%] mt-[50px] md:w-[50%] lg:gap-[10%] lg:mx-auto  lg:my-[5%] md:mt-[40px]">
+                <div className="flex w-full justify-center mx-auto px-[50px] items-center gap-[5%] md:gap-[10%] mt-[30px] md:w-[50%] lg:gap-[10%] lg:mx-auto  lg:my-[5%] md:mt-[40px]">
                   <Link to="/MtnDataTopUpBundle">
                     <button
                       onClick={() => {

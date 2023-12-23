@@ -1335,11 +1335,11 @@ const TransactionPage = () => {
             <div
              className={`transaction ${
               toggleSideBar
-                ? "transaction-table2 lg:text-[15px] md:gap-[5%] xl:gap-[%] md:pl-[px]"
-                : "transaction-table lg:text-[20px] lg:h-[44px] md:gap-[8.6%] lg:gap-[%] xl:gap-[%]"
+                ? "transaction-table2 lg:text-[15px] md:gap-[5%] xl:gap-[%] md:pl-[px] md:h-[50px]"
+                : "transaction-table lg:text-[20px] md:gap-[8.6%] lg:gap-[%] xl:gap-[%] md:h-[50px]"
             } ${
               isDarkMode ? "bg-black border" : " bg-[#ced9ff] "
-            } hidden md:text-[12px] font-semibold md:flex md:h-[35px] md:justify-start md:px-[20px] md:items-center`}
+            } hidden md:text-[12px] font-semibold md:flex md:justify-start md:px-[20px] md:items-center`}
             >
               <div>Products</div>
               <div>Description</div>
@@ -1376,7 +1376,7 @@ const TransactionPage = () => {
                       toggleSideBar
                         ? "lg:text-[15px] md:gap-[%] md:text-[8.5px] "
                         : "lg:text-[15px] md:gap-[%] md:text-[10px] lg:md:gap-[%]"
-                    }  hidden  font-semibold md:flex md:h-[50px] lg:h-[75px] md:justify-start md:px-[20px] md:items-center  md:mt-[20px] md:pb-[2%] border-b-[1px]`}
+                    }  hidden  font-semibold md:flex md:h-[60px] lg:h-[85px] md:justify-start md:px-[20px] md:items-center  md:mt-[20px] md:pb-[2%] border-b-[1px]`}
                   >
                     <div
                       className={`md:text-[#000000] ${

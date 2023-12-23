@@ -329,7 +329,7 @@ const DataTopUpPage = () => {
                   <img
                     src={InternationalData}
                     alt=""
-                    className="img mx-auto ml-[30%] mt-[30px] md:mt-[5%] md:w-[60%] md:h-[60%] md:mx-[25%] w-[50%] h-[50%px] lg:w-[300px] lg:h-[200px] lg:mx-[150px] lg:mt-[3%] 2xl:mt-[10%] 2xl:mx-[180px]"
+                    className="img mx-auto ml-[30%] mt-[30px] md:mt-[5%] md:w-[60%] md:h-[60%] md:mx-auto w-[50%] h-[50%] lg:w-[300px] lg:h-[200px] lg:mx-auto lg:mt-[3%] 2xl:mt-[10%] 2xl:mx-auto"
                   />
                 </div>
                 <div className="mt-[30px] flex flex-col gap-[5px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
@@ -354,7 +354,7 @@ const DataTopUpPage = () => {
             <Modal>
               <div
                 className={`${
-                  toggleSideBar ? "datapopup01" : "datapopup1 "
+                  toggleSideBar ? "datapopup011" : "datapopup1"
                 } bg-white `}
               >
                 <div
@@ -397,7 +397,7 @@ const DataTopUpPage = () => {
             <Modal>
               <div
                 className={`${
-                  toggleSideBar ? "datapopup01" : "datapopup1"
+                  toggleSideBar ? "datapopup011" : "datapopup1"
                 } bg-white `}
               >
                 <div
@@ -440,7 +440,7 @@ const DataTopUpPage = () => {
             <Modal>
               <div
                 className={`${
-                  toggleSideBar ? "datapopup01" : "datapopup1 datapopup2 "
+                  toggleSideBar ? "datapopup011" : "datapopup1 datapopup2 "
                 } bg-white `}
               >
                 <div
@@ -483,7 +483,7 @@ const DataTopUpPage = () => {
             <Modal>
               <div
                 className={`${
-                  toggleSideBar ? "datapopup01" : "datapopup1 datapopup2 "
+                  toggleSideBar ? "datapopup011" : "datapopup1 datapopup2 "
                 } bg-white `}
               >
                 <div

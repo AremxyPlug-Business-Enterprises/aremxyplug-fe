@@ -314,7 +314,7 @@ const TransactionHistory = () => {
           </div>
 
           {/* LARGER SCREENS */}
-
+          
           <div
           style={{
             boxShadow: "0px 0px 6.666667461395264px 0px rgba(0, 0, 0, 0.45)",
@@ -328,16 +328,16 @@ const TransactionHistory = () => {
             <div
               className={`transaction ${
                 toggleSideBar
-                  ? "transaction-table1 lg:text-[15px] md:gap-[8.2%] xl:gap-[%] md:pl-[px]"
-                  : "transaction-table lg:text-[20px] lg:h-[44px] md:gap-[8.6%] lg:gap-[%] xl:gap-[%]"
+                ? "transaction-table21 lg:text-[15px] md:gap-[8.3%] md:h-[50px] lg:h-[60px]"
+                : "transaction-table lg:text-[20px] md:gap-[8.6%] md:h-[50px] lg:h-[60px]"
               } ${
                 isDarkMode ? "bg-black border" : " bg-[#ced9ff] "
-              } hidden md:text-[12px] font-semibold md:flex md:h-[35px] md:justify-start md:px-[20px] md:items-center`}
+              } hidden md:text-[12px] font-semibold md:flex md:justify-start md:px-[20px] md:items-center`}
             >
               <div>Products</div>
               <div>Description</div>
               <div>Order No</div>
-              <div className={` xl:pr-[5px] 2xl:pr-[px] ${
+              <div className={` ${
                 toggleSideBar
                   ? "amount"
                   : "amount1"
@@ -369,7 +369,7 @@ const TransactionHistory = () => {
                       toggleSideBar
                         ? "lg:text-[15px] md:gap-[%] md:text-[8.5px] "
                         : "lg:text-[15px] md:gap-[%] md:text-[10px] lg:md:gap-[%]"
-                    }  hidden  font-semibold md:flex md:h-[50px] lg:h-[75px] md:justify-start md:px-[20px] md:items-center  md:mt-[20px] md:pb-[2%] border-b-[1px]`}
+                    }  hidden  font-semibold md:flex md:h-[60px] lg:h-[85px] md:justify-start md:px-[20px] md:items-center  md:mt-[20px] md:pb-[2%] border-b-[1px]`}
                   >
                     <div
                       className={`md:text-[#000000] ${

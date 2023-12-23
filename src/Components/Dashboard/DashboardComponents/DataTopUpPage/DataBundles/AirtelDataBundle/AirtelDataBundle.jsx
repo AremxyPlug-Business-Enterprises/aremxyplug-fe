@@ -35,7 +35,7 @@ const AirtelDataBundle = () => {
   const { selectedAmount, setSelectedAmount } = useContext(ContextProvider);
   const { recipientNames, setRecipientNames } = useContext(ContextProvider);
   const { walletName, setWalletName } = useContext(ContextProvider);
-
+  
   const [showProductList, setShowProductList] = useState(false);
   const [showOptionList, setShowOptionList] = useState(false);
   const [addRecipient, setAddRecipient] = useState(false);
@@ -447,7 +447,7 @@ const AirtelDataBundle = () => {
                 toggleSideBar
                   ? "code1"
                   : "code01"
-              } overflow-auto`}
+              } overflow-auto w-[90%]`}
               >
                 <img
                   onClick={() => setCodes(false)}
@@ -754,7 +754,7 @@ const AirtelDataBundle = () => {
           {proceed && (
             <Modal>
               <div
-                 className={`${
+                 className={`scroll-bar ${
                   isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
                 } ${
                   toggleSideBar
@@ -996,7 +996,7 @@ const AirtelDataBundle = () => {
             <Modal>
               {/* <TransactFailedPopUp/> */}
               <div
-                className={`${
+                className={` scroll-bar ${
                   toggleSideBar
                     ? "confirm03 w-[90%]"
                     : "confirm3 w-[90%]"

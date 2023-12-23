@@ -910,11 +910,11 @@ const SmileDataBundle = () => {
           </div>
 
           {/* ================Proceed=================== */}
-
+          
           {proceed && (
             <Modal>
               <div
-                className={`${
+                className={` scroll-bar ${
                   isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
                 } ${
                   toggleSideBar
@@ -1189,7 +1189,7 @@ const SmileDataBundle = () => {
             <Modal>
               {/* <DataBundleFailedPopUp/> */}
               <div
-                className={`${
+                className={` scroll-bar ${
                   toggleSideBar
                     ? "confirm03 w-[90%]"
                     : "confirm3 w-[90%]"
