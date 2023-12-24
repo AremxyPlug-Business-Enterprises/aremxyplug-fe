@@ -28,7 +28,7 @@ export default function GlobalTransfer() {
 
   const [addToRecipient, SetAddToRecipient] = useState(false);
   const [saveToFavorite, setSaveTofavorite] = useState(false);
-  
+
   const countryList = [
     {
       id: 1,
@@ -107,10 +107,7 @@ export default function GlobalTransfer() {
                   src={flag}
                   alt=""
                 />
-                <p className="text-[10px] font-extrabold lg:text-[14px]">
-                  {" "}
-                  {globalCountry}
-                </p>
+                <p className="text-[10px] lg:text-[14px]"> {globalCountry}</p>
               </div>
             ) : (
               <p></p>
@@ -191,31 +188,31 @@ export default function GlobalTransfer() {
       </div>
       {/* ==========================Select/Add Recipient====================== */}
       <div className="flex gap-[10%] lg:gap-[3%]">
-      <Link to = '/GlobalTransferSelectRecipient'
-         className="w-full flex items-center justify-between border text-[10px] rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003] cursor-pointer">
+        <Link
+          to="/GlobalTransferSelectRecipient"
+          className="w-full flex items-center justify-between border text-[10px] rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003] cursor-pointer"
+        >
           <p>Select Recipient</p>
-          
+
           <img
             className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
             src="./Images/otherBanksImages/weight.png"
             alt=""
-          /></Link>
-      
-           
-  
-       
-        <Link to ='/GlobalTransferAddRecipient'
-        className="w-full flex items-center justify-between border text-[10px]  rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003] cursor-pointer">
+          />
+        </Link>
+
+        <Link
+          to="/GlobalTransferAddRecipient"
+          className="w-full flex items-center justify-between border text-[10px]  rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003] cursor-pointer"
+        >
           <p>Add Recipient</p>
-          
+
           <img
             className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
             src="./Images/otherBanksImages/add-square.png"
             alt=""
           />
-         
         </Link>
-     
       </div>
       <div className="bg-[#04177f] text-[#fff] text-[10px] h-[20px] flex justify-center items-center rounded-[2px] lg:w-[45%] lg:h-[38px] lg:text-[16px]">
         Real-time Bank Network Tracker
@@ -258,7 +255,7 @@ export default function GlobalTransfer() {
               onChange={handleGlobalInputChange}
               name="accountNumber"
               value={globalAccountNumber}
-              className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
+              className={`${styles.hideArrows} text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]`}
               type="number"
             />
           </div>
@@ -383,7 +380,7 @@ export default function GlobalTransfer() {
       <button
         onClick={ProceedToGlobalTransfer}
         className={`${
-          amtToTransfer.length < 4 ? "bg-[#0008]" : "bg-[#04177f]"
+          amtToTransfer.length < 3 ? "bg-[#0008]" : "bg-[#04177f]"
         } my-[5%] w-full flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
       >
         Proceed

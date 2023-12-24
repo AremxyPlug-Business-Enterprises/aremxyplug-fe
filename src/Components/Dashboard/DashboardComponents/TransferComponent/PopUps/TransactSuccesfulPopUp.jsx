@@ -20,8 +20,7 @@ export const TransactSuccesfulPopUp = () => {
 
   const handleTransactionSuccessClose = () => {
     setTransactSuccessPopUp(false);
-  }; 
-
+  };
 
   return (
     <div>
@@ -53,7 +52,7 @@ export const TransactSuccesfulPopUp = () => {
               Transaction Successful
             </h2>
             <img
-              className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[250px] lg:h-[250px]"
+              className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[60px] lg:h-[60px]"
               src="./Gif/checkMarkGif.gif"
               alt="/"
             />

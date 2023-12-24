@@ -52,7 +52,6 @@
 
 .INnOUT {
   justify-content: space-between;
-  /* gap: 5px; */
 }
 
 .inflowOutflow {
@@ -246,8 +245,6 @@ td {
 
   .totalTransactions {
     box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.35);
-    /* top: 122.5%; */
-    /* font-size: 16px; */
   }
 
   .viewTransactions {
@@ -311,7 +308,6 @@ td {
 
   .countrySelect {
     border-radius: 5px;
-    left: 78%;
     width: 140px;
   }
 
@@ -419,9 +415,7 @@ td {
     align-items: center;
     gap: 13.248px;
     border-radius: 15.897px;
-    /* background: #fff; */
     box-shadow: 0px 0px 13.247862815856934px 0px rgba(0, 0, 0, 0.25);
-    /* color: #000; */
     font-size: 18.197px;
     font-style: normal;
     font-weight: 500;
@@ -453,7 +447,6 @@ td {
   }
 
   .chartBtn {
-    /* font-size: 21px; */
     padding: 2px 13.259px;
     border-radius: 6.629px;
   }
@@ -505,7 +498,6 @@ td {
 
   .countrySelect {
     border-radius: 5px;
-    left: 77.5%;
     width: 231px;
   }
 
