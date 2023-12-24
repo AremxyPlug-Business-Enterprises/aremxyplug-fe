@@ -248,13 +248,13 @@ const SelectRecipient = () => {
             {edit && (
               <Modal>
                 <div
-                  className={`confirm mx-[5%] ${
+                  className={`confirm mx-auto my-auto  ${
                     isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
                   } ${
                     toggleSideBar
                       ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
                       : "lg:w-[40%]"
-                  } lg:ml-[10%] lg:mr-[10%] grow pt-[10px] md:mt-[1%] bottom-[20px] md:top-[5%] lg:top-[5%] pb-[20px] rounded-tr-[8px] rounded-br-[8px] rounded-bl-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:mb-[18%] md:overflow-auto`}
+                  } lg:ml-[10%] lg:mr-[10%] grow pt-[10px] bottom-[20px] md:top-auto md:bottom-auto lg:top-[5%] pb-[20px] rounded-tr-[8px] rounded-br-[8px] rounded-bl-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:overflow-auto lg:overflow-hidden`}
                 >
                   <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
                     <img
@@ -419,7 +419,7 @@ const SelectRecipient = () => {
                         recipientNumber.length < 11
                           ? "bg-[#0008]"
                           : "bg-[#04177f]"
-                      } w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
+                      } w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:mx-auto md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
                       onClick={handleContinue}
                     >
                       Continue
@@ -433,10 +433,10 @@ const SelectRecipient = () => {
               <Modal>
                 <div
                   className={`${airtimestyles.successfulThree} ${
-                  toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-                  } md:w-[45%] w-[90%] overflow-auto`}
+                  toggleSideBar ? "md:w-[25%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+                  } w-[90%] md:w-[20%] overflow-auto`}
                 >
-                  <div className="flex justify-end items-end mx-[3%] my-[2%] lg:my-[1%] ">
+                  <div className="flex justify-end items-end my-[2%] lg:my-[1%] ">
                     <img
                       onClick={() => {
                         setContinue(false);
@@ -552,7 +552,7 @@ const SelectRecipient = () => {
                     />
                   </div>
 
-                  <hr className="h-[6px] bg-[#04177f] lg:mt-[2%] border-none mt-[2%] md:mt-[6%] md:h-[10px]" />
+                  <hr className="h-[6px] bg-[#04177f] lg:mt-[2%] border-none mt-[2%] md:mt-[2%] md:h-[10px]" />
                   <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[3%] lg:my-[%]">
                     Successful
                   </p>
@@ -572,7 +572,7 @@ const SelectRecipient = () => {
                     className={`w-full h-[38px] mt-[40px] px-[20px] items-center`}
                   >
                     <button
-                      className={`bg-[#04177F] w-full flex justify-center items-center my-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:mx-auto lg:h-[38px] lg:my-[4%]`}
+                      className={`bg-[#04177F] w-full flex justify-center items-center my-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:mx-auto md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:mx-auto lg:h-[38px] lg:my-[4%]`}
                       onClick={() => {
                         setConfirm(false);
                         window.location.reload();

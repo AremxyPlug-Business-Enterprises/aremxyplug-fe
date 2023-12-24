@@ -108,6 +108,16 @@
     text-align: center;
     margin: 0 auto;
 }
+.timeAble h5 {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0em;
+    color: #04177F;
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+}
 .NotInter .InterAirtime {
     margin: 0 auto;
     position: relative;
@@ -115,6 +125,15 @@
 .InterAirtime img {
     width: 250px;
     height: 150px;
+    margin: 0 auto;
+}
+.NotInter .InterAirtimeK {
+    margin: 0 auto;
+    position: relative;
+}
+.InterAirtimeK img {
+    width: 250px;
+    height: 200px;
     margin: 0 auto;
 }
 .NotInter .coming {
@@ -404,6 +423,15 @@
         width: 100%;
         margin: 0 auto;
     }
+    .timeAble h5 {
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 14px;
+        letter-spacing: 0em;
+        color: #04177F;
+        width: 100%;
+        margin: 0 auto;
+    }
     .NotInter .InterAirtime {
         margin: 0 auto;
         position: relative;
@@ -412,6 +440,16 @@
     .InterAirtime img {
         width: 146.12px;
         height: 88px;
+        margin: 0 auto;
+    }
+    .NotInter .InterAirtimeK {
+        margin: 0 auto;
+        position: relative;
+        left: 0;
+    }
+    .InterAirtimeK img {
+        width: 146.12px;
+        height: 100px;
         margin: 0 auto;
     }
     .NotInter .coming {
@@ -792,6 +830,14 @@
         color: #04177F;
         margin: 0 auto;
     }
+    .timeAble h5 {
+        font-size: 10px;
+        font-weight: 600;
+        line-height: 12px;
+        letter-spacing: 0em;
+        color: #04177F;
+        margin: 0 auto;
+    }
     .NotInter .InterAirtime {
         margin: 0 auto;
         position: relative;
@@ -800,6 +846,16 @@
     .InterAirtime img {
         width: 146px;
         height: 88.02px;
+        margin: 0 auto;
+    }
+    .NotInter .InterAirtimeK {
+        margin: 0 auto;
+        position: relative;
+        left: 0;
+    }
+    .InterAirtimeK img {
+        width: 146px;
+        height: 100.02px;
         margin: 0 auto;
     }
     .NotInter .coming {
