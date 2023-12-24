@@ -95,11 +95,21 @@ export const PersonalAccountForm = () => {
 
   const handleInputChange = (event) => {
     const { name, value, type, checked } = event.target;
-    const inputValue = type === "checkbox" ? checked : value;
-    setState({
-      ...state,
-      [name]: inputValue,
-    });
+    if (name === "accountNumber" && type === "number") {
+      // If the input is of type 'number', limit it to 10 digits
+      const inputValue = value.replace(/\D/g, "").slice(0, 10);
+      setState({
+        ...state,
+        [name]: inputValue,
+      });
+    } else {
+      // Handle other types of inputs as before
+      const inputValue = type === "checkbox" ? checked : value;
+      setState({
+        ...state,
+        [name]: inputValue,
+      });
+    }
   };
 
   const handleCountryClick = (name, flag, id, code) => {
@@ -131,7 +141,7 @@ export const PersonalAccountForm = () => {
     beneficiaryAddress: Joi.string().required(),
     beneficiaryCity: Joi.string().required(),
     stateOrProvince: Joi.string().required(),
-    zipCode: Joi.number().integer().min(-30587).max(+30587),
+    zipCode: Joi.number().required(),
     checkbox1: Joi.boolean().required().invalid(false).messages({
       "any.invalid": "Please ensure you acknowledge",
     }),
@@ -210,10 +220,7 @@ export const PersonalAccountForm = () => {
                   src={flag}
                   alt=""
                 />
-                <p className="text-[10px] font-extrabold lg:text-[14px]">
-                  {" "}
-                  {country}
-                </p>
+                <p className="text-[10px] lg:text-[14px]"> {country}</p>
               </div>
             ) : (
               <p></p>
@@ -293,6 +300,36 @@ export const PersonalAccountForm = () => {
               className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
               type="email"
             />
+            <svg
+              className="h-[13.3px] w-[13.3px] lg:h-[24px] lg:w-[24px]"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 12 13"
+              fill="none"
+            >
+              <path
+                d="M8.5 10.998H3.5C2 10.998 1 10.248 1 8.49805V4.99805C1 3.24805 2 2.49805 3.5 2.49805H8.5C10 2.49805 11 3.24805 11 4.99805V8.49805C11 10.248 10 10.998 8.5 10.998Z"
+                fill="#FFF"
+                stroke="#92ABFE"
+                stroke-width="0.5"
+                stroke-miterlimit="10"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <g opacity="0.4">
+                <path
+                  d="M8.5 5.24805L6.935 6.49805C6.42 6.90805 5.575 6.90805 5.06 6.49805L3.5 5.24805"
+                  fill="#FFF"
+                />
+                <path
+                  d="M8.5 5.24805L6.935 6.49805C6.42 6.90805 5.575 6.90805 5.06 6.49805L3.5 5.24805"
+                  stroke="#92ABFE"
+                  stroke-width="0.5"
+                  stroke-miterlimit="10"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </g>
+            </svg>
           </div>
           {errors.email && (
             <div className="text-[12px] text-red-500 italic lg:text-[14px]">
@@ -314,6 +351,29 @@ export const PersonalAccountForm = () => {
               className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
               type="text"
             />
+            <svg
+              className="h-[13.3px] w-[13.3px] lg:h-[24px] lg:w-[24px]"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 12 13"
+              fill="none"
+            >
+              <path
+                d="M4.51 2.16715L1.815 4.26715C1.365 4.61715 1 5.36215 1 5.92715V9.63215C1 10.7922 1.945 11.7422 3.105 11.7422H8.895C10.055 11.7422 11 10.7922 11 9.63715V5.99715C11 5.39215 10.595 4.61715 10.1 4.27215L7.01 2.10715C6.31 1.61715 5.185 1.64215 4.51 2.16715Z"
+                fill="#FFF"
+                stroke="#92ABFE"
+                stroke-width="0.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path d="M6 9.74219V8.24219V9.74219Z" fill="#FFF" />
+              <path
+                d="M6 9.74219V8.24219"
+                stroke="#92ABFE"
+                stroke-width="0.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
           </div>
           {errors.houseAddress && (
             <div className="text-[12px] text-red-500 italic lg:text-[14px]">
@@ -357,9 +417,32 @@ export const PersonalAccountForm = () => {
               onChange={handleInputChange}
               name="accountNumber"
               value={state.accountNumber}
-              className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
+              className={`${styles.hideArrows} hide-arrows text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]`}
               type="number"
             />
+            <svg
+              className="h-[13.3px] w-[13.3px] lg:h-[24px] lg:w-[24px]"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 12 13"
+              fill="none"
+            >
+              <path
+                d="M6.0793 6.18305C6.0293 6.17805 5.9693 6.17805 5.9143 6.18305C4.7243 6.14305 3.7793 5.16805 3.7793 3.96805C3.7793 2.74305 4.7693 1.74805 5.9993 1.74805C7.2243 1.74805 8.2193 2.74305 8.2193 3.96805C8.2143 5.16805 7.2693 6.14305 6.0793 6.18305Z"
+                fill="#FFf"
+                stroke="#92ABFE"
+                stroke-width="0.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M3.57938 8.02805C2.36937 8.83805 2.36937 10.158 3.57938 10.963C4.95438 11.883 7.20938 11.883 8.58438 10.963C9.79438 10.153 9.79438 8.83305 8.58438 8.02805C7.21438 7.11305 4.95938 7.11305 3.57938 8.02805Z"
+                fill="#FFF"
+                stroke="#92ABFE"
+                stroke-width="0.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
           </div>
           {errors.accountNumber && (
             <div className="text-[12px] text-red-500 italic lg:text-[14px]">
@@ -381,6 +464,78 @@ export const PersonalAccountForm = () => {
               className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
               type="text"
             />
+            <svg
+              className="h-[13.3px] w-[13.3px] lg:h-[24px] lg:w-[24px]"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 12 13"
+              fill="none"
+            >
+              <path
+                d="M8.5 10.998H3.5C2 10.998 1 10.248 1 8.49805V4.99805C1 3.24805 2 2.49805 3.5 2.49805H8.5C10 2.49805 11 3.24805 11 4.99805V8.49805C11 10.248 10 10.998 8.5 10.998Z"
+                fill="#FFF"
+                stroke="#92ABFE"
+                stroke-width="0.5"
+                stroke-miterlimit="10"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M3 4.74805V8.74805"
+                stroke="#92ABFE"
+                stroke-width="0.5"
+                stroke-miterlimit="10"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M4.5 4.74805V6.74805"
+                stroke="#92ABFE"
+                stroke-width="0.5"
+                stroke-miterlimit="10"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M4.5 8.24805V8.74805"
+                stroke="#92ABFE"
+                stroke-width="0.5"
+                stroke-miterlimit="10"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M7.5 4.74805V5.24805"
+                stroke="#92ABFE"
+                stroke-width="0.5"
+                stroke-miterlimit="10"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M6 4.74805V8.74805"
+                stroke="#92ABFE"
+                stroke-width="0.5"
+                stroke-miterlimit="10"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M7.5 6.74805V8.74805"
+                stroke="#92ABFE"
+                stroke-width="0.5"
+                stroke-miterlimit="10"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M9 4.74805V8.74805"
+                stroke="#92ABFE"
+                stroke-width="0.5"
+                stroke-miterlimit="10"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
           </div>
           {errors.swiftCode && (
             <div className="text-[12px] text-red-500 italic lg:text-[14px]">
@@ -403,6 +558,21 @@ export const PersonalAccountForm = () => {
               className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
               type="text"
             />
+            <svg
+              className="h-[13.3px] w-[13.3px] lg:h-[24px] lg:w-[24px]"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 12 13"
+              fill="none"
+            >
+              <path
+                d="M6 7.00977C4.415 7.00977 3.125 5.71977 3.125 4.13477C3.125 2.54977 4.415 1.25977 6 1.25977C7.585 1.25977 8.875 2.54977 8.875 4.13477C8.875 5.71977 7.585 7.00977 6 7.00977ZM6 2.00977C4.83 2.00977 3.875 2.96477 3.875 4.13477C3.875 5.30477 4.83 6.25977 6 6.25977C7.17 6.25977 8.125 5.30477 8.125 4.13477C8.125 2.96477 7.17 2.00977 6 2.00977Z"
+                fill="#92ABFE"
+              />
+              <path
+                d="M10.2951 12.0098C10.0901 12.0098 9.92007 11.8398 9.92007 11.6348C9.92007 9.90977 8.16008 8.50977 6.00008 8.50977C3.84008 8.50977 2.08008 9.90977 2.08008 11.6348C2.08008 11.8398 1.91008 12.0098 1.70508 12.0098C1.50008 12.0098 1.33008 11.8398 1.33008 11.6348C1.33008 9.49977 3.42508 7.75977 6.00008 7.75977C8.57508 7.75977 10.6701 9.49977 10.6701 11.6348C10.6701 11.8398 10.5001 12.0098 10.2951 12.0098Z"
+                fill="#92ABFE"
+              />
+            </svg>
           </div>
           {errors.accountName && (
             <div className="text-[12px] text-red-500 italic lg:text-[14px]">
@@ -423,6 +593,29 @@ export const PersonalAccountForm = () => {
               className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
               type="text"
             />
+            <svg
+              className="h-[13.3px] w-[13.3px] lg:h-[24px] lg:w-[24px]"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 12 13"
+              fill="none"
+            >
+              <path
+                d="M4.51 2.16715L1.815 4.26715C1.365 4.61715 1 5.36215 1 5.92715V9.63215C1 10.7922 1.945 11.7422 3.105 11.7422H8.895C10.055 11.7422 11 10.7922 11 9.63715V5.99715C11 5.39215 10.595 4.61715 10.1 4.27215L7.01 2.10715C6.31 1.61715 5.185 1.64215 4.51 2.16715Z"
+                fill="#FFF"
+                stroke="#92ABFE"
+                stroke-width="0.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path d="M6 9.74219V8.24219V9.74219Z" fill="#FFF" />
+              <path
+                d="M6 9.74219V8.24219"
+                stroke="#92ABFE"
+                stroke-width="0.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
           </div>
           {errors.beneficiaryAddress && (
             <div className="text-[12px] text-red-500 italic lg:text-[14px]">
@@ -444,6 +637,30 @@ export const PersonalAccountForm = () => {
               className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
               type="text"
             />
+            <svg
+              className="h-[13.3px] w-[13.3px] lg:h-[24px] lg:w-[24px]"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 12 13"
+              fill="none"
+            >
+              <path
+                d="M11.4999 8.3205V9.41553C11.4999 10.6355 10.6099 11.7855 9.39992 12.1205C9.31492 12.1405 9.22493 12.1405 9.14493 12.1205C8.55493 11.9605 8.03492 11.6005 7.66992 11.1355C7.27492 10.6455 7.04492 10.0405 7.04492 9.41553V8.3205C7.04492 8.1105 7.19992 7.88048 7.38992 7.80048L8.77992 7.23047C9.09492 7.10547 9.44492 7.10547 9.75992 7.23047L10.2599 7.43549L11.1549 7.80048C11.3449 7.88048 11.4999 8.1105 11.4999 8.3205Z"
+                fill="#FFF"
+                stroke="#92ABFE"
+                stroke-width="0.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                opacity="0.4"
+                d="M10.4756 6.14041L10.2606 7.43539L9.76062 7.23037C9.44562 7.10537 9.09563 7.10537 8.78063 7.23037L7.39063 7.80038C7.20063 7.88038 7.04563 8.1104 7.04563 8.3204V9.41543C7.04563 10.0404 7.27563 10.6454 7.67063 11.1354H3.09063C2.40563 11.1354 1.76063 10.5904 1.64563 9.91543L1.01563 6.14041C0.935629 5.67541 1.17062 5.0504 1.54062 4.7554L4.83063 2.12539C5.33563 1.72039 6.15563 1.7204 6.66063 2.1304L9.95063 4.7554C10.3156 5.0504 10.5556 5.67541 10.4756 6.14041Z"
+                fill="#FFF"
+                stroke="#92ABFE"
+                stroke-width="0.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
           </div>
           {errors.beneficiaryCity && (
             <div className="text-[12px] text-red-500 italic lg:text-[14px]">
@@ -465,6 +682,25 @@ export const PersonalAccountForm = () => {
               className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
               type="text"
             />
+            <svg
+              className="h-[13.3px] w-[13.3px] lg:h-[24px] lg:w-[24px]"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 12 13"
+              fill="none"
+            >
+              <path
+                d="M6.88023 9.50977H5.11523C4.56523 9.50977 4.13023 9.23977 3.88523 8.74977L3.44023 7.85477C3.33523 7.63977 3.12023 7.50977 2.88023 7.50977H0.990234C0.785234 7.50977 0.615234 7.33977 0.615234 7.13477C0.615234 6.92977 0.785234 6.75977 0.990234 6.75977H2.88523C3.41023 6.75977 3.88023 7.04977 4.11523 7.51977L4.56023 8.41477C4.67523 8.64477 4.86023 8.75977 5.12023 8.75977H6.88523C7.12523 8.75977 7.34023 8.62977 7.44523 8.41477L7.89023 7.51977C8.12523 7.04977 8.59523 6.75977 9.12023 6.75977H10.9902C11.1952 6.75977 11.3652 6.92977 11.3652 7.13477C11.3652 7.33977 11.1952 7.50977 10.9902 7.50977H9.12023C8.88023 7.50977 8.66523 7.63977 8.56024 7.85477L8.11523 8.74977C7.87523 9.21977 7.40523 9.50977 6.88023 9.50977Z"
+                fill="#92ABFE"
+              />
+              <path
+                d="M9.5 5.00977C8.465 5.00977 7.625 4.16977 7.625 3.13477C7.625 2.09977 8.465 1.25977 9.5 1.25977C10.535 1.25977 11.375 2.09977 11.375 3.13477C11.375 4.16977 10.535 5.00977 9.5 5.00977ZM9.5 2.00977C8.88 2.00977 8.375 2.51477 8.375 3.13477C8.375 3.75477 8.88 4.25977 9.5 4.25977C10.12 4.25977 10.625 3.75477 10.625 3.13477C10.625 2.51477 10.12 2.00977 9.5 2.00977Z"
+                fill="#92ABFE"
+              />
+              <path
+                d="M7.5 12.0098H4.5C1.785 12.0098 0.625 10.8498 0.625 8.13477V5.13477C0.625 2.41977 1.785 1.25977 4.5 1.25977H7C7.205 1.25977 7.375 1.42977 7.375 1.63477C7.375 1.83977 7.205 2.00977 7 2.00977H4.5C2.195 2.00977 1.375 2.82977 1.375 5.13477V8.13477C1.375 10.4398 2.195 11.2598 4.5 11.2598H7.5C9.805 11.2598 10.625 10.4398 10.625 8.13477V5.63477C10.625 5.42977 10.795 5.25977 11 5.25977C11.205 5.25977 11.375 5.42977 11.375 5.63477V8.13477C11.375 10.8498 10.215 12.0098 7.5 12.0098Z"
+                fill="#92ABFE"
+              />
+            </svg>
           </div>
           {errors.stateOrProvince && (
             <div className="text-[12px] text-red-500 italic lg:text-[14px]">
@@ -483,15 +719,57 @@ export const PersonalAccountForm = () => {
               onChange={handleInputChange}
               name="zipCode"
               value={state.zipCode}
-              className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
+              className={`${styles.hideArrows} text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]`}
               type="number"
             />
+            <svg
+              className="h-[13.3px] w-[13.3px] lg:h-[24px] lg:w-[24px]"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 12 13"
+              fill="none"
+            >
+              <path
+                d="M6.51478 1.63391H4.47978C4.27978 1.63391 4.08977 1.70391 3.93477 1.82391L2.83977 2.69891C2.39977 3.04891 2.39977 3.7139 2.83977 4.0639L3.93477 4.9389C4.08977 5.0639 4.28478 5.12891 4.47978 5.12891H8.60975C9.09475 5.12891 9.48475 4.73891 9.48475 4.25391V2.50391C9.48475 2.01891 9.09475 1.62891 8.60975 1.62891"
+                fill="#FFF"
+              />
+              <path
+                d="M6.51478 1.63391H4.47978C4.27978 1.63391 4.08977 1.70391 3.93477 1.82391L2.83977 2.69891C2.39977 3.04891 2.39977 3.7139 2.83977 4.0639L3.93477 4.9389C4.08977 5.0639 4.28478 5.12891 4.47978 5.12891H8.60975C9.09475 5.12891 9.48475 4.73891 9.48475 4.25391V2.50391C9.48475 2.01891 9.09475 1.62891 8.60975 1.62891"
+                stroke="#92ABFE"
+                stroke-width="0.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M3.40039 6.63477H7.5304C7.7304 6.63477 7.92041 6.70477 8.07541 6.82477L9.17041 7.69977C9.61041 8.04977 9.61041 8.71476 9.17041 9.06476L8.07541 9.93976C7.92041 10.0648 7.7254 10.1298 7.5304 10.1298H3.40039C2.91539 10.1298 2.52539 9.73976 2.52539 9.25476V7.50476C2.52539 7.02476 2.91539 6.63477 3.40039 6.63477Z"
+                fill="#FFF"
+                stroke="#92ABFE"
+                stroke-width="0.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M6 6.63477V5.13477"
+                stroke="#92ABFE"
+                stroke-width="0.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M6 11.6348V10.1348"
+                stroke="#92ABFE"
+                stroke-width="0.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M4.5 11.6348H7.5"
+                stroke="#92ABFE"
+                stroke-width="0.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
           </div>
-          {errors.zipCode && (
-            <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-              {errors.zipCode}
-            </div>
-          )}
         </div>
 
         {/* ==============================Acknowledgement Checks========================= */}
