@@ -297,7 +297,7 @@ const DataBundleSelectRecipient = () => {
                     toggleSideBar
                       ? "confirmEdit01"
                       : "confirmEdit"
-                  } grow pt-[10px] pb-[20px] rounded-tr-[8px] rounded-br-[8px] rounded-bl-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:overflow-auto`}
+                  } grow pt-[10px] pb-[20px] rounded-tr-[8px] rounded-br-[8px] rounded-bl-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto`}
                 >
                   <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
                     <img
@@ -455,7 +455,7 @@ const DataBundleSelectRecipient = () => {
                   </div>
 
                   <div
-                    className={`w-full h-[38px] mt-[80px] md:mt-[30%] px-[20px] mx-auto lg:mt-[25%] xl:mt-[20%]`}
+                    className={`w-full h-[38px] mt-[80px] md:mt-[25%] px-[20px] mx-auto lg:mt-[20%] xl:mt-[18%]`}
                   >
                     <button
                       className={`${
@@ -551,10 +551,10 @@ const DataBundleSelectRecipient = () => {
                   </div>
 
                   <div
-                    className={`w-full h-[38px] mt-[35px] md:mt-[10%] px-[20px] mx-auto lg:mt-[5%] xl:mt-[5%]`}
+                    className={`w-full h-[38px] mt-[35px] md:mt-[20%] px-[20px] mx-auto lg:mt-[5%] xl:mt-[10%]`}
                   >
                     <button
-                      className={` bg-[#04177f] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:mx-auto md:px-[10%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
+                      className={` bg-[#04177f] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:h-[50px] md:mx-auto md:px-[10%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] xl:h-[50px] lg:my-[4%]`}
                       onClick={handleConfirm}
                     >
                       Confirmed
@@ -730,7 +730,7 @@ const DataBundleSelectRecipient = () => {
                   <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[3%] lg:my-[%]">
                     Successful
                   </p>
-                  <p className="text-[10px] md:text-[14px] px-[20px] lg:text-[18px] font-extrabold text-center my-[1%] lg:my-[%]">
+                  <p className="text-[10px] text-[#04177F] md:text-[14px] px-[20px] lg:text-[18px] font-extrabold text-center my-[1%] lg:my-[%]">
                     Recipicient *****2345 has been deleted successfully. You can
                     add recipient again anytime!
                   </p>

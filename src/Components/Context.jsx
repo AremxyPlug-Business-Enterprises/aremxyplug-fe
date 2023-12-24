@@ -765,7 +765,7 @@ const globalAccountName = globalTransferState.accountName;
   const [recipientPhoneNumber, setRecipientPhoneNumber] = useState("");
   const [selectedAmount, setSelectedAmount] = useState("");
   const [recipientNames, setRecipientNames] = useState("");
-  const [walletName, setWalletName] = useState("");
+  const [walletName, setWalletName] = useState("initialWalletName");
 
   const [accountId, setAccountId] = useState("");
   const [numberPins, setNumberPins] = useState("");
@@ -777,6 +777,8 @@ const globalAccountName = globalTransferState.accountName;
   const [cardHolderName, setCardHolderName] = useState("");
   const [cardSelected, setCardSelected] = useState("");
   const [selectedCard, setSelectedCard] = useState("");
+  const [paymentSelected, setPaymentSelected] = useState("");
+
   
 
   //=============point redeem==============
@@ -1226,6 +1228,8 @@ const globalAccountName = globalTransferState.accountName;
     setCardSelected,
     selectedCard, 
     setSelectedCard,
+    paymentSelected, 
+    setPaymentSelected,
 
     //point redeem
     inputValue,

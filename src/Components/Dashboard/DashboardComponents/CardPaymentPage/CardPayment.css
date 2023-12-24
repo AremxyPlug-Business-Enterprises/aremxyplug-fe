@@ -27,82 +27,106 @@
 }
 
 .popUp1, .popUp01 {
-  position: absolute;
-  bottom: 0%;
-  width: 90%;
-  flex-shrink: 0;
-  background: #fff;
-  box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+    position: absolute;
+    bottom: 0%;
+    height: 400px;
+    width: 90%;
+    flex-shrink: 0;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
 }
 
 .cvvpop,
 .cvvpop01 {
-  margin: 0 auto;
-  padding: 2% 20px;
-  width: 90%;
-  height: 30%;
-  position: absolute;
-  top: 35%;
-  border-radius: 12px;
+    margin: 0 auto;
+    padding: 0% 20px 2% 20px;
+    width: 90%;
+    height: 270px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 12px;
 }
 
 .currencypopup,
 .currencypopup1 {
-  margin: 0 auto;
-  padding: 2% 20px;
-  width: 90%;
-  height: 30%;
-  position: absolute;
-  top: 35%;
-  border-radius: 12px;
+    margin: 0 auto;
+    padding: 2% 20px;
+    width: 90%;
+    height: 270px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 12px;
 }
 
 @media (min-width: 768px) {
   .popUp1 {
     position: absolute;
     top: 0%;
+    height: 400px;
     width: 50%;
-    height: 40%;
     flex-shrink: 0;
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
   }
+  
+  .popUp01 {
+    position: absolute;
+    top: 0%;
+    height: 400px;
+    width: 50%;
+    flex-shrink: 0;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+    margin-left: 20%;
+  }
 
   .cvvpop {
-    padding: 2% 20px;
+    margin: 0 auto;
+    padding: 0% 20px 2% 20px;
     width: 50%;
-    height: 40%;
-    position: absolute;
-    top: 28.5%;
+    height: 300px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     border-radius: 12px;
   }
 
   .cvvpop01 {
     margin: 0 auto;
-    padding: 2% 20px;
+    padding: 0% 20px 2% 20px;
     width: 50%;
-    height: 35%;
-    position: absolute;
-    top: 32%;
+    height: 300px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     border-radius: 12px;
-    margin-left: 20%;
+    margin-left: 10%;
   }
 
   .currencypopup {
+    margin: 0 auto;
     padding: 2% 20px;
     width: 50%;
-    height: 40%;
-    position: absolute;
-    top: 30%;
+    height: 300px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     border-radius: 12px;
   }
 
   .currencypopup1 {
     padding: 2% 20px;
-    width: 45%;
+    width: 50%;
     height: 40%;
     position: absolute;
-    top: 30%;
+    top: 28.5%;
     border-radius: 12px;
     margin-left: 20%;
   }
@@ -114,13 +138,13 @@
   }
 
   .success-default-card {
-    height: 100px;
-    width: 100px;
+    height: 80px;
+    width: 80px;
   }
 
   .delete-card {
     width: 150px;
-    height: 140px;
+    height: 120px;
   }
 
   .confirm-delete-card {
@@ -136,18 +160,21 @@
   }
 
   .popUp-style {
-    width: 60%;
+    width: 50%;
+    height: 70%;
   }
 
   .cvvpop01 {
     margin: 0 auto;
-    padding: 2% 20px;
-    width: 45%;
-    height: 35%;
-    position: absolute;
-    top: 32%;
+    padding: 0% 20px 2% 20px;
+    width: 50%;
+    height: 300px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     border-radius: 12px;
-    margin-left: 20%;
+    margin-left: 10%;
   }
 
   .secure1 {
@@ -162,17 +189,40 @@
     width: 100px;
     height: 100px;
   }
+
+  .currencypopup {
+    margin: 0 auto;
+    padding: 2% 20px;
+    width: 50%;
+    height: 310px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 12px;
+  }
 }
 
 @media (min-width: 1020px) {
   .popUp1 {
     position: absolute;
     top: 0%;
+    height: 400px;
     width: 40%;
-    height: 40%;
     flex-shrink: 0;
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+  }
+
+  .popUp01 {
+    position: absolute;
+    top: 0%;
+    height: 400px;
+    width: 40%;
+    flex-shrink: 0;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+    margin-left: 20%;
   }
 
   .okay {
@@ -205,27 +255,44 @@
   }
 
   .cvvpop {
-    padding: 2% 20px;
+    margin: 0 auto;
+    padding: 0% 20px 2% 20px;
     width: 40%;
-    height: 40%;
-    position: absolute;
-    top: 28.5%;
+    height: 310px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     border-radius: 12px;
   }
 
   .cvvpop01 {
     margin: 0 auto;
-    padding: 2% 20px;
+    padding: 0% 20px 2% 20px;
     width: 40%;
-    height: 35%;
-    position: absolute;
-    top: 32%;
+    height: 300px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     border-radius: 12px;
-    margin-left: 20%;
+    margin-left: 10%;
   }
 
   .secure {
     width: 55%;
+  }
+
+  .currencypopup {
+    margin: 0 auto;
+    padding: 2% 20px;
+    width: 40%;
+    height: 310px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 12px;
   }
 
   .currencypopup1 {
@@ -241,14 +308,17 @@
 
 
 @media (width: 1024px) {
-  .currencypopup {
-    padding: 2% 20px;
-    width: 50%;
-    height: 40%;
-    position: absolute;
-    top: 30%;
-    border-radius: 12px;
-  }
+    .currencypopup {
+        margin: 0 auto;
+        padding: 2% 20px;
+        width: 50%;
+        height: 310px;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 12px;
+      }
 
   .currencypopup1 {
     padding: 2% 20px;
@@ -259,6 +329,42 @@
     border-radius: 12px;
     /* margin-left: 20%; */
   }
+
+  .default-card {
+    width: 200px;
+    height: 150px;
+  }
+
+  .delete-card {
+    width: 150px;
+    height: 150px;
+  }
+
+  .success-default-card {
+    height: 100px;
+    width: 100px;
+  }
+
+  .popUp1 {
+    position: absolute;
+    top: 0%;
+    height: 500px;
+    width: 50%;
+    flex-shrink: 0;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+  }
+
+  .popUp01 {
+    position: absolute;
+    top: 0%;
+    height: 500px;
+    width: 50%;
+    flex-shrink: 0;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+    margin-left: 20%;
+  }
 }
 
 @media (min-width: 1250px) {
@@ -268,13 +374,71 @@
     }
 
     .success-default-card {
-        height: 120px;
-        width: 120px;
+        height: 150px;
+        width: 150px;
       }
 
       .delete-card {
         width: 150px;
         height: 150px;
+      }
+
+      .currencypopup {
+        margin: 0 auto;
+        padding: 2% 20px;
+        width: 50%;
+        height: 350px;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 12px;
+      }
+
+      .cvvpop {
+        margin: 0 auto;
+        padding: 0% 20px 2% 20px;
+        width: 40%;
+        height: 400px;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 12px;
+      }
+
+      .cvvpop01 {
+        margin: 0 auto;
+        padding: 0% 20px 2% 20px;
+        width: 40%;
+        height: 350px;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 12px;
+        margin-left: 10%;
+      }
+
+      .popUp1 {
+        position: absolute;
+        top: 0%;
+        height: 500px;
+        width: 50%;
+        flex-shrink: 0;
+        background: #fff;
+        box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+      }
+
+      .popUp01 {
+        position: absolute;
+        top: 0%;
+        height: 500px;
+        width: 50%;
+        flex-shrink: 0;
+        background: #fff;
+        box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+        margin-left: 20%;
       }
 }
 
@@ -292,23 +456,28 @@
   }
 
   .cvvpop {
-    padding: 2% 20px;
-    width: 40%;
-    height: 40%;
-    position: absolute;
-    top: 28.5%;
+    margin: 0 auto;
+    padding: 0% 20px 2% 20px;
+    width: 30%;
+    height: 400px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     border-radius: 12px;
   }
 
   .cvvpop01 {
     margin: 0 auto;
-    padding: 2% 20px;
-    width: 40%;
-    height: 40%;
-    position: absolute;
-    top: 28.5%;
+    padding: 0% 20px 2% 20px;
+    width: 35%;
+    height: 400px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     border-radius: 12px;
-    margin-left: 17%;
+    margin-left: 10%;
   }
 
   .secure {
@@ -343,6 +512,27 @@
     height: 150px;
     width: 150px;
   }
+
+  .popUp1 {
+    position: absolute;
+    top: 0%;
+    height: 500px;
+    width: 40%;
+    flex-shrink: 0;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+  }
+
+  .popUp01 {
+    position: absolute;
+    top: 0%;
+    height: 500px;
+    width: 40%;
+    flex-shrink: 0;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+    margin-left: 20%;
+  }
 }
 
 @media (min-width: 1500px) {
@@ -366,33 +556,49 @@
   }
 
   .cvvpop {
-    padding: 1% 20px;
+    margin: 0 auto;
+    padding: 0% 20px 2% 20px;
     width: 30%;
-    height: 40%;
-    position: absolute;
-    top: 30%;
+    height: 400px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     border-radius: 12px;
   }
 
   .cvvpop01 {
     margin: 0 auto;
-    padding: 2% 20px;
-    width: 30%;
-    height: 40%;
-    position: absolute;
-    top: 30%;
+    padding: 0% 20px 2% 20px;
+    width: 35%;
+    height: 400px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     border-radius: 12px;
-    margin-left: 17%;
+    margin-left: 10%;
   }
 
   .popUp1 {
     position: absolute;
     top: 0%;
-    width: 30%;
-    height: 40%;
+    height: 500px;
+    width: 40%;
     flex-shrink: 0;
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+  }
+
+  .popUp01 {
+    position: absolute;
+    top: 0%;
+    height: 500px;
+    width: 40%;
+    flex-shrink: 0;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+    margin-left: 20%;
   }
 
   .default-card {
