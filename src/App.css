@@ -260,3 +260,14 @@ border-radius : 10px;
   .idVerify::-webkit-scrollbar-thumb{
     background-color: transparent;
   }
+  .confirmRecipient{
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+  }
+  .confirmRecipient::-webkit-scrollbar{
+    width : 5px;
+  }
+  .confirmRecipient::-webkit-scrollbar-thumb{
+    background-color: transparent;
+  }

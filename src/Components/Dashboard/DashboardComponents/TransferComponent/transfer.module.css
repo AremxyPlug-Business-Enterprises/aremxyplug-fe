@@ -23,6 +23,37 @@
   display: none;
 }
 
+.no-spinners::-webkit-inner-spin-button,
+.no-spinners::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.hideArrows {
+  -moz-appearance: textfield;
+}
+
+/* Style to hide arrows in Firefox */
+.hideArrows::-webkit-inner-spin-button,
+.hideArrows::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Style to hide arrows in other browsers */
+.hideArrows[type="number"] {
+  -moz-appearance: textfield;
+}
+
+th {
+  border: none;
+}
+
+td {
+  border: none;
+  border-bottom: 0.5px solid #0003;
+}
+
 .transferMoneyBtn {
   border-radius: 4.763px;
   background: #fff;
@@ -71,14 +102,12 @@
   box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
 }
 .contactTeam {
-    
   bottom: 0%;
   flex-shrink: 0;
 
   background: #fff;
   box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
 }
-
 
 .checkrate {
   height: 600px;
@@ -210,6 +239,7 @@
   .transferMoneyPop {
     height: 620px;
     border-radius: 12px;
+    bottom: 30%;
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
   }
@@ -222,32 +252,28 @@
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
   }
   .contactTeam {
-    
     top: 20%;
     flex-shrink: 0;
-  
+
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
   }
-  
 
   .transferConfirmation {
     height: 572px;
-    bottom: 25%;
+    bottom: 30%;
     flex-shrink: 0;
     border-radius: 11px;
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
   }
   .contactTeam {
-    
     bottom: 25%;
     flex-shrink: 0;
-   
+
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
   }
-  
 
   .inputPin {
     bottom: auto;
@@ -307,10 +333,9 @@
     gap: 25px;
   }
   .contactTeam {
-    
     top: 20%;
     flex-shrink: 0;
-  
+
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
   }
@@ -332,6 +357,7 @@
   .transferMoneyPop {
     height: 550px;
     border-radius: 20px;
+    bottom: 7%;
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
   }
@@ -371,7 +397,7 @@
 
   .transferConfirmation {
     position: absolute;
-    top: 7%;
+    top: 7.5%;
     height: 550px;
     flex-shrink: 0;
     border-radius: 20px;
