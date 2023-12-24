@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { ContextProvider } from "../../../Context";
+import { useNavigate } from "react-router-dom";
 import styles from "../../DashboardComponents/component.module.css";
 
 // ================Function for country select dropdown===================
@@ -158,6 +159,15 @@ export const TransferRecord = () => {
     setSelectedCountry(country);
   };
 
+  // =======To link the table==========
+  const navigate = useNavigate();
+  const handleTableRowClick = () => {
+    navigate("/personal-account");
+  };
+  const handleTableRowClick2 = () => {
+    navigate("/business-account");
+  };
+
   return (
     <div>
       <div className=" flex items-end justify-between">
@@ -172,7 +182,7 @@ export const TransferRecord = () => {
               activeButton[0]
                 ? "bg-[#E2F3FF] rounded-[2px] border-b-[2px] border-b-[#04177f] h-[16px] flex items-center p-[5px] md:h-[35px] lg:rounded-[6px] lg:border-b-[4px] lg:h-[50px]"
                 : ""
-            } w-[95.667px] rounded-[2px] md:w-[180px] md:rounded-[3px] md:justify-center md:items-center flex lg:w-[248px] lg:rounded-[6px]`}
+            } cursor-pointer w-[95.667px] rounded-[2px] md:w-[180px] md:rounded-[3px] md:justify-center md:items-center flex lg:w-[248px] lg:rounded-[6px]`}
           >
             Personal Accounts
           </div>
@@ -186,7 +196,7 @@ export const TransferRecord = () => {
               activeButton[1]
                 ? "bg-[#E2F3FF] rounded-[2px] border-b-[2px] border-b-[#04177f] h-[16px] flex items-center p-[5px]  md:h-[35px] lg:rounded-[6px] lg:border-b-[4px] lg:h-[50px]"
                 : ""
-            } w-[95.667px] rounded-[2px] md:w-[180px] md:rounded-[3px]  md:justify-center md:items-center flex lg:w-[248px] lg:rounded-[6px]`}
+            } cursor-pointer w-[95.667px] rounded-[2px] md:w-[180px] md:rounded-[3px]  md:justify-center md:items-center flex lg:w-[248px] lg:rounded-[6px]`}
           >
             Business Accounts
           </div>
@@ -231,7 +241,10 @@ export const TransferRecord = () => {
 
       {/* =======================Personal Account Table==================== */}
       {personalAccount && (
-        <table className="border-0 border-collapse text-[7px] md:text-[12px] lg:text-[16px]">
+        <table
+          className="border-none border-collapse text-[7px] md:text-[12px] lg:text-[16px]"
+          style={{ borderCollapse: "collapse", width: "100%", border: "none" }}
+        >
           <thead>
             <tr className="bg-[#c3d9ff] lg:h-[47px]">
               <th>Country</th>
@@ -243,7 +256,7 @@ export const TransferRecord = () => {
             </tr>
           </thead>
 
-          <tbody className="border-collapse">
+          <tbody onClick={handleTableRowClick}>
             <tr>
               <td className="">
                 <div className="flex gap-[3px] lg:gap-[10px]">
@@ -252,29 +265,15 @@ export const TransferRecord = () => {
                     src={image}
                     alt=""
                   />{" "}
-                  <p>
-                    {" "}
-                    <Link to="/personal-account">Nigeria</Link>
-                  </p>
+                  <p> Nigeria</p>
                 </div>
               </td>
-              <td>
-                <Link to="/personal-account">NGN</Link>
-              </td>
-              <td>
-                <Link to="/personal-account">GT Bank</Link>
-              </td>
-              <td>
-                <Link to="/personal-account">Habib Kamaldeen</Link>
-              </td>
-              <td>
-                <Link to="/personal-account">01234*****</Link>
-              </td>
+              <td>NGN</td>
+              <td>GT Bank</td>
+              <td>Habib Kamaldeen</td>
+              <td>01234*****</td>
               <td className="flex gap-[5px] lg:gap-[10px]">
-                <p>
-                  {" "}
-                  <Link to="/personal-account">AP-2023 0703-001 </Link>
-                </p>
+                <p> AP-2023 0703-001</p>
                 <img
                   className="w-[10px] h-[10px] md:w-[14px] md:h-[14px] lg:w-[20px] lg:h-[20px]"
                   src="./Images/Dashboardimages/arrowright.png"
@@ -288,7 +287,10 @@ export const TransferRecord = () => {
 
       {/* =======================Business Account Table==================== */}
       {businessAccount && (
-        <table className="text-[7px] md:text-[12px] lg:text-[16px]">
+        <table
+          className="text-[7px] md:text-[12px] lg:text-[16px]"
+          style={{ borderCollapse: "collapse", width: "100%", border: "none" }}
+        >
           <thead>
             <tr className="bg-[#c3d9ff] lg:h-[47px]">
               <th>Country</th>
@@ -300,7 +302,7 @@ export const TransferRecord = () => {
             </tr>
           </thead>
 
-          <tbody>
+          <tbody onClick={handleTableRowClick2}>
             <tr>
               <td className="">
                 <div className="flex gap-[3px] lg:gap-[10px]">

@@ -45,6 +45,15 @@
   -moz-appearance: textfield;
 }
 
+th {
+  border: none;
+}
+
+td {
+  border: none;
+  border-bottom: 0.5px solid #0003;
+}
+
 .transferMoneyBtn {
   border-radius: 4.763px;
   background: #fff;
