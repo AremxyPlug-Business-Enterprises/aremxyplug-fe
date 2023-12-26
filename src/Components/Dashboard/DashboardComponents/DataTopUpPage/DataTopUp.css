@@ -164,9 +164,9 @@
 .datapopup01,
 .datapopup011 {
   margin: 0 auto;
-  padding: 2% 20px;
+  padding: 5% 20px;
   width: 90%;
-  height: 270px;
+  height: 280px;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -270,14 +270,28 @@
   }
 
   .img {
-    margin-left: 25%;
+    margin-left: 17%;
+    width: 80%;
+    height: 80%;
+    margin-top: 30px;
+  }
+
+  .img2, .img3 {
+    margin-left: 30%;
+    width: 40%;
+    height: 40%;
+  }
+
+  .currency-img {
+    width: 50%;
+    height: 50%;
   }
 
   .datapopup1 {
     margin: 0 auto;
-    padding: 2% 20px;
-    width: 50%;
-    height: 300px;
+    padding: 1% 20px;
+    width: 430px;
+    height: 350px;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -288,9 +302,9 @@
   .datapopup01,
   .datapopup011 {
     margin: 0 auto;
-    padding: 2% 20px;
-    width: 50%;
-    height: 300px;
+    padding: 1% 20px;
+    width: 430px;
+    height: 350px;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -322,10 +336,10 @@
 
   .confirm2 {
     top: 0%;
-    width: 50%;
+    width: 45%;
     top: 0;
     position: absolute;
-    height: 300px;
+    height: 350px;
     flex-shrink: 0;
     border-radius: 8px;
     background: #fff;
@@ -335,8 +349,8 @@
   .confirm02 {
     top: 0%;
     position: absolute;
-    width: 50%;
-    height: 270px;
+    width: 45%;
+    height: 350px;
     flex-shrink: 0;
     border-radius: 8px;
     background: #fff;
@@ -437,8 +451,8 @@
   .confirm {
     position: absolute;
     top: 0%;
-    height: 572px;
-    width: 60%;
+    height: 620px;
+    width: 45%;
     flex-shrink: 0;
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
@@ -466,15 +480,17 @@
 
   .datapopup1 {
     margin: 0 auto;
-    padding: 2% 20px;
-    width: 45%;
-    height: 300px;
+    padding: 4% 20px;
+    width: 430px;
+    height: 350px;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 12px;
   }
+
+  
 
   /* .transaction-table {
     gap: 11%;
@@ -493,12 +509,13 @@
   } */
 }
 
+
 @media (min-width: 845px) {
   .confirm {
     position: absolute;
     top: 0%;
-    height: 572px;
-    width: 60%;
+    height: 620px;
+    width: 45%;
     flex-shrink: 0;
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
@@ -531,8 +548,8 @@
   .confirm01 {
     position: absolute;
     top: 0%;
-    height: 572px;
-    width: 50%;
+    height: 620px;
+    width: 45%;
     flex-shrink: 0;
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
@@ -544,18 +561,18 @@
     width: 45%;
     bottom: 0%;
     position: absolute;
-    height: 300px;
+    height: 350px;
     flex-shrink: 0;
     border-radius: 8px;
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
   }
-
+  
   .confirm02 {
     top: 0%;
     position: absolute;
-    width: 50%;
-    height: 270px;
+    width: 45%;
+    height: 350px;
     flex-shrink: 0;
     border-radius: 8px;
     background: #fff;
@@ -587,14 +604,39 @@
   }
 
   .img {
-    margin-left: 25%;
+    margin-left: 17%;
+    width: 80%;
+    height: 80%;
+    margin-top: 30px;
   }
+
+  .img2 {
+    margin-left: 30%;
+    width: 45%;
+    height: 45%;
+    margin-top: 1%;
+  }
+
+
+  .img3 {
+    margin-left: 30%;
+    width: 40%;
+    height: 40%;
+    margin-top: 1%;
+  }
+
+  .currency-img {
+    width: 50%;
+    height: 50%;
+  }
+
+
 
   .datapopup1 {
     margin: 0 auto;
-    padding: 2% 20px;
-    width: 45%;
-    height: 300px;
+    padding: 1% 20px;
+    width: 430px;
+    height: 350px;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -605,9 +647,9 @@
   .datapopup01,
   .datapopup011 {
     margin: 0 auto;
-    padding: 2% 20px;
-    width: 45%;
-    height: 300px;
+    padding: 1% 20px;
+    width: 430px;
+    height: 350px;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -685,6 +727,20 @@
   }
 }
 
+@media (min-width: 967px) {
+  .transaction-table {
+    gap: 10.4%;
+  }
+
+  .transaction-table21 {
+    gap: 10%;
+  }
+
+  .transaction-table2 {
+    gap: 7.6%;
+  }
+}
+
 @media (min-width: 1020px) and (max-width: 1180px) {
   /* .img {
     margin-right: auto;
@@ -695,10 +751,10 @@
 
   .confirm2 {
     top: 0%;
-    width: 40%;
+    width: 45%;
     bottom: 0%;
     position: absolute;
-    height: 300px;
+    height: 350px;
     flex-shrink: 0;
     border-radius: 8px;
     background: #fff;
@@ -708,8 +764,8 @@
   .confirm02 {
     top: 0%;
     position: absolute;
-    width: 40%;
-    height: 270px;
+    width: 45%;
+    height: 350px;
     flex-shrink: 0;
     border-radius: 8px;
     background: #fff;
@@ -762,20 +818,37 @@
   }
 
   .img {
-    width: 60%;
-    height: 40%;
+    margin-left: 17%;
+    width: 80%;
+    height: 80%;
+    margin-top: 30px;
   }
 
   .img2 {
+    margin-left: 30%;
+    width: 45%;
+    height: 45%;
+    margin-top: 1%;
+  }
+
+
+  .img3 {
+    margin-left: 30%;
     width: 40%;
-    height: 130px;
+    height: 40%;
+    margin-top: 1%;
+  }
+
+  .currency-img {
+    width: 50%;
+    height: 50%;
   }
 
   .datapopup1 {
     margin: 0 auto;
-    padding: 0% 20px;
-    width: 45%;
-    height: 300px;
+    padding: 1% 20px;
+    width: 430px;
+    height: 350px;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -787,8 +860,8 @@
   .datapopup011 {
     margin: 0 auto;
     padding: 1% 20px;
-    width: 40%;
-    height: 300px;
+    width: 430px;
+    height: 350px;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -800,8 +873,8 @@
   .confirm {
     position: absolute;
     top: 0%;
-    height: 572px;
-    width: 60%;
+    height: 620px;
+    width: 45%;
     flex-shrink: 0;
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
@@ -810,8 +883,8 @@
   .confirm01 {
     position: absolute;
     top: 0%;
-    height: 572px;
-    width: 50%;
+    height: 620px;
+    width: 45%;
     flex-shrink: 0;
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
@@ -888,9 +961,9 @@
 
   .datapopup1 {
     margin: 0 auto;
-    padding: 0% 20px;
-    width: 45%;
-    height: 350px;
+    padding: 1% 20px;
+    width: 562px;
+    height: 480px;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -902,8 +975,8 @@
   .datapopup011 {
     margin: 0 auto;
     padding: 1% 20px;
-    width: 40%;
-    height: 350px;
+    width: 562px;
+    height: 480px;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -915,7 +988,7 @@
   .confirm {
     position: absolute;
     top: 0%;
-    height: 550px;
+    height: 560px;
     width: 40%;
     flex-shrink: 0;
     background: #fff;
@@ -958,6 +1031,52 @@
     top: 0;
     margin-left: 20%;
   }
+
+  .img {
+    margin-left: 10%;
+    width: 100%;
+    height: 100%;
+    margin-top: 30px;
+  }
+
+  .img2 {
+    margin-left: 30%;
+    width: 50%;
+    height: 50%;
+    margin-top: 1%;
+  }
+
+
+  .img3 {
+    margin-left: 30%;
+    width: 48%;
+    height: 48%;
+    margin-top: 1%;
+  }
+
+  .confirm2 {
+    top: 0%;
+    width: 40%;
+    bottom: 0%;
+    position: absolute;
+    height: 405px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+  }
+
+  .confirm02 {
+    top: 0%;
+    position: absolute;
+    width: 40%;
+    height: 405px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+    margin-left: 20%;
+  }
 }
 
 @media (min-width: 1250px) {
@@ -982,14 +1101,22 @@
   }
 
   .img {
-    margin-left: 25%;
+    margin-left: 10%;
+    width: 100%;
+    height: 100%;
+    margin-top: 30px;
+  }
+
+  .currency-img {
+    width: 60%;
+    height: 60%;
   }
 
   .datapopup1 {
     margin: 0 auto;
-    padding: 2% 20px;
-    width: 40%;
-    height: 450px;
+    padding: 1% 20px;
+    width: 562px;
+    height: 480px;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -1000,9 +1127,9 @@
   .datapopup01,
   .datapopup011 {
     margin: 0 auto;
-    padding: 2% 20px;
-    width: 40%;
-    height: 450px;
+    padding: 1% 20px;
+    width: 562px;
+    height: 480px;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -1054,7 +1181,7 @@
     width: 40%;
     bottom: 0%;
     position: absolute;
-    height: 350px;
+    height: 405px;
     flex-shrink: 0;
     border-radius: 8px;
     background: #fff;
@@ -1064,8 +1191,8 @@
   .confirm02 {
     top: 0%;
     position: absolute;
-    width: 35%;
-    height: 300px;
+    width: 40%;
+    height: 405px;
     flex-shrink: 0;
     border-radius: 8px;
     background: #fff;
@@ -1087,8 +1214,8 @@
   .confirm {
     position: absolute;
     top: 0%;
-    height: 620px;
-    width: 50%;
+    height: 560px;
+    width: 40%;
     flex-shrink: 0;
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
@@ -1097,8 +1224,8 @@
   .confirm01 {
     position: absolute;
     top: 0%;
-    height: 620px;
-    width: 50%;
+    height: 560px;
+    width: 40%;
     flex-shrink: 0;
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
@@ -1142,10 +1269,10 @@
 
   .confirm2 {
     top: 0%;
-    width: 30%;
+    width: 40%;
     bottom: 0%;
     position: absolute;
-    height: 325px;
+    height: 405px;
     flex-shrink: 0;
     border-radius: 8px;
     background: #fff;
@@ -1155,8 +1282,8 @@
   .confirm02 {
     top: 0%;
     position: absolute;
-    width: 35%;
-    height: 300px;
+    width: 40%;
+    height: 405px;
     flex-shrink: 0;
     border-radius: 8px;
     background: #fff;
@@ -1176,17 +1303,17 @@
   }
 
   .img {
-    height: 90%;
-    width: 90%;
-    margin-left: 15%;
+    height: 100%;
+    width: 100%;
+    margin-left: 10%;
     margin-top: 5%;
   }
 
   .datapopup1 {
     margin: 0 auto;
-    padding: 2% 20px;
-    width: 35%;
-    height: 470px;
+    padding: 1% 20px;
+    width: 562px;
+    height: 480px;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -1196,9 +1323,9 @@
 
   .datapopup01 {
     margin: 0 auto;
-    padding: 0% 20px;
-    width: 35%;
-    height: 450px;
+    padding: 3% 20px;
+    width: 562px;
+    height: 480px;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -1210,8 +1337,8 @@
   .datapopup011 {
     margin: 0 auto;
     padding: 1% 20px;
-    width: 35%;
-    height: 450px;
+    width: 562px;
+    height: 480px;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -1273,8 +1400,8 @@
   .confirm {
     position: absolute;
     top: 0%;
-    height: 720px;
-    width: 50%;
+    height: 560px;
+    width: 40%;
     flex-shrink: 0;
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
@@ -1283,8 +1410,8 @@
   .confirm01 {
     position: absolute;
     top: 0%;
-    height: 720px;
-    width: 50%;
+    height: 560px;
+    width: 40%;
     flex-shrink: 0;
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
@@ -1311,22 +1438,32 @@
   }
 
   .img {
-    height: 70%;
-    width: 70%;
-    margin-left: 20%;
+    height: 100%;
+    width: 100%;
+    margin-left: 10%;
     margin-top: 4%;
   }
 
   .img2 {
-    width: 40%;
-    height: 180px;
+    margin-left: 30%;
+    width: 50%;
+    height: 50%;
+    margin-top: 1%;
+  }
+
+
+  .img3 {
+    margin-left: 30%;
+    width: 48%;
+    height: 48%;
+    margin-top: 1%;
   }
 
   .datapopup1 {
     margin: 0 auto;
-    padding: 2% 20px;
-    width: 30%;
-    height: 450px;
+    padding: 1% 20px;
+    width: 562px;
+    height: 480px;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -1349,9 +1486,9 @@
 
   .datapopup011 {
     margin: 0 auto;
-    padding: 0% 20px;
-    width: 30%;
-    height: 400px;
+    padding: 1% 20px;
+    width: 562px;
+    height: 480px;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -1400,10 +1537,10 @@
 
   .confirm2 {
     top: 0%;
-    width: 30%;
+    width: 40%;
     bottom: 0%;
     position: absolute;
-    height: 325px;
+    height: 405px;
     flex-shrink: 0;
     border-radius: 8px;
     background: #fff;
@@ -1413,8 +1550,8 @@
   .confirm02 {
     top: 0%;
     position: absolute;
-    width: 30%;
-    height: 300px;
+    width: 40%;
+    height: 405px;
     flex-shrink: 0;
     border-radius: 8px;
     background: #fff;
@@ -1448,8 +1585,8 @@
   .confirm {
     position: absolute;
     top: 0%;
-    height: 620px;
-    width: 50%;
+    height: 560px;
+    width: 40%;
     flex-shrink: 0;
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
@@ -1458,8 +1595,8 @@
   .confirm01 {
     position: absolute;
     top: 0%;
-    height: 620px;
-    width: 50%;
+    height: 560px;
+    width: 40%;
     flex-shrink: 0;
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
