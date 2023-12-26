@@ -47,14 +47,12 @@ const AddNewCardPayment = () => {
   const [usd, setUsd] = useState("");
   const navigate = useNavigate();
 
-
   // useEffect(() => {
   //   // Include navigate in the dependency array
   //   if (paymentSelected) {
   //     navigate('/ExistingCardPage', { state: { paymentSelected: true } });
   //   }
-  // }, [paymentSelected, navigate]); 
-
+  // }, [paymentSelected, navigate]);
 
   const handleShowPayment = () => {
     setShowPayment(!showPayment);
@@ -153,10 +151,16 @@ const AddNewCardPayment = () => {
   };
 
   const handleCardNumberChange = (e) => {
-    let inputVal = e.target.value.replace(/\s/g, ""); // Remove existing spaces
+    let inputVal = e.target.value.replace(/[^0-9]/g, ""); // Keep only numeric characters
     inputVal = inputVal.replace(/(\d{4})(?=\d)/g, "$1 "); // Add space after every 4 digits, except the last 4
     setCardNumber(inputVal);
   };
+
+  // const handleCardNumberChange = (e) => {
+  //   let inputVal = e.target.value.replace(/\s/g, ""); // Remove existing spaces
+  //   inputVal = inputVal.replace(/(\d{4})(?=\d)/g, "$1 "); // Add space after every 4 digits, except the last 4
+  //   setCardNumber(inputVal);
+  // };
 
   const handleExpiryDateChange = (e) => {
     // Remove non-digit characters from the input
@@ -537,16 +541,14 @@ const AddNewCardPayment = () => {
           <Modal>
             <div
               className={`${
-                toggleSideBar ? "datapopup01" : "datapopup1"
+                toggleSideBar ? "datapopup011" : "datapopup1"
               } bg-white `}
             >
               <div
                 className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
-                    flex flex-col justify-center z-[100] lg:ml-[10px] items-center md:mt-[5%]  
+                    flex flex-col justify-center z-[100] lg:ml-[10px] items-center md:mt-[5%] lg:mt-0
                      
-                    ${
-                      toggleSideBar ? "" : "xl:mt-[0%]"
-                    }`}
+                    ${toggleSideBar ? "" : "xl:mt-[0%]"}`}
               >
                 <div>
                   <p className="text-[10px] text-[#04177F] text-center pt-[5%] md:pt-[0%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[0%]">
@@ -556,7 +558,7 @@ const AddNewCardPayment = () => {
                 <img
                   src={AddCardPopUp}
                   alt=""
-                  className="img2 mobile-desktop mx-auto mt-[20px] md:mt-[5%] md:w-[40%] md:h-[70%] md:mx-auto w-[143px] h-[100px] lg:w-[300px] lg:h-[200px] lg:mx-auto lg:mt-[8%] 2xl:mt-[5%] 2xl:mx-auto"
+                  className="currency-img mx-auto mt-[20px] md:mt-[5%] md:mx-auto w-[143px] h-[100px] lg:mx-auto lg:mt-[8%] 2xl:mt-[5%] 2xl:mx-auto"
                 />
               </div>
               <div className="mt-[30px] flex flex-col gap-[5px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
@@ -580,8 +582,8 @@ const AddNewCardPayment = () => {
           <Modal className="">
             <div
               className={` ${
-                toggleSideBar ? "confirm002" : "confirm200"
-              } bg-white flex flex-col justify-between lg:pb-[10px] md:mx-auto md:my-auto lg:mx-auto lg:my-auto md:overflow-auto rounded-[12px]`}
+                toggleSideBar ? "confirm02" : "confirm2"
+              } bg-white flex flex-col justify-between items-center pb-[10px] md:pb-[30px] lg:pb-[30px] md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
             >
               <div className="absolute z-0 right-0" style={{ zIndex: 0 }}>
                 <img
@@ -615,40 +617,30 @@ const AddNewCardPayment = () => {
                 </p>
               </div>
 
-              <div>
-                <img
-                  src={Success}
-                  alt=""
-                  className="absolute top-[25%] left-[32%] h-[50%] lg:left-[30.5%] md:top-[31%]"
-                />
-              </div>
+              <img src={Success} alt="" className="h-[50%] md:h-[40%]" />
 
-              <Link to="/ExistingCardPage">
-  <button
-    onClick={(e) => {
-      e.preventDefault();
-      setAddCard(false);
-      setCardNumber("");
-      setExpiryDate("");
-      setCVV("");
-      setPin("");
-      setCardHolderName("");
-      setPaymentSelected(true);
+              <Link
+                to="/ExistingCardPage"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setAddCard(false);
+                  setCardNumber("");
+                  setExpiryDate("");
+                  setCVV("");
+                  setPin("");
+                  setCardHolderName("");
+                  setPaymentSelected(true);
 
-
-      if (paymentSelected) {
-        navigate('/ExistingCardPage', { state: { paymentSelected: true } });
-      }
-
-
-      
-    }}
-    
-    className={`my-[5%] bg-[#04177f] w-[90%] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
-  >
-    Proceed
-  </button>
-</Link>
+                  if (paymentSelected) {
+                    navigate("/ExistingCardPage", {
+                      state: { paymentSelected: true },
+                    });
+                  }
+                }}
+                className={`my-[%] mt-0  bg-[#04177f] w-[90%] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+              >
+                Proceed
+              </Link>
             </div>
           </Modal>
         )}
@@ -778,7 +770,7 @@ const AddNewCardPayment = () => {
           </Modal>
         )}
 
-{/* {ExistingCardPage && (
+        {/* {ExistingCardPage && (
             <ExistingCardPage setPaymentSelected={setPaymentSelected} />
           )} */}
 

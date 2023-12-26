@@ -6,8 +6,7 @@ import PopUpGreenTab from "../ProfileImages/PopUpGreenTab.svg";
 import PopUpGreenDeskTop from "../ProfileImages/PopUpGreenDeskTop.svg";
 import { Modal } from "../../Screens/Modal/Modal";
 import styles from "../../../Components/Dashboard/DashboardComponents/TransferComponent/transfer.module.css";
-import Success from "../ProfileImages/success.gif"
-
+import Success from "../ProfileImages/success.gif";
 
 const ChangePassword = () => {
   const { toggleSideBar } = useContext(ContextProvider);
@@ -108,19 +107,13 @@ const ChangePassword = () => {
         <div className="py-[10px] lg:py-[30px]">
           <button
             className={`${
-                !oldPassword ||
-                !newPassword ||
-                !confirmPassword
-                  ? "bg-[#63616188] cursor-not-allowed"
-                  : "bg-primary"
-              } w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[600] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px]
+              !oldPassword || !newPassword || !confirmPassword
+                ? "bg-[#63616188] cursor-not-allowed"
+                : "bg-primary"
+            } w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[600] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px]
               `}
             onClick={handleUpdate}
-            disabled={
-                !oldPassword ||
-                !newPassword ||
-                !confirmPassword
-              }
+            disabled={!oldPassword || !newPassword || !confirmPassword}
           >
             Update
           </button>
@@ -130,20 +123,26 @@ const ChangePassword = () => {
       {update && (
         <Modal className="">
           <div
-            className={`confirm2 ${styles.inputPin} ${
-              toggleSideBar
-                ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
-                : "lg:w-[40%]"
-            }relative md:w-[55%] w-[90%] flex flex-col justify-between md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
+            className={` ${
+              toggleSideBar ? "confirm02" : "confirm2"
+            } bg-white flex flex-col justify-between items-center pb-[10px] md:pb-[30px] lg:pb-[30px] md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
           >
             <div className="absolute z-0 right-0" style={{ zIndex: 0 }}>
-              <img src={PopUpGreen} alt="" className="md:hidden rounded-tr-[10px]" />
+              <img
+                src={PopUpGreen}
+                alt=""
+                className="md:hidden rounded-tr-[10px]"
+              />
               <img
                 src={PopUpGreenTab}
                 alt=""
-                className="hidden md:block lg:hidden rounded-tr-[10px]"
+                className="hidden md:block rounded-tr-[10px]"
               />
-              <img src={PopUpGreenDeskTop} alt="" className="hidden lg:block rounded-tr-[20px]" />
+              <img
+                src={PopUpGreenDeskTop}
+                alt=""
+                className="hidden rounded-tr-[20px]"
+              />
             </div>
 
             <div className="relative z-10">
@@ -160,9 +159,7 @@ const ChangePassword = () => {
               </p>
             </div>
 
-            <div>
-                <img src={Success} alt="" className="absolute top-[25%] left-[32%] h-[50%] lg:left-[36.5%] md:top-[31%]"/>
-              </div>
+            <img src={Success} alt="" className="h-[50%] md:h-[40%]" />
 
             <button
               onClick={(e) => {
@@ -172,7 +169,7 @@ const ChangePassword = () => {
                 setNewPassword("");
                 setConfirmPassword("");
               }}
-              className={`my-[5%] bg-[#04177f] w-[90%] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+              className={`my-[%] mt-0  bg-[#04177f] w-[90%] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
             >
               Done
             </button>

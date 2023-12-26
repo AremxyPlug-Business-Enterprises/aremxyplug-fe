@@ -405,8 +405,8 @@ const DataBundleAddRecipient = () => {
             <Modal>
               <div
                 className={` ${
-                  toggleSideBar ? "confirm002" : "confirm200"
-                } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto md:overflow-auto rounded-[12px]`}
+                  toggleSideBar ? "confirm02" : "confirm2"
+                } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
               >
                 <div className="flex justify-between items-center mx-[3%] my-[2%] lg:mt-[3%] xl:mt-0 ">
                   <img
@@ -436,18 +436,18 @@ const DataBundleAddRecipient = () => {
                 </p>
                 <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
                   <img
-                    className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[125px] lg:h-[125px]"
+                    className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[100px] lg:h-[100px]"
                     src="./Gif/checkMarkGif.gif"
                     alt="/"
                   />
 
-                  <p className="text-[10px] text-[#2ED173] font-semibold md:text-[14px]">
+                  <p className="text-[10px] text-[#2ED173] font-semibold md:text-[14px] text-center">
                     New recipient contact has been added successfully.
                   </p>
                 </div>
 
                 <div
-                  className={`w-full h-[38px] mt-[35px] md:mt-[5%] px-[20px] mx-auto lg:mt-[5%] xl:mt-[5%]`}
+                  className={`w-full h-[38px] mt-[35px] md:mt-[10%] px-[20px] mx-auto lg:mt-[5%] xl:mt-[5%]`}
                 >
                   <button
                     className={`bg-[#04177f] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:mx-auto md:px-[10%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
@@ -456,7 +456,7 @@ const DataBundleAddRecipient = () => {
                       window.location.reload();
                     }}
                   >
-                    Confirmed
+                    Done
                   </button>
                 </div>
               </div>

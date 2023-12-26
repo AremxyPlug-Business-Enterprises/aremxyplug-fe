@@ -34,7 +34,7 @@ export const CardPaymentReceipt = () => {
     setCardPaymentSelected("");
     setCardSelected("");
     setCardPaymentAmount("");
-    
+
     // history.push('/CardPayment');
 
     // // Reload the page
