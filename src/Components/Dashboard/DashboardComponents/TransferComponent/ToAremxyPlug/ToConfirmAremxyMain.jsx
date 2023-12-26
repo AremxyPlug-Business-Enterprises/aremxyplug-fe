@@ -32,7 +32,7 @@ export const ToConfirmAremxyMain = () => {
           <div
             className={`${styles.aremxyMoneyPop} ${
               toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-            } w-[90%]`}
+            } w-[90%] md:w-[75%]`}
           >
             <img
               onClick={() => setEmailPhoneNumberConfirmation(false)}

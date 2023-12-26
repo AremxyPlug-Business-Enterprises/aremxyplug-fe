@@ -548,7 +548,7 @@ const AirtimeVtu = () => {
                     className={`${styles.balanceMoneyPop} ${
                     toggleSideBar ? "xl:w-[65%] xl:ml-[17%] lg:ml-[20%] lg:w-[40%]"
                     : "lg:w-[40%]"
-                } w-[90%] xl:w-[40%] overflow-auto`}
+                } w-[90%] xl:w-[40%] md:w-[70%] overflow-auto`}
                 >
                     <img
                     onClick={()=> setCodes(false)}
@@ -608,7 +608,7 @@ const AirtimeVtu = () => {
                 <div
                     className={`${styles.transferMoneyPop} ${
                     toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-                    } w-[90%] overflow-auto`}
+                    } w-[90%] md:w-[70%] overflow-auto`}
                 >
                     <img
                     onClick={()=> setProceed(false)}
@@ -771,7 +771,7 @@ const AirtimeVtu = () => {
                 <div
                     className={`${styles.successfulTwo} ${
                     toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-                    } md:w-[45%] w-[90%] overflow-auto`}
+                    } w-[90%] md:w-[70%]  overflow-auto`}
                 >
                     <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
                     <img
@@ -866,7 +866,7 @@ const AirtimeVtu = () => {
                     <Link to="/airtime-vtu-receipt">
                         <button
                         onClick={handleReceipt}
-                        className={`border-[1px] w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                        className={`border-[1px] w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[110px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
                         >
                         Receipt
                         </button>

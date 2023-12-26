@@ -148,7 +148,7 @@ export const TransferMoneyToAccountPopUp = () => {
             <button
               onClick={handleProceed}
               className={`${
-                amtToTransfer.length < 4 ? "bg-[#0008]" : "bg-[#04177f]"
+                amtToTransfer.length < 3 ? "bg-[#0008]" : "bg-[#04177f]"
               } my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
             >
               Proceed
