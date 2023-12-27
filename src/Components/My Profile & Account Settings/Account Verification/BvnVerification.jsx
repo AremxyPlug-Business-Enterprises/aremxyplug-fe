@@ -1,5 +1,6 @@
 import React, {useContext, useState} from 'react';
 import { ContextProvider } from '../../Context';
+import '../../../App.css';
 import styles from "../../../Components/Dashboard/DashboardComponents/TransferComponent/transfer.module.css";
 import Arrowright from '../../EducationPins/imagesEducation/educationArrowRight.svg';
 import { Modal } from '../../Screens/Modal/Modal';
@@ -24,6 +25,7 @@ export default function BvnVerification() {
    const [bvnPhone, setBvnPhone] = useState('');
    const[bvnPopVerified, setBvnPopVerified] = useState(false);
    const [bvnPhoneMessage, setBvnPhoneMessage] = useState(false);
+   const [errorVerify, setErrorVerify] = useState(false);
    const {toggleSideBar} = useContext(ContextProvider);
    
    const checkBvnform = () =>{
@@ -33,11 +35,13 @@ export default function BvnVerification() {
         setBvnStatus('Verified');
           setTimeout(()=>{
       setBvnPopVerified(true);
+      setErrorVerify(false);
       },2000)
         }
    else   {
     setBvnVerifyImage(NotVerifiedIcon);
        setBvnStatus('Not Verified');
+       setErrorVerify(true);
         }
     }
     //======= SETTING DATE FORMAT FOR DATE OF BIRTH =====
@@ -53,9 +57,7 @@ console.log(bvnDateOfBirth);
     <div>
         {bvnVerificationOpen && (
     <div className= {` flex flex-col ${verificationOpen
-      ? 'block'  : 'hidden'} ${bvnVerificationOpen
-      ? 'pb-[150px] lg:pb-[300px]'
-       : 'pb-[0px]'}`}>
+      ? 'block'  : 'hidden'} `}>
       
       <div className='flex lg:gap-[10px] lg:py-[50px] py-[35px] '> 
      <h2 className='font-[500] text-[#7C7C7C] text-[9.389px] leading-[14px] 
@@ -100,7 +102,7 @@ src={Arrowright} alt="" />
    action="">
     {/* Header Container */}
     
-   <div className='flex flex-col  lg:gap-[25px] gap-[20px]  w-[100%] mb-[50px]'>
+   <div className='flex flex-col  lg:gap-[25px] gap-[20px]  w-[100%] '>
    <div className='flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]'>
     {/* Full Name */}
     <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
@@ -200,6 +202,12 @@ src={Arrowright} alt="" />
          font-[600] text-[12px] leading-[18px] lg:text-[16px] text-center text-white lg:leading-[24px`}>
         Verify
         </button>
+        { errorVerify  && (
+        <h2 className={`font-[500] lg:text-[14px] lg:leading-[18px] md:text-[14px] md:leading-[18px] 
+        text-[12px] leading-[16px] text-red-600` }>
+          Fill all to Confirm Verification
+       </h2>
+       )}
         </div>
     </div>
 
@@ -208,10 +216,15 @@ src={Arrowright} alt="" />
    {/* ========== MODALS ========= */}
    {bvnQuery && (
           <Modal>
-            <div className='bg-white flex flex-col lg:px-[80px] md:px-[40px] md:rounded-[11.736px] rounded-[8px] lg:h-[890px] h-[650px] px-[18px] md:w-[80%]  lg:w-[70%] lg:rounded-[20px]
-             md:shadow-[0px_0px_11.73611px_0px_rgba(0,0,0,0.25)] md:h-[704.653px] mx-[19px] md:mx-[0px]
-            lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] justify-center items-center '>
-          <div className='flex flex-col   items-center'>
+        <div className=' h-[100%] flex flex-col w-[100%] items-center justify-center  '>
+            <div className='bvnQuery flex bg-white flex-col shadow-[0px_0px_8.3274px_0px_rgba(0 0 0,0.25)] rounded-[8px] 
+             shadow-[0px_0px_8.3274px_0px_rgba(0 0 0,0.25)] md:rounded-[11.736px]  lg:rounded-[20px] md:w-[55%]
+            md:shadow-[0px_0px_11.73611px_0px_rgba(0,0,0,0.25) lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] 
+            justify-center  items-center px-[18px] md:px-[30px] md:h-[550px]   
+            h-[430px] gap-[10px] md:gap-[40px] lg:gap-[50px] lg:justify-normal 
+            md:mx-[0px] mx-[19px]  lg:pt-[30px]  md:pt-[270px] pt-[270px]'>
+            
+          <div className='flex flex-col   items-center '>
             <div className='flex flex-col  md:gap-[20px] gap-[10px]'>
        <p className='font-[400] text-[13px] text-center leading-[16.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
@@ -260,13 +273,13 @@ text-[13px] leading-[16.4px]'>
    }} 
    className='font-[600] w-[100%] bg-[#04177F] md:w-[163px] md:py-[5.868px] lg:py-[13px]
     text-white lg:rounded-[12px] text-[13px] leading-[16.4px] rounded-[7.042px]
-   lg:text-[16px] lg:leading-[24px]  py-[16.531px]'>
+   lg:text-[16px] lg:leading-[24px]   py-[16.531px] md:mb-[40px] mb-[20px]'>
     Okay
    </button>
+   
           </div>
  </div>
-          
-            
+           </div>
           </Modal>
         )}
        {bvnPopVerified && (
@@ -322,7 +335,7 @@ text-[13px] leading-[16.4px]'>
         )}
         {bvnPhoneMessage && (
           <Modal>
-          <div className='flex flex-col lg:gap-[44px] md:gap-[25px] gap-[20px] lg:h-[465px] h-[330px] w-[100%] md:w-[55%]
+          <div className='flex flex-col lg:gap-[44px] md:gap-[25px] gap-[20px] lg:h-[465px] h-[330px] w-[100%] md:w-[45%]
           shadow-[0px_0px_8.3274px_0px_rgba(0,0,0,0.25)] rounded-[8px] px-[18px] md:px-[0px]
           lg:rounded-[12px] lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] mx-[19px] md:mx-[0px]
            bg-white md:shadow-[0px_0px_11.73611px_0px_rgba(0,0,0,0.25)]

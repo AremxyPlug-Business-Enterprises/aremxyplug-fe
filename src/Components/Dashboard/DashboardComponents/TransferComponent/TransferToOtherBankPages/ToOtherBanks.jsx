@@ -34,7 +34,7 @@ export const ToOtherBanks = () => {
                 without any hassle or hidden fee.
               </h2>
             </div>
-            <div className="w-[91px] h-[66px] lg:w-[199px] lg:h-[199px]">
+            <div className="w-[91px] h-[66px] lg:w-[190px] lg:h-[160px]">
               <img
                 src="./Images/transferImages/ToMyAcc.png"
                 alt=""

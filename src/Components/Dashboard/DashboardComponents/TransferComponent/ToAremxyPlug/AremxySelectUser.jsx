@@ -79,6 +79,10 @@ export default function AremxySelectUser() {
     const [confirm, setConfirm] = useState(false);
     const [userPhoneNumber, setUserPhoneNumber] =  useState('');
     const [emailUsername, setEmailUserName] = useState('');
+    const [miniCountry, setMiniCountry] = useState("");
+    const [select, setSelect] = useState(false);
+    const [showDrop, setShowDrop] = useState(false);
+    const [currencyAvailable, setCurrencyAvailable] = useState(false);
     const active = styled.active;
     const inactive = styled.inactive;
 
@@ -95,6 +99,17 @@ export default function AremxySelectUser() {
         setShowList(false);
         setMainCountry(name);
         setSelected(true);
+        setCurrencyAvailable(id !== 1);
+    };
+
+    const refresh = () => window.location.reload(true);
+
+    const handleCountryPress = (name, flag, id, code) => {
+        setFlag(flag);
+        setShowDrop(false);
+        setMiniCountry(name);
+        setSelect(true);
+        setCurrencyAvailable(id !== 1);
     };
 
     const handleRecipient = (index) => {
@@ -156,7 +171,6 @@ export default function AremxySelectUser() {
 
     const handleSave = (e) => {
         e.preventDefault();
-        setEdit(false);
       
         const { error } = firmTransferSchema.validate({
           emailUsername,
@@ -173,6 +187,7 @@ export default function AremxySelectUser() {
           );
         } else {
           setSave(true);
+          setEdit(false);
           setErrors({});
         }
     };
@@ -236,10 +251,10 @@ export default function AremxySelectUser() {
                 {/* =====================Country========================= */}
                 <div className={styles.inputBox}>
                 <div
-                    onClick={() => setShowList(!showList)}
+                    onClick={() => setShowDrop(!showDrop)}
                     className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]"
                 >
-                    {selected ? (
+                    {select ? (
                     <div className="flex gap-[7px] items-center">
                         <img
                         className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
@@ -248,7 +263,7 @@ export default function AremxySelectUser() {
                         />
                         <p className="text-[10px] font-extrabold lg:text-[14px]">
                         {" "}
-                        {mainCountry}
+                        {miniCountry}
                         </p>
                     </div>
                     ) : (
@@ -260,12 +275,12 @@ export default function AremxySelectUser() {
                     alt="dropdown"
                     />
                 </div>
-                {mainTransferErrors.country && (
+                {errors.country && (
                     <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                    {mainTransferErrors.country}
+                    {errors.country}
                     </div>
                 )}
-                {showList && (
+                {showDrop && (
                     <div
                     className={`${
                         toggleSideBar
@@ -273,7 +288,7 @@ export default function AremxySelectUser() {
                         : "lg:w-[38.5%] lg:top-[105.3%]"
                     }  ${
                         styles.countryDropDown
-                    } rounded-br-[7px] rounded-bl-[7px] shadow-xl bg-[#fff] border w-[100%] lg:w-full lg:rounded-br-[14px] lg:rounded-bl-[14px]`}
+                    } rounded-br-[7px] rounded-bl-[7px] shadow-xl bg-[#fff] border w-[100%] lg:w-full md:w-[50%] lg:rounded-br-[14px] lg:rounded-bl-[14px]`}
                     >
                     {" "}
                     {countryList.map((country) => (
@@ -281,7 +296,7 @@ export default function AremxySelectUser() {
                         className=" cursor-pointer border-b flex items-center p-2 gap-[5px] text-[9px]  md:text-[14px] lg:text-[16px]"
                         key={country.id}
                         onClick={() =>
-                            handleCountryClick(
+                            handleCountryPress(
                             country.name,
                             country.flag,
                             country.id,
@@ -499,7 +514,7 @@ export default function AremxySelectUser() {
                     />
                   </div>
 
-                  <hr className="h-[6px] bg-[#04177f] lg:mt-[2%] border-none mt-[2%] md:mt-[6%] md:h-[10px]" />
+                  <hr className="h-[6px] bg-[#04177f] lg:mt-[2%] border-none mt-[2%] md:mt-[2%] md:h-[10px]" />
                   <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[3%] lg:my-[%]">
                     Successful
                   </p>
@@ -519,7 +534,7 @@ export default function AremxySelectUser() {
                     className={`w-full h-[38px] mt-[40px] px-[20px] items-center`}
                   >
                     <button
-                      className={`bg-[#04177F] w-full flex justify-center items-center my-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:mx-auto lg:h-[38px] lg:my-[4%]`}
+                      className={`bg-[#04177F] w-full flex justify-center items-center my-auto mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:mx-auto lg:h-[38px] lg:my-[4%]`}
                       onClick={() => {
                         setAdd(false);
                         window.location.reload();
@@ -558,7 +573,7 @@ export default function AremxySelectUser() {
                     />
                   </div>
 
-                  <hr className="h-[6px] bg-[#04177f] lg:mt-[2%] border-none mt-[2%] md:mt-[6%] md:h-[10px]" />
+                  <hr className="h-[6px] bg-[#04177f] lg:mt-[2%] border-none mt-[2%] md:mt-[2%] md:h-[10px]" />
                   <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[3%] lg:my-[%]">
                     Successful
                   </p>
@@ -578,7 +593,7 @@ export default function AremxySelectUser() {
                     className={`w-full h-[38px] mt-[40px] px-[20px] items-center`}
                   >
                     <button
-                      className={`bg-[#04177F] w-full flex justify-center items-center my-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:mx-auto lg:h-[38px] lg:my-[4%]`}
+                      className={`bg-[#04177F] w-full flex justify-center items-center my-auto mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:mx-auto lg:h-[38px] lg:my-[4%]`}
                       onClick={() => {
                         setRemove(false);
                         window.location.reload();
@@ -593,13 +608,13 @@ export default function AremxySelectUser() {
             {edit && (
               <Modal>
                 <div
-                  className={`confirm mx-[5%] ${
+                  className={`confirm mx-auto my-auto ${
                     isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
                   } ${
                     toggleSideBar
                       ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
                       : "lg:w-[40%]"
-                  } lg:ml-[10%] lg:mr-[10%] grow pt-[10px] md:mt-[1%] bottom-[20px] md:top-[5%] lg:top-[5%] pb-[20px] rounded-tr-[8px] rounded-br-[8px] rounded-bl-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:mb-[18%] md:overflow-auto`}
+                  } lg:ml-[10%] lg:mr-[10%] grow pt-[10px] bottom-[20px] md:top-auto md:bottom-auto lg:top-[5%] pb-[20px] rounded-tr-[8px] rounded-br-[8px] rounded-bl-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:overflow-auto lg:overflow-hidden`}
                 >
                   <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
                     <img
@@ -765,7 +780,9 @@ export default function AremxySelectUser() {
                     <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
                         <input
                         onChange={(e) => {
-                            setUserPhoneNumber(e.target.value);
+                          const value = e.target.value;
+                          const numericValue = value.replace(/\D/g, "").slice(0, 11);
+                          setUserPhoneNumber(numericValue);
                         }} 
                         name="userPhoneNumber"
                         value={userPhoneNumber}
@@ -807,7 +824,7 @@ export default function AremxySelectUser() {
             {save && (
                 <Modal>
                     <div
-                        className={`${style.successfulThree} ${
+                        className={`${style.successfulFour} ${
                         toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
                         } md:w-[45%] w-[90%] overflow-auto`}
                     >
@@ -905,7 +922,7 @@ export default function AremxySelectUser() {
             {deleted && (
               <Modal>
                 <div
-                  className={`confirm2 ${styles.inputPin} ${
+                  className={`confirm2 ${style.inputPin} ${
                     toggleSideBar
                       ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
                       : "lg:w-[40%]"
@@ -966,7 +983,7 @@ export default function AremxySelectUser() {
             {successDeleted && (
               <Modal>
                 <div
-                  className={`confirm2 ${styles.inputPin} ${
+                  className={`confirm2 ${style.inputPin} ${
                     toggleSideBar
                       ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
                       : "lg:w-[40%]"
@@ -1000,7 +1017,7 @@ export default function AremxySelectUser() {
                   </p>
                   <p className="text-[10px] text-[#04177f] md:text-[14px] px-[20px] lg:text-[18px] font-extrabold text-center my-[1%] lg:my-[%]">
                     User *****2345 has been deleted successfully. You can
-                    add recipient again anytime!
+                    add user again anytime!
                   </p>
                   <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[5%]">
                     <img
@@ -1022,6 +1039,32 @@ export default function AremxySelectUser() {
                     >
                       Done
                     </button>
+                  </div>
+                </div>
+              </Modal>
+            )}
+            {currencyAvailable && (
+              <Modal>
+                <div className="bg-white shadow-lg w-[90%] rounded-[8px] h-[269px] flex flex-col items-center py-[4%] gap-[40px] md:h-[360px] lg:w-[562px] lg:gap-[60px] lg:h-[500px] lg:py-[3%] lg:rounded-[px]">
+                  <p className="text-[10px] text-[#04177f] font-extrabold md:text-[16px] lg:text-[25px]">
+                    This Currency is Currently Not Available.
+                  </p>
+                  <img
+                    className="w-[135px] h-[96px] lg:w-[217px] lg:h-[187px]"
+                    src="/Images/addAccountImages/account-unavailable.png"
+                    alt=""
+                  />
+                  <p className="absolute top-[58%] right-[15%] text-[8px] md:text-[12px] md:ml-[70%] lg:text-[14px] lg:top-[73%] lg:right-[33%] lg:ml-[40%] lg:w-[8%]">
+                    Coming Soon...
+                  </p>
+
+                  <div
+                    onClick={refresh}
+                    className={` ${
+                      isDarkMode ? "border" : "bg-[#04177f] "
+                    } cursor-pointer text-white text-[10px] h-[40px] w-[80%] rounded-[5px] flex items-center justify-center md:mx-auto md:w-[20%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[30%] lg:mx-auto`}
+                  >
+                    Okay
                   </div>
                 </div>
               </Modal>

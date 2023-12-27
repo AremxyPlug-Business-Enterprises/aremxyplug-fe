@@ -19,7 +19,6 @@ import Cancel from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/Cancel.svg";
 import "../../../DataTopUpPage/DataTopUp.css";
 import { Modal } from "../../../../../Screens/Modal/Modal";
 import OtpInput from "react-otp-input";
-import styles from "../../../TransferComponent/transfer.module.css";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import Joi from "joi";
@@ -272,7 +271,7 @@ const SpectranetDataBundle = () => {
   };
 
   console.log("confirm:", confirm);
-  
+
   return (
     <DashBoardLayout>
       <div
@@ -707,13 +706,11 @@ const SpectranetDataBundle = () => {
           {proceed && (
             <Modal>
               <div
-                className={`confirm mx-[5%] ${
+                className={` scroll-bar ${
                   isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
                 } ${
-                  toggleSideBar
-                    ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
-                    : "lg:w-[40%]"
-                } lg:ml-[10%] lg:mr-[10%] grow pt-[10px] md:mt-[1%] mb-0 pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:mb-[18%] overflow-auto`}
+                  toggleSideBar ? "confirm01" : "confirm"
+                } grow pt-[10px] pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto overflow-auto`}
               >
                 <div className="w-full flex justify-end border-b-[6px] border-primary px-[12px] md:h-[25px] lg:border-b-[10px] lg:mt-[20px]">
                   <img
@@ -908,58 +905,60 @@ const SpectranetDataBundle = () => {
           {confirm && (
             <Modal>
               <div
-                className={`confirm2 ${styles.inputPin} ${
-                  toggleSideBar
-                    ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
-                    : "lg:w-[40%]"
-                } md:w-[55%] w-[90%] md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
+                className={` ${
+                  toggleSideBar ? "confirm02" : "confirm2"
+                } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
               >
-                <img
-                  onClick={() => setConfirm(false)}
-                  className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[45px] lg:h-[45px] "
-                  src={Cancel}
-                  alt=""
-                />
+                <div className="flex justify-end px-2">
+                  <img
+                    onClick={() => setConfirm(false)}
+                    className="cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[35px] lg:h-[35px] "
+                    src={Cancel}
+                    alt=""
+                  />
+                </div>
 
-                <hr className="h-[6px] bg-[#04177f] lg:mt-[10%] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
-                <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[8%] lg:my-[%]">
-                  Input PIN to complete transaction
-                </p>
-                <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
-                  <div className=" flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
-                    {" "}
-                    {isVisible ? (
-                      <OtpInput
-                        value={inputPin}
-                        inputType="tel"
-                        onChange={setInputPin}
-                        numInputs={4}
-                        shouldAutoFocus={true}
-                        inputStyle={{
-                          color: "#403f3f",
-                          width: 30,
-                          height: 30,
-                          borderRadius: 3,
-                        }}
-                        renderInput={(props) => (
-                          <input {...props} className="inputOTP mx-[3px]" />
-                        )}
-                      />
-                    ) : (
-                      <div className="text-[24px] md:text-[24px] mt-1">
-                        * * * *{" "}
-                      </div>
-                    )}
-                    <div
-                      className="text-[#0003] text-xl md:text-3xl"
-                      onClick={toggleVisibility}
-                    >
-                      {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
-                    </div>
-                  </div>
-                  <p className="text-[8px] md:text-[12px] text-[#04177f]">
-                    Forgot Pin ?
+                <hr className="h-[6px] bg-[#04177f] lg:mt-[2%] border-none mt-[2%] md:mt-[2%] md:h-[10px]" />
+                <div className="md:mt-[15%] lg:mt-[10%]">
+                  <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[8%] md:my-[5%] lg:my-[3%]">
+                    Input PIN to complete transaction
                   </p>
+                  <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
+                    <div className=" flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
+                      {" "}
+                      {isVisible ? (
+                        <OtpInput
+                          value={inputPin}
+                          inputType="tel"
+                          onChange={setInputPin}
+                          numInputs={4}
+                          shouldAutoFocus={true}
+                          inputStyle={{
+                            color: "#403f3f",
+                            width: 30,
+                            height: 30,
+                            borderRadius: 3,
+                          }}
+                          renderInput={(props) => (
+                            <input {...props} className="inputOTP mx-[3px]" />
+                          )}
+                        />
+                      ) : (
+                        <div className="text-[24px] md:text-[24px] mt-1">
+                          * * * *{" "}
+                        </div>
+                      )}
+                      <div
+                        className="text-[#0003] text-xl md:text-3xl"
+                        onClick={toggleVisibility}
+                      >
+                        {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
+                      </div>
+                    </div>
+                    <p className="text-[8px] md:text-[12px] text-[#04177f]">
+                      Forgot Pin ?
+                    </p>
+                  </div>
                 </div>
 
                 <button
@@ -971,7 +970,7 @@ const SpectranetDataBundle = () => {
                   disabled={inputPin.length !== 4}
                   className={`${
                     inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
-                  } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                  } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
                 >
                   Purchase
                 </button>
@@ -983,11 +982,9 @@ const SpectranetDataBundle = () => {
             <Modal>
               {/* <DataBundleFailedPopUp/> */}
               <div
-                className={`confirm ${styles.successfulTwo} ${
-                  toggleSideBar
-                    ? "md:w-[45%] md:ml-[20%] lg:ml-[20%] lg:w-[40%]"
-                    : "lg:w-[40%]"
-                } md:w-[45%] w-[90%] md:my-auto md:mt-[.5%] mx-auto overflow-auto md:mb-[18%] lg:mx-auto lg:my-auto`}
+                className={` scroll-bar ${
+                  toggleSideBar ? "confirm01 w-[90%]" : "confirm w-[90%]"
+                } bg-white rounded-[12px] md:my-auto mx-auto overflow-auto lg:mx-auto lg:my-auto`}
               >
                 <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
                   <img
@@ -1015,7 +1012,7 @@ const SpectranetDataBundle = () => {
                   Purchase Successful
                 </h2>
                 <img
-                  className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[250px] lg:h-[250px]"
+                  className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[100px] lg:h-[100px]"
                   src="./Gif/checkMarkGif.gif"
                   alt="/"
                 />
@@ -1195,7 +1192,7 @@ const SpectranetDataBundle = () => {
               walletName={walletName}
             />
           )}
-          
+
           <div className="py-[30px] lg:py-[60px] mt-10">
             <button
               className={`w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[600] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px] ${
@@ -1221,29 +1218,27 @@ const SpectranetDataBundle = () => {
               Proceed
             </button>
           </div>
-
-          
         </section>
-        
+
         {/* =======================FOOTER=================================== */}
         <div
-            className={`${
-              isDarkMode ? "" : ""
-            } flex gap-[15px] justify-center items-center mt-[100%] pb-[25%] md:pb-[12%] md:mt-[40%] lg:mt-[40%] lg:pb-0`}
-          >
-            <div className="text-[10px] md:text-[12px] lg:text-[14px]">
-              You need help ?
-            </div>
-            <Link to="/ContactUs">
-              <div
-                className={`${
-                  isDarkMode ? "border" : "bg-[#04177f]"
-                } text-[10px] p-1 text-white rounded-[8px] lg:text-[18px]`}
-              >
-                Contact Us
-              </div>
-            </Link>
+          className={`${
+            isDarkMode ? "" : ""
+          } flex gap-[15px] justify-center items-center mt-[100%] pb-[25%] md:pb-[12%] md:mt-[40%] lg:mt-[40%] lg:pb-0`}
+        >
+          <div className="text-[10px] md:text-[12px] lg:text-[14px]">
+            You need help ?
           </div>
+          <Link to="/ContactUs">
+            <div
+              className={`${
+                isDarkMode ? "border" : "bg-[#04177f]"
+              } text-[10px] p-1 text-white rounded-[8px] lg:text-[18px]`}
+            >
+              Contact Us
+            </div>
+          </Link>
+        </div>
       </div>
     </DashBoardLayout>
   );

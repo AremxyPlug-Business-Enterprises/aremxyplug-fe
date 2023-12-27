@@ -19,12 +19,12 @@ export default function EditProfile() {
   return (
     <div>
        <DashBoardLayout>
-        <div className='flex flex-col justify-between md:h-[1000px] h-[900px] '>
+        <div className='flex flex-col justify-between md:h-[1000px] h-[900px] pb-[20%]'>
           <div className=''>
        <ProfileHero/>
        <div className='flex flex-col gap-[20px] md:gap-[30px] lg:gap-[40px]'>
         {/* Edit Profile */}
-       <div className='flex lg:gap-[10px] gap-[5.87px]'>
+       <div className='flex lg:gap-[10px] gap-[5.87px] '>
     <h2 className='text-[#7C7C7C] font-[500] text-[8px] leading-[10.4px] 
     md:text-[11.736px] md:leading-[18px]
     lg:text-[20px] lg:leading-[30px]'>
@@ -90,10 +90,10 @@ gap-[5.868px] lg:gap-[10px] cursor-default'>
      <Link to = '/ChangeEmail'
       className='lg:w-[163px] md:w-[150px] w-[100%]'>
      <button className='w-[100%] text-[12px] leading-[18px]
-      md:text-[9.389px]  md:leading-[14px]
+      md:text-[9.389px]  md:leading-[14px] md:py-[10px]
          md:rounded-[12px] rounded-[4.241px]
        font-[600] lg:text-[16px] lg:leading-[24px]
-       bg-[#04177F] py-[10px]
+       bg-[#04177F] py-[12px]
        text-white text-center'>
         Change Email
       </button>
@@ -124,9 +124,9 @@ gap-[5.868px] lg:gap-[10px] cursor-default'>
      <Link to = '/ChangePhoneNumber'
      className='lg:w-[163px] md:w-[150px] w-[100%]'>
     <button className='w-[100%] text-[12px] leading-[18px] md:text-[9.389px]  md:leading-[14px]
-   md:rounded-[12px] rounded-[4.241px]
+   md:rounded-[12px] rounded-[4.241px] 
        font-[600] lg:text-[16px] lg:leading-[24px]
-       bg-[#04177F] py-[10px] 
+      bg-[#04177F] md:py-[10px] py-[12px]
        text-white text-center'>
         Change Phone No
         </button>
@@ -137,10 +137,10 @@ gap-[5.868px] lg:gap-[10px] cursor-default'>
        </div>
        {/* CONTACT US */}
        <div className=" flex gap-[8.729px]  md:gap-[14.896px] 
-     justify-center px-[8.594px] mb-[130px]">
+     justify-center px-[8.594px]  lg:pt-[20%] lg:pb-[20%] md:pt-[100%] md:pb-[30%] pt-[40%] pb-[30%]">
               <p className="font-[500] text-[10px] text-black 
               leading-[10.4px] lg:text-[16px] lg:leading-[15.6px]  md:text-[6.875px]
-            ] md:leading-[12.938px] self-center">
+             md:leading-[12.938px] self-center">
                 You need help?
               </p>
               <Link to ="/contactUs"

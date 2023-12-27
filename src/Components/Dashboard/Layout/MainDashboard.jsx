@@ -21,13 +21,14 @@ export const MainDashboard = () => {
   const { setHideNavbar, toggleSideBar, isDarkMode } =
     useContext(ContextProvider);
   const [visible, setVisibility] = useState(true);
-  const [activeButtons, setActiveButtons] = useState([false, false, false]);
+  const [activeButtons, setActiveButtons] = useState([true, false, false]);
   const [blur, setBlur] = useState(false);
   const [blurTwo, setBlurTwo] = useState(false);
   const [blurThree, setBlurThree] = useState(false);
   const textRef = useRef(null);
   const [selected, setSelected] = useState("");
   const [selected2, setSelected2] = useState("");
+  const [symbol, setSymbol] = useState("₦");
 
   const handleCopyClick = () => {
     const text = textRef.current.innerText;
@@ -86,6 +87,19 @@ export const MainDashboard = () => {
     //     clickedoption === "EUR" ||
     //     clickedoption === "fiat"
     // );
+    clickedoption === "NGN"
+      ? setSymbol("₦")
+      : clickedoption === "USD"
+      ? setSymbol("$")
+      : clickedoption === "GBP"
+      ? setSymbol("£")
+      : clickedoption === "AUD"
+      ? setSymbol("AU$")
+      : clickedoption === "KES"
+      ? setSymbol("KSh")
+      : clickedoption === "EUR"
+      ? setSymbol("€")
+      : setSymbol("");
     return;
   };
 
@@ -201,7 +215,7 @@ export const MainDashboard = () => {
               </Link>
               <p
                 className={`${
-                  toggleSideBar ? "lg:text-[18px]" : "lg:text-[23px]"
+                  toggleSideBar ? "lg:text-[18px]" : "lg:text-[24px]"
                 } ${styles.walletText} `}
               >
                 Available Balance
@@ -262,7 +276,7 @@ export const MainDashboard = () => {
                     </span>
                   ) : (
                     <span className="text-[19px] leading-normal lg:text-[37px]">
-                      &#8358;0.00
+                      {symbol}0.00
                     </span>
                   )}
                   <div onClick={visibilityHandler} className=" text-[#92ABFE]">
@@ -322,11 +336,13 @@ export const MainDashboard = () => {
                     // setBlurThree();
                   }}
                   value="fiat"
-                  className={`${styles.fcp2} ${
+                  className={`${styles.fcp2}  ${
+                    activeButtons[0]
+                      ? "bg-[#04177f] text-[#fff]"
+                      : " bg-[#92ABFE2E]"
+                  } ${
                     isDarkMode ? " border" : " "
-                  } bg-[#92ABFE2E] cursor-pointer w-[17%] md:w-[10%] flex py-[3.92px] justify-center items-center text-[7px] md:text-[10px] font-semibold leading-normal rounded-[10px] lg:text-[13px] lg:w-[16%] lg:py-[7.47px] lg:rounded-[19px] hover:bg-[#04177f] hover:text-white active:bg-[#04177f] ${
-                    activeButtons[0] ? "bg-[#04177f] " : "bg-[#92ABFE2E]"
-                  } `}
+                  } cursor-pointer w-[17%] md:w-[10%] flex py-[3.92px] justify-center items-center text-[7px] md:text-[10px] font-semibold leading-normal rounded-[10px] lg:text-[13px] lg:w-[16%] lg:py-[7.47px] lg:rounded-[19px] `}
                 >
                   Fiat
                 </div>
@@ -339,8 +355,10 @@ export const MainDashboard = () => {
                   }}
                   className={`${styles.fcp2} ${
                     isDarkMode ? " border" : " "
-                  } md:text-[10px] md:w-[10%] bg-[#92ABFE2E] cursor-pointer w-[17%] flex py-[3.92px] justify-center items-center text-[7px] font-semibold leading-normal rounded-[10px] lg:w-[16%] lg:text-[13px] lg:py-[7.47px] lg:rounded-[19px]  hover:bg-[#04177f] hover:text-white active:bg-[#04177f]${
-                    activeButtons[1] ? "bg-[#04177f]" : "bg-[#92ABFE2E]"
+                  } md:text-[10px] md:w-[10%] cursor-pointer w-[17%] flex py-[3.92px] justify-center items-center text-[7px] font-semibold leading-normal rounded-[10px] lg:w-[16%] lg:text-[13px] lg:py-[7.47px] lg:rounded-[19px] ${
+                    activeButtons[1]
+                      ? "bg-[#04177f] text-[#fff]"
+                      : "bg-[#92ABFE2E]"
                   } `}
                 >
                   Crypto
@@ -354,8 +372,10 @@ export const MainDashboard = () => {
                   }}
                   className={`${styles.fcp2} ${
                     isDarkMode ? " border" : " "
-                  } md:text-[10px] md:w-[10%] bg-[#92ABFE2E] cursor-pointer w-[17%] flex py-[3.92px] justify-center items-center text-[7px] font-semibold leading-normal rounded-[10px] lg:w-[16%] lg:text-[13px] lg:py-[7.47px] lg:rounded-[19px] hover:bg-[#04177f] hover:text-white active:bg-[#04177f]${
-                    activeButtons[2] ? "bg-[#04177f]" : "bg-[#92ABFE2E]"
+                  } md:text-[10px] md:w-[10%] cursor-pointer w-[17%] flex py-[3.92px] justify-center items-center text-[7px] font-semibold leading-normal rounded-[10px] lg:w-[16%] lg:text-[13px] lg:py-[7.47px] lg:rounded-[19px] ${
+                    activeButtons[2]
+                      ? "bg-[#04177f] text-[#fff]"
+                      : "bg-[#92ABFE2E]"
                   } `}
                 >
                   Points
@@ -383,8 +403,8 @@ export const MainDashboard = () => {
                 <div className="flex mt-[8%] gap-[30px] md:mt-[5%] lg:mt-[9%]">
                   <p
                     className={`${styles.GVA} ${
-                      toggleSideBar ? "lg:text-[10px]" : "lg:text-[21px]"
-                    } text-[11px] font-extrabold md:text-[17px] `}
+                      toggleSideBar ? "lg:text-[10px]" : "lg:text-[24px]"
+                    } text-[11px] font-extrabold `}
                   >
                     Global Virtual Accounts
                   </p>

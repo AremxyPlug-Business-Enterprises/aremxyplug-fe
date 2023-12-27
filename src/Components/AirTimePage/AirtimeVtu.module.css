@@ -15,6 +15,9 @@
 .successfulThree::-webkit-scrollbar {
     display: none;
 }
+.successfulFour::-webkit-scrollbar {
+    display: none;
+}
 
 /* Banner Section */
 
@@ -31,6 +34,15 @@
     position: absolute;
     bottom: 0%;
     height: 300px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0px 0px 5.952381610870361px 0px rgba(0, 0, 0, 0.25);
+}
+.successfulFour {
+    position: absolute;
+    bottom: 0%;
+    height: 330px;
     flex-shrink: 0;
     border-radius: 8px;
     background: #fff;
@@ -296,7 +308,7 @@
     border: none;
     box-shadow: 0px 4px 10px 0px #00000040;
     border-radius: 5px;
-    width: 40%;
+    width: 46.7%;
     transition: height .3s ease;
     background: #FFF;
     z-index: 999;
@@ -658,29 +670,43 @@
 @media (min-width: 820px) and (max-width: 1180px) {  
     .transferMoneyPop {
       height: 620px;
+      bottom: auto;
+      top: auto;
       border-radius: 12px;
       background: #fff;
       box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
     }
     .balanceMoneyPop {
       height: 620px;
+      bottom: auto;
+      top: auto;
       border-radius: 12px;
       background: #fff;
       box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
     }
     .inputPin {
-        bottom: 30%;
+        bottom: auto;
+        top: auto;
         width: 481.25px;
         height: 350px;
     }
     .successfulTwo {
-        bottom: 30%;
+        bottom: auto;
+        top: auto;
         width: 80%;
         height: 600px;
         border-radius: 15px;
     }
     .successfulThree {
-        bottom: 30%;
+        bottom: auto;
+        top: auto;
+        width: 80%;
+        height: 450px;
+        border-radius: 15px;
+    }
+    .successfulFour {
+        bottom: auto;
+        top: auto;
         width: 80%;
         height: 450px;
         border-radius: 15px;
@@ -691,12 +717,16 @@
 @media (min-width: 1024px) {
     .transferMoneyPop {
       height: 560px;
+      bottom: auto;
+      top: auto;
       border-radius: 20px;
       background: #fff;
       box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
     }
     .balanceMoneyPop {
       height: 560px;
+      bottom: auto;
+      top: auto;
       border-radius: 20px;
       background: #fff;
       box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
@@ -704,19 +734,30 @@
     .inputPin {
         height: 405px;
         position: absolute;
-        top: 18%;
+        bottom: auto;
+        top: auto;
         border-radius: 20px;
     }
     .successfulTwo {
         position: absolute;
-        top: 7%;
+        bottom: auto;
+        top: auto;
         border-radius: 15px;
         height: 550px;
         box-shadow: 0px 0px 16.952381610870361px 0px rgba(0, 0, 0, 0.25);
     }
     .successfulThree {
         position: absolute;
-        top: 7%;
+        bottom: auto;
+        top: auto;
+        border-radius: 15px;
+        height: 450px;
+        box-shadow: 0px 0px 16.952381610870361px 0px rgba(0, 0, 0, 0.25);
+    }
+    .successfulFour {
+        position: absolute;
+        bottom: auto;
+        top: auto;
         border-radius: 15px;
         height: 450px;
         box-shadow: 0px 0px 16.952381610870361px 0px rgba(0, 0, 0, 0.25);
@@ -941,7 +982,7 @@
         border: none;
         box-shadow: 0px 4px 10px 0px #00000040;
         border-radius: 5px;
-        width: 40%;
+        width: 43%;
         transition: height .3s ease;
         background: #FFF;
         z-index: 999;

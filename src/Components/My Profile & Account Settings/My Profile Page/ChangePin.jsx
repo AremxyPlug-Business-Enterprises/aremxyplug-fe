@@ -299,70 +299,75 @@ const ChangePin = () => {
                 </div>
               </div>
             )}
-
+            
             {update && (
               <Modal className="">
-                <div
-                  className={`confirm2 ${styles.inputPin} ${
-                    toggleSideBar
-                      ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
-                      : "lg:w-[40%]"
-                  }relative md:w-[55%] w-[90%] flex flex-col justify-between md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
+
+
+<div
+             className={` ${
+              toggleSideBar ? "confirm02" : "confirm2"
+            } bg-white flex flex-col justify-between items-center pb-[10px] md:pb-[30px] lg:pb-[30px] md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
+            >
+              <div className="absolute z-0 right-0" style={{ zIndex: 0 }}>
+                <img
+                  src={PopUpGreen}
+                  alt=""
+                  className="md:hidden rounded-tr-[10px]"
+                />
+                <img
+                  src={PopUpGreenTab}
+                  alt=""
+                  className="hidden md:block rounded-tr-[10px]"
+                />
+                <img
+                  src={PopUpGreenDeskTop}
+                  alt=""
+                  className="hidden rounded-tr-[20px]"
+                />
+              </div>
+
+              <div className="relative z-10">
+                <p
+                  className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[8%] lg:mt-[3%] z-[1000] ${styles.overlayText}`}
                 >
-                  <div className="absolute z-0 right-0" style={{ zIndex: 0 }}>
-                    <img
-                      src={PopUpGreen}
-                      alt=""
-                      className="md:hidden rounded-tr-[10px]"
-                    />
-                    <img
-                      src={PopUpGreenTab}
-                      alt=""
-                      className="hidden md:block lg:hidden rounded-tr-[10px]"
-                    />
-                    <img
-                      src={PopUpGreenDeskTop}
-                      alt=""
-                      className="hidden lg:block rounded-tr-[20px]"
-                    />
-                  </div>
+                  Successful
+                </p>
 
-                  <div className="relative z-10">
-                    <p
-                      className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[8%] lg:mt-[3%] z-[1000] ${styles.overlayText}`}
-                    >
-                      Successful
-                    </p>
+                <p
+                  className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[4%] lg:my-[%] z-[1000] ${styles.overlayText}`}
+                >
+                  You have successfully changed your transaction PIN.
+                </p>
+              </div>
 
-                    <p
-                      className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[4%] lg:my-[%] z-[1000] ${styles.overlayText}`}
-                    >
-                      You have successfully changed your transaction PIN.
-                    </p>
-                  </div>
+              <img
+                  src={Success}
+                  alt=""
+                  className="h-[50%] md:h-[40%]"
+                />
 
-                  <div>
-                    <img
-                      src={Success}
-                      alt=""
-                      className="absolute top-[25%] left-[32%] h-[50%] lg:left-[36.5%] md:top-[33%]"
-                    />
-                  </div>
+                <button
+  
+  onClick={(e) => {
+    e.preventDefault();
+    setUpdate(false);
+    setOldPin("");
+    setNewPin("");
+    setConfirmPin("");
+    handleClick(activeIndex);
+  }}
+    
+    className={`my-[%] mt-0  bg-[#04177f] w-[90%] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+  >
+    Done
+  
+</button>
+              
+            
+              </div>
 
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setUpdate(false);
-                      setOldPin("");
-                      setNewPin("");
-                      setConfirmPin("");
-                      handleClick(activeIndex);
-                    }}
-                    className={`my-[5%] bg-[#04177f] w-[90%] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
-                  >
-                    Done
-                  </button>
-                </div>
+
               </Modal>
             )}
 
@@ -462,168 +467,174 @@ const ChangePin = () => {
 
             {resetPinUpdate && (
               <Modal>
-                <div
-                  className={`confirm2 ${styles.inputPin} ${
-                    toggleSideBar
-                      ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
-                      : "lg:w-[40%]"
-                  } md:w-[55%] w-[90%] md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
-                >
-                  <img
-                    onClick={() => setResetPinUpdate(false)}
-                    className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[45px] lg:h-[45px] "
-                    src={Cancel}
-                    alt=""
-                  />
 
-                  <hr className="h-[6px] bg-[#04177f] lg:mt-[10%] border-none mt-[8%] md:mt-[7%] md:h-[10px]" />
-                  <p className="text-[10px] px-[20px] md:text-[14px] lg:text-[18px] font-extrabold text-center my-[5%] lg:my-[%]">
-                    Verification code has been sent to your email - {emailId}
-                  </p>
-                  <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
-                    <div className=" flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
-                      {" "}
-                      {isVisible ? (
-                        <OtpInput
-                          value={inputPin}
-                          inputType="tel"
-                          onChange={setInputPin}
-                          numInputs={6}
-                          shouldAutoFocus={true}
-                          inputStyle={{
-                            color: "#403f3f",
-                            width: 30,
-                            height: 30,
-                            borderRadius: 3,
-                            ...(window.innerWidth >= 768 &&
-                              window.innerWidth < 1024 && {
-                                width: "40px",
-                                height: "40px",
-                              }),
-                            ...(window.innerWidth >= 1024 && {
-                              width: "60px",
-                              height: "60px",
-                            }),
-                          }}
-                          renderInput={(props) => (
-                            <input
-                              {...props}
-                              className="inputOTP text-[10px] md:text-[14px] lg:text-[20px] mx-[3px]"
-                            />
-                          )}
-                        />
-                      ) : (
-                        <div className="text-[24px] md:text-[24px] mt-1">
-                          * * * * * *{" "}
-                        </div>
+
+<div
+              className={` ${
+                toggleSideBar ? "confirm02" : "confirm2"
+              } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
+            >
+              <img
+                onClick={() => setUpdate(false)}
+                className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[45px] lg:h-[45px] "
+                src={Cancel}
+                alt=""
+              />
+
+              <hr className="h-[6px] bg-[#04177f] lg:mt-[10%] border-none mt-[8%] md:mt-[7%] md:h-[10px]" />
+              <p className="md:mt-[15%] lg:mt-[10%] text-[10px] px-[20px] md:text-[14px] lg:text-[18px] font-extrabold text-center my-[5%] lg:my-[%]">
+                Verification code has been sent to your email - {emailId}
+              </p>
+              <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
+                <div className=" flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
+                  {" "}
+                  {isVisible ? (
+                    <OtpInput
+                      value={inputPin}
+                      inputType="tel"
+                      onChange={setInputPin}
+                      numInputs={6}
+                      shouldAutoFocus={true}
+                      inputStyle={{
+                        color: "#403f3f",
+                        width: 30,
+                        height: 30,
+                        borderRadius: 3,
+                      }}
+                      renderInput={(props) => (
+                        <input {...props} className="inputOTP mx-[3px]" />
                       )}
-                      <div
-                        className="text-[#0003] text-xl md:text-3xl"
-                        onClick={toggleVisibility}
-                      >
-                        {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
-                      </div>
+                    />
+                  ) : (
+                    <div className="text-[24px] md:text-[24px] mt-1">
+                      * * * * * *{" "}
                     </div>
-                    <p className="flex justify-between w-[67%] md:w-[70%] lg:w-[70%] text-[8px] md:text-[12px] text-[#04177f]">
-                      <p>{countdown > 0 ? `${countdown}sec` : "0sec"}</p>
-                      <p
-                        onClick={() => {
-                          if (resendActive) {
-                            handleResendOTP();
-                          }
-                        }}
-                        style={{
-                          cursor: resendActive ? "pointer" : "not-allowed",
-                          color: resendActive ? "#04177f" : "#808080",
-                        }}
-                      >
-                        Resend OTP
-                      </p>
-                    </p>
-                  </div>
-
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setResetPinUpdate(false);
-                      inputPinHandler(e);
-                      setVerify(true);
-                    }}
-                    disabled={inputPin.length !== 6}
-                    className={`${
-                      inputPin.length !== 6 ? "bg-[#0008]" : "bg-[#04177f]"
-                    } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                  )}
+                  <div
+                    className="text-[#0003] text-xl md:text-3xl"
+                    onClick={toggleVisibility}
                   >
-                    Verify
-                  </button>
+                    {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
+                  </div>
                 </div>
+                <p className="flex justify-between w-[67%] md:w-[55%] lg:w-[45%] text-[8px] md:text-[12px] text-[#04177f]">
+                  <p>{countdown > 0 ? `${countdown}sec` : "0sec"}</p>
+                  <p
+                    onClick={() => {
+                      if (resendActive) {
+                        handleResendOTP();
+                      }
+                    }}
+                    style={{
+                      cursor: resendActive ? "pointer" : "not-allowed",
+                      color: resendActive ? "#04177f" : "#808080",
+                    }}
+                  >
+                    Resend OTP
+                  </p>
+                </p>
+              </div>
+
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  setResetPinUpdate(false);
+                  inputPinHandler(e);
+                  setVerify(true);
+                }}
+                disabled={inputPin.length !== 6}
+                className={`${
+                  inputPin.length !== 6 ? "bg-[#0008]" : "bg-[#04177f]"
+                } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+              >
+                Verify
+              </button>
+            </div>
+               
               </Modal>
             )}
 
             {verify && (
               <Modal className="">
-                <div
-                  className={`confirm2 ${styles.inputPin} ${
-                    toggleSideBar
-                      ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
-                      : "lg:w-[40%]"
-                  }relative md:w-[55%] w-[90%] flex flex-col justify-between md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
+
+
+
+<div
+             className={` ${
+              toggleSideBar ? "confirm02" : "confirm2"
+            } bg-white flex flex-col justify-between items-center pb-[10px] md:pb-[30px] lg:pb-[30px] md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
+            >
+              <div className="absolute z-0 right-0" style={{ zIndex: 0 }}>
+                <img
+                  src={PopUpGreen}
+                  alt=""
+                  className="md:hidden rounded-tr-[10px]"
+                />
+                <img
+                  src={PopUpGreenTab}
+                  alt=""
+                  className="hidden md:block rounded-tr-[10px]"
+                />
+                <img
+                  src={PopUpGreenDeskTop}
+                  alt=""
+                  className="hidden rounded-tr-[20px]"
+                />
+              </div>
+
+              <div className="relative z-10">
+                <p
+                  className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[8%] lg:mt-[3%] z-[1000] ${styles.overlayText}`}
                 >
-                  <div className="absolute z-0 right-0" style={{ zIndex: 0 }}>
-                    <img
-                      src={PopUpGreen}
-                      alt=""
-                      className="md:hidden rounded-tr-[10px]"
-                    />
-                    <img
-                      src={PopUpGreenTab}
-                      alt=""
-                      className="hidden md:block lg:hidden rounded-tr-[10px]"
-                    />
-                    <img
-                      src={PopUpGreenDeskTop}
-                      alt=""
-                      className="hidden lg:block rounded-tr-[20px]"
-                    />
-                  </div>
+                  Successful
+                </p>
 
-                  <div className="relative z-10">
-                    <p
-                      className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[8%] lg:mt-[3%] z-[1000] ${styles.overlayText}`}
-                    >
-                      Successful
-                    </p>
+                <p
+                  className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[4%] lg:my-[%] z-[1000] ${styles.overlayText}`}
+                >
+                 Your transaction PIN has been reset successfully.
+                </p>
+              </div>
 
-                    <p
-                      className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[4%] lg:my-[%] z-[1000] ${styles.overlayText}`}
-                    >
-                      Your transaction PIN has been reset successfully.
-                    </p>
-                  </div>
+              <img
+                  src={Success}
+                  alt=""
+                  className="h-[50%] md:h-[40%]"
+                />
 
-                  <div>
-                    <img
-                      src={Success}
-                      alt=""
-                      className="absolute top-[25%] left-[32%] h-[50%] lg:left-[36.5%]"
-                    />
-                  </div>
+                <button
+  
+  onClick={(e) => {
+    e.preventDefault();
+    setVerify(false);
+    setEmailId("");
+    setEmailInputColor("");
+    setPin("");
+    setResetPin(false);
+    setResetPin1(true);
+  }}
+    
+    className={`my-[%] mt-0  bg-[#04177f] w-[90%] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+  >
+    Create New Pin
+  
+</button>
+              
+            
+              </div>
 
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setVerify(false);
-                      setEmailId("");
-                      setEmailInputColor("");
-                      setPin("");
-                      setResetPin(false);
-                      setResetPin1(true);
-                    }}
-                    className={`my-[5%] bg-[#04177f] w-[90%] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[35%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
-                  >
-                    Create New PIN
-                  </button>
-                </div>
+
+
+
+
+
+
+
+
+
+
+
+
               </Modal>
             )}
 
@@ -751,69 +762,72 @@ const ChangePin = () => {
 
             {createPin && (
               <Modal className="">
-                <div
-                  className={`confirm2 ${styles.inputPin} ${
-                    toggleSideBar
-                      ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
-                      : "lg:w-[40%]"
-                  }relative md:w-[55%] w-[90%] flex flex-col justify-between md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
+
+<div
+             className={` ${
+              toggleSideBar ? "confirm02" : "confirm2"
+            } bg-white flex flex-col justify-between items-center pb-[10px] md:pb-[30px] lg:pb-[30px] md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
+            >
+              <div className="absolute z-0 right-0" style={{ zIndex: 0 }}>
+                <img
+                  src={PopUpGreen}
+                  alt=""
+                  className="md:hidden rounded-tr-[10px]"
+                />
+                <img
+                  src={PopUpGreenTab}
+                  alt=""
+                  className="hidden md:block rounded-tr-[10px]"
+                />
+                <img
+                  src={PopUpGreenDeskTop}
+                  alt=""
+                  className="hidden rounded-tr-[20px]"
+                />
+              </div>
+
+              <div className="relative z-10">
+                <p
+                  className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[8%] lg:mt-[3%] z-[1000] ${styles.overlayText}`}
                 >
-                  <div className="absolute z-0 right-0" style={{ zIndex: 0 }}>
-                    <img
-                      src={PopUpGreen}
-                      alt=""
-                      className="md:hidden rounded-tr-[10px]"
-                    />
-                    <img
-                      src={PopUpGreenTab}
-                      alt=""
-                      className="hidden md:block lg:hidden rounded-tr-[10px]"
-                    />
-                    <img
-                      src={PopUpGreenDeskTop}
-                      alt=""
-                      className="hidden lg:block rounded-tr-[20px]"
-                    />
-                  </div>
+                  Successful
+                </p>
 
-                  <div className="relative z-10">
-                    <p
-                      className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[8%] lg:mt-[3%] z-[1000] ${styles.overlayText}`}
-                    >
-                      Successful
-                    </p>
+                <p
+                  className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[4%] lg:my-[%] z-[1000] ${styles.overlayText}`}
+                >
+                  You have successfully changed your transaction PIN.
+                </p>
+              </div>
 
-                    <p
-                      className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[4%] lg:my-[%] z-[1000] ${styles.overlayText}`}
-                    >
-                      You have successfully changed your transaction PIN.
-                    </p>
-                  </div>
+              <img
+                  src={Success}
+                  alt=""
+                  className="h-[50%] md:h-[40%]"
+                />
 
-                  <div>
-                    <img
-                      src={Success}
-                      alt=""
-                      className="absolute top-[25%] left-[32%] h-[50%] lg:left-[36.5%] md:top-[33%]"
-                    />
-                  </div>
+                <button
+  
+  onClick={(e) => {
+    e.preventDefault();
+    setNewResetPin("");
+    setConfirmPin("");
+    setConfirmResetPin("");
+    setResetPin(true);
+    handleClick(activeIndex);
+    setCreatePin(false);
+    setResetPin1(false);
+  }}
+    
+    className={`my-[%] mt-0  bg-[#04177f] w-[90%] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+  >
+    Done
+  
+</button>
+              
+            
+              </div>
 
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setNewResetPin("");
-                      setConfirmPin("");
-                      setConfirmResetPin("");
-                      setResetPin(true);
-                      handleClick(activeIndex);
-                      setCreatePin(false);
-                      setResetPin1(false);
-                    }}
-                    className={`my-[5%] bg-[#04177f] w-[90%] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
-                  >
-                    Done
-                  </button>
-                </div>
               </Modal>
             )}
 

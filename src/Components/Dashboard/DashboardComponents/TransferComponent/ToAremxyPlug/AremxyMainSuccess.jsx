@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { ContextProvider } from "../../../../Context";
 import { Modal } from "../../../../Screens/Modal/Modal";
 import { Link } from "react-router-dom";
-import styles from "../../TransferComponent/transfer.module.css";
+import styles from "../../../../AirTimePage/AirtimeVtu.module.css";
 // import { TransactFailedPopUp } from "./TransactionFailedPopUp";
 
 export const AremxyMainSuccess = ({
@@ -20,6 +20,11 @@ export const AremxyMainSuccess = ({
 
   const handleTransactionSuccessClose = () => {
     setTransactSuccessToOtherBank(false);
+    window.location.reload();
+  };
+
+  const handleTransactionSuccessReciept = () => {
+    setTransactSuccessToOtherBank(false);
   };
 
   return (
@@ -30,7 +35,7 @@ export const AremxyMainSuccess = ({
           <div
             className={`${styles.successfulTwo} ${
               toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-            } md:w-[45%] w-[90%] overflow-auto`}
+            } md:w-[45%] w-[90%]`}
           >
             <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
               <img
@@ -89,7 +94,7 @@ export const AremxyMainSuccess = ({
 
             <div className="bg-[#F2FAFF] mx-10 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
               <p className="text-[6px] text-center mx-auto w-[171px] md:text-[14px] md:w-[80%] lg:text-[14px]">
-              The transfer has been sent successfully. Please contact the recipient bank with the Session ID if payment not received within 5-15 minutes.
+              The transfer has been sent successfully. Please contact the recipient user to confirm the payment from his/her wallet.
               </p>
             </div>
             <div className="flex w-[70%] mx-auto items-center gap-[5%] md:w-[60%] lg:my-[5%]">
@@ -101,8 +106,8 @@ export const AremxyMainSuccess = ({
               </button>
               <Link to="/to-aremxymain-receipt">
                 <button
-                  onClick={handleTransactionSuccessClose}
-                  className={`border-[1px] w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                  onClick={handleTransactionSuccessReciept}
+                  className={`border-[1px] w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[110px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
                 >
                   Receipt
                 </button>

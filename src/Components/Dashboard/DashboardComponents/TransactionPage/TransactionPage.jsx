@@ -1118,7 +1118,7 @@ const TransactionPage = () => {
                   />
                 </div>
                 <div className="text-center">
-                {selected === "NGN" ? "₦0.00" : "0.00"}
+                  {selected === "NGN" ? "₦0.00" : "0.00"}
                 </div>
               </div>
 
@@ -1156,7 +1156,7 @@ const TransactionPage = () => {
                   />
                 </div>
                 <div className="text-center">
-                {selected === "NGN" ? "₦0.00" : "0.00"}
+                  {selected === "NGN" ? "₦0.00" : "0.00"}
                 </div>
               </div>
             </div>
@@ -1335,20 +1335,22 @@ const TransactionPage = () => {
             <div
               className={`transaction ${
                 toggleSideBar
-                  ? "transaction-table1 lg:text-[15px] md:gap-[5.9%] xl:gap-[10%] md:pl-[5px]"
-                  : "transaction-table lg:text-[20px] lg:h-[44px] md:gap-[9%] lg:gap-[9.8%] xl:gap-[%]"
+                  ? "transaction-table2 lg:text-[15px] md:gap-[5%] xl:gap-[%] md:pl-[px] md:h-[50px]"
+                  : "transaction-table lg:text-[20px] md:gap-[8.6%] lg:gap-[%] xl:gap-[%] md:h-[50px]"
               } ${
                 isDarkMode ? "bg-black border" : " bg-[#ced9ff] "
-              } hidden md:text-[12px] font-semibold md:flex md:h-[35px] md:justify-start md:pl-[5px] md:items-center  mb-[%] 2xl:gap-[%]`}
+              } hidden md:text-[12px] font-semibold md:flex md:justify-start md:px-[20px] md:items-center`}
             >
               <div>Products</div>
               <div>Description</div>
               <div>Order No</div>
-              <div className={` xl:pr-[5px] 2xl:pr-[px] ${
-                toggleSideBar
-                  ? "amount"
-                  : "amount1"
-              }`}>Amount</div>
+              <div
+                className={` xl:pr-[5px] 2xl:pr-[px] ${
+                  toggleSideBar ? "amount2 md:pr-[10px]" : "amount1"
+                }`}
+              >
+                Amount
+              </div>
               <div>Date & Time</div>
               <div>Status</div>
             </div>
@@ -1375,8 +1377,8 @@ const TransactionPage = () => {
                     className={`${
                       toggleSideBar
                         ? "lg:text-[15px] md:gap-[%] md:text-[8.5px] "
-                        : "lg:text-[15px] md:gap-[%] md:text-[10px] lg:h-[44px] lg:md:gap-[%]"
-                    }  hidden  font-semibold md:flex md:h-[34px] md:justify-start md:px-[5px] md:items-center  md:mt-[20px] md:pb-[2%] border-b-[1px]`}
+                        : "lg:text-[15px] md:gap-[%] md:text-[10px] lg:md:gap-[%]"
+                    }  hidden  font-semibold md:flex md:h-[60px] lg:h-[85px] md:justify-start md:px-[20px] md:items-center  md:mt-[20px] md:pb-[2%] border-b-[1px]`}
                   >
                     <div
                       className={`md:text-[#000000] ${

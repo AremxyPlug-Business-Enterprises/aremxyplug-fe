@@ -267,16 +267,16 @@ const DataBundlesPage = () => {
               </div>
             </Link>
           </div>
-
+          
           {codes && (
             <Modal>
               (
               <div
                 className={`code ${
                   toggleSideBar
-                    ? "xl:w-[65%] xl:ml-[17%] lg:ml-[20%] lg:w-[40%]"
-                    : "lg:w-[40%]"
-                } w-[90%] xl:w-[80%] overflow-auto`}
+                    ? "code1"
+                    : "code01"
+                } overflow-auto w-[90%]`}
               >
                 <img
                   onClick={() => setCodes(false)}

@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { ContextProvider } from "../../../../Context";
 import styles from "../../TransferComponent/transfer.module.css";
+import styled from "../../../../AirTimePage/AirTime.module.css";
 import { ToConfirmAremxyMain } from "./ToConfirmAremxyMain";
 import { Modal } from "../../../../Screens/Modal/Modal";
 import pickPinIcon from '../../../../My Profile & Account Settings/ProfileImages/pickPinIcon.svg';
@@ -13,7 +14,6 @@ export default function ToAremxyMain() {
     setShowList,
     selected,
     setSelected,
-    isDarkMode,
     toggleSideBar,
     amtToTransfer,
     setAmtToTransfer,
@@ -294,7 +294,7 @@ export default function ToAremxyMain() {
               maxLength="11"
               value={mainUserPhoneNumber}
               className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
-              type="number"
+              type="text"
             />
             <img
               className=" h-[13.3px] w-[13.3px] lg:w-[24px] lg:h-[24px] "
@@ -315,7 +315,7 @@ export default function ToAremxyMain() {
             Amount To Transfer
           </p>
           <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
-            {" "}
+            <span className="text-gray-500">&#8358;</span>
             <input
               onChange={amountHandler}
               type="number"
@@ -411,27 +411,17 @@ export default function ToAremxyMain() {
       </button>
       {currencyAvailable && (
         <Modal>
-          <div className="bg-white shadow-lg w-[90%] rounded-[8px] h-[269px] flex flex-col items-center py-[4%] gap-[40px] md:h-[360px] lg:w-[562px] lg:gap-[60px] lg:h-[500px] lg:py-[3%] lg:rounded-[px]">
-            <p className="text-[10px] text-[#04177f] font-extrabold md:text-[16px] lg:text-[25px]">
-              This Currency is Currently Not Available.
-            </p>
-            <img
-              className="w-[135px] h-[96px] lg:w-[217px] lg:h-[187px]"
-              src="/Images/addAccountImages/account-unavailable.png"
-              alt=""
-            />
-            <p className="absolute top-[58%] right-[15%] text-[8px] md:text-[12px] md:ml-[70%] lg:text-[14px] lg:top-[73%] lg:right-[33%] lg:ml-[40%] lg:w-[8%]">
-              Coming Soon...
-            </p>
-
-            <div
-              onClick={refresh}
-              className={` ${
-                isDarkMode ? "border" : "bg-[#04177f] "
-              } cursor-pointer text-white text-[10px] h-[40px] w-[80%] rounded-[5px] flex items-center justify-center md:mx-auto md:w-[20%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[30%] lg:mx-auto`}
-            >
-              Okay
-            </div>
+          <div className={styled.NotInter}>
+              <div className={styled.timeAble}>
+                  <h5>This Currency is Currently Not Available.</h5>
+              </div>
+              <div className={styled.InterAirtimeK}>
+                  <img src="/Images/addAccountImages/account-unavailable.png" alt=""/>
+              </div>
+              <div className={styled.coming}>
+                  <h2>Coming soon...</h2>
+                  <button className={styled.btnOk} onClick={refresh}>Okay</button>
+              </div>
           </div>
         </Modal>
       )}

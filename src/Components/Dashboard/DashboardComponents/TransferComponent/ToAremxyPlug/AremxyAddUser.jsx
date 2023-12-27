@@ -11,18 +11,15 @@ import Joi from "joi";
 const AremxyAddUser = () => {
 
     const {
-        showList,
-        setShowList,
-        selected,
-        setSelected,
+        isDarkMode,
         toggleSideBar,
-        mainCountry,
-        setMainCountry,
-        mainTransferErrors,
       } = useContext(ContextProvider);
 
     const [userPhoneNumber, setUserPhoneNumber] =  useState('');
     const [emailUsername, setEmailUserName] = useState('');
+    const [mainCountry, setMainCountry] = useState("");
+    const [selected, setSelected] = useState(false);
+    const [showList, setShowList] = useState(false);
     const [save, setSave] = useState(false);
     const [errors, setErrors] = useState({});
 
@@ -109,13 +106,17 @@ const AremxyAddUser = () => {
 
     const [flag, setFlag] = useState("");
     const [confirm, setConfirm] = useState(false);
+    const [currencyAvailable, setCurrencyAvailable] = useState(false);
 
     const handleCountryClick = (name, flag, id, code) => {
         setFlag(flag);
         setShowList(false);
         setMainCountry(name);
         setSelected(true);
+        setCurrencyAvailable(id !== 1);
     };
+
+    const refresh = () => window.location.reload(true);
 
     const handleConfirm =()=> {
         setSave(false);
@@ -207,9 +208,9 @@ const AremxyAddUser = () => {
                 alt="dropdown"
                 />
             </div>
-            {mainTransferErrors.country && (
+            {errors.country && (
                 <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                {mainTransferErrors.country}
+                {errors.country}
                 </div>
             )}
             {showList && (
@@ -285,8 +286,10 @@ const AremxyAddUser = () => {
                 <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
                     <input
                     onChange={(e) => {
-                        setUserPhoneNumber(e.target.value);
-                       }} 
+                      const value = e.target.value;
+                      const numericValue = value.replace(/\D/g, "").slice(0, 11);
+                      setUserPhoneNumber(numericValue);
+                    }} 
                     name="userPhoneNumber"
                     value={userPhoneNumber}
                     className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
@@ -308,9 +311,10 @@ const AremxyAddUser = () => {
             {save && (
                 <Modal>
                     <div
-                        className={`${style.successfulThree} ${
+                        className={`${style.successfulFour} ${
                         toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-                        } md:w-[45%] w-[90%] overflow-auto`}
+                        } md:w-[45%] w-[90%] md:my-auto md:mt-[.5%] mx-auto 
+                        overflow-auto md:mb-[18%] lg:mx-auto lg:my-auto`}
                     >
                     <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
                         <img
@@ -409,6 +413,32 @@ const AremxyAddUser = () => {
                 } w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`} onClick={handleSave}>Save User
                 </button>
             </div>
+            {currencyAvailable && (
+              <Modal>
+                <div className="bg-white shadow-lg w-[90%] rounded-[8px] h-[269px] flex flex-col items-center py-[4%] gap-[40px] md:h-[360px] lg:w-[562px] lg:gap-[60px] lg:h-[500px] lg:py-[3%] lg:rounded-[px]">
+                  <p className="text-[10px] text-[#04177f] font-extrabold md:text-[16px] lg:text-[25px]">
+                    This Currency is Currently Not Available.
+                  </p>
+                  <img
+                    className="w-[135px] h-[96px] lg:w-[217px] lg:h-[187px]"
+                    src="/Images/addAccountImages/account-unavailable.png"
+                    alt=""
+                  />
+                  <p className="absolute top-[58%] right-[15%] text-[8px] md:text-[12px] md:ml-[70%] lg:text-[14px] lg:top-[73%] lg:right-[33%] lg:ml-[40%] lg:w-[8%]">
+                    Coming Soon...
+                  </p>
+
+                  <div
+                    onClick={refresh}
+                    className={` ${
+                      isDarkMode ? "border" : "bg-[#04177f] "
+                    } cursor-pointer text-white text-[10px] h-[40px] w-[80%] rounded-[5px] flex items-center justify-center md:mx-auto md:w-[20%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[30%] lg:mx-auto`}
+                  >
+                    Okay
+                  </div>
+                </div>
+              </Modal>
+            )}
         </div>
         <div className={style.help}>
                 <h2>You need help?</h2>

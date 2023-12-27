@@ -111,9 +111,7 @@ const checkform = () =>{
         { idVerificationOpen && (
         <div className={`flex flex-col  ${verificationOpen
             ? 'block' : 'hidden'}
-            ${idVerificationOpen
-             ? ' pb-[150px] lg:pb-[300px]'
-             : 'pb-[0px]'}`}>
+           `}>
          <div className='flex md:gap-[25px] gap-[11px] lg:pt-[50px]  pt-[35px] lg:mb-[50px] mb-[35px] '>
             {/* ICON == NOT VERIFIED */}
     <div className=' flex gap-[5px] py-[23px] pr-[12px] pl-[12px] md:py-[25px] md:pr-[41px] md:pl-[16px] bg-white
@@ -435,13 +433,14 @@ border-[0.4px] border-[solid] border-[#9C9C9C] cursor-pointer'>
         </div>
         {idCustomerQuery && (
           <Modal>
-            <div className='flex bg-white flex-col shadow-[0px_0px_8.3274px_0px_rgba(0 0 0,0.25)] rounded-[8px] 
-             shadow-[0px_0px_8.3274px_0px_rgba(0 0 0,0.25)] md:rounded-[11.736px]  lg:rounded-[20px]   md:w-[50%] 
+             <div className='h-[100%] flex flex-col w-[100%] items-center justify-center  pb-[30px]'>
+            <div className='idVerify  flex  flex-col bg-white shadow-[0px_0px_8.3274px_0px_rgba(0 0 0,0.25)] rounded-[8px] 
+             shadow-[0px_0px_8.3274px_0px_rgba(0 0 0,0.25)] md:rounded-[11.736px]  lg:rounded-[20px]   md:w-[55%]
             md:shadow-[0px_0px_11.73611px_0px_rgba(0,0,0,0.25) lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] 
-            justify-center items-center  px-[18px] md:px-[30px] 
-            md:mx-[0px] mx-[19px] lg:overflow-y-scroll '>
-            <div className=' flex flex-col w-[100%]  lg:h-[600px] md:h-[665.893px]  
-             h-[600px] gap-[18px] md:gap-[50px] lg:gap-[100px] '>
+            justify-center lg:justify-normal items-center  px-[18px] md:px-[30px] md:h-[550px]   
+            h-[430px]  md:mx-[0px] mx-[19px]  gap-[18px] md:gap-[40px] lg:gap-[70px] 
+            overflow-y-scroll md:py-[30px] lg:pt-[30px]  md:pt-[180px] pt-[210px]'>
+           
           <div className='flex flex-col lg:gap-[25px] gap-[10px] md:gap-[15px] items-center'>
        <p className='font-[400] text-[13px] text-center leading-[16.206px] 
    lg:text-[16px] lg:leading-[20.8px]'>
@@ -484,14 +483,15 @@ Confirming your identity ensures that the person accessing the account is indeed
     setIdCustomerQuery(false);
    }} 
    className='font-[600] bg-[#04177F] w-[100%] md:w-[163px] md:py-[5.868px] lg:py-[13px]
-    text-white lg:rounded-[12px] py-[16.531px]
+    text-white lg:rounded-[12px] py-[16.531px] md:mb-[40px] mb-[20px]
    lg:text-[16px] lg:leading-[24px] md:rounded-[7.042px] rounded-[4.61px]'>
     Okay
    </button>
           </div>
+          </div>
  </div>
           
-          </div>
+          
             
           </Modal>
         )}
@@ -525,6 +525,7 @@ Confirming your identity ensures that the person accessing the account is indeed
       Upload
       </button>
   </div>
+
   </div>
 </Modal>
     )}
