@@ -52,19 +52,20 @@ export const BusinessAccountPage = () => {
                 alt=""
               />
             </button>
-
-            <button
-              className={`${styles.transferMoneyBtn} flex gap-[5px] w-[100%] h-[26px] justify-center items-center md:w-[390px] lg:h-[41px]`}
-            >
-              <h2 className="text-[9px] md:text-[12px] lg:text-[16px]">
-                Add Money To Wallet
-              </h2>
-              <img
-                className="w-[11px] h-[11px] md:w-[20px] md:h-[20px] lg:w-[29px] lg:h-[29px]"
-                src="/Images/dashboardImages/add-money.png"
-                alt=""
-              />
-            </button>
+            <Link to="/top-up">
+              <button
+                className={`${styles.transferMoneyBtn} flex gap-[5px] w-[100%] h-[26px] justify-center items-center md:w-[390px] lg:h-[41px]`}
+              >
+                <h2 className="text-[9px] md:text-[12px] lg:text-[16px]">
+                  Add Money To Wallet
+                </h2>
+                <img
+                  className="w-[11px] h-[11px] md:w-[20px] md:h-[20px] lg:w-[29px] lg:h-[29px]"
+                  src="/Images/dashboardImages/add-money.png"
+                  alt=""
+                />
+              </button>
+            </Link>
           </div>
           <div className="flex text-[#7c7c7c] text-[10px] leading-[130%] items-center mb-[2%] gap-[8px] md:my-[5%] md:text-[18px] lg:text-[20px]">
             <p>Account Details : </p>

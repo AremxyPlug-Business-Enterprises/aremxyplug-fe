@@ -56,7 +56,7 @@
   margin-top: 7%;
 }
 
-select {
+.selected {
   padding: 3px;
   border-radius: 10.193px;
   background: var(--boxes, rgba(146, 171, 254, 0.18));
@@ -193,7 +193,7 @@ select {
     line-height: normal;
   }
 
-  select {
+  .selected  {
     padding: 3px;
     border-radius: 10.193px;
     background: var(--boxes, rgba(146, 171, 254, 0.18));
@@ -267,7 +267,7 @@ select {
     font-size: 19px;
   }
 
-  select {
+  .selected {
     padding: 8.6px;
     border-radius: 14.193px;
     height: 33px;
@@ -460,7 +460,7 @@ select {
     outline: none;
   }
 
-  select {
+  .selected {
     padding: 5.6px;
     border-radius: 14.193px;
     background: var(--boxes, rgba(146, 171, 254, 0.18));

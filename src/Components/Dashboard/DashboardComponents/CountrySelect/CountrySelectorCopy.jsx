@@ -3,9 +3,8 @@ import { useState } from "react";
 import { useContext } from "react";
 import { ContextProvider } from "../../../Context";
 
-export const CountrySelector = ({
+export const CountrySelectorCopy = ({
   onSelect,
-  selectedCountry,
   className,
   w = "w-[110px]",
 }) => {
@@ -50,30 +49,22 @@ export const CountrySelector = ({
 
   const {
     setNoRecord,
-    setPersonalAccount,
-    setBusinessAccount,
     setCode,
-    activeButton,
+    selectedCurr,
+    setSelectedCurr,
+    CurrImage,
+    setCurrImage,
   } = useContext(ContextProvider);
 
-  const [image, setImage] = useState("");
   const [showList, setShowList] = useState(false);
-  const [selected, setSelected] = useState(false);
 
   const handleOptionClick = (country, flag, id, code) => {
     onSelect(country);
-    setImage(flag);
+    setCurrImage(flag);
     setCode(code);
     setShowList(false);
-    setSelected(true);
+    setSelectedCurr(true);
     setNoRecord(id !== 1);
-    if (activeButton[0]) {
-      setPersonalAccount(id === 1);
-      // setBusinessAccount(false);
-    } else if (activeButton[1]) {
-      setBusinessAccount(id === 1);
-      // setPersonalAccount(false);
-    }
 
     console.log(id);
   };
@@ -86,11 +77,11 @@ export const CountrySelector = ({
         onClick={() => setShowList(!showList)}
         className={`text-[8px] text-[#0005] h-[23.5px] w-[50px] flex justify-center gap-[20%] items-center bg-[#04177f] mb-[4%] md:h-[45px] md:w-[160px] md:text-[12px] ${dynamicClassName} lg:h-[44px] lg:text-[16px]`}
       >
-        {selected ? (
+        {selectedCurr ? (
           <div className="flex gap-[5px] items-center md:gap-[8px]">
             <img
               className="w-[11px] h-[11px] md:w-[20px] md:h-[20px] lg:w-[29px] lg:h-[29px]"
-              src={image}
+              src={CurrImage}
               alt=""
             />
             {/* {selectedCountry} */}
@@ -98,11 +89,11 @@ export const CountrySelector = ({
         ) : (
           <img
             className="w-[11px] h-[11px] md:w-[20px] md:h-[20px] lg:w-[29px] lg:h-[29px]"
-            src="./Images/otherBanksImages/USFLAG.png"
+            src="./Images/otherBanksImages/NAIJAFLAG.png"
             alt=""
           />
         )}
-        {selected ? (
+        {selectedCurr ? (
           <img
             className=" h-[8.3px] w-[8.3px] md:h-[15px] md:w-[15px] lg:w-[24px] lg:h-[24px]"
             src="./Images/dashboardImages/arrow-down2.png"
@@ -125,7 +116,7 @@ export const CountrySelector = ({
         >
           {countryList.map((country) => (
             <div
-              className=" cursor-pointer border-b flex items-center p-1 gap-[5px] text-[9px] bg-[#fff] md:text-[14px] lg:text-[16px] lg:justify-between lg:px-[25%]"
+              className=" cursor-pointer border-b flex items-center p-1 gap-[5px] text-[9px] bg-[#fff] md:text-[14px] lg:gap-[15px] lg:text-[16px] lg:justify-between lg:px-[25%]"
               key={country.id}
               onClick={() =>
                 handleOptionClick(

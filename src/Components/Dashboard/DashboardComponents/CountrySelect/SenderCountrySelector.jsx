@@ -3,9 +3,7 @@ import { useState } from "react";
 import { useContext } from "react";
 import { ContextProvider } from "../../../Context";
 
-export const CountrySelector = ({
-  onSelect,
-  selectedCountry,
+export const SenderCountrySelector = ({
   className,
   w = "w-[110px]",
 }) => {
@@ -48,32 +46,22 @@ export const CountrySelector = ({
     },
   ];
 
-  const {
-    setNoRecord,
-    setPersonalAccount,
-    setBusinessAccount,
-    setCode,
-    activeButton,
-  } = useContext(ContextProvider);
+  const { setCode } = useContext(ContextProvider);
 
   const [image, setImage] = useState("");
   const [showList, setShowList] = useState(false);
   const [selected, setSelected] = useState(false);
+  // const [selectedCountry, setSelectedCountry] = useState("");
+  // const handleCountrySelect = (country, id) => {
+  //   setSelectedCountry(country);
+  // };
 
   const handleOptionClick = (country, flag, id, code) => {
-    onSelect(country);
+    // onSelect(country);
     setImage(flag);
     setCode(code);
     setShowList(false);
     setSelected(true);
-    setNoRecord(id !== 1);
-    if (activeButton[0]) {
-      setPersonalAccount(id === 1);
-      // setBusinessAccount(false);
-    } else if (activeButton[1]) {
-      setBusinessAccount(id === 1);
-      // setPersonalAccount(false);
-    }
 
     console.log(id);
   };
@@ -93,12 +81,11 @@ export const CountrySelector = ({
               src={image}
               alt=""
             />
-            {/* {selectedCountry} */}
           </div>
         ) : (
           <img
             className="w-[11px] h-[11px] md:w-[20px] md:h-[20px] lg:w-[29px] lg:h-[29px]"
-            src="./Images/otherBanksImages/USFLAG.png"
+            src="./Images/otherBanksImages/NAIJAFLAG.png"
             alt=""
           />
         )}
@@ -118,14 +105,14 @@ export const CountrySelector = ({
       </button>
       {showList && (
         <div
-          className=""
+          className="" 
           style={{
             boxShadow: "0px 1.60656px 4.01639px 0px rgba(0, 0, 0, 0.25)",
           }}
         >
           {countryList.map((country) => (
             <div
-              className=" cursor-pointer border-b flex items-center p-1 gap-[5px] text-[9px] bg-[#fff] md:text-[14px] lg:text-[16px] lg:justify-between lg:px-[25%]"
+              className="z-10 cursor-pointer border-b flex items-center p-1 gap-[5px] text-[9px] bg-[#0a0a0a] md:text-[14px] lg:text-[16px] lg:justify-between lg:px-[25%]"
               key={country.id}
               onClick={() =>
                 handleOptionClick(

@@ -3,9 +3,9 @@ import { useState } from "react";
 import { useContext } from "react";
 import { ContextProvider } from "../../../Context";
 
-export const CountrySelector = ({
-  onSelect,
-  selectedCountry,
+export const ReceiverCountrySelector = ({
+  // onSelect,
+  // selectedCountry,
   className,
   w = "w-[110px]",
 }) => {
@@ -48,32 +48,22 @@ export const CountrySelector = ({
     },
   ];
 
-  const {
-    setNoRecord,
-    setPersonalAccount,
-    setBusinessAccount,
-    setCode,
-    activeButton,
-  } = useContext(ContextProvider);
+  const { setCode } = useContext(ContextProvider);
 
   const [image, setImage] = useState("");
   const [showList, setShowList] = useState(false);
   const [selected, setSelected] = useState(false);
+  // const [selectedCountry, setSelectedCountry] = useState("");
+  // const handleCountrySelect = (country, id) => {
+  //   setSelectedCountry(country);
+  // };
 
   const handleOptionClick = (country, flag, id, code) => {
-    onSelect(country);
+    // onSelect(country);
     setImage(flag);
     setCode(code);
     setShowList(false);
     setSelected(true);
-    setNoRecord(id !== 1);
-    if (activeButton[0]) {
-      setPersonalAccount(id === 1);
-      // setBusinessAccount(false);
-    } else if (activeButton[1]) {
-      setBusinessAccount(id === 1);
-      // setPersonalAccount(false);
-    }
 
     console.log(id);
   };
@@ -81,10 +71,10 @@ export const CountrySelector = ({
   const dynamicClassName = `${w} ${className || ""}`;
 
   return (
-    <div>
+    <div className="z-[-10%]">
       <button
         onClick={() => setShowList(!showList)}
-        className={`text-[8px] text-[#0005] h-[23.5px] w-[50px] flex justify-center gap-[20%] items-center bg-[#04177f] mb-[4%] md:h-[45px] md:w-[160px] md:text-[12px] ${dynamicClassName} lg:h-[44px] lg:text-[16px]`}
+        className={`z-[-1px] text-[8px] text-[#0005] h-[23.5px] w-[50px] flex justify-center gap-[20%] items-center bg-[#04177f] mb-[4%] md:h-[45px] md:w-[160px] md:text-[12px] ${dynamicClassName} lg:h-[44px] lg:text-[16px]`}
       >
         {selected ? (
           <div className="flex gap-[5px] items-center md:gap-[8px]">
