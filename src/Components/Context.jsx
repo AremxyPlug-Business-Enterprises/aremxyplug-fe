@@ -375,11 +375,11 @@ export const Context = ({ children }) => {
   const [noRecord, setNoRecord] = useState(true);
   const [personalAccount, setPersonalAccount] = useState(false);
   const [businessAccount, setBusinessAccount] = useState(false);
-  const [image, setImage] = useState("");
   const [code, setCode] = useState("");
   const [activeButton, setActiveButtons] = useState([true, false]);
   const [showList, setShowList] = useState(false);
   const [selected, setSelected] = useState(false);
+  const [selectedCurr, setSelectedCurr] = useState(false);
   const [amtToTransfer, setAmtToTransfer] = useState("");
   const [confirmationPopUp, setConfirmationPopUp] = useState(false);
   const [inputPinPopUp, setInputPinPopUp] = useState(false);
@@ -590,8 +590,7 @@ export const Context = ({ children }) => {
     useState(false);
   const [InternationalDetailPopUp, setInternationalDetailPopUp] =
     useState(false);
-  const [transfer, setTransfer] = useState("");
-  const [receive, setReceive] = useState("");
+
   const [internationalDetails, setInternationalDetails] = useState({
     bankName: "",
     accountNumber: "",
@@ -603,6 +602,7 @@ export const Context = ({ children }) => {
   });
   const [purpose, setPurpose] = useState(false);
   const [internErrors, setInternErrors] = useState({});
+  const [CurrImage, setCurrImage] = useState("");
 
   const handleInternationalInputChange = (event) => {
     const { name, value, type, checked } = event.target;
@@ -1082,8 +1082,6 @@ export const Context = ({ children }) => {
     setPersonalAccount,
     businessAccount,
     setBusinessAccount,
-    image,
-    setImage,
     code,
     setCode,
     activeButton,
@@ -1147,10 +1145,6 @@ export const Context = ({ children }) => {
     setInternationalBankConfirmation,
     InternationalDetailPopUp,
     setInternationalDetailPopUp,
-    transfer,
-    setTransfer,
-    receive,
-    setReceive,
     internationalDetails,
     setInternationalDetails,
     purpose,
@@ -1165,6 +1159,10 @@ export const Context = ({ children }) => {
     swiftCode,
     recipientAddress,
     purposeOfPayment,
+    selectedCurr,
+    setSelectedCurr,
+    CurrImage,
+    setCurrImage,
 
     // ============withdrawal=============
     withdrawalPin,

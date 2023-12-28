@@ -4,7 +4,6 @@ import styles from "../../TransferComponent/transfer.module.css";
 import { ConfirmOtherTransaction } from "./OtherBankPopUp/OtherBankPopUp/ConfirmOtherTransaction";
 import { Modal } from "../../../../Screens/Modal/Modal";
 import { Link } from "react-router-dom";
-// import { useNavigate } from "react-router-dom";
 
 export default function GlobalTransfer() {
   const {
@@ -187,9 +186,7 @@ export default function GlobalTransfer() {
           )}
         </div>
       </div>
-
       {/* ==========================Select/Add Recipient====================== */}
-      
       <div className="flex gap-[10%] lg:gap-[3%]">
         <Link
           to="/GlobalTransferSelectRecipient"
@@ -221,7 +218,6 @@ export default function GlobalTransfer() {
         Real-time Bank Network Tracker
       </div>
       <div className="flex flex-col gap-[20px] md:grid md:grid-cols-2">
-
         {/* =====================Bank Name=================== */}
 
         <div className={` ${styles.inputBox}`}>
@@ -341,7 +337,7 @@ export default function GlobalTransfer() {
             <input
               onChange={amountHandler}
               type="number"
-              className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
+              className={`${styles.hideArrows} text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]`}
             />
             <img
               className=" h-[13.3px] w-[13.3px] lg:w-[24px] lg:h-[24px] "
