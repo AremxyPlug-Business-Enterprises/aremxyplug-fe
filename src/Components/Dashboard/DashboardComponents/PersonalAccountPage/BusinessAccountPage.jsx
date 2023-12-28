@@ -111,7 +111,9 @@ export const BusinessAccountPage = () => {
                 <p className="text-[13px] font-extrabold md:text-[20px]">
                   Company's Email
                 </p>
-                <p className="text-[10px] md:text-[15px]">hello@aremxyplug.com</p>
+                <p className="text-[10px] md:text-[15px]">
+                  hello@aremxyplug.com
+                </p>
               </div>
               <img
                 className="w-[18px] h-[18px] md:w-[24px] md:h-[24px] lg:w-[29px] lg:h-[29px]"
@@ -164,7 +166,9 @@ export const BusinessAccountPage = () => {
                 <p className="text-[13px] font-extrabold md:text-[20px]">
                   Company's Name
                 </p>
-                <p className="text-[10px] md:text-[15px]">Aremxyplug Business Ent, LTD.</p>
+                <p className="text-[10px] md:text-[15px]">
+                  Aremxyplug Business Ent, LTD.
+                </p>
               </div>
               <img
                 className="w-[18px] h-[18px] md:w-[24px] md:h-[24px] lg:w-[29px] lg:h-[29px]"
@@ -307,17 +311,13 @@ export const BusinessAccountPage = () => {
             </button>
           </div>
         </div>
-        <div
-          className={`${
-            isDarkMode ? "" : ""
-          } flex gap-[15px] justify-center items-center my-[15%] md:mt-[38%] lg:mt-[26%] lg:mb-[%]`}
-        >
-          <div className="text-[10px] md:text-[12px] lg:text-[14px]">
+        <div className="flex gap-[15px] justify-center items-center lg:my-10">
+          <div className="text-[8px] md:text-[12px] lg:text-[16px]">
             You need help ?
           </div>
           <Link to="/ContactUs">
             <div
-              className={`${isDarkMode ? "border" : "bg-[#04177f]"} ${
+              className={`${isDarkMode ? "border " : "bg-[#04177f]"} ${
                 styles.contactus
               }`}
             >

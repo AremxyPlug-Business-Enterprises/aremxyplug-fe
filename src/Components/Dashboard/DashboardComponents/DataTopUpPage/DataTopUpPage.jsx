@@ -110,7 +110,7 @@ const DataTopUpPage = () => {
             </div>
           </div>
           <div className="flex items-center my-[10%] gap-[8px] md:my-[5%] md:text-[18px] lg:text-[20px]">
-            <p className="text-[#7c7c7c] text-[10px] leading-[130%] md:text-[18px] lg:text-[20px] 2xl:text-[28px]">
+            <p className="text-[#7c7c7c] text-[10px] leading-[130%] md:text-[12px] lg:text-[16px] 2xl:text-[20px]">
               Select Data Type
             </p>
             <img
@@ -121,7 +121,7 @@ const DataTopUpPage = () => {
           </div>
 
           <section className="">
-            <div className="text-[8px] flex gap-[2.5%] md:text-[18px] lg:text-[20px] justify-between md:justify-start md:gap-[5%]">
+            <div className="text-[8px] flex gap-[2.5%] md:text-[14px] lg:text-[18px] justify-between md:justify-start md:gap-[5%]">
               <div
                 onClick={() => {
                   handleClick(0);
@@ -130,7 +130,7 @@ const DataTopUpPage = () => {
                   activeBtn[0]
                     ? "bg-[#E2F3FF] rounded-[2px] border-b-[2px] border-b-[#04177f] h-[25px] flex items-center p-[5px] md:h-[35px] lg:rounded-[6px] lg:border-b-[4px] lg:h-[60px]"
                     : ""
-                } cursor-pointer w-[144px] justify-center rounded-[2px] md:w-[180px] md:rounded-[3px] md:justify-center md:items-center flex lg:w-[248px] lg:rounded-[6px] 2xl:text-[24px]`}
+                } cursor-pointer w-[144px] justify-center rounded-[2px] md:w-[180px] md:rounded-[3px] md:justify-center md:items-center flex lg:w-[248px] lg:rounded-[6px]`}
               >
                 Local Data
               </div>
@@ -143,7 +143,7 @@ const DataTopUpPage = () => {
                   activeBtn[1]
                     ? "bg-[#E2F3FF] rounded-[2px] border-b-[2px] border-b-[#04177f] h-[25px] flex items-center p-[5px]  md:h-[35px] lg:rounded-[6px] lg:border-b-[4px] lg:h-[60px] lg:py-[40px]"
                     : ""
-                }cursor-pointer w-[144px] justify-center rounded-[2px] md:w-[180px] md:rounded-[3px] md:justify-center md:items-center flex lg:w-[248px] lg:rounded-[6px] 2xl:text-[24px]`}
+                }cursor-pointer w-[144px] justify-center rounded-[2px] md:w-[180px] md:rounded-[3px] md:justify-center md:items-center flex lg:w-[248px] lg:rounded-[6px] `}
               >
                 International Data
               </div>
@@ -160,11 +160,11 @@ const DataTopUpPage = () => {
                       className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:mt-[20px] lg:h-[20px] 2xl:mt-[25px] md:mb-[25px] lg:mb-[15px]"
                     />
 
-                    <div className="">
-                      <p className="text-[10px] md:text-[13px] font-[500] lg:text-[18px] 2xl:text-[22px]">
+                    <div className="lg:mt-[1%]">
+                      <p className="text-[10px] md:text-[12px] font-[500] lg:text-[18px] ">
                         Data Bundles
                       </p>
-                      <p className="text-[8px] text-[#7c7c7c] md:text-[10px] lg:text-[15px] font-[500] w-[95%] lg:w-[130%] mt-[3px] md:w-[110%] 2xl:text-[20px]">
+                      <p className="text-[8px] text-[#7c7c7c] md:text-[10px] lg:text-[14px] font-[500] w-[95%] lg:w-[130%] mt-[3px] md:w-[110%]">
                         Top up your mobile sim with our automated data bundles
                         directly from network providers.
                       </p>
@@ -192,11 +192,11 @@ const DataTopUpPage = () => {
                     className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px] 2xl:mt-[25px] md:mb-[25px]"
                   />
 
-                  <div className="">
-                    <p className="text-[10px] md:text-[13px] font-[500] lg:text-[18px] 2xl:text-[22px]">
+                  <div className="lg:mt-[1%]">
+                    <p className="text-[10px] md:text-[12px] font-[500] lg:text-[18px]">
                       Data Roll
                     </p>
-                    <p className="text-[8px] text-[#7c7c7c] md:text-[10px] lg:text-[15px] font-[500] w-[95%] mt-[3px] md:w-[100%] lg:w-[130%] 2xl:text-[20px]">
+                    <p className="text-[8px] text-[#7c7c7c] md:text-[10px] lg:text-[14px] font-[500] w-[95%] lg:w-[130%] mt-[3px] md:w-[110%]">
                       Add, manage, and send data to your team or employees
                       without any hassle.
                     </p>
@@ -223,11 +223,11 @@ const DataTopUpPage = () => {
                     className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px] 2xl:mt-[25px] md:mb-[25px]"
                   />
 
-                  <div className="">
-                    <p className="text-[10px] md:text-[13px] font-[500] lg:text-[18px] 2xl:text-[22px]">
+                  <div className="lg:mt-[1%]">
+                    <p className="text-[10px] md:text-[12px] font-[500] lg:text-[18px]">
                       Data Voucher
                     </p>
-                    <p className="text-[8px] text-[#7c7c7c] md:text-[10px] font-[500] lg:text-[15px] w-[95%] lg:w-[130%] mt-[3px] md:w-[100%] 2xl:text-[20px]">
+                    <p className="text-[8px] text-[#7c7c7c] md:text-[10px] font-[500] lg:text-[14px] w-[95%] lg:w-[130%] mt-[3px] md:w-[100%]">
                       Generate all networks data token / pins and recharge your
                       mobile sim directly using ussd codes.
                     </p>
@@ -254,11 +254,11 @@ const DataTopUpPage = () => {
                     className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px] 2xl:mt-[25px] md:mb-[25px]"
                   />
 
-                  <div className="">
-                    <p className="text-[10px] md:text-[13px] font-[500] lg:text-[18px] 2xl:text-[22px]">
+                  <div className="lg:mt-[1%]">
+                    <p className="text-[10px] md:text-[12px] font-[500] lg:text-[18px]">
                       Data Schedule
                     </p>
-                    <p className="text-[8px] text-[#7c7c7c] md:text-[10px] font-[500] lg:text-[15px] w-[95%] lg:w-[130%] mt-[3px] md:w-[100%] 2xl:text-[20px]">
+                    <p className="text-[8px] text-[#7c7c7c] md:text-[10px] font-[500] lg:text-[14px] w-[95%] lg:w-[130%] mt-[3px] md:w-[100%]">
                       Schedule sending of data for automatic vending to
                       recipients at your specified date and time.
                     </p>
@@ -285,11 +285,11 @@ const DataTopUpPage = () => {
                     className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px] 2xl:mt-[25px] md:mb-[25px]"
                   />
 
-                  <div className="">
-                    <p className="text-[10px] md:text-[13px] font-[500] lg:text-[18px] 2xl:text-[22px]">
+                  <div className="lg:mt-[1%]">
+                    <p className="text-[10px] md:text-[12px] font-[500] lg:text-[18px]">
                       Bulk Data
                     </p>
-                    <p className="text-[8px] text-[#7c7c7c] md:text-[10px] font-[500] lg:text-[15px] w-[95%] lg:w-[130%] mt-[3px] md:w-[100%] 2xl:text-[20px]">
+                    <p className="text-[8px] text-[#7c7c7c] md:text-[10px] font-[500] lg:text-[14px] w-[95%] lg:w-[130%] mt-[3px] md:w-[100%]">
                       Send data to multiple recipients at a time and receive
                       instantly without any hassle.
                     </p>
@@ -311,7 +311,7 @@ const DataTopUpPage = () => {
             <Modal>
               <div
                 className={`${
-                  toggleSideBar ? "datapopup01" : "datapopup1"
+                  toggleSideBar ? "datapopup011" : "datapopup1"
                 } bg-white `}
               >
                 <div
@@ -319,7 +319,7 @@ const DataTopUpPage = () => {
                     flex flex-col justify-center z-[100] lg:ml-[10px] items-center `}
                 >
                   <div>
-                    <p className="text-[10px] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[3%]">
+                    <p className="text-[10px] text-center pt-[5%] md:pt-[2%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[3%]">
                       International Data
                     </p>
                     <p className="text-[10px] md:text-[16px] font-[600] text-[#04177F] lg:text-[16px]">
@@ -329,7 +329,7 @@ const DataTopUpPage = () => {
                   <img
                     src={InternationalData}
                     alt=""
-                    className="img mx-auto ml-[30%] mt-[30px] md:mt-[5%] md:w-[60%] md:h-[60%] md:mx-[25%] w-[50%] h-[50%px] lg:w-[300px] lg:h-[200px] lg:mx-[150px] lg:mt-[3%] 2xl:mt-[10%] 2xl:mx-[180px]"
+                    className="img mx-auto ml-[30%] mt-[30px] md:mt-[5%] md:mx-auto w-[50%] h-[50%] lg:mx-auto lg:mt-[3%] 2xl:mt-[10%] 2xl:mx-auto"
                   />
                 </div>
                 <div className="mt-[30px] flex flex-col gap-[5px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
@@ -354,8 +354,8 @@ const DataTopUpPage = () => {
             <Modal>
               <div
                 className={`${
-                  toggleSideBar ? "datapopup01" : "datapopup1 "
-                } bg-white `}
+                  toggleSideBar ? "datapopup011" : "datapopup1"
+                } bg-white`}
               >
                 <div
                   className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
@@ -372,7 +372,7 @@ const DataTopUpPage = () => {
                   <img
                     src={DataRollPopUp}
                     alt=""
-                    className="img2 mobile-desktop mx-auto mt-[20px] md:mt-[5%] md:w-[30%] md:h-[70%] md:mx-auto w-[143px] h-[100px] lg:w-[300px] lg:h-[200px] lg:mx-auto lg:mt-[8%] 2xl:mt-[5%] 2xl:mx-auto"
+                    className="img2 mx-auto mt-[20px] md:mt-[5%] md:mx-auto w-[143px] h-[100px] lg:mx-auto lg:mt-[8%] 2xl:mt-[5%] 2xl:mx-auto"
                   />
                 </div>
                 <div className="mobile-desktop mt-[20px] flex flex-col gap-[5px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
@@ -397,7 +397,7 @@ const DataTopUpPage = () => {
             <Modal>
               <div
                 className={`${
-                  toggleSideBar ? "datapopup01" : "datapopup1"
+                  toggleSideBar ? "datapopup011" : "datapopup1"
                 } bg-white `}
               >
                 <div
@@ -415,7 +415,7 @@ const DataTopUpPage = () => {
                   <img
                     src={DataVoucherPopUp}
                     alt=""
-                    className="img2 mobile-desktop mx-auto mt-[20px] md:mt-[5%] md:w-[30%] md:h-[70%] md:mx-auto w-[143px] h-[100px] lg:w-[300px] lg:h-[200px] lg:mx-auto lg:mt-[8%] 2xl:mt-[5%] 2xl:mx-auto"
+                    className="img3 mobile-desktop mx-auto mt-[20px] md:mt-[2%] md:w-[30%] md:h-[70%] md:mx-auto w-[143px] h-[100px] lg:w-[300px] lg:h-[200px] lg:mx-auto lg:mt-[8%] 2xl:mt-[5%] 2xl:mx-auto"
                   />
                 </div>
                 <div className="mobile-desktop mt-[20px] flex flex-col gap-[5px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
@@ -440,7 +440,7 @@ const DataTopUpPage = () => {
             <Modal>
               <div
                 className={`${
-                  toggleSideBar ? "datapopup01" : "datapopup1 datapopup2 "
+                  toggleSideBar ? "datapopup011" : "datapopup1 datapopup2 "
                 } bg-white `}
               >
                 <div
@@ -483,7 +483,7 @@ const DataTopUpPage = () => {
             <Modal>
               <div
                 className={`${
-                  toggleSideBar ? "datapopup01" : "datapopup1 datapopup2 "
+                  toggleSideBar ? "datapopup011" : "datapopup1 datapopup2 "
                 } bg-white `}
               >
                 <div

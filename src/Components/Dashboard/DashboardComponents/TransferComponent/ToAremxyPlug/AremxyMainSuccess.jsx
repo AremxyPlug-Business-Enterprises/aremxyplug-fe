@@ -35,7 +35,7 @@ export const AremxyMainSuccess = ({
           <div
             className={`${styles.successfulTwo} ${
               toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-            } md:w-[45%] w-[90%] overflow-auto`}
+            } md:w-[45%] w-[90%]`}
           >
             <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
               <img
@@ -107,7 +107,7 @@ export const AremxyMainSuccess = ({
               <Link to="/to-aremxymain-receipt">
                 <button
                   onClick={handleTransactionSuccessReciept}
-                  className={`border-[1px] w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                  className={`border-[1px] w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[110px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
                 >
                   Receipt
                 </button>

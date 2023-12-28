@@ -349,7 +349,7 @@ export const Context = ({ children }) => {
   // =============Start Dashboard=============
   const [toggleSideBar, setToggleSideBar] = useState("");
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [isValue, SetIsValue] = useState(false);
+  const [isValue, SetIsValue] = useState(true);
   const [showModal2, setShowModal2] = useState(false);
   const [logout, setLogout] = useState(false);
   const date = new Date();
@@ -422,146 +422,168 @@ export const Context = ({ children }) => {
   };
   // ========================End Transfer page==========================
 
-// ===================Start of Aremxyplug pages====================
-const [emailPhoneNumberConfirmation, setEmailPhoneNumberConfirmation] = useState(false);
-const [mainCountry, setMainCountry] = useState("");
-const [mainTransferErrors, setMainTransferErrors] = useState({});
-const [mainTransferState, setMainTransferState] = useState({
-  emailUsername: "",
-  userPhoneNumber: "",
-});
-
-const handleMainInputChange = (e) => {
-  const { name, value } = e.target;
-  setMainTransferState({
-    ...mainTransferState,
-    [name]: value,
-  });
-};
-
-const mainTransferSchema = Joi.object({
-  mainCountry: Joi.string().required(),
-  userPhoneNumber: Joi.string()
-  .pattern(new RegExp(/^\d{11}$/)) // Exactly 10 digits, you can adjust as needed
-  .required()
-  .max(11)
-  .messages({
-    "string.pattern.base": "Phone number should be 11 digits",
-    "any.max": "Phone number should be at most 11 digits",
-  }),
-  emailUsername: Joi.alternatives()
-  .try(
-     Joi.string()
-        .lowercase()
-        .email({ tlds: { allow: false } }), 
-     Joi.string().alphanum().min(5).max(10)
-   )
-  .required(),
-  amtToTransfer: Joi.string()
-    .pattern(new RegExp(/\d{4,}/))
-    .required()
-    .messages({
-      "string.pattern.base": "Amount can not be less than 1000",
-    }),
-});
-
-const ProceedToMainTransfer = (e) => {
-  e.preventDefault();
-
-  const { emailUsername, userPhoneNumber } = mainTransferState;
-
-  const { error } = mainTransferSchema.validate({
-    emailUsername,
-    userPhoneNumber,
-    amtToTransfer,
-    mainCountry,
+  // ===================Start of Aremxyplug pages====================
+  const [emailPhoneNumberConfirmation, setEmailPhoneNumberConfirmation] =
+    useState(false);
+  const [mainCountry, setMainCountry] = useState("");
+  const [mainTransferErrors, setMainTransferErrors] = useState({});
+  const [mainTransferState, setMainTransferState] = useState({
+    emailUsername: "",
+    userPhoneNumber: "",
   });
 
-  if (error) {
-    setMainTransferErrors(
-      error.details.reduce((acc, curr) => {
-        acc[curr.path[0]] = curr.message;
-        return acc;
-      }, {})
-    );
-  } else {
-    setEmailPhoneNumberConfirmation(true);
-    setMainTransferErrors({});
-  }
-};
+  const handleMainInputChange = (e) => {
+    const { name, value } = e.target;
+    setMainTransferState({
+      ...mainTransferState,
+      [name]: value,
+    });
+  };
 
-const mainEmailUsername = mainTransferState.emailUsername;
-const mainUserPhoneNumber = mainTransferState.userPhoneNumber;
-
-// ===================End of Aremxyplug pages======================
-
-// ===================Start of Global Transfer====================
-const [otherBanksConfirmation, setOtherBankConfirmation] = useState(false);
-const [globalCountry, setGlobalCountry] = useState("");
-const [globalTransferErrors, setGlobalTransferErrors] = useState({});
-const [globalTransferState, setGlobalTransferState] = useState({
-  accountName: "",
-  accountNumber: "",
-  bankName: "",
-});
-
-const handleGlobalInputChange = (e) => {
-  const { name, value } = e.target;
-  setGlobalTransferState({
-    ...globalTransferState,
-    [name]: value,
-  });
-};
-
-const globalTransferSchema = Joi.object({
-  globalCountry: Joi.string().required(),
-  bankName: Joi.string().required(),
-  accountNumber: Joi.string()
-    .pattern(new RegExp(/^\d{10,}/))
-    .required()
-    .messages({
-      "string.pattern.base": "Account number should be 10 digits ",
-    }),
-  accountName: Joi.string().required(),
-  amtToTransfer: Joi.string()
-    .pattern(new RegExp(/\d{4,}/))
-    .required()
-    .messages({
-      "string.pattern.base": "Amount can not be less than 1000",
-    }),
-});
-
-const ProceedToGlobalTransfer = (e) => {
-  e.preventDefault();
-  const { accountNumber, accountName, bankName } = globalTransferState;
-
-  const { error } = globalTransferSchema.validate({
-    globalCountry,
-    bankName,
-    accountNumber,
-    accountName,
-    amtToTransfer,
+  const mainTransferSchema = Joi.object({
+    mainCountry: Joi.string().required(),
+    userPhoneNumber: Joi.string()
+      .pattern(new RegExp(/^\d{11}$/)) // Exactly 10 digits, you can adjust as needed
+      .required()
+      .max(11)
+      .messages({
+        "string.pattern.base": "Phone number should be 11 digits",
+        "any.max": "Phone number should be at most 11 digits",
+      }),
+    emailUsername: Joi.alternatives()
+      .try(
+        Joi.string()
+          .lowercase()
+          .email({ tlds: { allow: false } }),
+        Joi.string().alphanum().min(5).max(10)
+      )
+      .required(),
+    amtToTransfer: Joi.string()
+      .pattern(new RegExp(/\d{4,}/))
+      .required()
+      .messages({
+        "string.pattern.base": "Amount can not be less than 1000",
+      }),
   });
 
-  if (error) {
-    setGlobalTransferErrors(
-      error.details.reduce((acc, curr) => {
-        acc[curr.path[0]] = curr.message;
-        return acc;
-      }, {})
-    );
-  } else {
-    setOtherBankConfirmation(true);
-    setGlobalTransferErrors({});
-  }
-};
+  const ProceedToMainTransfer = (e) => {
+    e.preventDefault();
 
-const globalBankName = globalTransferState.bankName;
-const globalAccountNumber = globalTransferState.accountNumber;
-const globalAccountName = globalTransferState.accountName;
+    const { emailUsername, userPhoneNumber } = mainTransferState;
 
-// ===================End of Global Transfer======================
+    const { error } = mainTransferSchema.validate({
+      emailUsername,
+      userPhoneNumber,
+      amtToTransfer,
+      mainCountry,
+    });
 
+    if (error) {
+      setMainTransferErrors(
+        error.details.reduce((acc, curr) => {
+          acc[curr.path[0]] = curr.message;
+          return acc;
+        }, {})
+      );
+    } else {
+      setEmailPhoneNumberConfirmation(true);
+      setMainTransferErrors({});
+    }
+  };
+
+  const mainEmailUsername = mainTransferState.emailUsername;
+  const mainUserPhoneNumber = mainTransferState.userPhoneNumber;
+
+  // ===================End of Aremxyplug pages======================
+
+  // ===================Start of Global Transfer====================
+  const [otherBanksConfirmation, setOtherBankConfirmation] = useState(false);
+  const [globalCountry, setGlobalCountry] = useState("");
+  const [globalTransferErrors, setGlobalTransferErrors] = useState({});
+  const [globalTransferState, setGlobalTransferState] = useState({
+    accountName: "",
+    accountNumber: "",
+    bankName: "",
+  });
+
+  const handleGlobalInputChange = (e) => {
+    const { name, value } = e.target;
+    const limitedValue =
+      name === "accountNumber" ? value.replace(/\D/g, "").slice(0, 10) : value;
+
+    setGlobalTransferState({
+      ...globalTransferState,
+      [name]: limitedValue,
+    });
+  };
+
+  // const handleInputChange = (event) => {
+  //   const { name, value, type, checked } = event.target;
+  //   if (name === "accountNumber" && type === "number") {
+  //     // If the input is of type 'number', limit it to 10 digits
+  //     const inputValue = value.replace(/\D/g, "").slice(0, 10);
+  //     setState({
+  //       ...state,
+  //       [name]: inputValue,
+  //     });
+  //   } else {
+  //     // Handle other types of inputs as before
+  //     const inputValue = type === "checkbox" ? checked : value;
+  //     setState({
+  //       ...state,
+  //       [name]: inputValue,
+  //     });
+  //   }
+  // };
+
+  const globalTransferSchema = Joi.object({
+    globalCountry: Joi.string().required(),
+    bankName: Joi.string().required(),
+    accountNumber: Joi.string()
+      .pattern(new RegExp(/^\d{10,}/))
+      .required()
+      .messages({
+        "string.pattern.base": "Account number should be 10 digits ",
+      }),
+    accountName: Joi.string().required(),
+    amtToTransfer: Joi.string()
+      .pattern(new RegExp(/\d{4,}/))
+      .required()
+      .messages({
+        "string.pattern.base": "Amount can not be less than 1000",
+      }),
+  });
+
+  const ProceedToGlobalTransfer = (e) => {
+    e.preventDefault();
+    const { accountNumber, accountName, bankName } = globalTransferState;
+
+    const { error } = globalTransferSchema.validate({
+      globalCountry,
+      bankName,
+      accountNumber,
+      accountName,
+      amtToTransfer,
+    });
+
+    if (error) {
+      setGlobalTransferErrors(
+        error.details.reduce((acc, curr) => {
+          acc[curr.path[0]] = curr.message;
+          return acc;
+        }, {})
+      );
+    } else {
+      setOtherBankConfirmation(true);
+      setGlobalTransferErrors({});
+    }
+  };
+
+  const globalBankName = globalTransferState.bankName;
+  const globalAccountNumber = globalTransferState.accountNumber;
+  const globalAccountName = globalTransferState.accountName;
+
+  // ===================End of Global Transfer======================
 
   // ================Start of Transfer To International Banks =====================
   const [internationalBankConfirmation, setInternationalBankConfirmation] =
@@ -765,7 +787,7 @@ const globalAccountName = globalTransferState.accountName;
   const [recipientPhoneNumber, setRecipientPhoneNumber] = useState("");
   const [selectedAmount, setSelectedAmount] = useState("");
   const [recipientNames, setRecipientNames] = useState("");
-  const [walletName, setWalletName] = useState("");
+  const [walletName, setWalletName] = useState("initialWalletName");
 
   const [accountId, setAccountId] = useState("");
   const [numberPins, setNumberPins] = useState("");
@@ -777,7 +799,7 @@ const globalAccountName = globalTransferState.accountName;
   const [cardHolderName, setCardHolderName] = useState("");
   const [cardSelected, setCardSelected] = useState("");
   const [selectedCard, setSelectedCard] = useState("");
-  
+  const [paymentSelected, setPaymentSelected] = useState("");
 
   //=============point redeem==============
   const [inputValue, setInputValue] = useState("");
@@ -793,14 +815,14 @@ const globalAccountName = globalTransferState.accountName;
   const [ikedcamount, setIkedcamount] = useState("");
 
   //------------Airtime Conversion---------
-  const [inputValueA, setInputValueA] = useState('');
-  const [resultValue, setResultValue] = useState('');
-  const [recipientNumberA, setRecipientNumberA] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [airEmail, setairEmail] = useState('');
-  const [homeAdress, sethomeAdress] = useState('');
- 
+  const [inputValueA, setInputValueA] = useState("");
+  const [resultValue, setResultValue] = useState("");
+  const [recipientNumberA, setRecipientNumberA] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [airEmail, setairEmail] = useState("");
+  const [homeAdress, sethomeAdress] = useState("");
+
   //=============Currency conversion==============
   const [convertedAmount, setConvertedAmount] = useState("");
   const [initialValue, setInitialValue] = useState("");
@@ -824,13 +846,13 @@ const globalAccountName = globalTransferState.accountName;
   const [smartCard, setSmartCard] = useState("");
   const [tvEmail, setTvEmail] = useState("");
   const [tvAmount, setTvAmount] = useState("");
-  const [flagResult, setFlagResult ]= useState('');
-  const [ methodPayment, setMethodPayment ] = useState(false);
+  const [flagResult, setFlagResult] = useState("");
+  const [methodPayment, setMethodPayment] = useState(false);
   const [methodImage, setMethodImage] = useState(arrowDown);
-  const [tvWalletBalance, setTvWalletBalance] = useState('');
+  const [tvWalletBalance, setTvWalletBalance] = useState("");
   const [decoderType, setDecoderType] = useState("");
   const [decoderActive, setDecoderActive] = useState(false);
-  
+
   //==========DSTV===========
   const [selectedOptionDstv, setSelectedOptionDstv] = useState("");
   const [showDropdownDstv, setShowDropdownDstv] = useState(false);
@@ -851,57 +873,57 @@ const globalAccountName = globalTransferState.accountName;
   const [confirmStarTimesPopup, setConfirmStarTimesPopup] = useState(false);
   const [inputPinStarTimes, setInputPinStarTimes] = useState(false);
   const [starTimesSuccessful, setStarTimesSuccessful] = useState(false);
-    
+
   //============= EDUCATION PINS ========================
   //===============WAEC PINS================
-  const [quantityResult, setQuantityResult] = useState('');
+  const [quantityResult, setQuantityResult] = useState("");
   const [quantityActive, setQuantityActive] = useState(false);
-  const [paymentResult, setPaymentResult] = useState('');
+  const [paymentResult, setPaymentResult] = useState("");
   const [methodActive, setMethodActive] = useState(false);
-  const [examType, setExamType] = useState('');
+  const [examType, setExamType] = useState("");
   const [examActive, setExamActive] = useState(false);
-  const [educationPinPhone, setEducationPinPhone] = useState('');
-  const [educationPinEmail, setEducationPinEmail] = useState('');
-  const [educationAmount, setEducationAmount] = useState('₦');
-  const [walletBalance, setWalletBalance] = useState('');
+  const [educationPinPhone, setEducationPinPhone] = useState("");
+  const [educationPinEmail, setEducationPinEmail] = useState("");
+  const [educationAmount, setEducationAmount] = useState("₦");
+  const [walletBalance, setWalletBalance] = useState("");
 
   //==============  NECO PINS  ================
-  const [necoQuantityResult, setNecoQuantityResult] = useState('');
+  const [necoQuantityResult, setNecoQuantityResult] = useState("");
   const [necoQuantityActive, setNecoQuantityActive] = useState(false);
-  const [necoPaymentResult, setNecoPaymentResult] = useState('');
+  const [necoPaymentResult, setNecoPaymentResult] = useState("");
   const [necoMethodActive, setNecoMethodActive] = useState(false);
-  const [necoExamType, setNecoExamType] = useState('');
+  const [necoExamType, setNecoExamType] = useState("");
   const [necoExamActive, setNecoExamActive] = useState(false);
-  const [necoEducationPinPhone, setNecoEducationPinPhone] = useState('');
-  const [necoEducationPinEmail, setNecoEducationPinEmail] = useState('');
-  const [necoEducationAmount, setNecoEducationAmount] = useState('₦');
-  const [necoWalletBalance, setNecoWalletBalance] = useState('');
+  const [necoEducationPinPhone, setNecoEducationPinPhone] = useState("");
+  const [necoEducationPinEmail, setNecoEducationPinEmail] = useState("");
+  const [necoEducationAmount, setNecoEducationAmount] = useState("₦");
+  const [necoWalletBalance, setNecoWalletBalance] = useState("");
 
   // ============== JAMB PINS ================
-  const [jambQuantityResult, setJambQuantityResult] = useState('');
+  const [jambQuantityResult, setJambQuantityResult] = useState("");
   const [jambQuantityActive, setJambQuantityActive] = useState(false);
-  const [jambPaymentResult, setJambPaymentResult] = useState('');
+  const [jambPaymentResult, setJambPaymentResult] = useState("");
   const [jambMethodActive, setJambMethodActive] = useState(false);
-  const [jambExamType, setJambExamType] = useState('');
+  const [jambExamType, setJambExamType] = useState("");
   const [jambExamActive, setJambExamActive] = useState(false);
-  const [jambEducationPinPhone, setJambEducationPinPhone] = useState('');
-  const [jambEducationPinEmail, setJambEducationPinEmail] = useState('');
-  const [jambEducationAmount, setJambEducationAmount] = useState('₦');
-  const [jambWalletBalance, setJambWalletBalance] = useState('');
+  const [jambEducationPinPhone, setJambEducationPinPhone] = useState("");
+  const [jambEducationPinEmail, setJambEducationPinEmail] = useState("");
+  const [jambEducationAmount, setJambEducationAmount] = useState("₦");
+  const [jambWalletBalance, setJambWalletBalance] = useState("");
 
   // ============== NABTEB PINS =============
-  const [nabtebQuantityResult, setNabtebQuantityResult] = useState('');
+  const [nabtebQuantityResult, setNabtebQuantityResult] = useState("");
   const [nabtebQuantityActive, setNabtebQuantityActive] = useState(false);
-  const [nabtebPaymentResult, setNabtebPaymentResult] = useState('');
+  const [nabtebPaymentResult, setNabtebPaymentResult] = useState("");
   const [nabtebMethodActive, setNabtebMethodActive] = useState(false);
-  const [nabtebExamType, setNabtebExamType] = useState('');
+  const [nabtebExamType, setNabtebExamType] = useState("");
   const [nabtebExamActive, setNabtebExamActive] = useState(false);
-  const [nabtebEducationPinPhone, setNabtebEducationPinPhone] = useState('');
-  const [nabtebEducationPinEmail, setNabtebEducationPinEmail] = useState('');
-  const [nabtebEducationAmount, setNabtebEducationAmount] = useState('₦');
-  const [nabtebWalletBalance, setNabtebWalletBalance] = useState('');
- 
-    // PROFILE & ACCOUNT SETTINGS =========
+  const [nabtebEducationPinPhone, setNabtebEducationPinPhone] = useState("");
+  const [nabtebEducationPinEmail, setNabtebEducationPinEmail] = useState("");
+  const [nabtebEducationAmount, setNabtebEducationAmount] = useState("₦");
+  const [nabtebWalletBalance, setNabtebWalletBalance] = useState("");
+
+  // PROFILE & ACCOUNT SETTINGS =========
   //============ Profile Page =========
   const [openImage, setOpenImage] = useState(false);
   const [profilePage, setProfilePage] = useState(true);
@@ -912,19 +934,18 @@ const globalAccountName = globalTransferState.accountName;
   const [bvnVerificationOpen, setBvnVerificationOpen] = useState(false);
   const [accountUpgradeOpen, setAccountUpgradeOpen] = useState(false);
   const [dropDownGender, setDropDownGender] = useState(false);
-  const [idAddress, setIdAddress] = useState('');
-  const [idState, setIdState] = useState('');
-  const [idCity, setIdCity] = useState('');
-  const [idLGA, setIdLGA] = useState('');
-  const [idNumber, setIdNumber] = useState('');
-  const [idPostalCode, setIdPostalCode] = useState('');
-
+  const [idAddress, setIdAddress] = useState("");
+  const [idState, setIdState] = useState("");
+  const [idCity, setIdCity] = useState("");
+  const [idLGA, setIdLGA] = useState("");
+  const [idNumber, setIdNumber] = useState("");
+  const [idPostalCode, setIdPostalCode] = useState("");
 
   //========== BUSINESS KYC =============
   const [businessPopUp, setBusinessPopUp] = useState(false);
 
   // ========  ACCOUNT UPGRADE ===========
-  const [accountUpgrade, setAccountUpgrade]  = useState(false);
+  const [accountUpgrade, setAccountUpgrade] = useState(false);
 
   //============ AUTHETICATION SETTINGS ========
   const [authenticationOpen, setAuthenticationOpen] = useState(false);
@@ -1215,18 +1236,19 @@ const globalAccountName = globalTransferState.accountName;
     emailId,
     setEmailId,
 
-
     //===============Card payment==============
-    cardPaymentAmount, 
+    cardPaymentAmount,
     setCardPaymentAmount,
-    cardPaymentSelected, 
+    cardPaymentSelected,
     setCardPaymentSelected,
-    cardHolderName, 
+    cardHolderName,
     setCardHolderName,
-    cardSelected, 
+    cardSelected,
     setCardSelected,
-    selectedCard, 
+    selectedCard,
     setSelectedCard,
+    paymentSelected,
+    setPaymentSelected,
 
     //point redeem
     inputValue,
@@ -1256,16 +1278,15 @@ const globalAccountName = globalTransferState.accountName;
     resultValue,
     setResultValue,
     recipientNumberA,
-     setRecipientNumberA,
-     firstName,
-     setFirstName,
-     lastName, 
-     setLastName,
-     airEmail, 
-     setairEmail,
-     homeAdress,
+    setRecipientNumberA,
+    firstName,
+    setFirstName,
+    lastName,
+    setLastName,
+    airEmail,
+    setairEmail,
+    homeAdress,
     sethomeAdress,
-   
 
     //currency
     convertedAmount,
@@ -1317,8 +1338,6 @@ const globalAccountName = globalTransferState.accountName;
     showDropdownGOTV,
     setShowDropdownGOTV,
 
- 
-
     //=======DSTV
     confirmDstvPopup,
     setConfirmDstvPopup,
@@ -1354,7 +1373,6 @@ const globalAccountName = globalTransferState.accountName;
     setSelectedOptionStarTimes,
     showDropdownStarTimes,
     setShowDropdownStarTimes,
-
 
     //====== EDUCATION PINS
     //=======WAEC PINS
@@ -1445,52 +1463,49 @@ const globalAccountName = globalTransferState.accountName;
     nabtebWalletBalance,
     setNabtebWalletBalance,
 
-// ========= PROFILE & ACCOUNT SETTINGS ===========
-// ========== Profile Page ========
-openImage,
-setOpenImage,
-profilePage,
-setProfilePage,
+    // ========= PROFILE & ACCOUNT SETTINGS ===========
+    // ========== Profile Page ========
+    openImage,
+    setOpenImage,
+    profilePage,
+    setProfilePage,
 
-// ========= Account verification Page =====
-verificationOpen,
-setVerificationOpen,
-idVerificationOpen,
-setIdVerificationOpen,
-bvnVerificationOpen,
-setBvnVerificationOpen,
-accountUpgradeOpen,
-setAccountUpgradeOpen,
-dropDownGender,
-setDropDownGender,
-idAddress,
-setIdAddress,
-idCity,
-setIdCity,
-idState,
-setIdState,
-idLGA,
-setIdLGA,
-idNumber,
-setIdNumber,
-idPostalCode,
-setIdPostalCode,
-// ==========  BVN ========
+    // ========= Account verification Page =====
+    verificationOpen,
+    setVerificationOpen,
+    idVerificationOpen,
+    setIdVerificationOpen,
+    bvnVerificationOpen,
+    setBvnVerificationOpen,
+    accountUpgradeOpen,
+    setAccountUpgradeOpen,
+    dropDownGender,
+    setDropDownGender,
+    idAddress,
+    setIdAddress,
+    idCity,
+    setIdCity,
+    idState,
+    setIdState,
+    idLGA,
+    setIdLGA,
+    idNumber,
+    setIdNumber,
+    idPostalCode,
+    setIdPostalCode,
+    // ==========  BVN ========
 
+    //========== Business PopUp =======
+    businessPopUp,
+    setBusinessPopUp,
 
+    // ========== Account upgrade ========
+    accountUpgrade,
+    setAccountUpgrade,
 
-
-//========== Business PopUp =======
-businessPopUp,
-setBusinessPopUp,
-
-// ========== Account upgrade ========
-accountUpgrade,
-setAccountUpgrade,
-
-//======== AUTHENTICATION  SETTING =======
-authenticationOpen,
-setAuthenticationOpen,
+    //======== AUTHENTICATION  SETTING =======
+    authenticationOpen,
+    setAuthenticationOpen,
   };
 
   return (

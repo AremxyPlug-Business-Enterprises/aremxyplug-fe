@@ -438,16 +438,14 @@ const AirtelDataBundle = () => {
             </div>
             <div className="md:w-[50%]"></div>
           </div>
-          
+
           {codes && (
             <Modal>
               (
               <div
-               className={`code ${
-                toggleSideBar
-                  ? "code1"
-                  : "code01"
-              } overflow-auto`}
+                className={`code ${
+                  toggleSideBar ? "code1" : "code01"
+                } overflow-auto w-[90%]`}
               >
                 <img
                   onClick={() => setCodes(false)}
@@ -754,12 +752,10 @@ const AirtelDataBundle = () => {
           {proceed && (
             <Modal>
               <div
-                 className={`${
+                className={`scroll-bar ${
                   isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
                 } ${
-                  toggleSideBar
-                    ? "confirm01"
-                    : "confirm"
+                  toggleSideBar ? "confirm01" : "confirm"
                 } grow pt-[10px] pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative 
                 md:rounded-[11.5px] md:mx-auto md:my-auto md:overflow-auto`}
               >
@@ -921,59 +917,59 @@ const AirtelDataBundle = () => {
             <Modal>
               <div
                 className={` ${
-                  toggleSideBar
-                    ? "confirm02"
-                    : "confirm2"
+                  toggleSideBar ? "confirm02" : "confirm2"
                 } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
               >
                 <div className="flex justify-end px-2">
-                <img
-                  onClick={() => setConfirm(false)}
-                  className="cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[35px] lg:h-[35px] "
-                  src={Cancel}
-                  alt=""
-                />
+                  <img
+                    onClick={() => setConfirm(false)}
+                    className="cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[35px] lg:h-[35px] "
+                    src={Cancel}
+                    alt=""
+                  />
                 </div>
 
                 <hr className="h-[6px] bg-[#04177f] lg:mt-[2%] border-none mt-[2%] md:mt-[2%] md:h-[10px]" />
-                <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[8%] md:my-[5%] lg:my-[3%]">
-                  Input PIN to complete transaction
-                </p>
-                <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
-                  <div className=" flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
-                    {" "}
-                    {isVisible ? (
-                      <OtpInput
-                        value={inputPin}
-                        inputType="tel"
-                        onChange={setInputPin}
-                        numInputs={4}
-                        shouldAutoFocus={true}
-                        inputStyle={{
-                          color: "#403f3f",
-                          width: 30,
-                          height: 30,
-                          borderRadius: 3,
-                        }}
-                        renderInput={(props) => (
-                          <input {...props} className="inputOTP mx-[3px]" />
-                        )}
-                      />
-                    ) : (
-                      <div className="text-[24px] md:text-[24px] mt-1">
-                        * * * *{" "}
-                      </div>
-                    )}
-                    <div
-                      className="text-[#0003] text-xl md:text-3xl"
-                      onClick={toggleVisibility}
-                    >
-                      {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
-                    </div>
-                  </div>
-                  <p className="text-[8px] md:text-[12px] text-[#04177f]">
-                    Forgot Pin ?
+                <div className="md:mt-[15%] lg:mt-[10%]">
+                  <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[8%] md:my-[5%] lg:my-[3%]">
+                    Input PIN to complete transaction
                   </p>
+                  <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
+                    <div className=" flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
+                      {" "}
+                      {isVisible ? (
+                        <OtpInput
+                          value={inputPin}
+                          inputType="tel"
+                          onChange={setInputPin}
+                          numInputs={4}
+                          shouldAutoFocus={true}
+                          inputStyle={{
+                            color: "#403f3f",
+                            width: 30,
+                            height: 30,
+                            borderRadius: 3,
+                          }}
+                          renderInput={(props) => (
+                            <input {...props} className="inputOTP mx-[3px]" />
+                          )}
+                        />
+                      ) : (
+                        <div className="text-[24px] md:text-[24px] mt-1">
+                          * * * *{" "}
+                        </div>
+                      )}
+                      <div
+                        className="text-[#0003] text-xl md:text-3xl"
+                        onClick={toggleVisibility}
+                      >
+                        {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
+                      </div>
+                    </div>
+                    <p className="text-[8px] md:text-[12px] text-[#04177f]">
+                      Forgot Pin ?
+                    </p>
+                  </div>
                 </div>
 
                 <button
@@ -985,22 +981,20 @@ const AirtelDataBundle = () => {
                   disabled={inputPin.length !== 4}
                   className={`${
                     inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
-                  } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                  } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
                 >
                   Purchase
                 </button>
               </div>
             </Modal>
           )}
-          
+
           {transactSuccessPopUp && (
             <Modal>
               {/* <TransactFailedPopUp/> */}
               <div
-                className={`${
-                  toggleSideBar
-                    ? "confirm03 w-[90%]"
-                    : "confirm3 w-[90%]"
+                className={` scroll-bar ${
+                  toggleSideBar ? "confirm01 w-[90%]" : "confirm w-[90%]"
                 } bg-white rounded-[12px] md:my-auto mx-auto overflow-auto lg:mx-auto lg:my-auto`}
               >
                 <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">

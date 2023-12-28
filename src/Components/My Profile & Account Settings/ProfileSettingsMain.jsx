@@ -41,7 +41,7 @@ return (
                     {/* Profile Cursor */}
                     {profilePage && (
                     <div className='flex w-[100%] md:w-[60%]
-                     h-[2px] rounded-[10px]  bg-[#04177F]'></div>
+                    md:h-[3px] h-[2px] rounded-[10px]  bg-[#04177F]'></div>
                     )}
                     </div>
                     {/* ACCOUNT VERIFICATION TAB */}
@@ -60,7 +60,7 @@ return (
                     </h2>
                     {/* VERIFICATION CURSOR */}
                     {verificationOpen && (
-                    <div className='flex w-[100%] md:w-[60%]  h-[2px] rounded-[10px]  bg-[#04177F]'></div>
+                    <div className='flex w-[100%] md:w-[60%]  md:h-[3px] h-[2px] rounded-[10px]  bg-[#04177F]'></div>
                     )}
                     </div>
                     <div onClick={() => {
@@ -91,7 +91,7 @@ return (
                     </h2>
                      {/* AUTHENTICATION CURSOR */}
                      {authenticationOpen && (
-                    <div className='flex w-[100%] md:w-[70%]  h-[2px] rounded-[10px]
+                    <div className='flex w-[100%] md:w-[70%]  md:h-[3px] h-[2px] rounded-[10px]
                       bg-[#04177F]'></div>
                     )}
                     </div>
@@ -103,8 +103,8 @@ return (
         <BusinessKYC/>
         <ChangePin/>
      </div>
-     <div className=" flex gap-[8.729px]  md:pt-[200%] md:pb-[50%] pt-[40%] pb-[30%]  md:gap-[14.896px] 
-     justify-center px-[8.594px]  ">
+     <div className=" flex gap-[8.729px] lg:pt-[30%] lg:pb-[20%] md:pt-[110%] md:pb-[30%] pt-[40%] pb-[30%]  
+     md:gap-[14.896px] justify-center px-[8.594px]  ">
               <p className="font-[500] text-[10px] text-black 
               leading-[10.4px] lg:text-[16px] lg:leading-[15.6px]  md:text-[6.875px] md:leading-[12.938px] self-center">
                 You need help?

@@ -24,6 +24,8 @@ export const CardPaymentReceipt = () => {
 
   const contentRef = useRef(null);
 
+  // const history = useHistory();
+
   const handleChange = () => {
     setSelectedNetworkProduct(false);
     setSelectedOption(false);
@@ -32,6 +34,11 @@ export const CardPaymentReceipt = () => {
     setCardPaymentSelected("");
     setCardSelected("");
     setCardPaymentAmount("");
+
+    // history.push('/CardPayment');
+
+    // // Reload the page
+    // window.location.reload();
   };
 
   const location = useLocation();

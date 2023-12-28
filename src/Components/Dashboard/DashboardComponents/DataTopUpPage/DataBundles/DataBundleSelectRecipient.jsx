@@ -291,7 +291,7 @@ const DataBundleSelectRecipient = () => {
             {edit && (
               <Modal>
                 <div
-                  className={` mx-[5%] ${
+                  className={` scroll-bar mx-[5%] ${
                     isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
                   } ${
                     toggleSideBar
@@ -455,7 +455,7 @@ const DataBundleSelectRecipient = () => {
                   </div>
 
                   <div
-                    className={`w-full h-[38px] mt-[80px] md:mt-[30%] px-[20px] mx-auto lg:mt-[25%] xl:mt-[20%]`}
+                    className={`w-full h-[38px] mt-[80px] md:mt-[25%] px-[20px] mx-auto lg:mt-[20%] xl:mt-[18%]`}
                   >
                     <button
                       className={`${
@@ -551,10 +551,10 @@ const DataBundleSelectRecipient = () => {
                   </div>
 
                   <div
-                    className={`w-full h-[38px] mt-[35px] md:mt-[10%] px-[20px] mx-auto lg:mt-[5%] xl:mt-[5%]`}
+                    className={`w-full h-[38px] mt-[35px] md:mt-[20%] px-[20px] mx-auto lg:mt-[5%] xl:mt-[10%]`}
                   >
                     <button
-                      className={` bg-[#04177f] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:mx-auto md:px-[10%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
+                      className={` bg-[#04177f] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:h-[50px] md:mx-auto md:px-[10%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] xl:h-[50px] lg:my-[4%]`}
                       onClick={handleConfirm}
                     >
                       Confirmed
@@ -569,9 +569,9 @@ const DataBundleSelectRecipient = () => {
                 <div
                   className={` ${
                     toggleSideBar
-                      ? "confirm002"
-                      : "confirm200"
-                  } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto md:overflow-auto rounded-[12px]`}
+                    ? "confirm02"
+                    : "confirm2"
+                  } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
                 >
                   <div className="flex justify-between items-center mx-[3%] my-[2%] lg:mt-[3%] xl:mt-0 ">
                     <img
@@ -601,18 +601,18 @@ const DataBundleSelectRecipient = () => {
                   </p>
                   <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
                     <img
-                      className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[125px] lg:h-[125px]"
+                      className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[100px] lg:h-[100px]"
                       src="./Gif/checkMarkGif.gif"
                       alt="/"
                     />
 
-                    <p className="text-[10px] text-[#2ED173] font-semibold md:text-[14px]">
+                    <p className="text-[10px] text-[#2ED173] font-semibold md:text-[14px] text-center">
                       New recipient contact has been added successfully.
                     </p>
                   </div>
 
                   <div
-                    className={`w-full h-[38px] mt-[35px] md:mt-[5%] px-[20px] mx-auto lg:mt-[5%] xl:mt-[5%]`}
+                    className={`w-full h-[38px] mt-[35px] md:mt-[10%] px-[20px] mx-auto lg:mt-[5%] xl:mt-[5%]`}
                   >
                     <button
                       className={`bg-[#04177f] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:mx-auto md:px-[10%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
@@ -621,7 +621,7 @@ const DataBundleSelectRecipient = () => {
                         window.location.reload();
                       }}
                     >
-                      Confirmed
+                      Done
                     </button>
                   </div>
                 </div>
@@ -633,8 +633,8 @@ const DataBundleSelectRecipient = () => {
                 <div
                 className={` ${
                   toggleSideBar
-                    ? "confirm002"
-                    : "confirm200"
+                  ? "confirm02"
+                  : "confirm2"
                 } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto md:overflow-auto rounded-[12px]`}
                 >
                   <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[2%] xl:mt-[3%]">
@@ -665,7 +665,7 @@ const DataBundleSelectRecipient = () => {
                   </p>
                   <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
                     <img
-                      className="w-[70px] h-[70px] mx-auto mb-[2%] lg:w-[120px] lg:h-[120px]"
+                      className="w-[70px] h-[70px] mx-auto mb-[2%] md:w-[120px] md:h-[120px] lg:w-[120px] lg:h-[120px]"
                       src={Delete}
                       alt="/"
                     />
@@ -700,8 +700,8 @@ const DataBundleSelectRecipient = () => {
                 <div
                   className={` ${
                     toggleSideBar
-                      ? "confirm002"
-                      : "confirm200"
+                    ? "confirm02"
+                    : "confirm2"
                   } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto md:overflow-auto rounded-[12px]`}
                 >
                   <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[2%]">
@@ -730,23 +730,23 @@ const DataBundleSelectRecipient = () => {
                   <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[3%] lg:my-[%]">
                     Successful
                   </p>
-                  <p className="text-[10px] md:text-[14px] px-[20px] lg:text-[18px] font-extrabold text-center my-[1%] lg:my-[%]">
+                  <p className="text-[10px] text-[#04177F] md:text-[14px] px-[20px] lg:text-[18px] font-extrabold text-center my-[1%] lg:my-[%]">
                     Recipicient *****2345 has been deleted successfully. You can
                     add recipient again anytime!
                   </p>
-                  <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[5%]">
+                  <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[5%] xl:mb-[1%]">
                     <img
-                      className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[120px] lg:h-[120px]"
+                      className="w-[50px] h-[50px] mx-auto mb-[2%] md:w-[100px] md:h-[100px]  lg:w-[120px] lg:h-[120px]"
                       src="./Gif/checkMarkGif.gif"
                       alt="/"
                     />
                   </div>
 
                   <div
-                    className={`h-[38px] mt-[40px] px-[20px] md:mx-[35%] md:mt-[10px]`}
+                    className={`h-[38px] mt-[40px] px-[20px] md:mx-[30%] md:mt-[10px] 2xl:mt-[2px]`}
                   >
                     <button
-                      className={`bg-[#04177F] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-full md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
+                      className={`bg-[#04177F] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-full md:px-[50px] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
                       onClick={() => {
                         setSuccessDeleted(false);
                         window.location.reload();

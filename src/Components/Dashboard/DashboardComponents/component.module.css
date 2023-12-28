@@ -29,7 +29,8 @@
 }
 
 .Chart {
-  padding: 2%;
+  padding-top: 2%;
+  padding-right: 2%;
   box-shadow: 0px 0px 6.6666669845581055px 0px rgba(0, 0, 0, 0.25);
 }
 
@@ -51,7 +52,6 @@
 
 .INnOUT {
   justify-content: space-between;
-  /* gap: 5px; */
 }
 
 .inflowOutflow {
@@ -150,7 +150,7 @@
   color: #7c7c7c;
   position: absolute;
   /* left: 70%; */
-  right:5;
+  right: 5;
   width: 95px;
   box-shadow: 0px 1.627705693244934px 4.0692644119262695px 0px
     rgba(0, 0, 0, 0.25);
@@ -201,6 +201,16 @@ td {
   padding: 18px 6px;
 }
 
+.currencyUnavailable {
+  height: 340px;
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .currencyUnavailable {
+    height: 370px;
+  }
+}
+
 /* ===================Tablet view ================ */
 @media (min-width: 820px) and (max-width: 1180px) {
   .feature {
@@ -235,8 +245,6 @@ td {
 
   .totalTransactions {
     box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.35);
-    /* top: 122.5%; */
-    /* font-size: 16px; */
   }
 
   .viewTransactions {
@@ -300,7 +308,6 @@ td {
 
   .countrySelect {
     border-radius: 5px;
-    left: 78%;
     width: 140px;
   }
 
@@ -408,9 +415,7 @@ td {
     align-items: center;
     gap: 13.248px;
     border-radius: 15.897px;
-    /* background: #fff; */
     box-shadow: 0px 0px 13.247862815856934px 0px rgba(0, 0, 0, 0.25);
-    /* color: #000; */
     font-size: 18.197px;
     font-style: normal;
     font-weight: 500;
@@ -442,9 +447,11 @@ td {
   }
 
   .chartBtn {
-    /* font-size: 21px; */
     padding: 2px 13.259px;
     border-radius: 6.629px;
+  }
+  .Chart {
+    height: 550px;
   }
 
   .filter {
@@ -491,7 +498,6 @@ td {
 
   .countrySelect {
     border-radius: 5px;
-    left: 77.5%;
     width: 231px;
   }
 
@@ -503,5 +509,9 @@ td {
 
   .accountRecords {
     height: 100%;
+  }
+
+  .currencyUnavailable {
+    height: 540px;
   }
 }
