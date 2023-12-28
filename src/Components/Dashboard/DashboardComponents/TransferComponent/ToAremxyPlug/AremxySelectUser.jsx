@@ -4,6 +4,7 @@ import '../../../../../App.css';
 import style from "../../../../AirTimePage/AirtimeVtu.module.css";
 import styled from "../../../../AirTimePage/AirTime.module.css"
 import styles from "../../TransferComponent/transfer.module.css";
+import stylish from "../../component.module.css";
 import { DashBoardLayout } from "../../../Layout/DashBoardLayout";
 import ArrowRight from '../../../../EducationPins/imagesEducation/educationArrowRight.svg';
 import SearchIcon from '../../../../Add&SelectRecipient/RecipientImages/search-status.svg';
@@ -1045,26 +1046,31 @@ export default function AremxySelectUser() {
             )}
             {currencyAvailable && (
               <Modal>
-                <div className="bg-white shadow-lg w-[90%] rounded-[8px] h-[269px] flex flex-col items-center py-[4%] gap-[40px] md:h-[360px] lg:w-[562px] lg:gap-[60px] lg:h-[500px] lg:py-[3%] lg:rounded-[px]">
-                  <p className="text-[10px] text-[#04177f] font-extrabold md:text-[16px] lg:text-[25px]">
+                <div
+                  className={` mt-6 ${
+                    isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
+                  } ${stylish.cryptoTopUp} flex flex-col justify-between `}
+                >
+                  <div className="text-[10px] text-center pt-[2%] pb-[2%] text-[#04177f] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[2%] lg:pb-[0%]">
                     This Currency is Currently Not Available.
-                  </p>
+                  </div>
                   <img
-                    className="w-[135px] h-[96px] lg:w-[217px] lg:h-[187px]"
+                    className="w-[140px] h-[100px] mx-auto lg:w-[217px] lg:h-[187px]"
                     src="/Images/addAccountImages/account-unavailable.png"
-                    alt=""
+                    alt="/"
                   />
-                  <p className="absolute top-[58%] right-[15%] text-[8px] md:text-[12px] md:ml-[70%] lg:text-[14px] lg:top-[73%] lg:right-[33%] lg:ml-[40%] lg:w-[8%]">
-                    Coming Soon...
-                  </p>
-
-                  <div
-                    onClick={refresh}
-                    className={` ${
-                      isDarkMode ? "border" : "bg-[#04177f] "
-                    } cursor-pointer text-white text-[10px] h-[40px] w-[80%] rounded-[5px] flex items-center justify-center md:mx-auto md:w-[20%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[30%] lg:mx-auto`}
-                  >
-                    Okay
+                  <div className="mx-[6%] flex flex-col gap-[5px] pb-[5%]">
+                    <div className="text-[8px] font-extrabold float-right ml-[70%] md:ml-[70%] md:text-[12px] lg:text-[13px] lg:ml-[80%]">
+                      Coming soon...
+                    </div>
+                    <div
+                      onClick={refresh}
+                      className={` ${
+                        isDarkMode ? "border" : "bg-[#04177f] "
+                      } cursor-pointer text-white text-[10px] h-[40px] rounded-[5px] flex items-center justify-center md:mx-auto md:w-[20%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[30%] lg:mx-auto`}
+                    >
+                      Okay
+                    </div>
                   </div>
                 </div>
               </Modal>
