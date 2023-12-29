@@ -27,13 +27,13 @@ const LaunchPage3 = () => {
             <div className="NewLaunch text-black text-md lg:text-3xl md:text-lg text-center font-medium ">New Launch</div>
         </div>
         <div
-            className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px]
+            className="w-full h-[110px] md:h-[150.29px] lg:h-[250px] rounded-[7px] md:rounded-[11.5px]
             bg-gradient-to-b from-pink-500 to-fuchsia-500  flex px-[16px] lg:px-[50px]
       justify-between items-center lg:rounded-[20px]"
           >
             <div className="py-[13px] mt-2 lg:py-[40px]">
               <h2
-                className="text-[7px] mb-2 font-bold w-[110%] whitespace-nowrap md:text-[12px] md:w-[70%] lg:w-[70%]
+                className="text-[7px] mb-2 font-bold w-[110%] text-white whitespace-nowrap md:text-[12px] md:w-[70%] lg:w-[70%]
                  lg:text-[18px] 
               2xl:w-[80%] 2xl:text-[24px] lg:mb-4"
               >

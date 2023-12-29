@@ -28,7 +28,7 @@ const LaunchPage2 = () => {
             <div className="NewLaunch text-black text-md font-medium lg:text-3xl md:text-lg">New Launch</div>
         </div>
         <div
-            className="w-full h-[90px] shadow md:h-[112.29px] lg:h-[196px] md:rounded-[11.5px]
+            className="w-full h-[110px] shadow md:h-[150.29px] lg:h-[250px] md:rounded-[11.5px]
             bg-green-200 rounded-lg flex px-[16px] lg:px-[50px]
       justify-between items-center lg:rounded-[20px]"
           >
