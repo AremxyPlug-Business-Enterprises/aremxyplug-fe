@@ -559,7 +559,7 @@ const SelectRecipient = () => {
                       alt="/"
                     />
 
-                    <p className="text-[10px] text-[#2ED173] font-semibold md:text-[14px] my-[4%]">
+                    <p className="text-[10px] text-[#2ED173] md:text-[16px] font-bold text-center my-[4%] lg:my-[%]">
                       New recipient contact has been added successfully.
                     </p>
                   </div>
