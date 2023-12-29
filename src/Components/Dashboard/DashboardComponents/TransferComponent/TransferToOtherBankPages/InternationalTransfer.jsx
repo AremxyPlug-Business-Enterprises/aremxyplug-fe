@@ -12,11 +12,16 @@ import { CountrySelectorCopy } from "../../CountrySelect/CountrySelectorCopy";
 export const InternationalTransfer = () => {
   const [errors, setErrors] = useState({});
   const [checkrate, setCheckrate] = useState(false);
-  const [transfer, setTransfer] = useState("");
-  const [receive, setReceive] = useState("");
 
-  const { setInternationalDetailPopUp, selectedCurr, CurrImage } =
-    useContext(ContextProvider);
+  const {
+    setInternationalDetailPopUp,
+    selectedCurr,
+    CurrImage,
+    transfer,
+    setTransfer,
+    receive,
+    setReceive,
+  } = useContext(ContextProvider);
 
   const transferHandler = (e) => {
     setTransfer(e.target.value);
@@ -123,7 +128,7 @@ export const InternationalTransfer = () => {
       </div>
       <div className="border rounded-[3.3px] h-[20px] w-[50%] mx-auto my-[3%] flex justify-between items-center px-[2%] md:h-[40px] lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
         <p className="text-[8px] text-[#0008] md:text-[14px] lg:text-[16px]">
-          Available Balance(&#8358;50,000.00)
+          Available Balance(0.00)
         </p>
         {selectedCurr ? (
           <div className="flex gap-[5px] items-center md:gap-[8px]">
@@ -210,7 +215,7 @@ export const InternationalTransfer = () => {
       >
         Proceed
       </button>
-      <InternationalDetail />
+      <InternationalDetail transfer={transfer} />
       {checkrate && <CheckRate setCheckrate={setCheckrate} />}
     </div>
   );

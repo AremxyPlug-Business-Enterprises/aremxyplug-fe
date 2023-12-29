@@ -6,11 +6,8 @@ import styles from "../../DashboardComponents/component.module.css";
 import { ContextProvider } from "../../../Context";
 
 export const ToMyAccountPage = () => {
-  const { isDarkMode } = useContext(ContextProvider);
+  const { isDarkMode, handleRefresh } = useContext(ContextProvider);
 
-  const handleRefresh = () => {
-    window.location.reload(true);
-  };
   return (
     <DashBoardLayout>
       <div className="flex flex-col gap-[70px] justify-between h-full">

@@ -7,6 +7,9 @@ import arrowDown from "../../src/Components/EducationPins/imagesEducation/arrow-
 export const ContextProvider = createContext();
 
 export const Context = ({ children }) => {
+  const handleRefresh = () => {
+    window.location.reload(true);
+  };
   // Select username or email starts here
   const [hideNavbar, setHideNavbar] = useState(false);
   const [resetEmail, setResetEmail] = useState("");
@@ -115,6 +118,10 @@ export const Context = ({ children }) => {
     setTwentiethDrop((prev) => !prev);
   }
   // ============= End of FAQ drop down===========
+
+  // ==========IMages======
+  const [tfImage, settfImage] = useState("");
+  const [withdrawImage, setWithdrawImage] = useState("");
 
   // =========Start For SignUp.jsx==========
   const [isFocused, setIsFocused] = useState([]);
@@ -590,7 +597,8 @@ export const Context = ({ children }) => {
     useState(false);
   const [InternationalDetailPopUp, setInternationalDetailPopUp] =
     useState(false);
-
+  const [transfer, setTransfer] = useState("");
+  const [receive, setReceive] = useState("");
   const [internationalDetails, setInternationalDetails] = useState({
     bankName: "",
     accountNumber: "",
@@ -606,11 +614,20 @@ export const Context = ({ children }) => {
 
   const handleInternationalInputChange = (event) => {
     const { name, value, type, checked } = event.target;
-    const inputValue = type === "checkbox" ? checked : value;
-    setInternationalDetails({
-      ...internationalDetails,
-      [name]: inputValue,
-    });
+    if (name === "accountNumber" && type === "number") {
+      // If the input is of type 'number', limit it to 10 digits
+      const inputValue = value.replace(/\D/g, "").slice(0, 10);
+      setInternationalDetails({
+        ...state,
+        [name]: inputValue,
+      });
+    } else {
+      const inputValue = type === "checkbox" ? checked : value;
+      setInternationalDetails({
+        ...internationalDetails,
+        [name]: inputValue,
+      });
+    }
   };
 
   const schemaForInternationalDetails = Joi.object({
@@ -662,7 +679,6 @@ export const Context = ({ children }) => {
       setInternationalBankConfirmation(true);
     }
   };
-
   const bankName = internationalDetails.bankName;
   const accountNumber = internationalDetails.accountNumber;
   const accountName = internationalDetails.accountName;
@@ -950,6 +966,12 @@ export const Context = ({ children }) => {
   //============ AUTHETICATION SETTINGS ========
   const [authenticationOpen, setAuthenticationOpen] = useState(false);
   const hold = {
+    handleRefresh,
+    // ==================
+    tfImage, settfImage,
+    withdrawImage,
+    setWithdrawImage,
+    // ====================
     firstDrop,
     secondDrop,
     thirdDrop,
@@ -1163,6 +1185,10 @@ export const Context = ({ children }) => {
     setSelectedCurr,
     CurrImage,
     setCurrImage,
+    transfer,
+    setTransfer,
+    receive,
+    setReceive,
 
     // ============withdrawal=============
     withdrawalPin,
