@@ -19,10 +19,7 @@ import envelope from "./assets/envelope.svg";
 import bin from "./assets/bin.svg";
 import deletingfiles from "./assets/deletingfile.svg";
 import VuesaxBoldEye from "./assets/cancel.svg";
-// import WalletModal from "../Wallet/WalletModal";
-// import line from "./assets/line.svg";
 import { Modal } from "../Screens/Modal/Modal";
-// import GBPPopUp from "../../Components/Dashboard/DashboardComponents/CardPaymentPage/CardPaymentImages/GBPPopUp.svg";
 import SuccessGif from "../../Components/Dashboard/DashboardComponents/CardPaymentPage/CardPaymentImages/success.gif";
 
 
@@ -286,7 +283,7 @@ const [isModalOpen1, setIsModalOpen1] = useState(false);
 
 
   const handleClick6 = () => {
-    setIsRead(!isRead); 
+    setIsRead(!isRead);
     setIsRead1(!isRead1); 
     setIsRead2(!isRead2); 
     setIsRead3(!isRead3) ;
