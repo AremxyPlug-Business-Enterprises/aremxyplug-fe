@@ -14,7 +14,7 @@ import { InputPinPopUp } from "../TransferComponent/PopUps/InputPinPopUp";
 export const BusinessAccountPage = () => {
   const {
     isDarkMode,
-    image,
+    tfImage,
     code,
     toggleSideBar,
     amtToTransfer,
@@ -89,7 +89,7 @@ export const BusinessAccountPage = () => {
               </div>
               <img
                 className="w-[18px] h-[18px] md:w-[24px] md:h-[24px] lg:w-[29px] lg:h-[29px]"
-                src={image}
+                src={tfImage}
                 alt="/"
               />
             </div>
