@@ -7,7 +7,6 @@ import "./topUp.css";
 
 import { DashBoardLayout } from "../../Dashboard/Layout/DashBoardLayout";
 import { Link } from "react-router-dom";
-import TopupModal from "../../topup/TopupModal";
 import CurrencyConversionModal from '../../CurrencyConversion/CurrencyConversionModal';
 
 // FUNDING METHODS DATA STARTS HERE
@@ -268,7 +267,7 @@ cursor-pointer py-[8.17px] px-[14%] rounded-tr-[5px] rounded-br-[5px] rounded-bl
             </div>
           
             </div>
-        {showCryptoModal1 && (
+        {/* {showCryptoModal1 && (
           <TopupModal>
             <div className={`${isDarkMode ? "bg-[#000] border":"bg-[#fff]"} w-[90%] md:w-[70%] lg:w-[50%] pb-[33px] rounded-[8px] md:rounded-[11.5px]`} >
               <h2 className="text-center text-[10px] leading-[15px] mb-[10px] font-semibold md:text-[12px] md:leading-[18px] lg:text-base lg:leading-[24px] text-primary
@@ -298,12 +297,21 @@ cursor-pointer py-[8.17px] px-[14%] rounded-tr-[5px] rounded-br-[5px] rounded-bl
                   Okay
                 </div>
               </div>
-
-
             </div>
           </TopupModal>
-        )}
-    
+        )} */}
+
+        { showCryptoModal1 && 
+          <CurrencyConversionModal
+            tag={'This Feature is Currently Not Available.'}
+            title={'Crypto TopUp'}
+            image={'./Images/wallet/comingSoon.png'}
+            onClick={() => {
+              setShowCryptoModal1((prev) => !prev);
+              setPaymentType("fiat");
+            }}
+          />
+        }
     </DashBoardLayout>
   );
 }
