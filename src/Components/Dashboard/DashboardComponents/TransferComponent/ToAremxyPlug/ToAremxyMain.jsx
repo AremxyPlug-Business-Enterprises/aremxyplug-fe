@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { ContextProvider } from "../../../../Context";
 import styles from "../../TransferComponent/transfer.module.css";
-import styled from "../../../../AirTimePage/AirTime.module.css";
+import styled from "../../component.module.css";
 import { ToConfirmAremxyMain } from "./ToConfirmAremxyMain";
 import { Modal } from "../../../../Screens/Modal/Modal";
 import pickPinIcon from '../../../../My Profile & Account Settings/ProfileImages/pickPinIcon.svg';
@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 
 export default function ToAremxyMain() {
   const {
+    isDarkMode,
     showList,
     setShowList,
     selected,
@@ -411,19 +412,34 @@ export default function ToAremxyMain() {
       </button>
       {currencyAvailable && (
         <Modal>
-          <div className={styled.NotInter}>
-              <div className={styled.timeAble}>
-                  <h5>This Currency is Currently Not Available.</h5>
-              </div>
-              <div className={styled.InterAirtimeK}>
-                  <img src="/Images/addAccountImages/account-unavailable.png" alt=""/>
-              </div>
-              <div className={styled.coming}>
-                  <h2>Coming soon...</h2>
-                  <button className={styled.btnOk} onClick={refresh}>Okay</button>
-              </div>
+        <div
+          className={` mt-6 ${
+            isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
+          } ${styled.cryptoTopUp} flex flex-col justify-between `}
+        >
+          <div className="text-[10px] text-center pt-[2%] pb-[2%] text-[#04177f] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[2%] lg:pb-[0%]">
+            This Currency is Currently Not Available.
           </div>
-        </Modal>
+          <img
+            className="w-[140px] h-[100px] mx-auto lg:w-[217px] lg:h-[187px]"
+            src="/Images/addAccountImages/account-unavailable.png"
+            alt="/"
+          />
+          <div className="mx-[6%] flex flex-col gap-[5px] pb-[5%]">
+            <div className="text-[8px] font-extrabold float-right ml-[70%] md:ml-[70%] md:text-[12px] lg:text-[13px] lg:ml-[80%]">
+              Coming soon...
+            </div>
+            <div
+              onClick={refresh}
+              className={` ${
+                isDarkMode ? "border" : "bg-[#04177f] "
+              } cursor-pointer text-white text-[10px] h-[40px] rounded-[5px] flex items-center justify-center md:mx-auto md:w-[20%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[30%] lg:mx-auto`}
+            >
+              Okay
+            </div>
+          </div>
+        </div>
+      </Modal>
       )}
       <ToConfirmAremxyMain />
     </div>

@@ -304,8 +304,8 @@ const AddRecipient = () => {
                             src="./Gif/checkMarkGif.gif"
                             alt="/"
                             />
-                            <p className="text-[9px] text-[#2ED173] md:text-[16px] font-bold text-center my-[4%] lg:my-[%]">
-                            New recipient contact has been added successfully.
+                            <p className="text-[10px] text-[#2ED173] md:text-[16px] font-bold text-center my-[4%] lg:my-[%]">
+                            New recipient contact has been added successfully. 
                             </p>
                            
                             <Link to="/airtime-vtu">

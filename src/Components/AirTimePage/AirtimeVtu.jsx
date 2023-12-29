@@ -886,7 +886,7 @@ const AirtimeVtu = () => {
             )}
             <div className={styles.containFlex2}>
                 <button className={`${
-                amount.length < 4 ? "bg-[#0008]" : "bg-[#04177f]"
+                amount.length < 2 ? "bg-[#0008]" : "bg-[#04177f]"
                 } w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`} onClick={handleProceed}>Proceed
                 </button>
             </div>
