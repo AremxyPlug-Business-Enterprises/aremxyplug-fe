@@ -107,6 +107,7 @@ export const CountrySelectorCopy = ({
           />
         )}
       </button>
+
       {showList && (
         <div
           className=""
@@ -116,7 +117,7 @@ export const CountrySelectorCopy = ({
         >
           {countryList.map((country) => (
             <div
-              className=" cursor-pointer border-b flex items-center p-1 gap-[5px] text-[9px] bg-[#fff] md:text-[14px] lg:gap-[15px] lg:text-[16px] lg:justify-between lg:px-[25%]"
+              className="cursor-pointer border-b flex items-center p-1 gap-[5px] text-[9px] bg-[#fff] md:text-[14px] lg:gap-[15px] lg:text-[16px] lg:justify-between lg:px-[25%]"
               key={country.id}
               onClick={() =>
                 handleOptionClick(

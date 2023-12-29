@@ -8,7 +8,7 @@ export const ConfirmWithdrawalPopUp = () => {
   const {
     toggleSideBar,
     transferFee,
-    image,
+    withdrawImage,
     amtToTransfer,
     confirmationPopUp,
     setConfirmationPopUp,
@@ -88,7 +88,11 @@ export const ConfirmWithdrawalPopUp = () => {
             <div className="bg-[#0001] h-[45px] my-5 flex justify-between items-center px-[4%]">
               <div className="flex gap-2 items-center">
                 <div className="bg-white rounded-full h-[27px] w-[27px] flex justify-center items-center">
-                  <img className="w-[16px] h-[16px]" src={image} alt="/" />
+                  <img
+                    className="w-[16px] h-[16px]"
+                    src={withdrawImage}
+                    alt="/"
+                  />
                 </div>
                 <p className="text-[10px] md:text-[14px]  lg:text-[16px]">
                   Available Balance{" "}

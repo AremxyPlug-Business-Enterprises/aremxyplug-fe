@@ -14,7 +14,7 @@ import { WithdrawalPinPopUp } from "./WithdrawalPopUps/WithdrawPinPopUp";
 export const WithdrawToPersonalAccountPage = () => {
   const {
     isDarkMode,
-    image,
+    withdrawImage,
     code,
     toggleSideBar,
     amtToTransfer,
@@ -70,7 +70,8 @@ export const WithdrawToPersonalAccountPage = () => {
               />
             </button>
 
-            <button
+            <Link
+              to="/top-up"
               className={`${styles.transferMoneyBtn} flex gap-[5px] w-[100%] h-[26px] justify-center items-center md:w-[390px] lg:h-[41px]`}
             >
               <h2 className="text-[9px] md:text-[12px] lg:text-[16px]">
@@ -81,7 +82,7 @@ export const WithdrawToPersonalAccountPage = () => {
                 src="/Images/dashboardImages/add-money.png"
                 alt=""
               />
-            </button>
+            </Link>
           </div>
           <div className="flex text-[#7c7c7c] text-[10px] leading-[130%] items-center mb-[2%] gap-[8px] md:my-[5%] md:text-[18px] lg:text-[20px]">
             <p>Account Details : </p>
@@ -105,7 +106,7 @@ export const WithdrawToPersonalAccountPage = () => {
               </div>
               <img
                 className="w-[18px] h-[18px] md:w-[24px] md:h-[24px] lg:w-[29px] lg:h-[29px]"
-                src={image}
+                src={withdrawImage}
                 alt="/"
               />
             </div>
