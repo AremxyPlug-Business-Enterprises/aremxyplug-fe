@@ -295,7 +295,7 @@ const AddRecipient = () => {
                             src="/Images/transferImages/close-circle.png"
                             alt=""
                             />
-                            <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
+                            <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[9%] md:h-[10px]" />
                             <h2 className="text-[12px] font-bold my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
                             Successful
                             </h2>

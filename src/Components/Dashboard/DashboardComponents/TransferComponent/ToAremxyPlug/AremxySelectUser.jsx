@@ -289,7 +289,7 @@ export default function AremxySelectUser() {
                         : "lg:w-[38.5%] lg:top-[105.3%]"
                     }  ${
                         styles.countryDropDown
-                    } rounded-br-[7px] rounded-bl-[7px] shadow-xl bg-[#fff] border w-[100%] lg:w-full md:w-[50%] lg:rounded-br-[14px] lg:rounded-bl-[14px]`}
+                    } rounded-br-[7px] rounded-bl-[7px] shadow-xl bg-[#fff] border w-[100%] lg:w-full lg:rounded-br-[14px] lg:rounded-bl-[14px]`}
                     >
                     {" "}
                     {countryList.map((country) => (
@@ -606,9 +606,9 @@ export default function AremxySelectUser() {
               <Modal>
                 <div
                   className={`${style.balanceMoneyPop} ${
-                    toggleSideBar ? "xl:w-[65%] xl:ml-[17%] lg:ml-[20%] lg:w-[40%]"
+                    toggleSideBar ? " lg:ml-[20%] lg:w-[40%]"
                     : "lg:w-[40%]"
-                } w-[90%] xl:w-[40%] md:w-[70%] overflow-auto`}
+                } w-[90%] md:w-[70%] overflow-auto`}
                 >
                   <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
                     <img
@@ -888,7 +888,7 @@ export default function AremxySelectUser() {
                         src="/Images/transferImages/close-circle.png"
                         alt=""
                         />
-                        <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
+                        <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[8%] md:h-[10px]" />
                         <h2 className="text-[12px] font-bold my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
                         Successful
                         </h2>
