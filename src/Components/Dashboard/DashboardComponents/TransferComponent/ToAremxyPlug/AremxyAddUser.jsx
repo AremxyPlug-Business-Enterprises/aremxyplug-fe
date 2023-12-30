@@ -4,6 +4,7 @@ import { DashBoardLayout } from "../../../Layout/DashBoardLayout";
 import { Link } from "react-router-dom";
 import style from "../../../../AirTimePage/AirtimeVtu.module.css";
 import styles from "../../TransferComponent/transfer.module.css";
+import styled from "../../component.module.css";
 import { Modal } from "../../../../Screens/Modal/Modal";
 import Joi from "joi";
 
@@ -11,6 +12,7 @@ import Joi from "joi";
 const AremxyAddUser = () => {
 
     const {
+        isDarkMode,
         toggleSideBar,
       } = useContext(ContextProvider);
 
@@ -105,13 +107,17 @@ const AremxyAddUser = () => {
 
     const [flag, setFlag] = useState("");
     const [confirm, setConfirm] = useState(false);
+    const [currencyAvailable, setCurrencyAvailable] = useState(false);
 
     const handleCountryClick = (name, flag, id, code) => {
         setFlag(flag);
         setShowList(false);
         setMainCountry(name);
         setSelected(true);
+        setCurrencyAvailable(id !== 1);
     };
+
+    const refresh = () => window.location.reload(true);
 
     const handleConfirm =()=> {
         setSave(false);
@@ -212,11 +218,11 @@ const AremxyAddUser = () => {
                 <div
                 className={`${
                     toggleSideBar
-                    ? "lg:w-[36.7%] lg:top-[122%]"
-                    : "lg:w-[45%] lg:top-[122%]"
+                    ? "lg:w-[31.5%] lg:top-[100.5%]"
+                    : "lg:w-[38.5%] lg:top-[105.3%]"
                 }  ${
                     styles.countryDropDown
-                } rounded-br-[7px] absolute z-50 top-[355px] rounded-bl-[7px] shadow-xl bg-[#fff] border w-[90%] lg:rounded-br-[14px] lg:rounded-bl-[14px]`}
+                } rounded-br-[7px] rounded-bl-[7px] shadow-xl bg-[#fff] border w-[100%] lg:w-[50%] md:w-[50%] lg:rounded-br-[14px] lg:rounded-bl-[14px]`}
                 >
                 {" "}
                 {countryList.map((country) => (
@@ -307,8 +313,8 @@ const AremxyAddUser = () => {
                 <Modal>
                     <div
                         className={`${style.successfulFour} ${
-                        toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-                        } md:w-[45%] w-[90%] overflow-auto`}
+                          toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+                          } md:w-[45%] w-[90%] overflow-auto`}
                     >
                     <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
                         <img
@@ -376,7 +382,7 @@ const AremxyAddUser = () => {
                         src="/Images/transferImages/close-circle.png"
                         alt=""
                         />
-                        <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
+                        <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[8%] md:h-[10px]" />
                         <h2 className="text-[12px] font-bold my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
                         Successful
                         </h2>
@@ -407,6 +413,37 @@ const AremxyAddUser = () => {
                 } w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`} onClick={handleSave}>Save User
                 </button>
             </div>
+            {currencyAvailable && (
+              <Modal>
+                <div
+                  className={` mt-6 ${
+                    isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
+                  } ${styled.cryptoTopUp} flex flex-col justify-between `}
+                >
+                  <div className="text-[10px] text-center pt-[2%] pb-[2%] text-[#04177f] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[2%] lg:pb-[0%]">
+                    This Currency is Currently Not Available.
+                  </div>
+                  <img
+                    className="w-[140px] h-[100px] mx-auto lg:w-[217px] lg:h-[187px]"
+                    src="/Images/addAccountImages/account-unavailable.png"
+                    alt="/"
+                  />
+                  <div className="mx-[6%] flex flex-col gap-[5px] pb-[5%]">
+                    <div className="text-[8px] font-extrabold float-right ml-[70%] md:ml-[70%] md:text-[12px] lg:text-[13px] lg:ml-[80%]">
+                      Coming soon...
+                    </div>
+                    <div
+                      onClick={refresh}
+                      className={` ${
+                        isDarkMode ? "border" : "bg-[#04177f] "
+                      } cursor-pointer text-white text-[10px] h-[40px] rounded-[5px] flex items-center justify-center md:mx-auto md:w-[20%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[30%] lg:mx-auto`}
+                    >
+                      Okay
+                    </div>
+                  </div>
+                </div>
+              </Modal>
+            )}
         </div>
         <div className={style.help}>
                 <h2>You need help?</h2>

@@ -254,6 +254,7 @@ export const MainDashboard = () => {
                   }`}
                 >
                   <select
+                  className={`${styles.selected}`}
                     name="curr"
                     id="curr"
                     onChange={handleSelectedOption2}
@@ -410,6 +411,7 @@ export const MainDashboard = () => {
                   </p>
 
                   <select
+                  className={`${styles.selected}`}
                     name="curr"
                     id="curr"
                     onChange={handleSelectedOption}

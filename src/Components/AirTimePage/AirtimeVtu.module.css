@@ -422,7 +422,18 @@
     letter-spacing: 0em;
     color: #000000;
 }
+.input .phones {
+    outline: none;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 21px;
+    letter-spacing: 0em;
+    color: #000000;
+}
 .phone::placeholder {
+    font-weight: 400;
+}
+.phones::placeholder {
     font-weight: 400;
 }
 .call img {
@@ -671,36 +682,43 @@
     .transferMoneyPop {
       height: 620px;
       bottom: auto;
+      top: auto;
       border-radius: 12px;
       background: #fff;
       box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
     }
     .balanceMoneyPop {
       height: 620px;
+      bottom: auto;
+      top: auto;
       border-radius: 12px;
       background: #fff;
       box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
     }
     .inputPin {
-        bottom: 30%;
+        bottom: auto;
+        top: auto;
         width: 481.25px;
         height: 350px;
     }
     .successfulTwo {
-        bottom: 30%;
-        width: 80%;
+        bottom: auto;
+        top: auto;
+        width: 60%;
         height: 600px;
         border-radius: 15px;
     }
     .successfulThree {
-        bottom: 30%;
-        width: 80%;
+        bottom: auto;
+        top: auto;
+        width: 60%;
         height: 450px;
         border-radius: 15px;
     }
     .successfulFour {
-        bottom: 30%;
-        width: 80%;
+        bottom: auto;
+        top: auto;
+        width: 60%;
         height: 450px;
         border-radius: 15px;
     }
@@ -711,6 +729,7 @@
     .transferMoneyPop {
       height: 560px;
       bottom: auto;
+      top: auto;
       border-radius: 20px;
       background: #fff;
       box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
@@ -718,6 +737,7 @@
     .balanceMoneyPop {
       height: 560px;
       bottom: auto;
+      top: auto;
       border-radius: 20px;
       background: #fff;
       box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
@@ -726,11 +746,13 @@
         height: 405px;
         position: absolute;
         bottom: auto;
+        top: auto;
         border-radius: 20px;
     }
     .successfulTwo {
         position: absolute;
         bottom: auto;
+        top: auto;
         border-radius: 15px;
         height: 550px;
         box-shadow: 0px 0px 16.952381610870361px 0px rgba(0, 0, 0, 0.25);
@@ -738,6 +760,7 @@
     .successfulThree {
         position: absolute;
         bottom: auto;
+        top: auto;
         border-radius: 15px;
         height: 450px;
         box-shadow: 0px 0px 16.952381610870361px 0px rgba(0, 0, 0, 0.25);
@@ -745,6 +768,7 @@
     .successfulFour {
         position: absolute;
         bottom: auto;
+        top: auto;
         border-radius: 15px;
         height: 450px;
         box-shadow: 0px 0px 16.952381610870361px 0px rgba(0, 0, 0, 0.25);
@@ -1108,6 +1132,14 @@
         left: 0;
     }
     .input .phone {
+        outline: none;
+        font-size: 10px;
+        font-weight: 600;
+        line-height: 12px;
+        letter-spacing: 0em;
+        color: #000000;
+    }
+    .input .phones {
         outline: none;
         font-size: 10px;
         font-weight: 600;
@@ -1749,6 +1781,17 @@
         letter-spacing: 0em;
         text-align: left;
         color: #000000;
+    }
+    .input .phones {
+        outline: none;
+        font-size: 10px;
+        font-weight: 600;
+        line-height: 10px;
+        letter-spacing: 0em;
+        text-align: left;
+        color: #000000;
+        position: relative;
+        left: -30px;
     }
     .phone::placeholder {
         font-weight: 400;

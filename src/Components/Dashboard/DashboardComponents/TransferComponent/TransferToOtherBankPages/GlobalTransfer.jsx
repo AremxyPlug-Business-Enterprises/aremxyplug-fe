@@ -4,7 +4,6 @@ import styles from "../../TransferComponent/transfer.module.css";
 import { ConfirmOtherTransaction } from "./OtherBankPopUp/OtherBankPopUp/ConfirmOtherTransaction";
 import { Modal } from "../../../../Screens/Modal/Modal";
 import { Link } from "react-router-dom";
-// import { useNavigate } from "react-router-dom";
 
 export default function GlobalTransfer() {
   const {
@@ -28,7 +27,7 @@ export default function GlobalTransfer() {
 
   const [addToRecipient, SetAddToRecipient] = useState(false);
   const [saveToFavorite, setSaveTofavorite] = useState(false);
-  
+
   const countryList = [
     {
       id: 1,
@@ -107,10 +106,7 @@ export default function GlobalTransfer() {
                   src={flag}
                   alt=""
                 />
-                <p className="text-[10px] font-extrabold lg:text-[14px]">
-                  {" "}
-                  {globalCountry}
-                </p>
+                <p className="text-[10px] lg:text-[14px]"> {globalCountry}</p>
               </div>
             ) : (
               <p></p>
@@ -163,6 +159,7 @@ export default function GlobalTransfer() {
         </div>
 
         {/* =======================Currency============================ */}
+
         <div className={styles.inputBox}>
           <p className="text-[10px] font-extrabold md:text-[14px] lg:text-[20px]">
             Select Currency
@@ -191,31 +188,31 @@ export default function GlobalTransfer() {
       </div>
       {/* ==========================Select/Add Recipient====================== */}
       <div className="flex gap-[10%] lg:gap-[3%]">
-      <Link to = '/GlobalTransferSelectRecipient'
-         className="w-full flex items-center justify-between border text-[10px] rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003] cursor-pointer">
+        <Link
+          to="/GlobalTransferSelectRecipient"
+          className="w-full flex items-center justify-between border text-[10px] rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003] cursor-pointer"
+        >
           <p>Select Recipient</p>
-          
+
           <img
             className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
             src="./Images/otherBanksImages/weight.png"
             alt=""
-          /></Link>
-      
-           
-  
-       
-        <Link to ='/GlobalTransferAddRecipient'
-        className="w-full flex items-center justify-between border text-[10px]  rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003] cursor-pointer">
+          />
+        </Link>
+
+        <Link
+          to="/GlobalTransferAddRecipient"
+          className="w-full flex items-center justify-between border text-[10px]  rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003] cursor-pointer"
+        >
           <p>Add Recipient</p>
-          
+
           <img
             className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
             src="./Images/otherBanksImages/add-square.png"
             alt=""
           />
-         
         </Link>
-     
       </div>
       <div className="bg-[#04177f] text-[#fff] text-[10px] h-[20px] flex justify-center items-center rounded-[2px] lg:w-[45%] lg:h-[38px] lg:text-[16px]">
         Real-time Bank Network Tracker
@@ -258,9 +255,32 @@ export default function GlobalTransfer() {
               onChange={handleGlobalInputChange}
               name="accountNumber"
               value={globalAccountNumber}
-              className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
+              className={`${styles.hideArrows} text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]`}
               type="number"
             />
+            <svg
+              className="h-[13.3px] w-[13.3px] lg:h-[24px] lg:w-[24px]"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 12 13"
+              fill="none"
+            >
+              <path
+                d="M6.0793 6.18305C6.0293 6.17805 5.9693 6.17805 5.9143 6.18305C4.7243 6.14305 3.7793 5.16805 3.7793 3.96805C3.7793 2.74305 4.7693 1.74805 5.9993 1.74805C7.2243 1.74805 8.2193 2.74305 8.2193 3.96805C8.2143 5.16805 7.2693 6.14305 6.0793 6.18305Z"
+                fill="#FFf"
+                stroke="#92ABFE"
+                stroke-width="0.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M3.57938 8.02805C2.36937 8.83805 2.36937 10.158 3.57938 10.963C4.95438 11.883 7.20938 11.883 8.58438 10.963C9.79438 10.153 9.79438 8.83305 8.58438 8.02805C7.21438 7.11305 4.95938 7.11305 3.57938 8.02805Z"
+                fill="#FFF"
+                stroke="#92ABFE"
+                stroke-width="0.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
           </div>
           {globalTransferErrors.accountNumber && (
             <div className="text-[12px] text-red-500 italic lg:text-[14px]">
@@ -282,6 +302,21 @@ export default function GlobalTransfer() {
               className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
               type="text"
             />
+            <svg
+              className="h-[13.3px] w-[13.3px] lg:h-[24px] lg:w-[24px]"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 12 13"
+              fill="none"
+            >
+              <path
+                d="M6 7.00977C4.415 7.00977 3.125 5.71977 3.125 4.13477C3.125 2.54977 4.415 1.25977 6 1.25977C7.585 1.25977 8.875 2.54977 8.875 4.13477C8.875 5.71977 7.585 7.00977 6 7.00977ZM6 2.00977C4.83 2.00977 3.875 2.96477 3.875 4.13477C3.875 5.30477 4.83 6.25977 6 6.25977C7.17 6.25977 8.125 5.30477 8.125 4.13477C8.125 2.96477 7.17 2.00977 6 2.00977Z"
+                fill="#92ABFE"
+              />
+              <path
+                d="M10.2951 12.0098C10.0901 12.0098 9.92007 11.8398 9.92007 11.6348C9.92007 9.90977 8.16008 8.50977 6.00008 8.50977C3.84008 8.50977 2.08008 9.90977 2.08008 11.6348C2.08008 11.8398 1.91008 12.0098 1.70508 12.0098C1.50008 12.0098 1.33008 11.8398 1.33008 11.6348C1.33008 9.49977 3.42508 7.75977 6.00008 7.75977C8.57508 7.75977 10.6701 9.49977 10.6701 11.6348C10.6701 11.8398 10.5001 12.0098 10.2951 12.0098Z"
+                fill="#92ABFE"
+              />
+            </svg>
           </div>
           {globalTransferErrors.accountName && (
             <div className="text-[12px] text-red-500 italic lg:text-[14px]">
@@ -302,7 +337,12 @@ export default function GlobalTransfer() {
             <input
               onChange={amountHandler}
               type="number"
-              className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
+              className={`${styles.hideArrows} text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]`}
+            />
+            <img
+              className=" h-[13.3px] w-[13.3px] lg:w-[24px] lg:h-[24px] "
+              src="./Images/dashboardImages/convertshape.png"
+              alt="dropdown"
             />
           </div>
 
@@ -383,7 +423,7 @@ export default function GlobalTransfer() {
       <button
         onClick={ProceedToGlobalTransfer}
         className={`${
-          amtToTransfer.length < 4 ? "bg-[#0008]" : "bg-[#04177f]"
+          amtToTransfer.length < 3 ? "bg-[#0008]" : "bg-[#04177f]"
         } my-[5%] w-full flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
       >
         Proceed

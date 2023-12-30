@@ -31,7 +31,7 @@ const FundWithCard = () => {
     setInputPin,
     inputPinHandler,
     // selectedCard,
-    setCardPaymentSelected
+    setCardPaymentSelected,
   } = useContext(ContextProvider);
   const [showPayment, setShowPayment] = useState(false);
   const { walletName, setWalletName } = useContext(ContextProvider);
@@ -50,7 +50,6 @@ const FundWithCard = () => {
   const [error, setError] = useState("");
   const { paymentSelected, setPaymentSelected } = useContext(ContextProvider);
 
-
   const handleShowPayment = () => {
     setShowPayment(!showPayment);
     setWalletName("");
@@ -63,7 +62,7 @@ const FundWithCard = () => {
     setPaymentSelected(true);
     setShowPayment(false);
     // setNgn(code === "NGN");
-  
+
     if (
       code === "USD" ||
       code === "GBP" ||
@@ -316,17 +315,21 @@ const FundWithCard = () => {
     ? codeValue.split(",")
     : [];
 
-    useEffect(() => {
-      // Read from the query parameter to check if card payment was selected
-      const searchParams = new URLSearchParams(location.search);
-      const cardPaymentSelectedFromQuery = searchParams.get("cardPaymentSelected");
-    
-      // Check if card payment was selected on the previous page
-      setCardPaymentSelected((prevCardPaymentSelected) => {
-        const isSelected = cardPaymentSelectedFromQuery === "true";
-        return isSelected !== prevCardPaymentSelected ? isSelected : prevCardPaymentSelected;
-      });
-    }, [location.search, setCardPaymentSelected]);
+  useEffect(() => {
+    // Read from the query parameter to check if card payment was selected
+    const searchParams = new URLSearchParams(location.search);
+    const cardPaymentSelectedFromQuery = searchParams.get(
+      "cardPaymentSelected"
+    );
+
+    // Check if card payment was selected on the previous page
+    setCardPaymentSelected((prevCardPaymentSelected) => {
+      const isSelected = cardPaymentSelectedFromQuery === "true";
+      return isSelected !== prevCardPaymentSelected
+        ? isSelected
+        : prevCardPaymentSelected;
+    });
+  }, [location.search, setCardPaymentSelected]);
 
   // console.log("code:", code);
   // console.log("number:", number);
@@ -354,10 +357,11 @@ const FundWithCard = () => {
           >
             <div className="w-[100%] pt-[19px] lg:pt-[20px] pl-[8.5px] md:pl-[9px]">
               <p className="text-[10px] mb-2 font-bold uppercase w-[110%] md:text-[14px] md:w-[70%] lg:w-[70%] lg:text-[20px] 2xl:w-[80%] 2xl:text-[24px] lg:mb-4">
-              FUND WITH CARD.
+                FUND WITH CARD.
               </p>
               <p className="text-[7px] font-[400] leading-[9px] mb-3 md:text-[12px] md:leading-[12.2px] w-[90%] md:w-[65%] lg:w-[75%] 2xl:w-[85%] 2xl:mt-[5px] lg:mt-[20px] lg:text-[16px] lg:leading-[26px] 2xl:text-[20px] lg:mb-[20px]">
-              Please select your existing binded bank card option to fund your wallet.
+                Please select your existing binded bank card option to fund your
+                wallet.
               </p>
             </div>
 
@@ -369,8 +373,6 @@ const FundWithCard = () => {
               />
             </div>
           </div>
-
-
 
           <div>
             <div onClick={handleShowPayment}>
@@ -444,13 +446,6 @@ const FundWithCard = () => {
               </div>
             )}
           </div>
-
-
-
-
-
-
-
 
           {/* <div>
             <div
@@ -568,14 +563,14 @@ const FundWithCard = () => {
                     <div className="flex items-center gap-[10px]">
                       {/* <img src={BankLogo} alt="" /> */}
                       <div>
-                      <img
-                        src={flag}
-                        alt=""
-                        className="w-full h-full object-cover"
-                      />
+                        <img
+                          src={flag}
+                          alt=""
+                          className="w-full h-full object-cover"
+                        />
                       </div>
                       <div className="w-full">
-                      <h2 className="text-[#7C7C7C]">{cardName}</h2>
+                        <h2 className="text-[#7C7C7C]">{cardName}</h2>
                       </div>
                       {/* <h2 className="text-[#7C7C7C]">{selectedCard.code}</h2> */}
                     </div>
@@ -588,11 +583,13 @@ const FundWithCard = () => {
                     }}
                     className="text-[10px] md:text-[13px] lg:text-[16px] text-[#929292] flex gap-[10px]"
                   >
-                    <div><img
-                      src={flag}
-                      alt=""
-                      className="w-full h-full object-cover"
-                    /></div>
+                    <div>
+                      <img
+                        src={flag}
+                        alt=""
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
                     <div className="w-full">{code}</div>
                   </h2>
                 )}
@@ -646,7 +643,7 @@ const FundWithCard = () => {
           <div className="border-[1px] w-full md:w-[50%] mt-[5%] rounded-[5px] flex justify-between py-[5px] px-[10px]">
             <input
               type="number"
-              className="outline-none relative text-[14px] md:text-[16px] lg:text-[18px] pl-[4%] lg:pl-[3%]"
+              className="outline-none relative text-[14px] md:text-[16px] lg:text-[18px] pl-[4%] lg:pl-[3%] w-full"
               value={cardPaymentAmount}
               placeholder=""
               onChange={handleAmount}
@@ -679,54 +676,50 @@ const FundWithCard = () => {
                   : "bg-primary"
               }`}
               onClick={handleProceed}
-              disabled={
-                !paymentSelected || !cardPaymentAmount || !codeValue
-              }
+              disabled={!paymentSelected || !cardPaymentAmount || !codeValue}
             >
               Proceed
             </button>
           </div>
-          
+
           {paymentSelected && usd ? (
             <Modal>
-             <div
-              className={`${
-                toggleSideBar ? "datapopup01" : "datapopup1"
-              } bg-white `}
-            >
               <div
-                className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
-                    flex flex-col justify-center z-[100] lg:ml-[10px] items-center md:mt-[5%]  
-                     
-                    ${
-                      toggleSideBar ? "" : "xl:mt-[0%]"
-                    }`}
+                className={`${
+                  toggleSideBar ? "datapopup011" : "datapopup1"
+                } bg-white `}
               >
-                <div>
-                  <p className="text-[10px] text-[#04177F] text-center pt-[5%] md:pt-[0%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[0%]">
-                    This Currency is Currently Not Available.
-                  </p>
-                </div>
-                <img
-                  src={AddCardPopUp}
-                  alt=""
-                  className="img2 mobile-desktop mx-auto mt-[20px] md:mt-[5%] md:w-[40%] md:h-[70%] md:mx-auto w-[143px] h-[100px] lg:w-[300px] lg:h-[200px] lg:mx-auto lg:mt-[8%] 2xl:mt-[5%] 2xl:mx-auto"
-                />
-              </div>
-              <div className="mt-[30px] flex flex-col gap-[5px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
-                <p className="text-[8px] font-extrabold text-end float-right ml-[60%] md:ml-[70%] md:text-[12px] mt-[10px] lg:text-[13px] 2xl:text-[15px]">
-                  Coming Soon...
-                </p>
-                <button
-                  className={` ${
-                    isDarkMode ? "border" : "bg-[#04177f] "
-                  } cursor-pointer text-white text-[10px] h-[40px] rounded-[5px] md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[25%] lg:mx-auto`}
-                  onClick={handleButtonClick}
+                <div
+                  className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
+                    flex flex-col justify-center z-[100] lg:ml-[10px] items-center md:mt-[5%] lg:mt-0
+                     
+                    ${toggleSideBar ? "" : "xl:mt-[0%]"}`}
                 >
-                  Okay
-                </button>
+                  <div>
+                    <p className="text-[10px] text-[#04177F] text-center pt-[5%] md:pt-[0%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[0%]">
+                      This Currency is Currently Not Available.
+                    </p>
+                  </div>
+                  <img
+                    src={AddCardPopUp}
+                    alt=""
+                    className="currency-img mx-auto mt-[20px] md:mt-[5%] md:mx-auto w-[143px] h-[100px] lg:mx-auto lg:mt-[8%] 2xl:mt-[5%] 2xl:mx-auto"
+                  />
+                </div>
+                <div className="mt-[30px] flex flex-col gap-[5px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
+                  <p className="text-[8px] font-extrabold text-end float-right ml-[60%] md:ml-[70%] md:text-[12px] mt-[10px] lg:text-[13px] 2xl:text-[15px]">
+                    Coming Soon...
+                  </p>
+                  <button
+                    className={` ${
+                      isDarkMode ? "border" : "bg-[#04177f] "
+                    } cursor-pointer text-white text-[10px] h-[40px] rounded-[5px] md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[25%] lg:mx-auto`}
+                    onClick={handleButtonClick}
+                  >
+                    Okay
+                  </button>
+                </div>
               </div>
-            </div>
             </Modal>
           ) : null}
 
@@ -837,63 +830,61 @@ const FundWithCard = () => {
 
           {confirm && (
             <Modal>
-
-
-<div
+              <div
                 className={` ${
-                  toggleSideBar
-                    ? "confirm02"
-                    : "confirm2"
+                  toggleSideBar ? "confirm02" : "confirm2"
                 } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
               >
                 <div className="flex justify-end px-2">
-                <img
-                  onClick={() => setConfirm(false)}
-                  className="cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[35px] lg:h-[35px] "
-                  src={Cancel}
-                  alt=""
-                />
+                  <img
+                    onClick={() => setConfirm(false)}
+                    className="cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[35px] lg:h-[35px] "
+                    src={Cancel}
+                    alt=""
+                  />
                 </div>
 
                 <hr className="h-[6px] bg-[#04177f] lg:mt-[2%] border-none mt-[2%] md:mt-[2%] md:h-[10px]" />
-                <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[8%] md:my-[5%] lg:my-[3%]">
-                  Input PIN to complete transaction
-                </p>
-                <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
-                  <div className=" flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
-                    {" "}
-                    {isVisible ? (
-                      <OtpInput
-                        value={inputPin}
-                        inputType="tel"
-                        onChange={setInputPin}
-                        numInputs={4}
-                        shouldAutoFocus={true}
-                        inputStyle={{
-                          color: "#403f3f",
-                          width: 30,
-                          height: 30,
-                          borderRadius: 3,
-                        }}
-                        renderInput={(props) => (
-                          <input {...props} className="inputOTP mx-[3px]" />
-                        )}
-                      />
-                    ) : (
-                      <div className="text-[24px] md:text-[24px] mt-1">
-                        * * * *{" "}
-                      </div>
-                    )}
-                    <div
-                      className="text-[#0003] text-xl md:text-3xl"
-                      onClick={toggleVisibility}
-                    >
-                      {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
-                    </div>
-                  </div>
-                  <p className="text-[8px] md:text-[12px] text-[#04177f]">
-                    Forgot Pin ?
+                <div className="md:mt-[15%] lg:mt-[10%]">
+                  <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[8%] md:my-[5%] lg:my-[3%]">
+                    Input PIN to complete transaction
                   </p>
+                  <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
+                    <div className=" flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
+                      {" "}
+                      {isVisible ? (
+                        <OtpInput
+                          value={inputPin}
+                          inputType="tel"
+                          onChange={setInputPin}
+                          numInputs={4}
+                          shouldAutoFocus={true}
+                          inputStyle={{
+                            color: "#403f3f",
+                            width: 30,
+                            height: 30,
+                            borderRadius: 3,
+                          }}
+                          renderInput={(props) => (
+                            <input {...props} className="inputOTP mx-[3px]" />
+                          )}
+                        />
+                      ) : (
+                        <div className="text-[24px] md:text-[24px] mt-1">
+                          * * * *{" "}
+                        </div>
+                      )}
+                      <div
+                        className="text-[#0003] text-xl md:text-3xl"
+                        onClick={toggleVisibility}
+                      >
+                        {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
+                      </div>
+                    </div>
+                    <p className="text-[8px] md:text-[12px] text-[#04177f]">
+                      Forgot Pin ?
+                    </p>
+                  </div>
                 </div>
 
                 <button
@@ -902,14 +893,13 @@ const FundWithCard = () => {
                     setConfirm(false);
                     inputPinHandler(e);
                     handleSuccessful();
-
                   }}
                   disabled={inputPin.length !== 4}
                   className={`${
                     inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
-                  } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                  } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
                 >
-                  Fund
+                  Purchase
                 </button>
               </div>
             </Modal>

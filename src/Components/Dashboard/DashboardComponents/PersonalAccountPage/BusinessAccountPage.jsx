@@ -14,7 +14,7 @@ import { InputPinPopUp } from "../TransferComponent/PopUps/InputPinPopUp";
 export const BusinessAccountPage = () => {
   const {
     isDarkMode,
-    image,
+    tfImage,
     code,
     toggleSideBar,
     amtToTransfer,
@@ -52,19 +52,20 @@ export const BusinessAccountPage = () => {
                 alt=""
               />
             </button>
-
-            <button
-              className={`${styles.transferMoneyBtn} flex gap-[5px] w-[100%] h-[26px] justify-center items-center md:w-[390px] lg:h-[41px]`}
-            >
-              <h2 className="text-[9px] md:text-[12px] lg:text-[16px]">
-                Add Money To Wallet
-              </h2>
-              <img
-                className="w-[11px] h-[11px] md:w-[20px] md:h-[20px] lg:w-[29px] lg:h-[29px]"
-                src="/Images/dashboardImages/add-money.png"
-                alt=""
-              />
-            </button>
+            <Link to="/top-up">
+              <button
+                className={`${styles.transferMoneyBtn} flex gap-[5px] w-[100%] h-[26px] justify-center items-center md:w-[390px] lg:h-[41px]`}
+              >
+                <h2 className="text-[9px] md:text-[12px] lg:text-[16px]">
+                  Add Money To Wallet
+                </h2>
+                <img
+                  className="w-[11px] h-[11px] md:w-[20px] md:h-[20px] lg:w-[29px] lg:h-[29px]"
+                  src="/Images/dashboardImages/add-money.png"
+                  alt=""
+                />
+              </button>
+            </Link>
           </div>
           <div className="flex text-[#7c7c7c] text-[10px] leading-[130%] items-center mb-[2%] gap-[8px] md:my-[5%] md:text-[18px] lg:text-[20px]">
             <p>Account Details : </p>
@@ -88,7 +89,7 @@ export const BusinessAccountPage = () => {
               </div>
               <img
                 className="w-[18px] h-[18px] md:w-[24px] md:h-[24px] lg:w-[29px] lg:h-[29px]"
-                src={image}
+                src={tfImage}
                 alt="/"
               />
             </div>
@@ -111,7 +112,9 @@ export const BusinessAccountPage = () => {
                 <p className="text-[13px] font-extrabold md:text-[20px]">
                   Company's Email
                 </p>
-                <p className="text-[10px] md:text-[15px]">hello@aremxyplug.com</p>
+                <p className="text-[10px] md:text-[15px]">
+                  hello@aremxyplug.com
+                </p>
               </div>
               <img
                 className="w-[18px] h-[18px] md:w-[24px] md:h-[24px] lg:w-[29px] lg:h-[29px]"
@@ -164,7 +167,9 @@ export const BusinessAccountPage = () => {
                 <p className="text-[13px] font-extrabold md:text-[20px]">
                   Company's Name
                 </p>
-                <p className="text-[10px] md:text-[15px]">Aremxyplug Business Ent, LTD.</p>
+                <p className="text-[10px] md:text-[15px]">
+                  Aremxyplug Business Ent, LTD.
+                </p>
               </div>
               <img
                 className="w-[18px] h-[18px] md:w-[24px] md:h-[24px] lg:w-[29px] lg:h-[29px]"
@@ -307,17 +312,13 @@ export const BusinessAccountPage = () => {
             </button>
           </div>
         </div>
-        <div
-          className={`${
-            isDarkMode ? "" : ""
-          } flex gap-[15px] justify-center items-center my-[15%] md:mt-[38%] lg:mt-[26%] lg:mb-[%]`}
-        >
-          <div className="text-[10px] md:text-[12px] lg:text-[14px]">
+        <div className="flex gap-[15px] justify-center items-center lg:my-10">
+          <div className="text-[8px] md:text-[12px] lg:text-[16px]">
             You need help ?
           </div>
           <Link to="/ContactUs">
             <div
-              className={`${isDarkMode ? "border" : "bg-[#04177f]"} ${
+              className={`${isDarkMode ? "border " : "bg-[#04177f]"} ${
                 styles.contactus
               }`}
             >

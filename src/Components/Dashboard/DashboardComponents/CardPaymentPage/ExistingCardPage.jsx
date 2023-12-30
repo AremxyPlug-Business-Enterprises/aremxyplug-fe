@@ -570,42 +570,44 @@ const ExistingCardPage = () => {
 
           {paymentSelected && usd ? (
             <Modal>
+             <div
+              className={`${
+                toggleSideBar ? "datapopup011" : "datapopup1"
+              } bg-white `}
+            >
               <div
-                className={`${
-                  toggleSideBar ? "datapopup01" : "datapopup1"
-                } bg-white `}
-              >
-                <div
-                  className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
-                    flex flex-col justify-center z-[100] lg:ml-[10px] items-center md:mt-[5%]  
+                className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
+                    flex flex-col justify-center z-[100] lg:ml-[10px] items-center md:mt-[5%] lg:mt-0
                      
-                    ${toggleSideBar ? "" : "xl:mt-[0%]"}`}
-                >
-                  <div>
-                    <p className="text-[10px] text-[#04177F] text-center pt-[5%] md:pt-[0%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[0%]">
-                      This Currency is Currently Not Available.
-                    </p>
-                  </div>
-                  <img
-                    src={AddCardPopUp}
-                    alt=""
-                    className="img2 mobile-desktop mx-auto mt-[20px] md:mt-[5%] md:w-[40%] md:h-[70%] md:mx-auto w-[143px] h-[100px] lg:w-[300px] lg:h-[200px] lg:mx-auto lg:mt-[8%] 2xl:mt-[5%] 2xl:mx-auto"
-                  />
-                </div>
-                <div className="mt-[30px] flex flex-col gap-[5px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
-                  <p className="text-[8px] font-extrabold text-end float-right ml-[60%] md:ml-[70%] md:text-[12px] mt-[10px] lg:text-[13px] 2xl:text-[15px]">
-                    Coming Soon...
+                    ${
+                      toggleSideBar ? "" : "xl:mt-[0%]"
+                    }`}
+              >
+                <div>
+                  <p className="text-[10px] text-[#04177F] text-center pt-[5%] md:pt-[0%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[0%]">
+                    This Currency is Currently Not Available.
                   </p>
-                  <button
-                    className={` ${
-                      isDarkMode ? "border" : "bg-[#04177f] "
-                    } cursor-pointer text-white text-[10px] h-[40px] rounded-[5px] md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[25%] lg:mx-auto`}
-                    onClick={handleButtonClick}
-                  >
-                    Okay
-                  </button>
                 </div>
+                <img
+                  src={AddCardPopUp}
+                  alt=""
+                  className="currency-img mx-auto mt-[20px] md:mt-[5%] md:mx-auto w-[143px] h-[100px] lg:mx-auto lg:mt-[8%] 2xl:mt-[5%] 2xl:mx-auto"
+                />
               </div>
+              <div className="mt-[30px] flex flex-col gap-[5px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
+                <p className="text-[8px] font-extrabold text-end float-right ml-[60%] md:ml-[70%] md:text-[12px] mt-[10px] lg:text-[13px] 2xl:text-[15px]">
+                  Coming Soon...
+                </p>
+                <button
+                  className={` ${
+                    isDarkMode ? "border" : "bg-[#04177f] "
+                  } cursor-pointer text-white text-[10px] h-[40px] rounded-[5px] md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[25%] lg:mx-auto`}
+                  onClick={handleButtonClick}
+                >
+                  Okay
+                </button>
+              </div>
+            </div>
             </Modal>
           ) : null}
 
@@ -617,6 +619,7 @@ const ExistingCardPage = () => {
                   className="rounded-[5px] flex justify-between py-[10px] px-[10px] lg:mt-[2%]"
                   style={{ zIndex: 0 }}
                 >
+                  <div className="w-full">
                   <Link
                     to={`/FundWithCard?codeValue=${encodeURIComponent(
                       `${card.code}, ${card.name}, ${card.number}, ${card.flag}`
@@ -632,7 +635,7 @@ const ExistingCardPage = () => {
                       console.log('paymentSelected:', paymentSelected);
                     }}
                     key={index}
-                    className="w-full"
+                    className=""
                   >
                     <div className="flex flex-row gap-[10px]">
                       <div className="mt-[%]">
@@ -651,6 +654,7 @@ const ExistingCardPage = () => {
                       </div>
                     </div>
                   </Link>
+                  </div>
 
                   <div
                     className="relative right-[5px] z-[100000]"
@@ -666,9 +670,9 @@ const ExistingCardPage = () => {
                       handleBank(index);
                       setShowPayment(false);
 
-                      if (paymentSelected) {
-                        navigate('/FundWithCard', { state: { paymentSelected: true, localPaymentSelected: true } });
-                      }
+                      // if (paymentSelected) {
+                      //   navigate('/FundWithCard', { state: { paymentSelected: true, localPaymentSelected: true } });
+                      // }
                     }}
                   >
                     <img
@@ -683,7 +687,7 @@ const ExistingCardPage = () => {
 
                     {showPopup && activeImage === index && (
                       <div
-                        className="input border absolute bg-white top-[15px] right-[15px] w-[100px] md:top-[20px] md:right-[22px] lg:right-[30px] lg:top-[25px] h-[75px] md:h-[100px] md:w-[150px] rounded-[5px] z-50 flex flex-col justify-center items-start py-[5px]"
+                        className="input border absolute cursor-pointer bg-white top-[15px] right-[15px] w-[100px] md:top-[20px] md:right-[22px] lg:right-[30px] lg:top-[25px] h-[75px] md:h-[100px] md:w-[150px] rounded-[5px] z-[1000000000000] flex flex-col justify-center items-start py-[5px]"
                         style={{ boxShadow: "0 0 5px rgba(0, 0, 0, 0.2)" }}
                       >
                         <Link
@@ -723,8 +727,9 @@ const ExistingCardPage = () => {
                 <Modal>
                   <div
                     className={` ${
-                      toggleSideBar ? "confirm002" : "confirm200"
-                    } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto md:overflow-auto rounded-[12px]`}
+                      toggleSideBar ? "confirm02"
+                      : "confirm2"
+                    } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto xl:pb-[20px] rounded-[12px]`}
                   >
                     <hr className="h-[6px] bg-[#04177f] lg:mt-[5%] border-none mt-[6%] md:mt-[6%] md:h-[10px]" />
                     <p className="text-[10px] px-[20px] md:text-[14px] lg:text-[18px] font-extrabold text-center my-[3%] lg:my-[%]">
@@ -733,17 +738,17 @@ const ExistingCardPage = () => {
                     </p>
                     <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
                       <img
-                        className="default-card w-[100px] h-[100px] mx-auto mb-[2%] md:h-[100px] md:w-[150px]"
+                        className="w-[75px] h-[80px] mx-auto mb-[2%] md:w-[140px] md:h-[140px] lg:w-[170px] lg:h-[170px] xl:w-[150px] xl:h-[150px] 2xl:h-[120px]"
                         src={DefaultCard}
                         alt="/"
                       />
                     </div>
 
                     <div
-                      className={`flex flex-row gap-[10px] justify-center items-center w-full h-[38px] mt-[20px] md:mt-[10px] px-[20px] md:justify-center md:items-center mx-auto md:px-[40px]`}
+                      className={`flex flex-row gap-[10px] justify-center items-center w-full h-[38px] mt-[20px] md:mt-[10px] px-[20px] md:justify-center md:items-center mx-auto md:w-[80%]`}
                     >
                       <button
-                        className={`bg-[#04177F] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
+                        className={`bg-[#04177F] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%] xl:py-[30px]`}
                         onClick={() => {
                           handleSuccessDefaultCard();
                           setDefaultCard(false);
@@ -768,8 +773,9 @@ const ExistingCardPage = () => {
                 <Modal>
                   <div
                     className={` ${
-                      toggleSideBar ? "confirm002" : "confirm200"
-                    } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
+                      toggleSideBar ? "confirm02"
+                      : "confirm2"
+                    } bg-white md:mx-auto pb-[20px] md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
                   >
                     <hr className="h-[6px] bg-[#04177f] lg:mt-[5%] border-none mt-[6%] md:mt-[5%] md:h-[10px]" />
                     <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[3%] lg:my-[%]">
@@ -780,7 +786,7 @@ const ExistingCardPage = () => {
                     </p>
                     <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[5%]">
                       <img
-                        className="success-default-card w-[100px] h-[100px] md:w-[90px] md:h-[90px] mx-auto mb-[2%] lg:w-[150px] lg:h-[120px]"
+                        className="w-[80px] h-[80px] mx-auto mb-[2%] md:w-[130px] md:h-[130px]  lg:w-[150px] lg:h-[150px]"
                         src={SuccessGif}
                         alt="/"
                       />
@@ -807,7 +813,8 @@ const ExistingCardPage = () => {
                 <Modal>
                   <div
                     className={` ${
-                      toggleSideBar ? "confirm002" : "confirm200"
+                      toggleSideBar ? "confirm02"
+                      : "confirm2"
                     } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto md:overflow-auto rounded-[12px]`}
                   >
                     <hr className="h-[6px] bg-[#04177f] lg:mt-[5%] border-none mt-[6%] md:mt-[6%] md:h-[10px]" />
@@ -816,14 +823,14 @@ const ExistingCardPage = () => {
                     </p>
                     <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
                       <img
-                        className="delete-card w-[100px] h-[100px] md:w-[120px] md:h-[100px] mx-auto mb-[2%]"
+                        className="w-[100px] h-[100px] mx-auto mb-[2%] md:w-[150px] md:h-[150px] lg:w-[190px] lg:h-[190px] xl:w-[170px] xl:h-[170px]"
                         src={DeleteCard}
                         alt="/"
                       />
                     </div>
 
                     <div
-                      className={`flex flex-row gap-[10px] justify-center items-center w-full h-[38px] mt-[20px] md:mt-[10px] px-[20px] mx-auto md:px-[40px]`}
+                      className={`flex flex-row gap-[10px] justify-center items-center w-full h-[38px] mt-[20px] md:mt-[10px] px-[20px] md:justify-center md:items-center mx-auto md:w-[80%]`}
                     >
                       <button
                         className={`bg-[#04177F] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
@@ -851,8 +858,9 @@ const ExistingCardPage = () => {
                 <Modal>
                   <div
                     className={` ${
-                      toggleSideBar ? "confirm002" : "confirm200"
-                    } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto md:overflow-auto rounded-[12px]`}
+                      toggleSideBar ? "confirm02"
+                      : "confirm2"
+                    } bg-white md:mx-auto pb-[20px] md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
                   >
                     <hr className=" h-[6px] bg-[#04177f] lg:mt-[5%] border-none mt-[6%] md:mt-[5%] md:h-[10px]" />
                     <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[3%] lg:my-[%]">
@@ -864,14 +872,14 @@ const ExistingCardPage = () => {
                     </p>
                     <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[5%]">
                       <img
-                        className="success-default-card w-[80px] h-[80px] md:w-[90px] md:h-[90px] mx-auto mb-[2%] lg:w-[150px] lg:h-[120px]"
+                        className="w-[80px] h-[80px] mx-auto mb-[2%] md:w-[130px] md:h-[130px]  lg:w-[150px] lg:h-[150px] 2xl:h-[130px] 2xl:w-[130px]"
                         src={SuccessGif}
                         alt="/"
                       />
                     </div>
 
                     <div
-                      className={`w-full h-[38px] mt-[0px] px-[20px] md:mt-[10px]`}
+                      className={`w-full h-[38px] mt-[20px] px-[20px] md:mt-[10px]`}
                     >
                       <button
                         className={`bg-[#04177F] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[20px] lg:text-[16px] md:mx-auto lg:h-[38px] lg:my-[4%]`}

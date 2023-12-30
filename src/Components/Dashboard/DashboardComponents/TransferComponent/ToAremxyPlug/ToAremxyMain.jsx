@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { ContextProvider } from "../../../../Context";
 import styles from "../../TransferComponent/transfer.module.css";
+import styled from "../../component.module.css";
 import { ToConfirmAremxyMain } from "./ToConfirmAremxyMain";
 import { Modal } from "../../../../Screens/Modal/Modal";
 import pickPinIcon from '../../../../My Profile & Account Settings/ProfileImages/pickPinIcon.svg';
@@ -9,11 +10,11 @@ import { Link } from "react-router-dom";
 
 export default function ToAremxyMain() {
   const {
+    isDarkMode,
     showList,
     setShowList,
     selected,
     setSelected,
-    isDarkMode,
     toggleSideBar,
     amtToTransfer,
     setAmtToTransfer,
@@ -130,11 +131,11 @@ export default function ToAremxyMain() {
             <div
               className={`${
                 toggleSideBar
-                  ? "lg:w-[35.7%] lg:top-[84.5%]"
-                  : "lg:w-[44%] lg:top-[85%]"
+                  ? "lg:w-[31.5%] lg:top-[100.5%]"
+                  : "lg:w-[38.5%] lg:top-[105.3%]"
               }  ${
                 styles.countryDropDown
-              } rounded-br-[7px] absolute z-50 top-[250px] rounded-bl-[7px] shadow-xl bg-[#fff] border w-[90%] lg:rounded-br-[14px] lg:rounded-bl-[14px]`}
+              } rounded-br-[7px] rounded-bl-[7px] shadow-xl bg-[#fff] border w-[100%] lg:w-full lg:rounded-br-[14px] lg:rounded-bl-[14px]`}
             >
               {" "}
               {countryList.map((country) => (
@@ -294,7 +295,7 @@ export default function ToAremxyMain() {
               maxLength="11"
               value={mainUserPhoneNumber}
               className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
-              type="text"
+              type="number"
             />
             <img
               className=" h-[13.3px] w-[13.3px] lg:w-[24px] lg:h-[24px] "
@@ -411,29 +412,34 @@ export default function ToAremxyMain() {
       </button>
       {currencyAvailable && (
         <Modal>
-          <div className="bg-white shadow-lg w-[90%] rounded-[8px] h-[269px] flex flex-col items-center py-[4%] gap-[40px] md:h-[360px] lg:w-[562px] lg:gap-[60px] lg:h-[500px] lg:py-[3%] lg:rounded-[px]">
-            <p className="text-[10px] text-[#04177f] font-extrabold md:text-[16px] lg:text-[25px]">
-              This Currency is Currently Not Available.
-            </p>
-            <img
-              className="w-[135px] h-[96px] lg:w-[217px] lg:h-[187px]"
-              src="/Images/addAccountImages/account-unavailable.png"
-              alt=""
-            />
-            <p className="absolute top-[58%] right-[15%] text-[8px] md:text-[12px] md:ml-[70%] lg:text-[14px] lg:top-[73%] lg:right-[33%] lg:ml-[40%] lg:w-[8%]">
-              Coming Soon...
-            </p>
-
+        <div
+          className={` mt-6 ${
+            isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
+          } ${styled.cryptoTopUp} flex flex-col justify-between `}
+        >
+          <div className="text-[10px] text-center pt-[2%] pb-[2%] text-[#04177f] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[2%] lg:pb-[0%]">
+            This Currency is Currently Not Available.
+          </div>
+          <img
+            className="w-[140px] h-[100px] mx-auto lg:w-[217px] lg:h-[187px]"
+            src="/Images/addAccountImages/account-unavailable.png"
+            alt="/"
+          />
+          <div className="mx-[6%] flex flex-col gap-[5px] pb-[5%]">
+            <div className="text-[8px] font-extrabold float-right ml-[70%] md:ml-[70%] md:text-[12px] lg:text-[13px] lg:ml-[80%]">
+              Coming soon...
+            </div>
             <div
               onClick={refresh}
               className={` ${
                 isDarkMode ? "border" : "bg-[#04177f] "
-              } cursor-pointer text-white text-[10px] h-[40px] w-[80%] rounded-[5px] flex items-center justify-center md:mx-auto md:w-[20%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[30%] lg:mx-auto`}
+              } cursor-pointer text-white text-[10px] h-[40px] rounded-[5px] flex items-center justify-center md:mx-auto md:w-[20%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[30%] lg:mx-auto`}
             >
               Okay
             </div>
           </div>
-        </Modal>
+        </div>
+      </Modal>
       )}
       <ToConfirmAremxyMain />
     </div>
