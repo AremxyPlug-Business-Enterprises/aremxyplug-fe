@@ -3,10 +3,7 @@ import { useState } from "react";
 import { useContext } from "react";
 import { ContextProvider } from "../../../Context";
 
-export const SenderCountrySelector = ({
-  className,
-  w = "w-[110px]",
-}) => {
+export const SenderCountrySelector = ({ className, w = "w-[110px]" }) => {
   const countryList = [
     {
       id: 1,
@@ -105,14 +102,14 @@ export const SenderCountrySelector = ({
       </button>
       {showList && (
         <div
-          className="" 
+          className=""
           style={{
             boxShadow: "0px 1.60656px 4.01639px 0px rgba(0, 0, 0, 0.25)",
           }}
         >
           {countryList.map((country) => (
             <div
-              className="z-10 cursor-pointer border-b flex items-center p-1 gap-[5px] text-[9px] bg-[#0a0a0a] md:text-[14px] lg:text-[16px] lg:justify-between lg:px-[25%]"
+              className="z-10 cursor-pointer border-b flex items-center p-1 gap-[5px] text-[9px] md:text-[14px] lg:text-[16px] lg:justify-between lg:px-[25%]"
               key={country.id}
               onClick={() =>
                 handleOptionClick(
