@@ -455,9 +455,10 @@ md:w-[150px] text-center rounded-[4.41px] bg-[#04177F]
        </div>
         </div>
 
-    <div className='relative flex items-center'>
-     
-      <img key={favorite.id}
+    <div className='flex gap-[10px] h-[100%]'>
+      <div key={favorite.id}
+      className='relative flex  items-center'>
+      <img 
        onClick={() => {
         handleElementClick(favorite.id);
       }}
@@ -495,7 +496,12 @@ md:w-[150px] text-center rounded-[4.41px] bg-[#04177F]
     Delete Recipients
    </p>
         </div>
+        
       )}
+      </div>
+      <div className='flex justify-start'>
+      <img src={Star} className='h-[23px] w-[23px] lg:h-[43px] lg:w-[43px]' alt="" />
+      </div>
     </div>
     {deleteRecipient === favorite.id && (
           <Modal>
