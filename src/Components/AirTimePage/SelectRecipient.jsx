@@ -248,8 +248,8 @@ const SelectRecipient = () => {
             {edit && (
               <Modal>
                 <div
-                  className={`${airtimestyles.balanceMoneyPop} ${
-                    toggleSideBar ? "xl:w-[65%] xl:ml-[17%] lg:ml-[20%] lg:w-[40%]"
+                  className={`${airtimestyles.transferMoneyPop} ${
+                    toggleSideBar ? " lg:ml-[20%] lg:w-[40%]"
                     : "lg:w-[40%]"
                 } w-[90%] xl:w-[40%] md:w-[70%] overflow-auto`}
                 >
@@ -430,8 +430,8 @@ const SelectRecipient = () => {
               <Modal>
                 <div
                   className={`${airtimestyles.successfulThree} ${
-                  toggleSideBar ? "md:w-[25%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-                  } w-[90%] md:w-[20%] overflow-auto`}
+                  toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+                } md:w-[45%] w-[90%] overflow-auto`}
                 >
                   <div className="flex justify-end items-end my-[2%] lg:my-[1%] ">
                     <img
@@ -447,13 +447,13 @@ const SelectRecipient = () => {
                       alt=""
                     />
                   </div>
-                  <hr className="h-[6px] bg-[#04177f] border-none mt-[3%] md:mt-[3%] md:h-[10px]" />
+                  <hr className="h-[6px] bg-[#04177f] border-none mt-[2%] md:mt-[1%] md:h-[10px]" />
 
-                  <div className="text-center mt-[40px] font-semibold text-[10px] lg:mt-[20px] lg:text-[16px]">
+                  <div className="text-[12px] my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
                     Please Confirm
                   </div>
 
-                  <div className="bg-[#FFF0BA] mx-5 h-[80px] my-5 flex justify-between items-center px-[%] md:h-[75px] md:mx-[20px] md:rounded-[15px] lg:h-[75px]">
+                  <div className="bg-[#FFF0BA] mx-5 rounded-md h-[55px] my-5 flex justify-between items-center px-[4%] md:h-[75px] lg:h-[85px]">
                     <p className="text-[10px] text-[#4A4A4A] font-semibold text-center mx-auto w-[250px] md:text-[9px] md:w-full lg:text-[14px]">
                       Are you sure you want to add this details to your
                       recipients? Please re-confirm the identity and be informed
@@ -462,8 +462,8 @@ const SelectRecipient = () => {
                     </p>
                   </div>
 
-                  <div className="flex flex-col gap-5 mt-[30px] lg:gap-4 px-[20px]">
-                    <div className="flex items-center justify-between">
+                  <div className="flex flex-col gap-2 lg:gap-4">
+                    <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                       <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
                         Network
                       </h2>
@@ -477,7 +477,7 @@ const SelectRecipient = () => {
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between">
+                    <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                       <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
                         Phone Number
                       </h2>
@@ -488,7 +488,7 @@ const SelectRecipient = () => {
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between">
+                    <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                       <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
                         Recipient Name
                       </h2>
@@ -500,20 +500,16 @@ const SelectRecipient = () => {
                     </div>
                   </div>
 
-                  <div
-                    className={`w-full h-[38px] mt-[100px] lg:mt-[50px] px-[20px] md:mx-[35%]`}
-                  >
                     <button
                       className={`${
                         recipientNumber.length < 11
                           ? "bg-[#0008]"
                           : "bg-[#04177f]"
-                      } w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
+                      } bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:mt-[8%]`}
                       onClick={handleConfirm}
                     >
                       Confirmed
                     </button>
-                  </div>
                 </div>
               </Modal>
             )}
@@ -565,7 +561,7 @@ const SelectRecipient = () => {
                   </div>
 
                   <div
-                    className={`w-full h-[38px] mt-[40px] px-[20px] items-center`}
+                    className={`w-full h-[38px] mt-[30px] px-[20px] items-center`}
                   >
                     <button
                       className={`bg-[#04177F] w-full mt-[5%] flex justify-center items-center my-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:mx-auto md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:mx-auto lg:h-[38px] lg:mt-[10%]`}

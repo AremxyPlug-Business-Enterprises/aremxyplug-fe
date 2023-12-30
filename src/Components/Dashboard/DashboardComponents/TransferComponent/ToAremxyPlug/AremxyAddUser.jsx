@@ -313,9 +313,8 @@ const AremxyAddUser = () => {
                 <Modal>
                     <div
                         className={`${style.successfulFour} ${
-                        toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-                        } md:w-[45%] w-[90%] md:my-auto md:mt-[.5%] mx-auto 
-                        overflow-auto md:mb-[18%] lg:mx-auto lg:my-auto`}
+                          toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+                          } md:w-[45%] w-[90%] overflow-auto`}
                     >
                     <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
                         <img
@@ -383,7 +382,7 @@ const AremxyAddUser = () => {
                         src="/Images/transferImages/close-circle.png"
                         alt=""
                         />
-                        <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
+                        <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[8%] md:h-[10px]" />
                         <h2 className="text-[12px] font-bold my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
                         Successful
                         </h2>

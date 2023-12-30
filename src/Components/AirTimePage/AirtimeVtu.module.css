@@ -422,7 +422,18 @@
     letter-spacing: 0em;
     color: #000000;
 }
+.input .phones {
+    outline: none;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 21px;
+    letter-spacing: 0em;
+    color: #000000;
+}
 .phone::placeholder {
+    font-weight: 400;
+}
+.phones::placeholder {
     font-weight: 400;
 }
 .call img {
@@ -693,21 +704,21 @@
     .successfulTwo {
         bottom: auto;
         top: auto;
-        width: 80%;
+        width: 60%;
         height: 600px;
         border-radius: 15px;
     }
     .successfulThree {
         bottom: auto;
         top: auto;
-        width: 80%;
+        width: 60%;
         height: 450px;
         border-radius: 15px;
     }
     .successfulFour {
         bottom: auto;
         top: auto;
-        width: 80%;
+        width: 60%;
         height: 450px;
         border-radius: 15px;
     }
@@ -1121,6 +1132,14 @@
         left: 0;
     }
     .input .phone {
+        outline: none;
+        font-size: 10px;
+        font-weight: 600;
+        line-height: 12px;
+        letter-spacing: 0em;
+        color: #000000;
+    }
+    .input .phones {
         outline: none;
         font-size: 10px;
         font-weight: 600;
@@ -1762,6 +1781,17 @@
         letter-spacing: 0em;
         text-align: left;
         color: #000000;
+    }
+    .input .phones {
+        outline: none;
+        font-size: 10px;
+        font-weight: 600;
+        line-height: 10px;
+        letter-spacing: 0em;
+        text-align: left;
+        color: #000000;
+        position: relative;
+        left: -30px;
     }
     .phone::placeholder {
         font-weight: 400;
