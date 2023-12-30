@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState} from 'react'
 import { DashBoardLayout } from '../../Dashboard/Layout/DashBoardLayout';
 import RecipientHero from '../RecipientHero';
 import ArrowRight from '../../EducationPins/imagesEducation/educationArrowRight.svg';
@@ -17,10 +17,10 @@ import SuccessIcon from '../../My Profile & Account Settings/ProfileImages/succe
 import AremxyLogo from '../../EducationPins/imagesEducation/AremxyPlug.svg';
 import imageCurrencyNotAvalaible from '../RecipientImages/CurrencyNotAvaliable.svg';
 import { Link } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
 import '../../../App.css';
-
-export default function GlobalTransferAddRecipient() {
-const [accountNumber, setAccountNumber] =  useState('');
+export default function EditSelectRecipient() {
+  const [accountNumber, setAccountNumber] =  useState('');
 const [accountName, setAccountName] = useState('');
 const [bankName,  setBankName] = useState('');
 const [confirmRecipient, setConfirmRecipient] = useState(false);
@@ -54,42 +54,9 @@ const saveRecipientButton = () => {
   setErrorRecipient(true);
    }
 }
-// const handleRecipientAccountChange = (e) => {
-//   const { name, value } = e.target;
-//   setCheckAccountDigit({
-//     [name]: value,
-//   });
-// };
-// const globalTransferSchema = Joi.object({
-//    checkAccountDigit: Joi.string()
-//     .pattern(new RegExp(/^\d{10,}/))
-//     .required()
-//     .messages({
-//       "string.pattern.base": "Account number should be 10 digits ",
-//     })
-//   })
-//   const checkBvnVerification = (e) => {
-//     e.preventDefault();
-//   const { error } = globalTransferSchema.validate({
-//       checkAccountDigit
-//     });
-  
-//     if (error) {
-//       setBvnError(
-//         error.details.reduce((acc, curr) => {
-//           acc[curr.path[0]] = curr.message;
-//           return acc;
-//         }, {})
-//       );
-//     } else {
-//       setOtherBankConfirmation(true);
-//       setGlobalTransferErrors({});
-//     }
-//   };
-  
+//  const {id} = useParams();
   return (
-    
-        <DashBoardLayout>
+    <DashBoardLayout>
           <div className='flex flex-col justify-between lg:h-[1400px] md:h-[1550px] h-[750px]'>
           <div>
             <RecipientHero/>
