@@ -328,8 +328,8 @@ const ExistingCardPage = () => {
   };
 
   const handleDefaultCard = () => {
-    setShowPopup(false);
     setDefaultCard(true);
+    setShowPopup(false);
   };
 
   const handleSuccessDefaultCard = () => {
@@ -617,9 +617,9 @@ const ExistingCardPage = () => {
                 <div
                   id="USD"
                   className="rounded-[5px] flex justify-between py-[10px] px-[10px] lg:mt-[2%]"
-                  style={{ zIndex: 0 }}
+                  // style={{ zIndex: 10000, position: 'relative' }}
                 >
-                  <div className="w-full">
+                  <div className="w-full z-0">
                   <Link
                     to={`/FundWithCard?codeValue=${encodeURIComponent(
                       `${card.code}, ${card.name}, ${card.number}, ${card.flag}`
@@ -657,8 +657,8 @@ const ExistingCardPage = () => {
                   </div>
 
                   <div
-                    className="relative right-[5px] z-[100000]"
-                    style={{ zIndex: 10000000 }}
+                    className="relative right-[5px]"
+                    style={{ zIndex: 1000, position: 'relative' }}
                     onMouseDown={(e) => {
                       if (e.target === e.currentTarget) {
                         // Handle div click logic
@@ -687,8 +687,8 @@ const ExistingCardPage = () => {
 
                     {showPopup && activeImage === index && (
                       <div
-                        className="input border absolute cursor-pointer bg-white top-[15px] right-[15px] w-[100px] md:top-[20px] md:right-[22px] lg:right-[30px] lg:top-[25px] h-[75px] md:h-[100px] md:w-[150px] rounded-[5px] z-[1000000000000] flex flex-col justify-center items-start py-[5px]"
-                        style={{ boxShadow: "0 0 5px rgba(0, 0, 0, 0.2)" }}
+                        className="border absolute cursor-pointer bg-white top-[15px] right-[15px] w-[100px] md:top-[20px] md:right-[22px] lg:right-[30px] lg:top-[25px] h-[75px] md:h-[100px] md:w-[150px] rounded-[5px] flex flex-col justify-center items-start py-[5px]"
+                        style={{ boxShadow: "0 0 5px rgba(0, 0, 0, 0.2)", zIndex: 10000, position: 'absolute' }}
                       >
                         <Link
                     to={`/FundWithCard?codeValue=${encodeURIComponent(
@@ -699,21 +699,21 @@ const ExistingCardPage = () => {
                       console.log(card.flag);
                     }}
                     key={index}>
-                          <div className="text-[10px] md:text-[12px] lg:text-[14px] text-[#000000] px-[5px] py-[5px]">
+                          <div className="text-[10px] md:text-[12px] lg:text-[14px] text-[#000000] px-[5px] py-[5px] z-[10000]">
                             Fund with Card
                           </div>
                         </Link>
                         <hr className="w-full h-[5px]" />
                         <div
                           onClick={handleDefaultCard}
-                          className="text-[#000000] text-[10px] md:text-[12px] lg:text-[14px] px-[5px] py-[5px]"
+                          className="text-[#000000] text-[10px] md:text-[12px] lg:text-[14px] px-[5px] py-[5px] z-[10000000]"
                         >
                           Make Card Default
                         </div>
                         <hr className="w-full h-[5px]" />
                         <div
                           onClick={handleDeleteCard}
-                          className="text-[#000000] text-[10px] md:text-[12px] lg:text-[14px] px-[5px] py-[5px]"
+                          className="text-[#000000] text-[10px] md:text-[12px] lg:text-[14px] px-[5px] py-[5px] z-[10000]"
                         >
                           Delete Card
                         </div>
