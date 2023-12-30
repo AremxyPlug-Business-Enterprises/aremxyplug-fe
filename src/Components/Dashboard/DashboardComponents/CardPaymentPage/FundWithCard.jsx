@@ -14,7 +14,6 @@ import OtpInput from "react-otp-input";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import Logo from "./CardPaymentImages/AremxyLogo.svg";
-import Success from "./CardPaymentImages/Tick.png";
 import { Link } from "react-router-dom";
 // import WalletModal from "../../../Wallet/WalletModal";
 import AddCardPopUp from "./CardPaymentImages/AddCardPopUp.svg";
@@ -899,7 +898,7 @@ const FundWithCard = () => {
                     inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
                   } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
                 >
-                  Purchase
+                  Fund
                 </button>
               </div>
             </Modal>
@@ -942,7 +941,7 @@ const FundWithCard = () => {
                   </h2>
 
                   <div className="flex flex-col justify-center items-center">
-                    <img src={Success} alt="" className="" />
+                    <img src="./Gif/checkMarkGif.gif" alt="" className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[100px] lg:h-[100px]" />
                     <p className="text-[10px] md:text-[12px] lg:text-[14px] text-[#2ED173] font-semibold">
                       Your NGN Wallet has been Credited Successfully With
                     </p>
