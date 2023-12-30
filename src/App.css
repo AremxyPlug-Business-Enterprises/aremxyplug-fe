@@ -271,3 +271,15 @@ border-radius : 10px;
   .confirmRecipient::-webkit-scrollbar-thumb{
     background-color: transparent;
   }
+  .deleteRecipientSuccess{
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+  }
+  .deleteRecipientSuccess::-webkit-scrollbar{
+    width : 5px;
+  }
+  .deleteRecipientSuccess::-webkit-scrollbar-thumb{
+    background-color: transparent;
+  }
+  
