@@ -29,6 +29,17 @@
   margin: 0;
 }
 
+.currencySelect {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  
+}
+
+.currencySelect::-ms-expand {
+  display: none;
+}
+
 .hideArrows {
   -moz-appearance: textfield;
 }

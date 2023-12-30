@@ -8,7 +8,7 @@ import Joi from "joi";
 export const WithdrawMoneyToAccountPopUp = () => {
   const {
     toggleSideBar,
-    image,
+    withdrawImage,
     amtToTransfer,
     wthPopUp,
     setWthPopUp,
@@ -112,7 +112,7 @@ export const WithdrawMoneyToAccountPopUp = () => {
                 <input
                   onChange={amountHandler}
                   type="number"
-                  className="outline-none text-[10px] text-[#0008] border-[0.55px] w-full h-[18px] flex flex-col justify-between p-[1%] rounded-[4px] md:text-[14px] md:p-[3%] md:rounded-[8px] md:h-[40px] md:border-[1.5px] lg:h-[30px] lg:text-[12px]"
+                  className={`${styles.hideArrows} outline-none text-[10px] text-[#0008] border-[0.55px] w-full h-[18px] flex flex-col justify-between p-[1%] rounded-[4px] md:text-[14px] md:p-[3%] md:rounded-[8px] md:h-[40px] md:border-[1.5px] lg:h-[30px] lg:text-[12px]`}
                 />
                 {errors.amtToTransfer && (
                   <div className="text-[12px] text-red-500 italic lg:text-[14px]">
@@ -129,8 +129,8 @@ export const WithdrawMoneyToAccountPopUp = () => {
                     &#8358;50,000.00
                   </p>
                   <img
-                    className="w-[13px] h-[13px] md:w-[24px] md:h-[24px] lg:w-[29px] lg:h-[29px]"
-                    src={image}
+                    className="w-[13px] h-[13px] md:w-[24px] md:h-[24px] lg:w-[25px] lg:h-[25px]"
+                    src={withdrawImage}
                     alt="/"
                   />
                 </div>
@@ -148,7 +148,7 @@ export const WithdrawMoneyToAccountPopUp = () => {
             <button
               onClick={handleProceed}
               className={`${
-                amtToTransfer < 4 ? "bg-[#0008]" : "bg-[#04177f]"
+                amtToTransfer < 3 ? "bg-[#0008]" : "bg-[#04177f]"
               } my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
             >
               Proceed

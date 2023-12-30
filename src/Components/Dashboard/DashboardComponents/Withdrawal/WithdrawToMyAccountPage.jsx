@@ -7,7 +7,7 @@ import { useContext } from "react";
 import { ContextProvider } from "../../../Context";
 
 export const WithdrawToMyAccountPage = () => {
-  const { isDarkMode } = useContext(ContextProvider);
+  const { isDarkMode,handleRefresh } = useContext(ContextProvider);
   return (
     <DashBoardLayout>
       <div className="flex flex-col h-full justify-between">
@@ -59,7 +59,7 @@ export const WithdrawToMyAccountPage = () => {
                 />
               </div>
             </Link>
-            <div className="flex items-center gap-[5px] bg-[#04177f] text-white text-[9px] h-[20px] w-[136px] rounded-[5px] justify-center font-extrabold ">
+            <div onClick={handleRefresh} className="flex items-center gap-[5px] bg-[#04177f] text-white text-[9px] h-[20px] w-[136px] rounded-[5px] justify-center font-extrabold ">
               <p>Refresh Account</p>
               <img
                 className="w-[11px] h-[11px] md:h-[20px] md:w-[20px] lg:w-[24px] lg:h-[24px]"
@@ -84,7 +84,7 @@ export const WithdrawToMyAccountPage = () => {
               />
             </div>
 
-            <div className="flex items-center gap-[5px] bg-[#04177f] text-white text-[9px] px-[2%]  py-[2%] w-[30%] rounded-[5px] font-extrabold md:rounded-[9px] md:justify-center md:items-center md:text-[16px] md:gap-[10px] md:py-[1%] lg:text-[20px] lg:h-[41px] lg:rounded-[12px]">
+            <div className="cursor-pointer flex items-center gap-[5px] bg-[#04177f] text-white text-[9px] px-[2%]  py-[2%] w-[30%] rounded-[5px] font-extrabold md:rounded-[9px] md:justify-center md:items-center md:text-[16px] md:gap-[10px] md:py-[1%] lg:text-[20px] lg:h-[41px] lg:rounded-[12px]">
               <Link to="/add-account">
                 <p>Add New Account</p>
               </Link>
@@ -95,7 +95,7 @@ export const WithdrawToMyAccountPage = () => {
               />
             </div>
 
-            <div className="flex items-center gap-[5px] bg-[#04177f] text-white text-[9px] px-[2%]  py-[2%] w-[30%] rounded-[5px] font-extrabold md:rounded-[9px] md:justify-center md:items-center md:text-[16px] md:gap-[10px] md:py-[1%] lg:text-[20px] lg:h-[41px] lg:rounded-[12px]">
+            <div onClick={handleRefresh} className="cursor-pointer flex items-center gap-[5px] bg-[#04177f] text-white text-[9px] px-[2%]  py-[2%] w-[30%] rounded-[5px] font-extrabold md:rounded-[9px] md:justify-center md:items-center md:text-[16px] md:gap-[10px] md:py-[1%] lg:text-[20px] lg:h-[41px] lg:rounded-[12px]">
               <p>Refresh Account</p>
               <img
                 className="w-[11px] h-[11px] md:h-[20px] md:w-[20px] lg:w-[24px] lg:h-[24px]"
@@ -105,7 +105,7 @@ export const WithdrawToMyAccountPage = () => {
             </div>
           </div>
 
-          <div className="flex text-[#7c7c7c] text-[10px] leading-[130%] items-center my-[5%] gap-[8px] md:my-[5%] md:text-[18px] lg:text-[20px]">
+          <div className="cursor-pointer flex text-[#7c7c7c] text-[10px] leading-[130%] items-center my-[5%] gap-[8px] md:my-[5%] md:text-[18px] lg:text-[20px]">
             <p>Select Account Type </p>
             <img
               className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"

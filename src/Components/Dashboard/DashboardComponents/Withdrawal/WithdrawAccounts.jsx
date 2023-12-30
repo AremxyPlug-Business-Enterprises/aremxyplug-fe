@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { ContextProvider } from "../../../Context";
 import styles from "../../DashboardComponents/component.module.css";
 
@@ -50,8 +50,8 @@ const CountrySelect = ({ onSelect, selectedCountry, countries }) => {
     setNoRecord,
     setPersonalAccount,
     setBusinessAccount,
-    image,
-    setImage,
+    withdrawImage,
+    setWithdrawImage,
     setCode,
     showList,
     setShowList,
@@ -62,7 +62,7 @@ const CountrySelect = ({ onSelect, selectedCountry, countries }) => {
 
   const handleOptionClick = (country, flag, id, code) => {
     onSelect(country);
-    setImage(flag);
+    setWithdrawImage(flag);
     setCode(code);
     setShowList(false);
     setSelected(true);
@@ -88,7 +88,7 @@ const CountrySelect = ({ onSelect, selectedCountry, countries }) => {
           <div className="flex gap-[5px] items-center md:gap-[8px]">
             <img
               className="w-[11px] h-[11px] lg:w-[29px] lg:h-[29px]"
-              src={image}
+              src={withdrawImage}
               alt=""
             />
             {selectedCountry}
@@ -139,7 +139,7 @@ const CountrySelect = ({ onSelect, selectedCountry, countries }) => {
   );
 };
 
-// ===================Transfer To Account Page================
+// ===================Withdraw To Account Page================
 export const WithdrawAccounts = () => {
   const { isDarkMode, handleActive, activeButton } =
     useContext(ContextProvider);
@@ -150,7 +150,7 @@ export const WithdrawAccounts = () => {
     setPersonalAccount,
     setBusinessAccount,
     setNoRecord,
-    image,
+    withdrawImage,
   } = useContext(ContextProvider);
   const [selectedCountry, setSelectedCountry] = useState("");
 
@@ -158,6 +158,14 @@ export const WithdrawAccounts = () => {
     setSelectedCountry(country);
   };
 
+  const navigate = useNavigate();
+  
+  const handleTableRowClick1 = () => {
+    navigate("/withdraw-to-personalaccount");
+  };
+  const handleTableRowClick2 = () => {
+    navigate("/withdraw-to-businessaccount");
+  };
   return (
     <div>
       <div className=" flex items-end justify-between">
@@ -172,7 +180,7 @@ export const WithdrawAccounts = () => {
               activeButton[0]
                 ? "bg-[#E2F3FF] rounded-[2px] border-b-[2px] border-b-[#04177f] h-[16px] flex items-center p-[5px] md:h-[35px] lg:rounded-[6px] lg:border-b-[4px] lg:h-[50px]"
                 : ""
-            } w-[95.667px] rounded-[2px] md:w-[180px] md:rounded-[3px] md:justify-center md:items-center flex lg:w-[248px] lg:rounded-[6px]`}
+            } cursor-pointer w-[95.667px] rounded-[2px] md:w-[180px] md:rounded-[3px] md:justify-center md:items-center flex lg:w-[248px] lg:rounded-[6px]`}
           >
             Personal Accounts
           </div>
@@ -186,7 +194,7 @@ export const WithdrawAccounts = () => {
               activeButton[1]
                 ? "bg-[#E2F3FF] rounded-[2px] border-b-[2px] border-b-[#04177f] h-[16px] flex items-center p-[5px]  md:h-[35px] lg:rounded-[6px] lg:border-b-[4px] lg:h-[50px]"
                 : ""
-            } w-[95.667px] rounded-[2px] md:w-[180px] md:rounded-[3px]  md:justify-center md:items-center flex lg:w-[248px] lg:rounded-[6px]`}
+            } cursor-pointer w-[95.667px] rounded-[2px] md:w-[180px] md:rounded-[3px]  md:justify-center md:items-center flex lg:w-[248px] lg:rounded-[6px]`}
           >
             Business Accounts
           </div>
@@ -243,38 +251,24 @@ export const WithdrawAccounts = () => {
             </tr>
           </thead>
 
-          <tbody>
+          <tbody onClick={handleTableRowClick1}>
             <tr>
               <td className="">
                 <div className="flex gap-[3px] lg:gap-[10px]">
                   <img
                     className="w-[11px] h-[11px] lg:w-[24px] lg:h-[24px]"
-                    src={image}
+                    src={withdrawImage}
                     alt=""
-                  />{" "}
-                  <p>
-                    {" "}
-                    <Link to="/withdraw-to-personalaccount">Nigeria</Link>
-                  </p>
+                  />
+                  <p>Nigeria</p>
                 </div>
               </td>
-              <td>
-                <Link to="/withdraw-to-personalaccount">NGN</Link>
-              </td>
-              <td>
-                <Link to="/withdraw-to-personalaccount">GT Bank</Link>
-              </td>
-              <td>
-                <Link to="/withdraw-to-personalaccount">Habib Kamaldeen</Link>
-              </td>
-              <td>
-                <Link to="/withdraw-to-personalaccount">01234*****</Link>
-              </td>
+              <td>NGN</td>
+              <td>GT Bank</td>
+              <td>Habib Kamaldeen</td>
+              <td>01234*****</td>
               <td className="flex gap-[5px] lg:gap-[10px]">
-                <p>
-                  {" "}
-                  <Link to="/withdraw-to-personalaccount">AP-2023 0703-001 </Link>
-                </p>
+                <p>AP-2023 0703-001 </p>
                 <img
                   className="w-[10px] h-[10px] md:w-[14px] md:h-[14px] lg:w-[20px] lg:h-[20px]"
                   src="./Images/Dashboardimages/arrowright.png"
@@ -300,40 +294,24 @@ export const WithdrawAccounts = () => {
             </tr>
           </thead>
 
-          <tbody>
+          <tbody onClick={handleTableRowClick2}>
             <tr>
               <td className="">
                 <div className="flex gap-[3px] lg:gap-[10px]">
                   <img
                     className="w-[11px] h-[11px] lg:w-[24px] lg:h-[24px]"
-                    src={image}
+                    src={withdrawImage}
                     alt=""
                   />{" "}
-                  <p>
-                    {" "}
-                    <Link to="/withdraw-to-businessaccount">Nigeria</Link>
-                  </p>
+                  <p> Nigeria</p>
                 </div>
               </td>
-              <td>
-                <Link to="/withdraw-to-businessaccount">NGN</Link>
-              </td>
-              <td>
-                <Link to="/withdraw-to-businessaccount">Mercury Bank</Link>
-              </td>
-              <td>
-                <Link to="/withdraw-to-businessaccount">
-                  AremxyPlug Business Ent, LTD.
-                </Link>
-              </td>
-              <td>
-                <Link to="/withdraw-to-businessaccount">01234*****</Link>
-              </td>
+              <td>NGN</td>
+              <td>Mercury Bank</td>
+              <td>AremxyPlug Business Ent, LTD.</td>
+              <td>01234*****</td>
               <td className="flex gap-[5px] lg:gap-[10px]">
-                <p>
-                  {" "}
-                  <Link to="/withdraw-to-businessaccount">AP-2023 0703-001 </Link>
-                </p>
+                <p> AP-2023 0703-001 </p>
                 <img
                   className="w-[10px] h-[10px] md:w-[14px] md:h-[14px] lg:w-[20px] lg:h-[20px]"
                   src="./Images/Dashboardimages/arrowright.png"
@@ -344,7 +322,6 @@ export const WithdrawAccounts = () => {
           </tbody>
         </table>
       )}
-
     </div>
   );
 };

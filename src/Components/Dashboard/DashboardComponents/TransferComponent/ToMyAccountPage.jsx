@@ -6,11 +6,8 @@ import styles from "../../DashboardComponents/component.module.css";
 import { ContextProvider } from "../../../Context";
 
 export const ToMyAccountPage = () => {
-  const { isDarkMode } = useContext(ContextProvider);
+  const { isDarkMode, handleRefresh } = useContext(ContextProvider);
 
-  const handleRefresh = () => {
-    window.location.reload(true);
-  };
   return (
     <DashBoardLayout>
       <div className="flex flex-col gap-[70px] justify-between h-full">
@@ -90,17 +87,18 @@ export const ToMyAccountPage = () => {
                 alt="/"
               />
             </div>
+            <Link
+              to="/add-account"
+              className="flex items-center gap-[5px] bg-[#04177f] text-white text-[9px] px-[2%]  py-[2%] w-[30%] rounded-[5px] font-extrabold md:rounded-[9px] md:justify-center md:items-center md:text-[16px] md:gap-[10px] md:py-[1%] lg:text-[20px] lg:h-[41px] lg:rounded-[12px]"
+            >
+              <p>Add New Account</p>
 
-            <div className="flex items-center gap-[5px] bg-[#04177f] text-white text-[9px] px-[2%]  py-[2%] w-[30%] rounded-[5px] font-extrabold md:rounded-[9px] md:justify-center md:items-center md:text-[16px] md:gap-[10px] md:py-[1%] lg:text-[20px] lg:h-[41px] lg:rounded-[12px]">
-              <Link to="/add-account">
-                <p>Add New Account</p>
-              </Link>
               <img
                 className="w-[11px] h-[11px] md:h-[20px] md:w-[20px] lg:w-[24px] lg:h-[24px]"
                 src="./Images/dashboardImages/add-account.png"
                 alt="topup"
               />
-            </div>
+            </Link>
 
             <div
               onClick={handleRefresh}

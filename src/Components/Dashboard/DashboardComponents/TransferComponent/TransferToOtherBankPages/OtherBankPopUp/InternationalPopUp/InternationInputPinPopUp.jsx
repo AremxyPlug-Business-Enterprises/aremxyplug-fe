@@ -40,7 +40,7 @@ export const InternationalInputPinPopUp = ({
             } md:w-[55%] w-[90%]`}
           >
             <img
-              onClick={() => setOtherInputPinPopUp(false)}
+              onClick={() =>setInternationalInputPinPopUp(false)}
               className="absolute right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px]"
               src="/Images/transferImages/close-circle.png"
               alt=""

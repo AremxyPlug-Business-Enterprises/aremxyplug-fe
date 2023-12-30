@@ -7,6 +7,9 @@ import arrowDown from "../../src/Components/EducationPins/imagesEducation/arrow-
 export const ContextProvider = createContext();
 
 export const Context = ({ children }) => {
+  const handleRefresh = () => {
+    window.location.reload(true);
+  };
   // Select username or email starts here
   const [hideNavbar, setHideNavbar] = useState(false);
   const [resetEmail, setResetEmail] = useState("");
@@ -115,6 +118,10 @@ export const Context = ({ children }) => {
     setTwentiethDrop((prev) => !prev);
   }
   // ============= End of FAQ drop down===========
+
+  // ==========IMages======
+  const [tfImage, settfImage] = useState("");
+  const [withdrawImage, setWithdrawImage] = useState("");
 
   // =========Start For SignUp.jsx==========
   const [isFocused, setIsFocused] = useState([]);
@@ -375,11 +382,11 @@ export const Context = ({ children }) => {
   const [noRecord, setNoRecord] = useState(true);
   const [personalAccount, setPersonalAccount] = useState(false);
   const [businessAccount, setBusinessAccount] = useState(false);
-  const [image, setImage] = useState("");
   const [code, setCode] = useState("");
   const [activeButton, setActiveButtons] = useState([true, false]);
   const [showList, setShowList] = useState(false);
   const [selected, setSelected] = useState(false);
+  const [selectedCurr, setSelectedCurr] = useState(false);
   const [amtToTransfer, setAmtToTransfer] = useState("");
   const [confirmationPopUp, setConfirmationPopUp] = useState(false);
   const [inputPinPopUp, setInputPinPopUp] = useState(false);
@@ -434,16 +441,20 @@ export const Context = ({ children }) => {
 
   const handleMainInputChange = (e) => {
     const { name, value } = e.target;
+    const limitedValue =
+      name === "userPhoneNumber" ? value.replace(/\D/g, "").slice(0, 11) : value;
+
+
     setMainTransferState({
       ...mainTransferState,
-      [name]: value,
+      [name]: limitedValue,
     });
   };
 
   const mainTransferSchema = Joi.object({
     mainCountry: Joi.string().required(),
     userPhoneNumber: Joi.string()
-      .pattern(new RegExp(/^\d{11}$/)) // Exactly 10 digits, you can adjust as needed
+      .pattern(new RegExp(/^\d{11}$/)) 
       .required()
       .max(11)
       .messages({
@@ -459,10 +470,10 @@ export const Context = ({ children }) => {
       )
       .required(),
     amtToTransfer: Joi.string()
-      .pattern(new RegExp(/\d{4,}/))
+      .pattern(new RegExp(/\d{2,}/))
       .required()
       .messages({
-        "string.pattern.base": "Amount can not be less than 1000",
+        "string.pattern.base": "Amount can not be less than 50",
       }),
   });
 
@@ -603,14 +614,24 @@ export const Context = ({ children }) => {
   });
   const [purpose, setPurpose] = useState(false);
   const [internErrors, setInternErrors] = useState({});
+  const [CurrImage, setCurrImage] = useState("");
 
   const handleInternationalInputChange = (event) => {
     const { name, value, type, checked } = event.target;
-    const inputValue = type === "checkbox" ? checked : value;
-    setInternationalDetails({
-      ...internationalDetails,
-      [name]: inputValue,
-    });
+    if (name === "accountNumber" && type === "number") {
+      // If the input is of type 'number', limit it to 10 digits
+      const inputValue = value.replace(/\D/g, "").slice(0, 10);
+      setInternationalDetails({
+        ...state,
+        [name]: inputValue,
+      });
+    } else {
+      const inputValue = type === "checkbox" ? checked : value;
+      setInternationalDetails({
+        ...internationalDetails,
+        [name]: inputValue,
+      });
+    }
   };
 
   const schemaForInternationalDetails = Joi.object({
@@ -662,7 +683,6 @@ export const Context = ({ children }) => {
       setInternationalBankConfirmation(true);
     }
   };
-
   const bankName = internationalDetails.bankName;
   const accountNumber = internationalDetails.accountNumber;
   const accountName = internationalDetails.accountName;
@@ -950,6 +970,12 @@ export const Context = ({ children }) => {
   //============ AUTHETICATION SETTINGS ========
   const [authenticationOpen, setAuthenticationOpen] = useState(false);
   const hold = {
+    handleRefresh,
+    // ==================
+    tfImage, settfImage,
+    withdrawImage,
+    setWithdrawImage,
+    // ====================
     firstDrop,
     secondDrop,
     thirdDrop,
@@ -1082,8 +1108,6 @@ export const Context = ({ children }) => {
     setPersonalAccount,
     businessAccount,
     setBusinessAccount,
-    image,
-    setImage,
     code,
     setCode,
     activeButton,
@@ -1147,10 +1171,6 @@ export const Context = ({ children }) => {
     setInternationalBankConfirmation,
     InternationalDetailPopUp,
     setInternationalDetailPopUp,
-    transfer,
-    setTransfer,
-    receive,
-    setReceive,
     internationalDetails,
     setInternationalDetails,
     purpose,
@@ -1165,6 +1185,14 @@ export const Context = ({ children }) => {
     swiftCode,
     recipientAddress,
     purposeOfPayment,
+    selectedCurr,
+    setSelectedCurr,
+    CurrImage,
+    setCurrImage,
+    transfer,
+    setTransfer,
+    receive,
+    setReceive,
 
     // ============withdrawal=============
     withdrawalPin,
