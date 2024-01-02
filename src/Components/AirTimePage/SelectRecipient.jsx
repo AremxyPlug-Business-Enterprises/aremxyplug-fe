@@ -570,7 +570,7 @@ const SelectRecipient = () => {
                         window.location.reload();
                       }}
                     >
-                      Confirmed
+                      Done
                     </button>
                   </div>
                 </div>
