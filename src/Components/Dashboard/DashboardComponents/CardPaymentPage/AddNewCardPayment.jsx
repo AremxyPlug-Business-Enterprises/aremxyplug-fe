@@ -150,17 +150,17 @@ const AddNewCardPayment = () => {
     setFilteredCountryList(filteredList);
   };
 
-  const handleCardNumberChange = (e) => {
-    let inputVal = e.target.value.replace(/[^0-9]/g, ""); // Keep only numeric characters
-    inputVal = inputVal.replace(/(\d{4})(?=\d)/g, "$1 "); // Add space after every 4 digits, except the last 4
-    setCardNumber(inputVal);
-  };
-
   // const handleCardNumberChange = (e) => {
-  //   let inputVal = e.target.value.replace(/\s/g, ""); // Remove existing spaces
+  //   let inputVal = e.target.value.replace(/[^0-9]/g, ""); // Keep only numeric characters
   //   inputVal = inputVal.replace(/(\d{4})(?=\d)/g, "$1 "); // Add space after every 4 digits, except the last 4
   //   setCardNumber(inputVal);
   // };
+
+  const handleCardNumberChange = (e, setCardNumber) => {
+    let inputVal = e.target.value.replace(/[^0-9]/g, ""); // Keep only numeric characters
+    inputVal = inputVal.replace(/(\d{4})(?=\d)/g, "$1 "); // Add space after every 4 digits
+    setCardNumber(inputVal);
+  };
 
   const handleExpiryDateChange = (e) => {
     // Remove non-digit characters from the input
@@ -350,32 +350,31 @@ const AddNewCardPayment = () => {
               absolute opacity-[20%] h-[70%] md:h-full md:opacity-100 right-[-5.5%] z-0`}
             />
 
-            <div className="mt-[5%] flex flex-col gap-[5px]">
-              <p className="text-[10px] md:text-[14px] lg:text-[18px] font-semibold">
-                Card Number
-              </p>
-              <div
-                className={`border-[1px] rounded-[5px] flex flex-row px-[10px] py-[8px] md:w-[60%] lg:py-[12px] ${
-                  cardNumber.length === 19
-                    ? "border-[#B200FF99] bg-opacity-60"
-                    : ""
-                }`}
-              >
-                <input
-                  type="text"
-                  value={cardNumber}
-                  onChange={handleCardNumberChange}
-                  className={`outline-none w-full text-[10px] md:text-[14px] lg:text-[18px]`}
-                  placeholder="4444 4444 4444 4444"
-                  maxLength="39"
-                />
-                <img
-                  src={CardNumber}
-                  alt=""
-                  className="h-[20px] md:h-[30px] lg:h-[40px]"
-                />
-              </div>
-            </div>
+<div className="mt-[5%] flex flex-col gap-[5px]">
+  <p className="text-[10px] md:text-[14px] lg:text-[18px] font-semibold">
+    Card Number
+  </p>
+  <div
+    className={`border-[1px] rounded-[5px] flex flex-row px-[10px] py-[8px] md:w-[60%] lg:py-[12px] ${
+      cardNumber.length === 19 ? "border-[#B200FF99] bg-opacity-60" : ""
+    }`}
+  >
+     <input
+          type="tel"
+          inputMode="numeric" // Set inputMode to control keyboard type on mobile devices
+          value={cardNumber}
+          onChange={(e) => handleCardNumberChange(e, setCardNumber)}
+          className={`outline-none w-full text-[10px] md:text-[14px] lg:text-[18px]`}
+          placeholder="Card Number"
+          maxLength="39"
+        />
+    <img
+      src={CardNumber}
+      alt=""
+      className="h-[20px] md:h-[30px] lg:h-[40px]"
+    />
+  </div>
+</div>
 
             <div
               className={`flex flex-row gap-[10px] md:w-[60%] ${
@@ -395,7 +394,8 @@ const AddNewCardPayment = () => {
                   }`}
                 >
                   <input
-                    type="text"
+                    type="tel"
+                    inputMode="numeric" 
                     value={expiryDate}
                     onChange={handleExpiryDateChange}
                     className="outline-none w-full text-[10px] md:text-[14px] lg:text-[18px]"
