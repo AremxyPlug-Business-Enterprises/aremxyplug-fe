@@ -128,7 +128,7 @@ const AirtimeVtu = () => {
         }
       ];
 
-      const productList = ['SNS', 'VTU']
+      const productList = ['VTU', 'SNS']
 
 
     const Network =({name, image, onClick})=> {
@@ -201,10 +201,11 @@ const AirtimeVtu = () => {
         setSelected(false);
       }
 
-      const handleShowProduct =() => {
-        setShowProduct(!showProduct);
-        setSelectedProduct(false);
-      }
+      const handleShowProduct = () => {
+        if (selected) { 
+          setShowProduct(!showProduct);
+        }
+      };
 
       const handleShowPayment = ()=> {
         setShowPayment(!showPayment)
@@ -225,7 +226,7 @@ const AirtimeVtu = () => {
           .pattern(new RegExp(/\d{2,}/))
           .required()
           .messages({
-            "string.pattern.base": "Amount can not be less than 50",
+            "string.pattern.base": "Amount can not be less than 10",
           }),
       });
 
@@ -411,7 +412,7 @@ const AirtimeVtu = () => {
                             :
                                 <span onClick={handleShowProduct}>Select Product</span>
                             }
-                            <button className={styles.btnDrop} onClick={handleShowProduct}>
+                            <button className={styles.btnDrop} onClick={handleShowProduct} disabled={!selected}>
                                 <img src={arrowDown} alt="" />
                             </button>
                         </div>
@@ -435,7 +436,9 @@ const AirtimeVtu = () => {
                         </div>
                     </div>
                     <div>
-                        <h2 className={styles.head3}>Phone Number <span className={styles.span3}>(Select Recipient)</span></h2>
+                        <h2 className={styles.head3}>Phone Number <span
+                         className={styles.span3}><Link to="/select-vtu-recipient"> (Select Recipient) </Link> 
+                     </span></h2>
                         <div className={styles.input}>
                             <div className={styles.output}>
                                 <input type='number' 

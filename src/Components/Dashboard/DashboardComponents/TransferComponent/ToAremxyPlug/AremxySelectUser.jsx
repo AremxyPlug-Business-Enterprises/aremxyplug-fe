@@ -4,7 +4,6 @@ import '../../../../../App.css';
 import style from "../../../../AirTimePage/AirtimeVtu.module.css";
 import styled from "../../../../AirTimePage/AirTime.module.css"
 import styles from "../../TransferComponent/transfer.module.css";
-import stylish from "../../component.module.css";
 import { DashBoardLayout } from "../../../Layout/DashBoardLayout";
 import ArrowRight from '../../../../EducationPins/imagesEducation/educationArrowRight.svg';
 import SearchIcon from '../../../../Add&SelectRecipient/RecipientImages/search-status.svg';
@@ -16,7 +15,6 @@ import Joi from "joi";
 export default function AremxySelectUser() {
 
     const {
-        isDarkMode,
         showList,
         setShowList,
         selected,
@@ -581,7 +579,7 @@ export default function AremxySelectUser() {
                       alt="/"
                     />
 
-                    <p className="text-[10px] text-[#2ED173] md:text-[16px] font-bold text-center">
+                    <p className="text-[10px] text-[#04177f] md:text-[16px] font-bold text-center">
                         User has been successfully removed from Favorites.
                     </p>
                   </div>
@@ -605,7 +603,7 @@ export default function AremxySelectUser() {
             {edit && (
               <Modal>
                 <div
-                  className={`${style.balanceMoneyPop} ${
+                  className={`${style.successfulTwo} ${
                     toggleSideBar ? " lg:ml-[20%] lg:w-[40%]"
                     : "lg:w-[40%]"
                 } w-[90%] md:w-[70%] overflow-auto`}
@@ -1037,32 +1035,17 @@ export default function AremxySelectUser() {
             )}
             {currencyAvailable && (
               <Modal>
-                <div
-                  className={` mt-6 ${
-                    isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
-                  } ${stylish.cryptoTopUp} flex flex-col justify-between `}
-                >
-                  <div className="text-[10px] text-center pt-[2%] pb-[2%] text-[#04177f] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[2%] lg:pb-[0%]">
-                    This Currency is Currently Not Available.
-                  </div>
-                  <img
-                    className="w-[140px] h-[100px] mx-auto lg:w-[217px] lg:h-[187px]"
-                    src="/Images/addAccountImages/account-unavailable.png"
-                    alt="/"
-                  />
-                  <div className="mx-[6%] flex flex-col gap-[5px] pb-[5%]">
-                    <div className="text-[8px] font-extrabold float-right ml-[70%] md:ml-[70%] md:text-[12px] lg:text-[13px] lg:ml-[80%]">
-                      Coming soon...
+                <div className={styled.NotInterX} >
+                    <div className={styled.timeAbleK}>
+                        <h3>This Currency is Currently Not Available.</h3>
                     </div>
-                    <div
-                      onClick={refresh}
-                      className={` ${
-                        isDarkMode ? "border" : "bg-[#04177f] "
-                      } cursor-pointer text-white text-[10px] h-[40px] rounded-[5px] flex items-center justify-center md:mx-auto md:w-[20%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[30%] lg:mx-auto`}
-                    >
-                      Okay
+                    <div className={styled.InterAirtimeX}>
+                        <img src="/Images/addAccountImages/account-unavailable.png" alt="" />
                     </div>
-                  </div>
+                    <div className={styled.comingX} >
+                        <h2>Coming soon...</h2>
+                        <button className={styled.btnOkX} onClick={refresh}>Okay</button>
+                    </div>
                 </div>
               </Modal>
             )}
