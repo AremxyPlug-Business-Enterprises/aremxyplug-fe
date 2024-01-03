@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useContext } from "react";
 import { ContextProvider } from "../../../Context";
 
+
 export const CountrySelectorCopy = ({
   onSelect,
   className,
@@ -109,34 +110,36 @@ export const CountrySelectorCopy = ({
       </button>
 
       {showList && (
-        <div
-          className=""
-          style={{
-            boxShadow: "0px 1.60656px 4.01639px 0px rgba(0, 0, 0, 0.25)",
-          }}
-        >
-          {countryList.map((country) => (
-            <div
-              className="cursor-pointer border-b flex items-center p-1 gap-[5px] text-[9px] bg-[#fff] md:text-[14px] lg:gap-[15px] lg:text-[16px] lg:justify-between lg:px-[25%]"
-              key={country.id}
-              onClick={() =>
-                handleOptionClick(
-                  country.name,
-                  country.flag,
-                  country.id,
-                  country.code
-                )
-              }
-            >
-              <img
-                className="w-[11px] h-[11px] lg:w-[29px] lg:h-[29px]"
-                src={country.flag}
-                alt="/"
-              />
-              {country.code}
-            </div>
-          ))}
-        </div>
+       
+          <div
+            className="absolute bg-[#fff]"
+            style={{
+              boxShadow: "0px 1.60656px 4.01639px 0px rgba(0, 0, 0, 0.25)",
+            }}
+          >
+            {countryList.map((country) => (
+              <div
+                className=" cursor-pointer border-b flex items-center p-[7px] gap-[5px] text-[9px] justify-center md:p-[12px] md:gap-[20px] md:w-[160px] md:text-[14px] lg:w-[165px] lg:gap-[20px] lg:text-[16px]"
+                key={country.id}
+                onClick={() =>
+                  handleOptionClick(
+                    country.name,
+                    country.flag,
+                    country.id,
+                    country.code
+                  )
+                }
+              >
+                <img
+                  className="w-[11px] h-[11px] md:w-[20px] md:h-[20px] lg:w-[29px] lg:h-[29px]"
+                  src={country.flag}
+                  alt="/"
+                />
+                {country.code}
+              </div>
+            ))}
+          </div>
+       
       )}
     </div>
   );

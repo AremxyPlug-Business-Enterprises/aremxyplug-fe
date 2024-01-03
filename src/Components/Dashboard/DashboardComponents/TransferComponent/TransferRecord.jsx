@@ -255,7 +255,7 @@ export const TransferRecord = () => {
             </tr>
           </thead>
 
-          <tbody onClick={handleTableRowClick}>
+          <tbody className="cursor-pointer" onClick={handleTableRowClick}>
             <tr>
               <td className="">
                 <div className="flex gap-[3px] lg:gap-[10px]">
@@ -301,7 +301,7 @@ export const TransferRecord = () => {
             </tr>
           </thead>
 
-          <tbody onClick={handleTableRowClick2}>
+          <tbody className="cursor-pointer" onClick={handleTableRowClick2}>
             <tr>
               <td className="">
                 <div className="flex gap-[3px] lg:gap-[10px]">
