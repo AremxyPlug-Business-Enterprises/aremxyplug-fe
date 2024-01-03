@@ -4,6 +4,7 @@ import { DashBoardLayout } from "../../../Layout/DashBoardLayout";
 import { Link } from "react-router-dom";
 import style from "../../../../AirTimePage/AirtimeVtu.module.css";
 import styles from "../../TransferComponent/transfer.module.css";
+import styled from "../../component.module.css";
 import { Modal } from "../../../../Screens/Modal/Modal";
 import Joi from "joi";
 
@@ -312,9 +313,8 @@ const AremxyAddUser = () => {
                 <Modal>
                     <div
                         className={`${style.successfulFour} ${
-                        toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-                        } md:w-[45%] w-[90%] md:my-auto md:mt-[.5%] mx-auto 
-                        overflow-auto md:mb-[18%] lg:mx-auto lg:my-auto`}
+                          toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+                          } md:w-[45%] w-[90%] overflow-auto`}
                     >
                     <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
                         <img
@@ -382,7 +382,7 @@ const AremxyAddUser = () => {
                         src="/Images/transferImages/close-circle.png"
                         alt=""
                         />
-                        <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
+                        <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[8%] md:h-[10px]" />
                         <h2 className="text-[12px] font-bold my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
                         Successful
                         </h2>
@@ -415,26 +415,31 @@ const AremxyAddUser = () => {
             </div>
             {currencyAvailable && (
               <Modal>
-                <div className="bg-white shadow-lg w-[90%] rounded-[8px] h-[269px] flex flex-col items-center py-[4%] gap-[40px] md:h-[360px] lg:w-[562px] lg:gap-[60px] lg:h-[500px] lg:py-[3%] lg:rounded-[px]">
-                  <p className="text-[10px] text-[#04177f] font-extrabold md:text-[16px] lg:text-[25px]">
+                <div
+                  className={` mt-6 ${
+                    isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
+                  } ${styled.cryptoTopUp} flex flex-col justify-between `}
+                >
+                  <div className="text-[10px] text-center pt-[2%] pb-[2%] text-[#04177f] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[2%] lg:pb-[0%]">
                     This Currency is Currently Not Available.
-                  </p>
+                  </div>
                   <img
-                    className="w-[135px] h-[96px] lg:w-[217px] lg:h-[187px]"
+                    className="w-[140px] h-[100px] mx-auto lg:w-[217px] lg:h-[187px]"
                     src="/Images/addAccountImages/account-unavailable.png"
-                    alt=""
+                    alt="/"
                   />
-                  <p className="absolute top-[58%] right-[15%] text-[8px] md:text-[12px] md:ml-[70%] lg:text-[14px] lg:top-[73%] lg:right-[33%] lg:ml-[40%] lg:w-[8%]">
-                    Coming Soon...
-                  </p>
-
-                  <div
-                    onClick={refresh}
-                    className={` ${
-                      isDarkMode ? "border" : "bg-[#04177f] "
-                    } cursor-pointer text-white text-[10px] h-[40px] w-[80%] rounded-[5px] flex items-center justify-center md:mx-auto md:w-[20%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[30%] lg:mx-auto`}
-                  >
-                    Okay
+                  <div className="mx-[6%] flex flex-col gap-[5px] pb-[5%]">
+                    <div className="text-[8px] font-extrabold float-right ml-[70%] md:ml-[70%] md:text-[12px] lg:text-[13px] lg:ml-[80%]">
+                      Coming soon...
+                    </div>
+                    <div
+                      onClick={refresh}
+                      className={` ${
+                        isDarkMode ? "border" : "bg-[#04177f] "
+                      } cursor-pointer text-white text-[10px] h-[40px] rounded-[5px] flex items-center justify-center md:mx-auto md:w-[20%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[30%] lg:mx-auto`}
+                    >
+                      Okay
+                    </div>
                   </div>
                 </div>
               </Modal>

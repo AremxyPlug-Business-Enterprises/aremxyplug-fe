@@ -156,7 +156,7 @@ import { AremxyMainReceipt } from "./Components/Dashboard/DashboardComponents/Tr
 import AremxyAddUser from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/AremxyAddUser";
 import AremxySelectUser from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/AremxySelectUser";
 import { AirtimeReceipt } from "./Components/Dashboard/DashboardComponents/AirtimeConversion/AirtimeReceipt";
-
+import EditSelectRecipient from "./Components/Add&SelectRecipient/GlobalSelectRecipient/EditSelectRecipient";
 export const Router = () => {
   return (
     <div>
@@ -345,6 +345,7 @@ export const Router = () => {
         <Route path="/CardPaymentReceipt" element={<CardPaymentReceipt/>}/>
      <Route path="/GlobalTransferSelectRecipient" element={<GlobalTransferSelectRecipient/>}/>
      <Route path="/GlobalTransferAddRecipient" element={<GlobalTransferAddRecipient/>}/>
+     <Route path="/EditSelectRecipient" element = {<EditSelectRecipient/>}/>
       </Routes>
     </div>
   );

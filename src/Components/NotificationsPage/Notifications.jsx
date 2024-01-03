@@ -19,11 +19,14 @@ import envelope from "./assets/envelope.svg";
 import bin from "./assets/bin.svg";
 import deletingfiles from "./assets/deletingfile.svg";
 import VuesaxBoldEye from "./assets/cancel.svg";
-import WalletModal from "../Wallet/WalletModal";
+import { Modal } from "../Screens/Modal/Modal";
+import SuccessGif from "../../Components/Dashboard/DashboardComponents/CardPaymentPage/CardPaymentImages/success.gif";
+
+
 
 
 export default function NotificationsPage() {
-  const { isDarkMode } = useContext(ContextProvider);
+  
 
 
  const [isOpen1, setIsOpen1] = useState(true);   
@@ -48,6 +51,8 @@ export default function NotificationsPage() {
   const [isOpen20, setIsOpen20] = useState(false);
   const [isOpen21, setIsOpen21] = useState(false);
 
+  const { isDarkMode } = useContext(ContextProvider);
+
 
 
 const [isModalOpen1, setIsModalOpen1] = useState(false);
@@ -70,6 +75,7 @@ const [isModalOpen1, setIsModalOpen1] = useState(false);
       setFinalDelete4(false);
       setFinalDelete5(false);
       setFinalDelete6(false);
+      setFinalDelete7(false);
 
 
       setIsModalOpen1(false); // Close the modal immediately
@@ -132,6 +138,8 @@ const [isModalOpen1, setIsModalOpen1] = useState(false);
     const [finalDelete4, setFinalDelete4] = useState(true);
     const [finalDelete5, setFinalDelete5] = useState(true);
     const [finalDelete6, setFinalDelete6] = useState(true);
+    const [finalDelete7, setFinalDelete7] = useState(true);
+
 
   
     const openModal = () => {
@@ -275,7 +283,7 @@ const [isModalOpen1, setIsModalOpen1] = useState(false);
 
 
   const handleClick6 = () => {
-    setIsRead(!isRead); 
+    setIsRead(!isRead);
     setIsRead1(!isRead1); 
     setIsRead2(!isRead2); 
     setIsRead3(!isRead3) ;
@@ -300,6 +308,20 @@ const [isModalOpen1, setIsModalOpen1] = useState(false);
     setIsRead17(!isRead17);
   
   };
+
+
+  // const [notifications, setNotifications] = useState([
+    // { id: 1, content: 'Notification 1' },
+    // { id: 2, content: 'Notification 2' },
+    // ... other notifications
+  // ]);
+
+  // const handleDeleteNotification = (id) => {
+    // Filter out the notification with the specified id
+    // const updatedNotifications = notifications.filter((notification) => notification.id !== id);
+    // Update the state with the filtered array
+    // setNotifications(updatedNotifications);
+  // };
 
 
 
@@ -512,6 +534,7 @@ const [isModalOpen1, setIsModalOpen1] = useState(false);
                 className="flex flex-col relative w-full lg:w-full md:w-full mt-[50px] lg:mt-[100px]
          md:mt-[70px] md:gap-[45px] lg:gap-10 gap-[20.64px] "
               >
+                { finalDelete7 && (
                 <div
                   className="flex  lg:gap-[35px] lg:mt-[-80px] mt-[-40px] gap-[15px] md:gap-[25px] md:mt-[-60px] justify-end 
 items-end  "
@@ -590,10 +613,11 @@ items-end  "
                     </div>
                   </div>
                 </div>
-
+)}
 
 <div className="flex flex-col lg:gap-7 gap-3 md:gap-5">
 {finalDelete && (
+ 
                 <div
                 
                 id="colorReset"
@@ -601,14 +625,14 @@ items-end  "
                   border-b lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md
                    lg:rounded-xl shadow  border-[#d9d9d999]  ${isRead5 ? 'bg-white' :  'bg-sky-100'}`}
                 >
-                  <Link to="/launch-page">
+                   <Link to="/launch-page">
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
                     <div className="font-semibold text-text-color-fade text-zinc-500 lg:text-base md:text-xs  text-[8px] ">
                       New Launch!!
                     </div>
 
                     <p className="font-bold text-zinc-500 text-color-fade md:text-xs text-[8px] lg:text-lg whitespace-nowrap tracking-[0] leading-[normal]">
-                      We are excited to lunch our global platform for all things<br />
+                      We are excited to lunch our global platform for all<br /> things
                       telecom,
                        payments, and Digital services.
                     </p>
@@ -621,6 +645,7 @@ items-end  "
                   </div>
                   </Link>
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between ">
+                  <Link to="/launch-page">
                     <div className="flex flex-col">
                       <img
                         className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
@@ -630,11 +655,32 @@ items-end  "
                         alt=""
                       />
 
+                    </div>
+</Link>
+                    
+                    <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
+                      <div className="flex relative">
+                      <div
+                        onClick={() => {
+                          setIsOpen6((prev) => !prev);
+                          setIsOpen7(false);
+                          setIsOpen8(false);
+                          setIsOpen9(false);
+                          setIsOpen10(false);
+                          setIsOpen11(false);
+                        }}
+                        className="Frame758532418 relative cursor-pointer flex-col justify-center items-start gap-0.5 flex"
+                      >
+                        <div className="Ellipse141 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
+                        <div className="Ellipse142 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
+                        <div className="Ellipse143 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
+                      </div>
+
                       {isOpen6 && (
                         <div
                           className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px]
-                           top-[50px] md:top-[75px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[125px]
+                           top-[7px] md:top-[5px] 
+                    left-[-100px] md:left-[-182px] lg:left-[-191px] shadow flex-col lg:top-[10px]
                justify-start items-start flex"
                         >
 
@@ -680,24 +726,8 @@ items-end  "
                           </div>
                         </div>
                       )}
-                    </div>
-                    <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
-                      <div
-                        onClick={() => {
-                          setIsOpen6((prev) => !prev);
-                          setIsOpen7(false);
-                          setIsOpen8(false);
-                          setIsOpen9(false);
-                          setIsOpen10(false);
-                          setIsOpen11(false);
-                        }}
-                        className="Frame758532418 relative cursor-pointer  flex-col justify-center items-start gap-0.5 flex"
-                      >
-                        <div className="Ellipse141 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
-                        <div className="Ellipse142 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
-                        <div className="Ellipse143 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
-                      </div>
 
+</div>
                       <div
                         className={`Ellipse147 w-1.5 h-1.5 relative md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
                bg-red-400 rounded-full  ${isRead5 ? 'bg-white' :  'bg-red-400'}`}
@@ -707,304 +737,253 @@ items-end  "
 
                 </div>
 )}
-                {isModalOpen && (
-                <WalletModal>
-                  
-                <div className="text-center flex justify-center item-center md:mt-[-20px] lg:mt-[15px] 2xl:mt-[-15px]">
-                <div
-                  className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
-                    flex flex-col justify-center z-[100] lg:ml-[10px] md:w-full`}>
-                      <img 
+
+
+
+{isModalOpen && (
+                <Modal>
+                  <div
+                   className=" bg-white md:mx-auto md:my-auto w-[300px] md:w-[600px] md:h-[330px] 
+                    lg:mx-auto lg:w-[1000px] lg:h-[500px]
+                   lg:my-auto
+                   rounded-[12px] "
+                  >
+                                          <img 
                       onClick={closeModal}
-                      className=" w-[25px] h-[25px] inline-flex justify-end items-end"  src={VuesaxBoldEye} alt=""/>
-                  <div className="w-full h-[22px]  bg-[#04177f]" />
-                  <div>
-                    <p className="text-[10px] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[3%]">
-                    Are you sure you want to delete this Notification?
+                      className=" lg:w-[25px] w-[15px] h-[15px] lg:h-[25px] mt-[3px] ml-[280px]
+                       md:ml-[575px] md:mt-[5px] md:w-[20px] md:h-[20px]
+                      lg:mt-[5px] 
+                      lg:ml-[970px] flex "  src={VuesaxBoldEye} alt=""/>
+
+                    <hr className="h-[6px] bg-[#04177f] lg:mt-[3%] border-none mt-[3%] md:mt-[3%] lg:h-[20px] md:h-[10px]" />
+                    <p className="text-[10px] px-[20px] md:text-[14px] lg:text-[18px] font-extrabold text-center my-[3%] lg:my-[%]">
+                      Are you sure you want to delete this notifications?
                     </p>
-                  </div>
-                  <img
-                    src={deletingfiles}
-                    alt=""
-                    className="img mx-auto mt-[30px] md:mt-[15%] md:w-[220px] md:mx-[100px] w-[143px] h-[67px] lg:w-[300px] lg:h-[200px] lg:mx-[150px] lg:mt-[10%] 2xl:mt-[10%] 2xl:mx-[180px]"
-                  />
-                </div>
-              </div>
-              {/* desktop and tab view */}
-              <div className="mt-[40px] justify-center hidden items-center  lg:flex gap-[3px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
-                <button
-                  className={` ${
-                    isDarkMode ? "border" : "bg-[#04177f] "
-                  } cursor-pointer text-white text-[10px] h-[25px] w-[15%] lg:rounded-xl lg:w-40 lg:h-9 lg:px-3.5 lg:py-2.5 
-                  rounded-[5px]
-                   md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] 
-                   lg:my-[3%]  lg:text-[20px]  lg:mx-auto`}
-                  //  onClick={handleDelete}
-                  //  onClick={() => handleDelete('finalDelete')}
-                  //  onClick={() => handleDelete('finalDelete1')}
+                    <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
+                      <img
+                        className="default-card w-[100px] h-[100px] mx-auto mb-[2%] md:h-[100px] md:w-[150px]"
+                        src={deletingfiles}
+                        alt="/"
+                      />
+                    </div>
 
+                    <div
+                      className={`flex flex-row lg:gap-[3px] gap-[-30px] justify-center items-center h-[38px]
+                       mt-[20px] md:mt-[10px] px-[20px] lg:mt-[-30px] md:justify-center md:items-center mx-auto 
+                       md:px-[40px]`}
+                    >
+                      <button
+                        className={`bg-[#04177F] flex justify-center items-center lg:ml-[210px] ml-[50px] cursor-pointer 
+                        lg:w-[20%] w-[40%] md:w-[20%] md:ml-[140px] md:h-[30px]
+                        text-[14px] font-extrabold h-[20px] text-white rounded-[6px] md:rounded-[8px]
+                         md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
 
-                   onClick={() => {
-                    handleDelete('finalDelete')
-                    handleDelete('finalDelete1')
-                    handleDelete('finalDelete2')
-                    handleDelete('finalDelete3')
-                    handleDelete('finalDelete4')
-                    handleDelete('finalDelete5')
-
-
-
-
-                    
-                    
-                  }}
-
-                   
-                >
-                  Yes
-                </button>
-
-
-                
-                <button 
-            
+                        onClick={() => {
+                          handleDelete('finalDelete')
+      
+      
+      
+      
+                          
+                          
+                        }}
+      
+                      >
+                        Yes
+                      </button>
+                      <button
+                        className={`bg-[#fff] w-full flex justify-center items-center mr-auto cursor-pointer 
+                        text-[14px] font-extrabold h-[40px] text-[#F95252] rounded-[6px] md:w-[40%] md:rounded-[8px]
+                         md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
                         onClick={closeModal}
- className="Frame1469 cursor-pointer w-15  lg:w-40 lg:h-9 h-6 px-3.5 py-2.5 rounded-lg lg:rounded-xl border border-red-600 
-                justify-center items-center gap-2.5 flex">
-    <div  className="Cancel text-red-500 lg:text-base text-xs font-semibold ">Cancel</div>
-
-                </button>
-              </div>
-
-              <button
-              onClick={closeModal}
-              className="Frame1468 md:hidden lg:hidden ml-8 mt-5 w-56 h-10 px-1 py-0.5 bg-blue-950 rounded
-               justify-center items-center flex">
-    <div className="Verify text-white text-xs font-semibold">Verify</div>
-</button>
-              </WalletModal>
-                )}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                </Modal>
+)}
 
 {showSuccessMessage && (
-                                <WalletModal>
-                <div className="text-center flex justify-center item-center md:mt-[-20px] lg:mt-[15px] 2xl:mt-[-15px]">
-                <div
-                  className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
-                    flex flex-col justify-center z-[100] lg:ml-[10px] md:w-full`}>
-                      <img className=" w-[25px] h-[25px] inline-flex justify-end items-end"  src={VuesaxBoldEye} alt=""/>
-                  <div className="w-full h-[22px]  bg-[#04177f]" />
-                  <div>
-                    <p className="text-[10px] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[18px] lg:pt-[3%]">
+                <Modal>
+                  <div
+                   className="
+                     
+          
+                   bg-white md:mx-auto md:my-auto lg:mx-auto lg:w-[1000px] lg:h-[500px] w-[300px] md:w-[600px] md:h-[330px] lg:my-auto md:overflow-auto rounded-[12px]"
+                  >
+                                                              <img 
+                      onClick={closeModal}
+                      className=" lg:w-[25px] lg:h-[25px] w-[15px] md:ml-[575px] md:mt-[5px] md:w-[20px] md:h-[20px]
+                      h-[15px] lg:mt-[5px] mt-[3px] lg:ml-[970px] ml-[280px] flex "  src={VuesaxBoldEye} alt=""/>
+
+                    <hr className="h-[6px] bg-[#04177f] lg:mt-[3%] border-none mt-[3%] md:mt-[5%] lg:h-[20px] md:h-[10px]" />
+                    <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[3%] lg:my-[%]">
+                      Successful
+                    </p>
+                    <p className="text-[10px] text-[#00AA48] md:text-[14px] px-[20px] lg:text-[18px] font-extrabold text-center my-[1%] lg:my-[%]">
                     Notification has been deleted successfully.
                     </p>
+                    <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[5%]">
+                      <img
+                        className="success-default-card w-[100px] h-[100px] md:w-[90px] md:h-[90px] mx-auto mb-[2%] lg:w-[150px] lg:h-[120px]"
+                        src={SuccessGif}
+                        alt="/"
+                      />
+                    </div>
+
+                    <div
+                      className={`w-full h-[38px] mt-[20px] px-[20px] md:mt-[10px]`}
+                    >
+                      <button
+                        className={`bg-[#04177F] w-[80px] lg:w-[20%] flex justify-center items-center mr-auto 
+                        cursor-pointer ml-[90px] md:ml-[225px] md:w-[20%] md:h-[35px]
+                        text-[14px] font-extrabold h-[30px] text-white rounded-[6px] md:rounded-[8px]
+                         md:text-[20px] lg:text-[16px] md:mx-auto lg:h-[40px] lg:ml-[380px] lg:my-[4%]`}
+                        onClick={() => {
+                          setShowSuccessMessage(false);
+                          
+                        }}
+      
+                      >
+                        Done
+                      </button>
+                    </div>
                   </div>
-                </div>
-              </div>
-              <div className="mt-[40px] justify-center items-center flex gap-[3px] pb-[5%] 2xl:mt-[1%] lg:mt-[300px] md:mt-[5%] md:pr-[10px]">
-                <button
-                  className={` ${
-                    isDarkMode ? "border" : "bg-[#04177f] "
-                  } cursor-pointer text-white text-[10px] h-[40px]  lg:rounded-xl lg:w-40 lg:h-9 lg:px-3.5 lg:py-2.5 
-                  rounded-[5px]
-                   md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] 
-                   lg:my-[3%]  lg:text-[20px]  lg:mx-auto`}
-                   onClick={() => setShowSuccessMessage(false)}
-                  
-                  
-                   
-          >
-                  Done
-                </button>
-
-
-                
-              </div>
-              </WalletModal>
+                </Modal>
 )}
-       
-                                  {/* pop-up */}
-                                  {/* <div className="absolute w-full z-50 h-[465px] bg-red-200 rounded-[20px] top-[-40px]  */}
-                                  {/* // flex justify-center items-center "> */}
-      {/* <div className=" h-[22px] top-[60px] left-0 bg-[#04177f]" /> */}
-      {/*  */}
-      {/* <img className=" w-[25px] h-[25px] top-[10px]  flex justify-end items-start"  src={VuesaxBoldEye} alt=""/> */}
-        {/*  */}
-        {/* <div className="flex flex-col items-center gap-[40px] absolute top-0 left-0"> */}
-          {/* <div className="flex flex-col justify-center items-center gap-[10px] relative flex-[0_0_auto]"> */}
-            {/* <p className=" w-[388px] h-[44px] mt-[120.00px]  font-semibold text-black text-[16px] text-right tracking-[0] leading-[20.8px]"> */}
-              {/* Are you sure you want to delete this Notification? */}
-            {/* </p> */}
-            {/* <img className="relative w-[150px] h-[150px]" alt="Deleting files" src={deletingfiles} /> */}
-          {/* </div> */}
-          {/* <div className="flex items-start gap-[20px] relative flex-[0_0_auto]"> */}
-            {/* <div className="flex w-[163px] h-[38px] items-center justify-center gap-[10px] px-[15px] py-[10px] relative bg-primary-colormain rounded-[12px]"> */}
-              {/* <div className="relative w-fit mt-[-4.00px] mb-[-2.00px]  font-semibold text-white text-[16px] tracking-[0] leading-[normal]"> */}
-                {/* Yes */}
-              {/* </div> */}
-            {/* </div> */}
-            {/* <div className="flex w-[163px] h-[38px] items-center justify-center gap-[10px] px-[15px] py-[10px] relative rounded-[12px] border border-solid border-danger"> */}
-              {/* <div className="relative w-fit mt-[-4.00px] mb-[-2.00px] [font-family:'Poppins-SemiBold',Helvetica] font-semibold text-variable-collection-text-danger text-[16px] tracking-[0] leading-[normal]"> */}
-                {/* Cancel */}
-              {/* </div> */}
-            {/* </div> */}
-          {/* </div> */}
-          {/* </div> */}
-          {/*  */}
-                {/* </div> */}
+
+
+
+
+
 
                 {isModalOpen1 && (
-                <WalletModal>
-                  
-                <div className="text-center flex justify-center item-center md:mt-[-20px] lg:mt-[15px] 
-                2xl:mt-[-15px]">
-                <div
-                  className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
-                    flex flex-col justify-center z-[100] lg:ml-[10px] md:w-full`}>
-                      <img 
+                <Modal>
+                  <div
+                   className=" bg-white md:mx-auto md:my-auto w-[300px] md:w-[600px] md:h-[330px] 
+                    lg:mx-auto lg:w-[1000px] lg:h-[500px]
+                   lg:my-auto
+                   rounded-[12px] "
+                  >
+                                          <img 
                       onClick={closeModal1}
-                      className=" w-[25px] h-[25px] inline-flex justify-end items-end"  src={VuesaxBoldEye} alt=""/>
-                  <div className="w-full lg:h-[22px] md:h-[15px] h-[10px] bg-[#04177f]" />
-                  <div>
-                    <p className="text-[10px] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[25px]
-                     lg:pt-[3%]">
-                    Are you sure you want to delete all Notifications?
+                      className=" lg:w-[25px] w-[15px] h-[15px] lg:h-[25px] mt-[3px] ml-[280px]
+                       md:ml-[575px] md:mt-[5px] md:w-[20px] md:h-[20px]
+                      lg:mt-[5px] 
+                      lg:ml-[970px] flex "  src={VuesaxBoldEye} alt=""/>
+
+                    <hr className="h-[6px] bg-[#04177f] lg:mt-[3%] border-none mt-[3%] md:mt-[3%] lg:h-[20px] md:h-[10px]" />
+                    <p className="text-[10px] px-[20px] md:text-[14px] lg:text-[18px] font-extrabold text-center my-[3%] lg:my-[%]">
+                      Are you sure you want to delete all notifications?
                     </p>
-                  </div>
-                  <img
-                    src={deletingfiles}
-                    alt=""
-                    className="img mx-auto mt-[30px] md:mt-[15%] md:w-[220px] md:mx-[100px] w-[143px]
-                     h-[67px] lg:w-[300px] lg:h-[200px] md:h-[90px] md:ml-[-150px] lg:mx-[150px] lg:mt-[10%] 2xl:mt-[10%]
-                      2xl:mx-[180px]"
-                  />
-                </div>
-              </div>
-
-              {/* desktop and tab view */}
-              <div className="mt-[40px] hidden md:flex justify-center items-center lg:flex gap-[3px] md:gap-[2px]
-               pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px] ">
-                <button
-                  className={` ${
-                    isDarkMode ? "border" : "bg-[#04177f] "
-                  } cursor-pointer text-white text-[10px] h-[40px]  lg:rounded-xl lg:w-40 lg:h-9 lg:px-3.5 lg:py-2.5 
-                  rounded-[5px]
-                   md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] 
-                   lg:my-[3%]  lg:text-[20px]  lg:mx-auto`}
-                  //  onClick={handleDelete}
-                  //  onClick={() => handleDelete('finalDelete')}
-                  //  onClick={() => handleDelete('finalDelete1')}
-
-
-                   onClick={() => {
-                    handleDelete1('finalDelete')
-                    handleDelete1('finalDelete1')
-                    handleDelete1('finalDelete2')
-                    handleDelete1('finalDelete3')
-                    handleDelete1('finalDelete4')
-                    handleDelete1('finalDelete5')
-                    handleDelete1('finalDelete6')
-
-
-
-                    
-                    
-                  }}
-
-                   
-                >
-                  Yes
-                </button>
-
-
-                
-                <button 
-                      onClick={closeModal1}
-            
- className="Frame1469 cursor-pointer md:w-[100px] md:ml-[100px]  lg:w-40 lg:h-9 px-3.5 py-2.5 md:h-7 rounded-xl border border-red-600 
-                justify-center items-center gap-2.5 flex">
-    <div  className="Cancel text-red-500 text-base font-semibold ">Cancel</div>
-
-                </button>
-              </div>
-
-              {/* mobile view */}
-              <button
-                                           onClick={() => {
-                                            handleDelete1('finalDelete')
-                                            handleDelete1('finalDelete1')
-                                            handleDelete1('finalDelete2')
-                                            handleDelete1('finalDelete3')
-                                            handleDelete1('finalDelete4')
-                                            handleDelete1('finalDelete5')
-                                            handleDelete1('finalDelete6')
-                                           }}         
-              
-              className="Frame1468 w-56 lg:hidden md:hidden mt-5 ml-7 h-10 px-1 py-0.5 bg-blue-950 rounded justify-center items-center gap-0.5 inline-flex">
-    <div className="Verify text-white text-xs font-semibold">Verify</div>
-</button>
-              </WalletModal>
-                )}
-
-{showSuccessMessage1 && (
-                                <WalletModal>
-                <div className="text-center flex justify-center item-center md:mt-[-20px] lg:mt-[15px] 2xl:mt-[-15px]">
-                <div
-                  className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
-                    flex flex-col justify-center z-[100] lg:ml-[10px] md:w-full`}>
+                    <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
                       <img
-                      onClick={closeModal1}
-                      
-                      className=" w-[25px] h-[25px] inline-flex justify-end items-end"  src={VuesaxBoldEye} alt=""/>
-                  <div className="w-full h-[22px]  bg-[#04177f]" />
-                  <div>
-                    <p className="text-[10px] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[18px] lg:pt-[3%]">
-                    Notifications has been deleted successfully.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="mt-[40px] justify-center hidden items-center lg:flex md:flex gap-[3px] pb-[5%]
-               2xl:mt-[1%] lg:mt-[300px] md:mt-[55%] md:pr-[10px]">
-                <button
-                  className={` ${
-                    isDarkMode ? "border" : "bg-[#04177f] "
-                  } cursor-pointer text-white text-[10px] h-[40px]  lg:rounded-xl lg:w-40 lg:h-9 lg:px-3.5 lg:py-2.5 
-                  rounded-[5px]
-                   md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] 
-                   lg:my-[3%]  lg:text-[20px]  lg:mx-auto`}
-                   onClick={() => {
-                    setShowSuccessMessage1(false);
-                    setShowPicture(true);
-                  }}
+                        className="default-card w-[100px] h-[100px] mx-auto mb-[2%] md:h-[100px] md:w-[150px]"
+                        src={deletingfiles}
+                        alt="/"
+                      />
+                    </div>
 
-                >
-                  Done
-                </button>
+                    <div
+                      className={`flex flex-row lg:gap-[3px] gap-[-30px] justify-center items-center h-[38px]
+                       mt-[20px] md:mt-[10px] px-[20px] lg:mt-[-30px] md:justify-center md:items-center mx-auto 
+                       md:px-[40px]`}
+                    >
+                      <button
+                        className={`bg-[#04177F] flex justify-center items-center lg:ml-[210px] ml-[50px] cursor-pointer 
+                        lg:w-[20%] w-[40%] md:w-[20%] md:ml-[140px] md:h-[30px]
+                        text-[14px] font-extrabold h-[20px] text-white rounded-[6px] md:rounded-[8px]
+                         md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
 
-
-                
-              </div>
-              <div className="Frame758532352 md:hidden lg:hidden w-56 h-10 mt-[130px] ml-10 justify-center items-center gap-1 flex">
-    <button
-                       onClick={() => {
-                        setShowSuccessMessage1(false);
-                        setShowPicture(true);
-                      }}
-    
-    className="Frame1468 w-28 h-10 px-1 py-0.5 bg-blue-900 rounded justify-center items-center gap-0.5 flex">
-        <div className="Yes text-white text-xs font-semibold ">Yes</div>
-    </button>
-    <button
-                      onClick={closeModal1}
-    
-    className="Frame1469 w-28 h-10 px-2 py-1.5 bg-white rounded justify-center items-center gap-1.5 flex">
-        <div className="Cancel w-11 h-4 text-red-500 text-xs font-semibold ">Cancel
+                        onClick={() => {
+                          handleDelete1('finalDelete')
+                          handleDelete1('finalDelete1')
+                          handleDelete1('finalDelete2')
+                          handleDelete1('finalDelete3')
+                          handleDelete1('finalDelete4')
+                          handleDelete1('finalDelete5')
+                          handleDelete1('finalDelete6')
+                          handleDelete1('finalDelete7')
       
-        </div>
-    </button>
-</div>
-              </WalletModal>
+      
+      
+      
+                          
+                          
+                        }}
+      
+                      >
+                        Yes
+                      </button>
+                      <button
+                        className={`bg-[#fff] w-full flex justify-center items-center mr-auto cursor-pointer 
+                        text-[14px] font-extrabold h-[40px] text-[#F95252] rounded-[6px] md:w-[40%] md:rounded-[8px]
+                         md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
+                        onClick={closeModal1}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                </Modal>
 )}
+
+
+
+
+
+ {showSuccessMessage1 && (
+                <Modal>
+                  <div
+                   className="
+                     
+          
+                   bg-white md:mx-auto md:my-auto lg:mx-auto lg:w-[1000px] lg:h-[500px] w-[300px] md:w-[600px] md:h-[330px] lg:my-auto md:overflow-auto rounded-[12px]"
+                  >
+                                                              <img 
+                      onClick={closeModal1}
+                      className=" lg:w-[25px] lg:h-[25px] w-[15px] md:ml-[575px] md:mt-[5px] md:w-[20px] md:h-[20px]
+                      h-[15px] lg:mt-[5px] mt-[3px] lg:ml-[970px] ml-[280px] flex "  src={VuesaxBoldEye} alt=""/>
+
+                    <hr className="h-[6px] bg-[#04177f] lg:mt-[3%] border-none mt-[3%] md:mt-[5%] lg:h-[20px] md:h-[10px]" />
+                    <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[3%] lg:my-[%]">
+                      Successful
+                    </p>
+                    <p className="text-[10px] text-[#00AA48] md:text-[14px] px-[20px] lg:text-[18px] font-extrabold text-center my-[1%] lg:my-[%]">
+                    All notifications has been deleted successfully.
+                    </p>
+                    <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[5%]">
+                      <img
+                        className="success-default-card w-[100px] h-[100px] md:w-[90px] md:h-[90px] mx-auto mb-[2%] lg:w-[150px] lg:h-[120px]"
+                        src={SuccessGif}
+                        alt="/"
+                      />
+                    </div>
+
+                    <div
+                      className={`w-full h-[38px] mt-[20px] px-[20px] md:mt-[10px]`}
+                    >
+                      <button
+                        className={`bg-[#04177F] w-[80px] lg:w-[20%] flex justify-center items-center mr-auto 
+                        cursor-pointer ml-[90px] md:ml-[225px] md:w-[20%] md:h-[35px]
+                        text-[14px] font-extrabold h-[30px] text-white rounded-[6px] md:rounded-[8px]
+                         md:text-[20px] lg:text-[16px] md:mx-auto lg:h-[40px] lg:ml-[380px] lg:my-[4%]`}
+                        onClick={() => {
+                          setShowSuccessMessage1(false);
+                          setShowPicture(true);
+                        }}
+      
+                      >
+                        Done
+                      </button>
+                    </div>
+                  </div>
+                </Modal>
+)}
+
+
+
 
 
                 
@@ -1012,7 +991,7 @@ items-end  "
                 <div
                   className={` flex w-full justify-between items-center lg:h-[230px] h-[100px] md:h-[150px]
                    lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow   border-b 
-                    border-[#d9d9d999]   ${isRead ? 'bg-white' : 'bg-sky-100'} `}
+                    border-[#d9d9d999]  ${isRead ? 'bg-white' : 'bg-sky-100'} `}
                 >
   <Link to="/launch-page">
 
@@ -1022,7 +1001,7 @@ items-end  "
                     </div>
 
                     <p className="font-bold text-text-color-fade  text-zinc-500 md:text-xs text-[8px] whitespace-nowrap lg:text-lg tracking-[0] leading-[normal]">
-                      We are excited to lunch our global platform for all things<br />
+                      We are excited to lunch our global platform for all <br />things
                       telecom, payments, and Digital services.
                     </p>
                     <p className="font-medium text-[#9c9c9c] md:text-xs md:font-medium text-[6px] lg:text-xs tracking-[0.09px] leading-[normal]">
@@ -1042,11 +1021,28 @@ items-end  "
                         src={faq}
                         alt=""
                       />
+                    </div>
+                    <div className="flex justify-end cursor-pointer  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
+                      <div className="flex relative">
+                      <div
+                        onClick={() => {
+                          setIsOpen7((prev) => !prev);
+                          setIsOpen6(false);
+                          setIsOpen8(false);
+                          setIsOpen9(false);
+                          setIsOpen10(false);
+                          setIsOpen11(false);
+                        }}
+                        className="Frame758532418  flex-col justify-center items-start gap-0.5 cursor-pointer flex"
+                      >
+                        <div className="Ellipse141 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
+                        <div className="Ellipse142 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
+                        <div className="Ellipse143 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
+                      </div>
                       {isOpen7 && (
                         <div
-                          className="Frame758532672 w-[100px] absolute md:w-[180px] lg:w-[190px] top-[160px]
-                           md:top-[245px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[370px]
+                          className="Frame758532672 w-[100px] absolute md:w-[180px] lg:w-[190px]  
+                          top-[7px] md:top-[5px] left-[-100px] md:left-[-182px] lg:left-[-191px] lg:top-[10px] shadow flex-col 
                justify-start items-start flex"
                         >
 
@@ -1093,24 +1089,9 @@ items-end  "
                           </div>
                         </div>
                       )}
-                    </div>
-                    <div className="flex justify-end cursor-pointer  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
-                      <div
-                        onClick={() => {
-                          setIsOpen7((prev) => !prev);
-                          setIsOpen6(false);
-                          setIsOpen8(false);
-                          setIsOpen9(false);
-                          setIsOpen10(false);
-                          setIsOpen11(false);
-                        }}
-                        className="Frame758532418  flex-col justify-center items-start gap-0.5 cursor-pointer flex"
-                      >
-                        <div className="Ellipse141 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
-                        <div className="Ellipse142 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
-                        <div className="Ellipse143 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
-                      </div>
 
+
+</div>
                       <div
                         className={`Ellipse147  w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
                bg-red-400 rounded-full  ${isRead ? 'bg-white' :  'bg-red-400'}`}
@@ -1138,7 +1119,7 @@ items-end  "
                     </div>
 
                     <p className="font-bold text-text-color-fade md:text-xs text-zinc-500 text-[8px] lg:text-lg tracking-[0] whitespace-nowrap leading-[normal]">
-                      We are excited to lunch our global platform for all things<br />
+                      We are excited to lunch our global platform for all <br />things
                       telecom,
                        payments, and Digital services.
                     </p>
@@ -1160,10 +1141,14 @@ items-end  "
                         alt=""
                       />
 
-                      {isOpen8 && (
+                    </div>
+                    <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
+                     <div className="flex relative">
+                     {isOpen8 && (
                         <div
-                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] top-[270px] md:top-[410px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[630px]
+                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] 
+                          top-[7px] md:top-[5px] left-[-100px] md:left-[-182px] lg:left-[-191px] lg:top-[10px]
+                           shadow flex-col 
                justify-start items-start flex"
                         >
 
@@ -1208,8 +1193,7 @@ items-end  "
                           </div>
                         </div>
                       )}
-                    </div>
-                    <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
+
                       <div
                         onClick={() => {
                           setIsOpen8((prev) => !prev);
@@ -1225,7 +1209,7 @@ items-end  "
                         <div className="Ellipse142 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
                         <div className="Ellipse143 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
                       </div>
-
+</div>
                       <div
                         className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
                bg-red-400 rounded-full  ${isRead1 ? 'bg-white' : 'bg-red-400'}`}
@@ -1253,7 +1237,7 @@ items-end  "
                     </div>
 
                     <p className="font-bold text-text-color-fade md:text-xs text-zinc-500 whitespace-nowrap text-[8px] lg:text-lg tracking-[0] leading-[normal]">
-                      We are excited to lunch our global platform for all things<br />
+                      We are excited to lunch our global platform for all <br />things
                       telecom,
                        payments, and Digital services.
                     </p>
@@ -1275,11 +1259,14 @@ items-end  "
                         alt=""
                       />
 
-                      {isOpen9 && (
+                    </div>
+                    <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
+                     <div className="flex relative">
+                     {isOpen9 && (
                         <div
                           className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px]
-                           top-[385px] md:top-[580px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[895px]
+                          top-[7px] md:top-[5px] left-[-100px] md:left-[-182px] lg:left-[-191px] lg:top-[10px]
+                           shadow flex-col 
                justify-start items-start flex"
                         >
 
@@ -1325,8 +1312,8 @@ items-end  "
                           </div>
                         </div>
                       )}
-                    </div>
-                    <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
+
+
                       <div
                         onClick={() => {
                           setIsOpen9((prev) => !prev);
@@ -1342,7 +1329,7 @@ items-end  "
                         <div className="Ellipse142 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
                         <div className="Ellipse143 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
                       </div>
-
+</div>
                       <div
                         className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
                bg-red-400 rounded-full  ${isRead2 ? 'bg-white' : 'bg-red-400'}`}
@@ -1369,7 +1356,7 @@ items-end  "
                     </div>
 
                     <p className="font-bold text-text-color-fade md:text-xs text-zinc-500 text-[8px] whitespace-nowrap lg:text-lg tracking-[0] leading-[normal]">
-                      We are excited to lunch our global platform for all things<br />
+                      We are excited to lunch our global platform for all <br />things
                       telecom,
                        payments, and Digital services.
                     </p>
@@ -1391,11 +1378,30 @@ items-end  "
                         alt=""
                       />
 
+                    </div>
+                    <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] 
+                    flex-col-reverse">
+                      <div className="flex relative">
+                      <div
+                        onClick={() => {
+                          setIsOpen10((prev) => !prev);
+                          setIsOpen6(false);
+                          setIsOpen7(false);
+                          setIsOpen8(false);
+                          setIsOpen9(false);
+                          setIsOpen11(false);
+                        }}
+                        className="Frame758532418 cursor-pointer  flex-col justify-center items-start gap-0.5 flex"
+                      >
+                        <div className="Ellipse141 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
+                        <div className="Ellipse142 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
+                        <div className="Ellipse143 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
+                      </div>
                       {isOpen10 && (
                         <div
-                          className="Frame758532672 w-[100px] absolute md:w-[180px] lg:w-[190px] top-[495px]
-                           md:top-[750px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px]  shadow flex-col lg:top-[1155px]
+                          className="Frame758532672 w-[100px] absolute md:w-[180px] lg:w-[190px] 
+                          top-[7px] md:top-[5px] left-[-100px] md:left-[-182px] lg:left-[-191px] lg:top-[10px]
+                           shadow flex-col 
                justify-start items-start flex"
                         >
 
@@ -1450,25 +1456,8 @@ items-end  "
                           </div>
                         </div>
                       )}
-                    </div>
-                    <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] 
-                    flex-col-reverse">
-                      <div
-                        onClick={() => {
-                          setIsOpen10((prev) => !prev);
-                          setIsOpen6(false);
-                          setIsOpen7(false);
-                          setIsOpen8(false);
-                          setIsOpen9(false);
-                          setIsOpen11(false);
-                        }}
-                        className="Frame758532418 cursor-pointer  flex-col justify-center items-start gap-0.5 flex"
-                      >
-                        <div className="Ellipse141 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
-                        <div className="Ellipse142 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
-                        <div className="Ellipse143 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
-                      </div>
 
+</div>
                       <div
                         className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
                bg-red-400 rounded-full  ${isRead3 ? 'bg-white' : 'bg-red-400'}`}
@@ -1495,7 +1484,7 @@ items-end  "
                     </div>
 
                     <p className="font-bold text-text-color-fade md:text-xs  text-zinc-500 text-[8px] whitespace-nowrap lg:text-lg tracking-[0] leading-[normal]">
-                      We are excited to lunch our global platform for all things<br />
+                      We are excited to lunch our global platform for all <br />things
                       telecom,
                        payments, and Digital services.
                     </p>
@@ -1517,11 +1506,30 @@ items-end  "
                         alt=""
                       />
 
+                    </div>
+                    <div className="flex justify-end items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
+                     <div className="flex relative">
+                      <div
+                        onClick={() => {
+                          setIsOpen11((prev) => !prev);
+                          setIsOpen6(false);
+                          setIsOpen7(false);
+                          setIsOpen8(false);
+                          setIsOpen9(false);
+                          setIsOpen10(false);
+                        }}
+                        className="Frame758532418 cursor-pointer flex-col justify-center items-start gap-0.5 flex"
+                      >
+                        <div className="Ellipse141 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
+                        <div className="Ellipse142 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
+                        <div className="Ellipse143 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
+                      </div>
                       {isOpen11 && (
                         <div
-                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] top-[610px]
-                           md:top-[920px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[1415px]
+                          className="Frame758532672 absolute w-[100px]
+                           md:w-[180px] lg:w-[190px] 
+                           top-[7px] md:top-[5px] left-[-100px] md:left-[-182px] lg:left-[-191px] lg:top-[10px] 
+                           shadow flex-col 
                justify-start items-start flex"
                         >
 {isRead4 ? (
@@ -1573,24 +1581,8 @@ items-end  "
                           </div>
                         </div>
                       )}
-                    </div>
-                    <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
-                      <div
-                        onClick={() => {
-                          setIsOpen11((prev) => !prev);
-                          setIsOpen6(false);
-                          setIsOpen7(false);
-                          setIsOpen8(false);
-                          setIsOpen9(false);
-                          setIsOpen10(false);
-                        }}
-                        className="Frame758532418 cursor-pointer flex-col justify-center items-start gap-0.5 flex"
-                      >
-                        <div className="Ellipse141 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
-                        <div className="Ellipse142 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
-                        <div className="Ellipse143 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
-                      </div>
 
+</div>
                       <div
                         className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
                bg-red-400 rounded-full ${isRead4 ? 'bg-white' : 'bg-red-400'}`}
@@ -1648,11 +1640,13 @@ items-end  "
             )}
 
             {/* second flow */}
-            {isOpen2 && (
+            {isOpen2 &&  (
               <div
                 className="flex flex-col w-full lg:w-full md:w-full mt-[50px] lg:mt-[100px]
          md:mt-[70px] md:gap-[45px] lg:gap-10 gap-[20.64px] "
               >
+
+{deleteAll && (
                 <div className="flex  lg:gap-[35px] lg:mt-[-80px] mt-[-40px] gap-[15px] md:gap-[25px] md:mt-[-60px] 
                 justify-end items-end  ">
                                   {isRead7 && isRead8 && isRead9 && isRead10 && isRead11 ? (
@@ -1728,157 +1722,131 @@ items-end  "
                     </div>
                   </div>
                 </div>
+)}
 
-                {isModalOpen2 && (
-                <WalletModal>
-                  
-                <div className="text-center flex justify-center item-center md:mt-[-20px] lg:mt-[15px] 2xl:mt-[-15px]">
-                <div
-                  className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
-                    flex flex-col justify-center z-[100] lg:ml-[10px] md:w-full`}>
-                      <img 
+
+{isModalOpen2 && (
+                <Modal>
+                  <div
+                   className=" bg-white md:mx-auto md:my-auto w-[300px] lg:w-[1000px] lg:h-[500px] md:w-[600px] md:h-[330px] lg:mx-auto lg:my-auto
+                    md:overflow-auto rounded-[12px] "
+                  >
+                                          <img 
                       onClick={closeModal2}
-                      className=" w-[25px] h-[25px] inline-flex justify-end items-end"  src={VuesaxBoldEye} alt=""/>
-                  <div className="w-full h-[22px]  bg-[#04177f]" />
-                  <div>
-                    <p className="text-[10px] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[3%]">
-                    Are you sure you want to delete all Notifications?
+                      className=" lg:w-[25px] w-[15px] lg:ml-[970px] h-[15px] lg:h-[25px] mt-[3px] md:ml-[575px] 
+                      md:mt-[5px] md:w-[20px] md:h-[20px] ml-[280px] lg:mt-[5px] flex "  src={VuesaxBoldEye} alt=""/>
+
+                    <hr className="h-[6px] bg-[#04177f] lg:mt-[3%] border-none mt-[3%] md:mt-[6%] md:h-[10px] lg:h-[20px]" />
+                    <p className="text-[10px] px-[20px] md:text-[14px] lg:text-[18px] font-extrabold text-center my-[3%] lg:my-[%]">
+                      Are you sure you want to delete all notifications?
                     </p>
-                  </div>
-                  <img
-                    src={deletingfiles}
-                    alt=""
-                    className="img mx-auto mt-[30px] md:mt-[15%] md:w-[220px] md:mx-[100px] w-[143px] h-[67px] lg:w-[300px] lg:h-[200px] lg:mx-[150px] lg:mt-[10%] 2xl:mt-[10%] 2xl:mx-[180px]"
-                  />
-                </div>
-              </div>
-              <div className="mt-[40px] justify-center hidden  items-center lg:flex md:flex gap-[3px] pb-[5%]
-               2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
-                <button
-                  className={` ${
-                    isDarkMode ? "border" : "bg-[#04177f] "
-                  } cursor-pointer text-white text-[10px] h-[40px]  lg:rounded-xl lg:w-40 lg:h-9 lg:px-3.5 lg:py-2.5 
-                  rounded-[5px]
-                   md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] 
-                   lg:my-[3%]  lg:text-[20px]  lg:mx-auto`}
-                  //  onClick={handleDelete}
-                  //  onClick={() => handleDelete('finalDelete')}
-                  //  onClick={() => handleDelete('finalDelete1')}
+                    <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
+                      <img
+                        className="default-card w-[100px] h-[100px] mx-auto mb-[2%] md:h-[100px] md:w-[150px]"
+                        src={deletingfiles}
+                        alt="/"
+                      />
+                    </div>
 
+                    <div
+                      className={`flex flex-row lg:gap-[3px] gap-[-30px] justify-center items-center h-[38px]
+                       mt-[20px] md:mt-[10px] px-[20px] lg:mt-[-30px] md:justify-center md:items-center mx-auto 
+                       md:px-[40px]`}
+                    >
+                      <button
+                        className={`bg-[#04177F] flex justify-center items-center lg:ml-[210px] ml-[50px] cursor-pointer 
+                        lg:w-[20%] w-[40%] md:w-[20%] md:ml-[140px] md:h-[30px] 
+                        text-[14px] font-extrabold h-[20px] text-white rounded-[6px]  md:rounded-[8px]
+                         md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
 
-                   onClick={() => {
-                    handleDelete2('finalDelete')
-                    handleDelete2('finalDelete1')
-                    handleDelete2('finalDelete2')
-                    handleDelete2('finalDelete3')
-                    handleDelete2('finalDelete4')
-                    handleDelete2('finalDelete5')
-                    handleDelete2('finalDelete6')
-                    handleDelete2('deleteAll')              
-
-
-
-
-                    
-                    
-                  }}
-
-                   
-                >
-                  Yes
-                </button>
-
-
-                
-                <button 
-            
+                        onClick={() => {
+                          handleDelete2('deleteAll')
+      
+      
+      
+      
+                          
+                          
+                        }}
+      
+                      >
+                        Yes
+                      </button>
+                      <button
+                        className={`bg-[#fff] w-full flex justify-center items-center mr-auto cursor-pointer 
+                        text-[14px] font-extrabold h-[40px] text-[#F95252] rounded-[6px] md:w-[40%] md:rounded-[8px]
+                         md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
                         onClick={closeModal2}
- className="Frame1469 cursor-pointer  w-40 h-9 px-3.5 py-2.5 rounded-xl border border-red-600 
-                justify-center items-center gap-2.5 flex">
-    <div  className="Cancel text-red-500 text-base font-semibold ">Cancel</div>
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                </Modal>
+)}
 
-                </button>
 
-              </div>
-              <button
-                                           onClick={() => {
-                                            handleDelete2('finalDelete')
-                                            handleDelete2('finalDelete1')
-                                            handleDelete2('finalDelete2')
-                                            handleDelete2('finalDelete3')
-                                            handleDelete2('finalDelete4')
-                                            handleDelete2('finalDelete5')
-                                            handleDelete2('finalDelete6')
-                    handleDelete2('deleteAll')              
 
-                                           }}         
-              
-              className="Frame1468 w-56 lg:hidden md:hidden mt-5 ml-7 h-10 px-1 py-0.5 bg-blue-950 rounded justify-center items-center gap-0.5 flex">
-    <div className="Verify text-white text-xs font-semibold">Verify</div>
-</button>
 
-              </WalletModal>
-                )}
+
+
+
 
 {showSuccessMessage2 && (
-                                <WalletModal>
-                <div className="text-center flex justify-center item-center md:mt-[-20px] lg:mt-[15px] 2xl:mt-[-15px]">
-                <div
-                  className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
-                    flex flex-col justify-center z-[100] lg:ml-[10px] md:w-full`}>
-                      <img className=" w-[25px] h-[25px] inline-flex justify-end items-end"  src={VuesaxBoldEye} alt=""/>
-                  <div className="w-full h-[22px]  bg-[#04177f]" />
-                  <div>
-                    <p className="text-[10px] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[18px] lg:pt-[3%]">
-                    Notifications has been deleted successfully.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="mt-[40px] justify-center hidden items-center lg:flex md:flex gap-[3px] pb-[5%]
-               2xl:mt-[1%] lg:mt-[300px] md:mt-[55%] md:pr-[10px]">
-                <button
-                  className={` ${
-                    isDarkMode ? "border" : "bg-[#04177f] "
-                  } cursor-pointer text-white text-[10px] h-[40px]  lg:rounded-xl lg:w-40 lg:h-9 lg:px-3.5 lg:py-2.5 
-                  rounded-[5px]
-                   md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] 
-                   lg:my-[3%]  lg:text-[20px]  lg:mx-auto`}
-                   onClick={() => {
-                    setShowSuccessMessage2(false);
-                    setShowPicture1(true);
-                  }}
-
-                >
-                  Done
-                </button>
-
-
-                
-              </div>
-
-              <div className="Frame758532352 md:hidden lg:hidden w-56 h-10 mt-[130px] ml-10 justify-center items-center gap-1 flex">
-    <button
-                       onClick={() => {
-                        setShowSuccessMessage2(false);
-                        setShowPicture1(true);
-                      }}
-    
-    className="Frame1468 w-28 h-10 px-1 py-0.5 bg-blue-900 rounded justify-center items-center gap-0.5 flex">
-        <div className="Yes text-white text-xs font-semibold ">Yes</div>
-    </button>
-    <button
+                <Modal>
+                  <div
+                   className="
+                     
+          
+                   bg-white md:mx-auto md:my-auto lg:mx-auto md:w-[600px] lg:w-[1000px] lg:h-[500px]
+                    md:h-[330px] w-[300px] lg:my-auto md:overflow-auto rounded-[12px]"
+                  >
+                                                              <img 
                       onClick={closeModal2}
-    
-    className="Frame1469 w-28 h-10 px-2 py-1.5 bg-white rounded justify-center items-center gap-1.5 flex">
-        <div className="Cancel w-11 h-4 text-red-500 text-xs font-semibold ">Cancel
-      
-        </div>
-    </button>
-</div>
+                      className=" lg:w-[25px] md:w-[20px] md:h-[20px] md:ml-[575px] md:mt-[5px] 
+                       lg:h-[25px] w-[15px] h-[15px] lg:mt-[5px] mt-[3px] lg:ml-[970px]
+                       ml-[280px] flex "  src={VuesaxBoldEye} alt=""/>
 
-              </WalletModal>
+                    <hr className="h-[6px] bg-[#04177f] lg:h-[20px] lg:mt-[3%] border-none 
+                    
+ mt-[3%]" />
+                    <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[3%] lg:my-[%]">
+                      Successful
+                    </p>
+                    <p className="text-[10px] text-[#00AA48] md:text-[14px] px-[20px] lg:text-[18px] font-extrabold text-center my-[1%] lg:my-[%]">
+                    All notifications has been deleted successfully.
+                    </p>
+                    <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[5%]">
+                      <img
+                        className="success-default-card w-[100px] h-[100px] md:w-[90px] md:h-[90px] mx-auto mb-[2%] lg:w-[150px] lg:h-[120px]"
+                        src={SuccessGif}
+                        alt="/"
+                      />
+                    </div>
+
+                    <div
+                      className={`w-full h-[38px] mt-[20px] px-[20px] md:mt-[10px]`}
+                    >
+                      <button
+                        className={`bg-[#04177F] w-[80px] lg:w-[20] md:ml-[225px] md:w-[20%] md:h-[35px] flex justify-center items-center mr-auto 
+                        cursor-pointer ml-[90px] lg:ml-[380px]
+                        text-[14px] font-extrabold h-[30px] text-white rounded-[6px] md:rounded-[8px]
+                         md:text-[20px] lg:text-[16px] md:mx-auto lg:h-[38px] lg:my-[4%]`}
+                        onClick={() => {
+                          setShowSuccessMessage2(false);
+                          setShowPicture1(true);
+                        }}
+      
+                      >
+                        Done
+                      </button>
+                    </div>
+                  </div>
+                </Modal>
 )}
+
+
+
 
 
 
@@ -1900,8 +1868,8 @@ items-end  "
 
                     <p className="font-bold text-zinc-500 text-color-fade md:text-xs text-[7px] whitespace-nowrap lg:text-lg tracking-[0] leading-[normal]">
                       We are excited to launch our Airtime Top-up and
-                       Data Top-up <br /> features for all local networks
-                       including MTN,<br /> AIRTEL, GLO, and 9MOBILE.
+                       Data Top-up  features<br /> for all local networks
+                       including MTN, AIRTEL, GLO, and 9MOBILE.
                     </p>
                     <p className="font-medium text-[#9c9c9c] md:text-xs md:font-medium text-[5px] lg:text-xs tracking-[0.09px] leading-[normal]">
                       August 10th, 2023 12 :00:00am
@@ -1921,11 +1889,13 @@ items-end  "
                         alt=""
                       />
 
+                    </div>
+                    <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
+                      <div className="flex relative">
                       {isOpen12 && (
                         <div
-                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] top-[168px]
-                           md:top-[240px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[380px]
+                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] 
+                           top-[7px] md:top-[5px] left-[-100px] md:left-[-182px] lg:left-[-191px] lg:top-[10px] shadow flex-col 
                justify-start items-start flex"
                         >
 
@@ -1979,8 +1949,8 @@ items-end  "
                           </div>
                         </div>
                       )}
-                    </div>
-                    <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
+
+
                       <div
                         onClick={() => {
                           setIsOpen12((prev) => !prev);
@@ -1995,7 +1965,7 @@ items-end  "
                         <div className="Ellipse142 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
                         <div className="Ellipse143 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
                       </div>
-
+</div>
                       <div
                         className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
                bg-red-400 rounded-full ${isRead7 ? 'bg-white' : 'bg-red-400'}`}
@@ -2026,8 +1996,8 @@ items-end  "
 
                     <p className="font-bold text-text-color-fade  text-zinc-500 md:text-xs text-[7px] lg:text-lg tracking-[0] whitespace-nowrap leading-[normal]">
                                            We are excited to launch our Airtime Top-up and     
-                                            Data Top-up <br /> features for all local networks 
-                                            including MTN,<br /> AIRTEL, GLO, and 9MOBILE.     
+                                            Data Top-up features  <br /> for all local networks 
+                                            including MTN, AIRTEL, GLO, and 9MOBILE.     
                     </p>
                     <p className="font-medium text-[#9c9c9c] md:text-xs md:font-medium text-[5px] lg:text-xs tracking-[0.09px] leading-[normal]">
                       August 10th, 2023 12 :00:00am
@@ -2046,11 +2016,13 @@ items-end  "
                         src={file}
                         alt=""
                       />
+                    </div>
+                    <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
+                      <div className="flex relative">
                       {isOpen13 && (
                         <div
-                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] top-[278px]
-                           md:top-[398px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px]  shadow flex-col lg:top-[635px]
+                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px]
+                           top-[7px] md:top-[5px] left-[-100px] md:left-[-182px] lg:left-[-191px] lg:top-[10px] shadow flex-col 
                justify-start items-start flex"
                         >
 
@@ -2101,8 +2073,8 @@ items-end  "
                           </div>
                         </div>
                       )}
-                    </div>
-                    <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
+
+
                       <div
                         onClick={() => {
                           setIsOpen13((prev) => !prev);
@@ -2117,7 +2089,7 @@ items-end  "
                         <div className="Ellipse142 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
                         <div className="Ellipse143 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
                       </div>
-
+</div>
                       <div
                         className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
                bg-red-400 rounded-full ${isRead8 ? 'bg-white' : 'bg-red-400'}`}
@@ -2146,8 +2118,8 @@ items-end  "
 
                     <p className="font-bold text-text-color-fade md:text-xs text-zinc-500 whitespace-nowrap text-[7px] lg:text-lg tracking-[0] leading-[normal]">
                                            We are excited to launch our Airtime Top-up and     
-                                            Data Top-up <br /> features for all local networks 
-                                            including MTN,<br /> AIRTEL, GLO, and 9MOBILE.     
+                                            Data Top-up features <br />  for all local networks 
+                                            including MTN, AIRTEL, GLO, and 9MOBILE.     
                     </p>
                     <p className="font-medium text-[#9c9c9c] md:text-xs md:font-medium text-[5px] lg:text-xs tracking-[0.09px] leading-[normal]">
                       August 10th, 2023 12 :00:00am
@@ -2167,11 +2139,14 @@ items-end  "
                         alt=""
                       />
 
+                    </div>
+                    <div className="flex justify-end items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
+                      <div className="flex relative">
+
                       {isOpen14 && (
                         <div
-                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] top-[390px]
-                           md:top-[577px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[900px]
+                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] 
+                       shadow flex-col top-[7px] md:top-[5px] left-[-100px] md:left-[-182px] lg:left-[-191px] lg:top-[10px]
                justify-start items-start flex"
                         >
 
@@ -2222,8 +2197,7 @@ items-end  "
                           </div>
                         </div>
                       )}
-                    </div>
-                    <div className="flex justify-end items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
+
                       <div
                         onClick={() => {
                           setIsOpen14((prev) => !prev);
@@ -2238,7 +2212,7 @@ items-end  "
                         <div className="Ellipse142 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
                         <div className="Ellipse143 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
                       </div>
-
+</div>
                       <div
                         className={`first-letter:Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
                bg-red-400 rounded-full ${isRead9 ? 'bg-white' : 'bg-red-400'}`}
@@ -2267,8 +2241,8 @@ items-end  "
 
                     <p className="font-bold text-text-color-fade md:text-xs text-zinc-500 whitespace-nowrap text-[7px] lg:text-lg tracking-[0] leading-[normal]">
                                            We are excited to launch our Airtime Top-up and     
-                                            Data Top-up <br /> features for all local networks 
-                                            including MTN,<br /> AIRTEL, GLO, and 9MOBILE.     
+                                            Data Top-up features <br />  for all local networks 
+                                            including MTN, AIRTEL, GLO, and 9MOBILE.     
                     </p>
                     <p className="font-medium text-[#9c9c9c] md:text-xs md:font-medium text-[5px] lg:text-xs tracking-[0.09px] leading-[normal]">
                       August 10th, 2023 12 :00:00am
@@ -2288,11 +2262,14 @@ items-end  "
                         alt=""
                       />
 
+                    </div>
+                    <div className="flex justify-end items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
+                      
+                      <div className="flex relative">
                       {isOpen15 && (
                         <div
                           className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] 
-                          top-[500px] md:top-[740px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[1153px]
+                       shadow flex-col top-[7px] md:top-[5px] left-[-100px] md:left-[-182px] lg:left-[-191px] lg:top-[10px]
                justify-start items-start flex"
                         >
 
@@ -2333,7 +2310,6 @@ items-end  "
                           </div>
                           )}
 
-                          
                           <div
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
           justify-center items-center gap-1.5 flex"
@@ -2344,8 +2320,7 @@ items-end  "
                           </div>
                         </div>
                       )}
-                    </div>
-                    <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
+
                       <div
                         onClick={() => {
                           setIsOpen15((prev) => !prev);
@@ -2360,7 +2335,7 @@ items-end  "
                         <div className="Ellipse142 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
                         <div className="Ellipse143 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
                       </div>
-
+</div>
                       <div
                         className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
                bg-red-400 rounded-full ${isRead10 ? 'bg-white' : 'bg-red-400'}`}
@@ -2389,8 +2364,8 @@ items-end  "
 
                     <p className="font-bold text-text-color-fade md:text-xs text-zinc-500 text-[7px] whitespace-nowrap lg:text-lg tracking-[0] leading-[normal]">
                     We are excited to launch our Airtime Top-up and
-                       Data Top-up <br /> features for all local networks
-                       including MTN,<br /> AIRTEL, GLO, and 9MOBILE.
+                       Data Top-up features <br />  for all local networks
+                       including MTN, AIRTEL, GLO, and 9MOBILE.
                     </p>
                     <p className="font-medium text-[#9c9c9c] md:text-xs md:font-medium text-[5px] lg:text-xs tracking-[0.09px] leading-[normal]">
                       August 10th, 2023 12 :00:00am
@@ -2410,13 +2385,16 @@ items-end  "
                         alt=""
                       />
 
+                    </div>
+                    <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
+                      <div className="flex relative">
                       {isOpen16 && (
                         <div
-                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] top-[618px]
-                           md:top-[910px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px]  shadow flex-col lg:top-[1408px]
+                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] 
+                       shadow flex-col top-[7px] md:top-[5px] left-[-100px] md:left-[-182px] lg:left-[-191px] lg:top-[10px]
                justify-start items-start flex"
                         >
+
                         {isRead11 ? (
                           <div
                               onClick={handleClick11}
@@ -2464,8 +2442,7 @@ items-end  "
                           </div>
                         </div>
                       )}
-                    </div>
-                    <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
+
                       <div
                         onClick={() => {
                           setIsOpen16((prev) => !prev);
@@ -2480,7 +2457,7 @@ items-end  "
                         <div className="Ellipse142 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
                         <div className="Ellipse143 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
                       </div>
-
+</div>
                       <div
                         className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
                bg-red-400 rounded-full ${isRead11 ? 'bg-white' : 'bg-red-400'}`}
@@ -2542,6 +2519,7 @@ items-end  "
                 className="flex flex-col w-full lg:w-full  md:w-full mt-[50px] lg:mt-[100px] md:mt-[70px]
               md:gap-[45px] lg:gap-10 gap-[20.64px] "
               >
+{deleteAll1 && (
                 <div className="flex  lg:gap-[35px] lg:mt-[-80px] mt-[-40px] gap-[15px] md:gap-[25px] md:mt-[-60px] justify-end items-end  ">
                   { isRead13 && isRead14 && isRead15 && isRead16 && isRead17 ? (
                   <div
@@ -2617,139 +2595,136 @@ items-end  "
                     </div>
                   </div>
                 </div>
-
-                {isModalOpen3 && (
-                <WalletModal>
-                  
-                <div className="text-center flex justify-center item-center md:mt-[-20px] lg:mt-[15px] 2xl:mt-[-15px]">
-                <div
-                  className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
-                    flex flex-col justify-center z-[100] lg:ml-[10px] md:w-full`}>
-                      <img 
-                      onClick={closeModal3}
-                      className=" w-[25px] h-[25px] inline-flex justify-end items-end"  src={VuesaxBoldEye} alt=""/>
-                  <div className=" w-full lg:h-[22px] h-[15px] md-[h-18px] bg-[#04177f]" />
-                  <div>
-                    <p className="text-[10px] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[3%]">
-                    Are you sure you want to delete all Notifications?
-                    </p>
-                  </div>
-                  <img
-                    src={deletingfiles}
-                    alt=""
-                    className="img mx-auto mt-[30px] md:mt-[15%] md:w-[220px] md:mx-[100px] w-[143px] h-[67px]
-                     lg:w-[300px] lg:h-[200px] lg:mx-[150px]  lg:mt-[10%] flex justify-center items-center 2xl:mt-[10%] 2xl:mx-[180px]"
-                  />
-                </div>
-              </div>
-              <div className="mt-[40px] justify-center hidden items-center lg:flex md:flex gap-[3px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
-                <button
-                  className={` ${
-                    isDarkMode ? "border" : "bg-[#04177f] "
-                  } cursor-pointer text-white text-[10px] h-[40px] lg:rounded-xl lg:w-40 lg:h-9 lg:px-3.5 lg:py-2.5 
-                  rounded-[5px]
-                   md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] 
-                   lg:my-[3%]  lg:text-[20px]  lg:mx-auto`}
-
-
-                   onClick={() => {
-                    handleDelete3('deleteAll1')
-
-
-
-
-                    
-                    
-                  }}
-
-                   
-                >
-                  Yes
-                </button>
-
-
-                
-                <button 
-            
-                        onClick={closeModal3}
- className="Frame1469 cursor-pointer  w-40 h-9 px-3.5 py-2.5 rounded-xl border border-red-600 
-                justify-center items-center gap-2.5 flex">
-    <div  className="Cancel text-red-500 text-base font-semibold ">Cancel</div>
-
-                </button>
-              </div>
-              <button
-                                           onClick={() => {
-                    handleDelete3('deleteAll')              
-
-                                           }}         
-              
-              className="Frame1468 w-56 lg:hidden md:hidden mt-5 ml-7 h-10 px-1 py-0.5 bg-blue-950 rounded justify-center items-center gap-0.5 flex">
-    <div className="Verify text-white text-xs font-semibold">Verify</div>
-</button>
-
-              </WalletModal>
-                )}
-
-{showSuccessMessage3 && (
-                                <WalletModal>
-                <div className="text-center flex justify-center item-center md:mt-[-20px] lg:mt-[15px] 2xl:mt-[-15px]">
-                <div
-                  className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
-                    flex flex-col justify-center z-[100] lg:ml-[10px] md:w-full`}>
-                      <img className=" w-[25px] h-[25px] inline-flex justify-end items-end"  src={VuesaxBoldEye} alt=""/>
-                  <div className="w-full h-[22px]  bg-[#04177f]" />
-                  <div>
-                    <p className="text-[10px] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[18px] lg:pt-[3%]">
-                    Notifications has been deleted successfully.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="mt-[40px] justify-center hidden  items-center lg:flex md:flex gap-[3px] pb-[5%] 
-              2xl:mt-[1%] lg:mt-[300px] md:mt-[55%] md:pr-[10px]">
-                <button
-                  className={` ${
-                    isDarkMode ? "border" : "bg-[#04177f] "
-                  } cursor-pointer text-white text-[10px] h-[40px]  lg:rounded-xl lg:w-40 lg:h-9 lg:px-3.5 lg:py-2.5 
-                  rounded-[5px]
-                   md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] 
-                   lg:my-[3%]  lg:text-[20px]  lg:mx-auto`}
-                   onClick={() => {
-                    setShowSuccessMessage3(false);
-                    setShowPicture2(true);
-                  }}
-
-                >
-                  Done
-                </button>
-
-
-                
-              </div>
-              <div className="Frame758532352 md:hidden lg:hidden w-56 h-10 mt-[130px] ml-10 justify-center items-center gap-1 flex">
-    <button
-                       onClick={() => {
-                        setShowSuccessMessage3(false);
-                        setShowPicture2(true);
-                      }}
-    
-    className="Frame1468 w-28 h-10 px-1 py-0.5 bg-blue-900 rounded justify-center items-center gap-0.5 flex">
-        <div className="Yes text-white text-xs font-semibold ">Yes</div>
-    </button>
-    <button
-                      onClick={closeModal3}
-    
-    className="Frame1469 w-28 h-10 px-2 py-1.5 bg-white rounded justify-center items-center gap-1.5 flex">
-        <div className="Cancel w-11 h-4 text-red-500 text-xs font-semibold ">Cancel
-      
-        </div>
-    </button>
-</div>
-
-              </WalletModal>
 )}
 
+
+
+{isModalOpen3 && (
+                <Modal>
+                  <div
+                   className=" bg-white md:mx-auto md:my-auto lg:w-[1000px] lg:h-[500px] md:w-[600px] md:h-[330px] 
+                   w-[300px] lg:mx-auto lg:my-auto
+                    md:overflow-auto rounded-[12px] "
+                  >
+                                          <img 
+                      onClick={closeModal3}
+                      className=" lg:w-[25px] w-[15px] md:ml-[575px] md:mt-[5px] md:w-[20px] md:h-[20px] h-[15px] 
+                      lg:h-[25px] mt-[3px] ml-[280px] lg:mt-[5px] lg:ml-[970px] flex "  src={VuesaxBoldEye} alt=""/>
+
+                    <hr className="h-[6px] bg-[#04177f] lg:mt-[3%] border-none mt-[3%] md:mt-[6%] lg:h-[20px] md:h-[10px]" />
+                    <p className="text-[10px] px-[20px] md:text-[14px] lg:text-[18px] font-extrabold text-center my-[3%] lg:my-[%]">
+                      Are you sure you want to delete all notifications?
+                    </p>
+                    <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
+                      <img
+                        className="default-card w-[100px] h-[100px] mx-auto mb-[2%] md:h-[100px] md:w-[150px]"
+                        src={deletingfiles}
+                        alt="/"
+                      />
+                    </div>
+
+                    <div
+                      className={`flex flex-row lg:gap-[3px] gap-[-30px] justify-center items-center h-[38px]
+                       mt-[20px] md:mt-[10px] px-[20px] lg:mt-[-30px] md:justify-center md:items-center mx-auto 
+                       md:px-[40px]`}
+                    >
+                      <button
+                        className={`bg-[#04177F] flex md:w-[20%] md:ml-[140px] md:h-[30px] justify-center items-center lg:ml-[210px] ml-[50px] cursor-pointer 
+                        lg:w-[20%] w-[40%]
+                        text-[14px] font-extrabold h-[20px] text-white rounded-[6px] md:rounded-[8px]
+                         md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
+
+                        onClick={() => {
+                          handleDelete3('deleteAll1')
+                          
+                          
+                          
+                          
+                          
+                          
+                          
+      
+      
+      
+      
+                          
+                          
+                        }}
+      
+                      >
+                        Yes
+                      </button>
+                      <button
+                        className={`bg-[#fff] w-full flex justify-center items-center mr-auto cursor-pointer 
+                        text-[14px] font-extrabold h-[40px] text-[#F95252] rounded-[6px] md:w-[40%] md:rounded-[8px]
+                         md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
+                        onClick={closeModal3}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                </Modal>
+)}
+
+{showSuccessMessage3 && (
+                <Modal>
+                  <div
+                   className="
+                     
+          
+                   bg-white md:mx-auto md:my-auto md:w-[600px] lg:w-[1000px] lg:h-[500px] md:h-[330px] lg:mx-auto 
+                   w-[300px] lg:my-auto md:overflow-auto rounded-[12px]"
+                  >
+                                                              <img 
+                      onClick={closeModal3}
+                      className=" lg:w-[25px] lg:h-[25px] md:ml-[575px] md:mt-[5px] md:w-[20px] md:h-[20px]
+                      w-[15px] h-[15px] lg:mt-[5px] mt-[3px] lg:ml-[970px] ml-[280px] flex "  src={VuesaxBoldEye} alt=""/>
+
+                    <hr className="h-[6px] bg-[#04177f] lg:mt-[3%] border-none lg:h-[20px] mt-[3%] md:mt-[5%] md:h-[10px]" />
+                    <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[3%] lg:my-[%]">
+                      Successful
+                    </p>
+                    <p className="text-[10px] text-[#00AA48] md:text-[14px] px-[20px] lg:text-[18px] font-extrabold text-center my-[1%] lg:my-[%]">
+                    All notifications has been deleted successfully.
+                    </p>
+                    <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[5%]">
+                      <img
+                        className="success-default-card w-[100px] h-[100px] md:w-[90px] md:h-[90px] mx-auto mb-[2%] lg:w-[150px] lg:h-[120px]"
+                        src={SuccessGif}
+                        alt="/"
+                      />
+                    </div>
+
+                    <div
+                      className={`w-full h-[38px] mt-[20px] px-[20px] md:mt-[10px]`}
+                    >
+                      <button
+                        className={`bg-[#04177F] md:ml-[225px] md:w-[20%] md:h-[35px]
+
+
+                        w-[80px] lg:w-[20%] flex justify-center items-center mr-auto 
+                        cursor-pointer ml-[90px] lg:ml-[380px]
+                        text-[14px] font-extrabold h-[30px] text-white rounded-[6px] md:rounded-[8px]
+                         md:text-[20px] lg:text-[16px] md:mx-auto lg:h-[38px] lg:my-[4%]`}
+                        onClick={() => {
+                          setShowSuccessMessage3(false);
+                          setShowPicture2(true);
+                        }}
+      
+                      >
+                        Done
+                      </button>
+                    </div>
+                  </div>
+                </Modal>
+)}
+
+
+
+
+
+    
 
 {deleteAll1 && (           
 <div  className="flex flex-col lg:gap-7 gap-3 md:gap-5">
@@ -2767,10 +2742,11 @@ items-end  "
                       New Launch!!
                     </div>
 
-                    <p className="font-bold text-text-color-fade md:text-xs  text-zinc-500 whitespace-nowrap text-[7px] lg:text-lg tracking-[0] leading-[normal]">
+                    <p className="font-bold text-text-color-fade md:text-xs  text-zinc-500 whitespace-nowrap
+                     text-[6.5px] lg:text-lg tracking-[0] leading-[10px]">
                       We are excited to launch our Local Money Transfer
-                       product with<br /> features like Transfer to Personal
-                       Account, and Transfer<br /> to any Nigerian Bank Account
+                       product with features like <br /> Transfer to Personal
+                       Account, and Transfer to any Nigerian Bank Account
                     </p>
                     <p className="font-medium text-[#9c9c9c] md:text-xs md:font-medium text-[5px] lg:text-xs
                      tracking-[0.09px] leading-[normal]">
@@ -2791,14 +2767,19 @@ items-end  "
                         alt=""
                       />
 
-                      {isOpen17 && (
+                    </div>
+                    
+
+                    <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
+                     <div className="flex relative">
+                     {isOpen17 && (
                         <div
-                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] top-[168px]
-                           md:top-[240px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[390px]
+                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] 
+                       shadow flex-col top-[7px] md:top-[5px] left-[-100px] md:left-[-182px] lg:left-[-191px] lg:top-[10px]
                justify-start items-start flex"
                         >
-                          {isRead13 ? (
+
+                        {isRead13 ? (
                           <div
                               onClick={handleClick13}
                                                        
@@ -2835,8 +2816,6 @@ items-end  "
                           </div>
                           )}
 
-
-
                           <div
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
           justify-center items-center gap-1.5 flex"
@@ -2847,8 +2826,8 @@ items-end  "
                           </div>
                         </div>
                       )}
-                    </div>
-                    <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
+
+
                       <div
                         onClick={() => {
                           setIsOpen17((prev) => !prev);
@@ -2863,7 +2842,7 @@ items-end  "
                         <div className="Ellipse142 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
                         <div className="Ellipse143 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
                       </div>
-
+</div>
                       <div
                         className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
                bg-red-400 rounded-full ${isRead13 ? 'bg-white' : 'bg-red-400'}`}
@@ -2887,10 +2866,11 @@ items-end  "
                       New Launch!!
                     </div>
 
-                    <p className="font-bold text-text-color-fade md:text-xs  text-zinc-500 text-[7px] lg:text-lg whitespace-nowrap tracking-[0] leading-[normal]">
+                    <p className="font-bold text-text-color-fade md:text-xs  text-zinc-500 text-[6.5px] lg:text-lg 
+                    whitespace-nowrap tracking-[0] leading-[10px]">
                       We are excited to launch our Local Money Transfer
-                       product with<br /> features like Transfer to Personal
-                       Account, and Transfer<br /> to any Nigerian Bank Account
+                       product with features like<br />  Transfer to Personal
+                       Account, and Transfer to any Nigerian Bank Account
                     </p>
                     <p className="font-medium text-[#9c9c9c] md:text-xs md:font-medium text-[5px] lg:text-xs tracking-[0.09px] leading-[normal]">
                       August 10th, 2023 12 :00:00am
@@ -2910,14 +2890,17 @@ items-end  "
                         alt=""
                       />
 
-                      {isOpen18 && (
+                    </div>
+                    <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
+                     <div className="flex relative">
+                     {isOpen18 && (
                         <div
-                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] top-[280px]
-                           md:top-[410px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[649px]
+                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] 
+                       shadow flex-col top-[7px] md:top-[5px] left-[-100px] md:left-[-182px] lg:left-[-191px] lg:top-[10px]
                justify-start items-start flex"
                         >
-                          {isRead14 ? (
+
+                        {isRead14 ? (
                           <div
                               onClick={handleClick14}
                                                        
@@ -2954,7 +2937,6 @@ items-end  "
                           </div>
                           )}
 
-
                           <div
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
           justify-center items-center gap-1.5 flex"
@@ -2965,8 +2947,8 @@ items-end  "
                           </div>
                         </div>
                       )}
-                    </div>
-                    <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
+
+
                       <div
                         onClick={() => {
                           setIsOpen18((prev) => !prev);
@@ -2981,7 +2963,7 @@ items-end  "
                         <div className="Ellipse142 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
                         <div className="Ellipse143 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
                       </div>
-
+</div>
                       <div
                         className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
                bg-red-400 rounded-full ${isRead14 ? 'bg-white' : 'bg-red-400'}`}
@@ -3004,10 +2986,11 @@ items-end  "
                       New Launch!!
                     </div>
 
-                    <p className="font-bold text-text-color-fade md:text-xs text-zinc-500 text-[7px] whitespace-nowrap lg:text-lg tracking-[0] leading-[normal]">
+                    <p className="font-bold text-text-color-fade md:text-xs text-zinc-500 text-[6.5px]
+             whitespace-nowrap lg:text-lg tracking-[0] leading-[10px]">
                       We are excited to launch our Local Money Transfer
-                      product with  <br /> features like Transfer to Personal
-                       Account, and Transfer<br /> to any Nigerian Bank Account
+                      product with features like <br /> Transfer to Personal
+                       Account, and Transfer to any Nigerian Bank Account
                     </p>
                     <p className="font-medium text-[#9c9c9c] md:text-xs md:font-medium text-[5px] lg:text-xs tracking-[0.09px] leading-[normal]">
                       August 10th, 2023 12 :00:00am
@@ -3027,11 +3010,15 @@ items-end  "
                         alt=""
                       />
 
-                      {isOpen19 && (
+                    </div>
+                   
+                    <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
+                     <div className="flex relative">
+                     {isOpen19 && (
                         <div
-                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] top-[393px] 
-                          md:top-[580px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px] shadow flex-col lg:top-[910px]
+                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] 
+                          top-[7px] md:top-[5px] left-[-100px] md:left-[-182px] lg:left-[-191px] lg:top-[10px]
+                           shadow flex-col
                justify-start items-start flex"
                         >
                           {isRead15 ? (
@@ -3082,8 +3069,7 @@ items-end  "
                           </div>
                         </div>
                       )}
-                    </div>
-                    <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
+
                       <div
                         onClick={() => {
                           setIsOpen19((prev) => !prev);
@@ -3098,7 +3084,7 @@ items-end  "
                         <div className="Ellipse142 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
                         <div className="Ellipse143 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
                       </div>
-
+</div>
                       <div
                         className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
                bg-red-400 rounded-full ${isRead15 ? 'bg-white' : 'bg-red-400'}`}
@@ -3122,10 +3108,11 @@ items-end  "
                       New Launch!!
                     </div>
 
-                    <p className="font-bold text-text-color-fade md:text-xs   text-zinc-500 text-[7px] whitespace-nowrap lg:text-lg tracking-[0] leading-[normal]">
+                    <p className="font-bold text-text-color-fade md:text-xs  text-zinc-500 text-[6.5px] 
+                    whitespace-nowrap lg:text-lg tracking-[0] leading-[10px]">
                       We are excited to launch our Local Money Transfer
-                       product with <br />features like Transfer to Personal
-                      Account, and Transfer<br /> to any Nigerian Bank Account
+                       product with features like <br />Transfer to Personal
+                      Account, and Transfer to any Nigerian Bank Account
                     </p>
                     <p className="font-medium text-[#9c9c9c] md:text-xs md:font-medium text-[5px] lg:text-xs tracking-[0.09px] leading-[normal]">
                       August 10th, 2023 12 :00:00am
@@ -3145,14 +3132,17 @@ items-end  "
                         alt=""
                       />
 
+                    </div>
+                    <div className="flex justify-end relative  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
+                      <div className="flex relative">
                       {isOpen20 && (
                         <div
-                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] top-[507px] md:top-[750px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px]  shadow flex-col lg:top-[1168px]
+                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] 
+                          top-[7px] md:top-[5px] left-[-100px] md:left-[-182px] lg:left-[-191px] lg:top-[10px]
+                           shadow flex-col
                justify-start items-start flex"
                         >
-
-{isRead16 ? (
+                          {isRead16 ? (
                           <div
                               onClick={handleClick16}
                                                        
@@ -3200,8 +3190,7 @@ items-end  "
                           </div>
                         </div>
                       )}
-                    </div>
-                    <div className="flex justify-end relative  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
+
                       <div
                         onClick={() => {
                           setIsOpen20((prev) => !prev);
@@ -3216,7 +3205,7 @@ items-end  "
                         <div className="Ellipse142 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
                         <div className="Ellipse143 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
                       </div>
-
+</div>
                       <div
                         className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
                bg-red-400 rounded-full ${isRead16 ? 'bg-white' : 'bg-red-400'}`}
@@ -3239,10 +3228,11 @@ items-end  "
                       New Launch!!
                     </div>
 
-                    <p className="font-bold text-text-color-fade md:text-xs   text-zinc-500 text-[7px] whitespace-nowrap lg:text-lg tracking-[0] leading-[normal]">
+                    <p className="font-bold text-text-color-fade md:text-xs text-zinc-500 text-[6.5px] 
+                    whitespace-nowrap lg:text-lg tracking-[0] leading-[10px]">
                       We are excited to launch our Local Money Transfer
-                       product with<br /> features like Transfer to Personal
-                       Account, and Transfer<br /> to any Nigerian Bank Account
+                       product with features like<br /> Transfer to Personal
+                       Account, and Transfer to any Nigerian Bank Account
                     </p>
                     <p className="font-medium text-[#9c9c9c] md:text-xs md:font-medium text-[5px] lg:text-xs tracking-[0.09px] leading-[normal]">
                       August 10th, 2023 12 :00:00am
@@ -3261,10 +3251,14 @@ items-end  "
                         src={folder}
                         alt=""
                       />
+                    </div>
+                    <div className="flex justify-end relative  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
+                      <div className="flex relative">
                       {isOpen21 && (
                         <div
-                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] top-[618px] md:top-[920px] 
-                    ml-[-52px] md:ml-[-82px] lg:ml-[-40px]  shadow flex-col lg:top-[1425px]
+                          className="Frame758532672 absolute w-[100px] md:w-[180px] lg:w-[190px] 
+                          top-[7px] md:top-[5px] left-[-100px] md:left-[-182px] lg:left-[-191px] lg:top-[10px]
+                           shadow flex-col
                justify-start items-start flex"
                         >
                           {isRead17 ? (
@@ -3315,8 +3309,7 @@ items-end  "
                           </div>
                         </div>
                       )}
-                    </div>
-                    <div className="flex justify-end relative  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
+
                       <div
                         onClick={() => {
                           setIsOpen21((prev) => !prev);
@@ -3331,7 +3324,7 @@ items-end  "
                         <div className="Ellipse142 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
                         <div className="Ellipse143 w-1 h-1 lg:w-2 lg:h-2 bg-neutral-500 rounded-full" />
                       </div>
-
+</div>
                       <div
                         className={`Ellipse147 w-1.5 h-1.5 md:w-3 md:h-3 lg:mt-[-25px] md:mt-[-10px] mt-[-15px] lg:w-5 lg:h-5 flex 
                bg-red-400 relative rounded-full ${isRead17 ? 'bg-white' : 'bg-red-400'}`}

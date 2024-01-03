@@ -4,6 +4,7 @@ import '../../../../../App.css';
 import style from "../../../../AirTimePage/AirtimeVtu.module.css";
 import styled from "../../../../AirTimePage/AirTime.module.css"
 import styles from "../../TransferComponent/transfer.module.css";
+import stylish from "../../component.module.css";
 import { DashBoardLayout } from "../../../Layout/DashBoardLayout";
 import ArrowRight from '../../../../EducationPins/imagesEducation/educationArrowRight.svg';
 import SearchIcon from '../../../../Add&SelectRecipient/RecipientImages/search-status.svg';
@@ -288,7 +289,7 @@ export default function AremxySelectUser() {
                         : "lg:w-[38.5%] lg:top-[105.3%]"
                     }  ${
                         styles.countryDropDown
-                    } rounded-br-[7px] rounded-bl-[7px] shadow-xl bg-[#fff] border w-[100%] lg:w-full md:w-[50%] lg:rounded-br-[14px] lg:rounded-bl-[14px]`}
+                    } rounded-br-[7px] rounded-bl-[7px] shadow-xl bg-[#fff] border w-[100%] lg:w-full lg:rounded-br-[14px] lg:rounded-bl-[14px]`}
                     >
                     {" "}
                     {countryList.map((country) => (
@@ -490,15 +491,13 @@ export default function AremxySelectUser() {
             {add && (
               <Modal>
                 <div
-                  className={`confirm2 ${styles.inputPin} ${
-                    toggleSideBar
-                      ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
-                      : "lg:w-[40%]"
-                  } md:w-[55%] w-[90%] lg:mt-[10px] md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
+                  className={`${style.inputPin} ${
+                    toggleSideBar ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
+                    } md:w-[55%] w-[90%]`}
                 >
                   <div className="flex justify-between items-center mx-[3%] my-[2%] lg:mt-[3%] ">
                     <img
-                      className=" w-[18px] h-[15px] md:w-[35px] md:h-[32px] lg:w-[35px] lg:h-[22px] "
+                      className=" w-[18px] h-[15px] md:w-[35px] md:h-[32px] lg:w-[25px] lg:h-[12px] "
                       src="/Images/login/arpLogo.png"
                       alt=""
                     />
@@ -508,24 +507,24 @@ export default function AremxySelectUser() {
                         setAdd(false);
                         window.location.reload();
                       }}
-                      className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[35px] lg:h-[35px] "
+                      className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[25px] lg:h-[25px] "
                       src="/Images/transferImages/close-circle.png"
                       alt=""
                     />
                   </div>
 
-                  <hr className="h-[6px] bg-[#04177f] lg:mt-[2%] border-none mt-[2%] md:mt-[2%] md:h-[10px]" />
+                  <hr className="h-[6px] bg-[#04177f] border-none mt-[3%] md:mt-[3%] md:h-[10px]" />
                   <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[3%] lg:my-[%]">
                     Successful
                   </p>
                   <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
                     <img
-                      className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[125px] lg:h-[125px]"
+                      className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[120px] lg:h-[120px]"
                       src="./Gif/checkMarkGif.gif"
                       alt="/"
                     />
 
-                    <p className="text-[10px] text-[#2ED173] font-semibold md:text-[14px]">
+                    <p className="text-[10px] text-[#2ED173] md:text-[16px] font-bold text-center">
                         User has been successfully added to Favorites.
                     </p>
                   </div>
@@ -534,7 +533,7 @@ export default function AremxySelectUser() {
                     className={`w-full h-[38px] mt-[40px] px-[20px] items-center`}
                   >
                     <button
-                      className={`bg-[#04177F] w-full flex justify-center items-center my-auto mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:mx-auto lg:h-[38px] lg:my-[4%]`}
+                      className={`bg-[#04177F] w-full flex justify-center items-center my-auto mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:mx-auto lg:h-[38px] lg:mt-[4%]`}
                       onClick={() => {
                         setAdd(false);
                         window.location.reload();
@@ -549,15 +548,13 @@ export default function AremxySelectUser() {
             {remove && (
               <Modal>
                 <div
-                  className={`confirm2 ${styles.inputPin} ${
-                    toggleSideBar
-                      ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
-                      : "lg:w-[40%]"
-                  } md:w-[55%] w-[90%] lg:mt-[10px] md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
+                  className={`${styles.inputPin} ${
+                    toggleSideBar ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
+                    } md:w-[55%] w-[90%]`}
                 >
                   <div className="flex justify-between items-center mx-[3%] my-[2%] lg:mt-[3%] ">
                     <img
-                      className=" w-[18px] h-[15px] md:w-[35px] md:h-[32px] lg:w-[35px] lg:h-[22px] "
+                      className=" w-[18px] h-[15px] md:w-[35px] md:h-[32px] lg:w-[25px] lg:h-[12px] "
                       src="/Images/login/arpLogo.png"
                       alt=""
                     />
@@ -567,24 +564,24 @@ export default function AremxySelectUser() {
                         setRemove(false);
                         window.location.reload();
                       }}
-                      className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[35px] lg:h-[35px] "
+                      className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[25px] lg:h-[25px] "
                       src="/Images/transferImages/close-circle.png"
                       alt=""
                     />
                   </div>
 
-                  <hr className="h-[6px] bg-[#04177f] lg:mt-[2%] border-none mt-[2%] md:mt-[2%] md:h-[10px]" />
+                  <hr className="h-[6px] bg-[#04177f] border-none mt-[3%] md:mt-[3%] md:h-[10px]" />
                   <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[3%] lg:my-[%]">
                     Successful
                   </p>
                   <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
                     <img
-                      className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[125px] lg:h-[125px]"
+                      className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[120px] lg:h-[120px]"
                       src="./Gif/checkMarkGif.gif"
                       alt="/"
                     />
 
-                    <p className="text-[10px] text-[#04177F] font-semibold md:text-[14px]">
+                    <p className="text-[10px] text-[#2ED173] md:text-[16px] font-bold text-center">
                         User has been successfully removed from Favorites.
                     </p>
                   </div>
@@ -593,7 +590,7 @@ export default function AremxySelectUser() {
                     className={`w-full h-[38px] mt-[40px] px-[20px] items-center`}
                   >
                     <button
-                      className={`bg-[#04177F] w-full flex justify-center items-center my-auto mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:mx-auto lg:h-[38px] lg:my-[4%]`}
+                      className={`bg-[#04177F] w-full flex justify-center items-center my-auto mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:mx-auto lg:h-[38px] lg:mt-[4%]`}
                       onClick={() => {
                         setRemove(false);
                         window.location.reload();
@@ -608,13 +605,10 @@ export default function AremxySelectUser() {
             {edit && (
               <Modal>
                 <div
-                  className={`confirm mx-auto my-auto ${
-                    isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
-                  } ${
-                    toggleSideBar
-                      ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
-                      : "lg:w-[40%]"
-                  } lg:ml-[10%] lg:mr-[10%] grow pt-[10px] bottom-[20px] md:top-auto md:bottom-auto lg:top-[5%] pb-[20px] rounded-tr-[8px] rounded-br-[8px] rounded-bl-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:overflow-auto lg:overflow-hidden`}
+                  className={`${style.balanceMoneyPop} ${
+                    toggleSideBar ? " lg:ml-[20%] lg:w-[40%]"
+                    : "lg:w-[40%]"
+                } w-[90%] md:w-[70%] overflow-auto`}
                 >
                   <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
                     <img
@@ -811,7 +805,7 @@ export default function AremxySelectUser() {
                         userPhoneNumber.length < 11
                           ? "bg-[#0008]"
                           : "bg-[#04177f]"
-                      } my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:mt-[2%]`}
+                      } my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:mt-[5%]`}
                       onClick={handleSave}
                     >
                       Save User
@@ -894,7 +888,7 @@ export default function AremxySelectUser() {
                         src="/Images/transferImages/close-circle.png"
                         alt=""
                         />
-                        <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
+                        <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[8%] md:h-[10px]" />
                         <h2 className="text-[12px] font-bold my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
                         Successful
                         </h2>
@@ -922,15 +916,14 @@ export default function AremxySelectUser() {
             {deleted && (
               <Modal>
                 <div
-                  className={`confirm2 ${style.inputPin} ${
+                  className={`${style.inputPin} ${
                     toggleSideBar
-                      ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
-                      : "lg:w-[40%]"
-                  } md:w-[55%] w-[90%] md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
+                    ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
+                  } md:w-[55%] w-[90%]`}
                 >
                   <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[2%]">
                     <img
-                      className=" w-[18px] h-[15px] md:w-[25px] md:h-[22px] lg:w-[35px] lg:h-[22px]"
+                      className=" w-[18px] h-[15px] md:w-[25px] md:h-[22px] lg:w-[25px] lg:h-[12px]"
                       src="/Images/login/arpLogo.png"
                       alt=""
                     />
@@ -939,7 +932,7 @@ export default function AremxySelectUser() {
                       onClick={() => {
                         setdeleted(false);
                       }}
-                      className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[45px] lg:h-[45px] "
+                      className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[25px] lg:h-[25px] "
                       src="/Images/transferImages/close-circle.png"
                       alt=""
                     />
@@ -985,9 +978,8 @@ export default function AremxySelectUser() {
                 <div
                   className={`confirm2 ${style.inputPin} ${
                     toggleSideBar
-                      ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
-                      : "lg:w-[40%]"
-                  } md:w-[55%] w-[90%] md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
+                    ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
+                  } md:w-[55%] w-[90%]`}
                 >
                   <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[2%]">
                     <img
@@ -995,7 +987,7 @@ export default function AremxySelectUser() {
                         setSuccessDeleted(false);
                         //   window.location.reload();
                       }}
-                      className=" w-[18px] h-[15px] md:w-[35px] md:h-[32px] lg:w-[35px] lg:h-[22px]"
+                      className=" w-[18px] h-[15px] md:w-[35px] md:h-[32px] lg:w-[25px] lg:h-[12px]"
                       src="/Images/login/arpLogo.png"
                       alt=""
                     />
@@ -1005,7 +997,7 @@ export default function AremxySelectUser() {
                         setSuccessDeleted(false);
                         window.location.reload();
                       }}
-                      className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[45px] lg:h-[45px] "
+                      className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[25px] lg:h-[25px] "
                       src="/Images/transferImages/close-circle.png"
                       alt=""
                     />
@@ -1045,26 +1037,31 @@ export default function AremxySelectUser() {
             )}
             {currencyAvailable && (
               <Modal>
-                <div className="bg-white shadow-lg w-[90%] rounded-[8px] h-[269px] flex flex-col items-center py-[4%] gap-[40px] md:h-[360px] lg:w-[562px] lg:gap-[60px] lg:h-[500px] lg:py-[3%] lg:rounded-[px]">
-                  <p className="text-[10px] text-[#04177f] font-extrabold md:text-[16px] lg:text-[25px]">
+                <div
+                  className={` mt-6 ${
+                    isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
+                  } ${stylish.cryptoTopUp} flex flex-col justify-between `}
+                >
+                  <div className="text-[10px] text-center pt-[2%] pb-[2%] text-[#04177f] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[2%] lg:pb-[0%]">
                     This Currency is Currently Not Available.
-                  </p>
+                  </div>
                   <img
-                    className="w-[135px] h-[96px] lg:w-[217px] lg:h-[187px]"
+                    className="w-[140px] h-[100px] mx-auto lg:w-[217px] lg:h-[187px]"
                     src="/Images/addAccountImages/account-unavailable.png"
-                    alt=""
+                    alt="/"
                   />
-                  <p className="absolute top-[58%] right-[15%] text-[8px] md:text-[12px] md:ml-[70%] lg:text-[14px] lg:top-[73%] lg:right-[33%] lg:ml-[40%] lg:w-[8%]">
-                    Coming Soon...
-                  </p>
-
-                  <div
-                    onClick={refresh}
-                    className={` ${
-                      isDarkMode ? "border" : "bg-[#04177f] "
-                    } cursor-pointer text-white text-[10px] h-[40px] w-[80%] rounded-[5px] flex items-center justify-center md:mx-auto md:w-[20%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[30%] lg:mx-auto`}
-                  >
-                    Okay
+                  <div className="mx-[6%] flex flex-col gap-[5px] pb-[5%]">
+                    <div className="text-[8px] font-extrabold float-right ml-[70%] md:ml-[70%] md:text-[12px] lg:text-[13px] lg:ml-[80%]">
+                      Coming soon...
+                    </div>
+                    <div
+                      onClick={refresh}
+                      className={` ${
+                        isDarkMode ? "border" : "bg-[#04177f] "
+                      } cursor-pointer text-white text-[10px] h-[40px] rounded-[5px] flex items-center justify-center md:mx-auto md:w-[20%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[30%] lg:mx-auto`}
+                    >
+                      Okay
+                    </div>
                   </div>
                 </div>
               </Modal>

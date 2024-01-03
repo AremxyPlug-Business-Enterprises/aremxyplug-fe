@@ -441,16 +441,20 @@ export const Context = ({ children }) => {
 
   const handleMainInputChange = (e) => {
     const { name, value } = e.target;
+    const limitedValue =
+      name === "userPhoneNumber" ? value.replace(/\D/g, "").slice(0, 11) : value;
+
+
     setMainTransferState({
       ...mainTransferState,
-      [name]: value,
+      [name]: limitedValue,
     });
   };
 
   const mainTransferSchema = Joi.object({
     mainCountry: Joi.string().required(),
     userPhoneNumber: Joi.string()
-      .pattern(new RegExp(/^\d{11}$/)) // Exactly 10 digits, you can adjust as needed
+      .pattern(new RegExp(/^\d{11}$/)) 
       .required()
       .max(11)
       .messages({
@@ -466,10 +470,10 @@ export const Context = ({ children }) => {
       )
       .required(),
     amtToTransfer: Joi.string()
-      .pattern(new RegExp(/\d{4,}/))
+      .pattern(new RegExp(/\d{2,}/))
       .required()
       .messages({
-        "string.pattern.base": "Amount can not be less than 1000",
+        "string.pattern.base": "Amount can not be less than 50",
       }),
   });
 
