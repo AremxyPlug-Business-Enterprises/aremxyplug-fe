@@ -45,7 +45,7 @@ export default function CheckRate({ setCheckrate }) {
       >
         {" "}
         <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[8%] md:h-[15px]" />
-        <div className="bg-[#04177f] text-[#fff] text-[10px] my-[20%] h-[20px] flex justify-center items-center rounded-[2px] md:my-[15%] md:h-[30px] md:text-[15px] lg:text-[16px] lg:mx-auto lg:my-[5%] lg:h-[38px] lg:w-[60%]">
+        <div className="bg-[#04177f] text-[#fff] text-[10px] my-[20%] h-[20px] flex justify-center items-center rounded-[2px] md:my-[10%] md:h-[30px] md:text-[15px] lg:text-[16px] lg:mx-auto lg:my-[5%] lg:h-[38px] lg:w-[60%]">
           Real-time International Transfer Check Rate
         </div>
         <div className="mx-[5%]">
