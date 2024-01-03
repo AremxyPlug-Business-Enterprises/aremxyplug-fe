@@ -9,6 +9,7 @@ export const ContextProvider = createContext();
 export const Context = ({ children }) => {
   const handleRefresh = () => {
     window.location.reload(true);
+    // new
   };
   // Select username or email starts here
   const [hideNavbar, setHideNavbar] = useState(false);

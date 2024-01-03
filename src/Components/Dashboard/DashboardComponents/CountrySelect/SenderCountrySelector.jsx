@@ -69,7 +69,7 @@ export const SenderCountrySelector = ({ className, w = "w-[110px]" }) => {
     <div>
       <button
         onClick={() => setShowList(!showList)}
-        className={`text-[8px] text-[#0005] h-[23.5px] w-[50px] flex justify-center gap-[20%] items-center bg-[#04177f] mb-[4%] md:h-[45px] md:w-[160px] md:text-[12px] ${dynamicClassName} lg:h-[44px] lg:text-[16px]`}
+        className={`text-[8px] text-[#0005] h-[23.5px] w-[50px] flex justify-center gap-[20%] items-center bg-[#04177f] mb-[%] md:h-[45px] md:w-[160px] md:text-[12px] ${dynamicClassName} lg:h-[44px] lg:text-[16px]`}
       >
         {selected ? (
           <div className="flex gap-[5px] items-center md:gap-[8px]">
@@ -102,14 +102,14 @@ export const SenderCountrySelector = ({ className, w = "w-[110px]" }) => {
       </button>
       {showList && (
         <div
-          className=""
+          className="absolute bg-[#fff]"
           style={{
             boxShadow: "0px 1.60656px 4.01639px 0px rgba(0, 0, 0, 0.25)",
           }}
         >
           {countryList.map((country) => (
             <div
-              className="z-10 cursor-pointer border-b flex items-center p-1 gap-[5px] text-[9px] md:text-[14px] lg:text-[16px] lg:justify-between lg:px-[25%]"
+              className=" cursor-pointer border-b flex justify-center items-center p-[7px] gap-[5px] text-[9px] md:text-[14px] md:p-[12px] md:gap-[20px] md:w-[160px] lg:text-[16px] lg:p-[10px] lg:justify-between lg:px-[24%]"
               key={country.id}
               onClick={() =>
                 handleOptionClick(
@@ -121,7 +121,7 @@ export const SenderCountrySelector = ({ className, w = "w-[110px]" }) => {
               }
             >
               <img
-                className="w-[11px] h-[11px] lg:w-[29px] lg:h-[29px]"
+                className="w-[11px] h-[11px] md:w-[20px] md:h-[20px] lg:w-[29px] lg:h-[29px]"
                 src={country.flag}
                 alt="/"
               />

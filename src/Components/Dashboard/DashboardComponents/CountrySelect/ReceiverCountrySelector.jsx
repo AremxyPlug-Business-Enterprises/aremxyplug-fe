@@ -115,7 +115,7 @@ export const ReceiverCountrySelector = ({
         >
           {countryList.map((country) => (
             <div
-              className=" cursor-pointer border-b flex items-center p-1 gap-[5px] text-[9px] bg-[#fff] md:text-[14px] lg:text-[16px] lg:justify-between lg:px-[25%]"
+              className=" cursor-pointer border-b flex justify-center items-center p-[7px] gap-[5px] text-[9px] bg-[#fff] md:p-[12px] md:gap-[20px] md:text-[14px] lg:text-[16px] lg:p-[10px] lg:justify-between lg:px-[24%]"
               key={country.id}
               onClick={() =>
                 handleOptionClick(
@@ -127,7 +127,7 @@ export const ReceiverCountrySelector = ({
               }
             >
               <img
-                className="w-[11px] h-[11px] lg:w-[29px] lg:h-[29px]"
+                className="w-[11px] h-[11px] md:w-[20px] md:h-[20px] lg:w-[29px] lg:h-[29px]"
                 src={country.flag}
                 alt="/"
               />
