@@ -471,17 +471,17 @@ export const Context = ({ children }) => {
       )
       .required(),
     amtToTransfer: Joi.string()
-      .pattern(new RegExp(/\d{2,}/))
+      .pattern(new RegExp(/\d{3,}/))
       .required()
       .messages({
-        "string.pattern.base": "Amount can not be less than 50",
+        "string.pattern.base": "Amount can not be less than 100",
       }),
   });
 
   const ProceedToMainTransfer = (e) => {
     e.preventDefault();
 
-    const { emailUsername, userPhoneNumber } = mainTransferState;
+    const { emailUsername, userPhoneNumber, amtToTransfer } = mainTransferState;
 
     const { error } = mainTransferSchema.validate({
       emailUsername,

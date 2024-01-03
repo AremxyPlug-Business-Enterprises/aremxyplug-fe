@@ -4,7 +4,7 @@ import { DashBoardLayout } from "../../../Layout/DashBoardLayout";
 import { Link } from "react-router-dom";
 import style from "../../../../AirTimePage/AirtimeVtu.module.css";
 import styles from "../../TransferComponent/transfer.module.css";
-import styled from "../../component.module.css";
+import styled from "../../../../AirTimePage/AirTime.module.css";
 import { Modal } from "../../../../Screens/Modal/Modal";
 import Joi from "joi";
 
@@ -12,7 +12,6 @@ import Joi from "joi";
 const AremxyAddUser = () => {
 
     const {
-        isDarkMode,
         toggleSideBar,
       } = useContext(ContextProvider);
 
@@ -415,32 +414,17 @@ const AremxyAddUser = () => {
             </div>
             {currencyAvailable && (
               <Modal>
-                <div
-                  className={` mt-6 ${
-                    isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
-                  } ${styled.cryptoTopUp} flex flex-col justify-between `}
-                >
-                  <div className="text-[10px] text-center pt-[2%] pb-[2%] text-[#04177f] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[2%] lg:pb-[0%]">
-                    This Currency is Currently Not Available.
-                  </div>
-                  <img
-                    className="w-[140px] h-[100px] mx-auto lg:w-[217px] lg:h-[187px]"
-                    src="/Images/addAccountImages/account-unavailable.png"
-                    alt="/"
-                  />
-                  <div className="mx-[6%] flex flex-col gap-[5px] pb-[5%]">
-                    <div className="text-[8px] font-extrabold float-right ml-[70%] md:ml-[70%] md:text-[12px] lg:text-[13px] lg:ml-[80%]">
-                      Coming soon...
+                <div className={styled.NotInterX} >
+                    <div className={styled.timeAbleK}>
+                        <h3>This Currency is Currently Not Available.</h3>
                     </div>
-                    <div
-                      onClick={refresh}
-                      className={` ${
-                        isDarkMode ? "border" : "bg-[#04177f] "
-                      } cursor-pointer text-white text-[10px] h-[40px] rounded-[5px] flex items-center justify-center md:mx-auto md:w-[20%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[30%] lg:mx-auto`}
-                    >
-                      Okay
+                    <div className={styled.InterAirtimeX}>
+                        <img src="/Images/addAccountImages/account-unavailable.png" alt="" />
                     </div>
-                  </div>
+                    <div className={styled.comingX} >
+                        <h2>Coming soon...</h2>
+                        <button className={styled.btnOkX} onClick={refresh}>Okay</button>
+                    </div>
                 </div>
               </Modal>
             )}
