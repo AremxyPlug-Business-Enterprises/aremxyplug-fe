@@ -248,7 +248,7 @@ const SelectRecipient = () => {
             {edit && (
               <Modal>
                 <div
-                  className={`${airtimestyles.successfulTwo} ${
+                  className={`${airtimestyles.transferMoneyPop} ${
                     toggleSideBar ? " lg:ml-[20%] lg:w-[40%]"
                     : "lg:w-[40%]"
                 } w-[90%] xl:w-[40%] md:w-[70%] overflow-auto`}
