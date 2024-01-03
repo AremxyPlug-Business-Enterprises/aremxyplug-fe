@@ -481,7 +481,7 @@ export const Context = ({ children }) => {
   const ProceedToMainTransfer = (e) => {
     e.preventDefault();
 
-    const { emailUsername, userPhoneNumber, amtToTransfer } = mainTransferState;
+    const { emailUsername, userPhoneNumber } = mainTransferState;
 
     const { error } = mainTransferSchema.validate({
       emailUsername,
