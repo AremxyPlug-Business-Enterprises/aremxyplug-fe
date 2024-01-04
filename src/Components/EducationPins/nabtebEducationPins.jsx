@@ -804,7 +804,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                 </p>
 
                 <div className="flex items-center justify-between">
-                  <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] md:text-[12px] 
+                  <h2 className="text-[#7C7C7C] text-[10px] leading-[12.1px] md:text-[12px] 
                   md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] font-[500]">
                       Exam Type
                   </h2>
