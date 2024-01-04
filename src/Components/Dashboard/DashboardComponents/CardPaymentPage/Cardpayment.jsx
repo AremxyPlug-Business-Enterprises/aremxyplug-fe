@@ -61,9 +61,9 @@ const CardPayment = () => {
               />
             </div>
           </div>
-
+          
           <div className="flex items-center my-[10%] gap-[8px] md:my-[5%] md:text-[18px] lg:text-[20px]">
-            <p className="text-[#7c7c7c] text-[10px] leading-[130%] md:text-[14px] lg:text-[20px] 2xl:text-[28px]">
+            <p className="text-[#7c7c7c] text-[10px] leading-[130%] md:text-[12px] lg:text-[16px] 2xl:text-[20px]">
               Select Option
             </p>
             <img
