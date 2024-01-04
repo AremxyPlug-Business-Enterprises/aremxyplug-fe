@@ -482,7 +482,7 @@ const jambReceipt = () => {
       {jambEducationProceed && (
             <Modal>
               <div
-                className={`confirm mx-[5%] ${
+                className={`scroll-bar mx-[5%] ${
                   isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
                 } ${
                   toggleSideBar
@@ -917,7 +917,7 @@ const jambReceipt = () => {
                 items-center justify-center   
               md:mx-[20px] md:rounded-[15px] lg:rounded-[16.308px] lg:h-[75px]">
                   <p className="text-[9px] text-[#7C7C7C] text-center  md:text-[12px] 
-                lg:text-[16.231px] lg:leading-[20px]">
+                lg:text-[14.231px] lg:leading-[20px]">
                   <span className='md:block'>The e-pins purchase has been generated successfully. 
                 Please kindly check</span>
              <span className='md:block'> receipt to confirm the pin / token. 

@@ -44,7 +44,7 @@ export const WithdrawalDeletePopUp = () => {
                 Yes
               </button>
               <button
-                onClick={() => setWithdrawalDeleteSuccess(false)}
+                onClick={() => setWithdrawlDeletePopUp(false)}
                 className="cursor-pointer text-[#F95252] text-[14px] w-[111px] rounded-[6px] font-extrabold md:text-[20px] lg:text-[20px] lg:w-[163px] lg:h-[38px]"
               >
                 Cancel

@@ -479,7 +479,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
     {nabtebEducationProceed && (
           <Modal>
             <div
-              className={`confirm mx-[5%] ${
+              className={`scroll-bar mx-[5%] ${
                 isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
               } ${
                 toggleSideBar
@@ -787,7 +787,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                 Purchase Successful
               </h2>
               <img 
-                className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[250px] lg:h-[250px]"
+                className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[100px] lg:h-[100px]"
                 src="./Gif/checkMarkGif.gif"
                 alt="/"
               />
@@ -804,7 +804,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                 </p>
 
                 <div className="flex items-center justify-between">
-                  <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] md:text-[12px] 
+                  <h2 className="text-[#7C7C7C] text-[10px] leading-[12.1px] md:text-[12px] 
                   md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] font-[500]">
                       Exam Type
                   </h2>
@@ -866,17 +866,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                   </div>
                 </div>
 
-                {/* <div className="flex items-center justify-between">
-                  <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                    Amount
-                  </h2>
-                  <div className="flex gap-1">
-                    <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                      {selectedAmount}
-                    </h2>
-                  </div>
-                </div> */}
-
+               
                 <div className="flex items-center justify-between">
                   <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] 
                   md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] font-[500]">
@@ -907,7 +897,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
               <div className="bg-[#F2FAFF] mx-5 h-[45px] my-5 flex p-[10.193px] items-center justify-center   
               md:mx-[20px] md:rounded-[15px] lg:rounded-[16.308px] lg:h-[75px]">
                 <p className="text-[9px] text-[#7C7C7C] text-center  md:text-[11px] 
-                lg:text-[16.231px] lg:leading-[20px]">
+                lg:text-[14.231px] lg:leading-[20px]">
                <span className='md:block'>The e-pins purchase has been generated successfully. 
                 Please kindly check</span>
              <span className='md:block'> receipt to confirm the pin / token. 

@@ -248,7 +248,7 @@ const SelectRecipient = () => {
             {edit && (
               <Modal>
                 <div
-                  className={`${airtimestyles.transferMoneyPop} ${
+                  className={`${airtimestyles.successfulTwo} ${
                     toggleSideBar ? " lg:ml-[20%] lg:w-[40%]"
                     : "lg:w-[40%]"
                 } w-[90%] xl:w-[40%] md:w-[70%] overflow-auto`}
@@ -570,7 +570,7 @@ const SelectRecipient = () => {
                         window.location.reload();
                       }}
                     >
-                      Confirmed
+                      Done
                     </button>
                   </div>
                 </div>

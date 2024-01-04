@@ -16,7 +16,7 @@ export const ToOtherBanks = () => {
 
   return (
     <DashBoardLayout>
-      <div className="flex flex-col justify-between lg:gap-[200px] lg:h-full">
+      <div className="flex flex-col justify-between gap-[70px] lg:h-full">
         <div className="">
           <div
             style={{

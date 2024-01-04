@@ -159,7 +159,7 @@ export const WithdrawAccounts = () => {
   };
 
   const navigate = useNavigate();
-  
+
   const handleTableRowClick1 = () => {
     navigate("/withdraw-to-personalaccount");
   };
@@ -251,7 +251,7 @@ export const WithdrawAccounts = () => {
             </tr>
           </thead>
 
-          <tbody onClick={handleTableRowClick1}>
+          <tbody className="cursor-pointer" onClick={handleTableRowClick1}>
             <tr>
               <td className="">
                 <div className="flex gap-[3px] lg:gap-[10px]">
@@ -294,7 +294,7 @@ export const WithdrawAccounts = () => {
             </tr>
           </thead>
 
-          <tbody onClick={handleTableRowClick2}>
+          <tbody className="cursor-pointer" onClick={handleTableRowClick2}>
             <tr>
               <td className="">
                 <div className="flex gap-[3px] lg:gap-[10px]">

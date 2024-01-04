@@ -9,6 +9,7 @@ export const ContextProvider = createContext();
 export const Context = ({ children }) => {
   const handleRefresh = () => {
     window.location.reload(true);
+    // new
   };
   // Select username or email starts here
   const [hideNavbar, setHideNavbar] = useState(false);
@@ -470,10 +471,10 @@ export const Context = ({ children }) => {
       )
       .required(),
     amtToTransfer: Joi.string()
-      .pattern(new RegExp(/\d{2,}/))
+      .pattern(new RegExp(/\d{3,}/))
       .required()
       .messages({
-        "string.pattern.base": "Amount can not be less than 50",
+        "string.pattern.base": "Amount can not be less than 100",
       }),
   });
 
