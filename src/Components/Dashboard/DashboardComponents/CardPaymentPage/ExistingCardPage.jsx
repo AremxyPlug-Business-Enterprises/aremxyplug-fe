@@ -557,7 +557,7 @@ const ExistingCardPage = () => {
 
                     <div
                       className="relative right-[5px]"
-                      style={{ zIndex: 1000, position: "relative" }}
+                      style={{ zIndex: 30, position: "relative" }}
                       onMouseDown={(e) => {
                         if (e.target === e.currentTarget) {
                           // Handle div click logic
@@ -589,7 +589,7 @@ const ExistingCardPage = () => {
                           className="border absolute cursor-pointer bg-white top-[15px] right-[15px] w-[100px] md:top-[20px] md:right-[22px] lg:right-[30px] lg:top-[25px] h-[75px] md:h-[100px] md:w-[150px] rounded-[5px] flex flex-col justify-center items-start py-[5px]"
                           style={{
                             boxShadow: "0 0 5px rgba(0, 0, 0, 0.2)",
-                            zIndex: 10000,
+                            zIndex: 40,
                             position: "absolute",
                           }}
                         >

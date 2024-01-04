@@ -419,7 +419,7 @@ const AirtelDataBundle = () => {
 
           <div className="flex gap-[15px]  justify-between md:w-full md:gap-[10%]">
             <div className="flex gap-[15px] md:w-[50%] md:justify-between">
-              <p className="flex text-[#7c7c7c] gap-[7px] text-[10px] md:gap-[7px] leading-[130%] md:text-[12px] lg:text-[20px] 2xl:text-[28px]">
+              <p className="flex text-[#7c7c7c] gap-[7px] text-[10px] md:gap-[7px] leading-[130%] md:text-[12px] lg:text-[16px] 2xl:text-[20px]">
                 Purchase
                 <span>
                   <img
@@ -585,7 +585,11 @@ const AirtelDataBundle = () => {
             <div className="">
               <h2 className="text-[10px] font-[600] md:text-[12px] lg:text-[18px]">
                 Phone Number{" "}
-                <span className="text-[#04177F]">(Select Recipient)</span>{" "}
+                <span className="text-[#04177F]">
+                  <Link to="/DataBundleSelectRecipient">
+                    (Select Recipient)
+                  </Link>
+                  </span>{" "}
               </h2>
               <div className="relative mt-[5px]">
                 <input
