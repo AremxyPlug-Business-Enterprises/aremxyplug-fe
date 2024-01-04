@@ -480,7 +480,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
           <Modal>
          
             <div
-              className={`confirm  mx-[5%]  ${
+              className={`scroll-bar  mx-[5%]  ${
                 isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
               } ${
                 toggleSideBar
@@ -796,7 +796,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                 Purchase Successful
               </h2>
               <img 
-                className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[250px] lg:h-[250px]"
+                className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[100px] lg:h-[100px]"
                 src="./Gif/checkMarkGif.gif"
                 alt="/"
               />
