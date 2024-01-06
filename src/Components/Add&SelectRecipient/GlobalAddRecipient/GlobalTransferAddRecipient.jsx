@@ -336,7 +336,7 @@ className='bg-[#04177F] w-[100%] lg:py-[10px] py-[13px] lg:w-[163px]
         {changeRecipientSuccess && (
           <Modal>
             <div className='h-[100%] w-[100%] md:justify-center flex md:items-center items-end md:mx-[0px] mx-[19px]'>
-          <div className='deleteRecipientSuccess flex flex-col   lg:w-[35%] md:w-[45%] h-[320px] md:h-[400px] w-[100%] lg:h-[550px] bg-white lg:rounded-[20px]
+          <div className='deleteRecipientSuccess flex flex-col   lg:w-[35%] md:w-[45%] h-[320px] md:h-[400px] w-[100%] lg:h-[465px] bg-white lg:rounded-[20px]
           shadow-[0px_0px_6.933px_0px_rgba(0,0,0,0.25)] rounded-t-[8px] md:rounded-[11.458px]
           lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] pb-[60px] lg:pb-[80px] md:pb-[50px]'>
   <div className='flex justify-between w-[100%] border-b-[15px] border-[solid] border-[#04177F] lg:p-[15px] p-[10px]'>
@@ -346,8 +346,8 @@ className='bg-[#04177F] w-[100%] lg:py-[10px] py-[13px] lg:w-[163px]
    <img src={closeIcon} alt="" 
    className='lg:h-[32px] lg:w-[32px]  h-[16px] w-[16px]'/>
   </div>
-  <div className='flex flex-col justify-between lg:w-[100%] lg:pt-[20px] pt-[30px] items-center h-[100%]'>
-  <div className='flex flex-col items-center lg:w-[80%]  md:pb-[0px] pb-[40px]  lg:gap-[40px] gap-[20px]'>
+  <div className='flex flex-col  lg:w-[100%] lg:pt-[20px] pt-[30px] items-center h-[100%]'>
+  <div className='flex flex-col items-center lg:w-[80%]   pb-[40px]  lg:gap-[25px] gap-[20px]'>
    <h2 className='font-[600] text-center text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
     Successful
     </h2>

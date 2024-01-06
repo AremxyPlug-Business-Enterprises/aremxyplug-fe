@@ -17,7 +17,7 @@ import SuccessIcon from '../../My Profile & Account Settings/ProfileImages/succe
 import AremxyLogo from '../../EducationPins/imagesEducation/AremxyPlug.svg';
 import imageCurrencyNotAvalaible from '../RecipientImages/CurrencyNotAvaliable.svg';
 import { Link } from 'react-router-dom';
-// import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import '../../../App.css';
 export default function EditSelectRecipient() {
   const [accountNumber, setAccountNumber] =  useState('');
