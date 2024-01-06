@@ -538,7 +538,7 @@ Okay
        </div>
         </div>
 
-      <div className='flex gap-[5px]'>
+      <div className='flex gap-[4.5px]'>
       <div key={favorite.id}
       className='relative z-[16px]  flex  items-center '>
       <img 
