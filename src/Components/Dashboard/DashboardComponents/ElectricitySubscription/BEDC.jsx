@@ -198,7 +198,8 @@ const BEDC = () => {
        
     };
     const handlePhoneNumber = (event) => {
-      const newValue = event.target.value;
+      const value = event.target.value;
+      const newValue = value.replace(/\D/g, "").slice(0, 11);
       setPhoneNumber(newValue);
        
     };
@@ -299,7 +300,7 @@ const BEDC = () => {
                 </button>
               </div>
               {showProductList && (
-                <div className="border md:rounded-[10px] text-[10px] md:text-[12px] lg:text-[16px] mt-14 lg:mt-20 w-[90%]  rounded-[4px] absolute  bg-[#FFF] z-[10]">
+                <div className="border md:rounded-[10px] text-[10px] md:text-[12px] lg:text-[16px] mt-14 lg:mt-20 w-[90%] md:w-[44%]  rounded-[4px] absolute  bg-[#FFF] z-[10]">
                   {productList.map((item) => (
                     <div
                       key={item.name}
@@ -347,7 +348,7 @@ const BEDC = () => {
         <div className="flex flex-col mt-[10px]">
             <div className="text-[#7E7E7E] text-[10px] lg:text-[16px]   font-[600]" >Email</div>
             <div>
-              <input type="number" value={ikedcEmail} onChange={handleEmail}  className=" w-full lg:h-[51px] text-[#7E7E7E] pl-[9px] lg:text-[16px] text-[10px] font-[500]  border-[1px] h-[30px]" />
+              <input type="text" value={ikedcEmail} onChange={handleEmail}  className=" w-full lg:h-[51px] text-[#7E7E7E] pl-[9px] lg:text-[16px] text-[10px] font-[500]  border-[1px] h-[30px]" />
             </div>
             {errors.ikedcEmail && (
               <div className="text-[12px] text-red-500 italic lg:text-[14px]">
@@ -485,9 +486,9 @@ const BEDC = () => {
           {proceed && (
             <Modal>
               <div
-            className={`${styles.transferConfirmation} ${
-              toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[562px]"
-            } w-[90%] overflow-auto`}
+            className={`${styles.transferMoneyPop} ${
+              toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+              } w-[90%] md:w-[60%] overflow-auto`}
           >
             <img
               onClick={() => setProceed(false)}

@@ -310,11 +310,11 @@ const [text, setText] =useState(false);
               onClick={() => {setRealPop(false);
               handlerealClear(); }
               
-               } className="absolute right-6 md:right-[23%] lg:right-[33%] w-[18px] h-[18px] my-[1%] md:w-[30px] md:h-[30px] lg:w-[25px] lg:h-[25px]"
+               } className="absolute right-6 md:right-[25%] lg:right-[33%] w-[18px] h-[18px] my-[1%] md:w-[30px] md:h-[30px] lg:w-[25px] lg:h-[25px]"
               src="/Images/transferImages/close-circle.png"
               alt=""
             />
-            <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[8%] md:h-[10px] lg:h-[10px] lg:mt-[8%]" />
+           <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[8%] lg:mt-[6%]" />
             <div className="flex flex-col text-center items-center justify-center pt-[30px] md:pt-[30px] lg:pt-[1px]">
               <div className="font-[500] flex items-center justify-center w-[100%] text-center text-[10px] py-1 mt-[30px] md:mt-[30px] lg:mt-[50px]   md:text-[9.17px] lg:text-[16px] leading-[20.8px] lg:px-6 lg:w-fit  md:flex md:flex-row md:w-fit md:py-1 md:px-4 lg:py-3 rounded-sm md:rounded-sm lg:rounded-md md:leading-[11.5px] bg-primary text-white">
                 Real-time Points Redeem Tracker
