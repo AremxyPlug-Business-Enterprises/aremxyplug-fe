@@ -429,13 +429,13 @@ const [text, setText] =useState(false);
       {proceed && (
         <Modal>
           <div
-            className={`${styles.transferConfirmation} ${
-              toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[562px]"
-            } w-[90%] overflow-auto`}
+            className={`${styles.aremxyMoneyPop} ${
+              toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+            } w-[90%] md:w-[60%]`}
           >
             <img
               onClick={() => setProceed(false)}
-              className="absolute right-2 w-[18px] h-[18px] my-[3%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px]"
+              className="absolute right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px]"
               src="/Images/transferImages/close-circle.png"
               alt=""
             />
@@ -656,9 +656,7 @@ const [text, setText] =useState(false);
 
             <div className="bg-[#F2FAFF] mx-10 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
               <p className="text-[6px] text-center mx-auto w-[171px] md:text-[14px] md:w-[80%] lg:text-[14px]">
-                The Redeemed points has been sent successfully. Please contact
-                the recipient bank with the Session ID if payment not received
-                within 5-15 minutes.
+              The redeem has been sent successfully. Please check the correspondent wallet to view the value.
               </p>
             </div>
             <div className="flex w-[70%] mx-auto items-center gap-[5%] md:gap-[20px] justify-center md:w-[20%] lg:my-[5%]">
