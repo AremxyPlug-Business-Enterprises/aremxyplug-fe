@@ -6,29 +6,30 @@ import flag from '../AirtimeConversion/images/mtn.svg'
 export const AirtimeSelector = ({ onSelectOne, selectedCountryOne }) => {
   const countryListOne = [
     {
-        id:1,
-        name:'MTN',
-        image: require('../AirtimeConversion/images/mtn.svg').default,
-        discount: 3,
+      id: 1,
+      name: "MTN",
+      image: require("../AirtimeConversion/images/mtn.svg").default,
+      discount: 3,
     },
     {
-        id:2,
-        name:'AIR',
-        image: require('../AirtimeConversion/images/Airtel_logo-01 2 (2).png'),
-        discount: 4,
+      id: 1,
+      name: "AIRTEL",
+      image: require("../AirtimeConversion/images/airtel.svg").default,
+      discount: 3,
     },
     {
-        id:3,
-        name:'GLO',
-        image: require('../AirtimeConversion/images/640px-Glo_button 1 (1).png'),
-        discount: 3,
+      id: 1,
+      name: "GLO",
+      image: require("../AirtimeConversion/images/glo.svg").default,
+      discount: 3,
     },
+
     {
-        id:4,
-        name:'9MOB',
-        image: require('../AirtimeConversion/images/9mobile.svg').default,
-        discount: 3,
-    }
+      id: 4,
+      name: "9MOBILE",
+      image: require("../AirtimeConversion/images/9mobile.svg").default,
+      discount: 3,
+    },
   ];
 
   const {
