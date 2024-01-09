@@ -23,8 +23,8 @@ import { Modal } from '../../Screens/Modal/Modal';
 import SuccessIcon from '../../My Profile & Account Settings/ProfileImages/success.gif';
 import Star from '../RecipientImages/Star 2.svg';
 import { Link } from 'react-router-dom';
+// import { BrowserRouter as Route, Router, Link } from 'react-router-dom';
 // import EditSelectRecipient from './EditSelectRecipient';
-
 
 export default function GlobalTransferSelectRecipient() {
   const [selectRecipientCountry, setSelectRecipientCountry] = useState('');
@@ -36,7 +36,9 @@ export default function GlobalTransferSelectRecipient() {
   const [deleteRecipient, setDeleteRecipient] = useState(false);
 const [recipientTab, setRecipientTab] = useState(true);
 const [favoriteTab, setFavoriteTab] = useState(false);
-
+ const [deleteFavoriteRecipient, setDeleteFavoriteRecipient] = useState(false);
+const [favoriteEdit, setFavoriteEdit] = useState(null);
+const [addFavoriteRecipient, setAddFavoriteRecipient] = useState(false);
   const [recipientCountrySelection] = useState([
     {method : 'Nigeria',  flag : nigerianFlag, id : 1},
    {method : 'United states ',  flag : americaFlag, id : 2 },
@@ -58,36 +60,60 @@ document.querySelector('.SelectRecipientDrop').classList.toggle('DropIt');
     {recipientName : 'Habib Kamaldeen', recipientAccountNumber : '0123456789', recipientBank : 'Sporta Bank', img1 : triangleBank, img2 : Star,  id: 1},
     {recipientName : 'Jeremiah', recipientAccountNumber : '2343454626', recipientBank : 'Sporta Bank', img1 : triangleBank, img2 : Star, id: 2}
   ])
+
+  //     FUNCTIONS FOR RECIPIENTS TAB ===========
   function handleElementClick(recipients){
     setEditRecipient(recipients);
-   
-    console.log(`elements with clicked id ${recipients}`)
+   console.log(`elements with clicked id ${recipients}`)
+}
+function  closePopRecipients(){
+  setEditRecipient(null);
+   }
 
-  }
+  
   function handleAccountClick(recipients){
     setDeleteRecipient(false);
     setDeleteRecipientSuccess(recipients);
     console.log(`elements with clicked id ${recipients}`)
-
-  }
- function  closePopRecipients(){
+ }
+ function  DeleteSelectRecipients(recipients){
   setEditRecipient(null);
+  setDeleteRecipient(recipients);
    }
-   function  DeleteSelectRecipients(recipients){
+   function addFavorite(recipients){
     setEditRecipient(null);
-    setDeleteRecipient(recipients);
+    setAddFavoriteRecipient(recipients);
+   }
+ //   ======= || =============
+ 
+   
+    // FUNCTIONS FOR FAVORITE TAB ===========
+    function favoriteHandleElementClick(favorite){
+      setFavoriteEdit(favorite);
+      console.log(`elements with clicked id ${favorite}`)
+    }
+    function  closeFavoritePopRecipients(){
+      setEditRecipient(null);
+       }
+     function removeFavorite(favorite){
+      setFavoriteEdit(null);
+      setDeleteFavoriteRecipient(favorite);
      }
-    
+     function  DeleteFavoriteRecipients(favorite){
+      setFavoriteEdit(null);
+      setDeleteRecipient(favorite);
+       }
+       //
  
   
     const [searchRecipients, setSearchRecipients] = useState('');
 
 const filterData = knownRecipient.filter(item =>
   item.recipientName.toLowerCase().includes(searchRecipients.toLowerCase())
-)
+);
 const filterFavorite = knownFavorite.filter(item =>
   item.recipientName.toLowerCase().includes(searchRecipients.toLowerCase())
-)
+);
 
 
 
@@ -217,9 +243,10 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
      <h2 onClick ={() => {
       setFavoriteTab(false);
       setRecipientTab(true);
+      setFavoriteEdit(null);
      }}
      className={`md:w-[25%] w-[50%] font-[500] text-center text-[9px] leading-[12px] lg:text-[20px] lg:leading-[30px] py-[5.671px] lg:py-[10px]
-     bg-[#E2F3FF] md:border-b-[3px] border-b-[2.1px] border-[#04177F] lg:rounded-[6px] rounded-[1.987px]
+     bg-[#E2F3FF] md:border-b-[3px] border-b-[2.1px] border-[#04177F] lg:rounded-[6px] rounded-[1.987px] cursor-pointer
        ${recipientTab ? 'bg-[#E2F3FF] lg:rounded-[6px] lg:border-b-[4px] border-b-[2px] rounded-[3.521px] border-[#04177F]'
         :  'bg-transparent border-none'}`}>
   Recipients
@@ -227,16 +254,22 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
      <h2 onClick={() => {
        setFavoriteTab(true);
        setRecipientTab(false);
+       setEditRecipient(null);
      }}
      className={`md:w-[25%] w-[50%] font-[500] text-center text-[9px] leading-[12px] lg:text-[20px] 
-      lg:leading-[30px] lg:py-[10px] py-[5.671px]
+      lg:leading-[30px] lg:py-[10px] py-[5.671px] cursor-pointer
       ${favoriteTab ? 'bg-[#E2F3FF] lg:rounded-[6px] lg:border-b-[4px] border-b-[2px] rounded-[3.521px] border-[#04177F]'
       :  'bg-transparent border-none'}`}>
   Favorites
      </h2>
     </div>
    
-        
+  {/* <Router> */}
+    {/* <Route path = "/EditRecipient/:id">
+        <EditSelectRecipient/>
+      </Route> */}
+
+
  {recipientTab && (
    filterData.length === 0 ? (
     <div className='flex justify-center '>
@@ -286,7 +319,7 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
         <div className='absolute md:top-[15px] md:right-[10px] top-[0px] right-[10px] lg:top-[10px] lg:right-[10px] flex flex-col'>
           {/* ADD TO FAVORITE */}
    <p onClick={() => {
-   setEditRecipient(null);
+  addFavorite(recipients.id);
    }}
    className='text-[#7C7C7C] lg:w-[220px] md:w-[180px]  py-[7.451px] pl-[5.313px] w-[110.36px]  
    lg:py-[12px] lg:px-[14px] text-[9px] leading-[12px] 
@@ -295,6 +328,7 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
     Add to favorites
    </p>
    {/* EDIT  */}
+   {/* <Link to ={`/EditRecipient/${recipients.id}`} */}
    <p
     onClick={() => {
    closePopRecipients();
@@ -303,7 +337,8 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
     shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)] hover:bg-gray-200 cursor-pointer
    lg:text-[16px] lg:leading-[24px] font-[600] bg-white'>
     Edit Recipients
-   </p>
+    </p>
+   {/* </Link> */}
    {/* DELETE  */}
    <p onClick={() => {
   DeleteSelectRecipients(recipients.id);
@@ -364,6 +399,7 @@ md:w-[150px] text-center rounded-[4.41px]
           </div>
           </Modal>
         )}
+        
     {deleteRecipientSuccess === recipients.id && (
           <Modal>
             <div className='h-[100%] w-[100%] md:justify-center flex md:items-center items-end md:mx-[0px] mx-[19px]'
@@ -385,7 +421,7 @@ md:w-[150px] text-center rounded-[4.41px]
       </h2>
    <h2 className='font-[600]  text-[#04177F] text-center text-[10px] leading-[14px] 
    lg:text-[16px] lg:leading-[24px]' key={recipients.id} >
-   Recipient {recipients.recipientAccountNumber} has been deleted successfully. 
+   Recipient *****{recipients.recipientAccountNumber.slice(6,10)} has been deleted successfully. 
    You can add user again anytime!
 </h2>
     <img src={SuccessIcon} alt=""
@@ -408,6 +444,48 @@ md:w-[150px] text-center rounded-[4.41px] bg-[#04177F]
           </div>
           </Modal>
         )}
+         {addFavoriteRecipient === recipients.id && (
+          <Modal>
+            <div className='h-[100%] w-[100%] md:justify-center flex md:items-center items-end md:mx-[0px] mx-[19px]'
+            key={recipients.id}>
+          <div className='deleteRecipientSuccess flex flex-col   lg:w-[35%] md:w-[45%] h-[320px] md:h-[400px] w-[100%] lg:h-[465px] bg-white lg:rounded-[20px]
+          shadow-[0px_0px_6.933px_0px_rgba(0,0,0,0.25)] rounded-t-[8px] md:rounded-[11.458px]
+          lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] pb-[60px] lg:pb-[80px] md:pb-[50px]'>
+  <div className='flex justify-between w-[100%] border-b-[15px] border-[solid] border-[#04177F] lg:p-[15px] p-[10px]'>
+  <img src={AremxyLogo} alt="" 
+   className='lg:h-[24.818px] lg:w-[41.825px] h-[16px] w-[16px] 
+   '/>
+   <img src={closeIcon} alt="" 
+   className='lg:h-[32px] lg:w-[32px]  h-[16px] w-[16px]'/>
+  </div>
+  <div className='flex flex-col  lg:w-[100%] lg:pt-[20px] pt-[30px] items-center h-[100%]'>
+  <div className='flex flex-col items-center lg:w-[80%]   pb-[40px]  lg:gap-[25px] gap-[20px]'>
+   <h2 className='font-[600] text-center text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
+    Successful
+    </h2>
+    <img src={SuccessIcon} alt=""
+    className='lg:w-[135px] lg:h-[135px] h-[100px] w-[100px]'/>
+    <p className='font-[600] text-[#0DEF6C] text-center text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
+    Recipient has been successfully added to Favorites.
+
+    </p>
+  </div>
+ <div
+  className='w-[100%] flex justify-center'>
+  <button onClick={() => {
+     setAddFavoriteRecipient(false);
+  }}
+className='bg-[#04177F] w-[80%] md:py-[9px] py-[13px] lg:w-[163px]
+md:w-[150px] text-white text-center rounded-[4.41px]
+ lg:rounded-[12px] font-[600] lg:text-[16px] lg:leading-[24px]'>
+Okay
+</button>
+</div>
+  </div>
+          </div>
+          </div>
+          </Modal>
+        )}
         
         </div>
     )
@@ -415,7 +493,9 @@ md:w-[150px] text-center rounded-[4.41px] bg-[#04177F]
       </div>
      )
   
- )}    
+ )}  
+ 
+ {/* </Router>   */}
  {/* ================================FAVORITE TAB =============================*/}
 
 
@@ -427,13 +507,16 @@ md:w-[150px] text-center rounded-[4.41px] bg-[#04177F]
       </div>
      ):(
       <div className='flex flex-col'>
-   {filterData.map(favorite => {
+   {filterData.map((favorite, index) => {
     return (
       <div
-       className='flex justify-between pr-[19.87px]  py-[5.586px] pl-[4.758px] lg:pr-[60px] lg:py-[14px] lg:pl-[25px] border-[0.5px] 
+       className={`flex justify-between pr-[5.87px]  py-[5.586px] pl-[4.758px] lg:pr-[15px] lg:py-[14px] lg:pl-[25px] border-[0.5px] 
       md:border-[1px] border-[solid] border-[#7C7C7C] bg-white lg:rounded-[12px] mt-[20px]
-      shadow-[0px_0px_1.325px_0px_rgba(0,0,0,0.25)] lg:shadow-[] rounded-[3.974px]
-    ' key = {favorite.id}
+      shadow-[0px_0px_1.325px_0px_rgba(0,0,0,0.25)] lg:shadow-[0px_0px_4px_0px_rgba(0,0,0,0.25)] rounded-[3.974px]
+      
+      `}
+  
+     key = {favorite.id}
    >
         <div className='flex flex-col gap-[5px]'>
        <h2 
@@ -455,20 +538,21 @@ md:w-[150px] text-center rounded-[4.41px] bg-[#04177F]
        </div>
         </div>
 
-    <div className='flex gap-[10px] h-[100%]'>
+      <div className='flex gap-[4.5px]'>
       <div key={favorite.id}
-      className='relative flex  items-center'>
+      className='relative z-[16px]  flex  items-center '>
       <img 
        onClick={() => {
-        handleElementClick(favorite.id);
+       favoriteHandleElementClick(favorite.id);
       }}
+      className='md:w-[8px] md:h-[28px] w-[4px] h-[20px]'
        src={optionsRecipient} alt=""/>
       {/* FOR OPTIONS TO EDIT RECIPIENTS */}
-      { editRecipient === favorite.id && (
-        <div className='absolute md:top-[15px] md:right-[10px] top-[0px] right-[10px] lg:top-[10px] lg:right-[10px] flex flex-col'>
+      { favoriteEdit === favorite.id && (
+        <div className='absolute bg-blue-400 z-[12px] md:top-[15px] md:right-[10px] top-[0px] right-[10px] lg:top-[10px] lg:right-[10px] flex flex-col'>
           {/* ADD TO FAVORITE */}
    <p onClick={() => {
-   setEditRecipient(null);
+  removeFavorite(favorite.id);
    }}
    className='text-[#7C7C7C] lg:w-[220px] md:w-[180px]  py-[7.451px] pl-[5.313px] w-[110.36px]  
    lg:py-[12px] lg:px-[14px] text-[9px] leading-[12px] 
@@ -479,7 +563,7 @@ md:w-[150px] text-center rounded-[4.41px] bg-[#04177F]
    {/* EDIT  */}
    <p
     onClick={() => {
-   closePopRecipients();
+   closeFavoritePopRecipients();
    }}
     className='text-[#7C7C7C] lg:w-[220px] md:w-[180px] py-[7.451px] pl-[5.313px] w-[110.36px] lg:py-[12px] lg:px-[14px] text-[9px] leading-[12px] 
     shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)] hover:bg-gray-200 cursor-pointer
@@ -488,7 +572,7 @@ md:w-[150px] text-center rounded-[4.41px] bg-[#04177F]
    </p>
    {/* DELETE  */}
    <p onClick={() => {
-  DeleteSelectRecipients(favorite.id);
+  DeleteFavoriteRecipients(favorite.id);
    }}
    className='text-[#FA6B6B] lg:w-[220px] md:w-[180px] py-[7.451px] pl-[5.313px] w-[110.36px]  lg:py-[12px] lg:px-[14px] text-[9px] leading-[12px]
    shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)] hover:bg-gray-200 cursor-pointer
@@ -500,12 +584,17 @@ md:w-[150px] text-center rounded-[4.41px] bg-[#04177F]
       )}
       </div>
       <div className='flex justify-start'>
-      <img src={Star} className='h-[23px] w-[23px] lg:h-[43px] lg:w-[43px]' alt="" />
+      <img src={Star} className='h-[15px] w-[15px] lg:h-[40px] lg:w-[40px]' alt="" />
       </div>
-    </div>
+      </div>
+      
+    
     {deleteRecipient === favorite.id && (
+   
           <Modal>
-            <div className=' h-[100%] w-[100%] md:justify-center flex md:items-center items-end md:mx-[0px] mx-[19px]'
+            <div className={` h-[100%]  w-[100%] md:justify-center flex md:items-center items-end md:mx-[0px] mx-[19px]
+          `}
+         
               key={favorite.id} >
           <div className='deleteRecipientSuccess flex flex-col  lg:w-[35%] md:w-[45%] h-[320px] w-[100%] lg:h-[465px] bg-white lg:rounded-[20px]
           shadow-[0px_0px_6.933px_0px_rgba(0,0,0,0.25)] rounded-t-[8px] md:rounded-[5.729px]
@@ -550,10 +639,14 @@ md:w-[150px] text-center rounded-[4.41px]
           </div>
           </div>
           </Modal>
-        )}
+      
+    )}
+        
     {deleteRecipientSuccess === favorite.id && (
+       
           <Modal>
             <div className='h-[100%] w-[100%] md:justify-center flex md:items-center items-end md:mx-[0px] mx-[19px]'
+            style={{ position : 'relative', zIndex : favorite.id}}
             key={favorite.id}>
           <div className='deleteRecipientSuccess  flex flex-col  lg:w-[35%] md:w-[45%] h-[320px] w-[100%] lg:h-[465px] bg-white lg:rounded-[20px]
           shadow-[0px_0px_6.933px_0px_rgba(0,0,0,0.25)] rounded-t-[8px] md:rounded-[5.729px]
@@ -572,7 +665,7 @@ md:w-[150px] text-center rounded-[4.41px]
       </h2>
    <h2 className='font-[600]  text-[#04177F] text-center text-[10px] leading-[14px] 
    lg:text-[16px] lg:leading-[24px]' key={favorite.id} >
-   Recipient {favorite.recipientAccountNumber} has been deleted successfully. 
+   Recipient *****{favorite.recipientAccountNumber.slice(6,10)} has been deleted successfully. 
    You can add user again anytime!
 </h2>
     <img src={SuccessIcon} alt=""
@@ -594,6 +687,52 @@ md:w-[150px] text-center rounded-[4.41px] bg-[#04177F]
           </div>
           </div>
           </Modal>
+       
+        )}
+               {deleteFavoriteRecipient === favorite.id && (
+                
+          <Modal>
+            <div className='h-[100%] w-[100%] md:justify-center flex md:items-center items-end md:mx-[0px] mx-[19px]'
+            style={{ position : 'relative', zIndex : favorite.id}}
+            key={favorite.id}>
+          <div className='deleteRecipientSuccess flex flex-col   lg:w-[35%] md:w-[45%] h-[320px] md:h-[400px] w-[100%] lg:h-[465px] bg-white lg:rounded-[20px]
+          shadow-[0px_0px_6.933px_0px_rgba(0,0,0,0.25)] rounded-t-[8px] md:rounded-[11.458px]
+          lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] pb-[60px] lg:pb-[80px] md:pb-[50px]'>
+  <div className='flex justify-between w-[100%] border-b-[15px] border-[solid] border-[#04177F] lg:p-[15px] p-[10px]'>
+  <img src={AremxyLogo} alt="" 
+   className='lg:h-[24.818px] lg:w-[41.825px] h-[16px] w-[16px] 
+   '/>
+   <img src={closeIcon} alt="" 
+   className='lg:h-[32px] lg:w-[32px]  h-[16px] w-[16px]'/>
+  </div>
+  <div className='flex flex-col  lg:w-[100%] lg:pt-[20px] pt-[30px] items-center h-[100%]'>
+  <div className='flex flex-col items-center lg:w-[80%]   pb-[40px]  lg:gap-[25px] gap-[20px]'>
+   <h2 className='font-[600] text-center text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
+    Successful
+    </h2>
+    <img src={SuccessIcon} alt=""
+    className='lg:w-[135px] lg:h-[135px] h-[100px] w-[100px]'/>
+    <p className='font-[600] text-[#04177F] text-center text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
+    Recipient has been successfully removed from Favorites.
+
+    </p>
+  </div>
+ <div
+  className='w-[100%] flex justify-center'>
+  <button onClick={() => {
+     setDeleteFavoriteRecipient(false);
+  }}
+className='bg-[#04177F] w-[80%] md:py-[9px] py-[13px] lg:w-[163px]
+md:w-[150px] text-white text-center rounded-[4.41px]
+ lg:rounded-[12px] font-[600] lg:text-[16px] lg:leading-[24px]'>
+Okay
+</button>
+</div>
+  </div>
+          </div>
+          </div>
+          </Modal>
+                 
         )}
        
         </div>

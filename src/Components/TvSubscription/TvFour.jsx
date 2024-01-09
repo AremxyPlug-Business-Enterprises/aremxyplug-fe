@@ -7,6 +7,7 @@ import { useState } from "react";
 import arrowDown from '../EducationPins/imagesEducation/arrow-down.svg';
 import { ContextProvider } from "../Context";
 import { Link } from "react-router-dom";
+import style from "../AirTimePage/AirtimeVtu.module.css";
 import ConfirmShowmaxPopup from "./ShowmaxPopups/confirmShowmaxPopup";
 import { InputShowmaxPopup } from "./ShowmaxPopups/inputPinShowmax"
 import ShowmaxSuccessfulPopup from "./ShowmaxPopups/ShowmaxSuccessfulPopup";
@@ -190,7 +191,10 @@ const Showmax = () => {
     <div>
       <DashBoardLayout>
 
-        <div id='tvBackground' className="h-[90px] lg:h-[196px] md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] lg:rounded-[20px] mx-auto  flex gap-6 justify-between px-[16.51px] md:px-[28.65px] lg:px-[50px]">
+        <div className={style.AirtimeTops}>
+          <div className={style.airtimeTop}>
+            <div>
+            <div id='tvBackground' className="h-[90px] lg:h-[196px] md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] lg:rounded-[20px] mx-auto  flex gap-6 justify-between px-[16.51px] md:px-[28.65px] lg:px-[50px]">
           <div className="py-[9.57px] md:py-[16.61px] align-middle self-center flex flex-col gap-1.5 w-[70%]">
             <p className="text-[9px] lg:text-[24px] md:text-[13.75px] font-semibold">
               SUBSCRIBE YOUR TV CHANNELS WITH AREMXYPLUG.
@@ -418,15 +422,16 @@ const Showmax = () => {
             }
             mt-[38px] md:mt-[30px] lg:mt-[25px] rounded-[6px] md:rounded-[10px] lg:rounded-[15px] bg-[#04177F] h-[43px] md:h-[30px] lg:h-[40px] flex items-center font-semibold text-[12px] md:text-[11px] lg:text-[16px] text-[#fff] w-full md:w-[100px] lg:w-[170px] justify-center`}>
           Proceed</button>
+            </div>
+          </div>
 
-          <footer className="flex justify-center text-center pb-[10%] gap-[20px] mt-[200px]  md:mt-[750px]  lg:mt-[850px]">
-             <div className="font-medium text-[10px] md:text-[10px] lg:text-[15px] self-center">You need help ?</div>
-             <Link to="/ContactUs">
-               <div className="bluebutton flex bg-[#04177f] text-[8.5px] md:text-[8.5px] lg:text-[12px] text-white">
-                 <p className="self-center mx-auto align-middle">Contact Us</p>
-                </div>
-              </Link>
-          </footer>
+          <div className={style.help}>
+            <h2>You need help?</h2>
+            <Link to={`/ContactUs`} className={style.btnContact}>Contact Us</Link>
+          </div>
+
+        </div>
+
 
       </DashBoardLayout>
       <ConfirmShowmaxPopup />
