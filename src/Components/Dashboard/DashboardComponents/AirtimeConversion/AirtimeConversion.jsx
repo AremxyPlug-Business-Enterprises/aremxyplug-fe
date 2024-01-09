@@ -1,7 +1,7 @@
 import React from "react";
 import { DashBoardLayout } from "../../Layout/DashBoardLayout";
 import { useState } from "react";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
 import arrowdown from "../AirtimeConversion/images/arrow-down.png";
 import { ContextProvider } from "../../../Context";
 import { useContext } from "react";
@@ -19,7 +19,7 @@ import Joi from "joi";
 import arrow from "../AirtimeConversion/images/arrow.png";
 import boy from "../AirtimeConversion/images/Digital banking and online currency exchange.png";
 import styles from "../TransferComponent/transfer.module.css";
-import PhoneNumberPopUp from "./images/Phonenumber.svg"
+import PhoneNumberPopUp from "./images/Phonenumber.svg";
 // import mtn from "../AirtimeConversion/images/mtn.svg"
 // import { AirtimeSelector } from './airtimeselector';
 // import { image } from 'html2canvas/dist/types/css/types/image';
@@ -31,11 +31,11 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
   const inactive =
     "md:text-[12px] md:leading-[18px] lg:text-[20px] lg:leading-[30px] lg:w-[248px] md:w-[145.5px] md:h-[23px] lg:h-[50px] md:flex md:justify-center md:items-center md:flex-none flex-1 text-[8px] leading-[12px] text-center py-1";
   const [showList, setShowList] = useState(false);
-  const [networkImage, setNetworkImage] = useState('');
+  const [networkImage, setNetworkImage] = useState("");
   const [selected, setSelected] = useState(false);
-  const [networkName, setNetworkName] = useState('');
+  const [networkName, setNetworkName] = useState("");
   const [Pop, setPop] = useState("");
-  const [phoneNumberPopUp, setPhoneNumberPopUp] = useState("")
+  const [phoneNumberPopUp, setPhoneNumberPopUp] = useState("");
   // const [networkName_1  , setNetworkName_1] = useState('');
 
   // const [showListR, setShowListR] = useState(false);
@@ -59,15 +59,9 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
   const navigate = useNavigate();
 
   const [selectedNetwork, setSelectedNetwork] = useState({
-    networkImage: '',
-    networkName: '',
+    networkImage: "",
+    networkName: "",
   });
-
-
-
-
-
-
 
   const [proceed, setProceed] = useState(false);
 
@@ -117,7 +111,7 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
       image: require("../AirtimeConversion/images/glo.svg").default,
       discount: 3,
     },
- 
+
     {
       id: 4,
       name: "9MOBILE",
@@ -160,7 +154,7 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
 
   const handleContactTeam = () => {
     // Navigate to the linked page and pass the values as state
-    navigate('/contact-team', {
+    navigate("/contact-team", {
       state: {
         networkImage: selectedNetwork.networkImage,
         networkName: selectedNetwork.networkName,
@@ -181,10 +175,9 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
     setRResultValue(ninetyPercent);
   };
 
-
   const handlePhoneNumberPopUP = () => {
-    setPhoneNumberPopUp(true)
-  }
+    setPhoneNumberPopUp(true);
+  };
 
   const Network = ({ name, image, onClick }) => {
     return (
@@ -193,11 +186,7 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
         onClick={onClick}
       >
         <div className="rounded-full w-[15px] h-[15px] flex items-center justify-center text-[6px] overflow-hidden md:w-[30px] lg:w-[25px] md:h-[30px] lg:h-[25px]">
-          <img
-            src={image}
-            alt=""
-            className="object-cover"
-          />
+          <img src={image} alt="" className="object-cover" />
         </div>
         <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[12px] lg:leading-[24px]">
           {name}
@@ -208,7 +197,6 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
 
   const [errors, setErrors] = useState({});
   const handlePhoneNumber = (e) => {
-
     const value = e.target.value;
 
     const numericValue = value.replace(/\D/g, "").slice(0, 11);
@@ -217,7 +205,6 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
   };
 
   const handleProceed = () => {
-
     const { error } = schema.validate({
       recipientNumberA,
       inputValue,
@@ -276,19 +263,6 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
 
   const { isDarkMode } = useContext(ContextProvider);
 
-
-
-
-
-
-
-  
-
-
-
-
-
-
   return (
     <DashBoardLayout>
       <div
@@ -344,26 +318,26 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
               International Airtime
             </li>
           </ul>
-          
+
           <div className="">
             <div className="flex flex-col gap-[0px]">
               <div className="md:flex md:flex-row md:w-full md:justify-between">
                 <div classsName="md:w-[51.5%] xl:w-[51%]">
-                <div
-                  onClick={handlePop}
-                  className="font-[500] text-[10px] py-1 mt-[30px] md:mt-[30px] lg:mt-[50px] text-center px-4 md:text-[9.17px] lg:text-[16px] leading-[20.8px] lg:px-6 md:w-[100%]  md:flex md:flex-row md:py-1 lg:py-3 rounded-sm md:rounded-sm lg:rounded-md md:leading-[11.5px] bg-primary text-white"
-                >
-                  Real-time Airtime Conversion Check Rate
-                </div>
+                  <div
+                    onClick={handlePop}
+                    className="font-[500] text-[10px] py-1 mt-[30px] md:mt-[30px] lg:mt-[50px] text-center px-4 md:text-[9.17px] lg:text-[16px] leading-[20.8px] lg:px-6 md:w-[100%]  md:flex md:flex-row md:py-1 lg:py-3 rounded-sm md:rounded-sm lg:rounded-md md:leading-[11.5px] bg-primary text-white"
+                  >
+                    Real-time Airtime Conversion Check Rate
+                  </div>
                 </div>
 
                 <div className="md:w-[48.5%] xl:w-[49%]">
-                <div
-                  onClick={handleussdPop}
-                  className="font-[500] text-[10px] py-1 mt-[30px] md:mt-[30px] lg:mt-[50px] text-center px-4 md:text-[9.17px] lg:text-[16px] leading-[20.8px] lg:px-6 lg:w-[50%]  md:flex md:flex-row md:w-[60%] md:py-1 lg:py-3 rounded-sm md:rounded-sm lg:rounded-md md:leading-[11.5px] bg-primary text-white"
-                >
-                  Airtime Transfer USSD Codes
-                </div>
+                  <div
+                    onClick={handleussdPop}
+                    className="font-[500] text-[10px] py-1 mt-[30px] md:mt-[30px] lg:mt-[50px] text-center px-4 md:text-[9.17px] lg:text-[16px] leading-[20.8px] lg:px-6 lg:w-[50%]  md:flex md:flex-row md:w-[60%] md:py-1 lg:py-3 rounded-sm md:rounded-sm lg:rounded-md md:leading-[11.5px] bg-primary text-white"
+                  >
+                    Airtime Transfer USSD Codes
+                  </div>
                 </div>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-[20px]">
@@ -428,7 +402,11 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
                     <div className="font-bold">Phone Number </div>
                     <div onClick={handlePhoneNumberPopUP}>
                       {" "}
-                      <img src={message} alt="" className="w-[15px] h-[15px] lg:w-[20px] lg:h-[20px]" />
+                      <img
+                        src={message}
+                        alt=""
+                        className="w-[15px] h-[15px] lg:w-[20px] lg:h-[20px]"
+                      />
                     </div>
                   </div>
                   <div className="border w-full h-[30px] rounded-[4px] pr-[8px] pl-[4px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between">
@@ -530,7 +508,11 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
                   <div> ₦1,000 {networkName} ~ 90%</div>
                   <div className="flex items-center">
                     <div>
-                      <img src={flow1} alt="" className="w-[12.5px] h-[12.5px] lg:w-[18px] lg:h-[18px]"/>
+                      <img
+                        src={flow1}
+                        alt=""
+                        className="w-[12.5px] h-[12.5px] lg:w-[18px] lg:h-[18px]"
+                      />
                     </div>
                     <div>Transaction Fee - ₦0.00 </div>
                   </div>
@@ -558,9 +540,11 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
                 <div
                   onClick={() => {
                     handleProceed();
-                  
-                      console.log(selectedNetwork.networkImage, selectedNetwork.networkName)
-                    
+
+                    console.log(
+                      selectedNetwork.networkImage,
+                      selectedNetwork.networkName
+                    );
                   }}
                   className={` ${
                     !inputValue.length || resultValue.length < 4
@@ -648,44 +632,42 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
       </div>
 
       {proceed && (
-
-<Modal>
-<div
-  className={` ${
-    toggleSideBar ? "AirtimeConfirm" : "AirtimeConfirm1"
-  } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px] flex flex-col items-center justify-center gap-4`}
->
-
-          <div className="text-[10px] mt-2 font-[600] md:text-[12px] lg:text-[16px] text-[#000000] ">
+        <Modal>
+          <div
+            className={` ${
+              toggleSideBar ? "AirtimeConfirm" : "AirtimeConfirm1"
+            } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px] flex flex-col items-center justify-center gap-4`}
+          >
+            <div className="text-[10px] mt-2 font-[600] md:text-[12px] lg:text-[16px] text-[#000000] ">
               Airtime Conversion
-           </div>
-          <div className="text-[10px] lg:text-[12px] mt-1 text-[#04177F]">
-               Note!!!
-             </div>
-             <div
-               className="text-[8px] lg:text-[12px] font-[600] text-center w-[280px] lg:w-[409px] text-[#000000] rounded-md border-[0.5px] border-[
+            </div>
+            <div className="text-[10px] lg:text-[12px] mt-1 text-[#04177F]">
+              Note!!!
+            </div>
+            <div
+              className="text-[8px] lg:text-[12px] font-[600] text-center w-[280px] lg:w-[409px] text-[#000000] rounded-md border-[0.5px] border-[
  #7C7C7C] bg-[#FFF0BA] py-2 px-3 "
-             >
-               Kindly Contact Airtime Team to Complete Airtime Conversion
-               Transaction.
-             </div>
-             <div>
-               <img
-                 src={boy}
-                 className="w-[85px] h-[85px] md:w-[120px] md:h-[130px] lg:w-[150px] lg:h-[150px]"
-                 alt=""
-               />
-             </div>
-             <Link to="/contact-team">
-               <div onClick={handleContactTeam}
-                className="text-white mt-3 bg-primary lg:text-[16px] lg:py-1 w-[250px] md:w-[93px] lg:w-[163px] rounded-md md:py-1 md:rounded-lg md:px-1 py-3 text-center  text-[12px] font-[600]">
-                 Contact Team
+            >
+              Kindly Contact Airtime Team to Complete Airtime Conversion
+              Transaction.
+            </div>
+            <div>
+              <img
+                src={boy}
+                className="w-[85px] h-[85px] md:w-[120px] md:h-[130px] lg:w-[150px] lg:h-[150px]"
+                alt=""
+              />
+            </div>
+            <Link to="/contact-team">
+              <div
+                onClick={handleContactTeam}
+                className="text-white mt-3 bg-primary lg:text-[16px] lg:py-1 w-[250px] md:w-[93px] lg:w-[163px] rounded-md md:py-1 md:rounded-lg md:px-1 py-3 text-center  text-[12px] font-[600]"
+              >
+                Contact Team
               </div>
             </Link>
-  
-</div>
-</Modal>
-
+          </div>
+        </Modal>
       )}
 
       {Pop && (
@@ -750,14 +732,14 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
                         {selected ? (
                           <li className="flex items-center py-[3px] gap-1 md:py-[6px] cursor-pointer lg:gap-2 lg:h-[45px]">
                             <div className="rounded-full flex items-center justify-center text-[6px] overflow-hidden ">
-                            {networkImage && (
-                              <img
-                                src={networkImage}
-                                alt=""
-                                className="object-cover md:w-[25px] md:h-[25px] lg:w-[35px] lg:h-[35px]" 
-                              />
-                            )}
-                          </div>
+                              {networkImage && (
+                                <img
+                                  src={networkImage}
+                                  alt=""
+                                  className="object-cover md:w-[25px] md:h-[25px] lg:w-[35px] lg:h-[35px]"
+                                />
+                              )}
+                            </div>
                           </li>
                         ) : (
                           <img src={mtn} alt="" />
@@ -869,7 +851,7 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
                 : "lg:w-[562px] md:w-[500px]"
             } w-[90%] overflow-auto flex flex-col gap-0`}
           >
-           <div className="w-full flex justify-end  px-[12px] lg:mt-[2px] mt-[5px]">
+            <div className="w-full flex justify-end  px-[12px] lg:mt-[2px] mt-[5px]">
               <img
                 src="/Images/transferImages/close-circle.png"
                 alt=""
@@ -879,7 +861,7 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
             </div>
 
             <hr className="h-[6px]  bg-primary w-full border-none mt-[2%] md:mt-[2%] md:h-[8px] lg:h-[15px] lg:mt-[%]" />
-            
+
             <div className="flex flex-col text-center items-center justify-center pt-[30px] md:pt-[30px] lg:pt-[1px]">
               <div className="font-[500] flex items-center justify-center w-[100%] text-center text-[10px] py-1 mt-[30px] md:mt-[20px] lg:mt-[50px]   md:text-[12px] lg:text-[16px] leading-[20.8px] lg:px-6 lg:w-fit  md:flex md:flex-row md:w-fit md:py-1 md:px-4 lg:py-3 rounded-sm md:rounded-sm lg:rounded-md md:leading-[11.5px] bg-primary text-white">
                 Airtime Transfer USSD Codes
@@ -938,53 +920,49 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
         </Modal>
       )}
 
-
-{phoneNumberPopUp && (
-          <Modal>
-            <div
-              className={` ${
-                toggleSideBar ? "cvvpop01" : "cvvpop"
-              } bg-white flex flex-col justify-between md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
-            >
-
-              <div className="relative z-10">
-                <p
-                  className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[3%] lg:mt-[3%] z-[1000] ${styles.overlayText}`}
-                >
-                  Phone Number
-                </p>
-
-                <p
-                  className={`text-[10px] text-[#04177F] px-[20px] md:text-[14px] lg:text-[18px] font-semibold text-center mt-[4%] md:mt-[2%] lg:my-[%] z-[1000] ${styles.overlayText}`}
-                >
-                  The number you are sending the airtime from.
-                </p>
-              </div>
-
-              <div>
-                <img
-                  src={PhoneNumberPopUp}
-                  alt=""
-                  className="absolute cvvPopUp md:w-[50%] top-[35%] left-[45%] md:left-[25%] h-[30%] lg:left-[%] md:top-[38%]"
-                />
-              </div>
-
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  setPhoneNumberPopUp(false);
-                }}
-                className={`${
-                  toggleSideBar ? "okay01" : "okay"
-                } mt-[0%] bg-[#04177f] w-[100%] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:mt-[10%] md:w-[90%] md:rounded-[8px] md:text-[16px] lg:w-[80%] lg:h-[38px] lg:py-[5%]`}
+      {phoneNumberPopUp && (
+        <Modal>
+          <div
+            className={` ${
+              toggleSideBar ? "cvvpop01" : "cvvpop"
+            } bg-white flex flex-col justify-between md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
+          >
+            <div className="relative z-10">
+              <p
+                className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[3%] lg:mt-[3%] z-[1000] ${styles.overlayText}`}
               >
-                Okay
-              </button>
+                Phone Number
+              </p>
+
+              <p
+                className={`text-[10px] text-[#04177F] px-[20px] md:text-[14px] lg:text-[18px] font-semibold text-center mt-[4%] md:mt-[2%] lg:my-[%] z-[1000] ${styles.overlayText}`}
+              >
+                The number you are sending the airtime from.
+              </p>
             </div>
-          </Modal>
-        )}
 
+            <div>
+              <img
+                src={PhoneNumberPopUp}
+                alt=""
+                className="absolute cvvPopUp md:w-[50%] top-[35%] left-[45%] md:left-[25%] h-[30%] lg:left-[%] md:top-[38%]"
+              />
+            </div>
 
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                setPhoneNumberPopUp(false);
+              }}
+              className={`${
+                toggleSideBar ? "okay01" : "okay"
+              } mt-[0%] bg-[#04177f] w-[100%] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:mt-[10%] md:w-[90%] md:rounded-[8px] md:text-[16px] lg:w-[80%] lg:h-[38px] lg:py-[5%]`}
+            >
+              Okay
+            </button>
+          </div>
+        </Modal>
+      )}
     </DashBoardLayout>
   );
 };

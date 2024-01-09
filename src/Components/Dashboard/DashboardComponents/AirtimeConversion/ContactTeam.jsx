@@ -27,10 +27,9 @@ const ContactTeam = () => {
 
   const location = useLocation();
 
-
   const { networkImage, networkName } = location.state || {};
 
-  console.log(networkImage, networkName)
+  console.log(networkImage, networkName);
 
   // Access the state from the location object
   // const { networkImage, networkName } = location.state || {};
@@ -367,26 +366,26 @@ const ContactTeam = () => {
                     </h2>
                   )} */}
 
-{selected ? (
-          <li className="flex items-center py-[3px] gap-1 md:py-[6px] cursor-pointer lg:gap-2 lg:h-[45px]">
-            <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
-              {networkImageState && (
-                <img
-                  src={networkImageState}
-                  alt=""
-                  className="w-[20px] object-cover"
-                />
-              )}
-            </div>
-            <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-              {networkNameState}
-            </h2>
-          </li>
-        ) : (
-          <h2 className="lg:text-[16px]  lg:leading-[24px] text-[#7C7C7C] text-[8px] leading-[12px]">
-            {/* Select Network */}
-          </h2>
-        )}
+                  {selected ? (
+                    <li className="flex items-center py-[3px] gap-1 md:py-[6px] cursor-pointer lg:gap-2 lg:h-[45px]">
+                      <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
+                        {networkImageState && (
+                          <img
+                            src={networkImageState}
+                            alt=""
+                            className="w-[20px] object-cover"
+                          />
+                        )}
+                      </div>
+                      <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                        {networkNameState}
+                      </h2>
+                    </li>
+                  ) : (
+                    <h2 className="lg:text-[16px]  lg:leading-[24px] text-[#7C7C7C] text-[8px] leading-[12px]">
+                      {/* Select Network */}
+                    </h2>
+                  )}
                   <button
                     className="lg:w-6 lg:h-6 w-[11px] h-[11px]"
                     onClick={handleShowList}
