@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { ContextProvider } from "../../Context";
 import { Modal } from "../../Screens/Modal/Modal";
 import { Link } from "react-router-dom";
+import styles from "../../AirTimePage/AirtimeVtu.module.css";
 
 
  const DstvSuccessfulPopup = () => {
@@ -48,9 +49,9 @@ import { Link } from "react-router-dom";
             (
             <Modal>
            
-       <div className={`confirmTV mx-auto  ${
-              toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-            } w-[90%]`}>
+       <div className={`${styles.successfulTwo} ${
+              toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+            } md:w-[45%] w-[90%]`}>
         <div className="flex justify-between items-center mx-[3%] my-[2%] md:my-[1%]">
         <Link to="/">
               <img

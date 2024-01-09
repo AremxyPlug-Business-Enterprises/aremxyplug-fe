@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { ContextProvider } from "../../Context";
 import { Modal } from "../../Screens/Modal/Modal";
 import arrowRight from "../../../Components/EducationPins/imagesEducation/educationArrowRight.svg";
+import styles from '../../AirTimePage/AirtimeVtu.module.css'
 
 const ConfirmStarTimesPopup = () => {
 
@@ -48,8 +49,9 @@ const ConfirmStarTimesPopup = () => {
           <Modal >
 
             <div
-              className={`confirmTV mx-auto  ${toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-                } w-[90%]`}
+              className={`${styles.transferMoneyPop} ${
+                toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+                } w-[90%] md:w-[60%] overflow-auto`}
             >
               <div className="flex justify-end pr-2 mt-1 mb-3 md:mt-2 md:mb-2 lg:mb-0 lg:mt-1">
               <img onClick={() => { setConfirmStarTimesPopup(false); window.location.reload(); }}
