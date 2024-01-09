@@ -314,15 +314,17 @@ const [text, setText] =useState(false);
               src="/Images/transferImages/close-circle.png"
               alt=""
             />
-           <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[8%] lg:mt-[6%]" />
-            <div className="flex flex-col text-center items-center justify-center pt-[30px] md:pt-[30px] lg:pt-[1px]">
-              <div className="font-[500] flex items-center justify-center w-[100%] text-center text-[10px] py-1 mt-[30px] md:mt-[30px] lg:mt-[50px]   md:text-[9.17px] lg:text-[16px] leading-[20.8px] lg:px-6 lg:w-fit  md:flex md:flex-row md:w-fit md:py-1 md:px-4 lg:py-3 rounded-sm md:rounded-sm lg:rounded-md md:leading-[11.5px] bg-primary text-white">
+           <div>
+              <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[8%] lg:mt-[6%] md:h-2" />
+           </div>
+            <div className="flex flex-col text-center items-center justify-center pt-[30px] md:pt-[20px] lg:pt-[1px]">
+              <div className="font-[500] flex items-center justify-center w-[100%] text-center text-[10px] py-1 mt-[30px] md:mt-[20px] lg:mt-[50px]   md:text-[9.17px] lg:text-[16px] leading-[20.8px] lg:px-6 lg:w-fit  md:flex md:flex-row md:w-fit md:py-1 md:px-4 lg:py-3 rounded-sm md:rounded-sm lg:rounded-md md:leading-[11.5px] bg-primary text-white">
                 Real-time Points Redeem Tracker
               </div>
               <div></div>
             </div>
             <div className="flex flex-col px-3  md:px-6 ">
-              <div className=" pt-[30px] md:pt-[70px]">
+              <div className=" pt-[30px] md:pt-[40px]">
                 <div className="font-bold flex text-[#000] text-[10px] leading-[130%] items-center  gap-[8px]  md:text-[12px] lg:text-[15px]">
                   <p>Amount</p>
                   <img
