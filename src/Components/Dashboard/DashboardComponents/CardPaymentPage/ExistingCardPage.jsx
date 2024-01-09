@@ -12,14 +12,12 @@ import Search from "./CardPaymentImages/search.svg";
 import ExistingBankPage from "./CardPaymentImages/ExistingBankPage.svg";
 import NoExistingcard from "./CardPaymentImages/NoExistingCard.svg";
 import RoundArrowDown from "./CardPaymentImages/RoundArrowDown.svg";
-// import BankLogo from "./CardPaymentImages/BankLogo.svg";
 import AddCardPopUp from "./CardPaymentImages/AddCardPopUp.svg";
 import { Modal } from "../../../Screens/Modal/Modal";
 import DefaultCard from "./CardPaymentImages/DefaultCard.svg";
 import SuccessGif from "./CardPaymentImages/success.gif";
 import DeleteCard from "./CardPaymentImages/DeleteCard.svg";
 import { Context } from "../../../Context";
-// import FundWithCard from "./FundWithCard";
 import { useLocation } from "react-router-dom";
 
 const ExistingCardPage = () => {
@@ -37,63 +35,9 @@ const ExistingCardPage = () => {
   const [sucessdefaultCard, setSuccessDefaultCard] = useState("");
   const [deleteCard, setDeleteCard] = useState("");
   const [confirmDeleteCard, setConfirmDeleteCard] = useState("");
-  // const [fundWithCard] = useState(false);
   const location = useLocation();
   const [localPaymentSelected, setLocalPaymentSelected] = useState(false);
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   if (location.state?.paymentSelected !== undefined) {
-  //     setLocalPaymentSelected(location.state.paymentSelected);
-  //   }
-  // }, [location.state]);
-
-  // useEffect(() => {
-  //   // Check the initial state when the component mounts
-  //   if (localPaymentSelected === 'NGN') {
-  //     setNoCurrencySelected(false);
-  //     setPaymentSelected(true);
-  //     setWalletName('NGN');
-  //     setNgn(true);
-  //   } else {
-  //     setNoCurrencySelected(true);
-  //   }
-  // }, [localPaymentSelected]);
-
-  // const handleShowPayment = (code) => {
-  //   setShowPayment(!showPayment);
-
-  //   if (!localPaymentSelected) {
-  //     setWalletName('');
-  //     setPaymentSelected(false);
-  //     setNoCurrencySelected(true);
-  //   } else {
-  //     setNoCurrencySelected(false);
-  //     if (localPaymentSelected === 'NGN') {
-  //       setWalletName(code);
-  //       setPaymentSelected(true);
-  //       setShowPayment(false);
-  //       setNgn(code === 'NGN');
-  //       setNoCurrencySelected(!(code === 'NGN'));
-  //     } else {
-  //       setWalletName(true);
-  //       setPaymentSelected(true);
-  //     }
-  //   }
-  // };
-
-  // const paymentSelected = location.state?.paymentSelected || false;
-
-  // const handleShowPayment = () => {
-  //   setShowPayment(!showPayment);
-  //   if (!cardPaymentSelected) {
-  //     setWalletName("");
-  //     setCardPaymentSelected(false);
-  //     setNoCurrencySelected(true);
-  //   } else {
-  //     setNoCurrencySelected(false);
-  //   }
-  // };
 
   useEffect(() => {
     if (location.state?.paymentSelected !== undefined) {
@@ -123,21 +67,6 @@ const ExistingCardPage = () => {
       }
     }
   };
-
-  // const handleShowPayment = () => {
-  //    setShowPayment(!showPayment);
-  //   if (!paymentSelected) {
-  //     setWalletName("");
-  //     setPaymentSelected(false);
-  //     setNoCurrencySelected(true);
-  //   } else if (setLocalPaymentSelected(location.state.paymentSelected)) {
-  //     setNoCurrencySelected(false);
-  //     paymentSelected === "NGN"
-  //     walletName === "NGN"
-  //   } else {
-  //     setNoCurrencySelected(false);
-  //   }
-  // };
 
   const handleSelectPayment = (code) => {
     setWalletName(code);
@@ -279,28 +208,6 @@ const ExistingCardPage = () => {
     setUsd(false);
     setPaymentSelected(false);
   };
-
-  // const handleSelectPayment = (code) => {
-  //   setWalletName(code);
-  //   setShowPayment(false);
-  //   setPaymentSelected(true);
-
-  //   setNgn(code === "NGN");
-
-  //   setNoCurrencySelected(!(code === "NGN"));
-
-  //   if (
-  //     code === "USD" ||
-  //     code === "GBP" ||
-  //     code === "EUR" ||
-  //     code === "AUD" ||
-  //     code === "KSH"
-  //   ) {
-  //     setUsd(true);
-  //   } else {
-  //     setUsd(false);
-  //   }
-  // };
 
   const handleBank = (index) => {
     if (activeImage === index) {
@@ -568,17 +475,9 @@ const ExistingCardPage = () => {
                       onClick={() => {
                         handleBank(index);
                         setShowPayment(false);
-
-                        // if (paymentSelected) {
-                        //   navigate('/FundWithCard', { state: { paymentSelected: true, localPaymentSelected: true } });
-                        // }
                       }}
                     >
                       <img
-                        // onClick={() => {
-                        //   handleBank(index);
-                        //   setShowPayment(false);
-                        // }}
                         src={RoundArrowDown}
                         alt=""
                         className="mt-[-5%] h-[20px] md:h-[30px] lg:h-[40px]"
@@ -796,10 +695,6 @@ const ExistingCardPage = () => {
                 )}
               </div>
             )}
-
-          {/* {fundWithCard && (
-            <FundWithCard setCardPaymentSelected={setCardPaymentSelected} />
-          )} */}
         </section>
 
         <div

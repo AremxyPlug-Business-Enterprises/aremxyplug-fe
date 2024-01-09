@@ -15,9 +15,7 @@ import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import Logo from "./CardPaymentImages/AremxyLogo.svg";
 import { Link } from "react-router-dom";
-// import WalletModal from "../../../Wallet/WalletModal";
 import AddCardPopUp from "./CardPaymentImages/AddCardPopUp.svg";
-// import BankLogo from "./CardPaymentImages/BankLogo.svg";
 import { useLocation } from "react-router-dom";
 
 const FundWithCard = () => {
@@ -29,15 +27,12 @@ const FundWithCard = () => {
     inputPin,
     setInputPin,
     inputPinHandler,
-    // selectedCard,
     setCardPaymentSelected,
   } = useContext(ContextProvider);
   const [showPayment, setShowPayment] = useState(false);
   const { walletName, setWalletName } = useContext(ContextProvider);
   const { cardPaymentAmount, setCardPaymentAmount } =
     useContext(ContextProvider);
-  // const { cardPaymentSelected, setCardPaymentSelected } =
-  //   useContext(ContextProvider);
   const [showCard, setShowCard] = useState(false);
   const { cardSelected, setCardSelected } = useContext(ContextProvider);
   const { cardName, setCardName } = useContext(ContextProvider);
@@ -75,27 +70,6 @@ const FundWithCard = () => {
     }
   };
 
-  // const handleSelectPayment = (code) => {
-  //   setWalletName(code);
-  //   setShowPayment(false);
-  //   setPaymentSelected(true);
-  //   // setImage(flag);
-
-  //   console.log(paymentSelected)
-  //   console.log(setPaymentSelected)
-
-  //   if (
-  //     code === "USD" ||
-  //     code === "GBP" ||
-  //     code === "EUR" ||
-  //     code === "AUD" ||
-  //     code === "KSH"
-  //   ) {
-  //     setUsd(true);
-  //   } else {
-  //     setUsd(false);
-  //   }
-  // };
 
   const handleButtonClick = () => {
     setUsd(false);
@@ -446,105 +420,6 @@ const FundWithCard = () => {
             )}
           </div>
 
-          {/* <div>
-            <div
-              onClick={() => {
-                handleShowPayment();
-              }}
-            >
-              <div className="flex justify-between items-center border w-[50%] md:w-[35%] lg:w-[35%] h-8 px-2 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px] mt-[10%] xl:w-[35%]">
-                {cardPaymentSelected ? (
-                  <li
-                    onClick={() => {
-                      handleShowPayment();
-                    }}
-                    className={`flex flex-row justify-between w-full`}
-                  >
-                    <h2 className="text-[#7C7C7C]">{walletName}</h2>
-                  </li>
-                ) : (
-                  <h2
-                    onClick={() => {
-                      handleShowPayment();
-                    }}
-                    className="text-[10px] md:text-[12px] lg:text-[16px] text-[#929292]"
-                  >
-                    Select currency
-                  </h2>
-                )}
-                {cardPaymentSelected ? (
-                  <button
-                    className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]"
-                    onClick={handleShowPayment}
-                  >
-                    <img src={ArrowDown} alt="" className="" />
-                  </button>
-                ) : (
-                  <button
-                    className="lg:w-6 lg:h-6 h-[11px] w-[11px]"
-                    onClick={handleShowPayment}
-                  >
-                    <img src={ArrowDown} alt="" className="w-full h-full" />
-                  </button>
-                )}
-              </div>
-            </div>
-            {showPayment && (
-              <div
-                className={`border md:rounded-[10px] rounded-[4px] absolute ${
-                  toggleSideBar
-                    ? "w-[50%] md:w-[35%] lg:w-[35%] xl:w-[35%]"
-                    : "w-[50%] md:w-[35%] lg:w-[35%] xl:w-[35%]"
-                } bg-[#FFF] z-[100]`}
-              >
-                <div className="flex justify-between px-[10px] py-[7px]">
-                  <input
-                    type="text"
-                    placeholder="Search"
-                    className="text-[10px] md:text-[12px] lg:text-[14px] font-semibold text-[#7C7C7C] w-[50%] py-1 outline-none rounded-md focus:outline-none"
-                    onChange={(e) => handleSearch(e.target.value)}
-                  />
-                  <img src={Search} alt="" classsName="" />
-                </div>
-                <hr />
-                {filteredCountryList.map((country) => (
-                  <Payment
-                    key={country.id}
-                    flag={country.flag}
-                    code={country.code}
-                    amount={country.amount}
-                    onClick={() =>
-                      handleSelectPayment(
-                        country.code,
-                        country.flag,
-                        country.amount
-                      )
-                    }
-                  />
-                ))}
-              </div>
-            )}
-          </div> */}
-
-          {/* <div className="flex justify-between items-center border w-[50%] md:w-[35%] lg:w-[35%] h-8 px-2 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px] mt-[10%]">
-            <h2 className="text-[#7C7C7C]">{walletName}</h2>
-
-            <button
-                    className="lg:w-6 lg:h-6 h-[11px] w-[11px]"
-                  >
-                    <img src={ArrowDown} alt="" className="w-full h-full" />
-                  </button>
-          </div> */}
-
-          {/* <div className="flex justify-between items-center border w-full md:w-[50%] h-8 px-2 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px] mt-[5%] md:mt-[5%] lg:mt-[4%]">
-            <div className="text-[10px] md:text-[13px] lg:text-[16px] text-[#929292] flex gap-[10px]">
-              <img src={BankLogo} alt="" />
-              {code}
-            </div>
-
-            <img src={ArrowDown} alt="" className="" />
-          </div> */}
-
           <div>
             <div
               onClick={() => {
@@ -571,7 +446,6 @@ const FundWithCard = () => {
                       <div className="w-full">
                         <h2 className="text-[#7C7C7C]">{cardName}</h2>
                       </div>
-                      {/* <h2 className="text-[#7C7C7C]">{selectedCard.code}</h2> */}
                     </div>
                     <img src={ArrowDown} alt="" className="" />
                   </li>
@@ -737,9 +611,6 @@ const FundWithCard = () => {
                     alt=""
                     onClick={() => {
                       setProceed(false);
-                      // setCardPaymentAmount("");
-                      // setCardSelected("");
-                      // setCardPaymentSelected("");
                     }}
                     className="h-[30px] md:h-[120%] lg:h-[400%] lg:mt-[-25px] lg:pb-[20px]"
                   />
@@ -941,7 +812,11 @@ const FundWithCard = () => {
                   </h2>
 
                   <div className="flex flex-col justify-center items-center">
-                    <img src="./Gif/checkMarkGif.gif" alt="" className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[100px] lg:h-[100px]" />
+                    <img
+                      src="./Gif/checkMarkGif.gif"
+                      alt=""
+                      className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[100px] lg:h-[100px]"
+                    />
                     <p className="text-[10px] md:text-[12px] lg:text-[14px] text-[#2ED173] font-semibold">
                       Your NGN Wallet has been Credited Successfully With
                     </p>
@@ -1012,6 +887,24 @@ const FundWithCard = () => {
             </Modal>
           )}
         </section>
+        <div
+          className={`${
+            isDarkMode ? "" : ""
+          } flex gap-[15px] justify-center items-center mt-[100%] pb-[25%] md:pb-[2%] md:mt-[40%] lg:mt-[40%] lg:pb-0`}
+        >
+          <div className="text-[10px] md:text-[12px] lg:text-[14px]">
+            You need help ?
+          </div>
+          <Link to="/ContactUs">
+            <div
+              className={`${
+                isDarkMode ? "border" : "bg-[#04177f]"
+              } text-[10px] p-1 text-white rounded-[8px] lg:text-[18px]`}
+            >
+              Contact Us
+            </div>
+          </Link>
+        </div>
       </div>
     </DashBoardLayout>
   );
