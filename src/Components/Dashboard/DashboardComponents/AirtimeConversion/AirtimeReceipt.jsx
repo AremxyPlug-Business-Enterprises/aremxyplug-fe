@@ -15,18 +15,18 @@ export const AirtimeReceipt = () => {
    firstName,
    lastName,
     inputValue,
-    setrecepientNumberA,
+    setRecipientNumberA,
     setInputValue,
    resultValue,
-   setresultValue,
+   setResultValue,
    setFirstName,
     setLastName,
   } = useContext(ContextProvider);
-
+  
   const handleClear = () =>{
     setInputValue('');
-    setresultValue('');
-    setrecepientNumberA('');
+    setResultValue('');
+    setRecipientNumberA('');
     setFirstName('');
     setLastName('');
     

@@ -116,13 +116,13 @@ const ContactTeam = () => {
       discount: 3,
     },
     {
-      id: 1,
+      id: 2,
       name: "AIRTEL",
       image: require("../AirtimeConversion/images/airtel.svg").default,
       discount: 3,
     },
     {
-      id: 1,
+      id: 3,
       name: "GLO",
       image: require("../AirtimeConversion/images/glo.svg").default,
       discount: 3,
