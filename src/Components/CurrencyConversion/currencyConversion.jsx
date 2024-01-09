@@ -152,6 +152,7 @@ const CurrencyConversion = () =>{
           </Modal>
               )} {/* airtime conversion */}
           <div>
+          <Link to="/airtime-conversion">
           <div className="conversionLists cursor-pointer flex pl-[5px] pr-[14px] md:pr-[28px] lg:pr-[45px] md:pl-[8.59px] lg:pl-[15px] justify-between  mx-auto py-[7px] md:py-[9px] lg:py-[15px] rounded-[4px] md:rounded-[6.88px] lg:rounded-[12px]">
             <div className="flex gap-2 self-center">
                 <img src="./Images/currencyImages/airtime.svg" alt="fiat.svg" className="flex self-center lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px]" />
@@ -164,6 +165,7 @@ const CurrencyConversion = () =>{
                 <img src="./Images/currencyImages/right.svg" alt="" className="lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px] h-full" />
             </div>
           </div>
+          </Link>
           </div>
            {/* points redeemed */}
            <Link to='/point-redeem'>
@@ -182,7 +184,7 @@ const CurrencyConversion = () =>{
           </Link>
          </div>
 
-        
+
          <div className="flex justify-center items-center pb-[10%] mt-[97%] md:mt-[70%] gap-2">
            <div className="font-medium text-[10px] md:text-[10px] lg:text-[15px] self-center">You need help ?</div>
             <Link to="/ContactUs">
