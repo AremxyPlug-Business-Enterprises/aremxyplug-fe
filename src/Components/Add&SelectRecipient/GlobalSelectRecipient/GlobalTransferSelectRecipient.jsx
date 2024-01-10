@@ -84,6 +84,10 @@ function  closePopRecipients(){
     setEditRecipient(null);
     setAddFavoriteRecipient(recipients);
    }
+   function controlEditRecipient(){
+    setEditRecipient(false);
+   }
+
  //   ======= || =============
  
    
@@ -102,6 +106,9 @@ function  closePopRecipients(){
      function  DeleteFavoriteRecipients(favorite){
       setFavoriteEdit(null);
       setDeleteRecipient(favorite);
+       }
+       function controlFavoriteRecipient(){
+        setFavoriteEdit(false);
        }
        //
  
@@ -306,10 +313,13 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
        </div>
         </div>
 
-    <div className='relative flex items-center'>
+    <div className='optionRecipient relative flex items-center'>
       <img key={recipients.id}
        onClick={() => {
         handleElementClick(recipients.id);
+        if(editRecipient === recipients.id){
+          controlEditRecipient();
+        }
       }}
        src={optionsRecipient} alt="" 
       className='lg:w-[8px] lg:h-[28px] w-[4px] h-[14px] cursor-pointer'/>
@@ -329,7 +339,7 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
    </p>
    {/* EDIT  */}
    {/* <Link to ={`/EditRecipient/${recipients.id}`} */}
-   <p
+   <Link to='/EditSelectRecipient'
     onClick={() => {
    closePopRecipients();
    }}
@@ -337,7 +347,7 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
     shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)] hover:bg-gray-200 cursor-pointer
    lg:text-[16px] lg:leading-[24px] font-[600] bg-white'>
     Edit Recipients
-    </p>
+    </Link>
    {/* </Link> */}
    {/* DELETE  */}
    <p onClick={() => {
@@ -448,9 +458,9 @@ md:w-[150px] text-center rounded-[4.41px] bg-[#04177F]
           <Modal>
             <div className='h-[100%] w-[100%] md:justify-center flex md:items-center items-end md:mx-[0px] mx-[19px]'
             key={recipients.id}>
-          <div className=' flex flex-col   lg:w-[35%] md:w-[45%] md:h-[400px] w-[100%] lg:h-[465px] bg-white lg:rounded-[20px]
+          <div className='deleteRecipientSuccess flex flex-col   lg:w-[35%] md:w-[45%] w-[100%]  bg-white lg:rounded-[20px]
           shadow-[0px_0px_6.933px_0px_rgba(0,0,0,0.25)] rounded-t-[8px] md:rounded-[11.458px]
-          lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] pb-[10px] lg:pb-[80px] md:pb-[50px]'>
+          lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] pb-[10px] lg:pb-[30px] md:pb-[10px] '>
   <div className='flex justify-between w-[100%] border-b-[15px] border-[solid] border-[#04177F] lg:p-[15px] p-[10px]'>
   <img src={AremxyLogo} alt="" 
    className='lg:h-[24.818px] lg:w-[41.825px] h-[16px] w-[16px] 
@@ -458,8 +468,8 @@ md:w-[150px] text-center rounded-[4.41px] bg-[#04177F]
    <img src={closeIcon} alt="" 
    className='lg:h-[32px] lg:w-[32px]  h-[16px] w-[16px]'/>
   </div>
-  <div className='flex flex-col  lg:w-[100%] lg:pt-[20px] pt-[30px] items-center h-[100%]'>
-  <div className='flex flex-col items-center lg:w-[80%]   pb-[20px]  lg:gap-[25px] gap-[10px]'>
+  <div className='flex flex-col  lg:w-[100%] lg:pt-[20px] items-center pt-[30px]  h-[100%]'>
+  <div className='flex flex-col items-center lg:w-[80%] md:pb-[30px]   pb-[20px]  lg:gap-[25px] gap-[10px]'>
    <h2 className='font-[600] text-center text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
     Successful
     </h2>
@@ -544,8 +554,11 @@ Okay
       <img 
        onClick={() => {
        favoriteHandleElementClick(favorite.id);
+       if(favoriteEdit === favorite.id){
+             controlFavoriteRecipient();
+      }
       }}
-      className='md:w-[8px] md:h-[28px] w-[4px] h-[20px]'
+      className='lg:w-[8px] lg:h-[28px]  w-[4px] h-[20px] cursor-pointer'
        src={optionsRecipient} alt=""/>
       {/* FOR OPTIONS TO EDIT RECIPIENTS */}
       { favoriteEdit === favorite.id && (
@@ -561,7 +574,7 @@ Okay
     Remove to favorites
    </p>
    {/* EDIT  */}
-   <p
+   <Link to = '/EditSelectRecipient'
     onClick={() => {
    closeFavoritePopRecipients();
    }}
@@ -569,7 +582,7 @@ Okay
     shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)] hover:bg-gray-200 cursor-pointer
    lg:text-[16px] lg:leading-[24px] font-[600] bg-white'>
     Edit Recipients
-   </p>
+   </Link>
    {/* DELETE  */}
    <p onClick={() => {
   DeleteFavoriteRecipients(favorite.id);
@@ -620,7 +633,7 @@ Okay
   <button onClick={() => {
    handleAccountClick(favorite.id);
   }}
-className='bg-[#04177F] w-[50%] lg:py-[10px] md:py-[9px] py-[11px] lg:w-[163px]
+className='bg-[#04177F] w-[50%] lg:py-[10px] md:py-[7px] py-[11px] lg:w-[163px]
 md:w-[150px] text-white text-center rounded-[4.41px]
  lg:rounded-[12px] font-[600] lg:text-[16px] lg:leading-[24px]'>
  Yes
@@ -629,7 +642,7 @@ md:w-[150px] text-white text-center rounded-[4.41px]
   <button onClick={() => {
     setDeleteRecipient(false);
     }}
-className='text-[#F95252] w-[50%] lg:py-[10px] md:py-[9px] py-[11px] lg:w-[163px]
+className='text-[#F95252] w-[50%] lg:py-[10px] md:py-[7px] py-[11px] lg:w-[163px]
 md:w-[150px] text-center rounded-[4.41px]
  lg:rounded-[12px] font-[600] lg:text-[16px] lg:leading-[24px]'>
  Cancel
@@ -643,8 +656,7 @@ md:w-[150px] text-center rounded-[4.41px]
     )}
         
     {deleteRecipientSuccess === favorite.id && (
-       
-          <Modal>
+       <Modal>
             <div className='h-[100%] w-[100%] md:justify-center flex md:items-center items-end md:mx-[0px] mx-[19px]'
            
             key={favorite.id}>
@@ -677,7 +689,7 @@ md:w-[150px] text-center rounded-[4.41px]
   <button onClick={() => {
     setDeleteRecipientSuccess(false);
     }}
-className='text-white w-[100%] lg:py-[10px] md:py-[9px] py-[11px] lg:w-[163px]
+className='text-white w-[100%] lg:py-[10px] md:py-[7px] py-[11px] lg:w-[163px]
 md:w-[150px] text-center rounded-[4.41px] bg-[#04177F]
  lg:rounded-[12px] font-[600] lg:text-[16px] lg:leading-[24px]'>
  Done
@@ -694,9 +706,9 @@ md:w-[150px] text-center rounded-[4.41px] bg-[#04177F]
           <Modal>
             <div className='h-[100%] w-[100%] md:justify-center flex md:items-center items-end md:mx-[0px] mx-[19px]'
             key={favorite.id}>
-          <div className='deleteRecipientSuccess flex flex-col   lg:w-[35%] md:w-[45%]  md:h-[400px] w-[100%] lg:h-[465px] bg-white lg:rounded-[20px]
+          <div className='deleteRecipientSuccess flex flex-col   lg:w-[35%] md:w-[45%]   w-[100%]  bg-white lg:rounded-[20px]
           shadow-[0px_0px_6.933px_0px_rgba(0,0,0,0.25)] rounded-t-[8px] md:rounded-[11.458px]
-          lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] pb-[10px] lg:pb-[80px] md:pb-[50px]'>
+          lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] pb-[10px] lg:pb-[30px] md:pb-[10px]'>
   <div className='flex justify-between w-[100%] border-b-[15px] border-[solid] border-[#04177F] lg:p-[15px] p-[10px]'>
   <img src={AremxyLogo} alt="" 
    className='lg:h-[24.818px] lg:w-[41.825px] h-[16px] w-[16px] 
@@ -720,7 +732,7 @@ md:w-[150px] text-center rounded-[4.41px] bg-[#04177F]
   <button onClick={() => {
      setDeleteFavoriteRecipient(false);
   }}
-className='bg-[#04177F] w-[80%] md:py-[9px] py-[11px] lg:w-[163px]
+className='bg-[#04177F] w-[80%] md:py-[7px]  py-[11px] lg:w-[163px]
 md:w-[150px] text-white text-center rounded-[4.41px]
  lg:rounded-[12px] font-[600] lg:text-[16px] lg:leading-[24px]'>
 Okay
@@ -747,7 +759,7 @@ Okay
     </div> 
     {/* CONTACT US */}
     <div className=" flex gap-[8.729px]  md:gap-[14.896px]
-       justify-center px-[8.594px] mb-[70px] md:mb-[130px]">
+       justify-center px-[8.594px] lg:pt-[30%] lg:pb-[20%] md:pt-[98%] md:pb-[30%] pt-[40%] pb-[30%]">
               <p className="font-[500] text-[10px] text-black 
               leading-[10.4px] lg:text-[16px] lg:leading-[15.6px]  md:text-[6.875px]
             ] md:leading-[12.938px] self-center">

@@ -253,7 +253,7 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
     saveRecipientButton();
   }}
   className='bg-[#04177F] md:mt-[40px] mt-[60px] md:py-[9px] lg:py-[10px] rounded-[4.21px] py-[16px] lg:w-[163px] md:w-[150px] text-white text-center
-  lg:rounded-[12px] font-[600] text-[11px] ledaing-[15px] lg:text-[16px] lg:leading-[24px] '>
+  lg:rounded-[12px] font-[600] text-[11px] leading-[15px] lg:text-[16px] lg:leading-[24px] '>
    Save Account
   </button>
   </div>
@@ -261,15 +261,15 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
     {confirmRecipient && (
           <Modal>
             <div className=' h-[100%] w-[100%] flex justify-center md:items-center items-end md:mx-[0px] mx-[19px]'>
-          <div className='deleteRecipientSuccess flex flex-col md:w-[50%]   lg:h-[550px] bg-white rounded-t-[8px] md:rounded-[20px]
-          lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] pb-[20px] md:pb-[80px] '>
+          <div className='deleteRecipientSuccess flex flex-col md:w-[50%] lg:w-[40%]  bg-white rounded-t-[8px] md:rounded-[20px]
+          lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] pb-[20px] lg:pb-[30px] '>
     <div className='flex justify-end w-[100%] md:py-[15px] py-[10px] pr-[14px] border-b-[10px]  md:border-b-[15px] border-[solid] border-[#04177F]'>
    <img onClick={()=> {
     setConfirmRecipient(false);
    }} src={closeIcon} alt="" 
    className='lg:h-[35px] lg:w-[35px] h-[20px] w-[20px] '/>
     </div>
-    <div className='flex flex-col gap-[20px] lg:gap-[130px] md:gap-[90px] justify-between  lg:w-[100%] lg:pt-[20px] pt-[20px]  items-center h-[100%] '>
+    <div className='flex flex-col gap-[20px] lg:gap-[40px] md:gap-[40px] justify-between  lg:w-[100%] lg:pt-[20px] pt-[20px]  items-center h-[100%] '>
       <div className='flex flex-col lg:w-[80%] w-[80%] lg:gap-[30px] gap-[10px]'>
       {/* HEADER */}
      <h2 className='font-[600] text-center text-[10px] leading-[14px] lg:text-[16px] lg:leading-[20.8px]'>
@@ -322,7 +322,7 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
   setChangeRecipientSuccess(true);
   setConfirmRecipient(false)
 }}
-className='bg-[#04177F] w-[100%] lg:py-[10px] py-[13px] lg:w-[163px]
+className='bg-[#04177F] w-[100%] md:py-[7px] lg:py-[10px] py-[11px] lg:w-[163px]
  md:w-[150px] text-white text-center rounded-[4.41px]
   lg:rounded-[12px] font-[600] lg:text-[16px] lg:leading-[24px]'>
  Confirmed
@@ -368,7 +368,7 @@ className='bg-[#04177F] w-[100%] lg:py-[10px] py-[13px] lg:w-[163px]
      setAccountName('')
      setBankName('')
   }}
-className='bg-[#04177F] w-[80%] md:py-[9px] py-[13px] lg:w-[163px]
+className='bg-[#04177F] w-[80%] md:py-[7px] lg:py-[10px] py-[13px] lg:w-[163px]
 md:w-[150px] text-white text-center rounded-[4.41px]
  lg:rounded-[12px] font-[600] lg:text-[16px] lg:leading-[24px]'>
  Continue
@@ -382,7 +382,8 @@ md:w-[150px] text-white text-center rounded-[4.41px]
         </div>
         </div>
         <div className=" flex gap-[8.729px]  md:gap-[14.896px]
-       justify-center px-[8.594px] mb-[70px] md:mb-[130px]">
+       justify-center px-[8.594px]  lg:pt-[30%] lg:pb-[20%]
+        md:pt-[100%] md:pb-[30%] pt-[40%] pb-[30%]">
               <p className="font-[500] text-[10px] text-black 
               leading-[10.4px] lg:text-[16px] lg:leading-[15.6px]  md:text-[6.875px]
             ] md:leading-[12.938px] self-center">
