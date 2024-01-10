@@ -26,9 +26,7 @@ import Success from "./CardPaymentImages/success.gif";
 import CvvPopUp from "./CardPaymentImages/CvvPopUp.svg";
 import PinPopUp from "./CardPaymentImages/PinPopUp.svg";
 import CardBackground from "./CardPaymentImages/CardBackground.svg";
-// import WalletModal from "../../../Wallet/WalletModal";
 import AddCardPopUp from "./CardPaymentImages/AddCardPopUp.svg";
-// import ExistingCardPage from "./ExistingCardPage";
 
 const AddNewCardPayment = () => {
   const { isDarkMode, toggleSideBar } = useContext(ContextProvider);
@@ -46,13 +44,6 @@ const AddNewCardPayment = () => {
   const [image, setImage] = useState("");
   const [usd, setUsd] = useState("");
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   // Include navigate in the dependency array
-  //   if (paymentSelected) {
-  //     navigate('/ExistingCardPage', { state: { paymentSelected: true } });
-  //   }
-  // }, [paymentSelected, navigate]);
 
   const handleShowPayment = () => {
     setShowPayment(!showPayment);
@@ -149,12 +140,6 @@ const AddNewCardPayment = () => {
     );
     setFilteredCountryList(filteredList);
   };
-
-  // const handleCardNumberChange = (e) => {
-  //   let inputVal = e.target.value.replace(/[^0-9]/g, ""); // Keep only numeric characters
-  //   inputVal = inputVal.replace(/(\d{4})(?=\d)/g, "$1 "); // Add space after every 4 digits, except the last 4
-  //   setCardNumber(inputVal);
-  // };
 
   const handleCardNumberChange = (e, setCardNumber) => {
     let inputVal = e.target.value.replace(/[^0-9]/g, ""); // Keep only numeric characters
@@ -350,31 +335,33 @@ const AddNewCardPayment = () => {
               absolute opacity-[20%] h-[70%] md:h-full md:opacity-100 right-[-5.5%] z-0`}
             />
 
-<div className="mt-[5%] flex flex-col gap-[5px]">
-  <p className="text-[10px] md:text-[14px] lg:text-[18px] font-semibold">
-    Card Number
-  </p>
-  <div
-    className={`border-[1px] rounded-[5px] flex flex-row px-[10px] py-[8px] md:w-[60%] lg:py-[12px] ${
-      cardNumber.length === 19 ? "border-[#B200FF99] bg-opacity-60" : ""
-    }`}
-  >
-     <input
-          type="tel"
-          inputMode="numeric" // Set inputMode to control keyboard type on mobile devices
-          value={cardNumber}
-          onChange={(e) => handleCardNumberChange(e, setCardNumber)}
-          className={`outline-none w-full text-[10px] md:text-[14px] lg:text-[18px]`}
-          placeholder="Card Number"
-          maxLength="39"
-        />
-    <img
-      src={CardNumber}
-      alt=""
-      className="h-[20px] md:h-[30px] lg:h-[40px]"
-    />
-  </div>
-</div>
+            <div className="mt-[5%] flex flex-col gap-[5px]">
+              <p className="text-[10px] md:text-[14px] lg:text-[18px] font-semibold">
+                Card Number
+              </p>
+              <div
+                className={`border-[1px] rounded-[5px] flex flex-row px-[10px] py-[8px] md:w-[60%] lg:py-[12px] ${
+                  cardNumber.length === 19
+                    ? "border-[#B200FF99] bg-opacity-60"
+                    : ""
+                }`}
+              >
+                <input
+                  type="tel"
+                  inputMode="numeric" // Set inputMode to control keyboard type on mobile devices
+                  value={cardNumber}
+                  onChange={(e) => handleCardNumberChange(e, setCardNumber)}
+                  className={`outline-none w-full text-[10px] md:text-[14px] lg:text-[18px]`}
+                  placeholder="Card Number"
+                  maxLength="39"
+                />
+                <img
+                  src={CardNumber}
+                  alt=""
+                  className="h-[20px] md:h-[30px] lg:h-[40px]"
+                />
+              </div>
+            </div>
 
             <div
               className={`flex flex-row gap-[10px] md:w-[60%] ${
@@ -395,7 +382,7 @@ const AddNewCardPayment = () => {
                 >
                   <input
                     type="tel"
-                    inputMode="numeric" 
+                    inputMode="numeric"
                     value={expiryDate}
                     onChange={handleExpiryDateChange}
                     className="outline-none w-full text-[10px] md:text-[14px] lg:text-[18px]"
@@ -769,10 +756,6 @@ const AddNewCardPayment = () => {
             </div>
           </Modal>
         )}
-
-        {/* {ExistingCardPage && (
-            <ExistingCardPage setPaymentSelected={setPaymentSelected} />
-          )} */}
 
         <div
           className={`${
