@@ -558,7 +558,7 @@ Okay
              controlFavoriteRecipient();
       }
       }}
-      className='lg:w-[8px] lg:h-[28px]  w-[4px] h-[20px] cursor-pointer'
+      className='lg:w-[8px] lg:h-[28.0px]  w-[4px] h-[20px] cursor-pointer'
        src={optionsRecipient} alt=""/>
       {/* FOR OPTIONS TO EDIT RECIPIENTS */}
       { favoriteEdit === favorite.id && (
