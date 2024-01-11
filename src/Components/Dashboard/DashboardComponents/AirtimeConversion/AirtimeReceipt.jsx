@@ -1,7 +1,7 @@
 import React from "react";
 import { useContext, useRef } from "react";
 import { ContextProvider } from "../../../Context";
-import styles from "../TransferComponent/transfer.module.css"
+import styles from "../TransferComponent/transfer.module.css";
 import { DashBoardLayout } from "../../Layout/DashBoardLayout";
 import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
@@ -12,25 +12,28 @@ export const AirtimeReceipt = () => {
     toggleSideBar,
     isDarkMode,
     date,
-   firstName,
-   lastName,
+    firstName,
+    lastName,
     inputValue,
-    setrecepientNumberA,
+    setRecipientNumberA,
     setInputValue,
-   resultValue,
-   setresultValue,
-   setFirstName,
+    resultValue,
+    setResultValue,
+    setFirstName,
     setLastName,
+    setairEmail,
+    sethomeAdress,
   } = useContext(ContextProvider);
 
-  const handleClear = () =>{
-    setInputValue('');
-    setresultValue('');
-    setrecepientNumberA('');
-    setFirstName('');
-    setLastName('');
-    
-  }
+  const handleClear = () => {
+    setInputValue("");
+    setResultValue("");
+    setRecipientNumberA("");
+    setFirstName("");
+    setLastName("");
+    setairEmail("");
+    sethomeAdress("");
+  };
 
   const contentRef = useRef(null);
 
@@ -79,7 +82,7 @@ export const AirtimeReceipt = () => {
                 alt=""
               />
             </Link>
-            <Link onClick={ handleClear } to="/airtime-conversion">
+            <Link onClick={handleClear} to="/airtime-conversion">
               {" "}
               <img
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
@@ -116,9 +119,8 @@ export const AirtimeReceipt = () => {
               })}
             </span>
             <p className="text-[10px] font-bold pt-3 text-[#000] text-center mb-2 md:text-[14px] lg:text-[12px]">
-            Your NGN Wallet has been Credited Successfully With
+              Your NGN Wallet has been Credited Successfully With
             </p>
-
             <div className="flex flex-col gap-5">
               {/* ========================Recipient Info================== */}
               <div className="flex flex-col gap-[3px] w-[90%] mx-auto lg:gap-[5px]">
@@ -130,20 +132,16 @@ export const AirtimeReceipt = () => {
                     alt="/"
                   />
                 </div>
-                </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Amount </p>
-                  <span>{resultValue} </span>
-                </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Wallet Type</p>
-                  <span>Nigerian NGN Wallet</span>
-               
-               
-                
+              </div>
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <p className="text-[#0008]">Amount </p>
+                <span>{resultValue} </span>
+              </div>
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <p className="text-[#0008]">Wallet Type</p>
+                <span>Nigerian NGN Wallet</span>
               </div>
 
-              
               <div className="flex flex-col gap-[3px] w-[90%] mx-auto lg:gap-[5px]">
                 <div className="flex gap-[5px] items-center text-[10px] lg:text-[16px] font-extrabold">
                   <p>Sender Info</p>
@@ -153,21 +151,17 @@ export const AirtimeReceipt = () => {
                     alt="/"
                   />
                 </div>
-                </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Customer Name </p>
-                  <span>{firstName} {lastName} </span>
-                </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Wallet Type</p>
-                  <span>Nigerian NGN Wallet</span>
-               
-               
-                
               </div>
-
-
-             
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <p className="text-[#0008]">Customer Name </p>
+                <span>
+                  {firstName} {lastName}{" "}
+                </span>
+              </div>
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <p className="text-[#0008]">Wallet Type</p>
+                <span>Nigerian NGN Wallet</span>
+              </div>
 
               {/* ===================Transaction Info==================== */}
               <div className="flex flex-col gap-[5px] w-[90%] mx-auto lg:gap-[5px]">
@@ -199,7 +193,6 @@ export const AirtimeReceipt = () => {
                   <p className="text-[#0008]">Transaction ID</p>
                   <span>0331njokdhtf55</span>
                 </div>
-                
               </div>
             </div>
             <div className="rounded-[8px] bg-[#E2F3FF] mx-4 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
