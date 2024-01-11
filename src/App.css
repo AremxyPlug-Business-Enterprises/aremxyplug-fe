@@ -244,7 +244,7 @@ border-radius : 10px;
     scrollbar-color: transparent transparent;
   }
   .bvnQuery::-webkit-scrollbar{
-    width : 5px;
+    width : 0px;
   }
   .bnvQuery::-webkit-scrollbar-thumb{
     background-color: transparent;
@@ -255,7 +255,7 @@ border-radius : 10px;
     scrollbar-color: transparent transparent;
   }
   .idVerify::-webkit-scrollbar{
-    width : 5px;
+    width : 0px;
   }
   .idVerify::-webkit-scrollbar-thumb{
     background-color: transparent;
@@ -266,7 +266,7 @@ border-radius : 10px;
     scrollbar-color: transparent transparent;
   }
   .confirmRecipient::-webkit-scrollbar{
-    width : 5px;
+    width : 0px;
   }
   .confirmRecipient::-webkit-scrollbar-thumb{
     background-color: transparent;
@@ -277,7 +277,7 @@ border-radius : 10px;
     scrollbar-color: transparent transparent;
   }
   .deleteRecipientSuccess::-webkit-scrollbar{
-    width : 5px;
+    width : 0px;
   }
   .deleteRecipientSuccess::-webkit-scrollbar-thumb{
     background-color: transparent;
