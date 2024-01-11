@@ -341,31 +341,6 @@ const ContactTeam = () => {
                   onClick={handleShowList}
                   className="border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between"
                 >
-                  {/* {selected ? (
-                    <li className="flex items-center py-[3px] gap-1 md:py-[6px] cursor-pointer lg:gap-2 lg:h-[45px]">
-                      <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
-                        {networkImage && (
-                          <img
-                            src={networkImage}
-                            alt=""
-                            className="w-[20px] object-cover"
-                          />
-                        )}
-                      </div>
-                      <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        {networkName}
-                      </h2>
-                    </li>
-                  ) : (
-                    <h2 className="lg:text-[16px]  lg:leading-[24px] text-[#7C7C7C] text-[8px] leading-[12px]">
-                      Select Network
-                      <div>
-                        <h2>Network Image: {networkImage}</h2>
-                        <h2>Network Name: {networkName}</h2>
-                      </div>
-                    </h2>
-                  )} */}
-
                   {selected ? (
                     <li className="flex items-center py-[3px] gap-1 md:py-[6px] cursor-pointer lg:gap-2 lg:h-[45px]">
                       <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">

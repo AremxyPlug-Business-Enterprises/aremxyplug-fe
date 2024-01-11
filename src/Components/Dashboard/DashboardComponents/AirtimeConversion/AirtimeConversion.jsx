@@ -20,9 +20,7 @@ import arrow from "../AirtimeConversion/images/arrow.png";
 import boy from "../AirtimeConversion/images/Digital banking and online currency exchange.png";
 import styles from "../TransferComponent/transfer.module.css";
 import PhoneNumberPopUp from "./images/Phonenumber.svg";
-// import mtn from "../AirtimeConversion/images/mtn.svg"
-// import { AirtimeSelector } from './airtimeselector';
-// import { image } from 'html2canvas/dist/types/css/types/image';
+
 
 const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
   const [activeTab, setActiveTab] = useState("tab_1");
@@ -72,33 +70,6 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
   });
 
   const [proceed, setProceed] = useState(false);
-
-  // const countryListOne = [
-  //   {
-  //       id:1,
-  //       name:'MTN',
-  //       image: require('../AirtimeConversion/images/mtn.svg').default,
-  //       discount: 3,
-  //   },
-  //   {
-  //       id:2,
-  //       name:'AIR',
-  //       image: require('../AirtimeConversion/images/Airtel_logo-01 2 (2).png'),
-  //       discount: 4,
-  //   },
-  //   {
-  //       id:3,
-  //       name:'GLO',
-  //       image: require('../AirtimeConversion/images/640px-Glo_button 1 (1).png'),
-  //       discount: 3,
-  //   },
-  //   {
-  //       id:4,
-  //       name:'9MOB',
-  //       image: require('../AirtimeConversion/images/9mobile.svg').default,
-  //       discount: 3,
-  //   }
-  // ];
 
   const networkList = [
     {
@@ -174,12 +145,7 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
     //   networkName: name,
     // });
   };
-  // const handleShowListR =()=> {
-  //   setShowListR(!showList);
-  //   setNetworkName('');
-  //   setNetworkImage('');
-  //   setSelected(false);
-  // }
+
 
   const handleContactTeam = () => {
     // Navigate to the linked page and pass the values as state
