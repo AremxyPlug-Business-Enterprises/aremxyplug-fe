@@ -56,7 +56,7 @@ const saveRecipientButton = () => {
 //  const {id} = useParams();
   return (
     <DashBoardLayout>
-          <div className='flex flex-col justify-between lg:h-[1400px] md:h-[1550px] h-[750px]'>
+          <div className='flex flex-col justify-between lg:h-[900px] md:h-[1300px] h-[750px]'>
           <div>
             <RecipientHero/>
             <div className='flex flex-col lg:gap-[50px] gap-[20px]'>
@@ -72,7 +72,7 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
         {/* SECOND HEADING TEXT */}
         <div className='flex md:gap-[10px] gap-[3.67px]'>
     <h2 className='font-[500] text-[#000] text-[9px] leading-[12px] lg:text-[20px] lg:leading-[30px]'>
-    Recipient Details 
+   Edit Recipient Details 
 </h2>
 <img src={ArrowRight} alt="" 
 className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
@@ -348,8 +348,8 @@ md:w-[150px] text-white text-center rounded-[4.41px]
         </div>
         </div>
         <div className=" flex gap-[8.729px]  md:gap-[14.896px]
-       justify-center px-[8.594px]   lg:pt-[30%] lg:pb-[20%]
-       md:pt-[100%] md:pb-[30%] pt-[40%] pb-[30%]">
+       justify-center px-[8.594px]   lg:pt-[20px] lg:pb-[8px]
+       md:pt-[0px] md:pb-[20px] pt-[40%] pb-[30%]">
               <p className="font-[500] text-[10px] text-black 
               leading-[10.4px] lg:text-[16px] lg:leading-[15.6px]  md:text-[6.875px]
             ] md:leading-[12.938px] self-center">

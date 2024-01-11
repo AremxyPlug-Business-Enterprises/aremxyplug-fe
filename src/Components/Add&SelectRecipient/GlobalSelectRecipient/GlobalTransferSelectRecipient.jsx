@@ -138,7 +138,7 @@ const filterFavorite = knownFavorite.filter(item =>
   return (
 
   <DashBoardLayout>
-    <div className='flex flex-col justify-between lg:h-[1500px] md:h-[1600px] h-[950px] '>
+    <div className='flex flex-col justify-between lg:h-[1100px] md:h-[1400px] h-[950px] '>
     <div className=''>
       
     <RecipientHero/>
@@ -365,7 +365,7 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
           <Modal>
             <div className=' h-[100%] w-[100%] md:justify-center flex md:items-center items-end md:mx-[0px] mx-[19px]'
               key={recipients.id} >
-          <div className='deleteRecipientSuccess flex flex-col  lg:w-[35%] md:w-[45%]  w-[100%] lg:h-[465px] bg-white lg:rounded-[20px]
+          <div className='deleteRecipientSuccess flex flex-col  lg:w-[40%] md:w-[45%]  w-[100%] lg:h-[465px] bg-white lg:rounded-[20px]
           shadow-[0px_0px_6.933px_0px_rgba(0,0,0,0.25)] rounded-t-[8px] md:rounded-[5.729px]
           lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] pb-[10px] md:pb-[20px]'>
   <div className='flex justify-between w-[100%] border-b-[15px] border-[solid] border-[#04177F] lg:p-[15px] p-[10px]'>
@@ -414,7 +414,7 @@ md:w-[150px] text-center rounded-[4.41px]
           <Modal>
             <div className='h-[100%] w-[100%] md:justify-center flex md:items-center items-end md:mx-[0px] mx-[19px]'
             key={recipients.id}>
-          <div className='  flex flex-col  lg:w-[35%] md:w-[45%]  w-[100%] lg:h-[465px] bg-white lg:rounded-[20px]
+          <div className='  flex flex-col  lg:w-[40%] md:w-[45%]  w-[100%] lg:h-[465px] bg-white lg:rounded-[20px]
           shadow-[0px_0px_6.933px_0px_rgba(0,0,0,0.25)] rounded-t-[8px] md:rounded-[5.729px]
           lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] pb-[10px] md:pb-[20px]'>
   <div className='flex justify-between w-[100%] border-b-[15px] border-[solid] border-[#04177F] lg:p-[15px] p-[10px] '>
@@ -458,15 +458,18 @@ md:w-[150px] text-center rounded-[4.41px] bg-[#04177F]
           <Modal>
             <div className='h-[100%] w-[100%] md:justify-center flex md:items-center items-end md:mx-[0px] mx-[19px]'
             key={recipients.id}>
-          <div className='deleteRecipientSuccess flex flex-col   lg:w-[35%] md:w-[45%] w-[100%]  bg-white lg:rounded-[20px]
+          <div className='deleteRecipientSuccess flex flex-col   lg:w-[40%] md:w-[45%] w-[100%]  bg-white lg:rounded-[20px]
           shadow-[0px_0px_6.933px_0px_rgba(0,0,0,0.25)] rounded-t-[8px] md:rounded-[11.458px]
           lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] pb-[10px] lg:pb-[30px] md:pb-[10px] '>
   <div className='flex justify-between w-[100%] border-b-[15px] border-[solid] border-[#04177F] lg:p-[15px] p-[10px]'>
   <img src={AremxyLogo} alt="" 
    className='lg:h-[24.818px] lg:w-[41.825px] h-[16px] w-[16px] 
    '/>
-   <img src={closeIcon} alt="" 
-   className='lg:h-[32px] lg:w-[32px]  h-[16px] w-[16px]'/>
+   <img onClick={() => {
+    setAddFavoriteRecipient(false);
+   }}
+    src={closeIcon} alt="" 
+   className='lg:h-[32px] lg:w-[32px]  h-[16px] w-[16px] cursor-pointer'/>
   </div>
   <div className='flex flex-col  lg:w-[100%] lg:pt-[20px] items-center pt-[30px]  h-[100%]'>
   <div className='flex flex-col items-center lg:w-[80%] md:pb-[30px]   pb-[20px]  lg:gap-[25px] gap-[10px]'>
@@ -571,7 +574,7 @@ Okay
    lg:py-[12px] lg:px-[14px] text-[9px] leading-[12px] 
    shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)] hover:bg-gray-200 cursor-pointer
    lg:text-[16px] lg:leading-[24px] font-[500] bg-white'>
-    Remove to favorites
+    Remove from favorites
    </p>
    {/* EDIT  */}
    <Link to = '/EditSelectRecipient'
@@ -609,7 +612,7 @@ Okay
           `}
          
               key={favorite.id} >
-          <div className='deleteRecipientSuccess flex flex-col  lg:w-[35%] md:w-[45%] w-[100%] lg:h-[465px] bg-white lg:rounded-[20px]
+          <div className='deleteRecipientSuccess flex flex-col  lg:w-[40%] md:w-[45%] w-[100%] lg:h-[465px] bg-white lg:rounded-[20px]
           shadow-[0px_0px_6.933px_0px_rgba(0,0,0,0.25)] rounded-t-[8px] md:rounded-[5.729px]
           lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] pb-[10px] md:pb-[20px]'>
   <div className='flex justify-between w-[100%] border-b-[15px] border-[solid] border-[#04177F] lg:p-[15px] p-[10px]'>
@@ -660,7 +663,7 @@ md:w-[150px] text-center rounded-[4.41px]
             <div className='h-[100%] w-[100%] md:justify-center flex md:items-center items-end md:mx-[0px] mx-[19px]'
            
             key={favorite.id}>
-          <div className='deleteRecipientSuccess  flex flex-col  lg:w-[35%] md:w-[45%]  w-[100%] lg:h-[465px] bg-white lg:rounded-[20px]
+          <div className='deleteRecipientSuccess  flex flex-col  lg:w-[40%] md:w-[45%]  w-[100%] lg:h-[465px] bg-white lg:rounded-[20px]
           shadow-[0px_0px_6.933px_0px_rgba(0,0,0,0.25)] rounded-t-[8px] md:rounded-[5.729px]
           lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] pb-[10px] md:pb-[20px]'>
   <div className='flex justify-between w-[100%] border-b-[15px] border-[solid] border-[#04177F] lg:p-[15px] p-[10px] '>
@@ -706,7 +709,7 @@ md:w-[150px] text-center rounded-[4.41px] bg-[#04177F]
           <Modal>
             <div className='h-[100%] w-[100%] md:justify-center flex md:items-center items-end md:mx-[0px] mx-[19px]'
             key={favorite.id}>
-          <div className='deleteRecipientSuccess flex flex-col   lg:w-[35%] md:w-[45%]   w-[100%]  bg-white lg:rounded-[20px]
+          <div className='deleteRecipientSuccess flex flex-col   lg:w-[40%] md:w-[45%]   w-[100%]  bg-white lg:rounded-[20px]
           shadow-[0px_0px_6.933px_0px_rgba(0,0,0,0.25)] rounded-t-[8px] md:rounded-[11.458px]
           lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] pb-[10px] lg:pb-[30px] md:pb-[10px]'>
   <div className='flex justify-between w-[100%] border-b-[15px] border-[solid] border-[#04177F] lg:p-[15px] p-[10px]'>
@@ -759,7 +762,7 @@ Okay
     </div> 
     {/* CONTACT US */}
     <div className=" flex gap-[8.729px]  md:gap-[14.896px]
-       justify-center px-[8.594px] lg:pt-[30%] lg:pb-[20%] md:pt-[98%] md:pb-[30%] pt-[40%] pb-[30%]">
+       justify-center px-[8.594px] lg:pt-[20px] lg:pb-[8px] md:pt-[0px]  md:pb-[40px] pt-[40%] pb-[30%]">
               <p className="font-[500] text-[10px] text-black 
               leading-[10.4px] lg:text-[16px] lg:leading-[15.6px]  md:text-[6.875px]
             ] md:leading-[12.938px] self-center">

@@ -270,7 +270,7 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
    className='lg:h-[35px] lg:w-[35px] h-[20px] w-[20px] '/>
     </div>
     <div className='flex flex-col gap-[20px] lg:gap-[40px] md:gap-[40px] justify-between  lg:w-[100%] lg:pt-[20px] pt-[20px]  items-center h-[100%] '>
-      <div className='flex flex-col lg:w-[80%] w-[80%] lg:gap-[30px] gap-[10px]'>
+      <div className='flex flex-col lg:w-[80%] w-[80%] lg:gap-[15px] gap-[10px]'>
       {/* HEADER */}
      <h2 className='font-[600] text-center text-[10px] leading-[14px] lg:text-[16px] lg:leading-[20.8px]'>
      Please Confirm!!!
@@ -284,34 +284,34 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
 
   {/* COUNTRY */}
 <div className='flex justify-between'>
- <p className='font-[600] text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
+ <p className='font-[500] text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
   Country</p>
-  <p className='font-[600] text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
+  <p className='font-[500] text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
     Nigeria
     </p>
 </div>
 {/* BANK NAME */}
 <div className='flex justify-between'>
-<p className='font-[600] w-[50%] text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
+<p className='font-[500] w-[50%] text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
   Bank Name</p>
-  <p className='font-[600] md:w-auto w-[50%] text-end text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
+  <p className='font-[500] md:w-auto w-[50%] text-end text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
     {bankName}
     </p>
 </div>
 {/* ACCOUNT NAME */}
 <div className='flex justify-between'>
- <p className='font-[600] md:w-auto w-[50%] text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
+ <p className='font-[500] md:w-auto w-[50%] text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
   Account Name</p>
-  <p className='font-[600] md:w-auto w-[50%] text-end text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
+  <p className='font-[500] md:w-auto w-[50%] text-end text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
     {accountName}
     </p>
 </div>
 {/* ACCOUNT NUMBER */}
 <div className='flex justify-between'>
- <p className='font-[600] text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
+ <p className='font-[500] text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
  Account Number
  </p>
-  <p className='font-[600] text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
+  <p className='font-[500] text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
    {accountNumber}
     </p>
 </div>
@@ -336,7 +336,7 @@ className='bg-[#04177F] w-[100%] md:py-[7px] lg:py-[10px] py-[11px] lg:w-[163px]
         {changeRecipientSuccess && (
           <Modal>
             <div className='h-[100%] w-[100%] md:justify-center flex md:items-center items-end md:mx-[0px] mx-[19px]'>
-          <div className='deleteRecipientSuccess flex flex-col   lg:w-[35%] md:w-[45%]  md:h-[400px] w-[100%] lg:h-[465px] bg-white lg:rounded-[20px]
+          <div className='deleteRecipientSuccess flex flex-col   lg:w-[40%] md:w-[45%]  md:h-[400px] w-[100%] lg:h-[465px] bg-white lg:rounded-[20px]
           shadow-[0px_0px_6.933px_0px_rgba(0,0,0,0.25)] rounded-t-[8px] md:rounded-[11.458px]
           lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] pb-[10px] lg:pb-[80px] md:pb-[50px]'>
   <div className='flex justify-between w-[100%] border-b-[15px] border-[solid] border-[#04177F] lg:p-[15px] p-[10px]'>
