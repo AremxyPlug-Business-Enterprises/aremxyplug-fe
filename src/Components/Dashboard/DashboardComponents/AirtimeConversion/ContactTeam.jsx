@@ -383,7 +383,7 @@ const ContactTeam = () => {
                     </li>
                   ) : (
                     <h2 className="lg:text-[16px]  lg:leading-[24px] text-[#7C7C7C] text-[8px] leading-[12px]">
-                      {/* Select Network */}
+                      Select Network
                     </h2>
                   )}
                   <button
@@ -585,7 +585,7 @@ const ContactTeam = () => {
           </div>
         </div>
 
-        <div className="flex flex-row items-center justify-center md:mt-[750px] mt-[190px] pb-[10%] lg:mt-[980px] gap-2">
+        <div className="flex flex-row items-center justify-center md:mt-[750px] mt-[190px] pb-[10%] lg:pb-[2%] lg:mt-[500px] gap-2">
           <div className="text-[8px] lg:text-[12px] font-[600] text-black">
             You need help?
           </div>
