@@ -20,9 +20,7 @@ import arrow from "../AirtimeConversion/images/arrow.png";
 import boy from "../AirtimeConversion/images/Digital banking and online currency exchange.png";
 import styles from "../TransferComponent/transfer.module.css";
 import PhoneNumberPopUp from "./images/Phonenumber.svg";
-// import mtn from "../AirtimeConversion/images/mtn.svg"
-// import { AirtimeSelector } from './airtimeselector';
-// import { image } from 'html2canvas/dist/types/css/types/image';
+
 
 const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
   const [activeTab, setActiveTab] = useState("tab_1");
@@ -31,9 +29,17 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
   const inactive =
     "md:text-[12px] md:leading-[18px] lg:text-[20px] lg:leading-[30px] lg:w-[248px] md:w-[145.5px] md:h-[23px] lg:h-[50px] md:flex md:justify-center md:items-center md:flex-none flex-1 text-[8px] leading-[12px] text-center py-1";
   const [showList, setShowList] = useState(false);
+  const [showList2, setShowList2] = useState(false);
+
   const [networkImage, setNetworkImage] = useState("");
+  const [networkImage2, setNetworkImage2] = useState("");
+
   const [selected, setSelected] = useState(false);
+  const [selected2, setSelected2] = useState(false);
+
   const [networkName, setNetworkName] = useState("");
+  const [networkName2, setNetworkName2] = useState("");
+
   const [Pop, setPop] = useState("");
   const [phoneNumberPopUp, setPhoneNumberPopUp] = useState("");
   // const [networkName_1  , setNetworkName_1] = useState('');
@@ -59,38 +65,11 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
   const navigate = useNavigate();
 
   const [selectedNetwork, setSelectedNetwork] = useState({
-    networkImage: "",
-    networkName: "",
+    networkName: '',
+    networkImage: '',
   });
 
   const [proceed, setProceed] = useState(false);
-
-  // const countryListOne = [
-  //   {
-  //       id:1,
-  //       name:'MTN',
-  //       image: require('../AirtimeConversion/images/mtn.svg').default,
-  //       discount: 3,
-  //   },
-  //   {
-  //       id:2,
-  //       name:'AIR',
-  //       image: require('../AirtimeConversion/images/Airtel_logo-01 2 (2).png'),
-  //       discount: 4,
-  //   },
-  //   {
-  //       id:3,
-  //       name:'GLO',
-  //       image: require('../AirtimeConversion/images/640px-Glo_button 1 (1).png'),
-  //       discount: 3,
-  //   },
-  //   {
-  //       id:4,
-  //       name:'9MOB',
-  //       image: require('../AirtimeConversion/images/9mobile.svg').default,
-  //       discount: 3,
-  //   }
-  // ];
 
   const networkList = [
     {
@@ -127,11 +106,20 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
   const handleTab2 = () => {
     setActiveTab("tab_2");
   };
+
+
   const handleShowList = () => {
     setShowList(!showList);
     setNetworkName("");
     setNetworkImage("");
     setSelected(false);
+  };
+
+  const handleShowList2 = () => {
+    setShowList2(!showList2);
+    // setNetworkName2("");
+    setNetworkImage2("");
+    setSelected2(false);
   };
 
   const handleSelectNetwork = (name, image, val) => {
@@ -141,16 +129,23 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
     setSelected(true);
 
     setSelectedNetwork({
-      networkImage: image,
       networkName: name,
+      networkImage: image,
     });
   };
-  // const handleShowListR =()=> {
-  //   setShowListR(!showList);
-  //   setNetworkName('');
-  //   setNetworkImage('');
-  //   setSelected(false);
-  // }
+
+  const handleSelectNetwork2 = (name, image, val) => {
+    setNetworkName2(name);
+    setNetworkImage2(image);
+    setShowList2(false);
+    setSelected2(true);
+
+    // setSelectedNetwork({
+    //   networkImage: image,
+    //   networkName: name,
+    // });
+  };
+
 
   const handleContactTeam = () => {
     // Navigate to the linked page and pass the values as state
@@ -263,6 +258,9 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
 
   const { isDarkMode } = useContext(ContextProvider);
 
+
+
+  console.log(selectedNetwork);
   return (
     <DashBoardLayout>
       <div
@@ -597,28 +595,13 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
                   </div>
                 </WalletModal>
               )
-              //     <WalletModal>
-              //     <div className='rounded-[8px] px-3 relative lg:rounded-[11.5px] md:rounded-[6px] flex md:mt-8 flex-col ' >
-              //         <h2 className='text-center text-[10px] leading-[15px] mb-[10px] md:text-[12px] md:leading-[18px] lg:text-base lg:leading-[24px]'>International Airtime.</h2>
-              //         <h2 className='text-center text-[10px] leading-[15px] mb-[10px] font-semibold md:text-[12px] md:leading-[18px] lg:text-base lg:leading-[24px] text-primary'>This Feature is Currently Not Available.</h2>
-              //         <div className='flex justify-center items-center mt-[5%] lg:mt-[5%]'>
-              //             <div className='w-[170px] lg:w-[270px] lg:h-[220px] mb-[5%] md:mb-0'>
-              //                 <img src="./Images/airtimeTopUp/international-airtime.png" alt="" className='w-full'/>
-              //             </div>
-              //         </div>
-              //         <div className='w-[100%] mb-5 md:flex md:flex-row-reverse gap-[5px] bottom-[0px]   lg:w-[93%] md:mt-12  flex-col ' >
-              //             <h2 className='text-[8px] font-extrabold md:text-[12px] lg:text-[13px] w-full text-right md:mb-[-20px] lg:mb-[-80px]'>Coming soon...</h2>
-              //             <button className='w-full text-[10px]  leading-[15px] bg-primary px-[28.6px] py-[10px] text-white rounded-[7px] md:text-[12px] md:leading-[18px] md:w-fit lg:text-base lg:leading-[24px]' onClick={handleTab1}>Okay</button>
-              //         </div>
-
-              //     </div>
-              // </WalletModal>
+      
             }
           </div>
         </div>
 
         <div>
-          <div className="flex flex-row items-center justify-center md:mt-[750px] mt-[190px] pb-[10%] lg:mt-[980px] gap-2">
+          <div className="flex flex-row items-center justify-center md:mt-[750px] mt-[190px] pb-[10%] lg:pb-[2%] lg:mt-[500px] gap-2">
             <div className="text-[8px] lg:text-[12px] font-[600] text-black">
               You need help?
             </div>
@@ -658,7 +641,11 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
                 alt=""
               />
             </div>
-            <Link to="/contact-team">
+            
+            <Link  to={{
+            pathname: '/contact-team',
+            state: { selectedNetwork }, // Pass selected network details to File 2
+          }}>
               <div
                 onClick={handleContactTeam}
                 className="text-white mt-3 bg-primary lg:text-[16px] lg:py-1 w-[250px] md:w-[93px] lg:w-[163px] rounded-md md:py-1 md:rounded-lg md:px-1 py-3 text-center  text-[12px] font-[600]"
@@ -722,19 +709,19 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
                       placeholder="Amount to Convert"
                     />{" "}
                   </div>
-
+                  
                   <div className="relative w-[25%] md:w-[20%]">
                     <div>
                       <div
-                        onClick={handleShowList}
+                        onClick={handleShowList2}
                         className="border w-full h-[30px] md:h-[40px] lg:h-[50px] px-4 lg:px-[20px] bg-primary  justify-between  flex items-center"
                       >
-                        {selected ? (
+                        {selected2 ? (
                           <li className="flex items-center py-[3px] gap-1 md:py-[6px] cursor-pointer lg:gap-2 lg:h-[45px]">
                             <div className="rounded-full flex items-center justify-center text-[6px] overflow-hidden ">
-                              {networkImage && (
+                              {networkImage2 && (
                                 <img
-                                  src={networkImage}
+                                  src={networkImage2}
                                   alt=""
                                   className="object-cover md:w-[25px] md:h-[25px] lg:w-[35px] lg:h-[35px]"
                                 />
@@ -744,7 +731,7 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
                         ) : (
                           <img src={mtn} alt="" />
                         )}
-                        <button className="" onClick={handleShowList}>
+                        <button className="" onClick={handleShowList2}>
                           <img
                             src={arrowdown}
                             alt=""
@@ -753,7 +740,7 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
                         </button>
                       </div>
                     </div>
-                    {showList && (
+                    {showList2 && (
                       <div className="border md:rounded-[5px] lg:mt-2 mt-1 rounded-[4px] absolute  text-[10px] md:text-[12px] lg:text-[16px] w-full bg-[#FFF] z-[10]">
                         {networkList.map((item) => (
                           <Network
@@ -761,7 +748,7 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
                             image={item.image}
                             name={item.name}
                             onClick={() =>
-                              handleSelectNetwork(
+                              handleSelectNetwork2(
                                 item.name,
                                 item.image,
                                 item.discount
@@ -776,11 +763,11 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
                 <div className="flex flex-col items-center mt-[20px] md:mt-[20px] lg:mt-[20px] text-[#7C7C7C] lg:text-[16px] leading-[20.8px] gap-2 lg:gap-4 font-[500] text-[10px] md:text-[9.2px] ">
                   <div className="flex flex-row gap-2 items-center border-[1px] pt-2 px-4 md:py-2 md:px-2 rounded-md md:rounded-xl border-[#000000] text-[#29B8FC] ">
                     <div className="flex gap-2 items-center">
-                      <div>{networkName} ₦1,000 ~ 90%</div>
+                      <div>{networkName2} ₦1,000 ~ 90%</div>
                       <div>
-                        {networkImage && (
+                        {networkImage2 && (
                           <img
-                            src={networkImage}
+                            src={networkImage2}
                             alt=""
                             className="h-[14px] w-[15px] md:w-[15px] md:h-[15px] lg:w-[24px] lg:h-[24px] object-cover"
                           />
