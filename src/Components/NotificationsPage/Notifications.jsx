@@ -1922,7 +1922,7 @@ items-end  "
                   </div>
 </Link>
                   <Link to="/launch-page2">
-                    <div className="text-sky-100 w-[70px] h-[50px] md:w-[370px] md:h-[100px] lg:h-[150px] lg:w-[450px] mx-auto">
+                    <div className="text-sky-100 w-[40px] h-[50px] md:w-[280px] md:h-[100px] lg:h-[150px] lg:w-[450px] mx-auto">
                       Wild
                     </div>
                   </Link>
@@ -1988,7 +1988,7 @@ items-end  "
 
 
                           <div
-                            onClick={openModal}
+                            onClick={openModal1}
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
           justify-center items-center gap-1.5 flex"
                           >
@@ -2057,7 +2057,7 @@ items-end  "
                   </div>
 </Link>
                   <Link to="/launch-page2">
-                    <div className="text-sky-100 w-[70px] h-[50px] md:w-[370px] md:h-[100px] lg:h-[150px] lg:w-[450px] mx-auto">
+                    <div className="text-sky-100 w-[40px] h-[50px] md:w-[280px] md:h-[100px] lg:h-[150px] lg:w-[450px] mx-auto">
                       Wild
                     </div>
                   </Link>
@@ -2187,7 +2187,7 @@ items-end  "
                   </div>
 </Link>
                   <Link to="/launch-page2">
-                    <div className="text-sky-100 w-[70px] h-[50px] md:w-[370px] md:h-[100px] lg:h-[150px] lg:w-[450px] mx-auto">
+                    <div className="text-sky-100 w-[40px] h-[50px] md:w-[280px] md:h-[100px] lg:h-[150px] lg:w-[450px] mx-auto">
                       Wild
                     </div>
                   </Link>
@@ -2318,7 +2318,7 @@ items-end  "
                   </div>
 </Link>
                   <Link to="/launch-page2">
-                    <div className="text-sky-100 w-[70px] h-[50px] md:w-[370px] md:h-[100px] lg:h-[150px] lg:w-[450px] mx-auto">
+                    <div className="text-sky-100 w-[40px] h-[50px] md:w-[280px] md:h-[100px] lg:h-[150px] lg:w-[450px] mx-auto">
                       Wild
                     </div>
                   </Link>
@@ -2449,7 +2449,7 @@ items-end  "
                   </div>
 </Link>
                   <Link to="/launch-page2">
-                    <div className="text-sky-100 w-[70px] h-[50px] md:w-[370px] md:h-[100px] lg:h-[150px] lg:w-[450px] mx-auto">
+                    <div className="text-sky-100 w-[40px] h-[50px] md:w-[280px] md:h-[100px] lg:h-[150px] lg:w-[450px] mx-auto">
                       Wild
                     </div>
                   </Link>        
@@ -2839,7 +2839,7 @@ items-end  "
                   </div>
 </Link>
                   <Link to="/launch-page3">
-                    <div className="text-sky-100 w-[70px] h-[50px] md:w-[370px] md:h-[100px] lg:h-[150px] lg:w-[450px] mx-auto">
+                    <div className="text-sky-100 w-[40px] h-[50px] md:w-[240px] md:h-[100px] lg:h-[150px] lg:w-[450px] mx-auto">
                       Wild
                     </div>
                   </Link> 
@@ -2970,7 +2970,7 @@ items-end  "
                   </div>
 </Link>
                   <Link to="/launch-page3">
-                    <div className="text-sky-100 w-[70px] h-[50px] md:w-[370px] md:h-[100px] lg:h-[150px] lg:w-[450px] mx-auto">
+                    <div className="text-sky-100 w-[40px] h-[50px] md:w-[240px] md:h-[100px] lg:h-[150px] lg:w-[450px] mx-auto">
                       Wild
                     </div>
                   </Link>      
@@ -3098,7 +3098,7 @@ items-end  "
                   </div>
 </Link>
                   <Link to="/launch-page3">
-                    <div className="text-sky-100 w-[70px] h-[50px] md:w-[370px] md:h-[100px] lg:h-[150px] lg:w-[450px] mx-auto">
+                    <div className="text-sky-100 w-[40px] h-[50px] md:w-[240px] md:h-[100px] lg:h-[150px] lg:w-[450px] mx-auto">
                       Wild
                     </div>
                   </Link>       
@@ -3227,7 +3227,7 @@ items-end  "
                   </div>
 </Link>
                   <Link to="/launch-page3">
-                    <div className="text-sky-100 w-[70px] h-[50px] md:w-[370px] md:h-[100px] lg:h-[150px] lg:w-[450px] mx-auto">
+                    <div className="text-sky-100 w-[40px] h-[50px] md:w-[240px] md:h-[100px] lg:h-[150px] lg:w-[450px] mx-auto">
                       Wild
                     </div>
                   </Link>         
@@ -3355,7 +3355,7 @@ items-end  "
                   </div>
                   </Link>
                   <Link to="/launch-page3">
-                    <div className="text-sky-100 w-[70px] h-[50px] md:w-[370px] md:h-[100px] lg:h-[150px] lg:w-[450px] mx-auto">
+                    <div className="text-sky-100 w-[40px] h-[50px] md:w-[240px] md:h-[100px] lg:h-[150px] lg:w-[450px] mx-auto">
                       Wild
                     </div>
                   </Link>
@@ -3515,7 +3515,7 @@ items-end  "
                 >
                   No Notification Found !
                 </div>
-                <div className="flex gap-[15px] mt-[390px] lg:mt-[1050px] lg:mb-10 mb-5 md:mt-[700px] items-center">
+                <div className="flex gap-[15px] mt-[390px] lg:mt-[1050px] lg:mb-10 mb-5 md:mt-[800px] items-center">
                   <div className="text-xs font-medium ">You need help ?</div>
                   <Link to="/ContactUs">
                     <div
@@ -3554,7 +3554,7 @@ items-end  "
                 >
                   No Notification Found !
                 </div>
-                <div className="flex gap-[15px] mt-[390px] lg:mt-[1050px] lg:mb-10 mb-5 md:mt-[700px] items-center">
+                <div className="flex gap-[15px] mt-[390px] lg:mt-[1050px] lg:mb-10 mb-5 md:mt-[800px] items-center">
                   <div className="text-xs font-medium ">You need help ?</div>
                   <Link to="/ContactUs">
                     <div
