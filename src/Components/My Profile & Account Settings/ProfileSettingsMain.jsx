@@ -20,7 +20,7 @@ const {accountUpgrade} = useContext(ContextProvider);
 return (
     <DashBoardLayout>
         <div className=''>
-     <div className=' '>
+     <div className=''>
      <ProfileHero/>
         <div className='flex flex-wrap md:flex-nowrap  mt-[23px] md:w-[100%]  
         md:gap-[53.4px] lg:gap-[91px] 
