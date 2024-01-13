@@ -962,7 +962,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
         )}
 
  {/* =========== RECEIPT ============*/}
- {receipt && (
+ {receipt && ( 
           <WaecReceipt
              Exam ="WAEC"
             ExamType={examType}
