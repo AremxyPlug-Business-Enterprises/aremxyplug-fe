@@ -150,7 +150,7 @@ const waecReceipt = () => {
 
   return (
     <DashBoardLayout>
-    <div className='flex flex-col lg:h-[120%] h-[140%] justify-between'>
+    <div className='flex flex-col lg:h-[150%] h-[115%] justify-between '>
  <div className=''>
   {/* Hero-section */}
 <HeroComponent/>
@@ -962,7 +962,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
         )}
 
  {/* =========== RECEIPT ============*/}
- {receipt && (
+ {receipt && ( 
           <WaecReceipt
              Exam ="WAEC"
             ExamType={examType}
@@ -1012,7 +1012,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
     
 
     <div className=" flex gap-[8.729px]  md:gap-[14.896px] 
-     justify-center px-[8.594px] mb-[130px]">
+     justify-center px-[8.594px] mb-[50px]">
               <p className="font-[500] text-[10px] text-black 
               leading-[10.4px] lg:text-[16px] lg:leading-[15.6px]  md:text-[6.875px]
             ] md:leading-[12.938px] self-center">

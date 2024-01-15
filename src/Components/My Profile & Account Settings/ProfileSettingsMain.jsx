@@ -14,11 +14,13 @@ const {profilePage, setProfilePage} = useContext(ContextProvider);
 const {verificationOpen, setVerificationOpen} = useContext(ContextProvider);
 const {setBusinessPopUp} = useContext(ContextProvider);
 const {authenticationOpen, setAuthenticationOpen} = useContext(ContextProvider);
+const {bvnVerificationOpen} = useContext(ContextProvider);
+const {accountUpgrade} = useContext(ContextProvider);
 
 return (
     <DashBoardLayout>
         <div className=''>
-     <div className=' '>
+     <div className=''>
      <ProfileHero/>
         <div className='flex flex-wrap md:flex-nowrap  mt-[23px] md:w-[100%]  
         md:gap-[53.4px] lg:gap-[91px] 
@@ -103,8 +105,15 @@ return (
         <BusinessKYC/>
         <ChangePin/>
      </div>
-     <div className=" flex gap-[8.729px] lg:pt-[30%] lg:pb-[20%] md:pt-[110%] md:pb-[30%] pt-[40%] pb-[30%]  
-     md:gap-[14.896px] justify-center px-[8.594px]  ">
+     <div className={` flex gap-[8.729px]
+     pt-[30%] pb-[20%]
+      lg:pt-[20%] lg:pb-[10%] md:pt-[120%] md:pb-[50px]
+     md:gap-[14.896px] justify-center px-[8.594px]
+     ${profilePage ? 'md:pt-[130%] md:pb-[50px]' : '' }
+     ${bvnVerificationOpen ? 'md:pt-[130%] md:pb-[50px]' : ''}
+     ${accountUpgrade ? 'md:pt-[50%] md:pb-[50px]': ''}
+     ${authenticationOpen ? 'md:pt-[130%] md:pb-[50px] ' : ''} `}>
+
               <p className="font-[500] text-[10px] text-black 
               leading-[10.4px] lg:text-[16px] lg:leading-[15.6px]  md:text-[6.875px] md:leading-[12.938px] self-center">
                 You need help?
