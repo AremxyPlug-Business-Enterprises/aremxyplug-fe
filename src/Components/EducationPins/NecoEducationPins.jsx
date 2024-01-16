@@ -972,7 +972,7 @@ const necoReceipt = () => {
             />
           )}
                  
-                 <div className="py-[30px] lg:py-[60px] mt-10 lg:mb-[200px] mb-[50px] md:mb-[100px]">
+                 <div className="py-[30px] lg:py-[60px] mt-10 lg:mb-[80px] mb-[50px] md:mb-[100px]">
             <button
               className={`font-extrabold h-[43px] w-[100%] py-[3.534px] px-[5.301px] 
               mb-[40px] md:mb-[0px] rounded-[4.241px] md:h-auto
