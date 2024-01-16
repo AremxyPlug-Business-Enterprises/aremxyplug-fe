@@ -986,7 +986,7 @@ const jambReceipt = () => {
                   : "bg-primary"
               }`}
               onClick={(e)=>{
-                jambProceed();
+                jambProceed(e);
                 e.preventDefault();
               }}
               disabled={

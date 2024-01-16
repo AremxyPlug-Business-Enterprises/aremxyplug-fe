@@ -483,7 +483,7 @@ const necoReceipt = () => {
       {necoEducationProceed && (
             <Modal>
               <div
-                className={`scroll-bar mx-[5%] ${
+                className={`deleteRecipientSuccess mx-[5%] ${
                   isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
                 } ${
                   toggleSideBar

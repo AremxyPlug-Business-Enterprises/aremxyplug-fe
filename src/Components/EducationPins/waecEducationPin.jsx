@@ -480,7 +480,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
           <Modal>
          
             <div
-              className={`scroll-bar  mx-[5%]  ${
+              className={`deleteRecipientSuccess  mx-[5%]  ${
                 isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
               } ${
                 toggleSideBar
