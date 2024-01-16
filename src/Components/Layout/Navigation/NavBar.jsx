@@ -108,23 +108,29 @@ export const NavBar = () => {
           />
         </Link>
         <ul className="flex gap-[31px] items-center lg:gap-[55px]">
-          <li className="text-[9px] lg:text-[16px]">
+          <li className="text-[9px] lg:text-[16px] relative group">
             <Link to="/">Home</Link>
+            <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-[#04177F] rounded-[100px] md:h-[2.5px] md:w-[80%] lg:h-[4px] lg:w-[80%] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
           </li>
-          <li className="text-[9px] lg:text-[16px]">
+          <li className="text-[9px] lg:text-[16px] relative group">
             <Link to="/our-services">Services</Link>
+            <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-[#04177F] rounded-[100px] md:h-[2.5px] md:w-[80%] lg:h-[4px] lg:w-[80%] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
           </li>
-          <li className="text-[9px] lg:text-[16px]">
+          <li className="text-[9px] lg:text-[16px] relative group">
             <Link to="/about-us">About us</Link>
+            <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-[#04177F] rounded-[100px] md:h-[2.5px] md:w-[80%] lg:h-[4px] lg:w-[80%] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
           </li>
-          <li className="text-[9px] lg:text-[16px]">
+          <li className="text-[9px] lg:text-[16px] relative group">
             <Link to="/pricing">Pricing</Link>
+            <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-[#04177F] rounded-[100px] md:h-[2.5px] md:w-[80%] lg:h-[4px] lg:w-[80%] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
           </li>
-          <li className="text-[9px] lg:text-[16px]">
+          <li className="text-[9px] lg:text-[16px] relative group">
             <Link to="/Solutions">Solutions</Link>
+            <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-[#04177F] rounded-[100px] md:h-[2.5px] md:w-[80%] lg:h-[4px] lg:w-[80%] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
           </li>
-          <li className="text-[9px] lg:text-[16px]">
+          <li className="text-[9px] lg:text-[16px] relative group">
             <Link to="/faq">FAQs</Link>
+            <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-[#04177F] rounded-[100px] md:h-[2.5px] md:w-[80%] lg:h-[4px] lg:w-[80%] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
           </li>
         </ul>
 
