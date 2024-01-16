@@ -58,7 +58,7 @@ export const NavBar = () => {
       </div>
       {navOpen && (
         <div
-          className={` bg-[#04177f] fixed z-[50] left-[60%] text-[12px] text-center text-[#ffffff] p-6 w-[35%]   `}
+          className={` bg-[#04177f] fixed z-[50] left-[60%] text-[12px] text-center text-[#ffffff] p-6 w-[35%]`}
         >
           <ul className="flex flex-col gap-[20px]">
             <li onClick={() => setNavOpen((prev) => !prev)}>
@@ -91,7 +91,7 @@ export const NavBar = () => {
           </ul>
         </div>
       )}
-
+      
       {/* Tablet & Desktop View */}
       <div
         className={`${

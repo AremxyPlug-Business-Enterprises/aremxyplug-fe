@@ -11,7 +11,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { Link } from "react-router-dom";
 import CookieBanner from "./Cookie/CookieBanner";
-import groupone from "./groupone.svg";
+import groupone from "./Images/groupone.svg";
 import CrossBorder from "./Images/CrossBorder.svg";
 import CurrencyConversion from "./Images/CurrencyConversion.svg";
 import CurrencyConversion2 from "./Images/CurrencyConversion2.svg";
@@ -252,12 +252,9 @@ export const Home = () => {
       setError("");
       setEmail("");
     } else {
-      // Invalid email format
       setIsSuccess(false);
       setError("Invalid email");
     }
-
-    console.log(setEmail, setIsSuccess, setError);
   };
 
   return (
