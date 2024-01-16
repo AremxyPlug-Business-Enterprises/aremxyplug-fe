@@ -27,7 +27,7 @@ import FeedBack from "./Images/Feedback.svg";
 import Quote1 from "./Images/Quote1.svg";
 
 const feedback = [
-  <div className="bg-[] h-[250px] w-[100%] md:h-[250px] md:w-[60%] md:mx-auto lg:h-[300px] lg:w-[50%]">
+  <div className="h-[250px] w-[100%] md:h-[250px] md:w-[60%] md:mx-auto lg:h-[300px] lg:w-[50%]">
     <div className="h-[60%] bg-[#04177F] flex justify-center items-center">
       <div
         style={{ boxShadow: "0px 0px 5.187px 0px rgba(139, 67, 255, 0.50)" }}
@@ -56,7 +56,7 @@ const feedback = [
       <p className="text-[12px] lg:text-[18px]">CEO SAM DATA SERVICES</p>
     </div>
   </div>,
-  <div className="bg-[] h-[250px] w-[100%] md:h-[250px] md:w-[60%] md:mx-auto lg:h-[300px] lg:w-[50%]">
+  <div className="h-[250px] w-[100%] md:h-[250px] md:w-[60%] md:mx-auto lg:h-[300px] lg:w-[50%]">
     <div className="h-[60%] bg-[#04177F] flex justify-center items-center">
       <div
         style={{ boxShadow: "0px 0px 5.187px 0px rgba(139, 67, 255, 0.50)" }}
@@ -85,7 +85,7 @@ const feedback = [
       <p className="text-[12px] lg:text-[18px]">CEO SAM DATA SERVICES</p>
     </div>
   </div>,
-  <div className="bg-[] h-[250px] w-[100%] md:h-[250px] md:w-[60%] md:mx-auto lg:h-[300px] lg:w-[50%]">
+  <div className="h-[250px] w-[100%] md:h-[250px] md:w-[60%] md:mx-auto lg:h-[300px] lg:w-[50%]">
     <div className="h-[60%] bg-[#04177F] flex justify-center items-center">
       <div
         style={{ boxShadow: "0px 0px 5.187px 0px rgba(139, 67, 255, 0.50)" }}
@@ -114,7 +114,7 @@ const feedback = [
       <p className="text-[12px] lg:text-[18px]">CEO SAM DATA SERVICES</p>
     </div>
   </div>,
-  <div className="bg-[] h-[250px] w-[100%] md:h-[250px] md:w-[60%] md:mx-auto lg:h-[300px] lg:w-[50%]">
+  <div className="h-[250px] w-[100%] md:h-[250px] md:w-[60%] md:mx-auto lg:h-[300px] lg:w-[50%]">
     <div className="h-[60%] bg-[#04177F] flex justify-center items-center">
       <div
         style={{ boxShadow: "0px 0px 5.187px 0px rgba(139, 67, 255, 0.50)" }}
@@ -143,7 +143,7 @@ const feedback = [
       <p className="text-[12px] lg:text-[18px]">CEO SAM DATA SERVICES</p>
     </div>
   </div>,
-  <div className="bg-[] h-[250px] w-[100%] md:h-[250px] md:w-[60%] md:mx-auto lg:h-[300px] lg:w-[50%]">
+  <div className="h-[250px] w-[100%] md:h-[250px] md:w-[60%] md:mx-auto lg:h-[300px] lg:w-[50%]">
     <div className="h-[60%] bg-[#04177F] flex justify-center items-center">
       <div
         style={{ boxShadow: "0px 0px 5.187px 0px rgba(139, 67, 255, 0.50)" }}
