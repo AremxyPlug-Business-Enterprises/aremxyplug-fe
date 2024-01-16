@@ -24,7 +24,7 @@ import MultiCurrency2 from "./Images/MultiCurrency2.svg";
 import NewsLetter from "./Images/NewsLetter.svg";
 import Successful from "./Images/Success.gif";
 import FeedBack from "./Images/Feedback.svg";
-import Quote1 from "./Images/Quote1.svg"
+import Quote1 from "./Images/Quote1.svg";
 
 const feedback = [
   <div className="bg-[] h-[250px] w-[100%] md:h-[250px] md:w-[60%] md:mx-auto lg:h-[300px] lg:w-[50%]">
@@ -41,112 +41,137 @@ const feedback = [
             hendrerit a diam tristique scelerisque laoreet. Iaculis congue
             dignissim vitae ligula ultrice
           </span>
-          <img src={Quote1} alt="" className="w-[20px] h-[20px] rotate-180 mt-[50px]" />
+          <img
+            src={Quote1}
+            alt=""
+            className="w-[20px] h-[20px] rotate-180 mt-[50px]"
+          />
         </p>
-
       </div>
     </div>
     <div className="h-[40%] bg-[#EEEBEB] text-center pt-[50px]">
-      <p className="text-[12px] font-semibold lg:text-[18px]">Savannah Nguyen</p>
+      <p className="text-[12px] font-semibold lg:text-[18px]">
+        Savannah Nguyen
+      </p>
       <p className="text-[12px] lg:text-[18px]">CEO SAM DATA SERVICES</p>
     </div>
   </div>,
   <div className="bg-[] h-[250px] w-[100%] md:h-[250px] md:w-[60%] md:mx-auto lg:h-[300px] lg:w-[50%]">
-  <div className="h-[60%] bg-[#04177F] flex justify-center items-center">
-    <div
-      style={{ boxShadow: "0px 0px 5.187px 0px rgba(139, 67, 255, 0.50)" }}
-      className="bg-[#EEEBEB] mt-[100px] h-[125px] rounded-[4px] w-[85%] flex flex-col justify-center items-center gap-[20px]"
-    >
-      <img src={FeedBack} alt="" className="w-[70px] h-[70px] mt-[-70px]" />
-      <p className="px-[10px] flex items-start justify-start mx-auto">
-        <img src={Quote1} alt="" className="w-[20px] h-[20px]" />
-        <span className="text-[12px] px-[5px] text-center flex items-center mx-auto lg:text-[18px]">
-          Lorem ipsum dolor sit amet consectetur. Laoreet cras turpis
-          hendrerit a diam tristique scelerisque laoreet. Iaculis congue
-          dignissim vitae ligula ultrice
-        </span>
-        <img src={Quote1} alt="" className="w-[20px] h-[20px] rotate-180 mt-[50px]" />
-      </p>
-
+    <div className="h-[60%] bg-[#04177F] flex justify-center items-center">
+      <div
+        style={{ boxShadow: "0px 0px 5.187px 0px rgba(139, 67, 255, 0.50)" }}
+        className="bg-[#EEEBEB] mt-[100px] h-[125px] rounded-[4px] w-[85%] flex flex-col justify-center items-center gap-[20px]"
+      >
+        <img src={FeedBack} alt="" className="w-[70px] h-[70px] mt-[-70px]" />
+        <p className="px-[10px] flex items-start justify-start mx-auto">
+          <img src={Quote1} alt="" className="w-[20px] h-[20px]" />
+          <span className="text-[12px] px-[5px] text-center flex items-center mx-auto lg:text-[18px]">
+            Lorem ipsum dolor sit amet consectetur. Laoreet cras turpis
+            hendrerit a diam tristique scelerisque laoreet. Iaculis congue
+            dignissim vitae ligula ultrice
+          </span>
+          <img
+            src={Quote1}
+            alt=""
+            className="w-[20px] h-[20px] rotate-180 mt-[50px]"
+          />
+        </p>
+      </div>
     </div>
-  </div>
-  <div className="h-[40%] bg-[#EEEBEB] text-center pt-[50px]">
-    <p className="text-[12px] font-semibold lg:text-[18px]">Savannah Nguyen</p>
-    <p className="text-[12px] lg:text-[18px]">CEO SAM DATA SERVICES</p>
-  </div>
-</div>,
+    <div className="h-[40%] bg-[#EEEBEB] text-center pt-[50px]">
+      <p className="text-[12px] font-semibold lg:text-[18px]">
+        Savannah Nguyen
+      </p>
+      <p className="text-[12px] lg:text-[18px]">CEO SAM DATA SERVICES</p>
+    </div>
+  </div>,
   <div className="bg-[] h-[250px] w-[100%] md:h-[250px] md:w-[60%] md:mx-auto lg:h-[300px] lg:w-[50%]">
-  <div className="h-[60%] bg-[#04177F] flex justify-center items-center">
-    <div
-      style={{ boxShadow: "0px 0px 5.187px 0px rgba(139, 67, 255, 0.50)" }}
-      className="bg-[#EEEBEB] mt-[100px] h-[125px] rounded-[4px] w-[85%] flex flex-col justify-center items-center gap-[20px]"
-    >
-      <img src={FeedBack} alt="" className="w-[70px] h-[70px] mt-[-70px]" />
-      <p className="px-[10px] flex items-start justify-start mx-auto">
-        <img src={Quote1} alt="" className="w-[20px] h-[20px]" />
-        <span className="text-[12px] px-[5px] text-center flex items-center mx-auto lg:text-[18px]">
-          Lorem ipsum dolor sit amet consectetur. Laoreet cras turpis
-          hendrerit a diam tristique scelerisque laoreet. Iaculis congue
-          dignissim vitae ligula ultrice
-        </span>
-        <img src={Quote1} alt="" className="w-[20px] h-[20px] rotate-180 mt-[50px]" />
-      </p>
-
+    <div className="h-[60%] bg-[#04177F] flex justify-center items-center">
+      <div
+        style={{ boxShadow: "0px 0px 5.187px 0px rgba(139, 67, 255, 0.50)" }}
+        className="bg-[#EEEBEB] mt-[100px] h-[125px] rounded-[4px] w-[85%] flex flex-col justify-center items-center gap-[20px]"
+      >
+        <img src={FeedBack} alt="" className="w-[70px] h-[70px] mt-[-70px]" />
+        <p className="px-[10px] flex items-start justify-start mx-auto">
+          <img src={Quote1} alt="" className="w-[20px] h-[20px]" />
+          <span className="text-[12px] px-[5px] text-center flex items-center mx-auto lg:text-[18px]">
+            Lorem ipsum dolor sit amet consectetur. Laoreet cras turpis
+            hendrerit a diam tristique scelerisque laoreet. Iaculis congue
+            dignissim vitae ligula ultrice
+          </span>
+          <img
+            src={Quote1}
+            alt=""
+            className="w-[20px] h-[20px] rotate-180 mt-[50px]"
+          />
+        </p>
+      </div>
     </div>
-  </div>
-  <div className="h-[40%] bg-[#EEEBEB] text-center pt-[50px]">
-    <p className="text-[12px] font-semibold lg:text-[18px]">Savannah Nguyen</p>
-    <p className="text-[12px] lg:text-[18px]">CEO SAM DATA SERVICES</p>
-  </div>
-</div>,
+    <div className="h-[40%] bg-[#EEEBEB] text-center pt-[50px]">
+      <p className="text-[12px] font-semibold lg:text-[18px]">
+        Savannah Nguyen
+      </p>
+      <p className="text-[12px] lg:text-[18px]">CEO SAM DATA SERVICES</p>
+    </div>
+  </div>,
   <div className="bg-[] h-[250px] w-[100%] md:h-[250px] md:w-[60%] md:mx-auto lg:h-[300px] lg:w-[50%]">
-  <div className="h-[60%] bg-[#04177F] flex justify-center items-center">
-    <div
-      style={{ boxShadow: "0px 0px 5.187px 0px rgba(139, 67, 255, 0.50)" }}
-      className="bg-[#EEEBEB] mt-[100px] h-[125px] rounded-[4px] w-[85%] flex flex-col justify-center items-center gap-[20px]"
-    >
-      <img src={FeedBack} alt="" className="w-[70px] h-[70px] mt-[-70px]" />
-      <p className="px-[10px] flex items-start justify-start mx-auto">
-        <img src={Quote1} alt="" className="w-[20px] h-[20px]" />
-        <span className="text-[12px] px-[5px] text-center flex items-center mx-auto lg:text-[18px]">
-          Lorem ipsum dolor sit amet consectetur. Laoreet cras turpis
-          hendrerit a diam tristique scelerisque laoreet. Iaculis congue
-          dignissim vitae ligula ultrice
-        </span>
-        <img src={Quote1} alt="" className="w-[20px] h-[20px] rotate-180 mt-[50px]" />
-      </p>
-
+    <div className="h-[60%] bg-[#04177F] flex justify-center items-center">
+      <div
+        style={{ boxShadow: "0px 0px 5.187px 0px rgba(139, 67, 255, 0.50)" }}
+        className="bg-[#EEEBEB] mt-[100px] h-[125px] rounded-[4px] w-[85%] flex flex-col justify-center items-center gap-[20px]"
+      >
+        <img src={FeedBack} alt="" className="w-[70px] h-[70px] mt-[-70px]" />
+        <p className="px-[10px] flex items-start justify-start mx-auto">
+          <img src={Quote1} alt="" className="w-[20px] h-[20px]" />
+          <span className="text-[12px] px-[5px] text-center flex items-center mx-auto lg:text-[18px]">
+            Lorem ipsum dolor sit amet consectetur. Laoreet cras turpis
+            hendrerit a diam tristique scelerisque laoreet. Iaculis congue
+            dignissim vitae ligula ultrice
+          </span>
+          <img
+            src={Quote1}
+            alt=""
+            className="w-[20px] h-[20px] rotate-180 mt-[50px]"
+          />
+        </p>
+      </div>
     </div>
-  </div>
-  <div className="h-[40%] bg-[#EEEBEB] text-center pt-[50px]">
-    <p className="text-[12px] font-semibold lg:text-[18px]">Savannah Nguyen</p>
-    <p className="text-[12px] lg:text-[18px]">CEO SAM DATA SERVICES</p>
-  </div>
-</div>,
+    <div className="h-[40%] bg-[#EEEBEB] text-center pt-[50px]">
+      <p className="text-[12px] font-semibold lg:text-[18px]">
+        Savannah Nguyen
+      </p>
+      <p className="text-[12px] lg:text-[18px]">CEO SAM DATA SERVICES</p>
+    </div>
+  </div>,
   <div className="bg-[] h-[250px] w-[100%] md:h-[250px] md:w-[60%] md:mx-auto lg:h-[300px] lg:w-[50%]">
-  <div className="h-[60%] bg-[#04177F] flex justify-center items-center">
-    <div
-      style={{ boxShadow: "0px 0px 5.187px 0px rgba(139, 67, 255, 0.50)" }}
-      className="bg-[#EEEBEB] mt-[100px] h-[125px] rounded-[4px] w-[85%] flex flex-col justify-center items-center gap-[20px]"
-    >
-      <img src={FeedBack} alt="" className="w-[70px] h-[70px] mt-[-70px]" />
-      <p className="px-[10px] flex items-start justify-start mx-auto">
-        <img src={Quote1} alt="" className="w-[20px] h-[20px]" />
-        <span className="text-[12px] px-[5px] text-center flex items-center mx-auto lg:text-[18px]">
-          Lorem ipsum dolor sit amet consectetur. Laoreet cras turpis
-          hendrerit a diam tristique scelerisque laoreet. Iaculis congue
-          dignissim vitae ligula ultrice
-        </span>
-        <img src={Quote1} alt="" className="w-[20px] h-[20px] rotate-180 mt-[50px]" />
-      </p>
-
+    <div className="h-[60%] bg-[#04177F] flex justify-center items-center">
+      <div
+        style={{ boxShadow: "0px 0px 5.187px 0px rgba(139, 67, 255, 0.50)" }}
+        className="bg-[#EEEBEB] mt-[100px] h-[125px] rounded-[4px] w-[85%] flex flex-col justify-center items-center gap-[20px]"
+      >
+        <img src={FeedBack} alt="" className="w-[70px] h-[70px] mt-[-70px]" />
+        <p className="px-[10px] flex items-start justify-start mx-auto">
+          <img src={Quote1} alt="" className="w-[20px] h-[20px]" />
+          <span className="text-[12px] px-[5px] text-center flex items-center mx-auto lg:text-[18px]">
+            Lorem ipsum dolor sit amet consectetur. Laoreet cras turpis
+            hendrerit a diam tristique scelerisque laoreet. Iaculis congue
+            dignissim vitae ligula ultrice
+          </span>
+          <img
+            src={Quote1}
+            alt=""
+            className="w-[20px] h-[20px] rotate-180 mt-[50px]"
+          />
+        </p>
+      </div>
     </div>
-  </div>
-  <div className="h-[40%] bg-[#EEEBEB] text-center pt-[50px]">
-    <p className="text-[12px] font-semibold lg:text-[18px]">Savannah Nguyen</p>
-    <p className="text-[12px] lg:text-[18px]">CEO SAM DATA SERVICES</p>
-  </div>
-</div>,
+    <div className="h-[40%] bg-[#EEEBEB] text-center pt-[50px]">
+      <p className="text-[12px] font-semibold lg:text-[18px]">
+        Savannah Nguyen
+      </p>
+      <p className="text-[12px] lg:text-[18px]">CEO SAM DATA SERVICES</p>
+    </div>
+  </div>,
 ];
 
 const responsive = {
@@ -1041,6 +1066,7 @@ export const Home = () => {
       </div>
 
       {/* CROSS-BORDER PAYMENT */}
+
       <div
         id="crossborder"
         className="mt-[20%] md:mt-[5%] mb-[20%] md:mb-0 mx-[5%] lg:mx-[8%] flex flex-col gap-[20px] md:flex-row md:justify-between lg:mb-[5%]"
@@ -1070,6 +1096,8 @@ export const Home = () => {
       </div>
 
       {/* CURRENCY CONVERSION */}
+
+
       <div
         id="currencyconvert"
         className="mb-[20%] md:mb-[10%] md:mt-[5%] mx-[5%] lg:mx-[8%] flex flex-col gap-[20px] md:flex-row md:justify-between lg:mb-[10%]"
@@ -1099,6 +1127,8 @@ export const Home = () => {
       </div>
 
       {/* MULTI-CURRENCY WALLETS */}
+
+
       <div
         id="multicurrency"
         className="mb-[20%] md:mb-[10%] mx-[5%] lg:mx-[8%] flex flex-col gap-[20px] md:flex-row md:justify-between"
@@ -1130,7 +1160,9 @@ export const Home = () => {
         </div>
       </div>
 
-      {/* Blockchain Sim Card */}
+      {/* BLOCKCHAIN SIM CARD */}
+
+
       <div
         id="multicurrency"
         className="mb-[20%] md:mb-[10%] mx-[5%] lg:mx-[8%] flex flex-col gap-[20px] md:flex-row md:justify-between"
@@ -1162,7 +1194,9 @@ export const Home = () => {
         </div>
       </div>
 
-      {/* Virtual E-Sim */}
+      {/* VIRTUAL E-SIM */}
+
+
       <div
         id="multicurrency"
         className="mb-[20%] md:mb-[10%] mx-[5%] lg:mx-[8%] flex flex-col gap-[20px] md:flex-row md:justify-between"
