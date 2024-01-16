@@ -8,6 +8,7 @@ import cards from "./assets/cardbox.svg";
 import charts from "./assets/chartbox.svg";
 import { Link } from "react-router-dom/dist/react-router-dom.development";
 import styles from "../Dashboard/DashboardComponents/./component.module.css";
+import style from "../AirTimePage/AirtimeVtu.module.css";
 import { useContext } from "react";
 import { ContextProvider } from "../Context";
 import "./Notifications.css";
@@ -51,7 +52,7 @@ export default function NotificationsPage() {
   const [isOpen20, setIsOpen20] = useState(false);
   const [isOpen21, setIsOpen21] = useState(false);
 
-  const { isDarkMode } = useContext(ContextProvider);
+  const { isDarkMode, toggleSideBar } = useContext(ContextProvider);
 
 
 
@@ -644,6 +645,11 @@ items-end  "
                     </div>
                   </div>
                   </Link>
+                  <Link to="/launch-page">
+                  <div className="text-sky-100 w-[70px] h-[50px] md:w-[370px] md:h-[100px] lg:h-[150px] lg:w-[450px] mx-auto">
+                    Wild
+                  </div>
+                  </Link> 
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between ">
                   <Link to="/launch-page">
                     <div className="flex flex-col">
@@ -743,21 +749,21 @@ items-end  "
 {isModalOpen && (
                 <Modal>
                   <div
-                   className=" bg-white md:mx-auto md:my-auto w-[300px] md:w-[600px] md:h-[330px] 
-                    lg:mx-auto lg:w-[1000px] lg:h-[500px]
-                   lg:my-auto
-                   rounded-[12px] "
+                   className={`${style.inputPin} ${
+                    toggleSideBar
+                    ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
+                  } md:w-[55%] w-[90%]`}
                   >
                                           <img 
                       onClick={closeModal}
-                      className=" lg:w-[25px] w-[15px] h-[15px] lg:h-[25px] mt-[3px] ml-[280px]
+                      className=" lg:w-[25px] w-[15px] h-[15px] lg:h-[25px] mt-[7px] ml-[310px]
                        md:ml-[575px] md:mt-[5px] md:w-[20px] md:h-[20px]
                       lg:mt-[5px] 
                       lg:ml-[970px] flex "  src={VuesaxBoldEye} alt=""/>
 
                     <hr className="h-[6px] bg-[#04177f] lg:mt-[3%] border-none mt-[3%] md:mt-[3%] lg:h-[20px] md:h-[10px]" />
                     <p className="text-[10px] px-[20px] md:text-[14px] lg:text-[18px] font-extrabold text-center my-[3%] lg:my-[%]">
-                      Are you sure you want to delete this notifications?
+                      Are you sure you want to delete this notification?
                     </p>
                     <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
                       <img
@@ -861,14 +867,14 @@ items-end  "
                 {isModalOpen1 && (
                 <Modal>
                   <div
-                   className=" bg-white md:mx-auto md:my-auto w-[300px] md:w-[600px] md:h-[330px] 
-                    lg:mx-auto lg:w-[1000px] lg:h-[500px]
-                   lg:my-auto
-                   rounded-[12px] "
+                    className={`${style.inputPin} ${
+                      toggleSideBar
+                      ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
+                    } md:w-[55%] w-[90%]`}
                   >
                                           <img 
                       onClick={closeModal1}
-                      className=" lg:w-[25px] w-[15px] h-[15px] lg:h-[25px] mt-[3px] ml-[280px]
+                      className=" lg:w-[25px] w-[15px] h-[15px] lg:h-[25px] mt-[7px] ml-[310px]
                        md:ml-[575px] md:mt-[5px] md:w-[20px] md:h-[20px]
                       lg:mt-[5px] 
                       lg:ml-[970px] flex "  src={VuesaxBoldEye} alt=""/>
@@ -886,7 +892,7 @@ items-end  "
                     </div>
 
                     <div
-                      className={`flex flex-row lg:gap-[3px] gap-[-30px] justify-center items-center h-[38px]
+                      className={`flex flex-row lg:gap-[3px] gap-[-30px] justify-center items-center 
                        mt-[20px] md:mt-[10px] px-[20px] lg:mt-[-30px] md:justify-center md:items-center mx-auto 
                        md:px-[40px]`}
                     >
@@ -936,15 +942,15 @@ items-end  "
  {showSuccessMessage1 && (
                 <Modal>
                   <div
-                   className="
-                     
-          
-                   bg-white md:mx-auto md:my-auto lg:mx-auto lg:w-[1000px] lg:h-[500px] w-[300px] md:w-[600px] md:h-[330px] lg:my-auto md:overflow-auto rounded-[12px]"
+                    className={`${style.inputPin} ${
+                      toggleSideBar
+                      ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
+                    } md:w-[55%] w-[90%]`}
                   >
                                                               <img 
                       onClick={closeModal1}
                       className=" lg:w-[25px] lg:h-[25px] w-[15px] md:ml-[575px] md:mt-[5px] md:w-[20px] md:h-[20px]
-                      h-[15px] lg:mt-[5px] mt-[3px] lg:ml-[970px] ml-[280px] flex "  src={VuesaxBoldEye} alt=""/>
+                      h-[15px] lg:mt-[5px] mt-[7px] lg:ml-[970px] ml-[310px] flex "  src={VuesaxBoldEye} alt=""/>
 
                     <hr className="h-[6px] bg-[#04177f] lg:mt-[3%] border-none mt-[3%] md:mt-[5%] lg:h-[20px] md:h-[10px]" />
                     <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[3%] lg:my-[%]">
@@ -953,7 +959,7 @@ items-end  "
                     <p className="text-[10px] text-[#00AA48] md:text-[14px] px-[20px] lg:text-[18px] font-extrabold text-center my-[1%] lg:my-[%]">
                     All notifications has been deleted successfully.
                     </p>
-                    <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[5%]">
+                    <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[1%]">
                       <img
                         className="success-default-card w-[100px] h-[100px] md:w-[90px] md:h-[90px] mx-auto mb-[2%] lg:w-[150px] lg:h-[120px]"
                         src={SuccessGif}
@@ -962,13 +968,13 @@ items-end  "
                     </div>
 
                     <div
-                      className={`w-full h-[38px] mt-[20px] px-[20px] md:mt-[10px]`}
+                      className={`w-full h-[38px] mt-[20px] mb-[5px] px-[20px] md:mt-[10px]`}
                     >
                       <button
-                        className={`bg-[#04177F] w-[80px] lg:w-[20%] flex justify-center items-center mr-auto 
-                        cursor-pointer ml-[90px] md:ml-[225px] md:w-[20%] md:h-[35px]
-                        text-[14px] font-extrabold h-[30px] text-white rounded-[6px] md:rounded-[8px]
-                         md:text-[20px] lg:text-[16px] md:mx-auto lg:h-[40px] lg:ml-[380px] lg:my-[4%]`}
+                        className={`bg-[#04177F] w-[80px] lg:w-[20%] flex justify-center items-center mx-auto 
+                        cursor-pointer  md:w-[20%] md:h-[35px]
+                        text-[14px] font-extrabold h-[30px] text-white rounded-[8px] md:rounded-[8px]
+                         md:text-[20px] lg:text-[16px] lg:h-[40px] lg:my-[4%]`}
                         onClick={() => {
                           setShowSuccessMessage1(false);
                           setShowPicture(true);
@@ -1012,7 +1018,13 @@ items-end  "
                     </div>
                   </div>
 </Link>
+                  <Link to="/launch-page">
+                    <div className="text-sky-100 w-[70px] h-[50px] md:w-[370px] md:h-[100px] lg:h-[150px] lg:w-[450px] mx-auto">
+                      Wild
+                    </div>
+                  </Link>  
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
+                  <Link to="/launch-page">
                     <div className="flex flex-col">
                       <img
                         className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
@@ -1022,6 +1034,7 @@ items-end  "
                         alt=""
                       />
                     </div>
+                    </Link>
                     <div className="flex justify-end cursor-pointer  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
                       <div className="flex relative">
                       <div
@@ -1131,7 +1144,13 @@ items-end  "
                     </div>
                   </div>
 </Link>
+                  <Link to="/launch-page">
+                    <div className="text-sky-100 w-[70px] h-[50px] md:w-[370px] md:h-[100px] lg:h-[150px] lg:w-[450px] mx-auto">
+                      Wild
+                    </div>
+                  </Link> 
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
+                  <Link to="/launch-page">
                     <div className="flex flex-col">
                       <img
                         className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
@@ -1142,6 +1161,7 @@ items-end  "
                       />
 
                     </div>
+                    </Link> 
                     <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
                      <div className="flex relative">
                      {isOpen8 && (
@@ -1249,7 +1269,13 @@ items-end  "
                     </div>
                   </div>
 </Link>
+                  <Link to="/launch-page">
+                    <div className="text-sky-100 w-[70px] h-[50px] md:w-[370px] md:h-[100px] lg:h-[150px] lg:w-[450px] mx-auto">
+                      Wild
+                    </div>
+                  </Link> 
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
+                  <Link to="/launch-page">
                     <div className="flex flex-col">
                       <img
                         className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
@@ -1260,6 +1286,7 @@ items-end  "
                       />
 
                     </div>
+                    </Link> 
                     <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
                      <div className="flex relative">
                      {isOpen9 && (
@@ -1368,7 +1395,13 @@ items-end  "
                     </div>
                   </div>
 </Link>
+                  <Link to="/launch-page">
+                    <div className="text-sky-100 w-[70px] h-[50px] md:w-[370px] md:h-[100px] lg:h-[150px] lg:w-[450px] mx-auto">
+                      Wild
+                    </div>
+                  </Link>
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
+                  <Link to="/launch-page">
                     <div className="flex flex-col">
                       <img
                         className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
@@ -1379,6 +1412,7 @@ items-end  "
                       />
 
                     </div>
+                    </Link>
                     <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] 
                     flex-col-reverse">
                       <div className="flex relative">
@@ -1496,7 +1530,13 @@ items-end  "
                     </div>
                   </div>
 </Link>
+                  <Link to="/launch-page">
+                    <div className="text-sky-100 w-[70px] h-[50px] md:w-[370px] md:h-[100px] lg:h-[150px] lg:w-[450px] mx-auto">
+                      Wild
+                    </div>
+                  </Link>
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
+                  <Link to="/launch-page">
                     <div className="flex flex-col">
                       <img
                         className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
@@ -1507,6 +1547,7 @@ items-end  "
                       />
 
                     </div>
+                    </Link>
                     <div className="flex justify-end items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
                      <div className="flex relative">
                       <div
@@ -1728,13 +1769,15 @@ items-end  "
 {isModalOpen2 && (
                 <Modal>
                   <div
-                   className=" bg-white md:mx-auto md:my-auto w-[300px] lg:w-[1000px] lg:h-[500px] md:w-[600px] md:h-[330px] lg:mx-auto lg:my-auto
-                    md:overflow-auto rounded-[12px] "
+                    className={`${style.inputPin} ${
+                      toggleSideBar
+                      ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
+                    } md:w-[55%] w-[90%]`}
                   >
                                           <img 
                       onClick={closeModal2}
-                      className=" lg:w-[25px] w-[15px] lg:ml-[970px] h-[15px] lg:h-[25px] mt-[3px] md:ml-[575px] 
-                      md:mt-[5px] md:w-[20px] md:h-[20px] ml-[280px] lg:mt-[5px] flex "  src={VuesaxBoldEye} alt=""/>
+                      className=" lg:w-[25px] w-[15px] lg:ml-[970px] h-[15px] lg:h-[25px] mt-[7px] md:ml-[575px] 
+                      md:mt-[5px] md:w-[20px] md:h-[20px] ml-[310px] lg:mt-[5px] flex "  src={VuesaxBoldEye} alt=""/>
 
                     <hr className="h-[6px] bg-[#04177f] lg:mt-[3%] border-none mt-[3%] md:mt-[6%] md:h-[10px] lg:h-[20px]" />
                     <p className="text-[10px] px-[20px] md:text-[14px] lg:text-[18px] font-extrabold text-center my-[3%] lg:my-[%]">
@@ -1749,7 +1792,7 @@ items-end  "
                     </div>
 
                     <div
-                      className={`flex flex-row lg:gap-[3px] gap-[-30px] justify-center items-center h-[38px]
+                      className={`flex flex-row lg:gap-[3px] gap-[-30px] justify-center items-center
                        mt-[20px] md:mt-[10px] px-[20px] lg:mt-[-30px] md:justify-center md:items-center mx-auto 
                        md:px-[40px]`}
                     >
@@ -1795,17 +1838,16 @@ items-end  "
 {showSuccessMessage2 && (
                 <Modal>
                   <div
-                   className="
-                     
-          
-                   bg-white md:mx-auto md:my-auto lg:mx-auto md:w-[600px] lg:w-[1000px] lg:h-[500px]
-                    md:h-[330px] w-[300px] lg:my-auto md:overflow-auto rounded-[12px]"
+                    className={`${style.inputPin} ${
+                      toggleSideBar
+                      ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
+                    } md:w-[55%] w-[90%]`}
                   >
                                                               <img 
                       onClick={closeModal2}
                       className=" lg:w-[25px] md:w-[20px] md:h-[20px] md:ml-[575px] md:mt-[5px] 
-                       lg:h-[25px] w-[15px] h-[15px] lg:mt-[5px] mt-[3px] lg:ml-[970px]
-                       ml-[280px] flex "  src={VuesaxBoldEye} alt=""/>
+                       lg:h-[25px] w-[15px] h-[15px] lg:mt-[5px] mt-[7px] lg:ml-[970px]
+                       ml-[310px] flex "  src={VuesaxBoldEye} alt=""/>
 
                     <hr className="h-[6px] bg-[#04177f] lg:h-[20px] lg:mt-[3%] border-none 
                     
@@ -1816,7 +1858,7 @@ items-end  "
                     <p className="text-[10px] text-[#00AA48] md:text-[14px] px-[20px] lg:text-[18px] font-extrabold text-center my-[1%] lg:my-[%]">
                     All notifications has been deleted successfully.
                     </p>
-                    <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[5%]">
+                    <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[1%]">
                       <img
                         className="success-default-card w-[100px] h-[100px] md:w-[90px] md:h-[90px] mx-auto mb-[2%] lg:w-[150px] lg:h-[120px]"
                         src={SuccessGif}
@@ -1825,13 +1867,13 @@ items-end  "
                     </div>
 
                     <div
-                      className={`w-full h-[38px] mt-[20px] px-[20px] md:mt-[10px]`}
+                      className={`w-full h-[38px] mt-[20px] mb-[5px] px-[20px] md:mt-[10px]`}
                     >
                       <button
-                        className={`bg-[#04177F] w-[80px] lg:w-[20] md:ml-[225px] md:w-[20%] md:h-[35px] flex justify-center items-center mr-auto 
-                        cursor-pointer ml-[90px] lg:ml-[380px]
+                        className={`bg-[#04177F] w-[80px] lg:w-[20] md:ml-[225px] md:w-[20%] md:h-[35px] flex justify-center items-center mx-auto 
+                        cursor-pointer
                         text-[14px] font-extrabold h-[30px] text-white rounded-[6px] md:rounded-[8px]
-                         md:text-[20px] lg:text-[16px] md:mx-auto lg:h-[38px] lg:my-[4%]`}
+                         md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
                         onClick={() => {
                           setShowSuccessMessage2(false);
                           setShowPicture1(true);
@@ -1879,7 +1921,13 @@ items-end  "
                     </div>
                   </div>
 </Link>
+                  <Link to="/launch-page2">
+                    <div className="text-sky-100 w-[40px] h-[50px] md:w-[280px] md:h-[100px] lg:h-[150px] lg:w-[450px] mx-auto">
+                      Wild
+                    </div>
+                  </Link>
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
+                  <Link to="/launch-page2">
                     <div className="flex flex-col">
                       <img
                         className="lg:w-[150px] lg:h-[150px] relative mt-[5px] w-[50px] h-[50px] md:w-[100px]
@@ -1890,6 +1938,7 @@ items-end  "
                       />
 
                     </div>
+                    </Link>
                     <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
                       <div className="flex relative">
                       {isOpen12 && (
@@ -1939,7 +1988,7 @@ items-end  "
 
 
                           <div
-                          
+                            onClick={openModal1}
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
           justify-center items-center gap-1.5 flex"
                           >
@@ -2007,7 +2056,13 @@ items-end  "
                     </div>
                   </div>
 </Link>
+                  <Link to="/launch-page2">
+                    <div className="text-sky-100 w-[40px] h-[50px] md:w-[280px] md:h-[100px] lg:h-[150px] lg:w-[450px] mx-auto">
+                      Wild
+                    </div>
+                  </Link>
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
+                  <Link to="/launch-page2">
                     <div className="flex flex-col">
                       <img
                         className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
@@ -2017,6 +2072,7 @@ items-end  "
                         alt=""
                       />
                     </div>
+                    </Link>
                     <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
                       <div className="flex relative">
                       {isOpen13 && (
@@ -2064,6 +2120,7 @@ items-end  "
                           )}
 
                           <div
+                          onClick={openModal}
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
           justify-center items-center gap-1.5 flex"
                           >
@@ -2129,7 +2186,13 @@ items-end  "
                     </div>
                   </div>
 </Link>
+                  <Link to="/launch-page2">
+                    <div className="text-sky-100 w-[40px] h-[50px] md:w-[280px] md:h-[100px] lg:h-[150px] lg:w-[450px] mx-auto">
+                      Wild
+                    </div>
+                  </Link>
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
+                  <Link to="/launch-page2">
                     <div className="flex flex-col">
                       <img
                         className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
@@ -2140,6 +2203,7 @@ items-end  "
                       />
 
                     </div>
+                    </Link>
                     <div className="flex justify-end items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
                       <div className="flex relative">
 
@@ -2188,6 +2252,7 @@ items-end  "
                           )}
 
                           <div
+                          onClick={openModal}
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
           justify-center items-center gap-1.5 flex"
                           >
@@ -2252,7 +2317,13 @@ items-end  "
                     </div>
                   </div>
 </Link>
+                  <Link to="/launch-page2">
+                    <div className="text-sky-100 w-[40px] h-[50px] md:w-[280px] md:h-[100px] lg:h-[150px] lg:w-[450px] mx-auto">
+                      Wild
+                    </div>
+                  </Link>
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
+                  <Link to="/launch-page2">
                     <div className="flex flex-col">
                       <img
                         className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
@@ -2263,6 +2334,7 @@ items-end  "
                       />
 
                     </div>
+                    </Link>
                     <div className="flex justify-end items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
                       
                       <div className="flex relative">
@@ -2311,6 +2383,7 @@ items-end  "
                           )}
 
                           <div
+                          onClick={openModal}
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
           justify-center items-center gap-1.5 flex"
                           >
@@ -2375,7 +2448,13 @@ items-end  "
                     </div>
                   </div>
 </Link>
+                  <Link to="/launch-page2">
+                    <div className="text-sky-100 w-[40px] h-[50px] md:w-[280px] md:h-[100px] lg:h-[150px] lg:w-[450px] mx-auto">
+                      Wild
+                    </div>
+                  </Link>        
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
+                  <Link to="/launch-page2">
                     <div className="flex flex-col">
                       <img
                         className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
@@ -2386,6 +2465,7 @@ items-end  "
                       />
 
                     </div>
+                    </Link>
                     <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
                       <div className="flex relative">
                       {isOpen16 && (
@@ -2433,6 +2513,7 @@ items-end  "
                           )}
 
                           <div
+                          onClick={openModal}
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
           justify-center items-center gap-1.5 flex"
                           >
@@ -2602,14 +2683,15 @@ items-end  "
 {isModalOpen3 && (
                 <Modal>
                   <div
-                   className=" bg-white md:mx-auto md:my-auto lg:w-[1000px] lg:h-[500px] md:w-[600px] md:h-[330px] 
-                   w-[300px] lg:mx-auto lg:my-auto
-                    md:overflow-auto rounded-[12px] "
+                    className={`${style.inputPin} ${
+                      toggleSideBar
+                      ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
+                    } md:w-[55%] w-[90%]`}
                   >
                                           <img 
                       onClick={closeModal3}
                       className=" lg:w-[25px] w-[15px] md:ml-[575px] md:mt-[5px] md:w-[20px] md:h-[20px] h-[15px] 
-                      lg:h-[25px] mt-[3px] ml-[280px] lg:mt-[5px] lg:ml-[970px] flex "  src={VuesaxBoldEye} alt=""/>
+                      lg:h-[25px] mt-[7px] ml-[310px] lg:mt-[5px] lg:ml-[970px] flex "  src={VuesaxBoldEye} alt=""/>
 
                     <hr className="h-[6px] bg-[#04177f] lg:mt-[3%] border-none mt-[3%] md:mt-[6%] lg:h-[20px] md:h-[10px]" />
                     <p className="text-[10px] px-[20px] md:text-[14px] lg:text-[18px] font-extrabold text-center my-[3%] lg:my-[%]">
@@ -2624,7 +2706,7 @@ items-end  "
                     </div>
 
                     <div
-                      className={`flex flex-row lg:gap-[3px] gap-[-30px] justify-center items-center h-[38px]
+                      className={`flex flex-row lg:gap-[3px] gap-[-30px] justify-center items-center
                        mt-[20px] md:mt-[10px] px-[20px] lg:mt-[-30px] md:justify-center md:items-center mx-auto 
                        md:px-[40px]`}
                     >
@@ -2670,16 +2752,15 @@ items-end  "
 {showSuccessMessage3 && (
                 <Modal>
                   <div
-                   className="
-                     
-          
-                   bg-white md:mx-auto md:my-auto md:w-[600px] lg:w-[1000px] lg:h-[500px] md:h-[330px] lg:mx-auto 
-                   w-[300px] lg:my-auto md:overflow-auto rounded-[12px]"
+                    className={`${style.inputPin} ${
+                      toggleSideBar
+                      ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
+                    } md:w-[55%] w-[90%]`}
                   >
                                                               <img 
                       onClick={closeModal3}
                       className=" lg:w-[25px] lg:h-[25px] md:ml-[575px] md:mt-[5px] md:w-[20px] md:h-[20px]
-                      w-[15px] h-[15px] lg:mt-[5px] mt-[3px] lg:ml-[970px] ml-[280px] flex "  src={VuesaxBoldEye} alt=""/>
+                      w-[15px] h-[15px] lg:mt-[5px] mt-[7px] lg:ml-[970px] ml-[310px] flex "  src={VuesaxBoldEye} alt=""/>
 
                     <hr className="h-[6px] bg-[#04177f] lg:mt-[3%] border-none lg:h-[20px] mt-[3%] md:mt-[5%] md:h-[10px]" />
                     <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[3%] lg:my-[%]">
@@ -2688,7 +2769,7 @@ items-end  "
                     <p className="text-[10px] text-[#00AA48] md:text-[14px] px-[20px] lg:text-[18px] font-extrabold text-center my-[1%] lg:my-[%]">
                     All notifications has been deleted successfully.
                     </p>
-                    <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[5%]">
+                    <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[1%]">
                       <img
                         className="success-default-card w-[100px] h-[100px] md:w-[90px] md:h-[90px] mx-auto mb-[2%] lg:w-[150px] lg:h-[120px]"
                         src={SuccessGif}
@@ -2697,16 +2778,16 @@ items-end  "
                     </div>
 
                     <div
-                      className={`w-full h-[38px] mt-[20px] px-[20px] md:mt-[10px]`}
+                      className={`w-full h-[38px] mt-[20px] mb-[5px] px-[20px] md:mt-[10px]`}
                     >
                       <button
                         className={`bg-[#04177F] md:ml-[225px] md:w-[20%] md:h-[35px]
 
 
-                        w-[80px] lg:w-[20%] flex justify-center items-center mr-auto 
-                        cursor-pointer ml-[90px] lg:ml-[380px]
+                        w-[80px] lg:w-[20%] flex justify-center items-center mx-auto 
+                        cursor-pointer 
                         text-[14px] font-extrabold h-[30px] text-white rounded-[6px] md:rounded-[8px]
-                         md:text-[20px] lg:text-[16px] md:mx-auto lg:h-[38px] lg:my-[4%]`}
+                         md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
                         onClick={() => {
                           setShowSuccessMessage3(false);
                           setShowPicture2(true);
@@ -2757,7 +2838,13 @@ items-end  "
                     </div>
                   </div>
 </Link>
+                  <Link to="/launch-page3">
+                    <div className="text-sky-100 w-[40px] h-[50px] md:w-[240px] md:h-[100px] lg:h-[150px] lg:w-[450px] mx-auto">
+                      Wild
+                    </div>
+                  </Link> 
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
+                  <Link to="/launch-page3">
                     <div className="flex flex-col">
                       <img
                         className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
@@ -2768,6 +2855,7 @@ items-end  "
                       />
 
                     </div>
+                    </Link>
                     
 
                     <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
@@ -2817,6 +2905,7 @@ items-end  "
                           )}
 
                           <div
+                          onClick={openModal}
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
           justify-center items-center gap-1.5 flex"
                           >
@@ -2880,7 +2969,13 @@ items-end  "
                     </div>
                   </div>
 </Link>
+                  <Link to="/launch-page3">
+                    <div className="text-sky-100 w-[40px] h-[50px] md:w-[240px] md:h-[100px] lg:h-[150px] lg:w-[450px] mx-auto">
+                      Wild
+                    </div>
+                  </Link>      
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
+                  <Link to="/launch-page3">
                     <div className="flex flex-col">
                       <img
                         className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
@@ -2891,6 +2986,7 @@ items-end  "
                       />
 
                     </div>
+                    </Link> 
                     <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
                      <div className="flex relative">
                      {isOpen18 && (
@@ -2938,6 +3034,7 @@ items-end  "
                           )}
 
                           <div
+                          onClick={openModal}
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
           justify-center items-center gap-1.5 flex"
                           >
@@ -3000,7 +3097,13 @@ items-end  "
                     </div>
                   </div>
 </Link>
+                  <Link to="/launch-page3">
+                    <div className="text-sky-100 w-[40px] h-[50px] md:w-[240px] md:h-[100px] lg:h-[150px] lg:w-[450px] mx-auto">
+                      Wild
+                    </div>
+                  </Link>       
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
+                  <Link to="/launch-page3">
                     <div className="flex flex-col">
                       <img
                         className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
@@ -3011,7 +3114,7 @@ items-end  "
                       />
 
                     </div>
-                   
+                    </Link>
                     <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
                      <div className="flex relative">
                      {isOpen19 && (
@@ -3060,6 +3163,7 @@ items-end  "
 
 
                           <div
+                          onClick={openModal}
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
           justify-center items-center gap-1.5 flex"
                           >
@@ -3122,7 +3226,13 @@ items-end  "
                     </div>
                   </div>
 </Link>
+                  <Link to="/launch-page3">
+                    <div className="text-sky-100 w-[40px] h-[50px] md:w-[240px] md:h-[100px] lg:h-[150px] lg:w-[450px] mx-auto">
+                      Wild
+                    </div>
+                  </Link>         
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
+                  <Link to="/launch-page3">
                     <div className="flex flex-col">
                       <img
                         className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
@@ -3133,6 +3243,7 @@ items-end  "
                       />
 
                     </div>
+                    </Link>
                     <div className="flex justify-end relative  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
                       <div className="flex relative">
                       {isOpen20 && (
@@ -3181,6 +3292,7 @@ items-end  "
 
 
                           <div
+                          onClick={openModal}
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
           justify-center items-center gap-1.5 flex"
                           >
@@ -3242,7 +3354,13 @@ items-end  "
                     </div>
                   </div>
                   </Link>
+                  <Link to="/launch-page3">
+                    <div className="text-sky-100 w-[40px] h-[50px] md:w-[240px] md:h-[100px] lg:h-[150px] lg:w-[450px] mx-auto">
+                      Wild
+                    </div>
+                  </Link>
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
+                  <Link to="/launch-page3">
                     <div className="flex flex-col">
                       <img
                         className="lg:w-[150px] relative lg:h-[150px] mt-[5px] w-[50px] h-[50px] md:w-[100px]
@@ -3252,6 +3370,7 @@ items-end  "
                         alt=""
                       />
                     </div>
+                    </Link>
                     <div className="flex justify-end relative  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
                       <div className="flex relative">
                       {isOpen21 && (
@@ -3300,6 +3419,7 @@ items-end  "
 
 
                           <div
+                          onClick={openModal}
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
           justify-center items-center gap-1.5 flex"
                           >
@@ -3395,7 +3515,7 @@ items-end  "
                 >
                   No Notification Found !
                 </div>
-                <div className="flex gap-[15px] mt-[390px] lg:mt-[1050px] lg:mb-10 mb-5 md:mt-[700px] items-center">
+                <div className="flex gap-[15px] mt-[390px] lg:mt-[1050px] lg:mb-10 mb-5 md:mt-[800px] items-center">
                   <div className="text-xs font-medium ">You need help ?</div>
                   <Link to="/ContactUs">
                     <div
@@ -3434,7 +3554,7 @@ items-end  "
                 >
                   No Notification Found !
                 </div>
-                <div className="flex gap-[15px] mt-[390px] lg:mt-[1050px] lg:mb-10 mb-5 md:mt-[700px] items-center">
+                <div className="flex gap-[15px] mt-[390px] lg:mt-[1050px] lg:mb-10 mb-5 md:mt-[800px] items-center">
                   <div className="text-xs font-medium ">You need help ?</div>
                   <Link to="/ContactUs">
                     <div

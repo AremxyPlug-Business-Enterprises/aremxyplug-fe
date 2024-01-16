@@ -62,7 +62,7 @@ const LaunchPage = () => {
 
 
 <div className="flex lg:gap-7 gap-4 flex-col">
-  <h1 className="font-medium lg:text-base text-xs lg:leading-[40px] leading-8">
+  <h1 className="font-medium w-full text-justify lg:text-base text-xs lg:leading-[40px] leading-8">
     Welcome to the future of seamless communication and cutting-edge technology! We're thrilled to unveil our latest array of telecom and digital products designed to redefine connectivity and elevate your digital experience.<br/>
 At the heart of our launch is a commitment to transform the way you connect, communicate, and collaborate. Here's a glimpse of what's in store:<br/>
 1. Lightning-Fast Connectivity: Say goodbye to buffering and lagging. Our next-generation network infrastructure ensures lightning-fast speeds, enabling you to stream, download, and communicate without interruptions.<br/>

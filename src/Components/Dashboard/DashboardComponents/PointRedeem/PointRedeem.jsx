@@ -278,7 +278,7 @@ const [text, setText] =useState(false);
             className={` ${
               (inputValue.length < 3 ? "bg-[#0008]" : "bg-[#04177f]",
               outputValue.length < 3 ? "bg-[#0008]" : "bg-[#04177f]")
-            } text-[12px] mt-[50px] md:mt-[40px] md:w-fit lg:px-12 lg:text-[16px] lg:px md:py-1 md:rounded-md md:px-6   py-3 rounded-md font-[600] text-center text-white`}
+            } text-[12px] mt-[50px] md:mt-[40px] md:w-fit lg:px-12 lg:text-[16px] lg:px md:py-1 md:rounded-md md:px-6 cursor-pointer py-3 rounded-md font-[600] text-center text-white`}
           >
             Proceed
           </div>
@@ -433,7 +433,7 @@ const [text, setText] =useState(false);
           <div
             className={`${styles.aremxyMoneyPop} ${
               toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-            } w-[90%] md:w-[60%]`}
+            } w-[90%] md:w-[60%] overflow-auto`}
           >
             <img
               onClick={() => setProceed(false)}
