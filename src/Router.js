@@ -61,7 +61,7 @@ import MtnDataTopUpBundle from "./Components/Dashboard/DashboardComponents/DataT
 import WithdrawToOtherBanks from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToOtherBanks";
 import WalletSummaryPage from "./Components/WalletSummaryPage/WalletSummary";
 import SalesSummaryPage from "./Components/SalesSummaryPage/SalesSummary";
-import NotificationsPage from "./Components/NotificationsPage/Notifications";
+// import NotificationsPage from "./Components/NotificationsPage/Notifications";
 import { WalletSuccessfulReceipt } from "./Components/WalletSummaryPage/WalletSuccessfulReceipt";
 import { WalletFailedReceipt } from "./Components/WalletSummaryPage/WalletFailedReceipt";
 import { WalletPendingReceipt } from "./Components/WalletSummaryPage/WalletPendingReceipt";
@@ -218,8 +218,8 @@ export const Router = () => {
         <Route path="/withdraw" element={<WithdrawPage />} />
         <Route path="/wallet-summary" element={<WalletSummaryPage />} />
         <Route path="/sales-summary" element={<SalesSummaryPage />} />
-        <Route path="/notifications" element={<NotificationsPage />} />
-        <Route path="/notifications2" element={<NotificationsPage2 />} />
+        {/* <Route path="/notifications" element={<NotificationsPage />} /> */}
+        <Route path="/notifications" element={<NotificationsPage2 />} />
         <Route path="/launch-page" element={<LaunchPage />} />
         <Route path="/launch-page2" element={<LaunchPage2 />} />
         <Route path="/launch-page3" element={<LaunchPage3 />} />

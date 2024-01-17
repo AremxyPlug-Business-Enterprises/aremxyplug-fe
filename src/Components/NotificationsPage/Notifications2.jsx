@@ -19,7 +19,6 @@ import SuccessGif from "../../Components/Dashboard/DashboardComponents/CardPayme
 import { Modal } from "../Screens/Modal/Modal";
 import { useContext } from "react";
 import { ContextProvider } from "../Context";
-import styles from "../Dashboard/DashboardComponents/./component.module.css";
 
 const Notifications = [
   {
@@ -403,7 +402,6 @@ export default function NotificationsPage2() {
   const [deleteds, setdeleteds] = useState(false);
   const [successDeleted, setSuccessDeleted] = useState(false);
   const [successDeleteds, setSuccessDeleteds] = useState(false);
-  const [showPicture, setShowPicture] = useState(false);
 
   const { toggleSideBar, isDarkMode } = useContext(ContextProvider);
   
@@ -551,7 +549,7 @@ export default function NotificationsPage2() {
                   <div key={index}>
                     {isOpen === index && (
                       <div className="flex flex-col lg:gap-7 gap-3 md:gap-5">
-                        {notification.notifications.length > 0 &&
+                        {notification.notifications.length ? (
                           notification.notifications.map(
                             (notification, index) => (
                               <div
@@ -682,6 +680,26 @@ export default function NotificationsPage2() {
                                 </div>
                               </div>
                             )
+                          )) : (
+                            <div
+                              id="colorReset"
+                              className="mt-[100px] text-center mx-auto flex flex-col gap-5"
+                            >
+                              <div className="w-full mx-auto text-center">
+                                <img
+                                  className="lg:w-[500px] relative lg:h-[500px] w-[150px] h-[150px] md:w-[300px] flex justify-center md:h-[300px] text-center mx-auto"
+                                  src="./Images/Dashboardimages/noTransactionFound.png"
+                                  alt={notification.title}
+                                />
+                              </div>
+                              <div
+                                className={`${
+                                  isDarkMode ? "" : "text-[#0003]"
+                                } text-lg   text-opacity-30 mt-[-20px] lg:text-2xl  font-semibold `}
+                              >
+                                No Notification Found !
+                              </div>
+                            </div>
                           )}
                       </div>
                     )}
@@ -864,7 +882,6 @@ export default function NotificationsPage2() {
                       className={`bg-[#04177F] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
                       onClick={() => {
                         setSuccessDeleted(false);
-                        setShowPicture(true);
                       }}
                     >
                       Done
@@ -930,22 +947,6 @@ export default function NotificationsPage2() {
                   </div>
                 </div>
               </Modal>
-            )}
-            {showPicture && (
-              <div className={`${styles.viewTransactions} mt-[50px] `}>
-                <img
-                  className={styles.noTransactions}
-                  src="./Images/Dashboardimages/noTransactionFound.png"
-                  alt=""
-                />
-                <div
-                  className={`${
-                    isDarkMode ? "" : "text-[#0003]"
-                  } text-lg   text-opacity-30 mt-[-20px] lg:text-2xl  font-semibold `}
-                >
-                  No Notification Found !
-                </div>
-              </div>
             )}
         </div>
         <div className={style.help}>
