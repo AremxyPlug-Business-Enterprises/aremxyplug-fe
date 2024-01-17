@@ -88,7 +88,7 @@ return (
                       setAuthenticationOpen(true);
                       setVerificationOpen(false);
                       setProfilePage(false);
-                      setBvnVerificationOpen(false);
+                      setBvnVerificationOpen(false); 
                       setIdVerificationOpen(false);
                       setAccountUpgrade(false);
                     }}
