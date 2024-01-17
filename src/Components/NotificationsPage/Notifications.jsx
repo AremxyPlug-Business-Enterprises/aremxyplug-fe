@@ -1988,7 +1988,7 @@ items-end  "
 
 
                           <div
-                            onClick={openModal1}
+                            onClick={openModal}
                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b
           justify-center items-center gap-1.5 flex"
                           >
