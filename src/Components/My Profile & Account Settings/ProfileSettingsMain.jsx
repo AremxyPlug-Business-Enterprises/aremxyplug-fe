@@ -109,7 +109,7 @@ return (
      pt-[30%] pb-[20%]
       lg:pt-[20%] lg:pb-[10%] md:pt-[120%] md:pb-[50px]
      md:gap-[14.896px] justify-center px-[8.594px]
-     ${profilePage ? 'md:pt-[135%] md:pb-[50px]' : '' }
+     ${profilePage ? 'md:pt-[140%] md:pb-[50px]' : '' }
      ${bvnVerificationOpen ? 'md:pt-[135%] md:pb-[50px]' : ''}
      ${accountUpgrade ? 'md:pt-[50%] md:pb-[50px]': ''}
      ${authenticationOpen ? 'md:pt-[135%] md:pb-[50px] ' : ''} `}>
