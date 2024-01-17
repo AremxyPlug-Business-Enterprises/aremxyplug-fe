@@ -51,7 +51,7 @@ import styles from "../../AirTimePage/AirtimeVtu.module.css";
            
        <div className={`${styles.successfulTwo} ${
               toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-            } md:w-[45%] w-[90%]`}>
+            } md:w-[45%] w-[90%] overflow-auto`}>
         <div className="flex justify-between items-center mx-[3%] my-[2%] md:my-[1%]">
         <Link to="/">
               <img

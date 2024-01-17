@@ -62,11 +62,11 @@ const ConfirmStarTimesPopup = () => {
               </div>
               <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
               <div className="mx-auto">
-                <div className="text-[12px] my-[5%] font-medium text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
+                <div className="text-[12px] my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
                   Confirm Transaction</div>
-              <div className="text-[10px] font-bold text-[#0008] text-center mb-2 md:text-[11px] lg:text-[13px]">
+              <div className="text-[8px] text-[#0008] text-center mb-2 md:text-[12px] lg:text-[14px] mx-2">
                   You are about to purchase&nbsp;
-                  <span className="text-[#000] text-[11px] md:text-[13px] lg:text-[14px]">{valueWithoutTilde}</span>&nbsp;
+                  <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">{valueWithoutTilde}</span>&nbsp;
                 from your {" "}
                 {flagResult} {" "} to
                 </div>
@@ -74,43 +74,43 @@ const ConfirmStarTimesPopup = () => {
                 <div className="flex flex-col gap-3 mt-5 md:mt-6 lg:mt-7">
 
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className="text-[#7C7C7C]">Decoder Type</span>
+                    <span className="text-[#0008]">Decoder Type</span>
                     <span>StarTimes</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className="text-[#7C7C7C]">Package</span>
+                    <span className="text-[#0008]">Package</span>
                     <span>{selectedOptionStarTimes}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className="text-[#7C7C7C]">Smartcard / IUC Number</span>
+                    <span className="text-[#0008]">Smartcard / IUC Number</span>
                     <span>{smartCard}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className="text-[#7C7C7C]">Card Name</span>
+                    <span className="text-[#0008]">Card Name</span>
                     <span>{cardName}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className="text-[#7C7C7C]">Phone Number</span>
+                    <span className="text-[#0008]">Phone Number</span>
                     <span>{mobileNumber}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className="text-[#7C7C7C]">Email</span>
+                    <span className="text-[#0008]">Email</span>
                     <span>{tvEmail}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className="text-[#7C7C7C]">Amount</span>
+                    <span className="text-[#0008]">Amount</span>
                     <span>{'₦' + getNumericValue(selectedOptionStarTimes)}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className="text-[#7C7C7C]">Payment Method</span>
+                    <span className="text-[#0008]">Payment Method</span>
                     <span>{flagResult}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className="text-[#7C7C7C]">Transaction Fee</span>
+                    <span className="text-[#0008]">Transaction Fee</span>
                     <span>₦0.00</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className="text-[#7C7C7C]">Points Earned</span>
+                    <span className="text-[#0008]">Points Earned</span>
                     <span className="text-[#2ED173]">+2.00</span>
                   </div>
                 </div>
