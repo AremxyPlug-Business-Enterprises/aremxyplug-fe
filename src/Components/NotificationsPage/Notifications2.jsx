@@ -19,6 +19,7 @@ import SuccessGif from "../../Components/Dashboard/DashboardComponents/CardPayme
 import { Modal } from "../Screens/Modal/Modal";
 import { useContext } from "react";
 import { ContextProvider } from "../Context";
+import styles from "../Dashboard/DashboardComponents/./component.module.css";
 
 const Notifications = [
   {
@@ -302,13 +303,17 @@ const Notifications = [
     title: "Digital Services",
     image: cards,
     number: 0,
-    notifications: {},
+    notifications: {
+      image: "./Images/Dashboardimages/noTransactionFound.png"
+    },
   },
   {
     title: "Reports",
     image: charts,
     number: 0,
-    notifications: {},
+    notifications: {
+      image: "./Images/Dashboardimages/noTransactionFound.png"
+    },
   },
 ];
 
@@ -382,15 +387,25 @@ export default function NotificationsPage2() {
     setSuccessDeleted(true);
     setdeleted(false);
   };
+  const handleSuccessDeletes = () => {
+    setSuccessDeleteds(true);
+    setdeleteds(false);
+  };
 
   const handleDelete = () => {
     setdeleted(true);
   };
+  const handleDeletes = () => {
+    setdeleteds(true);
+  };
 
   const [deleted, setdeleted] = useState(false);
+  const [deleteds, setdeleteds] = useState(false);
   const [successDeleted, setSuccessDeleted] = useState(false);
+  const [successDeleteds, setSuccessDeleteds] = useState(false);
+  const [showPicture, setShowPicture] = useState(false);
 
-  const { toggleSideBar } = useContext(ContextProvider);
+  const { toggleSideBar, isDarkMode } = useContext(ContextProvider);
   
 
   return (
@@ -512,7 +527,6 @@ export default function NotificationsPage2() {
                   {Notifications[isOpen].notifications.length > 0 && (
                     <div
                       onClick={() => {
-                        Notifications[isOpen].notifications = [];
                         handleDelete();
                       }}
                       className="flex items-center lg:gap-[14px] cursor-pointer    lg:p-[8px] flex-[0_0_auto] bg-white lg:rounded-[6px]  border-red-500  lg:border-[0.2px] border-solid border-variable-collection- text-danger p-1 rounded shadow border gap-2 lg:shadow-[0px_0px_1px_#00000040]"
@@ -630,10 +644,8 @@ export default function NotificationsPage2() {
                                             onClick={(e) => {
                                               e.preventDefault();
                                               e.stopPropagation();
-                                              Notifications[
-                                                isOpen
-                                              ].notifications.splice(index, 1);
                                               setShowOptions(false);
+                                              handleDeletes();
                                             }}
                                             className="Frame758532672 px-4 py-1 bg-white h-[23px] cursor-pointer lg:h-[41px] md:h-[40px] lg:w-[190px] w-[100px] md:w-[180px] border-b justify-center items-center gap-1.5 flex"
                                           >
@@ -721,6 +733,7 @@ export default function NotificationsPage2() {
                     <button
                       className={`bg-[#04177F] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
                       onClick={() => {
+                        Notifications[isOpen].notifications = [];
                         handleSuccessDelete();
                       }}
                     >
@@ -730,6 +743,69 @@ export default function NotificationsPage2() {
                       className={`bg-[#fff] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-[#F95252] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
                       onClick={() => {
                         setdeleted(false);
+                      }}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </Modal>
+            )}
+          {deleteds && (
+              <Modal>
+                <div
+                  className={`${style.inputPin} ${
+                    toggleSideBar
+                    ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
+                  } md:w-[55%] w-[90%]`}
+                >
+                  <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[2%]">
+                    <img
+                      className=" w-[18px] h-[15px] md:w-[25px] md:h-[22px] lg:w-[25px] lg:h-[12px]"
+                      src="/Images/login/arpLogo.png"
+                      alt=""
+                    />
+
+                    <img
+                      onClick={() => {
+                        setdeleteds(false);
+                      }}
+                      className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[25px] lg:h-[25px] "
+                      src="/Images/transferImages/close-circle.png"
+                      alt=""
+                    />
+                  </div>
+
+                  <hr className="h-[6px] bg-[#04177f] lg:mt-[2%] border-none mt-[2%] md:mt-[2%] md:h-[10px]" />
+                  <p className="text-[10px] md:text-[14px] lg:text-[18px] font-extrabold text-center my-[3%] lg:my-[%]">
+                    Are you sure you want to delete this notification?
+                  </p>
+                  <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mt-[6%] mb-[2%]">
+                    <img
+                      className="w-[70px] h-[70px] mx-auto lg:w-[120px] lg:h-[120px]"
+                      src={deletingfiles}
+                      alt="/"
+                    />
+                  </div>
+
+                  <div
+                    className={`w-full h-[38px] mt-[40px] px-[20px] flex md:mx-[10%]`}
+                  >
+                    <button
+                      className={`bg-[#04177F] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
+                      onClick={(index) => {
+                        Notifications[
+                          isOpen
+                        ].notifications.splice(index, 1);
+                        handleSuccessDeletes();
+                      }}
+                    >
+                      Yes
+                    </button>
+                    <button
+                      className={`bg-[#fff] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-[#F95252] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
+                      onClick={() => {
+                        setdeleteds(false);
                       }}
                     >
                       Cancel
@@ -750,7 +826,6 @@ export default function NotificationsPage2() {
                     <img
                       onClick={() => {
                         setSuccessDeleted(false);
-                        //   window.location.reload();
                       }}
                       className=" w-[18px] h-[15px] md:w-[35px] md:h-[32px] lg:w-[25px] lg:h-[12px]"
                       src="/Images/login/arpLogo.png"
@@ -760,7 +835,6 @@ export default function NotificationsPage2() {
                     <img
                       onClick={() => {
                         setSuccessDeleted(false);
-                        window.location.reload();
                       }}
                       className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[25px] lg:h-[25px] "
                       src="/Images/transferImages/close-circle.png"
@@ -790,7 +864,7 @@ export default function NotificationsPage2() {
                       className={`bg-[#04177F] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
                       onClick={() => {
                         setSuccessDeleted(false);
-                        window.location.reload();
+                        setShowPicture(true);
                       }}
                     >
                       Done
@@ -798,6 +872,80 @@ export default function NotificationsPage2() {
                   </div>
                 </div>
               </Modal>
+            )}
+            {successDeleteds && (
+              <Modal>
+                <div
+                  className={`confirm2 ${style.inputPin} ${
+                    toggleSideBar
+                    ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
+                  } md:w-[55%] w-[90%]`}
+                >
+                  <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[2%]">
+                    <img
+                      onClick={() => {
+                        setSuccessDeleteds(false);
+                      }}
+                      className=" w-[18px] h-[15px] md:w-[35px] md:h-[32px] lg:w-[25px] lg:h-[12px]"
+                      src="/Images/login/arpLogo.png"
+                      alt=""
+                    />
+
+                    <img
+                      onClick={() => {
+                        setSuccessDeleteds(false);
+                      }}
+                      className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[25px] lg:h-[25px] "
+                      src="/Images/transferImages/close-circle.png"
+                      alt=""
+                    />
+                  </div>
+
+                  <hr className="h-[6px] bg-[#04177f] lg:mt-[2%] border-none mt-[2%] md:mt-[2%] md:h-[10px]" />
+                  <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[3%] lg:my-[%]">
+                    Successful
+                  </p>
+                  <p className="text-[10px] text-[#00AA48] md:text-[14px] px-[20px] lg:text-[18px] font-extrabold text-center my-[1%] lg:my-[%]">
+                    All notifications has been deleted successfully.
+                  </p>
+                  <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[5%]">
+                    <img
+                      className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[120px] lg:h-[120px]"
+                      src={SuccessGif}
+                      alt="/"
+                    />
+                  </div>
+
+                  <div
+                    className={`w-full h-[38px] mt-[40px] px-[20px] md:mx-[35%] md:mt-[10px]`}
+                  >
+                    <button
+                      className={`bg-[#04177F] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
+                      onClick={() => {
+                        setSuccessDeleteds(false);
+                      }}
+                    >
+                      Done
+                    </button>
+                  </div>
+                </div>
+              </Modal>
+            )}
+            {showPicture && (
+              <div className={`${styles.viewTransactions} mt-[50px] `}>
+                <img
+                  className={styles.noTransactions}
+                  src="./Images/Dashboardimages/noTransactionFound.png"
+                  alt=""
+                />
+                <div
+                  className={`${
+                    isDarkMode ? "" : "text-[#0003]"
+                  } text-lg   text-opacity-30 mt-[-20px] lg:text-2xl  font-semibold `}
+                >
+                  No Notification Found !
+                </div>
+              </div>
             )}
         </div>
         <div className={style.help}>
