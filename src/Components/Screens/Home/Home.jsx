@@ -11,22 +11,174 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { Link } from "react-router-dom";
 import CookieBanner from "./Cookie/CookieBanner";
+import groupone from "./Images/groupone.svg";
+import CrossBorder from "./Images/CrossBorder.svg";
+import CurrencyConversion from "./Images/CurrencyConversion.svg";
+import CurrencyConversion2 from "./Images/CurrencyConversion2.svg";
+import MultiCurrency from "./Images/MultiCurrency.svg";
+import BlockChain from "./Images/BlockChain.svg";
+import VirtualSim from "./Images/VirtualSim.svg";
+import API from "./Images/API.gif";
+import CrossBorder2 from "./Images/CrossBorder2.svg";
+import MultiCurrency2 from "./Images/MultiCurrency2.svg";
+import NewsLetter from "./Images/NewsLetter.svg";
+import Successful from "./Images/Success.gif";
+import FeedBack from "./Images/Feedback.svg";
+import Quote1 from "./Images/Quote1.svg";
 
 const feedback = [
-  <div className="bg-[#D9D9D9] h-[200px] w-[100%] md:h-[200px] md:w-[60%] md:flex md:mx-auto lg:h-[300px] lg:w-[50%]">
-    1
+  <div className="h-[250px] w-[100%] md:h-[250px] md:w-[60%] md:mx-auto lg:h-[300px] lg:w-[50%]">
+    <div className="h-[60%] bg-[#04177F] flex justify-center items-center">
+      <div
+        style={{ boxShadow: "0px 0px 5.187px 0px rgba(139, 67, 255, 0.50)" }}
+        className="bg-[#EEEBEB] mt-[100px] h-[125px] rounded-[4px] w-[85%] flex flex-col justify-center items-center gap-[20px]"
+      >
+        <img src={FeedBack} alt="" className="w-[70px] h-[70px] mt-[-70px]" />
+        <p className="px-[10px] flex items-start justify-start mx-auto">
+          <img src={Quote1} alt="" className="w-[20px] h-[20px]" />
+          <span className="text-[12px] px-[5px] text-center flex items-center mx-auto lg:text-[18px]">
+            Lorem ipsum dolor sit amet consectetur. Laoreet cras turpis
+            hendrerit a diam tristique scelerisque laoreet. Iaculis congue
+            dignissim vitae ligula ultrice
+          </span>
+          <img
+            src={Quote1}
+            alt=""
+            className="w-[20px] h-[20px] rotate-180 mt-[50px]"
+          />
+        </p>
+      </div>
+    </div>
+    <div className="h-[40%] bg-[#EEEBEB] text-center pt-[50px]">
+      <p className="text-[12px] font-semibold lg:text-[18px]">
+        Savannah Nguyen
+      </p>
+      <p className="text-[12px] lg:text-[18px]">CEO SAM DATA SERVICES</p>
+    </div>
   </div>,
-  <div className="bg-[#D9D9D9] h-[200px] w-[100%] md:h-[200px] md:w-[60%] md:flex md:mx-auto lg:h-[300px] lg:w-[50%]">
-    2
+
+
+  <div className="h-[250px] w-[100%] md:h-[250px] md:w-[60%] md:mx-auto lg:h-[300px] lg:w-[50%]">
+    <div className="h-[60%] bg-[#04177F] flex justify-center items-center">
+      <div
+        style={{ boxShadow: "0px 0px 5.187px 0px rgba(139, 67, 255, 0.50)" }}
+        className="bg-[#EEEBEB] mt-[100px] h-[125px] rounded-[4px] w-[85%] flex flex-col justify-center items-center gap-[20px]"
+      >
+        <img src={FeedBack} alt="" className="w-[70px] h-[70px] mt-[-70px]" />
+        <p className="px-[10px] flex items-start justify-start mx-auto">
+          <img src={Quote1} alt="" className="w-[20px] h-[20px]" />
+          <span className="text-[12px] px-[5px] text-center flex items-center mx-auto lg:text-[18px]">
+            Lorem ipsum dolor sit amet consectetur. Laoreet cras turpis
+            hendrerit a diam tristique scelerisque laoreet. Iaculis congue
+            dignissim vitae ligula ultrice
+          </span>
+          <img
+            src={Quote1}
+            alt=""
+            className="w-[20px] h-[20px] rotate-180 mt-[50px]"
+          />
+        </p>
+      </div>
+    </div>
+    <div className="h-[40%] bg-[#EEEBEB] text-center pt-[50px]">
+      <p className="text-[12px] font-semibold lg:text-[18px]">
+        Savannah Nguyen
+      </p>
+      <p className="text-[12px] lg:text-[18px]">CEO SAM DATA SERVICES</p>
+    </div>
   </div>,
-  <div className="bg-[#D9D9D9] h-[200px] w-[100%] md:h-[200px] md:w-[60%] md:flex md:mx-auto lg:h-[300px] lg:w-[50%]">
-    3
+
+
+  <div className="h-[250px] w-[100%] md:h-[250px] md:w-[60%] md:mx-auto lg:h-[300px] lg:w-[50%]">
+    <div className="h-[60%] bg-[#04177F] flex justify-center items-center">
+      <div
+        style={{ boxShadow: "0px 0px 5.187px 0px rgba(139, 67, 255, 0.50)" }}
+        className="bg-[#EEEBEB] mt-[100px] h-[125px] rounded-[4px] w-[85%] flex flex-col justify-center items-center gap-[20px]"
+      >
+        <img src={FeedBack} alt="" className="w-[70px] h-[70px] mt-[-70px]" />
+        <p className="px-[10px] flex items-start justify-start mx-auto">
+          <img src={Quote1} alt="" className="w-[20px] h-[20px]" />
+          <span className="text-[12px] px-[5px] text-center flex items-center mx-auto lg:text-[18px]">
+            Lorem ipsum dolor sit amet consectetur. Laoreet cras turpis
+            hendrerit a diam tristique scelerisque laoreet. Iaculis congue
+            dignissim vitae ligula ultrice
+          </span>
+          <img
+            src={Quote1}
+            alt=""
+            className="w-[20px] h-[20px] rotate-180 mt-[50px]"
+          />
+        </p>
+      </div>
+    </div>
+    <div className="h-[40%] bg-[#EEEBEB] text-center pt-[50px]">
+      <p className="text-[12px] font-semibold lg:text-[18px]">
+        Savannah Nguyen
+      </p>
+      <p className="text-[12px] lg:text-[18px]">CEO SAM DATA SERVICES</p>
+    </div>
   </div>,
-  <div className="bg-[#D9D9D9] h-[200px] w-[100%] md:h-[200px] md:w-[60%] md:flex md:mx-auto lg:h-[300px] lg:w-[50%]">
-    4
+
+
+  <div className="h-[250px] w-[100%] md:h-[250px] md:w-[60%] md:mx-auto lg:h-[300px] lg:w-[50%]">
+    <div className="h-[60%] bg-[#04177F] flex justify-center items-center">
+      <div
+        style={{ boxShadow: "0px 0px 5.187px 0px rgba(139, 67, 255, 0.50)" }}
+        className="bg-[#EEEBEB] mt-[100px] h-[125px] rounded-[4px] w-[85%] flex flex-col justify-center items-center gap-[20px]"
+      >
+        <img src={FeedBack} alt="" className="w-[70px] h-[70px] mt-[-70px]" />
+        <p className="px-[10px] flex items-start justify-start mx-auto">
+          <img src={Quote1} alt="" className="w-[20px] h-[20px]" />
+          <span className="text-[12px] px-[5px] text-center flex items-center mx-auto lg:text-[18px]">
+            Lorem ipsum dolor sit amet consectetur. Laoreet cras turpis
+            hendrerit a diam tristique scelerisque laoreet. Iaculis congue
+            dignissim vitae ligula ultrice
+          </span>
+          <img
+            src={Quote1}
+            alt=""
+            className="w-[20px] h-[20px] rotate-180 mt-[50px]"
+          />
+        </p>
+      </div>
+    </div>
+    <div className="h-[40%] bg-[#EEEBEB] text-center pt-[50px]">
+      <p className="text-[12px] font-semibold lg:text-[18px]">
+        Savannah Nguyen
+      </p>
+      <p className="text-[12px] lg:text-[18px]">CEO SAM DATA SERVICES</p>
+    </div>
   </div>,
-  <div className="bg-[#D9D9D9] h-[200px] w-[100%] md:h-[200px] md:w-[60%] md:flex md:mx-auto lg:h-[300px] lg:w-[50%]">
-    5
+
+  
+  <div className="h-[250px] w-[100%] md:h-[250px] md:w-[60%] md:mx-auto lg:h-[300px] lg:w-[50%]">
+    <div className="h-[60%] bg-[#04177F] flex justify-center items-center">
+      <div
+        style={{ boxShadow: "0px 0px 5.187px 0px rgba(139, 67, 255, 0.50)" }}
+        className="bg-[#EEEBEB] mt-[100px] h-[125px] rounded-[4px] w-[85%] flex flex-col justify-center items-center gap-[20px]"
+      >
+        <img src={FeedBack} alt="" className="w-[70px] h-[70px] mt-[-70px]" />
+        <p className="px-[10px] flex items-start justify-start mx-auto">
+          <img src={Quote1} alt="" className="w-[20px] h-[20px]" />
+          <span className="text-[12px] px-[5px] text-center flex items-center mx-auto lg:text-[18px]">
+            Lorem ipsum dolor sit amet consectetur. Laoreet cras turpis
+            hendrerit a diam tristique scelerisque laoreet. Iaculis congue
+            dignissim vitae ligula ultrice
+          </span>
+          <img
+            src={Quote1}
+            alt=""
+            className="w-[20px] h-[20px] rotate-180 mt-[50px]"
+          />
+        </p>
+      </div>
+    </div>
+    <div className="h-[40%] bg-[#EEEBEB] text-center pt-[50px]">
+      <p className="text-[12px] font-semibold lg:text-[18px]">
+        Savannah Nguyen
+      </p>
+      <p className="text-[12px] lg:text-[18px]">CEO SAM DATA SERVICES</p>
+    </div>
   </div>,
 ];
 
@@ -94,6 +246,25 @@ export const Home = () => {
     setButtonTextTwo((prevText) => (prevText === "More" ? "Less" : "More"));
   }
 
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  const validateEmail = () => {
+    // Regular expression for basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (emailRegex.test(email)) {
+      // Valid email format
+      setIsSuccess(true);
+      setError("");
+      setEmail("");
+    } else {
+      setIsSuccess(false);
+      setError("Invalid email");
+    }
+  };
+
   return (
     <>
       <div className="fixed top-[9.5%] left-0 right-0 z-50 md:top-[55%] lg:top-[45%]">
@@ -120,11 +291,17 @@ export const Home = () => {
             </button>
           </div>
         </div>
+
         <img
+          className="mx-auto mt-[12%] md:w-[40%] md:h-[30%] lg:w-[50%] lg:h-[40%] lg:mt-[20%]"
+          src={groupone}
+          alt="/"
+        />
+        {/* <img
           className="mx-auto mt-[12%] md:w-[40%] md:h-[30%] lg:w-[50%] lg:h-[40%]"
           src="./Images/groupOne.png"
           alt="/"
-        />
+        /> */}
       </div>
 
       {/* WHY CHOOSE US */}
@@ -873,7 +1050,7 @@ export const Home = () => {
       </div>
 
       {/* CARD ISSUING */}
-      <div className="mb-[20%] flex flex-col gap-[50px] bg-[#04177f] px-[5%] text-[#ffffff] py-[15%] md:py-[5%] md:flex-row md:px-[8%] md:gap-[10px] lg:gap-[30px]">
+      <div className="mb-[5%] flex flex-col gap-[50px] bg-[#04177f] px-[5%] text-[#ffffff] py-[15%] md:py-[5%] md:flex-row md:px-[8%] md:gap-[10px] lg:gap-[30px]">
         <div>
           <div className="text-[20px] font-medium text-center mb-[4%] md:text-[26px] md:text-left lg:text-[45px]">
             Card Issuing
@@ -894,71 +1071,163 @@ export const Home = () => {
       </div>
 
       {/* CROSS-BORDER PAYMENT */}
+
       <div
         id="crossborder"
-        className="mb-[20%] mx-[5%] lg:mx-[8%] flex flex-col gap-[20px] md:flex-row md:justify-between lg:mb-[10%]"
+        className="mt-[20%] md:mt-[5%] mb-[20%] md:mb-0 mx-[5%] lg:mx-[8%] flex flex-col gap-[20px] md:flex-row md:justify-between lg:mb-[5%]"
       >
-        <div>
-          <div className="text-[20px] font-semibold text-[#04177f] text-center md:text-[17px] md:font-semibold md:text-left lg:text-[30px] ">
+        <img
+          className="lg:w-[600px] lg:h-[500px] hidden md:block"
+          src={CrossBorder2}
+          alt="/"
+        />
+        <div className="md:flex md:flex-col md:justify-center">
+          <div className="text-[20px] font-semibold text-[#04177f] text-center w-[250px] mx-auto leading-[30px] md:w-[100%] lg:text-[30px] md:text-left">
             Cross-border Payment
           </div>
           <br></br>
-          <div className="text-[12px] text-justify md:w-[205px] md:text-[10px] lg:text-[18px] lg:w-[360px]">
+          <div className="text-[12px] text-justify md:w-[280px] md:text-[10px] lg:text-[18px] lg:w-[480px]">
             Our cross-border payment services make it simple and practical to
             send money to family and friends, receive money both locally and
             internationally.
           </div>
         </div>
+
         <img
-          className="w-[248px] h-[162px] mx-auto md:mx-0 lg:w-[433px] lg:h-[284px]"
-          src="./Images/newCurrency.png"
+          className="w-full h-full mt-[10%] md:hidden"
+          src={CrossBorder}
           alt="/"
         />
       </div>
 
       {/* CURRENCY CONVERSION */}
+
+
       <div
         id="currencyconvert"
-        className="mb-[20%] mx-[5%] lg:mx-[8%] flex flex-col gap-[20px] md:flex-row md:justify-between lg:mb-[10%]"
+        className="mb-[20%] md:mb-[10%] md:mt-[5%] mx-[5%] lg:mx-[8%] flex flex-col gap-[20px] md:flex-row md:justify-between lg:mb-[10%]"
       >
-        <div>
-          <div className="text-[20px] font-semibold text-[#04177f] text-center lg:text-[30px] lg:text-left">
+        <div className="md:flex md:flex-col md:justify-center">
+          <div className="text-[20px] font-semibold text-[#04177f] text-center w-full mx-auto leading-[30px] md:w-[100%] lg:text-[30px] md:text-left">
             Currency Conversion
           </div>
           <br></br>
-          <div className="text-[12px] text-justify md:w-[205px] md:text-[10px] lg:text-[18px] lg:w-[360px]">
+          <div className="text-[12px] text-justify md:w-[280px] md:text-[10px] lg:text-[18px] lg:w-[480px]">
             With our currency conversion service, You can get the most
             convenient exchange rates and convert any currency in a matter of
             seconds with no hidden fees.
           </div>
         </div>
         <img
-          className="w-[268px] h-[190px] mx-auto md:mx-0 lg:w-[470px] lg:h-[333px]"
-          src="./Images/newCurrency2.png"
+          className="w-full h-full mt-[10%] mx-auto md:hidden"
+          src={CurrencyConversion}
+          alt="/"
+        />
+
+        <img
+          className="lg:w-[600px] lg:h-[500px] hidden md:block"
+          src={CurrencyConversion2}
           alt="/"
         />
       </div>
 
       {/* MULTI-CURRENCY WALLETS */}
+
+
       <div
         id="multicurrency"
-        className="mb-[20%] mx-[5%] lg:mx-[8%] flex flex-col gap-[20px] md:flex-row md:justify-between"
+        className="mb-[20%] md:mb-[10%] mx-[5%] lg:mx-[8%] flex flex-col gap-[20px] md:flex-row md:justify-between"
       >
-        <div>
-          <div className="text-[20px] font-semibold text-[#04177f] text-center w-[200px] mx-auto leading-[30px] md:w-[100%] lg:text-[30px] lg:text-left">
+        <div className="hidden md:block">
+          <img
+            className="md:w-[250px] lg:w-[600px] lg:h-[500px] hidden md:block"
+            src={MultiCurrency2}
+            alt="/"
+          />
+        </div>
+        <div className="md:flex md:flex-col md:justify-center">
+          <div className="text-[20px] font-semibold text-[#04177f] text-center w-[200px] mx-auto leading-[30px] md:w-[100%] lg:text-[30px] md:text-left">
             Multi-Currency Wallets
           </div>
           <br></br>
-          <div className="text-[12px] text-justify md:w-[205px] md:text-[10px] lg:text-[18px] lg:w-[360px]">
+          <div className="text-[12px] text-justify md:w-[280px] md:text-[10px] lg:text-[18px] lg:w-[480px]">
             Our Multi-Currency Wallets services are the best way to manage all
             your currencies, keep a track and conveniently store, send, and
             receive digital assets in one location.
           </div>
         </div>
-        <div className="px-[10%]">
+        <div className="md:hidden">
           <img
-            className="w-[157px] h-[169px] mx-auto md:mx-0 lg:w-[275px] lg:h-[295px]"
-            src="./Images/currency3.png"
+            className="w-full h-full mt-[10%] mx-auto"
+            src={MultiCurrency}
+            alt="/"
+          />
+        </div>
+      </div>
+
+      {/* BLOCKCHAIN SIM CARD */}
+
+
+      <div
+        id="multicurrency"
+        className="mb-[20%] md:mb-[10%] mx-[5%] lg:mx-[8%] flex flex-col gap-[20px] md:flex-row md:justify-between"
+      >
+        <div className="md:flex md:flex-col md:justify-center">
+          <div className="text-[20px] font-semibold text-[#04177f] text-center w-[200px] mx-auto leading-[30px] md:w-[100%] lg:text-[30px] md:text-left">
+            Blockchain Sim Card
+          </div>
+          <br></br>
+          <div className="text-[12px] text-justify md:w-[280px] md:text-[10px] lg:text-[18px] lg:w-[480px]">
+            The new type of SIM card that uses blockchain technology to provide
+            several benefits over traditional SIM cards, including improved
+            security, privacy, and fraud prevention.
+          </div>
+        </div>
+        <div className="px-[20%] md:hidden">
+          <img
+            className="w-full h-full mt-[10%] mx-auto"
+            src={BlockChain}
+            alt="/"
+          />
+        </div>
+        <div className="px-[10%] md:px-0 hidden md:block">
+          <img
+            className="w-[248px] h-[162px] md:w-[200%] md:h-[200px] mx-auto md:mx-0 lg:w-[100%] lg:h-[300px] xl:h-[400px]"
+            src={BlockChain}
+            alt="/"
+          />
+        </div>
+      </div>
+
+      {/* VIRTUAL E-SIM */}
+
+
+      <div
+        id="multicurrency"
+        className="mb-[20%] md:mb-[10%] mx-[5%] lg:mx-[8%] flex flex-col gap-[20px] md:flex-row md:justify-between"
+      >
+        <div className="px-[10%] md:px-0 hidden md:block">
+          <img
+            className="w-[248px] h-[162px] md:w-[200%] md:h-[200px] mx-auto md:mx-0 lg:w-[100%] lg:h-[300px] xl:h-[400px]"
+            src={VirtualSim}
+            alt="/"
+          />
+        </div>
+        <div className="md:flex md:flex-col md:justify-center">
+          <div className="text-[20px] font-semibold text-[#04177f] text-center w-[200px] mx-auto leading-[30px] md:w-[100%] lg:text-[30px] md:text-left">
+            Virtual E-Sim
+          </div>
+          <br></br>
+          <div className="text-[12px] text-justify md:w-[280px] md:text-[10px] lg:text-[18px] lg:w-[480px]">
+            An eSIM is an industry-standard digital SIM that allows you to
+            activate a cellular plan from your carrier without having to use a
+            physical SIM.
+          </div>
+        </div>
+        <div className="px-[20%] md:hidden">
+          <img
+            className="w-full h-full mt-[10%] mx-auto"
+            src={VirtualSim}
             alt="/"
           />
         </div>
@@ -967,7 +1236,7 @@ export const Home = () => {
       {/* BECOME AN AGENT */}
       <div
         id="becomeAgent"
-        className=" mx-[5%] mb-[25%] mt-[15%] md:mb-[10%] md:flex md:flex-row md:justify-center md:items-center md:gap-[15%] md:mx-[8%] lg:gap-[10%]"
+        className=" mx-[5%] mb-[25%] mt-[5%] md:mb-[10%] md:flex md:flex-row md:justify-center md:items-center md:gap-[15%] md:mx-[8%] lg:gap-[10%]"
       >
         <div className="flex flex-col gap-[30px] md:gap-[15px] lg:gap-[40px] ">
           <div className="text-[20px] text-[#04177F] text-center font-medium md:text-[18px] md:text-left lg:text-[30px] lg:font-extrabold ">
@@ -1082,7 +1351,7 @@ export const Home = () => {
         </div>
         <img
           className="md:w-[40%] md:h-[40%] lg:w-[30%] lg:h-[30%]"
-          src="./Images/codegif.png"
+          src={API}
           alt="/"
         />
       </div>
@@ -1104,8 +1373,59 @@ export const Home = () => {
         />
       </div>
 
+      {/* Subscribe to our Newsletter */}
+      <div className="bg-[#04177f] text-[#ffffff] py-[15%] px-[5%] flex flex-col gap-[50px] md:py-[10%] md:flex-col md:justify-center md:items-center mb-[20%]">
+        <div className="text-center">
+          <p className="text-[20px] font-semibold  md:text-[26px]  lg:text-[45px]">
+            Subscribe to our Newsletter
+          </p>
+          <p className="text-[10px] mt-[5%] lg:text-[16px] lg:w-[80%] mx-auto">
+            Get the latest updates, exclusive offers, and expert insights
+            delivered right to your inbox. Subscribe to our newsletter today and
+            never miss out on what's happening in the tech industry!
+          </p>
+        </div>
+
+        <div className="w-full md:w-[60%] lg:w-[40%]">
+          <div className="flex gap-[10px]">
+            <div className="relative w-4/5">
+              <input
+                type="text"
+                placeholder="Enter your email..."
+                value={isSuccess ? "  " : email}
+                onChange={(e) => setEmail(e.target.value)}
+                className={`${
+                  error ? "bg-[#F9BBBB]" : "bg-[#D6DCFF]"
+                } h-[45px] w-full pl-[10px] outline-none text-black`}
+              />
+              {isSuccess && (
+                <div className="absolute inset-y-0 left-0 pl-2 flex items-center justify-between w-full">
+                  <p className="text-sm text-[#696969]">Successful</p>
+                  <img
+                    src={Successful}
+                    alt="Success"
+                    className="ml-1 h-[40px] w-[40px]"
+                  />
+                </div>
+              )}
+            </div>
+            <img
+              src={NewsLetter}
+              alt=""
+              className="h-[55px] w-1/5 mt-[-5px] cursor-pointer"
+              onClick={validateEmail}
+            />
+          </div>
+          {error && (
+            <div className="text-[9px] pl-[20px]" style={{ color: "#F93232" }}>
+              {error}
+            </div>
+          )}
+        </div>
+      </div>
+
       {/* FREQUENTLY ASKED QUESTIONS */}
-      <div className="mx-[5%] mb-[25%] md:mb-[15%] lg:mx-[8%]">
+      <div className="mx-[5%] mb-[25%] md:mb-[15%] lg:mx-[8%] ">
         <div className="text-[#04177f] text-[20px] font-bold text-center md:text-[20px] lg:text-[30px]">
           Frequently Asked Questions
         </div>

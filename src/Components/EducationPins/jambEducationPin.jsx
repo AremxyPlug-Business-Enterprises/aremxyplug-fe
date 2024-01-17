@@ -101,8 +101,6 @@ const {
 } = useContext(ContextProvider);
 
 const jambProceed = () => {
-  
-
   const { error } = schema.validate({
     jambEducationPinPhone,
     jambEducationPinEmail
@@ -122,13 +120,13 @@ const jambProceed = () => {
 };
 
 const schema = Joi.object({
-  educationPinPhone: Joi.string()
+  jambEducationPinPhone: Joi.string()
     .pattern(new RegExp(/^\d{11,}/))
     .required()
     .messages({
       "string.pattern.base": "Phone number should be 11 digits ",
     }),
-    educationPinEmail: Joi.string()
+    jambEducationPinEmail: Joi.string()
     .pattern(new RegExp(/^[^\s@]+@[^\s@]+\.[^\s@]+$/))
     .required()
     .messages({ "string.pattern.base": "Invalid email " })
@@ -482,7 +480,7 @@ const jambReceipt = () => {
       {jambEducationProceed && (
             <Modal>
               <div
-                className={`scroll-bar mx-[5%] ${
+                className={`deleteRecipientSuccess mx-[5%] ${
                   isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
                 } ${
                   toggleSideBar
@@ -971,7 +969,7 @@ const jambReceipt = () => {
             />
           )}
                  
-                 <div className="py-[30px] lg:py-[60px] mt-10 lg:mb-[200px] mb-[50px] md:mb-[100px]">
+                 <div className="py-[30px] lg:py-[60px] mt-10 lg:mb-[80px] mb-[50px] md:mb-[100px]">
             <button
               className={`font-extrabold h-[43px] w-[100%] py-[3.534px] px-[5.301px] 
              md:mb-[0px] rounded-[4.241px] md:h-auto
@@ -988,7 +986,7 @@ const jambReceipt = () => {
                   : "bg-primary"
               }`}
               onClick={(e)=>{
-                jambProceed();
+                jambProceed(e);
                 e.preventDefault();
               }}
               disabled={
