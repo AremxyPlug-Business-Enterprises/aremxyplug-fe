@@ -53,20 +53,20 @@ import { InternationalReceipt } from "./Components/Dashboard/DashboardComponents
 import FiatConversion from "./Components/CurrencyConversion/FiatConversion";
 import DataTopUpPage from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataTopUpPage";
 import CurrencyConversion from "./Components/CurrencyConversion/currencyConversion";
-import PointRedeem from "./Components/Dashboard/DashboardComponents/PointRedeem/PointRedeem"
-import Referral from "./Components/Referrals/Referral"
-import AirtimeVtuReceipt from "./Components/AirTimePage/AirtimeVtuReceipt"
+import PointRedeem from "./Components/Dashboard/DashboardComponents/PointRedeem/PointRedeem";
+import Referral from "./Components/Referrals/Referral";
+import AirtimeVtuReceipt from "./Components/AirTimePage/AirtimeVtuReceipt";
 import DataBundlesPage from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundlesPage";
 import MtnDataTopUpBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/MtnDataTopUpBundle/MtnDataTopUpBundle";
 import WithdrawToOtherBanks from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToOtherBanks";
 import WalletSummaryPage from "./Components/WalletSummaryPage/WalletSummary";
 import SalesSummaryPage from "./Components/SalesSummaryPage/SalesSummary";
-import NotificationsPage from "./Components/NotificationsPage/Notifications";
-import { WalletSuccessfulReceipt} from "./Components/WalletSummaryPage/WalletSuccessfulReceipt";
-import {WalletFailedReceipt} from "./Components/WalletSummaryPage/WalletFailedReceipt";
-import {WalletPendingReceipt} from "./Components/WalletSummaryPage/WalletPendingReceipt";
-import {WalletCancelledReceipt} from "./Components/WalletSummaryPage/WalletCancelledReceipt";
-import {WalletRefundedReceipt} from "./Components/WalletSummaryPage/WalletRefundedReceipt";
+// import NotificationsPage from "./Components/NotificationsPage/Notifications";
+import { WalletSuccessfulReceipt } from "./Components/WalletSummaryPage/WalletSuccessfulReceipt";
+import { WalletFailedReceipt } from "./Components/WalletSummaryPage/WalletFailedReceipt";
+import { WalletPendingReceipt } from "./Components/WalletSummaryPage/WalletPendingReceipt";
+import { WalletCancelledReceipt } from "./Components/WalletSummaryPage/WalletCancelledReceipt";
+import { WalletRefundedReceipt } from "./Components/WalletSummaryPage/WalletRefundedReceipt";
 import { WithdrawToOtherBankReceipt } from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToOtherBanksPopUp/WithdrawToOtherBankReceipt";
 import AirtelDataBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/AirtelDataBundle/AirtelDataBundle";
 import GloDataBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/GloDataBundle/GloDataBundle";
@@ -79,12 +79,12 @@ import EducationMain from "./Components/EducationPins/educationMain";
 import WaecEducationPin from "./Components/EducationPins/waecEducationPin";
 import NecoEducationPins from "./Components/EducationPins/NecoEducationPins";
 import JambEducationPin from "./Components/EducationPins/jambEducationPin";
-import NabtebEducationPins from './Components/EducationPins/nabtebEducationPins';
+import NabtebEducationPins from "./Components/EducationPins/nabtebEducationPins";
 import WaecReceipt from "./Components/EducationPins/ReceiptEducationPins/waecReceipt";
 import JambReceipt from "./Components/EducationPins/ReceiptEducationPins/jambReceipt";
 import NecoReceipt from "./Components/EducationPins/ReceiptEducationPins/necoReceipt";
 import NabtebReceipt from "./Components/EducationPins/ReceiptEducationPins/nabtebReceipt";
-import {SuccessfulReceipt} from "./Components/CurrencyConversion/ConversionReceipts/SuccessConversionReceipt";
+import { SuccessfulReceipt } from "./Components/CurrencyConversion/ConversionReceipts/SuccessConversionReceipt";
 import { TvSubscription } from "./Components/TvSubscription/TvSubscriptionPage";
 import GoTv from "./Components/TvSubscription/TvOne";
 import DsTv from "./Components/TvSubscription/TvTwo";
@@ -93,10 +93,10 @@ import SmileDataBundle from "./Components/Dashboard/DashboardComponents/DataTopU
 import { SmileReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/SmileDataBundle/SmileReceipt";
 import SpectranetDataBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/SpectranetDataBundle/SpectranetDataBundle";
 import { SpectranetReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/SpectranetDataBundle/SpectranetReceipt";
-import AddRecipient from "./Components/AirTimePage/AddRecipient"
-import SelectRecipient from "./Components/AirTimePage/SelectRecipient"
-import DataBundleSelectRecipient from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundleSelectRecipient"
-import DataBundleAddRecipient from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundleAddRecipient"
+import AddRecipient from "./Components/AirTimePage/AddRecipient";
+import SelectRecipient from "./Components/AirTimePage/SelectRecipient";
+import DataBundleSelectRecipient from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundleSelectRecipient";
+import DataBundleAddRecipient from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundleAddRecipient";
 import ElectricitySubscription from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/ElectricitySubscription";
 import IKEDC from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/IKEDC";
 import { IkedcReceipt } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/IkedcReceipt";
@@ -157,6 +157,7 @@ import AremxyAddUser from "./Components/Dashboard/DashboardComponents/TransferCo
 import AremxySelectUser from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/AremxySelectUser";
 import { AirtimeReceipt } from "./Components/Dashboard/DashboardComponents/AirtimeConversion/AirtimeReceipt";
 import EditSelectRecipient from "./Components/Add&SelectRecipient/GlobalSelectRecipient/EditSelectRecipient";
+import NotificationsPage2 from "./Components/NotificationsPage/Notifications2";
 export const Router = () => {
   return (
     <div>
@@ -208,29 +209,47 @@ export const Router = () => {
         <Route path="/airtime-topup" element={<AirTime />} />
         <Route path="/airtime-vtu" element={<AirtimeVtu />} />
         <Route path="/airtime-vtu-receipt" element={<AirtimeVtuReceipt />} />
-        <Route path="/add-vtu-recipient" element={<AddRecipient />} /> 
+        <Route path="/add-vtu-recipient" element={<AddRecipient />} />
         <Route path="/select-vtu-recipient" element={<SelectRecipient />} />
         <Route path="/add-account" element={<AddAccount />} />
         <Route path="/ngn-virtual-account" element={<NgnVirtualAccount />} />
         <Route path="/cookie-settings" element={<CookiesSettings />} />
         <Route path="/Receipt" element={<Receipt />} />
         <Route path="/withdraw" element={<WithdrawPage />} />
-        <Route path="/wallet-summary" element={<WalletSummaryPage/>} />
+        <Route path="/wallet-summary" element={<WalletSummaryPage />} />
         <Route path="/sales-summary" element={<SalesSummaryPage />} />
-        <Route path="/notifications" element={<NotificationsPage />} />
+        {/* <Route path="/notifications" element={<NotificationsPage />} /> */}
+        <Route path="/notifications" element={<NotificationsPage2 />} />
         <Route path="/launch-page" element={<LaunchPage />} />
         <Route path="/launch-page2" element={<LaunchPage2 />} />
         <Route path="/launch-page3" element={<LaunchPage3 />} />
-        <Route path="/wallet-successful-receipt" element={<WalletSuccessfulReceipt />} />
-        <Route path="/wallet-failed-receipt" element={<WalletFailedReceipt />} />
-        <Route path="/wallet-pending-receipt" element={<WalletPendingReceipt />} />
-        <Route path="/wallet-cancelled-receipt" element={<WalletCancelledReceipt />} />
-        <Route path="/wallet-refunded-receipt" element={<WalletRefundedReceipt />} />
+        <Route
+          path="/wallet-successful-receipt"
+          element={<WalletSuccessfulReceipt />}
+        />
+
+        s,d,v;,d;dv,;
+        <Route
+          path="/wallet-failed-receipt"
+          element={<WalletFailedReceipt />}
+        />
+        <Route
+          path="/wallet-pending-receipt"
+          element={<WalletPendingReceipt />}
+        />
+        <Route
+          path="/wallet-cancelled-receipt"
+          element={<WalletCancelledReceipt />}
+        />
+        <Route
+          path="/wallet-refunded-receipt"
+          element={<WalletRefundedReceipt />}
+        />
         <Route
           path="/withdraw-to-account"
           element={<WithdrawToMyAccountPage />}
         />
-        
+
         <Route
           path="/withdraw-to-personalaccount"
           element={<WithdrawToPersonalAccountPage />}
@@ -254,31 +273,34 @@ export const Router = () => {
           path="/international-bank-receipt"
           element={<InternationalReceipt />}
         />
-       <Route path="/redeem-receipt"element={<RedeemReceipt />} />
-       <Route path="/ikedec-receipt" element={<IkedcReceipt />} />
-       <Route path="/aedc-receipt" element={<AedcReceipt />} />
-       <Route path="/ekedc-receipt" element={<EkedcReceipt />} />
-       <Route path="/eedc-receipt" element={<EedcReceipt />} />
-       <Route path="/kaedco-receipt" element={<KaedcoReceipt />} />
-       <Route path="/bedc-receipt" element={<BedcReceipt/>} />
-       <Route path="/ibedc-receipt" element={<IbedcReceipt/>} />
-       <Route path="/jed-receipt" element={<JedReceipt/>} />
-       <Route path="/kedco-receipt" element={<KedcoReceipt/>} />
-       <Route path="/phed-receipt" element={<PhedReceipt/>} />
-       <Route path="/bedc" element={<BEDC />} />
-       <Route path="/phed" element={<PHED />} />
-       <Route path="/kedco" element={<KEDCO/>} /> 
-       <Route path="/jed" element={<JED />} />
-       <Route path="/ibedc" element={<IBEDC />} />
-       <Route path="/eedc" element={<EEDC />} />
-       <Route path="/kaedco" element={<KAEDCO />} />
+        <Route path="/redeem-receipt" element={<RedeemReceipt />} />
+        <Route path="/ikedec-receipt" element={<IkedcReceipt />} />
+        <Route path="/aedc-receipt" element={<AedcReceipt />} />
+        <Route path="/ekedc-receipt" element={<EkedcReceipt />} />
+        <Route path="/eedc-receipt" element={<EedcReceipt />} />
+        <Route path="/kaedco-receipt" element={<KaedcoReceipt />} />
+        <Route path="/bedc-receipt" element={<BedcReceipt />} />
+        <Route path="/ibedc-receipt" element={<IbedcReceipt />} />
+        <Route path="/jed-receipt" element={<JedReceipt />} />
+        <Route path="/kedco-receipt" element={<KedcoReceipt />} />
+        <Route path="/phed-receipt" element={<PhedReceipt />} />
+        <Route path="/bedc" element={<BEDC />} />
+        <Route path="/phed" element={<PHED />} />
+        <Route path="/kedco" element={<KEDCO />} />
+        <Route path="/jed" element={<JED />} />
+        <Route path="/ibedc" element={<IBEDC />} />
+        <Route path="/eedc" element={<EEDC />} />
+        <Route path="/kaedco" element={<KAEDCO />} />
         <Route path="/ikedc" element={<IKEDC />} />
         <Route path="/aedc" element={<AEDC />} />
         <Route path="/ekedc" element={<EKEDC />} />
         <Route path="/airtime-conversion" element={<AirtimeConversion />} />
         <Route path="/airtime-receipt" element={<AirtimeReceipt />} />
         <Route path="/contact-team" element={<ContactTeam />} />
-        <Route path="/electricity-subscription" element={<ElectricitySubscription/>} />
+        <Route
+          path="/electricity-subscription"
+          element={<ElectricitySubscription />}
+        />
         <Route path="/global-transfer" element={<GlobalTransfer />} />
         <Route path="/point-redeem" element={<PointRedeem />} />
         <Route path="/fiat" element={<FiatConversion />} />
@@ -287,65 +309,86 @@ export const Router = () => {
         <Route path="/data-bundles" element={<DataBundlesPage />} />
         <Route path="/My-Referral" element={<Referral />} />
         <Route path="/MtnDataTopUpBundle" element={<MtnDataTopUpBundle />} />
-        <Route path="/SuccessfulConversion" element={<SuccessfulReceipt/>}/>
-        <Route path="/MtnReceipt" element={<MtnReceipt/>} />
-        <Route path="/AirtelDataBundle" element={<AirtelDataBundle/>} />
-        <Route path="/GloDataBundle" element={<GloDataBundle/>} />
-        <Route path="/EtisalatDataBundle" element={<EtisalatDataBundle/>} />
-        <Route path="/AirtelReceipt" element={<AirtelReceipt/>} />
-        <Route path="/EtisalatReceipt" element={<EtisalatReceipt/>} />
-        <Route path="/GloReceipt" element={<GloReceipt/>} />
-        <Route path="/DataBundleSelectRecipient" element={<DataBundleSelectRecipient/>} />
-        <Route path="/DataBundleAddRecipient" element={<DataBundleAddRecipient/>} />
-        <Route path="/TvSubscription" element={<TvSubscription/>} />
-        <Route path="/GoTv" element={<GoTv/>} />
-        <Route path="/EducationPins" element={<EducationMain/>}/>
-        <Route path="/WaecEducationPin" element={<WaecEducationPin/>}/>
-        <Route path="/NecoEducationPin" element={<NecoEducationPins/>}/>
-        <Route path="/NabtebEducationPin" element={<NabtebEducationPins/>}/>
-        <Route path="/JambEducationPin" element={<JambEducationPin/>}/>
-        <Route path="/WaecReceipt" element={<WaecReceipt/>}/>
-        <Route path="/JambReceipt" element={<JambReceipt/>}/>
-        <Route path="/NecoReceipt" element={<NecoReceipt/>}/>
-        <Route path="/NabtebReceipt" element={<NabtebReceipt/>}/>
-        <Route path="/TvSubscription" element={<TvSubscription/>}/>
-        <Route path="/GoTv" element={<GoTv/>}/>
-        <Route path="/DsTv" element={<DsTv/>}/>
-        <Route path="/StarTimes" element={<StarTimes/>}/>
+        <Route path="/SuccessfulConversion" element={<SuccessfulReceipt />} />
+        <Route path="/MtnReceipt" element={<MtnReceipt />} />
+        <Route path="/AirtelDataBundle" element={<AirtelDataBundle />} />
+        <Route path="/GloDataBundle" element={<GloDataBundle />} />
+        <Route path="/EtisalatDataBundle" element={<EtisalatDataBundle />} />
+        <Route path="/AirtelReceipt" element={<AirtelReceipt />} />
+        <Route path="/EtisalatReceipt" element={<EtisalatReceipt />} />
+        <Route path="/GloReceipt" element={<GloReceipt />} />
+        <Route
+          path="/DataBundleSelectRecipient"
+          element={<DataBundleSelectRecipient />}
+        />
+        <Route
+          path="/DataBundleAddRecipient"
+          element={<DataBundleAddRecipient />}
+        />
+        <Route path="/TvSubscription" element={<TvSubscription />} />
+        <Route path="/GoTv" element={<GoTv />} />
+        <Route path="/EducationPins" element={<EducationMain />} />
+        <Route path="/WaecEducationPin" element={<WaecEducationPin />} />
+        <Route path="/NecoEducationPin" element={<NecoEducationPins />} />
+        <Route path="/NabtebEducationPin" element={<NabtebEducationPins />} />
+        <Route path="/JambEducationPin" element={<JambEducationPin />} />
+        <Route path="/WaecReceipt" element={<WaecReceipt />} />
+        <Route path="/JambReceipt" element={<JambReceipt />} />
+        <Route path="/NecoReceipt" element={<NecoReceipt />} />
+        <Route path="/NabtebReceipt" element={<NabtebReceipt />} />
+        <Route path="/TvSubscription" element={<TvSubscription />} />
+        <Route path="/GoTv" element={<GoTv />} />
+        <Route path="/DsTv" element={<DsTv />} />
+        <Route path="/StarTimes" element={<StarTimes />} />
         <Route path="/Showmax" element={<Showmax />} />
         <Route path="/GotvReceipt" element={<GotvReceipt />} />
         <Route path="/DstvReceipt" element={<DstvReceipt />} />
         <Route path="/StarTimesReceipt" element={<StarTimesReceipt />} />
-        <Route path="/ShowmaxReceipt" element={<ShowmaxReceipt/>} />
-        <Route path="/SuccessfulConversion" element={<SuccessfulReceipt/>}/>
-        <Route path="/SmileDataBundle" element={<SmileDataBundle/>} />
-        <Route path="/Smilereceipt" element={<SmileReceipt/>} />
-        <Route path="/SpectranetDataBundle" element={<SpectranetDataBundle/>} />
-        <Route path="/SpectranetReceipt" element={<SpectranetReceipt/>} />
-        <Route path="/DataBundleSelectRecipient" element={<DataBundleSelectRecipient/>} />
-        <Route path="/DataBundleAddRecipient" element={<DataBundleAddRecipient/>} />
-        <Route path="/ProfileSettingMain"element={<ProfileSettingsMain/>} />  
-        <Route path="/EditProfile" element= {<EditProfile/>} />
-        <Route path="/TransactionPage" element={<TransactionPage/>} />
-        <Route path="/SuccessfullReceipt" element={<SuccessfullReceipt/>} />
-        <Route path="/FailedReceipt" element={<FailedReceipt/>} />
-        <Route path="/PendingReceipt" element={<PendingReceipt/>} />
-        <Route path="/RefundedReceipt" element={<RefundedReceipt/>} />
-        <Route path="/CancelledReceipt" element={<CancelledReceipt/>} />
-        <Route path="/LaunchPage" element={<LaunchPage/>} />
-        <Route path="/ChangeEmail" element={<ChangeEmail/>} />
-        <Route path="/ChangePhoneNumber" element={<ChangePhoneNumber/>} />
-        <Route path="/ChangePin" element={<ChangePin/>} />
-        <Route path="/AccountUpgrade" element={<AccountUpgrade/>} />
-        <Route path="/payment-page" element={<PaymentPage/>}/>
-        <Route path="/CardPayment" element={<CardPayment/>} />
-        <Route path="/AddNewCardPayment" element={<AddNewCardPayment/>} />
-        <Route path="/ExistingCardPage" element={<ExistingCardPage/>} />
-        <Route path="/FundWithCard" element={<FundWithCard/>} />
-        <Route path="/CardPaymentReceipt" element={<CardPaymentReceipt/>}/>
-     <Route path="/GlobalTransferSelectRecipient" element={<GlobalTransferSelectRecipient/>}/>
-     <Route path="/GlobalTransferAddRecipient" element={<GlobalTransferAddRecipient/>}/>
-     <Route path="/EditSelectRecipient" element = {<EditSelectRecipient/>}/>
+        <Route path="/ShowmaxReceipt" element={<ShowmaxReceipt />} />
+        <Route path="/SuccessfulConversion" element={<SuccessfulReceipt />} />
+        <Route path="/SmileDataBundle" element={<SmileDataBundle />} />
+        <Route path="/Smilereceipt" element={<SmileReceipt />} />
+        <Route
+          path="/SpectranetDataBundle"
+          element={<SpectranetDataBundle />}
+        />
+        <Route path="/SpectranetReceipt" element={<SpectranetReceipt />} />
+        <Route
+          path="/DataBundleSelectRecipient"
+          element={<DataBundleSelectRecipient />}
+        />
+        <Route
+          path="/DataBundleAddRecipient"
+          element={<DataBundleAddRecipient />}
+        />
+        <Route path="/ProfileSettingMain" element={<ProfileSettingsMain />} />
+        <Route path="/EditProfile" element={<EditProfile />} />
+        <Route path="/TransactionPage" element={<TransactionPage />} />
+        <Route path="/SuccessfullReceipt" element={<SuccessfullReceipt />} />
+        <Route path="/FailedReceipt" element={<FailedReceipt />} />
+        <Route path="/PendingReceipt" element={<PendingReceipt />} />
+        <Route path="/RefundedReceipt" element={<RefundedReceipt />} />
+        <Route path="/CancelledReceipt" element={<CancelledReceipt />} />
+        <Route path="/LaunchPage" element={<LaunchPage />} />
+        <Route path="/ChangeEmail" element={<ChangeEmail />} />
+        <Route path="/ChangePhoneNumber" element={<ChangePhoneNumber />} />
+        <Route path="/ChangePin" element={<ChangePin />} />
+        <Route path="/AccountUpgrade" element={<AccountUpgrade />} />
+        <Route path="/payment-page" element={<PaymentPage />} />
+        <Route path="/CardPayment" element={<CardPayment />} />
+        <Route path="/AddNewCardPayment" element={<AddNewCardPayment />} />
+        <Route path="/ExistingCardPage" element={<ExistingCardPage />} />
+        <Route path="/FundWithCard" element={<FundWithCard />} />
+        <Route path="/CardPaymentReceipt" element={<CardPaymentReceipt />} />
+        <Route
+          path="/GlobalTransferSelectRecipient"
+          element={<GlobalTransferSelectRecipient />}
+        />
+        <Route
+          path="/GlobalTransferAddRecipient"
+          element={<GlobalTransferAddRecipient />}
+        />
+        <Route path="/EditSelectRecipient" element={<EditSelectRecipient />} />
       </Routes>
     </div>
   );
