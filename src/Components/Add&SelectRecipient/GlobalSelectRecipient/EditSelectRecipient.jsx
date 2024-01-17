@@ -348,8 +348,7 @@ md:w-[150px] text-white text-center rounded-[4.41px]
         </div>
         </div>
         <div className=" flex gap-[8.729px]  md:gap-[14.896px]
-       justify-center px-[8.594px]   lg:pt-[20px] lg:pb-[8px]
-       md:pt-[0px] md:pb-[20px] pt-[40%] pb-[30%]">
+       justify-center px-[8.594px]  lg:pt-[20px] lg:pb-[20px] md:pt-[0px]  md:pb-[40px] pt-[40%] pb-[30%]">
               <p className="font-[500] text-[10px] text-black 
               leading-[10.4px] lg:text-[16px] lg:leading-[15.6px]  md:text-[6.875px]
             ] md:leading-[12.938px] self-center">
