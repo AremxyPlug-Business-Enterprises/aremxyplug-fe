@@ -14,9 +14,9 @@ const {profilePage, setProfilePage} = useContext(ContextProvider);
 const {verificationOpen, setVerificationOpen} = useContext(ContextProvider);
 const {setBusinessPopUp} = useContext(ContextProvider);
 const {authenticationOpen, setAuthenticationOpen} = useContext(ContextProvider);
-const {bvnVerificationOpen} = useContext(ContextProvider);
-const {accountUpgrade} = useContext(ContextProvider);
-
+const {bvnVerificationOpen, setBvnVerificationOpen} = useContext(ContextProvider);
+const {accountUpgrade, setAccountUpgrade} = useContext(ContextProvider);
+const{idVerificationOpen, setIdVerificationOpen} = useContext(ContextProvider)
 return (
     <DashBoardLayout>
         <div className=''>
@@ -30,8 +30,13 @@ return (
             <div 
             onClick={() => {
                setProfilePage(true);
+               setBvnVerificationOpen(false);
+               setIdVerificationOpen(false);
+               setAccountUpgrade(false);
                setVerificationOpen(false);
                setAuthenticationOpen(false);
+              
+              
             }}
             className='flex flex-col md:w-1/4 w-[50%]  lg:gap-[23px] cursor-pointer 
           md:border-none border-b-[1.7px] border-[#D9D9D999] border-opacity-[60%]'>
@@ -50,6 +55,7 @@ return (
                     <div 
                     onClick={() => {
                         setProfilePage(false);
+                        setIdVerificationOpen(true);
                         setVerificationOpen(true);
                         setAuthenticationOpen(false);
                     }}
@@ -82,6 +88,9 @@ return (
                       setAuthenticationOpen(true);
                       setVerificationOpen(false);
                       setProfilePage(false);
+                      setBvnVerificationOpen(false); 
+                      setIdVerificationOpen(false);
+                      setAccountUpgrade(false);
                     }}
                      className='md:w-1/4 w-[50%] flex flex-col md:pt-[0px] pt-[30px] lg:gap-[23px] cursor-pointer
                     md:border-none border-b-[1.7px] border-[#D9D9D999] border-opacity-[60%]'>
@@ -110,6 +119,7 @@ return (
       lg:pt-[20%] lg:pb-[10%] md:pt-[120%] md:pb-[50px]
      md:gap-[14.896px] justify-center px-[8.594px]
      ${profilePage ? 'md:pt-[140%] md:pb-[50px]' : '' }
+     ${idVerificationOpen ? 'md:pt-[120%] md:pb-[50px]' : '' }
      ${bvnVerificationOpen ? 'md:pt-[135%] md:pb-[50px]' : ''}
      ${accountUpgrade ? 'md:pt-[50%] md:pb-[50px]': ''}
      ${authenticationOpen ? 'md:pt-[135%] md:pb-[50px] ' : ''} `}>
