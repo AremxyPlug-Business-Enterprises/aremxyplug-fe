@@ -62,7 +62,7 @@ console.log(bvnDateOfBirth);
       <div className='flex lg:gap-[10px] lg:py-[50px] py-[35px] '> 
      <h2 className='font-[500] text-[#7C7C7C] text-[9.389px] leading-[14px] 
      lg:text-[20px] lg:leading-[30px]'>
-      For Nigerian Use Only
+      For Nigerian User's Only
 </h2>
 <img  className='lg:h-[24px] lg:w-[24px] h-[14.083px] w-[14.083px] md:self-center'
 src={Arrowright} alt="" />
