@@ -77,7 +77,7 @@ src={Arrowright} alt="" />
      className={`h-[24px] w-[24px] md:h-[44px] md:w-[44px] lg:h-[62px] lg:w-[62px]`}/>
      <div className='flex flex-col gap-[4.694px] md:gap-[8px] justify-center'>
         <h2 className='font-[500] lg:text-[12px] lg:leading-[15.6px] text-[8.042px] leading-[10.45px]'>
-          ID Status</h2>
+          Bvn Status</h2>
         <h2 className='font-[500] lg:text-[12px] lg:leading-[15.6px] text-[8.042px] leading-[10.45px]'>
           {bvnStatus}
           </h2>
