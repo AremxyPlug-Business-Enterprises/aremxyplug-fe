@@ -227,8 +227,6 @@ export const Router = () => {
           path="/wallet-successful-receipt"
           element={<WalletSuccessfulReceipt />}
         />
-
-        s,d,v;,d;dv,;
         <Route
           path="/wallet-failed-receipt"
           element={<WalletFailedReceipt />}

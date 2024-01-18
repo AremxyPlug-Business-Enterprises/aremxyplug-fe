@@ -462,7 +462,7 @@ export default function NotificationsPage2() {
                     )}
                   </div>
                   {isOpen === index && (
-                    <div className="w-[55px] h-px bg-[#04177f] rounded-[5.87px] lg:w-[127px] lg:h-[2px] lg:mt-[145px]  md:w-[79px] mt-[59.555px] md:mt-[84.255px] lg:rounded-[10px]" />
+                    <div className="w-[55px] h-px bg-[#04177f] rounded-[5.87px] lg:w-[127px] lg:h-[2px] lg:mt-[145px]  md:w-[79px] mt-[69.555px] md:mt-[92.255px] lg:rounded-[10px]" />
                   )}
                 </div>
               ))}
@@ -559,7 +559,15 @@ export default function NotificationsPage2() {
                                 }`}
                                 key={index}
                               >
-                                <div className="w-full">
+                                <div className="w-full" onClick={() => {
+                                  Notifications[
+                                    isOpen
+                                  ].notifications[
+                                    index
+                                  ].read = true;
+                                  handleClick();
+                                }}
+                                >
                                   <Link to={notification.linkTo}>
                                     <div className="w-7/12 flex flex-wrap gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
                                       <div className="font-semibold text-text-color-fade text-zinc-500 lg:text-base md:text-xs  text-[6.5px] md:text-[10px] lg:text-[10px] ">
@@ -865,7 +873,7 @@ export default function NotificationsPage2() {
                     Successful
                   </p>
                   <p className="text-[10px] text-[#00AA48] md:text-[14px] px-[20px] lg:text-[18px] font-extrabold text-center my-[1%] lg:my-[%]">
-                    All notifications has been deleted successfully.
+                    All notifications have been deleted successfully.
                   </p>
                   <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[5%]">
                     <img
@@ -923,7 +931,7 @@ export default function NotificationsPage2() {
                     Successful
                   </p>
                   <p className="text-[10px] text-[#00AA48] md:text-[14px] px-[20px] lg:text-[18px] font-extrabold text-center my-[1%] lg:my-[%]">
-                    All notifications has been deleted successfully.
+                    This notification has been deleted successfully.
                   </p>
                   <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[5%]">
                     <img
