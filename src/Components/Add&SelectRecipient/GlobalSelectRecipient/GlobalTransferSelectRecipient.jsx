@@ -170,7 +170,7 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
       {selectRecipientCountry}
     </h2>
    </div>
-   <img src={ImageDrop}  alt=""
+   <img src={ImageDrop}  alt="" 
    className='SelectRecipientDrop lg:w-[24px] lg:h-[24px] h-[12px] w-[12px]' />
     </div>
     {selectRecipientActive && (
