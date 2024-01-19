@@ -642,7 +642,7 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
             <div class="w-[60.33px] md:w-[103.70px] lg:w-full text-black text-[8px] md:text-[12px] lg:text-[16px] font-semibold md:leading-3 lg:leading-tight leading-[10.40px]">Total Amount</div>
         </div>
     </div>
-    <div class="w-[312px] lg:h-[101px]  h-[33.67px] md:w-full md:h-[57.86px] "></div>
+    <div class="w-[312px] lg:h-[101px]  h-[33.67px] md:w-full md:h-[0px] "></div>
   </div>
 
 
@@ -694,8 +694,8 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
   >
   
   
-  <div className="flex  justify-start items-center lg:w-full relative bg-white  md:mt-[-655px]
-    lg:mt-[-967px] mt-[-526px] lg:h-[1100px] md:h-[1000px] h-[653px] mb-5 border-b-[1.2px] flex-col">
+  <div className="flex  justify-start items-center lg:w-full relative bg-white  md:mt-[-665px]
+    lg:mt-[-967px] mt-[-492px] lg:h-[1100px] md:h-[1000px] h-[653px] mb-5 border-b-[1.2px] flex-col">
   <div className={`${  
     toggleSideBar
     ? "lg:gap-[360px]"
@@ -862,8 +862,8 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
   <div className=' bg-white'>
 
 
-  <div className="flex  justify-start items-center lg:w-full shadow relative bg-white  md:mt-[-658px]
-    lg:mt-[-967px] mt-[-527px] lg:h-[1590px] md:h-[1390px]  h-[1050px]
+  <div className="flex  justify-start items-center lg:w-full shadow relative bg-white  md:mt-[-670px]
+    lg:mt-[-967px] mt-[-492px] lg:h-[1590px] md:h-[1390px]  h-[1050px]
      border mb-5 border-b-[1.2px] flex-col">
   <div className={`${  
     toggleSideBar
@@ -1221,7 +1221,7 @@ className={`${styles.viewTransact} ${
 
 
 <div className="flex  justify-start items-center lg:h-[1030px] md:h-[800px] h-[580px] mb-5 border-b-[1.2px]
- lg:w-full relative bg-white  md:mt-[-655px]  lg:mt-[-968px] mt-[-524px] flex-col">
+ lg:w-full relative bg-white  md:mt-[-670px]  lg:mt-[-968px] mt-[-492px] flex-col">
 <div className={`${  
   toggleSideBar
   ? "lg:gap-[360px]"
