@@ -138,7 +138,7 @@ const filterFavorite = knownFavorite.filter(item =>
   return (
 
   <DashBoardLayout>
-    <div className='flex flex-col justify-between lg:h-[1100px] md:h-[1450px] h-[950px] '>
+    <div className='flex flex-col justify-between lg:h-[100%] md:h-[115%] h-[120%]'>
     <div className=''>
       
     <RecipientHero/>
