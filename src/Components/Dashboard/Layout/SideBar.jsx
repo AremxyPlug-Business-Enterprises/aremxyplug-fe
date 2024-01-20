@@ -39,7 +39,8 @@ export const SideBar = () => {
     <div
       className={`${styles.sidebar}  fixed overflow-auto ${
         isDarkMode ? "bg-[#000] border" : " bg-[#04177f]"
-      } flex flex-col  justify-between  leading-normal text-white  w-[145px] h-[] rounded-tr-[11.17px] rounded-br-[11.17px] md:w-[178px] md:rounded-tr-[18px] md:rounded-br-[18px] lg:w-[300px] lg:rounded-br-[32px] lg:rounded-tr-[32px] lg:h-[100vh]`}
+      } flex flex-col  justify-between  leading-normal text-white  w-[145px] h-[] rounded-tr-[11.17px] rounded-br-[11.17px] md:w-[178px] md:rounded-tr-[18px] md:rounded-br-[18px] 
+      lg:w-[300px] lg:rounded-br-[32px] lg:rounded-tr-[32px] lg:h-[100vh]`}
     >
       {/* =======Nav Bar========= */}
       <div>

@@ -16,7 +16,7 @@ export const ToOtherBanks = () => {
 
   return (
     <DashBoardLayout>
-      <div className="flex flex-col justify-between gap-[70px] lg:h-full">
+      <div className="flex flex-col justify-between lg:h-[1400px] md:h-[1450px] h-[750px]">
         <div className="">
           <div
             style={{
@@ -85,7 +85,8 @@ export const ToOtherBanks = () => {
           {globalTransfer && <GlobalTransfer />}
           {internationalTransfer && <InternationalTransfer />}
         </div>
-        <div className="flex gap-[15px] justify-center items-center lg:my-10">
+        <div className="flex gap-[15px] justify-center items-center lg:pt-[20px] lg:pb-[50px] md:pt-[0px] 
+         md:pb-[40px] pt-[40%] pb-[30%]">
           <div className="text-[8px] md:text-[12px] lg:text-[16px]">
             You need help ?
           </div>
