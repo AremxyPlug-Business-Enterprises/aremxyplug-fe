@@ -424,7 +424,8 @@ export default function GlobalTransfer() {
         onClick={ProceedToGlobalTransfer}
         className={`${
           amtToTransfer.length < 3 ? "bg-[#0008]" : "bg-[#04177f]"
-        } my-[5%] w-full flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
+        } my-[5%] w-full flex justify-center items-center mx-auto cursor-pointer 
+        text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
       >
         Proceed
       </button>
