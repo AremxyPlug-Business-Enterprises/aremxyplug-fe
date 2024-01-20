@@ -12,10 +12,10 @@ import "react-multi-carousel/lib/styles.css";
 import { Link } from "react-router-dom";
 import CookieBanner from "./Cookie/CookieBanner";
 import groupone from "./Images/groupone.svg";
-import CrossBorder from "./Images/CrossBorder.svg";
-import CurrencyConversion from "./Images/CurrencyConversion.svg";
+// import CrossBorder from "./Images/CrossBorder.svg";
+// import CurrencyConversion from "./Images/CurrencyConversion.svg";
 import CurrencyConversion2 from "./Images/CurrencyConversion2.svg";
-import MultiCurrency from "./Images/MultiCurrency.svg";
+// import MultiCurrency from "./Images/MultiCurrency.svg";
 import BlockChain from "./Images/BlockChain.svg";
 import VirtualSim from "./Images/VirtualSim.svg";
 import API from "./Images/API.gif";
@@ -25,6 +25,10 @@ import NewsLetter from "./Images/NewsLetter.svg";
 import Successful from "./Images/Success.gif";
 import FeedBack from "./Images/Feedback.svg";
 import Quote1 from "./Images/Quote1.svg";
+import CrossBorderMobile from "./Images/crossborder.png"
+import Group from "./Images/group1.png"
+import Currency from "./Images/Currency.png"
+import Multi from "./Images/multi.png"
 
 const feedback = [
   <div className="h-[250px] w-[100%] md:h-[250px] md:w-[60%] md:mx-auto lg:h-[300px] lg:w-[50%]">
@@ -293,8 +297,14 @@ export const Home = () => {
         </div>
 
         <img
-          className="mx-auto mt-[12%] md:w-[40%] md:h-[30%] lg:w-[50%] lg:h-[40%] lg:mt-[20%]"
+          className="mx-auto mt-[12%] md:w-[40%] md:h-[30%] lg:w-[50%] lg:h-[40%] lg:mt-[20%] hidden md:block"
           src={groupone}
+          alt="/"
+        />
+
+<img
+          className="mx-auto mt-[12%] md:w-[40%] md:h-[30%] lg:w-[50%] lg:h-[40%] lg:mt-[20%] md:hidden"
+          src={Group}
           alt="/"
         />
         {/* <img
@@ -681,13 +691,15 @@ export const Home = () => {
               style={{ boxShadow: "0px 0px 11.676px rgba(28, 12, 249, 0.5)" }}
             >
               <div className="font-medium lg:text-[24px]">Airtime Top Up</div>
-              <div className="text-justify text-[12px] lg:text-[16px] lg:tracking-widest">
+              <div className="text-justify text-[12px] lg:text-[16px]">
                 With just a few clicks. Never run out of airtime. Simply top up
                 your phone online from the comfort of your home.
               </div>
+              <Link to="/our-services/telecoms">
               <div className="bg-[#04177f] w-[30%] text-[9px] mt-[10%] text-[#ffffff] p-[3%] text-center rounded-md lg:text-[14px] lg:font-bold lg:w-[50%] lg:p-[4%] lg:rounded-lg">
                 Buy Now
               </div>
+              </Link>
             </div>
 
             <div
@@ -695,13 +707,15 @@ export const Home = () => {
               style={{ boxShadow: "0px 0px 11.676px rgba(28, 12, 249, 0.5)" }}
             >
               <div className="font-medium lg:text-[24px]">Data Bundles</div>
-              <div className="text-justify text-[12px] lg:text-[16px] lg:tracking-widest">
+              <div className="text-justify text-[12px] lg:text-[16px]">
                 Our Data Bundles service has got you covered with flexible plans
                 to suit your needs and stream like never before!
               </div>
+              <Link to="/our-services/telecoms">
               <div className="bg-[#04177f] w-[30%] text-[9px] mt-[10%] text-[#ffffff] p-[3%] text-center rounded-md lg:text-[14px] lg:font-bold lg:w-[50%] lg:p-[4%] lg:rounded-lg">
                 Buy Now
               </div>
+              </Link>
             </div>
 
             <div
@@ -711,13 +725,15 @@ export const Home = () => {
               <div className="font-medium lg:text-[24px] lg:mb-[-5%]">
                 Education Pins
               </div>
-              <div className="mt-[-7%] md:mt-0 text-justify text-[12px] lg:text-[16px] lg:tracking-widest">
+              <div className="mt-[-7%] md:mt-0 text-justify text-[12px] lg:text-[16px]">
                 With our Education Pins service, you can access your exam
                 results in just a few clicks.
               </div>
+              <Link to="/our-services/telecoms">
               <div className="bg-[#04177f] w-[30%] text-[9px] mt-[10%] text-[#ffffff] p-[3%] text-center rounded-md lg:text-[14px] lg:font-bold lg:w-[50%] lg:p-[4%] lg:rounded-lg">
                 Buy Now
               </div>
+              </Link>
             </div>
 
             <div
@@ -727,13 +743,15 @@ export const Home = () => {
               <div className="font-medium lg:text-[24px] lg:mb-[-5%]">
                 TV Subscription
               </div>
-              <div className="text-justify text-[12px] lg:text-[16px] lg:tracking-widest">
+              <div className="text-justify text-[12px] lg:text-[16px]">
                 Enjoy unlimited streaming on multiple channels. Sign up now and
                 never miss your favorite show again!
               </div>
+              <Link to="/our-services/telecoms">
               <div className="bg-[#04177f] w-[30%] text-[9px] mt-[10%] text-[#ffffff] p-[3%] text-center rounded-md lg:text-[14px] lg:font-bold lg:w-[50%] lg:p-[4%] lg:rounded-lg">
                 Buy Now
               </div>
+              </Link>
             </div>
 
             <div
@@ -743,13 +761,15 @@ export const Home = () => {
               <div className="font-medium lg:text-[24px]">
                 Electricity Bills
               </div>
-              <div className="mt-[7%] md:mt-0 text-justify text-[12px] lg:text-[16px] lg:tracking-widest">
+              <div className="mt-[7%] md:mt-0 text-justify text-[12px] lg:text-[16px]">
                 Keep track of your bills and make sure you never miss a payment.
                 Try our bills payment service right away to make life easier.
               </div>
+              <Link to="/our-services/telecoms">
               <div className="bg-[#04177f] w-[30%] text-[9px] mt-[10%] text-[#ffffff] p-[3%] text-center rounded-md lg:text-[14px] lg:font-bold lg:w-[50%] lg:p-[4%] lg:rounded-lg">
                 Buy Now
               </div>
+              </Link>
             </div>
 
             <div
@@ -759,13 +779,15 @@ export const Home = () => {
               <div className="font-medium lg:text-[24px] lg:mb-[-5%]">
                 Airtime Conversion
               </div>
-              <div className="text-justify text-[12px] lg:text-[16px] lg:tracking-widest">
+              <div className="text-justify text-[12px] lg:text-[16px]">
                 You can quickly convert your bulk airtime to get cash to your
                 wallet or bank account in just few minutes.
               </div>
+              <Link to="/our-services/telecoms">
               <div className="bg-[#04177f] w-[30%] text-[9px] mt-[10%] text-[#ffffff] p-[3%] text-center rounded-md lg:text-[14px] lg:font-bold lg:w-[50%] lg:p-[4%] lg:rounded-lg">
                 Buy Now
               </div>
+              </Link>
             </div>
 
             <div
@@ -775,13 +797,15 @@ export const Home = () => {
               <div className="font-medium lg:text-[24px] lg:mb-[-5%]">
                 Bulk SMS
               </div>
-              <div className="mt-[-7%] md:mt-0 text-justify text-[12px] lg:text-[16px] lg:tracking-widest">
+              <div className="mt-[-7%] md:mt-0 text-justify text-[12px] lg:text-[16px]">
                 Try our bulk SMS service now and take your communication to the
                 next level.
               </div>
+              <Link to="/our-services/telecoms">
               <div className="bg-[#04177f] w-[30%] text-[9px] mt-[10%] text-[#ffffff] p-[3%] text-center rounded-md lg:text-[14px] lg:font-bold lg:w-[50%] lg:p-[4%] lg:rounded-lg">
                 Buy Now
               </div>
+              </Link>
             </div>
 
             <div
@@ -791,13 +815,15 @@ export const Home = () => {
               <div className="font-medium lg:text-[24px]">
                 Recharge Card Printing
               </div>
-              <div className="text-justify text-[12px] lg:text-[16px] lg:tracking-widest">
+              <div className="text-justify text-[12px] lg:text-[16px]">
                 Try our RCP service today, print recharge cards with your
                 business name and make a resell without any hassle.
               </div>
+              <Link to="/our-services/telecoms">
               <div className="bg-[#04177f] w-[30%] text-[9px] mt-[10%] text-[#ffffff] p-[3%] text-center rounded-md lg:text-[14px] lg:font-bold lg:w-[50%] lg:p-[4%] lg:rounded-lg">
                 Buy Now
               </div>
+              </Link>
             </div>
           </Carousel>
         )}
@@ -842,7 +868,7 @@ export const Home = () => {
               style={{ boxShadow: "0px 0px 11.676px rgba(28, 12, 249, 0.5)" }}
             >
               <div className="font-medium lg:text-[24px]">Wallet System</div>
-              <div className="text-justify text-[12px] lg:text-[16px] lg:tracking-widest">
+              <div className="text-justify text-[12px] lg:text-[16px]">
                 You can conveniently store, send, and receive money without any
                 hassle by using our user-friendly wallet system.
               </div>
@@ -859,7 +885,7 @@ export const Home = () => {
               <div className="font-medium lg:text-[24px]">
                 Global Virtual Accounts
               </div>
-              <div className="text-justify text-[12px] lg:text-[16px] lg:tracking-widest">
+              <div className="text-justify text-[12px] lg:text-[16px]">
                 Try our global virtual accounts services today and experience
                 hassle-free banking at your fingertips.
               </div>
@@ -874,7 +900,7 @@ export const Home = () => {
               style={{ boxShadow: "0px 0px 11.676px rgba(28, 12, 249, 0.5)" }}
             >
               <div className="font-medium lg:text-[24px]">Card Payment</div>
-              <div className="text-justify text-[12px] lg:text-[16px] lg:tracking-widest">
+              <div className="text-justify text-[12px] lg:text-[16px]">
                 Whether you're shopping online or in-store, our card payment
                 solutions offer fast and hassle-free transactions.
               </div>
@@ -891,7 +917,7 @@ export const Home = () => {
               <div className="font-medium lg:text-[24px] lg:mb-[-5%]">
                 Money Transfer
               </div>
-              <div className="text-justify text-[12px] lg:text-[16px] lg:tracking-widest">
+              <div className="text-justify text-[12px] lg:text-[16px]">
                 With our dependable money transfer services, you can send and
                 receive money without any hassle.
               </div>
@@ -908,7 +934,7 @@ export const Home = () => {
               <div className="font-medium lg:text-[24px] lg:mb-[-5%]">
                 International Payment
               </div>
-              <div className="text-justify text-[12px] lg:text-[16px] lg:tracking-widest">
+              <div className="text-justify text-[12px] lg:text-[16px]">
                 With our international payment structure, you can send and
                 receive money from anywhere in the world.
               </div>
@@ -922,7 +948,7 @@ export const Home = () => {
         )}
       </div>
 
-      <div className="px-[5%] pt-[20%] pb-[25%] md:pb-[20%]  lg:px-[8%] lg:pt-[5%]">
+      <div className="px-[5%] pt-[20%] pb-[25%] lg:pb-[5%] md:pb-[20%]  lg:px-[8%] lg:pt-[5%]">
         <div className="">
           <div className="flex justify-between md:justify-start items-center md:space-x-5 lg:space-x-[75px] text-[#04177f]">
             <div className=" items-center  font-semibold text-[20px] lg:text-[30px]">
@@ -1095,7 +1121,7 @@ export const Home = () => {
 
         <img
           className="w-full h-full mt-[10%] md:hidden"
-          src={CrossBorder}
+          src={CrossBorderMobile}
           alt="/"
         />
       </div>
@@ -1120,7 +1146,7 @@ export const Home = () => {
         </div>
         <img
           className="w-full h-full mt-[10%] mx-auto md:hidden"
-          src={CurrencyConversion}
+          src={Currency}
           alt="/"
         />
 
@@ -1159,7 +1185,7 @@ export const Home = () => {
         <div className="md:hidden">
           <img
             className="w-full h-full mt-[10%] mx-auto"
-            src={MultiCurrency}
+            src={Multi}
             alt="/"
           />
         </div>
@@ -1374,7 +1400,7 @@ export const Home = () => {
       </div>
 
       {/* Subscribe to our Newsletter */}
-      <div className="bg-[#04177f] text-[#ffffff] py-[15%] px-[5%] flex flex-col gap-[50px] md:py-[10%] md:flex-col md:justify-center md:items-center mb-[20%]">
+      <div className="bg-[#04177f] text-[#ffffff] py-[15%] px-[5%] flex flex-col gap-[50px] md:py-[10%] md:flex-col md:justify-center md:items-center mb-[20%] lg:mb-[5%]">
         <div className="text-center">
           <p className="text-[20px] font-semibold  md:text-[26px]  lg:text-[45px]">
             Subscribe to our Newsletter
@@ -1425,7 +1451,7 @@ export const Home = () => {
       </div>
 
       {/* FREQUENTLY ASKED QUESTIONS */}
-      <div className="mx-[5%] mb-[25%] md:mb-[15%] lg:mx-[8%] ">
+      <div className="mx-[5%] mb-[25%] md:mb-[15%] lg:mb-[5%] lg:mx-[8%] ">
         <div className="text-[#04177f] text-[20px] font-bold text-center md:text-[20px] lg:text-[30px]">
           Frequently Asked Questions
         </div>

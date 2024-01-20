@@ -157,6 +157,11 @@ import AremxyAddUser from "./Components/Dashboard/DashboardComponents/TransferCo
 import AremxySelectUser from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/AremxySelectUser";
 import { AirtimeReceipt } from "./Components/Dashboard/DashboardComponents/AirtimeConversion/AirtimeReceipt";
 import EditSelectRecipient from "./Components/Add&SelectRecipient/GlobalSelectRecipient/EditSelectRecipient";
+import ContentMarketing from "./Components/Screens/ContentMarketing/ContentMarketing";
+import SEOMarketing from "./Components/Screens/SEOMarketing/SEOMarketing";
+import EmailMarketing from "./Components/Screens/emailMarketing/EmailMarketing";
+import ProductDesign from "./Components/Screens/productDesign/ProductDesign";
+import GraphicDesign from "./Components/Screens/graphicDesign/GraphicDesign";
 export const Router = () => {
   return (
     <div>
@@ -173,6 +178,11 @@ export const Router = () => {
           path="/social-media-marketing"
           element={<SocialMediaMarketing />}
         />
+        <Route path="/content-marketing" element={<ContentMarketing/>}/>
+        <Route path="/seo-marketing" element={<SEOMarketing/>}/>
+        <Route path="/EmailMarketing" element={<EmailMarketing/>}/>
+        <Route path="/ProductDesign" element={<ProductDesign/>}/>
+        <Route path="/GraphicDesign" element={<GraphicDesign/>}/>
         <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/businessDev" element={<BusinessDev />} />
         <Route path="/DigitalServices" element={<DigitalServices />} />
