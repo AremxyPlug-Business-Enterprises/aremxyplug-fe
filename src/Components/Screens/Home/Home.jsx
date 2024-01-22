@@ -25,10 +25,7 @@ import NewsLetter from "./Images/NewsLetter.svg";
 import Successful from "./Images/Success.gif";
 import FeedBack from "./Images/Feedback.svg";
 import Quote1 from "./Images/Quote1.svg";
-// import CrossBorderMobile from "./Images/crossborder.png"
-// import Group from "./Images/group1.png"
-// import Currency from "./Images/Currency.png"
-// import Multi from "./Images/multi.png"
+
 
 const feedback = [
   <div className="h-[250px] w-[100%] md:h-[250px] md:w-[60%] md:mx-auto lg:h-[300px] lg:w-[50%]">
