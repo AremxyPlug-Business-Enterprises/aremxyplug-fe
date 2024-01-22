@@ -12,10 +12,10 @@ import "react-multi-carousel/lib/styles.css";
 import { Link } from "react-router-dom";
 import CookieBanner from "./Cookie/CookieBanner";
 import groupone from "./Images/groupone.svg";
-// import CrossBorder from "./Images/CrossBorder.svg";
-// import CurrencyConversion from "./Images/CurrencyConversion.svg";
+import CrossBorder from "./Images/CrossBorder.svg";
+import CurrencyConversion from "./Images/CurrencyConversion.svg";
 import CurrencyConversion2 from "./Images/CurrencyConversion2.svg";
-// import MultiCurrency from "./Images/MultiCurrency.svg";
+import MultiCurrency from "./Images/MultiCurrency.svg";
 import BlockChain from "./Images/BlockChain.svg";
 import VirtualSim from "./Images/VirtualSim.svg";
 import API from "./Images/API.gif";
@@ -25,10 +25,10 @@ import NewsLetter from "./Images/NewsLetter.svg";
 import Successful from "./Images/Success.gif";
 import FeedBack from "./Images/Feedback.svg";
 import Quote1 from "./Images/Quote1.svg";
-import CrossBorderMobile from "./Images/crossborder.png"
-import Group from "./Images/group1.png"
-import Currency from "./Images/Currency.png"
-import Multi from "./Images/multi.png"
+// import CrossBorderMobile from "./Images/crossborder.png"
+// import Group from "./Images/group1.png"
+// import Currency from "./Images/Currency.png"
+// import Multi from "./Images/multi.png"
 
 const feedback = [
   <div className="h-[250px] w-[100%] md:h-[250px] md:w-[60%] md:mx-auto lg:h-[300px] lg:w-[50%]">
@@ -297,16 +297,16 @@ export const Home = () => {
         </div>
 
         <img
-          className="mx-auto mt-[12%] md:w-[40%] md:h-[30%] lg:w-[50%] lg:h-[40%] lg:mt-[20%] hidden md:block"
+          className="mx-auto mt-[12%] md:w-[40%] md:h-[30%] lg:w-[50%] lg:h-[40%] lg:mt-[20%]"
           src={groupone}
           alt="/"
         />
 
-<img
+{/* <img
           className="mx-auto mt-[12%] md:w-[40%] md:h-[30%] lg:w-[50%] lg:h-[40%] lg:mt-[20%] md:hidden"
           src={Group}
           alt="/"
-        />
+        /> */}
         {/* <img
           className="mx-auto mt-[12%] md:w-[40%] md:h-[30%] lg:w-[50%] lg:h-[40%]"
           src="./Images/groupOne.png"
@@ -1121,7 +1121,7 @@ export const Home = () => {
 
         <img
           className="w-full h-full mt-[10%] md:hidden"
-          src={CrossBorderMobile}
+          src={CrossBorder}
           alt="/"
         />
       </div>
@@ -1146,7 +1146,7 @@ export const Home = () => {
         </div>
         <img
           className="w-full h-full mt-[10%] mx-auto md:hidden"
-          src={Currency}
+          src={CurrencyConversion}
           alt="/"
         />
 
@@ -1185,7 +1185,7 @@ export const Home = () => {
         <div className="md:hidden">
           <img
             className="w-full h-full mt-[10%] mx-auto"
-            src={Multi}
+            src={MultiCurrency}
             alt="/"
           />
         </div>
