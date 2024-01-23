@@ -138,7 +138,7 @@ const filterFavorite = knownFavorite.filter(item =>
   return (
 
   <DashBoardLayout>
-    <div className='flex flex-col justify-between lg:h-[1100px] md:h-[1450px] h-[950px] '>
+    <div className='flex flex-col justify-between lg:h-[100%] md:h-[115%] h-[120%]'>
     <div className=''>
       
     <RecipientHero/>
@@ -170,7 +170,7 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
       {selectRecipientCountry}
     </h2>
    </div>
-   <img src={ImageDrop}  alt=""
+   <img src={ImageDrop}  alt="" 
    className='SelectRecipientDrop lg:w-[24px] lg:h-[24px] h-[12px] w-[12px]' />
     </div>
     {selectRecipientActive && (
