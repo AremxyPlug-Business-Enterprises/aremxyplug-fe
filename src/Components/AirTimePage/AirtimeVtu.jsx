@@ -48,6 +48,8 @@ const AirtimeVtu = () => {
     const [errors, setErrors] = useState({});
     const [codes, setCodes] = useState(false);
     const [inputValue, setInputValue] = useState("");
+    const [networkId, setNetworkId] = useState("");
+    const [productId, setProductId] = useState("");
 
 
     if (addRecipient) {
@@ -56,31 +58,36 @@ const AirtimeVtu = () => {
         console.log('did not add recipient')
     }
 
+
     const networkList = [
         {
             id:1,
             name:'MTN',
             image: require('./Images/mtn.svg').default,
             discount: 3,
+            networkId: "01",
         },
         {
             id:2,
             name:'AIRTEL',
             image: require('./Images/airtel.png'),
             discount: 4,
+            networkId: "02",
         },
         {
             id:3,
             name:'GLO',
             image: require('./Images/glo.png'),
             discount: 3,
+            networkId: "03",
         },
         {
             id:4,
             name:'9MOBILE',
             image: require('./Images/9mobile.svg').default,
             discount: 3,
-        }
+            networkId: "04",
+        },
     ];
 
     const countryList = [
@@ -128,7 +135,17 @@ const AirtimeVtu = () => {
         }
       ];
 
-      const productList = ['VTU', 'SNS']
+      const productList = [
+        {
+            id: 1,
+            name: 'VTU',
+            productId: '01'
+        }, 
+        {
+            id: 2,
+            name: 'SNS',
+            productId: '02'
+        },]
 
 
     const Network =({name, image, onClick})=> {
@@ -168,6 +185,7 @@ const AirtimeVtu = () => {
         setDiscount(val);
         setShowList(false);
         setSelected(true);
+        setNetworkId(networkId);
       }
 
       const calcAmount = (a, b) => {
@@ -191,6 +209,7 @@ const AirtimeVtu = () => {
       const handleSelectProduct =(val) => {
         setSelectedProduct(val);
         setShowProduct(false);
+        setProductId(productId);
       }
 
       const handleShowList =()=> {
@@ -399,9 +418,10 @@ const AirtimeVtu = () => {
                         { showList && 
                             <div className={styles.colDown}>
                                 {networkList.map((item) => (
-                                    <Network key={item.id} image={item.image} name={item.name} onClick={()=>handleSelectNetwork(item.name, item.image, item.discount)}/>
+                                    <Network key={item.id} image={item.image} name={item.name} onClick={()=>handleSelectNetwork(item.name, item.image, item.discount, item.networkId)}/>
                                 ))}
                             </div> 
+                            
                         }
                     </div>
                     <div>
@@ -418,8 +438,8 @@ const AirtimeVtu = () => {
                         </div>
                         { showProduct && 
                             <div className={styles.colDown}>
-                                { productList.map((item, index) => (
-                                    <Product key={index} product={item} onClick={() => handleSelectProduct(item)}/>
+                                { productList.map((item) => (
+                                    <Product key={item.id} product={item.name} onClick={() => handleSelectProduct(item.name, item.productId)}/>
                                 ))}
                             </div>
                         }
