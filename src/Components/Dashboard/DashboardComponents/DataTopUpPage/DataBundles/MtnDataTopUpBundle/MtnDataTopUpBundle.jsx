@@ -49,7 +49,7 @@ const MtnDataTopUpBundle = () => {
   const [image, setImage] = useState("");
   const [paymentAmount, setPaymentAmount] = useState("");
   const [codes, setCodes] = useState(false);
-  const [plan, setPlan] = useState(false);
+  // const [plan, setPlan] = useState(false);
 
   const handleCodes = () => {
     setCodes(false);
@@ -550,7 +550,7 @@ const MtnDataTopUpBundle = () => {
 
   const handleSelectOption = (selectedOption, selectedAmount, duration, id) => {
 
-    setPlan(id);
+    // setPlan(id);
     console.log(id)
     setSelectedOption(selectedOption);
     setShowOptionList(false);
@@ -578,39 +578,39 @@ const MtnDataTopUpBundle = () => {
 
   console.log("confirm:", confirm);
 
-  const sendDataToBackend = (network, mobileNumber, plan, name) => {
-    const apiUrl = "http://localhost:8080/api/v1/data";
+  // const sendDataToBackend = (network, mobileNumber, plan, name) => {
+  //   const apiUrl = "http://localhost:8080/api/v1/data";
 
-    // Prepare the data to be sent in the request body
-    const requestData = {
-      network,
-      mobile_number: mobileNumber,
-      plan,
-      name,
-    };
+  //   // Prepare the data to be sent in the request body
+  //   const requestData = {
+  //     network,
+  //     mobile_number: mobileNumber,
+  //     plan,
+  //     name,
+  //   };
 
-    console.log(requestData);
+  //   console.log(requestData);
 
-    // Send a POST request to the backend API
-    fetch(apiUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(requestData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // Handle the response from the backend
-        console.log("Backend response:", data);
-      })
-      .catch((error) => {
-        // Handle any errors that occurred during the fetch
-        console.error("Error sending data to backend:", error);
-      });
-  };
+  //   // Send a POST request to the backend API
+  //   fetch(apiUrl, {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(requestData),
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       // Handle the response from the backend
+  //       console.log("Backend response:", data);
+  //     })
+  //     .catch((error) => {
+  //       // Handle any errors that occurred during the fetch
+  //       console.error("Error sending data to backend:", error);
+  //     });
+  // };
 
-  sendDataToBackend(1, inputValue, plan, recipientNames);
+  // sendDataToBackend(1, inputValue, plan, recipientNames);
 
 
   return (
