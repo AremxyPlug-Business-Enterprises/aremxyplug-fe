@@ -5,6 +5,7 @@ import { useState } from "react";
 import { ContextProvider } from "../../../Context";
 import { DashBoardLayout } from "../../Layout/DashBoardLayout";
 import styles from "../../DashboardComponents/component.module.css";
+import styled from "../../../AirTimePage/AirTime.module.css";
 import { Modal } from "../../../Screens/Modal/Modal";
 
 export const TransferPage = () => {
@@ -12,6 +13,7 @@ export const TransferPage = () => {
   const [activeBtn, setActiveBtn] = useState([true, false]);
   const [fiatTransfer, setFiatTransfer] = useState(true);
   const [cryptoTransfer, setCryptoTransfer] = useState(false);
+  const [bulkTransfer, setBulkTransfer] = useState(false);
 
   const handleClick = (index) => {
     const clickedBtn = activeBtn.map((isActive, i) => i === index);
@@ -140,31 +142,34 @@ export const TransferPage = () => {
                   />
                 </div>
               </Link>
-              <div
-                className={`${isDarkMode ? "border" : "bg-[#fff]"} ${
-                  styles.toMyAcct
-                }`}
-              >
-                <div className="flex gap-[5px] items-center">
+              <Link to="/to-aremxyplug">
+                <div
+                  className={`${isDarkMode ? "border" : "bg-[#fff]"} ${
+                    styles.toMyAcct
+                  }`}
+                >
+                  <div className="flex gap-[5px] items-center">
+                    <img
+                      className="w-[18px] h-[13px] md:w-[] md:h-[] lg:w-[30px] lg:h-[20px]"
+                      src="Images/Dashboardimages/tf3.png"
+                      alt="/"
+                    />
+                    <div>
+                      <p className="text-[10px] md:text-[18px]">To AremxyPlug</p>
+                      <p className="text-[8px] text-[#7c7c7c] md:text-[16px]">
+                        Transfer money from your wallets to any AremxyPlug user.
+                      </p>
+                    </div>
+                  </div>
                   <img
-                    className="w-[18px] h-[13px] md:w-[] md:h-[] lg:w-[30px] lg:h-[20px]"
-                    src="Images/Dashboardimages/tf3.png"
+                    className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
+                    src="./Images/Dashboardimages/arrowright.png"
                     alt="/"
                   />
-                  <div>
-                    <p className="text-[10px] md:text-[18px]">To AremxyPlug</p>
-                    <p className="text-[8px] text-[#7c7c7c] md:text-[16px]">
-                      Transfer money from your wallets to any AremxyPlug user.
-                    </p>
-                  </div>
                 </div>
-                <img
-                  className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                  src="./Images/Dashboardimages/arrowright.png"
-                  alt="/"
-                />
-              </div>
+              </Link>  
               <div
+                onClick={()=> setBulkTransfer(true)}
                 className={`${isDarkMode ? "border" : "bg-[#fff]"} ${
                   styles.toMyAcct
                 }`}
@@ -225,6 +230,28 @@ export const TransferPage = () => {
                   Okay
                 </div>
               </div>
+            </div>
+          </Modal>
+        )}
+
+        {/* ============Bulk transfer modal============= */}
+        {bulkTransfer && (
+          <Modal>
+            <div className={styled.NotInterX} >
+                <div className={styled.timeAbleX}>
+                    <h2>Bulk Transfer</h2>
+                    <h3>This Feature is Currently Not Available.</h3>
+                </div>
+                <div className={styled.InterAirtimeX}>
+                    <img src="./Images/transferImages/messages.png" alt="" />
+                </div>
+                <div className={styled.comingX} >
+                    <h2>Coming soon...</h2>
+                    <button className={styled.btnOkX} onClick={() => {
+                    setBulkTransfer(false);
+                    handleClick(0);
+                  }}>Okay</button>
+                </div>
             </div>
           </Modal>
         )}

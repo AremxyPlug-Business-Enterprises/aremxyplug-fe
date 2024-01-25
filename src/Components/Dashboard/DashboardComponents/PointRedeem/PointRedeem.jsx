@@ -132,8 +132,9 @@ const [text, setText] =useState(false);
           isDarkMode
             ? "bg-[#000] text-[#fff] border-[#fff]"
             : "bg-[#ffffff] text-[#000] "
-        }  flex flex-col w-full`}
+        }  flex flex-col justify-between w-full h-full`}
       >
+        <div>
         {/* top part after nav bar */}
         <div className="flex flex-row w-full pt-[20px]  h-[90px] md:h-[112.29px] lg:h-[196px] lg:px-[50px]  px-[16px] rounded-lg md:rounded-[11.5px] lg:rounded-[20px] justify-between  py-2 bg-gradient-to-r from-[#92ABFE] to-[#FFF741]">
           <div className="flex flex-col gap-2  ">
@@ -204,7 +205,7 @@ const [text, setText] =useState(false);
           </div>
         </div>
         <div className="mt-[7px] flex flex-row lg:mt-[20px]">
-          <div className="border-[1px] w-[85%] md:w-[85%]  text-[10px] lg:text-[16px] h-[30px] md:h-[40px] font-[600] text-[#7C7C7C] lg:h-[50px] px-2 py-0 pt-2 md:pt-3 lg:pt-4 border-slate-200">
+          <div className="border-[1px] w-[85%] md:w-[92%]  text-[10px] lg:text-[16px] h-[30px] md:h-[40px] font-[600] text-[#7C7C7C] lg:h-[50px] px-2 py-0 pt-2 md:pt-3 lg:pt-4 border-slate-200">
             {/* <input
               type="number"
               readOnly
@@ -214,7 +215,7 @@ const [text, setText] =useState(false);
             />{" "} */}
             {!text ? <p>Amount to Receive</p> : <div>&#8358;{outputValue}</div>}
           </div>
-          <div className="h-[30px] md:h-[40px] lg:h-[60px] w-[15%] md:w-[8%] gap-2 lg:gap-4 flex flex-row px-3 py-2 bg-primary items-center   ">
+          <div className="h-[30px] md:h-[40px] lg:h-[50px] w-[15%] md:w-[8%] gap-2 lg:gap-4 flex flex-row px-3 py-2 bg-primary items-center   ">
             <div>
               {" "}
               <img
@@ -277,13 +278,18 @@ const [text, setText] =useState(false);
             className={` ${
               (inputValue.length < 3 ? "bg-[#0008]" : "bg-[#04177f]",
               outputValue.length < 3 ? "bg-[#0008]" : "bg-[#04177f]")
-            } text-[12px] mt-[50px] md:mt-[40px] md:w-fit lg:px-12 lg:text-[16px] lg:px md:py-1 md:rounded-md md:px-6   py-3 rounded-md font-[600] text-center text-white`}
+            } text-[12px] mt-[50px] md:mt-[40px] md:w-fit lg:px-12 lg:text-[16px] lg:px md:py-1 md:rounded-md md:px-6 cursor-pointer py-3 rounded-md font-[600] text-center text-white`}
           >
             Proceed
           </div>
         </div>
+        </div>
 
+<<<<<<< HEAD
         <div className="flex flex-row items-center justify-center mt-[200px] md:mt-[38%] lg:mt-[45%] gap-2">
+=======
+        <div className="flex flex-row items-center justify-center md:mt-[750px] mt-[190px] pb-[10%] lg:mt-[980px] gap-2">
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
           <div className="text-[8px] lg:text-[12px] font-[600] text-black">
             You need help?
           </div>
@@ -308,6 +314,7 @@ const [text, setText] =useState(false);
               onClick={() => {setRealPop(false);
               handlerealClear(); }
               
+<<<<<<< HEAD
                } className="absolute right-6 md:right-[23%] lg:right-[32%] w-[18px] h-[18px] my-[1%] md:w-[30px] md:h-[30px] lg:w-[25px] lg:h-[25px]"
               src="/Images/transferImages/close-circle.png"
               alt=""
@@ -315,12 +322,23 @@ const [text, setText] =useState(false);
             <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[8%] md:h-[10px] lg:h-[10px] lg:mt-[8%]" />
             <div className="flex flex-col text-center items-center justify-center pt-[30px]">
               <div className="font-[500] flex items-center justify-center w-[100%] text-center text-[10px] py-1 mt-[30px] md:mt-[30px] lg:mt-[50px]   md:text-[9.17px] lg:text-[16px] leading-[20.8px] lg:px-6 lg:w-fit  md:flex md:flex-row md:w-fit md:py-1 md:px-4 lg:py-3 rounded-sm md:rounded-sm lg:rounded-md md:leading-[11.5px] bg-primary text-white">
+=======
+               } className="absolute right-6 md:right-[25%] lg:right-[33%] w-[18px] h-[18px] my-[1%] md:w-[30px] md:h-[30px] lg:w-[25px] lg:h-[25px]"
+              src="/Images/transferImages/close-circle.png"
+              alt=""
+            />
+           <div>
+              <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[8%] lg:mt-[6%] md:h-2" />
+           </div>
+            <div className="flex flex-col text-center items-center justify-center pt-[30px] md:pt-[20px] lg:pt-[1px]">
+              <div className="font-[500] flex items-center justify-center w-[100%] text-center text-[10px] py-1 mt-[30px] md:mt-[20px] lg:mt-[50px]   md:text-[9.17px] lg:text-[16px] leading-[20.8px] lg:px-6 lg:w-fit  md:flex md:flex-row md:w-fit md:py-1 md:px-4 lg:py-3 rounded-sm md:rounded-sm lg:rounded-md md:leading-[11.5px] bg-primary text-white">
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
                 Real-time Points Redeem Tracker
               </div>
               <div></div>
             </div>
             <div className="flex flex-col px-3  md:px-6 ">
-              <div className=" pt-[30px] md:pt-[70px]">
+              <div className=" pt-[30px] md:pt-[40px]">
                 <div className="font-bold flex text-[#000] text-[10px] leading-[130%] items-center  gap-[8px]  md:text-[12px] lg:text-[15px]">
                   <p>Amount</p>
                   <img
@@ -427,9 +445,9 @@ const [text, setText] =useState(false);
       {proceed && (
         <Modal>
           <div
-            className={`${styles.transferConfirmation} ${
-              toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[562px]"
-            } w-[90%] overflow-auto`}
+            className={`${styles.aremxyMoneyPop} ${
+              toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+            } w-[90%] md:w-[60%] overflow-auto`}
           >
             <img
               onClick={() => setProceed(false)}
@@ -448,7 +466,7 @@ const [text, setText] =useState(false);
               </span>{" "}
               Points to <br></br>
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">
-                &#8358;{outputValue}{" "}
+                {outputValue}{" "}
               </span>
               from your PTS balance to{" "}
             </p>
@@ -654,9 +672,7 @@ const [text, setText] =useState(false);
 
             <div className="bg-[#F2FAFF] mx-10 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
               <p className="text-[6px] text-center mx-auto w-[171px] md:text-[14px] md:w-[80%] lg:text-[14px]">
-                The Redeemed points has been sent successfully. Please contact
-                the recipient bank with the Session ID if payment not received
-                within 5-15 minutes.
+              The redeem has been sent successfully. Please check the correspondent wallet to view the value.
               </p>
             </div>
             <div className="flex w-[70%] mx-auto items-center gap-[5%] md:gap-[20px] justify-center md:w-[20%] lg:my-[5%]">

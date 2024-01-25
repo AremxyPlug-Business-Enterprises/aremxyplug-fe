@@ -1,5 +1,4 @@
 import React from "react";
-import { useState } from "react";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { ContextProvider } from "../../Context";
@@ -7,10 +6,18 @@ import DarkModeToggle from "../DashboardComponents/DarkModeToggle";
 import styles from "./Dashboard.module.css";
 
 export const TopBar = () => {
-  const { setToggleSideBar, isDarkMode, toggleSideBar } =
+  const { setToggleSideBar, isDarkMode, toggleSideBar, logout, setLogout } =
     useContext(ContextProvider);
-  const [logout, setLogout] = useState(false);
-  
+
+  const toggleTrueFalse = () => {
+    setToggleSideBar(true);
+    setLogout(false);
+  };
+  const toggleTrueFalse2 = () => {
+    setToggleSideBar(false);
+    setLogout((prev) => !prev);
+  };
+
   return (
     <div
       className={`${styles.topbar} ${
@@ -22,7 +29,7 @@ export const TopBar = () => {
       } `}
     >
       <img
-        onClick={() => setToggleSideBar(true)}
+        onClick={toggleTrueFalse}
         className="cursor-pointer w-[21px] h-[21px] md:h-[30.9px] md:w-[30.9px] lg:h-[52px] lg:w-[52px]"
         src="./Images/dashboardImages/menularge.png"
         alt="/harmburger"
@@ -62,13 +69,16 @@ export const TopBar = () => {
             <DarkModeToggle />
             <p>Dark</p>
           </div>
+          <Link to="/notifications">
+            <img
+              className="cursor-pointer w-[12px] h-[12px] md:w-[16px] md:h-[16px] lg:w-[28px] lg:h-[28px]"
+              src="./Images/dashboardImages/notificationlarge.png"
+              alt="notification"
+              notifications
+            />
+          </Link>
           <img
-            className="cursor-pointer w-[12px] h-[12px] md:w-[16px] md:h-[16px] lg:w-[28px] lg:h-[28px]"
-            src="./Images/dashboardImages/notificationlarge.png"
-            alt="notification"
-          />
-          <img
-            onClick={() => setLogout((prev) => !prev)}
+            onClick={toggleTrueFalse2}
             className="cursor-pointer w-[20px] h-[10px] md:w-[40px] md:h-[20px] rounded-[2.3px] lg:w-[65px] lg:h-[34px]"
             src="./Images/dashboardImages/largedoor.png"
             alt="notification"
@@ -82,12 +92,17 @@ export const TopBar = () => {
                 : "bg-[#ffffff] text-[#000] "
             }`}
           >
-            <li className="z-[99px] ursor-pointer hover:underline pt-1 pb-1 pl-1 text-[5px] font-medium border-b-[0.22px] md:border-b-[0.335px] md:text-[8px] lg:pt-[6%] lg:pb-[6%] lg:pl-[6%] lg:border-b-[0.6px] lg:text-[14px] ">
-              My Profile
-            </li>
-            <li className="cursor-pointer hover:underline pt-1 pb-1 pl-1 text-[5px] font-medium border-b-[0.22px] md:border-b-[0.335px] md:text-[8px] lg:pt-[6%] lg:pb-[6%] lg:pl-[6%] lg:border-b-[0.6px] lg:text-[14px] ">
-              Contact Support
-            </li>
+            <Link to="/ProfileSettingMain">
+              <li className="z-[99px] ursor-pointer hover:underline pt-1 pb-1 pl-1 text-[5px] font-medium border-b-[0.22px] md:border-b-[0.335px] md:text-[8px] lg:pt-[6%] lg:pb-[6%] lg:pl-[6%] lg:border-b-[0.6px] lg:text-[14px] ">
+                My Profile
+              </li>
+            </Link>
+            <Link to="/ContactUs">
+              {" "}
+              <li className="cursor-pointer hover:underline pt-1 pb-1 pl-1 text-[5px] font-medium border-b-[0.22px] md:border-b-[0.335px] md:text-[8px] lg:pt-[6%] lg:pb-[6%] lg:pl-[6%] lg:border-b-[0.6px] lg:text-[14px] ">
+                Contact Support
+              </li>
+            </Link>
             <Link to="/Login">
               <li className="z-[99px] cursor-pointer hover:underline pt-1 pb-1 pl-1 text-[5px] font-medium md:border-b-[0.335px] md:text-[8px] lg:pt-[6%] lg:pb-[6%] lg:pl-[6%] lg:border-b-[0.6px] lg:text-[14px] ">
                 Logout

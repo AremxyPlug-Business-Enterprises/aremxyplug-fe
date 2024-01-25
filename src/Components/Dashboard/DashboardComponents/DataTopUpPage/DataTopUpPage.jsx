@@ -12,15 +12,11 @@ import { DashBoardLayout } from "../../Layout/DashBoardLayout";
 import { useContext } from "react";
 import { ContextProvider } from "../../../Context";
 import { Link } from "react-router-dom";
-import WalletModal from "../../../Wallet/WalletModal";
-import DataRollPopUp from "./DataTopUp-Images/DataRollPopUp.svg"
-import DataVoucherPopUp from "./DataTopUp-Images/DataVoucherPopUp.svg"
-import DataSchedulePopUp from "./DataTopUp-Images/DataSchedulePopUp.svg"
-import BulkDataPopUp from "./DataTopUp-Images/BulkDataPopUp.svg"
-
-
-
-
+import DataRollPopUp from "./DataTopUp-Images/DataRollPopUp.svg";
+import DataVoucherPopUp from "./DataTopUp-Images/DataVoucherPopUp.svg";
+import DataSchedulePopUp from "./DataTopUp-Images/DataSchedulePopUp.svg";
+import BulkDataPopUp from "./DataTopUp-Images/BulkDataPopUp.svg";
+import { Modal } from "../../../Screens/Modal/Modal";
 
 const DataTopUpPage = () => {
   const [popupVisible, setPopupVisible] = useState(false);
@@ -71,7 +67,7 @@ const DataTopUpPage = () => {
     handleClick(0);
   };
 
-  const { isDarkMode } = useContext(ContextProvider);
+  const { isDarkMode, toggleSideBar } = useContext(ContextProvider);
 
   return (
     <DashBoardLayout>
@@ -87,7 +83,7 @@ const DataTopUpPage = () => {
             isDarkMode
               ? "bg-[#000] text-[#fff] border-[#fff]"
               : "bg-[#ffffff] text-[#000] "
-          } `}
+          }`}
         >
           <div
             id="DataTopUp"
@@ -113,9 +109,8 @@ const DataTopUpPage = () => {
               />
             </div>
           </div>
-
           <div className="flex items-center my-[10%] gap-[8px] md:my-[5%] md:text-[18px] lg:text-[20px]">
-            <p className="text-[#7c7c7c] text-[10px] leading-[130%] md:text-[18px] lg:text-[20px] 2xl:text-[28px]">
+            <p className="text-[#7c7c7c] text-[10px] leading-[130%] md:text-[12px] lg:text-[16px] 2xl:text-[20px]">
               Select Data Type
             </p>
             <img
@@ -124,9 +119,15 @@ const DataTopUpPage = () => {
               className="w-[12px] h-[12px] md:w-[14.083px] md:h-[14.083px] lg:w-[24px] lg:h-[24px]"
             />
           </div>
+<<<<<<< HEAD
           
           <section className="md:mt-[30px] mt-[30px] lg:mt-[50px]">
             <div className="text-[8px] flex gap-[2.5%] md:text-[18px] lg:text-[20px] justify-between md:justify-start md:gap-[5%]">
+=======
+
+          <section className="">
+            <div className="text-[8px] flex gap-[2.5%] md:text-[14px] lg:text-[18px] justify-between md:justify-start md:gap-[5%]">
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
               <div
                 onClick={() => {
                   handleClick(0);
@@ -135,7 +136,11 @@ const DataTopUpPage = () => {
                   activeBtn[0]
                     ? "bg-[#E2F3FF] rounded-[2px] border-b-[2px] border-b-[#04177f] h-[25px] flex items-center p-[5px] md:h-[35px] lg:rounded-[6px] lg:border-b-[4px] lg:h-[60px]"
                     : ""
+<<<<<<< HEAD
                 } cursor-pointer font-semibold w-[144px] justify-center rounded-[2px] md:w-[180px] md:rounded-[3px] md:justify-center md:items-center flex lg:w-[248px] lg:rounded-[6px] 2xl:text-[24px]`}
+=======
+                } cursor-pointer w-[144px] justify-center rounded-[2px] md:w-[180px] md:rounded-[3px] md:justify-center md:items-center flex lg:w-[248px] lg:rounded-[6px]`}
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
               >
                 Local Data
               </div>
@@ -148,7 +153,11 @@ const DataTopUpPage = () => {
                   activeBtn[1]
                     ? "bg-[#E2F3FF] rounded-[2px] border-b-[2px] border-b-[#04177f] h-[25px] flex items-center p-[5px]  md:h-[35px] lg:rounded-[6px] lg:border-b-[4px] lg:h-[60px] lg:py-[40px]"
                     : ""
+<<<<<<< HEAD
                 }cursor-pointer font-semibold w-[144px] justify-center rounded-[2px] md:w-[180px] md:rounded-[3px] md:justify-center md:items-center flex lg:w-[248px] lg:rounded-[6px] 2xl:text-[24px]`}
+=======
+                }cursor-pointer w-[144px] justify-center rounded-[2px] md:w-[180px] md:rounded-[3px] md:justify-center md:items-center flex lg:w-[248px] lg:rounded-[6px] `}
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
               >
                 International Data
               </div>
@@ -157,19 +166,19 @@ const DataTopUpPage = () => {
 
             <div className="mt-[10%] flex flex-col gap-[20px] md:mt-[2%] md:gap-[0px] 2xl:mt-[5%]">
               <Link to="/data-bundles">
-                <div className="Datatopup flex justify-between h-[50px] lg:h-[80px] md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[5px] gap-[8px] md:mt-[30px]">
+                <div className="Datatopup flex justify-between md:items-center h-[50px] md:h-[70px] lg:h-[90px] border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[5px] gap-[8px] md:mt-[30px]">
                   <div className="flex gap-[10px]">
                     <img
                       src={DataBundles}
                       alt=""
-                      className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:mt-[20px] lg:h-[20px] 2xl:mt-[25px]"
+                      className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:mt-[20px] lg:h-[20px] 2xl:mt-[25px] md:mb-[25px] lg:mb-[15px]"
                     />
 
-                    <div className="">
-                      <p className="text-[10px] md:text-[13px] font-[500] lg:text-[18px] 2xl:text-[22px]">
+                    <div className="lg:mt-[1%]">
+                      <p className="text-[10px] md:text-[12px] font-[500] lg:text-[18px] ">
                         Data Bundles
                       </p>
-                      <p className="text-[8px] text-[#7c7c7c] md:text-[10px] lg:text-[15px] font-[500] w-[95%] lg:w-[130%] mt-[3px] md:w-[110%] 2xl:text-[20px]">
+                      <p className="text-[8px] text-[#7c7c7c] md:text-[10px] lg:text-[14px] font-[500] w-[95%] lg:w-[130%] mt-[3px] md:w-[110%]">
                         Top up your mobile sim with our automated data bundles
                         directly from network providers.
                       </p>
@@ -179,7 +188,7 @@ const DataTopUpPage = () => {
                   <img
                     src={DataType}
                     alt=""
-                    className="w-[12px] h-[12px] mb-[12.5px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px] "
+                    className="w-[12px] h-[12px] mb-[12.5px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px]  md:mb-[20px] lg:mb-[10px]"
                   />
                 </div>
               </Link>
@@ -188,20 +197,20 @@ const DataTopUpPage = () => {
                 onClick={() => {
                   showDataRoll();
                 }}
-                className="Datatopup flex justify-between h-[50px] lg:h-[80px] md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[5px] gap-[8px] md:mt-[30px]"
+                className="Datatopup flex justify-between h-[50px] md:h-[70px] lg:h-[90px] md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[5px] gap-[8px] md:mt-[30px]"
               >
                 <div className="flex gap-[10px]">
                   <img
                     src={DataRoll}
                     alt=""
-                    className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px] 2xl:mt-[25px]"
+                    className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px] 2xl:mt-[25px] md:mb-[25px]"
                   />
 
-                  <div className="">
-                    <p className="text-[10px] md:text-[13px] font-[500] lg:text-[18px] 2xl:text-[22px]">
+                  <div className="lg:mt-[1%]">
+                    <p className="text-[10px] md:text-[12px] font-[500] lg:text-[18px]">
                       Data Roll
                     </p>
-                    <p className="text-[8px] text-[#7c7c7c] md:text-[10px] lg:text-[15px] font-[500] w-[95%] mt-[3px] md:w-[100%] lg:w-[130%] 2xl:text-[20px]">
+                    <p className="text-[8px] text-[#7c7c7c] md:text-[10px] lg:text-[14px] font-[500] w-[95%] lg:w-[130%] mt-[3px] md:w-[110%]">
                       Add, manage, and send data to your team or employees
                       without any hassle.
                     </p>
@@ -211,7 +220,7 @@ const DataTopUpPage = () => {
                 <img
                   src={DataType}
                   alt=""
-                  className="w-[12px] h-[12px] mb-[12.5px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px]"
+                  className="w-[12px] h-[12px] mb-[12.5px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px] md:mb-[20px] lg:mb-[10px]"
                 />
               </div>
 
@@ -219,20 +228,20 @@ const DataTopUpPage = () => {
                 onClick={() => {
                   showDataVoucher();
                 }}
-                className="Datatopup flex justify-between h-[50px] lg:h-[80px] md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[5px] gap-[8px] md:mt-[30px]"
+                className="Datatopup flex justify-between h-[50px] md:h-[70px] lg:h-[90px] md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[5px] gap-[8px] md:mt-[30px]"
               >
                 <div className="flex gap-[10px]">
                   <img
                     src={DataVoucher}
                     alt=""
-                    className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px] 2xl:mt-[25px]"
+                    className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px] 2xl:mt-[25px] md:mb-[25px]"
                   />
 
-                  <div className="">
-                    <p className="text-[10px] md:text-[13px] font-[500] lg:text-[18px] 2xl:text-[22px]">
+                  <div className="lg:mt-[1%]">
+                    <p className="text-[10px] md:text-[12px] font-[500] lg:text-[18px]">
                       Data Voucher
                     </p>
-                    <p className="text-[8px] text-[#7c7c7c] md:text-[10px] font-[500] lg:text-[15px] w-[95%] lg:w-[130%] mt-[3px] md:w-[100%] 2xl:text-[20px]">
+                    <p className="text-[8px] text-[#7c7c7c] md:text-[10px] font-[500] lg:text-[14px] w-[95%] lg:w-[130%] mt-[3px] md:w-[100%]">
                       Generate all networks data token / pins and recharge your
                       mobile sim directly using ussd codes.
                     </p>
@@ -242,7 +251,7 @@ const DataTopUpPage = () => {
                 <img
                   src={DataType}
                   alt=""
-                  className="w-[12px] h-[12px] mb-[12.5px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px]"
+                  className="w-[12px] h-[12px] mb-[12.5px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px] md:mb-[20px] lg:mb-[10px]"
                 />
               </div>
 
@@ -250,20 +259,20 @@ const DataTopUpPage = () => {
                 onClick={() => {
                   showDataSchedule();
                 }}
-                className="Datatopup flex justify-between h-[50px] lg:h-[80px] md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[5px] gap-[8px] md:mt-[30px]"
+                className="Datatopup flex justify-between h-[50px] md:h-[70px] lg:h-[90px] md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[5px] gap-[8px] md:mt-[30px]"
               >
                 <div className="flex gap-[10px]">
                   <img
                     src={DataSchedule}
                     alt=""
-                    className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px] 2xl:mt-[25px]"
+                    className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px] 2xl:mt-[25px] md:mb-[25px]"
                   />
 
-                  <div className="">
-                    <p className="text-[10px] md:text-[13px] font-[500] lg:text-[18px] 2xl:text-[22px]">
+                  <div className="lg:mt-[1%]">
+                    <p className="text-[10px] md:text-[12px] font-[500] lg:text-[18px]">
                       Data Schedule
                     </p>
-                    <p className="text-[8px] text-[#7c7c7c] md:text-[10px] font-[500] lg:text-[15px] w-[95%] lg:w-[130%] mt-[3px] md:w-[100%] 2xl:text-[20px]">
+                    <p className="text-[8px] text-[#7c7c7c] md:text-[10px] font-[500] lg:text-[14px] w-[95%] lg:w-[130%] mt-[3px] md:w-[100%]">
                       Schedule sending of data for automatic vending to
                       recipients at your specified date and time.
                     </p>
@@ -273,7 +282,7 @@ const DataTopUpPage = () => {
                 <img
                   src={DataType}
                   alt=""
-                  className="w-[12px] h-[12px] mb-[12.5px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px]"
+                  className="w-[12px] h-[12px] mb-[12.5px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px] md:mb-[20px] lg:mb-[10px]"
                 />
               </div>
 
@@ -281,20 +290,20 @@ const DataTopUpPage = () => {
                 onClick={() => {
                   showBulkData();
                 }}
-                className="Datatopup flex justify-between h-[50px] lg:h-[80px] md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[5px] gap-[8px] md:mt-[30px]"
+                className="Datatopup flex justify-between h-[50px] md:h-[70px] lg:h-[90px] md:justify-between border-[1px] rounded-[5px] pl-[8px] pr-[20px] py-[5px] gap-[8px] md:mt-[30px]"
               >
                 <div className="flex gap-[10px]">
                   <img
                     src={BulkData}
                     alt=""
-                    className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px] 2xl:mt-[25px]"
+                    className="w-[20px] h-[20px] mt-[10px] md:w-[14.736px] md:h-[14.736px] lg:w-[20px] lg:h-[20px] 2xl:mt-[25px] md:mb-[25px]"
                   />
 
-                  <div className="">
-                    <p className="text-[10px] md:text-[13px] font-[500] lg:text-[18px] 2xl:text-[22px]">
+                  <div className="lg:mt-[1%]">
+                    <p className="text-[10px] md:text-[12px] font-[500] lg:text-[18px]">
                       Bulk Data
                     </p>
-                    <p className="text-[8px] text-[#7c7c7c] md:text-[10px] font-[500] lg:text-[15px] w-[95%] lg:w-[130%] mt-[3px] md:w-[100%] 2xl:text-[20px]">
+                    <p className="text-[8px] text-[#7c7c7c] md:text-[10px] font-[500] lg:text-[14px] w-[95%] lg:w-[130%] mt-[3px] md:w-[100%]">
                       Send data to multiple recipients at a time and receive
                       instantly without any hassle.
                     </p>
@@ -304,39 +313,27 @@ const DataTopUpPage = () => {
                 <img
                   src={DataType}
                   alt=""
-                  className="w-[12px] h-[12px] mb-[12.5px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px]"
+                  className="w-[12px] h-[12px] mb-[12.5px] md:w-[14.083px] md:h-[14.083px] md:mt-[10px] lg:w-[24px] lg:h-[24px] md:mb-[20px] lg:mb-[10px]"
                 />
               </div>
             </div>
           </section>
 
-          <footer className="flex justify-center text-center gap-[20px] mt-[220px] mb-[50px] md:mt-[750px] lg:mb-[30px] 2xl:mt-[500px]">
-            <p className="text-[8px] md:text-[12px] lg:text-[20px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
-              You need help?
-            </p>
-
-            <Link to="/ContactUs">
-              <div
-                className={`${
-                  isDarkMode ? "border " : "bg-[#04177f]"
-                } text-[8px] p-1 text-white rounded-[8px] lg:text-[18px]`}
-              >
-                Contact Us
-              </div>
-            </Link>
-          </footer>
-
           {/* ================Popup======================= */}
 
           {popupVisible && (
-            <WalletModal>
-              <div className="text-center flex justify-center item-center md:mt-[-20px] lg:mt-[15px] 2xl:mt-[-15px]">
+            <Modal>
+              <div
+                className={`${
+                  toggleSideBar ? "datapopup011" : "datapopup1"
+                } bg-white `}
+              >
                 <div
                   className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
-                    flex flex-col justify-center z-[100] lg:ml-[10px] md:w-full`}
+                    flex flex-col justify-center z-[100] lg:ml-[10px] items-center `}
                 >
                   <div>
-                    <p className="text-[10px] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[3%]">
+                    <p className="text-[10px] text-center pt-[5%] md:pt-[2%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[3%]">
                       International Data
                     </p>
                     <p className="text-[10px] md:text-[16px] font-[600] text-[#04177F] lg:text-[16px]">
@@ -346,33 +343,37 @@ const DataTopUpPage = () => {
                   <img
                     src={InternationalData}
                     alt=""
-                    className="img mx-auto mt-[60px] md:mt-[15%] md:w-[220px] md:mx-[100px] w-[143px] h-[67px] lg:w-[300px] lg:h-[200px] lg:mx-[150px] lg:mt-[10%] 2xl:mt-[10%] 2xl:mx-[180px]"
+                    className="img mx-auto ml-[30%] mt-[30px] md:mt-[5%] md:mx-auto w-[50%] h-[50%] lg:mx-auto lg:mt-[3%] 2xl:mt-[10%] 2xl:mx-auto"
                   />
                 </div>
+                <div className="mt-[30px] flex flex-col gap-[5px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
+                  <p className="text-[8px] font-extrabold text-end float-right ml-[60%] md:ml-[70%] md:text-[12px] mt-[10px] lg:text-[13px] 2xl:text-[15px]">
+                    Coming Soon...
+                  </p>
+                  <button
+                    className={` ${
+                      isDarkMode ? "border" : "bg-[#04177f] "
+                    } cursor-pointer text-white text-[10px] h-[40px] rounded-[5px] md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[25%] lg:mx-auto`}
+                    onClick={resetActiveButton}
+                    handleClick={activeIndex}
+                  >
+                    Okay
+                  </button>
+                </div>
               </div>
-              <div className="mt-[40px] flex flex-col gap-[5px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
-                <p className="text-[8px] font-extrabold text-end float-right ml-[60%] md:ml-[70%] md:text-[12px] mt-[10px] lg:text-[13px] 2xl:text-[15px]">
-                  Coming Soon...
-                </p>
-                <button
-                  className={` ${
-                    isDarkMode ? "border" : "bg-[#04177f] "
-                  } cursor-pointer text-white text-[10px] h-[40px] rounded-[5px] md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[25%] lg:mx-auto`}
-                  onClick={resetActiveButton}
-                  handleClick={activeIndex}
-                >
-                  Okay
-                </button>
-              </div>
-            </WalletModal>
+            </Modal>
           )}
 
           {dataRoll && (
-            <WalletModal>
-              <div className="text-center flex justify-center item-center md:mt-[-20px] lg:mt-[15px] 2xl:mt-[-15px]">
+            <Modal>
+              <div
+                className={`${
+                  toggleSideBar ? "datapopup011" : "datapopup1"
+                } bg-white`}
+              >
                 <div
                   className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
-                    flex flex-col justify-center z-[100] lg:ml-[10px] md:w-full`}
+                  flex flex-col justify-center z-[100] lg:ml-[10px] items-center`}
                 >
                   <div>
                     <p className="text-[10px] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[3%]">
@@ -385,33 +386,37 @@ const DataTopUpPage = () => {
                   <img
                     src={DataRollPopUp}
                     alt=""
-                    className="img mx-auto mt-[20px] md:mt-[5%] md:w-[30%] md:h-[70%] md:mx-auto w-[143px] h-[100px] lg:w-[300px] lg:h-[200px] lg:mx-auto lg:mt-[8%] 2xl:mt-[10%] 2xl:mx-auto"
+                    className="img2 mx-auto mt-[20px] md:mt-[5%] md:mx-auto w-[143px] h-[100px] lg:mx-auto lg:mt-[8%] 2xl:mt-[5%] 2xl:mx-auto"
                   />
                 </div>
+                <div className="mobile-desktop mt-[20px] flex flex-col gap-[5px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
+                  <p className="text-[8px] font-extrabold text-end float-right ml-[60%] md:ml-[70%] md:text-[12px] mt-[10px] lg:text-[13px] 2xl:text-[15px]">
+                    Coming Soon...
+                  </p>
+                  <button
+                    className={` ${
+                      isDarkMode ? "border" : "bg-[#04177f] "
+                    } cursor-pointer text-white text-[10px] h-[40px] rounded-[5px] md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[25%] lg:mx-auto`}
+                    onClick={resetActiveButton}
+                    handleClick={activeIndex}
+                  >
+                    Okay
+                  </button>
+                </div>
               </div>
-              <div className="mt-[40px] flex flex-col gap-[5px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
-                <p className="text-[8px] font-extrabold text-end float-right ml-[60%] md:ml-[70%] md:text-[12px] mt-[10px] lg:text-[13px] 2xl:text-[15px]">
-                  Coming Soon...
-                </p>
-                <button
-                  className={` ${
-                    isDarkMode ? "border" : "bg-[#04177f] "
-                  } cursor-pointer text-white text-[10px] h-[40px] rounded-[5px] md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[25%] lg:mx-auto`}
-                  onClick={resetActiveButton}
-                  handleClick={activeIndex}
-                >
-                  Okay
-                </button>
-              </div>
-            </WalletModal>
+            </Modal>
           )}
 
           {dataVoucher && (
-            <WalletModal>
-              <div className="text-center flex justify-center item-center md:mt-[-20px] lg:mt-[15px] 2xl:mt-[-15px]">
+            <Modal>
+              <div
+                className={`${
+                  toggleSideBar ? "datapopup011" : "datapopup1"
+                } bg-white `}
+              >
                 <div
                   className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
-                    flex flex-col justify-center z-[100] lg:ml-[10px] md:w-full`}
+  flex flex-col justify-center z-[100] lg:ml-[10px] items-center`}
                 >
                   <div>
                     <p className="text-[10px] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[3%]">
@@ -424,37 +429,41 @@ const DataTopUpPage = () => {
                   <img
                     src={DataVoucherPopUp}
                     alt=""
-                    className="img mx-auto mt-[20px] md:mt-[5%] md:w-[30%] md:h-[70%] md:mx-auto w-[143px] h-[100px] lg:w-[300px] lg:h-[200px] lg:mx-auto lg:mt-[8%] 2xl:mt-[10%] 2xl:mx-auto"
+                    className="img3 mobile-desktop mx-auto mt-[20px] md:mt-[2%] md:w-[30%] md:h-[70%] md:mx-auto w-[143px] h-[100px] lg:w-[300px] lg:h-[200px] lg:mx-auto lg:mt-[8%] 2xl:mt-[5%] 2xl:mx-auto"
                   />
                 </div>
+                <div className="mobile-desktop mt-[20px] flex flex-col gap-[5px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
+                  <p className="text-[8px] font-extrabold text-end float-right ml-[60%] md:ml-[70%] md:text-[12px] mt-[10px] lg:text-[13px] 2xl:text-[15px]">
+                    Coming Soon...
+                  </p>
+                  <button
+                    className={` ${
+                      isDarkMode ? "border" : "bg-[#04177f] "
+                    } cursor-pointer text-white text-[10px] h-[40px] rounded-[5px] md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[25%] lg:mx-auto`}
+                    onClick={resetActiveButton}
+                    handleClick={activeIndex}
+                  >
+                    Okay
+                  </button>
+                </div>
               </div>
-              <div className="mt-[30px] flex flex-col gap-[5px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
-                <p className="text-[8px] font-extrabold text-end float-right ml-[60%] md:ml-[70%] md:text-[12px] mt-[10px] lg:text-[13px] 2xl:text-[15px]">
-                  Coming Soon...
-                </p>
-                <button
-                  className={` ${
-                    isDarkMode ? "border" : "bg-[#04177f] "
-                  } cursor-pointer text-white text-[10px] h-[40px] rounded-[5px] md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[25%] lg:mx-auto`}
-                  onClick={resetActiveButton}
-                  handleClick={activeIndex}
-                >
-                  Okay
-                </button>
-              </div>
-            </WalletModal>
+            </Modal>
           )}
 
           {dataSchedlue && (
-            <WalletModal>
-              <div className="text-center flex justify-center item-center md:mt-[-20px] lg:mt-[15px] 2xl:mt-[-15px]">
+            <Modal>
+              <div
+                className={`${
+                  toggleSideBar ? "datapopup011" : "datapopup1 datapopup2 "
+                } bg-white `}
+              >
                 <div
                   className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
-                    flex flex-col justify-center z-[100] lg:ml-[10px] md:w-full`}
+  flex flex-col justify-center z-[100] lg:ml-[10px] items-center`}
                 >
                   <div>
                     <p className="text-[10px] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[3%]">
-                      Data Schedule
+                      Data Schedlue
                     </p>
                     <p className="text-[10px] md:text-[16px] font-[600] text-[#04177F] lg:text-[16px]">
                       This Feature is Currently Not Available.
@@ -463,37 +472,41 @@ const DataTopUpPage = () => {
                   <img
                     src={DataSchedulePopUp}
                     alt=""
-                    className="img mx-auto mt-[20px] md:mt-[5%] md:w-[30%] md:h-[70%] md:mx-auto w-[143px] h-[100px] lg:w-[300px] lg:h-[200px] lg:mx-auto lg:mt-[8%] 2xl:mt-[10%] 2xl:mx-auto"
+                    className="img2 mobile-desktop mx-auto mt-[20px] md:mt-[5%] md:w-[30%] md:h-[70%] md:mx-auto w-[143px] h-[100px] lg:w-[300px] lg:h-[200px] lg:mx-auto lg:mt-[8%] 2xl:mt-[5%] 2xl:mx-auto"
                   />
                 </div>
+                <div className="mobile-desktop mt-[20px] flex flex-col gap-[5px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
+                  <p className="text-[8px] font-extrabold text-end float-right ml-[60%] md:ml-[70%] md:text-[12px] mt-[10px] lg:text-[13px] 2xl:text-[15px]">
+                    Coming Soon...
+                  </p>
+                  <button
+                    className={` ${
+                      isDarkMode ? "border" : "bg-[#04177f] "
+                    } cursor-pointer text-white text-[10px] h-[40px] rounded-[5px] md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[25%] lg:mx-auto`}
+                    onClick={resetActiveButton}
+                    handleClick={activeIndex}
+                  >
+                    Okay
+                  </button>
+                </div>
               </div>
-              <div className="mt-[30px] flex flex-col gap-[5px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
-                <p className="text-[8px] font-extrabold text-end float-right ml-[60%] md:ml-[70%] md:text-[12px] mt-[10px] lg:text-[13px] 2xl:text-[15px]">
-                  Coming Soon...
-                </p>
-                <button
-                  className={` ${
-                    isDarkMode ? "border" : "bg-[#04177f] "
-                  } cursor-pointer text-white text-[10px] h-[40px] rounded-[5px] md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[25%] lg:mx-auto`}
-                  onClick={resetActiveButton}
-                  handleClick={activeIndex}
-                >
-                  Okay
-                </button>
-              </div>
-            </WalletModal>
+            </Modal>
           )}
 
           {bulkData && (
-            <WalletModal>
-              <div className="text-center flex justify-center item-center md:mt-[-20px] lg:mt-[15px] 2xl:mt-[-15px]">
+            <Modal>
+              <div
+                className={`${
+                  toggleSideBar ? "datapopup011" : "datapopup1 datapopup2 "
+                } bg-white `}
+              >
                 <div
                   className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
-                    flex flex-col justify-center z-[100] lg:ml-[10px] md:w-full`}
+  flex flex-col justify-center z-[100] lg:ml-[10px] items-center`}
                 >
                   <div>
                     <p className="text-[10px] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[3%]">
-                      Bulk Data
+                      Data Data
                     </p>
                     <p className="text-[10px] md:text-[16px] font-[600] text-[#04177F] lg:text-[16px]">
                       This Feature is Currently Not Available.
@@ -502,27 +515,46 @@ const DataTopUpPage = () => {
                   <img
                     src={BulkDataPopUp}
                     alt=""
-                    className="img mx-auto mt-[20px] md:mt-[5%] md:w-[30%] md:h-[70%] md:mx-auto w-[143px] h-[100px] lg:w-[300px] lg:h-[200px] lg:mx-auto lg:mt-[8%] 2xl:mt-[10%] 2xl:mx-auto"
+                    className="img2 mobile-desktop mx-auto mt-[20px] md:mt-[5%] md:w-[30%] md:h-[70%] md:mx-auto w-[143px] h-[100px] lg:w-[300px] lg:h-[200px] lg:mx-auto lg:mt-[8%] 2xl:mt-[5%] 2xl:mx-auto"
                   />
                 </div>
+                <div className="mobile-desktop mt-[20px] flex flex-col gap-[5px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
+                  <p className="text-[8px] font-extrabold text-end float-right ml-[60%] md:ml-[70%] md:text-[12px] mt-[10px] lg:text-[13px] 2xl:text-[15px]">
+                    Coming Soon...
+                  </p>
+                  <button
+                    className={` ${
+                      isDarkMode ? "border" : "bg-[#04177f] "
+                    } cursor-pointer text-white text-[10px] h-[40px] rounded-[5px] md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[25%] lg:mx-auto`}
+                    onClick={resetActiveButton}
+                    handleClick={activeIndex}
+                  >
+                    Okay
+                  </button>
+                </div>
               </div>
-              <div className="mt-[30px] flex flex-col gap-[5px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
-                <p className="text-[8px] font-extrabold text-end float-right ml-[60%] md:ml-[70%] md:text-[12px] mt-[10px] lg:text-[13px] 2xl:text-[15px]">
-                  Coming Soon...
-                </p>
-                <button
-                  className={` ${
-                    isDarkMode ? "border" : "bg-[#04177f] "
-                  } cursor-pointer text-white text-[10px] h-[40px] rounded-[5px] md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[25%] lg:mx-auto`}
-                  onClick={resetActiveButton}
-                  handleClick={activeIndex}
-                >
-                  Okay
-                </button>
-              </div>
-            </WalletModal>
+            </Modal>
           )}
         </section>
+
+        <div
+          className={`${
+            isDarkMode ? "" : ""
+          } flex gap-[15px] justify-center items-center mt-[100%] pb-[25%] md:pb-[2%] md:mt-[40%] lg:mt-[40%] lg:pb-0`}
+        >
+          <div className="text-[10px] md:text-[12px] lg:text-[14px]">
+            You need help ?
+          </div>
+          <Link to="/ContactUs">
+            <div
+              className={`${
+                isDarkMode ? "border" : "bg-[#04177f]"
+              } text-[10px] p-1 text-white rounded-[8px] lg:text-[18px]`}
+            >
+              Contact Us
+            </div>
+          </Link>
+        </div>
       </div>
     </DashBoardLayout>
   );

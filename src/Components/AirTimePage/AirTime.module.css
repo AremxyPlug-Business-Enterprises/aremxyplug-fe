@@ -108,6 +108,16 @@
     text-align: center;
     margin: 0 auto;
 }
+.timeAble h5 {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0em;
+    color: #04177F;
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+}
 .NotInter .InterAirtime {
     margin: 0 auto;
     position: relative;
@@ -115,6 +125,15 @@
 .InterAirtime img {
     width: 250px;
     height: 150px;
+    margin: 0 auto;
+}
+.NotInter .InterAirtimeK {
+    margin: 0 auto;
+    position: relative;
+}
+.InterAirtimeK img {
+    width: 250px;
+    height: 200px;
     margin: 0 auto;
 }
 .NotInter .coming {
@@ -161,6 +180,11 @@
     margin: 0 auto;
     position: relative;
 }  
+.NotInterX .timeAbleK {
+    text-align: center;
+    margin: 40px auto 0;
+    position: relative;
+}  
 .timeAbleX h2 {
     font-size: 16px;
     font-weight: 600;
@@ -172,6 +196,16 @@
     margin: 0 auto 10px;
 }
 .timeAbleX h3 {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0em;
+    color: #04177F;
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+}
+.timeAbleK h3 {
     font-size: 16px;
     font-weight: 600;
     line-height: 24px;
@@ -404,6 +438,15 @@
         width: 100%;
         margin: 0 auto;
     }
+    .timeAble h5 {
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 14px;
+        letter-spacing: 0em;
+        color: #04177F;
+        width: 100%;
+        margin: 0 auto;
+    }
     .NotInter .InterAirtime {
         margin: 0 auto;
         position: relative;
@@ -412,6 +455,16 @@
     .InterAirtime img {
         width: 146.12px;
         height: 88px;
+        margin: 0 auto;
+    }
+    .NotInter .InterAirtimeK {
+        margin: 0 auto;
+        position: relative;
+        left: 0;
+    }
+    .InterAirtimeK img {
+        width: 146.12px;
+        height: 100px;
         margin: 0 auto;
     }
     .NotInter .coming {
@@ -456,6 +509,11 @@
         margin: 0 auto;
         left: 0;
     }  
+    .NotInterX .timeAbleK {
+        text-align: center;
+        margin: 10px auto 0;
+        left: 0;
+    }  
     .timeAbleX h2 {
         font-size: 9px;
         font-weight: 600;
@@ -466,6 +524,15 @@
         margin: 0 auto 10px;
     }
     .timeAbleX h3 {
+        font-size: 9px;
+        font-weight: 600;
+        line-height: 14px;
+        letter-spacing: 0em;
+        color: #04177F;
+        width: 100%;
+        margin: 0 auto;
+    }
+    .timeAbleK h3 {
         font-size: 9px;
         font-weight: 600;
         line-height: 14px;
@@ -792,6 +859,14 @@
         color: #04177F;
         margin: 0 auto;
     }
+    .timeAble h5 {
+        font-size: 10px;
+        font-weight: 600;
+        line-height: 12px;
+        letter-spacing: 0em;
+        color: #04177F;
+        margin: 0 auto;
+    }
     .NotInter .InterAirtime {
         margin: 0 auto;
         position: relative;
@@ -800,6 +875,16 @@
     .InterAirtime img {
         width: 146px;
         height: 88.02px;
+        margin: 0 auto;
+    }
+    .NotInter .InterAirtimeK {
+        margin: 0 auto;
+        position: relative;
+        left: 0;
+    }
+    .InterAirtimeK img {
+        width: 146px;
+        height: 100.02px;
         margin: 0 auto;
     }
     .NotInter .coming {
@@ -847,6 +932,13 @@
         position: relative;
         left: 0;
     }  
+    .NotInterX .timeAbleK {
+        text-align: center;
+        margin-top: 15px; 
+        width: 100%;
+        position: relative;
+        left: 0;
+    }  
     .timeAbleX h2 {
         font-size: 10px;
         font-weight: 600;
@@ -856,6 +948,14 @@
         margin: 0 auto 10px;
     }
     .timeAbleX h3 {
+        font-size: 10px;
+        font-weight: 600;
+        line-height: 12px;
+        letter-spacing: 0em;
+        color: #04177F;
+        margin: 0 auto;
+    }
+    .timeAbleK h3 {
         font-size: 10px;
         font-weight: 600;
         line-height: 12px;

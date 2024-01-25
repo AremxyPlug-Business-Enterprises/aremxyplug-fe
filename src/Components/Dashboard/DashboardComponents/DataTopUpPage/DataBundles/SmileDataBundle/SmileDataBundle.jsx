@@ -19,13 +19,21 @@ import Cancel from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/Cancel.svg";
 import "../../../DataTopUpPage/DataTopUp.css";
 import { Modal } from "../../../../../Screens/Modal/Modal";
 import OtpInput from "react-otp-input";
+<<<<<<< HEAD
 import styles from "../../../TransferComponent/transfer.module.css";
+=======
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import Joi, { number } from "joi";
 import airtimestyles from "../../../../../AirTimePage/AirtimeVtu.module.css";
 import AccountID from "../SmileDataBundle/SmileDataBundleImages/AccountId.svg";
+<<<<<<< HEAD
 import { SmileReceipt } from "./SmileReceipt"
+=======
+import { SmileReceipt } from "./SmileReceipt";
+import EmailId from "./SmileDataBundleImages/EmailId.svg";
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
 // import { DataBundleFailedPopUp } from "../../../TransferComponent/PopUps/TransactionFailedPopUp";
 
 const SmileDataBundle = () => {
@@ -39,7 +47,11 @@ const SmileDataBundle = () => {
   const { recipientNames, setRecipientNames } = useContext(ContextProvider);
   const { walletName, setWalletName } = useContext(ContextProvider);
   const { accountId, setAccountId } = useContext(ContextProvider);
+<<<<<<< HEAD
   const [email, setEmail] = useState("");
+=======
+  const { emailId, setEmailId } = useContext(ContextProvider);
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
 
   const [showProductList, setShowProductList] = useState(false);
   const [showOptionList, setShowOptionList] = useState(false);
@@ -52,6 +64,13 @@ const SmileDataBundle = () => {
   const [showPayment, setShowPayment] = useState(false);
   const [image, setImage] = useState("");
   const [paymentAmount, setPaymentAmount] = useState("");
+<<<<<<< HEAD
+=======
+  const [accountIdInputColor, setAccountIdInputColor] = useState("#92ABFE2E");
+  const [input, setInput] = useState("");
+  const [emailError, setEmailError] = useState("");
+
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
   // const [codes, setCodes] = useState(false);
 
   const points = "+2.00";
@@ -163,6 +182,7 @@ const SmileDataBundle = () => {
     console.log("did not add recipient");
   }
 
+<<<<<<< HEAD
   const [errorMessage, setErrorMessage] = useState('');
   const [showAccountId, setShowAccountId] = useState("");
 
@@ -172,11 +192,32 @@ const SmileDataBundle = () => {
 
     if (emailRegex.test(input) || numberRegex.test(input)) {
       return true; 
+=======
+  const [errorMessage, setErrorMessage] = useState("");
+  const [showAccountId, setShowAccountId] = useState("");
+
+  const isEmailOrNumberValid = (input) => {
+    const textRegex = /^[A-Za-z\d]{6,15}$/;
+    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{3}$/i;
+    const numberRegex = /^\d{11}$/;
+
+    if (emailRegex.test(input)) {
+      return true;
+    }
+
+    if (numberRegex.test(input)) {
+      return true;
+    }
+
+    if (textRegex.test(input)) {
+      return true;
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
     }
     return false;
   };
 
   const handleValidate = () => {
+<<<<<<< HEAD
 
     if (isEmailOrNumberValid(email) || isEmailOrNumberValid(number)) {
       setErrorMessage('')
@@ -185,6 +226,18 @@ const SmileDataBundle = () => {
     } else {
       setErrorMessage('Invalid Email or Smile Account ID')
     setShowAccountId(false);
+=======
+    if (isEmailOrNumberValid(input) || isEmailOrNumberValid(number)) {
+      setErrorMessage("");
+      setAccountId(input);
+      setShowAccountId(true);
+      setAccountIdInputColor("#2ED173");
+      setInput("");
+    } else {
+      setErrorMessage("Invalid Email Or Smile Account ID");
+      setShowAccountId(false);
+      setAccountIdInputColor("#F95252");
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
     }
   };
 
@@ -340,10 +393,30 @@ const SmileDataBundle = () => {
     },
   ];
 
+<<<<<<< HEAD
   const handleProceed = (e) => {
     // setProceed(true);
     // e.preventDefault();
 
+=======
+  const handleInputChange = (event) => {
+    const newEmail = event.target.value;
+    setEmailId(newEmail);
+    // validateEmail(newEmail);
+  };
+
+  const handleProceed = (e) => {
+    // Email validation
+    const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{3}$/i;
+
+    if (emailPattern.test(emailId)) {
+      setEmailError("");
+    } else {
+      setEmailError("Invalid email address");
+    }
+
+    // Schema validation
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
     const { error } = schema.validate({
       recipientPhoneNumber,
     });
@@ -355,6 +428,7 @@ const SmileDataBundle = () => {
           return acc;
         }, {})
       );
+<<<<<<< HEAD
     } else {
       setProceed(true);
       setErrors({});
@@ -362,6 +436,19 @@ const SmileDataBundle = () => {
   };
 
 
+=======
+    }
+
+    // Set proceed based on both email and schema validation
+    if (emailPattern.test(emailId) && !error) {
+      setProceed(true);
+      setErrors({});
+    } else {
+      setProceed(false);
+    }
+  };
+
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
   const schema = Joi.object({
     recipientPhoneNumber: Joi.string()
       .pattern(new RegExp(/^\d{11,}/))
@@ -400,6 +487,7 @@ const SmileDataBundle = () => {
     setRecipientNames(e.target.value);
   };
 
+<<<<<<< HEAD
   const handleAccountId = (e) => {
     // setAccountId(e.target.value);
     const value = e.target.value;
@@ -408,6 +496,16 @@ const SmileDataBundle = () => {
 
     setAccountId(numericValue);
   };
+=======
+  // const handleAccountId = (e) => {
+  //   // setAccountId(e.target.value);
+  //   const value = e.target.value;
+
+  //   const numericValue = value.replace(/\D/g, "").slice(0, 11);
+
+  //   setAccountId(numericValue);
+  // };
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
 
   const handleReceipt = () => {
     setTransactSuccessPopUp(false);
@@ -429,7 +527,11 @@ const SmileDataBundle = () => {
             isDarkMode
               ? "bg-[#000] text-[#fff] border-[#fff]"
               : "bg-[#ffffff] text-[#000] "
+<<<<<<< HEAD
           } `}
+=======
+          }`}
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
         >
           <div
             id="DataBundle"
@@ -511,6 +613,7 @@ const SmileDataBundle = () => {
             </div>
             <div className="hidden md:w-[50%] md:block"></div>
           </div>
+<<<<<<< HEAD
 
           <div className="flex items-center my-[10%] gap-[8px] md:my-[5%] md:text-[18px] lg:text-[20px] md:hidden">
             <p className="text-[#7c7c7c] text-[10px] leading-[130%] md:text-[18px] lg:text-[20px] 2xl:text-[28px]">
@@ -526,12 +629,21 @@ const SmileDataBundle = () => {
           <div className="flex gap-[15px]  justify-between md:w-full md:gap-[10%]">
             <div className="flex gap-[15px] md:w-[50%] md:justify-between">
               <p className="flex text-[#7c7c7c] gap-[7px] text-[10px] md:gap-[7px] leading-[130%] md:text-[12px] lg:text-[20px] 2xl:text-[28px]">
+=======
+          <div className="flex gap-[15px]  justify-between md:w-full md:gap-[10%]">
+            <div className="flex gap-[15px] md:w-[50%] md:justify-between">
+              <p className="flex text-[#7c7c7c] gap-[7px] text-[10px] md:gap-[7px] leading-[130%] md:text-[12px] lg:text-[16px] 2xl:text-[20px]">
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
                 Purchase
                 <span>
                   <img
                     src={SmileLogo}
                     alt=""
+<<<<<<< HEAD
                     className="md:w-[20px] md:h-[15px] mt-[px] lg:w-[30px] lg:h-[25px] 2xl:mt-[5px]"
+=======
+                    className="h-[20px] md:w-[20px] md:h-[30px] md:mt-[-10px] mt-[-5px] lg:w-[40px] lg:h-[40px] 2xl:mt-[5px]"
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
                   />
                 </span>{" "}
                 Smile Data Instantly
@@ -545,6 +657,7 @@ const SmileDataBundle = () => {
             <div className="md:w-[50%]"></div>
           </div>
 
+<<<<<<< HEAD
           {/* {codes && (
             <Modal>
               (
@@ -616,6 +729,11 @@ const SmileDataBundle = () => {
           {/* =========================PRODUCTS============================== */}
 
           <div className="grid grid-cols-1 mt-[50px] md:grid-cols-2 gap-y-[20px] md:gap-x-[58.68px] lg:gap-x-[100px] md:gap-y-[15px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[40px]">
+=======
+          {/* =========================PRODUCTS============================== */}
+
+          <div className="grid grid-cols-1 mt-[25px] md:grid-cols-2 gap-y-[20px] md:gap-x-[58.68px] lg:gap-x-[100px] md:gap-y-[15px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[20px]">
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
             <div className="relative">
               <h2 className="lg:text-[18px] lg:leading-[24px] mb-1 text-[10px] md:text-[12px] font-[600] leading-[12px]">
                 Select Product
@@ -707,6 +825,7 @@ const SmileDataBundle = () => {
 
             <div className="">
               <input
+<<<<<<< HEAD
                   type="text"
                   className="input border w-full h-[30px] bg-[#92ABFE2E] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-center text-[10px] text-[#7C7C7C] font-[600] leading-[12px] md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] text-center"
                   placeholder="Registered Email or Smile Account ID"
@@ -716,11 +835,23 @@ const SmileDataBundle = () => {
                     setErrorMessage('');
                   }}
                 />
+=======
+                type="text"
+                className="input border w-full h-[30px] bg-[#92ABFE2E] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-center text-[10px] text-[#7C7C7C] font-[600] leading-[12px] md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] text-start custom-placeholder"
+                placeholder="Registered Email or Smile Account ID"
+                value={input}
+                onChange={(event) => {
+                  setInput(event.target.value);
+                  setErrorMessage("");
+                }}
+              />
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
             </div>
 
             <div className="">
               <button
                 className={`w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[600] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px] ${
+<<<<<<< HEAD
                   !email 
                     ? "bg-[#63616188] cursor-not-allowed"
                     : "bg-primary"
@@ -728,6 +859,13 @@ const SmileDataBundle = () => {
                 disabled={
                   !email 
                 }
+=======
+                  !input ? "bg-primary cursor-not-allowed" : "bg-primary"
+                }`}
+                // disabled={
+                //   !email
+                // }
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
                 onClick={() => {
                   handleValidate();
                 }}
@@ -745,10 +883,18 @@ const SmileDataBundle = () => {
                   type="text"
                   className="input border w-full h-8 px-4 rounded-md text-[10px] lg:text-[16px] font-[600] focus:outline-none lg:h-[51px]"
                   placeholder=""
+<<<<<<< HEAD
                   value={showAccountId ? accountId : ''}
                   readOnly
                   onChange={(event) => {
                     handleAccountId(event);
+=======
+                  value={showAccountId ? accountId : ""}
+                  readOnly
+                  style={{ borderColor: accountIdInputColor }}
+                  onChange={(event) => {
+                    // handleAccountId(event);
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
                     setAccountId(event.target.value);
                   }}
                 />
@@ -760,12 +906,55 @@ const SmileDataBundle = () => {
                   />
                 </div>
               </div>
+<<<<<<< HEAD
+=======
+              {errorMessage && (
+                <p className="text-[10px] text-red-500 lg:text-[14px]">
+                  {errorMessage}
+                </p>
+              )}
+            </div>
+
+            <div className="">
+              <h2 className="text-[10px] font-[600] md:text-[12px] lg:text-[18px]">
+                Email ID{" "}
+              </h2>
+              <div className="relative mt-[5px]">
+                <input
+                  type="text"
+                  className="input border w-full h-8 px-4 rounded-md text-[10px] lg:text-[16px] font-[600] focus:outline-none lg:h-[51px]"
+                  placeholder=""
+                  value={emailId}
+                  onChange={handleInputChange}
+                />
+                <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                  <img
+                    src={EmailId}
+                    alt=""
+                    className="lg:w-[100%] lg:h-[50%]"
+                  />
+                </div>
+              </div>
+              {emailError && (
+                <p className="text-[10px] text-red-500 lg:text-[14px]">
+                  {emailError}
+                </p>
+              )}
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
             </div>
 
             <div className="">
               <h2 className="text-[10px] font-[600] md:text-[12px] lg:text-[18px]">
                 Phone Number{" "}
+<<<<<<< HEAD
                 <span className="text-[#04177F]">(Select Recipient)</span>{" "}
+=======
+                <span className="text-[#04177F]">
+                  <Link to="/DataBundleSelectRecipient">
+                    (Select Recipient)
+                  </Link>
+                  </span>{" "}
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
               </h2>
               <div className="relative mt-[5px]">
                 <input
@@ -786,6 +975,7 @@ const SmileDataBundle = () => {
                   />
                 </div>
               </div>
+<<<<<<< HEAD
             </div>
 
             {errors.recipientPhoneNumber && (
@@ -794,6 +984,15 @@ const SmileDataBundle = () => {
               </div>
             )}
 
+=======
+              {errors.recipientPhoneNumber && (
+                <p className="text-[10px] text-red-500 lg:text-[14px]">
+                  {errors.recipientPhoneNumber}
+                </p>
+              )}
+            </div>
+
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
             <div className="">
               <h2 className="text-[10px] font-[600] md:text-[12px] lg:text-[18px]">
                 Recipient Name<span className="text-[#7C7C7C]">(optional)</span>{" "}
@@ -840,7 +1039,11 @@ const SmileDataBundle = () => {
 
             <div>
               <div onClick={handleShowPayment}>
+<<<<<<< HEAD
                 <h2 className="lg:text-[18px] lg:leading-[24px] mb-2 text-[10px] md:text-[12px] font-[600] leading-[12px]">
+=======
+                <h2 className="lg:text-[18px] mt-[5px] lg:leading-[24px] mb-2 text-[10px] md:text-[12px] font-[600] leading-[12px]">
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
                   Payment Method
                 </h2>
                 <div className="input flex justify-between items-center border w-full h-8 px-2 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px]">
@@ -855,7 +1058,14 @@ const SmileDataBundle = () => {
                       </h2>
                     </li>
                   ) : (
+<<<<<<< HEAD
                     <h2 onClick={handleShowPayment} className="text-[10px] lg:text-[14px]">
+=======
+                    <h2
+                      onClick={handleShowPayment}
+                      className="text-[10px] lg:text-[14px]"
+                    >
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
                       Select Payment Method
                     </h2>
                   )}
@@ -881,11 +1091,21 @@ const SmileDataBundle = () => {
                 </div>
               </div>
               {showPayment && (
+<<<<<<< HEAD
                 <div className={`border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute ${
                   toggleSideBar
                     ? "w-full md:w-[44.5%] lg:w-[45%] 2xl:w-[46%]"
                     : "w-full md:w-[46%] 2xl:w-[46.5%]"
                 } bg-[#FFF] z-[100]`}>
+=======
+                <div
+                  className={`border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute ${
+                    toggleSideBar
+                      ? "w-full md:w-[44.5%] lg:w-[45%] 2xl:w-[46%]"
+                      : "w-full md:w-[46%] 2xl:w-[46.5%]"
+                  } bg-[#FFF] z-[100]`}
+                >
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
                   {countryList.map((country) => (
                     <Payment
                       key={country.id}
@@ -922,15 +1142,19 @@ const SmileDataBundle = () => {
             </div>
           </div>
 
+<<<<<<< HEAD
           {errorMessage && (
         <p className="text-red-500 text-start text-[10px] mt-[5px]">{errorMessage}</p>
       )}
 
+=======
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
           {/* ================Proceed=================== */}
 
           {proceed && (
             <Modal>
               <div
+<<<<<<< HEAD
                 className={`confirm mx-[5%] ${
                   isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
                 } ${
@@ -938,6 +1162,13 @@ const SmileDataBundle = () => {
                     ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
                     : "lg:w-[40%]"
                 } lg:ml-[10%] lg:mr-[10%] grow pt-[10px] md:mt-[1%] mb-0 pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:mb-[18%] overflow-auto`}
+=======
+                className={` scroll-bar ${
+                  isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
+                } ${
+                  toggleSideBar ? "confirm01" : "confirm"
+                } grow pt-[10px] pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto overflow-auto`}
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
               >
                 <div className="w-full flex justify-end border-b-[6px] border-primary px-[12px] md:h-[25px] lg:border-b-[10px] lg:mt-[20px]">
                   <img
@@ -964,7 +1195,11 @@ const SmileDataBundle = () => {
                         Network
                       </h2>
                       <div className="flex gap-1">
+<<<<<<< HEAD
                         <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
+=======
+                        <div className="h-[20px] md:w-[20px] md:h-[30px] md:mt-[-10px] mt-[-5px] lg:w-[40px] lg:h-[40px] 2xl:mt-[5px]">
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
                           <img
                             src={SmileLogo}
                             alt=""
@@ -972,7 +1207,11 @@ const SmileDataBundle = () => {
                           />
                         </div>
                         <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+<<<<<<< HEAD
                           Smile
+=======
+                          SMILE
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
                         </h2>
                       </div>
                     </div>
@@ -983,7 +1222,11 @@ const SmileDataBundle = () => {
                       </h2>
                       <div className="flex gap-1">
                         <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+<<<<<<< HEAD
                           {selectedNetworkProduct}
+=======
+                          SMILE NETWORK
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
                         </h2>
                       </div>
                     </div>
@@ -993,7 +1236,11 @@ const SmileDataBundle = () => {
                         Plan
                       </h2>
                       <div className="flex gap-1">
+<<<<<<< HEAD
                         <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+=======
+                        <h2 className="text-[10px] leading-[12px] md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
                           {selectedOption}
                         </h2>
                       </div>
@@ -1001,6 +1248,7 @@ const SmileDataBundle = () => {
 
                     <div className="flex items-center justify-between">
                       <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+<<<<<<< HEAD
                         Registered Email
                       </h2>
                       <div className="flex gap-1">
@@ -1016,6 +1264,12 @@ const SmileDataBundle = () => {
                       </h2>
                       <div className="flex gap-1">
                         <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+=======
+                        Account ID
+                      </h2>
+                      <div className="flex gap-1">
+                        <h2 className="text-[10px] leading-[12px] md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
                           {accountId}
                         </h2>
                       </div>
@@ -1023,6 +1277,31 @@ const SmileDataBundle = () => {
 
                     <div className="flex items-center justify-between">
                       <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+<<<<<<< HEAD
+=======
+                        Email ID
+                      </h2>
+                      <div className="flex gap-1">
+                        <h2 className="text-[10px] leading-[12px] md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                          {emailId}
+                        </h2>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                        Phone Number
+                      </h2>
+                      <div className="flex gap-1">
+                        <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                          {inputValue}
+                        </h2>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
                         Recipient Name
                       </h2>
                       <div className="flex gap-1">
@@ -1118,6 +1397,7 @@ const SmileDataBundle = () => {
           {confirm && (
             <Modal>
               <div
+<<<<<<< HEAD
                 className={`confirm2 ${styles.inputPin} ${
                   toggleSideBar
                     ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
@@ -1170,6 +1450,62 @@ const SmileDataBundle = () => {
                   <p className="text-[8px] md:text-[12px] text-[#04177f]">
                     Forgot Pin ?
                   </p>
+=======
+                className={` ${
+                  toggleSideBar ? "confirm02" : "confirm2"
+                } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
+              >
+                <div className="flex justify-end px-2">
+                  <img
+                    onClick={() => setConfirm(false)}
+                    className="cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[35px] lg:h-[35px] "
+                    src={Cancel}
+                    alt=""
+                  />
+                </div>
+
+                <hr className="h-[6px] bg-[#04177f] lg:mt-[2%] border-none mt-[2%] md:mt-[2%] md:h-[10px]" />
+                <div className="md:mt-[15%] lg:mt-[10%]">
+                  <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[8%] md:my-[5%] lg:my-[3%]">
+                    Input PIN to complete transaction
+                  </p>
+                  <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
+                    <div className=" flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
+                      {" "}
+                      {isVisible ? (
+                        <OtpInput
+                          value={inputPin}
+                          inputType="tel"
+                          onChange={setInputPin}
+                          numInputs={4}
+                          shouldAutoFocus={true}
+                          inputStyle={{
+                            color: "#403f3f",
+                            width: 30,
+                            height: 30,
+                            borderRadius: 3,
+                          }}
+                          renderInput={(props) => (
+                            <input {...props} className="inputOTP mx-[3px]" />
+                          )}
+                        />
+                      ) : (
+                        <div className="text-[24px] md:text-[24px] mt-1">
+                          * * * *{" "}
+                        </div>
+                      )}
+                      <div
+                        className="text-[#0003] text-xl md:text-3xl"
+                        onClick={toggleVisibility}
+                      >
+                        {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
+                      </div>
+                    </div>
+                    <p className="text-[8px] md:text-[12px] text-[#04177f]">
+                      Forgot Pin ?
+                    </p>
+                  </div>
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
                 </div>
 
                 <button
@@ -1181,7 +1517,11 @@ const SmileDataBundle = () => {
                   disabled={inputPin.length !== 4}
                   className={`${
                     inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
+<<<<<<< HEAD
                   } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+=======
+                  } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
                 >
                   Purchase
                 </button>
@@ -1193,11 +1533,17 @@ const SmileDataBundle = () => {
             <Modal>
               {/* <DataBundleFailedPopUp/> */}
               <div
+<<<<<<< HEAD
                 className={`confirm ${styles.successfulTwo} ${
                   toggleSideBar
                     ? "md:w-[45%] md:ml-[20%] lg:ml-[20%] lg:w-[40%]"
                     : "lg:w-[40%]"
                 } md:w-[45%] w-[90%] md:my-auto md:mt-[.5%] mx-auto overflow-auto md:mb-[18%] lg:mx-auto lg:my-auto`}
+=======
+                className={` scroll-bar ${
+                  toggleSideBar ? "confirm01 w-[90%]" : "confirm w-[90%]"
+                } bg-white rounded-[12px] md:my-auto mx-auto overflow-auto lg:mx-auto lg:my-auto`}
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
               >
                 <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
                   <img
@@ -1225,7 +1571,11 @@ const SmileDataBundle = () => {
                   Purchase Successful
                 </h2>
                 <img
+<<<<<<< HEAD
                   className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[250px] lg:h-[250px]"
+=======
+                  className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[100px] lg:h-[100px]"
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
                   src="./Gif/checkMarkGif.gif"
                   alt="/"
                 />
@@ -1244,7 +1594,11 @@ const SmileDataBundle = () => {
                       Network
                     </h2>
                     <div className="flex gap-1">
+<<<<<<< HEAD
                       <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
+=======
+                      <div className="h-[20px] md:w-[20px] md:h-[30px] md:mt-[-10px] mt-[-5px] lg:w-[40px] lg:h-[40px] 2xl:mt-[5px]">
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
                         <img
                           src={SmileLogo}
                           alt=""
@@ -1252,7 +1606,11 @@ const SmileDataBundle = () => {
                         />
                       </div>
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+<<<<<<< HEAD
                         Smile
+=======
+                        SMILE
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
                       </h2>
                     </div>
                   </div>
@@ -1263,7 +1621,11 @@ const SmileDataBundle = () => {
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+<<<<<<< HEAD
                         {selectedNetworkProduct}
+=======
+                        SMILE NETWORK
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
                       </h2>
                     </div>
                   </div>
@@ -1273,7 +1635,11 @@ const SmileDataBundle = () => {
                       Plan
                     </h2>
                     <div className="flex gap-1">
+<<<<<<< HEAD
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+=======
+                      <h2 className="text-[10px] leading-[12px] md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
                         {selectedOption}
                       </h2>
                     </div>
@@ -1281,6 +1647,7 @@ const SmileDataBundle = () => {
 
                   <div className="flex items-center justify-between">
                     <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+<<<<<<< HEAD
                       Registered Email
                     </h2>
                     <div className="flex gap-1">
@@ -1292,6 +1659,8 @@ const SmileDataBundle = () => {
 
                   <div className="flex items-center justify-between">
                     <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+=======
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
                       Account ID
                     </h2>
                     <div className="flex gap-1">
@@ -1301,7 +1670,22 @@ const SmileDataBundle = () => {
                     </div>
                   </div>
 
+<<<<<<< HEAD
                   {/* <div className="flex items-center justify-between">
+=======
+                  <div className="flex items-center justify-between">
+                    <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                      Email ID
+                    </h2>
+                    <div className="flex gap-1">
+                      <h2 className="text-[10px] leading-[12px] md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                        {emailId}
+                      </h2>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
                     <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
                       Phone Number
                     </h2>
@@ -1310,7 +1694,11 @@ const SmileDataBundle = () => {
                         {inputValue}
                       </h2>
                     </div>
+<<<<<<< HEAD
                   </div> */}
+=======
+                  </div>
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
 
                   <div className="flex items-center justify-between">
                     <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
@@ -1325,6 +1713,7 @@ const SmileDataBundle = () => {
 
                   <div className="flex items-center justify-between">
                     <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+<<<<<<< HEAD
                       Payment Method
                     </h2>
                     <div className="flex gap-1">
@@ -1337,6 +1726,9 @@ const SmileDataBundle = () => {
                   <div className="flex items-center justify-between">
                     <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
                       Total Amount
+=======
+                      Amount
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
@@ -1347,11 +1739,19 @@ const SmileDataBundle = () => {
 
                   <div className="flex items-center justify-between">
                     <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+<<<<<<< HEAD
                       Transaction Fee
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
                         0.00
+=======
+                      Payment Method
+                    </h2>
+                    <div className="flex gap-1">
+                      <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                        {walletName + " Wallet"}
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
                       </h2>
                     </div>
                   </div>
@@ -1439,6 +1839,7 @@ const SmileDataBundle = () => {
               Proceed
             </button>
           </div>
+<<<<<<< HEAD
 
           {/* =======================FOOTER=================================== */}
           <div className="flex gap-2 justify-center items-center mb-[15%] md:mt-40 mt-[50%] lg:mt-[50%]">
@@ -1453,6 +1854,29 @@ const SmileDataBundle = () => {
             </Link>
           </div>
         </section>
+=======
+        </section>
+
+        {/* =======================FOOTER=================================== */}
+        <div
+          className={`${
+            isDarkMode ? "" : ""
+          } flex gap-[15px] justify-center items-center mt-[100%] pb-[25%] md:pb-[12%] md:mt-[40%] lg:mt-[40%] lg:pb-0`}
+        >
+          <div className="text-[10px] md:text-[12px] lg:text-[14px]">
+            You need help ?
+          </div>
+          <Link to="/ContactUs">
+            <div
+              className={`${
+                isDarkMode ? "border" : "bg-[#04177f]"
+              } text-[10px] p-1 text-white rounded-[8px] lg:text-[18px]`}
+            >
+              Contact Us
+            </div>
+          </Link>
+        </div>
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
       </div>
     </DashBoardLayout>
   );

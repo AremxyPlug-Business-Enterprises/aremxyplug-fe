@@ -21,13 +21,14 @@ export const MainDashboard = () => {
   const { setHideNavbar, toggleSideBar, isDarkMode } =
     useContext(ContextProvider);
   const [visible, setVisibility] = useState(true);
-  const [activeButtons, setActiveButtons] = useState([false, false, false]);
+  const [activeButtons, setActiveButtons] = useState([true, false, false]);
   const [blur, setBlur] = useState(false);
   const [blurTwo, setBlurTwo] = useState(false);
-  const [blurThree, setBlurThree] = useState(false);
+  // const [blurThree, setBlurThree] = useState(false);
   const textRef = useRef(null);
   const [selected, setSelected] = useState("");
   const [selected2, setSelected2] = useState("");
+  const [symbol, setSymbol] = useState("₦");
 
   const handleCopyClick = () => {
     const text = textRef.current.innerText;
@@ -44,6 +45,7 @@ export const MainDashboard = () => {
   const visibilityHandler = () => {
     setVisibility(!visible);
   };
+
   const setNav = () => {
     setHideNavbar(true);
   };
@@ -77,13 +79,27 @@ export const MainDashboard = () => {
   const handleSelectedOption2 = (event) => {
     const clickedoption = event.target.value;
     setSelected2(clickedoption);
-    setBlurThree(
-      clickedoption === "USD" ||
-        clickedoption === "GBP" ||
-        clickedoption === "AUD" ||
-        clickedoption === "KES" ||
-        clickedoption === "EUR"
-    );
+    // setBlurThree(
+    //   clickedoption === "USD" ||
+    //     clickedoption === "GBP" ||
+    //     clickedoption === "AUD" ||
+    //     clickedoption === "KES" ||
+    //     clickedoption === "EUR" ||
+    //     clickedoption === "fiat"
+    // );
+    clickedoption === "NGN"
+      ? setSymbol("₦")
+      : clickedoption === "USD"
+      ? setSymbol("$")
+      : clickedoption === "GBP"
+      ? setSymbol("£")
+      : clickedoption === "AUD"
+      ? setSymbol("AU$")
+      : clickedoption === "KES"
+      ? setSymbol("KSh")
+      : clickedoption === "EUR"
+      ? setSymbol("€")
+      : setSymbol("");
     return;
   };
 
@@ -92,7 +108,7 @@ export const MainDashboard = () => {
       {/* ==============TOP BAR========== */}
       <TopBar />
 
-      <div className="w-[100%] ">
+      <div className="w-[100%]">
         {/* ============SIDE BAR========= */}
         {toggleSideBar && (
           <div className="absolute top-0 left-0 z-50">
@@ -199,8 +215,8 @@ export const MainDashboard = () => {
               </Link>
               <p
                 className={`${
-                  toggleSideBar ? "lg:text-[18px]" : "lg:text-[23px]"
-                } ${styles.walletText}`}
+                  toggleSideBar ? "lg:text-[18px]" : "lg:text-[24px]"
+                } ${styles.walletText} `}
               >
                 Available Balance
               </p>
@@ -217,19 +233,19 @@ export const MainDashboard = () => {
                   This feature is currently not available...
                 </div>
               )}
-              {blurThree && (
+              {/* {blurThree && (
                 <div
                   className={`${
                     isDarkMode ? " text-[#fff]" : "text-[#04177f]"
                   } ${
                     toggleSideBar
                       ? "backdrop-blur-[4.5px] md:absolute md:w-[80%] md:h-[65px] md:ml-[3%] md:text-[19px] md:text-center lg:absolute lg:mt-12 lg:font-extrabold lg:ml-[2%] lg:w-[14%] lg:text-[22px] lg:h-[50px] lg:left-[33%] text-[#04177f]"
-                      : "backdrop-blur-[4.5px] absolute w-[38%] right-[23%] h-[70px] text-[13px] font-bold text-center ml-[6%] pt-[5%] md:text-[20px] md:mt-[%] md:pb-[8%] md:pt-[0%] md:h-[40px] md:text-extrabold lg:text-[24px] lg:ml-[%] lg:w-[21%] lg:pb-0 lg:h-[60px] lg:flex lg:justify-center lg:items-center lg:mt-[2%] lg:right-[60%]"
+                      : "backdrop-blur-[4.5px] absolute w-[38%] right-[23%] h-[70px] text-[13px] font-bold text-center ml-[6%] pt-[5%] md:text-[20px] md:mt-[%] md:pb-[8%] md:pt-[0%] md:h-[40px] md:text-extrabold lg:text-[24px] lg:ml-[%] lg:w-[18%] lg:pb-0 lg:h-[60px] lg:flex lg:justify-center lg:items-center lg:mt-[2%] lg:right-[60%]"
                   } `}
                 >
                   Coming Soon...
                 </div>
-              )}
+              )} */}
               {/* ================= */}
               {!activeButtons[2] ? (
                 <div
@@ -238,6 +254,7 @@ export const MainDashboard = () => {
                   }`}
                 >
                   <select
+                  className={`${styles.selected}`}
                     name="curr"
                     id="curr"
                     onChange={handleSelectedOption2}
@@ -256,11 +273,11 @@ export const MainDashboard = () => {
                         toggleSideBar ? "lg:text-[19px]" : "lg:text-[37px]"
                       } text-[19px] leading-normal `}
                     >
-                      &#8358;5,000.00
+                      ******
                     </span>
                   ) : (
                     <span className="text-[19px] leading-normal lg:text-[37px]">
-                      **********
+                      {symbol}0.00
                     </span>
                   )}
                   <div onClick={visibilityHandler} className=" text-[#92ABFE]">
@@ -287,11 +304,11 @@ export const MainDashboard = () => {
                         toggleSideBar ? "lg:text-[19px]" : "lg:text-[37px]"
                       } text-[19px] leading-normal `}
                     >
-                      5000.00
+                      ******
                     </span>
                   ) : (
-                    <span className="text-[19px] leading-normal lg:text-[37px]">
-                      **********
+                    <span className="flex items-center text-[19px] leading-normal lg:text-[37px]">
+                      5000.00
                     </span>
                   )}
                   <div onClick={visibilityHandler} className=" text-[#92ABFE]">
@@ -317,13 +334,16 @@ export const MainDashboard = () => {
                   onClick={() => {
                     handleClick(0);
                     setBlur(false);
-                    setBlurThree();
+                    // setBlurThree();
                   }}
-                  className={`${styles.fcp2} ${
+                  value="fiat"
+                  className={`${styles.fcp2}  ${
+                    activeButtons[0]
+                      ? "bg-[#04177f] text-[#fff]"
+                      : " bg-[#92ABFE2E]"
+                  } ${
                     isDarkMode ? " border" : " "
-                  } bg-[#92ABFE2E] cursor-pointer w-[17%] md:w-[10%] flex py-[3.92px] justify-center items-center text-[7px] md:text-[10px] font-semibold leading-normal rounded-[10px] lg:text-[13px] lg:w-[16%] lg:py-[7.47px] lg:rounded-[19px] hover:bg-[#04177f] hover:text-white active:bg-[#04177f] ${
-                    activeButtons[0] ? "bg-[#04177f] " : "bg-[#92ABFE2E]"
-                  } `}
+                  } cursor-pointer w-[17%] md:w-[10%] flex py-[3.92px] justify-center items-center text-[7px] md:text-[10px] font-semibold leading-normal rounded-[10px] lg:text-[13px] lg:w-[16%] lg:py-[7.47px] lg:rounded-[19px] `}
                 >
                   Fiat
                 </div>
@@ -332,12 +352,14 @@ export const MainDashboard = () => {
                   onClick={() => {
                     handleClick(1);
                     setBlur(true);
-                    setBlurThree();
+                    // setBlurThree();
                   }}
                   className={`${styles.fcp2} ${
                     isDarkMode ? " border" : " "
-                  } md:text-[10px] md:w-[10%] bg-[#92ABFE2E] cursor-pointer w-[17%] flex py-[3.92px] justify-center items-center text-[7px] font-semibold leading-normal rounded-[10px] lg:w-[16%] lg:text-[13px] lg:py-[7.47px] lg:rounded-[19px]  hover:bg-[#04177f] hover:text-white active:bg-[#04177f]${
-                    activeButtons[1] ? "bg-[#04177f]" : "bg-[#92ABFE2E]"
+                  } md:text-[10px] md:w-[10%] cursor-pointer w-[17%] flex py-[3.92px] justify-center items-center text-[7px] font-semibold leading-normal rounded-[10px] lg:w-[16%] lg:text-[13px] lg:py-[7.47px] lg:rounded-[19px] ${
+                    activeButtons[1]
+                      ? "bg-[#04177f] text-[#fff]"
+                      : "bg-[#92ABFE2E]"
                   } `}
                 >
                   Crypto
@@ -347,12 +369,14 @@ export const MainDashboard = () => {
                   onClick={() => {
                     handleClick(2);
                     setBlur(false);
-                    setBlurThree();
+                    // setBlurThree();
                   }}
                   className={`${styles.fcp2} ${
                     isDarkMode ? " border" : " "
-                  } md:text-[10px] md:w-[10%] bg-[#92ABFE2E] cursor-pointer w-[17%] flex py-[3.92px] justify-center items-center text-[7px] font-semibold leading-normal rounded-[10px] lg:w-[16%] lg:text-[13px] lg:py-[7.47px] lg:rounded-[19px] hover:bg-[#04177f] hover:text-white active:bg-[#04177f]${
-                    activeButtons[2] ? "bg-[#04177f]" : "bg-[#92ABFE2E]"
+                  } md:text-[10px] md:w-[10%] cursor-pointer w-[17%] flex py-[3.92px] justify-center items-center text-[7px] font-semibold leading-normal rounded-[10px] lg:w-[16%] lg:text-[13px] lg:py-[7.47px] lg:rounded-[19px] ${
+                    activeButtons[2]
+                      ? "bg-[#04177f] text-[#fff]"
+                      : "bg-[#92ABFE2E]"
                   } `}
                 >
                   Points
@@ -380,13 +404,14 @@ export const MainDashboard = () => {
                 <div className="flex mt-[8%] gap-[30px] md:mt-[5%] lg:mt-[9%]">
                   <p
                     className={`${styles.GVA} ${
-                      toggleSideBar ? "lg:text-[10px]" : "lg:text-[21px]"
-                    } text-[11px] font-extrabold md:text-[17px] `}
+                      toggleSideBar ? "lg:text-[10px]" : "lg:text-[24px]"
+                    } text-[11px] font-extrabold `}
                   >
                     Global Virtual Accounts
                   </p>
 
                   <select
+                  className={`${styles.selected}`}
                     name="curr"
                     id="curr"
                     onChange={handleSelectedOption}
@@ -427,25 +452,25 @@ export const MainDashboard = () => {
                 <div
                   className={`${styles.virtualaccounttxt} ${
                     toggleSideBar ? "lg:text-[10px] lg:mt-[1%]" : ""
-                  } flex text-[10px] gap-[90px] md:gap-[110px] md:font-extrabold md:text-[15px]`}
+                  } flex text-[10px] gap-[90px] md:gap-[110px]  md:text-[15px]`}
                 >
-                  <div>Bank Name</div>
+                  <div className="md:font-semibold">Bank Name</div>
                   <div>SBI</div>
                 </div>
                 <div
                   className={`${styles.virtualaccounttxt} ${
                     toggleSideBar ? "lg:text-[10px]" : ""
-                  }  flex text-[10px] gap-[75px] md:gap-[80px] md:text-[15px] lg:font-extrabold`}
+                  }  flex text-[10px] gap-[75px] md:gap-[80px] md:text-[15px] `}
                 >
-                  <div>Account Name</div>
+                  <div className="md:font-semibold">Account Name</div>
                   <div>Habib Kamaldeen</div>
                 </div>
                 <div
                   className={`${styles.virtualaccounttxt} ${
                     toggleSideBar ? "lg:text-[10px]" : ""
-                  }  flex text-[10px] gap-[65px] md:gap-[60px] md:text-[15px] lg:font-extrabold`}
+                  }  flex text-[10px] gap-[65px] md:gap-[60px] md:text-[15px] `}
                 >
-                  <div>Account Number</div>
+                  <div className="md:font-semibold">Account Number</div>
                   <div className="flex items-center gap-[10px]">
                     <div ref={textRef}>1400 00xx xxxx</div>
                     <div
@@ -510,19 +535,20 @@ export const MainDashboard = () => {
                 <p>Withdraw</p>
               </div>
             </Link>
-            <Link to="/currencyConversion"
+            <Link
+              to="/currencyConversion"
               className={`${
                 isDarkMode ? " border bg-[#000]" : "bg-[#04177f]"
               } ${styles.button}`}
             >
-            <div className="flex items-center gap-[10%]">
-              <img
-                className="w-[11px] h-[11px] md:h-[20px] md:w-[20px] lg:w-[51px] lg:h-[51px]"
-                src="./Images/dashboardImages/convert.png"
-                alt="topup"
-              />
-              <p>Convert</p>
-            </div>
+              <div className="flex items-center gap-[10%]">
+                <img
+                  className="w-[11px] h-[11px] md:h-[20px] md:w-[20px] lg:w-[51px] lg:h-[51px]"
+                  src="./Images/dashboardImages/convert.png"
+                  alt="topup"
+                />
+                <p>Convert</p>
+              </div>
             </Link>
           </div>
 

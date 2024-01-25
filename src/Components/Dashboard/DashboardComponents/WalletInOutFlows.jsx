@@ -1,17 +1,26 @@
 import React, { useState } from "react";
 import { RxDotFilled } from "react-icons/rx";
 import styles from "./component.module.css";
-import { Line } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-} from "chart.js";
+// import { Line } from "react-chartjs-2";
+// import {
+//   Chart as ChartJS,
+//   CategoryScale,
+//   LinearScale,
+//   PointElement,
+//   LineElement,
+// } from "chart.js";
 import { useContext } from "react";
 import { ContextProvider } from "../../Context";
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement);
+// ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement);
+
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+} from "recharts";
 
 export const WalletInOutFlows = () => {
   const { volumeValueToggle, isValue, isDarkMode, toggleSideBar } =
@@ -19,10 +28,11 @@ export const WalletInOutFlows = () => {
   const [blur, setBlur] = useState(false);
   const [selected, setSelected] = useState("");
   // const [setToggleTotalTransaction] = useState(false);
-  const [yAxisValue, setYAxisValue] = useState("volume");
+
+  const [symbol, setSymbol] = useState("₦");
 
   const [activeButtons, setActiveButtons] = useState([
-    false,
+    true,
     false,
     false,
     false,
@@ -34,105 +44,6 @@ export const WalletInOutFlows = () => {
     setActiveButtons(updatedButtons);
   };
 
-  // function formatYAxisLabel(value) {
-  //   return "#" + value / 1000 + "k";
-  // }
-
-  // Function to handle button click and toggle the y-axis label type
-  const handleButtonClick = () => {
-    setYAxisValue(yAxisValue === "volume" ? "value" : "volume");
-  };
-
-  // Function to transform y-axis labels from volume to value
-  const transformYAxisValue = (v) => {
-    if (yAxisValue === "value") {
-      // const values = ["&#8358;0", "&#8358;1k", "&#8358;2k", "&#8358;3k"];
-      const values = ["₦0k", "10k", "20k", "30K"];
-      return values[v];
-    } else {
-      return v;
-    }
-  };
-
-  const data = {
-    labels: [
-      "0:00",
-      "1:00",
-      "2:00",
-      "3:00",
-      "4:00",
-      "5:00",
-      "6:00",
-      "7:00",
-      "8:00",
-      "9:00",
-      "10:00",
-      "11:00",
-      "12:00",
-      "13:00",
-      "14:00",
-      "15:00",
-      "16:00",
-      "17:00",
-      "18:00",
-      "19:00",
-      "20:00",
-      "21:00",
-      "22:00",
-      "23:00",
-      "24:00",
-    ],
-    // Replace with your X-axis labels
-
-    datasets: [
-      {
-        label: "data",
-        data: [0,10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
-        // border: false
-        display: false,
-        borderWidth: 0,
-        pointRadius: 0,
-      },
-
-      //   {
-      //     label: "Function Values, Outflows", // Replace with your data label
-      //     // data: [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000], // Replace with your function's values
-      //     backgroundColor: "#FA6B6B", // Optional: Background color for the chart
-      //     borderColor: "#FA6B6B", // Optional: Border color for the chart
-      //     borderWidth: 1, // Optional: Border width for the chart
-      //   },
-      //   {
-      //     label: "Function Values, Inflows", // Replace with your data label
-      //     // data: [0, 2, 4, 6, 8, 10], // Replace with your function's values
-      //     backgroundColor: "#58DA8F", // Optional: Background color for the chart
-      //     borderColor: "#58DA8F", // Optional: Border color for the chart
-      //     borderWidth: 1, // Optional: Border width for the chart
-      //   },
-    ],
-  };
-
-  const options = {
-    scales: {
-      y: {
-        ticks: {
-          callback: function (v) {
-            return transformYAxisValue(v);
-          },
-        },
-        grid: {
-          // display: false,
-        },
-      },
-
-      x: {
-        grid: {
-          // display: false,
-        },
-      },
-    },
-  };
-
-
   const handleSelectedOption = (event) => {
     const clickedoption = event.target.value;
     setSelected(clickedoption);
@@ -143,8 +54,61 @@ export const WalletInOutFlows = () => {
         clickedoption === "KES" ||
         clickedoption === "EUR"
     );
+    clickedoption === "NGN"
+      ? setSymbol("₦")
+      : clickedoption === "USD"
+      ? setSymbol("$")
+      : clickedoption === "GBP"
+      ? setSymbol("£")
+      : clickedoption === "AUD"
+      ? setSymbol("AU$")
+      : clickedoption === "KES"
+      ? setSymbol("KSh")
+      : clickedoption === "EUR"
+      ? setSymbol("€")
+      : setSymbol("");
     return;
   };
+
+  const data = [
+    { xaxis: "0.00", inflow: 100, outflow: 0, amt: 2400 },
+    { xaxis: "1.00", inflow: 90, outflow: 5, amt: 2210 },
+    { xaxis: "2.00", inflow: 80, outflow: 10, amt: 2210 },
+    { xaxis: "3.00", inflow: 70, outflow: 20, amt: 2210 },
+    { xaxis: "4.00", inflow: 60, outflow: 30, amt: 2210 },
+    { xaxis: "5.00", inflow: 50, outflow: 40, amt: 2210 },
+    { xaxis: "6.00", inflow: 40, outflow: 50, amt: 2210 },
+    { xaxis: "7.00", inflow: 30, outflow: 60, amt: 2210 },
+    { xaxis: "8.00", inflow: 20, outflow: 70, amt: 2210 },
+    { xaxis: "9.00", inflow: 10, outflow: 80, amt: 2210 },
+    { xaxis: "10.00", inflow: 0, outflow: 90, amt: 2210 },
+    { xaxis: "11.00", inflow: 5, outflow: 95, amt: 2210 },
+    { xaxis: "12.00", inflow: 10, outflow: 100, amt: 2210 },
+    { xaxis: "13.00", inflow: 20, outflow: 90, amt: 2210 },
+    { xaxis: "14.00", inflow: 30, outflow: 80, amt: 2210 },
+    { xaxis: "15.00", inflow: 40, outflow: 70, amt: 2210 },
+    { xaxis: "16.00", inflow: 50, outflow: 60, amt: 2210 },
+    { xaxis: "17.00", inflow: 60, outflow: 50, amt: 2210 },
+    { xaxis: "18.00", inflow: 70, outflow: 40, amt: 2210 },
+    { xaxis: "19.00", inflow: 80, outflow: 30, amt: 2210 },
+    { xaxis: "20.00", inflow: 90, outflow: 20, amt: 2210 },
+    { xaxis: "21.00", inflow: 100, outflow: 10, amt: 2210 },
+    { xaxis: "22.00", inflow: 100, outflow: 0, amt: 2210 },
+    { xaxis: "23.00", inflow: 20, outflow: 90, amt: 2210 },
+    { xaxis: "24.00", inflow: 0, outflow: 100, amt: 2210 },
+    // ...
+    { yaxis: "0" },
+    { yaxis: "10" },
+    { yaxis: "20" },
+    { yaxis: "30" },
+    { yaxis: "40" },
+    { yaxis: "50" },
+    { yaxis: "60" },
+    { yaxis: "70" },
+    { yaxis: "80" },
+    { yaxis: "90" },
+    { yaxis: "100" },
+  ];
 
   return (
     <div className="mt-[10%] lg:mt-[5%] mb-[10%]">
@@ -190,7 +154,7 @@ export const WalletInOutFlows = () => {
               alt="dropdown"
             />
           </div>
-          <div className="text-center">&#8358;0</div>
+          <div className="text-center">{symbol}0.00</div>
         </div>
 
         <div
@@ -226,7 +190,7 @@ export const WalletInOutFlows = () => {
               alt="dropdown"
             />
           </div>
-          <div className="text-center">&#8358;0</div>
+          <div className="text-center">{symbol}0.00</div>
         </div>
       </div>
 
@@ -254,10 +218,14 @@ export const WalletInOutFlows = () => {
 
       {blur && (
         <div
-          className={` ${isDarkMode ? "" : ""} ${
+          className={`${
+            styles.currencyUnavailable
+          } z-10 text-[#04177f] pt-[32%] text-[14px] w-[90%] font-extrabold  md:pt-[13%] md:text-[30px] ${
+            isDarkMode ? "" : ""
+          } ${
             toggleSideBar
-              ? "backdrop-blur-[5px] z-50 absolute font-extrabold lg:h-[101%] lg:w-[75%] lg:ml-[-8px] lg:flex lg:justify-center lg:pt-[20%] lg:text-[28px] lg:text-[#04177f]"
-              : "backdrop-blur-[5px] z-50 absolute text-[#04177f] text-[14px] h-[36.5%] w-[90%] font-extrabold flex justify-center pt-[23%] md:h-[42%] md:text-[34px] md:pt-[22%] lg:text-[45px] lg:w-[90%] lg:h-[121%] "
+              ? " backdrop-blur-[5px] absolute lg:h-[101%] lg:w-[75%] lg:ml-[-8px] lg:flex lg:justify-center lg:pt-[20%] lg:text-[28px] lg:text-[#04177f]"
+              : " backdrop-blur-[5px] absolute  flex justify-center lg:text-[45px] lg:w-[90%] lg:h-[121%] "
           } `}
         >
           This Currency Is Currently Not Available...
@@ -334,13 +302,13 @@ export const WalletInOutFlows = () => {
         <div
           className={`text-[7px] flex gap-2 items-center mt-[7%]  md:text-[14px] lg:mt-[4%] lg:text-[18px]  ${
             toggleSideBar ? "lg:ml-[80%]" : " lg:ml-[85%] md:ml-[82%]"
-          } ml-[75%]`}
+          } ml-[75%] mr`}
         >
           <div>Volume</div>
           <div
             onClick={() => {
               volumeValueToggle();
-              handleButtonClick();
+              // handleButtonClick();
             }}
             className={` w-[15px] h-[6.4px] md:w-[30px] md:h-[12px] lg:w-[50px] lg:h-[22px] lg:rounded-full rounded ${
               isValue ? "bg-[#58DA8F]" : "bg-[#b1b0b0]"
@@ -356,7 +324,7 @@ export const WalletInOutFlows = () => {
         </div>
 
         {/* ====================Inflow & Outflow indication================ */}
-        <div className="flex float-right mt-[5%] md:mt-[3%] lg:mt-[1%]">
+        <div className="flex float-right mt-[1%] md:mt-[3%] lg:mt-[1%]">
           <div className="flex items-center ">
             <div className="text-2xl text-[#58DA8F] md:text-5xl">
               <RxDotFilled />
@@ -370,12 +338,55 @@ export const WalletInOutFlows = () => {
             <div className="text-[7px] md:text-[14px]">Outflows</div>
           </div>
         </div>
-
+        {/* 
         <Line
           className={isDarkMode ? "bg-[#fff]" : ""}
           data={data}
           options={options}
-        />
+        /> */}
+
+        <LineChart
+          width={1100}
+          height={360}
+          data={data}
+          className="hidden lg:block"
+        >
+          <XAxis dataKey="xaxis" />
+          <YAxis dataKey="yaxis" />
+          <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
+          <Line type="linear" dataKey="inflow" stroke="#58DA8F" />
+          <Line type="linear" dataKey="outflow" stroke="#FA6B6B" />
+          <Tooltip />
+          {/* <Legend /> */}
+        </LineChart>
+        <LineChart
+          width={340}
+          height={280}
+          data={data}
+          className="pb-[10%] md:hidden"
+        >
+          <XAxis dataKey="xaxis" />
+          <YAxis dataKey="yaxis" />
+          <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
+          <Line type="linear" dataKey="inflow" stroke="#58DA8F" />
+          <Line type="linear" dataKey="outflow" stroke="#FA6B6B" />
+          <Tooltip />
+          {/* <Legend /> */}
+        </LineChart>
+        <LineChart
+          width={740}
+          height={280}
+          data={data}
+          className="pb-[10%] hidden md:block lg:hidden"
+        >
+          <XAxis dataKey="xaxis" />
+          <YAxis dataKey="yaxis" />
+          <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
+          <Line type="linear" dataKey="inflow" stroke="#58DA8F" />
+          <Line type="linear" dataKey="outflow" stroke="#FA6B6B" />
+          <Tooltip />
+          {/* <Legend /> */}
+        </LineChart>
       </div>
       {/* ========================Chart End========================= */}
     </div>

@@ -11,6 +11,13 @@
   .confirmConversion::-webkit-scrollbar {
     display: none;
   }
+<<<<<<< HEAD
+=======
+.confirmTV::-webkit-scrollbar {
+    display: none;
+  }
+
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
 .switch{
     padding: 4.91px 8.96px 4.91px 2.89px;
     width: 102.02px;
@@ -95,6 +102,17 @@
     overflow-y: auto;
   }
 
+  .confirmTV{
+    background: white;
+    box-shadow: 0px 0px 7.090909481048584px 0px #00000040;
+    border-radius: 8px, 8px, 0px, 0px;
+    bottom: 0;
+    flex-shrink: 0;
+    position: absolute;
+    height: 520px;
+    overflow-y: auto;
+  }
+
   .InputPinToConvert{
     position: absolute;
     box-shadow: 0px 0px 10px 0px #00000040;
@@ -119,7 +137,7 @@
     display: none;
   }
 
-.confirmConversion,.InputPinToConvert{
+.confirmConversion,.InputPinToConvert, .confirmTV{
   border-radius: 8px 8px 0 0;
 }
 
@@ -163,6 +181,14 @@
         border-radius: 11px;
       }
 
+      .confirmTV{
+        box-shadow: 0px 0px 10px 0px #00000040;
+        height: 592px;
+        bottom: 25%;
+        flex-shrink: 0;
+        border-radius: 11px;
+      }
+
       .InputPinToConvert{
         border-radius: 8px;
         bottom: 30%;
@@ -197,6 +223,12 @@
         border-radius: 20px;
         top: 7%;
         height: 550px;
+      }
+      .confirmTV{
+        box-shadow: 0px 0px 10px 0px #00000040;
+        border-radius: 20px;
+        top: 7%;
+        height: 570px;
       }
 
       .InputPinToConvert{

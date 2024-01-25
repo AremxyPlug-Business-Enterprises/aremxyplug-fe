@@ -208,4 +208,82 @@ html {
  .Refer table td,th{
   border: none;
 } 
+<<<<<<< HEAD
 /* and ends here */
+=======
+/* and ends here */
+/* Education code starts here */
+.educationPinsHero{
+  background: var(--Gradiant, linear-gradient(90deg, #60FF52 0%, rgba(250, 232, 68, 0.90) 50.97%, #FF5A7F 100%));
+}
+.Exam-box{
+  box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--stroke-fade, rgba(0, 0, 0, 0.30));
+}
+@keyframes openDropDown {
+  from {
+   transform : rotate(0deg)
+  }to{
+   transform : rotate(180deg)
+  }
+}
+.DropIt {
+  animation : openDropDown 0.3s ease 1 forwards;
+}
+.ProfileHero{
+  background: linear-gradient(91deg, rgba(29, 255, 255, 0.84) 6.85%, #AC43FF 102.32%);
+
+}
+.activeTab{
+border-bottom : 2px solid #04177F;
+border-radius : 10px;
+  }
+  .RecipientHero{
+    background: linear-gradient(91deg, #367CFF 0.39%, #69FFD2 101.71%);
+  }
+  .bvnQuery{
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+  }
+  .bvnQuery::-webkit-scrollbar{
+    width : 0px;
+  }
+  .bnvQuery::-webkit-scrollbar-thumb{
+    background-color: transparent;
+  }
+  .idVerify{
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+  }
+  .idVerify::-webkit-scrollbar{
+    width : 0px;
+  }
+  .idVerify::-webkit-scrollbar-thumb{
+    background-color: transparent;
+  }
+  .confirmRecipient{
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+  }
+  .confirmRecipient::-webkit-scrollbar{
+    width : 0px;
+  }
+  .confirmRecipient::-webkit-scrollbar-thumb{
+    background-color: transparent;
+  }
+  .deleteRecipientSuccess{
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+  }
+  .deleteRecipientSuccess::-webkit-scrollbar{
+    width : 0px;
+  }
+  .deleteRecipientSuccess::-webkit-scrollbar-thumb{
+    background-color: transparent;
+  }
+  
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a

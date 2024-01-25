@@ -21,6 +21,7 @@ const AddRecipient = () => {
     const [showList, setShowList] = useState(false);
     const [selected, setSelected] = useState(false);
     const [confirm, setConfirm] = useState(false);
+    const [inputValue, setInputValue] = useState("");
 
     const networkList = [
         {
@@ -102,6 +103,14 @@ const AddRecipient = () => {
         }
     };
 
+    const handleChange = (e) => {
+        const value = e.target.value;
+    
+        const numericValue = value.replace(/\D/g, "").slice(0, 11);
+    
+        setInputValue(numericValue);
+    };
+
     const {
         toggleSideBar,
         // inputPin,
@@ -113,6 +122,9 @@ const AddRecipient = () => {
       const handleConfirm =()=> {
         setSave(false);
         setConfirm(true);
+        setSelected("");
+        setRecipientNumber("");
+        setRecipientName("");
       }
 
   return (
@@ -174,7 +186,10 @@ const AddRecipient = () => {
                             <h2 className={styles.head3}>Phone Number <span className={styles.span3}>(Select Recipient)</span></h2>
                             <div className={styles.input}>
                                 <div className={styles.output}>
-                                    <input type='number' className={styles.phone} required placeholder='Add recipient phone number' onChange={(event)=>setRecipientNumber(event.target.value)} value={recipientNumber}/>
+                                    <input type='number' className={styles.phone} required placeholder='Add recipient phone number' onChange={(event) => {
+                                    handleChange(event);
+                                    setRecipientNumber(event.target.value);
+                                    }} value={inputValue}/>
                                     <div className={styles.call}>
                                         <img src={call} alt=""/>
                                     </div>
@@ -270,12 +285,17 @@ const AddRecipient = () => {
                             } md:w-[55%] w-[90%]`}
                         >
                             <img
-                            onClick={() => setConfirm(false)}
+                            onClick={() => {
+                                setConfirm(false);
+                                setSelected("");
+                                setRecipientName("");
+                                setRecipientNumber("");
+                            }}
                             className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px]"
                             src="/Images/transferImages/close-circle.png"
                             alt=""
                             />
-                            <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
+                            <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[9%] md:h-[10px]" />
                             <h2 className="text-[12px] font-bold my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
                             Successful
                             </h2>
@@ -284,8 +304,8 @@ const AddRecipient = () => {
                             src="./Gif/checkMarkGif.gif"
                             alt="/"
                             />
-                            <p className="text-[9px] text-[#2ED173] md:text-[16px] font-bold text-center my-[4%] lg:my-[%]">
-                            New recipient contact has been added successfully.
+                            <p className="text-[10px] text-[#2ED173] md:text-[16px] font-bold text-center my-[4%] lg:my-[%]">
+                            New recipient contact has been added successfully. 
                             </p>
                            
                             <Link to="/airtime-vtu">

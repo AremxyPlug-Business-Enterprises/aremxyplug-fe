@@ -47,6 +47,7 @@ const AirtimeVtu = () => {
     const [confirm, setConfirm] = useState(false);
     const [errors, setErrors] = useState({});
     const [codes, setCodes] = useState(false);
+    const [inputValue, setInputValue] = useState("");
 
 
     if (addRecipient) {
@@ -127,7 +128,7 @@ const AirtimeVtu = () => {
         }
       ];
 
-      const productList = ['SNS', 'VTU']
+      const productList = ['VTU', 'SNS']
 
 
     const Network =({name, image, onClick})=> {
@@ -200,10 +201,11 @@ const AirtimeVtu = () => {
         setSelected(false);
       }
 
-      const handleShowProduct =() => {
-        setShowProduct(!showProduct);
-        setSelectedProduct(false);
-      }
+      const handleShowProduct = () => {
+        if (selected) { 
+          setShowProduct(!showProduct);
+        }
+      };
 
       const handleShowPayment = ()=> {
         setShowPayment(!showPayment)
@@ -221,10 +223,10 @@ const AirtimeVtu = () => {
             "string.pattern.base": "Phone number should be 11 digits ",
           }),
         amount: Joi.string()
-          .pattern(new RegExp(/\d{4,}/))
+          .pattern(new RegExp(/\d{2,}/))
           .required()
           .messages({
-            "string.pattern.base": "Amount can not be less than 1000",
+            "string.pattern.base": "Amount can not be less than 10",
           }),
       });
 
@@ -294,8 +296,6 @@ const AirtimeVtu = () => {
 
       console.log(confirm)
 
-      console.log(recipientName, discount, newAmount, networkImage, selectedProduct, networkName, recipientNumber, name, image)
-
       const {
         transactSuccessPopUp,
         setTransactSuccessPopUp,
@@ -316,6 +316,14 @@ const AirtimeVtu = () => {
         setCodes(false);
         setCodes(true);
       }
+
+      const handleChange = (e) => {
+        const value = e.target.value;
+    
+        const numericValue = value.replace(/\D/g, "").slice(0, 11);
+    
+        setInputValue(numericValue);
+      };
 
   return (
     <DashBoardLayout>
@@ -356,8 +364,8 @@ const AirtimeVtu = () => {
                 </div>
             </div>
             <div className={styles.containFlex1}>
-                <div className={styles.FlexPut1}>
-                        <div className={styles.conPut1} onClick={handleCodes} >
+                <div className={styles.FlexPut1} onClick={handleCodes}>
+                        <div className={styles.conPut1}>
                             <h2>Airtime Balance USSD Codes</h2>
                             <div className={styles.FlexImg1}>
                                 <img src={data} alt="" className=''/>
@@ -404,7 +412,7 @@ const AirtimeVtu = () => {
                             :
                                 <span onClick={handleShowProduct}>Select Product</span>
                             }
-                            <button className={styles.btnDrop} onClick={handleShowProduct}>
+                            <button className={styles.btnDrop} onClick={handleShowProduct} disabled={!selected}>
                                 <img src={arrowDown} alt="" />
                             </button>
                         </div>
@@ -428,10 +436,18 @@ const AirtimeVtu = () => {
                         </div>
                     </div>
                     <div>
-                        <h2 className={styles.head3}>Phone Number <span className={styles.span3}>(Select Recipient)</span></h2>
+                        <h2 className={styles.head3}>Phone Number <span
+                         className={styles.span3}><Link to="/select-vtu-recipient"> (Select Recipient) </Link> 
+                     </span></h2>
                         <div className={styles.input}>
                             <div className={styles.output}>
-                                <input type='number' className={styles.phone} required placeholder='Add recipient phone number' onChange={(event)=>setRecipientNumber(event.target.value)} value={recipientNumber}/>
+                                <input type='number' 
+                                className={styles.phone} required 
+                                placeholder='Add recipient phone number'
+                                onChange={(event) => {
+                                handleChange(event);
+                                setRecipientNumber(event.target.value);
+                            }} value={inputValue}/>
                                 <div className={styles.call}>
                                     <img src={call} alt=""/>
                                 </div>
@@ -460,7 +476,8 @@ const AirtimeVtu = () => {
                         <h2 className={styles.head3}>Type Amount</h2>
                         <div className={styles.input}>
                             <div className={styles.output}>
-                                <input type='number' placeholder='Type amount' required className={styles.phone} onChange={(event)=>setAmount(event.target.value)} value={amount.toLocaleString()}/>
+                                <span className="text-gray-500 relative bottom-[1px]">&#8358;</span>
+                                <input type='number' placeholder='Type amount' required className={styles.phones} onChange={(event)=>setAmount(event.target.value)} value={amount.toLocaleString()}/>
                                 <div className={styles.call}>
                                     <img src={money} alt=""/>                            
                                 </div>
@@ -531,9 +548,10 @@ const AirtimeVtu = () => {
                 <Modal>
                 (
                 <div
-                    className={`${styles.transferMoneyPop} ${
-                    toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-                    } w-[90%] overflow-auto`}
+                    className={`${styles.balanceMoneyPop} ${
+                    toggleSideBar ? "xl:w-[65%] xl:ml-[17%] lg:ml-[20%] lg:w-[40%]"
+                    : "lg:w-[40%]"
+                } w-[90%] xl:w-[40%] md:w-[60%] overflow-auto`}
                 >
                     <img
                     onClick={()=> setCodes(false)}
@@ -541,10 +559,10 @@ const AirtimeVtu = () => {
                     src="/Images/transferImages/close-circle.png"
                     alt=""
                     />
-                    <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
+                    <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[8%] lg:mt-[6%] md:h-[10px]" />
 
                     <button
-                    className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[50%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[350px] lg:h-[38px] lg:my-[2%]`}
+                    className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[50%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[350px] lg:h-[38px] lg:my-[3%]`}
                     >
                     Airtime Balace USSD Codes
                     </button>
@@ -554,24 +572,24 @@ const AirtimeVtu = () => {
                     <h2 className="text-[12px] my-[5%] text-blue-600 text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
                     Tap the network Dial button to check airtime balance:
                     </h2>
-                    <div className='flex flex-col gap-1 mb-5'>
+                    <div className='flex flex-col gap-2 mb-5'>
                         <button
-                            className={`bg-[#FAF8F8] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%]`}
+                            className={`bg-[#FAF8F8] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:my-[1%]`}
                             >
                             MTN Airtime Balance Code - *310#
                         </button>
                         <button
-                            className={`bg-[#FAF8F8] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%]`}
+                            className={`bg-[#FAF8F8] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:my-[1%]`}
                             >
                             AIRTEL Airtime Balance Code - *310#
                         </button>
                         <button
-                            className={`bg-[#FAF8F8] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%]`}
+                            className={`bg-[#FAF8F8] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:my-[1%]`}
                             >
                             GLO Airtime Balance Code - *310#
                         </button>
                         <button
-                            className={`bg-[#FAF8F8] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%]`}
+                            className={`bg-[#FAF8F8] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:my-[1%]`}
                             >
                             9MOBILE Airtime Balance Code - *310#
                         </button>
@@ -579,7 +597,7 @@ const AirtimeVtu = () => {
 
                     <button
                     onClick={()=> setCodes(false)}
-                    className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                    className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:mt-[8%]`}
                     >
                     Okay
                     </button>
@@ -593,7 +611,7 @@ const AirtimeVtu = () => {
                 <div
                     className={`${styles.transferMoneyPop} ${
                     toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-                    } w-[90%] overflow-auto`}
+                    } w-[90%] md:w-[60%] overflow-auto`}
                 >
                     <img
                     onClick={()=> setProceed(false)}
@@ -601,11 +619,11 @@ const AirtimeVtu = () => {
                     src="/Images/transferImages/close-circle.png"
                     alt=""
                     />
-                    <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
-                    <h2 className="text-[12px] my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
+                    <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[8%] md:h-[10px]" />
+                    <h2 className="text-[10px] my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
                     Confirm Transaction
                     </h2>
-                    <p className="text-[8px] text-[#0008] text-center mb-2 md:text-[12px] lg:text-[14px]">
+                    <p className="text-[10px] mx-[10px] text-[#0008] text-center mb-4 md:text-[12px] lg:text-[14px]">
                     You are about to purchase{" "}
                     <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">
                     {networkName + ' ' + selectedProduct} Airtime &#8358;{amount}.00{" "}
@@ -613,14 +631,14 @@ const AirtimeVtu = () => {
                     from your NGN wallet to{" "}
                     </p>
 
-                    <div className="flex flex-col gap-3 mt-3">
+                    <div className="flex flex-col gap-2 mt-3">
                         <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                             <p className="text-[#0008]">Network</p>
                             <span className='flex gap-1'>
-                                <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
+                                <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[10px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
                                 <img src={networkImage} alt="" className='w-full h-full object-cover'/>
                                 </div> 
-                                <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">{networkName}</h2>
+                                <h2 className="text-[10px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">{networkName}</h2>
                             </span>
                         </div>
                         <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -697,7 +715,7 @@ const AirtimeVtu = () => {
                             src="/Images/transferImages/close-circle.png"
                             alt=""
                             />
-                            <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
+                            <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[8%] md:h-[10px]" />
                             <p className="text-[9px] md:text-[16px] font-extrabold text-center my-[8%] lg:my-[%]">
                             Input PIN to complete transaction
                             </p>
@@ -756,7 +774,7 @@ const AirtimeVtu = () => {
                 <div
                     className={`${styles.successfulTwo} ${
                     toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-                    } md:w-[45%] w-[90%] overflow-auto`}
+                    } w-[90%] md:w-[70%]  overflow-auto`}
                 >
                     <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
                     <img
@@ -774,7 +792,7 @@ const AirtimeVtu = () => {
                     />
                     </div>
                     <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
-                    <h2 className="text-[12px] my-[4%] text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%]">
+                    <h2 className="text-[12px] my-[3%] text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%]">
                     Transaction Successful
                     </h2>
                     <img
@@ -782,45 +800,45 @@ const AirtimeVtu = () => {
                     src="./Gif/checkMarkGif.gif"
                     alt="/"
                     />
-                    <p className="text-[8px] text-[#0008] text-center mb-10 md:text-[14px] lg:text-[12px]">
+                    <p className="text-[10px] text-[#0008] mx-[10px] text-center mb-5 md:text-[14px] lg:text-[12px]">
                     You have successfully purchased{" "}
-                    <span className="text-[#000] font-extrabold text-[8px] md:text-[14px] lg:text-[12px]">
+                    <span className="text-[#000] font-extrabold text-[10px] md:text-[14px] lg:text-[12px]">
                     {networkName + ' ' + selectedProduct} Airtime &#8358;{amount}.00{" "}
                     </span>
                     from your NGN wallet to{" "}
                     </p>
 
-                    <div className="flex flex-col gap-2 lg:gap-4">
-                    <div className="flex text-[8px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
+                    <div className="flex flex-col gap-1 lg:gap-4">
+                    <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                             <p className="text-[#0008]">Network</p>
                             <span className='flex gap-1'>
                                 <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
                                 <img src={networkImage} alt="" className='w-full h-full object-cover'/>
                                 </div> 
-                                <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">{networkName}</h2>
+                                <h2 className="text-[10px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">{networkName}</h2>
                             </span>
                         </div>
-                        <div className="flex text-[8px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
+                        <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                             <p className="text-[#0008]">Product</p>
                             <span>{networkName + ' ' + selectedProduct}</span>
                         </div>
-                        <div className="flex text-[8px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
+                        <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                             <p className="text-[#0008]">Phone Number</p>
                             <span>{recipientNumber}</span>
                         </div>
-                        <div className="flex text-[8px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
+                        <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                             <p className="text-[#0008]">Recipient Name</p>
                             <span>{recipientName}</span>
                         </div>
-                        <div className="flex text-[8px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
+                        <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                             <p className="text-[#0008]">Payment Method</p>
                             <span>{factorWalletName(name)}</span>
                         </div>
-                        <div className="flex text-[8px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
+                        <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                             <p className="text-[#0008]">Amount</p>
                             <span>&#8358;{amount}</span>
                         </div>
-                        <div className="flex text-[8px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[12px]">
+                        <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[12px]">
                             <p className="text-[#0008]">Order Number</p>
                             <span>122555556464564</span>
                         </div>
@@ -833,7 +851,17 @@ const AirtimeVtu = () => {
                     </div>
                     <div className="flex w-[70%] mx-auto items-center gap-[5%] md:w-[60%] lg:my-[5%]">
                     <button
-                        onClick={() => setTransactSuccessPopUp(false)}
+                        onClick={() => {
+                            setTransactSuccessPopUp(false);
+                            // window.location.reload();
+                            setSelected("");
+                            setRecipientNumber("");
+                            setRecipientName("");
+                            setSelectedProduct("");
+                            setAmount("");
+                            setDiscount("");
+                            setPaymentSelected("");
+                          }}
                         className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
                     >
                         Done
@@ -841,7 +869,7 @@ const AirtimeVtu = () => {
                     <Link to="/airtime-vtu-receipt">
                         <button
                         onClick={handleReceipt}
-                        className={`border-[1px] w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                        className={`border-[1px] w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[110px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
                         >
                         Receipt
                         </button>
@@ -861,7 +889,7 @@ const AirtimeVtu = () => {
             )}
             <div className={styles.containFlex2}>
                 <button className={`${
-                amount.length < 4 ? "bg-[#0008]" : "bg-[#04177f]"
+                amount.length < 2 ? "bg-[#0008]" : "bg-[#04177f]"
                 } w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`} onClick={handleProceed}>Proceed
                 </button>
             </div>

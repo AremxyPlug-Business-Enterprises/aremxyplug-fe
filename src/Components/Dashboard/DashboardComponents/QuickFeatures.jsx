@@ -47,6 +47,7 @@ const QuickFeatures = () => {
           />{" "}
           <p>Data Topup</p>
         </Link>
+<<<<<<< HEAD
 
         <div
           className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
@@ -73,32 +74,64 @@ const QuickFeatures = () => {
           />
           <p>TV Subscriptions</p>
         </div>
+=======
+        <Link to="/EducationPins">
+          <div
+            className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
+              styles.feature
+            }`}
+          >
+            <img
+              className="h-[25px] w-[25px] md:w-[] md:h-[] lg:h-[85px] lg:w-[85px]"
+              src="./Images/Dashboardimages/feature3.png"
+              alt="/"
+            />
+            <p>Education Pins</p>
+          </div>
         </Link>
-        <div
-          className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
-            styles.feature
-          }`}
-        >
-          <img
-            className="h-[25px] w-[25px] md:w-[] md:h-[] lg:h-[79px] lg:w-[79px]"
-            src="./Images/Dashboardimages/feature5.png"
-            alt="/"
-          />
-          <p>Electricity Bills</p>
-        </div>
-        <div
-          className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
-            styles.feature
-          }`}
-        >
+        <Link to="/TvSubscription">
+          <div
+            className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
+              styles.feature
+            }`}
+          >
+            <img
+              className="h-[25px] w-[25px] md:w-[] md:h-[] lg:h-[79px] lg:w-[79px]"
+              src="./Images/Dashboardimages/feature4.png"
+              alt="/"
+            />
+            <p>TV Subscriptions</p>
+          </div>
+>>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
+        </Link>
+        <Link to="/electricity-subscription">
+          <div
+            className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
+              styles.feature
+            }`}
+          >
+            <img
+              className="h-[25px] w-[25px] md:w-[] md:h-[] lg:h-[79px] lg:w-[79px]"
+              src="./Images/Dashboardimages/feature5.png"
+              alt="/"
+            />
+            <p>Electricity Bills</p>
+          </div>
+        </Link>
+        <Link to="/payment-page"
+            className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
+              styles.feature
+            }`}
+          >
           <img
             className="h-[25px] w-[25px] md:w-[] md:h-[] lg:h-[79px] lg:w-[79px]"
             src="./Images/Dashboardimages/feature6.png"
             alt="/"
           />
           <p>Payments</p>
-        </div>
-        <div
+        </Link>
+        <Link
+          to="/Cardissuing"
           className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
             styles.feature
           }`}
@@ -109,8 +142,9 @@ const QuickFeatures = () => {
             alt="/"
           />
           <p>Card Issuing</p>
-        </div>
-        <div
+        </Link>
+        <Link
+          to="/DigitalServices"
           className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
             styles.feature
           }`}
@@ -121,8 +155,9 @@ const QuickFeatures = () => {
             alt="/"
           />
           <p>Digital Services</p>
-        </div>
-        <div
+        </Link>
+        <Link
+          to="/My-Referral"
           className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
             styles.feature
           }`}
@@ -133,8 +168,9 @@ const QuickFeatures = () => {
             alt="/"
           />
           <p>Referrals</p>
-        </div>
-        <div
+        </Link>
+        <Link
+          to="/ProfileSettingMain"
           className={`${
             isDarkMode ? " border text-white" : "text-[#000] bg-[#fff] "
           } ${styles.feature}`}
@@ -145,7 +181,7 @@ const QuickFeatures = () => {
             alt="/"
           />
           <p>My Profile</p>
-        </div>
+        </Link>
       </div>
     </div>
   );
