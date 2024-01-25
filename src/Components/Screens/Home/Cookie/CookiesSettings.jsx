@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 export const CookiesSettings = () => {
   const [accepted, setAccepted] = useState(
@@ -11,6 +11,8 @@ export const CookiesSettings = () => {
   };
 
   console.log(accepted);
+
+  const {toggleDarkMode} = useContext
 
   return (
     <div className="h-[1000px] border-t-[1px] border-t-[#0003] px-[5%] py-[3%]">
@@ -61,7 +63,7 @@ export const CookiesSettings = () => {
             </p>
           </div>
           <div
-            // onClick={toggleDarkMode}
+            onClick={toggleDarkMode}
             className={`border-[1.5px] mt-[3px] flex items-center border-[#04177f] bg-[#04177f30]  w-[18px] h-[10px] md:w-[30px] md:h-[12px] lg:w-[50px] lg:h-[22px] lg:rounded-full rounded
             }`}
           >
@@ -83,7 +85,7 @@ export const CookiesSettings = () => {
             </p>
           </div>
           <div
-            // onClick={toggleDarkMode}
+            onClick={toggleDarkMode}
             className={`border-[1.5px] mt-[3px] flex items-center border-[#04177f] bg-[#04177f30]  w-[18px] h-[10px] md:w-[30px] md:h-[12px] lg:w-[50px] lg:h-[22px] lg:rounded-full rounded
             }`}
           >
@@ -105,7 +107,7 @@ export const CookiesSettings = () => {
             </p>
           </div>
           <div
-            // onClick={toggleDarkMode}
+            onClick={toggleDarkMode}
             className={`border-[1.5px] mt-[3px] flex items-center border-[#04177f] bg-[#04177f30]  w-[18px] h-[10px] md:w-[30px] md:h-[12px] lg:w-[50px] lg:h-[22px] lg:rounded-full rounded
             }`}
           >
@@ -127,7 +129,7 @@ export const CookiesSettings = () => {
             </p>
           </div>
           <div
-            // onClick={toggleDarkMode}
+            onClick={toggleDarkMode}
             className={`border-[1.5px] mt-[3px] flex items-center border-[#04177f] bg-[#04177f30]  w-[18px] h-[10px] md:w-[30px] md:h-[12px] lg:w-[50px] lg:h-[22px] lg:rounded-full rounded
             }`}
           >
