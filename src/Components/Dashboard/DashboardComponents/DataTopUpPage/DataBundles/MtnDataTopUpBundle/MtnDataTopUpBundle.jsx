@@ -334,7 +334,6 @@ const MtnDataTopUpBundle = () => {
         },
       ],
     },
-
   ];
 
   const handleProceed = (e) => {
@@ -375,9 +374,8 @@ const MtnDataTopUpBundle = () => {
   };
 
   const handleSelectOption = (selectedOption, selectedAmount, duration, id) => {
-
     // setPlan(id);
-    console.log(id)
+    console.log(id);
     setSelectedOption(selectedOption);
     setShowOptionList(false);
     setSelectedAmount(selectedAmount);
@@ -437,7 +435,6 @@ const MtnDataTopUpBundle = () => {
   // };
 
   // sendDataToBackend(1, inputValue, plan, recipientNames);
-
 
   return (
     <DashBoardLayout>
@@ -683,8 +680,6 @@ const MtnDataTopUpBundle = () => {
                       const duration = option.duration;
                       const id = option.id;
 
-
-
                       return (
                         <div
                           key={option.id}
@@ -708,46 +703,6 @@ const MtnDataTopUpBundle = () => {
                     })}
                 </div>
               )}
-
-              {/* {showOptionList && (
-                <div className="border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[100]">
-                  {productList
-                    .find((item) => item.name === selectedNetworkProduct)
-                    ?.options.map((optionItem, index) => {
-                      const optionIndex = productList
-                        .find((item) => item.name === selectedNetworkProduct)
-                        ?.options.indexOf(optionItem);
-
-                      if (optionIndex !== -1) {
-                        const amount = productList.find(
-                          (item) => item.name === selectedNetworkProduct
-                        )?.amount[optionIndex];
-                        const duration = productList.find(
-                          (item) => item.name === selectedNetworkProduct
-                        )?.duration[optionIndex];
-
-                        return (
-                          <div
-                            key={index}
-                            className={`cursor-pointer border-b-[0.5px] md:rounded-[0px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
-                              selectedOption === optionItem ? "bg-gray-200" : ""
-                            }`}
-                            onClick={() =>
-                              handleSelectOption(
-                                `${optionItem} (${amount}) ~ ${duration}`,
-                                amount
-                              )
-                            }
-                          >
-                            {`${optionItem} (${amount}) ~ ${duration}`}
-                          </div>
-                        );
-                      }
-
-                      return null;
-                    })}
-                </div>
-              )} */}
             </div>
 
             <div className="">
