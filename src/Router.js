@@ -96,8 +96,6 @@ import WaecReceipt from "./Components/EducationPins/ReceiptEducationPins/waecRec
 import JambReceipt from "./Components/EducationPins/ReceiptEducationPins/jambReceipt";
 import NecoReceipt from "./Components/EducationPins/ReceiptEducationPins/necoReceipt";
 import NabtebReceipt from "./Components/EducationPins/ReceiptEducationPins/nabtebReceipt";
-<<<<<<< HEAD
-=======
 import { SuccessfulReceipt } from "./Components/CurrencyConversion/ConversionReceipts/SuccessConversionReceipt";
 import { TvSubscription } from "./Components/TvSubscription/TvSubscriptionPage";
 import GoTv from "./Components/TvSubscription/TvOne";
@@ -146,7 +144,6 @@ import AirtimeConversion from "./Components/Dashboard/DashboardComponents/Airtim
 import LaunchPage from "./Components/NotificationsPage/LaunchPage";
 import LaunchPage2 from "./Components/NotificationsPage/LaunchPage2";
 import LaunchPage3 from "./Components/NotificationsPage/LaunchPage3";
->>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
 
 import ChangePin from "./Components/My Profile & Account Settings/My Profile Page/ChangePin";
 import AccountUpgrade from "./Components/My Profile & Account Settings/My Profile Page/AccountUpgrade";
@@ -297,8 +294,6 @@ export const Router = () => {
           element={<InternationalReceipt />}
         />
         <Route path="/redeem-receipt" element={<RedeemReceipt />} />
-<<<<<<< HEAD
-=======
         <Route path="/ikedec-receipt" element={<IkedcReceipt />} />
         <Route path="/aedc-receipt" element={<AedcReceipt />} />
         <Route path="/ekedc-receipt" element={<EkedcReceipt />} />
@@ -326,7 +321,6 @@ export const Router = () => {
           path="/electricity-subscription"
           element={<ElectricitySubscription />}
         />
->>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
         <Route path="/global-transfer" element={<GlobalTransfer />} />
         <Route path="/point-redeem" element={<PointRedeem />} />
         <Route path="/fiat" element={<FiatConversion />} />
@@ -335,7 +329,6 @@ export const Router = () => {
         <Route path="/data-bundles" element={<DataBundlesPage />} />
         <Route path="/My-Referral" element={<Referral />} />
         <Route path="/MtnDataTopUpBundle" element={<MtnDataTopUpBundle />} />
-<<<<<<< HEAD
         <Route path="/SuccessfulConversion" element={<SuccessfulReceipt/>}/>
         <Route path="/MtnReceipt" element={<MtnReceipt/>} />
         <Route path="/AirtelDataBundle" element={<AirtelDataBundle/>} />
@@ -364,7 +357,6 @@ export const Router = () => {
         <Route path="/TvSubscription" element={<TvSubscription/>}/>
         <Route path="/GoTv" element={<GoTv/>}/>
         <Route path="/SuccessfulConversion" element={<SuccessfulReceipt/>}/>
-=======
         <Route path="/SuccessfulConversion" element={<SuccessfulReceipt />} />
         <Route path="/MtnReceipt" element={<MtnReceipt />} />
         <Route path="/AirtelDataBundle" element={<AirtelDataBundle />} />
@@ -445,7 +437,6 @@ export const Router = () => {
           element={<GlobalTransferAddRecipient />}
         />
         <Route path="/EditSelectRecipient" element={<EditSelectRecipient />} />
->>>>>>> 6e9b9d85138c916aebfa1f63dcf23a0596800d3a
       </Routes>
     </div>
   );
