@@ -261,6 +261,12 @@ const MtnDataTopUpBundle = () => {
           amount: "₦300",
           duration: "1 MONTH",
         },
+        {
+          id: 303,
+          name: "MTN SME2 100GB",
+          amount: "₦2175000",
+          duration: "1 MONTH",
+        },
       ],
     },
 
