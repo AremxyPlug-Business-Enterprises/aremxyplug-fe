@@ -255,6 +255,12 @@ const MtnDataTopUpBundle = () => {
           amount: "₦2540",
           duration: "1 MONTH",
         },
+        {
+          id: 302,
+          name: "MTN SME2 1GB",
+          amount: "₦300",
+          duration: "1 MONTH",
+        },
       ],
     },
 
@@ -291,7 +297,7 @@ const MtnDataTopUpBundle = () => {
         { id: 304, name: "MTN CG 500MB", amount: "₦135", duration: "1 MONTH" },
       ],
     },
-
+    
     {
       id: 1,
       name: "MTN DATA COUPONS",
@@ -330,6 +336,12 @@ const MtnDataTopUpBundle = () => {
           id: 268,
           name: "MTN DATA COUPONS 4.5GB",
           amount: "₦1105",
+          duration: "1 MONTH",
+        },
+        {
+          id: 304,
+          name: "MTN DATA COUPONS 500MB",
+          amount: "₦1135",
           duration: "1 MONTH",
         },
       ],
