@@ -19,6 +19,7 @@ import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import { Link } from 'react-router-dom';
 import AirtimeVtuReceipt from "./AirtimeVtuReceipt";
+import axios from 'axios';
 
 const AirtimeVtu = () => {
     // const {  isDarkMode } = useContext(ContextProvider);
@@ -179,13 +180,13 @@ const AirtimeVtu = () => {
         )
       }
 
-      const handleSelectNetwork =(name, image, val)=> {
+      const handleSelectNetwork =(name, image, val, netId)=> {
         setNetworkName(name);
         setNetworkImage(image);
         setDiscount(val);
         setShowList(false);
         setSelected(true);
-        setNetworkId(networkId);
+        setNetworkId(netId);
       }
 
       const calcAmount = (a, b) => {
@@ -206,10 +207,10 @@ const AirtimeVtu = () => {
         setPaymentSelected(true);
       }
 
-      const handleSelectProduct =(val) => {
+      const handleSelectProduct =(val, proId) => {
         setSelectedProduct(val);
         setShowProduct(false);
-        setProductId(productId);
+        setProductId(proId);
       }
 
       const handleShowList =()=> {
@@ -265,6 +266,37 @@ const AirtimeVtu = () => {
             }, {})
         );
         } else {
+            
+
+            async function buyAirtime(token, network, mobileNo, amount, airtimeType, webhookUrl) {
+            const url = 'https://easyaccessapi.com.ng/api/airtime.php';
+
+            const data = {
+                token,
+                network,
+                mobileNo,
+                amount,
+                airtimeType,
+                webhookUrl,
+            };
+
+            try {
+                const response = await axios.post(url, data);
+                console.log(response.data);
+            } catch (error) {
+                console.error(error);
+            }
+            }
+
+            // Usage
+            buyAirtime(
+            '904cc8b30fb06707862323030783481b', // Authorization Token
+            networkId, // Network (MTN)
+            recipientNumber, // Mobile No
+            amount, // Amount
+            productId, // Airtime Type (VTU)
+            'https://yoursite.com/webhook.php' // Webhook Url
+            );        
         setProceed(true);
         setErrors({});
         }
