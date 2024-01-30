@@ -300,7 +300,6 @@ const MtnDataTopUpBundle = () => {
           amount: "₦130000",
           duration: "1 MONTH",
         },
-        { id: 304, name: "MTN CG 500MB", amount: "₦135", duration: "1 MONTH" },
       ],
     },
     
@@ -352,6 +351,83 @@ const MtnDataTopUpBundle = () => {
         },
       ],
     },
+
+
+    {
+      id: 1,
+      name: "MTN GIFTING",
+      options: [
+        {
+          id: 305,
+          name: "MTN GIFTING 1GB",
+          amount: "₦600",
+          duration: "1 MONTH",
+        },
+        {
+          id: 306,
+          name: "MTN GIFTING 200MB",
+          amount: "₦60",
+          duration: "1 MONTH",
+        },
+        {
+          id: 307,
+          name: "MTN GIFTING 2.5GB",
+          amount: "₦500",
+          duration: "1 MONTH",
+        },
+        {
+          id: 308,
+          name: "MTN GIFTING 750MB",
+          amount: "₦300",
+          duration: "1 MONTH",
+        },
+        {
+          id: 309,
+          name: "MTN GIFTING 250MB",
+          amount: "₦200",
+          duration: "1 MONTH",
+        },
+        {
+          id: 310,
+          name: "MTN GIFTING 100MB",
+          amount: "₦100",
+          duration: "1 MONTH",
+        },
+        {
+          id: 311,
+          name: "MTN GIFTING 200MB",
+          amount: "₦200",
+          duration: "1 MONTH",
+        },
+        {
+          id: 312,
+          name: "MTN GIFTING 40MB",
+          amount: "₦50",
+          duration: "1 MONTH",
+        },
+
+        {
+          id: 313,
+          name: "MTN GIFTING 1GB",
+          amount: "₦350",
+          duration: "1 MONTH",
+        },
+
+        {
+          id: 314,
+          name: "MTN GIFTING 350MB",
+          amount: "₦333",
+          duration: "1 MONTH",
+        },
+      ],
+    },
+
+
+
+
+
+
+
   ];
 
   const handleProceed = (e) => {
