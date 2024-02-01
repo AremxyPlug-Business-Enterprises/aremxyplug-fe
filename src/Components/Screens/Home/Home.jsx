@@ -11,7 +11,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { Link } from "react-router-dom";
 import CookieBanner from "./Cookie/CookieBanner";
-import groupone from "./Images/groupone.svg";
+import groupone from "./Images/groupone.svg?v=2";
 import CrossBorder from "./Images/CrossBorder.svg";
 import CurrencyConversion from "./Images/CurrencyConversion.svg";
 import CurrencyConversion2 from "./Images/CurrencyConversion2.svg";
@@ -25,7 +25,8 @@ import NewsLetter from "./Images/NewsLetter.svg";
 import Successful from "./Images/Success.gif";
 import FeedBack from "./Images/Feedback.svg";
 import Quote1 from "./Images/Quote1.svg";
-
+import Laptop from "./Images/Laptop.svg";
+import Phone from "./Images/Phone.svg";
 
 const feedback = [
   <div className="h-[250px] w-[100%] md:h-[250px] md:w-[60%] md:mx-auto lg:h-[300px] lg:w-[50%]">
@@ -58,6 +59,35 @@ const feedback = [
     </div>
   </div>,
 
+  <div className="h-[250px] w-[100%] md:h-[250px] md:w-[60%] md:mx-auto lg:h-[300px] lg:w-[50%]">
+    <div className="h-[60%] bg-[#04177F] flex justify-center items-center">
+      <div
+        style={{ boxShadow: "0px 0px 5.187px 0px rgba(139, 67, 255, 0.50)" }}
+        className="bg-[#EEEBEB] mt-[100px] h-[125px] rounded-[4px] w-[85%] flex flex-col justify-center items-center gap-[20px]"
+      >
+        <img src={FeedBack} alt="" className="w-[70px] h-[70px] mt-[-70px]" />
+        <p className="px-[10px] flex items-start justify-start mx-auto">
+          <img src={Quote1} alt="" className="w-[20px] h-[20px]" />
+          <span className="text-[12px] px-[5px] text-center flex items-center mx-auto lg:text-[18px]">
+            Lorem ipsum dolor sit amet consectetur. Laoreet cras turpis
+            hendrerit a diam tristique scelerisque laoreet. Iaculis congue
+            dignissim vitae ligula ultrice
+          </span>
+          <img
+            src={Quote1}
+            alt=""
+            className="w-[20px] h-[20px] rotate-180 mt-[50px]"
+          />
+        </p>
+      </div>
+    </div>
+    <div className="h-[40%] bg-[#EEEBEB] text-center pt-[50px]">
+      <p className="text-[12px] font-semibold lg:text-[18px]">
+        Savannah Nguyen
+      </p>
+      <p className="text-[12px] lg:text-[18px]">CEO SAM DATA SERVICES</p>
+    </div>
+  </div>,
 
   <div className="h-[250px] w-[100%] md:h-[250px] md:w-[60%] md:mx-auto lg:h-[300px] lg:w-[50%]">
     <div className="h-[60%] bg-[#04177F] flex justify-center items-center">
@@ -89,7 +119,6 @@ const feedback = [
     </div>
   </div>,
 
-
   <div className="h-[250px] w-[100%] md:h-[250px] md:w-[60%] md:mx-auto lg:h-[300px] lg:w-[50%]">
     <div className="h-[60%] bg-[#04177F] flex justify-center items-center">
       <div
@@ -120,38 +149,6 @@ const feedback = [
     </div>
   </div>,
 
-
-  <div className="h-[250px] w-[100%] md:h-[250px] md:w-[60%] md:mx-auto lg:h-[300px] lg:w-[50%]">
-    <div className="h-[60%] bg-[#04177F] flex justify-center items-center">
-      <div
-        style={{ boxShadow: "0px 0px 5.187px 0px rgba(139, 67, 255, 0.50)" }}
-        className="bg-[#EEEBEB] mt-[100px] h-[125px] rounded-[4px] w-[85%] flex flex-col justify-center items-center gap-[20px]"
-      >
-        <img src={FeedBack} alt="" className="w-[70px] h-[70px] mt-[-70px]" />
-        <p className="px-[10px] flex items-start justify-start mx-auto">
-          <img src={Quote1} alt="" className="w-[20px] h-[20px]" />
-          <span className="text-[12px] px-[5px] text-center flex items-center mx-auto lg:text-[18px]">
-            Lorem ipsum dolor sit amet consectetur. Laoreet cras turpis
-            hendrerit a diam tristique scelerisque laoreet. Iaculis congue
-            dignissim vitae ligula ultrice
-          </span>
-          <img
-            src={Quote1}
-            alt=""
-            className="w-[20px] h-[20px] rotate-180 mt-[50px]"
-          />
-        </p>
-      </div>
-    </div>
-    <div className="h-[40%] bg-[#EEEBEB] text-center pt-[50px]">
-      <p className="text-[12px] font-semibold lg:text-[18px]">
-        Savannah Nguyen
-      </p>
-      <p className="text-[12px] lg:text-[18px]">CEO SAM DATA SERVICES</p>
-    </div>
-  </div>,
-
-  
   <div className="h-[250px] w-[100%] md:h-[250px] md:w-[60%] md:mx-auto lg:h-[300px] lg:w-[50%]">
     <div className="h-[60%] bg-[#04177F] flex justify-center items-center">
       <div
@@ -293,22 +290,25 @@ export const Home = () => {
           </div>
         </div>
 
+        <div className="relative md:hidden">
+          <div className="">
+            <img
+              className="relative mx-auto mt-[12%] md:w-[40%] md:h-[30%] lg:w-[50%] lg:h-[40%] lg:mt-[20%]"
+              src={Laptop}
+              alt="/"
+            />
+            <img
+              className="absolute mx-auto top-0 right-[6%] mt-[7%] h-[78%] md:w-[40%] md:h-[30%] lg:w-[50%] lg:h-[40%] lg:mt-[20%]"
+              src={Phone}
+              alt="/"
+            />
+          </div>
+        </div>
         <img
-          className="mx-auto mt-[12%] md:w-[40%] md:h-[30%] lg:w-[50%] lg:h-[40%] lg:mt-[20%]"
+          className="mx-auto mt-[12%] md:w-[40%] md:h-[30%] lg:w-[50%] lg:h-[40%] lg:mt-[20%] hidden md:block"
           src={groupone}
           alt="/"
         />
-
-{/* <img
-          className="mx-auto mt-[12%] md:w-[40%] md:h-[30%] lg:w-[50%] lg:h-[40%] lg:mt-[20%] md:hidden"
-          src={Group}
-          alt="/"
-        /> */}
-        {/* <img
-          className="mx-auto mt-[12%] md:w-[40%] md:h-[30%] lg:w-[50%] lg:h-[40%]"
-          src="./Images/groupOne.png"
-          alt="/"
-        /> */}
       </div>
 
       {/* WHY CHOOSE US */}
@@ -693,9 +693,9 @@ export const Home = () => {
                 your phone online from the comfort of your home.
               </div>
               <Link to="/our-services/telecoms">
-              <div className="bg-[#04177f] w-[30%] text-[9px] mt-[10%] text-[#ffffff] p-[3%] text-center rounded-md lg:text-[14px] lg:font-bold lg:w-[50%] lg:p-[4%] lg:rounded-lg">
-                Buy Now
-              </div>
+                <div className="bg-[#04177f] w-[30%] text-[9px] mt-[10%] text-[#ffffff] p-[3%] text-center rounded-md lg:text-[14px] lg:font-bold lg:w-[50%] lg:p-[4%] lg:rounded-lg">
+                  Buy Now
+                </div>
               </Link>
             </div>
 
@@ -709,9 +709,9 @@ export const Home = () => {
                 to suit your needs and stream like never before!
               </div>
               <Link to="/our-services/telecoms">
-              <div className="bg-[#04177f] w-[30%] text-[9px] mt-[10%] text-[#ffffff] p-[3%] text-center rounded-md lg:text-[14px] lg:font-bold lg:w-[50%] lg:p-[4%] lg:rounded-lg">
-                Buy Now
-              </div>
+                <div className="bg-[#04177f] w-[30%] text-[9px] mt-[10%] text-[#ffffff] p-[3%] text-center rounded-md lg:text-[14px] lg:font-bold lg:w-[50%] lg:p-[4%] lg:rounded-lg">
+                  Buy Now
+                </div>
               </Link>
             </div>
 
@@ -727,9 +727,9 @@ export const Home = () => {
                 results in just a few clicks.
               </div>
               <Link to="/our-services/telecoms">
-              <div className="bg-[#04177f] w-[30%] text-[9px] mt-[10%] text-[#ffffff] p-[3%] text-center rounded-md lg:text-[14px] lg:font-bold lg:w-[50%] lg:p-[4%] lg:rounded-lg">
-                Buy Now
-              </div>
+                <div className="bg-[#04177f] w-[30%] text-[9px] mt-[10%] text-[#ffffff] p-[3%] text-center rounded-md lg:text-[14px] lg:font-bold lg:w-[50%] lg:p-[4%] lg:rounded-lg">
+                  Buy Now
+                </div>
               </Link>
             </div>
 
@@ -745,9 +745,9 @@ export const Home = () => {
                 never miss your favorite show again!
               </div>
               <Link to="/our-services/telecoms">
-              <div className="bg-[#04177f] w-[30%] text-[9px] mt-[10%] text-[#ffffff] p-[3%] text-center rounded-md lg:text-[14px] lg:font-bold lg:w-[50%] lg:p-[4%] lg:rounded-lg">
-                Buy Now
-              </div>
+                <div className="bg-[#04177f] w-[30%] text-[9px] mt-[10%] text-[#ffffff] p-[3%] text-center rounded-md lg:text-[14px] lg:font-bold lg:w-[50%] lg:p-[4%] lg:rounded-lg">
+                  Buy Now
+                </div>
               </Link>
             </div>
 
@@ -763,9 +763,9 @@ export const Home = () => {
                 Try our bills payment service right away to make life easier.
               </div>
               <Link to="/our-services/telecoms">
-              <div className="bg-[#04177f] w-[30%] text-[9px] mt-[10%] text-[#ffffff] p-[3%] text-center rounded-md lg:text-[14px] lg:font-bold lg:w-[50%] lg:p-[4%] lg:rounded-lg">
-                Buy Now
-              </div>
+                <div className="bg-[#04177f] w-[30%] text-[9px] mt-[10%] text-[#ffffff] p-[3%] text-center rounded-md lg:text-[14px] lg:font-bold lg:w-[50%] lg:p-[4%] lg:rounded-lg">
+                  Buy Now
+                </div>
               </Link>
             </div>
 
@@ -781,9 +781,9 @@ export const Home = () => {
                 wallet or bank account in just few minutes.
               </div>
               <Link to="/our-services/telecoms">
-              <div className="bg-[#04177f] w-[30%] text-[9px] mt-[10%] text-[#ffffff] p-[3%] text-center rounded-md lg:text-[14px] lg:font-bold lg:w-[50%] lg:p-[4%] lg:rounded-lg">
-                Buy Now
-              </div>
+                <div className="bg-[#04177f] w-[30%] text-[9px] mt-[10%] text-[#ffffff] p-[3%] text-center rounded-md lg:text-[14px] lg:font-bold lg:w-[50%] lg:p-[4%] lg:rounded-lg">
+                  Buy Now
+                </div>
               </Link>
             </div>
 
@@ -799,9 +799,9 @@ export const Home = () => {
                 next level.
               </div>
               <Link to="/our-services/telecoms">
-              <div className="bg-[#04177f] w-[30%] text-[9px] mt-[10%] text-[#ffffff] p-[3%] text-center rounded-md lg:text-[14px] lg:font-bold lg:w-[50%] lg:p-[4%] lg:rounded-lg">
-                Buy Now
-              </div>
+                <div className="bg-[#04177f] w-[30%] text-[9px] mt-[10%] text-[#ffffff] p-[3%] text-center rounded-md lg:text-[14px] lg:font-bold lg:w-[50%] lg:p-[4%] lg:rounded-lg">
+                  Buy Now
+                </div>
               </Link>
             </div>
 
@@ -817,9 +817,9 @@ export const Home = () => {
                 business name and make a resell without any hassle.
               </div>
               <Link to="/our-services/telecoms">
-              <div className="bg-[#04177f] w-[30%] text-[9px] mt-[10%] text-[#ffffff] p-[3%] text-center rounded-md lg:text-[14px] lg:font-bold lg:w-[50%] lg:p-[4%] lg:rounded-lg">
-                Buy Now
-              </div>
+                <div className="bg-[#04177f] w-[30%] text-[9px] mt-[10%] text-[#ffffff] p-[3%] text-center rounded-md lg:text-[14px] lg:font-bold lg:w-[50%] lg:p-[4%] lg:rounded-lg">
+                  Buy Now
+                </div>
               </Link>
             </div>
           </Carousel>
@@ -1125,7 +1125,6 @@ export const Home = () => {
 
       {/* CURRENCY CONVERSION */}
 
-
       <div
         id="currencyconvert"
         className="mb-[20%] md:mb-[10%] md:mt-[5%] mx-[5%] lg:mx-[8%] flex flex-col gap-[20px] md:flex-row md:justify-between lg:mb-[10%]"
@@ -1155,7 +1154,6 @@ export const Home = () => {
       </div>
 
       {/* MULTI-CURRENCY WALLETS */}
-
 
       <div
         id="multicurrency"
@@ -1190,7 +1188,6 @@ export const Home = () => {
 
       {/* BLOCKCHAIN SIM CARD */}
 
-
       <div
         id="multicurrency"
         className="mb-[20%] md:mb-[10%] mx-[5%] lg:mx-[8%] flex flex-col gap-[20px] md:flex-row md:justify-between"
@@ -1223,7 +1220,6 @@ export const Home = () => {
       </div>
 
       {/* VIRTUAL E-SIM */}
-
 
       <div
         id="multicurrency"

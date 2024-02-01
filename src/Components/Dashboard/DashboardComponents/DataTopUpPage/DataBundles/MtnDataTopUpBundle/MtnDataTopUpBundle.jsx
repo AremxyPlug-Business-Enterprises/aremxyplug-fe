@@ -49,7 +49,7 @@ const MtnDataTopUpBundle = () => {
   const [image, setImage] = useState("");
   const [paymentAmount, setPaymentAmount] = useState("");
   const [codes, setCodes] = useState(false);
-  // const [plan, setPlan] = useState(false);
+  const [plan, setPlan] = useState(false);
 
   const handleCodes = () => {
     setCodes(false);
@@ -300,7 +300,6 @@ const MtnDataTopUpBundle = () => {
           amount: "₦130000",
           duration: "1 MONTH",
         },
-        { id: 304, name: "MTN CG 500MB", amount: "₦135", duration: "1 MONTH" },
       ],
     },
     
@@ -352,6 +351,83 @@ const MtnDataTopUpBundle = () => {
         },
       ],
     },
+
+
+    {
+      id: 1,
+      name: "MTN GIFTING",
+      options: [
+        {
+          id: 305,
+          name: "MTN GIFTING 1GB",
+          amount: "₦600",
+          duration: "1 MONTH",
+        },
+        {
+          id: 306,
+          name: "MTN GIFTING 200MB",
+          amount: "₦60",
+          duration: "1 MONTH",
+        },
+        {
+          id: 307,
+          name: "MTN GIFTING 2.5GB",
+          amount: "₦500",
+          duration: "1 MONTH",
+        },
+        {
+          id: 308,
+          name: "MTN GIFTING 750MB",
+          amount: "₦300",
+          duration: "1 MONTH",
+        },
+        {
+          id: 309,
+          name: "MTN GIFTING 250MB",
+          amount: "₦200",
+          duration: "1 MONTH",
+        },
+        {
+          id: 310,
+          name: "MTN GIFTING 100MB",
+          amount: "₦100",
+          duration: "1 MONTH",
+        },
+        {
+          id: 311,
+          name: "MTN GIFTING 200MB",
+          amount: "₦200",
+          duration: "1 MONTH",
+        },
+        {
+          id: 312,
+          name: "MTN GIFTING 40MB",
+          amount: "₦50",
+          duration: "1 MONTH",
+        },
+
+        {
+          id: 313,
+          name: "MTN GIFTING 1GB",
+          amount: "₦350",
+          duration: "1 MONTH",
+        },
+
+        {
+          id: 314,
+          name: "MTN GIFTING 350MB",
+          amount: "₦333",
+          duration: "1 MONTH",
+        },
+      ],
+    },
+
+
+
+
+
+
+
   ];
 
   const handleProceed = (e) => {
@@ -392,7 +468,7 @@ const MtnDataTopUpBundle = () => {
   };
 
   const handleSelectOption = (selectedOption, selectedAmount, duration, id) => {
-    // setPlan(id);
+    setPlan(id);
     console.log(id);
     setSelectedOption(selectedOption);
     setShowOptionList(false);
@@ -420,39 +496,39 @@ const MtnDataTopUpBundle = () => {
 
   console.log("confirm:", confirm);
 
-  // const sendDataToBackend = (network, mobileNumber, plan, name) => {
-  //   const apiUrl = "http://localhost:8080/api/v1/data";
+  const sendDataToBackend = (network, mobileNumber, plan, name) => {
+    const apiUrl = "http://localhost:8080/api/v1/data";
 
-  //   // Prepare the data to be sent in the request body
-  //   const requestData = {
-  //     network,
-  //     mobile_number: mobileNumber,
-  //     plan,
-  //     name,
-  //   };
+    // Prepare the data to be sent in the request body
+    const requestData = {
+      network,
+      mobile_number: mobileNumber,
+      plan,
+      name,
+    };
 
-  //   console.log(requestData);
+    console.log(requestData);
 
-  //   // Send a POST request to the backend API
-  //   fetch(apiUrl, {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify(requestData),
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       // Handle the response from the backend
-  //       console.log("Backend response:", data);
-  //     })
-  //     .catch((error) => {
-  //       // Handle any errors that occurred during the fetch
-  //       console.error("Error sending data to backend:", error);
-  //     });
-  // };
+    // Send a POST request to the backend API
+    fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // Handle the response from the backend
+        console.log("Backend response:", data);
+      })
+      .catch((error) => {
+        // Handle any errors that occurred during the fetch
+        console.error("Error sending data to backend:", error);
+      });
+  };
 
-  // sendDataToBackend(1, inputValue, plan, recipientNames);
+  sendDataToBackend(1, inputValue, plan, recipientNames);
 
   return (
     <DashBoardLayout>
