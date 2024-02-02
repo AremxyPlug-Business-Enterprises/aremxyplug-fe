@@ -488,7 +488,7 @@ border-opacity-30 justify-start items-center gap-[52.80px] inline-flex"
           >
             <div
               onClick={() => {
-                setCalender(true);
+                setCalender((prev) => !prev);
                 setIsOpen1(false);
                 setShowStatus(false);
                 setIsOpen4(false); setIsOpen5(false);setIsOpen1(false);

@@ -21,6 +21,8 @@ import deletingfiles from "./assets/deletingfile.svg";
 import VuesaxBoldEye from "./assets/cancel.svg";
 import { Modal } from "../Screens/Modal/Modal";
 import SuccessGif from "../../Components/Dashboard/DashboardComponents/CardPaymentPage/CardPaymentImages/success.gif";
+import style from "../../Components/AirTimePage/AirtimeVtu.module.css";
+
 
 
 
@@ -51,7 +53,7 @@ export default function NotificationsPage() {
   const [isOpen20, setIsOpen20] = useState(false);
   const [isOpen21, setIsOpen21] = useState(false);
 
-  const { isDarkMode } = useContext(ContextProvider);
+  const { isDarkMode, toggleSideBar } = useContext(ContextProvider);
 
 
 
@@ -183,18 +185,25 @@ const [isModalOpen1, setIsModalOpen1] = useState(false);
     const [showPicture1, setShowPicture1] = useState(false);
     const [showPicture2, setShowPicture2] = useState(false);
 
+
+
+
     const [isRead, setIsRead] = useState(false);
+    
 
   const handleClick = () => {
     setIsRead(!isRead);
+    this.props.history.push('/LaunchPage.jsx'); // Navigate to another page
   };
 
   const [isRead1, setIsRead1] = useState(false);
 
+
+  
   const handleClick1 = () => {
     setIsRead1(!isRead1);
   };
-
+  
   const [isRead2, setIsRead2] = useState(false);
 
   const handleClick2 = () => {
@@ -625,8 +634,9 @@ items-end  "
                   border-b lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md
                    lg:rounded-xl shadow  border-[#d9d9d999]  ${isRead5 ? 'bg-white' :  'bg-sky-100'}`}
                 >
+                  <div className="w-full">
                    <Link to="/launch-page">
-                  <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
+                  <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start  text-start flex-col">
                     <div className="font-semibold text-text-color-fade text-zinc-500 lg:text-base md:text-xs  text-[8px] ">
                       New Launch!!
                     </div>
@@ -644,7 +654,9 @@ items-end  "
                     </div>
                   </div>
                   </Link>
+                  </div>
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between ">
+                    <div className="w-full">
                   <Link to="/launch-page">
                     <div className="flex flex-col">
                       <img
@@ -657,7 +669,7 @@ items-end  "
 
                     </div>
 </Link>
-                    
+       </div>             
                     <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
                       <div className="flex relative">
                       <div
@@ -743,10 +755,13 @@ items-end  "
 {isModalOpen && (
                 <Modal>
                   <div
-                   className=" bg-white md:mx-auto md:my-auto w-[300px] md:w-[600px] md:h-[330px] 
+                   className={` ${
+                    toggleSideBar ? "confirm02"
+                    : "confirm2"
+                  } bg-white md:mx-auto md:my-auto w-[300px] md:w-[600px] md:h-[330px] 
                     lg:mx-auto lg:w-[1000px] lg:h-[500px]
                    lg:my-auto
-                   rounded-[12px] "
+                   rounded-[12px]`}
                   >
                                           <img 
                       onClick={closeModal}
@@ -993,6 +1008,7 @@ items-end  "
                    lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow   border-b 
                     border-[#d9d9d999]  ${isRead ? 'bg-white' : 'bg-sky-100'} `}
                 >
+                  <div className="w-full">
   <Link to="/launch-page">
 
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
@@ -1012,6 +1028,7 @@ items-end  "
                     </div>
                   </div>
 </Link>
+</div>
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
@@ -1111,6 +1128,7 @@ items-end  "
                    w-full justify-between 
                   items-center `}
                 >
+                   <div className="w-full">
   <Link to="/launch-page">
 
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
@@ -1131,6 +1149,7 @@ items-end  "
                     </div>
                   </div>
 </Link>
+</div>
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
@@ -1229,6 +1248,7 @@ items-end  "
                     ${isRead2 ? 'bg-white' : 'bg-sky-100'} w-full justify-between
                    items-center`}
                 >
+                   <div className="w-full">
   <Link to="/launch-page">
 
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
@@ -1249,6 +1269,7 @@ items-end  "
                     </div>
                   </div>
 </Link>
+</div>
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
@@ -1348,6 +1369,7 @@ items-end  "
                   lg:rounded-xl shadow   border-b  border-[#d9d9d999]  ${isRead3 ? 'bg-white' : 'bg-sky-100'} w-full justify-between
                    items-center`}
                 >
+                   <div className="w-full">
   <Link to="/launch-page">
 
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
@@ -1368,6 +1390,7 @@ items-end  "
                     </div>
                   </div>
 </Link>
+</div>
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
@@ -1476,6 +1499,7 @@ items-end  "
                    lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${isRead4 ? 'bg-white' : 'bg-sky-100'} w-full justify-between
                    items-center`}
                 >
+                   <div className="w-full">
   <Link to="/launch-page">
 
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
@@ -1496,6 +1520,7 @@ items-end  "
                     </div>
                   </div>
 </Link>
+</div>
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
@@ -1728,13 +1753,14 @@ items-end  "
 {isModalOpen2 && (
                 <Modal>
                   <div
-                   className=" bg-white md:mx-auto md:my-auto w-[300px] lg:w-[1000px] lg:h-[500px] md:w-[600px] md:h-[330px] lg:mx-auto lg:my-auto
+                   className=" bg-white md:mx-auto md:my-auto w-[370px] lg:w-[1000px] lg:h-[500px] md:w-[690px]
+                    md:h-[350px] lg:mx-auto lg:my-auto h-[250px]
                     md:overflow-auto rounded-[12px] "
                   >
                                           <img 
                       onClick={closeModal2}
-                      className=" lg:w-[25px] w-[15px] lg:ml-[970px] h-[15px] lg:h-[25px] mt-[3px] md:ml-[575px] 
-                      md:mt-[5px] md:w-[20px] md:h-[20px] ml-[280px] lg:mt-[5px] flex "  src={VuesaxBoldEye} alt=""/>
+                      className=" lg:w-[25px] w-[15px] lg:ml-[970px] h-[15px] lg:h-[25px] mt-[3px] md:ml-[665px] 
+                      md:mt-[5px] md:w-[20px] md:h-[20px] ml-[350px] lg:mt-[5px] flex "  src={VuesaxBoldEye} alt=""/>
 
                     <hr className="h-[6px] bg-[#04177f] lg:mt-[3%] border-none mt-[3%] md:mt-[6%] md:h-[10px] lg:h-[20px]" />
                     <p className="text-[10px] px-[20px] md:text-[14px] lg:text-[18px] font-extrabold text-center my-[3%] lg:my-[%]">
@@ -1795,17 +1821,25 @@ items-end  "
 {showSuccessMessage2 && (
                 <Modal>
                   <div
-                   className="
-                     
-          
-                   bg-white md:mx-auto md:my-auto lg:mx-auto md:w-[600px] lg:w-[1000px] lg:h-[500px]
-                    md:h-[330px] w-[300px] lg:my-auto md:overflow-auto rounded-[12px]"
+                  
+                  
+                  
+                  // className="
+                    //  
+          // 
+                  //  bg-white md:mx-auto md:my-auto lg:mx-auto md:w-[690px] lg:w-[1000px] lg:h-[500px]
+                    // md:h-[350px] w-[370px] lg:my-auto md:overflow-auto rounded-[12px] h-[250px]"
+
+
+                    className={`${style.inputPin} ${
+                      toggleSideBar ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
+                      } md:w-[55%] w-[90%] relative `}
                   >
                                                               <img 
                       onClick={closeModal2}
-                      className=" lg:w-[25px] md:w-[20px] md:h-[20px] md:ml-[575px] md:mt-[5px] 
+                      className=" lg:w-[25px] md:w-[20px] justify-end items-end md:h-[20px] z-[1000] md:ml-[665px] md:mt-[5px] 
                        lg:h-[25px] w-[15px] h-[15px] lg:mt-[5px] mt-[3px] lg:ml-[970px]
-                       ml-[280px] flex "  src={VuesaxBoldEye} alt=""/>
+                       ml-[320px] flex "  src={VuesaxBoldEye} alt=""/>
 
                     <hr className="h-[6px] bg-[#04177f] lg:h-[20px] lg:mt-[3%] border-none 
                     
@@ -1825,13 +1859,14 @@ items-end  "
                     </div>
 
                     <div
-                      className={`w-full h-[38px] mt-[20px] px-[20px] md:mt-[10px]`}
+                      className={`w-full h-[38px] mt-[-10px] px-[20px] md:mt-[10px]`}
                     >
                       <button
-                        className={`bg-[#04177F] w-[80px] lg:w-[20] md:ml-[225px] md:w-[20%] md:h-[35px] flex justify-center items-center mr-auto 
-                        cursor-pointer ml-[90px] lg:ml-[380px]
-                        text-[14px] font-extrabold h-[30px] text-white rounded-[6px] md:rounded-[8px]
-                         md:text-[20px] lg:text-[16px] md:mx-auto lg:h-[38px] lg:my-[4%]`}
+                        className={`bg-[#04177F] mt-[10%] w-[88%] flex justify-center 
+                        items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white
+                         rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] 
+                         lg:h-[38px] lg:mt-[5%]`}
+                        
                         onClick={() => {
                           setShowSuccessMessage2(false);
                           setShowPicture1(true);
@@ -1858,6 +1893,7 @@ items-end  "
                    lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${isRead7 ? 'bg-white' : 'bg-sky-100'} w-full justify-between
                    items-center`}
                 >
+                   <div className="w-full">
   <Link to="/launch-page2">
 
 
@@ -1879,6 +1915,7 @@ items-end  "
                     </div>
                   </div>
 </Link>
+</div>
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
@@ -1985,6 +2022,7 @@ items-end  "
                    lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${isRead8 ? 'bg-white' : 'bg-sky-100'} w-full justify-between
                    items-center`}
                 >
+                   <div className="w-full">
   <Link to="/launch-page2">
 
 
@@ -2007,6 +2045,7 @@ items-end  "
                     </div>
                   </div>
 </Link>
+</div>
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
@@ -2108,6 +2147,7 @@ items-end  "
                    lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${isRead9 ? 'bg-white' : 'bg-sky-100'} w-full justify-between
                    items-center`}
                 >
+                   <div className="w-full">
   <Link to="/launch-page2">
 
 
@@ -2129,6 +2169,7 @@ items-end  "
                     </div>
                   </div>
 </Link>
+</div>
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
@@ -2232,6 +2273,7 @@ items-end  "
                    lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${isRead10 ? 'bg-white' : 'bg-sky-100'} w-full justify-between
                    items-center`}
                 >
+                   <div className="w-full">
   <Link to="/launch-page2">
 
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
@@ -2252,6 +2294,7 @@ items-end  "
                     </div>
                   </div>
 </Link>
+</div>
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
@@ -2354,6 +2397,7 @@ items-end  "
                    lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${isRead11 ? 'bg-white' : 'bg-sky-100'} w-full justify-between
                    items-center`}
                 >
+                   <div className="w-full">
   <Link to="/launch-page2">
 
 
@@ -2375,6 +2419,7 @@ items-end  "
                     </div>
                   </div>
 </Link>
+</div>
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
@@ -2733,6 +2778,7 @@ items-end  "
                   lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${isRead13 ? 'bg-white' : 'bg-sky-100'} w-full justify-between
                    items-center`}
                 >
+                   <div className="w-full">
   <Link to="/launch-page3">
 
 
@@ -2757,6 +2803,7 @@ items-end  "
                     </div>
                   </div>
 </Link>
+</div>
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
@@ -2859,6 +2906,7 @@ items-end  "
                    lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${isRead14 ? 'bg-white' : 'bg-sky-100'} w-full justify-between
                    items-center`}
                 >
+                   <div className="w-full">
   <Link to="/launch-page3">
 
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
@@ -2880,6 +2928,7 @@ items-end  "
                     </div>
                   </div>
 </Link>
+</div>
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
@@ -2980,6 +3029,7 @@ items-end  "
                   lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${isRead15 ? 'bg-white' : 'bg-sky-100'} w-full justify-between
                    items-center`}
                 >
+                   <div className="w-full">
  <Link to="/launch-page3">
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
                     <div className="font-semibold text-text-color-fade text-zinc-500 lg:text-base md:text-xs  text-[8px] ">
@@ -3000,6 +3050,7 @@ items-end  "
                     </div>
                   </div>
 </Link>
+</div>
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
@@ -3101,6 +3152,7 @@ items-end  "
                   lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${isRead16 ? 'bg-white' : 'bg-sky-100'} w-full justify-between
                    items-center`}
                 >
+                   <div className="w-full">
                    <Link to="/launch-page3">
 
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
@@ -3122,6 +3174,7 @@ items-end  "
                     </div>
                   </div>
 </Link>
+</div>
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
@@ -3222,7 +3275,9 @@ items-end  "
                    lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${isRead17 ? 'bg-white' : 'bg-sky-100'} w-full justify-between
                    items-center`}
                 >
+                   <div className="w-full">
  <Link to="/launch-page3">
+ 
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
                     <div className="font-semibold text-text-color-fade text-zinc-500 lg:text-base md:text-xs  text-[8px] ">
                       New Launch!!
@@ -3242,6 +3297,7 @@ items-end  "
                     </div>
                   </div>
                   </Link>
+                  </div>
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                     <div className="flex flex-col">
                       <img
@@ -3456,5 +3512,6 @@ items-end  "
       </>
     </DashBoardLayout>
   );
-                    }
+};
+
                   
