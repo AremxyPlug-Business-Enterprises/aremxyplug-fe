@@ -294,7 +294,7 @@ export default function ToAremxyMain() {
               maxLength="11"
               value={mainUserPhoneNumber}
               className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
-              type="text"
+              type="number"
             />
             <img
               className=" h-[13.3px] w-[13.3px] lg:w-[24px] lg:h-[24px] "
@@ -404,26 +404,26 @@ export default function ToAremxyMain() {
       <button
         onClick={ProceedToMainTransfer}
         className={`${
-          amtToTransfer.length < 4 ? "bg-[#0008]" : "bg-[#04177f]"
+          amtToTransfer.length < 3 ? "bg-[#0008]" : "bg-[#04177f]"
         } my-[5%] w-full flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
       >
         Proceed
       </button>
       {currencyAvailable && (
         <Modal>
-          <div className={styled.NotInter}>
-              <div className={styled.timeAble}>
-                  <h5>This Currency is Currently Not Available.</h5>
-              </div>
-              <div className={styled.InterAirtimeK}>
-                  <img src="/Images/addAccountImages/account-unavailable.png" alt=""/>
-              </div>
-              <div className={styled.coming}>
-                  <h2>Coming soon...</h2>
-                  <button className={styled.btnOk} onClick={refresh}>Okay</button>
-              </div>
-          </div>
-        </Modal>
+        <div className={styled.NotInterX} >
+            <div className={styled.timeAbleK}>
+                <h3>This Currency is Currently Not Available.</h3>
+            </div>
+            <div className={styled.InterAirtimeX}>
+                <img src="/Images/addAccountImages/account-unavailable.png" alt="" />
+            </div>
+            <div className={styled.comingX} >
+                <h2>Coming soon...</h2>
+                <button className={styled.btnOkX} onClick={refresh}>Okay</button>
+            </div>
+        </div>
+      </Modal>
       )}
       <ToConfirmAremxyMain />
     </div>

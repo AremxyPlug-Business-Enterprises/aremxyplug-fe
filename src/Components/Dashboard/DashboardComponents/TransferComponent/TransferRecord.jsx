@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { ContextProvider } from "../../../Context";
 import { useNavigate } from "react-router-dom";
@@ -51,8 +50,8 @@ const CountrySelect = ({ onSelect, selectedCountry, countries }) => {
     setNoRecord,
     setPersonalAccount,
     setBusinessAccount,
-    image,
-    setImage,
+    tfImage,
+    settfImage,
     setCode,
     showList,
     setShowList,
@@ -63,7 +62,7 @@ const CountrySelect = ({ onSelect, selectedCountry, countries }) => {
 
   const handleOptionClick = (country, flag, id, code) => {
     onSelect(country);
-    setImage(flag);
+    settfImage(flag);
     setCode(code);
     setShowList(false);
     setSelected(true);
@@ -89,7 +88,7 @@ const CountrySelect = ({ onSelect, selectedCountry, countries }) => {
           <div className="flex gap-[5px] items-center md:gap-[8px]">
             <img
               className="w-[11px] h-[11px] lg:w-[29px] lg:h-[29px]"
-              src={image}
+              src={tfImage}
               alt=""
             />
             {selectedCountry}
@@ -151,7 +150,7 @@ export const TransferRecord = () => {
     setPersonalAccount,
     setBusinessAccount,
     setNoRecord,
-    image,
+    tfImage,
   } = useContext(ContextProvider);
   const [selectedCountry, setSelectedCountry] = useState("");
 
@@ -256,13 +255,13 @@ export const TransferRecord = () => {
             </tr>
           </thead>
 
-          <tbody onClick={handleTableRowClick}>
+          <tbody className="cursor-pointer" onClick={handleTableRowClick}>
             <tr>
               <td className="">
                 <div className="flex gap-[3px] lg:gap-[10px]">
                   <img
                     className="w-[11px] h-[11px] lg:w-[24px] lg:h-[24px]"
-                    src={image}
+                    src={tfImage}
                     alt=""
                   />{" "}
                   <p> Nigeria</p>
@@ -302,40 +301,24 @@ export const TransferRecord = () => {
             </tr>
           </thead>
 
-          <tbody onClick={handleTableRowClick2}>
+          <tbody className="cursor-pointer" onClick={handleTableRowClick2}>
             <tr>
               <td className="">
                 <div className="flex gap-[3px] lg:gap-[10px]">
                   <img
                     className="w-[11px] h-[11px] lg:w-[24px] lg:h-[24px]"
-                    src={image}
+                    src={tfImage}
                     alt=""
                   />{" "}
-                  <p>
-                    {" "}
-                    <Link to="/business-account">Nigeria</Link>
-                  </p>
+                  <p> Nigeria</p>
                 </div>
               </td>
-              <td>
-                <Link to="/business-account">NGN</Link>
-              </td>
-              <td>
-                <Link to="/business-account">Mercury Bank</Link>
-              </td>
-              <td>
-                <Link to="/business-account">
-                  AremxyPlug Business Ent, LTD.
-                </Link>
-              </td>
-              <td>
-                <Link to="/business-account">01234*****</Link>
-              </td>
+              <td>NGN</td>
+              <td>Mercury Bank</td>
+              <td>AremxyPlug Business Ent, LTD.</td>
+              <td>01234*****</td>
               <td className="flex gap-[5px] lg:gap-[10px]">
-                <p>
-                  {" "}
-                  <Link to="/business-account">AP-2023 0703-001 </Link>
-                </p>
+                <p> AP-2023 0703-001</p>
                 <img
                   className="w-[10px] h-[10px] md:w-[14px] md:h-[14px] lg:w-[20px] lg:h-[20px]"
                   src="./Images/Dashboardimages/arrowright.png"

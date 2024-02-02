@@ -419,7 +419,7 @@ const AirtelDataBundle = () => {
 
           <div className="flex gap-[15px]  justify-between md:w-full md:gap-[10%]">
             <div className="flex gap-[15px] md:w-[50%] md:justify-between">
-              <p className="flex text-[#7c7c7c] gap-[7px] text-[10px] md:gap-[7px] leading-[130%] md:text-[12px] lg:text-[20px] 2xl:text-[28px]">
+              <p className="flex text-[#7c7c7c] gap-[7px] text-[10px] md:gap-[7px] leading-[130%] md:text-[12px] lg:text-[16px] 2xl:text-[20px]">
                 Purchase
                 <span>
                   <img
@@ -585,7 +585,11 @@ const AirtelDataBundle = () => {
             <div className="">
               <h2 className="text-[10px] font-[600] md:text-[12px] lg:text-[18px]">
                 Phone Number{" "}
-                <span className="text-[#04177F]">(Select Recipient)</span>{" "}
+                <span className="text-[#04177F]">
+                  <Link to="/DataBundleSelectRecipient">
+                    (Select Recipient)
+                  </Link>
+                  </span>{" "}
               </h2>
               <div className="relative mt-[5px]">
                 <input
@@ -1178,7 +1182,7 @@ const AirtelDataBundle = () => {
               walletName={walletName}
             />
           )}
-
+          
           <div className="py-[30px] lg:py-[60px] mt-10">
             <button
               className={`w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[600] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px] ${

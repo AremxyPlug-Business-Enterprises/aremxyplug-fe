@@ -29,6 +29,17 @@
   margin: 0;
 }
 
+.currencySelect {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  
+}
+
+.currencySelect::-ms-expand {
+  display: none;
+}
+
 .hideArrows {
   -moz-appearance: textfield;
 }
@@ -110,7 +121,7 @@ td {
 }
 
 .checkrate {
-  height: 600px;
+  height: 550px;
   /* width: 90%; */
   flex-shrink: 0;
   border-radius: 11px;
@@ -312,6 +323,11 @@ td {
     background: #fff3e5;
     border-radius: 3.328px;
     border: 0.555px solid var(--stroke-fade, rgba(0, 0, 0, 0.3));
+  }
+
+  .checkrate {
+    height: 750px;
+    border-radius: 15px;
   }
 }
 

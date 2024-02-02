@@ -6,6 +6,7 @@ import { Modal } from "../../Screens/Modal/Modal";
 import { AiFillEye } from "react-icons/ai";
 import OtpInput from "react-otp-input";
 import { AiFillEyeInvisible } from "react-icons/ai";
+import styles from "../../Dashboard/DashboardComponents/TransferComponent/transfer.module.css";
 
 
 export const InputDstvPopup = () => {
@@ -45,7 +46,7 @@ export const InputDstvPopup = () => {
             (
             <Modal>
          
-        <div className={`InputPinToConvert ${
+        <div className={`${styles.inputPin} ${
               toggleSideBar ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
             } md:w-[55%] w-[90%]`}
             >

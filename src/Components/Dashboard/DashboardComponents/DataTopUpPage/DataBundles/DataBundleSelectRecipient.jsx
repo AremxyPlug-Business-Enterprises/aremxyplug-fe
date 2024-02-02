@@ -214,7 +214,7 @@ const DataBundleSelectRecipient = () => {
               </div>
             </section>
           </div>
-          <div className="flex text-[#7c7c7c] mt-[5%] text-[10px] leading-[26px] items-center gap-[8px] md:text-[12px] lg:text-[20px]">
+          <div className="flex text-[#7c7c7c] mt-[5%] text-[10px] leading-[26px] items-center gap-[8px] md:text-[12px] lg:text-[16px] 2xl:text-[20px]">
             <p>Add Recipient Details </p>
             <img
               className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"

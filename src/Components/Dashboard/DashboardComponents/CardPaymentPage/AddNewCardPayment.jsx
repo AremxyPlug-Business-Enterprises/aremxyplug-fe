@@ -26,9 +26,7 @@ import Success from "./CardPaymentImages/success.gif";
 import CvvPopUp from "./CardPaymentImages/CvvPopUp.svg";
 import PinPopUp from "./CardPaymentImages/PinPopUp.svg";
 import CardBackground from "./CardPaymentImages/CardBackground.svg";
-// import WalletModal from "../../../Wallet/WalletModal";
 import AddCardPopUp from "./CardPaymentImages/AddCardPopUp.svg";
-// import ExistingCardPage from "./ExistingCardPage";
 
 const AddNewCardPayment = () => {
   const { isDarkMode, toggleSideBar } = useContext(ContextProvider);
@@ -46,13 +44,6 @@ const AddNewCardPayment = () => {
   const [image, setImage] = useState("");
   const [usd, setUsd] = useState("");
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   // Include navigate in the dependency array
-  //   if (paymentSelected) {
-  //     navigate('/ExistingCardPage', { state: { paymentSelected: true } });
-  //   }
-  // }, [paymentSelected, navigate]);
 
   const handleShowPayment = () => {
     setShowPayment(!showPayment);
@@ -150,17 +141,11 @@ const AddNewCardPayment = () => {
     setFilteredCountryList(filteredList);
   };
 
-  const handleCardNumberChange = (e) => {
+  const handleCardNumberChange = (e, setCardNumber) => {
     let inputVal = e.target.value.replace(/[^0-9]/g, ""); // Keep only numeric characters
-    inputVal = inputVal.replace(/(\d{4})(?=\d)/g, "$1 "); // Add space after every 4 digits, except the last 4
+    inputVal = inputVal.replace(/(\d{4})(?=\d)/g, "$1 "); // Add space after every 4 digits
     setCardNumber(inputVal);
   };
-
-  // const handleCardNumberChange = (e) => {
-  //   let inputVal = e.target.value.replace(/\s/g, ""); // Remove existing spaces
-  //   inputVal = inputVal.replace(/(\d{4})(?=\d)/g, "$1 "); // Add space after every 4 digits, except the last 4
-  //   setCardNumber(inputVal);
-  // };
 
   const handleExpiryDateChange = (e) => {
     // Remove non-digit characters from the input
@@ -362,11 +347,12 @@ const AddNewCardPayment = () => {
                 }`}
               >
                 <input
-                  type="text"
+                  type="tel"
+                  inputMode="numeric" // Set inputMode to control keyboard type on mobile devices
                   value={cardNumber}
-                  onChange={handleCardNumberChange}
+                  onChange={(e) => handleCardNumberChange(e, setCardNumber)}
                   className={`outline-none w-full text-[10px] md:text-[14px] lg:text-[18px]`}
-                  placeholder="4444 4444 4444 4444"
+                  placeholder="Card Number"
                   maxLength="39"
                 />
                 <img
@@ -395,7 +381,8 @@ const AddNewCardPayment = () => {
                   }`}
                 >
                   <input
-                    type="text"
+                    type="tel"
+                    inputMode="numeric"
                     value={expiryDate}
                     onChange={handleExpiryDateChange}
                     className="outline-none w-full text-[10px] md:text-[14px] lg:text-[18px]"
@@ -769,10 +756,6 @@ const AddNewCardPayment = () => {
             </div>
           </Modal>
         )}
-
-        {/* {ExistingCardPage && (
-            <ExistingCardPage setPaymentSelected={setPaymentSelected} />
-          )} */}
 
         <div
           className={`${

@@ -4,6 +4,7 @@ import { DashBoardLayout } from "../../../Layout/DashBoardLayout";
 import { Link } from "react-router-dom";
 import style from "../../../../AirTimePage/AirtimeVtu.module.css";
 import styles from "../../TransferComponent/transfer.module.css";
+import styled from "../../../../AirTimePage/AirTime.module.css";
 import { Modal } from "../../../../Screens/Modal/Modal";
 import Joi from "joi";
 
@@ -11,7 +12,6 @@ import Joi from "joi";
 const AremxyAddUser = () => {
 
     const {
-        isDarkMode,
         toggleSideBar,
       } = useContext(ContextProvider);
 
@@ -312,9 +312,8 @@ const AremxyAddUser = () => {
                 <Modal>
                     <div
                         className={`${style.successfulFour} ${
-                        toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-                        } md:w-[45%] w-[90%] md:my-auto md:mt-[.5%] mx-auto 
-                        overflow-auto md:mb-[18%] lg:mx-auto lg:my-auto`}
+                          toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+                          } md:w-[45%] w-[90%] overflow-auto`}
                     >
                     <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
                         <img
@@ -382,7 +381,7 @@ const AremxyAddUser = () => {
                         src="/Images/transferImages/close-circle.png"
                         alt=""
                         />
-                        <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
+                        <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[8%] md:h-[10px]" />
                         <h2 className="text-[12px] font-bold my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
                         Successful
                         </h2>
@@ -415,27 +414,17 @@ const AremxyAddUser = () => {
             </div>
             {currencyAvailable && (
               <Modal>
-                <div className="bg-white shadow-lg w-[90%] rounded-[8px] h-[269px] flex flex-col items-center py-[4%] gap-[40px] md:h-[360px] lg:w-[562px] lg:gap-[60px] lg:h-[500px] lg:py-[3%] lg:rounded-[px]">
-                  <p className="text-[10px] text-[#04177f] font-extrabold md:text-[16px] lg:text-[25px]">
-                    This Currency is Currently Not Available.
-                  </p>
-                  <img
-                    className="w-[135px] h-[96px] lg:w-[217px] lg:h-[187px]"
-                    src="/Images/addAccountImages/account-unavailable.png"
-                    alt=""
-                  />
-                  <p className="absolute top-[58%] right-[15%] text-[8px] md:text-[12px] md:ml-[70%] lg:text-[14px] lg:top-[73%] lg:right-[33%] lg:ml-[40%] lg:w-[8%]">
-                    Coming Soon...
-                  </p>
-
-                  <div
-                    onClick={refresh}
-                    className={` ${
-                      isDarkMode ? "border" : "bg-[#04177f] "
-                    } cursor-pointer text-white text-[10px] h-[40px] w-[80%] rounded-[5px] flex items-center justify-center md:mx-auto md:w-[20%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[30%] lg:mx-auto`}
-                  >
-                    Okay
-                  </div>
+                <div className={styled.NotInterX} >
+                    <div className={styled.timeAbleK}>
+                        <h3>This Currency is Currently Not Available.</h3>
+                    </div>
+                    <div className={styled.InterAirtimeX}>
+                        <img src="/Images/addAccountImages/account-unavailable.png" alt="" />
+                    </div>
+                    <div className={styled.comingX} >
+                        <h2>Coming soon...</h2>
+                        <button className={styled.btnOkX} onClick={refresh}>Okay</button>
+                    </div>
                 </div>
               </Modal>
             )}

@@ -146,7 +146,7 @@ const nabtebReceipt = () => {
 
   return (
     <DashBoardLayout>
-    <div className='flex flex-col h-[140%] lg:h-[120%] justify-between '>
+    <div className='flex flex-col h-[115%] lg:h-[120%] justify-between '>
  <div className=''>
   {/* Hero-section */}
 <HeroComponent/>
@@ -479,7 +479,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
     {nabtebEducationProceed && (
           <Modal>
             <div
-              className={`confirm mx-[5%] ${
+              className={`deleteRecipientSuccess mx-[5%] ${
                 isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
               } ${
                 toggleSideBar
@@ -787,7 +787,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                 Purchase Successful
               </h2>
               <img 
-                className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[250px] lg:h-[250px]"
+                className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[100px] lg:h-[100px]"
                 src="./Gif/checkMarkGif.gif"
                 alt="/"
               />
@@ -804,7 +804,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                 </p>
 
                 <div className="flex items-center justify-between">
-                  <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] md:text-[12px] 
+                  <h2 className="text-[#7C7C7C] text-[10px] leading-[12.1px] md:text-[12px] 
                   md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] font-[500]">
                       Exam Type
                   </h2>
@@ -866,17 +866,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                   </div>
                 </div>
 
-                {/* <div className="flex items-center justify-between">
-                  <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                    Amount
-                  </h2>
-                  <div className="flex gap-1">
-                    <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                      {selectedAmount}
-                    </h2>
-                  </div>
-                </div> */}
-
+               
                 <div className="flex items-center justify-between">
                   <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] 
                   md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] font-[500]">
@@ -907,7 +897,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
               <div className="bg-[#F2FAFF] mx-5 h-[45px] my-5 flex p-[10.193px] items-center justify-center   
               md:mx-[20px] md:rounded-[15px] lg:rounded-[16.308px] lg:h-[75px]">
                 <p className="text-[9px] text-[#7C7C7C] text-center  md:text-[11px] 
-                lg:text-[16.231px] lg:leading-[20px]">
+                lg:text-[14.231px] lg:leading-[20px]">
                <span className='md:block'>The e-pins purchase has been generated successfully. 
                 Please kindly check</span>
              <span className='md:block'> receipt to confirm the pin / token. 
@@ -966,7 +956,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
           />
         )}
                
-               <div className="py-[30px] lg:py-[60px] mt-10 lg:mb-[200px] mb-[50px] md:mb-[100px]">
+               <div className="py-[30px] lg:py-[60px] mt-10 lg:mb-[80px] mb-[50px] md:mb-[100px]">
           <button
             className={`font-extrabold h-[43px] w-[100%] py-[3.534px] px-[5.301px]  md:mb-[0px] rounded-[4.241px]
             md:w-[95.649px] text-white md:py-[5.868px] md:px-[8.802px]  md:h-auto
@@ -1003,7 +993,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
     
 
     <div className="flex gap-[8.729px]  md:gap-[14.896px] 
-   justify-center px-[8.594px] mb-[130px]">
+   justify-center px-[8.594px] mb-[50px]">
             <p className="font-[500] text-[10px] text-black 
               leading-[10.4px] lg:text-[16px] lg:leading-[15.6px]  md:text-[6.875px]
             ] md:leading-[12.938px] self-center">

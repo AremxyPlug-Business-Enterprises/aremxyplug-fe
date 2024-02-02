@@ -24,7 +24,7 @@ export const MainDashboard = () => {
   const [activeButtons, setActiveButtons] = useState([true, false, false]);
   const [blur, setBlur] = useState(false);
   const [blurTwo, setBlurTwo] = useState(false);
-  const [blurThree, setBlurThree] = useState(false);
+  // const [blurThree, setBlurThree] = useState(false);
   const textRef = useRef(null);
   const [selected, setSelected] = useState("");
   const [selected2, setSelected2] = useState("");
@@ -233,19 +233,19 @@ export const MainDashboard = () => {
                   This feature is currently not available...
                 </div>
               )}
-              {blurThree && (
+              {/* {blurThree && (
                 <div
                   className={`${
                     isDarkMode ? " text-[#fff]" : "text-[#04177f]"
                   } ${
                     toggleSideBar
                       ? "backdrop-blur-[4.5px] md:absolute md:w-[80%] md:h-[65px] md:ml-[3%] md:text-[19px] md:text-center lg:absolute lg:mt-12 lg:font-extrabold lg:ml-[2%] lg:w-[14%] lg:text-[22px] lg:h-[50px] lg:left-[33%] text-[#04177f]"
-                      : "backdrop-blur-[4.5px] absolute w-[38%] right-[23%] h-[70px] text-[13px] font-bold text-center ml-[6%] pt-[5%] md:text-[20px] md:mt-[%] md:pb-[8%] md:pt-[0%] md:h-[40px] md:text-extrabold lg:text-[24px] lg:ml-[%] lg:w-[21%] lg:pb-0 lg:h-[60px] lg:flex lg:justify-center lg:items-center lg:mt-[2%] lg:right-[60%]"
+                      : "backdrop-blur-[4.5px] absolute w-[38%] right-[23%] h-[70px] text-[13px] font-bold text-center ml-[6%] pt-[5%] md:text-[20px] md:mt-[%] md:pb-[8%] md:pt-[0%] md:h-[40px] md:text-extrabold lg:text-[24px] lg:ml-[%] lg:w-[18%] lg:pb-0 lg:h-[60px] lg:flex lg:justify-center lg:items-center lg:mt-[2%] lg:right-[60%]"
                   } `}
                 >
                   Coming Soon...
                 </div>
-              )}
+              )} */}
               {/* ================= */}
               {!activeButtons[2] ? (
                 <div
@@ -254,6 +254,7 @@ export const MainDashboard = () => {
                   }`}
                 >
                   <select
+                  className={`${styles.selected}`}
                     name="curr"
                     id="curr"
                     onChange={handleSelectedOption2}
@@ -351,7 +352,7 @@ export const MainDashboard = () => {
                   onClick={() => {
                     handleClick(1);
                     setBlur(true);
-                    setBlurThree();
+                    // setBlurThree();
                   }}
                   className={`${styles.fcp2} ${
                     isDarkMode ? " border" : " "
@@ -368,7 +369,7 @@ export const MainDashboard = () => {
                   onClick={() => {
                     handleClick(2);
                     setBlur(false);
-                    setBlurThree();
+                    // setBlurThree();
                   }}
                   className={`${styles.fcp2} ${
                     isDarkMode ? " border" : " "
@@ -410,6 +411,7 @@ export const MainDashboard = () => {
                   </p>
 
                   <select
+                  className={`${styles.selected}`}
                     name="curr"
                     id="curr"
                     onChange={handleSelectedOption}

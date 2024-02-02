@@ -14,7 +14,7 @@ import { InputPinPopUp } from "../TransferComponent/PopUps/InputPinPopUp";
 export const PersonalAccountPage = () => {
   const {
     isDarkMode,
-    image,
+    tfImage,
     code,
     toggleSideBar,
     amtToTransfer,
@@ -56,7 +56,6 @@ export const PersonalAccountPage = () => {
               className="w-[91px] h-[66px] md:h-[120px] md:w-[90px] lg:w-[199px] lg:h-[170px]"
             />
           </div>
-          
           <div className="flex my-[5%] gap-11 font-extrabold md:w-[80%]">
             <button
               onClick={() => setTfPopUp(true)}
@@ -72,20 +71,18 @@ export const PersonalAccountPage = () => {
               />
             </button>
 
-            <Link to="/top-up">
-              {" "}
-              <button
-                className={`${styles.transferMoneyBtn} flex gap-[5px] w-[100%] h-[26px] justify-center items-center md:w-[390px] lg:h-[41px]`}
-              >
-                <h2 className="text-[9px] md:text-[12px] lg:text-[16px]">
-                  Add Money To Wallet
-                </h2>
-                <img
-                  className="w-[11px] h-[11px] md:w-[20px] md:h-[20px] lg:w-[29px] lg:h-[29px]"
-                  src="/Images/dashboardImages/add-money.png"
-                  alt=""
-                />
-              </button>
+            <Link
+              to="/top-up"
+              className={`${styles.transferMoneyBtn} flex gap-[5px] w-[100%] h-[26px] justify-center items-center md:w-[390px] lg:h-[41px]`}
+            >
+              <h2 className="text-[9px] md:text-[12px] lg:text-[16px]">
+                Add Money To Wallet
+              </h2>
+              <img
+                className="w-[11px] h-[11px] md:w-[20px] md:h-[20px] lg:w-[29px] lg:h-[29px]"
+                src="/Images/dashboardImages/add-money.png"
+                alt=""
+              />
             </Link>
           </div>
           <div className="flex text-[#7c7c7c] text-[10px] leading-[130%] items-center mb-[2%] gap-[8px] md:my-[5%] md:text-[18px] lg:text-[20px]">
@@ -110,7 +107,7 @@ export const PersonalAccountPage = () => {
               </div>
               <img
                 className="w-[18px] h-[18px] md:w-[24px] md:h-[24px] lg:w-[29px] lg:h-[29px]"
-                src={image}
+                src={tfImage}
                 alt="/"
               />
             </div>

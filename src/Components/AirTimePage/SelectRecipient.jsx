@@ -248,13 +248,10 @@ const SelectRecipient = () => {
             {edit && (
               <Modal>
                 <div
-                  className={`confirm mx-auto my-auto  ${
-                    isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
-                  } ${
-                    toggleSideBar
-                      ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
-                      : "lg:w-[40%]"
-                  } lg:ml-[10%] lg:mr-[10%] grow pt-[10px] bottom-[20px] md:top-auto md:bottom-auto lg:top-[5%] pb-[20px] rounded-tr-[8px] rounded-br-[8px] rounded-bl-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:overflow-auto lg:overflow-hidden`}
+                  className={`${airtimestyles.successfulTwo} ${
+                    toggleSideBar ? " lg:ml-[20%] lg:w-[40%]"
+                    : "lg:w-[40%]"
+                } w-[90%] xl:w-[40%] md:w-[70%] overflow-auto`}
                 >
                   <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
                     <img
@@ -433,8 +430,8 @@ const SelectRecipient = () => {
               <Modal>
                 <div
                   className={`${airtimestyles.successfulThree} ${
-                  toggleSideBar ? "md:w-[25%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-                  } w-[90%] md:w-[20%] overflow-auto`}
+                  toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+                } md:w-[45%] w-[90%] overflow-auto`}
                 >
                   <div className="flex justify-end items-end my-[2%] lg:my-[1%] ">
                     <img
@@ -445,18 +442,18 @@ const SelectRecipient = () => {
                         setRecipientNumber("");
                         setRecipientName("");
                       }}
-                      className=" w-[18px] cursor-pointer h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
+                      className=" w-[18px] cursor-pointer h-[18px] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px]"
                       src="/Images/transferImages/close-circle.png"
                       alt=""
                     />
                   </div>
-                  <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
+                  <hr className="h-[6px] bg-[#04177f] border-none mt-[2%] md:mt-[1%] md:h-[10px]" />
 
-                  <div className="text-center mt-[40px] font-semibold text-[10px] lg:mt-[20px] lg:text-[16px]">
+                  <div className="text-[12px] my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
                     Please Confirm
                   </div>
 
-                  <div className="bg-[#FFF0BA] mx-5 h-[80px] my-5 flex justify-between items-center px-[%] md:h-[75px] md:mx-[20px] md:rounded-[15px] lg:h-[75px]">
+                  <div className="bg-[#FFF0BA] mx-5 rounded-md h-[55px] my-5 flex justify-between items-center px-[4%] md:h-[75px] lg:h-[85px]">
                     <p className="text-[10px] text-[#4A4A4A] font-semibold text-center mx-auto w-[250px] md:text-[9px] md:w-full lg:text-[14px]">
                       Are you sure you want to add this details to your
                       recipients? Please re-confirm the identity and be informed
@@ -465,8 +462,8 @@ const SelectRecipient = () => {
                     </p>
                   </div>
 
-                  <div className="flex flex-col gap-5 mt-[30px] lg:gap-4 px-[20px]">
-                    <div className="flex items-center justify-between">
+                  <div className="flex flex-col gap-2 lg:gap-4">
+                    <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                       <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
                         Network
                       </h2>
@@ -480,7 +477,7 @@ const SelectRecipient = () => {
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between">
+                    <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                       <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
                         Phone Number
                       </h2>
@@ -491,7 +488,7 @@ const SelectRecipient = () => {
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between">
+                    <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                       <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
                         Recipient Name
                       </h2>
@@ -503,20 +500,16 @@ const SelectRecipient = () => {
                     </div>
                   </div>
 
-                  <div
-                    className={`w-full h-[38px] mt-[100px] lg:mt-[50px] px-[20px] md:mx-[35%]`}
-                  >
                     <button
                       className={`${
                         recipientNumber.length < 11
                           ? "bg-[#0008]"
                           : "bg-[#04177f]"
-                      } w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
+                      } bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:mt-[8%]`}
                       onClick={handleConfirm}
                     >
                       Confirmed
                     </button>
-                  </div>
                 </div>
               </Modal>
             )}
@@ -524,11 +517,10 @@ const SelectRecipient = () => {
             {confirm && (
               <Modal>
                 <div
-                  className={`confirm2 ${airtimestyles.inputPin} ${
+                  className={`${airtimestyles.inputPin} ${
                     toggleSideBar
-                      ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
-                      : "lg:w-[40%]"
-                  } md:w-[55%] w-[90%] lg:mt-[10px] md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
+                      ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
+                  } md:w-[55%] w-[90%]`}
                 >
                   <div className="flex justify-between items-center mx-[3%] my-[2%] lg:mt-[3%] ">
                     <img
@@ -536,7 +528,7 @@ const SelectRecipient = () => {
                         setEdit(false);
                         //   window.location.reload();
                       }}
-                      className=" w-[18px] h-[15px] md:w-[35px] md:h-[32px] lg:w-[35px] lg:h-[22px] "
+                      className=" w-[18px] h-[15px] md:w-[35px] md:h-[32px] lg:w-[25px] lg:h-[12px] "
                       src="/Images/login/arpLogo.png"
                       alt=""
                     />
@@ -546,39 +538,39 @@ const SelectRecipient = () => {
                         setConfirm(false);
                         window.location.reload();
                       }}
-                      className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[35px] lg:h-[35px] "
+                      className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[25px] lg:h-[25px] "
                       src="/Images/transferImages/close-circle.png"
                       alt=""
                     />
                   </div>
 
-                  <hr className="h-[6px] bg-[#04177f] lg:mt-[2%] border-none mt-[2%] md:mt-[2%] md:h-[10px]" />
+                  <hr className="h-[6px] bg-[#04177f] border-none mt-[3%] md:mt-[3%] md:h-[10px]" />
                   <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[3%] lg:my-[%]">
                     Successful
                   </p>
                   <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
                     <img
-                      className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[125px] lg:h-[125px]"
+                      className="w-[50px] h-[50px] mx-auto lg:w-[70px] lg:h-[70px]"
                       src="./Gif/checkMarkGif.gif"
                       alt="/"
                     />
 
-                    <p className="text-[10px] text-[#2ED173] font-semibold md:text-[14px]">
+                    <p className="text-[10px] text-[#2ED173] md:text-[16px] font-bold text-center my-[4%] lg:my-[%]">
                       New recipient contact has been added successfully.
                     </p>
                   </div>
 
                   <div
-                    className={`w-full h-[38px] mt-[40px] px-[20px] items-center`}
+                    className={`w-full h-[38px] mt-[30px] px-[20px] items-center`}
                   >
                     <button
-                      className={`bg-[#04177F] w-full flex justify-center items-center my-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:mx-auto md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:mx-auto lg:h-[38px] lg:my-[4%]`}
+                      className={`bg-[#04177F] w-full mt-[5%] flex justify-center items-center my-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:mx-auto md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:mx-auto lg:h-[38px] lg:mt-[10%]`}
                       onClick={() => {
                         setConfirm(false);
                         window.location.reload();
                       }}
                     >
-                      Confirmed
+                      Done
                     </button>
                   </div>
                 </div>
@@ -588,11 +580,10 @@ const SelectRecipient = () => {
             {deleted && (
               <Modal>
                 <div
-                  className={`confirm2 ${airtimestyles.inputPin} ${
+                  className={`${airtimestyles.inputPin} ${
                     toggleSideBar
-                      ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
-                      : "lg:w-[40%]"
-                  } md:w-[55%] w-[90%] md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
+                      ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
+                  } md:w-[55%] w-[90%]`}
                 >
                   <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[2%]">
                     <img
@@ -600,7 +591,7 @@ const SelectRecipient = () => {
                         setEdit(false);
                         //   window.location.reload();
                       }}
-                      className=" w-[18px] h-[15px] md:w-[25px] md:h-[22px] lg:w-[35px] lg:h-[22px]"
+                      className=" w-[18px] h-[15px] md:w-[25px] md:h-[22px] lg:w-[25px] lg:h-[12px]"
                       src="/Images/login/arpLogo.png"
                       alt=""
                     />
@@ -609,13 +600,13 @@ const SelectRecipient = () => {
                       onClick={() => {
                         setdeleted(false);
                       }}
-                      className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[45px] lg:h-[45px] "
+                      className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[25px] lg:h-[25px] "
                       src="/Images/transferImages/close-circle.png"
                       alt=""
                     />
                   </div>
 
-                  <hr className="h-[6px] bg-[#04177f] lg:mt-[2%] border-none mt-[2%] md:mt-[2%] md:h-[10px]" />
+                  <hr className="h-[6px] bg-[#04177f] border-none mt-[3%] md:mt-[3%] md:h-[10px]" />
                   <p className="text-[10px] md:text-[14px] lg:text-[18px] font-extrabold text-center my-[3%] lg:my-[%]">
                     Are you sure you want to delete this recipient permanently?
                   </p>
@@ -654,11 +645,10 @@ const SelectRecipient = () => {
             {successDeleted && (
               <Modal>
                 <div
-                  className={`confirm2 ${airtimestyles.inputPin} ${
+                  className={`${airtimestyles.inputPin} ${
                     toggleSideBar
-                      ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
-                      : "lg:w-[40%]"
-                  } md:w-[55%] w-[90%] md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
+                      ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
+                  } md:w-[55%] w-[90%]`}
                 >
                   <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[2%]">
                     <img
@@ -666,7 +656,7 @@ const SelectRecipient = () => {
                         setSuccessDeleted(false);
                         //   window.location.reload();
                       }}
-                      className=" w-[18px] h-[15px] md:w-[35px] md:h-[32px] lg:w-[35px] lg:h-[22px]"
+                      className=" w-[18px] h-[15px] md:w-[35px] md:h-[32px] lg:w-[25px] lg:h-[12px]"
                       src="/Images/login/arpLogo.png"
                       alt=""
                     />
@@ -676,18 +666,18 @@ const SelectRecipient = () => {
                         setConfirm(false);
                         window.location.reload();
                       }}
-                      className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[45px] lg:h-[45px] "
+                      className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[25px] lg:h-[25px] "
                       src="/Images/transferImages/close-circle.png"
                       alt=""
                     />
                   </div>
 
-                  <hr className="h-[6px] bg-[#04177f] lg:mt-[2%] border-none mt-[2%] md:mt-[2%] md:h-[10px]" />
+                  <hr className="h-[6px] bg-[#04177f] border-none mt-[3%] md:mt-[3%] md:h-[10px]" />
                   <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[3%] lg:my-[%]">
                     Successful
                   </p>
                   <p className="text-[10px] text-[#04177f] md:text-[14px] px-[20px] lg:text-[18px] font-extrabold text-center my-[1%] lg:my-[%]">
-                    Recipicient *****2345 has been deleted successfully. You can
+                    Recipient *****2345 has been deleted successfully. You can
                     add recipient again anytime!
                   </p>
                   <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[5%]">

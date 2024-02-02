@@ -128,7 +128,7 @@ export const Footer = () => {
               </div>
             </div>
           </div>
-
+          
           <div className="flex flex-col gap-[15px] mb-[15%]">
             <div className="w-[81px] h-[16px] text-[13px] font-semibold">
               <Link to="/solutions">Solutions</Link>
@@ -190,7 +190,7 @@ export const Footer = () => {
           </div>
 
           <div className="flex flex-col gap-[15px] mb-[15%]">
-            <div className="w-[81px] h-[16px] text-[13px] font-semibold">
+            <div className="w-[81px] h-[16px] text-[13px] lg:text-[25px] font-semibold">
               <Link to="/ContactUs">Contact us</Link>
             </div>
             <div className="w-[80px] h-[13px] text-[9px]">Live Chat</div>
@@ -218,7 +218,7 @@ export const Footer = () => {
           </div>
 
           <div className="flex flex-col gap-[15px] ">
-            <div className="w-[81px] h-[16px] text-[13px] font-semibold">
+            <div className="w-[81px] h-[16px] text-[13px] lg:text-[25px] font-semibold">
               Legal
             </div>
             <div className="w-[90px] h-[13px] text-[9px]">
@@ -453,7 +453,7 @@ export const Footer = () => {
               </div>
             </div>
             <div className="flex flex-col gap-[15px] lg:gap-[20px]">
-              <div className="w-[81px] h-[13px] text-[14px] font-semibold lg:text-[18px]">
+              <div className="w-[81px] h-[13px] text-[14px] font-semibold lg:text-[25px] mb-[10px]">
                 Legal
               </div>
               <div className="w-[90px] h-[13px] text-[9px] lg:w-[100%] lg:text-[16px]">
@@ -485,7 +485,7 @@ export const Footer = () => {
             </div>
             <div className="flex flex-col gap-[15px]">
               <Link to="/ContactUs">
-                <div className="w-[81px] h-[16px] text-[14px] font-semibold lg:text-[16px] lg:w-[166px]">
+                <div className="w-[81px] h-[16px] text-[14px] font-semibold lg:text-[25px] lg:w-[166px] mb-[10px]">
                   Contact us
                 </div>
               </Link>

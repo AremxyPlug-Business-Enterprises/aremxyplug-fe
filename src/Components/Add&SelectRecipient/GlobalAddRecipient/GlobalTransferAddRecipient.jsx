@@ -90,7 +90,7 @@ const saveRecipientButton = () => {
   return (
     
         <DashBoardLayout>
-          <div className='flex flex-col justify-between md:h-[1100px] h-[750px] '>
+          <div className='flex flex-col justify-between  lg:h-[100%] md:h-[115%] h-[120%]'>
           <div>
             <RecipientHero/>
             <div className='flex flex-col lg:gap-[50px] gap-[20px]'>
@@ -253,7 +253,7 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
     saveRecipientButton();
   }}
   className='bg-[#04177F] md:mt-[40px] mt-[60px] md:py-[9px] lg:py-[10px] rounded-[4.21px] py-[16px] lg:w-[163px] md:w-[150px] text-white text-center
-  lg:rounded-[12px] font-[600] text-[11px] ledaing-[15px] lg:text-[16px] lg:leading-[24px] '>
+  lg:rounded-[12px] font-[600] text-[11px] leading-[15px] lg:text-[16px] lg:leading-[24px] '>
    Save Account
   </button>
   </div>
@@ -261,22 +261,22 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
     {confirmRecipient && (
           <Modal>
             <div className=' h-[100%] w-[100%] flex justify-center md:items-center items-end md:mx-[0px] mx-[19px]'>
-          <div className='confirmRecipient flex flex-col md:w-[55%] h-[420px]  lg:h-[550px] bg-white rounded-t-[8px] md:rounded-[20px]
-          lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] pb-[40px] md:pb-[80px]'>
+          <div className='deleteRecipientSuccess flex flex-col md:w-[50%] lg:w-[40%]  bg-white rounded-t-[8px] md:rounded-[20px]
+          lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] pb-[20px] lg:pb-[30px] '>
     <div className='flex justify-end w-[100%] md:py-[15px] py-[10px] pr-[14px] border-b-[10px]  md:border-b-[15px] border-[solid] border-[#04177F]'>
    <img onClick={()=> {
     setConfirmRecipient(false);
    }} src={closeIcon} alt="" 
    className='lg:h-[35px] lg:w-[35px] h-[20px] w-[20px] '/>
     </div>
-    <div className='flex flex-col gap-[50px] lg:gap-[130px] md:gap-[90px] justify-between  lg:w-[100%] lg:pt-[20px] pt-[20px]  items-center h-[100%]'>
-      <div className='flex flex-col lg:w-[80%] w-[80%] lg:gap-[30px] gap-[20px]'>
+    <div className='flex flex-col gap-[20px] lg:gap-[40px] md:gap-[40px] justify-between  lg:w-[100%] lg:pt-[20px] pt-[20px]  items-center h-[100%] '>
+      <div className='flex flex-col lg:w-[80%] w-[80%] lg:gap-[15px] gap-[10px]'>
       {/* HEADER */}
      <h2 className='font-[600] text-center text-[10px] leading-[14px] lg:text-[16px] lg:leading-[20.8px]'>
      Please Confirm!!!
      </h2>
      <p className='font-[400] text-[#4A4A4A] text-center text-[10px] leading-[14px] lg:text-[16px]
-      lg:leading-[20.8px] py-[5px] px-[10px] bg-[#FFF0BA] rounded-[8px]'>
+      lg:leading-[20.8px] py-[8px] px-[10px] bg-[#FFF0BA] rounded-[8px]'>
      Are you sure you want to add this account to your recipients? 
      Kindly re-confirm the identity, and be informed any funds transfer to any strange accounts 
      cannot be reversed.
@@ -284,34 +284,34 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
 
   {/* COUNTRY */}
 <div className='flex justify-between'>
- <p className='font-[600] text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
+ <p className='font-[500] text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
   Country</p>
-  <p className='font-[600] text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
+  <p className='font-[500] text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
     Nigeria
     </p>
 </div>
 {/* BANK NAME */}
 <div className='flex justify-between'>
-<p className='font-[600] text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
+<p className='font-[500] w-[50%] text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
   Bank Name</p>
-  <p className='font-[600] text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
+  <p className='font-[500] md:w-auto w-[50%] text-end text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
     {bankName}
     </p>
 </div>
 {/* ACCOUNT NAME */}
 <div className='flex justify-between'>
- <p className='font-[600] text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
+ <p className='font-[500] md:w-auto w-[50%] text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
   Account Name</p>
-  <p className='font-[600] text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
+  <p className='font-[500] md:w-auto w-[50%] text-end text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
     {accountName}
     </p>
 </div>
 {/* ACCOUNT NUMBER */}
 <div className='flex justify-between'>
- <p className='font-[600] text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
+ <p className='font-[500] text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
  Account Number
  </p>
-  <p className='font-[600] text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
+  <p className='font-[500] text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
    {accountNumber}
     </p>
 </div>
@@ -322,7 +322,7 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
   setChangeRecipientSuccess(true);
   setConfirmRecipient(false)
 }}
-className='bg-[#04177F] w-[100%] lg:py-[10px] py-[13px] lg:w-[163px]
+className='bg-[#04177F] w-[100%] md:py-[7px] lg:py-[10px] py-[11px] lg:w-[163px]
  md:w-[150px] text-white text-center rounded-[4.41px]
   lg:rounded-[12px] font-[600] lg:text-[16px] lg:leading-[24px]'>
  Confirmed
@@ -336,9 +336,9 @@ className='bg-[#04177F] w-[100%] lg:py-[10px] py-[13px] lg:w-[163px]
         {changeRecipientSuccess && (
           <Modal>
             <div className='h-[100%] w-[100%] md:justify-center flex md:items-center items-end md:mx-[0px] mx-[19px]'>
-          <div className='flex flex-col  md:w-[50%] h-[370px] md:h-[400px] w-[100%] lg:h-[550px] bg-white lg:rounded-[20px]
+          <div className='deleteRecipientSuccess flex flex-col   lg:w-[40%] md:w-[45%]  md:h-[400px] w-[100%] lg:h-[465px] bg-white lg:rounded-[20px]
           shadow-[0px_0px_6.933px_0px_rgba(0,0,0,0.25)] rounded-t-[8px] md:rounded-[11.458px]
-          lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] pb-[30px] lg:pb-[80px] md:pb-[50px]'>
+          lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] pb-[10px] lg:pb-[80px] md:pb-[50px]'>
   <div className='flex justify-between w-[100%] border-b-[15px] border-[solid] border-[#04177F] lg:p-[15px] p-[10px]'>
   <img src={AremxyLogo} alt="" 
    className='lg:h-[24.818px] lg:w-[41.825px] h-[16px] w-[16px] 
@@ -346,8 +346,8 @@ className='bg-[#04177F] w-[100%] lg:py-[10px] py-[13px] lg:w-[163px]
    <img src={closeIcon} alt="" 
    className='lg:h-[32px] lg:w-[32px]  h-[16px] w-[16px]'/>
   </div>
-  <div className='flex flex-col justify-between lg:w-[100%] lg:pt-[20px] pt-[30px]  items-center h-[100%]'>
-  <div className='flex flex-col items-center lg:w-[80%] lg:gap-[40px] gap-[20px]'>
+  <div className='flex flex-col  lg:w-[100%] lg:pt-[20px] pt-[30px] items-center h-[100%]'>
+  <div className='flex flex-col items-center lg:w-[80%]   pb-[40px]  lg:gap-[25px] gap-[10px]'>
    <h2 className='font-[600] text-center text-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px]'>
     Successful
     </h2>
@@ -368,7 +368,7 @@ className='bg-[#04177F] w-[100%] lg:py-[10px] py-[13px] lg:w-[163px]
      setAccountName('')
      setBankName('')
   }}
-className='bg-[#04177F] w-[80%] md:py-[9px] py-[13px] lg:w-[163px]
+className='bg-[#04177F] w-[80%] md:py-[7px] lg:py-[10px] py-[13px] lg:w-[163px]
 md:w-[150px] text-white text-center rounded-[4.41px]
  lg:rounded-[12px] font-[600] lg:text-[16px] lg:leading-[24px]'>
  Continue
@@ -382,7 +382,7 @@ md:w-[150px] text-white text-center rounded-[4.41px]
         </div>
         </div>
         <div className=" flex gap-[8.729px]  md:gap-[14.896px]
-       justify-center px-[8.594px] mb-[70px] md:mb-[130px]">
+       justify-center px-[8.594px]   lg:mb-[20px]  md:pb-[40px]  mb-[50px]">
               <p className="font-[500] text-[10px] text-black 
               leading-[10.4px] lg:text-[16px] lg:leading-[15.6px]  md:text-[6.875px]
             ] md:leading-[12.938px] self-center">
@@ -403,7 +403,7 @@ md:w-[150px] text-white text-center rounded-[4.41px]
               <Modal>
               <div className='h-[100%] w-[100%] md:justify-center flex 
               items-center  md:mx-[0px] mx-[19px]'>
-         <div className='flex flex-col  md:w-[40%] h-[269px]  w-[100%] lg:h-[420px] bg-white lg:rounded-[20px]
+         <div className='flex flex-col lg:w-[38%] md:w-[45%]  h-[269px]  w-[100%] lg:h-[420px] bg-white lg:rounded-[20px]
           shadow-[0px_0px_6.933px_0px_rgba(0,0,0,0.25)] md:rounded-[7.153px] rounded-[8px]
           md:shadow-[0px_0px_11.922px_0px_rgba(0, 0, 0, 0.25)] 
           lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] lg:py-[23px] lg:px-[0px] py-[10px] px-[24px]'>

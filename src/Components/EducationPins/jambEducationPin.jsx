@@ -101,8 +101,6 @@ const {
 } = useContext(ContextProvider);
 
 const jambProceed = () => {
-  
-
   const { error } = schema.validate({
     jambEducationPinPhone,
     jambEducationPinEmail
@@ -122,13 +120,13 @@ const jambProceed = () => {
 };
 
 const schema = Joi.object({
-  educationPinPhone: Joi.string()
+  jambEducationPinPhone: Joi.string()
     .pattern(new RegExp(/^\d{11,}/))
     .required()
     .messages({
       "string.pattern.base": "Phone number should be 11 digits ",
     }),
-    educationPinEmail: Joi.string()
+    jambEducationPinEmail: Joi.string()
     .pattern(new RegExp(/^[^\s@]+@[^\s@]+\.[^\s@]+$/))
     .required()
     .messages({ "string.pattern.base": "Invalid email " })
@@ -147,7 +145,7 @@ const jambReceipt = () => {
 };
   return (
     <DashBoardLayout>
-      <div className='flex flex-col justify-between h-[140%] lg:h-[120%]'>
+      <div className='flex flex-col justify-between h-[115%] lg:h-[120%]'>
    <div className=''>
     {/* Hero-section */}
  <HeroComponent/>
@@ -482,7 +480,7 @@ const jambReceipt = () => {
       {jambEducationProceed && (
             <Modal>
               <div
-                className={`confirm mx-[5%] ${
+                className={`deleteRecipientSuccess mx-[5%] ${
                   isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
                 } ${
                   toggleSideBar
@@ -917,7 +915,7 @@ const jambReceipt = () => {
                 items-center justify-center   
               md:mx-[20px] md:rounded-[15px] lg:rounded-[16.308px] lg:h-[75px]">
                   <p className="text-[9px] text-[#7C7C7C] text-center  md:text-[12px] 
-                lg:text-[16.231px] lg:leading-[20px]">
+                lg:text-[14.231px] lg:leading-[20px]">
                   <span className='md:block'>The e-pins purchase has been generated successfully. 
                 Please kindly check</span>
              <span className='md:block'> receipt to confirm the pin / token. 
@@ -971,7 +969,7 @@ const jambReceipt = () => {
             />
           )}
                  
-                 <div className="py-[30px] lg:py-[60px] mt-10 lg:mb-[200px] mb-[50px] md:mb-[100px]">
+                 <div className="py-[30px] lg:py-[60px] mt-10 lg:mb-[80px] mb-[50px] md:mb-[100px]">
             <button
               className={`font-extrabold h-[43px] w-[100%] py-[3.534px] px-[5.301px] 
              md:mb-[0px] rounded-[4.241px] md:h-auto
@@ -988,7 +986,7 @@ const jambReceipt = () => {
                   : "bg-primary"
               }`}
               onClick={(e)=>{
-                jambProceed();
+                jambProceed(e);
                 e.preventDefault();
               }}
               disabled={
@@ -1009,7 +1007,7 @@ const jambReceipt = () => {
       
 
       <div className=" flex gap-[8.729px]  md:gap-[14.896px]
-       justify-center px-[8.594px] mb-[130px]">
+       justify-center px-[8.594px] mb-[50px]">
               <p className="font-[500] text-[10px] text-black 
               leading-[10.4px] lg:text-[16px] lg:leading-[15.6px]  md:text-[6.875px]
             ] md:leading-[12.938px] self-center">

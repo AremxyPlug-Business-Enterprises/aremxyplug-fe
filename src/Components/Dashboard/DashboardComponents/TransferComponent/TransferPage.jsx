@@ -5,6 +5,7 @@ import { useState } from "react";
 import { ContextProvider } from "../../../Context";
 import { DashBoardLayout } from "../../Layout/DashBoardLayout";
 import styles from "../../DashboardComponents/component.module.css";
+import styled from "../../../AirTimePage/AirTime.module.css";
 import { Modal } from "../../../Screens/Modal/Modal";
 
 export const TransferPage = () => {
@@ -236,38 +237,21 @@ export const TransferPage = () => {
         {/* ============Bulk transfer modal============= */}
         {bulkTransfer && (
           <Modal>
-            <div
-              className={` mt-6 ${
-                isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
-              } ${styles.cryptoTopUp} flex flex-col justify-between `}
-            >
-              <div className="text-[10px] text-center pt-[4%] text-[#000] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[5%]">
-                Bulk Transfer
-              </div>
-              <div className="text-[10px] text-center pt-[1%] pb-[2%] text-[#04177f] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[1%] lg:pb-[0%]">
-                This Feature is Currently Not Available.
-              </div>
-              <img
-                className="mx-auto mt-[] w-[90px] h-[115px] md:w-[100px] md:h-[150px] md:mt-[4%] lg:w-[150px] lg:h-[200px] lg:mt-[4%]"
-                src="./Images/transferImages/messages.png"
-                alt="/"
-              />
-              <div className="mx-[6%] flex flex-col gap-[5px] pb-[5%]">
-                <div className="text-[8px] font-extrabold float-right ml-[80%] md:ml-[70%] md:text-[12px] lg:text-[13px] lg:ml-[80%]">
-                  Coming soon...
+            <div className={styled.NotInterX} >
+                <div className={styled.timeAbleX}>
+                    <h2>Bulk Transfer</h2>
+                    <h3>This Feature is Currently Not Available.</h3>
                 </div>
-                <div
-                  onClick={() => {
+                <div className={styled.InterAirtimeX}>
+                    <img src="./Images/transferImages/messages.png" alt="" />
+                </div>
+                <div className={styled.comingX} >
+                    <h2>Coming soon...</h2>
+                    <button className={styled.btnOkX} onClick={() => {
                     setBulkTransfer(false);
                     handleClick(0);
-                  }}
-                  className={` ${
-                    isDarkMode ? "border" : "bg-[#04177f] "
-                  } cursor-pointer text-white text-[10px] h-[40px] rounded-[5px] flex items-center justify-center md:mx-auto md:w-[20%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[30%] lg:mx-auto`}
-                >
-                  Okay
+                  }}>Okay</button>
                 </div>
-              </div>
             </div>
           </Modal>
         )}

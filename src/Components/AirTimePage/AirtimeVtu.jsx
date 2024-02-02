@@ -128,7 +128,7 @@ const AirtimeVtu = () => {
         }
       ];
 
-      const productList = ['SNS', 'VTU']
+      const productList = ['VTU', 'SNS']
 
 
     const Network =({name, image, onClick})=> {
@@ -201,10 +201,11 @@ const AirtimeVtu = () => {
         setSelected(false);
       }
 
-      const handleShowProduct =() => {
-        setShowProduct(!showProduct);
-        setSelectedProduct(false);
-      }
+      const handleShowProduct = () => {
+        if (selected) { 
+          setShowProduct(!showProduct);
+        }
+      };
 
       const handleShowPayment = ()=> {
         setShowPayment(!showPayment)
@@ -222,10 +223,10 @@ const AirtimeVtu = () => {
             "string.pattern.base": "Phone number should be 11 digits ",
           }),
         amount: Joi.string()
-          .pattern(new RegExp(/\d{4,}/))
+          .pattern(new RegExp(/\d{2,}/))
           .required()
           .messages({
-            "string.pattern.base": "Amount can not be less than 1000",
+            "string.pattern.base": "Amount can not be less than 10",
           }),
       });
 
@@ -411,7 +412,7 @@ const AirtimeVtu = () => {
                             :
                                 <span onClick={handleShowProduct}>Select Product</span>
                             }
-                            <button className={styles.btnDrop} onClick={handleShowProduct}>
+                            <button className={styles.btnDrop} onClick={handleShowProduct} disabled={!selected}>
                                 <img src={arrowDown} alt="" />
                             </button>
                         </div>
@@ -435,7 +436,9 @@ const AirtimeVtu = () => {
                         </div>
                     </div>
                     <div>
-                        <h2 className={styles.head3}>Phone Number <span className={styles.span3}>(Select Recipient)</span></h2>
+                        <h2 className={styles.head3}>Phone Number <span
+                         className={styles.span3}><Link to="/select-vtu-recipient"> (Select Recipient) </Link> 
+                     </span></h2>
                         <div className={styles.input}>
                             <div className={styles.output}>
                                 <input type='number' 
@@ -474,7 +477,7 @@ const AirtimeVtu = () => {
                         <div className={styles.input}>
                             <div className={styles.output}>
                                 <span className="text-gray-500 relative bottom-[1px]">&#8358;</span>
-                                <input type='number' placeholder='Type amount' required className={styles.phone} onChange={(event)=>setAmount(event.target.value)} value={amount.toLocaleString()}/>
+                                <input type='number' placeholder='Type amount' required className={styles.phones} onChange={(event)=>setAmount(event.target.value)} value={amount.toLocaleString()}/>
                                 <div className={styles.call}>
                                     <img src={money} alt=""/>                            
                                 </div>
@@ -548,7 +551,7 @@ const AirtimeVtu = () => {
                     className={`${styles.balanceMoneyPop} ${
                     toggleSideBar ? "xl:w-[65%] xl:ml-[17%] lg:ml-[20%] lg:w-[40%]"
                     : "lg:w-[40%]"
-                } w-[90%] xl:w-[40%] md:w-[70%] overflow-auto`}
+                } w-[90%] xl:w-[40%] md:w-[60%] overflow-auto`}
                 >
                     <img
                     onClick={()=> setCodes(false)}
@@ -556,7 +559,7 @@ const AirtimeVtu = () => {
                     src="/Images/transferImages/close-circle.png"
                     alt=""
                     />
-                    <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] lg:mt-[6%] md:h-[10px]" />
+                    <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[8%] lg:mt-[6%] md:h-[10px]" />
 
                     <button
                     className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[50%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[350px] lg:h-[38px] lg:my-[3%]`}
@@ -608,7 +611,7 @@ const AirtimeVtu = () => {
                 <div
                     className={`${styles.transferMoneyPop} ${
                     toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-                    } w-[90%] md:w-[70%] overflow-auto`}
+                    } w-[90%] md:w-[60%] overflow-auto`}
                 >
                     <img
                     onClick={()=> setProceed(false)}
@@ -616,7 +619,7 @@ const AirtimeVtu = () => {
                     src="/Images/transferImages/close-circle.png"
                     alt=""
                     />
-                    <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
+                    <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[8%] md:h-[10px]" />
                     <h2 className="text-[10px] my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
                     Confirm Transaction
                     </h2>
@@ -712,7 +715,7 @@ const AirtimeVtu = () => {
                             src="/Images/transferImages/close-circle.png"
                             alt=""
                             />
-                            <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
+                            <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[8%] md:h-[10px]" />
                             <p className="text-[9px] md:text-[16px] font-extrabold text-center my-[8%] lg:my-[%]">
                             Input PIN to complete transaction
                             </p>
@@ -886,7 +889,7 @@ const AirtimeVtu = () => {
             )}
             <div className={styles.containFlex2}>
                 <button className={`${
-                amount.length < 4 ? "bg-[#0008]" : "bg-[#04177f]"
+                amount.length < 2 ? "bg-[#0008]" : "bg-[#04177f]"
                 } w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`} onClick={handleProceed}>Proceed
                 </button>
             </div>
