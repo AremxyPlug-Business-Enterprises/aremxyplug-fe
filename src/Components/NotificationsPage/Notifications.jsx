@@ -22,8 +22,6 @@ import deletingfiles from "./assets/deletingfile.svg";
 import VuesaxBoldEye from "./assets/cancel.svg";
 import { Modal } from "../Screens/Modal/Modal";
 import SuccessGif from "../../Components/Dashboard/DashboardComponents/CardPaymentPage/CardPaymentImages/success.gif";
-import style from "../../Components/AirTimePage/AirtimeVtu.module.css";
-
 
 
 
@@ -186,25 +184,18 @@ const [isModalOpen1, setIsModalOpen1] = useState(false);
     const [showPicture1, setShowPicture1] = useState(false);
     const [showPicture2, setShowPicture2] = useState(false);
 
-
-
-
     const [isRead, setIsRead] = useState(false);
-    
 
   const handleClick = () => {
     setIsRead(!isRead);
-    this.props.history.push('/LaunchPage.jsx'); // Navigate to another page
   };
 
   const [isRead1, setIsRead1] = useState(false);
 
-
-  
   const handleClick1 = () => {
     setIsRead1(!isRead1);
   };
-  
+
   const [isRead2, setIsRead2] = useState(false);
 
   const handleClick2 = () => {
@@ -635,9 +626,8 @@ items-end  "
                   border-b lg:h-[230px] h-[100px] md:h-[150px] lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md
                    lg:rounded-xl shadow  border-[#d9d9d999]  ${isRead5 ? 'bg-white' :  'bg-sky-100'}`}
                 >
-                  <div className="w-full">
                    <Link to="/launch-page">
-                  <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start  text-start flex-col">
+                  <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
                     <div className="font-semibold text-text-color-fade text-zinc-500 lg:text-base md:text-xs  text-[8px] ">
                       New Launch!!
                     </div>
@@ -661,7 +651,6 @@ items-end  "
                   </div>
                   </Link> 
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between ">
-                    <div className="w-full">
                   <Link to="/launch-page">
                     <div className="flex flex-col">
                       <img
@@ -674,7 +663,7 @@ items-end  "
 
                     </div>
 </Link>
-       </div>             
+                    
                     <div className="flex justify-end  items-center lg:gap-[65px] md:gap-[40px] gap-[30px] flex-col-reverse">
                       <div className="flex relative">
                       <div
@@ -1010,7 +999,6 @@ items-end  "
                    lg:p-5 p-[7px] md:p-3 rounded-md md:rounded-md lg:rounded-xl shadow   border-b 
                     border-[#d9d9d999]  ${isRead ? 'bg-white' : 'bg-sky-100'} `}
                 >
-                  <div className="w-full">
   <Link to="/launch-page">
 
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
@@ -1136,7 +1124,6 @@ items-end  "
                    w-full justify-between 
                   items-center `}
                 >
-                   <div className="w-full">
   <Link to="/launch-page">
 
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
@@ -1262,7 +1249,6 @@ items-end  "
                     ${isRead2 ? 'bg-white' : 'bg-sky-100'} w-full justify-between
                    items-center`}
                 >
-                   <div className="w-full">
   <Link to="/launch-page">
 
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
@@ -1389,7 +1375,6 @@ items-end  "
                   lg:rounded-xl shadow   border-b  border-[#d9d9d999]  ${isRead3 ? 'bg-white' : 'bg-sky-100'} w-full justify-between
                    items-center`}
                 >
-                   <div className="w-full">
   <Link to="/launch-page">
 
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
@@ -1525,7 +1510,6 @@ items-end  "
                    lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${isRead4 ? 'bg-white' : 'bg-sky-100'} w-full justify-between
                    items-center`}
                 >
-                   <div className="w-full">
   <Link to="/launch-page">
 
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
@@ -1916,7 +1900,6 @@ items-end  "
                    lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${isRead7 ? 'bg-white' : 'bg-sky-100'} w-full justify-between
                    items-center`}
                 >
-                   <div className="w-full">
   <Link to="/launch-page2">
 
 
@@ -1943,7 +1926,6 @@ items-end  "
                       Wild
                     </div>
                   </Link>
-</div>
                   <div className="flex lg:gap-4 md:gap-3 gap-2 justify-between">
                   <Link to="/launch-page2">
                     <div className="flex flex-col">
@@ -2052,7 +2034,6 @@ items-end  "
                    lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${isRead8 ? 'bg-white' : 'bg-sky-100'} w-full justify-between
                    items-center`}
                 >
-                   <div className="w-full">
   <Link to="/launch-page2">
 
 
@@ -2184,7 +2165,6 @@ items-end  "
                    lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${isRead9 ? 'bg-white' : 'bg-sky-100'} w-full justify-between
                    items-center`}
                 >
-                   <div className="w-full">
   <Link to="/launch-page2">
 
 
@@ -2317,7 +2297,6 @@ items-end  "
                    lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${isRead10 ? 'bg-white' : 'bg-sky-100'} w-full justify-between
                    items-center`}
                 >
-                   <div className="w-full">
   <Link to="/launch-page2">
 
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
@@ -2448,7 +2427,6 @@ items-end  "
                    lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${isRead11 ? 'bg-white' : 'bg-sky-100'} w-full justify-between
                    items-center`}
                 >
-                   <div className="w-full">
   <Link to="/launch-page2">
 
 
@@ -2836,7 +2814,6 @@ items-end  "
                   lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${isRead13 ? 'bg-white' : 'bg-sky-100'} w-full justify-between
                    items-center`}
                 >
-                   <div className="w-full">
   <Link to="/launch-page3">
 
 
@@ -2971,7 +2948,6 @@ items-end  "
                    lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${isRead14 ? 'bg-white' : 'bg-sky-100'} w-full justify-between
                    items-center`}
                 >
-                   <div className="w-full">
   <Link to="/launch-page3">
 
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
@@ -3101,7 +3077,6 @@ items-end  "
                   lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${isRead15 ? 'bg-white' : 'bg-sky-100'} w-full justify-between
                    items-center`}
                 >
-                   <div className="w-full">
  <Link to="/launch-page3">
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
                     <div className="font-semibold text-text-color-fade text-zinc-500 lg:text-base md:text-xs  text-[8px] ">
@@ -3230,7 +3205,6 @@ items-end  "
                   lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${isRead16 ? 'bg-white' : 'bg-sky-100'} w-full justify-between
                    items-center`}
                 >
-                   <div className="w-full">
                    <Link to="/launch-page3">
 
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
@@ -3360,9 +3334,7 @@ items-end  "
                    lg:rounded-xl shadow  border-b  border-[#d9d9d999] ${isRead17 ? 'bg-white' : 'bg-sky-100'} w-full justify-between
                    items-center`}
                 >
-                   <div className="w-full">
  <Link to="/launch-page3">
- 
                   <div className="flex gap-2 lg:gap-4 md:gap-2.5 justify-start text-start flex-col">
                     <div className="font-semibold text-text-color-fade text-zinc-500 lg:text-base md:text-xs  text-[8px] ">
                       New Launch!!
@@ -3604,6 +3576,5 @@ items-end  "
       </>
     </DashBoardLayout>
   );
-};
-
+                    }
                   
