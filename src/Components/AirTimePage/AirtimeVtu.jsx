@@ -289,7 +289,7 @@ const AirtimeVtu = () => {
             // Usage
             buyAirtime(
                 networkId, // Network (MTN)
-                recipientNumber, // Mobile No
+                inputValue, // Mobile No
                 amount, // Amount
                 productId, // Airtime Type (VTU)
             );
