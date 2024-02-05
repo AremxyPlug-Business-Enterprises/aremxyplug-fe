@@ -159,7 +159,7 @@ const GoTv = () => {
             console.error("Error sending data to backend:", error);
           });
       };
-      sendDataToBackend(decoderType, value, mobileNumber, email);
+      sendDataToBackend(decoderType, smartCard, mobileNumber, tvEmail);
       setConfirmGotvPopup(true);
       setErrors({});
     }
