@@ -48,6 +48,8 @@ const AirtelDataBundle = () => {
   const [image, setImage] = useState("");
   const [paymentAmount, setPaymentAmount] = useState("");
   const [codes, setCodes] = useState(false);
+  const [plan, setPlan] = useState(false);
+
 
   const handleCodes = () => {
     setCodes(false);
@@ -159,103 +161,19 @@ const AirtelDataBundle = () => {
   const productList = [
     {
       id: 1,
-      name: "AIRTEL CG",
-      options: [
-        "AIRTEL CG 100MB",
-        "AIRTEL CG 200MB",
-        "AIRTEL CG 300MB",
-        "AIRTEL CG 1GB",
-        "AIRTEL CG 2GB",
-        "AIRTEL CG 3GB",
-        "AIRTEL CG 5GB",
-        "AIRTEL CG 10GB",
-        "AIRTEL CG 15GB",
-        "AIRTEL CG 20GB",
-      ],
-
-      amount: [
-        "₦100",
-        "₦200",
-        "₦300",
-        "₦500",
-        "₦500",
-        "₦800",
-        "₦900",
-        "₦900",
-        "₦900",
-        "₦900",
-      ],
-
-      duration: [
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-      ],
-    },
-
-    {
-      id: 2,
       name: "AIRTEL GIFTING",
       options: [
-        "AIRTEL GIFTING 1.5GB",
-        "AIRTEL GIFTING 2GB",
-        "AIRTEL GIFTING 3GB",
-        "AIRTEL GIFTING 4.5GB",
-        "AIRTEL GIFTING 6GB",
-        "AIRTEL GIFTING 10GB",
-        "AIRTEL GIFTING 11GB",
-        "AIRTEL GIFTING 15GB",
-        "AIRTEL GIFTING 40GB",
-        "AIRTEL GIFTING 75GB",
-        "AIRTEL GIFTING 120GB",
+        { id: 145, name: "AIRTEL GIFTING 1.5GB", amount: "₦920", duration: "1 MONTH" },
+        { id: 146, name: "AIRTEL GIFTING 2GB", amount: "₦1104", duration: "1 MONTH" },
+        { id: 147, name: "AIRTEL GIFTING 3GB", amount: "₦1380", duration: "1 MONTH" },
+        { id: 148, name: "AIRTEL GIFTING 4.5GB", amount: "₦1840", duration: "1 MONTH" },
+        { id: 149, name: "AIRTEL GIFTING 6GB", amount: "₦2300", duration: "1 MONTH" },
+        { id: 150, name: "AIRTEL GIFTING 10GB", amount: "₦2750", duration: "1 MONTH" },
+        
       ],
-
-      amount: [
-        "₦1050",
-        "₦2500",
-        "₦3500",
-        "₦5800",
-        "₦5300",
-        "₦8100",
-        "₦9500",
-        "₦5800",
-        "₦5300",
-        "₦8100",
-        "₦9500",
-      ],
-
-      duration: [
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-      ],
-    },
-
-    {
-      id: 3,
-      name: "AIRTEL GENERAL BUNDLES ---",
-      options: [],
-      amount: [],
-
-      duration: [],
     },
   ];
-
+  
   const handleProceed = (e) => {
     // setProceed(true);
     // e.preventDefault();
@@ -293,7 +211,9 @@ const AirtelDataBundle = () => {
     setShowOptionList(false);
   };
 
-  const handleSelectOption = (selectedOption, selectedAmount, duration) => {
+  const handleSelectOption = (selectedOption, selectedAmount, duration, id) => {
+    setPlan(id);
+    console.log(id);
     setSelectedOption(selectedOption);
     setShowOptionList(false);
     setSelectedAmount(selectedAmount);
@@ -319,6 +239,40 @@ const AirtelDataBundle = () => {
   };
 
   console.log("confirm:", confirm);
+
+  const sendDataToBackend = (network, mobileNumber, plan, name) => {
+    const apiUrl = "https://aremxyplug.onrender.com/api/v1/data";
+
+    // Prepare the data to be sent in the request body
+    const requestData = {
+      network,
+      mobile_number: mobileNumber,
+      plan,
+      name,
+    };
+
+    console.log(requestData);
+
+    // Send a POST request to the backend API
+    fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // Handle the response from the backend
+        console.log("Backend response:", data);
+      })
+      .catch((error) => {
+        // Handle any errors that occurred during the fetch
+        console.error("Error sending data to backend:", error);
+      });
+  };
+
+  sendDataToBackend(2, inputValue, plan, recipientNames);
 
   return (
     <DashBoardLayout>
@@ -545,38 +499,31 @@ const AirtelDataBundle = () => {
                 <div className="border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[100]">
                   {productList
                     .find((item) => item.name === selectedNetworkProduct)
-                    ?.options.map((optionItem, index) => {
-                      const optionIndex = productList
-                        .find((item) => item.name === selectedNetworkProduct)
-                        ?.options.indexOf(optionItem);
+                    ?.options.map((option, index) => {
+                      const amount = option.amount;
+                      const duration = option.duration;
+                      const id = option.id;
 
-                      if (optionIndex !== -1) {
-                        const amount = productList.find(
-                          (item) => item.name === selectedNetworkProduct
-                        )?.amount[optionIndex];
-                        const duration = productList.find(
-                          (item) => item.name === selectedNetworkProduct
-                        )?.duration[optionIndex];
+                      return (
+                        <div
+                          key={option.id}
+                          className={`cursor-pointer border-b-[0.5px] md:rounded-[0px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
+                            selectedOption === option.id ? "bg-gray-200" : ""
+                          }`}
+                          onClick={() =>
+                            handleSelectOption(
+                              `${option.name} (${amount}) ~ ${duration}`,
+                              amount,
+                              duration,
+                              id, // Pass the id here
 
-                        return (
-                          <div
-                            key={index}
-                            className={`cursor-pointer border-b-[0.5px] md:rounded-[0px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
-                              selectedOption === optionItem ? "bg-gray-200" : ""
-                            }`}
-                            onClick={() =>
-                              handleSelectOption(
-                                `${optionItem} (${amount}) ~ ${duration}`,
-                                amount
-                              )
-                            }
-                          >
-                            {`${optionItem} (${amount}) ~ ${duration}`}
-                          </div>
-                        );
-                      }
-
-                      return null;
+                              console.log(id)
+                            )
+                          }
+                        >
+                          {`${option.name} (${amount}) ~ ${duration}`}
+                        </div>
+                      );
                     })}
                 </div>
               )}

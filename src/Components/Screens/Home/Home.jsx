@@ -11,7 +11,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { Link } from "react-router-dom";
 import CookieBanner from "./Cookie/CookieBanner";
-import groupone from "./Images/groupone.svg?v=2";
+// import groupone from "./Images/groupone.svg?v=2";
 import CrossBorder from "./Images/CrossBorder.svg";
 import CurrencyConversion from "./Images/CurrencyConversion.svg";
 import CurrencyConversion2 from "./Images/CurrencyConversion2.svg";
@@ -25,8 +25,7 @@ import NewsLetter from "./Images/NewsLetter.svg";
 import Successful from "./Images/Success.gif";
 import FeedBack from "./Images/Feedback.svg";
 import Quote1 from "./Images/Quote1.svg";
-import Laptop from "./Images/Laptop.svg";
-import Phone from "./Images/Phone.svg";
+import HeroImage from "./Images/HeroImage.svg"
 
 const feedback = [
   <div className="h-[250px] w-[100%] md:h-[250px] md:w-[60%] md:mx-auto lg:h-[300px] lg:w-[50%]">
@@ -289,24 +288,9 @@ export const Home = () => {
             </button>
           </div>
         </div>
-
-        <div className="relative md:hidden">
-          <div className="">
-            <img
-              className="relative mx-auto mt-[12%] md:w-[40%] md:h-[30%] lg:w-[50%] lg:h-[40%] lg:mt-[20%]"
-              src={Laptop}
-              alt="/"
-            />
-            <img
-              className="absolute mx-auto top-0 right-[6%] mt-[7%] h-[78%] md:w-[40%] md:h-[30%] lg:w-[50%] lg:h-[40%] lg:mt-[20%]"
-              src={Phone}
-              alt="/"
-            />
-          </div>
-        </div>
         <img
-          className="mx-auto mt-[12%] md:w-[40%] md:h-[30%] lg:w-[50%] lg:h-[40%] lg:mt-[20%] hidden md:block"
-          src={groupone}
+          className="mx-auto mt-[12%] md:w-[40%] md:h-[30%] lg:w-[50%] lg:h-[40%] lg:mt-[20%]"
+          src={HeroImage}
           alt="/"
         />
       </div>

@@ -211,6 +211,12 @@ const MtnDataTopUpBundle = () => {
           amount: "₦25500",
           duration: "1 MONTH",
         },
+        {
+          id: 346,
+          name: "MTN SME 10TB",
+          amount: "₦2545000",
+          duration: "1 MONTH",
+        },
       ],
     },
 
@@ -419,6 +425,192 @@ const MtnDataTopUpBundle = () => {
           amount: "₦333",
           duration: "1 MONTH",
         },
+        {
+          id: 315,
+          name: "MTN GIFTING 750MB",
+          amount: "₦475",
+          duration: "1 MONTH",
+        },
+        {
+          id: 316,
+          name: "MTN GIFTING 2GB",
+          amount: "₦950",
+          duration: "1 MONTH",
+        },
+        {
+          id: 317,
+          name: "MTN GIFTING 1GB",
+          amount: "₦570",
+          duration: "1 MONTH",
+        },
+        {
+          id: 318,
+          name: "MTN GIFTING 6GB",
+          amount: "₦1900",
+          duration: "1 MONTH",
+        },
+        {
+          id: 319,
+          name: "MTN GIFTING 1.5GB",
+          amount: "₦950",
+          duration: "1 MONTH",
+        },
+        {
+          id: 320,
+          name: "MTN GIFTING 450MB",
+          amount: "₦120",
+          duration: "1 MONTH",
+        },
+        {
+          id: 321,
+          name: "MTN GIFTING 750MB",
+          amount: "₦475",
+          duration: "1 MONTH",
+        },
+        {
+          id: 322,
+          name: "MTN GIFTING 2GB",
+          amount: "₦1425",
+          duration: "1 MONTH",
+        },
+        {
+          id: 323,
+          name: "MTN GIFTING 1.5GB",
+          amount: "₦1140",
+          duration: "1 MONTH",
+        },
+        {
+          id: 324,
+          name: "MTN GIFTING 4.5GB",
+          amount: "₦2375",
+          duration: "1 MONTH",
+        },
+        {
+          id: 325,
+          name: "MTN GIFTING 12GB",
+          amount: "₦3800",
+          duration: "1 MONTH",
+        },
+        {
+          id: 326,
+          name: "MTN GIFTING 20GB",
+          amount: "₦5225",
+          duration: "1 MONTH",
+        },
+        {
+          id: 327,
+          name: "MTN GIFTING 40GB",
+          amount: "₦10450",
+          duration: "1 MONTH",
+        },
+        {
+          id: 328,
+          name: "MTN GIFTING 3GB",
+          amount: "₦1520",
+          duration: "1 MONTH",
+        },
+        {
+          id: 329,
+          name: "MTN GIFTING 25GB",
+          amount: "₦6175",
+          duration: "1 MONTH",
+        },
+        {
+          id: 330,
+          name: "MTN GIFTING 6GB",
+          amount: "₦2850",
+          duration: "1 MONTH",
+        },
+        {
+          id: 331,
+          name: "MTN GIFTING 75GB",
+          amount: "₦15200",
+          duration: "1 MONTH",
+        },
+        {
+          id: 332,
+          name: "MTN GIFTING 10GB",
+          amount: "₦3325",
+          duration: "1 MONTH",
+        },
+        {
+          id: 333,
+          name: "MTN GIFTING 120GB",
+          amount: "₦20900",
+          duration: "1 MONTH",
+        },
+        {
+          id: 334,
+          name: "MTN GIFTING 200GB",
+          amount: "₦28500",
+          duration: "1 MONTH",
+        },
+        {
+          id: 335,
+          name: "MTN GIFTING 100GB",
+          amount: "₦19400",
+          duration: "1 MONTH",
+        },
+        {
+          id: 336,
+          name: "MTN GIFTING 160GB",
+          amount: "₦29100",
+          duration: "1 MONTH",
+        },
+        {
+          id: 337,
+          name: "MTN GIFTING 30GB",
+          amount: "₦7760",
+          duration: "1 MONTH",
+        },
+        {
+          id: 338,
+          name: "MTN GIFTING 400GB",
+          amount: "₦49000",
+          duration: "1 MONTH",
+        },
+        {
+          id: 339,
+          name: "MTN GIFTING 600GB",
+          amount: "₦73500",
+          duration: "1 MONTH",
+        },
+        {
+          id: 340,
+          name: "MTN GIFTING 800GB",
+          amount: "₦88200",
+          duration: "1 MONTH",
+        },
+        {
+          id: 341,
+          name: "MTN GIFTING 1TB",
+          amount: "₦9800",
+          duration: "1 MONTH",
+        },
+        {
+          id: 342,
+          name: "MTN GIFTING 2.5TB",
+          amount: "₦245000",
+          duration: "1 MONTH",
+        },
+        {
+          id: 343,
+          name: "MTN GIFTING 4.5TB",
+          amount: "₦441000",
+          duration: "1 MONTH",
+        },
+        {
+          id: 344,
+          name: "MTN GIFTING 25TB",
+          amount: "₦5400000",
+          duration: "1 MONTH",
+        },
+        {
+          id: 345,
+          name: "MTN GIFTING 360MB",
+          amount: "₦100000",
+          duration: "1 MONTH",
+        },
       ],
     },
 
@@ -430,14 +622,38 @@ const MtnDataTopUpBundle = () => {
 
   ];
 
+  // const handleProceed = (e) => {
+  //   // setProceed(true);
+  //   // e.preventDefault();
+
+  //   const { error } = schema.validate({
+  //     recipientPhoneNumber,
+  //   });
+
+  //   if (error) {
+  //     setErrors(
+  //       error.details.reduce((acc, curr) => {
+  //         acc[curr.path[0]] = curr.message;
+  //         return acc;
+  //       }, {})
+  //     );
+  //   } else {
+  //     setProceed(true);
+  //     setErrors({});
+  //   }
+  // };
+
   const handleProceed = (e) => {
     // setProceed(true);
     // e.preventDefault();
-
+  
+    // Regular expression for MTN numbers (adjust as needed)
+    const mtnRegex = /^(234|0)(703[1-9]|7025[0-9]|7026[1-9]|7027[1-9]|7028[1-9]|810[1-9]|813[1-9]|816[1-9]|0900[1-9]|0903[1-9]|0906[1-9]|7029[1-9]|7030[1-9]|7031[0-4]|7032[7-9]|7033[0-9]|7034[0-9]|7035[0-9]|7036[0-9]|7037[0-9]|7038[0-9]|7039[0-9]|7040[1-9]|7042[0-9]|7043[0-9]|7044[0-9]|7045[0-9]|7046[0-9]|7047[0-9]|7048[0-9]|7049[0-9]|7050[0-9]|7051[0-9]|7052[0-9]|7053[0-9]|7054[0-9]|7055[0-9]|7056[0-9]|7057[0-9]|7058[0-9]|7059[0-9]|7060[0-9]|7061[0-9]|7062[0-9]|7063[0-9]|7064[0-9]|7065[0-9]|7066[0-9]|7067[0-9]|7068[0-9]|7069[0-9]|7070[0-9]|7071[0-9]|7072[0-9]|7073[0-9]|7074[0-9]|7075[0-9]|7076[0-9]|7077[0-9]|7078[0-9]|7079[0-9]|7080[0-9]|7081[0-9]|7082[0-9]|7083[0-9]|7084[0-9]|7085[0-9]|7086[0-9]|7087[0-9]|7088[0-9]|7089[0-9]|7090[0-9]|7091[0-9]|7092[0-9]|7093[0-9]|7094[0-9]|7095[0-9]|7096[0-9]|7097[0-9]|7098[0-9]|7099[0-9]|7010[0-9]|7011[0-9]|7012[0-9]|7013[0-9]|7014[0-9]|7015[0-9]|7016[0-9]|7017[0-9]|7018[0-9]|7019[0-9]|7020[0-9]|7021[0-9]|7022[0-9]|7023[0-9]|7024[0-9]|7025[0-9])\d{6}$/;
+  
     const { error } = schema.validate({
       recipientPhoneNumber,
     });
-
+  
     if (error) {
       setErrors(
         error.details.reduce((acc, curr) => {
@@ -445,6 +661,10 @@ const MtnDataTopUpBundle = () => {
           return acc;
         }, {})
       );
+    } else if (!mtnRegex.test(recipientPhoneNumber)) {
+      setErrors({
+        recipientPhoneNumber: "Invalid MTN number. Please enter a valid MTN number.",
+      });
     } else {
       setProceed(true);
       setErrors({});
@@ -497,7 +717,7 @@ const MtnDataTopUpBundle = () => {
   console.log("confirm:", confirm);
 
   const sendDataToBackend = (network, mobileNumber, plan, name) => {
-    const apiUrl = "http://localhost:8080/api/v1/data";
+    const apiUrl = "https://aremxyplug.onrender.com/api/v1/data";
 
     // Prepare the data to be sent in the request body
     const requestData = {
