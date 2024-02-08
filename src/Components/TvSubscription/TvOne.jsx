@@ -129,6 +129,37 @@ const GoTv = () => {
         }, {})
       );
     } else {
+
+      const sendDataToBackend = (decoderType, smartCard, mobileNumber, tvEmail, cardName ) => {
+        const apiUrl = "https://aremxyplug.onrender.com/api/v1/tvsub";
+        // Prepare the data to be sent in the request body 
+        const requestData = {
+          decoder_type: decoderType,
+          smartCard,
+          mobile_number: mobileNumber,
+          tvEmail,
+          cardName,
+        };
+        console.log(requestData);
+        // Send a POST request to the backend API 
+        fetch(apiUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestData),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            // Handle the response from the backend 
+            console.log("Backend response:", data);
+          })
+          .catch((error) => {
+            // Handle any errors that occurred during the fetch
+            console.error("Error sending data to backend:", error);
+          });
+      };
+      sendDataToBackend(decoderType, smartCard, mobileNumber, tvEmail);
       setConfirmGotvPopup(true);
       setErrors({});
     }
