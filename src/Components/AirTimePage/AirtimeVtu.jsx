@@ -145,7 +145,7 @@ const AirtimeVtu = () => {
         {
             id: 2,
             name: 'SNS',
-            productId: '002'    
+            productId: '002'
         },]
 
 
@@ -597,7 +597,7 @@ const AirtimeVtu = () => {
                             (
                             <div
                                 className={`${styles.balanceMoneyPop} ${toggleSideBar ? "xl:w-[65%] xl:ml-[17%] lg:ml-[20%] lg:w-[40%]"
-                                        : "lg:w-[40%]"
+                                    : "lg:w-[40%]"
                                     } w-[90%] xl:w-[40%] md:w-[60%] overflow-auto`}
                             >
                                 <img
@@ -883,7 +883,7 @@ const AirtimeVtu = () => {
                                     </div>
                                     <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[12px]">
                                         <p className="text-[#0008]">Order Number</p>
-                                        <span>122555556464564</span>
+                                        <span>122334455667</span>
                                     </div>
                                 </div>
 

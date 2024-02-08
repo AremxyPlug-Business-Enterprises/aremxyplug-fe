@@ -9,13 +9,13 @@ import html2canvas from "html2canvas";
 
 const AirtimeVtuReceipt = () => {  
 
-  const {
-    networkName,
-    selectedProduct,
-    recipientName,
-    recipientNumber,
-    amount}
-   = useContext(ContextProvider);
+  // const {
+  //   networkName,
+  //   selectedProduct,
+  //   recipientName,
+  //   recipientNumber,
+  //   amount}
+  //  = useContext(ContextProvider);
 
   const { 
     toggleSideBar,
@@ -24,6 +24,20 @@ const AirtimeVtuReceipt = () => {
     useContext(ContextProvider);  
 
   const contentRef = useRef(null);
+
+  const airtimeResponse = {
+    "status": "success",
+    "network": "Example Network",
+    "amount": "100",
+    "phone_no": "123456789",
+    "name": "John Doe",
+    "product": "Airtime",
+    "recipient": "Jane Doe",
+    "order_id": 123,
+    "description": "Airtime recharge",
+    "transaction_id": "ABC123",
+    "reference_number": "XYZ789"
+  };
 
   // ===============Copy to Clipboard Function============
   // const handleCopyClick = () => {
@@ -122,7 +136,7 @@ const AirtimeVtuReceipt = () => {
             <p className="text-[9px] text-[#0008] text-center mx-[10px] my-2 md:text-[14px] lg:text-[14px]">
               You have successfully purchased{" "}
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[16px]">
-              {networkName + ' ' + selectedProduct} Airtime &#8358;{amount}.00{" "}
+              {airtimeResponse.network + ' ' + airtimeResponse.product} Airtime &#8358;{airtimeResponse.amount}.00{" "}
               </span>
               from your NGN wallet to{" "}
             </p>
@@ -139,23 +153,23 @@ const AirtimeVtuReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Network</p>
-                  <span>{networkName}</span>
+                  <span>{airtimeResponse.network}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Product</p>
-                  <span>{networkName + ' ' + selectedProduct}</span>
+                  <span>{airtimeResponse.network + ' ' + airtimeResponse.product}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Phone Number</p>
-                  <span>{recipientNumber}</span>
+                  <span>{airtimeResponse.phone_no}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Recipient Name</p>
-                  <span>{recipientName}</span>
+                  <span>{airtimeResponse.name}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Amount</p>
-                  <span>&#8358;{amount}</span>
+                  <span>&#8358;{airtimeResponse.amount}</span>
                 </div>
               </div>
 
@@ -195,7 +209,7 @@ const AirtimeVtuReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Description</p>
-                  <span>{networkName + ' ' + selectedProduct}</span>
+                  <span>{airtimeResponse.network + ' ' + airtimeResponse.product}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Order Number</p>
@@ -203,11 +217,11 @@ const AirtimeVtuReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Transaction ID</p>
-                  <span>0331njokdhtf55</span>
+                  <span>{airtimeResponse.transaction_id}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Reference Number</p>
-                  <span>235488526097423118APDA</span>
+                  <span>{airtimeResponse.reference_number}</span>
                 </div>
               </div>
             </div>
