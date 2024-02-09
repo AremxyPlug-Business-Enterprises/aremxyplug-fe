@@ -24,6 +24,8 @@ import { AiFillEye } from "react-icons/ai";
 import { MtnReceipt } from "./MtnReceipt";
 import Joi from "joi";
 import airtimestyles from "../../../../../AirTimePage/AirtimeVtu.module.css";
+import axios from 'axios';
+
 // import { DataBundleFailedPopUp } from "../../../TransferComponent/PopUps/TransactionFailedPopUp";
 
 const MtnDataTopUpBundle = () => {
@@ -308,7 +310,7 @@ const MtnDataTopUpBundle = () => {
         },
       ],
     },
-    
+
     {
       id: 1,
       name: "MTN DATA COUPONS",
@@ -357,7 +359,6 @@ const MtnDataTopUpBundle = () => {
         },
       ],
     },
-
 
     {
       id: 1,
@@ -613,13 +614,6 @@ const MtnDataTopUpBundle = () => {
         },
       ],
     },
-
-
-
-
-
-
-
   ];
 
   // const handleProceed = (e) => {
@@ -642,7 +636,6 @@ const MtnDataTopUpBundle = () => {
   //     setErrors({});
   //   }
   // };
-  
 
   const schema = Joi.object({
     recipientPhoneNumber: Joi.string()
@@ -689,7 +682,41 @@ const MtnDataTopUpBundle = () => {
 
   console.log("confirm:", confirm);
 
-  const sendDataToBackend = (network, mobileNumber, plan, name) => {
+  // const sendDataToBackend = (network, mobileNumber, plan, name) => {
+  //   const apiUrl = "https://aremxyplug.onrender.com/api/v1/data";
+
+  //   // Prepare the data to be sent in the request body
+  //   const requestData = {
+  //     network,
+  //     mobile_number: mobileNumber,
+  //     plan,
+  //     name,
+  //   };
+
+  //   console.log(requestData);
+
+  //   // Send a POST request to the backend API
+  //   fetch(apiUrl, {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(requestData),
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       // Handle the response from the backend
+  //       console.log("Backend response:", data);
+  //     })
+  //     .catch((error) => {
+  //       // Handle any errors that occurred during the fetch
+  //       console.error("Error sending data to backend:", error);
+  //     });
+  // };
+
+  // const axios = require("axios");
+
+  const sendDataToBackend = async (network, mobileNumber, plan, name) => {
     const apiUrl = "https://aremxyplug.onrender.com/api/v1/data";
 
     // Prepare the data to be sent in the request body
@@ -702,36 +729,34 @@ const MtnDataTopUpBundle = () => {
 
     console.log(requestData);
 
-    // Send a POST request to the backend API
-    fetch(apiUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(requestData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // Handle the response from the backend
-        console.log("Backend response:", data);
-      })
-      .catch((error) => {
-        // Handle any errors that occurred during the fetch
-        console.error("Error sending data to backend:", error);
+    try {
+      // Send a POST request to the backend API using Axios
+      const response = await axios.post(apiUrl, requestData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
+
+      // Handle the response from the backend
+      console.log("Backend response:", response.data);
+    } catch (error) {
+      // Handle any errors that occurred during the request
+      console.error("Error sending data to backend:", error);
+    }
   };
 
   const handleProceed = (e) => {
     // setProceed(true);
     // e.preventDefault();
-  
+
     // Regular expression for MTN numbers (adjust as needed)
-    const mtnRegex = /^(234|0)(703[1-9]|7025[0-9]|7026[1-9]|7027[1-9]|7028[1-9]|810[1-9]|813[1-9]|816[1-9]|0900[1-9]|0903[1-9]|0906[1-9]|7029[1-9]|7030[1-9]|7031[0-4]|7032[7-9]|7033[0-9]|7034[0-9]|7035[0-9]|7036[0-9]|7037[0-9]|7038[0-9]|7039[0-9]|7040[1-9]|7042[0-9]|7043[0-9]|7044[0-9]|7045[0-9]|7046[0-9]|7047[0-9]|7048[0-9]|7049[0-9]|7050[0-9]|7051[0-9]|7052[0-9]|7053[0-9]|7054[0-9]|7055[0-9]|7056[0-9]|7057[0-9]|7058[0-9]|7059[0-9]|7060[0-9]|7061[0-9]|7062[0-9]|7063[0-9]|7064[0-9]|7065[0-9]|7066[0-9]|7067[0-9]|7068[0-9]|7069[0-9]|7070[0-9]|7071[0-9]|7072[0-9]|7073[0-9]|7074[0-9]|7075[0-9]|7076[0-9]|7077[0-9]|7078[0-9]|7079[0-9]|7080[0-9]|7081[0-9]|7082[0-9]|7083[0-9]|7084[0-9]|7085[0-9]|7086[0-9]|7087[0-9]|7088[0-9]|7089[0-9]|7090[0-9]|7091[0-9]|7092[0-9]|7093[0-9]|7094[0-9]|7095[0-9]|7096[0-9]|7097[0-9]|7098[0-9]|7099[0-9]|7010[0-9]|7011[0-9]|7012[0-9]|7013[0-9]|7014[0-9]|7015[0-9]|7016[0-9]|7017[0-9]|7018[0-9]|7019[0-9]|7020[0-9]|7021[0-9]|7022[0-9]|7023[0-9]|7024[0-9]|7025[0-9])\d{6}$/;
-  
+    const mtnRegex =
+      /^(234|0)(703[1-9]|7025[0-9]|7026[1-9]|7027[1-9]|7028[1-9]|810[1-9]|813[1-9]|816[1-9]|0900[1-9]|0903[1-9]|0906[1-9]|7029[1-9]|7030[1-9]|7031[0-4]|7032[7-9]|7033[0-9]|7034[0-9]|7035[0-9]|7036[0-9]|7037[0-9]|7038[0-9]|7039[0-9]|7040[1-9]|7042[0-9]|7043[0-9]|7044[0-9]|7045[0-9]|7046[0-9]|7047[0-9]|7048[0-9]|7049[0-9]|7050[0-9]|7051[0-9]|7052[0-9]|7053[0-9]|7054[0-9]|7055[0-9]|7056[0-9]|7057[0-9]|7058[0-9]|7059[0-9]|7060[0-9]|7061[0-9]|7062[0-9]|7063[0-9]|7064[0-9]|7065[0-9]|7066[0-9]|7067[0-9]|7068[0-9]|7069[0-9]|7070[0-9]|7071[0-9]|7072[0-9]|7073[0-9]|7074[0-9]|7075[0-9]|7076[0-9]|7077[0-9]|7078[0-9]|7079[0-9]|7080[0-9]|7081[0-9]|7082[0-9]|7083[0-9]|7084[0-9]|7085[0-9]|7086[0-9]|7087[0-9]|7088[0-9]|7089[0-9]|7090[0-9]|7091[0-9]|7092[0-9]|7093[0-9]|7094[0-9]|7095[0-9]|7096[0-9]|7097[0-9]|7098[0-9]|7099[0-9]|7010[0-9]|7011[0-9]|7012[0-9]|7013[0-9]|7014[0-9]|7015[0-9]|7016[0-9]|7017[0-9]|7018[0-9]|7019[0-9]|7020[0-9]|7021[0-9]|7022[0-9]|7023[0-9]|7024[0-9]|7025[0-9])\d{6}$/;
+
     const { error } = schema.validate({
       recipientPhoneNumber,
     });
-  
+
     if (error) {
       setErrors(
         error.details.reduce((acc, curr) => {
@@ -741,7 +766,8 @@ const MtnDataTopUpBundle = () => {
       );
     } else if (!mtnRegex.test(recipientPhoneNumber)) {
       setErrors({
-        recipientPhoneNumber: "Invalid MTN number. Please enter a valid MTN number.",
+        recipientPhoneNumber:
+          "Invalid MTN number. Please enter a valid MTN number.",
       });
     } else {
       setProceed(true);
