@@ -25,7 +25,10 @@ import NewsLetter from "./Images/NewsLetter.svg";
 import Successful from "./Images/Success.gif";
 import FeedBack from "./Images/Feedback.svg";
 import Quote1 from "./Images/Quote1.svg";
-import HeroImage from "./Images/HeroImage.svg"
+import { HashLink } from "react-router-hash-link";
+
+// import HeroImage from "./Images/HeroImage.svg"
+// import Hero from "./Images/desktop_phone.png"
 
 const feedback = [
   <div className="h-[250px] w-[100%] md:h-[250px] md:w-[60%] md:mx-auto lg:h-[300px] lg:w-[50%]">
@@ -267,7 +270,7 @@ export const Home = () => {
       <div className="fixed top-[9.5%] left-0 right-0 z-50 md:top-[55%] lg:top-[45%]">
         <CookieBanner />
       </div>
-      <div className={styles.hero}>
+      {/* <div className={styles.hero}>
         <div className=" w-[90%] pt-[40%] mx-auto md:pt-[10%] md:w-[] lg:pt-[25%]">
           <div className="text-justify tracking-widest w-[100%] text-[#04177F] text-[20px] font-extrabold md:text-[25px] md:font-bold lg:tracking-wide lg:text-[45px] lg:font-extrabold lg:leading-[px]">
             The One-Stop Shop for Individuals and Businesses for Telecom,
@@ -290,7 +293,41 @@ export const Home = () => {
         </div>
         <img
           className="mx-auto mt-[12%] md:w-[40%] md:h-[30%] lg:w-[50%] lg:h-[40%] lg:mt-[20%]"
-          src={HeroImage}
+          src={Hero}
+          alt="/"
+        />
+      </div> */}
+
+      <div className={styles.hero}>
+      <div className=" w-[90%] pt-[40%] mx-auto md:pt-[10%] md:w-[] lg:pt-[25%]">
+      <div className="text-justify w-[100%] text-[#04177F] text-[20px] font-extrabold md:text-[25px] md:font-bold lg:text-[45px] lg:font-extrabold lg:leading-[px]">
+            The One-Stop Shop for Individuals and Businesses for Telecom,
+            Payments, and Digital Services.
+          </div>
+          <div className="text-justify text-[16px] w-[100%] mt-[5%] lg:text-[18px] lg:w-[515px]">
+            With AremxyPlug's robust APIs and software solutions intended to
+            help you increase revenue, you can accept payments and transfer
+            money internationally.
+          </div>
+          <div className="flex gap-[6%] mt-[5%]">
+            <HashLink
+              to="/signUp"
+              className="bg-[#04177F] text-[#ffffff] p-[3%] text-center rounded-lg w-[108px] text-[10px] lg:w-[25%] lg:text-[20px] lg:p-[1%] lg:h-[45px]"
+            >
+              Sign up
+            </HashLink>
+
+            <HashLink
+              to="/Login"
+              className="bg-[#04177F] text-[#ffffff] p-[3%] text-center rounded-lg w-[108px] text-[10px] lg:w-[25%] lg:text-[20px] lg:p-[1%] lg:h-[45px]"
+            >
+              Sign in
+            </HashLink>
+          </div>
+        </div>
+        <img
+          className="mx-auto mt-[12%] md:w-[40%] md:h-[30%] lg:w-[50%] lg:h-[40%] px-[20px] md:px-0 "
+          src="./Images/desktop_phone.png"
           alt="/"
         />
       </div>
