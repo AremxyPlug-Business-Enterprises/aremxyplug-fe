@@ -130,15 +130,18 @@ export default function NabtebReceipt() {
                 hour12: true,
               })}
             </span>
-            <p className="text-[10px] leading-[15px] md:leading-[20px]
-           text-[#000] px-[20px] text-center my-2 md:text-[14px] 
-          lg:text-[16px]  lg:leading-[24px font-[500] md:mb-7">
+            <div className='flex justify-center mx-[19px]'>
+            <p className="text-[10px] p-[5.729px] border-[0.573px] rounded-[6.302px] md:p-[5.868px] md:border-[0.578px] 
+             md:rounded-[6.455px]  lg:border-[1px] lg:rounded-[11px]  border-[solid] border-[#27AE60] leading-[15px] md:leading-[20px]
+           text-[#27AE60] bg-[#D5F6E3] lg:p-[10px] text-center my-2 md:text-[14px] 
+          lg:text-[16px]  lg:leading-[24px] font-[500] md:mb-7">
               You have successfully purchased{" "}
               <span className="font-extrabold text-[10.9px] md:text-[14.9px] lg:text-[16.9px]">
               {nabtebExamType} {" "}
               </span>
               from your {nabtebPaymentResult} to{" "}
             </p>
+            </div>
             <div className="flex flex-col  gap-7  md:gap-10">
               {/* ========================Recipient Info================== */}
               <div className="flex flex-col gap-[3px] w-[90%] mx-auto md:gap-[7px] lg:gap-[8px]">

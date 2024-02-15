@@ -69,7 +69,7 @@ function nabtebMethodDropDown(){
 document.querySelector('.methodDrop').classList.toggle('DropIt');
 }
 const [nabtebMethodOptions,setNabtebMethodOptions] = useState([
- {method : 'NGN Wallet', balance :" (50,000.00)", flag : nigerianFlag, id : 1},
+ {method : 'NGN Wallet', balance :" (0.00)", flag : nigerianFlag, id : 1},
 {method : 'USD Wallet ', balance :'(0.00)', flag : americaFlag, id : 2 },
 {method : 'EUR Wallet', balance :'(0.00)', flag : britainFlag, id : 3 },
 {method :  'GBP Wallet', balance :'(0.00)', flag : euroFlag, id : 4 },
