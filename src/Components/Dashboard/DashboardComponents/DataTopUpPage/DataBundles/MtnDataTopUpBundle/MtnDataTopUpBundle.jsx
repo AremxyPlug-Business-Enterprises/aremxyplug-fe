@@ -24,6 +24,8 @@ import { AiFillEye } from "react-icons/ai";
 import { MtnReceipt } from "./MtnReceipt";
 import Joi from "joi";
 import airtimestyles from "../../../../../AirTimePage/AirtimeVtu.module.css";
+import axios from 'axios';
+
 // import { DataBundleFailedPopUp } from "../../../TransferComponent/PopUps/TransactionFailedPopUp";
 
 const MtnDataTopUpBundle = () => {
@@ -49,6 +51,7 @@ const MtnDataTopUpBundle = () => {
   const [image, setImage] = useState("");
   const [paymentAmount, setPaymentAmount] = useState("");
   const [codes, setCodes] = useState(false);
+  const [plan, setPlan] = useState(false);
 
   const handleCodes = () => {
     setCodes(false);
@@ -162,198 +165,477 @@ const MtnDataTopUpBundle = () => {
       id: 1,
       name: "MTN SME",
       options: [
-        "MTN SME 500MB",
-        "MTN SME 1GB",
-        "MTN SME 2GB",
-        "MTN SME 3GB",
-        "MTN SME 4GB",
-        "MTN SME 5GB",
-        "MTN SME 10GB",
-      ],
-
-      amount: ["₦100", "₦200", "₦300", "₦500", "₦500", "₦800", "₦900"],
-
-      duration: [
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
+        { id: 6, name: "MTN SME 500MB", amount: "₦128", duration: "1 MONTH" },
+        { id: 7, name: "MTN SME 1GB", amount: "₦256", duration: "1 MONTH" },
+        { id: 8, name: "MTN SME 2GB", amount: "₦512", duration: "1 MONTH" },
+        { id: 44, name: "MTN SME 3GB", amount: "₦768", duration: "1 MONTH" },
+        { id: 11, name: "MTN SME 5GB", amount: "₦1280", duration: "1 MONTH" },
+        { id: 43, name: "MTN SME 10GB", amount: "₦2560", duration: "1 MONTH" },
+        {
+          id: 236,
+          name: "MTN SME 25TB",
+          amount: "₦6350000",
+          duration: "1 MONTH",
+        },
+        {
+          id: 270,
+          name: "MTN SME 1TB",
+          amount: "₦255000",
+          duration: "1 MONTH",
+        },
+        {
+          id: 272,
+          name: "MTN SME 250GB",
+          amount: "₦63750",
+          duration: "1 MONTH",
+        },
+        {
+          id: 273,
+          name: "MTN SME 500GB",
+          amount: "₦127500",
+          duration: "1 MONTH",
+        },
+        {
+          id: 277,
+          name: "MTN SME 3TB",
+          amount: "₦765000",
+          duration: "1 MONTH",
+        },
+        {
+          id: 278,
+          name: "MTN SME 5TB",
+          amount: "₦1275000",
+          duration: "1 MONTH",
+        },
+        {
+          id: 279,
+          name: "MTN SME 100GB",
+          amount: "₦25500",
+          duration: "1 MONTH",
+        },
+        {
+          id: 346,
+          name: "MTN SME 10TB",
+          amount: "₦2545000",
+          duration: "1 MONTH",
+        },
       ],
     },
 
     {
-      id: 2,
+      id: 1,
       name: "MTN SME2",
       options: [
-        "MTN SME2 500MB",
-        "MTN SME2 1GB",
-        "MTN SME2 2GB",
-        "MTN SME2 3GB",
-        "MTN SME2 4GB",
-        "MTN SME2 5GB",
-        "MTN SME2 10GB",
-      ],
-      amount: ["₦1050", "₦2500", "₦3500", "₦5800", "₦5300", "₦8100", "₦9500"],
-
-      duration: [
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
+        { id: 244, name: "MTN SME2 50MB", amount: "₦45", duration: "1 MONTH" },
+        {
+          id: 245,
+          name: "MTN SME2 500MB",
+          amount: "₦128",
+          duration: "1 MONTH",
+        },
+        {
+          id: 246,
+          name: "MTN SME2 1000MB",
+          amount: "₦254",
+          duration: "1 MONTH",
+        },
+        {
+          id: 248,
+          name: "MTN SME2 2000MB",
+          amount: "₦508",
+          duration: "1 MONTH",
+        },
+        {
+          id: 250,
+          name: "MTN SME2 3000MB",
+          amount: "₦762",
+          duration: "1 MONTH",
+        },
+        {
+          id: 252,
+          name: "MTN SME2 5000MB",
+          amount: "₦1270",
+          duration: "1 MONTH",
+        },
+        {
+          id: 255,
+          name: "MTN SME2 10000MB",
+          amount: "₦2540",
+          duration: "1 MONTH",
+        },
+        {
+          id: 302,
+          name: "MTN SME2 1GB",
+          amount: "₦300",
+          duration: "1 MONTH",
+        },
+        {
+          id: 303,
+          name: "MTN SME2 100GB",
+          amount: "₦2175000",
+          duration: "1 MONTH",
+        },
       ],
     },
+
     {
-      id: 3,
+      id: 1,
       name: "MTN CG",
       options: [
-        "MTN CG 500MB",
-        "MTN CG 1GB",
-        "MTN CG 2GB",
-        "MTN CG 3GB",
-        "MTN CG 5GB",
-        "MTN CG 10GB",
-      ],
-
-      amount: ["₦1000", "₦2050", "₦3030", "₦5600", "₦8900", "₦1900"],
-
-      duration: [
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
+        { id: 216, name: "MTN CG 50MB", amount: "₦30", duration: "1 MONTH" },
+        { id: 217, name: "MTN CG 150MB", amount: "₦70", duration: "1 MONTH" },
+        { id: 218, name: "MTN CG 250MB", amount: "₦80", duration: "1 MONTH" },
+        { id: 219, name: "MTN CG 500MB", amount: "₦130", duration: "1 MONTH" },
+        { id: 220, name: "MTN CG 1GB", amount: "₦258", duration: "1 MONTH" },
+        { id: 221, name: "MTN CG 2GB", amount: "₦516", duration: "1 MONTH" },
+        { id: 222, name: "MTN CG 3GB", amount: "₦774", duration: "1 MONTH" },
+        { id: 223, name: "MTN CG 5GB", amount: "₦1290", duration: "1 MONTH" },
+        { id: 224, name: "MTN CG 10GB", amount: "₦2580", duration: "1 MONTH" },
+        { id: 225, name: "MTN CG 15GB", amount: "₦3870", duration: "1 MONTH" },
+        { id: 226, name: "MTN CG 20GB", amount: "₦5600", duration: "1 MONTH" },
+        { id: 227, name: "MTN CG 40GB", amount: "₦9000", duration: "1 MONTH" },
+        { id: 228, name: "MTN CG 75GB", amount: "₦16875", duration: "1 MONTH" },
+        {
+          id: 229,
+          name: "MTN CG 100GB",
+          amount: "₦22500",
+          duration: "1 MONTH",
+        },
+        { id: 275, name: "MTN CG 1TB", amount: "₦260000", duration: "1 MONTH" },
+        {
+          id: 276,
+          name: "MTN CG 500GB",
+          amount: "₦130000",
+          duration: "1 MONTH",
+        },
       ],
     },
 
     {
-      id: 4,
+      id: 1,
+      name: "MTN DATA COUPONS",
+      options: [
+        {
+          id: 264,
+          name: "MTN DATA COUPONS 750MB",
+          amount: "₦199",
+          duration: "1 MONTH",
+        },
+        {
+          id: 269,
+          name: "MTN DATA COUPONS 1GB",
+          amount: "₦239",
+          duration: "1 MONTH",
+        },
+        {
+          id: 265,
+          name: "MTN DATA COUPONS 1.5GB",
+          amount: "₦390",
+          duration: "1 MONTH",
+        },
+        {
+          id: 266,
+          name: "MTN DATA COUPONS 2GB",
+          amount: "₦510",
+          duration: "1 MONTH",
+        },
+        {
+          id: 267,
+          name: "MTN DATA COUPONS 3GB",
+          amount: "₦690",
+          duration: "1 MONTH",
+        },
+        {
+          id: 268,
+          name: "MTN DATA COUPONS 4.5GB",
+          amount: "₦1105",
+          duration: "1 MONTH",
+        },
+        {
+          id: 304,
+          name: "MTN DATA COUPONS 500MB",
+          amount: "₦1135",
+          duration: "1 MONTH",
+        },
+      ],
+    },
+
+    {
+      id: 1,
       name: "MTN GIFTING",
       options: [
-        "MTN 100MB",
-        "MTN 200MB",
-        "MTN 300MB",
-        "MTN 500MB",
-        "MTN 1GB",
-        "MTN 2GB",
-        "MTN 3GB",
-        "MTN 5GB",
-        "MTN 10GB",
-        "MTN 15GB",
-        "MTN 20GB",
-        "MTN 50GB",
-        "MTN 75GB",
-        "MTN 120GB",
+        {
+          id: 305,
+          name: "MTN GIFTING 1GB",
+          amount: "₦600",
+          duration: "1 MONTH",
+        },
+        {
+          id: 306,
+          name: "MTN GIFTING 200MB",
+          amount: "₦60",
+          duration: "1 MONTH",
+        },
+        {
+          id: 307,
+          name: "MTN GIFTING 2.5GB",
+          amount: "₦500",
+          duration: "1 MONTH",
+        },
+        {
+          id: 308,
+          name: "MTN GIFTING 750MB",
+          amount: "₦300",
+          duration: "1 MONTH",
+        },
+        {
+          id: 309,
+          name: "MTN GIFTING 250MB",
+          amount: "₦200",
+          duration: "1 MONTH",
+        },
+        {
+          id: 310,
+          name: "MTN GIFTING 100MB",
+          amount: "₦100",
+          duration: "1 MONTH",
+        },
+        {
+          id: 311,
+          name: "MTN GIFTING 200MB",
+          amount: "₦200",
+          duration: "1 MONTH",
+        },
+        {
+          id: 312,
+          name: "MTN GIFTING 40MB",
+          amount: "₦50",
+          duration: "1 MONTH",
+        },
+
+        {
+          id: 313,
+          name: "MTN GIFTING 1GB",
+          amount: "₦350",
+          duration: "1 MONTH",
+        },
+
+        {
+          id: 314,
+          name: "MTN GIFTING 350MB",
+          amount: "₦333",
+          duration: "1 MONTH",
+        },
+        {
+          id: 315,
+          name: "MTN GIFTING 750MB",
+          amount: "₦475",
+          duration: "1 MONTH",
+        },
+        {
+          id: 316,
+          name: "MTN GIFTING 2GB",
+          amount: "₦950",
+          duration: "1 MONTH",
+        },
+        {
+          id: 317,
+          name: "MTN GIFTING 1GB",
+          amount: "₦570",
+          duration: "1 MONTH",
+        },
+        {
+          id: 318,
+          name: "MTN GIFTING 6GB",
+          amount: "₦1900",
+          duration: "1 MONTH",
+        },
+        {
+          id: 319,
+          name: "MTN GIFTING 1.5GB",
+          amount: "₦950",
+          duration: "1 MONTH",
+        },
+        {
+          id: 320,
+          name: "MTN GIFTING 450MB",
+          amount: "₦120",
+          duration: "1 MONTH",
+        },
+        {
+          id: 321,
+          name: "MTN GIFTING 750MB",
+          amount: "₦475",
+          duration: "1 MONTH",
+        },
+        {
+          id: 322,
+          name: "MTN GIFTING 2GB",
+          amount: "₦1425",
+          duration: "1 MONTH",
+        },
+        {
+          id: 323,
+          name: "MTN GIFTING 1.5GB",
+          amount: "₦1140",
+          duration: "1 MONTH",
+        },
+        {
+          id: 324,
+          name: "MTN GIFTING 4.5GB",
+          amount: "₦2375",
+          duration: "1 MONTH",
+        },
+        {
+          id: 325,
+          name: "MTN GIFTING 12GB",
+          amount: "₦3800",
+          duration: "1 MONTH",
+        },
+        {
+          id: 326,
+          name: "MTN GIFTING 20GB",
+          amount: "₦5225",
+          duration: "1 MONTH",
+        },
+        {
+          id: 327,
+          name: "MTN GIFTING 40GB",
+          amount: "₦10450",
+          duration: "1 MONTH",
+        },
+        {
+          id: 328,
+          name: "MTN GIFTING 3GB",
+          amount: "₦1520",
+          duration: "1 MONTH",
+        },
+        {
+          id: 329,
+          name: "MTN GIFTING 25GB",
+          amount: "₦6175",
+          duration: "1 MONTH",
+        },
+        {
+          id: 330,
+          name: "MTN GIFTING 6GB",
+          amount: "₦2850",
+          duration: "1 MONTH",
+        },
+        {
+          id: 331,
+          name: "MTN GIFTING 75GB",
+          amount: "₦15200",
+          duration: "1 MONTH",
+        },
+        {
+          id: 332,
+          name: "MTN GIFTING 10GB",
+          amount: "₦3325",
+          duration: "1 MONTH",
+        },
+        {
+          id: 333,
+          name: "MTN GIFTING 120GB",
+          amount: "₦20900",
+          duration: "1 MONTH",
+        },
+        {
+          id: 334,
+          name: "MTN GIFTING 200GB",
+          amount: "₦28500",
+          duration: "1 MONTH",
+        },
+        {
+          id: 335,
+          name: "MTN GIFTING 100GB",
+          amount: "₦19400",
+          duration: "1 MONTH",
+        },
+        {
+          id: 336,
+          name: "MTN GIFTING 160GB",
+          amount: "₦29100",
+          duration: "1 MONTH",
+        },
+        {
+          id: 337,
+          name: "MTN GIFTING 30GB",
+          amount: "₦7760",
+          duration: "1 MONTH",
+        },
+        {
+          id: 338,
+          name: "MTN GIFTING 400GB",
+          amount: "₦49000",
+          duration: "1 MONTH",
+        },
+        {
+          id: 339,
+          name: "MTN GIFTING 600GB",
+          amount: "₦73500",
+          duration: "1 MONTH",
+        },
+        {
+          id: 340,
+          name: "MTN GIFTING 800GB",
+          amount: "₦88200",
+          duration: "1 MONTH",
+        },
+        {
+          id: 341,
+          name: "MTN GIFTING 1TB",
+          amount: "₦9800",
+          duration: "1 MONTH",
+        },
+        {
+          id: 342,
+          name: "MTN GIFTING 2.5TB",
+          amount: "₦245000",
+          duration: "1 MONTH",
+        },
+        {
+          id: 343,
+          name: "MTN GIFTING 4.5TB",
+          amount: "₦441000",
+          duration: "1 MONTH",
+        },
+        {
+          id: 344,
+          name: "MTN GIFTING 25TB",
+          amount: "₦5400000",
+          duration: "1 MONTH",
+        },
+        {
+          id: 345,
+          name: "MTN GIFTING 360MB",
+          amount: "₦100000",
+          duration: "1 MONTH",
+        },
       ],
-
-      amount: [
-        "₦1500",
-        "₦2200",
-        "₦3800",
-        "₦5200",
-        "₦5800",
-        "₦8500",
-        "₦9900",
-        "₦1060",
-        "₦2300",
-        "₦3800",
-        "₦5900",
-        "₦5300",
-        "₦8400",
-        "₦9000",
-      ],
-
-      duration: [
-        "1 MONTH",
-        "1 MONTH",
-        "6 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-      ],
-    },
-
-    {
-      id: 4,
-      name: "MTN DIRECT COUPON",
-      options: [
-        "MTN DIRECT COUPON 500MB",
-        "MTN DIRECT COUPON 750MB",
-        "MTN DIRECT COUPON 1GB",
-        "MTN DIRECT COUPON 1.5GB",
-        "MTN DIRECT COUPON 2GB",
-        "MTN DIRECT COUPON 3GB",
-        "MTN DIRECT COUPON 5GB",
-        "MTN DIRECT COUPON 10GB",
-      ],
-
-      amount: [
-        "₦1200",
-        "₦2200",
-        "₦3200",
-        "₦5200",
-        "₦5200",
-        "₦8200",
-        "₦9200",
-        "₦9000",
-      ],
-
-      duration: [
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-      ],
-    },
-
-    {
-      id: 3,
-      name: "MTN GENERAL BUNDLES ---",
-      options: [],
-      amount: [],
-
-      duration: [],
     },
   ];
 
-  const handleProceed = (e) => {
-    // setProceed(true);
-    // e.preventDefault();
+  // const handleProceed = (e) => {
+  //   // setProceed(true);
+  //   // e.preventDefault();
 
-    const { error } = schema.validate({
-      recipientPhoneNumber,
-    });
+  //   const { error } = schema.validate({
+  //     recipientPhoneNumber,
+  //   });
 
-    if (error) {
-      setErrors(
-        error.details.reduce((acc, curr) => {
-          acc[curr.path[0]] = curr.message;
-          return acc;
-        }, {})
-      );
-    } else {
-      setProceed(true);
-      setErrors({});
-    }
-  };
+  //   if (error) {
+  //     setErrors(
+  //       error.details.reduce((acc, curr) => {
+  //         acc[curr.path[0]] = curr.message;
+  //         return acc;
+  //       }, {})
+  //     );
+  //   } else {
+  //     setProceed(true);
+  //     setErrors({});
+  //   }
+  // };
 
   const schema = Joi.object({
     recipientPhoneNumber: Joi.string()
@@ -371,7 +653,9 @@ const MtnDataTopUpBundle = () => {
     setShowOptionList(false);
   };
 
-  const handleSelectOption = (selectedOption, selectedAmount, duration) => {
+  const handleSelectOption = (selectedOption, selectedAmount, duration, id) => {
+    setPlan(id);
+    console.log(id);
     setSelectedOption(selectedOption);
     setShowOptionList(false);
     setSelectedAmount(selectedAmount);
@@ -397,6 +681,102 @@ const MtnDataTopUpBundle = () => {
   };
 
   console.log("confirm:", confirm);
+
+  // const sendDataToBackend = (network, mobileNumber, plan, name) => {
+  //   const apiUrl = "https://aremxyplug.onrender.com/api/v1/data";
+
+  //   // Prepare the data to be sent in the request body
+  //   const requestData = {
+  //     network,
+  //     mobile_number: mobileNumber,
+  //     plan,
+  //     name,
+  //   };
+
+  //   console.log(requestData);
+
+  //   // Send a POST request to the backend API
+  //   fetch(apiUrl, {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(requestData),
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       // Handle the response from the backend
+  //       console.log("Backend response:", data);
+  //     })
+  //     .catch((error) => {
+  //       // Handle any errors that occurred during the fetch
+  //       console.error("Error sending data to backend:", error);
+  //     });
+  // };
+
+  // const axios = require("axios");
+
+  const sendDataToBackend = async (network, mobileNumber, plan, name) => {
+    const apiUrl = "https://aremxyplug.onrender.com/api/v1/data";
+
+    // Prepare the data to be sent in the request body
+    const requestData = {
+      network,
+      mobile_number: mobileNumber,
+      plan,
+      name,
+    };
+
+    console.log(requestData);
+
+    try {
+      // Send a POST request to the backend API using Axios
+      const response = await axios.post(apiUrl, requestData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      // Handle the response from the backend
+      console.log("Backend response:", response.data);
+    } catch (error) {
+      // Handle any errors that occurred during the request
+      console.error("Error sending data to backend:", error);
+    }
+  };
+
+  const handleProceed = (e) => {
+    // setProceed(true);
+    // e.preventDefault();
+
+    // Regular expression for MTN numbers (adjust as needed)
+    const mtnRegex =
+      /^(234|0)(703[1-9]|7025[0-9]|7026[1-9]|7027[1-9]|7028[1-9]|810[1-9]|813[1-9]|816[1-9]|0900[1-9]|0903[1-9]|0906[1-9]|7029[1-9]|7030[1-9]|7031[0-4]|7032[7-9]|7033[0-9]|7034[0-9]|7035[0-9]|7036[0-9]|7037[0-9]|7038[0-9]|7039[0-9]|7040[1-9]|7042[0-9]|7043[0-9]|7044[0-9]|7045[0-9]|7046[0-9]|7047[0-9]|7048[0-9]|7049[0-9]|7050[0-9]|7051[0-9]|7052[0-9]|7053[0-9]|7054[0-9]|7055[0-9]|7056[0-9]|7057[0-9]|7058[0-9]|7059[0-9]|7060[0-9]|7061[0-9]|7062[0-9]|7063[0-9]|7064[0-9]|7065[0-9]|7066[0-9]|7067[0-9]|7068[0-9]|7069[0-9]|7070[0-9]|7071[0-9]|7072[0-9]|7073[0-9]|7074[0-9]|7075[0-9]|7076[0-9]|7077[0-9]|7078[0-9]|7079[0-9]|7080[0-9]|7081[0-9]|7082[0-9]|7083[0-9]|7084[0-9]|7085[0-9]|7086[0-9]|7087[0-9]|7088[0-9]|7089[0-9]|7090[0-9]|7091[0-9]|7092[0-9]|7093[0-9]|7094[0-9]|7095[0-9]|7096[0-9]|7097[0-9]|7098[0-9]|7099[0-9]|7010[0-9]|7011[0-9]|7012[0-9]|7013[0-9]|7014[0-9]|7015[0-9]|7016[0-9]|7017[0-9]|7018[0-9]|7019[0-9]|7020[0-9]|7021[0-9]|7022[0-9]|7023[0-9]|7024[0-9]|7025[0-9])\d{6}$/;
+
+    const { error } = schema.validate({
+      recipientPhoneNumber,
+    });
+
+    if (error) {
+      setErrors(
+        error.details.reduce((acc, curr) => {
+          acc[curr.path[0]] = curr.message;
+          return acc;
+        }, {})
+      );
+    } else if (!mtnRegex.test(recipientPhoneNumber)) {
+      setErrors({
+        recipientPhoneNumber:
+          "Invalid MTN number. Please enter a valid MTN number.",
+      });
+    } else {
+      setProceed(true);
+      setErrors({});
+      sendDataToBackend(1, recipientPhoneNumber, plan, recipientNames);
+    }
+  };
+
+  // sendDataToBackend(1, inputValue, plan, recipientNames);
 
   return (
     <DashBoardLayout>
@@ -637,38 +1017,31 @@ const MtnDataTopUpBundle = () => {
                 <div className="border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[100]">
                   {productList
                     .find((item) => item.name === selectedNetworkProduct)
-                    ?.options.map((optionItem, index) => {
-                      const optionIndex = productList
-                        .find((item) => item.name === selectedNetworkProduct)
-                        ?.options.indexOf(optionItem);
+                    ?.options.map((option, index) => {
+                      const amount = option.amount;
+                      const duration = option.duration;
+                      const id = option.id;
 
-                      if (optionIndex !== -1) {
-                        const amount = productList.find(
-                          (item) => item.name === selectedNetworkProduct
-                        )?.amount[optionIndex];
-                        const duration = productList.find(
-                          (item) => item.name === selectedNetworkProduct
-                        )?.duration[optionIndex];
+                      return (
+                        <div
+                          key={option.id}
+                          className={`cursor-pointer border-b-[0.5px] md:rounded-[0px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
+                            selectedOption === option.id ? "bg-gray-200" : ""
+                          }`}
+                          onClick={() =>
+                            handleSelectOption(
+                              `${option.name} (${amount}) ~ ${duration}`,
+                              amount,
+                              duration,
+                              id, // Pass the id here
 
-                        return (
-                          <div
-                            key={index}
-                            className={`cursor-pointer border-b-[0.5px] md:rounded-[0px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
-                              selectedOption === optionItem ? "bg-gray-200" : ""
-                            }`}
-                            onClick={() =>
-                              handleSelectOption(
-                                `${optionItem} (${amount}) ~ ${duration}`,
-                                amount
-                              )
-                            }
-                          >
-                            {`${optionItem} (${amount}) ~ ${duration}`}
-                          </div>
-                        );
-                      }
-
-                      return null;
+                              console.log(id)
+                            )
+                          }
+                        >
+                          {`${option.name} (${amount}) ~ ${duration}`}
+                        </div>
+                      );
                     })}
                 </div>
               )}

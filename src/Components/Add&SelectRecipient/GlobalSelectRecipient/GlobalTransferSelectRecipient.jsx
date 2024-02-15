@@ -138,7 +138,7 @@ const filterFavorite = knownFavorite.filter(item =>
   return (
 
   <DashBoardLayout>
-    <div className='flex flex-col justify-between lg:h-[1100px] md:h-[1400px] h-[950px] '>
+    <div className='flex flex-col justify-between lg:h-[100%] md:h-[115%] h-[120%]'>
     <div className=''>
       
     <RecipientHero/>
@@ -170,7 +170,7 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
       {selectRecipientCountry}
     </h2>
    </div>
-   <img src={ImageDrop}  alt=""
+   <img src={ImageDrop}  alt="" 
    className='SelectRecipientDrop lg:w-[24px] lg:h-[24px] h-[12px] w-[12px]' />
     </div>
     {selectRecipientActive && (
@@ -762,7 +762,7 @@ Okay
     </div> 
     {/* CONTACT US */}
     <div className=" flex gap-[8.729px]  md:gap-[14.896px]
-       justify-center px-[8.594px] lg:pt-[20px] lg:pb-[8px] md:pt-[0px]  md:pb-[40px] pt-[40%] pb-[30%]">
+       justify-center px-[8.594px] lg:pt-[20px] lg:pb-[50px] md:pt-[0px]  md:pb-[40px] pt-[40%] pb-[30%]">
               <p className="font-[500] text-[10px] text-black 
               leading-[10.4px] lg:text-[16px] lg:leading-[15.6px]  md:text-[6.875px]
             ] md:leading-[12.938px] self-center">
