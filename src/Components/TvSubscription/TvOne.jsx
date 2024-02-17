@@ -68,6 +68,7 @@ const GoTv = () => {
     const selectedOptionInfo = `${option.name} - ${option.amount} - ${option.duration}`;
     setSelectedOptionGOTV(selectedOptionInfo); // Replace 'setInputValue' with the function to set input value
     setShowDropdownGOTV(false);
+    setPlan(id);
     document.querySelector('.imgdrop').classList.remove('DropIt');
   };
   
