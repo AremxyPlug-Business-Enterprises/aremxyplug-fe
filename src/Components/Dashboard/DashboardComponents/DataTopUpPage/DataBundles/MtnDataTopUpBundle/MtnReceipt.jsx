@@ -68,12 +68,12 @@ const ReceiptDetails = ({ receiptData, purchaseStatus }) => {
         {purchaseStatus === "pending"
           ? "Your transaction is under process please wait while the system are confirm."
           : purchaseStatus === "failed"
-          ? "Purchase Failed due to an unexpected error that occured. Please try again."
-          : purchaseStatus === "refunded"
-          ? "Transaction was unsuccessful and your wallet has been refunded. Please try again."
-          : purchaseStatus === "cancelled"
-          ? "Purchase Cancelled due to an unexpected error that occur. Please try again."
-          : `You have successfully purchased ${receiptData.network} ${receiptData.plan_name} ${receiptData.plan_amount} from your ${receiptData.walletName} Wallet to`}
+            ? "Purchase Failed due to an unexpected error that occured. Please try again."
+            : purchaseStatus === "refunded"
+              ? "Transaction was unsuccessful and your wallet has been refunded. Please try again."
+              : purchaseStatus === "cancelled"
+                ? "Purchase Cancelled due to an unexpected error that occur. Please try again."
+                : `You have successfully purchased ${receiptData.network} ${receiptData.plan_name} ${receiptData.plan_amount} from your ${receiptData.walletName} Wallet to`}
       </p>
       <div className="flex flex-col gap-3">
         {/* ========================Recipient Info================== */}
@@ -205,7 +205,7 @@ export const MtnReceipt = () => {
     }).catch((error) => {
       console.error("Error fetching receipt details:", error);
     });
-    
+
     // Reset selected options
     // setSelectedNetworkProduct(false);
     // setSelectedOption(false);
@@ -231,9 +231,8 @@ export const MtnReceipt = () => {
     <DashBoardLayout>
       <div className="flex flex-col gap-[35px] lg:gap-[85px]">
         <div
-          className={`  ${
-            toggleSideBar ? "" : "lg:w-[880px] "
-          } w-full lg:mx-auto border-[2px] rounded-[10px]`}
+          className={`  ${toggleSideBar ? "" : "lg:w-[880px] "
+            } w-full lg:mx-auto border-[2px] rounded-[10px]`}
         >
           <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
             <Link to="/">
@@ -258,12 +257,12 @@ export const MtnReceipt = () => {
 
 
 
-          {receiptData && purchaseStatus && (
-            <ReceiptDetails
-              receiptData={receiptData}
-              purchaseStatus={purchaseStatus}
-            />
-          )}
+            {receiptData && purchaseStatus && (
+              <ReceiptDetails
+                receiptData={receiptData}
+                purchaseStatus={purchaseStatus}
+              />
+            )}
 
 
 
@@ -945,11 +944,10 @@ export const MtnReceipt = () => {
         </div>
 
 
-          {/* ===============FOOTER=========== */}
+        {/* ===============FOOTER=========== */}
         <div
-          className={`${
-            isDarkMode ? "mb-[1%]" : "mb-[5%]"
-          } flex gap-[15px] justify-center items-center lg:mb-[%]`}
+          className={`${isDarkMode ? "mb-[1%]" : "mb-[5%]"
+            } flex gap-[15px] justify-center items-center lg:mb-[%]`}
         >
           <div className="flex gap-2 justify-center items-center mb-[15%] md:mt-40 mt-[50%] lg:mt-[50%]">
             <h2 className="text-[8px] leading-[12px] lg:text-[16px]">

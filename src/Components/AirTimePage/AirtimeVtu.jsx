@@ -269,7 +269,7 @@ const AirtimeVtu = () => {
 
 
             async function buyAirtime(network, mobileNo, amount, airtimeType) {
-                const url = 'https://easyaccessapi.com.ng/api/airtime.php';
+                const url = 'https://aremxyplug.onrender.com/api/v1/airtime';
 
                 const data = {
                     network,
@@ -348,12 +348,6 @@ const AirtimeVtu = () => {
         setTransactSuccessPopUp,
         transactFailedPopUp, 
         setTransactFailedPopUp,
-        transactRefundPopUp, 
-        setTransactRefundPopUp,
-        transactPendPopUp, 
-        setTransactPendPopUp,
-        transactCancelPopUp, 
-        setTransactCancelPopUp
     } = useContext(ContextProvider);
 
     const handleTransactionSuccessClose = (statusCode) => {
@@ -361,18 +355,9 @@ const AirtimeVtu = () => {
         if (statusCode === 200) {
             // Success response
             setTransactSuccessPopUp(true); // Show success popup
-          } else if (statusCode === 400 || statusCode === 404) {
+          } else if (statusCode === 400 || statusCode === 500) {
             // Failure response
             setTransactFailedPopUp(true); // Show failure popup
-          } else if (statusCode === 500) {
-            // Refund response
-            setTransactRefundPopUp(true); // Show refund popup
-          } else if (statusCode === 202) {
-            // Pending response
-            setTransactPendPopUp(true); // Show pending popup
-          } else if (statusCode === 403) {
-            // Cancelled response
-            setTransactCancelPopUp(true); // Show cancelled popup
           } else {
             // Handle other status codes or unexpected responses
             console.error("Unexpected status code:", statusCode);
@@ -974,370 +959,17 @@ const AirtimeVtu = () => {
                                 </h2>
                                 <img
                                     className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[70px] lg:h-[70px]"
-                                    src="./Gif/checkMarkGif.gif"
+                                    src="./Images/failed"
                                     alt="/"
                                 />
                                 <p className="text-[10px] text-[#0008] mx-[10px] text-center mb-5 md:text-[14px] lg:text-[12px]">
-                                    Purchase Failed due to an unexpected error that occured. Please try again.
+                                    An unexpected error has occurred, please try again.
                                 </p>
-
-                                <div className="flex flex-col gap-1 lg:gap-4">
-                                    <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
-                                        <p className="text-[#0008]">Network</p>
-                                        <span className='flex gap-1'>
-                                            <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
-                                                <img src={networkImage} alt="" className='w-full h-full object-cover' />
-                                            </div>
-                                            <h2 className="text-[10px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">{networkName}</h2>
-                                        </span>
-                                    </div>
-                                    <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
-                                        <p className="text-[#0008]">Product</p>
-                                        <span>{networkName + ' ' + selectedProduct}</span>
-                                    </div>
-                                    <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
-                                        <p className="text-[#0008]">Phone Number</p>
-                                        <span>{recipientNumber}</span>
-                                    </div>
-                                    <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
-                                        <p className="text-[#0008]">Recipient Name</p>
-                                        <span>{recipientName}</span>
-                                    </div>
-                                    <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
-                                        <p className="text-[#0008]">Payment Method</p>
-                                        <span>{factorWalletName(name)}</span>
-                                    </div>
-                                    <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
-                                        <p className="text-[#0008]">Amount</p>
-                                        <span>&#8358;{amount}</span>
-                                    </div>
-                                    <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[12px]">
-                                        <p className="text-[#0008]">Order Number</p>
-                                        <span>122334455667</span>
-                                    </div>
-                                </div>
-
-                                <div className="bg-[#F2FAFF] mx-5 rounded-md h-[55px] my-5 flex justify-between items-center px-[4%] md:h-[75px] lg:h-[85px]">
-                                    <p className="text-[8px] text-center mx-auto w-[201px] md:text-[14px] md:w-[92%] lg:text-[14px]">
-                                    The airtime purchase could not be processed for the recipient phone number. We apologize for the inconvenience caused. We kindly request that the recipient verify their balance manually. If you require further assistance, please don't hesitate to reach out to us.
-                                    </p>
-                                </div>
+                        
                                 <div className="flex w-[70%] mx-auto items-center gap-[5%] md:w-[60%] lg:my-[5%]">
                                     <button
                                         onClick={() => {
                                             setTransactFailedPopUp(false);
-                                            // window.location.reload();
-                                            setSelected("");
-                                            setRecipientNumber("");
-                                            setRecipientName("");
-                                            setSelectedProduct("");
-                                            setAmount("");
-                                            setDiscount("");
-                                            setPaymentSelected("");
-                                        }}
-                                        className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
-                                    >
-                                        Done
-                                    </button>
-                                    <Link to="/airtime-vtu-receipt">
-                                        <button
-                                            onClick={handleReceipt}
-                                            className={`border-[1px] w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[110px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
-                                        >
-                                            Receipt
-                                        </button>
-                                    </Link>
-                                </div>
-                            </div>
-                        </Modal>
-                    )}
-                    {transactPendPopUp && (
-                        <Modal>
-                            <div
-                                className={`${styles.successfulTwo} ${toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-                                    } w-[90%] md:w-[70%]  overflow-auto`}
-                            >
-                                <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
-                                    <img
-                                        onClick={() => setTransactPendPopUp(false)}
-                                        className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[25px]"
-                                        src="/Images/login/arpLogo.png"
-                                        alt=""
-                                    />
-
-                                    <img
-                                        onClick={() => setTransactPendPopUp(false)}
-                                        className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
-                                        src="/Images/transferImages/close-circle.png"
-                                        alt=""
-                                    />
-                                </div>
-                                <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
-                                <h2 className="text-[12px] my-[3%] text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%]">
-                                    Transaction Pending
-                                </h2>
-                                <img
-                                    className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[70px] lg:h-[70px]"
-                                    src="./Gif/checkMarkGif.gif"
-                                    alt="/"
-                                />
-                                <p className="text-[10px] text-[#0008] mx-[10px] text-center mb-5 md:text-[14px] lg:text-[12px]">
-                                    Your Purchase is under process please wait while the system confirm.
-                                </p>
-
-                                <div className="flex flex-col gap-1 lg:gap-4">
-                                    <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
-                                        <p className="text-[#0008]">Network</p>
-                                        <span className='flex gap-1'>
-                                            <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
-                                                <img src={networkImage} alt="" className='w-full h-full object-cover' />
-                                            </div>
-                                            <h2 className="text-[10px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">{networkName}</h2>
-                                        </span>
-                                    </div>
-                                    <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
-                                        <p className="text-[#0008]">Product</p>
-                                        <span>{networkName + ' ' + selectedProduct}</span>
-                                    </div>
-                                    <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
-                                        <p className="text-[#0008]">Phone Number</p>
-                                        <span>{recipientNumber}</span>
-                                    </div>
-                                    <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
-                                        <p className="text-[#0008]">Recipient Name</p>
-                                        <span>{recipientName}</span>
-                                    </div>
-                                    <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
-                                        <p className="text-[#0008]">Payment Method</p>
-                                        <span>{factorWalletName(name)}</span>
-                                    </div>
-                                    <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
-                                        <p className="text-[#0008]">Amount</p>
-                                        <span>&#8358;{amount}</span>
-                                    </div>
-                                    <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[12px]">
-                                        <p className="text-[#0008]">Order Number</p>
-                                        <span>122334455667</span>
-                                    </div>
-                                </div>
-
-                                <div className="bg-[#F2FAFF] mx-5 rounded-md h-[55px] my-5 flex justify-between items-center px-[4%] md:h-[75px] lg:h-[85px]">
-                                    <p className="text-[8px] text-center mx-auto w-[201px] md:text-[14px] md:w-[92%] lg:text-[14px]">
-                                    The airtime purchase has been initiated for the recipient phone number. However, it is currently pending processing. We advise the recipient to check their balance after a short while to confirm the value. Please feel free to contact us if you require any further assistance.
-                                    </p>
-                                </div>
-                                <div className="flex w-[70%] mx-auto items-center gap-[5%] md:w-[60%] lg:my-[5%]">
-                                    <button
-                                        onClick={() => {
-                                            setTransactPendPopUp(false);
-                                            // window.location.reload();
-                                            setSelected("");
-                                            setRecipientNumber("");
-                                            setRecipientName("");
-                                            setSelectedProduct("");
-                                            setAmount("");
-                                            setDiscount("");
-                                            setPaymentSelected("");
-                                        }}
-                                        className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
-                                    >
-                                        Done
-                                    </button>
-                                    <Link to="/airtime-vtu-receipt">
-                                        <button
-                                            onClick={handleReceipt}
-                                            className={`border-[1px] w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[110px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
-                                        >
-                                            Receipt
-                                        </button>
-                                    </Link>
-                                </div>
-                            </div>
-                        </Modal>
-                    )}
-                    {transactRefundPopUp && (
-                        <Modal>
-                            <div
-                                className={`${styles.successfulTwo} ${toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-                                    } w-[90%] md:w-[70%]  overflow-auto`}
-                            >
-                                <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
-                                    <img
-                                        onClick={() => setTransactRefundPopUp(false)}
-                                        className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[25px]"
-                                        src="/Images/login/arpLogo.png"
-                                        alt=""
-                                    />
-
-                                    <img
-                                        onClick={() => setTransactRefundPopUp(false)}
-                                        className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
-                                        src="/Images/transferImages/close-circle.png"
-                                        alt=""
-                                    />
-                                </div>
-                                <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
-                                <h2 className="text-[12px] my-[3%] text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%]">
-                                    Transaction Refunded
-                                </h2>
-                                <img
-                                    className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[70px] lg:h-[70px]"
-                                    src="./Gif/checkMarkGif.gif"
-                                    alt="/"
-                                />
-                                <p className="text-[10px] text-[#0008] mx-[10px] text-center mb-5 md:text-[14px] lg:text-[12px]">
-                                    Purchase was unsuccessful and your wallet has been refunded. Please try again.
-                                </p>
-
-                                <div className="flex flex-col gap-1 lg:gap-4">
-                                    <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
-                                        <p className="text-[#0008]">Network</p>
-                                        <span className='flex gap-1'>
-                                            <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
-                                                <img src={networkImage} alt="" className='w-full h-full object-cover' />
-                                            </div>
-                                            <h2 className="text-[10px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">{networkName}</h2>
-                                        </span>
-                                    </div>
-                                    <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
-                                        <p className="text-[#0008]">Product</p>
-                                        <span>{networkName + ' ' + selectedProduct}</span>
-                                    </div>
-                                    <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
-                                        <p className="text-[#0008]">Phone Number</p>
-                                        <span>{recipientNumber}</span>
-                                    </div>
-                                    <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
-                                        <p className="text-[#0008]">Recipient Name</p>
-                                        <span>{recipientName}</span>
-                                    </div>
-                                    <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
-                                        <p className="text-[#0008]">Payment Method</p>
-                                        <span>{factorWalletName(name)}</span>
-                                    </div>
-                                    <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
-                                        <p className="text-[#0008]">Amount</p>
-                                        <span>&#8358;{amount}</span>
-                                    </div>
-                                    <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[12px]">
-                                        <p className="text-[#0008]">Order Number</p>
-                                        <span>122334455667</span>
-                                    </div>
-                                </div>
-
-                                <div className="bg-[#F2FAFF] mx-5 rounded-md h-[55px] my-5 flex justify-between items-center px-[4%] md:h-[75px] lg:h-[85px]">
-                                    <p className="text-[8px] text-center mx-auto w-[201px] md:text-[14px] md:w-[92%] lg:text-[14px]">
-                                    The airtime purchase for the recipient phone number has been refunded. We regret any inconvenience this may have caused. We recommend the recipient to verify their balance to confirm the refund. Should you need additional support, please do not hesitate to contact us.
-                                    </p>
-                                </div>
-                                <div className="flex w-[70%] mx-auto items-center gap-[5%] md:w-[60%] lg:my-[5%]">
-                                    <button
-                                        onClick={() => {
-                                            setTransactRefundPopUp(false);
-                                            // window.location.reload();
-                                            setSelected("");
-                                            setRecipientNumber("");
-                                            setRecipientName("");
-                                            setSelectedProduct("");
-                                            setAmount("");
-                                            setDiscount("");
-                                            setPaymentSelected("");
-                                        }}
-                                        className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
-                                    >
-                                        Done
-                                    </button>
-                                    <Link to="/airtime-vtu-receipt">
-                                        <button
-                                            onClick={handleReceipt}
-                                            className={`border-[1px] w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[110px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
-                                        >
-                                            Receipt
-                                        </button>
-                                    </Link>
-                                </div>
-                            </div>
-                        </Modal>
-                    )}
-                    {transactCancelPopUp && (
-                        <Modal>
-                            <div
-                                className={`${styles.successfulTwo} ${toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-                                    } w-[90%] md:w-[70%]  overflow-auto`}
-                            >
-                                <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
-                                    <img
-                                        onClick={() => setTransactCancelPopUp(false)}
-                                        className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[25px]"
-                                        src="/Images/login/arpLogo.png"
-                                        alt=""
-                                    />
-
-                                    <img
-                                        onClick={() => setTransactCancelPopUp(false)}
-                                        className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
-                                        src="/Images/transferImages/close-circle.png"
-                                        alt=""
-                                    />
-                                </div>
-                                <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
-                                <h2 className="text-[12px] my-[3%] text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%]">
-                                    Transaction Cancelled
-                                </h2>
-                                <img
-                                    className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[70px] lg:h-[70px]"
-                                    src="./Gif/checkMarkGif.gif"
-                                    alt="/"
-                                />
-                                <p className="text-[10px] text-[#0008] mx-[10px] text-center mb-5 md:text-[14px] lg:text-[12px]">
-                                    Purchase Cancelled due to an unexpected error that occur. Please try again.
-                                </p>
-
-                                <div className="flex flex-col gap-1 lg:gap-4">
-                                    <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
-                                        <p className="text-[#0008]">Network</p>
-                                        <span className='flex gap-1'>
-                                            <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
-                                                <img src={networkImage} alt="" className='w-full h-full object-cover' />
-                                            </div>
-                                            <h2 className="text-[10px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">{networkName}</h2>
-                                        </span>
-                                    </div>
-                                    <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
-                                        <p className="text-[#0008]">Product</p>
-                                        <span>{networkName + ' ' + selectedProduct}</span>
-                                    </div>
-                                    <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
-                                        <p className="text-[#0008]">Phone Number</p>
-                                        <span>{recipientNumber}</span>
-                                    </div>
-                                    <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
-                                        <p className="text-[#0008]">Recipient Name</p>
-                                        <span>{recipientName}</span>
-                                    </div>
-                                    <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
-                                        <p className="text-[#0008]">Payment Method</p>
-                                        <span>{factorWalletName(name)}</span>
-                                    </div>
-                                    <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
-                                        <p className="text-[#0008]">Amount</p>
-                                        <span>&#8358;{amount}</span>
-                                    </div>
-                                    <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[12px]">
-                                        <p className="text-[#0008]">Order Number</p>
-                                        <span>122334455667</span>
-                                    </div>
-                                </div>
-
-                                <div className="bg-[#F2FAFF] mx-5 rounded-md h-[55px] my-5 flex justify-between items-center px-[4%] md:h-[75px] lg:h-[85px]">
-                                    <p className="text-[8px] text-center mx-auto w-[201px] md:text-[14px] md:w-[92%] lg:text-[14px]">
-                                    The airtime purchase for the recipient phone number has been cancelled. We apologize for any inconvenience this may cause. We suggest the recipient verify their balance for any deductions. If you need further assistance, please feel free to reach out to us.
-                                    </p>
-                                </div>
-                                <div className="flex w-[70%] mx-auto items-center gap-[5%] md:w-[60%] lg:my-[5%]">
-                                    <button
-                                        onClick={() => {
-                                            setTransactCancelPopUp(false);
                                             // window.location.reload();
                                             setSelected("");
                                             setRecipientNumber("");
