@@ -32,6 +32,9 @@ const AirtimeVtu = () => {
     const { recipientNumber, setRecipientNumber } = useContext(ContextProvider);
     const { amount, setAmount } = useContext(ContextProvider);
     const { networkImage, setNetworkImage } = useContext(ContextProvider);
+    const {inputValues, setInputValues} = useContext(ContextProvider);
+    const {networkId, setNetworkId} = useContext(ContextProvider);
+    const {productId, setProductId} = useContext(ContextProvider);
 
 
     const [addRecipient, setAddRecipient] = useState(false);
@@ -48,9 +51,7 @@ const AirtimeVtu = () => {
     const [confirm, setConfirm] = useState(false);
     const [errors, setErrors] = useState({});
     const [codes, setCodes] = useState(false);
-    const [inputValue, setInputValue] = useState("");
-    const [networkId, setNetworkId] = useState("");
-    const [productId, setProductId] = useState("");
+    
 
 
     if (addRecipient) {
@@ -280,16 +281,18 @@ const AirtimeVtu = () => {
 
                 try {
                     const response = await axios.post(url, data);
-                    console.log(response.data);
+                    return { statusCode: response.status, data: response.data };
+                    // console.log(response.data);
                 } catch (error) {
                     console.error(error);
+                    return { statusCode: error.response.status, data: null };
                 }
             }
 
             // Usage
             buyAirtime(
                 networkId, // Network (MTN)
-                inputValue, // Mobile No
+                inputValues, // Mobile No
                 amount, // Amount
                 productId, // Airtime Type (VTU)
             );
@@ -350,7 +353,7 @@ const AirtimeVtu = () => {
         setTransactFailedPopUp,
     } = useContext(ContextProvider);
 
-    const handleTransactionSuccessClose = (statusCode) => {
+    const handleTransactionSuccessClose = async (statusCode) => {
         setConfirm(false);
         if (statusCode === 200) {
             // Success response
@@ -380,7 +383,7 @@ const AirtimeVtu = () => {
 
         const numericValue = value.replace(/\D/g, "").slice(0, 11);
 
-        setInputValue(numericValue);
+        setInputValues(numericValue);
     };
 
     return (
@@ -506,7 +509,7 @@ const AirtimeVtu = () => {
                                             onChange={(event) => {
                                                 handleChange(event);
                                                 setRecipientNumber(event.target.value);
-                                            }} value={inputValue} />
+                                            }} value={inputValues} />
                                         <div className={styles.call}>
                                             <img src={call} alt="" />
                                         </div>
@@ -959,7 +962,7 @@ const AirtimeVtu = () => {
                                 </h2>
                                 <img
                                     className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[70px] lg:h-[70px]"
-                                    src="./Images/failed"
+                                    src="./Images/failed.png"
                                     alt="/"
                                 />
                                 <p className="text-[10px] text-[#0008] mx-[10px] text-center mb-5 md:text-[14px] lg:text-[12px]">

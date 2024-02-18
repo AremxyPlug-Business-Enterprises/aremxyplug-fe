@@ -802,6 +802,9 @@ export const Context = ({ children }) => {
   const [amount, setAmount] = useState("");
   const [networkImage, setNetworkImage] = useState("");
   const [transactFailedPopUp, setTransactFailedPopUp] = useState("");
+  const [inputValues, setInputValues] = useState("");
+  const [networkId, setNetworkId] = useState("");
+  const [productId, setProductId] = useState("");
 
   // =====================DATABUNDLE========================
   const [selectedOption, setSelectedOption] = useState("");
@@ -1251,6 +1254,12 @@ export const Context = ({ children }) => {
     setNetworkImage,
     transactFailedPopUp,
     setTransactFailedPopUp,
+    networkId,
+    setNetworkId,
+    inputValues,
+    setInputValues,
+    productId,
+    setProductId,
 
     // ==============DataBundle===============
     selectedOption,
