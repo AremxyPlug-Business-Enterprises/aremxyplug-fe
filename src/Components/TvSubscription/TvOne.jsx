@@ -17,6 +17,7 @@ import britainFlag from '../../Components/EducationPins/imagesEducation/Britain.
 import euroFlag from '../../Components/EducationPins/imagesEducation/GBP.svg';
 import austriaFlag from '../../Components/EducationPins/imagesEducation/Austria.svg';
 import kenyaFlag from '../../Components/EducationPins/imagesEducation/Kenya.svg';
+// import { duration } from "html2canvas/dist/types/css/property-descriptors/duration";
 
 const GoTv = () => {
 
@@ -44,34 +45,65 @@ const GoTv = () => {
     setMethodImage,
   } = useContext(ContextProvider)
 
+  const [plan, setPlan] = useState(false);
+
+
+
+  // const handleOptionClickGOTV = (option, id) => {
+    // setSelectedOptionGOTV(option);
+    // setShowDropdownGOTV(false);
+    // setPlan(id);
+    // document.querySelector('.imgdrop').classList.remove('DropIt');
+  // };
+
+  // const getNumericValue = (option) => {
+    // const numericPart = option.match(/\d+/);
+    // if (numericPart) {
+      // return formatNumberWithCommas(parseInt(numericPart[0], numericPart[2], 10));
+    // }
+    // return '';
+  // };
 
   const handleOptionClickGOTV = (option) => {
-    setSelectedOptionGOTV(option);
+    const selectedOptionInfo = `${option.name} - ${option.amount} - ${option.duration}`;
+    setSelectedOptionGOTV(selectedOptionInfo); // Replace 'setInputValue' with the function to set input value
     setShowDropdownGOTV(false);
+    setPlan(id);
     document.querySelector('.imgdrop').classList.remove('DropIt');
   };
-
+  
   const getNumericValue = (option) => {
-    const numericPart = option.match(/\d+/);
-    if (numericPart) {
-      return formatNumberWithCommas(parseInt(numericPart[0], numericPart[2], 10));
+    if (typeof option === 'string') {
+        const numericPart = option.match(/\d+/);
+        if (numericPart) {
+            return formatNumberWithCommas(parseInt(numericPart[0], 10));
+        } else {
+            return ''; // Return an empty string if numeric part is not found
+        }
+    } else {
+        return ''; // Return an empty string for non-string inputs
     }
-    return '';
-  };
+};
+          
 
-  const options = [
-    `Gotv Smallie (₦1100) ~ Monthly`,
-    `GOtv Jinja (₦2250) ~ Monthly`,
-    `GOtv Jinja (₦4500) ~ 2 Months`,
-    `GOtv Lite (₦2900) ~ 3 Months`,
-    `GOtv Lite (₦8600) ~ Annually`,
-    `GOtv Max (₦4850) ~ Monthly`,
-    `GOtv Max (₦9700) ~ 2 Months`,
-    `GOtv Joli (₦3300) ~ Monthly`,
-    `GOtv Joli (₦6600) ~ 2 Months`,
-    `GOtv SUPA (₦6400) ~ Monthly`,
-    `GOtv SUPA (₦12800) ~ 2 Months`,
-    `GOtv SUPA plus (₦21000) ~ 2 Months`,
+    const options = [
+    { id: 1, name: "Gotv Smallie", amount: "₦1100", duration: "Monthly" },
+    { id: 2, name: "GOtv Jinja", amount: "₦2250", duration: "Monthly" },
+    { id: 3, name: "GOtv Jinja", amount: "₦4500", duration: "2 Months" },
+    { id: 4, name: "GOtv Lite", amount: "₦2900", duration: "3 Months" },
+    { id: 5, name: "GOtv Lite", amount: "₦8600", duration: "Annually" },
+    { id: 6, name: "GOtv Max", amount: "₦4850", duration: "Monthly" },
+    { id: 7, name: "GOtv Max", amount: "₦9700", duration: "2 Months" },
+    { id: 8, name: "GOtv Joli", amount: "₦3300", duration: "Monthly" },
+    { id: 9, name: "GOtv Joli", amount: "₦6600", duration: "2 Months" },
+    { id: 10, name: "GOtv SUPA", amount: "₦6400", duration: "Monthly" },
+    { id: 11, name: "GOtv SUPA", amount: "₦12800", duration: "2 Months" },
+    { id: 12, name: "GOtv SUPA plus", amount: "₦21000", duration: "2 Months" },
+
+
+
+    
+
   ]
 
  
@@ -101,10 +133,10 @@ const GoTv = () => {
 
  
   const Decoders  = [
-    { decoderType :'GOtv',  id : 1},
-      { decoderType :'DStv', path :  "/DsTv", id : 2 },
-      { decoderType :'StarTimes', path : "/StarTimes", id : 3 },
-    { decoderType :'Showmax', path : "/Showmax", id : 4 }
+    { decoderType  :'GOtv',  id : 1},
+      { decoderType  :'DStv', path :  "/DsTv", id : 2 },
+      { decoderType  :'StarTimes', path : "/StarTimes", id : 3 },
+    { decoderType  :'Showmax', path : "/Showmax", id : 4 }
      ]
   //   function GotvDropDown(){
   //     setDecoderActive(!decoderActive);
@@ -130,18 +162,24 @@ const GoTv = () => {
       );
     } else {
 
-      const sendDataToBackend = (decoderType, smartCard, mobileNumber, tvEmail, cardName ) => {
+      const sendDataToBackend = (decoder_type, plan, iuc_number, email, amount, phone ) => {
         const apiUrl = "https://aremxyplug.onrender.com/api/v1/tvsub";
+
         // Prepare the data to be sent in the request body 
         const requestData = {
-          decoder_type: decoderType,
-          smartCard,
-          mobile_number: mobileNumber,
-          tvEmail,
-          cardName,
+          decoder_type,
+          plan,
+          iuc_number,
+          email,
+          amount,
+          phone, 
+          
+          
+          
         };
         console.log(requestData);
         // Send a POST request to the backend API 
+        
         fetch(apiUrl, {
           method: "POST",
           headers: {
@@ -159,7 +197,8 @@ const GoTv = () => {
             console.error("Error sending data to backend:", error);
           });
       };
-      sendDataToBackend(decoderType, smartCard, mobileNumber, tvEmail);
+      sendDataToBackend(decoderType, plan, smartCard, tvEmail, '₦' + getNumericValue(selectedOptionGOTV), mobileNumber);
+      console.log(decoderType, plan, smartCard, tvEmail, '₦' + getNumericValue(selectedOptionGOTV), mobileNumber);
       setConfirmGotvPopup(true);
       setErrors({});
     }
@@ -221,7 +260,7 @@ const GoTv = () => {
   ])
 
   function packageDropdown() {
-    if (!decoderType) {
+    if (!decoderType ) {
       setShowDropdownGOTV(false);
     }
     else {
@@ -274,7 +313,7 @@ const GoTv = () => {
               {/* <button className="border-[0.23px] lg:border-[0.4px] w-full md:w-1/2 h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C]">Gotv</button> */}
               <div className="relative  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[600] text-[9px] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] hover:bg-[#EDEAEA] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center" onClick={decoderDropdown}>
-                {decoderType}
+                {decoderType }
                 <img className="decdrop absolute left-[92%] lg:left-[94%] self-center align-middle md:h-[14.038px] md:w-[14.038px] 
       lg:h-[24px] lg:w-[24px] w-[14px] h-[14px]" src={arrowDown} alt="" />
               </div>
@@ -287,7 +326,7 @@ const GoTv = () => {
             return (
                <a href={decoder.path}
                onClick={(e =>{
-          setDecoderType(decoder.decoderType);
+          setDecoderType(decoder.decoderType );
                  setDecoderActive(false);
              document.querySelector('.decdrop').classList.remove('DropIt');
              console.log(e);
@@ -297,7 +336,7 @@ const GoTv = () => {
          shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] bg-white
          lg:text-[16px] lg:leading-[20.8px] cursor-pointer hover:bg-[#EDEAEA]' 
          key= {decoder.id}>
-      <h2>{decoder.decoderType}   </h2>
+      <h2>{decoder.decoderType }   </h2>
          </a>
         
             )
@@ -321,17 +360,17 @@ const GoTv = () => {
 
               {showDropdownGOTV && (
                 <ul className="dropdown-options absolute top-[100%] w-full bg-white cursor-pointer z-[2]">
-                  {options.map((option, index) => (
+                  {options.map((option) => (
                     <li
                       className={`text-[8px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
                       md:text-[13.227px] md:leading-[17.195px] 
                       shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] bg-white
                       lg:text-[16px] lg:leading-[20.8px] cursor-pointer hover:bg-[#EDEAEA]`}
-                      key={index}
+                      key={option.id}
                       onClick={() => handleOptionClickGOTV(option) }
                       
                     >
-                      {option}
+                      {`${option.name} (${option.amount}) ~ ${option.duration}`}
                     </li>
                   ))}
                 </ul>
