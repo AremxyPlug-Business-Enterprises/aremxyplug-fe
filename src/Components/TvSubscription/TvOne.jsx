@@ -17,6 +17,7 @@ import britainFlag from '../../Components/EducationPins/imagesEducation/Britain.
 import euroFlag from '../../Components/EducationPins/imagesEducation/GBP.svg';
 import austriaFlag from '../../Components/EducationPins/imagesEducation/Austria.svg';
 import kenyaFlag from '../../Components/EducationPins/imagesEducation/Kenya.svg';
+import axios from 'axios';
 // import { duration } from "html2canvas/dist/types/css/property-descriptors/duration";
 
 const GoTv = () => {
@@ -64,7 +65,7 @@ const GoTv = () => {
     // return '';
   // };
 
-  const handleOptionClickGOTV = (option) => {
+  const handleOptionClickGOTV = (option, id) => {
     const selectedOptionInfo = `${option.name} - ${option.amount} - ${option.duration}`;
     setSelectedOptionGOTV(selectedOptionInfo); // Replace 'setInputValue' with the function to set input value
     setShowDropdownGOTV(false);
@@ -84,6 +85,39 @@ const GoTv = () => {
         return ''; // Return an empty string for non-string inputs
     }
 };
+
+// const sendDataToBackend = (decoder_type, plan, iuc_number, email, amount, phone ) => {
+      //   const apiUrl = "https://aremxyplug.onrender.com/api/v1/tvsub";
+
+      //   // Prepare the data to be sent in the request body 
+      //   const requestData = {
+      //     decoder_type,
+      //     plan,
+      //     iuc_number,
+      //     email,
+      //     amount,
+      //     phone, 
+      //   };
+      //   console.log(requestData);
+      //   // Send a POST request to the backend API 
+        
+      //   fetch(apiUrl, {
+      //     method: "POST",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //     body: JSON.stringify(requestData),
+      //   })
+      //     .then((response) => response.json())
+      //     .then((data) => {
+      //       // Handle the response from the backend 
+      //       console.log("Backend response:", data);
+      //     })
+      //     .catch((error) => {
+      //       // Handle any errors that occurred during the fetch
+      //       console.error("Error sending data to backend:", error);
+      //     });
+      // };
           
 
     const options = [
@@ -99,11 +133,6 @@ const GoTv = () => {
     { id: 10, name: "GOtv SUPA", amount: "₦6400", duration: "Monthly" },
     { id: 11, name: "GOtv SUPA", amount: "₦12800", duration: "2 Months" },
     { id: 12, name: "GOtv SUPA plus", amount: "₦21000", duration: "2 Months" },
-
-
-
-    
-
   ]
 
  
@@ -142,6 +171,37 @@ const GoTv = () => {
   //     setDecoderActive(!decoderActive);
   //   document.querySelector('.Decoderdrop').classList.toggle('DropIt');
   // }
+
+  const sendDataToBackend = async (decoder_type, plan, iuc_number, email, amount, phone) => {
+    const apiUrl = "https://aremxyplug.onrender.com/api/v1/tvsub";
+
+    // Prepare the data to be sent in the request body
+    const requestData = {
+      decoder_type,
+      plan,
+      iuc_number,
+      email,
+      amount,
+      phone, 
+    };
+
+    console.log(requestData);
+
+    try {
+      // Send a POST request to the backend API using Axios
+      const response = await axios.post(apiUrl, requestData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      // Handle the response from the backend
+      console.log("Backend response:", response.data);
+    } catch (error) {
+      // Handle any errors that occurred during the request
+      console.error("Error sending data to backend:", error);
+    }
+  };
   
 
   const handleGotv = (event) => {
@@ -161,42 +221,6 @@ const GoTv = () => {
         }, {})
       );
     } else {
-
-      const sendDataToBackend = (decoder_type, plan, iuc_number, email, amount, phone ) => {
-        const apiUrl = "https://aremxyplug.onrender.com/api/v1/tvsub";
-
-        // Prepare the data to be sent in the request body 
-        const requestData = {
-          decoder_type,
-          plan,
-          iuc_number,
-          email,
-          amount,
-          phone, 
-          
-          
-          
-        };
-        console.log(requestData);
-        // Send a POST request to the backend API 
-        
-        fetch(apiUrl, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(requestData),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            // Handle the response from the backend 
-            console.log("Backend response:", data);
-          })
-          .catch((error) => {
-            // Handle any errors that occurred during the fetch
-            console.error("Error sending data to backend:", error);
-          });
-      };
       sendDataToBackend(decoderType, plan, smartCard, tvEmail, '₦' + getNumericValue(selectedOptionGOTV), mobileNumber);
       console.log(decoderType, plan, smartCard, tvEmail, '₦' + getNumericValue(selectedOptionGOTV), mobileNumber);
       setConfirmGotvPopup(true);

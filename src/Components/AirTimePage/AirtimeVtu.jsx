@@ -32,6 +32,9 @@ const AirtimeVtu = () => {
     const { recipientNumber, setRecipientNumber } = useContext(ContextProvider);
     const { amount, setAmount } = useContext(ContextProvider);
     const { networkImage, setNetworkImage } = useContext(ContextProvider);
+    const {inputValues, setInputValues} = useContext(ContextProvider);
+    const {networkId, setNetworkId} = useContext(ContextProvider);
+    const {productId, setProductId} = useContext(ContextProvider);
 
 
     const [addRecipient, setAddRecipient] = useState(false);
@@ -48,9 +51,7 @@ const AirtimeVtu = () => {
     const [confirm, setConfirm] = useState(false);
     const [errors, setErrors] = useState({});
     const [codes, setCodes] = useState(false);
-    const [inputValue, setInputValue] = useState("");
-    const [networkId, setNetworkId] = useState("");
-    const [productId, setProductId] = useState("");
+    
 
 
     if (addRecipient) {
@@ -145,7 +146,7 @@ const AirtimeVtu = () => {
         {
             id: 2,
             name: 'SNS',
-            productId: '002'    
+            productId: '002'
         },]
 
 
@@ -253,6 +254,25 @@ const AirtimeVtu = () => {
     const handleProceed = (e) => {
         e.preventDefault();
 
+        function validateNigerianNumberByNetwork(number) {
+            const networks = {
+                'AIRTEL': ['0701', '0708', '0802', '0808', '0812', '0901', '0902', '0904', '0907', '0912', '0911'],
+                'MTN': ['07025', '07026', '0703', '0704', '0706', '0803', '0806', '0810', '0813', '0814', '0816', '0903', '0906', '0913', '0916'],
+                'GLO': ['0705', '0805', '0807', '0811', '0815', '0905', '0915'],
+                '9MOBILE': ['0809', '0817', '0818', '0909', '0908']
+            };
+        
+            for (let network in networks) {
+                for (let prefix of networks[network]) {
+                    if (number.startsWith(prefix) && number.length === prefix.length + 7) {
+                        return network;
+                    }
+                }
+            }
+        
+            return 'Unknown network';
+        }
+
         const { error } = schema.validate({
             recipientNumber,
             amount,
@@ -265,11 +285,14 @@ const AirtimeVtu = () => {
                     return acc;
                 }, {})
             );
+        } else if (validateNigerianNumberByNetwork(recipientNumber) !== networkName) {
+            setErrors({
+              recipientNumber:
+                `Invalid ${networkName} number. Please enter a valid ${networkName} number.`,
+            });
         } else {
-
-
             async function buyAirtime(network, mobileNo, amount, airtimeType) {
-                const url = 'https://easyaccessapi.com.ng/api/airtime.php';
+                const url = 'https://aremxyplug.onrender.com/api/v1/airtime';
 
                 const data = {
                     network,
@@ -280,16 +303,18 @@ const AirtimeVtu = () => {
 
                 try {
                     const response = await axios.post(url, data);
-                    console.log(response.data);
+                    return { statusCode: response.status, data: response.data };
+                    // console.log(response.data);
                 } catch (error) {
                     console.error(error);
+                    return { statusCode: error.response.status, data: null };
                 }
             }
 
             // Usage
             buyAirtime(
                 networkId, // Network (MTN)
-                inputValue, // Mobile No
+                inputValues, // Mobile No
                 amount, // Amount
                 productId, // Airtime Type (VTU)
             );
@@ -346,11 +371,22 @@ const AirtimeVtu = () => {
     const {
         transactSuccessPopUp,
         setTransactSuccessPopUp,
+        transactFailedPopUp, 
+        setTransactFailedPopUp,
     } = useContext(ContextProvider);
 
-    const handleTransactionSuccessClose = () => {
+    const handleTransactionSuccessClose = async (statusCode) => {
         setConfirm(false);
-        setTransactSuccessPopUp(true);
+        if (statusCode === 200) {
+            // Success response
+            setTransactSuccessPopUp(true); // Show success popup
+          } else if (statusCode === 400 || statusCode === 500) {
+            // Failure response
+            setTransactFailedPopUp(true); // Show failure popup
+          } else {
+            // Handle other status codes or unexpected responses
+            console.error("Unexpected status code:", statusCode);
+          }
     };
 
     const [receipt] = useState(false);
@@ -369,7 +405,7 @@ const AirtimeVtu = () => {
 
         const numericValue = value.replace(/\D/g, "").slice(0, 11);
 
-        setInputValue(numericValue);
+        setInputValues(numericValue);
     };
 
     return (
@@ -495,7 +531,7 @@ const AirtimeVtu = () => {
                                             onChange={(event) => {
                                                 handleChange(event);
                                                 setRecipientNumber(event.target.value);
-                                            }} value={inputValue} />
+                                            }} value={inputValues} />
                                         <div className={styles.call}>
                                             <img src={call} alt="" />
                                         </div>
@@ -597,7 +633,7 @@ const AirtimeVtu = () => {
                             (
                             <div
                                 className={`${styles.balanceMoneyPop} ${toggleSideBar ? "xl:w-[65%] xl:ml-[17%] lg:ml-[20%] lg:w-[40%]"
-                                        : "lg:w-[40%]"
+                                    : "lg:w-[40%]"
                                     } w-[90%] xl:w-[40%] md:w-[60%] overflow-auto`}
                             >
                                 <img
@@ -883,7 +919,7 @@ const AirtimeVtu = () => {
                                     </div>
                                     <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[12px]">
                                         <p className="text-[#0008]">Order Number</p>
-                                        <span>122555556464564</span>
+                                        <span>122334455667</span>
                                     </div>
                                 </div>
 
@@ -896,6 +932,69 @@ const AirtimeVtu = () => {
                                     <button
                                         onClick={() => {
                                             setTransactSuccessPopUp(false);
+                                            // window.location.reload();
+                                            setSelected("");
+                                            setRecipientNumber("");
+                                            setRecipientName("");
+                                            setSelectedProduct("");
+                                            setAmount("");
+                                            setDiscount("");
+                                            setPaymentSelected("");
+                                        }}
+                                        className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                                    >
+                                        Done
+                                    </button>
+                                    <Link to="/airtime-vtu-receipt">
+                                        <button
+                                            onClick={handleReceipt}
+                                            className={`border-[1px] w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[110px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                                        >
+                                            Receipt
+                                        </button>
+                                    </Link>
+                                </div>
+                            </div>
+                        </Modal>
+                    )}
+                    {transactFailedPopUp && (
+                        <Modal>
+                            <div
+                                className={`${styles.successfulTwo} ${toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+                                    } w-[90%] md:w-[70%]  overflow-auto`}
+                            >
+                                <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
+                                    <img
+                                        onClick={() => setTransactFailedPopUp(false)}
+                                        className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[25px]"
+                                        src="/Images/login/arpLogo.png"
+                                        alt=""
+                                    />
+
+                                    <img
+                                        onClick={() => setTransactFailedPopUp(false)}
+                                        className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
+                                        src="/Images/transferImages/close-circle.png"
+                                        alt=""
+                                    />
+                                </div>
+                                <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
+                                <h2 className="text-[12px] my-[3%] text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%]">
+                                    Transaction Failed
+                                </h2>
+                                <img
+                                    className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[70px] lg:h-[70px]"
+                                    src="./Images/failed.png"
+                                    alt="/"
+                                />
+                                <p className="text-[10px] text-[#0008] mx-[10px] text-center mb-5 md:text-[14px] lg:text-[12px]">
+                                    An unexpected error has occurred, please try again.
+                                </p>
+                        
+                                <div className="flex w-[70%] mx-auto items-center gap-[5%] md:w-[60%] lg:my-[5%]">
+                                    <button
+                                        onClick={() => {
+                                            setTransactFailedPopUp(false);
                                             // window.location.reload();
                                             setSelected("");
                                             setRecipientNumber("");
