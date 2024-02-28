@@ -18,8 +18,9 @@ import { useContext } from 'react';
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import { Link } from 'react-router-dom';
-import AirtimeVtuReceipt from "./AirtimeVtuReceipt";
+import { AirtimeVtuReceipt } from './AirtimeVtuReceipt';
 import axios from 'axios';
+import { AirtimeReceiptFailed } from './AirtimeReceiptFailed';
 
 const AirtimeVtu = () => {
     // const {  isDarkMode } = useContext(ContextProvider);
@@ -32,9 +33,9 @@ const AirtimeVtu = () => {
     const { recipientNumber, setRecipientNumber } = useContext(ContextProvider);
     const { amount, setAmount } = useContext(ContextProvider);
     const { networkImage, setNetworkImage } = useContext(ContextProvider);
-    const {inputValues, setInputValues} = useContext(ContextProvider);
-    const {networkId, setNetworkId} = useContext(ContextProvider);
-    const {productId, setProductId} = useContext(ContextProvider);
+    const { inputValues, setInputValues } = useContext(ContextProvider);
+    const { networkId, setNetworkId } = useContext(ContextProvider);
+    const { productId, setProductId } = useContext(ContextProvider);
 
 
     const [addRecipient, setAddRecipient] = useState(false);
@@ -51,7 +52,11 @@ const AirtimeVtu = () => {
     const [confirm, setConfirm] = useState(false);
     const [errors, setErrors] = useState({});
     const [codes, setCodes] = useState(false);
-    
+    const [transactionID, setTransactionID] = useState("");
+    const [orderID, setOrderID] = useState("");
+    const [refNumber, setRefNumber] = useState("");
+    const [description, setDescription] = useState("");
+
 
 
     if (addRecipient) {
@@ -74,14 +79,14 @@ const AirtimeVtu = () => {
             name: 'AIRTEL',
             image: require('./Images/airtel.png'),
             discount: 4,
-            networkId: "02",
+            networkId: "03",
         },
         {
             id: 3,
             name: 'GLO',
             image: require('./Images/glo.png'),
             discount: 3,
-            networkId: "03",
+            networkId: "02",
         },
         {
             id: 4,
@@ -261,7 +266,7 @@ const AirtimeVtu = () => {
                 'GLO': ['0705', '0805', '0807', '0811', '0815', '0905', '0915'],
                 '9MOBILE': ['0809', '0817', '0818', '0909', '0908']
             };
-        
+
             for (let network in networks) {
                 for (let prefix of networks[network]) {
                     if (number.startsWith(prefix) && number.length === prefix.length + 7) {
@@ -269,7 +274,7 @@ const AirtimeVtu = () => {
                     }
                 }
             }
-        
+
             return 'Unknown network';
         }
 
@@ -287,37 +292,10 @@ const AirtimeVtu = () => {
             );
         } else if (validateNigerianNumberByNetwork(recipientNumber) !== networkName) {
             setErrors({
-              recipientNumber:
-                `Invalid ${networkName} number. Please enter a valid ${networkName} number.`,
+                recipientNumber:
+                    `Invalid ${networkName} number. Please enter a valid ${networkName} number.`,
             });
         } else {
-            async function buyAirtime(network, mobileNo, amount, airtimeType) {
-                const url = 'https://aremxyplug.onrender.com/api/v1/airtime';
-
-                const data = {
-                    network,
-                    mobileNo,
-                    amount,
-                    airtimeType,
-                };
-
-                try {
-                    const response = await axios.post(url, data);
-                    return { statusCode: response.status, data: response.data };
-                    // console.log(response.data);
-                } catch (error) {
-                    console.error(error);
-                    return { statusCode: error.response.status, data: null };
-                }
-            }
-
-            // Usage
-            buyAirtime(
-                networkId, // Network (MTN)
-                inputValues, // Mobile No
-                amount, // Amount
-                productId, // Airtime Type (VTU)
-            );
             setProceed(true);
             setErrors({});
         }
@@ -371,28 +349,70 @@ const AirtimeVtu = () => {
     const {
         transactSuccessPopUp,
         setTransactSuccessPopUp,
-        transactFailedPopUp, 
+        transactFailedPopUp,
         setTransactFailedPopUp,
     } = useContext(ContextProvider);
 
-    const handleTransactionSuccessClose = async (statusCode) => {
+    const handleTransactionSuccessClose = async () => {
+        async function buyAirtime(network, mobileno, amount, airtime_type) {
+            const url = 'https://aremxyplug.onrender.com/api/v1/airtime';
+
+            const data = {
+                network,
+                mobileno,
+                amount,
+                airtime_type,
+            };
+
+            try {
+                const response = await axios.post(url, data);
+                console.log(response.data);
+                console.log(response.status);
+                setNetworkName(response.data.network)
+                setSelectedProduct(response.data.product)
+                setInputValues(response.data.phone_no)
+                setAmount(response.data.amount)
+                setTransactionID(response.data.transaction_id)
+                setRefNumber(response.data.reference_number)
+                setOrderID(response.data.order_id)
+                setDescription(response.data.description)
+                return { statusCode: response.status, data: response.data };
+                // console.log(response.data);
+            } catch (error) {
+                console.error(error);
+                return { statusCode: error.response.status, data: null };
+            }
+        }
+
+        // Usage
+        const response = await buyAirtime(
+            networkId, // Network (MTN)
+            inputValues, // Mobile No
+            amount, // Amount
+            productId, // Airtime Type (VTU)
+        );
+
+
         setConfirm(false);
-        if (statusCode === 200) {
+        if (response.statusCode === 200) {
             // Success response
             setTransactSuccessPopUp(true); // Show success popup
-          } else if (statusCode === 400 || statusCode === 500) {
+        } else {
             // Failure response
             setTransactFailedPopUp(true); // Show failure popup
-          } else {
-            // Handle other status codes or unexpected responses
-            console.error("Unexpected status code:", statusCode);
-          }
+        }
     };
 
+
     const [receipt] = useState(false);
+    const [receiptFailed] = useState(false);
 
     const handleReceipt = () => {
         setTransactSuccessPopUp(false);
+    }
+
+    const handleReceiptFailed = () => {
+        setTransactFailedPopUp(false);
     }
 
     const handleCodes = () => {
@@ -903,7 +923,7 @@ const AirtimeVtu = () => {
                                     </div>
                                     <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                                         <p className="text-[#0008]">Phone Number</p>
-                                        <span>{recipientNumber}</span>
+                                        <span>{inputValues}</span>
                                     </div>
                                     <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                                         <p className="text-[#0008]">Recipient Name</p>
@@ -945,7 +965,17 @@ const AirtimeVtu = () => {
                                     >
                                         Done
                                     </button>
-                                    <Link to="/airtime-vtu-receipt">
+                                    <Link to="/airtime-vtu-receipt" state={{
+                                        networkName: networkName,
+                                        selectedProduct: selectedProduct,
+                                        inputValues: inputValues,
+                                        recipientName: recipientName,
+                                        amount: amount,
+                                        transactionID: transactionID,
+                                        refNumber: refNumber,
+                                        orderID: orderID,
+                                        description: description,
+                                    }}>
                                         <button
                                             onClick={handleReceipt}
                                             className={`border-[1px] w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[110px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
@@ -979,18 +1009,18 @@ const AirtimeVtu = () => {
                                     />
                                 </div>
                                 <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
-                                <h2 className="text-[12px] my-[3%] text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%]">
+                                <h2 className="text-[12px] my-[5%] text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%]">
                                     Transaction Failed
                                 </h2>
                                 <img
-                                    className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[70px] lg:h-[70px]"
+                                    className="w-[120px] h-[120px] mx-auto my-[10%] lg:w-[150px] lg:h-[150px]"
                                     src="./Images/failed.png"
                                     alt="/"
                                 />
-                                <p className="text-[10px] text-[#0008] mx-[10px] text-center mb-5 md:text-[14px] lg:text-[12px]">
+                                <p className="text-[10px] text-[#0008] mx-[10px] text-center my-[60px] md:text-[14px] lg:text-[12px]">
                                     An unexpected error has occurred, please try again.
                                 </p>
-                        
+
                                 <div className="flex w-[70%] mx-auto items-center gap-[5%] md:w-[60%] lg:my-[5%]">
                                     <button
                                         onClick={() => {
@@ -1008,9 +1038,19 @@ const AirtimeVtu = () => {
                                     >
                                         Done
                                     </button>
-                                    <Link to="/airtime-vtu-receipt">
+                                    <Link to="/airtime-receipt-failed" state={{
+                                        networkName: networkName,
+                                        selectedProduct: selectedProduct,
+                                        inputValues: inputValues,
+                                        recipientName: recipientName,
+                                        amount: amount,
+                                        transactionID: transactionID,
+                                        refNumber: refNumber,
+                                        orderID: orderID,
+                                        description: description,
+                                    }}>
                                         <button
-                                            onClick={handleReceipt}
+                                            onClick={handleReceiptFailed}
                                             className={`border-[1px] w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[110px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
                                         >
                                             Receipt
@@ -1027,6 +1067,23 @@ const AirtimeVtu = () => {
                             recipientNumber={recipientNumber}
                             recipientName={recipientName}
                             amount={amount}
+                            transactionID={transactionID}
+                            refNumber={refNumber}
+                            orderID={orderID}
+                            description={description}
+                        />
+                    )}
+                    {receiptFailed && (
+                        <AirtimeReceiptFailed
+                            networkName={networkName}
+                            selectedProduct={selectedProduct}
+                            recipientNumber={recipientNumber}
+                            recipientName={recipientName}
+                            amount={amount}
+                            transactionID={transactionID}
+                            refNumber={refNumber}
+                            orderID={orderID}
+                            description={description}
                         />
                     )}
                     <div className={styles.containFlex2}>
