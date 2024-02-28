@@ -156,100 +156,242 @@ const GloDataBundle = () => {
     console.log("did not add recipient");
   }
 
+  // const productList = [
+  //   {
+  //     id: 1,
+  //     name: "GLO CG",
+  //     options: [
+  //       "GLO CG 100MB",
+  //       "GLO CG 200MB",
+  //       "GLO CG 300MB",
+  //       "GLO CG 500MB",
+  //       "GLO CG 1GB",
+  //       "GLO CG 2GB",
+  //       "GLO CG 3GB",
+  //       "GLO CG 5GB",
+  //       "GLO CG 10GB",
+  //     ],
+
+  //     amount: [
+  //       "₦100",
+  //       "₦200",
+  //       "₦300",
+  //       "₦500",
+  //       "₦500",
+  //       "₦800",
+  //       "₦900",
+  //       "₦900",
+  //       "₦900",
+  //     ],
+
+  //     duration: [
+  //       "1 MONTH",
+  //       "1 MONTH",
+  //       "1 MONTH",
+  //       "1 MONTH",
+  //       "1 MONTH",
+  //       "1 MONTH",
+  //       "1 MONTH",
+  //       "1 MONTH",
+  //       "1 MONTH",
+  //     ],
+  //   },
+
+  //   {
+  //     id: 2,
+  //     name: "GLO GIFTING",
+  //     options: [
+  //       "GLO GIFTING 1.05GB",
+  //       "GLO GIFTING 2.9GB",
+  //       "GLO GIFTING 4.1GB",
+  //       "GLO GIFTING 5.8GB",
+  //       "GLO GIFTING 7.7GB",
+  //       "GLO GIFTING 10GB",
+  //       "GLO GIFTING 13.25GB",
+  //       "GLO GIFTING 18.25GB",
+  //       "GLO GIFTING 29.5GB",
+  //       "GLO GIFTING 50GB",
+  //       "GLO GIFTING 93GB",
+  //     ],
+
+  //     amount: [
+  //       "₦1050",
+  //       "₦2500",
+  //       "₦3500",
+  //       "₦5800",
+  //       "₦5300",
+  //       "₦8100",
+  //       "₦9500",
+  //       "₦5800",
+  //       "₦5300",
+  //       "₦8100",
+  //       "₦9500",
+  //     ],
+
+  //     duration: [
+  //       "1 MONTH",
+  //       "1 MONTH",
+  //       "1 MONTH",
+  //       "1 MONTH",
+  //       "1 MONTH",
+  //       "1 MONTH",
+  //       "1 MONTH",
+  //       "1 MONTH",
+  //       "1 MONTH",
+  //       "1 MONTH",
+  //       "1 MONTH",
+  //     ],
+  //   },
+
+  //   {
+  //     id: 3,
+  //     name: "GLO GENERAL BUNDLES ---",
+  //     options: [],
+  //     amount: [],
+
+  //     duration: [],
+  //   },
+  // ];
+
   const productList = [
     {
       id: 1,
-      name: "GLO CG",
+      name: "GLO COPORATE GIFTING",
       options: [
-        "GLO CG 100MB",
-        "GLO CG 200MB",
-        "GLO CG 300MB",
-        "GLO CG 500MB",
-        "GLO CG 1GB",
-        "GLO CG 2GB",
-        "GLO CG 3GB",
-        "GLO CG 5GB",
-        "GLO CG 10GB",
-      ],
+        { id: 243, name: "GLO CG 200MB", amount: "₦100", duration: "1 MONTH" },
+        { id: 237, name: "GLO CG 500MB", amount: "₦150", duration: "1 MONTH" },
+        { id: 238, name: "GLO CG 1.0GB", amount: "₦250", duration: "1 MONTH" },
+        { id: 239, name: "GLO CG 2.0GB", amount: "₦500", duration: "1 MONTH" },
+        { id: 240, name: "GLO CG 3.0GB", amount: "₦750", duration: "1 MONTH" },
+        { id: 241, name: "GLO CG 5.0GB", amount: "₦1250", duration: "1 MONTH" },
+        {
+          id: 242,
+          name: "GLO CG 10.0GB",
+          amount: "₦2500",
+          duration: "1 MONTH",
+        },
 
-      amount: [
-        "₦100",
-        "₦200",
-        "₦300",
-        "₦500",
-        "₦500",
-        "₦800",
-        "₦900",
-        "₦900",
-        "₦900",
-      ],
-
-      duration: [
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
+        // THIS ONES ARE IN THE DOCUMENTATION BUT NOT IN THE PRICE LIST FROM AREMXY
+        {
+          id: 274,
+          name: "GLO CG 1.0TB",
+          amount: "₦212000",
+          duration: "1 MONTH",
+        },
+        {
+          id: 280,
+          name: "GLO CG 100.0GB",
+          amount: "₦2140000",
+          duration: "1 MONTH",
+        },
+        {
+          id: 281,
+          name: "GLO CG 250.0GB",
+          amount: "₦53375",
+          duration: "1 MONTH",
+        },
+        {
+          id: 282,
+          name: "GLO CG 500GB",
+          amount: "₦106500",
+          duration: "1 MONTH",
+        },
+        {
+          id: 283,
+          name: "GLO CG 3.0TB",
+          amount: "₦634500",
+          duration: "1 MONTH",
+        },
       ],
     },
-
     {
       id: 2,
       name: "GLO GIFTING",
       options: [
-        "GLO GIFTING 1.05GB",
-        "GLO GIFTING 2.9GB",
-        "GLO GIFTING 4.1GB",
-        "GLO GIFTING 5.8GB",
-        "GLO GIFTING 7.7GB",
-        "GLO GIFTING 10GB",
-        "GLO GIFTING 13.25GB",
-        "GLO GIFTING 18.25GB",
-        "GLO GIFTING 29.5GB",
-        "GLO GIFTING 50GB",
-        "GLO GIFTING 93GB",
-      ],
-
-      amount: [
-        "₦1050",
-        "₦2500",
-        "₦3500",
-        "₦5800",
-        "₦5300",
-        "₦8100",
-        "₦9500",
-        "₦5800",
-        "₦5300",
-        "₦8100",
-        "₦9500",
-      ],
-
-      duration: [
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
+        {
+          id: 194,
+          name: "GLO GIFTING 1.05GB",
+          amount: "₦485",
+          duration: "1 MONTH",
+        },
+        {
+          id: 195,
+          name: "GLO GIFTING 2.9GB",
+          amount: "₦965",
+          duration: "1 MONTH",
+        },
+        {
+          id: 196,
+          name: "GLO GIFTING 4.1GB",
+          amount: "₦1450",
+          duration: "1 MONTH",
+        },
+        {
+          id: 197,
+          name: "GLO GIFTING 5.8GB",
+          amount: "₦1950",
+          duration: "1 MONTH",
+        },
+        {
+          id: 198,
+          name: "GLO GIFTING 7.7GB",
+          amount: "₦2475",
+          duration: "1 MONTH",
+        },
+        {
+          id: 199,
+          name: "GLO GIFTING 10.0GB",
+          amount: "₦2975",
+          duration: "1 MONTH",
+        },
+        {
+          id: 200,
+          name: "GLO GIFTING 13.25GB",
+          amount: "₦3960",
+          duration: "1 MONTH",
+        },
+        {
+          id: 201,
+          name: "GLO GIFTING 18.25GB",
+          amount: "₦4985",
+          duration: "1 MONTH",
+        },
+        {
+          id: 202,
+          name: "GLO GIFTING 29.5GB",
+          amount: "₦8000",
+          duration: "1 MONTH",
+        },
+        {
+          id: 203,
+          name: "GLO GIFTING 50GB",
+          amount: "₦10500",
+          duration: "1 MONTH",
+        },
+        {
+          id: 204,
+          name: "GLO GIFTING 93GB",
+          amount: "₦16665",
+          duration: "1 MONTH",
+        },
+        {
+          id: 205,
+          name: "GLO GIFTING 119.0GB",
+          amount: "₦21815",
+          duration: "1 MONTH",
+        },
+        {
+          id: 206,
+          name: "GLO GIFTING 138.0GB",
+          amount: "₦23330",
+          duration: "1 MONTH",
+        },
       ],
     },
-
     {
       id: 3,
-      name: "GLO GENERAL BUNDLES ---",
+      name: "GENERAL BUNDLES ---",
       options: [],
-      amount: [],
-
-      duration: [],
     },
   ];
 
@@ -585,7 +727,7 @@ const GloDataBundle = () => {
                   <Link to="/DataBundleSelectRecipient">
                     (Select Recipient)
                   </Link>
-                  </span>{" "}
+                </span>{" "}
               </h2>
               <div className="relative mt-[5px]">
                 <input

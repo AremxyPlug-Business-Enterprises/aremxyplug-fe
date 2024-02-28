@@ -159,79 +159,179 @@ const EtisalatDataBundle = () => {
   const productList = [
     {
       id: 1,
-      name: "9MOBILE SME",
+      name: "9MOBILE COPORATE GIFTING",
       options: [
-        "9MOBILE SME 100MB",
-        "9MOBILE SME 200MB",
-        "9MOBILE SME 300MB",
-        "9MOBILE SME 500MB",
-        "9MOBILE SME 1GB",
-        "9MOBILE SME 1.5GB",
-        "9MOBILE SME 2GB",
-        "9MOBILE SME 3GB",
-        "9MOBILE SME 4.5GB",
-        "9MOBILE SME 5GB",
-        "9MOBILE SME 10GB",
-        "9MOBILE SME 11GB",
-        "9MOBILE SME 15GB",
-        "9MOBILE SME 40GB",
-        "9MOBILE SME 75GB",
-      ],
+        {
+          id: 235,
+          name: "9MOBILE CG 100MB",
+          amount: "₦70",
+          duration: "1 MONTH",
+        },
+        {
+          id: 256,
+          name: "9MOBILE CG 250MB",
+          amount: "₦100",
+          duration: "1 MONTH",
+        },
+        {
+          id: 182,
+          name: "9MOBILE CG 500MB",
+          amount: "₦120",
+          duration: "1 MONTH",
+        },
+        {
+          id: 257,
+          name: "9MOBILE CG 650MB",
+          amount: "₦140",
+          duration: "1 MONTH",
+        },
+        {
+          id: 258,
+          name: "9MOBILE CG 1GB",
+          amount: "₦185",
+          duration: "1 MONTH",
+        },
+        {
+          id: 183,
+          name: "9MOBILE CG 1.5GB",
+          amount: "₦280",
+          duration: "1 MONTH",
+        },
+        {
+          id: 184,
+          name: "9MOBILE CG 2.0GB",
+          amount: "₦370",
+          duration: "1 MONTH",
+        },
+        {
+          id: 185,
+          name: "9MOBILE CG 3.0GB",
+          amount: "₦555",
+          duration: "1 MONTH",
+        },
+        {
+          id: 186,
+          name: "9MOBILE CG 4.5GB",
+          amount: "₦840",
+          duration: "1 MONTH",
+        },
+        {
+          id: 259,
+          name: "9MOBILE CG 5.0GB",
+          amount: "₦925",
+          duration: "1 MONTH",
+        },
+        {
+          id: 233,
+          name: "9MOBILE CG 10.0GB",
+          amount: "₦1850",
+          duration: "1 MONTH",
+        },
+        {
+          id: 187,
+          name: "9MOBILE CG 11.0GB",
+          amount: "₦2035",
+          duration: "1 MONTH",
+        },
+        {
+          id: 188,
+          name: "9MOBILE CG 15.0GB",
+          amount: "₦2775",
+          duration: "1 MONTH",
+        },
+        {
+          id: 260,
+          name: "9MOBILE CG 20.0GB",
+          amount: "₦3700",
+          duration: "1 MONTH",
+        },
+        {
+          id: 261,
+          name: "9MOBILE CG 25.0GB",
+          amount: "₦4625",
+          duration: "1 MONTH",
+        },
+        {
+          id: 262,
+          name: "9MOBILE CG 30.0GB",
+          amount: "₦5550",
+          duration: "1 MONTH",
+        },
+        {
+          id: 263,
+          name: "9MOBILE CG 50.0GB",
+          amount: "₦9250",
+          duration: "1 MONTH",
+        },
 
-      amount: [
-        "₦100",
-        "₦200",
-        "₦300",
-        "₦500",
-        "₦500",
-        "₦800",
-        "₦900",
-        "₦900",
-        "₦900",
-        "₦900",
-        "₦500",
-        "₦500",
-        "₦800",
-        "₦900",
-        "₦900",
-      ],
+        {
+          id: 189,
+          name: "9MOBILE CG 40.0GB",
+          amount: "₦7400",
+          duration: "1 MONTH",
+        },
+        {
+          id: 190,
+          name: "9MOBILE CG 75.0GB",
+          amount: "₦13875",
+          duration: "1 MONTH",
+        },
+        {
+          id: 234,
+          name: "9MOBILE CG 100.0GB",
+          amount: "₦18500",
+          duration: "1 MONTH",
+        },
 
-      duration: [
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "6 MONTH",
-        "3 MONTH",
-        "5 MONTH",
-        "2 MONTH",
-        "3 MONTH",
+        // THIS ONES ARE IN THE DOCUMENTATION AND NOT IN THE PRICING LIST
+        {
+          id: 285,
+          name: "9MOBILE CG 100.0GB",
+          amount: "₦15500",
+          duration: "1 MONTH",
+        },
+        {
+          id: 286,
+          name: "9MOBILE CG 250.0GB",
+          amount: "₦37500",
+          duration: "1 MONTH",
+        },
+        {
+          id: 288,
+          name: "9MOBILE CG 500GB",
+          amount: "₦75000",
+          duration: "1 MONTH",
+        },
+        {
+          id: 287,
+          name: "9MOBILE CG 1TB",
+          amount: "₦145000",
+          duration: "1 MONTH",
+        },
+        {
+          id: 289,
+          name: "9MOBILE CG 3TB",
+          amount: "₦420000",
+          duration: "1 MONTH",
+        },
       ],
     },
-
     {
       id: 2,
-      name: "9MOBILE CG ---",
-      options: [],
-
-      amount: [],
-
-      duration: [],
+      name: "GLO GIFTING",
+      options: [
+        {
+          id: 194,
+          name: "9MOBILE GIFTING 1.05GB",
+          amount: "₦485",
+          duration: "1 MONTH",
+        },
+      ],
     },
-
     {
       id: 3,
-      name: "9MOBILE GENERAL BUNDLES ---",
+      name: "GENERAL BUNDLES ---",
       options: [],
-      amount: [],
-
-      duration: [],
     },
   ];
 
@@ -567,7 +667,7 @@ const EtisalatDataBundle = () => {
                   <Link to="/DataBundleSelectRecipient">
                     (Select Recipient)
                   </Link>
-                  </span>{" "}
+                </span>{" "}
               </h2>
               <div className="relative mt-[5px]">
                 <input

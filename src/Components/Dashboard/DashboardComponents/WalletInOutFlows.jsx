@@ -20,6 +20,7 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
+  ResponsiveContainer,
 } from "recharts";
 
 export const WalletInOutFlows = () => {
@@ -30,6 +31,33 @@ export const WalletInOutFlows = () => {
   // const [setToggleTotalTransaction] = useState(false);
 
   const [symbol, setSymbol] = useState("₦");
+  const [volumeData, setVolumeData] = useState([]);
+  const [valueData, setValueData] = useState([]);
+
+  const renderTooltipContent = (props) => {
+    const { active, payload } = props;
+    if (active && payload && payload.length) {
+      if (isValue) {
+        const inflow = payload.find((entry) => entry.dataKey === "inflow");
+        const outflow = payload.find((entry) => entry.dataKey === "outflow");
+        return (
+          <div className={styles.customTooltip}>
+            <p>{`Time: ${payload[0].payload.xaxis}`}</p>
+            <p>{`Inflow: ${inflow ? inflow.value : 0}${symbol}`}</p>
+            <p>{`Outflow: ${outflow ? outflow.value : 0}${symbol}`}</p>
+          </div>
+        );
+      } else {
+        return (
+          <div className={styles.customTooltip}>
+            <p>{`Time: ${payload[0].payload.xaxis}`}</p>
+            <p>{`Volume: ${payload[0].payload.volume}`}</p>
+          </div>
+        );
+      }
+    }
+    return null;
+  };
 
   const [activeButtons, setActiveButtons] = useState([
     true,
@@ -70,48 +98,75 @@ export const WalletInOutFlows = () => {
     return;
   };
 
+  // const data = [
+  //   { xaxis: "0.00", inflow: 100, outflow: 0, amt: 2400 },
+  //   { xaxis: "1.00", inflow: 90, outflow: 5, amt: 2210 },
+  //   { xaxis: "2.00", inflow: 80, outflow: 10, amt: 2210 },
+  //   { xaxis: "3.00", inflow: 70, outflow: 20, amt: 2210 },
+  //   { xaxis: "4.00", inflow: 60, outflow: 30, amt: 2210 },
+  //   { xaxis: "5.00", inflow: 50, outflow: 40, amt: 2210 },
+  //   { xaxis: "6.00", inflow: 40, outflow: 50, amt: 2210 },
+  //   { xaxis: "7.00", inflow: 30, outflow: 60, amt: 2210 },
+  //   { xaxis: "8.00", inflow: 20, outflow: 70, amt: 2210 },
+  //   { xaxis: "9.00", inflow: 10, outflow: 80, amt: 2210 },
+  //   { xaxis: "10.00", inflow: 0, outflow: 90, amt: 2210 },
+  //   { xaxis: "11.00", inflow: 5, outflow: 95, amt: 2210 },
+  //   { xaxis: "12.00", inflow: 10, outflow: 100, amt: 2210 },
+  //   { xaxis: "13.00", inflow: 20, outflow: 90, amt: 2210 },
+  //   { xaxis: "14.00", inflow: 30, outflow: 80, amt: 2210 },
+  //   { xaxis: "15.00", inflow: 40, outflow: 70, amt: 2210 },
+  //   { xaxis: "16.00", inflow: 50, outflow: 60, amt: 2210 },
+  //   { xaxis: "17.00", inflow: 60, outflow: 50, amt: 2210 },
+  //   { xaxis: "18.00", inflow: 70, outflow: 40, amt: 2210 },
+  //   { xaxis: "19.00", inflow: 80, outflow: 30, amt: 2210 },
+  //   { xaxis: "20.00", inflow: 90, outflow: 20, amt: 2210 },
+  //   { xaxis: "21.00", inflow: 100, outflow: 10, amt: 2210 },
+  //   { xaxis: "22.00", inflow: 100, outflow: 0, amt: 2210 },
+  //   { xaxis: "23.00", inflow: 20, outflow: 90, amt: 2210 },
+  //   { xaxis: "24.00", inflow: 0, outflow: 100, amt: 2210 },
+  //   // ...
+  //   { yaxis: "0" },
+  //   { yaxis: "10" },
+  //   { yaxis: "20" },
+  //   { yaxis: "30" },
+  //   { yaxis: "40" },
+  //   { yaxis: "50" },
+  //   { yaxis: "60" },
+  //   { yaxis: "70" },
+  //   { yaxis: "80" },
+  //   { yaxis: "90" },
+  //   { yaxis: "100" },
+  // ];
+
   const data = [
-    { xaxis: "0.00", inflow: 100, outflow: 0, amt: 2400 },
-    { xaxis: "1.00", inflow: 90, outflow: 5, amt: 2210 },
-    { xaxis: "2.00", inflow: 80, outflow: 10, amt: 2210 },
-    { xaxis: "3.00", inflow: 70, outflow: 20, amt: 2210 },
-    { xaxis: "4.00", inflow: 60, outflow: 30, amt: 2210 },
-    { xaxis: "5.00", inflow: 50, outflow: 40, amt: 2210 },
-    { xaxis: "6.00", inflow: 40, outflow: 50, amt: 2210 },
-    { xaxis: "7.00", inflow: 30, outflow: 60, amt: 2210 },
-    { xaxis: "8.00", inflow: 20, outflow: 70, amt: 2210 },
-    { xaxis: "9.00", inflow: 10, outflow: 80, amt: 2210 },
-    { xaxis: "10.00", inflow: 0, outflow: 90, amt: 2210 },
-    { xaxis: "11.00", inflow: 5, outflow: 95, amt: 2210 },
-    { xaxis: "12.00", inflow: 10, outflow: 100, amt: 2210 },
-    { xaxis: "13.00", inflow: 20, outflow: 90, amt: 2210 },
-    { xaxis: "14.00", inflow: 30, outflow: 80, amt: 2210 },
-    { xaxis: "15.00", inflow: 40, outflow: 70, amt: 2210 },
-    { xaxis: "16.00", inflow: 50, outflow: 60, amt: 2210 },
-    { xaxis: "17.00", inflow: 60, outflow: 50, amt: 2210 },
-    { xaxis: "18.00", inflow: 70, outflow: 40, amt: 2210 },
-    { xaxis: "19.00", inflow: 80, outflow: 30, amt: 2210 },
-    { xaxis: "20.00", inflow: 90, outflow: 20, amt: 2210 },
-    { xaxis: "21.00", inflow: 100, outflow: 10, amt: 2210 },
-    { xaxis: "22.00", inflow: 100, outflow: 0, amt: 2210 },
-    { xaxis: "23.00", inflow: 20, outflow: 90, amt: 2210 },
-    { xaxis: "24.00", inflow: 0, outflow: 100, amt: 2210 },
-    // ...
-    { yaxis: "0" },
-    { yaxis: "10" },
-    { yaxis: "20" },
-    { yaxis: "30" },
-    { yaxis: "40" },
-    { yaxis: "50" },
-    { yaxis: "60" },
-    { yaxis: "70" },
-    { yaxis: "80" },
-    { yaxis: "90" },
-    { yaxis: "100" },
+    { time: "0:00", value: 1000 },
+    { time: "1:00", value: 2000 },
+    { time: "2:00", value: 3000 },
+    { time: "3:00", value: 4000 },
+    { time: "4:00", value: 5000 },
+    { time: "5:00", value: 6000 },
+    { time: "6:00", value: 7000 },
+    { time: "7:00", value: 8000 },
+    { time: "8:00", value: 9000 },
+    { time: "9:00", value: 10000 },
+    { time: "10:00", value: 9000 },
+    { time: "11:00", value: 8000 },
+    { time: "12:00", value: 7000 },
+    { time: "13:00", value: 6000 },
+    { time: "14:00", value: 5000 },
+    { time: "15:00", value: 4000 },
+    { time: "16:00", value: 3000 },
+    { time: "17:00", value: 2000 },
+    { time: "18:00", value: 1000 },
+    { time: "19:00", value: 2000 },
+    { time: "20:00", value: 3000 },
+    { time: "21:00", value: 4000 },
+    { time: "22:00", value: 5000 },
+    { time: "23:00", value: 6000 },
   ];
 
   return (
-    <div className="mt-[10%] lg:mt-[5%] mb-[10%]">
+    <div className="mt-[5%]">
       <div className="flex items-center gap-[10px]">
         <p className={styles.InOutText}>Wallets Inflows & Outflows</p>
         <img
@@ -123,7 +178,7 @@ export const WalletInOutFlows = () => {
 
       {/* ==============================Inflows & Outflows Indicator====================== */}
       <div
-        className={`${styles.INnOUT} my-[10%] flex lg:mt-[5%] lg:items-center`}
+        className={`${styles.INnOUT} my-[5%] flex lg:mt-[5%] lg:items-center`}
       >
         <select
           name="curr"
@@ -324,7 +379,7 @@ export const WalletInOutFlows = () => {
         </div>
 
         {/* ====================Inflow & Outflow indication================ */}
-        <div className="flex float-right mt-[1%] md:mt-[3%] lg:mt-[1%]">
+        <div className="flex float-right mt-[5%] md:mt-[3%] lg:mt-[1%]">
           <div className="flex items-center ">
             <div className="text-2xl text-[#58DA8F] md:text-5xl">
               <RxDotFilled />
@@ -345,6 +400,7 @@ export const WalletInOutFlows = () => {
           options={options}
         /> */}
 
+        {/* 
         <LineChart
           width={1100}
           height={360}
@@ -357,9 +413,27 @@ export const WalletInOutFlows = () => {
           <Line type="linear" dataKey="inflow" stroke="#58DA8F" />
           <Line type="linear" dataKey="outflow" stroke="#FA6B6B" />
           <Tooltip />
-          {/* <Legend /> */}
-        </LineChart>
-        <LineChart
+          <Legend />
+        </LineChart> */}
+
+        <ResponsiveContainer width="100%" height={400}>
+          <LineChart
+            data={data}
+            margin={{ top: 20, right: 30, left: 20, bottom: 10 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="time" />
+            <YAxis
+              type="number"
+              domain={[1000, 10000]}
+              tickFormatter={(value) => `₦${value / 1000}k`}
+            />
+            <Tooltip />
+            <Line type="monotone" dataKey="value" stroke="#8884d8" />
+          </LineChart>
+        </ResponsiveContainer>
+
+        {/* <LineChart
           width={340}
           height={280}
           data={data}
@@ -371,7 +445,7 @@ export const WalletInOutFlows = () => {
           <Line type="linear" dataKey="inflow" stroke="#58DA8F" />
           <Line type="linear" dataKey="outflow" stroke="#FA6B6B" />
           <Tooltip />
-          {/* <Legend /> */}
+          <Legend />
         </LineChart>
         <LineChart
           width={740}
@@ -385,8 +459,8 @@ export const WalletInOutFlows = () => {
           <Line type="linear" dataKey="inflow" stroke="#58DA8F" />
           <Line type="linear" dataKey="outflow" stroke="#FA6B6B" />
           <Tooltip />
-          {/* <Legend /> */}
-        </LineChart>
+          <Legend />
+        </LineChart> */}
       </div>
       {/* ========================Chart End========================= */}
     </div>

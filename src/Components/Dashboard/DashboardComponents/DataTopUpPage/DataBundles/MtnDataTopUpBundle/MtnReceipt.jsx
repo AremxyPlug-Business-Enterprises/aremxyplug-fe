@@ -9,120 +9,123 @@ import axios from "axios"; // Import axios for making HTTP requests
 
 
 
-const ReceiptDetails = ({ receiptData, purchaseStatus }) => {
-  const getStatusText = () => {
-    switch (purchaseStatus) {
-      case "success":
-        return "Purchase Successful";
-      case "failed":
-        return "Purchase Failed";
-      case "pending":
-        return "Purchase Pending";
-      case "refunded":
-        return "Purchase Refunded";
-      case "cancelled":
-        return "Purchase Cancelled";
-      default:
-        return "";
-    }
-  };
+// const ReceiptDetails = ({ receiptData, purchaseStatus }) => {
+//   const getStatusText = () => {
+//     switch (purchaseStatus) {
+//       case "success":
+//         return "Purchase Successful";
+//       case "failed":
+//         return "Purchase Failed";
+//       case "pending":
+//         return "Purchase Pending";
+//       case "refunded":
+//         return "Purchase Refunded";
+//       case "cancelled":
+//         return "Purchase Cancelled";
+//       default:
+//         return "";
+//     }
+//   };
 
-  const getBackgroundColor = () => {
-    switch (purchaseStatus) {
-      case "success":
-        return "#D5F6E3";
-      case "failed":
-        return "#FDCECE";
-      case "pending":
-        return "#FFF1D6";
-      case "refunded":
-        return "#A6D9FF";
-      case "cancelled":
-        return "#EFC6BE";
-      default:
-        return "";
-    }
-  };
+//   const getBackgroundColor = () => {
+//     switch (purchaseStatus) {
+//       case "success":
+//         return "#D5F6E3";
+//       case "failed":
+//         return "#FDCECE";
+//       case "pending":
+//         return "#FFF1D6";
+//       case "refunded":
+//         return "#A6D9FF";
+//       case "cancelled":
+//         return "#EFC6BE";
+//       default:
+//         return "";
+//     }
+//   };
 
-  return (
-    <div className="receipt-details">
-      <h3 className="font-extrabold text-[12px] my-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
-        Transaction Receipt
-      </h3>
-      <div className="w-full flex justify-center">
-        <img
-          className="absolute w-[250px] h-[450px] md:w-[70%] lg:w-[50%] lg:h-[550px]"
-          src="./Images/transferImages/receipt-background.png"
-          alt="/"
-        />
-      </div>
-      <h3 className="font-extrabold text-[12px] mt-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
-        {getStatusText()} on
-      </h3>
-      <span className="text-[11px] text-[#0008] font-extrabold flex justify-center items-center">
-        {receiptData.created_at}
-      </span>
-      <p
-        className={`text-[9px] text-[#0008] px-[20px] text-center my-2 md:text-[14px] lg:text-[14px] bg-[${getBackgroundColor()}] mx-[10px] border-[#${purchaseStatus === 'success' ? '27AE60' : purchaseStatus === 'failed' ? 'F93232' : purchaseStatus === 'pending' ? 'FFC24C' : purchaseStatus === 'refunded' ? '04177F' : 'E62E05'}] border-[1px] rounded-[10px] py-[10px]`}
-      >
-        {purchaseStatus === "pending"
-          ? "Your transaction is under process please wait while the system are confirm."
-          : purchaseStatus === "failed"
-          ? "Purchase Failed due to an unexpected error that occured. Please try again."
-          : purchaseStatus === "refunded"
-          ? "Transaction was unsuccessful and your wallet has been refunded. Please try again."
-          : purchaseStatus === "cancelled"
-          ? "Purchase Cancelled due to an unexpected error that occur. Please try again."
-          : `You have successfully purchased ${receiptData.network} ${receiptData.plan_name} ${receiptData.plan_amount} from your ${receiptData.walletName} Wallet to`}
-      </p>
-      <div className="flex flex-col gap-3">
-        {/* ========================Recipient Info================== */}
-        <div className="flex flex-col gap-[3px] w-[90%] mx-auto lg:gap-[5px]">
-          <div className="flex gap-[5px] items-center text-[10px] lg:text-[16px] font-extrabold">
-            <p>Recipient Info</p>
-            <img
-              className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-              src="./Images/Dashboardimages/arrowright.png"
-              alt="/"
-            />
-          </div>
-          <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-            <p className="text-[#0008]">Network</p>
-            <span>{receiptData.network}</span>
-          </div>
-          <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-            <p className="text-[#0008]">Product</p>
-            <span>{receiptData.plan_name}</span>
-          </div>
-          <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-            <p className="text-[#0008]">Plan</p>
-            <span>
-              {receiptData.network} {receiptData.plan_name}{" "}
-              {receiptData.plan_amount}
-            </span>
-          </div>
-          <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-            <p className="text-[#0008]">Recipient Name</p>
-            <span>{receiptData.name}</span>
-          </div>
-          <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-            <p className="text-[#0008]">Phone Number</p>
-            <span>{receiptData.phone_number}</span>
-          </div>
-          <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-            <p className="text-[#0008]">Amount</p>
-            <span>{receiptData.amount}</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-
+//   return (
+//     <div className="receipt-details">
+//       <h3 className="font-extrabold text-[12px] my-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
+//         Transaction Receipt
+//       </h3>
+//       <div className="w-full flex justify-center">
+//         <img
+//           className="absolute w-[250px] h-[450px] md:w-[70%] lg:w-[50%] lg:h-[550px]"
+//           src="./Images/transferImages/receipt-background.png"
+//           alt="/"
+//         />
+//       </div>
+//       <h3 className="font-extrabold text-[12px] mt-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
+//         {getStatusText()} on
+//       </h3>
+//       <span className="text-[11px] text-[#0008] font-extrabold flex justify-center items-center">
+//         {receiptData.created_at}
+//       </span>
+//       <p
+//         className={`text-[9px] text-[#0008] px-[20px] text-center my-2 md:text-[14px] lg:text-[14px] bg-[${getBackgroundColor()}] mx-[10px] border-[#${purchaseStatus === 'success' ? '27AE60' : purchaseStatus === 'failed' ? 'F93232' : purchaseStatus === 'pending' ? 'FFC24C' : purchaseStatus === 'refunded' ? '04177F' : 'E62E05'}] border-[1px] rounded-[10px] py-[10px]`}
+//       >
+//         {purchaseStatus === "pending"
+//           ? "Your transaction is under process please wait while the system are confirm."
+//           : purchaseStatus === "failed"
+//           ? "Purchase Failed due to an unexpected error that occured. Please try again."
+//           : purchaseStatus === "refunded"
+//           ? "Transaction was unsuccessful and your wallet has been refunded. Please try again."
+//           : purchaseStatus === "cancelled"
+//           ? "Purchase Cancelled due to an unexpected error that occur. Please try again."
+//           : `You have successfully purchased ${receiptData.network} ${receiptData.plan_name} ${receiptData.plan_amount} from your ${receiptData.walletName} Wallet to`}
+//       </p>
+//       <div className="flex flex-col gap-3">
+//         {/* ========================Recipient Info================== */}
+//         <div className="flex flex-col gap-[3px] w-[90%] mx-auto lg:gap-[5px]">
+//           <div className="flex gap-[5px] items-center text-[10px] lg:text-[16px] font-extrabold">
+//             <p>Recipient Info</p>
+//             <img
+//               className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
+//               src="./Images/Dashboardimages/arrowright.png"
+//               alt="/"
+//             />
+//           </div>
+//           <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+//             <p className="text-[#0008]">Network</p>
+//             <span>{receiptData.network}</span>
+//           </div>
+//           <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+//             <p className="text-[#0008]">Product</p>
+//             <span>{receiptData.plan_name}</span>
+//           </div>
+//           <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+//             <p className="text-[#0008]">Plan</p>
+//             <span>
+//               {receiptData.network} {receiptData.plan_name}{" "}
+//               {receiptData.plan_amount}
+//             </span>
+//           </div>
+//           <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+//             <p className="text-[#0008]">Recipient Name</p>
+//             <span>{receiptData.name}</span>
+//           </div>
+//           <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+//             <p className="text-[#0008]">Phone Number</p>
+//             <span>{receiptData.phone_number}</span>
+//           </div>
+//           <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+//             <p className="text-[#0008]">Amount</p>
+//             <span>{receiptData.amount}</span>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
 
 
-export const MtnReceipt = () => {
+
+
+export const MtnReceipt = (
+  receiptData,
+  purchaseStatus
+) => {
   const {
     // selectedNetworkProduct,
     // selectedOption,
@@ -192,26 +195,34 @@ export const MtnReceipt = () => {
       });
     }
   };
+  
+  const receiptTitle = () => {
+    switch (purchaseStatus) {
+      case "paid":
+        // show this
+        return <div> </div>
+      case "failed":
+        return <div><h1>transaction failed!</h1></div>
+      default: 
+        return
+    }
+  }
 
-  const [receiptData, setReceiptData] = useState(null); // State to hold receipt data
-  const [purchaseStatus, setPurchaseStatus] = useState(null); // State to hold purchase status
-
-
-  useEffect(() => {
-    // Fetch receipt details from the backend API
-    axios.get("your_backend_api_endpoint").then((response) => {
-      setReceiptData(response.data.receiptData);
-      setPurchaseStatus(response.data.purchaseStatus);
-    }).catch((error) => {
-      console.error("Error fetching receipt details:", error);
-    });
+  // useEffect(() => {
+  //   // Fetch receipt details from the backend API
+  //   axios.get("https://aremxyplug.onrender.com/api/v1/data").then((response) => {
+  //     setReceiptData(response.data.receiptData);
+  //     setPurchaseStatus(response.data.purchaseStatus);
+  //   }).catch((error) => {
+  //     console.error("Error fetching receipt details:", error);
+  //   });
     
-    // Reset selected options
-    // setSelectedNetworkProduct(false);
-    // setSelectedOption(false);
-    // setSelectedAmount("");
-    // setRecipientNames("");
-  }, []);
+  //   // Reset selected options
+  //   // setSelectedNetworkProduct(false);
+  //   // setSelectedOption(false);
+  //   // setSelectedAmount("");
+  //   // setRecipientNames("");
+  // }, []);
 
 
   // useEffect(() => {
@@ -258,23 +269,24 @@ export const MtnReceipt = () => {
 
 
 
-          {receiptData && purchaseStatus && (
+          {/* {receiptData && purchaseStatus && (
             <ReceiptDetails
               receiptData={receiptData}
               purchaseStatus={purchaseStatus}
             />
-          )}
+          )} */}
 
 
 
 
 
-            {purchaseStatus === "success" && receiptData && (
+            {purchaseStatus === "paid" && receiptData && (
               <div className="receipt-details">
                 {" "}
                 <h3 className="font-extrabold text-[12px] my-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
                   Transaction Receipt
                 </h3>
+                {receiptTitle()}
                 <div className="w-full flex justify-center ">
                   <img
                     className="absolute w-[250px] h-[450px] md:w-[70%] lg:w-[50%] lg:h-[550px]"
