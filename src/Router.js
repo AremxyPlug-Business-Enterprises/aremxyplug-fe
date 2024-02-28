@@ -55,7 +55,7 @@ import DataTopUpPage from "./Components/Dashboard/DashboardComponents/DataTopUpP
 import CurrencyConversion from "./Components/CurrencyConversion/currencyConversion";
 import PointRedeem from "./Components/Dashboard/DashboardComponents/PointRedeem/PointRedeem";
 import Referral from "./Components/Referrals/Referral";
-import AirtimeVtuReceipt from "./Components/AirTimePage/AirtimeVtuReceipt";
+import { AirtimeVtuReceipt } from "./Components/AirTimePage/AirtimeVtuReceipt";
 import DataBundlesPage from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundlesPage";
 import MtnDataTopUpBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/MtnDataTopUpBundle/MtnDataTopUpBundle";
 import WithdrawToOtherBanks from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToOtherBanks";
@@ -163,6 +163,7 @@ import EmailMarketing from "./Components/Screens/emailMarketing/EmailMarketing";
 import ProductDesign from "./Components/Screens/productDesign/ProductDesign";
 import GraphicDesign from "./Components/Screens/graphicDesign/GraphicDesign";
 import NotificationsPage2 from "./Components/NotificationsPage/Notifications2";
+import { AirtimeReceiptFailed } from "./Components/AirTimePage/AirtimeReceiptFailed";
 export const Router = () => {
   return (
     <div>
@@ -219,6 +220,7 @@ export const Router = () => {
         <Route path="/airtime-topup" element={<AirTime />} />
         <Route path="/airtime-vtu" element={<AirtimeVtu />} />
         <Route path="/airtime-vtu-receipt" element={<AirtimeVtuReceipt />} />
+        <Route path="/airtime-receipt-failed" element={<AirtimeReceiptFailed />} />
         <Route path="/add-vtu-recipient" element={<AddRecipient />} />
         <Route path="/select-vtu-recipient" element={<SelectRecipient />} />
         <Route path="/add-account" element={<AddAccount />} />

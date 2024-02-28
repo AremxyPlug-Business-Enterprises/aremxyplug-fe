@@ -801,6 +801,10 @@ export const Context = ({ children }) => {
   const [recipientNumber, setRecipientNumber] = useState("");
   const [amount, setAmount] = useState("");
   const [networkImage, setNetworkImage] = useState("");
+  const [transactFailedPopUp, setTransactFailedPopUp] = useState("");
+  const [inputValues, setInputValues] = useState("");
+  const [networkId, setNetworkId] = useState("");
+  const [productId, setProductId] = useState("");
 
   // =====================DATABUNDLE========================
   const [selectedOption, setSelectedOption] = useState("");
@@ -971,6 +975,9 @@ export const Context = ({ children }) => {
 
   //============ AUTHETICATION SETTINGS ========
   const [authenticationOpen, setAuthenticationOpen] = useState(false);
+
+  //============== API COLLECTION FOR EDUCATION PINS
+  const [eduResponse, setEduResponse] = useState(null);
   const hold = {
     handleRefresh,
     // ==================
@@ -1245,6 +1252,14 @@ export const Context = ({ children }) => {
     setAmount,
     networkImage,
     setNetworkImage,
+    transactFailedPopUp,
+    setTransactFailedPopUp,
+    networkId,
+    setNetworkId,
+    inputValues,
+    setInputValues,
+    productId,
+    setProductId,
 
     // ==============DataBundle===============
     selectedOption,
@@ -1536,6 +1551,9 @@ export const Context = ({ children }) => {
     //======== AUTHENTICATION  SETTING =======
     authenticationOpen,
     setAuthenticationOpen,
+    //========API COLLECTION FOR EDUCATION PINS =====\
+    eduResponse, 
+    setEduResponse
   };
 
   return (
