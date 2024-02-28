@@ -46,7 +46,7 @@ const GoTv = () => {
     setMethodImage,
   } = useContext(ContextProvider)
 
-  const [plan, setPlan] = useState(false);
+  const [planName, setPlanName] = useState(false);
 
 
 
@@ -65,11 +65,10 @@ const GoTv = () => {
     // return '';
   // };
 
-  const handleOptionClickGOTV = (option, id) => {
-    const selectedOptionInfo = `${option.name} - ${option.amount} - ${option.duration}`;
-    setSelectedOptionGOTV(selectedOptionInfo); // Replace 'setInputValue' with the function to set input value
+  const handleOptionClickGOTV = (option, plan) => {
+    setSelectedOptionGOTV(option); // Replace 'setInputValue' with the function to set input value
     setShowDropdownGOTV(false);
-    setPlan(id);
+    setPlanName(plan.planName);
     document.querySelector('.imgdrop').classList.remove('DropIt');
   };
   
@@ -121,18 +120,18 @@ const GoTv = () => {
           
 
     const options = [
-    { id: 1, name: "Gotv Smallie", amount: "₦1100", duration: "Monthly" },
-    { id: 2, name: "GOtv Jinja", amount: "₦2250", duration: "Monthly" },
-    { id: 3, name: "GOtv Jinja", amount: "₦4500", duration: "2 Months" },
-    { id: 4, name: "GOtv Lite", amount: "₦2900", duration: "3 Months" },
-    { id: 5, name: "GOtv Lite", amount: "₦8600", duration: "Annually" },
-    { id: 6, name: "GOtv Max", amount: "₦4850", duration: "Monthly" },
-    { id: 7, name: "GOtv Max", amount: "₦9700", duration: "2 Months" },
-    { id: 8, name: "GOtv Joli", amount: "₦3300", duration: "Monthly" },
-    { id: 9, name: "GOtv Joli", amount: "₦6600", duration: "2 Months" },
-    { id: 10, name: "GOtv SUPA", amount: "₦6400", duration: "Monthly" },
-    { id: 11, name: "GOtv SUPA", amount: "₦12800", duration: "2 Months" },
-    { id: 12, name: "GOtv SUPA plus", amount: "₦21000", duration: "2 Months" },
+    { id: 1, planName: "Gotv Smallie", amount: "₦1100", duration: "Monthly" },
+    { id: 2, planName: "GOtv Jinja", amount: "₦2250", duration: "Monthly" },
+    { id: 3, planName: "GOtv Jinja", amount: "₦4500", duration: "2 Months" },
+    { id: 4, planName: "GOtv Lite", amount: "₦2900", duration: "3 Months" },
+    { id: 5, planName: "GOtv Lite", amount: "₦8600", duration: "Annually" },
+    { id: 6, planName: "GOtv Max", amount: "₦4850", duration: "Monthly" },
+    { id: 7, planName: "GOtv Max", amount: "₦9700", duration: "2 Months" },
+    { id: 8, planName: "GOtv Joli", amount: "₦3300", duration: "Monthly" },
+    { id: 9, planName: "GOtv Joli", amount: "₦6600", duration: "2 Months" },
+    { id: 10, planName: "GOtv SUPA", amount: "₦6400", duration: "Monthly" },
+    { id: 11, planName: "GOtv SUPA", amount: "₦12800", duration: "2 Months" },
+    { id: 12, planName: "GOtv SUPA plus", amount: "₦21000", duration: "2 Months" },
   ]
 
  
@@ -221,8 +220,8 @@ const GoTv = () => {
         }, {})
       );
     } else {
-      sendDataToBackend(decoderType, plan, smartCard, tvEmail, '₦' + getNumericValue(selectedOptionGOTV), mobileNumber);
-      console.log(decoderType, plan, smartCard, tvEmail, '₦' + getNumericValue(selectedOptionGOTV), mobileNumber);
+      sendDataToBackend(decoderType, planName, smartCard, tvEmail, '₦' + getNumericValue(selectedOptionGOTV), mobileNumber);
+      console.log(decoderType, planName, smartCard, tvEmail, '₦' + getNumericValue(selectedOptionGOTV), mobileNumber);
       setConfirmGotvPopup(true);
       setErrors({});
     }
@@ -384,19 +383,26 @@ const GoTv = () => {
 
               {showDropdownGOTV && (
                 <ul className="dropdown-options absolute top-[100%] w-full bg-white cursor-pointer z-[2]">
-                  {options.map((option) => (
+                  {options.map((option) => {
+                    const amount = option.amount;
+                    const duration = option.duration;
+
+
+                    return (
                     <li
                       className={`text-[8px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
                       md:text-[13.227px] md:leading-[17.195px] 
                       shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] bg-white
                       lg:text-[16px] lg:leading-[20.8px] cursor-pointer hover:bg-[#EDEAEA]`}
                       key={option.id}
-                      onClick={() => handleOptionClickGOTV(option) }
+                      onClick={() => handleOptionClickGOTV(`${option.planName} (${amount}) ~ ${duration}`, option)}
+
                       
                     >
-                      {`${option.name} (${option.amount}) ~ ${option.duration}`}
+                      {`${option.planName} (${option.amount}) ~ ${option.duration}`}
                     </li>
-                  ))}
+                    );
+                  })}
                 </ul>
               )}
 
