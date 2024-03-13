@@ -16,6 +16,7 @@ import { AiFillEye } from "react-icons/ai";
 import OtpInput from "react-otp-input";
 import { Link } from "react-router-dom";
 import axios from 'axios';
+
 const BEDC = () => {
 
   const { isDarkMode,
@@ -267,9 +268,14 @@ const BEDC = () => {
       ikedcamount,
     );
 
-    setSuccessPopup(true);
     setInputPinPopUp(false);
-    setProceed(false);
+    if (response.statusCode === 200) {
+      // Success response
+      setSuccessPopup(true); // Show success popup
+    } else {
+      // Failure response
+      setFailedPopup(true) // Show failure popup
+    }
   };
 
   const [InputPinPopUp, setInputPinPopUp] = useState(false);
@@ -850,7 +856,7 @@ const BEDC = () => {
               >
                 Done
               </button>
-              <Link to="/bedc-receipt" state={{
+              <Link to="/bedc-receipt-failed" state={{
                 selectedNetworkProduct: selectedNetworkProduct,
                 meterNumber: meterNumber,
                 phoneNumber: phoneNumber,

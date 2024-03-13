@@ -164,6 +164,7 @@ import ProductDesign from "./Components/Screens/productDesign/ProductDesign";
 import GraphicDesign from "./Components/Screens/graphicDesign/GraphicDesign";
 import NotificationsPage2 from "./Components/NotificationsPage/Notifications2";
 import { AirtimeReceiptFailed } from "./Components/AirTimePage/AirtimeReceiptFailed";
+import { BedcReceiptFailed } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/bedcReceiptFailed";
 export const Router = () => {
   return (
     <div>
@@ -290,6 +291,7 @@ export const Router = () => {
         <Route path="/eedc-receipt" element={<EedcReceipt />} />
         <Route path="/kaedco-receipt" element={<KaedcoReceipt />} />
         <Route path="/bedc-receipt" element={<BedcReceipt />} />
+        <Route path="/bedc-receipt-failed" element={<BedcReceiptFailed />} />
         <Route path="/ibedc-receipt" element={<IbedcReceipt />} />
         <Route path="/jed-receipt" element={<JedReceipt />} />
         <Route path="/kedco-receipt" element={<KedcoReceipt />} />
