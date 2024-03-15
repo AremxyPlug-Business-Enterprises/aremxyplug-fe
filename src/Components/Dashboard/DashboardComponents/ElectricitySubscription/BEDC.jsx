@@ -230,7 +230,7 @@ const BEDC = () => {
 
   const handleSuccess = async () => {
     async function buyBEDC(meter_type, meter_no, phone, email, amount) {
-      const url = 'https://aremxyplug.onrender.com/api/v1/airtime';
+      const url = 'https://aremxyplug.onrender.com/api/v1/electric-bill';
 
       const data = {
         meter_type,
@@ -238,7 +238,10 @@ const BEDC = () => {
         phone,
         email,
         amount,
+        disco_type: "BEDC",
       };
+
+      console.log(data);
 
       try {
         const response = await axios.post(url, data);
@@ -864,6 +867,7 @@ const BEDC = () => {
                 ikedcamount: ikedcamount,
                 requestID: requestID,
                 serviceID: serviceID,
+                disco_type: "BEDC",
               }}>
                 <button
                   onClick={() => {

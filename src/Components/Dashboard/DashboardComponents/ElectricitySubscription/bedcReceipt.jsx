@@ -6,20 +6,19 @@ import { DashBoardLayout } from "../../Layout/DashBoardLayout";
 import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-import logo2 from "../ElectricitySubscription/Electricity-sub-images/BEDC-Logo-new-dark-1 1.svg"
+import logo2 from "../ElectricitySubscription/Electricity-sub-images/BEDC-Logo-new-dark-1 1.svg";
+import { useLocation } from 'react-router-dom';
 
 export const BedcReceipt = () => {
+
+  const location = useLocation()
+  const { selectedNetworkProduct, meterNumber, phoneNumber, ikedcEmail, ikedcamount, requestID, serviceID  } = location.state
+
   const {
     toggleSideBar,
     isDarkMode,
-    date,
-    selectedNetworkProduct,
-    ikedcamount,
-    meterNumber,
-    verifiedName,
-    ikedcEmail,
-    phoneNumber,
-    
+    date,   
+    verifiedName, 
   } = useContext(ContextProvider);
 
   const handleClear = () =>{
@@ -139,7 +138,7 @@ export const BedcReceipt = () => {
                 <p className="text-[#7C7C7C] font-[500]">Disco Type</p>
                 <span className="flex items-center gap-1 ">
                   <div><img className="w-[30px]" src={logo2} alt="" /></div>
-                  <div>Benin-BEDC</div>
+                  <div>{serviceID}</div>
                   </span>
               </div>
               <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -226,7 +225,7 @@ export const BedcReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Transaction ID</p>
-                  <span>0331njokdhtf55</span>
+                  <span>{requestID}</span>
                 </div>
                 
               </div>
