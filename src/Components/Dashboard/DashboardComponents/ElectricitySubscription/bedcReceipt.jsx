@@ -12,7 +12,7 @@ import { useLocation } from 'react-router-dom';
 export const BedcReceipt = () => {
 
   const location = useLocation()
-  const { selectedNetworkProduct, meterNumber, phoneNumber, ikedcEmail, ikedcamount, requestID, serviceID  } = location.state
+  const { selectedNetworkProduct, meterNumber, phoneNumber, ikedcEmail, ikedcamount, serviceID, orderId, transactionId, showDescription  } = location.state
 
   const {
     toggleSideBar,
@@ -213,7 +213,7 @@ export const BedcReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Description</p>
-                  <span>Benin {selectedNetworkProduct} </span>
+                  <span>{showDescription}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Bill / Token Generated</p>
@@ -221,11 +221,11 @@ export const BedcReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Order Number</p>
-                  <span>1256478999</span>
+                  <span>{orderId}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Transaction ID</p>
-                  <span>{requestID}</span>
+                  <span>{transactionId}</span>
                 </div>
                 
               </div>

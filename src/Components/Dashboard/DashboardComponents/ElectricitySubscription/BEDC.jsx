@@ -40,8 +40,8 @@ const BEDC = () => {
     setIkedcamount,
     toggleVisibility,
     isVisible,
-    requestID,
-    setRequestID,
+    // requestID,
+    // setRequestID,
     serviceID,
     setServiceID,
   } = useContext(ContextProvider);
@@ -51,7 +51,9 @@ const BEDC = () => {
   const { selectedNetworkProduct, setSelectedNetworkProduct } =
     useContext(ContextProvider);
   const [showProductList, setShowProductList] = useState(false);
-  ;
+  const [showDescription, setShowDescription] = useState(false);
+  const [orderId, setOrderId] = useState(false);
+  const [transactionId, setTransactionId] = useState(false);
 
   const pointsEarned = "+2.00";
 
@@ -208,7 +210,6 @@ const BEDC = () => {
     const value = event.target.value;
     const newValue = value.replace(/\D/g, "").slice(0, 11);
     setPhoneNumber(newValue);
-
   };
   const handleEmail = (event) => {
     const newValue = event.target.value;
@@ -232,12 +233,15 @@ const BEDC = () => {
     async function buyBEDC(meter_type, meter_no, phone, email, amount) {
       const url = 'https://aremxyplug.onrender.com/api/v1/electric-bill';
 
+      const parsedPhone = parseInt(phone, 10);
+      const parsedAmount = parseInt(amount, 10);
+
       const data = {
         meter_type,
         meter_no,
-        phone,
+        phone: parsedPhone, // Use the parsed integer value
         email,
-        amount,
+        amount: parsedAmount, // Use the parsed integer value
         disco_type: "BEDC",
       };
 
@@ -252,8 +256,11 @@ const BEDC = () => {
         setPhoneNumber(response.data.phone)
         setEmail(response.data.email)
         setIkedcamount(response.data.amount)
-        setRequestID(response.data.request_id)
+        // setRequestID(response.data.request_id)
+        setOrderId(response.data.order_id)
+        setTransactionId(response.data.transaction_id)
         setServiceID(response.data.disco_type)
+        setShowDescription(response.data.description)
         return { statusCode: response.status, data: response.data };
         // console.log(response.data);
       } catch (error) {
@@ -746,7 +753,7 @@ const BEDC = () => {
                 <p className="text-[#7C7C7C] font-[500]">Disco Type</p>
                 <span className="flex items-center gap-1 ">
                   <div><img className="w-[30px]" src={logo} alt="" /></div>
-                  <div>Eko-EKEDC</div>
+                  <div>{serviceID}</div>
                 </span>
               </div>
               <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -801,7 +808,17 @@ const BEDC = () => {
               >
                 Done
               </button>
-              <Link to="/bedc-receipt">
+              <Link to="/bedc-receipt" state={{
+                selectedNetworkProduct: selectedNetworkProduct,
+                meterNumber: meterNumber,
+                phoneNumber: phoneNumber,
+                ikedcEmail: ikedcEmail,
+                ikedcamount: ikedcamount,
+                orderId: orderId,
+                transactionId: transactionId,
+                serviceID: serviceID,
+                showDescription: showDescription,
+              }}>
                 <button
                   onClick={() => {
                     setSuccessPopup(false);
@@ -865,9 +882,10 @@ const BEDC = () => {
                 phoneNumber: phoneNumber,
                 ikedcEmail: ikedcEmail,
                 ikedcamount: ikedcamount,
-                requestID: requestID,
+                orderId: orderId,
+                transactionId: transactionId,
                 serviceID: serviceID,
-                disco_type: "BEDC",
+                showDescription: showDescription,
               }}>
                 <button
                   onClick={() => {
