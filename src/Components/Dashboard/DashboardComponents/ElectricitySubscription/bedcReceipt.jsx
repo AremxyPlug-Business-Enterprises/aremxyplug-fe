@@ -21,11 +21,6 @@ export const BedcReceipt = () => {
     verifiedName, 
   } = useContext(ContextProvider);
 
-  const handleClear = () =>{
-    selectedNetworkProduct('');
-    
-  }
-
   const contentRef = useRef(null);
 
   // ==============Share pdf Function=============
@@ -66,14 +61,14 @@ export const BedcReceipt = () => {
           } w-full lg:mx-auto`}
         >
           <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
-            <Link onClick={handleClear} to="/electricity-subscription">
+            <Link to="/">
               <img
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[29px]"
                 src="/Images/login/arpLogo.png"
                 alt=""
               />
             </Link>
-            <Link onClick={handleClear} to="/electricity-subscription">
+            <Link to="/electricity-subscription">
               {" "}
               <img
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
@@ -112,7 +107,7 @@ export const BedcReceipt = () => {
             <p className="text-[8px] lg:text-[16px] font-[500] text-[#000] text-center mb-2 md:text-[14px] ">
               You have successfully Purchased{" "}
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
-               Ikeja {selectedNetworkProduct} Meter
+               Benin {selectedNetworkProduct} Meter
               </span>{" "}
              <br></br>
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
@@ -157,7 +152,7 @@ export const BedcReceipt = () => {
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Phone Number</p>
-                <span>{phoneNumber}</span>
+                <span>0{phoneNumber}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Email</p>

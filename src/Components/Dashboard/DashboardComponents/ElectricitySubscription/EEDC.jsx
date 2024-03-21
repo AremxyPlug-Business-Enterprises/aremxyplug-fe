@@ -15,14 +15,16 @@ import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import OtpInput from "react-otp-input";
 import { Link } from "react-router-dom";
+import axios from 'axios';
+
 const EEDC = () => {
 
-    const { isDarkMode,
-      toggleSideBar,
-      meterNumber,
-      showList,
-      setMeterNumber,
-      setVerifiedName,
+  const { isDarkMode,
+    toggleSideBar,
+    meterNumber,
+    showList,
+    setMeterNumber,
+    setVerifiedName,
     setShowList,
     setSelected,
     selected,
@@ -30,265 +32,325 @@ const EEDC = () => {
     setGlobalCountry,
     globalTransferErrors,
     verifiedName,
-    phoneNumber, 
+    phoneNumber,
     setPhoneNumber,
-    ikedcEmail, 
+    ikedcEmail,
     setEmail,
     ikedcamount,
-     setIkedcamount,
-     toggleVisibility, isVisible,
-    } = useContext(ContextProvider);
-    const [flag, setFlag] = useState("");
- ;
+    setIkedcamount,
+    toggleVisibility,
+    isVisible,
+    // requestID,
+    // setRequestID,
+    serviceID,
+    setServiceID,
+  } = useContext(ContextProvider);
+  const [flag, setFlag] = useState("");
+  ;
 
-    const { selectedNetworkProduct, setSelectedNetworkProduct } =
+  const { selectedNetworkProduct, setSelectedNetworkProduct } =
     useContext(ContextProvider);
-    const [showProductList, setShowProductList] = useState(false);
-    ;
+  const [showProductList, setShowProductList] = useState(false);
+  const [showDescription, setShowDescription] = useState(false);
+  const [orderId, setOrderId] = useState(false);
+  const [transactionId, setTransactionId] = useState(false);
 
-    const pointsEarned = "+2.00";
+  const pointsEarned = "+2.00";
 
-    // const handleValidate = () => {
+  // const handleValidate = () => {
 
-    //   if (isEmailOrNumberValid(email) || isEmailOrNumberValid(number)) {
-    //     setErrorMessage('')
-    //     setAccountId(email);
-    //   setShowAccountId(true);;
-    //   } else {
-    //     setErrorMessage('Invalid Email or Smile Account ID')
-    //   setShowAccountId(false);
-    //   }
-    // };
-    const productList = [
-        {
-          id: 1,
-          name: "Prepaid",
-        
-        },
-    
-        {
-          id: 2,
-          name: "Postpaid",
-       
-        },
-        
-      ];
-      const handleSelectProduct = (productName) => {
-        setSelectedNetworkProduct(productName);
-        // setSelectedOption("");
-        setShowProductList(false);
-        // setShowOptionList(false);
-      };
-    //   const { selectedOption, setSelectedOption } = useContext(ContextProvider);
-    //   const [showOptionList, setShowOptionList] = useState(false);
-    const countryList = [
-      {
-        id: 1,
-        name: "NGN Wallet(50,000.00)",
-        code: "Nigerian NGN Wallet",
-        flag: require("../ElectricitySubscription/Electricity-sub-images/nigeriaFlag.png"),
-      },
-      {
-        id: 2,
-        name: "USD Wallet. (00)",
-        code: "USD",
-        flag: require("../ElectricitySubscription/Electricity-sub-images/americaFlag.png"),
-      },
-      {
-        id: 3,
-        name: " GBP Wallet. (00)",
-        code: "GBP",
-        flag: require("../ElectricitySubscription/Electricity-sub-images/ukFlag.png"),
-      },
-      {
-        id: 4,
-        name: "EUR Wallet. (00)",
-        code: "EUR ",
-        flag: require("../ElectricitySubscription/Electricity-sub-images/europeanFlag.png"),
-      },
-      {
-        id: 5,
-        name: "AUD Wallet. (00)",
-        code: "AUD",
-        flag: require("../ElectricitySubscription/Electricity-sub-images/australiaFlag.png"),
-      },
-      {
-        id: 6,
-        name: "KES Wallet. (00)",
-        code: "KES",
-        flag: require("../ElectricitySubscription/Electricity-sub-images/kenyaFlag.png"),
-      },
-    ];
-    const [errors, setErrors] = useState({});
-    const [proceed, setProceed] = useState(false);
-    
-    const handleProceed = (e) => {
-     
-      // e.preventDefault();
-  
-      const { error } = schema.validate({
-        phoneNumber,
-        ikedcEmail,
-        meterNumber
-      });
-  
-      if (error) {
-        setErrors(
-          error.details.reduce((acc, curr) => {
-            acc[curr.path[0]] = curr.message;
-            return acc;
-          }, {})
-        );
-      } else {
-        setProceed(true);
-        setErrors({});
-      }
-    };
-  
-    const schema = Joi.object({
-      phoneNumber: Joi.string()
-        .pattern(new RegExp(/^\d{11,}/))
-        .required()
-        .messages({
-          "string.pattern.base": "Phone number should be 11 digits ",
-        }),
-        meterNumber: Joi.string()
-        .pattern(new RegExp(/^\d{10,}/))
-        .required()
-        .messages({
-          "string.pattern.base": "Invalid meter number",
-        }),
-        ikedcEmail: Joi.string()
-        .pattern(new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i))
-        .required()
-        .messages({
-          "string.pattern.base": "Invalid Email",
-        }),
-        
+  //   if (isEmailOrNumberValid(email) || isEmailOrNumberValid(number)) {
+  //     setErrorMessage('')
+  //     setAccountId(email);
+  //   setShowAccountId(true);;
+  //   } else {
+  //     setErrorMessage('Invalid Email or Smile Account ID')
+  //   setShowAccountId(false);
+  //   }
+  // };
+  const productList = [
+    {
+      id: 1,
+      name: "Prepaid",
+
+    },
+
+    {
+      id: 2,
+      name: "Postpaid",
+
+    },
+
+  ];
+  const handleSelectProduct = (productName) => {
+    setSelectedNetworkProduct(productName);
+    // setSelectedOption("");
+    setShowProductList(false);
+    // setShowOptionList(false);
+  };
+  //   const { selectedOption, setSelectedOption } = useContext(ContextProvider);
+  //   const [showOptionList, setShowOptionList] = useState(false);
+  const countryList = [
+    {
+      id: 1,
+      name: "NGN Wallet(50,000.00)",
+      code: "Nigerian NGN Wallet",
+      flag: require("../ElectricitySubscription/Electricity-sub-images/nigeriaFlag.png"),
+    },
+    {
+      id: 2,
+      name: "USD Wallet. (00)",
+      code: "USD",
+      flag: require("../ElectricitySubscription/Electricity-sub-images/americaFlag.png"),
+    },
+    {
+      id: 3,
+      name: " GBP Wallet. (00)",
+      code: "GBP",
+      flag: require("../ElectricitySubscription/Electricity-sub-images/ukFlag.png"),
+    },
+    {
+      id: 4,
+      name: "EUR Wallet. (00)",
+      code: "EUR ",
+      flag: require("../ElectricitySubscription/Electricity-sub-images/europeanFlag.png"),
+    },
+    {
+      id: 5,
+      name: "AUD Wallet. (00)",
+      code: "AUD",
+      flag: require("../ElectricitySubscription/Electricity-sub-images/australiaFlag.png"),
+    },
+    {
+      id: 6,
+      name: "KES Wallet. (00)",
+      code: "KES",
+      flag: require("../ElectricitySubscription/Electricity-sub-images/kenyaFlag.png"),
+    },
+  ];
+  const [errors, setErrors] = useState({});
+  const [proceed, setProceed] = useState(false);
+
+  const handleProceed = (e) => {
+
+    // e.preventDefault();
+
+    const { error } = schema.validate({
+      phoneNumber,
+      ikedcEmail,
+      meterNumber
     });
-  
-    // const isEmailValid = (input) => {
-    //   const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-      
-  
-    //   if (emailRegex.test(input) ) {
-    //     return true; 
-    //   }
-    //   return false;
-    // };
-  
-    
-    const handleCountryClick = (name, flag, id, code) => {
-      setFlag(flag);
-      setShowList(false);
-      setGlobalCountry(name);
-      setSelected(true);
-      // setCountryCode(code);
-      // setCurrencyAvailable(id !== 1);
-    
-    };
-    const handleVerifiedName = (event) => {
-      const newValue = event.target.value;
-      setVerifiedName(newValue);
-       
-    };
-    const handleMeterNumber = (event) => {
-      const newValue = event.target.value;
-      setMeterNumber(newValue);
-       
-    };
-    const handlePhoneNumber = (event) => {
-      const value = event.target.value;
-      const newValue = value.replace(/\D/g, "").slice(0, 11);
-      setPhoneNumber(newValue);
-       
-    };
-    const handleEmail = (event) => {
-      const newValue = event.target.value;
-      setEmail(newValue);
-       
-    };
-    const handleIkedcAmount = (event) => {
-      const newValue = event.target.value;
-      // setIkedcamount(newValue);
-      if (newValue.startsWith('')) {
-        setIkedcamount(newValue);
-      } else {
-        setIkedcamount(`₦${newValue}`);
-      }
-       
-    };
-    const [successPopup, setSuccessPopup] = useState(false);
 
-    const handleSuccess = () => {
-      setSuccessPopup(true);
-      setInputPinPopUp(false);
-      setProceed(false);
-    };
-    const [InputPinPopUp, setInputPinPopUp] = useState(false);
+    if (error) {
+      setErrors(
+        error.details.reduce((acc, curr) => {
+          acc[curr.path[0]] = curr.message;
+          return acc;
+        }, {})
+      );
+    } else {
+      setProceed(true);
+      setErrors({});
+    }
+  };
+
+  const schema = Joi.object({
+    phoneNumber: Joi.string()
+      .pattern(new RegExp(/^\d{11,}/))
+      .required()
+      .messages({
+        "string.pattern.base": "Phone number should be 11 digits ",
+      }),
+    meterNumber: Joi.string()
+      .pattern(new RegExp(/^\d{10,}/))
+      .required()
+      .messages({
+        "string.pattern.base": "Invalid meter number",
+      }),
+    ikedcEmail: Joi.string()
+      .pattern(new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i))
+      .required()
+      .messages({
+        "string.pattern.base": "Invalid Email",
+      }),
+
+  });
+
+  // const isEmailValid = (input) => {
+  //   const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+
+
+  //   if (emailRegex.test(input) ) {
+  //     return true; 
+  //   }
+  //   return false;
+  // };
+
+
+  const handleCountryClick = (name, flag, id, code) => {
+    setFlag(flag);
+    setShowList(false);
+    setGlobalCountry(name);
+    setSelected(true);
+    // setCountryCode(code);
+    // setCurrencyAvailable(id !== 1);
+
+  };
+  const handleVerifiedName = (event) => {
+    const newValue = event.target.value;
+    setVerifiedName(newValue);
+
+  };
+  const handleMeterNumber = (event) => {
+    const newValue = event.target.value;
+    setMeterNumber(newValue);
+
+  };
+  const handlePhoneNumber = (event) => {
+    const value = event.target.value;
+    const newValue = value.replace(/\D/g, "").slice(0, 11);
+    setPhoneNumber(newValue);
+  };
+  const handleEmail = (event) => {
+    const newValue = event.target.value;
+    setEmail(newValue);
+
+  };
+  const handleIkedcAmount = (event) => {
+    const newValue = event.target.value;
+    // setIkedcamount(newValue);
+    if (newValue.startsWith('')) {
+      setIkedcamount(newValue);
+    } else {
+      setIkedcamount(`₦${newValue}`);
+    }
+
+  };
+  const [successPopup, setSuccessPopup] = useState(false);
+  const [failedPopup, setFailedPopup] = useState(false);
+
+  const handleSuccess = async () => {
+    async function buyEEDC(meter_type, meter_no, phone, email, amount) {
+      const url = 'https://aremxyplug.onrender.com/api/v1/electric-bill';
+
+      const parsedPhone = parseInt(phone, 10);
+      const parsedAmount = parseInt(amount, 10);
+
+      const data = {
+        meter_type,
+        meter_no,
+        phone: parsedPhone, // Use the parsed integer value
+        email,
+        amount: parsedAmount, // Use the parsed integer value
+        disco_type: "EEDC",
+      };
+
+      console.log(data);
+
+      try {
+        const response = await axios.post(url, data);
+        console.log(response.data);
+        console.log(response.status);
+        setSelectedNetworkProduct(response.data.meter_type)
+        setMeterNumber(response.data.meter_no)
+        setPhoneNumber(response.data.phone)
+        setEmail(response.data.email)
+        setIkedcamount(response.data.amount)
+        // setRequestID(response.data.request_id)
+        setOrderId(response.data.order_id)
+        setTransactionId(response.data.transaction_id)
+        setServiceID(response.data.disco_type)
+        setShowDescription(response.data.description)
+        return { statusCode: response.status, data: response.data };
+        // console.log(response.data);
+      } catch (error) {
+        console.error(error);
+        return { statusCode: error.response.status, data: null };
+      }
+    }
+
+    // Usage
+    const response = await buyEEDC(
+      selectedNetworkProduct,
+      meterNumber,
+      phoneNumber,
+      ikedcEmail,
+      ikedcamount,
+    );
+
+    setInputPinPopUp(false);
+    if (response.statusCode === 200) {
+      // Success response
+      setSuccessPopup(true); // Show success popup
+    } else {
+      // Failure response
+      setFailedPopup(true) // Show failure popup
+    }
+  };
+
+  const [InputPinPopUp, setInputPinPopUp] = useState(false);
   const [inputPin, setInputPin] = useState("");
 
   const handle = () => {
     setInputPinPopUp(false);
     setProceed(true);
   };
-  
+
   const handleSwitch = () => {
     setInputPinPopUp(true);
     setProceed(false);
   };
 
-    
 
-    return ( 
 
-       <DashBoardLayout>
-        <div  className={` ${
-          isDarkMode
-            ? "bg-[#000] text-[#fff] border-[#fff]"
-            : "bg-[#ffffff] text-[#000] "
+  return (
+
+    <DashBoardLayout>
+      <div className={` ${isDarkMode
+        ? "bg-[#000] text-[#fff] border-[#fff]"
+        : "bg-[#ffffff] text-[#000] "
         }  flex flex-col w-full justify-between h-full `}>
-          <div>
-        {/* top part after nav bar */}
-        <div className="flex flex-row w-full pt-[10px]  h-[90px] md:h-[112.29px] lg:h-[196px] lg:px-[50px]  px-[16px] rounded-lg md:rounded-[11.5px] lg:rounded-[20px] justify-between  py-0 bg-gradient-to-r from-[#FFA733] via-[#58FF4A] to-[#98B0FF]">
-          <div className="flex flex-col gap-2  ">
-            <div className="text-[8px] font-[600]  pt-[10px] md:text-[11px] md:leading-[20.63px] lg:pt-[25px] lg:text-[24px] lg:leading-[36px] text-[#000000] leading-[12px]">
-            ELECTRICITY BILLS, PREPAID AND POSTPAID  <br /> PAYMENTS. 
+        <div>
+          {/* top part after nav bar */}
+          <div className="flex flex-row w-full pt-[10px]  h-[90px] md:h-[112.29px] lg:h-[196px] lg:px-[50px]  px-[16px] rounded-lg md:rounded-[11.5px] lg:rounded-[20px] justify-between  py-0 bg-gradient-to-r from-[#FFA733] via-[#58FF4A] to-[#98B0FF]">
+            <div className="flex flex-col gap-2  ">
+              <div className="text-[8px] font-[600]  pt-[10px] md:text-[11px] md:leading-[20.63px] lg:pt-[25px] lg:text-[24px] lg:leading-[36px] text-[#000000] leading-[12px]">
+                ELECTRICITY BILLS, PREPAID AND POSTPAID  <br /> PAYMENTS.
+              </div>
+              <div className="text-[8px] font-[400] leading-[9px] md:text-[10px] md:leading-[14.9px] lg:text-[20px] lg:leading-[26px] text-[#000000] ">
+                Recharge your metre and pay bills  with our electricity bills <br /> payment feature for both prepaid and postpaid metertypes.
+              </div>
             </div>
-            <div className="text-[8px] font-[400] leading-[9px] md:text-[10px] md:leading-[14.9px] lg:text-[20px] lg:leading-[26px] text-[#000000] ">
-            Recharge your metre and pay bills  with our electricity bills <br /> payment feature for both prepaid and postpaid metertypes.
+            <div>
+              <img
+                className="w-[55px] h-[70px] md:w-[151.9px] md:h-[85.9px] lg:w-[265px] lg:h-[150px]"
+                src={bulb}
+                alt=""
+              />{" "}
             </div>
           </div>
-          <div>
-            <img
-              className="w-[55px] h-[70px] md:w-[151.9px] md:h-[85.9px] lg:w-[265px] lg:h-[150px]"
-              src={bulb}
-              alt=""
-            />{" "}
-          </div>
-        </div>  
-        <div className=" flex lg:mt-[20px] text-[10px] lg:text-[16px] font-[600] pt-[30px] text-[#7E7E7E] items-center "> 
+          <div className=" flex lg:mt-[20px] text-[10px] lg:text-[16px] font-[600] pt-[30px] text-[#7E7E7E] items-center ">
             <div>Recharge</div>
-            <div><img className="w-[25px] ml-1"  src={logo} alt="" /></div>
+            <div><img className="w-[35px] lg:w-[130px] ml-1" src={logo} alt="" /></div>
             <div className=" ml-1">Enugu Electric Payment-IKEDC Meter Instantly</div>
             <div><img className="lg:w-[24px]" src={arrow} alt="" /></div>
 
-            </div>  
-            <div className="lg:flex lg:items-start ">
+          </div>
+          <div className="lg:flex lg:items-start ">
             <div className="bg-gradient-to-b mt-[10px] lg:mt-[15px] border-[1px] border-[] from-[#E2F3FF] font-[700] text-[10px] lg:text-[16px] lg:rounded-sm lg:py-2 text-center lg:px-3 py-1 to-[#FFF]">Enugu Electric Covers: Enugu State | Imo State | Abia State | Anambra State | Eboyin State.
-</div>
             </div>
-                
+          </div>
 
-        
-        <div className="text-[10px]  lg:text-[16px]  font-[600] mt-[20px] text-[#7E7E7E] "> Select <span className="text-[#04177F] font-[700]">Prepaid</span> MeterType if you load token on your meter.</div>
-        <div className="text-[10px]  lg:text-[16px]  font-[600] mt-[10px] text-[#7E7E7E] "> Select <span className="text-[#04177F] font-[700]">Postpaid</span> MeterType if you get a bill at the end of the month.</div>
 
-        {/* input sections */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-1 md:gap-6 lg:gap-6 items-center lg:mt-[20px] ">
-        <div className=" flex flex-col mt-[20px] gap-1">
-            <div className="text-[#7E7E7E] text-[10px] lg:text-[16px]  font-[600]">Select Meter Type</div>
-            <div
+
+          <div className="text-[10px]  lg:text-[16px]  font-[600] mt-[20px] text-[#7E7E7E] "> Select <span className="text-[#04177F] font-[700]">Prepaid</span> MeterType if you load token on your meter.</div>
+          <div className="text-[10px]  lg:text-[16px]  font-[600] mt-[10px] text-[#7E7E7E] "> Select <span className="text-[#04177F] font-[700]">Postpaid</span> MeterType if you get a bill at the end of the month.</div>
+
+          {/* input sections */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 md:gap-6 lg:gap-6 items-center lg:mt-[20px] ">
+            <div className=" flex flex-col mt-[20px] gap-1">
+              <div className="text-[#7E7E7E] text-[10px] lg:text-[16px]  font-[600]">Select Meter Type</div>
+              <div
                 className=" border-[1px] w-full h-[30px]  pl-[4px] pr-[8px]  lg:h-[51px] lg:pl-[14px] lg:pr-[16px] flex  items-center justify-between"
                 onClick={() => setShowProductList(!showProductList)}
               >
@@ -304,9 +366,8 @@ const EEDC = () => {
                   {productList.map((item) => (
                     <div
                       key={item.name}
-                      className={`cursor-pointer border-b-[0.5px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] w-[100%]  md:rounded-[0px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
-                        selectedNetworkProduct === item.name ? "bg-white" : ""
-                      }`}
+                      className={`cursor-pointer border-b-[0.5px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] w-[100%]  md:rounded-[0px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${selectedNetworkProduct === item.name ? "bg-white" : ""
+                        }`}
                       onClick={() => handleSelectProduct(item.name)}
                     >
                       {item.name}
@@ -314,144 +375,141 @@ const EEDC = () => {
                   ))}
                 </div>
               )}
-        </div>
+            </div>
 
-        <div className="flex flex-col mt-[10px] md:mt-[23px] lg:mt-[23px]">
-            <div className="text-[#7E7E7E] text-[10px] lg:text-[16px] font-[600] " >Meter Number</div>
-            <div>
-              <input type="number" value= { meterNumber } onChange={handleMeterNumber} className=" w-full text-[#7E7E7E] pl-[9px] lg:h-[51px] lg:text-[16px]  text-[10px] font-[500]  border-[1px] h-[30px]" />{" "}
-            </div>
-            {errors.meterNumber && (
-              <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                {errors.meterNumber}
+            <div className="flex flex-col mt-[10px] md:mt-[23px] lg:mt-[23px]">
+              <div className="text-[#7E7E7E] text-[10px] lg:text-[16px] font-[600] " >Meter Number</div>
+              <div>
+                <input type="number" value={meterNumber} onChange={handleMeterNumber} className=" w-full text-[#7E7E7E] pl-[9px] lg:h-[51px] lg:text-[16px]  text-[10px] font-[500]  border-[1px] h-[30px]" />{" "}
               </div>
-            )}
-        </div>
+              {errors.meterNumber && (
+                <div className="text-[12px] text-red-500 italic lg:text-[14px]">
+                  {errors.meterNumber}
+                </div>
+              )}
+            </div>
 
-        <div className="flex flex-col mt-[10px]">
-            <div className="text-[#7E7E7E] text-[10px] lg:text-[16px] font-[600]" >Verified Name</div>
-            <div>
-              <input type="text" value={ verifiedName } onChange={handleVerifiedName} className=" w-full text-[#7E7E7E] lg:h-[51px] lg:text-[16px]  text-[10px] pl-[9px] font-[500]  border-[1px] h-[30px]" />{" "}
-            </div>
-        </div>
-        <div className="flex flex-col mt-[10px]">
-            <div className="text-[#7E7E7E] text-[10px] lg:text-[16px] font-[600]" >Phone Number</div>
-            <div>
-              <input type="number" value={phoneNumber} onChange={handlePhoneNumber}  className=" w-full text-[#7E7E7E] lg:h-[51px] lg:text-[16px]  pl-[9px] text-[10px] font-[500]  border-[1px] h-[30px]" />
-            </div>
-            {errors.phoneNumber && (
-              <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                {errors.phoneNumber}
+            <div className="flex flex-col mt-[10px]">
+              <div className="text-[#7E7E7E] text-[10px] lg:text-[16px] font-[600]" >Verified Name</div>
+              <div>
+                <input type="text" value={verifiedName} onChange={handleVerifiedName} className=" w-full text-[#7E7E7E] lg:h-[51px] lg:text-[16px]  text-[10px] pl-[9px] font-[500]  border-[1px] h-[30px]" />{" "}
               </div>
-            )}
-        </div>
-        <div className="flex flex-col mt-[10px]">
-            <div className="text-[#7E7E7E] text-[10px] lg:text-[16px]   font-[600]" >Email</div>
-            <div>
-              <input type="text" value={ikedcEmail} onChange={handleEmail}  className=" w-full lg:h-[51px] text-[#7E7E7E] pl-[9px] lg:text-[16px] text-[10px] font-[500]  border-[1px] h-[30px]" />
             </div>
-            {errors.ikedcEmail && (
-              <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                {errors.ikedcEmail}
+            <div className="flex flex-col mt-[10px]">
+              <div className="text-[#7E7E7E] text-[10px] lg:text-[16px] font-[600]" >Phone Number</div>
+              <div>
+                <input type="number" value={phoneNumber} onChange={handlePhoneNumber} className=" w-full text-[#7E7E7E] lg:h-[51px] lg:text-[16px]  pl-[9px] text-[10px] font-[500]  border-[1px] h-[30px]" />
               </div>
-            )}
-        </div>
-        <div className="flex flex-col mt-[10px]">
-            <div className="text-[#7E7E7E] text-[10px] lg:text-[16px]  font-[600]" >Amount</div>
-            <div className="flex items-center lg:text-[16px] text-[#7E7E7E] text-[10px] pl-2 border-[1px]">
-            &#8358;
-              <input type="number" name="ikedcamount"  value={ikedcamount} onChange={handleIkedcAmount} className=" w-full outline-none lg:h-[51px] lg:text-[16px]  text-[#7E7E7E] pl-[9px] text-[10px] font-[500]   h-[30px]" />
+              {errors.phoneNumber && (
+                <div className="text-[12px] text-red-500 italic lg:text-[14px]">
+                  {errors.phoneNumber}
+                </div>
+              )}
             </div>
-        </div>
+            <div className="flex flex-col mt-[10px]">
+              <div className="text-[#7E7E7E] text-[10px] lg:text-[16px]   font-[600]" >Email</div>
+              <div>
+                <input type="text" value={ikedcEmail} onChange={handleEmail} className=" w-full lg:h-[51px] text-[#7E7E7E] pl-[9px] lg:text-[16px] text-[10px] font-[500]  border-[1px] h-[30px]" />
+              </div>
+              {errors.ikedcEmail && (
+                <div className="text-[12px] text-red-500 italic lg:text-[14px]">
+                  {errors.ikedcEmail}
+                </div>
+              )}
+            </div>
+            <div className="flex flex-col mt-[10px]">
+              <div className="text-[#7E7E7E] text-[10px] lg:text-[16px]  font-[600]" >Amount</div>
+              <div className="flex items-center lg:text-[16px] text-[#7E7E7E] text-[10px] pl-2 border-[1px]">
+                &#8358;
+                <input type="number" name="ikedcamount" value={ikedcamount} onChange={handleIkedcAmount} className=" w-full outline-none lg:h-[51px] lg:text-[16px]  text-[#7E7E7E] pl-[9px] text-[10px] font-[500]   h-[30px]" />
+              </div>
+            </div>
 
-        <div className=" flex flex-col mt-[20px] gap-1">
-            <div className="text-[#7E7E7E] text-[10px] lg:text-[16px]  font-[600]">Payment Method</div>
-            <div
+            <div className=" flex flex-col mt-[20px] gap-1">
+              <div className="text-[#7E7E7E] text-[10px] lg:text-[16px]  font-[600]">Payment Method</div>
+              <div
                 className=" border-[1px] w-full h-[30px]  pl-[4px] pr-[8px] lg:h-[51px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between"
                 onClick={() => setShowList(!showList)}
               >
                 <p></p>
-                 {selected ? (
-              <div className="flex w-[100%] justify-between items-center">
-                
-                <p className="text-[10px] text-[#7E7E7E] font-extrabold lg:text-[14px]">
-                  {" "}
-                  {globalCountry}
-                </p>
-                <img
-                  className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
-                  src={flag}
-                  alt=""
-                />
-              </div>
-            ) : (
-              
-              <img
-              className=" h-[13.3px] w-[13.3px] lg:w-[24px] lg:h-[24px]  "
-              src="./Images/dashboardImages/arrow-down2.png"
-              alt="dropdown"
-            />
-              
-            )}
-            
-           
-          </div>
-          {globalTransferErrors.country && (
-            <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-              {globalTransferErrors.country}
-            </div>
-          )}
-              {showList && (
-            <div
-              className={`${
-                toggleSideBar
-                  ? "lg:w-[31.5%] lg:top-[100.5%]"
-                  : "lg:w-[38.5%] lg:top-[105.3%]"
-              }  ${
-                styles.countryDropDown
-              } rounded-br-[7px] rounded-bl-[7px] shadow-xl bg-[#fff] border w-[100%] lg:w-full lg:rounded-br-[14px] lg:rounded-bl-[14px]`}
-            >
-              {" "}
-              {countryList.map((country) => (
-                <div
-                  className=" cursor-pointer border-b flex items-center p-2 gap-[5px] text-[9px]  md:text-[14px] lg:text-[16px]"
-                  key={country.id}
-                  onClick={() =>
-                    handleCountryClick(
-                      country.name,
-                      country.flag,
-                      country.id,
-                      country.code
-                    )
-                  }
-                >
-                  <img
-                    className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
-                    src={country.flag}
-                    alt="/"
-                  />
-                  {country.name}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+                {selected ? (
+                  <div className="flex w-[100%] justify-between items-center">
 
-        </div>
-        <div
+                    <p className="text-[10px] text-[#7E7E7E] font-extrabold lg:text-[14px]">
+                      {" "}
+                      {globalCountry}
+                    </p>
+                    <img
+                      className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
+                      src={flag}
+                      alt=""
+                    />
+                  </div>
+                ) : (
+
+                  <img
+                    className=" h-[13.3px] w-[13.3px] lg:w-[24px] lg:h-[24px]  "
+                    src="./Images/dashboardImages/arrow-down2.png"
+                    alt="dropdown"
+                  />
+
+                )}
+
+
+              </div>
+              {globalTransferErrors.country && (
+                <div className="text-[12px] text-red-500 italic lg:text-[14px]">
+                  {globalTransferErrors.country}
+                </div>
+              )}
+              {showList && (
+                <div
+                  className={`${toggleSideBar
+                    ? "lg:w-[31.5%] lg:top-[100.5%]"
+                    : "lg:w-[38.5%] lg:top-[105.3%]"
+                    }  ${styles.countryDropDown
+                    } rounded-br-[7px] rounded-bl-[7px] shadow-xl bg-[#fff] border w-[100%] lg:w-full lg:rounded-br-[14px] lg:rounded-bl-[14px]`}
+                >
+                  {" "}
+                  {countryList.map((country) => (
+                    <div
+                      className=" cursor-pointer border-b flex items-center p-2 gap-[5px] text-[9px]  md:text-[14px] lg:text-[16px]"
+                      key={country.id}
+                      onClick={() =>
+                        handleCountryClick(
+                          country.name,
+                          country.flag,
+                          country.id,
+                          country.code
+                        )
+                      }
+                    >
+                      <img
+                        className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
+                        src={country.flag}
+                        alt="/"
+                      />
+                      {country.name}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+          </div>
+          <div
             onClick={handleProceed}
             className={`text-[12px] mt-[30px] md:mt-[40px] bg-[#0008] md:w-fit lg:px-12 lg:text-[16px] lg:px md:py-1 md:rounded-md md:px-6   py-3 rounded-md font-[600] text-center text-white
-            ${
-              !meterNumber ||
-              !verifiedName ||
-              !phoneNumber ||
-              !ikedcEmail ||
-              !selectedNetworkProduct ||
-              !selected ||
-              !ikedcamount
+            ${!meterNumber ||
+                !verifiedName ||
+                !phoneNumber ||
+                !ikedcEmail ||
+                !selectedNetworkProduct ||
+                !selected ||
+                !ikedcamount
                 ? "bg-[#63616188] cursor-not-allowed"
                 : "bg-primary"
-            }`}
+              }`}
             disabled={
               !meterNumber ||
               !verifiedName ||
@@ -464,29 +522,28 @@ const EEDC = () => {
           >
             Proceed
           </div>
-          </div>
-          <footer className="flex justify-center text-center gap-[20px] mt-[200px] pb-[10%] md:mt-[750px]  lg:mt-[850px]">
-            <p className="text-[8px] md:text-[12px] lg:text-[20px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
-              You need help?
-            </p>
+        </div>
+        <footer className="flex justify-center text-center gap-[20px] mt-[200px] pb-[10%] md:mt-[750px]  lg:mt-[850px]">
+          <p className="text-[8px] md:text-[12px] lg:text-[20px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
+            You need help?
+          </p>
 
-            <Link to="/ContactUs">
-              <div
-                className={`${
-                  isDarkMode ? "border " : "bg-[#04177f]"
+          <Link to="/ContactUs">
+            <div
+              className={`${isDarkMode ? "border " : "bg-[#04177f]"
                 } text-[8px] p-1 text-white rounded-[8px] lg:text-[18px]`}
-              >
-                Contact Us
-              </div>
-            </Link>
-          </footer>
-          </div>
-          {/* Confirmation Transaction Popup */}
-          {proceed && (
-            <Modal>
-              <div
-            className={`${styles.transferMoneyPop} ${
-              toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+            >
+              Contact Us
+            </div>
+          </Link>
+        </footer>
+      </div>
+
+      {/* Confirmation Transaction Popup */}
+      {proceed && (
+        <Modal>
+          <div
+            className={`${styles.transferMoneyPop} ${toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
               } w-[90%] md:w-[60%] overflow-auto`}
           >
             <img
@@ -515,9 +572,9 @@ const EEDC = () => {
               <div className="flex text-[10px] md:text-[14px] pt-[10px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Disco Type</p>
                 <span className="flex items-center gap-1 ">
-                  <div><img className="w-[25px]" src={logo} alt="" /></div>
+                  <div><img className="w-[30px]" src={logo} alt="" /></div>
                   <div>Enugu-EEDC</div>
-                  </span>
+                </span>
               </div>
               <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Meter Type</p>
@@ -578,17 +635,16 @@ const EEDC = () => {
               Confirmed
             </button>
           </div>
-            </Modal>
-          )}
+        </Modal>
+      )}
 
 
-          {/* Input pin pop up */}
+      {/* Input pin pop up */}
       {InputPinPopUp && (
         <Modal>
           <div
-            className={`${styles.inputPin} ${
-              toggleSideBar ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
-            } md:w-[55%] w-[90%]`}
+            className={`${styles.inputPin} ${toggleSideBar ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
+              } md:w-[55%] w-[90%]`}
           >
             <img
               onClick={handle}
@@ -639,9 +695,8 @@ const EEDC = () => {
             <button
               disabled={inputPin.length !== 4 ? true : false}
               onClick={handleSuccess}
-              className={`${
-                inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
-              } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+              className={`${inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
+                } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
             >
               Purchase
             </button>
@@ -654,9 +709,8 @@ const EEDC = () => {
       {successPopup && (
         <Modal>
           <div
-            className={`${styles.successfulTwo} ${
-              toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-            } md:w-[45%] w-[90%] overflow-auto`}
+            className={`${styles.successfulTwo} ${toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+              } md:w-[45%] w-[90%] overflow-auto`}
           >
             <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
               <img
@@ -685,11 +739,11 @@ const EEDC = () => {
             <p className="text-[8px] lg:text-[16px] font-[500] text-[#000] text-center mb-2 md:text-[14px] ">
               You have successfully Purchased{" "}
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
-               Enugu {selectedNetworkProduct} Meter
+                Enugu {selectedNetworkProduct} Meter
               </span>{" "}
-             <br></br>
+              <br></br>
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
-                ( &#8358;{ikedcamount}){" "}
+                (&#8358;{ikedcamount}){" "}
               </span>
               From your NGN Nigerian Wallet to{" "}
             </p>
@@ -698,9 +752,9 @@ const EEDC = () => {
               <div className="flex text-[10px] md:text-[14px] pt-[10px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Disco Type</p>
                 <span className="flex items-center gap-1 ">
-                  <div><img className="w-[25px]" src={logo} alt="" /></div>
-                  <div>Enugu-EEDC</div>
-                  </span>
+                  <div><img className="w-[30px]" src={logo} alt="" /></div>
+                  <div>{serviceID}</div>
+                </span>
               </div>
               <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Meter Type</p>
@@ -718,7 +772,7 @@ const EEDC = () => {
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Phone Number</p>
-                <span>{phoneNumber}</span>
+                <span>0{phoneNumber}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Email</p>
@@ -741,11 +795,11 @@ const EEDC = () => {
 
             <div className="bg-[#F2FAFF] mx-10 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
               <p className="text-[6px] text-center mx-auto w-[171px] md:text-[14px] md:w-[80%] lg:text-[14px]">
-              The electricity bills / token purchase has been generated successfully. Please kindly check receipt
-               to confirm the bills / token. You can contact us for any further assistance.
+                The electricity bills / token purchase has been generated successfully. Please kindly check receipt
+                to confirm the bills / token. You can contact us for any further assistance.
               </p>
             </div>
-            <div className="flex w-[70%] mx-auto my-6  items-center gap-[6%] md:gap-[20px] justify-center md:w-[20%] lg:my-[5%]">
+            <div className="flex w-[70%] mx-auto items-center my-6  gap-[6%] md:gap-[20px] justify-center md:w-[20%] lg:my-[5%]">
               <button
                 onClick={() => {
                   setSuccessPopup(false);
@@ -754,7 +808,17 @@ const EEDC = () => {
               >
                 Done
               </button>
-              <Link to="/eedc-receipt">
+              <Link to="/eedc-receipt" state={{
+                selectedNetworkProduct: selectedNetworkProduct,
+                meterNumber: meterNumber,
+                phoneNumber: phoneNumber,
+                ikedcEmail: ikedcEmail,
+                ikedcamount: ikedcamount,
+                orderId: orderId,
+                transactionId: transactionId,
+                serviceID: serviceID,
+                showDescription: showDescription,
+              }}>
                 <button
                   onClick={() => {
                     setSuccessPopup(false);
@@ -769,8 +833,76 @@ const EEDC = () => {
         </Modal>
       )}
 
-       </DashBoardLayout>
-     );
+      {/* purchase Failed Popup */}
+      {failedPopup && (
+        <Modal>
+          <div
+            className={`${styles.successfulTwo} ${toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+              } md:w-[45%] w-[90%] overflow-auto`}
+          >
+            <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
+              <img
+                onClick={() => setFailedPopup(false)}
+                className=" w-[18px]   md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[25px]"
+                src="/Images/login/arpLogo.png"
+                alt=""
+              />
+
+              <img
+                onClick={() => setFailedPopup(false)}
+                className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
+                src="/Images/transferImages/close-circle.png"
+                alt=""
+              />
+            </div>
+            <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
+            <h2 className="text-[12px] my-[5%] text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%]">
+              Transaction Failed
+            </h2>
+            <img
+              className="w-[120px] h-[120px] mx-auto my-[10%] lg:w-[150px] lg:h-[150px]"
+              src="./Images/failed.png"
+              alt="/"
+            />
+            <p className="text-[10px] text-[#0008] mx-[10px] text-center my-[60px] md:text-[14px] lg:text-[12px]">
+              An unexpected error has occurred, please try again.
+            </p>
+            <div className="flex w-[70%] mx-auto items-center my-6  gap-[6%] md:gap-[20px] justify-center md:w-[20%] lg:my-[5%]">
+              <button
+                onClick={() => {
+                  setFailedPopup(false);
+                }}
+                className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:px-[50px] md:w-[70%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+              >
+                Done
+              </button>
+              <Link to="/eedc-receipt-failed" state={{
+                selectedNetworkProduct: selectedNetworkProduct,
+                meterNumber: meterNumber,
+                phoneNumber: phoneNumber,
+                ikedcEmail: ikedcEmail,
+                ikedcamount: ikedcamount,
+                orderId: orderId,
+                transactionId: transactionId,
+                serviceID: serviceID,
+                showDescription: showDescription,
+              }}>
+                <button
+                  onClick={() => {
+                    setFailedPopup(false);
+                  }}
+                  className={`border-[1px] w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                >
+                  Receipt
+                </button>
+              </Link>
+            </div>
+          </div>
+        </Modal>
+      )}
+
+    </DashBoardLayout>
+  );
 }
- 
+
 export default EEDC;
