@@ -168,6 +168,17 @@ import { MtnFailedReceipt } from "./Components/Dashboard/DashboardComponents/Dat
 import { AirtelFailedReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/AirtelDataBundle/AirtelFailedReceipt";
 import { GloFailedReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/GloDataBundle/GloFailedReceipt";
 import { EtisalatFailedReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/EtisalatDataBundle/9MobileFailedReceipt";
+import { BedcReceiptFailed } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/bedcReceiptFailed";
+import { AedcReceiptFailed } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/aedcReceiptFailed";
+import { EedcReceiptFailed } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/eedcReceiptFailed";
+import { EkedcReceiptFailed } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/ekedcReceiptFailed";
+import { IbedcReceiptFailed } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/ibedcReceiptFailed";
+import { IkedcReceiptFailed } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/IkedcReceiptFailed";
+import { JedReceiptFailed } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/jedReceiptFailed";
+import { KaedcoReceiptFailed } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/kaedcoReceiptFailed";
+import { KedcoReceiptFailed } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/kedcoReceiptFailed";
+import { PhedReceiptFailed } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/phedReceiptFailed";
+
 export const Router = () => {
   return (
     <div>
@@ -288,16 +299,26 @@ export const Router = () => {
           element={<InternationalReceipt />}
         />
         <Route path="/redeem-receipt" element={<RedeemReceipt />} />
-        <Route path="/ikedec-receipt" element={<IkedcReceipt />} />
+        <Route path="/ikedc-receipt" element={<IkedcReceipt />} />
+        <Route path="/ikedc-receipt-failed" element={<IkedcReceiptFailed />} />
         <Route path="/aedc-receipt" element={<AedcReceipt />} />
+        <Route path="/aedc-receipt-failed" element={<AedcReceiptFailed />} />
         <Route path="/ekedc-receipt" element={<EkedcReceipt />} />
+        <Route path="/ekedc-receipt-failed" element={<EkedcReceiptFailed />} />
         <Route path="/eedc-receipt" element={<EedcReceipt />} />
+        <Route path="/eedc-receipt-failed" element={<EedcReceiptFailed />} />
         <Route path="/kaedco-receipt" element={<KaedcoReceipt />} />
+        <Route path="/kaedco-receipt-failed" element={<KaedcoReceiptFailed />} />
         <Route path="/bedc-receipt" element={<BedcReceipt />} />
+        <Route path="/bedc-receipt-failed" element={<BedcReceiptFailed />} />
         <Route path="/ibedc-receipt" element={<IbedcReceipt />} />
+        <Route path="/ibedc-receipt-failed" element={<IbedcReceiptFailed />} />
         <Route path="/jed-receipt" element={<JedReceipt />} />
+        <Route path="/jed-receipt-failed" element={<JedReceiptFailed />} />
         <Route path="/kedco-receipt" element={<KedcoReceipt />} />
+        <Route path="/kedco-receipt-failed" element={<KedcoReceiptFailed />} />
         <Route path="/phed-receipt" element={<PhedReceipt />} />
+        <Route path="/phed-receipt-failed" element={<PhedReceiptFailed />} />
         <Route path="/bedc" element={<BEDC />} />
         <Route path="/phed" element={<PHED />} />
         <Route path="/kedco" element={<KEDCO />} />

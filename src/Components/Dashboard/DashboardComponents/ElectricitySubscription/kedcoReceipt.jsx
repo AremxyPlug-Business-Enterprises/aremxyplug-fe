@@ -7,25 +7,19 @@ import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import logo2 from "../ElectricitySubscription/Electricity-sub-images/kedco-logo 1.svg"
+import { useLocation } from 'react-router-dom';
 
 export const KedcoReceipt = () => {
+
+  const location = useLocation()
+  const { selectedNetworkProduct, meterNumber, phoneNumber, ikedcEmail, ikedcamount, serviceID, orderId, transactionId, showDescription  } = location.state
+
   const {
     toggleSideBar,
     isDarkMode,
-    date,
-    selectedNetworkProduct,
-    ikedcamount,
-    meterNumber,
-    verifiedName,
-    ikedcEmail,
-    phoneNumber,
-    
+    date,   
+    verifiedName, 
   } = useContext(ContextProvider);
-
-  const handleClear = () =>{
-    selectedNetworkProduct('');
-    
-  }
 
   const contentRef = useRef(null);
 
@@ -67,14 +61,14 @@ export const KedcoReceipt = () => {
           } w-full lg:mx-auto`}
         >
           <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
-            <Link onClick={handleClear} to="/electricity-subscription">
+            <Link to="/">
               <img
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[29px]"
                 src="/Images/login/arpLogo.png"
                 alt=""
               />
             </Link>
-            <Link onClick={handleClear} to="/electricity-subscription">
+            <Link to="/electricity-subscription">
               {" "}
               <img
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
@@ -117,7 +111,7 @@ export const KedcoReceipt = () => {
               </span>{" "}
              <br></br>
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
-                ( &#8358;{ikedcamount}){" "}
+                (&#8358;{ikedcamount}){" "}
               </span>
               From your NGN Nigerian Wallet to{" "}
             </p>
@@ -138,8 +132,8 @@ export const KedcoReceipt = () => {
               <div className="flex text-[10px] md:text-[14px] pt-[10px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Disco Type</p>
                 <span className="flex items-center gap-1 ">
-                  <div><img className="w-[20px]" src={logo2} alt="" /></div>
-                  <div>Kano-KEDCO</div>
+                  <div><img className="w-[30px]" src={logo2} alt="" /></div>
+                  <div>{serviceID}</div>
                   </span>
               </div>
               <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -158,7 +152,7 @@ export const KedcoReceipt = () => {
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Phone Number</p>
-                <span>{phoneNumber}</span>
+                <span>0{phoneNumber}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Email</p>
@@ -166,7 +160,7 @@ export const KedcoReceipt = () => {
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Amount</p>
-                <span> &#8358;{ikedcamount}</span>
+                <span>&#8358;{ikedcamount}</span>
               </div>
               
             </div>
@@ -214,7 +208,7 @@ export const KedcoReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Description</p>
-                  <span>Kano {selectedNetworkProduct} </span>
+                  <span>{showDescription}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Bill / Token Generated</p>
@@ -222,11 +216,11 @@ export const KedcoReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Order Number</p>
-                  <span>1256478999</span>
+                  <span>{orderId}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Transaction ID</p>
-                  <span>0331njokdhtf55</span>
+                  <span>{transactionId}</span>
                 </div>
                 
               </div>

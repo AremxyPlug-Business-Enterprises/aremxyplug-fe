@@ -6,10 +6,10 @@ import { DashBoardLayout } from "../../Layout/DashBoardLayout";
 import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-import logo2 from "../ElectricitySubscription/Electricity-sub-images/1584714918161-ekedc-logo 1.svg"
+import logo2 from "../ElectricitySubscription/Electricity-sub-images/ibedc-logo 1.svg"
 import { useLocation } from 'react-router-dom';
 
-export const EkedcReceipt = () => {
+export const IbedcReceiptFailed = () => {
 
   const location = useLocation()
   const { selectedNetworkProduct, meterNumber, phoneNumber, ikedcEmail, ikedcamount, serviceID, orderId, transactionId, showDescription  } = location.state
@@ -91,7 +91,7 @@ export const EkedcReceipt = () => {
               />
             </div>
             <h3 className="font-extrabold text-[12px] mt-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
-              Purchase Successful on
+              Purchase Failed on
             </h3>
             <span className="text-[8px] text-[#0008] pt-1 font-extrabold flex justify-center items-center">
               {date.toLocaleDateString(undefined, {
@@ -104,16 +104,8 @@ export const EkedcReceipt = () => {
                 hour12: true,
               })}
             </span>
-            <p className="text-[8px] lg:text-[16px] font-[500] text-[#000] text-center mb-2 md:text-[14px] ">
-              You have successfully Purchased{" "}
-              <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
-               Eko {selectedNetworkProduct} Meter
-              </span>{" "}
-             <br></br>
-              <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
-                (&#8358;{ikedcamount}){" "}
-              </span>
-              From your NGN Nigerian Wallet to{" "}
+            <p className="text-[9px] text-[#F95252] bg-[#FDCECE] rounded-[11px] border-2 border-[#F95252] py-[5px] px-[2px] text-center mx-[3px] lg:mx-[130px] md:mx-[80px] my-2 md:text-[14px] lg:text-[14px]">
+                    Purchase Failed due to an unexpected error that occured. Please try again.
             </p>
 
 
