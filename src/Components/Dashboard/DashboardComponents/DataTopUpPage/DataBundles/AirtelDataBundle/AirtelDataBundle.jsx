@@ -27,7 +27,7 @@ import airtimestyles from "../../../../../AirTimePage/AirtimeVtu.module.css";
 import axios from "axios";
 import Spinner from "./../MtnDataTopUpBundle/Spinner";
 import Failed from "./../MtnDataTopUpBundle/MtnDataTopUpBundleImages/Failed.svg"
-
+import { AirtelFailedReceipt } from "./AirtelFailedReceipt";
 
 
 const AirtelDataBundle = () => {
@@ -53,11 +53,10 @@ const AirtelDataBundle = () => {
   const [image, setImage] = useState("");
   const [paymentAmount, setPaymentAmount] = useState("");
   const [codes, setCodes] = useState(false);
-  const [plan, setPlan] = useState(false);
+  const [plan, setPlan] = useState("");
   const [loading, setLoading] = useState("");
   const [airtelpurchaseStatus, setAirtelPurchaseStatus] = useState(null); // State to hold purchase status
-  const [receiptData, setReceiptData] = useState(null); // State to hold receipt data
-  const [proceedToShowReceipt, setProceedToShowReceipt] = useState(false);
+  const [proceedToShowReceipt] = useState(false);
 
 
 
@@ -162,11 +161,11 @@ const AirtelDataBundle = () => {
     setTransactSuccessPopUp(false);
   };
 
-  if (addRecipient) {
-    console.log("recipient added");
-  } else {
-    console.log("did not add recipient");
-  }
+  // if (addRecipient) {
+  //   console.log("recipient added");
+  // } else {
+  //   console.log("did not add recipient");
+  // }
 
   const productList = [
     {
@@ -240,21 +239,6 @@ const AirtelDataBundle = () => {
 
   const [inputValue, setInputValue] = useState("");
 
-  const handleChange = (e) => {
-    const value = e.target.value;
-
-    const numericValue = value.replace(/\D/g, "").slice(0, 11);
-
-    setInputValue(numericValue);
-
-    if (numericValue.length === 11) {
-      validatePhoneNumber(numericValue);
-    } else {
-      // Clear any previous errors if the input length is less than 11
-      setErrors({});
-    }
-  };
-
   const schema = Joi.object({
     recipientPhoneNumber: Joi.string()
       .pattern(new RegExp(/^\d{11,}/))
@@ -264,72 +248,88 @@ const AirtelDataBundle = () => {
       }),
   });
 
+  const airtelRegex =
+      /^(234|0)(802[0-9]|701[0-9]|708[0-9]|808[0-9]|812[0-9]|901[0-9]|902[0-9]|904[0-9]|907[0-9]|912[0-9]|911[0-9])\d{6}$/;
+
+   
   const validatePhoneNumber = (phoneNumber) => {
-    const airtelRegex =
-      /^(234|0)(802[1-9]|701[0-9]|708[1-9]|808[1-9]|812[1-9]|901[1-9]|902[1-9]|904[1-9]|907[1-9]|912[1-9]|911[1-9])\d{6}$/;
-
-    const { error } = schema.validate({ recipientPhoneNumber: phoneNumber });
-
-    if (error) {
-      setErrors(
-        error.details.reduce((acc, curr) => {
-          acc[curr.path[0]] = curr.message;
-          return acc;
-        }, {})
-      );
-    } else if (!airtelRegex.test(phoneNumber)) {
-      setErrors({
-        recipientPhoneNumber:
-          "Invalid AIRTEL number. Please enter a valid AIRTEL number.",
-      });
-    } else {
-      setErrors({});
-    }
-  };
+        if (!phoneNumber) {
+          return "Phone number is required";
+        }
+      
+        if (!airtelRegex.test(phoneNumber)) {
+          return "Invalid AIRTEL number. Please enter a valid AIRTEL number.";
+        }
+      
+        return null; // No error
+      };
 
 
-  const handleProceed = (e) => {
-    // setProceed(true);
-    // e.preventDefault();
+  const handleChange = (e) => {
+        const value = e.target.value;
+        const numericValue = value.replace(/\D/g, "").slice(0, 11);
+        setInputValue(numericValue);
+      
+        // Validate phone number if it's complete
+        if (numericValue.length === 11) {
+          const error = validatePhoneNumber(numericValue);
+          if (error) {
+            setErrors({ recipientPhoneNumber: error });
+          } else {
+            setErrors({});
+          }
+        } else {
+          // Clear any previous errors if the input length is less than 11
+          setErrors({});
+        }
+      };
+    
+    
+    
+      const handleProceed = (e) => {
+        e.preventDefault();
+    
+        function validateNigerianNumberByNetwork(number) {
+            const networks = {
+              'AIRTEL': ['0701', '0708', '0802', '0808', '0812', '0901', '0902', '0904', '0907', '0912', '0911'],
+            };
+    
+            for (let network in networks) {
+                for (let prefix of networks[network]) {
+                    if (number.startsWith(prefix) && number.length === prefix.length + 7) {
+                        return network;
+                    }
+                }
+            }
+    
+            return 'Unknown network';
+        }
+    
+        const { error } = schema.validate({
+            recipientPhoneNumber,
+        });
+    
+        if (error) {
+            setErrors(
+                error.details.reduce((acc, curr) => {
+                    acc[curr.path[0]] = curr.message;
+                    return acc;
+                }, {})
+            );
+        } else if (validateNigerianNumberByNetwork(recipientPhoneNumber) !== 'AIRTEL') {
+            setErrors({
+                recipientPhoneNumber:
+                    `Invalid AIRTEL number. Please enter a valid AIRTEL number.`,
+            });
+        } else {
+            setProceed(true);
+            setErrors({});
+        }
+    };
 
-    // Regular expression for MTN numbers (adjust as needed)
-    const airtelRegex =
-    /^(234|0)(802[1-9]|701[0-9]|708[1-9]|808[1-9]|812[1-9]|901[1-9]|902[1-9]|904[1-9]|907[1-9]|912[1-9]|911[1-9])\d{6}$/;
 
-    const { error } = schema.validate({
-      recipientPhoneNumber,
-    });
 
-    if (error) {
-      setErrors(
-        error.details.reduce((acc, curr) => {
-          acc[curr.path[0]] = curr.message;
-          return acc;
-        }, {})
-      );
-    } else if (!airtelRegex.test(recipientPhoneNumber)) {
-      setErrors({
-        recipientPhoneNumber:
-          "Invalid AIRTEL number. Please enter a valid AIRTEL number.",
-      });
-    } else {
-      setProceed(true);
-      setErrors({});
-      // sendDataToBackend(1, recipientPhoneNumber, plan, recipientNames);
-    }
-  };
 
-  const inputPinHandler = async (e) => {
-    setInputPin(e.target.value);
-    await sendDataToBackend(2, recipientPhoneNumber, plan, recipientNames); // Wait for sendDataToBackend to complete
-    // Now that sendDataToBackend has completed, setTransactSuccessPopUp can be executed
-    // setTransactSuccessPopUp(true);
-    if (airtelpurchaseStatus === "failed") {
-      setAirtelPurchaseStatus("failed");
-    } else {
-      console.log("its me");
-    }
-  };
   
   const handleRecipientNameChange = (e) => {
     setRecipientNames(e.target.value);
@@ -339,61 +339,87 @@ const AirtelDataBundle = () => {
     setTransactSuccessPopUp(false);
   };
 
-  console.log("confirm:", confirm);
+  // console.log("confirm:", confirm);
 
-  const sendDataToBackend = async (network, mobileNumber, plan, name) => {
-    const apiUrl = "https://aremxyplug.onrender.com/api/v1/data";
 
-    // Prepare the data to be sent in the request body
-    const requestData = {
-      network,
-      mobile_number: mobileNumber,
-      plan,
-      name,
-    };
+  const [airteltransactionID, setAirtelTransactionID] = useState("");
+  const [airtelorderID, setAirtelOrderID] = useState("");
+  const [airtelrefNumber, setAirtelRefNumber] = useState("");
+  const [airteldescription, setAirtelDescription] = useState("");
 
-    console.log(requestData);
+  const inputPinHandler = async () => {
+    async function buyData(network, mobileNumber, plan, name) {
+      const url = 'https://aremxyplug.onrender.com/api/v1/data';
 
-    try {
-      setLoading(true);
-      // Send a POST request to the backend API using Axios
-      const response = await axios.post(apiUrl, requestData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      setLoading(false);
+      const data = {
+        network,
+        mobile_number: mobileNumber,
+        plan,
+        name,
+      };
 
-      console.log({ response });
-      console.log("code got here");
 
-      if (response.status === 200 && response.status <= 299) {
-        setAirtelPurchaseStatus("paid");
-        setReceiptData(response.data);
-        setTransactSuccessPopUp(true);
+      setLoading(true)
+
+
+      console.log(data)
+      console.log("its me")
+
+      try {
+          const response = await axios.post(url, data);
+          console.log(response.data);
+          console.log(response.status);
+          // setSelectedNetworkProduct(response.data.product)
+          // console.log(response.data.product)
+          setPlan(response.data.plan_name)
+          console.log(response.data.plan_name)
+          setInputValue(response.data.Phone_Number)
+          console.log(response.data.Phone_Number)
+          setRecipientPhoneNumber(data.Phone_number)
+          console.log(data.Phone_number)
+          console.log(inputValue)
+          console.log(recipientPhoneNumber)
+          setRecipientNames(response.data.Name)
+          console.log(response.data.Name)
+          setSelectedAmount(response.data.plan_amount)
+          console.log(response.data.plan_amount)
+          setAirtelTransactionID(response.data.transaction_id)
+          console.log(response.data.transaction_id)
+          setAirtelRefNumber(response.data.reference_number)
+          console.log(response.data.reference_number)
+          setAirtelOrderID(response.data.order_id)
+          console.log(response.data.order_id)
+          // setMtnDescription(response.data.description)
+          // console.log(response.data.description)
+          return { statusCode: response.status, data: response.data };
+          // console.log(response.data);
+      } catch (error) {
+          console.error(error);
+          return { statusCode: error.response.status, data: null };
       }
-      // Handle the response from the backend
-      console.log("Backend response:", response.data);
-    } catch (error) {
-      setLoading(false);
-      setAirtelPurchaseStatus("failed");
-      console.log(error)
+  }
 
-      // Handle any errors that occurred during the request
-      switch (error?.response?.status) {
-        case 401:
-          alert("unauthorised");
-          break;
-        case 500:
-          // alert("Transaction failed. Please try again.")
-          setAirtelPurchaseStatus("failed");
-          break;
-        default:
-          // alert("Transaction failed!");
-          console.log("Transaction Failed")
+  // usage
+  const response = await buyData(
+    4, recipientPhoneNumber, plan, recipientNames
+  );
 
-      }
-    }
+  console.log(response)
+  console.log("its me 1")
+
+  setLoading(false)
+
+
+
+  setConfirm(false);
+  if (response.statusCode === 200) {
+      // Success response
+      setTransactSuccessPopUp(true); // Show success popup
+  } else {
+      // Failure response
+      setAirtelPurchaseStatus(true); // Show failure popup
+  }
+
   };
 
   // sendDataToBackend(2, inputValue, plan, recipientNames);
@@ -996,7 +1022,7 @@ const AirtelDataBundle = () => {
           )}
 
 
-{airtelpurchaseStatus === "failed" && (
+{airtelpurchaseStatus && (
             <Modal>
               <div
                 className={` ${
@@ -1037,10 +1063,25 @@ const AirtelDataBundle = () => {
                     Done
                   </button>
 
-                  <Link to="/Mtnreceipt">
+                  <Link to="/AirtelFailedReceipt" 
+                  state={{
+                    networkName: "AIRTEL",
+                    selectedNetworkProduct: selectedNetworkProduct,
+                    selectedOption: selectedOption,
+                    recipientPhoneNumber: recipientPhoneNumber,
+                    inputValue: inputValue,
+                    recipientNames: recipientNames,
+                    selectedAmount: selectedAmount,
+                    airteltransactionID: airteltransactionID,
+                    airtelrefNumber: airtelrefNumber,
+                    airtelorderID: airtelorderID,
+                    airteldescription: airteldescription,
+                   
+                }}
+                  >
                     <button
-                      onClick={(e) => {
-                        e.preventDefault();
+                      onClick={() => {
+                        // e.preventDefault();
                         // setTransaction(false);
                         setAirtelPurchaseStatus(null);
                         // setProceedToShowReceipt(purchaseStatus === "paid" || purchaseStatus === "failed");
@@ -1115,10 +1156,10 @@ const AirtelDataBundle = () => {
                 </div>
 
                 <button
-                  onClick={(e) => {
-                    e.preventDefault();
+                  onClick={() => {
+                    // e.preventDefault();
                     setConfirm(false);
-                    inputPinHandler(e);
+                    inputPinHandler();
                   }}
                   disabled={inputPin.length !== 4}
                   className={`${
@@ -1247,7 +1288,7 @@ const AirtelDataBundle = () => {
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        {selectedAmount}
+                      &#8358;{selectedAmount}
                       </h2>
                     </div>
                   </div>
@@ -1262,7 +1303,7 @@ const AirtelDataBundle = () => {
                       </h2>
                     </div>
                   </div>
-
+                  
                   <div className="flex items-center justify-between">
                     <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
                       Order Number
@@ -1296,7 +1337,18 @@ const AirtelDataBundle = () => {
                     </button>
                   </Link>
 
-                  <Link to="/AirtelReceipt">
+                  <Link to="/AirtelReceipt"
+                  state={{
+                    selectedNetworkProduct: selectedNetworkProduct,
+                    inputValue: inputValue,
+                    selectedOption: selectedOption,
+                    recipientNames: recipientNames,
+                    selectedAmount: selectedAmount,
+                    airteltransactionID: airteltransactionID,
+                    airtelrefNumber: airtelrefNumber,
+                    airtelorderID: airtelorderID,
+                    airteldescription: airteldescription,
+                }}>
                     <button
                       onClick={handleReceipt}
                       className={`border-[1px] w-[100px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-[600] h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[12px] lg:w-[163px] lg:h-[38px] lg:my-[2%] md:px-[60px] md:h-[30px]`}
@@ -1309,31 +1361,38 @@ const AirtelDataBundle = () => {
             </Modal>
           )}
 
-          {/* {receipt && (
-            <AirtelReceipt
-              networkName="AIRTEL"
-              selectedOption={selectedOption}
-              selectedNetworkProduct={selectedNetworkProduct}
-              recipientNumber={inputValue}
-              selectedAmount={selectedAmount}
-              recipientNames={recipientNames}
-              walletName={walletName}
-            />
-          )} */}
 
 {proceedToShowReceipt && (
             <AirtelReceipt
-              networkName="MTN"
-              selectedOption={selectedOption}
+              networkName="AIRTEL"
               selectedNetworkProduct={selectedNetworkProduct}
-              recipientNumber={inputValue}
-              selectedAmount={selectedAmount}
-              recipientNames={recipientNames}
-              walletName={walletName}
-              receiptData={receiptData}
-              airtelpurchaseStatus={airtelpurchaseStatus}
+            recipientPhoneNumber={recipientPhoneNumber}
+            recipientNames={recipientNames}
+            selectedAmount={selectedAmount}
+            airteltransactionID={airteltransactionID}
+            airtelrefNumber={airtelrefNumber}
+            airtelorderID={airtelorderID}
+            airteldescription={airteldescription}
             />
           )}
+
+
+{proceedToShowReceipt && (
+            <AirtelFailedReceipt
+              networkName="AIRTEL"
+              selectedNetworkProduct={selectedNetworkProduct}
+            recipientPhoneNumber={recipientPhoneNumber}
+            recipientNames={recipientNames}
+            selectedAmount={selectedAmount}
+            airteltransactionID={airteltransactionID}
+            airtelrefNumber={airtelrefNumber}
+            airtelorderID={airtelorderID}
+            airteldescription={airteldescription}
+            />
+          )}
+
+
+
           
           <div className="py-[30px] lg:py-[60px] mt-10">
             <button

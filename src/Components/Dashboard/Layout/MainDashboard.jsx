@@ -102,7 +102,7 @@ export const MainDashboard = () => {
       : setSymbol("");
     return;
   };
-
+  
   return (
     <div>
       {/* ==============TOP BAR========== */}

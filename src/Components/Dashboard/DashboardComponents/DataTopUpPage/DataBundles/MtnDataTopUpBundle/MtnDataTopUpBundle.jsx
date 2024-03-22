@@ -27,6 +27,7 @@ import airtimestyles from "../../../../../AirTimePage/AirtimeVtu.module.css";
 import axios from "axios";
 import Failed from "./MtnDataTopUpBundleImages/Failed.svg";
 import Spinner from "./Spinner";
+import { MtnFailedReceipt } from "./MtnFailedReceipt";
 
 // import { DataBundleFailedPopUp } from "../../../TransferComponent/PopUps/TransactionFailedPopUp";
 
@@ -78,14 +79,14 @@ const countryList = [
 const productList = [
   {
     id: 1,
-    name: "MTN SME",
+    name: "MTN SME & SME2",
     options: [
       { id: 6, name: "MTN SME & SME2 500MB", amount: "₦150", duration: "1 MONTH" },
-      { id: 7, name: "MTN SME 1GB", amount: "₦275", duration: "1 MONTH" },
-      { id: 8, name: "MTN SME 2GB", amount: "₦550", duration: "1 MONTH" },
-      { id: 44, name: "MTN SME 3GB", amount: "₦825", duration: "1 MONTH" },
-      { id: 11, name: "MTN SME 5GB", amount: "₦1375", duration: "1 MONTH" },
-      { id: 43, name: "MTN SME 10GB", amount: "₦2750", duration: "1 MONTH" },
+      { id: 7, name: "MTN SME & SME2 1GB", amount: "₦275", duration: "1 MONTH" },
+      { id: 8, name: "MTN SME & SME2 2GB", amount: "₦550", duration: "1 MONTH" },
+      { id: 44, name: "MTN SME & SME2 3GB", amount: "₦825", duration: "1 MONTH" },
+      { id: 11, name: "MTN SME & SME2 5GB", amount: "₦1375", duration: "1 MONTH" },
+      { id: 43, name: "MTN SME & SME2 10GB", amount: "₦2750", duration: "1 MONTH" },
     ],
   },
 
@@ -485,11 +486,10 @@ const MtnDataTopUpBundle = () => {
   const [image, setImage] = useState("");
   const [paymentAmount, setPaymentAmount] = useState("");
   const [codes, setCodes] = useState(false);
-  const [plan, setPlan] = useState(false);
-  const [receiptData, setReceiptData] = useState(null); // State to hold receipt data
+  const [plan, setPlan] = useState("");
   const [purchaseStatus, setPurchaseStatus] = useState(null); // State to hold purchase status
   const [loading, setLoading] = useState("");
-  const [proceedToShowReceipt, setProceedToShowReceipt] = useState(false);
+  const [proceedToShowReceipt] = useState(false);
 
   useEffect(() => {
     // Simulate async data loading
@@ -554,32 +554,11 @@ const MtnDataTopUpBundle = () => {
     setTransactSuccessPopUp(false);
   };
 
-  if (addRecipient) {
-    console.log("recipient added");
-  } else {
-    console.log("did not add recipient");
-  }
-
-  // const handleProceed = (e) => {
-  //   // setProceed(true);
-  //   // e.preventDefault();
-
-  //   const { error } = schema.validate({
-  //     recipientPhoneNumber,
-  //   });
-
-  //   if (error) {
-  //     setErrors(
-  //       error.details.reduce((acc, curr) => {
-  //         acc[curr.path[0]] = curr.message;
-  //         return acc;
-  //       }, {})
-  //     );
-  //   } else {
-  //     setProceed(true);
-  //     setErrors({});
-  //   }
-  // };
+  // if (addRecipient) {
+  //   console.log("recipient added");
+  // } else {
+  //   console.log("did not add recipient");
+  // }
 
   const schema = Joi.object({
     recipientPhoneNumber: Joi.string()
@@ -610,141 +589,98 @@ const MtnDataTopUpBundle = () => {
 
   // const proceedToShowReceipt = purchaseStatus === "paid" || purchaseStatus === "failed";
 
+
+  const mtnRegex =
+  /^(234|0)(703[0-9]|704[0-9]|706[0-9]|810[0-9]|813[0-9]|814[0-9]|816[0-9]|901[0-9]|903[0-9]|906[0-9]|913[0-9]|916[0-9])\d{6}$/;
+  
+  const validatePhoneNumber = (inputValue) => {
+    if (!inputValue) {
+      return "Phone number is required";
+    }
+  
+    if (!mtnRegex.test(inputValue)) {
+      return "Invalid MTN number. Please enter a valid MTN number.";
+      
+    }
+    console.log("its me")
+  
+    return null;
+  };
+
+
   const handleChange = (e) => {
     const value = e.target.value;
-
     const numericValue = value.replace(/\D/g, "").slice(0, 11);
-
     setInputValue(numericValue);
-
+  
+    // Validate phone number if it's complete
     if (numericValue.length === 11) {
-      validatePhoneNumber(numericValue);
+      const error = validatePhoneNumber(numericValue);
+      if (error) {
+        setErrors({ recipientPhoneNumber: error });
+      } else {
+        setErrors({});
+      }
     } else {
       // Clear any previous errors if the input length is less than 11
       setErrors({});
     }
   };
 
-  const validatePhoneNumber = (phoneNumber) => {
-    const mtnRegex =
-      /^(234|0)(703[1-9]|706[0-9]|810[1-9]|813[1-9]|816[1-9]|0900[1-9]|0903[1-9]|0906[1-9])\d{6}$/;
+  const handleProceed = (e) => {
 
-    const { error } = schema.validate({ recipientPhoneNumber: phoneNumber });
+    console.log(recipientPhoneNumber)
+    console.log(inputValue)
+
+
+
+    e.preventDefault();
+
+    function validateNigerianNumberByNetwork(inputValue) {
+        const networks = {
+            'MTN': ['0703', '0704', '0814', '0706', '0803', '0806', '0810', '0813', '0814', '0816', '0903', '0906', '0913', '0916'],
+        };
+
+        for (let network in networks) {
+            for (let prefix of networks[network]) {
+                if (inputValue.startsWith(prefix) && inputValue.length === prefix.length + 7) {
+                    return network;
+                }
+            }
+        }
+
+        return 'Unknown network';
+    }
+
+    const { error } = schema.validate({
+        recipientPhoneNumber,
+    });
 
     if (error) {
-      setErrors(
-        error.details.reduce((acc, curr) => {
-          acc[curr.path[0]] = curr.message;
-          return acc;
-        }, {})
-      );
-    } else if (!mtnRegex.test(phoneNumber)) {
-      setErrors({
-        recipientPhoneNumber:
-          "Invalid MTN number. Please enter a valid MTN number.",
-      });
+        setErrors(
+            error.details.reduce((acc, curr) => {
+                acc[curr.path[0]] = curr.message;
+                return acc;
+            }, {})
+        );
+    } else if (validateNigerianNumberByNetwork(recipientPhoneNumber) !== 'MTN') {
+        setErrors({
+            recipientPhoneNumber:
+                `Invalid MTN number. Please enter a valid MTN number.`,
+                
+        });
+        console.log("its me 2")
     } else {
-      setErrors({});
+        setProceed(true);
+        setErrors({});
     }
-  };
+};
   
   const handleRecipientNameChange = (e) => {
     setRecipientNames(e.target.value);
   };
 
-  console.log("confirm:", confirm);
-
-  // const sendDataToBackend = (network, mobileNumber, plan, name) => {
-  //   const apiUrl = "https://aremxyplug.onrender.com/api/v1/data";
-
-  //   // Prepare the data to be sent in the request body
-  //   const requestData = {
-  //     network,
-  //     mobile_number: mobileNumber,
-  //     plan,
-  //     name,
-  //   };
-
-  //   console.log(requestData);
-
-  //   // Send a POST request to the backend API
-  //   fetch(apiUrl, {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify(requestData),
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       // Handle the response from the backend
-  //       console.log("Backend response:", data);
-  //     })
-  //     .catch((error) => {
-  //       // Handle any errors that occurred during the fetch
-  //       console.error("Error sending data to backend:", error);
-  //     });
-  // };
-
-  // const axios = require("axios");
-
-  // const [transaction, setTransaction] = useState(null);
-
-  // const sendDataToBackend = async (network, mobileNumber, plan, name) => {
-  //   const apiUrl = "https://aremxyplug.onrender.com/api/v1/data";
-
-  //   // Prepare the data to be sent in the request body
-  //   const requestData = {
-  //     network,
-  //     mobile_number: mobileNumber,
-  //     plan,
-  //     name,
-  //   };
-
-  //   console.log(requestData);
-
-  //   try {
-  //     setLoading(true);
-  //     // Send a POST request to the backend API using Axios
-  //     const response = await axios.post(apiUrl, requestData, {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     }
-  //     );
-  //     setLoading(false);
-
-  //     console.log({ response });
-  //     console.log("code got here");
-
-  //     if (response.status === 200 && response.status <= 299) {
-  //       setPurchaseStatus("paid");
-  //       setReceiptData(response.data);
-  //       setTransactSuccessPopUp(true);
-  //     }
-  //     // Handle the response from the backend
-  //     console.log("Backend response:", response.data);
-  //   } catch (error) {
-  //     setLoading(false);
-  //     setPurchaseStatus("failed");
-
-  //     console.log(error)
-
-  //     // Handle any errors that occurred during the request
-  //     switch (error?.response?.status) {
-  //       case 401:
-  //         alert("unauthorised");
-  //         break;
-  //       case 500:
-  //         // alert("Transaction failed. Please try again.")
-  //         setPurchaseStatus("failed");
-  //         break;
-  //       default:
-  //         // alert("Transaction failed!");
-  //         console.log("Transaction Failed")
-  //     }
-  //   }
-  // };
+  // console.log("confirm:", confirm);
 
 
     const [mtntransactionID, setMtnTransactionID] = useState("");
@@ -753,105 +689,85 @@ const MtnDataTopUpBundle = () => {
     const [mtndescription, setMtnDescription] = useState("");
 
 
-  const sendDataToBackend = async () => {
-    async function buyAirtime(network, mobileNumber, plan, name) {
-        const url = 'https://aremxyplug.onrender.com/api/v1/data';
-
-        const data = {
-          network,
-          mobile_number: mobileNumber,
-          plan,
-          name,
-        };
-
-        try {
-            const response = await axios.post(url, data);
-            console.log(response.data);
-            console.log(response.status);
-            // setNetworkName(response.data.network)
-            setSelectedNetworkProduct(response.data.product)
-            recipientPhoneNumber(response.data.phone_no)
-            // setAmount(response.data.amount)
-            setMtnTransactionID(response.data.transaction_id)
-            setMtnRefNumber(response.data.reference_number)
-            setMtnOrderID(response.data.order_id)
-            setMtnDescription(response.data.description)
-            return { statusCode: response.status, data: response.data };
-            // console.log(response.data);
-        } catch (error) {
-            console.error(error);
-            return { statusCode: error.response.status, data: null };
-        }
-    }
-
-    // Usage
-    const response = await buyData(
-        networkId, // Network (MTN)
-        inputValues, // Mobile No
-        amount, // Amount
-        productId, // Airtime Type (VTU)
-    );
-
-
-    setConfirm(false);
-    if (response.statusCode === 200) {
-        // Success response
-        setTransactSuccessPopUp(true); // Show success popup
-    } else {
-        // Failure response
-        setPurchaseStatus("failed"); // Show failure popup
-    }
-};
-
   const handleReceipt = () => {
     setTransactSuccessPopUp(false);
     // sendDataToBackend(1, recipientPhoneNumber, plan, recipientNames);
   };
 
-  const inputPinHandler = async (e) => {
-    setInputPin(e.target.value);
-    await sendDataToBackend(1, recipientPhoneNumber, plan, recipientNames); // Wait for sendDataToBackend to complete
-    // Now that sendDataToBackend has completed, setTransactSuccessPopUp can be executed
-    // setTransactSuccessPopUp(true);
-    if (purchaseStatus === "failed") {
-      setPurchaseStatus("failed");
-    } else {
-      console.log("its me");
-    }
+  const inputPinHandler = async () => {
+    async function buyData(network, mobileNumber, plan, name) {
+      const url = 'https://aremxyplug.onrender.com/api/v1/data';
+
+      const data = {
+        network,
+        mobile_number: mobileNumber,
+        plan,
+        name,
+      };
+
+
+      setLoading(true)
+
+
+      console.log(data)
+      console.log("its me")
+
+      try {
+          const response = await axios.post(url, data);
+          console.log(response.data);
+          console.log(response.status);
+          // setSelectedNetworkProduct(response.data.product)
+          // console.log(response.data.product)
+          setPlan(response.data.plan_name)
+          console.log(response.data.plan_name)
+          setInputValue(response.data.Phone_Number)
+          console.log(response.data.Phone_Number)
+          setRecipientPhoneNumber(data.Phone_number)
+          console.log(data.Phone_number)
+          console.log(inputValue)
+          console.log(recipientPhoneNumber)
+          setRecipientNames(response.data.Name)
+          console.log(response.data.Name)
+          setSelectedAmount(response.data.plan_amount)
+          console.log(response.data.plan_amount)
+          setMtnTransactionID(response.data.transaction_id)
+          console.log(response.data.transaction_id)
+          setMtnRefNumber(response.data.reference_number)
+          console.log(response.data.reference_number)
+          setMtnOrderID(response.data.order_id)
+          console.log(response.data.order_id)
+          // setMtnDescription(response.data.description)
+          // console.log(response.data.description)
+          return { statusCode: response.status, data: response.data };
+          // console.log(response.data);
+      } catch (error) {
+          console.error(error);
+          return { statusCode: error.response.status, data: null };
+      }
+  }
+
+  // usage
+  const response = await buyData(
+    1, recipientPhoneNumber, plan, recipientNames
+  );
+
+  console.log(response)
+  console.log("its me 1")
+
+  setLoading(false)
+
+
+
+  setConfirm(false);
+  if (response.statusCode === 200) {
+      // Success response
+      setTransactSuccessPopUp(true); // Show success popup
+  } else {
+      // Failure response
+      setPurchaseStatus(true); // Show failure popup
+  }
+
   };
-
-  const handleProceed = (e) => {
-    // setProceed(true);
-    // e.preventDefault();
-
-    // Regular expression for MTN numbers (adjust as needed)
-    const mtnRegex =
-      /^(234|0)(703[1-9]|706[0-9]|810[1-9]|813[1-9]|816[1-9]|0900[1-9]|0903[1-9]|0906[1-9])\d{6}$/;
-
-    const { error } = schema.validate({
-      recipientPhoneNumber,
-    });
-
-    if (error) {
-      setErrors(
-        error.details.reduce((acc, curr) => {
-          acc[curr.path[0]] = curr.message;
-          return acc;
-        }, {})
-      );
-    } else if (!mtnRegex.test(recipientPhoneNumber)) {
-      setErrors({
-        recipientPhoneNumber:
-          "Invalid MTN number. Please enter a valid MTN number.",
-      });
-    } else {
-      setProceed(true);
-      setErrors({});
-      // sendDataToBackend(1, recipientPhoneNumber, plan, recipientNames);
-    }
-  };
-
-  // sendDataToBackend(1, inputValue, plan, recipientNames);
 
   return (
     <DashBoardLayout>
@@ -1462,7 +1378,7 @@ const MtnDataTopUpBundle = () => {
             </Modal>
           )}
 
-          {purchaseStatus === "failed" && (
+          {purchaseStatus && (
             <Modal>
               <div
                 className={` ${
@@ -1503,27 +1419,26 @@ const MtnDataTopUpBundle = () => {
                     Done
                   </button>
                   
-                  <Link to="/Mtnreceipt"
+                  <Link to="/MtnFailedReceipt"
                   state={{
                     networkName: "MTN",
-                    selectedProduct: selectedNetworkProduct,
-                    inputValues: inputValues,
-                    recipientName: recipientName,
-                    amount: amount,
-                    transactionID: transactionID,
-                    refNumber: refNumber,
-                    orderID: orderID,
-                    description: description,
-                   
+                    selectedNetworkProduct: selectedNetworkProduct,
+                    selectedOption: selectedOption,
+                    recipientPhoneNumber: recipientPhoneNumber,
+                    inputValue: inputValue,
+                    recipientNames: recipientNames,
+                    selectedAmount: selectedAmount,
+                    mtntransactionID: mtntransactionID,
+                    mtnrefNumber: mtnrefNumber,
+                    mtnorderID: mtnorderID,
+                    mtndescription: mtndescription,
                 }}
                   
                   >
                     <button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        // setTransaction(false);
-                        setPurchaseStatus(null);
-                        // setProceedToShowReceipt(purchaseStatus === "paid" || purchaseStatus === "failed");
+                      onClick={() => {
+                        // e.preventDefault();
+                        setPurchaseStatus(false);
                       }}
                       className="bg-white my-[%] w-[100px] cursor-pointer text-[10px] font-extrabold h-[px] rounded-[6px] md:w-[%] md:rounded-[8px] md:text-[16px] lg:w-[px] lg:h-[38px] lg:my-[2%]"
                     >
@@ -1598,7 +1513,7 @@ const MtnDataTopUpBundle = () => {
                   onClick={(e) => {
                     e.preventDefault();
                     setConfirm(false);
-                    inputPinHandler(e);
+                    inputPinHandler();
                   }}
                   disabled={inputPin.length !== 4}
                   className={`${
@@ -1727,7 +1642,7 @@ const MtnDataTopUpBundle = () => {
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        {selectedAmount}
+                      &#8358;{selectedAmount}
                       </h2>
                     </div>
                   </div>
@@ -1749,7 +1664,7 @@ const MtnDataTopUpBundle = () => {
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        0124yend44
+                        {mtnorderID}
                       </h2>
                     </div>
                   </div>
@@ -1776,7 +1691,18 @@ const MtnDataTopUpBundle = () => {
                     </button>
                   </Link>
 
-                  <Link to="/MtnReceipt">
+                  <Link to="/MtnReceipt" state={{
+                                        selectedNetworkProduct: selectedNetworkProduct,
+                                        inputValue: inputValue,
+                                        recipientPhoneNumber: recipientPhoneNumber,
+                                        selectedOption: selectedOption,
+                                        recipientNames: recipientNames,
+                                        selectedAmount: selectedAmount,
+                                        mtntransactionID: mtntransactionID,
+                                        mtnrefNumber: mtnrefNumber,
+                                        mtnorderID: mtnorderID,
+                                        mtndescription: mtndescription,
+                                    }}>
                     <button
                       onClick={handleReceipt}
                       className={`border-[1px] w-[100px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-[600] h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[12px] lg:w-[163px] lg:h-[38px] lg:my-[2%] md:px-[60px] md:h-[30px]`}
@@ -1788,18 +1714,34 @@ const MtnDataTopUpBundle = () => {
               </div>
             </Modal>
           )}
-
+          
           {proceedToShowReceipt && (
             <MtnReceipt
-              networkName="MTN"
-              selectedOption={selectedOption}
-              selectedNetworkProduct={selectedNetworkProduct}
-              recipientNumber={inputValue}
-              selectedAmount={selectedAmount}
-              recipientNames={recipientNames}
-              walletName={walletName}
-              receiptData={receiptData}
-              purchaseStatus={purchaseStatus}
+            networkName='MTN'
+            selectedNetworkProduct={selectedNetworkProduct}
+            recipientPhoneNumber={recipientPhoneNumber}
+            inputValue={inputValue}
+            recipientNames={recipientNames}
+            selectedAmount={selectedAmount}
+            mtntransactionID={mtntransactionID}
+            mtnrefNumber={mtnrefNumber}
+            mtnorderID={mtnorderID}
+            mtndescription={mtndescription}
+            />
+          )}
+
+{proceedToShowReceipt && (
+            <MtnFailedReceipt
+            networkName='MTN'
+            selectedNetworkProduct={selectedNetworkProduct}
+            recipientPhoneNumber={recipientPhoneNumber}
+            inputValue={inputValue}
+            recipientNames={recipientNames}
+            selectedAmount={selectedAmount}
+            mtntransactionID={mtntransactionID}
+            mtnrefNumber={mtnrefNumber}
+            mtnorderID={mtnorderID}
+            mtndescription={mtndescription}
             />
           )}
 

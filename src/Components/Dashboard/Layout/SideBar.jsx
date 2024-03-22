@@ -34,7 +34,7 @@ export const SideBar = () => {
       document.removeEventListener("click", handleClickOutside);
     };
   });
-
+  
   return (
     <div
       className={`${styles.sidebar}  fixed overflow-auto ${
