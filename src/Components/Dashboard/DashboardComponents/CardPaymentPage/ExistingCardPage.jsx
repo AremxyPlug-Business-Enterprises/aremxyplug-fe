@@ -276,7 +276,7 @@ const ExistingCardPage = () => {
               />
             </div>
           </div>
-
+          
           <div>
             <div onClick={handleShowPayment}>
               <div className="flex justify-between items-center border w-[50%] md:w-[35%] lg:w-[35%] h-8 px-2 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px] mt-[5%] xl:w-[35%]">

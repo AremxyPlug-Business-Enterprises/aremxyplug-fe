@@ -402,7 +402,7 @@ const AirtimeVtu = () => {
             setTransactFailedPopUp(true); // Show failure popup
         }
     };
-
+    
 
     const [receipt] = useState(false);
     const [receiptFailed] = useState(false);

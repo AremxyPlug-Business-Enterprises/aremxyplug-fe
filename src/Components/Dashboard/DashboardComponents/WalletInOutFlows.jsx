@@ -97,8 +97,8 @@ export const WalletInOutFlows = () => {
     { xaxis: "23.00", inflow: 20, outflow: 90, amt: 2210 },
     { xaxis: "24.00", inflow: 0, outflow: 100, amt: 2210 },
     // ...
-    { yaxis: "0" },
-    { yaxis: "10" },
+    { yaxis: "0K" },
+    { yaxis: "10K" },
     { yaxis: "20" },
     { yaxis: "30" },
     { yaxis: "40" },
@@ -109,7 +109,7 @@ export const WalletInOutFlows = () => {
     { yaxis: "90" },
     { yaxis: "100" },
   ];
-
+  
   return (
     <div className="mt-[10%] lg:mt-[5%] mb-[10%]">
       <div className="flex items-center gap-[10px]">
