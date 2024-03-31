@@ -102,7 +102,7 @@ export const MainDashboard = () => {
       : setSymbol("");
     return;
   };
-
+  
   return (
     <div>
       {/* ==============TOP BAR========== */}
@@ -196,7 +196,7 @@ export const MainDashboard = () => {
             </SwiperSlide>
           </Swiper>
           {/* ==============HERO SECTION CLOSE========== */}
-
+          
           {/* ==========AVAILABLE BALANCE=========== */}
           <div className={styles.balance}>
             <div
@@ -485,11 +485,11 @@ export const MainDashboard = () => {
             </div>
           </div>
           {/* ================VIRTUAL ACCOUNT CLOSE=============== */}
-
+          
           <div
             className={`${styles.ttwc} ${
               toggleSideBar ? "lg:gap-[63px]" : "lg:gap-[80px]"
-            } flex mt-[7%] gap-[30px] md:gap-[90px] `}
+            } flex mt-[5%] gap-[30px] md:gap-[90px] `}
           >
             <Link
               to="/top-up"

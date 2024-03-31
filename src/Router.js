@@ -164,6 +164,10 @@ import ProductDesign from "./Components/Screens/productDesign/ProductDesign";
 import GraphicDesign from "./Components/Screens/graphicDesign/GraphicDesign";
 import NotificationsPage2 from "./Components/NotificationsPage/Notifications2";
 import { AirtimeReceiptFailed } from "./Components/AirTimePage/AirtimeReceiptFailed";
+import { MtnFailedReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/MtnDataTopUpBundle/MtnFailedReceipt";
+import { AirtelFailedReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/AirtelDataBundle/AirtelFailedReceipt";
+import { GloFailedReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/GloDataBundle/GloFailedReceipt";
+import { EtisalatFailedReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/EtisalatDataBundle/9MobileFailedReceipt";
 import { BedcReceiptFailed } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/bedcReceiptFailed";
 import { AedcReceiptFailed } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/aedcReceiptFailed";
 import { EedcReceiptFailed } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/eedcReceiptFailed";
@@ -411,6 +415,10 @@ export const Router = () => {
         <Route path="/ExistingCardPage" element={<ExistingCardPage />} />
         <Route path="/FundWithCard" element={<FundWithCard />} />
         <Route path="/CardPaymentReceipt" element={<CardPaymentReceipt />} />
+        <Route path="/MtnfailedReceipt" element={<MtnFailedReceipt/>}/>
+        <Route path="/AirtelFailedReceipt" element={<AirtelFailedReceipt/>}/>
+        <Route path="GloFailedReceipt" element={<GloFailedReceipt/>}/>
+        <Route path="EtisalatFailedReceipt" element={<EtisalatFailedReceipt/>}/>
         <Route
           path="/GlobalTransferSelectRecipient"
           element={<GlobalTransferSelectRecipient />}

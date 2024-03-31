@@ -1,6 +1,7 @@
 {
   "name": "yes",
   "version": "yes",
+  "homepage": "./",
   "private": true,
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",

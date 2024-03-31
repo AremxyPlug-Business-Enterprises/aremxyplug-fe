@@ -24,6 +24,11 @@ import { AiFillEye } from "react-icons/ai";
 import { GloReceipt } from "./GloReceipt";
 import Joi from "joi";
 import airtimestyles from "../../../../../AirTimePage/AirtimeVtu.module.css";
+import { GloFailedReceipt } from "./GloFailedReceipt";
+import Spinner from "./../MtnDataTopUpBundle/Spinner";
+import axios from "axios";
+import Failed from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/Failed.svg"
+
 
 const GloDataBundle = () => {
   const { isDarkMode } = useContext(ContextProvider);
@@ -41,13 +46,21 @@ const GloDataBundle = () => {
   const [addRecipient, setAddRecipient] = useState(false);
   const [proceed, setProceed] = useState(false);
   const [confirm, setConfirm] = useState(false);
-  const [receipt] = useState(false);
   const [errors, setErrors] = useState({});
   const [paymentSelected, setPaymentSelected] = useState(false);
   const [showPayment, setShowPayment] = useState(false);
   const [image, setImage] = useState("");
   const [paymentAmount, setPaymentAmount] = useState("");
   const [codes, setCodes] = useState(false);
+  const [plan, setPlan] = useState("");
+  const [loading, setLoading] = useState("");
+  const [glotransactionID, setGloTransactionID] = useState("");
+  const [gloorderID, setGloOrderID] = useState("");
+  const [glorefNumber, setGloRefNumber] = useState("");
+  const [glodescription, setGloDescription] = useState("");
+  const [proceedToShowReceipt] = useState(false);
+
+
 
   const handleCodes = () => {
     setCodes(false);
@@ -133,7 +146,7 @@ const GloDataBundle = () => {
     toggleSideBar,
     inputPin,
     setInputPin,
-    inputPinHandler,
+    // inputPinHandler,
     toggleVisibility,
     isVisible,
   } = useContext(ContextProvider);
@@ -150,129 +163,154 @@ const GloDataBundle = () => {
     setTransactSuccessPopUp(false);
   };
 
-  if (addRecipient) {
-    console.log("recipient added");
-  } else {
-    console.log("did not add recipient");
-  }
+  // if (addRecipient) {
+  //   console.log("recipient added");
+  // } else {
+  //   console.log("did not add recipient");
+  // }
 
   const productList = [
     {
       id: 1,
-      name: "GLO CG",
+      name: "GLO COPORATE GIFTING",
       options: [
-        "GLO CG 100MB",
-        "GLO CG 200MB",
-        "GLO CG 300MB",
-        "GLO CG 500MB",
-        "GLO CG 1GB",
-        "GLO CG 2GB",
-        "GLO CG 3GB",
-        "GLO CG 5GB",
-        "GLO CG 10GB",
-      ],
+        { id: 243, name: "GLO CG 200MB", amount: "₦100", duration: "1 MONTH" },
+        { id: 237, name: "GLO CG 500MB", amount: "₦150", duration: "1 MONTH" },
+        { id: 238, name: "GLO CG 1.0GB", amount: "₦250", duration: "1 MONTH" },
+        { id: 239, name: "GLO CG 2.0GB", amount: "₦500", duration: "1 MONTH" },
+        { id: 240, name: "GLO CG 3.0GB", amount: "₦750", duration: "1 MONTH" },
+        { id: 241, name: "GLO CG 5.0GB", amount: "₦1250", duration: "1 MONTH" },
+        {
+          id: 242,
+          name: "GLO CG 10.0GB",
+          amount: "₦2500",
+          duration: "1 MONTH",
+        },
 
-      amount: [
-        "₦100",
-        "₦200",
-        "₦300",
-        "₦500",
-        "₦500",
-        "₦800",
-        "₦900",
-        "₦900",
-        "₦900",
-      ],
-
-      duration: [
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
+        // THIS ONES ARE IN THE DOCUMENTATION BUT NOT IN THE PRICE LIST FROM AREMXY
+        {
+          id: 274,
+          name: "GLO CG 1.0TB",
+          amount: "₦212000",
+          duration: "1 MONTH",
+        },
+        {
+          id: 280,
+          name: "GLO CG 100.0GB",
+          amount: "₦2140000",
+          duration: "1 MONTH",
+        },
+        {
+          id: 281,
+          name: "GLO CG 250.0GB",
+          amount: "₦53375",
+          duration: "1 MONTH",
+        },
+        {
+          id: 282,
+          name: "GLO CG 500GB",
+          amount: "₦106500",
+          duration: "1 MONTH",
+        },
+        {
+          id: 283,
+          name: "GLO CG 3.0TB",
+          amount: "₦634500",
+          duration: "1 MONTH",
+        },
       ],
     },
-
     {
       id: 2,
       name: "GLO GIFTING",
       options: [
-        "GLO GIFTING 1.05GB",
-        "GLO GIFTING 2.9GB",
-        "GLO GIFTING 4.1GB",
-        "GLO GIFTING 5.8GB",
-        "GLO GIFTING 7.7GB",
-        "GLO GIFTING 10GB",
-        "GLO GIFTING 13.25GB",
-        "GLO GIFTING 18.25GB",
-        "GLO GIFTING 29.5GB",
-        "GLO GIFTING 50GB",
-        "GLO GIFTING 93GB",
-      ],
-
-      amount: [
-        "₦1050",
-        "₦2500",
-        "₦3500",
-        "₦5800",
-        "₦5300",
-        "₦8100",
-        "₦9500",
-        "₦5800",
-        "₦5300",
-        "₦8100",
-        "₦9500",
-      ],
-
-      duration: [
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
+        {
+          id: 194,
+          name: "GLO GIFTING 1.05GB",
+          amount: "₦485",
+          duration: "1 MONTH",
+        },
+        {
+          id: 195,
+          name: "GLO GIFTING 2.9GB",
+          amount: "₦965",
+          duration: "1 MONTH",
+        },
+        {
+          id: 196,
+          name: "GLO GIFTING 4.1GB",
+          amount: "₦1450",
+          duration: "1 MONTH",
+        },
+        {
+          id: 197,
+          name: "GLO GIFTING 5.8GB",
+          amount: "₦1950",
+          duration: "1 MONTH",
+        },
+        {
+          id: 198,
+          name: "GLO GIFTING 7.7GB",
+          amount: "₦2475",
+          duration: "1 MONTH",
+        },
+        {
+          id: 199,
+          name: "GLO GIFTING 10.0GB",
+          amount: "₦2975",
+          duration: "1 MONTH",
+        },
+        {
+          id: 200,
+          name: "GLO GIFTING 13.25GB",
+          amount: "₦3960",
+          duration: "1 MONTH",
+        },
+        {
+          id: 201,
+          name: "GLO GIFTING 18.25GB",
+          amount: "₦4985",
+          duration: "1 MONTH",
+        },
+        {
+          id: 202,
+          name: "GLO GIFTING 29.5GB",
+          amount: "₦8000",
+          duration: "1 MONTH",
+        },
+        {
+          id: 203,
+          name: "GLO GIFTING 50GB",
+          amount: "₦10500",
+          duration: "1 MONTH",
+        },
+        {
+          id: 204,
+          name: "GLO GIFTING 93GB",
+          amount: "₦16665",
+          duration: "1 MONTH",
+        },
+        {
+          id: 205,
+          name: "GLO GIFTING 119.0GB",
+          amount: "₦21815",
+          duration: "1 MONTH",
+        },
+        {
+          id: 206,
+          name: "GLO GIFTING 138.0GB",
+          amount: "₦23330",
+          duration: "1 MONTH",
+        },
       ],
     },
-
     {
       id: 3,
-      name: "GLO GENERAL BUNDLES ---",
+      name: "GENERAL BUNDLES ---",
       options: [],
-      amount: [],
-
-      duration: [],
     },
   ];
 
-  const handleProceed = (e) => {
-    // setProceed(true);
-    // e.preventDefault();
-
-    const { error } = schema.validate({
-      recipientPhoneNumber,
-    });
-
-    if (error) {
-      setErrors(
-        error.details.reduce((acc, curr) => {
-          acc[curr.path[0]] = curr.message;
-          return acc;
-        }, {})
-      );
-    } else {
-      setProceed(true);
-      setErrors({});
-    }
-  };
 
   const schema = Joi.object({
     recipientPhoneNumber: Joi.string()
@@ -290,22 +328,92 @@ const GloDataBundle = () => {
     setShowOptionList(false);
   };
 
-  const handleSelectOption = (selectedOption, selectedAmount, duration) => {
+  const handleSelectOption = (selectedOption, selectedAmount, duration, id) => {
+    setPlan(id);
+    console.log(id);
     setSelectedOption(selectedOption);
     setShowOptionList(false);
     setSelectedAmount(selectedAmount);
-    // setDuration(duration);
   };
 
   const [inputValue, setInputValue] = useState("");
 
-  const handleChange = (e) => {
-    const value = e.target.value;
+  const GloRegex =
+      /^(234|0)(705[0-9]|805[0-9]|807[0-9]|811[0-9]|815[0-9]|905[0-9]|915[0-9])\d{6}$/;
+      
 
-    const numericValue = value.replace(/\D/g, "").slice(0, 11);
+      const validatePhoneNumber = (phoneNumber) => {
+        if (!phoneNumber) {
+          return "Phone number is required";
+        }
+      
+        if (!GloRegex.test(phoneNumber)) {
+          return "Invalid GLO number. Please enter a valid GLO number.";
+        }
+      
+        return null; // No error
+      };
 
-    setInputValue(numericValue);
-  };
+      const handleChange = (e) => {
+        const value = e.target.value;
+        const numericValue = value.replace(/\D/g, "").slice(0, 11);
+        setInputValue(numericValue);
+      
+        // Validate phone number if it's complete
+        if (numericValue.length === 11) {
+          const error = validatePhoneNumber(numericValue);
+          if (error) {
+            setErrors({ recipientPhoneNumber: error });
+          } else {
+            setErrors({});
+          }
+        } else {
+          // Clear any previous errors if the input length is less than 11
+          setErrors({});
+        }
+      };
+
+      const handleProceed = (e) => {
+        e.preventDefault();
+    
+        function validateNigerianNumberByNetwork(number) {
+            const networks = {
+              'GLO': ['0705', '0805', '0807', '0811', '0815', '0905', '0915'],
+            };
+    
+            for (let network in networks) {
+                for (let prefix of networks[network]) {
+                    if (number.startsWith(prefix) && number.length === prefix.length + 7) {
+                        return network;
+                    }
+                }
+            }
+    
+            return 'Unknown network';
+        }
+    
+        const { error } = schema.validate({
+            recipientPhoneNumber,
+        });
+    
+        if (error) {
+            setErrors(
+                error.details.reduce((acc, curr) => {
+                    acc[curr.path[0]] = curr.message;
+                    return acc;
+                }, {})
+            );
+        } else if (validateNigerianNumberByNetwork(recipientPhoneNumber) !== 'GLO') {
+            setErrors({
+                recipientPhoneNumber:
+                    `Invalid GLO number. Please enter a valid GLO number.`,
+            });
+        } else {
+            setProceed(true);
+            setErrors({});
+        }
+    };
+
 
   const handleRecipientNameChange = (e) => {
     setRecipientNames(e.target.value);
@@ -315,7 +423,85 @@ const GloDataBundle = () => {
     setTransactSuccessPopUp(false);
   };
 
-  console.log("confirm:", confirm);
+  const [glopurchaseStatus, setGloPurchaseStatus] = useState(null); // State to hold purchase status
+
+  const inputPinHandler = async () => {
+    async function buyData(network, mobileNumber, plan, name) {
+      const url = 'https://aremxyplug.onrender.com/api/v1/data';
+
+      const data = {
+        network,
+        mobile_number: mobileNumber,
+        plan,
+        name,
+      };
+
+
+      setLoading(true)
+
+
+      console.log(data)
+      console.log("its me")
+
+      try {
+          const response = await axios.post(url, data);
+          console.log(response.data);
+          console.log(response.status);
+          // setSelectedNetworkProduct(response.data.product)
+          // console.log(response.data.product)
+          setPlan(response.data.plan_name)
+          console.log(response.data.plan_name)
+          setInputValue(response.data.Phone_Number)
+          console.log(response.data.Phone_Number)
+          setRecipientPhoneNumber(data.Phone_number)
+          console.log(data.Phone_number)
+          console.log(inputValue)
+          console.log(recipientPhoneNumber)
+          setRecipientNames(response.data.Name)
+          console.log(response.data.Name)
+          setSelectedAmount(response.data.plan_amount)
+          console.log(response.data.plan_amount)
+          setGloTransactionID(response.data.transaction_id)
+          console.log(response.data.transaction_id)
+          setGloRefNumber(response.data.reference_number)
+          console.log(response.data.reference_number)
+          setGloOrderID(response.data.order_id)
+          console.log(response.data.order_id)
+          // setMtnDescription(response.data.description)
+          // console.log(response.data.description)
+          return { statusCode: response.status, data: response.data };
+          // console.log(response.data);
+      } catch (error) {
+          console.error(error);
+          return { statusCode: error.response.status, data: null };
+      }
+  }
+
+  // usage
+  const response = await buyData(
+    2, recipientPhoneNumber, plan, recipientNames
+  );
+
+  console.log(response)
+  console.log("its me 1")
+
+  setLoading(false)
+
+
+
+  setConfirm(false);
+  if (response.statusCode === 200) {
+      // Success response
+      setTransactSuccessPopUp(true); // Show success popup
+  } else {
+      // Failure response
+      setGloPurchaseStatus(true); // Show failure popup
+  }
+
+  };
+
+
+  // console.log("confirm:", confirm);
 
   return (
     <DashBoardLayout>
@@ -541,38 +727,31 @@ const GloDataBundle = () => {
                 <div className="border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[100]">
                   {productList
                     .find((item) => item.name === selectedNetworkProduct)
-                    ?.options.map((optionItem, index) => {
-                      const optionIndex = productList
-                        .find((item) => item.name === selectedNetworkProduct)
-                        ?.options.indexOf(optionItem);
+                    ?.options.map((option, index) => {
+                      const amount = option.amount;
+                      const duration = option.duration;
+                      const id = option.id;
 
-                      if (optionIndex !== -1) {
-                        const amount = productList.find(
-                          (item) => item.name === selectedNetworkProduct
-                        )?.amount[optionIndex];
-                        const duration = productList.find(
-                          (item) => item.name === selectedNetworkProduct
-                        )?.duration[optionIndex];
+                      return (
+                        <div
+                          key={option.id}
+                          className={`cursor-pointer border-b-[0.5px] md:rounded-[0px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
+                            selectedOption === option.id ? "bg-gray-200" : ""
+                          }`}
+                          onClick={() =>
+                            handleSelectOption(
+                              `${option.name} (${amount}) ~ ${duration}`,
+                              amount,
+                              duration,
+                              id, // Pass the id here
 
-                        return (
-                          <div
-                            key={index}
-                            className={`cursor-pointer border-b-[0.5px] md:rounded-[0px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
-                              selectedOption === optionItem ? "bg-gray-200" : ""
-                            }`}
-                            onClick={() =>
-                              handleSelectOption(
-                                `${optionItem} (${amount}) ~ ${duration}`,
-                                amount
-                              )
-                            }
-                          >
-                            {`${optionItem} (${amount}) ~ ${duration}`}
-                          </div>
-                        );
-                      }
-
-                      return null;
+                              console.log(id)
+                            )
+                          }
+                        >
+                          {`${option.name} (${amount}) ~ ${duration}`}
+                        </div>
+                      );
                     })}
                 </div>
               )}
@@ -585,7 +764,7 @@ const GloDataBundle = () => {
                   <Link to="/DataBundleSelectRecipient">
                     (Select Recipient)
                   </Link>
-                  </span>{" "}
+                </span>{" "}
               </h2>
               <div className="relative mt-[5px]">
                 <input
@@ -606,13 +785,13 @@ const GloDataBundle = () => {
                   />
                 </div>
               </div>
-            </div>
 
-            {errors.recipientPhoneNumber && (
-              <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                {errors.recipientPhoneNumber}
-              </div>
-            )}
+              {errors.recipientPhoneNumber && (
+                <div className="text-[12px] text-red-500 italic lg:text-[14px]">
+                  {errors.recipientPhoneNumber}
+                </div>
+              )}
+            </div>
 
             <div className="">
               <h2 className="text-[10px] font-[600] md:text-[12px] lg:text-[18px]">
@@ -748,6 +927,12 @@ const GloDataBundle = () => {
           </div>
 
           {/* ================Proceed=================== */}
+
+          {loading && (
+            <Modal>
+              <Spinner size="large" />
+            </Modal>
+          )}
 
           {proceed && (
             <Modal>
@@ -986,6 +1171,80 @@ const GloDataBundle = () => {
             </Modal>
           )}
 
+
+{glopurchaseStatus && (
+            <Modal>
+              <div
+                className={` ${
+                  toggleSideBar ? "confirm02" : "confirm2"
+                } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
+              >
+                <div className="flex justify-end px-2">
+                  <img
+                    onClick={() => setGloPurchaseStatus(null)}
+                    className="cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[35px] lg:h-[35px] "
+                    src={Cancel}
+                    alt=""
+                  />
+                </div>
+
+                <hr className="h-[6px] bg-[#04177f] lg:mt-[2%] border-none mt-[2%] md:mt-[2%] md:h-[10px]" />
+                <div className="md:mt-[15%] lg:mt-[10%]">
+                  <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[8%] md:my-[5%] lg:my-[3%]">
+                    Transaction Failed
+                  </p>
+                  <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
+                    <img src={Failed} alt="" />
+                    <p className="text-[8px] md:text-[12px] text-[#04177f]">
+                      An unexpected error has occurred, please try again.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex justify-center items-center gap-[20px]">
+                  <button
+                    onClick={(e) => {
+                      // e.preventDefault();
+                      // setTransaction(false);
+                      setGloPurchaseStatus(null);
+                    }}
+                    className="bg-[#04177f] my-[%] w-[100px] cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[%] md:rounded-[8px] md:text-[16px] lg:w-[px] lg:h-[38px] lg:my-[2%]"
+                  >
+                    Done
+                  </button>
+                  
+                  <Link to="/GloFailedReceipt"
+                  state={{
+                    networkName: "MTN",
+                    selectedNetworkProduct: selectedNetworkProduct,
+                    selectedOption: selectedOption,
+                    recipientPhoneNumber: recipientPhoneNumber,
+                    inputValue: inputValue,
+                    recipientNames: recipientNames,
+                    selectedAmount: selectedAmount,
+                    glotransactionID: glotransactionID,
+                    glorefNumber: glorefNumber,
+                    gloorderID: gloorderID,
+                    glodescription: glodescription,
+                   
+                }}
+                  
+                  >
+                    <button
+                      onClick={() => {
+                        // e.preventDefault();
+                        setGloPurchaseStatus(false);
+                      }}
+                      className="bg-white my-[%] w-[100px] cursor-pointer text-[10px] font-extrabold h-[px] rounded-[6px] md:w-[%] md:rounded-[8px] md:text-[16px] lg:w-[px] lg:h-[38px] lg:my-[2%]"
+                    >
+                      Receipt
+                    </button>
+                  </Link>
+                </div>
+              </div>
+            </Modal>
+          )}
+
           {transactSuccessPopUp && (
             <Modal>
               {/* <TransactFailedPopUp/> */}
@@ -1124,7 +1383,7 @@ const GloDataBundle = () => {
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        0124yend44
+                        {gloorderID}
                       </h2>
                     </div>
                   </div>
@@ -1151,7 +1410,20 @@ const GloDataBundle = () => {
                     </button>
                   </Link>
 
-                  <Link to="/GloReceipt">
+                  <Link to="/GloReceipt"
+                  state={{
+                    selectedNetworkProduct: selectedNetworkProduct,
+                    inputValue: inputValue,
+                    recipientPhoneNumber: recipientPhoneNumber,
+                    selectedOption: selectedOption,
+                    recipientNames: recipientNames,
+                    selectedAmount: selectedAmount,
+                    glotransactionID: glotransactionID,
+                    glorefNumber: glorefNumber,
+                    gloorderID: gloorderID,
+                    glodescription: glodescription,
+                }}>
+                  
                     <button
                       onClick={handleReceipt}
                       className={`border-[1px] w-[100px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-[600] h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[12px] lg:w-[163px] lg:h-[38px] lg:my-[2%] md:px-[60px] md:h-[30px]`}
@@ -1164,15 +1436,33 @@ const GloDataBundle = () => {
             </Modal>
           )}
 
-          {receipt && (
+{proceedToShowReceipt && (
             <GloReceipt
-              networkName="GLO"
-              selectedOption={selectedOption}
-              selectedNetworkProduct={selectedNetworkProduct}
-              recipientNumber={inputValue}
-              selectedAmount={selectedAmount}
-              recipientNames={recipientNames}
-              walletName={walletName}
+            networkName='MTN'
+            selectedNetworkProduct={selectedNetworkProduct}
+            recipientPhoneNumber={recipientPhoneNumber}
+            inputValue={inputValue}
+            recipientNames={recipientNames}
+            selectedAmount={selectedAmount}
+            glotransactionID={glotransactionID}
+            glorefNumber={glorefNumber}
+            gloorderID={gloorderID}
+            glodescription={glodescription}
+            />
+          )}
+
+{proceedToShowReceipt && (
+            <GloFailedReceipt
+            networkName='MTN'
+            selectedNetworkProduct={selectedNetworkProduct}
+            recipientPhoneNumber={recipientPhoneNumber}
+            inputValue={inputValue}
+            recipientNames={recipientNames}
+            selectedAmount={selectedAmount}
+            glotransactionID={glotransactionID}
+            glorefNumber={glorefNumber}
+            gloorderID={gloorderID}
+            glodescription={glodescription}
             />
           )}
 
