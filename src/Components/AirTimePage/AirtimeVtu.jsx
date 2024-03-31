@@ -1044,10 +1044,6 @@ const AirtimeVtu = () => {
                                         inputValues: inputValues,
                                         recipientName: recipientName,
                                         amount: amount,
-                                        transactionID: transactionID,
-                                        refNumber: refNumber,
-                                        orderID: orderID,
-                                        description: description,
                                     }}>
                                         <button
                                             onClick={handleReceiptFailed}

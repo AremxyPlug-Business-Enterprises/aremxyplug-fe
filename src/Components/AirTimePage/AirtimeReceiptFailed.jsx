@@ -10,7 +10,7 @@ import { useLocation } from 'react-router-dom';
 
 export const AirtimeReceiptFailed = () => {  
   const location = useLocation()
-  const { networkName, selectedProduct, inputValues, amount, transactionID, refNumber, orderID, description } = location.state
+  const { networkName, selectedProduct, inputValues, amount } = location.state
 
   const {
     recipientName,}
@@ -190,19 +190,19 @@ export const AirtimeReceiptFailed = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Description</p>
-                  <span>{description}</span>
+                  <span>Failed</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Order Number</p>
-                  <span>{orderID}</span>
+                  <span>1256478999</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Transaction ID</p>
-                  <span>{transactionID}</span>
+                  <span>0331njokdhtf55</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Reference Number</p>
-                  <span>{refNumber}</span>
+                  <span>235488526097423118APDA</span>
                 </div>
               </div>
             </div>

@@ -104,16 +104,12 @@ export const IkedcReceipt = () => {
                 hour12: true,
               })}
             </span>
-            <p className="text-[8px] lg:text-[16px] font-[500] text-[#000] text-center mb-2 md:text-[14px] ">
-              You have successfully Purchased{" "}
-              <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
-               Ikeja {selectedNetworkProduct} Meter
-              </span>{" "}
-             <br></br>
-              <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
-                (&#8358;{ikedcamount}){" "}
+            <p className="text-[9px] text-[#27AE60] bg-[#D5F6E3] rounded-[11px] border-2 border-[#27AE60] py-[5px] px-[2px] text-center mx-[5px] lg:mx-[150px] md:mx-[100px] my-2 md:text-[14px] lg:text-[14px]">
+              You have successfully purchased{" "}
+              <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[16px]">
+              Ikeja {selectedNetworkProduct} Meter &#8358;{ikedcamount}.00{" "}
               </span>
-              From your NGN Nigerian Wallet to{" "}
+              from your NGN wallet to{" "}
             </p>
 
 
