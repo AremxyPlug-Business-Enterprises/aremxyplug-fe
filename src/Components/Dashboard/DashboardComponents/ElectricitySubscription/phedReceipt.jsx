@@ -93,7 +93,7 @@ export const PhedReceipt = () => {
             <h3 className="font-extrabold text-[12px] mt-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
               Purchase Successful on
             </h3>
-            <span className="text-[8px] text-[#0008] pt-1 font-extrabold flex justify-center items-center">
+            <span className="text-[8px] md:text-[12px] text-[#0008] pt-1 font-extrabold flex justify-center items-center">
               {date.toLocaleDateString(undefined, {
                 year: "numeric",
                 month: "long",
@@ -106,7 +106,7 @@ export const PhedReceipt = () => {
             </span>
             <p className="text-[9px] text-[#27AE60] bg-[#D5F6E3] rounded-[11px] border-2 border-[#27AE60] py-[5px] px-[2px] text-center mx-[5px] lg:mx-[150px] md:mx-[100px] my-2 md:text-[14px] lg:text-[14px]">
               You have successfully purchased{" "}
-              <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[16px]">
+              <span className="text-[#000] font-extrabold text-[10px] md:text-[14px]">
               Port-Harcourt {selectedNetworkProduct} Meter &#8358;{ikedcamount}.00{" "}
               </span>
               from your NGN wallet to{" "}

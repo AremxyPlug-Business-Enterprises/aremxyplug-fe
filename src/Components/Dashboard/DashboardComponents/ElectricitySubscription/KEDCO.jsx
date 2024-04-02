@@ -233,16 +233,15 @@ const KEDCO = () => {
     async function buyKEDCO(meter_type, meter_no, phone, email, amount) {
       const url = 'https://aremxyplug.onrender.com/api/v1/electric-bill';
 
-      const parsedPhone = parseInt(phone, 10);
       const parsedAmount = parseInt(amount, 10);
 
       const data = {
         meter_type,
         meter_no,
-        phone: parsedPhone, // Use the parsed integer value
+        phone, // Use the parsed integer value
         email,
         amount: parsedAmount, // Use the parsed integer value
-        disco_type: "KEDCO",
+        disco_type: "kano-electric",
       };
 
       console.log(data);
