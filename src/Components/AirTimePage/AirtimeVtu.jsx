@@ -364,6 +364,8 @@ const AirtimeVtu = () => {
                 airtime_type,
             };
 
+            console.log(data);
+
             try {
                 const response = await axios.post(url, data);
                 console.log(response.data);
@@ -402,7 +404,6 @@ const AirtimeVtu = () => {
             setTransactFailedPopUp(true); // Show failure popup
         }
     };
-    
 
     const [receipt] = useState(false);
     const [receiptFailed] = useState(false);
@@ -953,8 +954,9 @@ const AirtimeVtu = () => {
                                         onClick={() => {
                                             setTransactSuccessPopUp(false);
                                             // window.location.reload();
+                                            setNetworkName("");
                                             setSelected("");
-                                            setRecipientNumber("");
+                                            setInputValues("");
                                             setRecipientName("");
                                             setSelectedProduct("");
                                             setAmount("");
@@ -1026,8 +1028,9 @@ const AirtimeVtu = () => {
                                         onClick={() => {
                                             setTransactFailedPopUp(false);
                                             // window.location.reload();
+                                            setNetworkName("");
                                             setSelected("");
-                                            setRecipientNumber("");
+                                            setInputValues("");
                                             setRecipientName("");
                                             setSelectedProduct("");
                                             setAmount("");
