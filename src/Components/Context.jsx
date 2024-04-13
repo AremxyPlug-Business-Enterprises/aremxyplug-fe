@@ -840,6 +840,7 @@ export const Context = ({ children }) => {
   const [ikedcamount, setIkedcamount] = useState("");
   const [requestID, setRequestID] = useState("");
   const [serviceID, setServiceID] = useState("");
+  const [flag, setFlag] = useState("");
 
   //------------Airtime Conversion---------
   const [inputValueA, setInputValueA] = useState("");
@@ -1322,6 +1323,8 @@ export const Context = ({ children }) => {
     setRequestID,
     serviceID,
     setServiceID,
+    flag,
+    setFlag,
 
     //Airtime Conversion
     inputValueA,

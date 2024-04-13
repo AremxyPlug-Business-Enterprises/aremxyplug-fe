@@ -44,9 +44,9 @@ const BEDC = () => {
     // setRequestID,
     serviceID,
     setServiceID,
+    flag,
+    setFlag,
   } = useContext(ContextProvider);
-  const [flag, setFlag] = useState("");
-  ;
 
   const { selectedNetworkProduct, setSelectedNetworkProduct } =
     useContext(ContextProvider);
@@ -199,13 +199,13 @@ const BEDC = () => {
   const handleVerifiedName = (event) => {
     const newValue = event.target.value;
     setVerifiedName(newValue);
-
   };
+
   const handleMeterNumber = (event) => {
     const newValue = event.target.value;
     setMeterNumber(newValue);
-
   };
+
   const handlePhoneNumber = (event) => {
     const value = event.target.value;
     const newValue = value.replace(/\D/g, "").slice(0, 11);
@@ -251,7 +251,7 @@ const BEDC = () => {
         console.log(response.data);
         console.log(response.status);
         setSelectedNetworkProduct(response.data.meter_type)
-        setMeterNumber(response.data.meter_no)
+        setMeterNumber(response.data.meter_number)
         setPhoneNumber(response.data.phone)
         setEmail(response.data.email)
         setIkedcamount(response.data.amount)
@@ -720,7 +720,17 @@ const BEDC = () => {
               />
 
               <img
-                onClick={() => setSuccessPopup(false)}
+                onClick={() => {
+                  setSelectedNetworkProduct("");
+                  setMeterNumber("");
+                  setVerifiedName("");
+                  setPhoneNumber("");
+                  setEmail("");
+                  setIkedcamount("");
+                  setGlobalCountry("");
+                  setFlag("");
+                  setSuccessPopup(false)
+                }}
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
@@ -801,6 +811,14 @@ const BEDC = () => {
             <div className="flex w-[70%] mx-auto items-center my-6  gap-[6%] md:gap-[20px] justify-center md:w-[20%] lg:my-[5%]">
               <button
                 onClick={() => {
+                  setSelectedNetworkProduct("");
+                  setMeterNumber("");
+                  setVerifiedName("");
+                  setPhoneNumber("");
+                  setEmail("");
+                  setIkedcamount("");
+                  setGlobalCountry("");
+                  setFlag("");
                   setSuccessPopup(false);
                 }}
                 className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:px-[50px] md:w-[70%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
@@ -848,7 +866,17 @@ const BEDC = () => {
               />
 
               <img
-                onClick={() => setFailedPopup(false)}
+                onClick={() => {
+                  setSelectedNetworkProduct("");
+                  setMeterNumber("");
+                  setVerifiedName("");
+                  setPhoneNumber("");
+                  setEmail("");
+                  setIkedcamount("");
+                  setGlobalCountry("");
+                  setFlag("");
+                  setFailedPopup(false)
+                }}
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""

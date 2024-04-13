@@ -44,9 +44,9 @@ const EKEDC = () => {
     // setRequestID,
     serviceID,
     setServiceID,
+    flag,
+    setFlag,
   } = useContext(ContextProvider);
-  const [flag, setFlag] = useState("");
-  ;
 
   const { selectedNetworkProduct, setSelectedNetworkProduct } =
     useContext(ContextProvider);
@@ -251,7 +251,7 @@ const EKEDC = () => {
         console.log(response.data);
         console.log(response.status);
         setSelectedNetworkProduct(response.data.meter_type)
-        setMeterNumber(response.data.meter_no)
+        setMeterNumber(response.data.meter_number)
         setPhoneNumber(response.data.phone)
         setEmail(response.data.email)
         setIkedcamount(response.data.amount)
@@ -720,7 +720,17 @@ const EKEDC = () => {
               />
 
               <img
-                onClick={() => setSuccessPopup(false)}
+                onClick={() => {
+                  setSelectedNetworkProduct("");
+                  setMeterNumber("");
+                  setVerifiedName("");
+                  setPhoneNumber("");
+                  setEmail("");
+                  setIkedcamount("");
+                  setGlobalCountry("");
+                  setFlag("");
+                  setSuccessPopup(false);
+                }}
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
@@ -848,7 +858,17 @@ const EKEDC = () => {
               />
 
               <img
-                onClick={() => setFailedPopup(false)}
+                onClick={() => {
+                  setSelectedNetworkProduct("");
+                  setMeterNumber("");
+                  setVerifiedName("");
+                  setPhoneNumber("");
+                  setEmail("");
+                  setIkedcamount("");
+                  setGlobalCountry("");
+                  setFlag("");
+                  setFailedPopup(false)
+                }}
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
