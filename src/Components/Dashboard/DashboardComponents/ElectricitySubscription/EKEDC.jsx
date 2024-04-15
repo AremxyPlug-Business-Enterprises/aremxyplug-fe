@@ -40,8 +40,8 @@ const EKEDC = () => {
     setIkedcamount,
     toggleVisibility,
     isVisible,
-    // requestID,
-    // setRequestID,
+    billGenerate,
+    setBillGenerate,
     serviceID,
     setServiceID,
     flag,
@@ -255,7 +255,7 @@ const EKEDC = () => {
         setPhoneNumber(response.data.phone)
         setEmail(response.data.email)
         setIkedcamount(response.data.amount)
-        // setRequestID(response.data.request_id)
+        setBillGenerate(response.data.bill_generated)
         setOrderId(response.data.order_id)
         setTransactionId(response.data.transaction_id)
         setServiceID(response.data.disco_type)
@@ -781,7 +781,7 @@ const EKEDC = () => {
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Phone Number</p>
-                <span>0{phoneNumber}</span>
+                <span>{phoneNumber}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Email</p>
@@ -827,6 +827,7 @@ const EKEDC = () => {
                 transactionId: transactionId,
                 serviceID: serviceID,
                 showDescription: showDescription,
+                billGenerate: billGenerate,
               }}>
                 <button
                   onClick={() => {

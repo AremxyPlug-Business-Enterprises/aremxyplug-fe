@@ -40,8 +40,8 @@ const AEDC = () => {
     setIkedcamount,
     toggleVisibility,
     isVisible,
-    // requestID,
-    // setRequestID,
+    billGenerate,
+    setBillGenerate,
     serviceID,
     setServiceID,
     flag,
@@ -255,7 +255,7 @@ const AEDC = () => {
         setPhoneNumber(response.data.phone)
         setEmail(response.data.email)
         setIkedcamount(response.data.amount)
-        // setRequestID(response.data.request_id)
+        setBillGenerate(response.data.bill_generated)
         setOrderId(response.data.order_id)
         setTransactionId(response.data.transaction_id)
         setServiceID(response.data.disco_type)
@@ -841,6 +841,7 @@ const AEDC = () => {
                 transactionId: transactionId,
                 serviceID: serviceID,
                 showDescription: showDescription,
+                billGenerate: billGenerate,
               }}>
                 <button
                   onClick={() => {

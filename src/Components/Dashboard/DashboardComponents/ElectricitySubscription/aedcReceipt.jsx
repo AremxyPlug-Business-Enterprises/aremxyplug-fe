@@ -13,7 +13,7 @@ export const AedcReceipt = () => {
 
   const location = useLocation();
   const navigate = useNavigate();
-  const { selectedNetworkProduct, meterNumber, phoneNumber, ikedcEmail, ikedcamount, serviceID, orderId, transactionId, showDescription } = location.state
+  const { selectedNetworkProduct, meterNumber, phoneNumber, ikedcEmail, ikedcamount, serviceID, orderId, transactionId, showDescription, billGenerate } = location.state
 
   const {
     toggleSideBar,
@@ -168,7 +168,7 @@ export const AedcReceipt = () => {
 
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <p className="text-[#7C7C7C] font-[500]">Phone Number</p>
-                    <span>0{phoneNumber}</span>
+                    <span>{phoneNumber}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <p className="text-[#7C7C7C] font-[500]">Email</p>
@@ -228,7 +228,7 @@ export const AedcReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Bill / Token Generated</p>
-                  <span>Instantly</span>
+                  <span>{billGenerate}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Order Number</p>
