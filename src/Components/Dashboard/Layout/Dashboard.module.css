@@ -50,13 +50,13 @@
 .walletText {
   font-size: 11.093px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 800;
   line-height: normal;
   text-align: center;
   margin-top: 7%;
 }
 
-select {
+.selected {
   padding: 3px;
   border-radius: 10.193px;
   background: var(--boxes, rgba(146, 171, 254, 0.18));
@@ -108,16 +108,16 @@ select {
 }
 
 /* ================ TABLET VIEW ============== */
-@media (min-width: 768px) {
+@media (min-width: 768px) and (max-width: 1180px) {
   .dashboard {
     width: 157px;
     gap: 6px;
   }
 
   .walletText {
-    font-size: 18.093px;
+    font-size: 26.093px;
     font-style: normal;
-    font-weight: 600;
+    font-weight: 800;
     line-height: normal;
     text-align: center;
     margin-top: 6%;
@@ -131,13 +131,13 @@ select {
   }
   .balance1 {
     width: 100%;
-    height: 250px;
+    height: 280px;
     border-radius: 8.32px;
     padding: 3%;
   }
   .balance2 {
     width: 100%;
-    height: 250px;
+    height: 280px;
     border-radius: 8.32px;
     padding: 3%;
   }
@@ -193,7 +193,7 @@ select {
     line-height: normal;
   }
 
-  select {
+  .selected  {
     padding: 3px;
     border-radius: 10.193px;
     background: var(--boxes, rgba(146, 171, 254, 0.18));
@@ -205,6 +205,14 @@ select {
     width: 50px;
     outline: none;
     font-weight: bolder;
+  }
+}
+
+/* =========Ipad Air=========== */
+@media (min-width: 820px) and (max-width: 1180px) {
+  .balance1 {
+    height: 500px;
+    /* background-color: black; */
   }
 }
 
@@ -227,10 +235,6 @@ select {
     font-size: 20px;
   }
 
-  /* .walletText { */
-  /* font-size: 25.5px; */
-  /* } */
-
   .dashboard {
     width: 209px;
     gap: 9px;
@@ -246,24 +250,24 @@ select {
 
   .balance1 {
     width: 100%;
-    height: 270px;
+    height: 350px;
     border-radius: 8.32px;
     padding: 3%;
   }
 
   .balance2 {
-    height: 280px;
+    height: 320px;
   }
 
   .GVA {
-    font-size: 25px;
+    font-size: 24px;
   }
 
   .virtualaccounttxt {
     font-size: 19px;
   }
 
-  select {
+  .selected {
     padding: 8.6px;
     border-radius: 14.193px;
     height: 33px;
@@ -284,10 +288,6 @@ select {
     font-size: 14px;
     border-radius: 15px;
   }
-
-  /* .ttwc { */
-  /* gap: 10%; */
-  /* } */
 
   .button {
     gap: 10px;
@@ -312,10 +312,6 @@ select {
   .logouttxt {
     font-size: 18px;
   }
-
-  .sidebartxt {
-    font-size: 13px;
-  }
 }
 
 /* ===================Surface Duo======================== */
@@ -337,10 +333,6 @@ select {
   .viewWallet {
     font-size: 10px;
   }
-
-  /* .walletText { */
-  /* font-size: 16px; */
-  /* } */
 
   .viewBalance {
     display: flex;
@@ -384,7 +376,6 @@ select {
   .button {
     display: flex;
     width: 20%;
-    /* padding: 21.226px 46.293px; */
     padding-top: 21.226px;
     padding-bottom: 21.226px;
     justify-content: center;
@@ -436,9 +427,9 @@ select {
   }
 
   .walletText {
-    font-size: 23.093px;
+    font-size: 24px;
     font-style: normal;
-    font-weight: 600;
+    font-weight: 800;
     line-height: normal;
     text-align: center;
     margin-top: 10%;
@@ -469,7 +460,7 @@ select {
     outline: none;
   }
 
-  select {
+  .selected {
     padding: 5.6px;
     border-radius: 14.193px;
     background: var(--boxes, rgba(146, 171, 254, 0.18));
@@ -485,9 +476,5 @@ select {
 
   .navSide {
     gap: 50px;
-  }
-
-  .GVA {
-    font-size: 20px;
   }
 }

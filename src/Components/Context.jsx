@@ -1,11 +1,16 @@
 import React, { createContext, useState, useRef, useEffect } from "react";
 import Joi from "joi";
 import axios from "axios";
+import arrowDown from "../../src/Components/EducationPins/imagesEducation/arrow-down.svg";
 // import { BASE_URL } from "../config";
 
 export const ContextProvider = createContext();
 
 export const Context = ({ children }) => {
+  const handleRefresh = () => {
+    window.location.reload(true);
+    // new
+  };
   // Select username or email starts here
   const [hideNavbar, setHideNavbar] = useState(false);
   const [resetEmail, setResetEmail] = useState("");
@@ -114,6 +119,10 @@ export const Context = ({ children }) => {
     setTwentiethDrop((prev) => !prev);
   }
   // ============= End of FAQ drop down===========
+
+  // ==========IMages======
+  const [tfImage, settfImage] = useState("");
+  const [withdrawImage, setWithdrawImage] = useState("");
 
   // =========Start For SignUp.jsx==========
   const [isFocused, setIsFocused] = useState([]);
@@ -348,7 +357,7 @@ export const Context = ({ children }) => {
   // =============Start Dashboard=============
   const [toggleSideBar, setToggleSideBar] = useState("");
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [isValue, SetIsValue] = useState(false);
+  const [isValue, SetIsValue] = useState(true);
   const [showModal2, setShowModal2] = useState(false);
   const [logout, setLogout] = useState(false);
   const date = new Date();
@@ -374,11 +383,11 @@ export const Context = ({ children }) => {
   const [noRecord, setNoRecord] = useState(true);
   const [personalAccount, setPersonalAccount] = useState(false);
   const [businessAccount, setBusinessAccount] = useState(false);
-  const [image, setImage] = useState("");
   const [code, setCode] = useState("");
   const [activeButton, setActiveButtons] = useState([true, false]);
   const [showList, setShowList] = useState(false);
   const [selected, setSelected] = useState(false);
+  const [selectedCurr, setSelectedCurr] = useState(false);
   const [amtToTransfer, setAmtToTransfer] = useState("");
   const [confirmationPopUp, setConfirmationPopUp] = useState(false);
   const [inputPinPopUp, setInputPinPopUp] = useState(false);
@@ -421,6 +430,84 @@ export const Context = ({ children }) => {
   };
   // ========================End Transfer page==========================
 
+  // ===================Start of Aremxyplug pages====================
+  const [emailPhoneNumberConfirmation, setEmailPhoneNumberConfirmation] =
+    useState(false);
+  const [mainCountry, setMainCountry] = useState("");
+  const [mainTransferErrors, setMainTransferErrors] = useState({});
+  const [mainTransferState, setMainTransferState] = useState({
+    emailUsername: "",
+    userPhoneNumber: "",
+  });
+
+  const handleMainInputChange = (e) => {
+    const { name, value } = e.target;
+    const limitedValue =
+      name === "userPhoneNumber" ? value.replace(/\D/g, "").slice(0, 11) : value;
+
+
+    setMainTransferState({
+      ...mainTransferState,
+      [name]: limitedValue,
+    });
+  };
+
+  const mainTransferSchema = Joi.object({
+    mainCountry: Joi.string().required(),
+    userPhoneNumber: Joi.string()
+      .pattern(new RegExp(/^\d{11}$/)) 
+      .required()
+      .max(11)
+      .messages({
+        "string.pattern.base": "Phone number should be 11 digits",
+        "any.max": "Phone number should be at most 11 digits",
+      }),
+    emailUsername: Joi.alternatives()
+      .try(
+        Joi.string()
+          .lowercase()
+          .email({ tlds: { allow: false } }),
+        Joi.string().alphanum().min(5).max(10)
+      )
+      .required(),
+    amtToTransfer: Joi.string()
+      .pattern(new RegExp(/\d{3,}/))
+      .required()
+      .messages({
+        "string.pattern.base": "Amount can not be less than 100",
+      }),
+  });
+
+  const ProceedToMainTransfer = (e) => {
+    e.preventDefault();
+
+    const { emailUsername, userPhoneNumber } = mainTransferState;
+
+    const { error } = mainTransferSchema.validate({
+      emailUsername,
+      userPhoneNumber,
+      amtToTransfer,
+      mainCountry,
+    });
+
+    if (error) {
+      setMainTransferErrors(
+        error.details.reduce((acc, curr) => {
+          acc[curr.path[0]] = curr.message;
+          return acc;
+        }, {})
+      );
+    } else {
+      setEmailPhoneNumberConfirmation(true);
+      setMainTransferErrors({});
+    }
+  };
+
+  const mainEmailUsername = mainTransferState.emailUsername;
+  const mainUserPhoneNumber = mainTransferState.userPhoneNumber;
+
+  // ===================End of Aremxyplug pages======================
+
   // ===================Start of Global Transfer====================
   const [otherBanksConfirmation, setOtherBankConfirmation] = useState(false);
   const [globalCountry, setGlobalCountry] = useState("");
@@ -433,11 +520,33 @@ export const Context = ({ children }) => {
 
   const handleGlobalInputChange = (e) => {
     const { name, value } = e.target;
+    const limitedValue =
+      name === "accountNumber" ? value.replace(/\D/g, "").slice(0, 10) : value;
+
     setGlobalTransferState({
       ...globalTransferState,
-      [name]: value,
+      [name]: limitedValue,
     });
   };
+
+  // const handleInputChange = (event) => {
+  //   const { name, value, type, checked } = event.target;
+  //   if (name === "accountNumber" && type === "number") {
+  //     // If the input is of type 'number', limit it to 10 digits
+  //     const inputValue = value.replace(/\D/g, "").slice(0, 10);
+  //     setState({
+  //       ...state,
+  //       [name]: inputValue,
+  //     });
+  //   } else {
+  //     // Handle other types of inputs as before
+  //     const inputValue = type === "checkbox" ? checked : value;
+  //     setState({
+  //       ...state,
+  //       [name]: inputValue,
+  //     });
+  //   }
+  // };
 
   const globalTransferSchema = Joi.object({
     globalCountry: Joi.string().required(),
@@ -506,14 +615,24 @@ export const Context = ({ children }) => {
   });
   const [purpose, setPurpose] = useState(false);
   const [internErrors, setInternErrors] = useState({});
+  const [CurrImage, setCurrImage] = useState("");
 
   const handleInternationalInputChange = (event) => {
     const { name, value, type, checked } = event.target;
-    const inputValue = type === "checkbox" ? checked : value;
-    setInternationalDetails({
-      ...internationalDetails,
-      [name]: inputValue,
-    });
+    if (name === "accountNumber" && type === "number") {
+      // If the input is of type 'number', limit it to 10 digits
+      const inputValue = value.replace(/\D/g, "").slice(0, 10);
+      setInternationalDetails({
+        ...state,
+        [name]: inputValue,
+      });
+    } else {
+      const inputValue = type === "checkbox" ? checked : value;
+      setInternationalDetails({
+        ...internationalDetails,
+        [name]: inputValue,
+      });
+    }
   };
 
   const schemaForInternationalDetails = Joi.object({
@@ -565,7 +684,6 @@ export const Context = ({ children }) => {
       setInternationalBankConfirmation(true);
     }
   };
-
   const bankName = internationalDetails.bankName;
   const accountNumber = internationalDetails.accountNumber;
   const accountName = internationalDetails.accountName;
@@ -683,6 +801,10 @@ export const Context = ({ children }) => {
   const [recipientNumber, setRecipientNumber] = useState("");
   const [amount, setAmount] = useState("");
   const [networkImage, setNetworkImage] = useState("");
+  const [transactFailedPopUp, setTransactFailedPopUp] = useState("");
+  const [inputValues, setInputValues] = useState("");
+  const [networkId, setNetworkId] = useState("");
+  const [productId, setProductId] = useState("");
 
   // =====================DATABUNDLE========================
   const [selectedOption, setSelectedOption] = useState("");
@@ -690,11 +812,19 @@ export const Context = ({ children }) => {
   const [recipientPhoneNumber, setRecipientPhoneNumber] = useState("");
   const [selectedAmount, setSelectedAmount] = useState("");
   const [recipientNames, setRecipientNames] = useState("");
-  const [walletName, setWalletName] = useState("");
+  const [walletName, setWalletName] = useState("initialWalletName");
 
   const [accountId, setAccountId] = useState("");
   const [numberPins, setNumberPins] = useState("");
   const [emailId, setEmailId] = useState("");
+
+  // ==================Card Payment===============================
+  const [cardPaymentAmount, setCardPaymentAmount] = useState("");
+  const [cardPaymentSelected, setCardPaymentSelected] = useState("");
+  const [cardHolderName, setCardHolderName] = useState("");
+  const [cardSelected, setCardSelected] = useState("");
+  const [selectedCard, setSelectedCard] = useState("");
+  const [paymentSelected, setPaymentSelected] = useState("");
 
   //=============point redeem==============
   const [inputValue, setInputValue] = useState("");
@@ -708,7 +838,20 @@ export const Context = ({ children }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [ikedcEmail, setEmail] = useState("");
   const [ikedcamount, setIkedcamount] = useState("");
+  const [billGenerate, setBillGenerate] = useState("");
+  const [serviceID, setServiceID] = useState("");
+  const [flag, setFlag] = useState("");
 
+  //------------Airtime Conversion---------
+  const [inputValueA, setInputValueA] = useState("");
+  const [resultValue, setResultValue] = useState("");
+  const [recipientNumberA, setRecipientNumberA] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [airEmail, setairEmail] = useState("");
+  const [homeAdress, sethomeAdress] = useState("");
+  
+  
   //=============Currency conversion==============
   const [convertedAmount, setConvertedAmount] = useState("");
   const [initialValue, setInitialValue] = useState("");
@@ -731,6 +874,13 @@ export const Context = ({ children }) => {
   const [cardName, setCardName] = useState("");
   const [smartCard, setSmartCard] = useState("");
   const [tvEmail, setTvEmail] = useState("");
+  const [tvAmount, setTvAmount] = useState("");
+  const [flagResult, setFlagResult] = useState("");
+  const [methodPayment, setMethodPayment] = useState(false);
+  const [methodImage, setMethodImage] = useState(arrowDown);
+  const [tvWalletBalance, setTvWalletBalance] = useState("");
+  const [decoderType, setDecoderType] = useState("");
+  const [decoderActive, setDecoderActive] = useState(false);
 
   //==========DSTV===========
   const [selectedOptionDstv, setSelectedOptionDstv] = useState("");
@@ -739,56 +889,70 @@ export const Context = ({ children }) => {
   const [inputPinDstv, setInputPinDstv] = useState(false);
   const [dstvSuccessful, setDstvSuccessful] = useState(false);
 
+  //=========SHOWMAX===========
+  const [selectedOptionShowmax, setSelectedOptionShowmax] = useState("");
+  const [showDropdownShowmax, setShowDropdownShowmax] = useState(false);
+  const [confirmShowmaxPopup, setConfirmShowmaxPopup] = useState(false);
+  const [inputPinShowmax, setInputPinShowmax] = useState(false);
+  const [showmaxSuccessful, setShowmaxSuccessful] = useState(false);
+
+  //=========STARTIMES===========
+  const [selectedOptionStarTimes, setSelectedOptionStarTimes] = useState("");
+  const [showDropdownStarTimes, setShowDropdownStarTimes] = useState(false);
+  const [confirmStarTimesPopup, setConfirmStarTimesPopup] = useState(false);
+  const [inputPinStarTimes, setInputPinStarTimes] = useState(false);
+  const [starTimesSuccessful, setStarTimesSuccessful] = useState(false);
+
   //============= EDUCATION PINS ========================
-//===============WAEC PINS================
-  const [quantityResult, setQuantityResult] = useState('');
-const [quantityActive, setQuantityActive] = useState(false);
-const [paymentResult, setPaymentResult] = useState('');
-const [methodActive, setMethodActive] = useState(false);
-const [examType, setExamType] = useState('');
-const [examActive, setExamActive] = useState(false);
-const [educationPinPhone, setEducationPinPhone]= useState('');
-const[ educationPinEmail, setEducationPinEmail] = useState('');
-const [educationAmount, setEducationAmount] = useState('₦');
-const [walletBalance, setWalletBalance] = useState('');
+  //===============WAEC PINS================
+  const [quantityResult, setQuantityResult] = useState("");
+  const [quantityActive, setQuantityActive] = useState(false);
+  const [paymentResult, setPaymentResult] = useState("");
+  const [methodActive, setMethodActive] = useState(false);
+  const [examType, setExamType] = useState("");
+  const [examActive, setExamActive] = useState(false);
+  const [educationPinPhone, setEducationPinPhone] = useState("");
+  const [educationPinEmail, setEducationPinEmail] = useState("");
+  const [educationAmount, setEducationAmount] = useState("₦");
+  const [walletBalance, setWalletBalance] = useState("");
 
- //==============  NECO PINS  ================
- const [necoQuantityResult, setNecoQuantityResult] = useState('');
-const [necoQuantityActive, setNecoQuantityActive] = useState(false);
- const [necoPaymentResult, setNecoPaymentResult] = useState('');
- const [necoMethodActive, setNecoMethodActive] = useState(false);
- const [necoExamType, setNecoExamType] = useState('');
- const [necoExamActive, setNecoExamActive] = useState(false);
- const [necoEducationPinPhone, setNecoEducationPinPhone]= useState('');
- const[ necoEducationPinEmail, setNecoEducationPinEmail] = useState('');
- const [necoEducationAmount, setNecoEducationAmount] = useState('₦');
- const [necoWalletBalance, setNecoWalletBalance] = useState('');
+  //==============  NECO PINS  ================
+  const [necoQuantityResult, setNecoQuantityResult] = useState("");
+  const [necoQuantityActive, setNecoQuantityActive] = useState(false);
+  const [necoPaymentResult, setNecoPaymentResult] = useState("");
+  const [necoMethodActive, setNecoMethodActive] = useState(false);
+  const [necoExamType, setNecoExamType] = useState("");
+  const [necoExamActive, setNecoExamActive] = useState(false);
+  const [necoEducationPinPhone, setNecoEducationPinPhone] = useState("");
+  const [necoEducationPinEmail, setNecoEducationPinEmail] = useState("");
+  const [necoEducationAmount, setNecoEducationAmount] = useState("₦");
+  const [necoWalletBalance, setNecoWalletBalance] = useState("");
 
- // ============== JAMB PINS ================
- const [jambQuantityResult, setJambQuantityResult] = useState('');
- const [jambQuantityActive, setJambQuantityActive] = useState(false);
-  const [jambPaymentResult, setJambPaymentResult] = useState('');
+  // ============== JAMB PINS ================
+  const [jambQuantityResult, setJambQuantityResult] = useState("");
+  const [jambQuantityActive, setJambQuantityActive] = useState(false);
+  const [jambPaymentResult, setJambPaymentResult] = useState("");
   const [jambMethodActive, setJambMethodActive] = useState(false);
-  const [jambExamType, setJambExamType] = useState('');
+  const [jambExamType, setJambExamType] = useState("");
   const [jambExamActive, setJambExamActive] = useState(false);
-  const [jambEducationPinPhone, setJambEducationPinPhone]= useState('');
-  const[ jambEducationPinEmail, setJambEducationPinEmail] = useState('');
-  const [jambEducationAmount, setJambEducationAmount] = useState('₦');
-  const [jambWalletBalance, setJambWalletBalance] = useState('');
+  const [jambEducationPinPhone, setJambEducationPinPhone] = useState("");
+  const [jambEducationPinEmail, setJambEducationPinEmail] = useState("");
+  const [jambEducationAmount, setJambEducationAmount] = useState("₦");
+  const [jambWalletBalance, setJambWalletBalance] = useState("");
 
   // ============== NABTEB PINS =============
-  const [nabtebQuantityResult, setNabtebQuantityResult] = useState('');
- const [nabtebQuantityActive, setNabtebQuantityActive] = useState(false);
-  const [nabtebPaymentResult, setNabtebPaymentResult] = useState('');
+  const [nabtebQuantityResult, setNabtebQuantityResult] = useState("");
+  const [nabtebQuantityActive, setNabtebQuantityActive] = useState(false);
+  const [nabtebPaymentResult, setNabtebPaymentResult] = useState("");
   const [nabtebMethodActive, setNabtebMethodActive] = useState(false);
-  const [nabtebExamType, setNabtebExamType] = useState('');
+  const [nabtebExamType, setNabtebExamType] = useState("");
   const [nabtebExamActive, setNabtebExamActive] = useState(false);
-  const [nabtebEducationPinPhone, setNabtebEducationPinPhone]= useState('');
-  const[ nabtebEducationPinEmail, setNabtebEducationPinEmail] = useState('');
-  const [nabtebEducationAmount, setNabtebEducationAmount] = useState('₦');
-  const [nabtebWalletBalance, setNabtebWalletBalance] = useState('');
- 
-    // PROFILE & ACCOUNT SETTINGS =========
+  const [nabtebEducationPinPhone, setNabtebEducationPinPhone] = useState("");
+  const [nabtebEducationPinEmail, setNabtebEducationPinEmail] = useState("");
+  const [nabtebEducationAmount, setNabtebEducationAmount] = useState("₦");
+  const [nabtebWalletBalance, setNabtebWalletBalance] = useState("");
+
+  // PROFILE & ACCOUNT SETTINGS =========
   //============ Profile Page =========
   const [openImage, setOpenImage] = useState(false);
   const [profilePage, setProfilePage] = useState(true);
@@ -799,16 +963,31 @@ const [necoQuantityActive, setNecoQuantityActive] = useState(false);
   const [bvnVerificationOpen, setBvnVerificationOpen] = useState(false);
   const [accountUpgradeOpen, setAccountUpgradeOpen] = useState(false);
   const [dropDownGender, setDropDownGender] = useState(false);
-   
+  const [idAddress, setIdAddress] = useState("");
+  const [idState, setIdState] = useState("");
+  const [idCity, setIdCity] = useState("");
+  const [idLGA, setIdLGA] = useState("");
+  const [idNumber, setIdNumber] = useState("");
+  const [idPostalCode, setIdPostalCode] = useState("");
+
   //========== BUSINESS KYC =============
   const [businessPopUp, setBusinessPopUp] = useState(false);
 
   // ========  ACCOUNT UPGRADE ===========
-  const [accountUpgrade, setAccountUpgrade]  = useState(false);
+  const [accountUpgrade, setAccountUpgrade] = useState(false);
 
   //============ AUTHETICATION SETTINGS ========
   const [authenticationOpen, setAuthenticationOpen] = useState(false);
+
+  //============== API COLLECTION FOR EDUCATION PINS
+  const [eduResponse, setEduResponse] = useState(null);
   const hold = {
+    handleRefresh,
+    // ==================
+    tfImage, settfImage,
+    withdrawImage,
+    setWithdrawImage,
+    // ====================
     firstDrop,
     secondDrop,
     thirdDrop,
@@ -941,8 +1120,6 @@ const [necoQuantityActive, setNecoQuantityActive] = useState(false);
     setPersonalAccount,
     businessAccount,
     setBusinessAccount,
-    image,
-    setImage,
     code,
     setCode,
     activeButton,
@@ -978,6 +1155,17 @@ const [necoQuantityActive, setNecoQuantityActive] = useState(false);
     toggleVisibility,
     isVisible,
 
+    // ==================Aremxyplug pages==============
+    mainTransferErrors,
+    mainCountry,
+    setMainCountry,
+    handleMainInputChange,
+    mainEmailUsername,
+    mainUserPhoneNumber,
+    emailPhoneNumberConfirmation,
+    setEmailPhoneNumberConfirmation,
+    ProceedToMainTransfer,
+
     // ==================GLobal Transfer==============
     otherBanksConfirmation,
     setOtherBankConfirmation,
@@ -995,10 +1183,6 @@ const [necoQuantityActive, setNecoQuantityActive] = useState(false);
     setInternationalBankConfirmation,
     InternationalDetailPopUp,
     setInternationalDetailPopUp,
-    transfer,
-    setTransfer,
-    receive,
-    setReceive,
     internationalDetails,
     setInternationalDetails,
     purpose,
@@ -1013,6 +1197,14 @@ const [necoQuantityActive, setNecoQuantityActive] = useState(false);
     swiftCode,
     recipientAddress,
     purposeOfPayment,
+    selectedCurr,
+    setSelectedCurr,
+    CurrImage,
+    setCurrImage,
+    transfer,
+    setTransfer,
+    receive,
+    setReceive,
 
     // ============withdrawal=============
     withdrawalPin,
@@ -1063,6 +1255,14 @@ const [necoQuantityActive, setNecoQuantityActive] = useState(false);
     setAmount,
     networkImage,
     setNetworkImage,
+    transactFailedPopUp,
+    setTransactFailedPopUp,
+    networkId,
+    setNetworkId,
+    inputValues,
+    setInputValues,
+    productId,
+    setProductId,
 
     // ==============DataBundle===============
     selectedOption,
@@ -1083,6 +1283,20 @@ const [necoQuantityActive, setNecoQuantityActive] = useState(false);
     setNumberPins,
     emailId,
     setEmailId,
+
+    //===============Card payment==============
+    cardPaymentAmount,
+    setCardPaymentAmount,
+    cardPaymentSelected,
+    setCardPaymentSelected,
+    cardHolderName,
+    setCardHolderName,
+    cardSelected,
+    setCardSelected,
+    selectedCard,
+    setSelectedCard,
+    paymentSelected,
+    setPaymentSelected,
 
     //point redeem
     inputValue,
@@ -1105,6 +1319,28 @@ const [necoQuantityActive, setNecoQuantityActive] = useState(false);
     setEmail,
     ikedcamount,
     setIkedcamount,
+    billGenerate,
+    setBillGenerate,
+    serviceID,
+    setServiceID,
+    flag,
+    setFlag,
+
+    //Airtime Conversion
+    inputValueA,
+    setInputValueA,
+    resultValue,
+    setResultValue,
+    recipientNumberA,
+    setRecipientNumberA,
+    firstName,
+    setFirstName,
+    lastName,
+    setLastName,
+    airEmail,
+    setairEmail,
+    homeAdress,
+    sethomeAdress,
 
     //currency
     convertedAmount,
@@ -1118,20 +1354,8 @@ const [necoQuantityActive, setNecoQuantityActive] = useState(false);
     setActiveButtonsOne,
     activeButtonOne,
 
-    //TV-subscription
-    confirmGotvPopup,
-    setConfirmGotvPopup,
-    // handleGotv,
-    inputPinGotv,
-    setInputPinGotv,
-    // handleInputGotv,
-    gotvSuccessful,
-    setGotvSuccessful,
-    // handleGotvSuccessful,
-    selectedOptionGOTV,
-    setSelectedOptionGOTV,
-    showDropdownGOTV,
-    setShowDropdownGOTV,
+    //=====TV-subscription
+    //=====general
     formatNumberWithCommas,
     mobileNumber,
     setMobileNumber,
@@ -1141,7 +1365,34 @@ const [necoQuantityActive, setNecoQuantityActive] = useState(false);
     setSmartCard,
     tvEmail,
     setTvEmail,
+    tvAmount,
+    setTvAmount,
+    methodPayment,
+    setMethodPayment,
+    flagResult,
+    setFlagResult,
+    tvWalletBalance,
+    setTvWalletBalance,
+    methodImage,
+    setMethodImage,
+    decoderType,
+    setDecoderType,
+    decoderActive,
+    setDecoderActive,
 
+    //=======GOTV
+    confirmGotvPopup,
+    setConfirmGotvPopup,
+    inputPinGotv,
+    setInputPinGotv,
+    gotvSuccessful,
+    setGotvSuccessful,
+    selectedOptionGOTV,
+    setSelectedOptionGOTV,
+    showDropdownGOTV,
+    setShowDropdownGOTV,
+
+    //=======DSTV
     confirmDstvPopup,
     setConfirmDstvPopup,
     inputPinDstv,
@@ -1152,127 +1403,166 @@ const [necoQuantityActive, setNecoQuantityActive] = useState(false);
     setSelectedOptionDstv,
     showDropdownDstv,
     setShowDropdownDstv,
-    
 
-  //====== EDUCATION PINS
-  //=======WAEC PINS
-  quantityResult, 
-  setQuantityResult,
-  quantityActive,
-  setQuantityActive,
-  paymentResult, 
-  setPaymentResult,
-  methodActive, 
-  setMethodActive,
-  examType, 
-  setExamType,
-  examActive,
-   setExamActive,
-   educationPinPhone, 
-   setEducationPinPhone,
-   educationPinEmail, 
-  setEducationPinEmail,
-  educationAmount, 
-  setEducationAmount,
-  walletBalance, 
-  setWalletBalance,
+    //=======SHOWMAX
+    confirmShowmaxPopup,
+    setConfirmShowmaxPopup,
+    inputPinShowmax,
+    setInputPinShowmax,
+    showmaxSuccessful,
+    setShowmaxSuccessful,
+    selectedOptionShowmax,
+    setSelectedOptionShowmax,
+    showDropdownShowmax,
+    setShowDropdownShowmax,
 
-//======NECO PINS ==========
- necoQuantityResult, 
-  setNecoQuantityResult,
-  necoQuantityActive, 
-  setNecoQuantityActive,
-  necoPaymentResult, 
-  setNecoPaymentResult,
- necoMethodActive, 
-  setNecoMethodActive,
-  necoExamType, 
-  setNecoExamType,
-  necoExamActive,
-   setNecoExamActive,
-   necoEducationPinPhone, 
-   setNecoEducationPinPhone,
-   necoEducationPinEmail, 
-  setNecoEducationPinEmail,
-  necoEducationAmount, 
-  setNecoEducationAmount,
-  necoWalletBalance, 
-  setNecoWalletBalance,
- 
-  //==========   JAMB PINS =========
-  jambQuantityResult, 
-  setJambQuantityResult,
-  jambQuantityActive, 
-  setJambQuantityActive,
-  jambPaymentResult, 
-  setJambPaymentResult,
- jambMethodActive, 
-  setJambMethodActive,
-  jambExamType, 
-  setJambExamType,
-  jambExamActive,
-   setJambExamActive,
-   jambEducationPinPhone, 
-   setJambEducationPinPhone,
-   jambEducationPinEmail, 
-  setJambEducationPinEmail,
-  jambEducationAmount, 
-  setJambEducationAmount,
-  jambWalletBalance, 
-  setJambWalletBalance,
+    //=======STARTIMES
+    confirmStarTimesPopup,
+    setConfirmStarTimesPopup,
+    inputPinStarTimes,
+    setInputPinStarTimes,
+    starTimesSuccessful,
+    setStarTimesSuccessful,
+    selectedOptionStarTimes,
+    setSelectedOptionStarTimes,
+    showDropdownStarTimes,
+    setShowDropdownStarTimes,
 
-  //========= NABTEB PINS =======
-nabtebQuantityResult, 
-  setNabtebQuantityResult,
-  nabtebQuantityActive, 
-  setNabtebQuantityActive,
-  nabtebPaymentResult, 
-  setNabtebPaymentResult,
- nabtebMethodActive, 
-  setNabtebMethodActive,
-  nabtebExamType, 
-  setNabtebExamType,
-  nabtebExamActive,
-   setNabtebExamActive,
-   nabtebEducationPinPhone, 
-   setNabtebEducationPinPhone,
-   nabtebEducationPinEmail, 
-  setNabtebEducationPinEmail,
-  nabtebEducationAmount, 
-  setNabtebEducationAmount,
-  nabtebWalletBalance, 
-  setNabtebWalletBalance,
+    //====== EDUCATION PINS
+    //=======WAEC PINS
+    quantityResult,
+    setQuantityResult,
+    quantityActive,
+    setQuantityActive,
+    paymentResult,
+    setPaymentResult,
+    methodActive,
+    setMethodActive,
+    examType,
+    setExamType,
+    examActive,
+    setExamActive,
+    educationPinPhone,
+    setEducationPinPhone,
+    educationPinEmail,
+    setEducationPinEmail,
+    educationAmount,
+    setEducationAmount,
+    walletBalance,
+    setWalletBalance,
 
-// ========= PROFILE & ACCOUNT SETTINGS ===========
-// ========== Profile Page ========
-openImage,
-setOpenImage,
-profilePage,
-setProfilePage,
+    //======NECO PINS ==========
+    necoQuantityResult,
+    setNecoQuantityResult,
+    necoQuantityActive,
+    setNecoQuantityActive,
+    necoPaymentResult,
+    setNecoPaymentResult,
+    necoMethodActive,
+    setNecoMethodActive,
+    necoExamType,
+    setNecoExamType,
+    necoExamActive,
+    setNecoExamActive,
+    necoEducationPinPhone,
+    setNecoEducationPinPhone,
+    necoEducationPinEmail,
+    setNecoEducationPinEmail,
+    necoEducationAmount,
+    setNecoEducationAmount,
+    necoWalletBalance,
+    setNecoWalletBalance,
 
-// ========= Account verification Page =====
-verificationOpen,
-setVerificationOpen,
-idVerificationOpen,
-setIdVerificationOpen,
-bvnVerificationOpen,
-setBvnVerificationOpen,
-accountUpgradeOpen,
-setAccountUpgradeOpen,
-dropDownGender,
-setDropDownGender,
+    //==========   JAMB PINS =========
+    jambQuantityResult,
+    setJambQuantityResult,
+    jambQuantityActive,
+    setJambQuantityActive,
+    jambPaymentResult,
+    setJambPaymentResult,
+    jambMethodActive,
+    setJambMethodActive,
+    jambExamType,
+    setJambExamType,
+    jambExamActive,
+    setJambExamActive,
+    jambEducationPinPhone,
+    setJambEducationPinPhone,
+    jambEducationPinEmail,
+    setJambEducationPinEmail,
+    jambEducationAmount,
+    setJambEducationAmount,
+    jambWalletBalance,
+    setJambWalletBalance,
 
-//========== Business PopUp =======
-businessPopUp,
-setBusinessPopUp,
+    //========= NABTEB PINS =======
+    nabtebQuantityResult,
+    setNabtebQuantityResult,
+    nabtebQuantityActive,
+    setNabtebQuantityActive,
+    nabtebPaymentResult,
+    setNabtebPaymentResult,
+    nabtebMethodActive,
+    setNabtebMethodActive,
+    nabtebExamType,
+    setNabtebExamType,
+    nabtebExamActive,
+    setNabtebExamActive,
+    nabtebEducationPinPhone,
+    setNabtebEducationPinPhone,
+    nabtebEducationPinEmail,
+    setNabtebEducationPinEmail,
+    nabtebEducationAmount,
+    setNabtebEducationAmount,
+    nabtebWalletBalance,
+    setNabtebWalletBalance,
 
-// ========== Account upgrade ========
-accountUpgrade,
-setAccountUpgrade,
+    // ========= PROFILE & ACCOUNT SETTINGS ===========
+    // ========== Profile Page ========
+    openImage,
+    setOpenImage,
+    profilePage,
+    setProfilePage,
 
-//======== AUTHENTICATION  SETTING =======
-authenticationOpen,
-setAuthenticationOpen,
+    // ========= Account verification Page =====
+    verificationOpen,
+    setVerificationOpen,
+    idVerificationOpen,
+    setIdVerificationOpen,
+    bvnVerificationOpen,
+    setBvnVerificationOpen,
+    accountUpgradeOpen,
+    setAccountUpgradeOpen,
+    dropDownGender,
+    setDropDownGender,
+    idAddress,
+    setIdAddress,
+    idCity,
+    setIdCity,
+    idState,
+    setIdState,
+    idLGA,
+    setIdLGA,
+    idNumber,
+    setIdNumber,
+    idPostalCode,
+    setIdPostalCode,
+    // ==========  BVN ========
+
+    //========== Business PopUp =======
+    businessPopUp,
+    setBusinessPopUp,
+
+    // ========== Account upgrade ========
+    accountUpgrade,
+    setAccountUpgrade,
+
+    //======== AUTHENTICATION  SETTING =======
+    authenticationOpen,
+    setAuthenticationOpen,
+    //========API COLLECTION FOR EDUCATION PINS =====\
+    eduResponse, 
+    setEduResponse
   };
 
   return (

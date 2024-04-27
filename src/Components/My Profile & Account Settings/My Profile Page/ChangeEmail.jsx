@@ -13,9 +13,9 @@ import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import Cancel from "../ProfileImages/Cancel.svg";
 import PopUpGreen from "../ProfileImages/PopUpGreen.svg";
-import PopUpGreenTab from "../ProfileImages/PopUpGreenTab.svg"
-import PopUpGreenDeskTop from "../ProfileImages/PopUpGreenDeskTop.svg"
-import Success from "../ProfileImages/success.gif"
+import PopUpGreenTab from "../ProfileImages/PopUpGreenTab.svg";
+import PopUpGreenDeskTop from "../ProfileImages/PopUpGreenDeskTop.svg";
+import Success from "../ProfileImages/success.gif";
 
 const ChangeEmail = () => {
   const { isDarkMode } = useContext(ContextProvider);
@@ -30,7 +30,7 @@ const ChangeEmail = () => {
     isVisible,
   } = useContext(ContextProvider);
 
-  const [countdown, setCountdown] = useState(60); 
+  const [countdown, setCountdown] = useState(60);
   const [resendActive, setResendActive] = useState(false);
 
   useEffect(() => {
@@ -92,7 +92,7 @@ const ChangeEmail = () => {
         <section>
           <ProfileHero></ProfileHero>
 
-        {/* <Link to="/ChangePin"> */}
+          {/* <Link to="/ChangePin"> */}
           <div className="flex items-center my-[10%] gap-[8px] md:my-[5%] md:text-[18px] lg:text-[px]">
             <p className="text-[#7c7c7c] text-[10px] leading-[130%] md:text-[14px] lg:text-[18px] 2xl:text-[28px]">
               Change Email
@@ -150,11 +150,9 @@ const ChangeEmail = () => {
         {update && (
           <Modal>
             <div
-              className={`confirm2 ${styles.inputPin} ${
-                toggleSideBar
-                  ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
-                  : "lg:w-[40%]"
-              } md:w-[55%] w-[90%] md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
+              className={` ${
+                toggleSideBar ? "confirm02" : "confirm2"
+              } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
             >
               <img
                 onClick={() => setUpdate(false)}
@@ -164,7 +162,7 @@ const ChangeEmail = () => {
               />
 
               <hr className="h-[6px] bg-[#04177f] lg:mt-[10%] border-none mt-[8%] md:mt-[7%] md:h-[10px]" />
-              <p className="text-[10px] px-[20px] md:text-[14px] lg:text-[18px] font-extrabold text-center my-[5%] lg:my-[%]">
+              <p className="md:mt-[15%] lg:mt-[10%] text-[10px] px-[20px] md:text-[14px] lg:text-[18px] font-extrabold text-center my-[5%] lg:my-[%]">
                 Verification code has been sent to your email - {emailId}
               </p>
               <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
@@ -227,7 +225,7 @@ const ChangeEmail = () => {
                 disabled={inputPin.length !== 6}
                 className={`${
                   inputPin.length !== 6 ? "bg-[#0008]" : "bg-[#04177f]"
-                } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
               >
                 Verify
               </button>
@@ -238,16 +236,26 @@ const ChangeEmail = () => {
         {verify && (
           <Modal className="">
             <div
-              className={`confirm2 ${styles.inputPin} ${
-                toggleSideBar
-                  ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
-                  : "lg:w-[40%]"
-              }relative md:w-[55%] w-[90%] flex flex-col justify-between md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
+              className={` ${
+                toggleSideBar ? "confirm02" : "confirm2"
+              } bg-white flex flex-col justify-between items-center pb-[10px] md:pb-[30px] lg:pb-[30px] md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
             >
               <div className="absolute z-0 right-0" style={{ zIndex: 0 }}>
-                <img src={PopUpGreen} alt="" className="md:hidden rounded-tr-[10px]" />
-                <img src={PopUpGreenTab} alt="" className="hidden md:block lg:hidden rounded-tr-[10px]" />
-                <img src={PopUpGreenDeskTop} alt="" className="hidden lg:block rounded-tr-[20px]" />
+                <img
+                  src={PopUpGreen}
+                  alt=""
+                  className="md:hidden rounded-tr-[10px]"
+                />
+                <img
+                  src={PopUpGreenTab}
+                  alt=""
+                  className="hidden md:block rounded-tr-[10px]"
+                />
+                <img
+                  src={PopUpGreenDeskTop}
+                  alt=""
+                  className="hidden rounded-tr-[20px]"
+                />
               </div>
 
               <div className="relative z-10">
@@ -264,10 +272,8 @@ const ChangeEmail = () => {
                 </p>
               </div>
 
-              <div>
-                <img src={Success} alt="" className="absolute top-[25%] left-[32%] h-[50%] lg:left-[36.5%]"/>
-              </div>
-              
+              <img src={Success} alt="" className="h-[50%] md:h-[40%]" />
+
               <button
                 onClick={(e) => {
                   e.preventDefault();
@@ -275,11 +281,11 @@ const ChangeEmail = () => {
                   setEmailId("");
                   setEmailInputColor("");
                 }}
-                className={`my-[5%] bg-[#04177f] w-[90%] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                className={`my-[%] mt-0  bg-[#04177f] w-[90%] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
               >
                 Done
               </button>
-              </div>
+            </div>
           </Modal>
         )}
 

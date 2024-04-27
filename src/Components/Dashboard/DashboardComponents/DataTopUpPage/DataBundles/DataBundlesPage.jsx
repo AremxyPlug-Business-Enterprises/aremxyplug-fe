@@ -150,9 +150,9 @@ const DataBundlesPage = () => {
             </div>
             <div className="hidden md:w-1/2 md:block"></div>
           </div>
-
+          
           <div className="flex items-center my-[10%] gap-[8px] md:my-[5%] md:text-[18px] lg:text-[20px]">
-            <p className="text-[#7c7c7c] text-[10px] leading-[130%] md:text-[18px] lg:text-[20px] 2xl:text-[28px]">
+            <p className="text-[#7c7c7c] text-[10px] leading-[130%] md:text-[12px] lg:text-[16px] 2xl:text-[20px]">
               Select Network Type
             </p>
             <img
@@ -267,16 +267,16 @@ const DataBundlesPage = () => {
               </div>
             </Link>
           </div>
-
+          
           {codes && (
             <Modal>
               (
               <div
                 className={`code ${
                   toggleSideBar
-                    ? "xl:w-[65%] xl:ml-[17%] lg:ml-[20%] lg:w-[40%]"
-                    : "lg:w-[40%]"
-                } w-[90%] xl:w-[80%] overflow-auto`}
+                    ? "code1"
+                    : "code01"
+                } overflow-auto w-[90%]`}
               >
                 <img
                   onClick={() => setCodes(false)}

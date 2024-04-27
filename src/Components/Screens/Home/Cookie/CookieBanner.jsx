@@ -28,12 +28,12 @@ const CookieBanner = () => {
   const closeBanner = () => {
     setShowBanner(!showBanner);
   };
-
+  
   return showBanner && !accepted ? (
-    <div className="cookie-banner bg-white py-[9%] text-[14px] px-[5%] text-justify w-[95%] mx-auto border-[3px] border-[#04177f] rounded-[16px] md:py-[5%] lg:py-[2%]">
+    <div className="cookie-banner bg-white py-[9%] text-[10px] px-[5%] text-justify w-[95%] md:w-[90%] lg:w-[85%] md:text-[12px] lg:text-[14px] mx-auto border-[3px] border-[#04177f] rounded-[16px] md:py-[5%] lg:py-[2%]">
       <img
         onClick={closeBanner}
-        className="absolute top-[2%] right-[4%] w-[30px] h-[30px]"
+        className="absolute top-[2%] right-[4%] w-[30px] h-[30px] md:right-[7%] lg:right-[10%]"
         src="./Images/cancel.png"
         alt="/"
       />

@@ -70,7 +70,7 @@ const handleBalance = (product) => {
 
 
         
-        const [selected, setSelected] = useState("");
+        const [selected, setSelected] = useState("NGN");
         const { isDarkMode, toggleSideBar } =
   useContext(ContextProvider);
 
@@ -100,15 +100,16 @@ const handleBalance = (product) => {
         <DashBoardLayout>
         <>
         <div class="flex gap-[25px] lg:w-full lg:h-[1850px] md:h-[1200px] h-[800px] md:w-full w-full flex-col">
-        <div
-            id="Transaction"
-            className="w-full h-[90px] bg-gradient-to-r from-yellow-300 to-rose-400 md:h-[112.29px] lg:h-[196px] md:rounded-[11.5px] rounded-[7px] md:mt-[-1px] px-[5px] lg:ml-[-20px] lg:w-[102%] 2xl:w-full 2xl:ml-0 lg:gap-[50px] pt-[10px] lg:px-[30px] lg:rounded-[20px] lg:py-[20px] pb-[16px] flex justify-between items-center"
+
+          <div
+            // id="Transaction"
+            className="w-full h-[90px] md:h-[112.29px] bg-gradient-to-r from-yellow-300 to-rose-400  lg:h-[196px] md:rounded-[11.5px] rounded-[7px] md:mt-[-1px] px-[5px] lg:ml-[-20px] lg:w-[102%] 2xl:w-full 2xl:ml-0 lg:gap-[50px] pt-[10px] lg:px-[30px] lg:rounded-[20px] lg:py-[20px] pb-[16px] flex justify-between items-center"
           >
             <div className="w-[100%] pt-[19px] lg:pt-[20px] pl-[8.5px] md:pl-[9px]">
-              <p className="text-[10px] mb-2 font-bold uppercase w-[110%] md:text-[12px] md:w-[70%] lg:w-[70%] lg:text-[20px] 2xl:w-[80%] 2xl:text-[24px] lg:mb-4">
+              <p className="text-[10px] mb-2 font-bold uppercase w-[100%] md:text-[12px] md:w-[70%] lg:w-[70%] lg:text-[20px] 2xl:w-[80%] 2xl:text-[24px] lg:mb-4">
                 MANAGE ALL YOUR TRANSACTIONS AT A TIME WITHOUT ANY HASSLE.
               </p>
-              <p className="text-[7px] font-[400] leading-[9px] mb-3 md:text-[9px] md:leading-[12.2px] w-[100%] md:w-[80%] lg:w-[75%] 2xl:w-[85%] 2xl:mt-[5px] lg:mt-[20px] lg:text-[16px] lg:leading-[26px] 2xl:text-[20px] lg:mb-[20px]">
+              <p className="text-[7px] font-[400] leading-[9px] mb-3 md:text-[9px] md:leading-[12.2px] w-[90%] md:w-[80%] lg:w-[75%] 2xl:w-[85%] 2xl:mt-[5px] lg:mt-[20px] lg:text-[16px] lg:leading-[26px] 2xl:text-[20px] lg:mb-[20px]">
                 Select, filter, and manage all your transactions at a time,
                 download all transactions stats and keep a record track.
               </p>
@@ -118,30 +119,10 @@ const handleBalance = (product) => {
               <img
                 src={receiptA}
                 alt=""
-                className="w-[55.482px] h-full md:w-[98px] md:h-[px] lg:w-[166.447px] lg:h-[150px]"
+                className="w-[67.482px] h-[60px] md:w-[98px] md:h-[px] lg:w-[196.447px] lg:h-[150px]"
               />
             </div>
           </div>
-
-        {/* <div className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] bg-gradient-to-r from-yellow-300 to-rose-400 flex px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px]"> */}
-                {/* <div className="py-[13px] lg:py-[40px]"> */}
-                  {/* <h2 className="text-[9px] md:text-[13.75px] font-bold mb-3 lg:text-[24px] lg:mb-4"> */}
-                  {/* MANAGE ALL YOUR TRANSACTIONS AT A <br /> TIME WITHOUT ANY HASSLE. */}
-                  {/* </h2> */}
-                  {/* <h2 className="text-[6px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3"> */}
-                  {/* Select, filter, and manage all your transactions at a time, */}
-                   {/* download all <br/> transactions stats and keep a record track. */}
-                    {/*  */}
-                  {/* </h2> */}
-                {/* </div> */}
-                {/* <div className="w-[91px] md:h-full md:w-[150px] lg:w-[220px] h-[70px] lg:h-[180px]"> */}
-                  {/* <img */}
-                    {/* // src={receiptA} */}
-                    {/* // alt="" */}
-                    {/* // className="h-full" */}
-                  {/* // /> */}
-                {/* </div> */}
-              {/* </div> */}
 
 
 
@@ -661,7 +642,7 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
             <div class="w-[60.33px] md:w-[103.70px] lg:w-full text-black text-[8px] md:text-[12px] lg:text-[16px] font-semibold md:leading-3 lg:leading-tight leading-[10.40px]">Total Amount</div>
         </div>
     </div>
-    <div class="w-[312px] lg:h-[101px]  h-[33.67px] md:w-full md:h-[57.86px] "></div>
+    <div class="w-[312px] lg:h-[101px]  h-[33.67px] md:w-full md:h-[0px] "></div>
   </div>
 
 
@@ -677,7 +658,7 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
 <div className=' '>
 <footer className="
  flex  justify-center   text-center gap-[20px] 
- mt-[370px] mb-[50px] md:mt-[480px] lg:mb-[30px]  
+ mt-[370px] mb-[20px] md:mt-[580px] lg:mb-[30px]  
   z-index-2 onset-[500px] lg:mt-[760px]">
             <p className="text-[8px] md:text-[12px] lg:text-[12px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
               You need help?
@@ -705,7 +686,7 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
 
 {/* airtime top-up dropdown */}
 {isOpen2 && (
-  <div className='h-[1110px] lg:h-full'>
+  <div className=''>
   <div
   className={`${styles.viewTransact} ${
     isDarkMode ? "bg-black border" : "bg-white"
@@ -713,12 +694,12 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
   >
   
   
-  <div className="flex  justify-start items-center lg:w-full relative bg-white  md:mt-[-655px]
-    lg:mt-[-967px] mt-[-526px] lg:h-[1100px] md:h-[700px] h-[453px] lg:mb-80 md:mb-40 mb-40 border-b-[1.2px] flex-col">
+  <div className="flex  justify-start items-center lg:w-full relative bg-white  md:mt-[-665px]
+    lg:mt-[-967px] mt-[-492px] lg:h-[1100px] md:h-[1000px] h-[653px] mb-5 border-b-[1.2px] flex-col">
   <div className={`${  
     toggleSideBar
-  ? "lg:gap-[325px]"
-  : "lg:gap-[400px]"}
+    ? "lg:gap-[360px]"
+    : "lg:gap-[445px]"}
   lg:w-full md:w-full md:h-[70.86px] md:pl-[14.90px]  md:pr-[9.29px]  lg:h-[101px] 
   lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px]  pr-[1.33px] pt-3 pb-[11.67px] bg-white 
   justify-between md:justify-between
@@ -732,8 +713,8 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
   </div>
   <div class={`${
       toggleSideBar
-      ? "lg:gap-[325px]"
-      : "lg:gap-[400px]"}
+      ? "lg:gap-[360px]"
+      : "lg:gap-[445px]"}
     lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px]
    lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white 
    justify-between md:justify-between lg:justify-start  items-center inline-flex`}>
@@ -745,8 +726,8 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
   </div>
   <div class={`${
       toggleSideBar
-      ? "lg:gap-[325px]"
-      : "lg:gap-[400px]"}
+      ? "lg:gap-[360px]"
+      : "lg:gap-[445px]"}
     lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px]
    lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px]
     pt-3 pb-[11.67px] bg-white justify-between md:justify-between  md:whitespace-nowrap lg:justify-start  items-center inline-flex`}>
@@ -758,8 +739,8 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
   
   <div class={`${
       toggleSideBar
-      ? "lg:gap-[325px]"
-      : "lg:gap-[400px]"}
+      ? "lg:gap-[360px]"
+      : "lg:gap-[445px]"}
     lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px]
    lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px]
     pt-3 pb-[11.67px] bg-white justify-between md:justify-between lg:justify-start md:whitespace-nowrap
@@ -772,8 +753,8 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
   </div>
   <div class={`${
       toggleSideBar
-      ? "lg:gap-[325px]"
-      : "lg:gap-[400px]"}
+      ? "lg:gap-[360px]"
+      : "lg:gap-[445px]"}
     lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px]
    lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.66px] bg-white
     justify-between md:justify-between lg:justify-start  md:whitespace-nowrap items-center inline-flex`}>
@@ -785,8 +766,8 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
   </div>
   <div class={`${
       toggleSideBar
-      ? "lg:gap-[325px]"
-      : "lg:gap-[400px]"}
+      ? "lg:gap-[360px]"
+      : "lg:gap-[445px]"}
     lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px]
    lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] lg:justify-start  pr-[1.33px] pt-2 pb-[7.67px] bg-white
     justify-between md:justify-between md:whitespace-nowrap items-center inline-flex`}>
@@ -798,8 +779,8 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
   </div>
   <div class={`${
       toggleSideBar
-      ? "lg:gap-[325px]"
-      : "lg:gap-[400px]"}
+      ? "lg:gap-[360px]"
+      : "lg:gap-[445px]"}
     lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px] 
   lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.67px] bg-white
    justify-between md:justify-between items-center lg:justify-start  md:whitespace-nowrap inline-flex`}>
@@ -811,8 +792,8 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
   </div>
   <div class={`${
       toggleSideBar
-      ? "lg:gap-[325px]"
-      : "lg:gap-[400px]"}
+      ? "lg:gap-[360px]"
+      : "lg:gap-[445px]"}
     lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px]
    lg:pl-[26px] lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.67px] bg-white
     justify-between md:justify-between lg:justify-start  md:whitespace-nowrap items-center inline-flex`}>
@@ -824,8 +805,8 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
   </div>
   <div class={`${
       toggleSideBar
-      ? "lg:gap-[325px]"
-      : "lg:gap-[400px]"}
+      ? "lg:gap-[360px]"
+      : "lg:gap-[445px]"}
     lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px] lg:pl-[26px]
    lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.67px] bg-white justify-between
    md:justify-between lg:justify-start  md:whitespace-nowrap items-center inline-flex`}>
@@ -837,8 +818,8 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
   </div>
   <div class={`${
       toggleSideBar
-      ? "lg:gap-[325px]"
-      : "lg:gap-[400px]"}
+      ? "lg:gap-[360px]"
+      : "lg:gap-[445px]"}
     lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px] lg:pl-[26px]
    lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
    md:justify-between lg:justify-start items-center inline-flex `}>
@@ -850,8 +831,8 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
   
   
   
-      <footer className="flex justify-center  text-center gap-[20px] mt-[100px] mb-[50px]
-       md:mt-[200px] lg:mb-[30px] lg:mt-[185px]">
+      <footer className="flex justify-center  text-center gap-[20px] mt-[270px] mb-[10px]
+       md:mt-[350px] lg:mb-[30px] lg:mt-[185px]">
               <p className="text-[8px] md:text-[12px] lg:text-[12px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
                 You need help?
               </p>
@@ -878,16 +859,16 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
 
 {/* data top-up dropdown */}
 {isOpen3 && (
-  <div className=' bg-white  lg:h-full  w-full '>
+  <div className=' bg-white'>
 
 
-  <div className="flex  justify-start items-center lg:w-full shadow relative bg-white  md:mt-[-658px]
-    lg:mt-[-967px] mt-[-527px] lg:h-[1590px] md:h-[1390px]  h-[1050px]
-     border lg:mb-80 md:mb-60 mb-40 border-b-[1.2px] flex-col">
+  <div className="flex  justify-start items-center lg:w-full shadow relative bg-white  md:mt-[-670px]
+    lg:mt-[-967px] mt-[-492px] lg:h-[1590px] md:h-[1390px]  h-[1050px]
+     border mb-5 border-b-[1.2px] flex-col">
   <div className={`${  
     toggleSideBar
-  ? "lg:gap-[325px]"
-  : "lg:gap-[400px]"}
+    ? "lg:gap-[360px]"
+    : "lg:gap-[445px]"}
   lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px]  lg:h-[101px] 
   lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px]  pr-[1.33px] pt-3 pb-[11.67px] bg-white 
   justify-between md:justify-between
@@ -901,8 +882,8 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
   </div>
   <div class={`${
       toggleSideBar
-      ? "lg:gap-[325px]"
-      : "lg:gap-[400px]"}
+      ? "lg:gap-[360px]"
+      : "lg:gap-[445px]"}
     lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px]
    lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white 
    justify-between md:justify-between lg:justify-start  items-center inline-flex`}>
@@ -914,8 +895,8 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
   </div>
   <div class={`${
       toggleSideBar
-      ? "lg:gap-[325px]"
-      : "lg:gap-[400px]"}
+      ? "lg:gap-[360px]"
+      : "lg:gap-[445px]"}
     lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px]
    lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px]
     pt-3 pb-[11.67px] bg-white justify-between md:justify-between  md:whitespace-nowrap lg:justify-start  items-center inline-flex`}>
@@ -927,8 +908,8 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
   
   <div class={`${
       toggleSideBar
-      ? "lg:gap-[325px]"
-      : "lg:gap-[400px]"}
+      ? "lg:gap-[360px]"
+      : "lg:gap-[445px]"}
     lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px]
    lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px]
     pt-3 pb-[11.67px] bg-white justify-between md:justify-between lg:justify-start md:whitespace-nowrap
@@ -941,8 +922,8 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
   </div>
   <div class={`${
       toggleSideBar
-      ? "lg:gap-[325px]"
-      : "lg:gap-[400px]"}
+      ? "lg:gap-[360px]"
+      : "lg:gap-[445px]"}
     lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px]
    lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.66px] bg-white
     justify-between md:justify-between lg:justify-start  md:whitespace-nowrap items-center inline-flex`}>
@@ -954,8 +935,8 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
   </div>
   <div class={`${
       toggleSideBar
-      ? "lg:gap-[325px]"
-      : "lg:gap-[400px]"}
+      ? "lg:gap-[360px]"
+      : "lg:gap-[445px]"}
     lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px]
    lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] lg:justify-start  pr-[1.33px] pt-2 pb-[7.67px] bg-white
     justify-between md:justify-between md:whitespace-nowrap items-center inline-flex`}>
@@ -967,8 +948,8 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
   </div>
   <div class={`${
       toggleSideBar
-      ? "lg:gap-[325px]"
-      : "lg:gap-[400px]"}
+      ? "lg:gap-[360px]"
+      : "lg:gap-[445px]"}
     lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] 
   lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.67px] bg-white
    justify-between md:justify-between items-center lg:justify-start  md:whitespace-nowrap inline-flex`}>
@@ -980,8 +961,8 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
   </div>
   <div class={`${
       toggleSideBar
-      ? "lg:gap-[325px]"
-      : "lg:gap-[400px]"}
+      ? "lg:gap-[360px]"
+      : "lg:gap-[445px]"}
     lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
    lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
    md:justify-between lg:justify-start items-center inline-flex `}>
@@ -993,8 +974,8 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
   
       <div class={`${
       toggleSideBar
-      ? "lg:gap-[325px]"
-      : "lg:gap-[400px]"}
+      ? "lg:gap-[360px]"
+      : "lg:gap-[445px]"}
     lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
    lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
    md:justify-between lg:justify-start items-center inline-flex `}>
@@ -1006,8 +987,8 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
 
       <div class={`${
       toggleSideBar
-      ? "lg:gap-[325px]"
-      : "lg:gap-[400px]"}
+      ? "lg:gap-[360px]"
+      : "lg:gap-[445px]"}
     lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
    lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
    md:justify-between lg:justify-start items-center inline-flex `}>
@@ -1019,8 +1000,8 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
 
       <div class={`${
       toggleSideBar
-      ? "lg:gap-[325px]"
-      : "lg:gap-[400px]"}
+      ? "lg:gap-[360px]"
+      : "lg:gap-[445px]"}
     lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
    lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
    md:justify-between lg:justify-start items-center inline-flex `}>
@@ -1032,8 +1013,8 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
 
       <div class={`${
       toggleSideBar
-      ? "lg:gap-[325px]"
-      : "lg:gap-[400px]"}
+      ? "lg:gap-[360px]"
+      : "lg:gap-[445px]"}
     lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
    lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
    md:justify-between lg:justify-start items-center inline-flex `}>
@@ -1045,8 +1026,8 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
 
       <div class={`${
       toggleSideBar
-      ? "lg:gap-[325px]"
-      : "lg:gap-[400px]"}
+      ? "lg:gap-[360px]"
+      : "lg:gap-[445px]"}
     lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
    lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
    md:justify-between lg:justify-start items-center inline-flex `}>
@@ -1058,8 +1039,8 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
 
       <div class={`${
       toggleSideBar
-      ? "lg:gap-[325px]"
-      : "lg:gap-[400px]"}
+      ? "lg:gap-[360px]"
+      : "lg:gap-[445px]"}
     lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
    lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
    md:justify-between lg:justify-start items-center inline-flex `}>
@@ -1071,8 +1052,8 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
 
       <div class={`${
       toggleSideBar
-      ? "lg:gap-[325px]"
-      : "lg:gap-[400px]"}
+      ? "lg:gap-[360px]"
+      : "lg:gap-[445px]"}
     lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
    lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
    md:justify-between lg:justify-start items-center inline-flex `}>
@@ -1084,8 +1065,8 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
 
       <div class={`${
       toggleSideBar
-      ? "lg:gap-[325px]"
-      : "lg:gap-[400px]"}
+      ? "lg:gap-[360px]"
+      : "lg:gap-[445px]"}
     lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
    lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
    md:justify-between lg:justify-start items-center inline-flex `}>
@@ -1097,8 +1078,8 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
 
       <div class={`${
       toggleSideBar
-      ? "lg:gap-[325px]"
-      : "lg:gap-[400px]"}
+      ? "lg:gap-[360px]"
+      : "lg:gap-[445px]"}
     lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
    lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
    md:justify-between lg:justify-start items-center inline-flex `}>
@@ -1110,8 +1091,8 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
 
       <div class={`${
       toggleSideBar
-      ? "lg:gap-[325px]"
-      : "lg:gap-[400px]"}
+      ? "lg:gap-[360px]"
+      : "lg:gap-[445px]"}
     lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
    lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
    md:justify-between lg:justify-start items-center inline-flex `}>
@@ -1123,8 +1104,8 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
 
       <div class={`${
       toggleSideBar
-      ? "lg:gap-[325px]"
-      : "lg:gap-[400px]"}
+      ? "lg:gap-[360px]"
+      : "lg:gap-[445px]"}
     lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
    lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
    md:justify-between lg:justify-start items-center inline-flex `}>
@@ -1136,8 +1117,8 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
 
       <div class={`${
       toggleSideBar
-      ? "lg:gap-[325px]"
-      : "lg:gap-[400px]"}
+      ? "lg:gap-[360px]"
+      : "lg:gap-[445px]"}
     lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
    lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
    md:justify-between lg:justify-start items-center inline-flex `}>
@@ -1149,8 +1130,8 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
 
       <div class={`${
       toggleSideBar
-      ? "lg:gap-[325px]"
-      : "lg:gap-[400px]"}
+      ? "lg:gap-[360px]"
+      : "lg:gap-[445px]"}
     lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
    lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
    md:justify-between lg:justify-start items-center inline-flex `}>
@@ -1162,8 +1143,8 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
 
       <div class={`${
       toggleSideBar
-      ? "lg:gap-[325px]"
-      : "lg:gap-[400px]"}
+      ? "lg:gap-[360px]"
+      : "lg:gap-[445px]"}
     lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
    lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
    md:justify-between lg:justify-start items-center inline-flex `}>
@@ -1175,8 +1156,8 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
 
       <div class={`${
       toggleSideBar
-      ? "lg:gap-[325px]"
-      : "lg:gap-[400px]"}
+      ? "lg:gap-[360px]"
+      : "lg:gap-[445px]"}
     lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
    lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
    md:justify-between lg:justify-start items-center inline-flex `}>
@@ -1188,8 +1169,8 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
 
       <div class={`${
       toggleSideBar
-      ? "lg:gap-[325px]"
-      : "lg:gap-[400px]"}
+      ? "lg:gap-[360px]"
+      : "lg:gap-[445px]"}
     lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
    lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
    md:justify-between lg:justify-start items-center inline-flex `}>
@@ -1201,7 +1182,7 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
 
 
       
-      <footer className="flex justify-center  text-center  gap-[20px] mt-[100px] mb-[50px]
+      <footer className="flex justify-center  text-center  gap-[20px] mt-[190px] mb-[30px]
        md:mt-[200px] lg:mb-[30px] lg:mt-[150px]">
               <p className="text-[8px] md:text-[12px] lg:text-[12px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
                 You need help?
@@ -1231,7 +1212,7 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
 {/* bills payment dropdown */}
 {isOpen4 && (
 
-<div className='h-[1110px] lg:h-full'>
+<div className=''>
 <div
 className={`${styles.viewTransact} ${
   isDarkMode ? "bg-black border" : "bg-white"
@@ -1239,12 +1220,12 @@ className={`${styles.viewTransact} ${
 >
 
 
-<div className="flex  justify-start items-center lg:h-[1030px] md:h-[700px] h-[480px] lg:mb-80 md:mb-40  mb-40 border-b-[1.2px]
- lg:w-full relative bg-white  md:mt-[-655px]  lg:mt-[-968px] mt-[-524px] flex-col">
+<div className="flex  justify-start items-center lg:h-[1030px] md:h-[800px] h-[580px] mb-5 border-b-[1.2px]
+ lg:w-full relative bg-white  md:mt-[-670px]  lg:mt-[-968px] mt-[-492px] flex-col">
 <div className={`${  
   toggleSideBar
-? "lg:gap-[325px]"
-: "lg:gap-[400px]"}
+  ? "lg:gap-[360px]"
+  : "lg:gap-[445px]"}
 lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px]  lg:h-[101px] 
 lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.67px] bg-white justify-between md:justify-between
  lg:justify-start 
@@ -1257,8 +1238,8 @@ items-center inline-flex`}>
 </div>
 <div class={`${
     toggleSideBar
-    ? "lg:gap-[325px]"
-    : "lg:gap-[400px]"}
+    ? "lg:gap-[360px]"
+    : "lg:gap-[445px]"}
   lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px]
  lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white 
  justify-between md:justify-between lg:justify-start  items-center inline-flex`}>
@@ -1270,8 +1251,8 @@ items-center inline-flex`}>
 </div>
 <div class={`${
     toggleSideBar
-    ? "lg:gap-[325px]"
-    : "lg:gap-[400px]"}
+    ? "lg:gap-[360px]"
+    : "lg:gap-[445px]"}
   lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px]
  lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px]
   pt-3 pb-[11.67px] bg-white justify-between md:justify-between lg:justify-start  items-center inline-flex`}>
@@ -1283,8 +1264,8 @@ items-center inline-flex`}>
 
 <div class={`${
     toggleSideBar
-    ? "lg:gap-[325px]"
-    : "lg:gap-[400px]"}
+    ? "lg:gap-[360px]"
+    : "lg:gap-[445px]"}
   lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px]
  lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px]
   pt-3 pb-[11.67px] bg-white justify-between md:justify-between lg:justify-start  items-center inline-flex`}>
@@ -1296,8 +1277,8 @@ items-center inline-flex`}>
 </div>
 <div class={`${
     toggleSideBar
-    ? "lg:gap-[325px]"
-    : "lg:gap-[400px]"}
+    ? "lg:gap-[360px]"
+    : "lg:gap-[445px]"}
   lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px]
  lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.66px] bg-white
   justify-between md:justify-between lg:justify-start  items-center inline-flex`}>
@@ -1309,8 +1290,8 @@ items-center inline-flex`}>
 </div>
 <div class={`${
     toggleSideBar
-    ? "lg:gap-[325px]"
-    : "lg:gap-[400px]"}
+    ? "lg:gap-[360px]"
+    : "lg:gap-[445px]"}
   lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px]
  lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] lg:justify-start  pr-[1.33px] pt-2 pb-[7.67px] bg-white
   justify-between md:justify-between items-center inline-flex`}>
@@ -1322,8 +1303,8 @@ items-center inline-flex`}>
 </div>
 <div class={`${
     toggleSideBar
-    ? "lg:gap-[325px]"
-    : "lg:gap-[400px]"}
+    ? "lg:gap-[360px]"
+    : "lg:gap-[445px]"}
   lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px] 
 lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.67px] bg-white
  justify-between md:justify-between items-center lg:justify-start  inline-flex`}>
@@ -1335,8 +1316,8 @@ lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.67
 </div>
 <div class={`${
     toggleSideBar
-    ? "lg:gap-[325px]"
-    : "lg:gap-[400px]"}
+    ? "lg:gap-[360px]"
+    : "lg:gap-[445px]"}
   lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px]
  lg:pl-[26px] lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.67px] bg-white
   justify-between md:justify-between lg:justify-start  items-center inline-flex`}>
@@ -1348,8 +1329,8 @@ lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.67
 </div>
 <div class={`${
     toggleSideBar
-    ? "lg:gap-[325px]"
-    : "lg:gap-[400px]"}
+    ? "lg:gap-[360px]"
+    : "lg:gap-[445px]"}
   lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px] lg:pl-[26px]
  lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.67px] bg-white justify-between
  md:justify-between lg:justify-start  items-center inline-flex`}>
@@ -1361,8 +1342,8 @@ lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.67
 </div>
 <div class={`${
     toggleSideBar
-    ? "lg:gap-[325px]"
-    : "lg:gap-[400px]"}
+    ? "lg:gap-[360px]"
+    : "lg:gap-[445px]"}
   lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px] lg:pl-[26px]
  lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
  md:justify-between lg:justify-start  items-center inline-flex `}>
@@ -1374,8 +1355,8 @@ lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.67
 
 <div class={`${
     toggleSideBar
-    ? "lg:gap-[325px]"
-    : "lg:gap-[400px]"}
+    ? "lg:gap-[360px]"
+    : "lg:gap-[445px]"}
   lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px] lg:pl-[26px] lg:pr-1
  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] lg:justify-start  pt-2 pb-[7.67px] bg-white
   justify-between md:justify-between items-center inline-flex`}>
@@ -1386,7 +1367,7 @@ lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.67
     </div>
 
 
-    <footer className="flex justify-center  text-center gap-[20px] mt-[70px] mb-[50px]
+    <footer className="flex justify-center  text-center gap-[20px] mt-[160px] mb-[20px]
      md:mt-[200px] lg:mb-[30px] lg:mt-[200px]">
             <p className="text-[8px] md:text-[12px] lg:text-[12px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
               You need help?

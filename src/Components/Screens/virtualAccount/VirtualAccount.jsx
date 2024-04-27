@@ -1,9 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { DashBoardLayout } from '../../Dashboard/Layout/DashBoardLayout';
 import { Link } from 'react-router-dom';
-
 import { ContextProvider } from '../../Context';
-import TopupModal from '../../topup/TopupModal';
+import CurrencyConversionModal from '../../CurrencyConversion/CurrencyConversionModal';
  
 
 const VirtualAccount = () => {
@@ -100,8 +99,6 @@ const VirtualAccount = () => {
 
             </div>
 
-
-    
             <div className="mt-[25.39px] md:mt-[35px] lg:mt-[60px] px-2 py-2 flex flex-col gap-2" style={{boxShadow: `0px 0px 6.666667461395264px 0px rgba(0, 0, 0, 0.25)`}}>
               <div className='flex justify-between items-baseline font-bold text-[8px] leading-[12px] md:text-[9.17px] md:leading-[11.92px] border-b py-1 lg:text-[16px] lg:leading-[24px]'>
                 <h2 className='font-bold'>Country</h2>
@@ -167,9 +164,7 @@ const VirtualAccount = () => {
               </Link>
             </div>
         </div>
-      
-      
-        {showCryptoModal1 && (
+        {/* {showCryptoModal1 && (
           <TopupModal>
             <div className={`${isDarkMode ? "bg-[#000] border":"bg-[#fff]"} w-[90%] md:w-[70%] lg:w-[50%] pb-[33px] rounded-[8px] md:rounded-[11.5px]`} >
               <h2 className="text-center text-[10px] leading-[15px] mb-[10px] font-semibold md:text-[12px] md:leading-[18px] lg:text-base lg:leading-[24px] text-primary
@@ -203,8 +198,15 @@ const VirtualAccount = () => {
 
             </div>
           </TopupModal>
-        )}
-      
+        )} */}
+        { showCryptoModal1 && 
+          <CurrencyConversionModal
+            title={'Global Virtual Accounts'}
+            tag={'This Currency is Currently Not Available.'}
+            image={'./Images/virtual-account/phone.png'}
+            onClick={() => setShowCryptoModal1((prev) => !prev)}
+          />
+        }
     </DashBoardLayout>
   );
 }

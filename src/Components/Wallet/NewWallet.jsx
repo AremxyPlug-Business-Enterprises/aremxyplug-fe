@@ -16,7 +16,7 @@ const NewWallet = () => {
               <div className='py-[10px] lg:py-[40px] flex flex-col justify-between items-center w-full h-full'>
                 <h2 className='md:text-[12px] md:leading-[18px] text-[10px] leading-[15px] lg:text-lg lg:leading-[24px]'>Available Balance</h2>
                 <div className='flex gap-1 lg:gap-2 items-center'>
-                  { showMoney ? <h2 className='md:text-[16px] md:leading-[20px] font-bold text-[9.33px] leading-[12px] lg:text-[28px] lg:leading-[36px]'>&#8358;{money.toLocaleString()}:00</h2> : <h2 className='md:text-[16px] md:leading-[20px] font-bold text-[9.33px] leading-[12px] lg:text-[28px] lg:leading-[36px] lg:mt-2 mt-1'>******</h2>}
+                  { showMoney ? <h2 className='md:text-[16px] md:leading-[20px] font-bold text-[9.33px] leading-[12px] lg:text-[28px] lg:leading-[36px]'>&#8358;{money.toLocaleString()}.00</h2> : <h2 className='md:text-[16px] md:leading-[20px] font-bold text-[9.33px] leading-[12px] lg:text-[28px] lg:leading-[36px] lg:mt-2 mt-1'>******</h2>}
                   <BsEyeFill className='text-[#92abfe] text-[10px] lg:text-[20px] cursor-pointer' onClick={()=> setShowMoney(!showMoney)}/>
                 </div>
                 <h2 className='md:text-[12px] md:leading-[18px] text-[10px] leading-[15px] lg:text-lg lg:leading-[24px]'>currency: NGN</h2>

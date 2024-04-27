@@ -14,11 +14,11 @@ import { InputPinPopUp } from "../TransferComponent/PopUps/InputPinPopUp";
 export const WithdrawToBusinessAccountPage = () => {
   const {
     isDarkMode,
-    image,
+    withdrawImage,
     code,
     toggleSideBar,
     amtToTransfer,
-    setTfPopUp,
+    setWthPopUp,
     setDeletePopUp,
   } = useContext(ContextProvider);
 
@@ -33,14 +33,31 @@ export const WithdrawToBusinessAccountPage = () => {
       >
         <div>
           {" "}
-          <img
-            className=" w-[100%] h-[80px] md:h-[180px] lg:h-[230px]"
-            src="/Images/dashboardImages/ToMyAccount.png"
-            alt="/"
-          />
+          <div
+            className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] flex px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px]"
+            style={{
+              background:
+                "linear-gradient(91deg, #33B6FF 0.39%, #4AFFCD 101.71%)",
+            }}
+          >
+            <div className="py-[13px] lg:py-[40px]">
+              <p className="text-[10px] font-extrabold  md:text-[13.75px] mb-3 lg:text-[24px] lg:mb-4">
+                WITHDRAW MONEY TO MY ACCOUNT.
+              </p>
+              <p className="text-[7px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3">
+                Withdraw money from your wallets to your personal or business
+                bank accounts without any hassle or hidden fee.
+              </p>
+            </div>
+            <img
+              className=" w-[66px] h-[60px] md:h-[120px] md:w-[90px] lg:h-[180px] lg:w-[200px]"
+              src="/Images/withdrawImages/moneyandphone.png"
+              alt="/"
+            />
+          </div>
           <div className="flex my-[5%] gap-11 font-extrabold md:w-[80%]">
             <button
-              onClick={() => setTfPopUp(true)}
+              onClick={() => setWthPopUp(true)}
               className={`${styles.transferMoneyBtn} flex gap-[5px] w-[100%] h-[26px] justify-center items-center md:w-[390px] lg:h-[41px]`}
             >
               <h2 className="text-[9px] md:text-[12px] lg:text-[16px] ">
@@ -53,7 +70,8 @@ export const WithdrawToBusinessAccountPage = () => {
               />
             </button>
 
-            <button
+            <Link
+              to="/top-up"
               className={`${styles.transferMoneyBtn} flex gap-[5px] w-[100%] h-[26px] justify-center items-center md:w-[390px] lg:h-[41px]`}
             >
               <h2 className="text-[9px] md:text-[12px] lg:text-[16px]">
@@ -64,7 +82,7 @@ export const WithdrawToBusinessAccountPage = () => {
                 src="/Images/dashboardImages/add-money.png"
                 alt=""
               />
-            </button>
+            </Link>
           </div>
           <div className="flex text-[#7c7c7c] text-[10px] leading-[130%] items-center mb-[2%] gap-[8px] md:my-[5%] md:text-[18px] lg:text-[20px]">
             <p>Account Details : </p>
@@ -88,7 +106,7 @@ export const WithdrawToBusinessAccountPage = () => {
               </div>
               <img
                 className="w-[18px] h-[18px] md:w-[24px] md:h-[24px] lg:w-[29px] lg:h-[29px]"
-                src={image}
+                src={withdrawImage}
                 alt="/"
               />
             </div>
@@ -111,7 +129,9 @@ export const WithdrawToBusinessAccountPage = () => {
                 <p className="text-[13px] font-extrabold md:text-[20px]">
                   Company's Email
                 </p>
-                <p className="text-[10px] md:text-[15px]">hello@aremxyplug.com</p>
+                <p className="text-[10px] md:text-[15px]">
+                  hello@aremxyplug.com
+                </p>
               </div>
               <img
                 className="w-[18px] h-[18px] md:w-[24px] md:h-[24px] lg:w-[29px] lg:h-[29px]"
@@ -164,7 +184,9 @@ export const WithdrawToBusinessAccountPage = () => {
                 <p className="text-[13px] font-extrabold md:text-[20px]">
                   Company's Name
                 </p>
-                <p className="text-[10px] md:text-[15px]">Aremxyplug Business Ent, LTD.</p>
+                <p className="text-[10px] md:text-[15px]">
+                  Aremxyplug Business Ent, LTD.
+                </p>
               </div>
               <img
                 className="w-[18px] h-[18px] md:w-[24px] md:h-[24px] lg:w-[29px] lg:h-[29px]"

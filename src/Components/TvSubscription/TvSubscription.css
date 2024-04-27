@@ -5,6 +5,8 @@
 #tvGrid{
     display: grid;
     grid-template-columns: 1fr 1fr;
+    align-content: space-between;
+    justify-content: space-between;
 }
 
 .dropdownCSS{

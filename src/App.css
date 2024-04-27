@@ -235,4 +235,51 @@ html {
 border-bottom : 2px solid #04177F;
 border-radius : 10px;
   }
+  .RecipientHero{
+    background: linear-gradient(91deg, #367CFF 0.39%, #69FFD2 101.71%);
+  }
+  .bvnQuery{
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+  }
+  .bvnQuery::-webkit-scrollbar{
+    width : 0px;
+  }
+  .bnvQuery::-webkit-scrollbar-thumb{
+    background-color: transparent;
+  }
+  .idVerify{
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+  }
+  .idVerify::-webkit-scrollbar{
+    width : 0px;
+  }
+  .idVerify::-webkit-scrollbar-thumb{
+    background-color: transparent;
+  }
+  .confirmRecipient{
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+  }
+  .confirmRecipient::-webkit-scrollbar{
+    width : 0px;
+  }
+  .confirmRecipient::-webkit-scrollbar-thumb{
+    background-color: transparent;
+  }
+  .deleteRecipientSuccess{
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+  }
+  .deleteRecipientSuccess::-webkit-scrollbar{
+    width : 0px;
+  }
+  .deleteRecipientSuccess::-webkit-scrollbar-thumb{
+    background-color: transparent;
+  }
   

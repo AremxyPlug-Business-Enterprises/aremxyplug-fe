@@ -5,6 +5,7 @@ import IdVerification from './IdVerification';
 import BvnVerification from './BvnVerification';
 import AccountUpgrade from '../My Profile Page/AccountUpgrade';
 
+
 export default function AccountVerficationPage() {
     const {verificationOpen} = useContext(ContextProvider);
     const {idVerificationOpen, setIdVerificationOpen} = useContext(ContextProvider);
@@ -12,10 +13,11 @@ export default function AccountVerficationPage() {
     const {accountUpgrade, setAccountUpgrade} = useContext(ContextProvider);
   return (
     
-    <div>
+    
+      <div className=''>
         { verificationOpen && (
-        <div>
-       <div className='flex lg:gap-[10px] lg:py-[50px] py-[35px] '> 
+        <div className=''>
+       <div className='flex lg:gap-[10px] lg:py-[50px] py-[35px]'> 
      <h2 className='font-[500] text-[#7C7C7C] text-[9.389px] leading-[14px] 
      lg:text-[20px] lg:leading-[30px]'>
         Verify your account to upgrade your transaction limit with other benefits.
@@ -25,7 +27,7 @@ src={Arrowright} alt="" />
        </div>
        {/* TABS VERIFICATION */}
        <div className='flex w-[100%] lg:gap-[25px] border-b-[2px] border-[#D9D9D999]
-        lg:mb-[50px] mb-[35px]'>
+       '>
         {/* ========== ID VERIFICATION  ======== */}
     <div onClick={() => {
         setIdVerificationOpen(true);
@@ -77,6 +79,8 @@ src={Arrowright} alt="" />
         <IdVerification/>
         <BvnVerification/>
         <AccountUpgrade/>
+        
+        
     </div> 
   )
 }

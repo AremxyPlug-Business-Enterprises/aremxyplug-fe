@@ -58,7 +58,7 @@ const ElectricitySubscription = () => {
                   />
                 </div>
 
-      <div className={ ` ${toggleSideBar ?   " alignwidth md:gap-5 lg:gap-[60px] " : "alignwidth1 md:gap-10 lg:gap-20 xl:gap-[100px]"   } mt-[20px] flex flex-wrap w-full justify-between lg:mt-[70px] gap-6  ` }> 
+      <div className={ ` ${toggleSideBar ?   " alignwidth md:gap-5 lg:gap-[60px] " : "alignwidth1 md:gap-10 lg:gap-20 xl:gap-[100px]"   } mt-[20px] flex flex-wrap  w-full justify-between lg:mt-[70px] gap-6  ` }> 
             <Link to= "/ikedc"  >
             <div className="flex flex-col justify-between items-center rounded-md border-[1px] pb-3 lg:pb-5 px-4 w-[144px]  h-[94px] md:w-[94px] md:h-[94px] lg:w-[160px] lg:h-[160px]">
                 <div><img className="w-[42.9px] lg:w-[82px] lg:h-[100px] h-[53px] pt-2" src={bill1} alt="" /></div>

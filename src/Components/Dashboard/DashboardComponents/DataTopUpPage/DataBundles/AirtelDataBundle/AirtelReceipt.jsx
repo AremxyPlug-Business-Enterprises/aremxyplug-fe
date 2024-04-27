@@ -5,17 +5,15 @@ import { DashBoardLayout } from '../../../../Layout/DashBoardLayout';
 import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import { useLocation } from 'react-router-dom';
+
 
 
 export const AirtelReceipt = () => { 
 
   const {
-    selectedNetworkProduct,
-    selectedOption,
-    recipientPhoneNumber,
-    recipientNames,
-    selectedAmount,
-    walletName,
+
+    // walletName,
     setSelectedNetworkProduct,
     setSelectedOption,
     setSelectedAmount,
@@ -23,6 +21,12 @@ export const AirtelReceipt = () => {
   }
    = useContext(ContextProvider);
 
+   const location = useLocation()
+  const { selectedNetworkProduct, selectedOption, 
+    // recipientPhoneNumber, 
+    inputValue, recipientNames, selectedAmount, airteltransactionID, airtelrefNumber, airtelorderID,  } = location.state
+  
+   
   const { 
     toggleSideBar,
     isDarkMode,
@@ -82,6 +86,9 @@ export const AirtelReceipt = () => {
       });
     }
   };
+
+
+  
   return (
     <DashBoardLayout>
       <div className="flex flex-col gap-[35px] lg:gap-[85px]">
@@ -135,12 +142,12 @@ export const AirtelReceipt = () => {
                 hour12: true,
               })}
             </span>
-            <p className="text-[9px] text-[#0008] px-[20px] text-center my-2 md:text-[14px] lg:text-[14px]">
+            <p className="text-[9px] text-[#27AE60] bg-[#D5F6E3] rounded-[11px] border-2 border-[#27AE60] py-[5px] px-[2px] text-center mx-[5px] lg:mx-[150px] md:mx-[100px] my-2 md:text-[14px] lg:text-[14px]">
               You have successfully purchased{" "}
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[16px]">
-              {selectedOption} {" "}
+                {`${selectedOption} Data `}
               </span>
-              from your {walletName + " Wallet"} to{" "}
+              from your NGN wallet to{" "}
             </p>
             <div className="flex flex-col gap-3">
               {/* ========================Recipient Info================== */}
@@ -159,23 +166,23 @@ export const AirtelReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Product</p>
-                  <span>{selectedNetworkProduct}</span>
-                </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Plan</p>
                   <span>{selectedOption}</span>
                 </div>
+                {/* <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                  <p className="text-[#0008]">Plan</p>
+                  <span>{selectedOption}</span>
+                </div> */}
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Recipient Name</p>
                   <span>{recipientNames}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Phone Number</p>
-                  <span>{recipientPhoneNumber}</span>
+                  <span>{inputValue}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Amount</p>
-                  <span>{selectedAmount}</span>
+                  <span>&#8358;{selectedAmount}</span>
                 </div>            
               </div>
 
@@ -191,11 +198,11 @@ export const AirtelReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Customer Name</p>
-                  <span>Aremxyplug</span>
+                  <span>{recipientNames}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Wallet Type</p>
-                  <span>{walletName + " Wallet"}</span>
+                  <span>NGN Wallet</span>
                 </div>
               </div>
 
@@ -211,19 +218,23 @@ export const AirtelReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Product</p>
-                  <span>{selectedNetworkProduct}</span>
+                  <span>Data Top-up</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Description</p>
-                  <span>Data  Top-up</span>
+                  <span>{selectedNetworkProduct}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Order Number</p>
-                  <span>1256464564</span>
+                  <span>{airtelorderID}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Transaction ID</p>
-                  <span>0331njokdhtf55</span>
+                  <span>{airteltransactionID}</span>
+                </div>
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                  <p className="text-[#0008]">Reference Number</p>
+                  <span>{airtelrefNumber}</span>
                 </div>
               </div>
             </div>

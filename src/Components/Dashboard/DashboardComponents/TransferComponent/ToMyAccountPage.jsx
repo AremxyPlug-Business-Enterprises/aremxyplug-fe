@@ -6,10 +6,11 @@ import styles from "../../DashboardComponents/component.module.css";
 import { ContextProvider } from "../../../Context";
 
 export const ToMyAccountPage = () => {
-  const { isDarkMode } = useContext(ContextProvider);
+  const { isDarkMode, handleRefresh } = useContext(ContextProvider);
+
   return (
     <DashBoardLayout>
-      <div className="flex flex-col justify-between h-full">
+      <div className="flex flex-col gap-[70px] justify-between h-full">
         <div>
           <div
             style={{
@@ -31,7 +32,7 @@ export const ToMyAccountPage = () => {
             <img
               src="./Images/transferImages/ToMyAcc.png"
               alt=""
-              className="w-[91px] h-[66px] md:h-[120px] md:w-[90px] lg:w-[199px] lg:h-[199px]"
+              className="w-[91px] h-[66px] md:h-[120px] md:w-[90px] lg:w-[199px] lg:h-[170px]"
             />
           </div>
 
@@ -59,7 +60,10 @@ export const ToMyAccountPage = () => {
                 />
               </div>
             </Link>
-            <div className="flex items-center gap-[5px] bg-[#04177f] text-white text-[9px] h-[20px] w-[136px] rounded-[5px] justify-center font-extrabold ">
+            <div
+              onClick={handleRefresh}
+              className=" flex items-center gap-[5px] bg-[#04177f] text-white text-[9px] h-[20px] w-[136px] rounded-[5px] justify-center font-extrabold "
+            >
               <p>Refresh Account</p>
               <img
                 className="w-[11px] h-[11px] md:h-[20px] md:w-[20px] lg:w-[24px] lg:h-[24px]"
@@ -83,19 +87,23 @@ export const ToMyAccountPage = () => {
                 alt="/"
               />
             </div>
+            <Link
+              to="/add-account"
+              className="flex items-center gap-[5px] bg-[#04177f] text-white text-[9px] px-[2%]  py-[2%] w-[30%] rounded-[5px] font-extrabold md:rounded-[9px] md:justify-center md:items-center md:text-[16px] md:gap-[10px] md:py-[1%] lg:text-[20px] lg:h-[41px] lg:rounded-[12px]"
+            >
+              <p>Add New Account</p>
 
-            <div className="flex items-center gap-[5px] bg-[#04177f] text-white text-[9px] px-[2%]  py-[2%] w-[30%] rounded-[5px] font-extrabold md:rounded-[9px] md:justify-center md:items-center md:text-[16px] md:gap-[10px] md:py-[1%] lg:text-[20px] lg:h-[41px] lg:rounded-[12px]">
-              <Link to="/add-account">
-                <p>Add New Account</p>
-              </Link>
               <img
                 className="w-[11px] h-[11px] md:h-[20px] md:w-[20px] lg:w-[24px] lg:h-[24px]"
                 src="./Images/dashboardImages/add-account.png"
                 alt="topup"
               />
-            </div>
+            </Link>
 
-            <div className="flex items-center gap-[5px] bg-[#04177f] text-white text-[9px] px-[2%]  py-[2%] w-[30%] rounded-[5px] font-extrabold md:rounded-[9px] md:justify-center md:items-center md:text-[16px] md:gap-[10px] md:py-[1%] lg:text-[20px] lg:h-[41px] lg:rounded-[12px]">
+            <div
+              onClick={handleRefresh}
+              className="cursor-pointer flex items-center gap-[5px] bg-[#04177f] text-white text-[9px] px-[2%]  py-[2%] w-[30%] rounded-[5px] font-extrabold md:rounded-[9px] md:justify-center md:items-center md:text-[16px] md:gap-[10px] md:py-[1%] lg:text-[20px] lg:h-[41px] lg:rounded-[12px]"
+            >
               <p>Refresh Account</p>
               <img
                 className="w-[11px] h-[11px] md:h-[20px] md:w-[20px] lg:w-[24px] lg:h-[24px]"

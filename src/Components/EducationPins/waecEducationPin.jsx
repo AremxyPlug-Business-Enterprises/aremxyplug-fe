@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 import { DashBoardLayout } from '../Dashboard/Layout/DashBoardLayout';
-import { useContext } from 'react';
+import { useContext,useEffect } from 'react';
 import '../../App.css';
 import HeroComponent from './heroComponent';
 import WaecImg from '../EducationPins/imagesEducation/WaecImg.svg';
@@ -24,6 +24,9 @@ import { AiFillEye } from "react-icons/ai";
  import { Modal } from '../Screens/Modal/Modal';
  import AremxyPlugIcon from './imagesEducation/AremxyPlug.svg';
 import WaecReceipt from './ReceiptEducationPins/waecReceipt';
+import axios from 'axios';
+import '../Dashboard/DashboardComponents/DataTopUpPage/DataTopUp.css';
+
 
 export default function WaecEducationPin() {
   const { isDarkMode } = useContext(ContextProvider);
@@ -33,8 +36,7 @@ const {paymentResult, setPaymentResult} = useContext(ContextProvider);
 const {methodActive, setMethodActive} = useContext(ContextProvider);
 const {examType, setExamType} = useContext(ContextProvider);
 const {examActive, setExamActive} = useContext(ContextProvider);
-const { transactSuccessPopUp, setTransactSuccessPopUp } =
-useContext(ContextProvider);
+const { transactSuccessPopUp, setTransactSuccessPopUp } = useContext(ContextProvider);
 const {educationPinPhone, setEducationPinPhone} = useContext(ContextProvider);
 const {educationPinEmail, setEducationPinEmail} = useContext(ContextProvider);
  const {educationAmount, setEducationAmount} = useContext(ContextProvider);
@@ -70,8 +72,8 @@ function waecMethodDropDown(){
 document.querySelector('.methodDrop').classList.toggle('DropIt');
 }
 const [methodOptions,setMethodOptions] = useState([
- {method : 'NGN Wallet', balance :" (50,000.00)", flag : nigerianFlag, id : 1},
-{method : 'USD Wallet ', balance :'(0.00)', flag : americaFlag, id : 2 },
+ {method : 'NGN Wallet', balance :" (0.00)", flag : nigerianFlag, id : 1},
+{method : 'USD Currency', balance :'(0.00)', flag : americaFlag, id : 2 },
 {method : 'EUR Wallet', balance :'(0.00)', flag : britainFlag, id : 3 },
 {method :  'GBP Wallet', balance :'(0.00)', flag : euroFlag, id : 4 },
 {method : 'AUD Wallet', balance :'(0.00)', flag : austriaFlag, id : 5 },
@@ -80,10 +82,10 @@ const [methodOptions,setMethodOptions] = useState([
 
 // CONFIRM EXAM TYPE
 const Exams  = [
-{ examType :'WAEC (₦100)',  id : 1},
-  { examType :'NECO (₦100)', path :  "/NecoEducationPin", id : 2 },
-  { examType :'NABTEB (₦100)', path : "/NabtebEducationPin", id : 3 },
-{ examType :'JAMB (₦100)', path : "/JambEducationPin", id : 4 }
+{ examType :'WAEC',  id : 1},
+  { examType :'NECO', path :  "/NecoEducationPin", id : 2 },
+  { examType :'NABTEB', path : "/NabtebEducationPin", id : 3 },
+{ examType :'JAMB', path : "/JambEducationPin", id : 4 }
  ]
 function waecExamDropDown(){
   setExamActive(!examActive);
@@ -100,14 +102,11 @@ const {
 } = useContext(ContextProvider);
 
 const waecProceed = () => {
-  
-
   const { error } = schema.validate({
     educationPinPhone,
     educationPinEmail
   });
-
-  if (error) {
+if (error) {
     setErrors(
       error.details.reduce((acc, curr) => {
         acc[curr.path[0]] = curr.message;
@@ -145,11 +144,59 @@ const waecTransactionSuccessClose = () => {
 const waecReceipt = () => {
   setTransactSuccessPopUp(false);
 };
-
-
+const [sendWaecForm, setSendWaecForm] = useState({
+  waecUserExamType : examType,
+  waecUserQuantity :  quantityResult.slice(0,22),
+  waecUserPhoneNumber : educationPinPhone,
+  waecUserEmail : educationPinEmail,
+  waecUserAmount : educationAmount,
+  waecUserCountry: paymentResult,
+  id : 1
+})
+console.log(sendWaecForm);
+console.log(examType, quantityResult, educationPinPhone,educationPinEmail,educationAmount,paymentResult);
+const handleWaecChange = (e) => {
+  setSendWaecForm({...sendWaecForm, [e.target.name ]: e.target.value});
+};
+const handleWaecSubmitPost = async(e) => {
+  e.preventDefault();
+  try{
+    const response = await axios.post('', sendWaecForm);
+    console.log(response.data);
+    alert('submitted');
+  }catch(error)  {
+console.error(`The Data brought back an error Of ${error}`);
+alert(error);
+  }
+}
+// GET RESPONSE SUCCESSFUL
+const {eduResponse,setEduResponse} = useContext(ContextProvider);
+const requestEducationPin = async(e) =>{
+  try{
+    const EducationResponse = await axios.get('/');
+    return EducationResponse.data;                                 
+  }catch(error){
+    console.error('There was error fetching the Education Pins', error)
+  return null;
+  }
+}
+useEffect(()=> {
+acceptData();
+})
+const acceptData = async()=>{
+  try{
+  const dataCollected = await requestEducationPin();
+  if(dataCollected){
+    setEduResponse(dataCollected);
+  }
+  }catch(error){
+  console.error('There was an error trying to get the token:', error);
+  }
+}
+console.log(eduResponse);
   return (
     <DashBoardLayout>
-    <div className='flex flex-col lg:h-[120%] h-[140%] justify-between'>
+    <div className='flex flex-col lg:h-[150%] h-[115%] justify-between '>
  <div className=''>
   {/* Hero-section */}
 <HeroComponent/>
@@ -160,8 +207,7 @@ const waecReceipt = () => {
        md:leading-[11.267px] lg:text-[16px] text-[#7E7E7E] lg:leading-[19.2px]'>
     Purchase
       </h2>
-
-      <img className='h-[12px] w-[12px] md:h-[14.083px] md-w-[14.083px] lg:h-[24px] lg:w-[24px] self-center'
+ <img className='h-[12px] w-[12px] md:h-[14.083px] md-w-[14.083px] lg:h-[24px] lg:w-[24px] self-center'
       src={WaecImg} alt="" />
 
       <h2 className='font-[600] text-[9px] leading-[12px] md:text-[9.389px]
@@ -172,7 +218,8 @@ const waecReceipt = () => {
       src={arrowRight} alt="" />
     </div>
     {/* Input for Request of examination pins  */}
-    <form action=''>
+    <form onSubmit={handleWaecSubmitPost}
+    action='POST'>
     <div  className='flex flex-col gap-[20px]  md:h-[172.73px] md:gap-[14.67px] 
      lg:gap-[25px] lg:h-[296px] lg:mb-[30px] mb-[30px]'>
       {/* container for the first two input */}
@@ -190,21 +237,28 @@ const waecReceipt = () => {
     Confirm Exam Type
     </h2>
     {/* input */}
-<div 
- onClick={waecExamDropDown}
-className=' w-[100%] flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
-md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] 
-lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] border-[0.4px] border-[#9C9C9C]
-hover:bg-[#EDEAEA]'>
-    <h2 
-    className='font-[500] text-[8px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] 
-    lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer'>
-    {examType}
-      </h2>
-      <img  
-      className='Examdrop md:h-[14.083px] md:w-[14.083px] lg:h-[24px] 
-      lg:w-[24px] h-[14px] w-[14px]'
-      src= {arrowDown} alt="" />
+    <div className='w-[100%] relative'
+onClick={(e) => {
+  waecExamDropDown();
+  console.log(e.target.value)}}>
+  <input type="text"
+  name='ExamType'
+   value={examType}
+   onChange={(e) => {
+   handleWaecChange(e)}}
+className=' flex  justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
+ md:pt-[8.802px] md:pb-[7.042px] w-[100%]
+md:pr-[5.282px] md:pl-[5.867px] bg-white
+lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
+border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]
+font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
+    lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer focus:outline-none' disabled={false}/>
+   <img 
+       className='absolute lg:top-[15px] lg:right-[9px] md:top-[8.802px] md:right-[5.282px]
+        top-[8.802px] right-[13px]
+        Examdrop md:h-[14.038px] md:w-[14.038px] 
+      lg:h-[24px] lg:w-[24px] w-[14px] h-[14px]'
+      src={arrowDown} alt="" />
        </div>
        {examActive && (
          <div className='absolute lg:top-[90px] md:top-[60px]  top-[50px] z-[2]  flex flex-col w-[100%] lg:h-225px md:h-[210px]  
@@ -244,21 +298,30 @@ hover:bg-[#EDEAEA]'>
     Quantity
     </h2>
     {/* input */}
-<div 
-onClick={waecQuantityDropDown}
+<div className='w-[100%] relative'
+onClick={(e) => {
+  waecQuantityDropDown();
+  console.log(e.target.value)}}>
+  <input type="text"
+  name='Waec-Quantity'
+   onChange={(e)=>{
+    handleWaecChange(e)
+  }}
+  value={quantityResult}
 className=' flex  justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
- md:pt-[8.802px] md:pb-[7.042px] 
-md:pr-[5.282px] md:pl-[5.867px] 
+ md:pt-[8.802px] md:pb-[7.042px] w-[100%]
+md:pr-[5.282px] md:pl-[5.867px] bg-white
 lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
-border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
-    <h2 className='font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
-    lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer'>
-    {quantityResult}
-      </h2>
+border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]
+font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
+    lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer focus:outline-none' disabled={true}/>
+   
       <img 
-       className='imgdrop md:h-[14.038px] md:w-[14.038px] 
+       className='absolute lg:top-[15px] lg:right-[9px] md:top-[8.802px] md:right-[5.282px]
+        top-[8.802px] right-[13px]
+        imgdrop md:h-[14.038px] md:w-[14.038px] 
       lg:h-[24px] lg:w-[24px] w-[14px] h-[14px]'
-      src={arrowDown} alt="" />
+      src={arrowDown} alt=""  />
        </div>
        {/* drop down */}
        
@@ -327,10 +390,13 @@ border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
    placeholder:text-[14.389px] placeholder:leading-[18.809.4px] 
    lg:placeholder:text-[16px] lg:placeholder:leading-[20.8px] placeholder:text-[#7E7E7E]
    md:placeholder:text-[14.389px] md:placeholder:leading-[18.206px]'
-    type="tel" name='phone' id='phone' maxLength={11} placeholder=''
-    value={educationPinPhone} onChange={(e)=>{
+    type="tel" name='Waec-Phone' id='phone' maxLength={11} placeholder=''
+    value={educationPinPhone}
+     onChange={(e)=>{
       setEducationPinPhone(e.target.value);
-    }}/>
+      console.log(e.target.value);
+       handleWaecChange(e);
+     }}/>
      {errors.educationPinPhone && (
             <div className="text-[12px] text-red-500 italic lg:text-[14px]">
               {errors.educationPinPhone}
@@ -358,9 +424,12 @@ border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
    placeholder:text-[14.389px] placeholder:leading-[18.809.4px] 
    lg:placeholder:text-[16px] lg:placeholder:leading-[20.8px] placeholder:text-[#7E7E7E]
    md:placeholder:text-[14.389px] md:placeholder:leading-[18.206px]'
+   name='Waec-Email'
     value={educationPinEmail}
    onChange={(e) =>{
-    setEducationPinEmail(e.target.value)
+    setEducationPinEmail(e.target.value);
+    console.log(e.target.value);
+    handleWaecChange(e);
    }}
     type="Email" 
     placeholder='example@gmail.com'/>
@@ -377,8 +446,7 @@ border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
    {/* Conatiner for Amount and Payment method */}
    <div className='flex w-[100%]
    flex-col gap-[20px] md:flex-row md:gap-[12.91px] lg:gap-[22px]'>
-
- {/* Amount Step /Leftside */}
+{/* Amount Step /Leftside */}
    <div className='flex flex-col gap-[5.868px] w-[100%] md:w-1/2 md:gap-[10px]'>
     {/* header */}
     <h2 className='font-[600] text-[8px] leading-[10.4px]
@@ -387,8 +455,7 @@ border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
     Amount
     </h2>
     {/* input */}
-    <div
-      onchange={setEducationAmount}
+    <input name='Waec-Amount' 
      className='h-[29.927px]  lg:h-[51px] md:h-[29.93px]
         md:pt-[8.802px] md:pb-[7.042px] 
        pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
@@ -398,12 +465,11 @@ border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
     text-[8px] leading-[10.4px]
    font-[500]  md:text-[9.389px] md:leading-[12.206px]
   lg:text-[16px] text-black lg:leading-[20.8px]'
-  maxLength={7}>
-  {educationAmount}
-   </div>
-
-
-    </div>
+  maxLength={7} value={educationAmount}
+  onChange={(e)=>{
+    handleWaecChange(e);
+  }} disabled={false}/>
+ </div>
     {/* payment method */}
     <div className='relative payment-parent gap-[5.868px]
      flex w-[100%] flex-col md:w-1/2   md:gap-[10px]'>
@@ -414,22 +480,30 @@ border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
     Payment Method
     </h2>
     {/* input */}
-<div 
- onClick={waecMethodDropDown}
-className='flex  justify-between  pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
-md:pt-[8.802px] md:pb-[7.042px] 
-md:pr-[5.282px] md:pl-[5.867px] 
+    <div className='w-[100%] relative'
+onClick={(e) => {
+  waecMethodDropDown();
+  console.log(e.target.value);
+}}>
+  <input type="text" name='Waec-PaymentMethod'
+  onChange={(e)=> {
+    handleWaecChange(e);
+  }}
+  value={paymentResult}
+className=' flex  justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
+ md:pt-[8.802px] md:pb-[7.042px] w-[100%]
+md:pr-[5.282px] md:pl-[5.867px] bg-white
 lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
-border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
-    <h2 className='font-[500] text-[8px] leading-[10.4px]
-     md:text-[9.389px] md:leading-[12.206px]
-    lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer'>
-    {paymentResult + walletBalance}
-      </h2>
+border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]
+font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
+    lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer focus:outline-none'
+  disabled = {false}/>
+   
       <img 
-     
-      className='methodDrop h-[14px] w-[14px] 
-      md:h-[14.038px] md:w-[14.038px] lg:h-[24px] lg:w-[24px]'
+       className='absolute lg:top-[15px] lg:right-[9px] md:top-[8.802px] md:right-[5.282px]
+        top-[8.802px] right-[13px]
+        methodDrop md:h-[14.038px] md:w-[14.038px] 
+      lg:h-[24px] lg:w-[24px] w-[14px] h-[14px]'
       src={imageState} alt="" />
        </div>
        {/* drop down */}
@@ -477,17 +551,16 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
     </div>
     {educationProceed && (
           <Modal>
+         
             <div
-              className={`confirm mx-[5%] ${
+              className={`deleteRecipientSuccess  mx-[5%]  ${
                 isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
               } ${
                 toggleSideBar
-                  ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
-                  : "lg:w-[40%]"
-              } lg:ml-[10%] lg:mr-[10%] grow 
-              md:mt-[1%] mb-0 pb-[20px] rounded-tr-[8px] 
-              rounded-tl-[8px] relative md:rounded-[11.5px] 
-              md:mx-auto md:my-auto md:mb-[18%] md:overflow-auto`}
+                  ? "confirm01"
+                  : "confirm"
+              } grow pt-[10px] pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative 
+              md:rounded-[11.5px] md:mx-auto md:my-auto md:overflow-auto`}
             >
               <div className="w-full flex justify-end border-b-[6px] items-center
                border-primary px-[12px] h-[35px] md:h-[45px] lg:h-[60px]  lg:border-b-[10px] ">
@@ -671,9 +744,10 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                       Confirmed
                     </button>
                   </div>
+                  </div>
                 </div>
               </div>
-            </div>
+          
           </Modal>
         )}
 
@@ -795,7 +869,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
                 Purchase Successful
               </h2>
               <img 
-                className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[250px] lg:h-[250px]"
+                className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[100px] lg:h-[100px]"
                 src="./Gif/checkMarkGif.gif"
                 alt="/"
               />
@@ -961,7 +1035,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
         )}
 
  {/* =========== RECEIPT ============*/}
- {receipt && (
+ {receipt && ( 
           <WaecReceipt
              Exam ="WAEC"
             ExamType={examType}
@@ -974,7 +1048,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
           />
         )}
                
-               <div className="py-[30px] lg:py-[60px] mt-10 lg:mb-[200px] mb-[50px] md:mb-[100px]">
+               <div className="py-[30px] lg:py-[60px] mt-10 lg:mb-[80px] mb-[50px] md:mb-[100px]">
           <button
             className={`font-extrabold h-[43px] w-[100%] py-[3.534px] px-[5.301px] md:mb-[0px] rounded-[4.241px]
             md:w-[95.649px] text-white md:py-[5.868px] md:px-[8.802px] md:h-auto
@@ -1011,7 +1085,7 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
     
 
     <div className=" flex gap-[8.729px]  md:gap-[14.896px] 
-     justify-center px-[8.594px] mb-[130px]">
+     justify-center px-[8.594px] mb-[50px]">
               <p className="font-[500] text-[10px] text-black 
               leading-[10.4px] lg:text-[16px] lg:leading-[15.6px]  md:text-[6.875px]
             ] md:leading-[12.938px] self-center">
