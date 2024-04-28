@@ -5,20 +5,33 @@ import { Link } from "react-router-dom";
 import { useContext, useRef } from "react";
 import styles from './AirtimeVtu.module.css'
 import { ContextProvider } from '../Context';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { DashBoardLayout } from '../Dashboard/Layout/DashBoardLayout';
 
 
 export const AirtimeVtuReceipt = () => {
-  const location = useLocation()
+  const location = useLocation();
+  const navigate = useNavigate();
   const { networkName, selectedProduct, inputValues, amount, transactionID, refNumber, orderID, description } = location.state
   
   const {
     toggleSideBar,
     isDarkMode,
     date,
-    recipientName, } =
+    recipientName,
+    setSelectedProduct,
+    setInputValues,
+    setAmount,
+    setRecipientName } =
     useContext(ContextProvider);
+
+    function handleClick() {
+      setSelectedProduct("");
+      setInputValues("");
+      setRecipientName("");
+      setAmount("");
+      navigate('/airtime-topup');
+    }
 
   const contentRef = useRef(null);
 
@@ -79,14 +92,14 @@ export const AirtimeVtuReceipt = () => {
                 alt=""
               />
             </Link>
-            <Link to="/airtime-topup">
+            <div onClick={handleClick}>
               {" "}
               <img
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
               />
-            </Link>
+            </div>
           </div>
           <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
           <div ref={contentRef}>
@@ -102,7 +115,7 @@ export const AirtimeVtuReceipt = () => {
               />
             </div>
             <h3 className="font-extrabold text-[12px] mt-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
-              Transaction Successful on
+              Purchase Successful on
             </h3>
             <span className="text-[11px] text-[#0008] font-extrabold flex justify-center items-center">
               {date.toLocaleDateString(undefined, {

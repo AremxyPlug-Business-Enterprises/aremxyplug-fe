@@ -838,8 +838,9 @@ export const Context = ({ children }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [ikedcEmail, setEmail] = useState("");
   const [ikedcamount, setIkedcamount] = useState("");
-  const [requestID, setRequestID] = useState("");
+  const [billGenerate, setBillGenerate] = useState("");
   const [serviceID, setServiceID] = useState("");
+  const [flag, setFlag] = useState("");
 
   //------------Airtime Conversion---------
   const [inputValueA, setInputValueA] = useState("");
@@ -1318,10 +1319,12 @@ export const Context = ({ children }) => {
     setEmail,
     ikedcamount,
     setIkedcamount,
-    requestID,
-    setRequestID,
+    billGenerate,
+    setBillGenerate,
     serviceID,
     setServiceID,
+    flag,
+    setFlag,
 
     //Airtime Conversion
     inputValueA,
