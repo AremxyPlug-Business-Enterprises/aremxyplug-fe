@@ -40,13 +40,13 @@ const AEDC = () => {
     setIkedcamount,
     toggleVisibility,
     isVisible,
-    // requestID,
-    // setRequestID,
+    billGenerate,
+    setBillGenerate,
     serviceID,
     setServiceID,
+    flag,
+    setFlag,
   } = useContext(ContextProvider);
-  const [flag, setFlag] = useState("");
-  ;
 
   const { selectedNetworkProduct, setSelectedNetworkProduct } =
     useContext(ContextProvider);
@@ -233,16 +233,15 @@ const AEDC = () => {
     async function buyAEDC(meter_type, meter_no, phone, email, amount) {
       const url = 'https://aremxyplug.onrender.com/api/v1/electric-bill';
 
-      const parsedPhone = parseInt(phone, 10);
       const parsedAmount = parseInt(amount, 10);
 
       const data = {
         meter_type,
         meter_no,
-        phone: parsedPhone, // Use the parsed integer value
+        phone, // Use the parsed integer value
         email,
         amount: parsedAmount, // Use the parsed integer value
-        disco_type: "AEDC",
+        disco_type: "abuja-electric",
       };
 
       console.log(data);
@@ -252,11 +251,11 @@ const AEDC = () => {
         console.log(response.data);
         console.log(response.status);
         setSelectedNetworkProduct(response.data.meter_type)
-        setMeterNumber(response.data.meter_no)
+        setMeterNumber(response.data.meter_number)
         setPhoneNumber(response.data.phone)
         setEmail(response.data.email)
         setIkedcamount(response.data.amount)
-        // setRequestID(response.data.request_id)
+        setBillGenerate(response.data.bill_generated)
         setOrderId(response.data.order_id)
         setTransactionId(response.data.transaction_id)
         setServiceID(response.data.disco_type)
@@ -362,7 +361,13 @@ const AEDC = () => {
                 </button>
               </div>
               {showProductList && (
-                <div className="border md:rounded-[10px] text-[10px] md:text-[12px] lg:text-[16px] mt-14 lg:mt-20 w-[90%] md:w-[44%]  rounded-[4px] absolute  bg-[#FFF] z-[10]">
+                <div
+                  // className="border md:rounded-[10px] text-[10px] md:text-[12px] lg:text-[16px] mt-14 lg:mt-20 w-[90%] md:w-[44%]  rounded-[4px] absolute  bg-[#FFF] z-[10]"
+                  className={`${toggleSideBar
+                    ? "lg:w-[35.8%] lg:top-[100.5%]"
+                    : "lg:w-[44.2%] lg:top-[100.3%]"
+                    } border md:rounded-[10px] text-[10px] md:text-[12px] lg:text-[16px] mt-14 lg:mt-20 w-[90%] md:w-[44%]  rounded-[4px] absolute  bg-[#FFF] z-[10]`}
+                >
                   {productList.map((item) => (
                     <div
                       key={item.name}
@@ -721,7 +726,17 @@ const AEDC = () => {
               />
 
               <img
-                onClick={() => setSuccessPopup(false)}
+                onClick={() => {
+                  setSelectedNetworkProduct("");
+                  setMeterNumber("");
+                  setVerifiedName("");
+                  setPhoneNumber("");
+                  setEmail("");
+                  setIkedcamount("");
+                  setGlobalCountry("");
+                  setFlag("");
+                  setSuccessPopup(false)
+                }}
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
@@ -802,6 +817,14 @@ const AEDC = () => {
             <div className="flex w-[70%] mx-auto items-center my-6  gap-[6%] md:gap-[20px] justify-center md:w-[20%] lg:my-[5%]">
               <button
                 onClick={() => {
+                  setSelectedNetworkProduct("");
+                  setMeterNumber("");
+                  setVerifiedName("");
+                  setPhoneNumber("");
+                  setEmail("");
+                  setIkedcamount("");
+                  setGlobalCountry("");
+                  setFlag("");
                   setSuccessPopup(false);
                 }}
                 className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:px-[50px] md:w-[70%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
@@ -818,6 +841,7 @@ const AEDC = () => {
                 transactionId: transactionId,
                 serviceID: serviceID,
                 showDescription: showDescription,
+                billGenerate: billGenerate,
               }}>
                 <button
                   onClick={() => {
@@ -849,7 +873,17 @@ const AEDC = () => {
               />
 
               <img
-                onClick={() => setFailedPopup(false)}
+                onClick={() => {
+                  setSelectedNetworkProduct("");
+                  setMeterNumber("");
+                  setVerifiedName("");
+                  setPhoneNumber("");
+                  setEmail("");
+                  setIkedcamount("");
+                  setGlobalCountry("");
+                  setFlag("");
+                  setFailedPopup(false)
+                }}
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""

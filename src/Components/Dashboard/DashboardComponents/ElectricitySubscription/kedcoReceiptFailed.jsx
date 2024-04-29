@@ -7,19 +7,40 @@ import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import logo2 from "../ElectricitySubscription/Electricity-sub-images/kedco-logo 1.svg"
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export const KedcoReceiptFailed = () => {
 
-  const location = useLocation()
+  const location = useLocation();
+  const navigate = useNavigate();
   const { selectedNetworkProduct, meterNumber, phoneNumber, ikedcEmail, ikedcamount, serviceID, orderId, transactionId, showDescription  } = location.state
 
   const {
     toggleSideBar,
     isDarkMode,
     date,   
-    verifiedName, 
+    verifiedName,
+    setSelectedNetworkProduct,
+    setMeterNumber,
+    setVerifiedName,
+    setPhoneNumber,
+    setEmail,
+    setIkedcamount,
+    setGlobalCountry,
+    setFlag, 
   } = useContext(ContextProvider);
+
+  function handleClick() {
+    setSelectedNetworkProduct("");
+    setMeterNumber("");
+    setVerifiedName("");
+    setPhoneNumber("");
+    setEmail("");
+    setIkedcamount("");
+    setGlobalCountry("");
+    setFlag("");
+    navigate('/electricity-subscription');
+  }
 
   const contentRef = useRef(null);
 
@@ -68,14 +89,14 @@ export const KedcoReceiptFailed = () => {
                 alt=""
               />
             </Link>
-            <Link to="/electricity-subscription">
+            <div onClick={handleClick}>
               {" "}
               <img
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
               />
-            </Link>
+            </div>
           </div>
           <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
           <div ref={contentRef}>
@@ -144,7 +165,7 @@ export const KedcoReceiptFailed = () => {
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Phone Number</p>
-                <span>0{phoneNumber}</span>
+                <span>{phoneNumber}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Email</p>
