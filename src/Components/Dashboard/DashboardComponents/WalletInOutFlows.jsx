@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { RxDotFilled } from "react-icons/rx";
 import styles from "./component.module.css";
 // import { Line } from "react-chartjs-2";
@@ -20,6 +20,7 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
+  Label,
 } from "recharts";
 
 export const WalletInOutFlows = () => {
@@ -27,7 +28,7 @@ export const WalletInOutFlows = () => {
     useContext(ContextProvider);
   const [blur, setBlur] = useState(false);
   const [selected, setSelected] = useState("");
-  // const [setToggleTotalTransaction] = useState(false);
+  const [toggleTotalTransaction, setToggleTotalTransaction] = useState(false);
 
   const [symbol, setSymbol] = useState("₦");
 
@@ -44,72 +45,168 @@ export const WalletInOutFlows = () => {
     setActiveButtons(updatedButtons);
   };
 
+  // const handleSelectedOption = (event) => {
+  //   const clickedoption = event.target.value;
+  //   setSelected(clickedoption);
+  //   setBlur(
+  //     clickedoption === "USD" ||
+  //       clickedoption === "GBP" ||
+  //       clickedoption === "AUD" ||
+  //       clickedoption === "KES" ||
+  //       clickedoption === "EUR"
+  //   );
+  //   clickedoption === "NGN"
+  //     ? setSymbol("₦")
+  //     : clickedoption === "USD"
+  //     ? setSymbol("$")
+  //     : clickedoption === "GBP"
+  //     ? setSymbol("£")
+  //     : clickedoption === "AUD"
+  //     ? setSymbol("AU$")
+  //     : clickedoption === "KES"
+  //     ? setSymbol("KSh")
+  //     : clickedoption === "EUR"
+  //     ? setSymbol("€")
+  //     : setSymbol("");
+  //   return;
+  // };
+
+  // const data = [
+  //   { xaxis: "0.00", inflow: 10, outflow: 0, amt: 2400 },
+  //   { xaxis: "1.00", inflow: 9, outflow: 5, amt: 2210 },
+  //   { xaxis: "2.00", inflow: 8, outflow: 1, amt: 2210 },
+  //   { xaxis: "3.00", inflow: 7, outflow: 2, amt: 2210 },
+  //   { xaxis: "4.00", inflow: 6, outflow: 3, amt: 2210 },
+  //   { xaxis: "5.00", inflow: 5, outflow: 4, amt: 2210 },
+  //   { xaxis: "6.00", inflow: 4, outflow: 5, amt: 2210 },
+  //   { xaxis: "7.00", inflow: 3, outflow: 6, amt: 2210 },
+  //   { xaxis: "8.00", inflow: 2, outflow: 7, amt: 2210 },
+  //   { xaxis: "9.00", inflow: 1, outflow: 8, amt: 2210 },
+  //   { xaxis: "10.00", inflow: 0, outflow: 9, amt: 2210 },
+  //   { xaxis: "11.00", inflow: 5, outflow: 9.5, amt: 2210 },
+  //   { xaxis: "12.00", inflow: 1, outflow: 10, amt: 2210 },
+  //   { xaxis: "13.00", inflow: 2, outflow: 9, amt: 2210 },
+  //   { xaxis: "14.00", inflow: 3, outflow: 8, amt: 2210 },
+  //   { xaxis: "15.00", inflow: 4, outflow: 7, amt: 2210 },
+  //   { xaxis: "16.00", inflow: 5, outflow: 6, amt: 2210 },
+  //   { xaxis: "17.00", inflow: 6, outflow: 5, amt: 2210 },
+  //   { xaxis: "18.00", inflow: 7, outflow: 4, amt: 2210 },
+  //   { xaxis: "19.00", inflow: 8, outflow: 3, amt: 2210 },
+  //   { xaxis: "20.00", inflow: 9, outflow: 2, amt: 2210 },
+  //   { xaxis: "21.00", inflow: 10, outflow: 1, amt: 2210 },
+  //   { xaxis: "22.00", inflow: 10, outflow: 0, amt: 2210 },
+  //   { xaxis: "23.00", inflow: 2, outflow: 9, amt: 2210 },
+  //   { xaxis: "24.00", inflow: 0, outflow: 10, amt: 2210 },
+  // ];
+
   const handleSelectedOption = (event) => {
     const clickedoption = event.target.value;
     setSelected(clickedoption);
-    setBlur(
-      clickedoption === "USD" ||
-        clickedoption === "GBP" ||
-        clickedoption === "AUD" ||
-        clickedoption === "KES" ||
-        clickedoption === "EUR"
+    setSymbol(
+      clickedoption === "NGN"
+        ? "₦"
+        : clickedoption === "USD"
+        ? "$"
+        : clickedoption === "GBP"
+        ? "£"
+        : clickedoption === "AUD"
+        ? "AU$"
+        : clickedoption === "KES"
+        ? "KSh"
+        : clickedoption === "EUR"
+        ? "€"
+        : ""
     );
-    clickedoption === "NGN"
-      ? setSymbol("₦")
-      : clickedoption === "USD"
-      ? setSymbol("$")
-      : clickedoption === "GBP"
-      ? setSymbol("£")
-      : clickedoption === "AUD"
-      ? setSymbol("AU$")
-      : clickedoption === "KES"
-      ? setSymbol("KSh")
-      : clickedoption === "EUR"
-      ? setSymbol("€")
-      : setSymbol("");
-    return;
   };
 
-  const data = [
-    { xaxis: "0.00", inflow: 100, outflow: 0, amt: 2400 },
-    { xaxis: "1.00", inflow: 90, outflow: 5, amt: 2210 },
-    { xaxis: "2.00", inflow: 80, outflow: 10, amt: 2210 },
-    { xaxis: "3.00", inflow: 70, outflow: 20, amt: 2210 },
-    { xaxis: "4.00", inflow: 60, outflow: 30, amt: 2210 },
-    { xaxis: "5.00", inflow: 50, outflow: 40, amt: 2210 },
-    { xaxis: "6.00", inflow: 40, outflow: 50, amt: 2210 },
-    { xaxis: "7.00", inflow: 30, outflow: 60, amt: 2210 },
-    { xaxis: "8.00", inflow: 20, outflow: 70, amt: 2210 },
-    { xaxis: "9.00", inflow: 10, outflow: 80, amt: 2210 },
-    { xaxis: "10.00", inflow: 0, outflow: 90, amt: 2210 },
-    { xaxis: "11.00", inflow: 5, outflow: 95, amt: 2210 },
-    { xaxis: "12.00", inflow: 10, outflow: 100, amt: 2210 },
-    { xaxis: "13.00", inflow: 20, outflow: 90, amt: 2210 },
-    { xaxis: "14.00", inflow: 30, outflow: 80, amt: 2210 },
-    { xaxis: "15.00", inflow: 40, outflow: 70, amt: 2210 },
-    { xaxis: "16.00", inflow: 50, outflow: 60, amt: 2210 },
-    { xaxis: "17.00", inflow: 60, outflow: 50, amt: 2210 },
-    { xaxis: "18.00", inflow: 70, outflow: 40, amt: 2210 },
-    { xaxis: "19.00", inflow: 80, outflow: 30, amt: 2210 },
-    { xaxis: "20.00", inflow: 90, outflow: 20, amt: 2210 },
-    { xaxis: "21.00", inflow: 100, outflow: 10, amt: 2210 },
-    { xaxis: "22.00", inflow: 100, outflow: 0, amt: 2210 },
-    { xaxis: "23.00", inflow: 20, outflow: 90, amt: 2210 },
-    { xaxis: "24.00", inflow: 0, outflow: 100, amt: 2210 },
-    // ...
-    { yaxis: "0K" },
-    { yaxis: "10K" },
-    { yaxis: "20" },
-    { yaxis: "30" },
-    { yaxis: "40" },
-    { yaxis: "50" },
-    { yaxis: "60" },
-    { yaxis: "70" },
-    { yaxis: "80" },
-    { yaxis: "90" },
-    { yaxis: "100" },
-  ];
-  
+  const [activeButton, setActiveButton] = useState(0);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    // Function to generate data based on selected time range
+    const generateData = () => {
+      const currentDate = new Date();
+      const currentDay = currentDate.getDay();
+      const todayData = [
+        { xaxis: "0.00", inflow: 10, outflow: 0, amt: 2400 },
+        { xaxis: "1.00", inflow: 9, outflow: 5, amt: 2210 },
+        { xaxis: "2.00", inflow: 8, outflow: 1, amt: 2210 },
+        { xaxis: "3.00", inflow: 7, outflow: 2, amt: 2210 },
+        { xaxis: "4.00", inflow: 6, outflow: 3, amt: 2210 },
+        { xaxis: "5.00", inflow: 5, outflow: 4, amt: 2210 },
+        { xaxis: "6.00", inflow: 4, outflow: 5, amt: 2210 },
+        { xaxis: "7.00", inflow: 3, outflow: 6, amt: 2210 },
+        { xaxis: "8.00", inflow: 2, outflow: 7, amt: 2210 },
+        { xaxis: "9.00", inflow: 1, outflow: 8, amt: 2210 },
+        { xaxis: "10.00", inflow: 0, outflow: 9, amt: 2210 },
+        { xaxis: "11.00", inflow: 5, outflow: 9.5, amt: 2210 },
+        { xaxis: "12.00", inflow: 1, outflow: 10, amt: 2210 },
+        { xaxis: "13.00", inflow: 2, outflow: 9, amt: 2210 },
+        { xaxis: "14.00", inflow: 3, outflow: 8, amt: 2210 },
+        { xaxis: "15.00", inflow: 4, outflow: 7, amt: 2210 },
+        { xaxis: "16.00", inflow: 5, outflow: 6, amt: 2210 },
+        { xaxis: "17.00", inflow: 6, outflow: 5, amt: 2210 },
+        { xaxis: "18.00", inflow: 7, outflow: 4, amt: 2210 },
+        { xaxis: "19.00", inflow: 8, outflow: 3, amt: 2210 },
+        { xaxis: "20.00", inflow: 9, outflow: 2, amt: 2210 },
+        { xaxis: "21.00", inflow: 10, outflow: 1, amt: 2210 },
+        { xaxis: "22.00", inflow: 10, outflow: 0, amt: 2210 },
+        { xaxis: "23.00", inflow: 2, outflow: 9, amt: 2210 },
+        { xaxis: "24.00", inflow: 0, outflow: 10, amt: 2210 },
+        // Include data for the current day
+        // Modify data based on your actual requirements
+      ];
+
+      const last7DaysData = [
+        // Generate data for last 7 days, starting from Monday
+        // Modify data based on your actual requirements
+      ];
+
+      const last30DaysData = [
+        // Generate data for last 30 days
+        // Modify data based on your actual requirements
+      ];
+
+      const allTimeData = [
+        // Generate data for all time
+        // Modify data based on your actual requirements
+      ];
+
+      const customData = [
+        // Generate data for custom time range
+        // Modify data based on your actual requirements
+      ];
+
+      // Set data based on the selected button
+      switch (activeButton) {
+        case 0:
+          setData(todayData);
+          break;
+        case 1:
+          setData(last7DaysData);
+          break;
+        case 2:
+          setData(last30DaysData);
+          break;
+        case 3:
+          setData(allTimeData);
+          break;
+        case 4:
+          setData(customData);
+          break;
+        default:
+          setData(todayData);
+          break;
+      }
+    };
+
+    generateData();
+  }, [activeButton]);
+
+  // const handleClick = (index) => {
+  //   setActiveButton(index);
+  // };
+
   return (
     <div className="mt-[10%] lg:mt-[5%] mb-[10%]">
       <div className="flex items-center gap-[10px]">
@@ -194,7 +291,7 @@ export const WalletInOutFlows = () => {
         </div>
       </div>
 
-      {/* {toggleTotalTransaction && (
+      {toggleTotalTransaction && (
         <div
           className={`${styles.totalTransactions} ${
             toggleSideBar
@@ -214,7 +311,7 @@ export const WalletInOutFlows = () => {
             </li>
           </ul>
         </div>
-      )} */}
+      )}
 
       {blur && (
         <div
@@ -345,7 +442,44 @@ export const WalletInOutFlows = () => {
           options={options}
         /> */}
 
-        <LineChart
+        <div style={{ width: "100%", maxWidth: "100%", overflowX: "auto" }}>
+          <LineChart
+            width={window.innerWidth < 768 ? window.innerWidth - 40 : 1480}
+            height={window.innerWidth < 768 ? 300 : 370}
+            data={data}
+            margin={{ top: 20, right: 20, bottom: 20, left: 0 }}
+          >
+           <XAxis 
+          dataKey="xaxis" 
+          tickLine={false}
+          tick={{ 
+            fontSize: 12,
+            textAnchor: 'end'
+          }} 
+        >
+          <Label
+            value="X Axis Label"
+            offset={0}
+            position="insideBottom"
+            style={{ fontStyle: 'italic', transform: 'rotate(45deg)' }}
+          />
+        </XAxis>
+            <YAxis tickFormatter={(value) => `${symbol}${value}K`} 
+          tick={{ 
+            fontSize: 12,
+            // fontStyle: 'italic',
+            // transform: 'rotate(90deg)',
+            // textAnchor: 'end'
+          }} 
+             />
+            <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
+            <Line type="linear" dataKey="inflow" stroke="#58DA8F" />
+            <Line type="linear" dataKey="outflow" stroke="#FA6B6B" />
+            <Tooltip />
+          </LineChart>
+        </div>
+
+        {/* <LineChart
           width={1100}
           height={360}
           data={data}
@@ -357,7 +491,7 @@ export const WalletInOutFlows = () => {
           <Line type="linear" dataKey="inflow" stroke="#58DA8F" />
           <Line type="linear" dataKey="outflow" stroke="#FA6B6B" />
           <Tooltip />
-          {/* <Legend /> */}
+          <Legend />
         </LineChart>
         <LineChart
           width={340}
@@ -371,7 +505,7 @@ export const WalletInOutFlows = () => {
           <Line type="linear" dataKey="inflow" stroke="#58DA8F" />
           <Line type="linear" dataKey="outflow" stroke="#FA6B6B" />
           <Tooltip />
-          {/* <Legend /> */}
+          <Legend />
         </LineChart>
         <LineChart
           width={740}
@@ -385,8 +519,8 @@ export const WalletInOutFlows = () => {
           <Line type="linear" dataKey="inflow" stroke="#58DA8F" />
           <Line type="linear" dataKey="outflow" stroke="#FA6B6B" />
           <Tooltip />
-          {/* <Legend /> */}
-        </LineChart>
+          <Legend />
+        </LineChart> */}
       </div>
       {/* ========================Chart End========================= */}
     </div>
