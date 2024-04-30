@@ -389,7 +389,7 @@ const AirtelDataBundle = () => {
           console.log(response.data.reference_number)
           setAirtelOrderID(response.data.order_id)
           console.log(response.data.order_id)
-          // setMtnDescription(response.data.description)
+          setAirtelDescription(response.data.description)
           // console.log(response.data.description)
           return { statusCode: response.status, data: response.data };
           // console.log(response.data);

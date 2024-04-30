@@ -27,9 +27,10 @@ export const WalletInOutFlows = () => {
   const { volumeValueToggle, isValue, isDarkMode, toggleSideBar } =
     useContext(ContextProvider);
   const [blur, setBlur] = useState(false);
+  console.log(setBlur)
   const [selected, setSelected] = useState("");
   const [toggleTotalTransaction, setToggleTotalTransaction] = useState(false);
-
+  console.log(setToggleTotalTransaction)
   const [symbol, setSymbol] = useState("₦");
 
   const [activeButtons, setActiveButtons] = useState([
@@ -120,6 +121,8 @@ export const WalletInOutFlows = () => {
   };
 
   const [activeButton, setActiveButton] = useState(0);
+
+  console.log(setActiveButton)
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -127,6 +130,8 @@ export const WalletInOutFlows = () => {
     const generateData = () => {
       const currentDate = new Date();
       const currentDay = currentDate.getDay();
+
+      console.log(currentDay)
       const todayData = [
         { xaxis: "0.00", inflow: 10, outflow: 0, amt: 2400 },
         { xaxis: "1.00", inflow: 9, outflow: 5, amt: 2210 },
