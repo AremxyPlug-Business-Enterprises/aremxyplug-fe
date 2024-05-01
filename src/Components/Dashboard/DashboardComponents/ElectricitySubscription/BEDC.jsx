@@ -40,13 +40,13 @@ const BEDC = () => {
     setIkedcamount,
     toggleVisibility,
     isVisible,
-    // requestID,
-    // setRequestID,
+    billGenerate,
+    setBillGenerate,
     serviceID,
     setServiceID,
+    flag,
+    setFlag,
   } = useContext(ContextProvider);
-  const [flag, setFlag] = useState("");
-  ;
 
   const { selectedNetworkProduct, setSelectedNetworkProduct } =
     useContext(ContextProvider);
@@ -71,13 +71,13 @@ const BEDC = () => {
   const productList = [
     {
       id: 1,
-      name: "Prepaid",
+      name: "prepaid",
 
     },
 
     {
       id: 2,
-      name: "Postpaid",
+      name: "postpaid",
 
     },
 
@@ -199,13 +199,13 @@ const BEDC = () => {
   const handleVerifiedName = (event) => {
     const newValue = event.target.value;
     setVerifiedName(newValue);
-
   };
+
   const handleMeterNumber = (event) => {
     const newValue = event.target.value;
     setMeterNumber(newValue);
-
   };
+
   const handlePhoneNumber = (event) => {
     const value = event.target.value;
     const newValue = value.replace(/\D/g, "").slice(0, 11);
@@ -233,16 +233,15 @@ const BEDC = () => {
     async function buyBEDC(meter_type, meter_no, phone, email, amount) {
       const url = 'https://aremxyplug.onrender.com/api/v1/electric-bill';
 
-      const parsedPhone = parseInt(phone, 10);
       const parsedAmount = parseInt(amount, 10);
 
       const data = {
         meter_type,
         meter_no,
-        phone: parsedPhone, // Use the parsed integer value
+        phone, // Use the parsed integer value
         email,
         amount: parsedAmount, // Use the parsed integer value
-        disco_type: "BEDC",
+        disco_type: "benin-electric",
       };
 
       console.log(data);
@@ -252,11 +251,11 @@ const BEDC = () => {
         console.log(response.data);
         console.log(response.status);
         setSelectedNetworkProduct(response.data.meter_type)
-        setMeterNumber(response.data.meter_no)
+        setMeterNumber(response.data.meter_number)
         setPhoneNumber(response.data.phone)
         setEmail(response.data.email)
         setIkedcamount(response.data.amount)
-        // setRequestID(response.data.request_id)
+        setBillGenerate(response.data.bill_generated)
         setOrderId(response.data.order_id)
         setTransactionId(response.data.transaction_id)
         setServiceID(response.data.disco_type)
@@ -721,7 +720,17 @@ const BEDC = () => {
               />
 
               <img
-                onClick={() => setSuccessPopup(false)}
+                onClick={() => {
+                  setSelectedNetworkProduct("");
+                  setMeterNumber("");
+                  setVerifiedName("");
+                  setPhoneNumber("");
+                  setEmail("");
+                  setIkedcamount("");
+                  setGlobalCountry("");
+                  setFlag("");
+                  setSuccessPopup(false)
+                }}
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
@@ -772,7 +781,7 @@ const BEDC = () => {
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Phone Number</p>
-                <span>0{phoneNumber}</span>
+                <span>{phoneNumber}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Email</p>
@@ -802,6 +811,14 @@ const BEDC = () => {
             <div className="flex w-[70%] mx-auto items-center my-6  gap-[6%] md:gap-[20px] justify-center md:w-[20%] lg:my-[5%]">
               <button
                 onClick={() => {
+                  setSelectedNetworkProduct("");
+                  setMeterNumber("");
+                  setVerifiedName("");
+                  setPhoneNumber("");
+                  setEmail("");
+                  setIkedcamount("");
+                  setGlobalCountry("");
+                  setFlag("");
                   setSuccessPopup(false);
                 }}
                 className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:px-[50px] md:w-[70%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
@@ -818,6 +835,7 @@ const BEDC = () => {
                 transactionId: transactionId,
                 serviceID: serviceID,
                 showDescription: showDescription,
+                billGenerate: billGenerate,
               }}>
                 <button
                   onClick={() => {
@@ -849,7 +867,17 @@ const BEDC = () => {
               />
 
               <img
-                onClick={() => setFailedPopup(false)}
+                onClick={() => {
+                  setSelectedNetworkProduct("");
+                  setMeterNumber("");
+                  setVerifiedName("");
+                  setPhoneNumber("");
+                  setEmail("");
+                  setIkedcamount("");
+                  setGlobalCountry("");
+                  setFlag("");
+                  setFailedPopup(false)
+                }}
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""

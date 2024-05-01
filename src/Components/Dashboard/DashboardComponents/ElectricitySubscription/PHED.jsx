@@ -40,13 +40,13 @@ const PHED = () => {
     setIkedcamount,
     toggleVisibility,
     isVisible,
-    // requestID,
-    // setRequestID,
+    billGenerate,
+    setBillGenerate,
     serviceID,
     setServiceID,
+    flag,
+    setFlag,
   } = useContext(ContextProvider);
-  const [flag, setFlag] = useState("");
-  ;
 
   const { selectedNetworkProduct, setSelectedNetworkProduct } =
     useContext(ContextProvider);
@@ -233,16 +233,15 @@ const PHED = () => {
     async function buyPHED(meter_type, meter_no, phone, email, amount) {
       const url = 'https://aremxyplug.onrender.com/api/v1/electric-bill';
 
-      const parsedPhone = parseInt(phone, 10);
       const parsedAmount = parseInt(amount, 10);
 
       const data = {
         meter_type,
         meter_no,
-        phone: parsedPhone, // Use the parsed integer value
+        phone, // Use the parsed integer value
         email,
         amount: parsedAmount, // Use the parsed integer value
-        disco_type: "PHED",
+        disco_type: "port-harcourt-electric",
       };
 
       console.log(data);
@@ -252,11 +251,11 @@ const PHED = () => {
         console.log(response.data);
         console.log(response.status);
         setSelectedNetworkProduct(response.data.meter_type)
-        setMeterNumber(response.data.meter_no)
+        setMeterNumber(response.data.meter_number)
         setPhoneNumber(response.data.phone)
         setEmail(response.data.email)
         setIkedcamount(response.data.amount)
-        // setRequestID(response.data.request_id)
+        setBillGenerate(response.data.bill_generated)
         setOrderId(response.data.order_id)
         setTransactionId(response.data.transaction_id)
         setServiceID(response.data.disco_type)
@@ -721,7 +720,17 @@ const PHED = () => {
               />
 
               <img
-                onClick={() => setSuccessPopup(false)}
+                onClick={() => {
+                  setSelectedNetworkProduct("");
+                  setMeterNumber("");
+                  setVerifiedName("");
+                  setPhoneNumber("");
+                  setEmail("");
+                  setIkedcamount("");
+                  setGlobalCountry("");
+                  setFlag("");
+                  setSuccessPopup(false);
+                }}
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
@@ -772,7 +781,7 @@ const PHED = () => {
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Phone Number</p>
-                <span>0{phoneNumber}</span>
+                <span>{phoneNumber}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Email</p>
@@ -818,6 +827,7 @@ const PHED = () => {
                 transactionId: transactionId,
                 serviceID: serviceID,
                 showDescription: showDescription,
+                billGenerate: billGenerate,
               }}>
                 <button
                   onClick={() => {
@@ -849,7 +859,17 @@ const PHED = () => {
               />
 
               <img
-                onClick={() => setFailedPopup(false)}
+                onClick={() => {
+                  setSelectedNetworkProduct("");
+                  setMeterNumber("");
+                  setVerifiedName("");
+                  setPhoneNumber("");
+                  setEmail("");
+                  setIkedcamount("");
+                  setGlobalCountry("");
+                  setFlag("");
+                  setFailedPopup(false)
+                }}
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""

@@ -7,19 +7,40 @@ import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import logo2 from "../ElectricitySubscription/Electricity-sub-images/AEDC1 1.svg"
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export const AedcReceipt = () => {
 
-  const location = useLocation()
-  const { selectedNetworkProduct, meterNumber, phoneNumber, ikedcEmail, ikedcamount, serviceID, orderId, transactionId, showDescription  } = location.state
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { selectedNetworkProduct, meterNumber, phoneNumber, ikedcEmail, ikedcamount, serviceID, orderId, transactionId, showDescription, billGenerate } = location.state
 
   const {
     toggleSideBar,
     isDarkMode,
-    date,   
-    verifiedName, 
+    date,
+    verifiedName,
+    setSelectedNetworkProduct,
+    setMeterNumber,
+    setVerifiedName,
+    setPhoneNumber,
+    setEmail,
+    setIkedcamount,
+    setGlobalCountry,
+    setFlag,
   } = useContext(ContextProvider);
+
+  function handleClick() {
+    setSelectedNetworkProduct("");
+    setMeterNumber("");
+    setVerifiedName("");
+    setPhoneNumber("");
+    setEmail("");
+    setIkedcamount("");
+    setGlobalCountry("");
+    setFlag("");
+    navigate('/electricity-subscription');
+  }
 
   const contentRef = useRef(null);
 
@@ -56,9 +77,8 @@ export const AedcReceipt = () => {
     <DashBoardLayout>
       <div className="flex flex-col gap-[35px] lg:gap-[85px]">
         <div
-          className={` ${styles.receipt} ${
-            toggleSideBar ? "" : "lg:w-[880px] "
-          } w-full lg:mx-auto`}
+          className={` ${styles.receipt} ${toggleSideBar ? "" : "lg:w-[880px] "
+            } w-full lg:mx-auto`}
         >
           <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
             <Link to="/">
@@ -68,14 +88,14 @@ export const AedcReceipt = () => {
                 alt=""
               />
             </Link>
-            <Link to="/electricity-subscription">
+            <div onClick={handleClick}>
               {" "}
               <img
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
               />
-            </Link>
+            </div>
           </div>
           <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
           <div ref={contentRef}>
@@ -93,7 +113,7 @@ export const AedcReceipt = () => {
             <h3 className="font-extrabold text-[12px] mt-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
               Purchase Successful on
             </h3>
-            <span className="text-[8px] text-[#0008] pt-1 font-extrabold flex justify-center items-center">
+            <span className="text-[8px] md:text-[12px] text-[#0008] pt-1 font-extrabold flex justify-center items-center">
               {date.toLocaleDateString(undefined, {
                 year: "numeric",
                 month: "long",
@@ -104,16 +124,12 @@ export const AedcReceipt = () => {
                 hour12: true,
               })}
             </span>
-            <p className="text-[8px] lg:text-[16px] font-[500] text-[#000] text-center mb-2 md:text-[14px] ">
-              You have successfully Purchased{" "}
-              <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
-               Abuja {selectedNetworkProduct} Meter
-              </span>{" "}
-             <br></br>
-              <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
-                (&#8358;{ikedcamount}){" "}
+            <p className="text-[9px] text-[#27AE60] bg-[#D5F6E3] rounded-[11px] border-2 border-[#27AE60] py-[5px] px-[2px] text-center mx-[5px] lg:mx-[150px] md:mx-[100px] my-2 md:text-[14px] lg:text-[14px]">
+              You have successfully purchased{" "}
+              <span className="text-[#000] font-extrabold text-[10px] md:text-[14px]">
+                Abuja {selectedNetworkProduct} Meter &#8358;{ikedcamount}.00{" "}
               </span>
-              From your NGN Nigerian Wallet to{" "}
+              from your NGN wallet to{" "}
             </p>
 
 
@@ -129,42 +145,42 @@ export const AedcReceipt = () => {
                   />
                 </div>
                 <div className="flex flex-col gap-3 pt-[10px]">
-              <div className="flex text-[10px] md:text-[14px] pt-[10px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Disco Type</p>
-                <span className="flex items-center gap-1 ">
-                  <div><img className="w-[30px]" src={logo2} alt="" /></div>
-                  <div>{serviceID}</div>
-                  </span>
-              </div>
-              <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Meter Type</p>
-                <span>{selectedNetworkProduct} </span>
-              </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Meter Number</p>
-                <span>{meterNumber} </span>
-              </div>
+                  <div className="flex text-[10px] md:text-[14px] pt-[10px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                    <p className="text-[#7C7C7C] font-[500]">Disco Type</p>
+                    <span className="flex items-center gap-1 ">
+                      <div><img className="w-[30px]" src={logo2} alt="" /></div>
+                      <div>{serviceID}</div>
+                    </span>
+                  </div>
+                  <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                    <p className="text-[#7C7C7C] font-[500]">Meter Type</p>
+                    <span>{selectedNetworkProduct} </span>
+                  </div>
+                  <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                    <p className="text-[#7C7C7C] font-[500]">Meter Number</p>
+                    <span>{meterNumber} </span>
+                  </div>
 
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Verified Name</p>
-                <span>{verifiedName}</span>
-              </div>
+                  <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                    <p className="text-[#7C7C7C] font-[500]">Verified Name</p>
+                    <span>{verifiedName}</span>
+                  </div>
 
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Phone Number</p>
-                <span>0{phoneNumber}</span>
-              </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Email</p>
-                <span>{ikedcEmail}</span>
-              </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Amount</p>
-                <span>&#8358;{ikedcamount}</span>
-              </div>
-              
-            </div>
-            <div className="flex gap-[5px] items-center mt-[10px] md:mt-[30px] text-[10px] lg:text-[16px] font-extrabold">
+                  <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                    <p className="text-[#7C7C7C] font-[500]">Phone Number</p>
+                    <span>{phoneNumber}</span>
+                  </div>
+                  <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                    <p className="text-[#7C7C7C] font-[500]">Email</p>
+                    <span>{ikedcEmail}</span>
+                  </div>
+                  <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                    <p className="text-[#7C7C7C] font-[500]">Amount</p>
+                    <span>&#8358;{ikedcamount}</span>
+                  </div>
+
+                </div>
+                <div className="flex gap-[5px] items-center mt-[10px] md:mt-[30px] text-[10px] lg:text-[16px] font-extrabold">
                   <p>Sender Info</p>
                   <img
                     className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
@@ -173,24 +189,24 @@ export const AedcReceipt = () => {
                   />
                 </div>
                 <div className="flex flex-col gap-3 pt-[10px]">
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Customer Name</p>
-                <span>{verifiedName}</span>
+                  <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                    <p className="text-[#7C7C7C] font-[500]">Customer Name</p>
+                    <span>{verifiedName}</span>
+                  </div>
+
+                  <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                    <p className="text-[#7C7C7C] font-[500]">Wallet Type</p>
+                    <span>Nigerian NGN Wallet </span>
+                  </div>
+
+
+                </div>
+
               </div>
 
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Wallet Type</p>
-                <span>Nigerian NGN Wallet </span>
-              </div>
-             
-              
-            </div>
-                
-              </div>
 
-              
 
-             
+
 
               {/* ===================Transaction Info==================== */}
               <div className="flex flex-col gap-[3px] w-[90%] mx-auto lg:gap-[5px]">
@@ -212,7 +228,7 @@ export const AedcReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Bill / Token Generated</p>
-                  <span>Instantly</span>
+                  <span>{billGenerate}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Order Number</p>
@@ -222,7 +238,7 @@ export const AedcReceipt = () => {
                   <p className="text-[#0008]">Transaction ID</p>
                   <span>{transactionId}</span>
                 </div>
-                
+
               </div>
             </div>
             <div className="rounded-[8px] bg-[#E2F3FF] mx-4 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
@@ -254,18 +270,16 @@ export const AedcReceipt = () => {
           </div>
         </div>
         <div
-          className={`${
-            isDarkMode ? "mb-[1%]" : "mb-[5%]"
-          } flex gap-[15px] justify-center items-center mt-[80px] lg:mb-[%]`}
+          className={`${isDarkMode ? "mb-[1%]" : "mb-[5%]"
+            } flex gap-[15px] justify-center items-center mt-[80px] lg:mb-[%]`}
         >
           <div className="text-[10px] md:text-[12px] lg:text-[16px]">
             You need help ?
           </div>
           <Link to="/ContactUs">
             <div
-              className={`${isDarkMode ? "" : "bg-[#04177f]"} ${
-                styles.contactus
-              } text-[8px] p-1 text-white rounded-[8px] lg:text-[14px]`}
+              className={`${isDarkMode ? "" : "bg-[#04177f]"} ${styles.contactus
+                } text-[8px] p-1 text-white rounded-[8px] lg:text-[14px]`}
             >
               Contact Us
             </div>

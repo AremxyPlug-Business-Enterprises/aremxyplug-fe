@@ -85,7 +85,7 @@ export const AirtelFailedReceipt = () => {
     setSelectedAmount("");
     setRecipientNames("");
   };
-
+  
   return (
     <DashBoardLayout>
       <div className="flex flex-col gap-[35px] lg:gap-[85px]">
