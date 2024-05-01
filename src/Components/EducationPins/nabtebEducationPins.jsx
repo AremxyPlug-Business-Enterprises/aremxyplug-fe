@@ -5,7 +5,7 @@ import NabtebImg from './imagesEducation/NabtebImg.svg'
 import HeroComponent from './heroComponent';
 import arrowRight from "../EducationPins/imagesEducation/educationArrowRight.svg";
 import arrowDown from '../EducationPins/imagesEducation/arrow-down.svg';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import nigerianFlag from './imagesEducation/Nigeriaflag.svg';
 import americaFlag from './imagesEducation/Usa.svg';
@@ -23,6 +23,8 @@ import { AiFillEye } from "react-icons/ai";
  import { Modal } from '../Screens/Modal/Modal';
  import AremxyPlugIcon from './imagesEducation/AremxyPlug.svg';
 import NabtebReceipt from './ReceiptEducationPins/nabtebReceipt';
+import axios from 'axios';
+import eduFailed from "./imagesEducation/WaecFailedTransaction.svg";
 import '../Dashboard/DashboardComponents/DataTopUpPage/DataTopUp.css'
 
 export default function NabtebEducationPins() {
@@ -45,6 +47,7 @@ const [nabtebImageState, setNabtebImageState] = useState(arrowDown);
 const [nabtebEducationProceed, setNabtebEducationProceed] = useState(false);
 const [errors, setErrors] = useState({});
 const [nabtebEducationConfirm, setNabtebEducationConfirm] = useState(false);
+const [nabtebFailedTransaction, setNabtebFailedTransaction] = useState(false);
 
 const [receipt] = useState(false);
 
@@ -53,11 +56,11 @@ function nabtebQuantityDropDown(){
 document.querySelector('.imgdrop').classList.toggle('DropIt');
 }
 const nabtebOptions = [
-  {quantity :  '1 Piece Of Result Checker', Amount : "₦100", id : 1},
-  {quantity :  '2 Piece Of Result Checker', Amount : "₦200", id : 2},
-  {quantity :  '3 Piece Of Result Checker', Amount : "₦300", id : 3},
-  {quantity :  '4 Piece Of Result Checker', Amount : "₦400", id : 4},
-  {quantity :  '5 Piece Of Result Checker', Amount : "₦500", id : 5}
+  {quantity :  '1 Piece Of Result Checker', Amount : "₦1000", id : 1},
+  {quantity :  '2 Piece Of Result Checker', Amount : "₦2000", id : 2},
+  {quantity :  '3 Piece Of Result Checker', Amount : "₦3000", id : 3},
+  {quantity :  '4 Piece Of Result Checker', Amount : "₦4000", id : 4},
+  {quantity :  '5 Piece Of Result Checker', Amount : "₦5000", id : 5}
 ]
 
 
@@ -79,10 +82,10 @@ const [nabtebMethodOptions,setNabtebMethodOptions] = useState([
 
 // CONFIRM EXAM TYPE
 const nabtebExams  = [
-{ examType :'NABTEB (₦100)',   id : 1},
-{ examType :'NECO (₦100)', path :  "/NecoEducationPin", id : 2 },
-{ examType :'WAEC (₦100)', path : "/WaecEducationPin", id : 3 },
-{ examType :'JAMB (₦100)', path : "/JambEducationPin", id : 4 }
+{ examType :'NABTEB',   id : 1},
+{ examType :'NECO', path :  "/NecoEducationPin", id : 2 },
+{ examType :'WAEC', path : "/WaecEducationPin", id : 3 },
+{ examType :'JAMB ', path : "/JambEducationPin", id : 4 }
  ]
 function nabtebExamDropDown(){
   setNabtebExamActive(!nabtebExamActive);
@@ -93,7 +96,6 @@ const {
   toggleSideBar,
   inputPin,
   setInputPin,
-  inputPinHandler,
   toggleVisibility,
   isVisible,
 } = useContext(ContextProvider);
@@ -143,7 +145,66 @@ const nabtebTransactionSuccessClose = () => {
 const nabtebReceipt = () => {
   setTransactSuccessPopUp(false);
 };
+const nabtebEduPinSuccess= (e) =>{
+  setTransactSuccessPopUp(true);
+  setNabtebEducationConfirm(false);
+  setInputPin(e.target.value);
+}
+const nabtebEduPinFailed = ()=> {
+  setNabtebEducationConfirm(false);
+  setNabtebFailedTransaction(true);
+ 
+}
+const handleNabtebSubmitPost = async(e) => {
+  e.preventDefault();
+  try{
+    const sendNabtebForm ={
+     exam_type : nabtebExamType.toLowerCase(),
+      quantity :  parseInt(nabtebQuantityResult.slice(0,1)),
+      phone_no : nabtebEducationPinPhone,
+      email : nabtebEducationPinEmail,
+       amount : nabtebEducationAmount.slice(1),
+      wallet_type: '',
+     }
+     console.log(sendNabtebForm);
+    const response = await axios.post('https://aremxyplug.onrender.com/api/v1/edu', sendNabtebForm);
+    if(response.status === "success" || 201 || "Successful" || 200){
+      nabtebEduPinSuccess();
+    } 
+    alert('submitted');
+  }catch(error)  {
+console.error(`The Data brought back an error Of ${error}`);
+nabtebEduPinFailed()
+  }
+}
+// GET RESPONSE SUCCESSFUL
+const {setNabtebEduResponse} = useContext(ContextProvider);
+const requestEducationPin = async() =>{
+  try{
+    const EducationResponse = await axios.get('https://aremxyplug.onrender.com/api/v1/edu');
+    return EducationResponse.data;                                 
+  }catch(error){
+    console.error('There was error fetching the Education Pins', error)
+  return null;
+  }
+}
 
+useEffect(()=> {
+ acceptData();
+},[])
+const acceptData = async() => {
+  try{
+  const dataCollected = await requestEducationPin();
+  if(dataCollected){
+    setNabtebEduResponse(dataCollected);
+   }
+  }catch(error){
+  console.error('There was an error trying to get the token:', error);
+  }
+};
+
+
+// console.log(eduResponse);
   return (
     <DashBoardLayout>
     <div className='flex flex-col h-[115%] lg:h-[120%] justify-between '>
@@ -169,7 +230,7 @@ const nabtebReceipt = () => {
       src={arrowRight} alt="" />
     </div>
     {/* Input for Request of examination pins  */}
-    <form action=''>
+    <form action='POST'>
     <div  className='flex flex-col gap-[20px]  md:h-[172.73px] md:gap-[14.67px] 
      lg:gap-[25px] lg:h-[296px] lg:mb-[30px] mb-[30px]'>
       {/* container for the first two input */}
@@ -181,26 +242,32 @@ const nabtebReceipt = () => {
    <div className='relative flex flex-col w-[100%] gap-[5.868px] md:w-1/2 md:gap-[5.868px]  
    lg:gap-[10px]'>
     {/* header */}
-    <h2 className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px]  
+    <label className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px]  
      md:text-[9.389px] md:leading-[12.206px]
     lg:text-[16px] lg:leading-[20.8px]'>
     Confirm Exam Type
-    </h2>
+    </label>
     {/* input */}
 <div 
  onClick={nabtebExamDropDown}
-className='relative w-[100%] flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
-md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] 
-lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] border-[0.4px] border-[#9C9C9C]
-hover:bg-[#EDEAEA]'>
-    <h2 
-    className='font-[500] text-[8px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] 
-    lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer'>
-    {nabtebExamType}
-      </h2>
+className='relative w-[100%] '>
+    <input value={nabtebExamType}
+    onChange={(e)=> {
+      setNabtebExamType(e.target.value);
+    }}
+    className='pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
+    md:pt-[8.802px] md:pb-[7.042px] w-[100%]
+   md:pr-[5.282px] md:pl-[5.867px] bg-white
+   lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
+   border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]
+   font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
+       lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer focus:outline-none' readOnly/>
+
       <img  
-      className='Examdrop md:h-[14.083px] md:w-[14.083px] lg:h-[24px] 
-      lg:w-[24px] h-[14px] w-[14px]'
+      className='absolute lg:top-[15px] lg:right-[9px] md:top-[8.802px] md:right-[5.282px]
+      top-[8.802px] right-[13px]
+      Examdrop md:h-[14.038px] md:w-[14.038px] 
+    lg:h-[24px] lg:w-[24px] w-[14px] h-[14px]'
       src= {arrowDown} alt="" />
        </div>
        {nabtebExamActive && (
@@ -236,26 +303,32 @@ hover:bg-[#EDEAEA]'>
     <div className='relative gap-[5.868px] flex flex-col w-[100%] md:w-1/2  
     md:gap-[5.868px] lg:gap-[10px] '>
     {/* header */}
-    <h2 className='  font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px]
+    <label className='  font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px]
       md:text-[9.389px] md:leading-[12.206px]
      lg:text-[16px] lg:leading-[20.8px]'>
     Quantity
-    </h2>
+    </label>
     {/* input */}
 <div 
 onClick={nabtebQuantityDropDown}
-className=' flex  justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
- md:pt-[8.802px] md:pb-[7.042px] 
-md:pr-[5.282px] md:pl-[5.867px] 
-lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
-border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
-    <h2 className='font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
-    lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer'>
-    {nabtebQuantityResult}
-      </h2>
+className=' relative w-[100%]'>
+    <input value={nabtebQuantityResult}
+    onChange={(e)=>{
+      nabtebQuantityResult(e.target.value);
+    }}
+     className=' pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
+     md:pt-[8.802px] md:pb-[7.042px] w-[100%]
+    md:pr-[5.282px] md:pl-[5.867px] bg-white
+    lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
+    border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]
+    font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
+        lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer focus:outline-none' readOnly/>
+     
       <img 
-       className='imgdrop md:h-[14.038px] md:w-[14.038px] 
-      lg:h-[24px] lg:w-[24px] w-[14px] h-[14px]'
+       className='absolute lg:top-[15px] lg:right-[9px] md:top-[8.802px] md:right-[5.282px]
+       top-[8.802px] right-[13px]
+       imgdrop md:h-[14.038px] md:w-[14.038px] 
+     lg:h-[24px] lg:w-[24px] w-[14px] h-[14px]'
       src={arrowDown} alt="" />
        </div>
        {/* drop down */}
@@ -295,12 +368,12 @@ border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
     {/* LeftSide */}
      <div className=' container-phone gap-[5.868px] 
      flex flex-col md:w-1/2 md:gap-[10px] '>
-   <h2 className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px]
+   <label className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px]
      md:text-[9.389px] md:leading-[12.206px]
    lg:text-[16px] lg:leading-[20.8px] '>
   Phone Number
 
-   </h2>
+   </label>
    
    <input onInput={(e =>{
   
@@ -340,11 +413,11 @@ border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
         
    {/* right-side */}
    <div className='flex flex-col gap-[5.868px] md:w-1/2 md:gap-[10px]'>
-   <h2 className='font-[600] text-[8px] leading-[10.4px]
+   <label className='font-[600] text-[8px] leading-[10.4px]
    text-[#7E7E7E]  md:text-[9.389px] md:leading-[12.206px]
    lg:text-[16px] lg:leading-[20.8px]'>
    Email
-   </h2>
+   </label>
    
    <input className ='EmailPins font-[500] flex h-[29.927px] lg:h-[51px] md:h-[29.93px] w-[100%]
    lg:text-[16px] lg:leading-[20.8px] 
@@ -382,14 +455,14 @@ border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
  {/* Amount Step /Leftside */}
    <div className='flex flex-col gap-[5.868px] w-[100%] md:w-1/2 md:gap-[10px]'>
     {/* header */}
-    <h2 className='font-[600] text-[8px] leading-[10.4px]
+    <label className='font-[600] text-[8px] leading-[10.4px]
      md:text-[9.389px] md:leading-[12.206px]
      text-[#7E7E7E] lg:text-[16px] lg:leading-[20.8px]'>
     Amount
-    </h2>
+    </label>
     {/* input */}
-    <div
-      onchange={setNabtebEducationAmount}
+    <input value={ nabtebEducationAmount}
+      onChange={setNabtebEducationAmount}
      className='h-[29.927px] lg:h-[51px] md:h-[29.93px]
         md:pt-[8.802px] md:pb-[7.042px] 
        pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
@@ -398,39 +471,41 @@ border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
   focus:outline-none text-start
     text-[8px] leading-[10.4px]
    font-[500]  md:text-[9.389px] md:leading-[12.206px]
-  lg:text-[16px] text-black lg:leading-[20.8px]'
-  maxLength={7}>
-  {nabtebEducationAmount}
-   </div>
+  lg:text-[16px] text-black lg:leading-[20.8px]'/>
+</div>
 
-
-    </div>
-    {/* payment method */}
+    {/*================== PAYMENT METHOD ===============*/}
     <div className=' relative gap-[5.868px]
      flex w-[100%] flex-col md:w-1/2   md:gap-[10px]'>
     {/* header */}
-    <h2 className='font-[600] text-[8px] leading-[10.4px]
+    <label className='font-[600] text-[8px] leading-[10.4px]
      text-[#7E7E7E]  md:text-[9.389px] md:leading-[12.206px]
      lg:text-[16px] lg:leading-[20.8px]'>
     Payment Method
-    </h2>
+    </label>
     {/* input */}
 <div 
- onClick={nabtebMethodDropDown}
-className='flex  justify-between  pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
-md:pt-[8.802px] md:pb-[7.042px] 
-md:pr-[5.282px] md:pl-[5.867px] 
-lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
-border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
-    <h2 className='font-[500] text-[8px] leading-[10.4px]
-     md:text-[9.389px] md:leading-[12.206px]
-    lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer'>
-    {nabtebPaymentResult +  nabtebWalletBalance}
-      </h2>
+ onClick={(e)=>{
+  nabtebMethodDropDown(e.target.value);
+  console.log(e.target.value);
+ }}
+className='relative w-[100%]'>
+    <input value={nabtebPaymentResult}
+     className=' pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
+     md:pt-[8.802px] md:pb-[7.042px] w-[100%]
+    md:pr-[5.282px] md:pl-[5.867px] bg-white
+    lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
+    border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]
+    font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
+        lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer focus:outline-none' readOnly/>
+   
+   
       <img 
-     
-      className='methodDrop h-[14px] w-[14px] md:h-[14.038px] md:w-[14.038px] lg:h-[24px] lg:w-[24px]'
-      src={nabtebImageState} alt="" />
+      className='absolute lg:top-[15px] lg:right-[9px] md:top-[8.802px] md:right-[5.282px]
+      top-[8.802px] right-[13px]
+      methodDrop md:h-[14.038px] md:w-[14.038px] 
+    lg:h-[24px] lg:w-[24px] w-[14px] h-[14px]'
+      src={nabtebImageState} alt="CountryFlag" />
        </div>
        {/* drop down */}
        
@@ -732,9 +807,8 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
               <button
                 onClick={(e) => {
                   e.preventDefault();
-                  setNabtebEducationConfirm(false);
-                  inputPinHandler(e);
-                }}
+                handleNabtebSubmitPost(e);
+                   }}
                 disabled={inputPin.length !== 4}
                 className={`${
                   inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
@@ -990,7 +1064,89 @@ border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
 
     </form>
 </div>
-    
+{nabtebFailedTransaction && (
+ <Modal>
+     <div
+              className={`deleteRecipientSuccess  mx-[5%]  ${
+                isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
+              } ${
+                toggleSideBar
+                  ? "confirm01"
+                  : "confirm"
+              } grow  pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative 
+              md:rounded-[11.5px] md:mx-auto md:my-auto md:overflow-auto`}
+            >
+              <div className="w-full flex justify-between border-b-[6px] items-center
+               border-primary px-[12px] h-[45px] md:h-[55px] lg:h-[70px]  lg:border-b-[10px] ">
+                 <img
+                  className=" w-[18px] h-[18px] md:w-[35px] cursor-pointer
+                  md:h-[35px] lg:w-[35px] lg:h-[42px]"
+                  src={AremxyPlugIcon}
+                  alt=""
+                />
+
+              <img
+              src={closeIcon}
+              alt=""
+              onClick={() =>{
+                setNabtebFailedTransaction(false)
+                window.location.reload();
+              }}
+              className="w-[18px] h-[18px]  md:w-[25px] cursor-pointer
+               md:h-[25px] lg:w-[35px] lg:h-[35px]"
+               />
+              </div>
+
+              <div className='flex flex-col justify-between items-center h-[100%]'>
+                <h2 className="lg:text-[16px] lg:leading-[24px] text-center mb-1
+                text-[12px] md:text-[13px] md:leading-[20px] font-[600] mt-[20px] leading-[16px]">
+                  Purchase Failed
+                </h2>
+              <img src = {eduFailed}
+              className='w-[150px] md:w-[200px]' alt='transaction failed'/>
+
+              <p className='text-center text-[#F95252]  lg:text-[16px] lg:leading-[20.8px] font-[600]
+                text-[12px] md:text-[13px] md:leading-[20px] leading-[16px]'>
+                    An unexpected error has occurred, please try again.
+                </p>
+                <div className="flex  justify-center  w-[100%] 
+              items-center gap-[15px] md:gap-[20px] mt-[50px]  lg:gap-[20px] 
+              lg:my-[5%] md:mt-[20px] mb-[20px]">
+                 
+                <Link 
+               to="/NabtebEducationPin"
+                 onClick=  {() => {
+                     setNabtebFailedTransaction(false);
+                      window.location.reload();
+                    }}
+                    className={`bg-[#04177f] w-[111px] flex justify-center 
+                    items-center  cursor-pointer text-center text-[12px] font-extrabold h-[40px]
+                     text-white rounded-[6px] md:w-[150px] md:rounded-[8px] 
+                     md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]  `}>
+                  
+                    Done
+               
+                </Link>
+                {/* RECEIPT FAILED */}
+                <Link to="/NabtebFailedReceipt"
+                onClick={()=> {
+        setNabtebFailedTransaction(false);
+                }}
+                 className={`bg-[#ffffff] border-[1px] w-[111px] border-[#0003] 
+                 flex justify-center items-center text-center  cursor-pointer text-[12px] 
+                 font-extrabold h-[40px] rounded-[6px] md:w-[150px] md:rounded-[8px] 
+                 md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}>
+              
+                Receipt
+              
+            </Link>
+               
+                </div>
+              </div>
+              </div>
+ </Modal>
+)}
+
 
     <div className="flex gap-[8.729px]  md:gap-[14.896px] 
    justify-center px-[8.594px] mb-[50px]">
