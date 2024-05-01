@@ -467,7 +467,7 @@ const GloDataBundle = () => {
           console.log(response.data.reference_number)
           setGloOrderID(response.data.order_id)
           console.log(response.data.order_id)
-          // setMtnDescription(response.data.description)
+          setGloDescription(response.data.description)
           // console.log(response.data.description)
           return { statusCode: response.status, data: response.data };
           // console.log(response.data);
@@ -476,7 +476,7 @@ const GloDataBundle = () => {
           return { statusCode: error.response.status, data: null };
       }
   }
-
+  
   // usage
   const response = await buyData(
     2, recipientPhoneNumber, plan, recipientNames
