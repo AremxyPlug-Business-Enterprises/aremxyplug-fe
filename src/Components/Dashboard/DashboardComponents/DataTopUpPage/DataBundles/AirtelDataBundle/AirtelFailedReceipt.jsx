@@ -3,31 +3,36 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { Link } from "react-router-dom";
 import { useContext, useRef } from "react";
-import styles from '../../../../../AirTimePage/AirtimeVtu.module.css'
+import styles from "../../../../../AirTimePage/AirtimeVtu.module.css";
 import { ContextProvider } from "../../../../../Context";
-import { useLocation } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 import { DashBoardLayout } from "../../../../Layout/DashBoardLayout";
 
+export const AirtelFailedReceipt = () => {
+  const location = useLocation();
+  const {
+    selectedNetworkProduct,
+    // recipientPhoneNumber,
+    inputValue,
+    selectedOption,
+    recipientNames,
+    selectedAmount,
+    airteltransactionID,
+    airtelrefNumber,
+    airtelorderID,
+    // airteldescription,
+  } = location.state;
 
-export const MtnReceipt = () => {
-  const location = useLocation()
-  const { 
-    selectedNetworkProduct, 
-    selectedOption, 
-    // recipientPhoneNumber, 
-    inputValue, recipientNames, selectedAmount, mtntransactionID, mtnrefNumber, mtnorderID } = location.state
-  
   const {
     toggleSideBar,
     isDarkMode,
     date,
-    // recipientNames,
+    // recipientName,
     setSelectedNetworkProduct,
     setSelectedOption,
     setSelectedAmount,
     setRecipientNames,
-   } =
-    useContext(ContextProvider);
+  } = useContext(ContextProvider);
 
   const contentRef = useRef(null);
 
@@ -60,7 +65,7 @@ export const MtnReceipt = () => {
       // Handle sharing fallback for unsupported browsers
     }
   };
-  
+
   // ==============Save Pdf Function==============
   const handleSaveAsPDFClick = () => {
     const content = contentRef.current;
@@ -81,13 +86,13 @@ export const MtnReceipt = () => {
     setRecipientNames("");
   };
 
-
   return (
     <DashBoardLayout>
       <div className="flex flex-col gap-[35px] lg:gap-[85px]">
         <div
-          className={` ${styles.receipt} ${toggleSideBar ? "" : "lg:w-[880px] "
-            } w-full lg:mx-auto`}
+          className={` ${styles.receipt} ${
+            toggleSideBar ? "" : "lg:w-[880px] "
+          } w-full lg:mx-auto`}
         >
           <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
             <Link to="/">
@@ -97,7 +102,7 @@ export const MtnReceipt = () => {
                 alt=""
               />
             </Link>
-            <Link to="/MtnDataTopUpBundle">
+            <Link to="/AirtelDataBundle">
               {" "}
               <img
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
@@ -121,7 +126,7 @@ export const MtnReceipt = () => {
               />
             </div>
             <h3 className="font-extrabold text-[12px] mt-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
-              Transaction Successful on
+              Purchase failed on
             </h3>
             <span className="text-[11px] text-[#0008] font-extrabold flex justify-center items-center">
               {date.toLocaleDateString(undefined, {
@@ -134,12 +139,9 @@ export const MtnReceipt = () => {
                 hour12: true,
               })}
             </span>
-            <p className="text-[9px] text-[#27AE60] bg-[#D5F6E3] rounded-[11px] border-2 border-[#27AE60] py-[5px] px-[2px] text-center mx-[5px] lg:mx-[150px] md:mx-[100px] my-2 md:text-[14px] lg:text-[14px]">
-              You have successfully purchased{" "}
-              <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[16px]">
-                {`${selectedOption} Data `}
-              </span>
-              from your NGN wallet to{" "}
+            <p className="text-[9px] text-[#F95252] bg-[#FDCECE] rounded-[11px] border-2 border-[#F95252] py-[5px] px-[2px] text-center mx-[3px] lg:mx-[130px] md:mx-[80px] my-2 md:text-[14px] lg:text-[14px]">
+              Purchase Failed due to an unexpected error that occured. Please
+              try again.
             </p>
             <div className="flex flex-col gap-3">
               {/* ========================Recipient Info================== */}
@@ -154,7 +156,7 @@ export const MtnReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Network</p>
-                  <span>MTN</span>
+                  <span>AIRTEL</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Product</p>
@@ -170,7 +172,7 @@ export const MtnReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Amount</p>
-                  <span>&#8358;{selectedAmount}</span>
+                  <span>{selectedAmount}</span>
                 </div>
               </div>
               
@@ -204,31 +206,33 @@ export const MtnReceipt = () => {
                     alt="/"
                   />
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                {/* <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Product</p>
                   <span>Data Top-up</span>
-                </div>
+                </div> */}
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Description</p>
                   <span>{selectedNetworkProduct}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Order Number</p>
-                  <span>{mtnorderID}</span>
+                  <span>{airtelorderID}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Transaction ID</p>
-                  <span>{mtntransactionID}</span>
+                  <span>{airteltransactionID}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Reference Number</p>
-                  <span>{mtnrefNumber}</span>
+                  <span>{airtelrefNumber}</span>
                 </div>
               </div>
             </div>
             <div className="rounded-[8px] bg-[#E2F3FF] mx-4 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
               <p className="text-[8px] text-center mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[16px]">
-                Earn free points on every successful transactions, redeem your earned points to real money, withdrawn to your bank account instantly.
+                Earn free points on every successful transactions, redeem your
+                earned points to real money, withdrawn to your bank account
+                instantly.
               </p>
             </div>
           </div>
@@ -253,12 +257,15 @@ export const MtnReceipt = () => {
           </div>
         </div>
         <div
-          className={`${isDarkMode ? "mb-[1%]" : "mb-[5%]"
-            } flex gap-[15px] justify-center items-center lg:mb-[%]`}
+          className={`${
+            isDarkMode ? "mb-[1%]" : "mb-[5%]"
+          } flex gap-[15px] justify-center items-center lg:mb-[%]`}
         >
           <div className={styles.help}>
             <h2>You need help?</h2>
-            <Link to={`/ContactUs`} className={styles.btnContact}>Contact Us</Link>
+            <Link to={`/ContactUs`} className={styles.btnContact}>
+              Contact Us
+            </Link>
           </div>
         </div>
       </div>

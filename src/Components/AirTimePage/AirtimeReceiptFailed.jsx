@@ -1,32 +1,39 @@
 import React from "react";
+import { useContext, useRef } from "react";
+import { ContextProvider } from '../Context';
+import styles from './AirtimeVtu.module.css'
+import { DashBoardLayout } from '../Dashboard/Layout/DashBoardLayout';
+import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-import { Link } from "react-router-dom";
-import { useContext, useRef } from "react";
-import styles from '../../../../../AirTimePage/AirtimeVtu.module.css'
-import { ContextProvider } from "../../../../../Context";
-import { useLocation } from 'react-router-dom';
-import { DashBoardLayout } from "../../../../Layout/DashBoardLayout";
+import { useLocation, useNavigate } from 'react-router-dom';
 
+export const AirtimeReceiptFailed = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { networkName, selectedProduct, inputValues, amount} = location.state
 
-export const MtnReceipt = () => {
-  const location = useLocation()
   const { 
-    selectedNetworkProduct, 
-    selectedOption, 
-    // recipientPhoneNumber, 
-    inputValue, recipientNames, selectedAmount, mtntransactionID, mtnrefNumber, mtnorderID } = location.state
-  
+    recipientName, 
+    setSelectedProduct,
+    setInputValues,
+    setAmount,
+    setRecipientName
+  } = useContext(ContextProvider);
+
+
+  function handleClick() {
+    setSelectedProduct("");
+    setInputValues("");
+    setRecipientName("");
+    setAmount("");
+    navigate('/airtime-topup');
+  }
+
   const {
     toggleSideBar,
     isDarkMode,
-    date,
-    // recipientNames,
-    setSelectedNetworkProduct,
-    setSelectedOption,
-    setSelectedAmount,
-    setRecipientNames,
-   } =
+    date, } =
     useContext(ContextProvider);
 
   const contentRef = useRef(null);
@@ -60,7 +67,7 @@ export const MtnReceipt = () => {
       // Handle sharing fallback for unsupported browsers
     }
   };
-  
+
   // ==============Save Pdf Function==============
   const handleSaveAsPDFClick = () => {
     const content = contentRef.current;
@@ -73,15 +80,6 @@ export const MtnReceipt = () => {
       });
     }
   };
-
-  const handleChange = () => {
-    setSelectedNetworkProduct(false);
-    setSelectedOption(false);
-    setSelectedAmount("");
-    setRecipientNames("");
-  };
-
-
   return (
     <DashBoardLayout>
       <div className="flex flex-col gap-[35px] lg:gap-[85px]">
@@ -97,15 +95,14 @@ export const MtnReceipt = () => {
                 alt=""
               />
             </Link>
-            <Link to="/MtnDataTopUpBundle">
+            <div onClick={handleClick}>
               {" "}
               <img
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
-                onClick={handleChange}
               />
-            </Link>
+            </div>
           </div>
           <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
           <div ref={contentRef}>
@@ -121,7 +118,7 @@ export const MtnReceipt = () => {
               />
             </div>
             <h3 className="font-extrabold text-[12px] mt-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
-              Transaction Successful on
+              Purchase failed on
             </h3>
             <span className="text-[11px] text-[#0008] font-extrabold flex justify-center items-center">
               {date.toLocaleDateString(undefined, {
@@ -134,12 +131,8 @@ export const MtnReceipt = () => {
                 hour12: true,
               })}
             </span>
-            <p className="text-[9px] text-[#27AE60] bg-[#D5F6E3] rounded-[11px] border-2 border-[#27AE60] py-[5px] px-[2px] text-center mx-[5px] lg:mx-[150px] md:mx-[100px] my-2 md:text-[14px] lg:text-[14px]">
-              You have successfully purchased{" "}
-              <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[16px]">
-                {`${selectedOption} Data `}
-              </span>
-              from your NGN wallet to{" "}
+            <p className="text-[9px] text-[#F95252] bg-[#FDCECE] rounded-[11px] border-2 border-[#F95252] py-[5px] px-[2px] text-center mx-[3px] lg:mx-[130px] md:mx-[80px] my-2 md:text-[14px] lg:text-[14px]">
+              Purchase Failed due to an unexpected error that occured. Please try again.
             </p>
             <div className="flex flex-col gap-3">
               {/* ========================Recipient Info================== */}
@@ -154,26 +147,26 @@ export const MtnReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Network</p>
-                  <span>MTN</span>
+                  <span>{networkName}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Product</p>
-                  <span>{`${selectedOption}`}</span>
+                  <span>{networkName + ' ' + selectedProduct}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Phone Number</p>
-                  <span>{inputValue}</span>
+                  <span>{inputValues}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Recipient Name</p>
-                  <span>{recipientNames}</span>
+                  <span>{recipientName}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Amount</p>
-                  <span>&#8358;{selectedAmount}</span>
+                  <span>&#8358;{amount}</span>
                 </div>
               </div>
-              
+
               {/* ===================Sender Info====================== */}
               <div className="flex flex-col gap-[3px] w-[90%] mx-auto lg:gap-[5px]">
                 <div className="flex gap-[5px] items-center text-[10px] lg:text-[16px] font-extrabold">
@@ -186,11 +179,11 @@ export const MtnReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Customer Name</p>
-                  <span>{recipientNames}</span>
+                  <span>Aremxyplug</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Wallet Type</p>
-                  <span>NGN Wallet</span>
+                  <span>Nigerian NGN Wallet</span>
                 </div>
               </div>
 
@@ -206,23 +199,23 @@ export const MtnReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Product</p>
-                  <span>Data Top-up</span>
+                  <span>Airtime Top-up</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Description</p>
-                  <span>{selectedNetworkProduct}</span>
+                  <span>Failed</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Order Number</p>
-                  <span>{mtnorderID}</span>
+                  <span>1256478999</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Transaction ID</p>
-                  <span>{mtntransactionID}</span>
+                  <span>0331njokdhtf55</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Reference Number</p>
-                  <span>{mtnrefNumber}</span>
+                  <span>235488526097423118APDA</span>
                 </div>
               </div>
             </div>

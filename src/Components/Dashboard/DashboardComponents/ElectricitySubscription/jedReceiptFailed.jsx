@@ -6,14 +6,14 @@ import { DashBoardLayout } from "../../Layout/DashBoardLayout";
 import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-import logo2 from "../ElectricitySubscription/Electricity-sub-images/ibedc-logo 1.svg"
+import logo2 from "../ElectricitySubscription/Electricity-sub-images/Jos-Electric-JED 1.svg"
 import { useLocation, useNavigate } from 'react-router-dom';
 
-export const IbedcReceipt = () => {
+export const JedReceiptFailed = () => {
 
   const location = useLocation();
   const navigate = useNavigate();
-  const { selectedNetworkProduct, meterNumber, phoneNumber, ikedcEmail, ikedcamount, serviceID, orderId, transactionId, showDescription, billGenerate  } = location.state
+  const { selectedNetworkProduct, meterNumber, phoneNumber, ikedcEmail, ikedcamount, serviceID, orderId, transactionId, showDescription  } = location.state
 
   const {
     toggleSideBar,
@@ -112,9 +112,9 @@ export const IbedcReceipt = () => {
               />
             </div>
             <h3 className="font-extrabold text-[12px] mt-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
-              Purchase Successful on
+              Purchase Failed on
             </h3>
-            <span className="text-[8px] md:text-[12px] text-[#0008] pt-1 font-extrabold flex justify-center items-center">
+            <span className="text-[8px] text-[#0008] pt-1 font-extrabold flex justify-center items-center">
               {date.toLocaleDateString(undefined, {
                 year: "numeric",
                 month: "long",
@@ -125,12 +125,8 @@ export const IbedcReceipt = () => {
                 hour12: true,
               })}
             </span>
-            <p className="text-[9px] text-[#27AE60] bg-[#D5F6E3] rounded-[11px] border-2 border-[#27AE60] py-[5px] px-[2px] text-center mx-[5px] lg:mx-[150px] md:mx-[100px] my-2 md:text-[14px] lg:text-[14px]">
-              You have successfully purchased{" "}
-              <span className="text-[#000] font-extrabold text-[10px] md:text-[14px]">
-              Ibadan {selectedNetworkProduct} Meter &#8358;{ikedcamount}.00{" "}
-              </span>
-              from your NGN wallet to{" "}
+            <p className="text-[9px] text-[#F95252] bg-[#FDCECE] rounded-[11px] border-2 border-[#F95252] py-[5px] px-[2px] text-center mx-[3px] lg:mx-[130px] md:mx-[80px] my-2 md:text-[14px] lg:text-[14px]">
+                    Purchase Failed due to an unexpected error that occured. Please try again.
             </p>
 
 
@@ -229,7 +225,7 @@ export const IbedcReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Bill / Token Generated</p>
-                  <span>{billGenerate}</span>
+                  <span>Instantly</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Order Number</p>

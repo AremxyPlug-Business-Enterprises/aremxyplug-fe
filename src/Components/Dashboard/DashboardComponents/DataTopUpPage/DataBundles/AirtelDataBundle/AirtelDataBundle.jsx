@@ -24,6 +24,11 @@ import { AiFillEye } from "react-icons/ai";
 import { AirtelReceipt } from "./AirtelReceipt";
 import Joi from "joi";
 import airtimestyles from "../../../../../AirTimePage/AirtimeVtu.module.css";
+import axios from "axios";
+import Spinner from "./../MtnDataTopUpBundle/Spinner";
+import Failed from "./../MtnDataTopUpBundle/MtnDataTopUpBundleImages/Failed.svg"
+import { AirtelFailedReceipt } from "./AirtelFailedReceipt";
+
 
 const AirtelDataBundle = () => {
   const { isDarkMode } = useContext(ContextProvider);
@@ -41,14 +46,18 @@ const AirtelDataBundle = () => {
   const [addRecipient, setAddRecipient] = useState(false);
   const [proceed, setProceed] = useState(false);
   const [confirm, setConfirm] = useState(false);
-  const [receipt] = useState(false);
+  // const [receipt] = useState(false);
   const [errors, setErrors] = useState({});
   const [paymentSelected, setPaymentSelected] = useState(false);
   const [showPayment, setShowPayment] = useState(false);
   const [image, setImage] = useState("");
   const [paymentAmount, setPaymentAmount] = useState("");
   const [codes, setCodes] = useState(false);
-  const [plan, setPlan] = useState(false);
+  const [plan, setPlan] = useState("");
+  const [loading, setLoading] = useState("");
+  const [airtelpurchaseStatus, setAirtelPurchaseStatus] = useState(null); // State to hold purchase status
+  const [proceedToShowReceipt] = useState(false);
+
 
 
   const handleCodes = () => {
@@ -135,7 +144,7 @@ const AirtelDataBundle = () => {
     toggleSideBar,
     inputPin,
     setInputPin,
-    inputPinHandler,
+    // inputPinHandler,
     toggleVisibility,
     isVisible,
   } = useContext(ContextProvider);
@@ -152,57 +161,65 @@ const AirtelDataBundle = () => {
     setTransactSuccessPopUp(false);
   };
 
-  if (addRecipient) {
-    console.log("recipient added");
-  } else {
-    console.log("did not add recipient");
-  }
+  // if (addRecipient) {
+  //   console.log("recipient added");
+  // } else {
+  //   console.log("did not add recipient");
+  // }
 
   const productList = [
     {
       id: 1,
+      name: "AIRTEL COPORATE GIFTING",
+      options: [
+        { id: 207, name: "AIRTEL CG 100MB", amount: "₦70", duration: "WEEKLY" },
+        { id: 208, name: "AIRTEL CG 300MB", amount: "₦100", duration: "WEEKLY" },
+        { id: 209, name: "AIRTEL CG 500MB", amount: "₦150", duration: "1 MONTH" },
+        { id: 210, name: "AIRTEL CG 1GB", amount: "₦250", duration: "1 MONTH" },
+        { id: 211, name: "AIRTEL CG 2GB", amount: "₦500", duration: "1 MONTH" },
+        { id: 212, name: "AIRTEL CG 5GB", amount: "₦1250", duration: "1 MONTH" },
+        { id: 213, name: "AIRTEL CG 10GB", amount: "₦2500", duration: "1 MONTH" },
+        { id: 214, name: "AIRTEL CG 15GB", amount: "₦3750", duration: "1 MONTH" },
+        { id: 215, name: "AIRTEL CG 20GB", amount: "₦5000", duration: "1 MONTH" },
+
+        // This ones are in the data documentation but not in the price List sent from aremxy
+        { id: 290, name: "AIRTEL CG 100GB", amount: "₦20500", duration: "1 MONTH" },
+        { id: 291, name: "AIRTEL CG 250GB", amount: "₦51250", duration: "1 MONTH" },
+        { id: 292, name: "AIRTEL CG 500GB", amount: "₦100000", duration: "1 MONTH" },
+        { id: 293, name: "AIRTEL CG 3TB", amount: "₦597000", duration: "1 MONTH" },
+        { id: 294, name: "AIRTEL CG 5TB", amount: "₦995000", duration: "1 MONTH" },
+        { id: 295, name: "AIRTEL CG 10TB", amount: "₦1990000", duration: "1 MONTH" },
+      ],
+    },
+    {
+      id: 2,
       name: "AIRTEL GIFTING",
       options: [
-        { id: 145, name: "AIRTEL GIFTING 1.5GB", amount: "₦920", duration: "1 MONTH" },
-        { id: 146, name: "AIRTEL GIFTING 2GB", amount: "₦1104", duration: "1 MONTH" },
-        { id: 147, name: "AIRTEL GIFTING 3GB", amount: "₦1380", duration: "1 MONTH" },
-        { id: 148, name: "AIRTEL GIFTING 4.5GB", amount: "₦1840", duration: "1 MONTH" },
-        { id: 149, name: "AIRTEL GIFTING 6GB", amount: "₦2300", duration: "1 MONTH" },
-        { id: 150, name: "AIRTEL GIFTING 10GB", amount: "₦2750", duration: "1 MONTH" },
-        
+        { id: 232, name: "AIRTEL GIFTING 350MB", amount: "₦300", duration: "WEEKLY" }, 
+        { id: 231, name: "AIRTEL GIFTING 750MB", amount: "₦490", duration: "2 WEEKS" }, 
+        { id: 145, name: "AIRTEL GIFTING 1.5GB", amount: "₦1000", duration: "1 MONTH" },
+        { id: 146, name: "AIRTEL GIFTING 2GB", amount: "₦1150", duration: "1 MONTH" },
+        { id: 147, name: "AIRTEL GIFTING 3GB", amount: "₦1420", duration: "1 MONTH" },
+        { id: 148, name: "AIRTEL GIFTING 4.5GB", amount: "₦1900", duration: "1 MONTH" },
+        { id: 192, name: "AIRTEL GIFTING 6GB", amount: "₦1450", duration: "WEEKLY" },  
+        { id: 149, name: "AIRTEL GIFTING 6GB", amount: "₦2420", duration: "1 MONTH" },
+        { id: 150, name: "AIRTEL GIFTING 10GB", amount: "₦2950", duration: "1 MONTH" },
+        { id: 163, name: "AIRTEL GIFTING 11GB", amount: "₦3900", duration: "1 MONTH" },
+        // THIS IS AVAILABLE IN THE PRICING BUT NOT IN THE DOCUMENTATION
+        { id: 163, name: "AIRTEL GIFTING 15GB", amount: "₦4100", duration: "1 MONTH" },
+        { id: 164, name: "AIRTEL GIFTING 20GB", amount: "₦5000", duration: "1 MONTH" },
+        { id: 165, name: "AIRTEL GIFTING 40GB", amount: "₦10000", duration: "1 MONTH" },  
+        { id: 191, name: "AIRTEL GIFTING 75GB", amount: "₦15300", duration: "1 MONTH" },  
+        { id: 193, name: "AIRTEL GIFTING 110GB", amount: "₦20600", duration: "1 MONTH" },   
       ],
+    },
+    {
+      id: 3,
+      name: "GENERAL BUNDLES ---",
+      options: [],
     },
   ];
   
-  const handleProceed = (e) => {
-    // setProceed(true);
-    // e.preventDefault();
-
-    const { error } = schema.validate({
-      recipientPhoneNumber,
-    });
-
-    if (error) {
-      setErrors(
-        error.details.reduce((acc, curr) => {
-          acc[curr.path[0]] = curr.message;
-          return acc;
-        }, {})
-      );
-    } else {
-      setProceed(true);
-      setErrors({});
-    }
-  };
-
-  const schema = Joi.object({
-    recipientPhoneNumber: Joi.string()
-      .pattern(new RegExp(/^\d{11,}/))
-      .required()
-      .messages({
-        "string.pattern.base": "Phone number should be 11 digits ",
-      }),
-  });
 
   const handleSelectProduct = (productName) => {
     setSelectedNetworkProduct(productName);
@@ -222,14 +239,98 @@ const AirtelDataBundle = () => {
 
   const [inputValue, setInputValue] = useState("");
 
+  const schema = Joi.object({
+    recipientPhoneNumber: Joi.string()
+      .pattern(new RegExp(/^\d{11,}/))
+      .required()
+      .messages({
+        "string.pattern.base": "Phone number should be 11 digits ",
+      }),
+  });
+
+  const airtelRegex =
+      /^(234|0)(802[0-9]|701[0-9]|708[0-9]|808[0-9]|812[0-9]|901[0-9]|902[0-9]|904[0-9]|907[0-9]|912[0-9]|911[0-9])\d{6}$/;
+
+   
+  const validatePhoneNumber = (phoneNumber) => {
+        if (!phoneNumber) {
+          return "Phone number is required";
+        }
+      
+        if (!airtelRegex.test(phoneNumber)) {
+          return "Invalid AIRTEL number. Please enter a valid AIRTEL number.";
+        }
+      
+        return null; // No error
+      };
+
+
   const handleChange = (e) => {
-    const value = e.target.value;
+        const value = e.target.value;
+        const numericValue = value.replace(/\D/g, "").slice(0, 11);
+        setInputValue(numericValue);
+      
+        // Validate phone number if it's complete
+        if (numericValue.length === 11) {
+          const error = validatePhoneNumber(numericValue);
+          if (error) {
+            setErrors({ recipientPhoneNumber: error });
+          } else {
+            setErrors({});
+          }
+        } else {
+          // Clear any previous errors if the input length is less than 11
+          setErrors({});
+        }
+      };
+    
+    
+    
+      const handleProceed = (e) => {
+        e.preventDefault();
+    
+        function validateNigerianNumberByNetwork(number) {
+            const networks = {
+              'AIRTEL': ['0701', '0708', '0802', '0808', '0812', '0901', '0902', '0904', '0907', '0912', '0911'],
+            };
+    
+            for (let network in networks) {
+                for (let prefix of networks[network]) {
+                    if (number.startsWith(prefix) && number.length === prefix.length + 7) {
+                        return network;
+                    }
+                }
+            }
+    
+            return 'Unknown network';
+        }
+    
+        const { error } = schema.validate({
+            recipientPhoneNumber,
+        });
+    
+        if (error) {
+            setErrors(
+                error.details.reduce((acc, curr) => {
+                    acc[curr.path[0]] = curr.message;
+                    return acc;
+                }, {})
+            );
+        } else if (validateNigerianNumberByNetwork(recipientPhoneNumber) !== 'AIRTEL') {
+            setErrors({
+                recipientPhoneNumber:
+                    `Invalid AIRTEL number. Please enter a valid AIRTEL number.`,
+            });
+        } else {
+            setProceed(true);
+            setErrors({});
+        }
+    };
 
-    const numericValue = value.replace(/\D/g, "").slice(0, 11);
 
-    setInputValue(numericValue);
-  };
 
+
+  
   const handleRecipientNameChange = (e) => {
     setRecipientNames(e.target.value);
   };
@@ -238,41 +339,91 @@ const AirtelDataBundle = () => {
     setTransactSuccessPopUp(false);
   };
 
-  console.log("confirm:", confirm);
+  // console.log("confirm:", confirm);
 
-  const sendDataToBackend = (network, mobileNumber, plan, name) => {
-    const apiUrl = "https://aremxyplug.onrender.com/api/v1/data";
 
-    // Prepare the data to be sent in the request body
-    const requestData = {
-      network,
-      mobile_number: mobileNumber,
-      plan,
-      name,
-    };
+  const [airteltransactionID, setAirtelTransactionID] = useState("");
+  const [airtelorderID, setAirtelOrderID] = useState("");
+  const [airtelrefNumber, setAirtelRefNumber] = useState("");
+  const [airteldescription, setAirtelDescription] = useState("");
 
-    console.log(requestData);
+  const inputPinHandler = async () => {
+    async function buyData(network, mobileNumber, plan, name) {
+      const url = 'https://aremxyplug.onrender.com/api/v1/data';
 
-    // Send a POST request to the backend API
-    fetch(apiUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(requestData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // Handle the response from the backend
-        console.log("Backend response:", data);
-      })
-      .catch((error) => {
-        // Handle any errors that occurred during the fetch
-        console.error("Error sending data to backend:", error);
-      });
+      const data = {
+        network,
+        mobile_number: mobileNumber,
+        plan,
+        name,
+      };
+
+
+      setLoading(true)
+
+
+      console.log(data)
+      console.log("its me")
+
+      try {
+          const response = await axios.post(url, data);
+          console.log(response.data);
+          console.log(response.status);
+          // setSelectedNetworkProduct(response.data.product)
+          // console.log(response.data.product)
+          setPlan(response.data.plan_name)
+          console.log(response.data.plan_name)
+          setInputValue(response.data.Phone_Number)
+          console.log(response.data.Phone_Number)
+          setRecipientPhoneNumber(data.Phone_number)
+          console.log(data.Phone_number)
+          console.log(inputValue)
+          console.log(recipientPhoneNumber)
+          setRecipientNames(response.data.Name)
+          console.log(response.data.Name)
+          setSelectedAmount(response.data.plan_amount)
+          console.log(response.data.plan_amount)
+          setAirtelTransactionID(response.data.transaction_id)
+          console.log(response.data.transaction_id)
+          setAirtelRefNumber(response.data.reference_number)
+          console.log(response.data.reference_number)
+          setAirtelOrderID(response.data.order_id)
+          console.log(response.data.order_id)
+          // setMtnDescription(response.data.description)
+          // console.log(response.data.description)
+          return { statusCode: response.status, data: response.data };
+          // console.log(response.data);
+      } catch (error) {
+          console.error(error);
+          return { statusCode: error.response.status, data: null };
+      }
+  }
+
+  // usage
+  const response = await buyData(
+    4, recipientPhoneNumber, plan, recipientNames
+  );
+
+  console.log(response)
+  console.log("its me 1")
+
+  setLoading(false)
+
+
+
+  setConfirm(false);
+  if (response.statusCode === 200) {
+      // Success response
+      setTransactSuccessPopUp(true); // Show success popup
+  } else {
+      // Failure response
+      setAirtelPurchaseStatus(true); // Show failure popup
+  }
+
   };
 
-  sendDataToBackend(2, inputValue, plan, recipientNames);
+  // sendDataToBackend(2, inputValue, plan, recipientNames);
+
 
   return (
     <DashBoardLayout>
@@ -557,13 +708,13 @@ const AirtelDataBundle = () => {
                   />
                 </div>
               </div>
-            </div>
-
-            {errors.recipientPhoneNumber && (
+              {errors.recipientPhoneNumber && (
               <div className="text-[12px] text-red-500 italic lg:text-[14px]">
                 {errors.recipientPhoneNumber}
               </div>
             )}
+              
+            </div>
 
             <div className="">
               <h2 className="text-[10px] font-[600] md:text-[12px] lg:text-[18px]">
@@ -699,6 +850,12 @@ const AirtelDataBundle = () => {
           </div>
 
           {/* ================Proceed=================== */}
+
+          {loading && (
+            <Modal>
+              <Spinner size="large" />
+            </Modal>
+          )}
 
           {proceed && (
             <Modal>
@@ -864,6 +1021,81 @@ const AirtelDataBundle = () => {
             </Modal>
           )}
 
+
+{airtelpurchaseStatus && (
+            <Modal>
+              <div
+                className={` ${
+                  toggleSideBar ? "confirm02" : "confirm2"
+                } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
+              >
+                <div className="flex justify-end px-2">
+                  <img
+                    onClick={() => setAirtelPurchaseStatus(null)}
+                    className="cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[35px] lg:h-[35px] "
+                    src={Cancel}
+                    alt=""
+                  />
+                </div>
+
+                <hr className="h-[6px] bg-[#04177f] lg:mt-[2%] border-none mt-[2%] md:mt-[2%] md:h-[10px]" />
+                <div className="md:mt-[15%] lg:mt-[10%]">
+                  <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[8%] md:my-[5%] lg:my-[3%]">
+                    Transaction Failed
+                  </p>
+                  <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
+                    <img src={Failed} alt="" />
+                    <p className="text-[8px] md:text-[12px] text-[#04177f]">
+                      An unexpected error has occurred, please try again.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex justify-center items-center gap-[20px]">
+                  <button
+                    onClick={(e) => {
+                      // e.preventDefault();
+                      // setTransaction(false);
+                      setAirtelPurchaseStatus(null);
+                    }}
+                    className="bg-[#04177f] my-[%] w-[100px] cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[%] md:rounded-[8px] md:text-[16px] lg:w-[px] lg:h-[38px] lg:my-[2%]"
+                  >
+                    Done
+                  </button>
+
+                  <Link to="/AirtelFailedReceipt" 
+                  state={{
+                    networkName: "AIRTEL",
+                    selectedNetworkProduct: selectedNetworkProduct,
+                    selectedOption: selectedOption,
+                    recipientPhoneNumber: recipientPhoneNumber,
+                    inputValue: inputValue,
+                    recipientNames: recipientNames,
+                    selectedAmount: selectedAmount,
+                    airteltransactionID: airteltransactionID,
+                    airtelrefNumber: airtelrefNumber,
+                    airtelorderID: airtelorderID,
+                    airteldescription: airteldescription,
+                   
+                }}
+                  >
+                    <button
+                      onClick={() => {
+                        // e.preventDefault();
+                        // setTransaction(false);
+                        setAirtelPurchaseStatus(null);
+                        // setProceedToShowReceipt(purchaseStatus === "paid" || purchaseStatus === "failed");
+                      }}
+                      className="bg-white my-[%] w-[100px] cursor-pointer text-[10px] font-extrabold h-[px] rounded-[6px] md:w-[%] md:rounded-[8px] md:text-[16px] lg:w-[px] lg:h-[38px] lg:my-[2%]"
+                    >
+                      Receipt
+                    </button>
+                  </Link>
+                </div>
+              </div>
+            </Modal>
+          )}
+
           {confirm && (
             <Modal>
               <div
@@ -924,10 +1156,10 @@ const AirtelDataBundle = () => {
                 </div>
 
                 <button
-                  onClick={(e) => {
-                    e.preventDefault();
+                  onClick={() => {
+                    // e.preventDefault();
                     setConfirm(false);
-                    inputPinHandler(e);
+                    inputPinHandler();
                   }}
                   disabled={inputPin.length !== 4}
                   className={`${
@@ -1056,7 +1288,7 @@ const AirtelDataBundle = () => {
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        {selectedAmount}
+                      &#8358;{selectedAmount}
                       </h2>
                     </div>
                   </div>
@@ -1071,7 +1303,7 @@ const AirtelDataBundle = () => {
                       </h2>
                     </div>
                   </div>
-
+                  
                   <div className="flex items-center justify-between">
                     <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
                       Order Number
@@ -1105,7 +1337,18 @@ const AirtelDataBundle = () => {
                     </button>
                   </Link>
 
-                  <Link to="/AirtelReceipt">
+                  <Link to="/AirtelReceipt"
+                  state={{
+                    selectedNetworkProduct: selectedNetworkProduct,
+                    inputValue: inputValue,
+                    selectedOption: selectedOption,
+                    recipientNames: recipientNames,
+                    selectedAmount: selectedAmount,
+                    airteltransactionID: airteltransactionID,
+                    airtelrefNumber: airtelrefNumber,
+                    airtelorderID: airtelorderID,
+                    airteldescription: airteldescription,
+                }}>
                     <button
                       onClick={handleReceipt}
                       className={`border-[1px] w-[100px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-[600] h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[12px] lg:w-[163px] lg:h-[38px] lg:my-[2%] md:px-[60px] md:h-[30px]`}
@@ -1118,17 +1361,38 @@ const AirtelDataBundle = () => {
             </Modal>
           )}
 
-          {receipt && (
+
+{proceedToShowReceipt && (
             <AirtelReceipt
               networkName="AIRTEL"
-              selectedOption={selectedOption}
               selectedNetworkProduct={selectedNetworkProduct}
-              recipientNumber={inputValue}
-              selectedAmount={selectedAmount}
-              recipientNames={recipientNames}
-              walletName={walletName}
+            recipientPhoneNumber={recipientPhoneNumber}
+            recipientNames={recipientNames}
+            selectedAmount={selectedAmount}
+            airteltransactionID={airteltransactionID}
+            airtelrefNumber={airtelrefNumber}
+            airtelorderID={airtelorderID}
+            airteldescription={airteldescription}
             />
           )}
+
+
+{proceedToShowReceipt && (
+            <AirtelFailedReceipt
+              networkName="AIRTEL"
+              selectedNetworkProduct={selectedNetworkProduct}
+            recipientPhoneNumber={recipientPhoneNumber}
+            recipientNames={recipientNames}
+            selectedAmount={selectedAmount}
+            airteltransactionID={airteltransactionID}
+            airtelrefNumber={airtelrefNumber}
+            airtelorderID={airtelorderID}
+            airteldescription={airteldescription}
+            />
+          )}
+
+
+
           
           <div className="py-[30px] lg:py-[60px] mt-10">
             <button
@@ -1137,7 +1401,8 @@ const AirtelDataBundle = () => {
                 !selectedOption ||
                 !inputValue ||
                 !selectedAmount ||
-                !paymentSelected
+                !paymentSelected ||
+                !validatePhoneNumber
                   ? "bg-[#63616188] cursor-not-allowed"
                   : "bg-primary"
               }`}
@@ -1147,7 +1412,8 @@ const AirtelDataBundle = () => {
                 !selectedOption ||
                 !inputValue ||
                 !selectedAmount ||
-                !paymentSelected
+                !paymentSelected ||
+                !validatePhoneNumber
               }
             >
               Proceed

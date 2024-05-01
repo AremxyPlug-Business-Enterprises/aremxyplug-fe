@@ -55,7 +55,7 @@ import DataTopUpPage from "./Components/Dashboard/DashboardComponents/DataTopUpP
 import CurrencyConversion from "./Components/CurrencyConversion/currencyConversion";
 import PointRedeem from "./Components/Dashboard/DashboardComponents/PointRedeem/PointRedeem";
 import Referral from "./Components/Referrals/Referral";
-import AirtimeVtuReceipt from "./Components/AirTimePage/AirtimeVtuReceipt";
+import { AirtimeVtuReceipt } from "./Components/AirTimePage/AirtimeVtuReceipt";
 import DataBundlesPage from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundlesPage";
 import MtnDataTopUpBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/MtnDataTopUpBundle/MtnDataTopUpBundle";
 import WithdrawToOtherBanks from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToOtherBanks";
@@ -166,6 +166,21 @@ import NotificationsPage2 from "./Components/NotificationsPage/Notifications2";
 import { WaecFailedReceipt } from "./Components/EducationPins/ReceiptEducationPins/WaecFailedReceipt";
 import { NecoFailedReceipt } from "./Components/EducationPins/ReceiptEducationPins/NecoFailedReceipt";
 import { NabtebFailedReceipt } from "./Components/EducationPins/ReceiptEducationPins/NabtebFailedReceipt";
+import { AirtimeReceiptFailed } from "./Components/AirTimePage/AirtimeReceiptFailed";
+import { MtnFailedReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/MtnDataTopUpBundle/MtnFailedReceipt";
+import { AirtelFailedReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/AirtelDataBundle/AirtelFailedReceipt";
+import { GloFailedReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/GloDataBundle/GloFailedReceipt";
+import { EtisalatFailedReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/EtisalatDataBundle/9MobileFailedReceipt";
+import { BedcReceiptFailed } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/bedcReceiptFailed";
+import { AedcReceiptFailed } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/aedcReceiptFailed";
+import { EedcReceiptFailed } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/eedcReceiptFailed";
+import { EkedcReceiptFailed } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/ekedcReceiptFailed";
+import { IbedcReceiptFailed } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/ibedcReceiptFailed";
+import { IkedcReceiptFailed } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/IkedcReceiptFailed";
+import { JedReceiptFailed } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/jedReceiptFailed";
+import { KaedcoReceiptFailed } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/kaedcoReceiptFailed";
+import { KedcoReceiptFailed } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/kedcoReceiptFailed";
+import { PhedReceiptFailed } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/phedReceiptFailed";
 
 export const Router = () => {
   return (
@@ -223,6 +238,7 @@ export const Router = () => {
         <Route path="/airtime-topup" element={<AirTime />} />
         <Route path="/airtime-vtu" element={<AirtimeVtu />} />
         <Route path="/airtime-vtu-receipt" element={<AirtimeVtuReceipt />} />
+        <Route path="/airtime-receipt-failed" element={<AirtimeReceiptFailed />} />
         <Route path="/add-vtu-recipient" element={<AddRecipient />} />
         <Route path="/select-vtu-recipient" element={<SelectRecipient />} />
         <Route path="/add-account" element={<AddAccount />} />
@@ -286,16 +302,26 @@ export const Router = () => {
           element={<InternationalReceipt />}
         />
         <Route path="/redeem-receipt" element={<RedeemReceipt />} />
-        <Route path="/ikedec-receipt" element={<IkedcReceipt />} />
+        <Route path="/ikedc-receipt" element={<IkedcReceipt />} />
+        <Route path="/ikedc-receipt-failed" element={<IkedcReceiptFailed />} />
         <Route path="/aedc-receipt" element={<AedcReceipt />} />
+        <Route path="/aedc-receipt-failed" element={<AedcReceiptFailed />} />
         <Route path="/ekedc-receipt" element={<EkedcReceipt />} />
+        <Route path="/ekedc-receipt-failed" element={<EkedcReceiptFailed />} />
         <Route path="/eedc-receipt" element={<EedcReceipt />} />
+        <Route path="/eedc-receipt-failed" element={<EedcReceiptFailed />} />
         <Route path="/kaedco-receipt" element={<KaedcoReceipt />} />
+        <Route path="/kaedco-receipt-failed" element={<KaedcoReceiptFailed />} />
         <Route path="/bedc-receipt" element={<BedcReceipt />} />
+        <Route path="/bedc-receipt-failed" element={<BedcReceiptFailed />} />
         <Route path="/ibedc-receipt" element={<IbedcReceipt />} />
+        <Route path="/ibedc-receipt-failed" element={<IbedcReceiptFailed />} />
         <Route path="/jed-receipt" element={<JedReceipt />} />
+        <Route path="/jed-receipt-failed" element={<JedReceiptFailed />} />
         <Route path="/kedco-receipt" element={<KedcoReceipt />} />
+        <Route path="/kedco-receipt-failed" element={<KedcoReceiptFailed />} />
         <Route path="/phed-receipt" element={<PhedReceipt />} />
+        <Route path="/phed-receipt-failed" element={<PhedReceiptFailed />} />
         <Route path="/bedc" element={<BEDC />} />
         <Route path="/phed" element={<PHED />} />
         <Route path="/kedco" element={<KEDCO />} />
@@ -392,6 +418,10 @@ export const Router = () => {
         <Route path="/ExistingCardPage" element={<ExistingCardPage />} />
         <Route path="/FundWithCard" element={<FundWithCard />} />
         <Route path="/CardPaymentReceipt" element={<CardPaymentReceipt />} />
+        <Route path="/MtnfailedReceipt" element={<MtnFailedReceipt/>}/>
+        <Route path="/AirtelFailedReceipt" element={<AirtelFailedReceipt/>}/>
+        <Route path="GloFailedReceipt" element={<GloFailedReceipt/>}/>
+        <Route path="EtisalatFailedReceipt" element={<EtisalatFailedReceipt/>}/>
         <Route
           path="/GlobalTransferSelectRecipient"
           element={<GlobalTransferSelectRecipient />}

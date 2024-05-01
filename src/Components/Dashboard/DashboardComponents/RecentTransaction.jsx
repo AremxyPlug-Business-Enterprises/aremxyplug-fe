@@ -11,7 +11,7 @@ export const RecentTransaction = () => {
   const { toggleSideBar, isDarkMode } = useContext(ContextProvider);
   const [calender, setCalender] = useState(false);
   return (
-    <div className="mb-[25%]">
+    <div className="mt-[5%]">
       <div className="flex items-center gap-[10px] md:">
         <p className={styles.InOutText}>Recent Transactions</p>
         <img
@@ -26,7 +26,7 @@ export const RecentTransaction = () => {
           toggleSideBar
             ? "lg:gap-[px] lg:text-[20px] md:justify-between"
             : "md:justify-between lg:text-[23px]"
-        } my-[10%] flex text-[8px] font-extrabold gap-[8px] justify-between md:my-[5%] md:text-[20px] md:gap-[39px] `}
+        } my-[5%] flex text-[8px] font-extrabold gap-[8px] justify-between md:my-[5%] md:text-[20px] md:gap-[39px] `}
       >
         <div
           onClick={() => {

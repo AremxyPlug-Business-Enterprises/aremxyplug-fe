@@ -24,6 +24,11 @@ import { AiFillEye } from "react-icons/ai";
 import { EtisalatReceipt } from "./9MobileReceipt";
 import Joi from "joi";
 import airtimestyles from "../../../../../AirTimePage/AirtimeVtu.module.css";
+import axios from "axios";
+import Spinner from "../MtnDataTopUpBundle/Spinner";
+import { EtisalatFailedReceipt } from "./9MobileFailedReceipt";
+import Failed from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/Failed.svg"
+
 
 const EtisalatDataBundle = () => {
   const { isDarkMode } = useContext(ContextProvider);
@@ -41,13 +46,17 @@ const EtisalatDataBundle = () => {
   const [addRecipient, setAddRecipient] = useState(false);
   const [proceed, setProceed] = useState(false);
   const [confirm, setConfirm] = useState(false);
-  const [receipt] = useState(false);
   const [errors, setErrors] = useState({});
   const [paymentSelected, setPaymentSelected] = useState(false);
   const [showPayment, setShowPayment] = useState(false);
   const [image, setImage] = useState("");
   const [paymentAmount, setPaymentAmount] = useState("");
   const [codes, setCodes] = useState(false);
+  const [plan, setPlan] = useState("");
+  const [etisalatpurchaseStatus, setEtisalatPurchaseStatus] = useState(null); // State to hold purchase status
+  const [loading, setLoading] = useState("");
+  const [proceedToShowReceipt] = useState(false);
+
 
   const handleCodes = () => {
     setCodes(false);
@@ -133,7 +142,7 @@ const EtisalatDataBundle = () => {
     toggleSideBar,
     inputPin,
     setInputPin,
-    inputPinHandler,
+    // inputPinHandler,
     toggleVisibility,
     isVisible,
   } = useContext(ContextProvider);
@@ -150,111 +159,191 @@ const EtisalatDataBundle = () => {
     setTransactSuccessPopUp(false);
   };
 
-  if (addRecipient) {
-    console.log("recipient added");
-  } else {
-    console.log("did not add recipient");
-  }
+  // if (addRecipient) {
+  //   console.log("recipient added");
+  // } else {
+  //   console.log("did not add recipient");
+  // }
 
   const productList = [
     {
       id: 1,
-      name: "9MOBILE SME",
+      name: "9MOBILE COPORATE GIFTING",
       options: [
-        "9MOBILE SME 100MB",
-        "9MOBILE SME 200MB",
-        "9MOBILE SME 300MB",
-        "9MOBILE SME 500MB",
-        "9MOBILE SME 1GB",
-        "9MOBILE SME 1.5GB",
-        "9MOBILE SME 2GB",
-        "9MOBILE SME 3GB",
-        "9MOBILE SME 4.5GB",
-        "9MOBILE SME 5GB",
-        "9MOBILE SME 10GB",
-        "9MOBILE SME 11GB",
-        "9MOBILE SME 15GB",
-        "9MOBILE SME 40GB",
-        "9MOBILE SME 75GB",
-      ],
+        {
+          id: 235,
+          name: "9MOBILE CG 100MB",
+          amount: "₦70",
+          duration: "1 MONTH",
+        },
+        {
+          id: 256,
+          name: "9MOBILE CG 250MB",
+          amount: "₦100",
+          duration: "1 MONTH",
+        },
+        {
+          id: 182,
+          name: "9MOBILE CG 500MB",
+          amount: "₦120",
+          duration: "1 MONTH",
+        },
+        {
+          id: 257,
+          name: "9MOBILE CG 650MB",
+          amount: "₦140",
+          duration: "1 MONTH",
+        },
+        {
+          id: 258,
+          name: "9MOBILE CG 1GB",
+          amount: "₦185",
+          duration: "1 MONTH",
+        },
+        {
+          id: 183,
+          name: "9MOBILE CG 1.5GB",
+          amount: "₦280",
+          duration: "1 MONTH",
+        },
+        {
+          id: 184,
+          name: "9MOBILE CG 2.0GB",
+          amount: "₦370",
+          duration: "1 MONTH",
+        },
+        {
+          id: 185,
+          name: "9MOBILE CG 3.0GB",
+          amount: "₦555",
+          duration: "1 MONTH",
+        },
+        {
+          id: 186,
+          name: "9MOBILE CG 4.5GB",
+          amount: "₦840",
+          duration: "1 MONTH",
+        },
+        {
+          id: 259,
+          name: "9MOBILE CG 5.0GB",
+          amount: "₦925",
+          duration: "1 MONTH",
+        },
+        {
+          id: 233,
+          name: "9MOBILE CG 10.0GB",
+          amount: "₦1850",
+          duration: "1 MONTH",
+        },
+        {
+          id: 187,
+          name: "9MOBILE CG 11.0GB",
+          amount: "₦2035",
+          duration: "1 MONTH",
+        },
+        {
+          id: 188,
+          name: "9MOBILE CG 15.0GB",
+          amount: "₦2775",
+          duration: "1 MONTH",
+        },
+        {
+          id: 260,
+          name: "9MOBILE CG 20.0GB",
+          amount: "₦3700",
+          duration: "1 MONTH",
+        },
+        {
+          id: 261,
+          name: "9MOBILE CG 25.0GB",
+          amount: "₦4625",
+          duration: "1 MONTH",
+        },
+        {
+          id: 262,
+          name: "9MOBILE CG 30.0GB",
+          amount: "₦5550",
+          duration: "1 MONTH",
+        },
+        {
+          id: 263,
+          name: "9MOBILE CG 50.0GB",
+          amount: "₦9250",
+          duration: "1 MONTH",
+        },
 
-      amount: [
-        "₦100",
-        "₦200",
-        "₦300",
-        "₦500",
-        "₦500",
-        "₦800",
-        "₦900",
-        "₦900",
-        "₦900",
-        "₦900",
-        "₦500",
-        "₦500",
-        "₦800",
-        "₦900",
-        "₦900",
-      ],
+        {
+          id: 189,
+          name: "9MOBILE CG 40.0GB",
+          amount: "₦7400",
+          duration: "1 MONTH",
+        },
+        {
+          id: 190,
+          name: "9MOBILE CG 75.0GB",
+          amount: "₦13875",
+          duration: "1 MONTH",
+        },
+        {
+          id: 234,
+          name: "9MOBILE CG 100.0GB",
+          amount: "₦18500",
+          duration: "1 MONTH",
+        },
 
-      duration: [
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "6 MONTH",
-        "3 MONTH",
-        "5 MONTH",
-        "2 MONTH",
-        "3 MONTH",
+        // THIS ONES ARE IN THE DOCUMENTATION AND NOT IN THE PRICING LIST
+        {
+          id: 285,
+          name: "9MOBILE CG 100.0GB",
+          amount: "₦15500",
+          duration: "1 MONTH",
+        },
+        {
+          id: 286,
+          name: "9MOBILE CG 250.0GB",
+          amount: "₦37500",
+          duration: "1 MONTH",
+        },
+        {
+          id: 288,
+          name: "9MOBILE CG 500GB",
+          amount: "₦75000",
+          duration: "1 MONTH",
+        },
+        {
+          id: 287,
+          name: "9MOBILE CG 1TB",
+          amount: "₦145000",
+          duration: "1 MONTH",
+        },
+        {
+          id: 289,
+          name: "9MOBILE CG 3TB",
+          amount: "₦420000",
+          duration: "1 MONTH",
+        },
       ],
     },
-
     {
       id: 2,
-      name: "9MOBILE CG ---",
-      options: [],
-
-      amount: [],
-
-      duration: [],
+      name: "GLO GIFTING",
+      options: [
+        {
+          id: 194,
+          name: "9MOBILE GIFTING 1.05GB",
+          amount: "₦485",
+          duration: "1 MONTH",
+        },
+      ],
     },
-
     {
       id: 3,
-      name: "9MOBILE GENERAL BUNDLES ---",
+      name: "GENERAL BUNDLES ---",
       options: [],
-      amount: [],
-
-      duration: [],
     },
   ];
 
-  const handleProceed = (e) => {
-    // setProceed(true);
-    // e.preventDefault();
-
-    const { error } = schema.validate({
-      recipientPhoneNumber,
-    });
-
-    if (error) {
-      setErrors(
-        error.details.reduce((acc, curr) => {
-          acc[curr.path[0]] = curr.message;
-          return acc;
-        }, {})
-      );
-    } else {
-      setProceed(true);
-      setErrors({});
-    }
-  };
 
   const schema = Joi.object({
     recipientPhoneNumber: Joi.string()
@@ -272,7 +361,9 @@ const EtisalatDataBundle = () => {
     setShowOptionList(false);
   };
 
-  const handleSelectOption = (selectedOption, selectedAmount, duration) => {
+  const handleSelectOption = (selectedOption, selectedAmount, duration, id) => {
+    setPlan(id);
+    console.log(id);
     setSelectedOption(selectedOption);
     setShowOptionList(false);
     setSelectedAmount(selectedAmount);
@@ -281,13 +372,85 @@ const EtisalatDataBundle = () => {
 
   const [inputValue, setInputValue] = useState("");
 
+  const mtnRegex =
+  /^(234|0)(809[0-9]|817[0-9]|818[0-9]|909[0-9]|908[0-9])\d{6}$/;
+  
+  const validatePhoneNumber = (inputValue) => {
+    if (!inputValue) {
+      return "Phone number is required";
+    }
+  
+    if (!mtnRegex.test(inputValue)) {
+      return "Invalid 9MOBILE number. Please enter a valid 9MOBILE number.";
+      
+    }
+    console.log("its me")
+  
+    return null;
+  };
+
+
   const handleChange = (e) => {
     const value = e.target.value;
-
     const numericValue = value.replace(/\D/g, "").slice(0, 11);
-
     setInputValue(numericValue);
+  
+    // Validate phone number if it's complete
+    if (numericValue.length === 11) {
+      const error = validatePhoneNumber(numericValue);
+      if (error) {
+        setErrors({ recipientPhoneNumber: error });
+      } else {
+        setErrors({});
+      }
+    } else {
+      // Clear any previous errors if the input length is less than 11
+      setErrors({});
+    }
   };
+
+  const handleProceed = (e) => {
+    e.preventDefault();
+
+    function validateNigerianNumberByNetwork(inputValue) {
+        const networks = {
+          '9MOBILE': ['0809', '0817', '0818', '0909', '0908']
+        };
+
+        for (let network in networks) {
+            for (let prefix of networks[network]) {
+                if (inputValue.startsWith(prefix) && inputValue.length === prefix.length + 7) {
+                    return network;
+                }
+            }
+        }
+
+        return 'Unknown network';
+    }
+
+    const { error } = schema.validate({
+        recipientPhoneNumber,
+    });
+
+    if (error) {
+        setErrors(
+            error.details.reduce((acc, curr) => {
+                acc[curr.path[0]] = curr.message;
+                return acc;
+            }, {})
+        );
+    } else if (validateNigerianNumberByNetwork(recipientPhoneNumber) !== '9MOBILE') {
+        setErrors({
+            recipientPhoneNumber:
+                `Invalid 9MOBILE number. Please enter a valid 9MOBILE number.`,
+                
+        });
+        console.log("its me 2")
+    } else {
+        setProceed(true);
+        setErrors({});
+    }
+};
 
   const handleRecipientNameChange = (e) => {
     setRecipientNames(e.target.value);
@@ -297,7 +460,88 @@ const EtisalatDataBundle = () => {
     setTransactSuccessPopUp(false);
   };
 
-  console.log("confirm:", confirm);
+  // console.log("confirm:", confirm);
+
+  const [etisalattransactionID, setEtisalatTransactionID] = useState("");
+  const [etisalatorderID, setEtisalatOrderID] = useState("");
+  const [etisalatrefNumber, setEtisalatRefNumber] = useState("");
+  const [etisalatdescription, setEtisalatDescription] = useState("");
+
+
+  const inputPinHandler = async () => {
+    async function buyData(network, mobileNumber, plan, name) {
+      const url = 'https://aremxyplug.onrender.com/api/v1/data';
+
+      const data = {
+        network,
+        mobile_number: mobileNumber,
+        plan,
+        name,
+      };
+
+
+      setLoading(true)
+
+
+      console.log(data)
+      console.log("its me")
+
+      try {
+          const response = await axios.post(url, data);
+          console.log(response.data);
+          console.log(response.status);
+          // setSelectedNetworkProduct(response.data.product)
+          // console.log(response.data.product)
+          setPlan(response.data.plan_name)
+          console.log(response.data.plan_name)
+          setInputValue(response.data.Phone_Number)
+          console.log(response.data.Phone_Number)
+          setRecipientPhoneNumber(data.Phone_number)
+          console.log(data.Phone_number)
+          console.log(inputValue)
+          console.log(recipientPhoneNumber)
+          setRecipientNames(response.data.Name)
+          console.log(response.data.Name)
+          setSelectedAmount(response.data.plan_amount)
+          console.log(response.data.plan_amount)
+          setEtisalatTransactionID(response.data.transaction_id)
+          console.log(response.data.transaction_id)
+          setEtisalatRefNumber(response.data.reference_number)
+          console.log(response.data.reference_number)
+          setEtisalatOrderID(response.data.order_id)
+          console.log(response.data.order_id)
+          // setMtnDescription(response.data.description)
+          // console.log(response.data.description)
+          return { statusCode: response.status, data: response.data };
+          // console.log(response.data);
+      } catch (error) {
+          console.error(error);
+          return { statusCode: error.response.status, data: null };
+      }
+  }
+
+  // usage
+  const response = await buyData(
+    3, recipientPhoneNumber, plan, recipientNames
+  );
+
+  console.log(response)
+  console.log("its me 1")
+
+  setLoading(false)
+
+
+
+  setConfirm(false);
+  if (response.statusCode === 200) {
+      // Success response
+      setTransactSuccessPopUp(true); // Show success popup
+  } else {
+      // Failure response
+      setEtisalatPurchaseStatus(true); // Show failure popup
+  }
+
+  };
 
   return (
     <DashBoardLayout>
@@ -523,43 +767,36 @@ const EtisalatDataBundle = () => {
                 <div className="border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[100]">
                   {productList
                     .find((item) => item.name === selectedNetworkProduct)
-                    ?.options.map((optionItem, index) => {
-                      const optionIndex = productList
-                        .find((item) => item.name === selectedNetworkProduct)
-                        ?.options.indexOf(optionItem);
+                    ?.options.map((option, index) => {
+                      const amount = option.amount;
+                      const duration = option.duration;
+                      const id = option.id;
 
-                      if (optionIndex !== -1) {
-                        const amount = productList.find(
-                          (item) => item.name === selectedNetworkProduct
-                        )?.amount[optionIndex];
-                        const duration = productList.find(
-                          (item) => item.name === selectedNetworkProduct
-                        )?.duration[optionIndex];
+                      return (
+                        <div
+                          key={option.id}
+                          className={`cursor-pointer border-b-[0.5px] md:rounded-[0px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
+                            selectedOption === option.id ? "bg-gray-200" : ""
+                          }`}
+                          onClick={() =>
+                            handleSelectOption(
+                              `${option.name} (${amount}) ~ ${duration}`,
+                              amount,
+                              duration,
+                              id, // Pass the id here
 
-                        return (
-                          <div
-                            key={index}
-                            className={`cursor-pointer border-b-[0.5px] md:rounded-[0px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
-                              selectedOption === optionItem ? "bg-gray-200" : ""
-                            }`}
-                            onClick={() =>
-                              handleSelectOption(
-                                `${optionItem} (${amount}) ~ ${duration}`,
-                                amount
-                              )
-                            }
-                          >
-                            {`${optionItem} (${amount}) ~ ${duration}`}
-                          </div>
-                        );
-                      }
-
-                      return null;
+                              console.log(id)
+                            )
+                          }
+                        >
+                          {`${option.name} (${amount}) ~ ${duration}`}
+                        </div>
+                      );
                     })}
                 </div>
               )}
             </div>
-
+            
             <div className="">
               <h2 className="text-[10px] font-[600] md:text-[12px] lg:text-[18px]">
                 Phone Number{" "}
@@ -567,7 +804,7 @@ const EtisalatDataBundle = () => {
                   <Link to="/DataBundleSelectRecipient">
                     (Select Recipient)
                   </Link>
-                  </span>{" "}
+                </span>{" "}
               </h2>
               <div className="relative mt-[5px]">
                 <input
@@ -588,13 +825,13 @@ const EtisalatDataBundle = () => {
                   />
                 </div>
               </div>
-            </div>
 
-            {errors.recipientPhoneNumber && (
-              <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                {errors.recipientPhoneNumber}
-              </div>
-            )}
+              {errors.recipientPhoneNumber && (
+                <div className="text-[12px] text-red-500 italic lg:text-[14px]">
+                  {errors.recipientPhoneNumber}
+                </div>
+              )}
+            </div>
 
             <div className="">
               <h2 className="text-[10px] font-[600] md:text-[12px] lg:text-[18px]">
@@ -730,6 +967,12 @@ const EtisalatDataBundle = () => {
           </div>
 
           {/* ================Proceed=================== */}
+
+          {loading && (
+            <Modal>
+              <Spinner size="large" />
+            </Modal>
+          )}
 
           {proceed && (
             <Modal>
@@ -968,6 +1211,80 @@ const EtisalatDataBundle = () => {
             </Modal>
           )}
 
+
+{etisalatpurchaseStatus && (
+            <Modal>
+              <div
+                className={` ${
+                  toggleSideBar ? "confirm02" : "confirm2"
+                } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
+              >
+                <div className="flex justify-end px-2">
+                  <img
+                    onClick={() => setEtisalatPurchaseStatus(null)}
+                    className="cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[35px] lg:h-[35px] "
+                    src={Cancel}
+                    alt=""
+                  />
+                </div>
+
+                <hr className="h-[6px] bg-[#04177f] lg:mt-[2%] border-none mt-[2%] md:mt-[2%] md:h-[10px]" />
+                <div className="md:mt-[15%] lg:mt-[10%]">
+                  <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[8%] md:my-[5%] lg:my-[3%]">
+                    Transaction Failed
+                  </p>
+                  <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
+                    <img src={Failed} alt="" />
+                    <p className="text-[8px] md:text-[12px] text-[#04177f]">
+                      An unexpected error has occurred, please try again.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex justify-center items-center gap-[20px]">
+                  <button
+                    onClick={(e) => {
+                      // e.preventDefault();
+                      // setTransaction(false);
+                      setEtisalatPurchaseStatus(null);
+                    }}
+                    className="bg-[#04177f] my-[%] w-[100px] cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[%] md:rounded-[8px] md:text-[16px] lg:w-[px] lg:h-[38px] lg:my-[2%]"
+                  >
+                    Done
+                  </button>
+                  
+                  <Link to="/EtisalatFailedReceipt"
+                  state={{
+                    networkName: "MTN",
+                    selectedNetworkProduct: selectedNetworkProduct,
+                    selectedOption: selectedOption,
+                    recipientPhoneNumber: recipientPhoneNumber,
+                    inputValue: inputValue,
+                    recipientNames: recipientNames,
+                    selectedAmount: selectedAmount,
+                    etisalattransactionID: etisalattransactionID,
+                    etisalatrefNumber: etisalatrefNumber,
+                    etisalatorderID: etisalatorderID,
+                    etisalatdescription: etisalatdescription,
+                   
+                }}
+                  
+                  >
+                    <button
+                      onClick={() => {
+                        // e.preventDefault();
+                        setEtisalatPurchaseStatus(false);
+                      }}
+                      className="bg-white my-[%] w-[100px] cursor-pointer text-[10px] font-extrabold h-[px] rounded-[6px] md:w-[%] md:rounded-[8px] md:text-[16px] lg:w-[px] lg:h-[38px] lg:my-[2%]"
+                    >
+                      Receipt
+                    </button>
+                  </Link>
+                </div>
+              </div>
+            </Modal>
+          )}
+
           {transactSuccessPopUp && (
             <Modal>
               {/* <TransactFailedPopUp/> */}
@@ -1106,7 +1423,7 @@ const EtisalatDataBundle = () => {
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        0124yend44
+                        {etisalatorderID}
                       </h2>
                     </div>
                   </div>
@@ -1133,7 +1450,22 @@ const EtisalatDataBundle = () => {
                     </button>
                   </Link>
 
-                  <Link to="/EtisalatReceipt">
+                  <Link to="/EtisalatReceipt" 
+                  state={{
+                    networkName: "MTN",
+                    selectedNetworkProduct: selectedNetworkProduct,
+                    selectedOption: selectedOption,
+                    recipientPhoneNumber: recipientPhoneNumber,
+                    inputValue: inputValue,
+                    recipientNames: recipientNames,
+                    selectedAmount: selectedAmount,
+                    etisalattransactionID: etisalattransactionID,
+                    etisalatrefNumber: etisalatrefNumber,
+                    etisalatorderID: etisalatorderID,
+                    etisalatdescription: etisalatdescription,
+                   
+                }}
+                  >
                     <button
                       onClick={handleReceipt}
                       className={`border-[1px] w-[100px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-[600] h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[12px] lg:w-[163px] lg:h-[38px] lg:my-[2%] md:px-[60px] md:h-[30px]`}
@@ -1146,15 +1478,33 @@ const EtisalatDataBundle = () => {
             </Modal>
           )}
 
-          {receipt && (
+          {proceedToShowReceipt && (
             <EtisalatReceipt
-              networkName="9MOBILE"
-              selectedOption={selectedOption}
-              selectedNetworkProduct={selectedNetworkProduct}
-              recipientNumber={inputValue}
-              selectedAmount={selectedAmount}
-              recipientNames={recipientNames}
-              walletName={walletName}
+            networkName='9MOBILE'
+            selectedNetworkProduct={selectedNetworkProduct}
+            recipientPhoneNumber={recipientPhoneNumber}
+            inputValue={inputValue}
+            recipientNames={recipientNames}
+            selectedAmount={selectedAmount}
+            etisalattransactionID={etisalattransactionID}
+            etisalatrefNumber={etisalatrefNumber}
+            etisalatorderID={etisalatorderID}
+            etisalatdescription={etisalatdescription}
+            />
+          )}
+
+{proceedToShowReceipt && (
+            <EtisalatFailedReceipt
+            networkName='9MOBILE'
+            selectedNetworkProduct={selectedNetworkProduct}
+            recipientPhoneNumber={recipientPhoneNumber}
+            inputValue={inputValue}
+            recipientNames={recipientNames}
+            selectedAmount={selectedAmount}
+            etisalattransactionID={etisalattransactionID}
+            etisalatrefNumber={etisalatrefNumber}
+            etisalatorderID={etisalatorderID}
+            etisalatdescription={etisalatdescription}
             />
           )}
 

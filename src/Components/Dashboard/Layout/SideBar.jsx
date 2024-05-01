@@ -34,7 +34,7 @@ export const SideBar = () => {
       document.removeEventListener("click", handleClickOutside);
     };
   });
-
+  
   return (
     <div
       className={`${styles.sidebar}  fixed overflow-auto ${
@@ -68,7 +68,7 @@ export const SideBar = () => {
               alt="Menu"
             />
           </div>
-
+          
           <div className="px-[5%] pt-[5%] ">
             {/* ======Profile picture and name======== */}
             <div className="sticky top-0">
@@ -81,6 +81,9 @@ export const SideBar = () => {
                 <div className="flex flex-col gap-[3px] justify-center mt-[4%]">
                   <p className="text-[8px] font-semibold md:text-[14px] lg:text-[14px]">
                     Habib Kamaldeen
+                  </p>
+                  <p className="text-[8px] font-semibold md:text-[14px] lg:text-[14px]">
+                    UID: 508373
                   </p>
                   <div className="flex gap-[3px] lg:gap-[5px]">
                     <div className=" rounded-[1px] px-[4px] py-[1px] font-semibold text-[6px] bg-[#b4b4b4] md:text-[10px] lg:text-[12px] lg:rounded-[2px]">

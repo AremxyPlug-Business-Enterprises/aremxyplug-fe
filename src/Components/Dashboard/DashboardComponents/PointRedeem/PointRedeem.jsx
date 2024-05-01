@@ -18,6 +18,7 @@ import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import OtpInput from "react-otp-input";
 import Joi from "joi";
+import axios from 'axios';
 
 const PointRedeem = () => {
   const { toggleSideBar, transferFee, toggleVisibility, isVisible } =
@@ -490,7 +491,7 @@ const [text, setText] =useState(false);
               </div>
             </div>
 
-            <div className="bg-[#0001] h-[45px] my-5 flex justify-between items-center px-[4%]">
+            <div  className="bg-[#0001] h-[45px] my-5 flex justify-between items-center px-[4%]">
               <div className="flex gap-2 items-center">
                 <div className="bg-white rounded-full h-[27px] w-[27px] flex justify-center items-center">
                   <img className="w-[16px] h-[16px]" src={icon4} alt="/" />
