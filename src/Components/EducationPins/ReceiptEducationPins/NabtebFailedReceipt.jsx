@@ -1,15 +1,15 @@
-import React from 'react'
+import React from 'react';
 import { useContext, useRef } from "react";
  import { ContextProvider } from '../../Context';
 import { DashBoardLayout } from '../../Dashboard/Layout/DashBoardLayout';
 import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-import AremxyPlugIcon from '../imagesEducation/AremxyPlug.svg';
+import AremxyPlugIcon from '../imagesEducation/AremxyPlug.svg'
 
-export default function NabtebReceipt() {
-  const {
-        nabtebExamType,
+export const NabtebFailedReceipt = () => {
+    const {
+        
         nabtebQuantityResult,
         nabtebEducationPinPhone,
         nabtebEducationPinEmail,
@@ -34,7 +34,7 @@ export default function NabtebReceipt() {
   
           const contentRef = useRef(null);
   
-          const currentNabtebChanges = () => {
+          const resetNabtebInputs = () => {
             setNabtebQuantityResult('');
             setNabtebExamType('');
             setNabtebEducationPinPhone('');
@@ -45,7 +45,7 @@ export default function NabtebReceipt() {
           }
         
         //   Share function
-        const nabtebShareClick = () => {
+        const shareFailedNabteb = () => {
             if (navigator.share) {
               navigator
                 .share({
@@ -61,7 +61,7 @@ export default function NabtebReceipt() {
           };
         
           // ==============Save Pdf Function==============
-          const nabtebSaveAsPDFClick = () => {
+          const nabtebFailedPdf = () => {
             const contentNabteb = contentRef.current;
             if (contentNabteb) {
               const pdf = new jsPDF();
@@ -72,7 +72,6 @@ export default function NabtebReceipt() {
               });
             }
           };
-
   return (
     <DashBoardLayout>
       <div className="flex flex-col gap-[35px] lg:gap-[85px]">
@@ -95,8 +94,8 @@ export default function NabtebReceipt() {
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
-                onClick={(e) => {
-                  currentNabtebChanges();
+                onClick={() => {
+                  resetNabtebInputs();
                 }}
               />
             </Link>
@@ -116,7 +115,7 @@ export default function NabtebReceipt() {
             </div>
             <h3 className="font-extrabold text-[12px] mt-[2%] text-center 
             md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
-              Purchase Successful on
+              Purchase Failed on
             </h3>
             <span className="text-[11px] md:text-[14px] lg:text-[16px] text-[#0008]  
             flex justify-center items-center font-[600]">
@@ -132,14 +131,11 @@ export default function NabtebReceipt() {
             </span>
             <div className='flex justify-center mx-[19px]'>
             <p className="text-[10px] p-[5.729px] border-[0.573px] rounded-[6.302px] md:p-[5.868px] md:border-[0.578px] 
-             md:rounded-[6.455px]  lg:border-[1px] lg:rounded-[11px]  border-[solid] border-[#27AE60] leading-[15px] md:leading-[20px]
-           text-[#27AE60] bg-[#D5F6E3] lg:p-[10px] text-center my-2 md:text-[14px] 
+             md:rounded-[6.455px]  lg:border-[1px] lg:rounded-[11px]  border-[solid] border-[#F95252] leading-[15px] md:leading-[20px]
+           text-[#F95252] bg-[#FDCECE] lg:p-[10px] text-center my-2 md:text-[14px] 
           lg:text-[16px]  lg:leading-[24px] font-[500] md:mb-7">
-              You have successfully purchased{" "}
-              <span className="font-extrabold text-[10.9px] md:text-[14.9px] lg:text-[16.9px]">
-              {nabtebExamType} {" "}
-              </span>
-              from your {nabtebPaymentResult} to{" "}
+                Purchase Failed due to an unexpected error that occured. Please try again.
+             
             </p>
             </div>
             <div className="flex flex-col  gap-7  md:gap-10">
@@ -163,10 +159,6 @@ export default function NabtebReceipt() {
                   <p className="text-[#0008]">Quantity</p>
                   <span>{nabtebQuantityResult}</span>
                 </div>
-                {/* <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Plan</p>
-                  <span>{selectedOption}</span>
-                </div> */}
                 
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
                 justify-between  lg:text-[16px] font-[500]">
@@ -226,6 +218,7 @@ export default function NabtebReceipt() {
                 lg:text-[16px] font-[500]">
                   <p className="text-[#0008]">Description</p>
                   <span>{nabtebEduResponse.description}</span>
+                 
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] 
                 mx-auto justify-between  lg:text-[16px] font-[500]">
@@ -259,7 +252,7 @@ export default function NabtebReceipt() {
         gap-[10px] md:gap-[20px] px-[20px]  mb-[5%]  ">
           <button
             onClick={() => {
-              nabtebShareClick();
+              shareFailedNabteb();
             }}
             className={`bg-[#04177f] w-[111px] 
               cursor-pointer text-[12px] 
@@ -270,7 +263,7 @@ export default function NabtebReceipt() {
           </button>
           <button
             onClick={() => {
-              nabtebSaveAsPDFClick();
+            nabtebFailedPdf();
             }}
             className={`bg-[#ffffff] border-[1px] w-[111px] 
             border-[#0003]  cursor-pointer text-[12px] font-extrabold h-[40px] 

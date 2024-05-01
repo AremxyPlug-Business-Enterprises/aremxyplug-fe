@@ -974,6 +974,8 @@ export const Context = ({ children }) => {
 
   //============== API COLLECTION FOR EDUCATION PINS
   const [eduResponse, setEduResponse] = useState(null);
+  const [nabtebEduResponse,setNabtebEduResponse] = useState(null);
+  const [necoEduResponse,setNecoEduResponse] =useState(null);
   const hold = {
     handleRefresh,
     // ==================
@@ -1541,7 +1543,11 @@ export const Context = ({ children }) => {
     setAuthenticationOpen,
     //========API COLLECTION FOR EDUCATION PINS =====\
     eduResponse, 
-    setEduResponse
+    setEduResponse,
+    nabtebEduResponse,
+    setNabtebEduResponse,
+    necoEduResponse,
+    setNecoEduResponse
   };
 
   return (

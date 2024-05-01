@@ -163,6 +163,10 @@ import EmailMarketing from "./Components/Screens/emailMarketing/EmailMarketing";
 import ProductDesign from "./Components/Screens/productDesign/ProductDesign";
 import GraphicDesign from "./Components/Screens/graphicDesign/GraphicDesign";
 import NotificationsPage2 from "./Components/NotificationsPage/Notifications2";
+import { WaecFailedReceipt } from "./Components/EducationPins/ReceiptEducationPins/WaecFailedReceipt";
+import { NecoFailedReceipt } from "./Components/EducationPins/ReceiptEducationPins/NecoFailedReceipt";
+import { NabtebFailedReceipt } from "./Components/EducationPins/ReceiptEducationPins/NabtebFailedReceipt";
+
 export const Router = () => {
   return (
     <div>
@@ -397,6 +401,9 @@ export const Router = () => {
           element={<GlobalTransferAddRecipient />}
         />
         <Route path="/EditSelectRecipient" element={<EditSelectRecipient />} />
+        <Route path ="/WaecFailedReceipt" element={<WaecFailedReceipt/>}/>
+        <Route path = "/NecoFailedReceipt" element = {<NecoFailedReceipt/>}/>
+        <Route path="/NabtebFailedReceipt" element= {<NabtebFailedReceipt/>}/>
       </Routes>
     </div>
   );
