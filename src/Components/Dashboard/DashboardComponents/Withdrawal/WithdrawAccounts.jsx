@@ -224,7 +224,7 @@ export const WithdrawAccounts = () => {
 
           <img
             className={styles.noTransactions}
-            src="./Images/Dashboardimages/noTransactionFound.png"
+            src="./Images/dashboardImages/noTransactionFound.png"
             alt=""
           />
           <div
@@ -271,7 +271,7 @@ export const WithdrawAccounts = () => {
                 <p>AP-2023 0703-001 </p>
                 <img
                   className="w-[10px] h-[10px] md:w-[14px] md:h-[14px] lg:w-[20px] lg:h-[20px]"
-                  src="./Images/Dashboardimages/arrowright.png"
+                  src="./Images/dashboardImages/arrowright.png"
                   alt="/"
                 />
               </td>
@@ -314,7 +314,7 @@ export const WithdrawAccounts = () => {
                 <p> AP-2023 0703-001 </p>
                 <img
                   className="w-[10px] h-[10px] md:w-[14px] md:h-[14px] lg:w-[20px] lg:h-[20px]"
-                  src="./Images/Dashboardimages/arrowright.png"
+                  src="./Images/dashboardImages/arrowright.png"
                   alt="/"
                 />
               </td>

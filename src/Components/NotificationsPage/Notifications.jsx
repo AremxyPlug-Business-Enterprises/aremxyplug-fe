@@ -1651,7 +1651,7 @@ items-end  "
 <div className={`${styles.viewTransactions} mt-[50px] `}>
                 <img
                   className={styles.noTransactions}
-                  src="./Images/Dashboardimages/noTransactionFound.png"
+                  src="./Images/dashboardImages/noTransactionFound.png"
                   alt=""
                 />
                 <div
@@ -2567,7 +2567,7 @@ items-end  "
 <div className={`${styles.viewTransactions} mt-[50px] `}>
                 <img
                   className={styles.noTransactions}
-                  src="./Images/Dashboardimages/noTransactionFound.png"
+                  src="./Images/dashboardImages/noTransactionFound.png"
                   alt=""
                 />
                 <div
@@ -3472,7 +3472,7 @@ items-end  "
 <div className={`${styles.viewTransactions} mt-[50px] `}>
                 <img
                   className={styles.noTransactions}
-                  src="./Images/Dashboardimages/noTransactionFound.png"
+                  src="./Images/dashboardImages/noTransactionFound.png"
                   alt=""
                 />
                 <div
@@ -3505,7 +3505,7 @@ items-end  "
               <div className={`${styles.viewTransactions} mt-[50px] `}>
                 <img
                   className={styles.noTransactions}
-                  src="./Images/Dashboardimages/noTransactionFound.png"
+                  src="./Images/dashboardImages/noTransactionFound.png"
                   alt=""
                 />
                 <div
@@ -3536,14 +3536,14 @@ items-end  "
               >
                 <img
                   className={styles.noTransactions}
-                  src="./Images/Dashboardimages/noTransactionFound.png"
+                  src="./Images/dashboardImages/noTransactionFound.png"
                   alt=""
                 />
                 {/* <div className={styles.viewAll}> */}
                 {/* <div className={styles.viewText}>View all transactions</div> */}
                 {/* <img */}
                 {/* // className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]" */}
-                {/* // src="./Images/Dashboardimages/empty-wallet-add.png" */}
+                {/* // src="./Images/dashboardImages/empty-wallet-add.png" */}
                 {/* // alt="" */}
                 {/* // /> */}
                 {/* </div> */}

@@ -88,7 +88,7 @@ export const WithdrawToPersonalAccountPage = () => {
             <p>Account Details : </p>
             <img
               className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-              src="./Images/Dashboardimages/arrowright.png"
+              src="./Images/dashboardImages/arrowright.png"
               alt="/"
             />
           </div>
@@ -133,7 +133,7 @@ export const WithdrawToPersonalAccountPage = () => {
               </div>
               <img
                 className="w-[18px] h-[18px] md:w-[24px] md:h-[24px] lg:w-[29px] lg:h-[29px]"
-                src="./Images/Dashboardimages/email-address.png"
+                src="./Images/dashboardImages/email-address.png"
                 alt="/"
               />
             </div>
@@ -152,7 +152,7 @@ export const WithdrawToPersonalAccountPage = () => {
               </div>
               <img
                 className="w-[18px] h-[18px] md:w-[24px] md:h-[24px] lg:w-[29px] lg:h-[29px]"
-                src="./Images/Dashboardimages/home-address.png"
+                src="./Images/dashboardImages/home-address.png"
                 alt="/"
               />
             </div>
@@ -169,7 +169,7 @@ export const WithdrawToPersonalAccountPage = () => {
               </div>
               <img
                 className="w-[18px] h-[18px] md:w-[24px] md:h-[24px] lg:w-[29px] lg:h-[29px]"
-                src="./Images/Dashboardimages/iban.png"
+                src="./Images/dashboardImages/iban.png"
                 alt="/"
               />
             </div>
@@ -186,7 +186,7 @@ export const WithdrawToPersonalAccountPage = () => {
               </div>
               <img
                 className="w-[18px] h-[18px] md:w-[24px] md:h-[24px] lg:w-[29px] lg:h-[29px]"
-                src="./Images/Dashboardimages/account-name.png"
+                src="./Images/dashboardImages/account-name.png"
                 alt="/"
               />
             </div>
@@ -203,7 +203,7 @@ export const WithdrawToPersonalAccountPage = () => {
               </div>
               <img
                 className="w-[18px] h-[18px] md:w-[24px] md:h-[24px] lg:w-[29px] lg:h-[29px]"
-                src="./Images/Dashboardimages/barcode.png"
+                src="./Images/dashboardImages/barcode.png"
                 alt="/"
               />
             </div>
@@ -220,7 +220,7 @@ export const WithdrawToPersonalAccountPage = () => {
               </div>
               <img
                 className="w-[18px] h-[18px] md:w-[24px] md:h-[24px] lg:w-[29px] lg:h-[29px]"
-                src="./Images/Dashboardimages/bank-name.png"
+                src="./Images/dashboardImages/bank-name.png"
                 alt="/"
               />
             </div>
@@ -239,7 +239,7 @@ export const WithdrawToPersonalAccountPage = () => {
               </div>
               <img
                 className="w-[18px] h-[18px] md:w-[24px] md:h-[24px] lg:w-[29px] lg:h-[29px]"
-                src="./Images/Dashboardimages/beneficiary-address.png"
+                src="./Images/dashboardImages/beneficiary-address.png"
                 alt="/"
               />
             </div>
@@ -256,7 +256,7 @@ export const WithdrawToPersonalAccountPage = () => {
               </div>
               <img
                 className="w-[18px] h-[18px] md:w-[24px] md:h-[24px] lg:w-[29px] lg:h-[29px]"
-                src="./Images/Dashboardimages/beneficiary.png"
+                src="./Images/dashboardImages/beneficiary.png"
                 alt="/"
               />
             </div>
@@ -273,7 +273,7 @@ export const WithdrawToPersonalAccountPage = () => {
               </div>
               <img
                 className="w-[18px] h-[18px] md:w-[24px] md:h-[24px] lg:w-[29px] lg:h-[29px]"
-                src="./Images/Dashboardimages/direct-notification.png"
+                src="./Images/dashboardImages/direct-notification.png"
                 alt="/"
               />
             </div>
@@ -290,7 +290,7 @@ export const WithdrawToPersonalAccountPage = () => {
               </div>
               <img
                 className="w-[18px] h-[18px] md:h-[24px] md:w-[24px] lg:w-[29px] lg:h-[29px]"
-                src="./Images/Dashboardimages/zip.png"
+                src="./Images/dashboardImages/zip.png"
                 alt="/"
               />
             </div>
@@ -307,7 +307,7 @@ export const WithdrawToPersonalAccountPage = () => {
               </div>
               <img
                 className="w-[18px] h-[18px] md:h-[40px] md:w-[40px] lg:w-[29px] lg:h-[29px]"
-                src="./Images/Dashboardimages/reference.png"
+                src="./Images/dashboardImages/reference.png"
                 alt="/"
               />
             </div>

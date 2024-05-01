@@ -55,7 +55,7 @@ export const WithdrawPage = () => {
             <p>Select Withdrawal Type </p>
             <img
               className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-              src="./Images/Dashboardimages/arrowright.png"
+              src="./Images/dashboardImages/arrowright.png"
               alt="/"
             />
           </div>
@@ -100,7 +100,7 @@ export const WithdrawPage = () => {
                   <div className="flex gap-[5px] items-center">
                     <img
                       className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                      src="Images/Dashboardimages/tf1.png"
+                      src="Images/dashboardImages/tf1.png"
                       alt="/"
                     />
 
@@ -116,7 +116,7 @@ export const WithdrawPage = () => {
                   </div>
                   <img
                     className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                    src="./Images/Dashboardimages/arrowright.png"
+                    src="./Images/dashboardImages/arrowright.png"
                     alt="/"
                   />
                 </div>
@@ -131,7 +131,7 @@ export const WithdrawPage = () => {
                   <div className="flex gap-[5px] items-center">
                     <img
                       className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                      src="Images/Dashboardimages/tf2.png"
+                      src="Images/dashboardImages/tf2.png"
                       alt="/"
                     />
                     <div>
@@ -145,7 +145,7 @@ export const WithdrawPage = () => {
                   </div>
                   <img
                     className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                    src="./Images/Dashboardimages/arrowright.png"
+                    src="./Images/dashboardImages/arrowright.png"
                     alt="/"
                   />
                 </div>
@@ -173,7 +173,7 @@ export const WithdrawPage = () => {
                 </div>
                 <img
                   className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                  src="./Images/Dashboardimages/arrowright.png"
+                  src="./Images/dashboardImages/arrowright.png"
                   alt="/"
                 />
               </div>
@@ -200,7 +200,7 @@ export const WithdrawPage = () => {
                 </div>
                 <img
                   className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                  src="./Images/Dashboardimages/arrowright.png"
+                  src="./Images/dashboardImages/arrowright.png"
                   alt="/"
                 />
               </div>
@@ -221,7 +221,7 @@ export const WithdrawPage = () => {
               </div>
               <img
                 className="mx-auto mt-[] w-[135px] h-[96px] md:w-[220px] md:h-[200px] md:mt-[5%] lg:w-[350px] lg:h-[280px] lg:mt-[5%]"
-                src="./Images/Dashboardimages/Cryptocomingsoon.png"
+                src="./Images/dashboardImages/Cryptocomingsoon.png"
                 alt="/"
               />
               <div className="mx-[6%] flex flex-col gap-[5px] pb-[5%]">
