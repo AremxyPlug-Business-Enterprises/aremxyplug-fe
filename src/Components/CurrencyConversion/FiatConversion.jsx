@@ -185,7 +185,7 @@ const FiatConversion = () => {
                 <p>Sender</p>
                 <img
                   className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                  src="./Images/Dashboardimages/arrowright.png"
+                  src="./Images/dashboardImages/arrowright.png"
                   alt="/"
                 />
               </div>
@@ -222,7 +222,7 @@ const FiatConversion = () => {
                 <p>To Recipient</p>
                 <img
                   className="w-[15px] h-[15px] md:h-[24px] md:w-[24px] lg:w-[20px] lg:h-[20px]"
-                  src="./Images/Dashboardimages/arrowright.png"
+                  src="./Images/dashboardImages/arrowright.png"
                   alt="/"
                 />
               </div>

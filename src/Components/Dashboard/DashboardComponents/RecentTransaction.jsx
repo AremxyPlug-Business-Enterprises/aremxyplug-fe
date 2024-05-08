@@ -16,7 +16,7 @@ export const RecentTransaction = () => {
         <p className={styles.InOutText}>Recent Transactions</p>
         <img
           className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-          src="./Images/Dashboardimages/arrowright.png"
+          src="./Images/dashboardImages/arrowright.png"
           alt="/"
         />
       </div>
@@ -39,7 +39,7 @@ export const RecentTransaction = () => {
           <div className={`text-[#04177f]`}>Filter by Date </div>
           <img
             className="w-[15px] h-[15px] md:w-[17px] md:h-[17px] lg:w-[20px] lg:h-[20px]"
-            src="./Images/Dashboardimages/dateImg.png"
+            src="./Images/dashboardImages/dateImg.png"
             alt=""
           />
         </div>

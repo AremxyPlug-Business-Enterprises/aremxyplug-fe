@@ -1038,7 +1038,7 @@ const TransactionPage = () => {
                 </div>
                 <img
                   className="w-[15px] h-[15px] md:w-[17px] md:h-[17px] lg:w-[20px] lg:h-[20px]"
-                  src="./Images/Dashboardimages/dateImg.png"
+                  src="./Images/dashboardImages/dateImg.png"
                   alt=""
                 />
               </div>
@@ -1068,7 +1068,7 @@ const TransactionPage = () => {
                 Download Stat.
                 <img
                   className="w-[10px] h-[10px] md:w-[15px] md:h-[15px] lg:w-[20px] lg:h-[20px]"
-                  src="./Images/Dashboardimages/downloadicon.png"
+                  src="./Images/dashboardImages/downloadicon.png"
                   alt=""
                 />
               </div>
@@ -1169,7 +1169,7 @@ const TransactionPage = () => {
               </p>
               <img
                 className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                src="./Images/Dashboardimages/arrowright.png"
+                src="./Images/dashboardImages/arrowright.png"
                 alt="/"
               />
             </div>
@@ -1294,7 +1294,7 @@ const TransactionPage = () => {
                           <div className="w-[13.41px] mt-7 h-[12.06px]">
                             <img
                               className="w-[13.41px] h-[12.06px]"
-                              src="./Images/Dashboardimages/arrowright.png"
+                              src="./Images/dashboardImages/arrowright.png"
                               alt=""
                             />
                           </div>
@@ -1441,7 +1441,7 @@ const TransactionPage = () => {
                       </div>
                       <img
                         className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                        src="./Images/Dashboardimages/arrowright.png"
+                        src="./Images/dashboardImages/arrowright.png"
                         alt="/"
                       />
                     </div>

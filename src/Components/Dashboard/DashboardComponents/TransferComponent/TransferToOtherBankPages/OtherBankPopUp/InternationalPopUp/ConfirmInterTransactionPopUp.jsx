@@ -118,7 +118,7 @@ export const ConfirmInterTransactionPopUp = () => {
               </div>
               <img
                 className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                src="./Images/Dashboardimages/arrowright.png"
+                src="./Images/dashboardImages/arrowright.png"
                 alt="/"
               />
             </div>

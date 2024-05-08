@@ -465,7 +465,7 @@ const EtisalatDataBundle = () => {
   const [etisalattransactionID, setEtisalatTransactionID] = useState("");
   const [etisalatorderID, setEtisalatOrderID] = useState("");
   const [etisalatrefNumber, setEtisalatRefNumber] = useState("");
-  const [etisalatdescription] = useState("");
+  const [etisalatdescription, setEtisalatDescription] = useState("");
 
 
   const inputPinHandler = async () => {
@@ -510,7 +510,7 @@ const EtisalatDataBundle = () => {
           console.log(response.data.reference_number)
           setEtisalatOrderID(response.data.order_id)
           console.log(response.data.order_id)
-          // setMtnDescription(response.data.description)
+          setEtisalatDescription(response.data.description)
           // console.log(response.data.description)
           return { statusCode: response.status, data: response.data };
           // console.log(response.data);
@@ -519,7 +519,7 @@ const EtisalatDataBundle = () => {
           return { statusCode: error.response.status, data: null };
       }
   }
-
+  
   // usage
   const response = await buyData(
     3, recipientPhoneNumber, plan, recipientNames
