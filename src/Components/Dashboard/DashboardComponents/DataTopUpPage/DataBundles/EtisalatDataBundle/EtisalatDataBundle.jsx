@@ -465,7 +465,7 @@ const EtisalatDataBundle = () => {
   const [etisalattransactionID, setEtisalatTransactionID] = useState("");
   const [etisalatorderID, setEtisalatOrderID] = useState("");
   const [etisalatrefNumber, setEtisalatRefNumber] = useState("");
-  const [etisalatdescription, setEtisalatDescription] = useState("");
+  const [etisalatdescription] = useState("");
 
 
   const inputPinHandler = async () => {

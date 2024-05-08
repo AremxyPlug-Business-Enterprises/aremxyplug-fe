@@ -18,7 +18,7 @@ import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import OtpInput from "react-otp-input";
 import Joi from "joi";
-import axios from 'axios';
+// import axios from 'axios';
 
 const PointRedeem = () => {
   const { toggleSideBar, transferFee, toggleVisibility, isVisible } =

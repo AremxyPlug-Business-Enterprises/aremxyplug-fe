@@ -13,7 +13,7 @@ export const EtisalatReceipt = () => {
   const location = useLocation()
   const { 
     selectedNetworkProduct, 
-    selectedOption, recipientPhoneNumber, inputValue, recipientNames, selectedAmount, etisalattransactionID, etisalatrefNumber, etisalatorderID, etisalatdescription } = location.state
+    selectedOption, inputValue, recipientNames, selectedAmount, etisalattransactionID, etisalatrefNumber, etisalatorderID, etisalatdescription } = location.state
     
   const {
     toggleSideBar,

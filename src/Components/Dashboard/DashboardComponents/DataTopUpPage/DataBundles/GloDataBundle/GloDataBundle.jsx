@@ -57,7 +57,7 @@ const GloDataBundle = () => {
   const [glotransactionID, setGloTransactionID] = useState("");
   const [gloorderID, setGloOrderID] = useState("");
   const [glorefNumber, setGloRefNumber] = useState("");
-  const [glodescription, setGloDescription] = useState("");
+  const [glodescription] = useState("");
   const [proceedToShowReceipt] = useState(false);
 
 

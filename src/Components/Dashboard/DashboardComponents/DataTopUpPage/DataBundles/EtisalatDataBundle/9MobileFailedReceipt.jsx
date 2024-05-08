@@ -12,14 +12,14 @@ export const EtisalatFailedReceipt = () => {
   const location = useLocation();
   const {
     selectedNetworkProduct,
-    recipientPhoneNumber,
+    // recipientPhoneNumber,
     inputValue,
     recipientNames,
     selectedAmount,
     etisalattransactionID,
     etisalatrefNumber,
     etisalatorderID,
-    etisalatdescription,
+    // etisalatdescription,
     selectedOption
   } = location.state;
 

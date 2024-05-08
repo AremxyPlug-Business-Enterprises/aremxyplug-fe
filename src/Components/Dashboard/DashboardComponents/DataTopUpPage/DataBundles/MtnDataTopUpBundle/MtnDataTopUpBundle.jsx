@@ -686,7 +686,7 @@ const MtnDataTopUpBundle = () => {
     const [mtntransactionID, setMtnTransactionID] = useState("");
     const [mtnorderID, setMtnOrderID] = useState("");
     const [mtnrefNumber, setMtnRefNumber] = useState("");
-    const [mtndescription, setMtnDescription] = useState("");
+    const [mtndescription] = useState("");
 
 
   const handleReceipt = () => {

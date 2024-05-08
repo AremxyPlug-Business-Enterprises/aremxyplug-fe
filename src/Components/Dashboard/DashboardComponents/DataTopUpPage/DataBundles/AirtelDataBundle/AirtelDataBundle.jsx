@@ -345,7 +345,7 @@ const AirtelDataBundle = () => {
   const [airteltransactionID, setAirtelTransactionID] = useState("");
   const [airtelorderID, setAirtelOrderID] = useState("");
   const [airtelrefNumber, setAirtelRefNumber] = useState("");
-  const [airteldescription, setAirtelDescription] = useState("");
+  const [airteldescription] = useState("");
 
   const inputPinHandler = async () => {
     async function buyData(network, mobileNumber, plan, name) {
