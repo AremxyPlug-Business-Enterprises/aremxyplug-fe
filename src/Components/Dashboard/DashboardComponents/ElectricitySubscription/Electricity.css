@@ -1,0 +1,57 @@
+@media (min-width: 845px) {
+    .alignwidth{
+        gap: 20px;
+    }
+    .alignwidth1{
+        gap: 50px;
+    }
+}
+
+@media (min-width: 980px) {
+    .alignwidth{
+        gap: 40px;
+    }
+    .alignwidth1{
+        gap: 90px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .alignwidth{
+        gap: 0px;
+    }
+    .alignwidth1{
+        gap: 30px;
+    }
+}
+
+@media (width: 1200px) {
+    .alignwidth{
+        gap: 20px;
+    }
+    .alignwidth1{
+        gap:50px;
+    }
+}
+
+@media (min-width: 1440px) {
+    .alignwidth{
+    
+        gap: 20px;
+        
+    }
+    .alignwidth1{
+        gap: 90px;
+    }
+}
+
+@media (min-width: 1500px) {
+    .alignwidth{
+    
+        gap: 60px;
+        
+    }
+    .alignwidth1{
+        gap: 100px;
+    }
+}

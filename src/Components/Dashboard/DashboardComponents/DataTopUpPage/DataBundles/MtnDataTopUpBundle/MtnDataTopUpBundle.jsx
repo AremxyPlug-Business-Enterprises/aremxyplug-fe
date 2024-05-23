@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { DashBoardLayout } from "../../../../Layout/DashBoardLayout";
 import { ContextProvider } from "../../../../../Context";
 import { useContext } from "react";
@@ -19,13 +19,450 @@ import Cancel from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/Cancel.svg";
 import "../../../DataTopUpPage/DataTopUp.css";
 import { Modal } from "../../../../../Screens/Modal/Modal";
 import OtpInput from "react-otp-input";
-import styles from "../../../TransferComponent/transfer.module.css";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import { MtnReceipt } from "./MtnReceipt";
 import Joi from "joi";
 import airtimestyles from "../../../../../AirTimePage/AirtimeVtu.module.css";
+import axios from "axios";
+import Failed from "./MtnDataTopUpBundleImages/Failed.svg";
+import Spinner from "./Spinner";
+import { MtnFailedReceipt } from "./MtnFailedReceipt";
+
 // import { DataBundleFailedPopUp } from "../../../TransferComponent/PopUps/TransactionFailedPopUp";
+
+const countryList = [
+  {
+    id: 1,
+    name: "Nigeria",
+    code: "NGN",
+    flag: require("../DataBundles-Images/ng.svg").default,
+    amount: 0,
+  },
+  {
+    id: 2,
+    name: "United States",
+    code: "USD",
+    flag: require("../DataBundles-Images/us.svg").default,
+    amount: 0,
+  },
+  {
+    id: 3,
+    name: "United Kingdom",
+    code: "GBP",
+    flag: require("../DataBundles-Images/gb.svg").default,
+    amount: 0,
+  },
+  {
+    id: 4,
+    name: "European Union",
+    code: "EUR",
+    flag: require("../DataBundles-Images/eu.svg").default,
+    amount: 0,
+  },
+  {
+    id: 5,
+    name: "Australia",
+    code: "AUD",
+    flag: require("../DataBundles-Images/au.svg").default,
+    amount: 0,
+  },
+  {
+    id: 6,
+    name: "Kenya",
+    code: "KSH",
+    flag: require("../DataBundles-Images/ke.svg").default,
+    amount: 0,
+  },
+];
+
+const productList = [
+  {
+    id: 1,
+    name: "MTN SME & SME2",
+    options: [
+      { id: 6, name: "MTN SME & SME2 500MB", amount: "₦150", duration: "1 MONTH" },
+      { id: 7, name: "MTN SME & SME2 1GB", amount: "₦275", duration: "1 MONTH" },
+      { id: 8, name: "MTN SME & SME2 2GB", amount: "₦550", duration: "1 MONTH" },
+      { id: 44, name: "MTN SME & SME2 3GB", amount: "₦825", duration: "1 MONTH" },
+      { id: 11, name: "MTN SME & SME2 5GB", amount: "₦1375", duration: "1 MONTH" },
+      { id: 43, name: "MTN SME & SME2 10GB", amount: "₦2750", duration: "1 MONTH" },
+    ],
+  },
+
+  {
+    id: 2,
+    name: "MTN CG",
+    options: [
+      { id: 216, name: "MTN CG 50MB", amount: "₦40", duration: "1 MONTH" },
+      { id: 217, name: "MTN CG 150MB", amount: "₦100", duration: "1 MONTH" },
+      { id: 218, name: "MTN CG 250MB", amount: "₦130", duration: "1 MONTH" },
+      { id: 219, name: "MTN CG 500MB", amount: "₦150", duration: "1 MONTH" },
+      { id: 220, name: "MTN CG 1GB", amount: "₦285", duration: "1 MONTH" },
+      { id: 221, name: "MTN CG 2GB", amount: "₦570", duration: "1 MONTH" },
+      { id: 222, name: "MTN CG 3GB", amount: "₦855", duration: "1 MONTH" },
+      { id: 223, name: "MTN CG 5GB", amount: "₦1425", duration: "1 MONTH" },
+      { id: 224, name: "MTN CG 10GB", amount: "₦2850", duration: "1 MONTH" },
+      { id: 225, name: "MTN CG 15GB", amount: "₦4275", duration: "1 MONTH" },
+      { id: 226, name: "MTN CG 20GB", amount: "₦5700", duration: "1 MONTH" },
+      { id: 227, name: "MTN CG 40GB", amount: "₦10000", duration: "1 MONTH" },
+      { id: 228, name: "MTN CG 75GB", amount: "₦18750", duration: "1 MONTH" },
+      {
+        id: 229,
+        name: "MTN CG 100GB",
+        amount: "₦25000",
+        duration: "1 MONTH",
+      },
+    ],
+  },
+
+  {
+    id: 3,
+    name: "MTN DIRECT COUPONS",
+    options: [
+      {
+        id: 304,
+        name: "MTN DIRECT COUPONS 500MB",
+        amount: "₦200",
+        duration: "WEEKLY",
+      },
+      {
+        id: 264,
+        name: "MTN DIRECT COUPONS 750MB",
+        amount: "₦220",
+        duration: "WEEKLY",
+      },
+      {
+        id: 269,
+        name: "MTN DIRECT COUPONS 1GB",
+        amount: "₦260",
+        duration: "WEEKLY",
+      },
+      {
+        id: 265,
+        name: "MTN DIRECT COUPONS 1.5GB",
+        amount: "₦420",
+        duration: "1 MONTH",
+      },
+      {
+        id: 266,
+        name: "MTN DIRECT COUPONS 2GB",
+        amount: "₦550",
+        duration: "1 MONTH",
+      },
+      {
+        id: 267,
+        name: "MTN DIRECT COUPONS 3GB",
+        amount: "₦765",
+        duration: "1 MONTH",
+      },
+      {
+        id: 268,
+        name: "MTN DIRECT COUPONS 4.5GB",
+        amount: "₦1150",
+        duration: "1 MONTH",
+      },
+
+
+      // NOT IN THE DATA DOCUMENTATION SO IT HAS NO ID
+
+      {
+        id: 268,
+        name: "MTN DIRECT COUPONS 5GB",
+        amount: "₦1275",
+        duration: "1 MONTH",
+      },
+
+      {
+        id: 268,
+        name: "MTN DIRECT COUPONS 10GB",
+        amount: "₦2550",
+        duration: "1 MONTH",
+      },
+    ],
+  },
+
+  {
+    id: 4,
+    name: "MTN GIFTING",
+    options: [
+      {
+        id: 312,
+        name: "MTN GIFTING 40MB",
+        amount: "₦50",
+        duration: "DAILY",
+      },
+      {
+        id: 310,
+        name: "MTN GIFTING 100MB",
+        amount: "₦100",
+        duration: "DAILY",
+      },
+      {
+        id: 306,
+        name: "MTN GIFTING 200MB",
+        amount: "₦100",
+        duration: "DAILY DAY & NIGHT",
+      },
+
+      {
+        id: 311,
+        name: "MTN GIFTING 200MB",
+        amount: "₦200",
+        duration: "3 DAYS",
+      },
+      {
+        id: 309,
+        name: "MTN GIFTING 250MB",
+        amount: "₦250",
+        duration: "2 DAYS",
+      },
+      {
+        id: 314,
+        name: "MTN GIFTING 350MB",
+        amount: "₦350",
+        duration: "WEEKLY",
+      },
+      {
+        id: 320,
+        name: "MTN GIFTING 450MB",
+        amount: "₦400",
+        duration: "WEELY DAY & NIGHT",
+      },
+      {
+        id: 308,
+        name: "MTN GIFTING 750MB",
+        amount: "₦350",
+        duration: "3 DAYS",
+      },
+
+      {
+        id: 315,
+        name: "MTN GIFTING 750MB",
+        amount: "₦500",
+        duration: "WEEKLY",
+      },
+
+      {
+        id: 321,
+        name: "MTN GIFTING 750MB",
+        amount: "₦500",
+        duration: "2 WEEKS",
+      },
+      {
+        id: 313,
+        name: "MTN GIFTING 1GB",
+        amount: "₦365",
+        duration: "DAILY",
+      },
+      {
+        id: 317,
+        name: "MTN GIFTING 1GB",
+        amount: "₦590",
+        duration: "WEEKLY",
+      },
+      {
+        id: 305,
+        name: "MTN GIFTING 1GB",
+        amount: "₦620",
+        duration: "WEEKLY PLAN",
+      },
+      {
+        id: 319,
+        name: "MTN GIFTING 1.5GB",
+        amount: "₦980",
+        duration: "WEEKLY",
+      },
+
+      {
+        id: 323,
+        name: "MTN GIFTING 1.5GB",
+        amount: "₦1200",
+        duration: "1 MONTH",
+      },
+
+      {
+        id: 316,
+        name: "MTN GIFTING 2GB",
+        amount: "₦980",
+        duration: "WEEKLY",
+      },
+
+      {
+        id: 322,
+        name: "MTN GIFTING 2GB",
+        amount: "₦1480",
+        duration: "1 MONTH",
+      },
+      {
+        id: 307,
+        name: "MTN GIFTING 2.5GB",
+        amount: "₦550",
+        duration: "2 DAYS",
+      },
+
+      {
+        id: 328,
+        name: "MTN GIFTING 3GB",
+        amount: "₦1550",
+        duration: "1 MONTH",
+      },
+
+      {
+        id: 324,
+        name: "MTN GIFTING 4.5GB",
+        amount: "₦2475",
+        duration: "1 MONTH",
+      },
+
+      {
+        id: 318,
+        name: "MTN GIFTING 6GB",
+        amount: "₦2100",
+        duration: "WEEKLY",
+      },
+
+      {
+        id: 330,
+        name: "MTN GIFTING 6GB",
+        amount: "₦3000",
+        duration: "1 MONTH",
+      },
+
+      {
+        id: 332,
+        name: "MTN GIFTING 10GB",
+        amount: "₦3500",
+        duration: "1 MONTH",
+      },
+
+      {
+        id: 325,
+        name: "MTN GIFTING 12GB",
+        amount: "₦4000",
+        duration: "1 MONTH",
+      },
+      {
+        id: 326,
+        name: "MTN GIFTING 20GB",
+        amount: "₦5500",
+        duration: "1 MONTH",
+      },
+
+      {
+        id: 329,
+        name: "MTN GIFTING 25GB",
+        amount: "₦6400",
+        duration: "1 MONTH",
+      },
+
+      {
+        id: 337,
+        name: "MTN GIFTING 30GB",
+        amount: "₦8000",
+        duration: "2 MONTHS",
+      },
+
+      {
+        id: 327,
+        name: "MTN GIFTING 40GB",
+        amount: "₦10750",
+        duration: "1 MONTH",
+      },
+     
+    
+      {
+        id: 331,
+        name: "MTN GIFTING 75GB",
+        amount: "₦15500",
+        duration: "1 MONTH",
+      },
+
+      {
+        id: 335,
+        name: "MTN GIFTING 100GB",
+        amount: "₦20000",
+        duration: "2 MONTHS",
+      },
+   
+      {
+        id: 333,
+        name: "MTN GIFTING 120GB",
+        amount: "₦22000",
+        duration: "1 MONTH",
+      },
+
+      {
+        id: 336,
+        name: "MTN GIFTING 160GB",
+        amount: "₦30500",
+        duration: "2 MONTHS",
+      },
+      {
+        id: 334,
+        name: "MTN GIFTING 200GB",
+        amount: "₦30000",
+        duration: "1 MONTH",
+      },
+    
+      
+      {
+        id: 338,
+        name: "MTN GIFTING 400GB",
+        amount: "₦52000",
+        duration: "3 MONTHS",
+      },
+      {
+        id: 339,
+        name: "MTN GIFTING 600GB",
+        amount: "₦78000",
+        duration: "3 MONTHS",
+      },
+      {
+        id: 340,
+        name: "MTN GIFTING 800GB",
+        amount: "₦94200",
+        duration: "6 MONTHS",
+      },
+      {
+        id: 341,
+        name: "MTN GIFTING 1TB",
+        amount: "₦108000",
+        duration: "1 YEAR",
+      },
+      {
+        id: 342,
+        name: "MTN GIFTING 2.5TB",
+        amount: "₦257000",
+        duration: "1 YEAR",
+      },
+      {
+        id: 343,
+        name: "MTN GIFTING 4.5TB",
+        amount: "₦456000",
+        duration: "1 YEAR",
+      },
+      {
+        id: 344,
+        name: "MTN GIFTING 25TB",
+        amount: "₦5450000",
+        duration: "1 YEAR",
+      },
+      // {
+      //   id: 345,
+      //   name: "MTN GIFTING 360MB",
+      //   amount: "₦100000",
+      //   duration: "1 MONTH",
+      // },
+    ],
+  },
+
+  {
+    id: 6,
+    name: "GENERAL BUNDLES ---",
+    options: [],
+  },
+];
 
 const MtnDataTopUpBundle = () => {
   const { isDarkMode } = useContext(ContextProvider);
@@ -43,13 +480,23 @@ const MtnDataTopUpBundle = () => {
   const [addRecipient, setAddRecipient] = useState(false);
   const [proceed, setProceed] = useState(false);
   const [confirm, setConfirm] = useState(false);
-  const [receipt] = useState(false);
   const [errors, setErrors] = useState({});
   const [paymentSelected, setPaymentSelected] = useState(false);
   const [showPayment, setShowPayment] = useState(false);
   const [image, setImage] = useState("");
   const [paymentAmount, setPaymentAmount] = useState("");
   const [codes, setCodes] = useState(false);
+  const [plan, setPlan] = useState("");
+  const [purchaseStatus, setPurchaseStatus] = useState(null); // State to hold purchase status
+  const [loading, setLoading] = useState("");
+  const [proceedToShowReceipt] = useState(false);
+
+  useEffect(() => {
+    // Simulate async data loading
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+  }, []);
 
   const handleCodes = () => {
     setCodes(false);
@@ -72,51 +519,6 @@ const MtnDataTopUpBundle = () => {
     setPaymentSelected(true);
   };
 
-  const countryList = [
-    {
-      id: 1,
-      name: "Nigeria",
-      code: "NGN",
-      flag: require("../DataBundles-Images/ng.svg").default,
-      amount: 50000,
-    },
-    {
-      id: 2,
-      name: "United States",
-      code: "USD",
-      flag: require("../DataBundles-Images/us.svg").default,
-      amount: 0,
-    },
-    {
-      id: 3,
-      name: "United Kingdom",
-      code: "GBP",
-      flag: require("../DataBundles-Images/gb.svg").default,
-      amount: 0,
-    },
-    {
-      id: 4,
-      name: "European Union",
-      code: "EUR",
-      flag: require("../DataBundles-Images/eu.svg").default,
-      amount: 0,
-    },
-    {
-      id: 5,
-      name: "Australia",
-      code: "AUD",
-      flag: require("../DataBundles-Images/au.svg").default,
-      amount: 0,
-    },
-    {
-      id: 6,
-      name: "Kenya",
-      code: "KSH",
-      flag: require("../DataBundles-Images/ke.svg").default,
-      amount: 0,
-    },
-  ];
-
   const Payment = ({ code, flag, amount, onClick }) => {
     return (
       <li className={airtimestyles.netList} onClick={onClick}>
@@ -135,7 +537,7 @@ const MtnDataTopUpBundle = () => {
     toggleSideBar,
     inputPin,
     setInputPin,
-    inputPinHandler,
+    // inputPinHandler,
     toggleVisibility,
     isVisible,
   } = useContext(ContextProvider);
@@ -152,209 +554,11 @@ const MtnDataTopUpBundle = () => {
     setTransactSuccessPopUp(false);
   };
 
-  if (addRecipient) {
-    console.log("recipient added");
-  } else {
-    console.log("did not add recipient");
-  }
-
-  const productList = [
-    {
-      id: 1,
-      name: "MTN SME",
-      options: [
-        "MTN SME 500MB",
-        "MTN SME 1GB",
-        "MTN SME 2GB",
-        "MTN SME 3GB",
-        "MTN SME 4GB",
-        "MTN SME 5GB",
-        "MTN SME 10GB",
-      ],
-
-      amount: ["₦100", "₦200", "₦300", "₦500", "₦500", "₦800", "₦900"],
-
-      duration: [
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-      ],
-    },
-
-    {
-      id: 2,
-      name: "MTN SME2",
-      options: [
-        "MTN SME2 500MB",
-        "MTN SME2 1GB",
-        "MTN SME2 2GB",
-        "MTN SME2 3GB",
-        "MTN SME2 4GB",
-        "MTN SME2 5GB",
-        "MTN SME2 10GB",
-      ],
-      amount: ["₦1050", "₦2500", "₦3500", "₦5800", "₦5300", "₦8100", "₦9500"],
-
-      duration: [
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-      ],
-    },
-    {
-      id: 3,
-      name: "MTN CG",
-      options: [
-        "MTN CG 500MB",
-        "MTN CG 1GB",
-        "MTN CG 2GB",
-        "MTN CG 3GB",
-        "MTN CG 5GB",
-        "MTN CG 10GB",
-      ],
-
-      amount: ["₦1000", "₦2050", "₦3030", "₦5600", "₦8900", "₦1900"],
-
-      duration: [
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-      ],
-    },
-
-    {
-      id: 4,
-      name: "MTN GIFTING",
-      options: [
-        "MTN 100MB",
-        "MTN 200MB",
-        "MTN 300MB",
-        "MTN 500MB",
-        "MTN 1GB",
-        "MTN 2GB",
-        "MTN 3GB",
-        "MTN 5GB",
-        "MTN 10GB",
-        "MTN 15GB",
-        "MTN 20GB",
-        "MTN 50GB",
-        "MTN 75GB",
-        "MTN 120GB",
-      ],
-
-      amount: [
-        "₦1500",
-        "₦2200",
-        "₦3800",
-        "₦5200",
-        "₦5800",
-        "₦8500",
-        "₦9900",
-        "₦1060",
-        "₦2300",
-        "₦3800",
-        "₦5900",
-        "₦5300",
-        "₦8400",
-        "₦9000",
-      ],
-
-      duration: [
-        "1 MONTH",
-        "1 MONTH",
-        "6 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-      ],
-    },
-
-    {
-      id: 4,
-      name: "MTN DIRECT COUPON",
-      options: [
-        "MTN DIRECT COUPON 500MB",
-        "MTN DIRECT COUPON 750MB",
-        "MTN DIRECT COUPON 1GB",
-        "MTN DIRECT COUPON 1.5GB",
-        "MTN DIRECT COUPON 2GB",
-        "MTN DIRECT COUPON 3GB",
-        "MTN DIRECT COUPON 5GB",
-        "MTN DIRECT COUPON 10GB",
-      ],
-
-      amount: [
-        "₦1200",
-        "₦2200",
-        "₦3200",
-        "₦5200",
-        "₦5200",
-        "₦8200",
-        "₦9200",
-        "₦9000",
-      ],
-
-      duration: [
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-      ],
-    },
-
-    {
-      id: 3,
-      name: "MTN GENERAL BUNDLES ---",
-      options: [],
-      amount: [],
-
-      duration: [],
-    },
-  ];
-
-  const handleProceed = (e) => {
-    // setProceed(true);
-    // e.preventDefault();
-
-    const { error } = schema.validate({
-      recipientPhoneNumber,
-    });
-
-    if (error) {
-      setErrors(
-        error.details.reduce((acc, curr) => {
-          acc[curr.path[0]] = curr.message;
-          return acc;
-        }, {})
-      );
-    } else {
-      setProceed(true);
-      setErrors({});
-    }
-  };
+  // if (addRecipient) {
+  //   console.log("recipient added");
+  // } else {
+  //   console.log("did not add recipient");
+  // }
 
   const schema = Joi.object({
     recipientPhoneNumber: Joi.string()
@@ -372,7 +576,9 @@ const MtnDataTopUpBundle = () => {
     setShowOptionList(false);
   };
 
-  const handleSelectOption = (selectedOption, selectedAmount, duration) => {
+  const handleSelectOption = (selectedOption, selectedAmount, duration, id) => {
+    setPlan(id);
+    console.log(id);
     setSelectedOption(selectedOption);
     setShowOptionList(false);
     setSelectedAmount(selectedAmount);
@@ -381,23 +587,187 @@ const MtnDataTopUpBundle = () => {
 
   const [inputValue, setInputValue] = useState("");
 
-  const handleChange = (e) => {
-    const value = e.target.value;
+  // const proceedToShowReceipt = purchaseStatus === "paid" || purchaseStatus === "failed";
 
-    const numericValue = value.replace(/\D/g, "").slice(0, 11);
 
-    setInputValue(numericValue);
+  const mtnRegex =
+  /^(234|0)(703[0-9]|704[0-9]|706[0-9]|810[0-9]|813[0-9]|814[0-9]|816[0-9]|901[0-9]|903[0-9]|906[0-9]|913[0-9]|916[0-9])\d{6}$/;
+  
+  const validatePhoneNumber = (inputValue) => {
+    if (!inputValue) {
+      return "Phone number is required";
+    }
+  
+    if (!mtnRegex.test(inputValue)) {
+      return "Invalid MTN number. Please enter a valid MTN number.";
+      
+    }
+    console.log("its me")
+  
+    return null;
   };
 
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    const numericValue = value.replace(/\D/g, "").slice(0, 11);
+    setInputValue(numericValue);
+  
+    // Validate phone number if it's complete
+    if (numericValue.length === 11) {
+      const error = validatePhoneNumber(numericValue);
+      if (error) {
+        setErrors({ recipientPhoneNumber: error });
+      } else {
+        setErrors({});
+      }
+    } else {
+      // Clear any previous errors if the input length is less than 11
+      setErrors({});
+    }
+  };
+
+  const handleProceed = (e) => {
+
+    console.log(recipientPhoneNumber)
+    console.log(inputValue)
+
+
+
+    e.preventDefault();
+
+    function validateNigerianNumberByNetwork(inputValue) {
+        const networks = {
+            'MTN': ['0703', '0704', '0814', '0706', '0803', '0806', '0810', '0813', '0814', '0816', '0903', '0906', '0913', '0916'],
+        };
+
+        for (let network in networks) {
+            for (let prefix of networks[network]) {
+                if (inputValue.startsWith(prefix) && inputValue.length === prefix.length + 7) {
+                    return network;
+                }
+            }
+        }
+
+        return 'Unknown network';
+    }
+
+    const { error } = schema.validate({
+        recipientPhoneNumber,
+    });
+
+    if (error) {
+        setErrors(
+            error.details.reduce((acc, curr) => {
+                acc[curr.path[0]] = curr.message;
+                return acc;
+            }, {})
+        );
+    } else if (validateNigerianNumberByNetwork(recipientPhoneNumber) !== 'MTN') {
+        setErrors({
+            recipientPhoneNumber:
+                `Invalid MTN number. Please enter a valid MTN number.`,
+                
+        });
+        console.log("its me 2")
+    } else {
+        setProceed(true);
+        setErrors({});
+    }
+};
+  
   const handleRecipientNameChange = (e) => {
     setRecipientNames(e.target.value);
   };
 
+  // console.log("confirm:", confirm);
+
+
+    const [mtntransactionID, setMtnTransactionID] = useState("");
+    const [mtnorderID, setMtnOrderID] = useState("");
+    const [mtnrefNumber, setMtnRefNumber] = useState("");
+    const [mtndescription, setMtnDescription] = useState("");
+
+
   const handleReceipt = () => {
     setTransactSuccessPopUp(false);
+    // sendDataToBackend(1, recipientPhoneNumber, plan, recipientNames);
   };
 
-  console.log("confirm:", confirm);
+  const inputPinHandler = async () => {
+    async function buyData(network, mobileNumber, plan, name) {
+      const url = 'https://aremxyplug.onrender.com/api/v1/data';
+
+      const data = {
+        network,
+        mobile_number: mobileNumber,
+        plan,
+        name,
+      };
+
+
+      setLoading(true)
+
+
+      console.log(data)
+      console.log("its me")
+
+      try {
+          const response = await axios.post(url, data);
+          console.log(response.data);
+          console.log(response.status);
+          // setSelectedNetworkProduct(response.data.product)
+          // console.log(response.data.product)
+          setPlan(response.data.plan_name)
+          console.log(response.data.plan_name)
+          setInputValue(response.data.Phone_Number)
+          console.log(response.data.Phone_Number)
+          setRecipientPhoneNumber(data.Phone_number)
+          console.log(data.Phone_number)
+          console.log(inputValue)
+          console.log(recipientPhoneNumber)
+          setRecipientNames(response.data.Name)
+          console.log(response.data.Name)
+          setSelectedAmount(response.data.plan_amount)
+          console.log(response.data.plan_amount)
+          setMtnTransactionID(response.data.transaction_id)
+          console.log(response.data.transaction_id)
+          setMtnRefNumber(response.data.reference_number)
+          console.log(response.data.reference_number)
+          setMtnOrderID(response.data.order_id)
+          console.log(response.data.order_id)
+          setMtnDescription(response.data.description)
+          // console.log(response.data.description)
+          return { statusCode: response.status, data: response.data };
+          // console.log(response.data);
+      } catch (error) {
+          console.error(error);
+          return { statusCode: error.response.status, data: null };
+      }
+  }
+
+  // usage
+  const response = await buyData(
+    1, recipientPhoneNumber, plan, recipientNames
+  );
+
+  console.log(response)
+  console.log("its me 1")
+
+  setLoading(false)
+
+
+
+  setConfirm(false);
+  if (response.statusCode === 200) {
+      // Success response
+      setTransactSuccessPopUp(true); // Show success popup
+  } else {
+      // Failure response
+      setPurchaseStatus(true); // Show failure popup
+  }
+
+  };
 
   return (
     <DashBoardLayout>
@@ -497,7 +867,7 @@ const MtnDataTopUpBundle = () => {
           </div>
           <div className="flex gap-[15px]  justify-between md:w-full md:gap-[10%]">
             <div className="flex gap-[15px] md:w-[50%] md:justify-between">
-              <p className="flex text-[#7c7c7c] gap-[7px] text-[10px] md:gap-[7px] leading-[130%] md:text-[12px] lg:text-[20px] 2xl:text-[28px]">
+              <p className="flex text-[#7c7c7c] gap-[7px] text-[10px] md:gap-[7px] leading-[130%] md:text-[12px] lg:text-[16px] 2xl:text-[20px]">
                 Purchase
                 <span>
                   <img
@@ -522,10 +892,8 @@ const MtnDataTopUpBundle = () => {
               (
               <div
                 className={`code ${
-                  toggleSideBar
-                    ? "xl:w-[65%] xl:ml-[17%] lg:ml-[20%] lg:w-[40%]"
-                    : "lg:w-[40%]"
-                } w-[90%] xl:w-[80%] overflow-auto`}
+                  toggleSideBar ? "code1" : "code01"
+                } overflow-auto w-[90%]`}
               >
                 <img
                   onClick={() => setCodes(false)}
@@ -640,38 +1008,31 @@ const MtnDataTopUpBundle = () => {
                 <div className="border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[100]">
                   {productList
                     .find((item) => item.name === selectedNetworkProduct)
-                    ?.options.map((optionItem, index) => {
-                      const optionIndex = productList
-                        .find((item) => item.name === selectedNetworkProduct)
-                        ?.options.indexOf(optionItem);
+                    ?.options.map((option, index) => {
+                      const amount = option.amount;
+                      const duration = option.duration;
+                      const id = option.id;
 
-                      if (optionIndex !== -1) {
-                        const amount = productList.find(
-                          (item) => item.name === selectedNetworkProduct
-                        )?.amount[optionIndex];
-                        const duration = productList.find(
-                          (item) => item.name === selectedNetworkProduct
-                        )?.duration[optionIndex];
+                      return (
+                        <div
+                          key={option.id}
+                          className={`cursor-pointer border-b-[0.5px] md:rounded-[0px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
+                            selectedOption === option.id ? "bg-gray-200" : ""
+                          }`}
+                          onClick={() =>
+                            handleSelectOption(
+                              `${option.name} (${amount}) ~ ${duration}`,
+                              amount,
+                              duration,
+                              id, // Pass the id here
 
-                        return (
-                          <div
-                            key={index}
-                            className={`cursor-pointer border-b-[0.5px] md:rounded-[0px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
-                              selectedOption === optionItem ? "bg-gray-200" : ""
-                            }`}
-                            onClick={() =>
-                              handleSelectOption(
-                                `${optionItem} (${amount}) ~ ${duration}`,
-                                amount
-                              )
-                            }
-                          >
-                            {`${optionItem} (${amount}) ~ ${duration}`}
-                          </div>
-                        );
-                      }
-
-                      return null;
+                              console.log(id)
+                            )
+                          }
+                        >
+                          {`${option.name} (${amount}) ~ ${duration}`}
+                        </div>
+                      );
                     })}
                 </div>
               )}
@@ -680,7 +1041,11 @@ const MtnDataTopUpBundle = () => {
             <div className="">
               <h2 className="text-[10px] font-[600] md:text-[12px] lg:text-[18px]">
                 Phone Number{" "}
-                <span className="text-[#04177F]">(Select Recipient)</span>{" "}
+                <span className="text-[#04177F]">
+                  <Link to="/DataBundleSelectRecipient">
+                    (Select Recipient)
+                  </Link>
+                </span>{" "}
               </h2>
               <div className="relative mt-[5px]">
                 <input
@@ -701,13 +1066,13 @@ const MtnDataTopUpBundle = () => {
                   />
                 </div>
               </div>
-            </div>
 
-            {errors.recipientPhoneNumber && (
-              <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                {errors.recipientPhoneNumber}
-              </div>
-            )}
+              {errors.recipientPhoneNumber && (
+                <div className="text-[12px] text-red-500 italic lg:text-[14px]">
+                  {errors.recipientPhoneNumber}
+                </div>
+              )}
+            </div>
 
             <div className="">
               <h2 className="text-[10px] font-[600] md:text-[12px] lg:text-[18px]">
@@ -844,16 +1209,20 @@ const MtnDataTopUpBundle = () => {
 
           {/* ================Proceed=================== */}
 
+          {loading && (
+            <Modal>
+              <Spinner size="large" />
+            </Modal>
+          )}
+
           {proceed && (
             <Modal>
               <div
-                className={`confirm mx-[5%] ${
+                className={`scroll-bar ${
                   isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
                 } ${
-                  toggleSideBar
-                    ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
-                    : "lg:w-[40%]"
-                } lg:ml-[10%] lg:mr-[10%] grow pt-[10px] md:mt-[1%] mb-0 pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:mb-[18%] md:overflow-auto`}
+                  toggleSideBar ? "confirm01" : "confirm"
+                } grow pt-[10px] pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:overflow-auto`}
               >
                 <div className="w-full flex justify-end border-b-[6px] border-primary px-[12px] md:h-[25px] lg:border-b-[10px] lg:mt-[20px]">
                   <img
@@ -884,7 +1253,7 @@ const MtnDataTopUpBundle = () => {
                           <img
                             src={MtnLogo}
                             alt=""
-                            className="w-full h-full object-cover md:h-[15px]"
+                            className="w-full h-full object-cover md:h-[25px]"
                           />
                         </div>
                         <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
@@ -1009,73 +1378,147 @@ const MtnDataTopUpBundle = () => {
             </Modal>
           )}
 
+          {purchaseStatus && (
+            <Modal>
+              <div
+                className={` ${
+                  toggleSideBar ? "confirm02" : "confirm2"
+                } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
+              >
+                <div className="flex justify-end px-2">
+                  <img
+                    onClick={() => setPurchaseStatus(null)}
+                    className="cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[35px] lg:h-[35px] "
+                    src={Cancel}
+                    alt=""
+                  />
+                </div>
+
+                <hr className="h-[6px] bg-[#04177f] lg:mt-[2%] border-none mt-[2%] md:mt-[2%] md:h-[10px]" />
+                <div className="md:mt-[15%] lg:mt-[10%]">
+                  <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[8%] md:my-[5%] lg:my-[3%]">
+                    Transaction Failed
+                  </p>
+                  <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
+                    <img src={Failed} alt="" />
+                    <p className="text-[8px] md:text-[12px] text-[#04177f]">
+                      An unexpected error has occurred, please try again.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex justify-center items-center gap-[20px]">
+                  <button
+                    onClick={(e) => {
+                      // e.preventDefault();
+                      // setTransaction(false);
+                      setPurchaseStatus(null);
+                    }}
+                    className="bg-[#04177f] my-[%] w-[100px] cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[%] md:rounded-[8px] md:text-[16px] lg:w-[px] lg:h-[38px] lg:my-[2%]"
+                  >
+                    Done
+                  </button>
+                  
+                  <Link to="/MtnFailedReceipt"
+                  state={{
+                    networkName: "MTN",
+                    selectedNetworkProduct: selectedNetworkProduct,
+                    selectedOption: selectedOption,
+                    recipientPhoneNumber: recipientPhoneNumber,
+                    inputValue: inputValue,
+                    recipientNames: recipientNames,
+                    selectedAmount: selectedAmount,
+                    mtntransactionID: mtntransactionID,
+                    mtnrefNumber: mtnrefNumber,
+                    mtnorderID: mtnorderID,
+                    mtndescription: mtndescription,
+                }}
+                  
+                  >
+                    <button
+                      onClick={() => {
+                        // e.preventDefault();
+                        setPurchaseStatus(false);
+                      }}
+                      className="bg-white my-[%] w-[100px] cursor-pointer text-[10px] font-extrabold h-[px] rounded-[6px] md:w-[%] md:rounded-[8px] md:text-[16px] lg:w-[px] lg:h-[38px] lg:my-[2%]"
+                    >
+                      Receipt
+                    </button>
+                  </Link>
+                </div>
+              </div>
+            </Modal>
+          )}
+
           {confirm && (
             <Modal>
               <div
-                className={`confirm2 ${styles.inputPin} ${
-                  toggleSideBar
-                    ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
-                    : "lg:w-[40%]"
-                } md:w-[55%] w-[90%] md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
+                className={` ${
+                  toggleSideBar ? "confirm02" : "confirm2"
+                } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
               >
-                <img
-                  onClick={() => setConfirm(false)}
-                  className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[45px] lg:h-[45px] "
-                  src={Cancel}
-                  alt=""
-                />
+                <div className="flex justify-end px-2">
+                  <img
+                    onClick={() => setConfirm(false)}
+                    className="cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[35px] lg:h-[35px] "
+                    src={Cancel}
+                    alt=""
+                  />
+                </div>
 
-                <hr className="h-[6px] bg-[#04177f] lg:mt-[10%] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
-                <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[8%] lg:my-[%]">
-                  Input PIN to complete transaction
-                </p>
-                <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
-                  <div className=" flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
-                    {" "}
-                    {isVisible ? (
-                      <OtpInput
-                        value={inputPin}
-                        inputType="tel"
-                        onChange={setInputPin}
-                        numInputs={4}
-                        shouldAutoFocus={true}
-                        inputStyle={{
-                          color: "#403f3f",
-                          width: 30,
-                          height: 30,
-                          borderRadius: 3,
-                        }}
-                        renderInput={(props) => (
-                          <input {...props} className="inputOTP mx-[3px]" />
-                        )}
-                      />
-                    ) : (
-                      <div className="text-[24px] md:text-[24px] mt-1">
-                        * * * *{" "}
-                      </div>
-                    )}
-                    <div
-                      className="text-[#0003] text-xl md:text-3xl"
-                      onClick={toggleVisibility}
-                    >
-                      {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
-                    </div>
-                  </div>
-                  <p className="text-[8px] md:text-[12px] text-[#04177f]">
-                    Forgot Pin ?
+                <hr className="h-[6px] bg-[#04177f] lg:mt-[2%] border-none mt-[2%] md:mt-[2%] md:h-[10px]" />
+                <div className="md:mt-[15%] lg:mt-[10%]">
+                  <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[8%] md:my-[5%] lg:my-[3%]">
+                    Input PIN to complete transaction
                   </p>
+                  <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
+                    <div className=" flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
+                      {" "}
+                      {isVisible ? (
+                        <OtpInput
+                          value={inputPin}
+                          inputType="tel"
+                          onChange={setInputPin}
+                          numInputs={4}
+                          shouldAutoFocus={true}
+                          inputStyle={{
+                            color: "#403f3f",
+                            width: 30,
+                            height: 30,
+                            borderRadius: 3,
+                          }}
+                          renderInput={(props) => (
+                            <input {...props} className="inputOTP mx-[3px]" />
+                          )}
+                        />
+                      ) : (
+                        <div className="text-[24px] md:text-[24px] mt-1">
+                          * * * *{" "}
+                        </div>
+                      )}
+                      <div
+                        className="text-[#0003] text-xl md:text-3xl"
+                        onClick={toggleVisibility}
+                      >
+                        {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
+                      </div>
+                    </div>
+                    <p className="text-[8px] md:text-[12px] text-[#04177f]">
+                      Forgot Pin ?
+                    </p>
+                  </div>
                 </div>
 
                 <button
                   onClick={(e) => {
                     e.preventDefault();
                     setConfirm(false);
-                    inputPinHandler(e);
+                    inputPinHandler();
                   }}
                   disabled={inputPin.length !== 4}
                   className={`${
                     inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
-                  } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                  } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
                 >
                   Purchase
                 </button>
@@ -1087,11 +1530,9 @@ const MtnDataTopUpBundle = () => {
             <Modal>
               {/* <DataBundleFailedPopUp/> */}
               <div
-                className={`confirm ${styles.successfulTwo} ${
-                  toggleSideBar
-                    ? "md:w-[45%] md:ml-[20%] lg:ml-[20%] lg:w-[40%]"
-                    : "lg:w-[40%]"
-                } md:w-[45%] w-[90%] md:my-auto md:mt-[.5%] mx-auto overflow-auto md:mb-[18%] lg:mx-auto lg:my-auto`}
+                className={`scroll-bar ${
+                  toggleSideBar ? "confirm01 w-[90%]" : "confirm w-[90%]"
+                } bg-white rounded-[12px] md:my-auto mx-auto overflow-auto lg:mx-auto lg:my-auto`}
               >
                 <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
                   <img
@@ -1119,7 +1560,7 @@ const MtnDataTopUpBundle = () => {
                   Purchase Successful
                 </h2>
                 <img
-                  className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[250px] lg:h-[250px]"
+                  className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[100px] lg:h-[100px]"
                   src="./Gif/checkMarkGif.gif"
                   alt="/"
                 />
@@ -1201,7 +1642,7 @@ const MtnDataTopUpBundle = () => {
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        {selectedAmount}
+                      &#8358;{selectedAmount}
                       </h2>
                     </div>
                   </div>
@@ -1223,7 +1664,7 @@ const MtnDataTopUpBundle = () => {
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        0124yend44
+                        {mtnorderID}
                       </h2>
                     </div>
                   </div>
@@ -1237,7 +1678,7 @@ const MtnDataTopUpBundle = () => {
                     contact us for any further assistance.
                   </p>
                 </div>
-                <div className="flex w-full justify-center mx-auto px-[50px] items-center gap-[5%] md:gap-[10%] mt-[50px] md:w-[50%] lg:gap-[10%] lg:mx-auto  lg:my-[5%] md:mt-[40px]">
+                <div className="flex w-full justify-center mx-auto px-[50px] items-center gap-[5%] md:gap-[10%] mt-[30px] md:w-[50%] lg:gap-[10%] lg:mx-auto  lg:my-[5%] md:mt-[40px]">
                   <Link to="/MtnDataTopUpBundle">
                     <button
                       onClick={() => {
@@ -1250,7 +1691,18 @@ const MtnDataTopUpBundle = () => {
                     </button>
                   </Link>
 
-                  <Link to="/MtnReceipt">
+                  <Link to="/MtnReceipt" state={{
+                                        selectedNetworkProduct: selectedNetworkProduct,
+                                        inputValue: inputValue,
+                                        recipientPhoneNumber: recipientPhoneNumber,
+                                        selectedOption: selectedOption,
+                                        recipientNames: recipientNames,
+                                        selectedAmount: selectedAmount,
+                                        mtntransactionID: mtntransactionID,
+                                        mtnrefNumber: mtnrefNumber,
+                                        mtnorderID: mtnorderID,
+                                        mtndescription: mtndescription,
+                                    }}>
                     <button
                       onClick={handleReceipt}
                       className={`border-[1px] w-[100px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-[600] h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[12px] lg:w-[163px] lg:h-[38px] lg:my-[2%] md:px-[60px] md:h-[30px]`}
@@ -1262,16 +1714,34 @@ const MtnDataTopUpBundle = () => {
               </div>
             </Modal>
           )}
-
-          {receipt && (
+          
+          {proceedToShowReceipt && (
             <MtnReceipt
-              networkName="MTN"
-              selectedOption={selectedOption}
-              selectedNetworkProduct={selectedNetworkProduct}
-              recipientNumber={inputValue}
-              selectedAmount={selectedAmount}
-              recipientNames={recipientNames}
-              walletName={walletName}
+            networkName='MTN'
+            selectedNetworkProduct={selectedNetworkProduct}
+            recipientPhoneNumber={recipientPhoneNumber}
+            inputValue={inputValue}
+            recipientNames={recipientNames}
+            selectedAmount={selectedAmount}
+            mtntransactionID={mtntransactionID}
+            mtnrefNumber={mtnrefNumber}
+            mtnorderID={mtnorderID}
+            mtndescription={mtndescription}
+            />
+          )}
+
+{proceedToShowReceipt && (
+            <MtnFailedReceipt
+            networkName='MTN'
+            selectedNetworkProduct={selectedNetworkProduct}
+            recipientPhoneNumber={recipientPhoneNumber}
+            inputValue={inputValue}
+            recipientNames={recipientNames}
+            selectedAmount={selectedAmount}
+            mtntransactionID={mtntransactionID}
+            mtnrefNumber={mtnrefNumber}
+            mtnorderID={mtnorderID}
+            mtndescription={mtndescription}
             />
           )}
 

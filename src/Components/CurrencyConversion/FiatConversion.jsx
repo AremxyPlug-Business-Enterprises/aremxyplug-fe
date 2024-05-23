@@ -185,7 +185,7 @@ const FiatConversion = () => {
                 <p>Sender</p>
                 <img
                   className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                  src="./Images/Dashboardimages/arrowright.png"
+                  src="./Images/dashboardImages/arrowright.png"
                   alt="/"
                 />
               </div>
@@ -222,7 +222,7 @@ const FiatConversion = () => {
                 <p>To Recipient</p>
                 <img
                   className="w-[15px] h-[15px] md:h-[24px] md:w-[24px] lg:w-[20px] lg:h-[20px]"
-                  src="./Images/Dashboardimages/arrowright.png"
+                  src="./Images/dashboardImages/arrowright.png"
                   alt="/"
                 />
               </div>
@@ -327,15 +327,14 @@ const FiatConversion = () => {
                 </div>
 
                 
-                <div className={`flex gap-[15px] justify-center items-center mt-[68%] md:mt-[38%] lg:mt-[26%] max-[760px]:pb-[60px]`}>
-                    <div className="font-medium text-[10px] md:text-[12px] lg:text-[14px]">
-                      You need help ?</div>
-                    <Link to="/ContactUs">
-                       <div className="bluebutton flex bg-[#04177f] text-[8.5px] md:text-[8.5px] lg:text-[12px] text-white">
-                         <p className="self-center mx-auto align-middle">Contact Us</p>
-                       </div>
-                    </Link>
-               </div>
+                <footer className="flex justify-center text-center pb-[10%] gap-[20px] mt-[200px]  md:mt-[750px]  lg:mt-[850px]">
+             <div className="font-medium text-[10px] md:text-[10px] lg:text-[15px] self-center">You need help ?</div>
+             <Link to="/ContactUs">
+               <div className="bluebutton flex bg-[#04177f] text-[8.5px] md:text-[8.5px] lg:text-[12px] text-white">
+                 <p className="self-center mx-auto align-middle">Contact Us</p>
+                </div>
+              </Link>
+          </footer>
         </div>
 
         {confirm &&

@@ -9,7 +9,7 @@ export const ConfirmOtherWithdrawalPopUp = () => {
   const {
     toggleSideBar,
     transferFee,
-    image,
+    withdrawImage,
     otherWithdrawalConfirmation,
     setOtherWithdrawalConfirmation,
     amtToWithdraw,
@@ -96,7 +96,11 @@ export const ConfirmOtherWithdrawalPopUp = () => {
             <div className="bg-[#0001] h-[45px] my-5 flex justify-between items-center px-[4%]">
               <div className="flex gap-2 items-center">
                 <div className="bg-white rounded-full h-[27px] w-[27px] flex justify-center items-center">
-                  <img className="w-[16px] h-[16px]" src={image} alt="/" />
+                  <img
+                    className="w-[16px] h-[16px]"
+                    src={withdrawImage}
+                    alt="/"
+                  />
                 </div>
                 <p className="text-[10px] md:text-[14px]  lg:text-[16px]">
                   Available Balance{" "}
@@ -105,7 +109,7 @@ export const ConfirmOtherWithdrawalPopUp = () => {
               </div>
               <img
                 className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                src="./Images/Dashboardimages/arrowright.png"
+                src="./Images/dashboardImages/arrowright.png"
                 alt="/"
               />
             </div>

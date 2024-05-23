@@ -6,25 +6,40 @@ import { DashBoardLayout } from "../../Layout/DashBoardLayout";
 import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-import logo2 from "../ElectricitySubscription/Electricity-sub-images/BEDC-Logo-new-dark-1 1.svg"
+import logo2 from "../ElectricitySubscription/Electricity-sub-images/BEDC-Logo-new-dark-1 1.svg";
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export const BedcReceipt = () => {
+
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { selectedNetworkProduct, meterNumber, phoneNumber, ikedcEmail, ikedcamount, serviceID, orderId, transactionId, showDescription, billGenerate  } = location.state
+
   const {
     toggleSideBar,
     isDarkMode,
-    date,
-    selectedNetworkProduct,
-    ikedcamount,
-    meterNumber,
-    verifiedName,
-    ikedcEmail,
-    phoneNumber,
-    
+    date,   
+    verifiedName, 
+    setSelectedNetworkProduct,
+    setMeterNumber,
+    setVerifiedName,
+    setPhoneNumber,
+    setEmail,
+    setIkedcamount,
+    setGlobalCountry,
+    setFlag,
   } = useContext(ContextProvider);
 
-  const handleClear = () =>{
-    selectedNetworkProduct('');
-    
+  function handleClick() {
+    setSelectedNetworkProduct("");
+    setMeterNumber("");
+    setVerifiedName("");
+    setPhoneNumber("");
+    setEmail("");
+    setIkedcamount("");
+    setGlobalCountry("");
+    setFlag("");
+    navigate('/electricity-subscription');
   }
 
   const contentRef = useRef(null);
@@ -67,21 +82,21 @@ export const BedcReceipt = () => {
           } w-full lg:mx-auto`}
         >
           <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
-            <Link onClick={handleClear} to="/electricity-subscription">
+            <Link to="/">
               <img
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[29px]"
                 src="/Images/login/arpLogo.png"
                 alt=""
               />
             </Link>
-            <Link onClick={handleClear} to="/electricity-subscription">
+            <div onClick={handleClick}>
               {" "}
               <img
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
               />
-            </Link>
+            </div>
           </div>
           <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
           <div ref={contentRef}>
@@ -99,7 +114,7 @@ export const BedcReceipt = () => {
             <h3 className="font-extrabold text-[12px] mt-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
               Purchase Successful on
             </h3>
-            <span className="text-[8px] text-[#0008] pt-1 font-extrabold flex justify-center items-center">
+            <span className="text-[8px] md:text-[12px] text-[#0008] pt-1 font-extrabold flex justify-center items-center">
               {date.toLocaleDateString(undefined, {
                 year: "numeric",
                 month: "long",
@@ -110,18 +125,13 @@ export const BedcReceipt = () => {
                 hour12: true,
               })}
             </span>
-            <p className="text-[8px] lg:text-[16px] font-[500] text-[#000] text-center mb-2 md:text-[14px] ">
-              You have successfully Purchased{" "}
-              <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
-               Ikeja {selectedNetworkProduct} Meter
-              </span>{" "}
-             <br></br>
-              <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
-                ({ikedcamount}){" "}
+            <p className="text-[9px] text-[#27AE60] bg-[#D5F6E3] rounded-[11px] border-2 border-[#27AE60] py-[5px] px-[2px] text-center mx-[5px] lg:mx-[150px] md:mx-[100px] my-2 md:text-[14px] lg:text-[14px]">
+              You have successfully purchased{" "}
+              <span className="text-[#000] font-extrabold text-[10px] md:text-[14px]">
+              Benin {selectedNetworkProduct} Meter &#8358;{ikedcamount}.00{" "}
               </span>
-              From your NGN Nigerian Wallet to{" "}
+              from your NGN wallet to{" "}
             </p>
-
 
             <div className="flex flex-col gap-5">
               {/* ========================Recipient Info================== */}
@@ -130,7 +140,7 @@ export const BedcReceipt = () => {
                   <p>Recepient Info</p>
                   <img
                     className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                    src="./Images/Dashboardimages/arrowright.png"
+                    src="./Images/dashboardImages/arrowright.png"
                     alt="/"
                   />
                 </div>
@@ -139,7 +149,7 @@ export const BedcReceipt = () => {
                 <p className="text-[#7C7C7C] font-[500]">Disco Type</p>
                 <span className="flex items-center gap-1 ">
                   <div><img className="w-[30px]" src={logo2} alt="" /></div>
-                  <div>Benin-BEDC</div>
+                  <div>{serviceID}</div>
                   </span>
               </div>
               <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -158,7 +168,7 @@ export const BedcReceipt = () => {
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Phone Number</p>
-                <span>{phoneNumber}</span>
+                <span>0{phoneNumber}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Email</p>
@@ -166,7 +176,7 @@ export const BedcReceipt = () => {
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Amount</p>
-                <span>{ikedcamount}</span>
+                <span>&#8358;{ikedcamount}</span>
               </div>
               
             </div>
@@ -174,7 +184,7 @@ export const BedcReceipt = () => {
                   <p>Sender Info</p>
                   <img
                     className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                    src="./Images/Dashboardimages/arrowright.png"
+                    src="./Images/dashboardImages/arrowright.png"
                     alt="/"
                   />
                 </div>
@@ -204,7 +214,7 @@ export const BedcReceipt = () => {
                   <p>Transaction Info</p>
                   <img
                     className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                    src="./Images/Dashboardimages/arrowright.png"
+                    src="./Images/dashboardImages/arrowright.png"
                     alt="/"
                   />
                 </div>
@@ -214,19 +224,19 @@ export const BedcReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Description</p>
-                  <span>Benin {selectedNetworkProduct} </span>
+                  <span>{showDescription}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Bill / Token Generated</p>
-                  <span>Instantly</span>
+                  <span>{billGenerate}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Order Number</p>
-                  <span>1256478999</span>
+                  <span>{orderId}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Transaction ID</p>
-                  <span>0331njokdhtf55</span>
+                  <span>{transactionId}</span>
                 </div>
                 
               </div>

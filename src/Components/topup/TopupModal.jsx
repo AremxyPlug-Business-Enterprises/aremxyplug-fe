@@ -9,7 +9,6 @@ const TopupModal = ({children}) => {
   return (
     <div className={`fixed top-0 left-0 w-full h-full bg-black/[0.3] z-[300] flex justify-center items-center ${toggleSideBar ? "md:pl-[20%]":""}`}>
       {children}
-     
     </div>
   );
 }

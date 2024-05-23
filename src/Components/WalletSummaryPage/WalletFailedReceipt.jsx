@@ -10,12 +10,12 @@ import { useRef } from "react";
 export const WalletFailedReceipt = () => { 
 
   const {
-    selectedNetworkProduct,
+    // selectedNetworkProduct,
     selectedOption,
-    recipientPhoneNumber,
-    recipientNames,
-    selectedAmount,
-    walletName,
+    // recipientPhoneNumber,
+    // recipientNames,
+    // selectedAmount,
+    // walletName,
     setSelectedNetworkProduct,
     setSelectedOption,
     setSelectedAmount,
@@ -121,7 +121,9 @@ export const WalletFailedReceipt = () => {
                 hour12: true,
               })}
             </span>
-            <p className="text-[9px] text-[#0008] px-[20px] text-center my-2 md:text-[14px] lg:text-[14px]">
+            <div className="border rounded-[8px] border-red-500 bg-red-200 mx-4 h-[45px] my-5 flex justify-center items-center px-[4%] md:h-[65px] lg:h-[75px]">
+            
+            <p className="text-[9px] text-red-500 px-[20px] text-center my-2 md:text-[14px] lg:text-[14px]">
             Purchase Failed due to an unexpected error that occured. Please try again.
 {" "}
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[16px]">
@@ -129,6 +131,7 @@ export const WalletFailedReceipt = () => {
               </span>
               {/* from your {walletName + " Wallet"} to{" "} */}
             </p>
+            </div>
             <div className="flex flex-col gap-3">
               {/* ========================Recipient Info================== */}
               <div className="flex flex-col gap-[3px] w-[90%] mx-auto lg:gap-[5px]">
@@ -136,7 +139,7 @@ export const WalletFailedReceipt = () => {
                   <p>Recipient Info</p>
                   <img
                     className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                    src="./Images/Dashboardimages/arrowright.png"
+                    src="./Images/dashboardImages/arrowright.png"
                     alt="/"
                   />
                 </div>
@@ -146,19 +149,20 @@ export const WalletFailedReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Product</p>
-                  <span>{selectedNetworkProduct}</span>
-                </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Recipient Name</p>
-                  <span>{recipientNames}</span>
+                  <span>MTN VTU</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Phone Number</p>
-                  <span>{recipientPhoneNumber}</span>
+                  <span>7741235545</span>
+                </div>
+
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                  <p className="text-[#0008]">Recipient Name</p>
+                  <span>Pranay</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Amount</p>
-                  <span>{selectedAmount}</span>
+                  <span>₦10,000.00</span>
                 </div>            
               </div>
 
@@ -168,7 +172,7 @@ export const WalletFailedReceipt = () => {
                   <p>Sender Info</p>
                   <img
                     className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                    src="./Images/Dashboardimages/arrowright.png"
+                    src="./Images/dashboardImages/arrowright.png"
                     alt="/"
                   />
                 </div>
@@ -178,7 +182,7 @@ export const WalletFailedReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Wallet Type</p>
-                  <span>{walletName + " Wallet"}</span>
+                  <span>Nigerian NGN Wallet</span>
                 </div>
               </div>
 
@@ -188,26 +192,31 @@ export const WalletFailedReceipt = () => {
                   <p>Transaction Info</p>
                   <img
                     className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                    src="./Images/Dashboardimages/arrowright.png"
+                    src="./Images/dashboardImages/arrowright.png"
                     alt="/"
                   />
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Product</p>
-                  <span>{selectedNetworkProduct}</span>
+                  <span>MTN VTU</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Description</p>
-                  <span>Data  Top-up</span>
+                  <span>Airtime Top-up</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Order Number</p>
-                  <span>1256464564</span>
+                  <span>1256478999</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Transaction ID</p>
                   <span>0331njokdhtf55</span>
                 </div>
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                  <p className="text-[#0008]">Reference Number</p>
+                  <span>235488526097423118APDA</span>
+                </div>
+
               </div>
             </div>
             <div className="rounded-[8px] bg-[#E2F3FF] mx-4 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">

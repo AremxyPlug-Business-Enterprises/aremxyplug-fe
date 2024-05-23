@@ -80,7 +80,7 @@ export const InternationalDetail = () => {
                     onChange={handleInternationalInputChange}
                     name="accountNumber"
                     value={internationalDetails.accountNumber}
-                    className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
+                    className={`${styles.hideArrows} text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]`}
                     type="number"
                   />
                 </div>

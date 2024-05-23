@@ -1,9 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { DashBoardLayout } from '../../Dashboard/Layout/DashBoardLayout';
 import { Link } from 'react-router-dom';
-
 import { ContextProvider } from '../../Context';
-import TopupModal from '../../topup/TopupModal';
+import CurrencyConversionModal from '../../CurrencyConversion/CurrencyConversionModal';
  
 
 const VirtualAccount = () => {
@@ -69,19 +68,13 @@ const VirtualAccount = () => {
         <div className='flex flex-col justify-between h-full'>
          
           <div>
-               {/* HERO HEADER STARTS HERE */}
-            <div className="w-full h-[65.33px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] items-center flex px-[16px] lg:px-[50px] justify-around lg:rounded-[20px]"
-            style={{
-                backgroundColor: "#ffada7"
-            }}
-            >
+            {/* HERO HEADER STARTS HERE */}
+            <div className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] bg-[#ff4343]/[0.5] flex px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px] bg-[#ffada7]">
               <div className='py-[13px] lg:py-[40px]'>
-                <h2 className='text-[#000] text-[8px] md:text-[13.75px] md:leading-[20.63px] font-bold mb-2 lg:text-[24px] lg:mb-4'>GLOBAL VIRTUAL ACCOUNTS</h2>
-                <h2 className='text-[#000] text-[6.6px] md:text-[11.46px] md:leading-[15px] lg:text-[20px] lg:leading-[26px] mb-3'>Please select the wallet currency to view the account details.
-
-</h2>
+                <h2 className='text-[10px] md:text-[13.75px] font-bold mb-3 lg:text-[24px] lg:mb-4'>GLOBAL VIRTUAL ACCOUNTS</h2>
+                <h2 className='text-[7px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3'>Please select the wallet currency to view the account details.</h2>
               </div>
-              <div className='h-[90%] ml-[15px]'>
+              <div className='h-[66px] lg:h-[170px]'>
                 <img src='./Images/virtual-account/cloud.png' alt="" className='h-full'/>
               </div>
             </div>
@@ -106,13 +99,11 @@ const VirtualAccount = () => {
 
             </div>
 
-
-    
             <div className="mt-[25.39px] md:mt-[35px] lg:mt-[60px] px-2 py-2 flex flex-col gap-2" style={{boxShadow: `0px 0px 6.666667461395264px 0px rgba(0, 0, 0, 0.25)`}}>
               <div className='flex justify-between items-baseline font-bold text-[8px] leading-[12px] md:text-[9.17px] md:leading-[11.92px] border-b py-1 lg:text-[16px] lg:leading-[24px]'>
                 <h2 className='font-bold'>Country</h2>
                 <h2 className='font-bold'>Currency</h2>
-                <h2 className='font-bold'>Balance</h2>
+                <h2 className='font-bold'>Account</h2>
               </div>
               <div className="flex flex-col gap-2">
                 {countryList.map((country) => (
@@ -120,8 +111,8 @@ const VirtualAccount = () => {
                   key={country.id} 
                   to={`${country.code === "NGN" ? "/ngn-virtual-account": "" }`}
                   onClick={() => country.code !== "NGN" && setShowCryptoModal1(true)}
+                  className="grid grid-cols-3 text-[7px] leading-[10.5px] pb-[8px] md:text-[10px] md:leading-[15px] border-b last:border-b-0 last:pb-0 lg:text-[16px] lg:leading-[24px] cursor-pointer lg:pb-3 lg:pt-2"
                   >
-                  <div className="grid grid-cols-3 text-[7px] leading-[10.5px] pb-[8px] md:text-[10px] md:leading-[15px] border-b last:border-b-0 last:pb-0 lg:text-[16px] lg:leading-[24px] cursor-pointer lg:pb-3 lg:pt-2">
                     <h2 className='text-slate-400'>{country.name}</h2>
                     <div className='flex gap-1 items-center justify-center lg:gap-2' >
                       <div className='w-[10px] h-[10px] md:w-[15px] md:h-[15px] lg:w-[20px] lg:h-[20px] rounded-full overflow-hidden flex items-center justify-center'>
@@ -132,14 +123,9 @@ const VirtualAccount = () => {
                     <div className='flex gap-1 justify-end items-center text-slate-400'>
                       <h2>Account</h2>
                       <button >
-                      <img
-              src="Images/top_up/arrowR.png"
-              alt=" "
-              className="ml-[1%] w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-            />
+                        <img src="Images/top_up/arrowR.png" alt=" " className="ml-[1%] w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]" />
                       </button>
                     </div>
-                  </div>
                   </Link>
                 ))}
               </div>
@@ -178,9 +164,7 @@ const VirtualAccount = () => {
               </Link>
             </div>
         </div>
-      
-      
-        {showCryptoModal1 && (
+        {/* {showCryptoModal1 && (
           <TopupModal>
             <div className={`${isDarkMode ? "bg-[#000] border":"bg-[#fff]"} w-[90%] md:w-[70%] lg:w-[50%] pb-[33px] rounded-[8px] md:rounded-[11.5px]`} >
               <h2 className="text-center text-[10px] leading-[15px] mb-[10px] font-semibold md:text-[12px] md:leading-[18px] lg:text-base lg:leading-[24px] text-primary
@@ -214,8 +198,15 @@ const VirtualAccount = () => {
 
             </div>
           </TopupModal>
-        )}
-      
+        )} */}
+        { showCryptoModal1 && 
+          <CurrencyConversionModal
+            title={'Global Virtual Accounts'}
+            tag={'This Currency is Currently Not Available.'}
+            image={'./Images/virtual-account/phone.png'}
+            onClick={() => setShowCryptoModal1((prev) => !prev)}
+          />
+        }
     </DashBoardLayout>
   );
 }

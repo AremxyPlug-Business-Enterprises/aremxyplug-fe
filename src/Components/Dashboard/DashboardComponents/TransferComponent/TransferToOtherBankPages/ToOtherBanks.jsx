@@ -16,7 +16,7 @@ export const ToOtherBanks = () => {
 
   return (
     <DashBoardLayout>
-      <div className="flex flex-col justify-between lg:gap-[200px] lg:h-full">
+      <div className="flex flex-col justify-between  lg:h-[100%] md:h-[115%] h-[150%] "> 
         <div className="">
           <div
             style={{
@@ -34,7 +34,7 @@ export const ToOtherBanks = () => {
                 without any hassle or hidden fee.
               </h2>
             </div>
-            <div className="w-[91px] h-[66px] lg:w-[199px] lg:h-[199px]">
+            <div className="w-[91px] h-[66px] lg:w-[190px] lg:h-[160px]">
               <img
                 src="./Images/transferImages/ToMyAcc.png"
                 alt=""
@@ -46,7 +46,7 @@ export const ToOtherBanks = () => {
             <p>Select Transfer type </p>
             <img
               className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-              src="./Images/Dashboardimages/arrowright.png"
+              src="./Images/dashboardImages/arrowright.png"
               alt="/"
             />
           </div>
@@ -85,7 +85,8 @@ export const ToOtherBanks = () => {
           {globalTransfer && <GlobalTransfer />}
           {internationalTransfer && <InternationalTransfer />}
         </div>
-        <div className="flex gap-[15px] justify-center items-center lg:my-10">
+        <div className="flex gap-[15px] justify-center items-center  lg:pb-[0px]  
+         md:pb-[40px] pt-[50px]  pb-[50px]">
           <div className="text-[8px] md:text-[12px] lg:text-[16px]">
             You need help ?
           </div>

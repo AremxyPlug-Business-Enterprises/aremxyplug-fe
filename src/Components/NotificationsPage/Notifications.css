@@ -1,0 +1,10 @@
+.firstBox {
+background-image: url("./assets/firstbox.svg");
+height: 900px;
+width: 100%;
+background-size: contain;
+background-position: contain;
+background-repeat: no-repeat;
+
+}
+

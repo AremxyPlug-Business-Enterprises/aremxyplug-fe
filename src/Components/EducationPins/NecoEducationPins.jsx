@@ -5,7 +5,7 @@ import HeroComponent from './heroComponent';
 import NecoImg from '../EducationPins/imagesEducation/Neco_official_banner 1.svg';
 import arrowRight from "../EducationPins/imagesEducation/educationArrowRight.svg";
 import arrowDown from '../EducationPins/imagesEducation/arrow-down.svg';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import nigerianFlag from './imagesEducation/Nigeriaflag.svg';
 import americaFlag from './imagesEducation/Usa.svg';
@@ -23,6 +23,9 @@ import { AiFillEye } from "react-icons/ai";
  import { Modal } from '../Screens/Modal/Modal';
  import AremxyPlugIcon from './imagesEducation/AremxyPlug.svg';
 import NecoReceipt from './ReceiptEducationPins/necoReceipt';
+import axios from 'axios';
+import eduFailed from "./imagesEducation/WaecFailedTransaction.svg";
+import '../Dashboard/DashboardComponents/DataTopUpPage/DataTopUp.css'
 
 export default function NecoEducationPins() {
   const { isDarkMode } = useContext(ContextProvider);
@@ -45,6 +48,7 @@ const [necoEducationProceed, setNecoEducationProceed] = useState(false);
 const [errors, setErrors] = useState({});
 const [necoEducationConfirm, setNecoEducationConfirm] = useState(false);
 const [receipt] = useState(false);
+const [necoFailedTransaction, setNecoFailedTransaction] = useState(false);
 
 
 //==========  QUANTITY RESULT SLIP CHECKERS ==============
@@ -53,11 +57,11 @@ function necoQuantityDropDown(){
 document.querySelector('.imgdrop').classList.toggle('DropIt');
 }
 const necoOptions = [
-  {quantity :  '1 Piece Of Result Checker', Amount : "₦100", id : 1},
-  {quantity :  '2 Piece Of Result Checker', Amount : "₦200", id : 2},
-  {quantity :  '3 Piece Of Result Checker', Amount : "₦300", id : 3},
-  {quantity :  '4 Piece Of Result Checker', Amount : "₦400", id : 4},
-  {quantity :  '5 Piece Of Result Checker', Amount : "₦500", id : 5}
+  {quantity :  '1 Piece Of Result Checker', Amount : "₦1200", id : 1},
+  {quantity :  '2 Piece Of Result Checker', Amount : "₦2400", id : 2},
+  {quantity :  '3 Piece Of Result Checker', Amount : "₦3600", id : 3},
+  {quantity :  '4 Piece Of Result Checker', Amount : "₦4800", id : 4},
+  {quantity :  '5 Piece Of Result Checker', Amount : "₦6000", id : 5}
 ]
 
 
@@ -69,7 +73,7 @@ function necoMethodDropDown(){
 document.querySelector('.methodDrop').classList.toggle('DropIt');
 }
 const [necoMethodOptions,setNecoMethodOptions] = useState([
- {method : 'NGN Wallet', balance :" (50,000.00)", flag : nigerianFlag, id : 1},
+ {method : 'NGN Wallet', balance :" (0.00)", flag : nigerianFlag, id : 1},
 {method : 'USD Wallet ', balance :'(0.00)', flag : americaFlag, id : 2 },
 {method : 'EUR Wallet', balance :'(0.00)', flag : britainFlag, id : 3 },
 {method :  'GBP Wallet', balance :'(0.00)', flag : euroFlag, id : 4 },
@@ -79,9 +83,9 @@ const [necoMethodOptions,setNecoMethodOptions] = useState([
 
 // CONFIRM EXAM TYPE
 const necoExams  = [
-{ examType :'NECO (₦100)',  id : 1},
-  { examType :'WAEC (₦100)', path :  "/WaecEducationPin", id : 2 },
-  { examType :'NABTEB (₦100)', path : "/NabtebEducationPin", id : 3 },
+{ examType :'NECO',  id : 1},
+  { examType :'WAEC (₦3400)', path :  "/WaecEducationPin", id : 2 },
+  { examType :'NABTEB (₦1000)', path : "/NabtebEducationPin", id : 3 },
 { examType :'JAMB (₦100)', path : "/JambEducationPin", id : 4 }
  ]
 function necoExamDropDown(){
@@ -93,7 +97,6 @@ const {
   toggleSideBar,
   inputPin,
   setInputPin,
-  inputPinHandler,
   toggleVisibility,
   isVisible,
 } = useContext(ContextProvider);
@@ -143,12 +146,69 @@ const waecTransactionSuccessClose = () => {
 const necoReceipt = () => {
   setTransactSuccessPopUp(false);
 };
+const necoEduPinSuccess= (e) =>{
+  setTransactSuccessPopUp(true);
+  setNecoEducationConfirm(false);
+  setInputPin("");
+}
+const necoEduPinFailed = ()=> {
+  setNecoEducationConfirm(false);
+  setNecoFailedTransaction(true);
+  setInputPin('');
+}
+const handleNecoSubmitPost = async(e) => {
+  e.preventDefault();
+  try{
+    const sendNecoForm ={
+     exam_type : necoExamType.toLowerCase(),
+      quantity :  parseInt(necoQuantityResult.slice(0,1)),
+      phone_no : necoEducationPinPhone,
+      email : necoEducationPinEmail,
+       amount : necoEducationAmount.slice(1),
+      wallet_type: '',
+     }
+     console.log(sendNecoForm);
+     
+    const response = await axios.post('https://aremxyplug.onrender.com/api/v1/edu', sendNecoForm);
+    if(response.status ==="success" || 201 || "Successful" || 200){
+      necoEduPinSuccess();
+    } 
+    alert('submitted');
+  }catch(error)  {
+console.error(`The Data brought back an error Of ${error}`);
+necoEduPinFailed()
+  }
+}
+// GET RESPONSE SUCCESSFUL
+const {setNecoEduResponse} = useContext(ContextProvider);
+const requestEducationPin = async() =>{
+  try{
+    const EducationResponse = await axios.get('https://aremxyplug.onrender.com/api/v1/edu');
+    return EducationResponse.data;                                 
+  }catch(error){
+    console.error('There was error fetching the Education Pins', error)
+  return null;
+  }
+}
+useEffect(()=> {
+acceptData();
+},[])
+const acceptData = async()=>{
+  try{
+  const dataCollected = await requestEducationPin();
+  if(dataCollected){
+    setNecoEduResponse(dataCollected);
+  }
+  }catch(error){
+  console.error('There was an error trying to get the token:', error);
 
-
+  }
+}
+// console.log(necoEduResponse);
 
   return (
     <DashBoardLayout>
-   <div className='flex flex-col h-[110%] justify-between '>
+   <div className='flex flex-col  justify-between lg:h-[120%] h-[115%]'>
    <div className=''>
     {/* Hero-section */}
  <HeroComponent/>
@@ -189,22 +249,29 @@ const necoReceipt = () => {
       Confirm Exam Type
       </h2>
       {/* input */}
-  <div 
-   onClick={necoExamDropDown}
-  className=' w-[100%] flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
-  md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] 
-  lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] border-[0.4px] border-[#9C9C9C]
-  hover:bg-[#EDEAEA]'>
-      <h2 
-      className='font-[500] text-[8px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] 
-      lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer'>
-      {necoExamType}
-        </h2>
-        <img  
-        className='Examdrop md:h-[14.083px] md:w-[14.083px] lg:h-[24px] 
-        lg:w-[24px] h-[14px] w-[14px]'
-        src= {arrowDown} alt="" />
-         </div>
+      <div className='w-[100%] relative'
+onClick={(e) => {
+  necoExamDropDown();
+  console.log(e.target.value)}}>
+  <input type="text"
+  
+  value={necoExamType}
+className=' flex  justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
+ md:pt-[8.802px] md:pb-[7.042px] w-[100%]
+md:pr-[5.282px] md:pl-[5.867px] bg-white
+lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
+border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]
+font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
+    lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer focus:outline-none'
+ readOnly />
+   
+      <img 
+       className='absolute lg:top-[15px] lg:right-[9px] md:top-[8.802px] md:right-[5.282px]
+        top-[8.802px] right-[13px]
+        Examdrop md:h-[14.038px] md:w-[14.038px] 
+      lg:h-[24px] lg:w-[24px] w-[14px] h-[14px]'
+      src={arrowDown} alt="" />
+       </div>
          {necoExamActive && (
            <div className='absolute lg:top-[90px] md:top-[60px] top-[50px] z-[5]  flex flex-col 
            w-[100%] lg:h-225px md:h-[210px]  
@@ -246,22 +313,29 @@ const necoReceipt = () => {
       Quantity
       </h2>
       {/* input */}
-  <div 
-  onClick={necoQuantityDropDown}
-  className=' flex  justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
-   md:pt-[8.802px] md:pb-[7.042px] 
-  md:pr-[5.282px] md:pl-[5.867px] 
-  lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
-  border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]'>
-      <h2 className='font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
-      lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer'>
-      {necoQuantityResult}
-        </h2>
-        <img 
-         className='imgdrop md:h-[14.038px] md:w-[14.038px] 
-        lg:h-[24px] lg:w-[24px] w-[14px] h-[14px]'
-        src={arrowDown} alt="" />
-         </div>
+      <div className='w-[100%] relative'
+onClick={(e) => {
+necoQuantityDropDown();
+  console.log(e.target.value)}}>
+  <input type="text"
+  
+  value={necoQuantityResult}
+className=' pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
+ md:pt-[8.802px] md:pb-[7.042px] w-[100%]
+md:pr-[5.282px] md:pl-[5.867px] bg-white
+lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
+border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]
+font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
+    lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer focus:outline-none'
+  readOnly/>
+   
+      <img 
+       className='absolute lg:top-[15px] lg:right-[9px] md:top-[8.802px] md:right-[5.282px]
+        top-[8.802px] right-[13px]
+        imgdrop md:h-[14.038px] md:w-[14.038px] 
+      lg:h-[24px] lg:w-[24px] w-[14px] h-[14px]'
+      src={arrowDown} alt="" />
+       </div>
          {/* drop down */}
          
         {necoQuantityActive && (
@@ -357,8 +431,7 @@ const necoReceipt = () => {
      md:pr-[5.282px] md:pl-[5.867px] 
     lg:pt-[14px] lg:pb-[15.5px] lg:pr-[16px] lg:pl-[10px] 
      lg:placeholder:text-[16px] lg:placeholder:leading-[20.8px] placeholder:text-[#7E7E7E]
-     md:placeholder:text-[10.389px] md:placeholder:leading-[16.206px]
-      md:placeholder:text-[#7E7E7E]'
+     placeholder:text-[14.389px] placeholder:leading-[18.809.4px]'
       value={necoEducationPinEmail}
       onChange={(e) =>{
         setNecoEducationPinEmail(e.target.value);
@@ -389,8 +462,7 @@ const necoReceipt = () => {
       Amount
       </h2>
       {/* input */}
-      <div
-      onchange={setNecoEducationAmount}
+      <input
      className='h-[29.927px]  lg:h-[51px] md:h-[29.93px]
         md:pt-[8.802px] md:pb-[7.042px] 
        pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
@@ -400,9 +472,10 @@ const necoReceipt = () => {
     text-[8px] leading-[10.4px]
    font-[500]  md:text-[9.389px] md:leading-[12.206px]
   lg:text-[16px] text-black lg:leading-[20.8px]'
-  maxLength={7}>
-  {necoEducationAmount}
-   </div>
+ value={necoEducationAmount}
+  onChange={(e)=>{
+    setNecoEducationAmount(e.target.value);
+  }} readOnly/>
    
    
 
@@ -418,25 +491,29 @@ const necoReceipt = () => {
       Payment Method
       </h2>
       {/* input */}
-  <div 
-   onClick={necoMethodDropDown}
-  className=' flex justify-between  pr-[13px] pl-[10.876px] w-[100%]
-  pt-[8.802px] pb-[7.042px] 
- lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
-  border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA]'>
-
-      <h2 className='font-[500] text-[8px] leading-[10.4px]
-       md:text-[9.389px] md:leading-[12.206px]
-        lg:text-[16px] text-black lg:leading-[20.8px] 
-        cursor-pointer'>
-      {necoPaymentResult + necoWalletBalance}
-        </h2>
-        <img 
-       
-        className='methodDrop h-[14px] w-[14px] md:h-[14.038px] 
-        md:w-[14.038px] lg:h-[24px] lg:w-[24px]'
-        src={necoImageState} alt="" />
-         </div>
+      <div className='w-[100%] relative'
+onClick={(e) => {
+  necoMethodDropDown();
+  console.log(e.target.value);
+}}>
+  <input type="text"
+  value={necoPaymentResult}
+className=' flex  justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
+ md:pt-[8.802px] md:pb-[7.042px] w-[100%]
+md:pr-[5.282px] md:pl-[5.867px] bg-white
+lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
+border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]
+font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
+    lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer focus:outline-none'
+  readOnly/>
+   
+      <img 
+       className='absolute lg:top-[15px] lg:right-[9px] md:top-[8.802px] md:right-[5.282px]
+        top-[8.802px] right-[13px]
+        methodDrop md:h-[14.038px] md:w-[14.038px] 
+      lg:h-[24px] lg:w-[24px] w-[14px] h-[14px]'
+      src={necoImageState} alt="CountryFlag" />
+       </div>
          {/* drop down */}
          
         {necoMethodActive && (
@@ -483,15 +560,14 @@ const necoReceipt = () => {
       {necoEducationProceed && (
             <Modal>
               <div
-                className={`confirm mx-[5%] ${
+                className={`deleteRecipientSuccess mx-[5%] ${
                   isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
                 } ${
                   toggleSideBar
-                    ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
-                    : "lg:w-[40%]"
-                } lg:ml-[10%] lg:mr-[10%] grow  md:mt-[1%] mb-0 pb-[20px] 
-                rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] 
-                md:mx-auto md:my-auto md:mb-[18%] md:overflow-auto`}
+                    ? "confirm01"
+                    : "confirm"
+                } grow pt-[10px] pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative 
+                md:rounded-[11.5px] md:mx-auto md:my-auto md:overflow-auto`}
               >
                 <div className="w-full flex justify-end items-center border-b-[6px]
                  border-primary px-[12px] h-[35px] md:h-[45px] lg:h-[60px] lg:border-b-[10px] ">
@@ -512,7 +588,7 @@ const necoReceipt = () => {
                   lg:leading-[24px] 
                   text-[10px] leading-[12px] text-center mt-[26px] mx-[10px] mb-[20px] font-[500]">
                     You are about to purchase{" "}
-                    <span className="font-[600]">NECO PIN (₦100){" "}</span> from
+                    <span className="font-[600]">NECO PIN (₦1200){" "}</span> from
                     your {necoPaymentResult} to
                   </h2>
 
@@ -738,9 +814,7 @@ const necoReceipt = () => {
 
                 <button
                   onClick={(e) => {
-                    e.preventDefault();
-                    setNecoEducationConfirm(false);
-                    inputPinHandler(e);
+                  handleNecoSubmitPost(e)
                   }}
                   disabled={inputPin.length !== 4}
                   className={`${
@@ -794,7 +868,7 @@ const necoReceipt = () => {
                   Purchase Successful
                 </h2>
                 <img 
-                  className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[250px] lg:h-[250px]"
+                  className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[100px] lg:h-[100px]"
                   src="./Gif/checkMarkGif.gif"
                   alt="/"
                 />
@@ -805,7 +879,7 @@ const necoReceipt = () => {
                     You have successfully purchased{" "}
                     <span className="text-[#000] font-[600] text-[10.9px] md:text-[14.9px]
                     lg:text-[16.9px]">
-                    NECO PIN (₦100) {' '}
+                    NECO PIN (₦1200) {' '}
                     </span>
                     from your {necoPaymentResult} to{" "}
                   </p>
@@ -913,7 +987,7 @@ const necoReceipt = () => {
                 items-center justify-center   
               md:mx-[20px] md:rounded-[15px] lg:rounded-[16.308px] lg:h-[75px]">
                 <p className="text-[9px] text-[#7C7C7C] text-center  md:text-[11px] 
-                lg:text-[16.231px] lg:leading-[20px]">
+                lg:text-[14.231px] lg:leading-[20px]">
                <span className='md:block'>The e-pins purchase has been generated successfully. 
                 Please kindly check</span>
              <span className='md:block'> receipt to confirm the pin / token. 
@@ -943,8 +1017,9 @@ const necoReceipt = () => {
                 
                 <Link to="/NecoReceipt"
                 
-                    onClick=
-                      {necoReceipt}
+                    onClick={()=> {
+                      setNecoFailedTransaction(false);
+                    }}
                      className={`bg-[#ffffff] border-[1px] w-[111px] border-[#0003] 
                      flex justify-center items-center text-center  cursor-pointer text-[12px] 
                      font-extrabold h-[40px] rounded-[6px] md:w-[150px] md:rounded-[8px] 
@@ -973,7 +1048,7 @@ const necoReceipt = () => {
             />
           )}
                  
-                 <div className="py-[30px] lg:py-[60px] mt-10 lg:mb-[0px] mb-[40px] md:mb-[0px] ">
+                 <div className="py-[30px] lg:py-[60px] mt-10 lg:mb-[80px] mb-[50px] md:mb-[100px]">
             <button
               className={`font-extrabold h-[43px] w-[100%] py-[3.534px] px-[5.301px] 
               mb-[40px] md:mb-[0px] rounded-[4.241px] md:h-auto
@@ -1009,10 +1084,90 @@ const necoReceipt = () => {
 
       </form>
 </div>
-      
 
-      <div className=" flex gap-[5.729px]  md:gap-[14.896px] 
-       justify-center px-[8.594px] mb-[80px]">
+{/*==================== NECO TRANSACTION FAILED POP UP=========== */}
+{necoFailedTransaction && (
+ <Modal>
+     <div
+              className={`deleteRecipientSuccess  mx-[5%]  ${
+                isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
+              } ${
+                toggleSideBar
+                  ? "confirm01"
+                  : "confirm"
+              } grow  pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative 
+              md:rounded-[11.5px] md:mx-auto md:my-auto md:overflow-auto`}
+            >
+              <div className="w-full flex justify-between border-b-[6px] items-center
+               border-primary px-[12px] h-[45px] md:h-[55px] lg:h-[70px]  lg:border-b-[10px] ">
+                 <img
+                  className=" w-[18px] h-[18px] md:w-[35px] cursor-pointer
+                  md:h-[35px] lg:w-[35px] lg:h-[42px]"
+                  src={AremxyPlugIcon}
+                  alt=""
+                />
+
+              <img
+              src={closeIcon}
+              alt=""
+              onClick={() => {
+                setNecoFailedTransaction(false)
+                window.location.reload();
+              }}
+              className="w-[18px] h-[18px]  md:w-[25px] cursor-pointer
+               md:h-[25px] lg:w-[35px] lg:h-[35px]"
+               />
+              </div>
+
+              <div className='flex flex-col justify-between items-center h-[100%]'>
+                <h2 className="lg:text-[16px] lg:leading-[24px] text-center mb-1
+                text-[12px] md:text-[13px] md:leading-[20px] font-[600] mt-[20px] leading-[16px]">
+                  Purchase Failed
+                </h2>
+              <img src = {eduFailed}
+              className='w-[150px] md:w-[200px]' alt='transaction failed'/>
+
+              <p className='text-center text-[#F95252]  lg:text-[16px] lg:leading-[20.8px] font-[600]
+                text-[12px] md:text-[13px] md:leading-[20px] leading-[16px]'>
+                    An unexpected error has occurred, please try again.
+                </p>
+                <div className="flex  justify-center  w-[100%] 
+              items-center gap-[15px] md:gap-[20px] mt-[50px]  lg:gap-[20px] 
+              lg:my-[5%] md:mt-[20px] mb-[20px] ">
+                 
+                <Link 
+               to="/NecoEducationPin"
+                 onClick=  {() => {
+                   setNecoFailedTransaction(false);
+                      window.location.reload();
+                    }}
+                    className={`bg-[#04177f] w-[111px] flex justify-center 
+                    items-center  cursor-pointer text-center text-[12px] font-extrabold h-[40px]
+                     text-white rounded-[6px] md:w-[150px] md:rounded-[8px] 
+                     md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%] `}>
+                  
+                    Done
+               
+                </Link>
+                <Link to="/NecoFailedReceipt"
+                onClick=
+                  {necoReceipt}
+                 className={`bg-[#ffffff] border-[1px] w-[111px] border-[#0003] 
+                 flex justify-center items-center text-center  cursor-pointer text-[12px] 
+                 font-extrabold h-[40px] rounded-[6px] md:w-[150px] md:rounded-[8px] 
+                 md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}>
+              
+                Receipt
+              
+            </Link>
+                 </div>
+              </div>
+              </div>
+ </Modal>
+)}
+
+      <div className=" flex gap-[8.729px]  md:gap-[14.896px] 
+       justify-center px-[8.594px] mb-[50px]">
               <p className="font-[500] text-[10px] text-black 
               leading-[10.4px] lg:text-[16px] lg:leading-[15.6px]  md:text-[6.875px]
             ] md:leading-[12.938px] self-center">

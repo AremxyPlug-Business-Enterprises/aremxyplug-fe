@@ -19,12 +19,16 @@ import Cancel from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/Cancel.svg";
 import "../../../DataTopUpPage/DataTopUp.css";
 import { Modal } from "../../../../../Screens/Modal/Modal";
 import OtpInput from "react-otp-input";
-import styles from "../../../TransferComponent/transfer.module.css";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import { GloReceipt } from "./GloReceipt";
 import Joi from "joi";
 import airtimestyles from "../../../../../AirTimePage/AirtimeVtu.module.css";
+import { GloFailedReceipt } from "./GloFailedReceipt";
+import Spinner from "./../MtnDataTopUpBundle/Spinner";
+import axios from "axios";
+import Failed from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/Failed.svg"
+
 
 const GloDataBundle = () => {
   const { isDarkMode } = useContext(ContextProvider);
@@ -42,18 +46,26 @@ const GloDataBundle = () => {
   const [addRecipient, setAddRecipient] = useState(false);
   const [proceed, setProceed] = useState(false);
   const [confirm, setConfirm] = useState(false);
-  const [receipt] = useState(false);
   const [errors, setErrors] = useState({});
   const [paymentSelected, setPaymentSelected] = useState(false);
   const [showPayment, setShowPayment] = useState(false);
   const [image, setImage] = useState("");
   const [paymentAmount, setPaymentAmount] = useState("");
   const [codes, setCodes] = useState(false);
+  const [plan, setPlan] = useState("");
+  const [loading, setLoading] = useState("");
+  const [glotransactionID, setGloTransactionID] = useState("");
+  const [gloorderID, setGloOrderID] = useState("");
+  const [glorefNumber, setGloRefNumber] = useState("");
+  const [glodescription, setGloDescription] = useState("");
+  const [proceedToShowReceipt] = useState(false);
 
-  const handleCodes =()=> {
+
+
+  const handleCodes = () => {
     setCodes(false);
     setCodes(true);
-  }
+  };
 
   const handleShowPayment = () => {
     setShowPayment(!showPayment);
@@ -134,7 +146,7 @@ const GloDataBundle = () => {
     toggleSideBar,
     inputPin,
     setInputPin,
-    inputPinHandler,
+    // inputPinHandler,
     toggleVisibility,
     isVisible,
   } = useContext(ContextProvider);
@@ -151,129 +163,154 @@ const GloDataBundle = () => {
     setTransactSuccessPopUp(false);
   };
 
-  if (addRecipient) {
-    console.log("recipient added");
-  } else {
-    console.log("did not add recipient");
-  }
+  // if (addRecipient) {
+  //   console.log("recipient added");
+  // } else {
+  //   console.log("did not add recipient");
+  // }
 
   const productList = [
     {
       id: 1,
-      name: "GLO CG",
+      name: "GLO COPORATE GIFTING",
       options: [
-        "GLO CG 100MB",
-        "GLO CG 200MB",
-        "GLO CG 300MB",
-        "GLO CG 500MB",
-        "GLO CG 1GB",
-        "GLO CG 2GB",
-        "GLO CG 3GB",
-        "GLO CG 5GB",
-        "GLO CG 10GB",
-      ],
+        { id: 243, name: "GLO CG 200MB", amount: "₦100", duration: "1 MONTH" },
+        { id: 237, name: "GLO CG 500MB", amount: "₦150", duration: "1 MONTH" },
+        { id: 238, name: "GLO CG 1.0GB", amount: "₦250", duration: "1 MONTH" },
+        { id: 239, name: "GLO CG 2.0GB", amount: "₦500", duration: "1 MONTH" },
+        { id: 240, name: "GLO CG 3.0GB", amount: "₦750", duration: "1 MONTH" },
+        { id: 241, name: "GLO CG 5.0GB", amount: "₦1250", duration: "1 MONTH" },
+        {
+          id: 242,
+          name: "GLO CG 10.0GB",
+          amount: "₦2500",
+          duration: "1 MONTH",
+        },
 
-      amount: [
-        "₦100",
-        "₦200",
-        "₦300",
-        "₦500",
-        "₦500",
-        "₦800",
-        "₦900",
-        "₦900",
-        "₦900",
-      ],
-
-      duration: [
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
+        // THIS ONES ARE IN THE DOCUMENTATION BUT NOT IN THE PRICE LIST FROM AREMXY
+        {
+          id: 274,
+          name: "GLO CG 1.0TB",
+          amount: "₦212000",
+          duration: "1 MONTH",
+        },
+        {
+          id: 280,
+          name: "GLO CG 100.0GB",
+          amount: "₦2140000",
+          duration: "1 MONTH",
+        },
+        {
+          id: 281,
+          name: "GLO CG 250.0GB",
+          amount: "₦53375",
+          duration: "1 MONTH",
+        },
+        {
+          id: 282,
+          name: "GLO CG 500GB",
+          amount: "₦106500",
+          duration: "1 MONTH",
+        },
+        {
+          id: 283,
+          name: "GLO CG 3.0TB",
+          amount: "₦634500",
+          duration: "1 MONTH",
+        },
       ],
     },
-
     {
       id: 2,
       name: "GLO GIFTING",
       options: [
-        "GLO GIFTING 1.05GB",
-        "GLO GIFTING 2.9GB",
-        "GLO GIFTING 4.1GB",
-        "GLO GIFTING 5.8GB",
-        "GLO GIFTING 7.7GB",
-        "GLO GIFTING 10GB",
-        "GLO GIFTING 13.25GB",
-        "GLO GIFTING 18.25GB",
-        "GLO GIFTING 29.5GB",
-        "GLO GIFTING 50GB",
-        "GLO GIFTING 93GB",
-      ],
-
-      amount: [
-        "₦1050",
-        "₦2500",
-        "₦3500",
-        "₦5800",
-        "₦5300",
-        "₦8100",
-        "₦9500",
-        "₦5800",
-        "₦5300",
-        "₦8100",
-        "₦9500",
-      ],
-
-      duration: [
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
-        "1 MONTH",
+        {
+          id: 194,
+          name: "GLO GIFTING 1.05GB",
+          amount: "₦485",
+          duration: "1 MONTH",
+        },
+        {
+          id: 195,
+          name: "GLO GIFTING 2.9GB",
+          amount: "₦965",
+          duration: "1 MONTH",
+        },
+        {
+          id: 196,
+          name: "GLO GIFTING 4.1GB",
+          amount: "₦1450",
+          duration: "1 MONTH",
+        },
+        {
+          id: 197,
+          name: "GLO GIFTING 5.8GB",
+          amount: "₦1950",
+          duration: "1 MONTH",
+        },
+        {
+          id: 198,
+          name: "GLO GIFTING 7.7GB",
+          amount: "₦2475",
+          duration: "1 MONTH",
+        },
+        {
+          id: 199,
+          name: "GLO GIFTING 10.0GB",
+          amount: "₦2975",
+          duration: "1 MONTH",
+        },
+        {
+          id: 200,
+          name: "GLO GIFTING 13.25GB",
+          amount: "₦3960",
+          duration: "1 MONTH",
+        },
+        {
+          id: 201,
+          name: "GLO GIFTING 18.25GB",
+          amount: "₦4985",
+          duration: "1 MONTH",
+        },
+        {
+          id: 202,
+          name: "GLO GIFTING 29.5GB",
+          amount: "₦8000",
+          duration: "1 MONTH",
+        },
+        {
+          id: 203,
+          name: "GLO GIFTING 50GB",
+          amount: "₦10500",
+          duration: "1 MONTH",
+        },
+        {
+          id: 204,
+          name: "GLO GIFTING 93GB",
+          amount: "₦16665",
+          duration: "1 MONTH",
+        },
+        {
+          id: 205,
+          name: "GLO GIFTING 119.0GB",
+          amount: "₦21815",
+          duration: "1 MONTH",
+        },
+        {
+          id: 206,
+          name: "GLO GIFTING 138.0GB",
+          amount: "₦23330",
+          duration: "1 MONTH",
+        },
       ],
     },
-
     {
       id: 3,
-      name: "GLO GENERAL BUNDLES ---",
+      name: "GENERAL BUNDLES ---",
       options: [],
-      amount: [],
-
-      duration: [],
     },
   ];
 
-  const handleProceed = (e) => {
-    // setProceed(true);
-    // e.preventDefault();
-
-    const { error } = schema.validate({
-      recipientPhoneNumber,
-    });
-
-    if (error) {
-      setErrors(
-        error.details.reduce((acc, curr) => {
-          acc[curr.path[0]] = curr.message;
-          return acc;
-        }, {})
-      );
-    } else {
-      setProceed(true);
-      setErrors({});
-    }
-  };
 
   const schema = Joi.object({
     recipientPhoneNumber: Joi.string()
@@ -291,22 +328,92 @@ const GloDataBundle = () => {
     setShowOptionList(false);
   };
 
-  const handleSelectOption = (selectedOption, selectedAmount, duration) => {
+  const handleSelectOption = (selectedOption, selectedAmount, duration, id) => {
+    setPlan(id);
+    console.log(id);
     setSelectedOption(selectedOption);
     setShowOptionList(false);
     setSelectedAmount(selectedAmount);
-    // setDuration(duration);
   };
 
   const [inputValue, setInputValue] = useState("");
 
-  const handleChange = (e) => {
-    const value = e.target.value;
+  const GloRegex =
+      /^(234|0)(705[0-9]|805[0-9]|807[0-9]|811[0-9]|815[0-9]|905[0-9]|915[0-9])\d{6}$/;
+      
 
-    const numericValue = value.replace(/\D/g, "").slice(0, 11);
+      const validatePhoneNumber = (phoneNumber) => {
+        if (!phoneNumber) {
+          return "Phone number is required";
+        }
+      
+        if (!GloRegex.test(phoneNumber)) {
+          return "Invalid GLO number. Please enter a valid GLO number.";
+        }
+      
+        return null; // No error
+      };
 
-    setInputValue(numericValue);
-  };
+      const handleChange = (e) => {
+        const value = e.target.value;
+        const numericValue = value.replace(/\D/g, "").slice(0, 11);
+        setInputValue(numericValue);
+      
+        // Validate phone number if it's complete
+        if (numericValue.length === 11) {
+          const error = validatePhoneNumber(numericValue);
+          if (error) {
+            setErrors({ recipientPhoneNumber: error });
+          } else {
+            setErrors({});
+          }
+        } else {
+          // Clear any previous errors if the input length is less than 11
+          setErrors({});
+        }
+      };
+
+      const handleProceed = (e) => {
+        e.preventDefault();
+    
+        function validateNigerianNumberByNetwork(number) {
+            const networks = {
+              'GLO': ['0705', '0805', '0807', '0811', '0815', '0905', '0915'],
+            };
+    
+            for (let network in networks) {
+                for (let prefix of networks[network]) {
+                    if (number.startsWith(prefix) && number.length === prefix.length + 7) {
+                        return network;
+                    }
+                }
+            }
+    
+            return 'Unknown network';
+        }
+    
+        const { error } = schema.validate({
+            recipientPhoneNumber,
+        });
+    
+        if (error) {
+            setErrors(
+                error.details.reduce((acc, curr) => {
+                    acc[curr.path[0]] = curr.message;
+                    return acc;
+                }, {})
+            );
+        } else if (validateNigerianNumberByNetwork(recipientPhoneNumber) !== 'GLO') {
+            setErrors({
+                recipientPhoneNumber:
+                    `Invalid GLO number. Please enter a valid GLO number.`,
+            });
+        } else {
+            setProceed(true);
+            setErrors({});
+        }
+    };
+
 
   const handleRecipientNameChange = (e) => {
     setRecipientNames(e.target.value);
@@ -316,8 +423,86 @@ const GloDataBundle = () => {
     setTransactSuccessPopUp(false);
   };
 
-  console.log("confirm:", confirm);
+  const [glopurchaseStatus, setGloPurchaseStatus] = useState(null); // State to hold purchase status
+
+  const inputPinHandler = async () => {
+    async function buyData(network, mobileNumber, plan, name) {
+      const url = 'https://aremxyplug.onrender.com/api/v1/data';
+
+      const data = {
+        network,
+        mobile_number: mobileNumber,
+        plan,
+        name,
+      };
+
+
+      setLoading(true)
+
+
+      console.log(data)
+      console.log("its me")
+
+      try {
+          const response = await axios.post(url, data);
+          console.log(response.data);
+          console.log(response.status);
+          // setSelectedNetworkProduct(response.data.product)
+          // console.log(response.data.product)
+          setPlan(response.data.plan_name)
+          console.log(response.data.plan_name)
+          setInputValue(response.data.Phone_Number)
+          console.log(response.data.Phone_Number)
+          setRecipientPhoneNumber(data.Phone_number)
+          console.log(data.Phone_number)
+          console.log(inputValue)
+          console.log(recipientPhoneNumber)
+          setRecipientNames(response.data.Name)
+          console.log(response.data.Name)
+          setSelectedAmount(response.data.plan_amount)
+          console.log(response.data.plan_amount)
+          setGloTransactionID(response.data.transaction_id)
+          console.log(response.data.transaction_id)
+          setGloRefNumber(response.data.reference_number)
+          console.log(response.data.reference_number)
+          setGloOrderID(response.data.order_id)
+          console.log(response.data.order_id)
+          setGloDescription(response.data.description)
+          // console.log(response.data.description)
+          return { statusCode: response.status, data: response.data };
+          // console.log(response.data);
+      } catch (error) {
+          console.error(error);
+          return { statusCode: error.response.status, data: null };
+      }
+  }
   
+  // usage
+  const response = await buyData(
+    2, recipientPhoneNumber, plan, recipientNames
+  );
+
+  console.log(response)
+  console.log("its me 1")
+
+  setLoading(false)
+
+
+
+  setConfirm(false);
+  if (response.statusCode === 200) {
+      // Success response
+      setTransactSuccessPopUp(true); // Show success popup
+  } else {
+      // Failure response
+      setGloPurchaseStatus(true); // Show failure popup
+  }
+
+  };
+
+
+  // console.log("confirm:", confirm);
+
   return (
     <DashBoardLayout>
       <div
@@ -359,31 +544,42 @@ const GloDataBundle = () => {
           </div>
 
           {/* =========================Select/Add Recipient===================== */}
-          
+
           <div className="flex gap-[10%] mt-[40px] md:w-full md:justify-between md:gap-[10%] ">
             <div className="w-full flex items-center justify-between border text-[10px] md:py-[15px] md:w-[50%] rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
-            <Link to="/DataBundleSelectRecipient" style={{ display: 'inline-flex', width: '100%',}} className="justify-between">
-              <p className="font-semibold">Select Recipient</p>
-              <img
-                className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
-                src={Recipient}
-                alt=""
-              />
+              <Link
+                to="/DataBundleSelectRecipient"
+                style={{ display: "inline-flex", width: "100%" }}
+                className="justify-between"
+              >
+                <p className="font-semibold">Select Recipient</p>
+                <img
+                  className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
+                  src={Recipient}
+                  alt=""
+                />
               </Link>
             </div>
             <div className="w-full flex items-center justify-between border text-[10px] md:py-[15px] md:w-[40%] md:mr-[9%]  rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
-            <Link to="/DataBundleAddRecipient" style={{ display: 'inline-flex', width: '100%' }} className="justify-between">
-              <p className="font-semibold">Add Recipient</p>
-              <img
-                className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
-                src={Recipient2}
-                alt=""
-              />
+              <Link
+                to="/DataBundleAddRecipient"
+                style={{ display: "inline-flex", width: "100%" }}
+                className="justify-between"
+              >
+                <p className="font-semibold">Add Recipient</p>
+                <img
+                  className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
+                  src={Recipient2}
+                  alt=""
+                />
               </Link>
             </div>
           </div>
 
-          <div onClick={handleCodes} className="flex mt-[35px] my-[30px] md:w-[100%] md:gap-[10%]">
+          <div
+            onClick={handleCodes}
+            className="flex mt-[35px] my-[30px] md:w-[100%] md:gap-[10%]"
+          >
             <div className="rounded-[4px] w-full bg-primary text-white md:w-[50%] h-[30px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-center md:justify-between gap-[10px] px-[5px]">
               <h2 className="lg:text-[16px] lg:leading-[24px] text-[10px] md:text-[12px] leading-[12px]">
                 Data Balance USSD Codes
@@ -405,7 +601,7 @@ const GloDataBundle = () => {
           </div>
           <div className="flex gap-[15px]  justify-between md:w-full md:gap-[10%]">
             <div className="flex gap-[15px] md:w-[50%] md:justify-between">
-              <p className="flex text-[#7c7c7c] gap-[7px] text-[10px] md:gap-[7px] leading-[130%] md:text-[12px] lg:text-[20px] 2xl:text-[28px]">
+              <p className="flex text-[#7c7c7c] gap-[7px] text-[10px] md:gap-[7px] leading-[130%] md:text-[12px] lg:text-[16px] 2xl:text-[20px]">
                 Purchase
                 <span>
                   <img
@@ -426,60 +622,58 @@ const GloDataBundle = () => {
           </div>
 
           {codes && (
-                <Modal>
-                (
-                <div
-                    className={`code ${
-                    toggleSideBar ? "xl:w-[65%] xl:ml-[17%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-                    } w-[90%] xl:w-[80%] overflow-auto`}
+            <Modal>
+              (
+              <div
+                className={`code ${
+                  toggleSideBar ? "code1" : "code01"
+                } overflow-auto w-[90%]`}
+              >
+                <img
+                  onClick={() => setCodes(false)}
+                  className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px] xl:h-[35px] xl:w-[35px]"
+                  src="/Images/transferImages/close-circle.png"
+                  alt=""
+                />
+                <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
+
+                <button
+                  className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[50%] md:rounded-[8px] md:text-[16px] lg:text-[14px] xl:text-[20px] lg:w-[350px] lg:h-[38px] lg:my-[2%]`}
                 >
-                    <img
-                    onClick={()=> setCodes(false)}
-                    className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px] xl:h-[35px] xl:w-[35px]"
-                    src="/Images/transferImages/close-circle.png"
-                    alt=""
-                    />
-                    <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
-
-                    <button
-                    className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[50%] md:rounded-[8px] md:text-[16px] lg:text-[14px] xl:text-[20px] lg:w-[350px] lg:h-[38px] lg:my-[2%]`}
-                    >
-                    Data Balance USSD Codes
-                    </button>
-                    <h2 className="text-[12px] my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
-                    Data balance / share ussd codes.
-                    </h2>
-                    <h2 className="text-[12px] px-[2%] my-[5%] text-blue-600 text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
-                    Tap the network Dial button to check data balance:
-                    </h2>
-                    <div className='flex flex-col gap-1 mb-5'>
-                        
-                        <button
-                            className={`bg-[#FAF8F8] mt-[%] mb-[2%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:mt-[%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:mt-[0%] xl:mb-[1%]`}
-                            >
-                            GLO Data Balance Code - *323#
-                        </button>
-                        <button
-                            className={`bg-[#FAF8F8] my-[2%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:my-[1%]`}
-                            >
-                            GLO Data Share Code - *321#
-                        </button>
-                        
-                    </div>
-
-                    <button
-                    onClick={()=> setCodes(false)}
-                    className={`bg-[#04177f] my-[5%] mt-[50%] md:mt-[15%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:my-[2%] xl:mt-[10%]`}
-                    >
-                    Okay
-                    </button>
+                  Data Balance USSD Codes
+                </button>
+                <h2 className="text-[12px] my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
+                  Data balance / share ussd codes.
+                </h2>
+                <h2 className="text-[12px] px-[2%] my-[5%] text-blue-600 text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
+                  Tap the network Dial button to check data balance:
+                </h2>
+                <div className="flex flex-col gap-1 mb-5">
+                  <button
+                    className={`bg-[#FAF8F8] mt-[%] mb-[2%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:mt-[%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:mt-[0%] xl:mb-[1%]`}
+                  >
+                    GLO Data Balance Code - *323#
+                  </button>
+                  <button
+                    className={`bg-[#FAF8F8] my-[2%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:my-[1%]`}
+                  >
+                    GLO Data Share Code - *321#
+                  </button>
                 </div>
-                )
-                </Modal>
-            )}
+
+                <button
+                  onClick={() => setCodes(false)}
+                  className={`bg-[#04177f] my-[5%] mt-[50%] md:mt-[15%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:my-[2%] xl:mt-[10%]`}
+                >
+                  Okay
+                </button>
+              </div>
+              )
+            </Modal>
+          )}
 
           {/* =========================PRODUCTS============================== */}
-          
+
           <div className="grid grid-cols-1 mt-[25px] md:grid-cols-2 gap-y-[20px] md:gap-x-[58.68px] lg:gap-x-[100px] md:gap-y-[15px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[20px]">
             <div className="relative">
               <h2 className="lg:text-[18px] lg:leading-[24px] mb-1 text-[10px] md:text-[12px] font-[600] leading-[12px]">
@@ -533,38 +727,31 @@ const GloDataBundle = () => {
                 <div className="border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[100]">
                   {productList
                     .find((item) => item.name === selectedNetworkProduct)
-                    ?.options.map((optionItem, index) => {
-                      const optionIndex = productList
-                        .find((item) => item.name === selectedNetworkProduct)
-                        ?.options.indexOf(optionItem);
+                    ?.options.map((option, index) => {
+                      const amount = option.amount;
+                      const duration = option.duration;
+                      const id = option.id;
 
-                      if (optionIndex !== -1) {
-                        const amount = productList.find(
-                          (item) => item.name === selectedNetworkProduct
-                        )?.amount[optionIndex];
-                        const duration = productList.find(
-                          (item) => item.name === selectedNetworkProduct
-                        )?.duration[optionIndex];
+                      return (
+                        <div
+                          key={option.id}
+                          className={`cursor-pointer border-b-[0.5px] md:rounded-[0px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
+                            selectedOption === option.id ? "bg-gray-200" : ""
+                          }`}
+                          onClick={() =>
+                            handleSelectOption(
+                              `${option.name} (${amount}) ~ ${duration}`,
+                              amount,
+                              duration,
+                              id, // Pass the id here
 
-                        return (
-                          <div
-                            key={index}
-                            className={`cursor-pointer border-b-[0.5px] md:rounded-[0px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
-                              selectedOption === optionItem ? "bg-gray-200" : ""
-                            }`}
-                            onClick={() =>
-                              handleSelectOption(
-                                `${optionItem} (${amount}) ~ ${duration}`,
-                                amount
-                              )
-                            }
-                          >
-                            {`${optionItem} (${amount}) ~ ${duration}`}
-                          </div>
-                        );
-                      }
-
-                      return null;
+                              console.log(id)
+                            )
+                          }
+                        >
+                          {`${option.name} (${amount}) ~ ${duration}`}
+                        </div>
+                      );
                     })}
                 </div>
               )}
@@ -573,7 +760,11 @@ const GloDataBundle = () => {
             <div className="">
               <h2 className="text-[10px] font-[600] md:text-[12px] lg:text-[18px]">
                 Phone Number{" "}
-                <span className="text-[#04177F]">(Select Recipient)</span>{" "}
+                <span className="text-[#04177F]">
+                  <Link to="/DataBundleSelectRecipient">
+                    (Select Recipient)
+                  </Link>
+                </span>{" "}
               </h2>
               <div className="relative mt-[5px]">
                 <input
@@ -594,13 +785,13 @@ const GloDataBundle = () => {
                   />
                 </div>
               </div>
-            </div>
 
-            {errors.recipientPhoneNumber && (
-              <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                {errors.recipientPhoneNumber}
-              </div>
-            )}
+              {errors.recipientPhoneNumber && (
+                <div className="text-[12px] text-red-500 italic lg:text-[14px]">
+                  {errors.recipientPhoneNumber}
+                </div>
+              )}
+            </div>
 
             <div className="">
               <h2 className="text-[10px] font-[600] md:text-[12px] lg:text-[18px]">
@@ -663,7 +854,10 @@ const GloDataBundle = () => {
                       </h2>
                     </li>
                   ) : (
-                    <h2 onClick={handleShowPayment} className="text-[10px] lg:text-[14px]">
+                    <h2
+                      onClick={handleShowPayment}
+                      className="text-[10px] lg:text-[14px]"
+                    >
                       Select Payment Method
                     </h2>
                   )}
@@ -689,11 +883,13 @@ const GloDataBundle = () => {
                 </div>
               </div>
               {showPayment && (
-                <div className={`border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute ${
-                  toggleSideBar
-                    ? "w-full md:w-[44.5%] lg:w-[45%] 2xl:w-[46%]"
-                    : "w-full md:w-[46%] 2xl:w-[46.5%]"
-                } bg-[#FFF] z-[100]`}>
+                <div
+                  className={`border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute ${
+                    toggleSideBar
+                      ? "w-full md:w-[44.5%] lg:w-[45%] 2xl:w-[46%]"
+                      : "w-full md:w-[46%] 2xl:w-[46.5%]"
+                  } bg-[#FFF] z-[100]`}
+                >
                   {countryList.map((country) => (
                     <Payment
                       key={country.id}
@@ -732,16 +928,18 @@ const GloDataBundle = () => {
 
           {/* ================Proceed=================== */}
 
+          {loading && (
+            <Modal>
+              <Spinner size="large" />
+            </Modal>
+          )}
+
           {proceed && (
             <Modal>
               <div
-                className={`confirm mx-[5%] ${
-                  isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
-                } ${
-                  toggleSideBar
-                    ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
-                    : "lg:w-[40%]"
-                } lg:ml-[10%] lg:mr-[10%] grow pt-[10px] md:mt-[1%] mb-0 pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:mb-[18%] md:overflow-auto`}
+                className={`${isDarkMode ? "border bg-[#000]" : "bg-[#fff]"} ${
+                  toggleSideBar ? "confirm01" : "confirm"
+                } grow pt-[10px] pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:overflow-auto`}
               >
                 <div className="w-full flex justify-end border-b-[6px] border-primary px-[12px] md:h-[25px] lg:border-b-[10px] lg:mt-[20px]">
                   <img
@@ -900,58 +1098,60 @@ const GloDataBundle = () => {
           {confirm && (
             <Modal>
               <div
-                className={`confirm2 ${styles.inputPin} ${
-                  toggleSideBar
-                    ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
-                    : "lg:w-[40%]"
-                } md:w-[55%] w-[90%] md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
+                className={` ${
+                  toggleSideBar ? "confirm02" : "confirm2"
+                } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
               >
-                <img
-                  onClick={() => setConfirm(false)}
-                  className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[45px] lg:h-[45px] "
-                  src={Cancel}
-                  alt=""
-                />
+                <div className="flex justify-end px-2">
+                  <img
+                    onClick={() => setConfirm(false)}
+                    className="cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[35px] lg:h-[35px] "
+                    src={Cancel}
+                    alt=""
+                  />
+                </div>
 
-                <hr className="h-[6px] bg-[#04177f] lg:mt-[10%] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
-                <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[8%] lg:my-[%]">
-                  Input PIN to complete transaction
-                </p>
-                <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
-                  <div className=" flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
-                    {" "}
-                    {isVisible ? (
-                      <OtpInput
-                        value={inputPin}
-                        inputType="tel"
-                        onChange={setInputPin}
-                        numInputs={4}
-                        shouldAutoFocus={true}
-                        inputStyle={{
-                          color: "#403f3f",
-                          width: 30,
-                          height: 30,
-                          borderRadius: 3,
-                        }}
-                        renderInput={(props) => (
-                          <input {...props} className="inputOTP mx-[3px]" />
-                        )}
-                      />
-                    ) : (
-                      <div className="text-[24px] md:text-[24px] mt-1">
-                        * * * *{" "}
-                      </div>
-                    )}
-                    <div
-                      className="text-[#0003] text-xl md:text-3xl"
-                      onClick={toggleVisibility}
-                    >
-                      {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
-                    </div>
-                  </div>
-                  <p className="text-[8px] md:text-[12px] text-[#04177f]">
-                    Forgot Pin ?
+                <hr className="h-[6px] bg-[#04177f] lg:mt-[2%] border-none mt-[2%] md:mt-[2%] md:h-[10px]" />
+                <div className="md:mt-[15%] lg:mt-[10%]">
+                  <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[8%] md:my-[5%] lg:my-[3%]">
+                    Input PIN to complete transaction
                   </p>
+                  <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
+                    <div className=" flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
+                      {" "}
+                      {isVisible ? (
+                        <OtpInput
+                          value={inputPin}
+                          inputType="tel"
+                          onChange={setInputPin}
+                          numInputs={4}
+                          shouldAutoFocus={true}
+                          inputStyle={{
+                            color: "#403f3f",
+                            width: 30,
+                            height: 30,
+                            borderRadius: 3,
+                          }}
+                          renderInput={(props) => (
+                            <input {...props} className="inputOTP mx-[3px]" />
+                          )}
+                        />
+                      ) : (
+                        <div className="text-[24px] md:text-[24px] mt-1">
+                          * * * *{" "}
+                        </div>
+                      )}
+                      <div
+                        className="text-[#0003] text-xl md:text-3xl"
+                        onClick={toggleVisibility}
+                      >
+                        {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
+                      </div>
+                    </div>
+                    <p className="text-[8px] md:text-[12px] text-[#04177f]">
+                      Forgot Pin ?
+                    </p>
+                  </div>
                 </div>
 
                 <button
@@ -963,10 +1163,84 @@ const GloDataBundle = () => {
                   disabled={inputPin.length !== 4}
                   className={`${
                     inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
-                  } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                  } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
                 >
                   Purchase
                 </button>
+              </div>
+            </Modal>
+          )}
+
+
+{glopurchaseStatus && (
+            <Modal>
+              <div
+                className={` ${
+                  toggleSideBar ? "confirm02" : "confirm2"
+                } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
+              >
+                <div className="flex justify-end px-2">
+                  <img
+                    onClick={() => setGloPurchaseStatus(null)}
+                    className="cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[35px] lg:h-[35px] "
+                    src={Cancel}
+                    alt=""
+                  />
+                </div>
+
+                <hr className="h-[6px] bg-[#04177f] lg:mt-[2%] border-none mt-[2%] md:mt-[2%] md:h-[10px]" />
+                <div className="md:mt-[15%] lg:mt-[10%]">
+                  <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[8%] md:my-[5%] lg:my-[3%]">
+                    Transaction Failed
+                  </p>
+                  <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
+                    <img src={Failed} alt="" />
+                    <p className="text-[8px] md:text-[12px] text-[#04177f]">
+                      An unexpected error has occurred, please try again.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex justify-center items-center gap-[20px]">
+                  <button
+                    onClick={(e) => {
+                      // e.preventDefault();
+                      // setTransaction(false);
+                      setGloPurchaseStatus(null);
+                    }}
+                    className="bg-[#04177f] my-[%] w-[100px] cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[%] md:rounded-[8px] md:text-[16px] lg:w-[px] lg:h-[38px] lg:my-[2%]"
+                  >
+                    Done
+                  </button>
+                  
+                  <Link to="/GloFailedReceipt"
+                  state={{
+                    networkName: "MTN",
+                    selectedNetworkProduct: selectedNetworkProduct,
+                    selectedOption: selectedOption,
+                    recipientPhoneNumber: recipientPhoneNumber,
+                    inputValue: inputValue,
+                    recipientNames: recipientNames,
+                    selectedAmount: selectedAmount,
+                    glotransactionID: glotransactionID,
+                    glorefNumber: glorefNumber,
+                    gloorderID: gloorderID,
+                    glodescription: glodescription,
+                   
+                }}
+                  
+                  >
+                    <button
+                      onClick={() => {
+                        // e.preventDefault();
+                        setGloPurchaseStatus(false);
+                      }}
+                      className="bg-white my-[%] w-[100px] cursor-pointer text-[10px] font-extrabold h-[px] rounded-[6px] md:w-[%] md:rounded-[8px] md:text-[16px] lg:w-[px] lg:h-[38px] lg:my-[2%]"
+                    >
+                      Receipt
+                    </button>
+                  </Link>
+                </div>
               </div>
             </Modal>
           )}
@@ -975,11 +1249,9 @@ const GloDataBundle = () => {
             <Modal>
               {/* <TransactFailedPopUp/> */}
               <div
-                className={`confirm ${styles.successfulTwo} ${
-                  toggleSideBar
-                    ? "md:w-[45%] md:ml-[20%] lg:ml-[20%] lg:w-[40%]"
-                    : "lg:w-[40%]"
-                } md:w-[45%] w-[90%] md:my-auto md:mt-[.5%] mx-auto overflow-auto md:mb-[18%] lg:mx-auto lg:my-auto`}
+                className={`${
+                  toggleSideBar ? "confirm01 w-[90%]" : "confirm w-[90%]"
+                } bg-white rounded-[12px] md:my-auto mx-auto overflow-auto lg:mx-auto lg:my-auto`}
               >
                 <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
                   <img
@@ -1007,7 +1279,7 @@ const GloDataBundle = () => {
                   Purchase Successful
                 </h2>
                 <img
-                  className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[250px] lg:h-[250px]"
+                  className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[100px] lg:h-[100px]"
                   src="./Gif/checkMarkGif.gif"
                   alt="/"
                 />
@@ -1111,7 +1383,7 @@ const GloDataBundle = () => {
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        0124yend44
+                        {gloorderID}
                       </h2>
                     </div>
                   </div>
@@ -1138,7 +1410,20 @@ const GloDataBundle = () => {
                     </button>
                   </Link>
 
-                  <Link to="/GloReceipt">
+                  <Link to="/GloReceipt"
+                  state={{
+                    selectedNetworkProduct: selectedNetworkProduct,
+                    inputValue: inputValue,
+                    recipientPhoneNumber: recipientPhoneNumber,
+                    selectedOption: selectedOption,
+                    recipientNames: recipientNames,
+                    selectedAmount: selectedAmount,
+                    glotransactionID: glotransactionID,
+                    glorefNumber: glorefNumber,
+                    gloorderID: gloorderID,
+                    glodescription: glodescription,
+                }}>
+                  
                     <button
                       onClick={handleReceipt}
                       className={`border-[1px] w-[100px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-[600] h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[12px] lg:w-[163px] lg:h-[38px] lg:my-[2%] md:px-[60px] md:h-[30px]`}
@@ -1151,15 +1436,33 @@ const GloDataBundle = () => {
             </Modal>
           )}
 
-          {receipt && (
+{proceedToShowReceipt && (
             <GloReceipt
-              networkName="GLO"
-              selectedOption={selectedOption}
-              selectedNetworkProduct={selectedNetworkProduct}
-              recipientNumber={inputValue}
-              selectedAmount={selectedAmount}
-              recipientNames={recipientNames}
-              walletName={walletName}
+            networkName='MTN'
+            selectedNetworkProduct={selectedNetworkProduct}
+            recipientPhoneNumber={recipientPhoneNumber}
+            inputValue={inputValue}
+            recipientNames={recipientNames}
+            selectedAmount={selectedAmount}
+            glotransactionID={glotransactionID}
+            glorefNumber={glorefNumber}
+            gloorderID={gloorderID}
+            glodescription={glodescription}
+            />
+          )}
+
+{proceedToShowReceipt && (
+            <GloFailedReceipt
+            networkName='MTN'
+            selectedNetworkProduct={selectedNetworkProduct}
+            recipientPhoneNumber={recipientPhoneNumber}
+            inputValue={inputValue}
+            recipientNames={recipientNames}
+            selectedAmount={selectedAmount}
+            glotransactionID={glotransactionID}
+            glorefNumber={glorefNumber}
+            gloorderID={gloorderID}
+            glodescription={glodescription}
             />
           )}
 
@@ -1186,29 +1489,27 @@ const GloDataBundle = () => {
               Proceed
             </button>
           </div>
-
-          
         </section>
-        
+
         {/* =======================FOOTER=================================== */}
         <div
-            className={`${
-              isDarkMode ? "" : ""
-            } flex gap-[15px] justify-center items-center mt-[100%] pb-[25%] md:pb-[12%] md:mt-[40%] lg:mt-[40%] lg:pb-0`}
-          >
-            <div className="text-[10px] md:text-[12px] lg:text-[14px]">
-              You need help ?
-            </div>
-            <Link to="/ContactUs">
-              <div
-                className={`${
-                  isDarkMode ? "border" : "bg-[#04177f]"
-                } text-[10px] p-1 text-white rounded-[8px] lg:text-[18px]`}
-              >
-                Contact Us
-              </div>
-            </Link>
+          className={`${
+            isDarkMode ? "" : ""
+          } flex gap-[15px] justify-center items-center mt-[100%] pb-[25%] md:pb-[12%] md:mt-[40%] lg:mt-[40%] lg:pb-0`}
+        >
+          <div className="text-[10px] md:text-[12px] lg:text-[14px]">
+            You need help ?
           </div>
+          <Link to="/ContactUs">
+            <div
+              className={`${
+                isDarkMode ? "border" : "bg-[#04177f]"
+              } text-[10px] p-1 text-white rounded-[8px] lg:text-[18px]`}
+            >
+              Contact Us
+            </div>
+          </Link>
+        </div>
       </div>
     </DashBoardLayout>
   );

@@ -5,6 +5,7 @@ import { useState } from "react";
 import { ContextProvider } from "../../../Context";
 import { DashBoardLayout } from "../../Layout/DashBoardLayout";
 import styles from "../../DashboardComponents/component.module.css";
+import styled from "../../../AirTimePage/AirTime.module.css";
 import { Modal } from "../../../Screens/Modal/Modal";
 
 export const TransferPage = () => {
@@ -12,6 +13,7 @@ export const TransferPage = () => {
   const [activeBtn, setActiveBtn] = useState([true, false]);
   const [fiatTransfer, setFiatTransfer] = useState(true);
   const [cryptoTransfer, setCryptoTransfer] = useState(false);
+  const [bulkTransfer, setBulkTransfer] = useState(false);
 
   const handleClick = (index) => {
     const clickedBtn = activeBtn.map((isActive, i) => i === index);
@@ -46,7 +48,7 @@ export const TransferPage = () => {
             <p>Select Transfer type </p>
             <img
               className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-              src="./Images/Dashboardimages/arrowright.png"
+              src="./Images/dashboardImages/arrowright.png"
               alt="/"
             />
           </div>
@@ -91,7 +93,7 @@ export const TransferPage = () => {
                   <div className="flex gap-[5px] items-center">
                     <img
                       className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                      src="Images/Dashboardimages/tf1.png"
+                      src="Images/dashboardImages/tf1.png"
                       alt="/"
                     />
 
@@ -107,7 +109,7 @@ export const TransferPage = () => {
                   </div>
                   <img
                     className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                    src="./Images/Dashboardimages/arrowright.png"
+                    src="./Images/dashboardImages/arrowright.png"
                     alt="/"
                   />
                 </div>
@@ -121,7 +123,7 @@ export const TransferPage = () => {
                   <div className="flex gap-[5px] items-center">
                     <img
                       className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                      src="Images/Dashboardimages/tf2.png"
+                      src="Images/dashboardImages/tf2.png"
                       alt="/"
                     />
                     <div>
@@ -135,36 +137,39 @@ export const TransferPage = () => {
                   </div>
                   <img
                     className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                    src="./Images/Dashboardimages/arrowright.png"
+                    src="./Images/dashboardImages/arrowright.png"
                     alt="/"
                   />
                 </div>
               </Link>
-              <div
-                className={`${isDarkMode ? "border" : "bg-[#fff]"} ${
-                  styles.toMyAcct
-                }`}
-              >
-                <div className="flex gap-[5px] items-center">
+              <Link to="/to-aremxyplug">
+                <div
+                  className={`${isDarkMode ? "border" : "bg-[#fff]"} ${
+                    styles.toMyAcct
+                  }`}
+                >
+                  <div className="flex gap-[5px] items-center">
+                    <img
+                      className="w-[18px] h-[13px] md:w-[] md:h-[] lg:w-[30px] lg:h-[20px]"
+                      src="Images/dashboardImages/tf3.png"
+                      alt="/"
+                    />
+                    <div>
+                      <p className="text-[10px] md:text-[18px]">To AremxyPlug</p>
+                      <p className="text-[8px] text-[#7c7c7c] md:text-[16px]">
+                        Transfer money from your wallets to any AremxyPlug user.
+                      </p>
+                    </div>
+                  </div>
                   <img
-                    className="w-[18px] h-[13px] md:w-[] md:h-[] lg:w-[30px] lg:h-[20px]"
-                    src="Images/Dashboardimages/tf3.png"
+                    className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
+                    src="./Images/dashboardImages/arrowright.png"
                     alt="/"
                   />
-                  <div>
-                    <p className="text-[10px] md:text-[18px]">To AremxyPlug</p>
-                    <p className="text-[8px] text-[#7c7c7c] md:text-[16px]">
-                      Transfer money from your wallets to any AremxyPlug user.
-                    </p>
-                  </div>
                 </div>
-                <img
-                  className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                  src="./Images/Dashboardimages/arrowright.png"
-                  alt="/"
-                />
-              </div>
+              </Link>  
               <div
+                onClick={()=> setBulkTransfer(true)}
                 className={`${isDarkMode ? "border" : "bg-[#fff]"} ${
                   styles.toMyAcct
                 }`}
@@ -172,7 +177,7 @@ export const TransferPage = () => {
                 <div className="flex gap-[5px] items-center">
                   <img
                     className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                    src="Images/Dashboardimages/tf4.png"
+                    src="Images/dashboardImages/tf4.png"
                     alt="/"
                   />
                   <div>
@@ -185,7 +190,7 @@ export const TransferPage = () => {
                 </div>
                 <img
                   className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                  src="./Images/Dashboardimages/arrowright.png"
+                  src="./Images/dashboardImages/arrowright.png"
                   alt="/"
                 />
               </div>
@@ -206,7 +211,7 @@ export const TransferPage = () => {
               </div>
               <img
                 className="mx-auto mt-[] w-[135px] h-[96px] md:w-[220px] md:h-[200px] md:mt-[5%] lg:w-[350px] lg:h-[280px] lg:mt-[5%]"
-                src="./Images/Dashboardimages/Cryptocomingsoon.png"
+                src="./Images/dashboardImages/Cryptocomingsoon.png"
                 alt="/"
               />
               <div className="mx-[6%] flex flex-col gap-[5px] pb-[5%]">
@@ -225,6 +230,28 @@ export const TransferPage = () => {
                   Okay
                 </div>
               </div>
+            </div>
+          </Modal>
+        )}
+
+        {/* ============Bulk transfer modal============= */}
+        {bulkTransfer && (
+          <Modal>
+            <div className={styled.NotInterX} >
+                <div className={styled.timeAbleX}>
+                    <h2>Bulk Transfer</h2>
+                    <h3>This Feature is Currently Not Available.</h3>
+                </div>
+                <div className={styled.InterAirtimeX}>
+                    <img src="./Images/transferImages/messages.png" alt="" />
+                </div>
+                <div className={styled.comingX} >
+                    <h2>Coming soon...</h2>
+                    <button className={styled.btnOkX} onClick={() => {
+                    setBulkTransfer(false);
+                    handleClick(0);
+                  }}>Okay</button>
+                </div>
             </div>
           </Modal>
         )}

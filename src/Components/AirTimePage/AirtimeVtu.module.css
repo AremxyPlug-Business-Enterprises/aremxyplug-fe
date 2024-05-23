@@ -6,10 +6,16 @@
 .transferMoneyPop::-webkit-scrollbar {
     display: none;
 }
+.balanceMoneyPop::-webkit-scrollbar {
+    display: none;
+}
 .successfulTwo::-webkit-scrollbar {
     display: none;
 }
 .successfulThree::-webkit-scrollbar {
+    display: none;
+}
+.successfulFour::-webkit-scrollbar {
     display: none;
 }
 
@@ -33,10 +39,29 @@
     background: #fff;
     box-shadow: 0px 0px 5.952381610870361px 0px rgba(0, 0, 0, 0.25);
 }
+.successfulFour {
+    position: absolute;
+    bottom: 0%;
+    height: 330px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0px 0px 5.952381610870361px 0px rgba(0, 0, 0, 0.25);
+}
 .transferMoneyPop {
     position: absolute;
     height: 505px;
     flex-shrink: 0;
+    bottom: 0%;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+}
+.balanceMoneyPop {
+    position: absolute;
+    height: 505px;
+    flex-shrink: 0;
+    bottom: 0%;
     border-radius: 8px;
     background: #fff;
     box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
@@ -54,6 +79,7 @@
     height: 100%;
     flex-shrink: 0;
     border-radius: 10px;
+    margin-bottom: 50%;
     background: #fff;
     box-shadow: 0px 0px 5.952381610870361px 0px rgba(0, 0, 0, 0.25);
 }
@@ -130,7 +156,7 @@
 .FlexPut {
     margin: auto 0;
     border-radius: 10px;
-    width: 40%;
+    width: 50%;
     height: 51px;
     border: none;
     box-shadow: 0px 0px 4px 0px #00000040;
@@ -166,7 +192,7 @@
 .FlexPut1 {
     margin: auto 0;
     border-radius: 10px;
-    width: 40%;
+    width: 46.5%;
     height: 51px;
     border: none;
     background: #04177F;
@@ -208,7 +234,7 @@
 }
 .mainGrid .mainGridCol {
     display: grid;
-    grid-template-columns: 40% 40%;
+    grid-template-columns: 46.5% 46.5%;
     width: 100%;
     column-gap: 60px;
 }
@@ -283,7 +309,7 @@
     border: none;
     box-shadow: 0px 4px 10px 0px #00000040;
     border-radius: 5px;
-    width: 40%;
+    width: 46.7%;
     transition: height .3s ease;
     background: #FFF;
     z-index: 999;
@@ -397,7 +423,18 @@
     letter-spacing: 0em;
     color: #000000;
 }
+.input .phones {
+    outline: none;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 21px;
+    letter-spacing: 0em;
+    color: #000000;
+}
 .phone::placeholder {
+    font-weight: 400;
+}
+.phones::placeholder {
     font-weight: 400;
 }
 .call img {
@@ -410,6 +447,7 @@
     line-height: 15.6px;
     letter-spacing: 0em;
     color: #04177F;
+    cursor: pointer;
 }
 .span4 {
     font-size: 16px;
@@ -645,24 +683,44 @@
 @media (min-width: 820px) and (max-width: 1180px) {  
     .transferMoneyPop {
       height: 620px;
+      bottom: auto;
+      top: auto;
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+    }
+    .balanceMoneyPop {
+      height: 620px;
+      bottom: auto;
+      top: auto;
       border-radius: 12px;
       background: #fff;
       box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
     }
     .inputPin {
-        bottom: 30%;
+        bottom: auto;
+        top: auto;
         width: 481.25px;
         height: 350px;
     }
     .successfulTwo {
-        bottom: 30%;
-        width: 80%;
+        bottom: auto;
+        top: auto;
+        width: 60%;
         height: 600px;
         border-radius: 15px;
     }
     .successfulThree {
-        bottom: 30%;
-        width: 80%;
+        bottom: auto;
+        top: auto;
+        width: 60%;
+        height: 450px;
+        border-radius: 15px;
+    }
+    .successfulFour {
+        bottom: auto;
+        top: auto;
+        width: 60%;
         height: 450px;
         border-radius: 15px;
     }
@@ -672,6 +730,16 @@
 @media (min-width: 1024px) {
     .transferMoneyPop {
       height: 560px;
+      bottom: auto;
+      top: auto;
+      border-radius: 20px;
+      background: #fff;
+      box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
+    }
+    .balanceMoneyPop {
+      height: 560px;
+      bottom: auto;
+      top: auto;
       border-radius: 20px;
       background: #fff;
       box-shadow: 0px 0px 7.068181991577148px 0px rgba(0, 0, 0, 0.25);
@@ -679,19 +747,30 @@
     .inputPin {
         height: 405px;
         position: absolute;
-        top: 18%;
+        bottom: auto;
+        top: auto;
         border-radius: 20px;
     }
     .successfulTwo {
         position: absolute;
-        top: 7%;
+        bottom: auto;
+        top: auto;
         border-radius: 15px;
         height: 550px;
         box-shadow: 0px 0px 16.952381610870361px 0px rgba(0, 0, 0, 0.25);
     }
     .successfulThree {
         position: absolute;
-        top: 7%;
+        bottom: auto;
+        top: auto;
+        border-radius: 15px;
+        height: 450px;
+        box-shadow: 0px 0px 16.952381610870361px 0px rgba(0, 0, 0, 0.25);
+    }
+    .successfulFour {
+        position: absolute;
+        bottom: auto;
+        top: auto;
         border-radius: 15px;
         height: 450px;
         box-shadow: 0px 0px 16.952381610870361px 0px rgba(0, 0, 0, 0.25);
@@ -755,7 +834,7 @@
     .FlexPut {
         margin: auto 0;
         border-radius: 6px;
-        width: 40%;
+        width: 50%;
         height: 30px;
         border: none;
         box-shadow: 0px 0px 4px 0px #00000040;
@@ -791,7 +870,7 @@
     .FlexPut1 {
         margin: auto 0;
         border-radius: 6px;
-        width: 40%;
+        width: 43%;
         height: 30px;
         border: none;
         background: #04177F;
@@ -831,7 +910,7 @@
     }
     .mainGrid .mainGridCol {
         display: grid;
-        grid-template-columns: 40% 40%;
+        grid-template-columns: 43% 43%;
         width: 100%;
         column-gap: 60px;
     }
@@ -916,7 +995,7 @@
         border: none;
         box-shadow: 0px 4px 10px 0px #00000040;
         border-radius: 5px;
-        width: 40%;
+        width: 43%;
         transition: height .3s ease;
         background: #FFF;
         z-index: 999;
@@ -1055,6 +1134,14 @@
         left: 0;
     }
     .input .phone {
+        outline: none;
+        font-size: 10px;
+        font-weight: 600;
+        line-height: 12px;
+        letter-spacing: 0em;
+        color: #000000;
+    }
+    .input .phones {
         outline: none;
         font-size: 10px;
         font-weight: 600;
@@ -1354,35 +1441,36 @@
         margin: auto 0;
         border-radius: 3.67px;
         width: 100%;
-        height: 18px;
+        height: 25px;
         border: none;
         box-shadow: 0px 0px 4px 0px #00000040;
     }
     .FlexPut .conPut {
         width: 95%;
-        height: 9px;
+        margin: auto;
         position: relative;
         top: 4.68px;
-        left: 3.67px;
+        left: 0;
         display: flex;
+        align-items: center;
         justify-content: space-between;
     }
     .conPut h2 {
-        width: 64.97px;
+        width: 80px;
         height: 9px;
-        font-size: 7px;
+        font-size: 10px;
         font-weight: 600;
         line-height: 9px;
         letter-spacing: 0em;
         text-align: left;
     }
     .FlexPut .FlexImg img {
-        width: 8.81px;
-        height: 8.81px;
+        width: 13px;
+        height: 13px;
     }
     .containFlex1 {
         width: 100%;
-        height: 19px;
+        height: 30px;
         position: relative;
         margin: 0 auto;
         right: 0px;
@@ -1392,9 +1480,9 @@
         margin: auto;
         border-radius: 10px;
         width: 100%;
-        height: 19px;
-        border: none;   
-        border-radius: 1.94px;
+        height: 30px;
+        border: none;  
+        border-radius: 4px;
         padding: 3.24px 8.09px;
         background: #04177F;
         box-shadow: 0px 0px 4px 0px #00000040;
@@ -1402,25 +1490,28 @@
     }
     .containFlex1 .conPut1 {
         position: relative;
-        top: 1px;
+        top: 5px;
         left: 0;
-        margin: 0 auto;
+        margin: auto;
+        align-items: center; 
         display: flex;
-        gap: 1px;
+        justify-content: center;
+        text-align: center;
+        gap: 4px;
+        width: 58%;
     }
     .FlexPut1 .conPut1 h2 {
-        font-size: 8px;
+        font-size: 10px;
         font-weight: 600;
         line-height: 10px;
         letter-spacing: 0em;
         position: relative;
-        left: 40px;
+        left: 0;
     }
     .FlexPut1 .FlexImg1 img {
-        width: 12px;
-        height: 12px;
+        width: 13px;
+        height: 13px;
         position: relative;
-        right: 40px;
         top: .1px;
     }
     .airtimeTop .mainGrid {
@@ -1693,6 +1784,17 @@
         text-align: left;
         color: #000000;
     }
+    .input .phones {
+        outline: none;
+        font-size: 10px;
+        font-weight: 600;
+        line-height: 10px;
+        letter-spacing: 0em;
+        text-align: left;
+        color: #000000;
+        position: relative;
+        left: -30px;
+    }
     .phone::placeholder {
         font-weight: 400;
     }
@@ -1769,7 +1871,7 @@
         width: 100%;
         height: 38px;
         position: relative;
-        top: 200px;
+        top: 50px;
         margin: 0 auto;
     }
     .containFlex3 {
@@ -1800,7 +1902,7 @@
         gap: 14.9px;
         position: relative;
         top: 0;
-        padding-bottom: 20%;
+        padding-bottom: 25%;
     }
     .help h2 {
         font-size: 10px;
@@ -1824,14 +1926,15 @@
     }
     .airtimeTop {
         padding-bottom: 15%;
-        gap: 20px;
+        gap: 25px;
     }
     .AirtimeTops {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        gap: 200px;
+        gap: 350px;
         height: 100%;
+        margin: 0 auto;
     }
     .AirtimeTops1 {
         display: flex;

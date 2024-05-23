@@ -14,7 +14,7 @@ import { InputPinPopUp } from "../TransferComponent/PopUps/InputPinPopUp";
 export const BusinessAccountPage = () => {
   const {
     isDarkMode,
-    image,
+    tfImage,
     code,
     toggleSideBar,
     amtToTransfer,
@@ -52,8 +52,8 @@ export const BusinessAccountPage = () => {
                 alt=""
               />
             </button>
-
-            <button
+            <Link
+              to="/top-up"
               className={`${styles.transferMoneyBtn} flex gap-[5px] w-[100%] h-[26px] justify-center items-center md:w-[390px] lg:h-[41px]`}
             >
               <h2 className="text-[9px] md:text-[12px] lg:text-[16px]">
@@ -64,13 +64,13 @@ export const BusinessAccountPage = () => {
                 src="/Images/dashboardImages/add-money.png"
                 alt=""
               />
-            </button>
+            </Link>
           </div>
           <div className="flex text-[#7c7c7c] text-[10px] leading-[130%] items-center mb-[2%] gap-[8px] md:my-[5%] md:text-[18px] lg:text-[20px]">
             <p>Account Details : </p>
             <img
               className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-              src="./Images/Dashboardimages/arrowright.png"
+              src="./Images/dashboardImages/arrowright.png"
               alt="/"
             />
           </div>
@@ -88,7 +88,7 @@ export const BusinessAccountPage = () => {
               </div>
               <img
                 className="w-[18px] h-[18px] md:w-[24px] md:h-[24px] lg:w-[29px] lg:h-[29px]"
-                src={image}
+                src={tfImage}
                 alt="/"
               />
             </div>
@@ -111,11 +111,13 @@ export const BusinessAccountPage = () => {
                 <p className="text-[13px] font-extrabold md:text-[20px]">
                   Company's Email
                 </p>
-                <p className="text-[10px] md:text-[15px]">hello@aremxyplug.com</p>
+                <p className="text-[10px] md:text-[15px]">
+                  hello@aremxyplug.com
+                </p>
               </div>
               <img
                 className="w-[18px] h-[18px] md:w-[24px] md:h-[24px] lg:w-[29px] lg:h-[29px]"
-                src="./Images/Dashboardimages/email-address.png"
+                src="./Images/dashboardImages/email-address.png"
                 alt="/"
               />
             </div>
@@ -134,7 +136,7 @@ export const BusinessAccountPage = () => {
               </div>
               <img
                 className="w-[18px] h-[18px] md:w-[24px] md:h-[24px] lg:w-[29px] lg:h-[29px]"
-                src="./Images/Dashboardimages/home-address.png"
+                src="./Images/dashboardImages/home-address.png"
                 alt="/"
               />
             </div>
@@ -151,7 +153,7 @@ export const BusinessAccountPage = () => {
               </div>
               <img
                 className="w-[18px] h-[18px] md:w-[24px] md:h-[24px] lg:w-[29px] lg:h-[29px]"
-                src="./Images/Dashboardimages/iban.png"
+                src="./Images/dashboardImages/iban.png"
                 alt="/"
               />
             </div>
@@ -164,11 +166,13 @@ export const BusinessAccountPage = () => {
                 <p className="text-[13px] font-extrabold md:text-[20px]">
                   Company's Name
                 </p>
-                <p className="text-[10px] md:text-[15px]">Aremxyplug Business Ent, LTD.</p>
+                <p className="text-[10px] md:text-[15px]">
+                  Aremxyplug Business Ent, LTD.
+                </p>
               </div>
               <img
                 className="w-[18px] h-[18px] md:w-[24px] md:h-[24px] lg:w-[29px] lg:h-[29px]"
-                src="./Images/Dashboardimages/account-name.png"
+                src="./Images/dashboardImages/account-name.png"
                 alt="/"
               />
             </div>
@@ -185,7 +189,7 @@ export const BusinessAccountPage = () => {
               </div>
               <img
                 className="w-[18px] h-[18px] md:w-[24px] md:h-[24px] lg:w-[29px] lg:h-[29px]"
-                src="./Images/Dashboardimages/barcode.png"
+                src="./Images/dashboardImages/barcode.png"
                 alt="/"
               />
             </div>
@@ -202,7 +206,7 @@ export const BusinessAccountPage = () => {
               </div>
               <img
                 className="w-[18px] h-[18px] md:w-[24px] md:h-[24px] lg:w-[29px] lg:h-[29px]"
-                src="./Images/Dashboardimages/bank-name.png"
+                src="./Images/dashboardImages/bank-name.png"
                 alt="/"
               />
             </div>
@@ -221,7 +225,7 @@ export const BusinessAccountPage = () => {
               </div>
               <img
                 className="w-[18px] h-[18px] md:w-[24px] md:h-[24px] lg:w-[29px] lg:h-[29px]"
-                src="./Images/Dashboardimages/beneficiary-address.png"
+                src="./Images/dashboardImages/beneficiary-address.png"
                 alt="/"
               />
             </div>
@@ -238,7 +242,7 @@ export const BusinessAccountPage = () => {
               </div>
               <img
                 className="w-[18px] h-[18px] md:w-[24px] md:h-[24px] lg:w-[29px] lg:h-[29px]"
-                src="./Images/Dashboardimages/beneficiary.png"
+                src="./Images/dashboardImages/beneficiary.png"
                 alt="/"
               />
             </div>
@@ -255,7 +259,7 @@ export const BusinessAccountPage = () => {
               </div>
               <img
                 className="w-[18px] h-[18px] md:w-[24px] md:h-[24px] lg:w-[29px] lg:h-[29px]"
-                src="./Images/Dashboardimages/direct-notification.png"
+                src="./Images/dashboardImages/direct-notification.png"
                 alt="/"
               />
             </div>
@@ -272,7 +276,7 @@ export const BusinessAccountPage = () => {
               </div>
               <img
                 className="w-[18px] h-[18px] md:h-[24px] md:w-[24px] lg:w-[29px] lg:h-[29px]"
-                src="./Images/Dashboardimages/zip.png"
+                src="./Images/dashboardImages/zip.png"
                 alt="/"
               />
             </div>
@@ -289,7 +293,7 @@ export const BusinessAccountPage = () => {
               </div>
               <img
                 className="w-[18px] h-[18px] md:h-[40px] md:w-[40px] lg:w-[29px] lg:h-[29px]"
-                src="./Images/Dashboardimages/reference.png"
+                src="./Images/dashboardImages/reference.png"
                 alt="/"
               />
             </div>
@@ -307,17 +311,13 @@ export const BusinessAccountPage = () => {
             </button>
           </div>
         </div>
-        <div
-          className={`${
-            isDarkMode ? "" : ""
-          } flex gap-[15px] justify-center items-center my-[15%] md:mt-[38%] lg:mt-[26%] lg:mb-[%]`}
-        >
-          <div className="text-[10px] md:text-[12px] lg:text-[14px]">
+        <div className="flex gap-[15px] justify-center items-center lg:my-10">
+          <div className="text-[8px] md:text-[12px] lg:text-[16px]">
             You need help ?
           </div>
           <Link to="/ContactUs">
             <div
-              className={`${isDarkMode ? "border" : "bg-[#04177f]"} ${
+              className={`${isDarkMode ? "border " : "bg-[#04177f]"} ${
                 styles.contactus
               }`}
             >

@@ -13,7 +13,7 @@ const QuickFeatures = () => {
         </p>
         <img
           className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-          src="./Images/Dashboardimages/arrowright.png"
+          src="./Images/dashboardImages/arrowright.png"
           alt="/"
         />
       </div>
@@ -26,7 +26,7 @@ const QuickFeatures = () => {
           >
             <img
               className="h-[25px] w-[25px] md:w-[] md:h-[] lg:h-[79px] lg:w-[79px]"
-              src="./Images/Dashboardimages/feature1.png"
+              src="./Images/dashboardImages/feature1.png"
               alt="/"
             />
             <p>Airtime Topup</p>
@@ -42,7 +42,7 @@ const QuickFeatures = () => {
           {" "}
           <img
             className=" h-[25px] w-[25px] md:w-[] md:h-[] lg:h-[79px] lg:w-[79px]"
-            src="./Images/Dashboardimages/feature2.png"
+            src="./Images/dashboardImages/feature2.png"
             alt="/"
           />{" "}
           <p>Data Topup</p>
@@ -55,7 +55,7 @@ const QuickFeatures = () => {
           >
             <img
               className="h-[25px] w-[25px] md:w-[] md:h-[] lg:h-[85px] lg:w-[85px]"
-              src="./Images/Dashboardimages/feature3.png"
+              src="./Images/dashboardImages/feature3.png"
               alt="/"
             />
             <p>Education Pins</p>
@@ -69,7 +69,7 @@ const QuickFeatures = () => {
           >
             <img
               className="h-[25px] w-[25px] md:w-[] md:h-[] lg:h-[79px] lg:w-[79px]"
-              src="./Images/Dashboardimages/feature4.png"
+              src="./Images/dashboardImages/feature4.png"
               alt="/"
             />
             <p>TV Subscriptions</p>
@@ -83,48 +83,50 @@ const QuickFeatures = () => {
           >
             <img
               className="h-[25px] w-[25px] md:w-[] md:h-[] lg:h-[79px] lg:w-[79px]"
-              src="./Images/Dashboardimages/feature5.png"
+              src="./Images/dashboardImages/feature5.png"
               alt="/"
             />
             <p>Electricity Bills</p>
           </div>
         </Link>
-        <div
-          className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
-            styles.feature
-          }`}
-        >
+        <Link to="/payment-page"
+            className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
+              styles.feature
+            }`}
+          >
           <img
             className="h-[25px] w-[25px] md:w-[] md:h-[] lg:h-[79px] lg:w-[79px]"
-            src="./Images/Dashboardimages/feature6.png"
+            src="./Images/dashboardImages/feature6.png"
             alt="/"
           />
           <p>Payments</p>
-        </div>
-        <div
+        </Link>
+        <Link
+          to="/Cardissuing"
           className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
             styles.feature
           }`}
         >
           <img
             className="h-[25px] w-[25px] md:w-[] md:h-[] lg:h-[79px] lg:w-[79px]"
-            src="./Images/Dashboardimages/feature7.png"
+            src="./Images/dashboardImages/feature7.png"
             alt="/"
           />
           <p>Card Issuing</p>
-        </div>
-        <div
+        </Link>
+        <Link
+          to="/DigitalServices"
           className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
             styles.feature
           }`}
         >
           <img
             className="h-[25px] w-[25px] md:w-[] md:h-[] lg:h-[79px] lg:w-[79px]"
-            src="./Images/Dashboardimages/feature8.png"
+            src="./Images/dashboardImages/feature8.png"
             alt="/"
           />
           <p>Digital Services</p>
-        </div>
+        </Link>
         <Link
           to="/My-Referral"
           className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
@@ -133,23 +135,24 @@ const QuickFeatures = () => {
         >
           <img
             className="h-[25px] w-[25px] md:w-[] md:h-[] lg:h-[79px] lg:w-[79px]"
-            src="./Images/Dashboardimages/feature9.png"
+            src="./Images/dashboardImages/feature9.png"
             alt="/"
           />
           <p>Referrals</p>
         </Link>
-        <div
+        <Link
+          to="/ProfileSettingMain"
           className={`${
             isDarkMode ? " border text-white" : "text-[#000] bg-[#fff] "
           } ${styles.feature}`}
         >
           <img
             className="h-[25px] w-[25px] md:w-[] md:h-[] lg:h-[79px] lg:w-[79px]"
-            src="./Images/Dashboardimages/feature10.png"
+            src="./Images/dashboardImages/feature10.png"
             alt="/"
           />
           <p>My Profile</p>
-        </div>
+        </Link>
       </div>
     </div>
   );
