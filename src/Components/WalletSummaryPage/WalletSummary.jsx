@@ -510,7 +510,7 @@ border-opacity-30 justify-start items-center gap-[52.80px] inline-flex"
               </div>
               <img
                 className="w-[15px] h-[15px] md:w-[17px] md:h-[17px] lg:w-[20px] lg:h-[20px]"
-                src="./Images/Dashboardimages/dateImg.png"
+                src="./Images/dashboardImages/dateImg.png"
                 alt=""
               />
             </div>
@@ -784,7 +784,7 @@ setIsOpen1(false);
             <p className={styles.InOutText}>Wallet History</p>
             <img
               className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-              src="./Images/Dashboardimages/arrowright.png"
+              src="./Images/dashboardImages/arrowright.png"
               alt="/"
             />
           </div>

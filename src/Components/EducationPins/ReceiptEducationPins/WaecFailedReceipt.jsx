@@ -1,82 +1,78 @@
-import React from 'react'
+import React from 'react';
 import { useContext, useRef } from "react";
 import { ContextProvider } from '../../Context';
- 
-import { DashBoardLayout } from '../../Dashboard/Layout/DashBoardLayout';
+ import { DashBoardLayout } from '../../Dashboard/Layout/DashBoardLayout';
 import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import AremxyPlugIcon from '../imagesEducation/AremxyPlug.svg'
 import html2canvas from "html2canvas";
-
-export default function WaecReceipt() {
- 
+export const WaecFailedReceipt = () => {
     const {
-      examType,
-      quantityResult,
-      educationPinPhone,
-      educationPinEmail,
-      paymentResult,
-      setExamType,
-      educationAmount,
-      setQuantityResult,
-      setEducationPinEmail,
-      setEducationPinPhone,
-      setPaymentResult,
-      setEducationAmount,
-      setWalletBalance,
-      eduResponse
-      }
-       = useContext(ContextProvider);
-
-       const { 
-        toggleSideBar,
-        isDarkMode,
-        date, } =
-        useContext(ContextProvider);  
-
-        const contentRef = useRef(null);
-
-        const currentChanges = () => {
-          setQuantityResult('');
-          setExamType('');
-          setEducationPinPhone('');
-          setEducationPinEmail('');
-         setPaymentResult('');
-         setEducationAmount('₦');
-         setWalletBalance('');
+        quantityResult,
+        educationPinPhone,
+        educationPinEmail,
+        paymentResult,
+        setExamType,
+        educationAmount,
+        setQuantityResult,
+        setEducationPinEmail,
+        setEducationPinPhone,
+        setPaymentResult,
+        setEducationAmount,
+        setWalletBalance,
+        eduResponse
         }
-      
-      
-        //   Share function
-        const waecShareClick = () => {
-            if (navigator.share) {
-              navigator
-                .share({
-                  title: "Receipt",
-                  text: "Check out this receipt!",
-                  url: "https://test.aremxyplug.com/",
-                })
-                .then(() => console.log("Shared successfully"))
-                .catch((error) => console.error("Error sharing:", error));
-            } else {
-              console.log("Web Share API not supported.");
-            }
-          };
+         = useContext(ContextProvider);
+  
+         const { 
+          toggleSideBar,
+          isDarkMode,
+          date, } =
+          useContext(ContextProvider);  
+  
+          const contentRef = useRef(null);
+          //   Function for Resetting the inputs
+          const failedResult = () => {
+            setQuantityResult('');
+            setExamType('');
+            setEducationPinPhone('');
+            setEducationPinEmail('');
+           setPaymentResult('');
+           setEducationAmount('₦');
+           setWalletBalance('');
+          }
         
-          // ==============Save Pdf Function==============
-          const waecSaveAsPDFClick = () => {
-            const contentWaec = contentRef.current;
-            if (contentWaec) {
-              const pdf = new jsPDF();
-              html2canvas(contentWaec).then((canvas) => {
-                const imgWaecData = canvas.toDataURL("image/png");
-                pdf.addImage(imgWaecData, "PNG", 10, 10, 190, 0);
-                pdf.save("page.pdf");
-              });
-            }
-          };
+        
+          //   Share function
+          const shareFailedReceipt = () => {
+              if (navigator.share) {
+                navigator
+                  .share({
+                    title: "Receipt",
+                    text: "Check out this receipt!",
+                    url: "https://test.aremxyplug.com/",
+                  })
+                  .then(() => console.log("Shared successfully"))
+                  .catch((error) => console.error("Error sharing:", error));
+              } else {
+                console.log("Web Share API not supported.");
+              }
+            };
+          
+            // ==============Save Pdf Function==============
+            const waecFailedPDF= () => {
+              const contentWaec = contentRef.current;
+              if (contentWaec) {
+                const pdf = new jsPDF();
+                html2canvas(contentWaec).then((canvas) => {
+                  const imgWaecData = canvas.toDataURL("image/png");
+                  pdf.addImage(imgWaecData, "PNG", 10, 10, 190, 0);
+                  pdf.save("page.pdf");
+                });
+              }
+            };
   return (
-<DashBoardLayout>
+    <DashBoardLayout>
       <div className="flex flex-col gap-[35px] lg:gap-[85px]">
         <div
           className={`  ${
@@ -97,8 +93,8 @@ export default function WaecReceipt() {
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
-                onClick={(e) => {
-                  currentChanges();
+                onClick={() => {
+                   failedResult();
                 }}
               />
             </Link>
@@ -118,7 +114,7 @@ export default function WaecReceipt() {
             </div>
             <h3 className="  text-[12px] mt-[2%] text-center 
             md:text-[20px] md:my-[3%] lg:text-[16px] font-[600] lg:my-[2%]">
-              Purchase Successful on
+              Purchase Failed on
             </h3>
             <span className="text-[11px] md:text-[14px] lg:text-[16px] text-[#7C7C7C] 
             font-[600] flex justify-center items-center">
@@ -134,14 +130,11 @@ export default function WaecReceipt() {
             </span>
             <div className='flex justify-center mx-[19px]'>
             <p className="text-[10px] p-[5.729px] border-[0.573px] rounded-[6.302px] md:p-[5.868px] md:border-[0.578px] 
-             md:rounded-[6.455px]  lg:border-[1px] lg:rounded-[11px]  border-[solid] border-[#27AE60] leading-[15px] md:leading-[20px]
-           text-[#27AE60] bg-[#D5F6E3] lg:p-[10px] text-center my-2 md:text-[14px] 
+             md:rounded-[6.455px]  lg:border-[1px] lg:rounded-[11px]  border-[solid] border-[#F95252] leading-[15px] md:leading-[20px]
+           text-[#F95252] bg-[#FDCECE] lg:p-[10px] text-center my-2 md:text-[14px] 
           lg:text-[16px]  lg:leading-[24px] font-[500] md:mb-7">
-              You have successfully purchased{" "}
-              <span className=" font-extrabold text-[10.9px] md:text-[14.9px] lg:text-[16.9px]">
-              {examType} {" "}
-              </span>
-              from your {paymentResult} to{" "}
+             Purchase Failed due to an unexpected error that occured. Please try again.
+
             </p>
             </div>
             <div className="flex flex-col gap-7  md:gap-10">
@@ -152,7 +145,7 @@ export default function WaecReceipt() {
                   <p>Recipient Info</p>
                   <img
                     className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                    src="./Images/dashboardImages/arrowright.png"
+                    src="./Images/Dashboardimages/arrowright.png"
                     alt="/"
                   />
                 </div>
@@ -166,10 +159,7 @@ export default function WaecReceipt() {
                   <p className="text-[#0008]">Quantity</p>
                   <span>{quantityResult}</span>
                 </div>
-                {/* <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Plan</p>
-                  <span>{selectedOption}</span>
-                </div> */}
+                
                 
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
                 justify-between  lg:text-[16px] font-[500]">
@@ -194,7 +184,7 @@ export default function WaecReceipt() {
                   <p>Sender Info</p>
                   <img
                     className="w-[13px] h-[13px] md:w-[18px] md:h-[18px] lg:w-[24px] lg:h-[24px]"
-                    src="./Images/dashboardImages/arrowright.png"
+                    src="./Images/Dashboardimages/arrowright.png"
                     alt="/"
                   />
                 </div>
@@ -216,7 +206,7 @@ export default function WaecReceipt() {
                   <p>Transaction Info</p>
                   <img
                     className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                    src="./Images/dashboardImages/arrowright.png"
+                    src="./Images/Dashboardimages/arrowright.png"
                     alt="/"
                   />
                 </div>
@@ -261,7 +251,7 @@ export default function WaecReceipt() {
         gap-[10px] md:gap-[20px] px-[20px]  mb-[5%]  ">
           <button
             onClick={() => {
-              waecShareClick();
+            shareFailedReceipt();
             }}
             className={`bg-[#04177f] w-[111px] 
               cursor-pointer text-[12px] 
@@ -272,7 +262,7 @@ export default function WaecReceipt() {
           </button>
           <button
             onClick={() => {
-              waecSaveAsPDFClick();
+              waecFailedPDF();
             }}
             className={`bg-[#ffffff] border-[1px] w-[111px] 
             border-[#0003]  cursor-pointer text-[12px] font-extrabold h-[40px] 
@@ -311,3 +301,5 @@ export default function WaecReceipt() {
 
   )
 }
+
+

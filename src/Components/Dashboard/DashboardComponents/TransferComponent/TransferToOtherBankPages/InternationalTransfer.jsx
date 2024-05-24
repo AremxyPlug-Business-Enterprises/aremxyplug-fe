@@ -100,7 +100,7 @@ export const InternationalTransfer = () => {
         <p>From</p>
         <img
           className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-          src="./Images/Dashboardimages/arrowright.png"
+          src="./Images/dashboardImages/arrowright.png"
           alt="/"
         />
       </div>
@@ -150,7 +150,7 @@ export const InternationalTransfer = () => {
         <p>To Recipient</p>
         <img
           className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-          src="./Images/Dashboardimages/arrowright.png"
+          src="./Images/dashboardImages/arrowright.png"
           alt="/"
         />
       </div>

@@ -6,10 +6,8 @@ import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import AremxyPlugIcon from '../imagesEducation/AremxyPlug.svg'
-
-export default function NecoReceipt() {
+export const NecoFailedReceipt = () => {
     const {
-        necoExamType,
         necoQuantityResult,
         necoEducationPinPhone,
         necoEducationPinEmail,
@@ -33,8 +31,8 @@ export default function NecoReceipt() {
           useContext(ContextProvider);  
   
           const contentRef = useRef(null);
-  
-          const currentNecoChanges = () => {
+    //  Function for Resetting inputs
+          const resetInputs = () => {
             setNecoQuantityResult('');
         setNecoExamType('');
         setNecoEducationPinPhone('');
@@ -45,7 +43,7 @@ export default function NecoReceipt() {
           }
         
         //   Share function
-        const necoShareClick = () => {
+        const shareFailedReceipt = () => {
             if (navigator.share) {
               navigator
                 .share({
@@ -61,7 +59,7 @@ export default function NecoReceipt() {
           };
         
           // ==============Save Pdf Function==============
-          const necoSaveAsPDFClick = () => {
+          const FailedNecoPdf = () => {
             const contentNeco = contentRef.current;
             if (contentNeco) {
               const pdf = new jsPDF();
@@ -72,7 +70,6 @@ export default function NecoReceipt() {
               });
             }
           };
-
   return (
     <DashBoardLayout>
     <div className="flex flex-col gap-[35px] lg:gap-[85px]">
@@ -95,8 +92,8 @@ export default function NecoReceipt() {
               className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
               src="/Images/transferImages/close-circle.png"
               alt=""
-              onClick={(e) => {
-                currentNecoChanges();
+              onClick={() => {
+                resetInputs();
               }}
             />
           </Link>
@@ -116,7 +113,7 @@ export default function NecoReceipt() {
           </div>
           <h3 className="font-extrabold text-[12px] mt-[2%] 
           text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
-            Purchase Successful on
+            Purchase Failed on
           </h3>
           <span className="text-[11px] text-[#0008] md:text-[14px] 
           flex justify-center items-center font-[600]">
@@ -132,15 +129,11 @@ export default function NecoReceipt() {
           </span>
           <div className='flex justify-center mx-[19px]'>
           <p className="text-[10px] p-[5.729px] border-[0.573px] rounded-[6.302px] md:p-[5.868px] md:border-[0.578px] 
-             md:rounded-[6.455px]  lg:border-[1px] lg:rounded-[11px]  border-[solid] border-[#27AE60] leading-[15px] md:leading-[20px]
-           text-[#27AE60] bg-[#D5F6E3] lg:p-[10px] text-center my-2 md:text-[14px] 
+             md:rounded-[6.455px]  lg:border-[1px] lg:rounded-[11px]  border-[solid] border-[#F95252] leading-[15px] md:leading-[20px]
+           text-[#F95252] bg-[#FDCECE] lg:p-[10px] text-center my-2 md:text-[14px] 
           lg:text-[16px]  lg:leading-[24px] font-[500] md:mb-7">
-            You have successfully purchased{" "}
-            <span className=" font-extrabold text-[10.9px] md:text-[14.9px] lg:text-[16.9px]   
-            ">
-            {necoExamType} {" "}
-            </span>
-            from your {necoPaymentResult} to{" "}
+            Purchase Failed due to an unexpected error that occured. Please try again.
+
           </p>
           </div>
           <div className="flex flex-col gap-7  md:gap-10">
@@ -151,7 +144,7 @@ export default function NecoReceipt() {
                 <p>Recipient Info</p>
                 <img
                   className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                  src="./Images/dashboardImages/arrowright.png"
+                  src="./Images/Dashboardimages/arrowright.png"
                   alt="/"
                 />
               </div>
@@ -195,7 +188,7 @@ export default function NecoReceipt() {
                 <p>Sender Info</p>
                 <img
                   className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                  src="./Images/dashboardImages/arrowright.png"
+                  src="./Images/Dashboardimages/arrowright.png"
                   alt="/"
                 />
               </div>
@@ -218,7 +211,7 @@ export default function NecoReceipt() {
                 <p>Transaction Info</p>
                 <img
                   className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                  src="./Images/dashboardImages/arrowright.png"
+                  src="./Images/Dashboardimages/arrowright.png"
                   alt="/"
                 />
               </div>
@@ -262,7 +255,7 @@ export default function NecoReceipt() {
         gap-[10px] md:gap-[20px] px-[20px]  mb-[5%]  ">
           <button
             onClick={() => {
-              necoShareClick();
+                shareFailedReceipt();
             }}
             className={`bg-[#04177f] w-[111px] 
               cursor-pointer text-[12px] 
@@ -273,7 +266,7 @@ export default function NecoReceipt() {
           </button>
           <button
             onClick={() => {
-              necoSaveAsPDFClick();
+             FailedNecoPdf();
             }}
             className={`bg-[#ffffff] border-[1px] w-[111px] 
             border-[#0003]  cursor-pointer text-[12px] font-extrabold h-[40px] 

@@ -442,7 +442,7 @@ gap-[5px] mt-[-0%] lg:mt-[25px] bg-indigo-300
         <div class="text-[#04177f] text-[9px] lg:text-[20px] flex items-center md:text-[16px] 
         whitespace-nowrap font-bold relative">Filter by Date</div>
         <div class="w-4 h-4 lg:h-6 lg:mt-1 lg:w-6 md:w-[15.75px] md:h-[15.75px] justify-center items-center inline-flex">
-            <img src="./Images/Dashboardimages/dateImg.png" className=" md:mt-[1px] lg:mt-[-2px]
+            <img src="./Images/dashboardImages/dateImg.png" className=" md:mt-[1px] lg:mt-[-2px]
              mt-[-2px] w-[12px] h-[12px] md:w-[17px] md:h-[17px] lg:w-[20px] lg:h-[20px] relative" alt="" />
 
         
@@ -619,7 +619,7 @@ handleClick('Data Top-up'); }} class="w-[186.20px] text-neutral-500 text-[9px] m
         <p className={styles.InOutText}>Sales Analysis</p>
         <img
           className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-          src="./Images/Dashboardimages/arrowright.png"
+          src="./Images/dashboardImages/arrowright.png"
           alt="/"
         />
       </div>

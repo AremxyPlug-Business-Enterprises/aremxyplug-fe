@@ -303,7 +303,7 @@ const Notifications = [
     image: cards,
     number: 0,
     notifications: {
-      image: "./Images/Dashboardimages/noTransactionFound.png"
+      image: "./Images/dashboardImages/noTransactionFound.png"
     },
   },
   {
@@ -311,7 +311,7 @@ const Notifications = [
     image: charts,
     number: 0,
     notifications: {
-      image: "./Images/Dashboardimages/noTransactionFound.png"
+      image: "./Images/dashboardImages/noTransactionFound.png"
     },
   },
 ];
@@ -696,7 +696,7 @@ export default function NotificationsPage2() {
                               <div className="w-full mx-auto text-center">
                                 <img
                                   className="lg:w-[500px] relative lg:h-[500px] w-[150px] h-[150px] md:w-[300px] flex justify-center md:h-[300px] text-center mx-auto"
-                                  src="./Images/Dashboardimages/noTransactionFound.png"
+                                  src="./Images/dashboardImages/noTransactionFound.png"
                                   alt={notification.title}
                                 />
                               </div>
