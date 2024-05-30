@@ -12,32 +12,47 @@ import arrowDown from "../Referrals/referralImage/arrow-down.svg";
 import { Link } from "react-router-dom/dist/react-router-dom.development";
 import { useState } from "react";
 import "../../App.css";
-// import copy from "copy-to-clipboard";
+
 
 export default function Referral() {
   
-
-  const [copyTextOne, setCopyTextOne] = useState('https://aremxyplug.com/app/register?referral=aremxyplug');
-  const [copyTextTwo, setCopyTextTwo] = useState('aremxyplug');
-
-    const handleCopyTextOne = (e) => {
-      setCopyTextOne(e.target.value);
-    }
+  const [copyTextOne, setCopyTextOne] = useState('');
+  const [copyTextTwo, setCopyTextTwo] = useState('');
  
-    const copyToClipBoardOne = () => {
-        // copy(copyTextOne);
-        alert(`You have copied "${copyTextOne}"`);
-    }
+
+
+  const handleCopyClick = (e) => {
+     if(e.target.id === 'copy-btn1' ){
+    navigator.clipboard
+    .writeText(copyTextOne)
+    .then(() => {
+      alert("Copied to clipboard");
+    })
+    .catch((err) => {
+      console.error("Error copying text: ", err);
+    });
+  }else if(e.target.id === 'copy-btn2'){
+    navigator.clipboard
+    .writeText(copyTextTwo)
+    .then(() => {
+      alert("Copied to clipboard");
+    })
+    .catch((err) => {
+      console.error("Error copying text: ", err);
+    });
+   } 
+  };
+   
+    // const copyToClipBoardOne = () => {
+    //     // copy(copyTextOne);
+    //     alert(`You have copied "${copyTextOne}"`);
+    // }
         
-// function for aremxyplug-- copy code
-    const handleCopyTextTwo = (e) => {
-      setCopyTextTwo(e.target.value);
-    }
   
-    const copyToClipBoardTwo = () => {
-        // copy(copyTextTwo);
-        alert(`You have copied "${copyTextTwo}"`);
-    }
+    // const copyToClipBoardTwo = () => {
+    //     // copy(copyTextTwo);
+    //     alert(`You have copied "${copyTextTwo}"`);
+    // }
   
   return (
     <DashBoardLayout>
@@ -106,22 +121,25 @@ export default function Referral() {
             >
               {/* THE REFER LINK */}
 
-              <div className="copy-content1 flex items-center  w-[75%] h-[100%]  border-l-[1px] border-y-[1px] 
+              <input value={copyTextOne}
+              onChange={(e)=> {
+                setCopyTextOne(e.target.value);
+              }}
+               className="copy-content1 font-[600]  text-[#7C7C7C] text-[7px] leading-[11px]
+               lg:text-[16px] lg:leading-[24px] 
+                md:text-[9.167px] md:leading-[14px] flex items-center  w-[75%] h-[100%]  border-l-[1px] border-y-[1px] 
           border-[#7C7C7C] pl-[5px]  lg:pl-[18px]  md:pl-[13px]
-         lg:rounded-s-[22px] rounded-s-[9.333px] md:rounded-s-[12.607px] overflow-x-scroll md:overflow-auto">
-              <p
-              onChange={handleCopyTextOne}
-                className="font-[600]  text-[#7C7C7C] text-[7px] leading-[11px]
-       lg:text-[16px] lg:leading-[24px] 
-        md:text-[9.167px] md:leading-[14px] flex-nowrap shrink-0"
-              >
-                {copyTextOne}
-              </p>
-              </div>
+         lg:rounded-s-[22px] rounded-s-[9.333px] md:rounded-s-[12.607px] overflow-x-scroll md:overflow-auto focus:outline-none" readOnly/>
+             
+              
               {/* COPY LINK */}
-              <div
-              onClick={copyToClipBoardOne}
-                className="flex justify-center 
+              <div 
+              id='copy-btn1'
+              onClick={(e)=> {
+                handleCopyClick(e)
+            
+              }}
+                className=" copy-btn1 flex justify-center 
        gap-[10px] w-[25%] h-[100%] bg-[#04177F] items-center 
        rounded-e-[9.333px] lg:rounded-e-[22px] md:rounded-e-[12.607px]"
               >
@@ -154,22 +172,26 @@ lg:text-[16px] lg:leading-[24px]"
         lg:h-[54px] "
             >
               {/* THE REFER LINK 2*/}
-         <div className="copy-content2 flex items-center  w-[75%] h-[100%]  border-l-[1px] border-y-[1px] 
-          border-[#7C7C7C] pl-[5px] lg:pl-[18px] md:pl-[13px]
-         lg:rounded-s-[22px] rounded-s-[9.333px] md:rounded-s-[12.607px]">
-              <p
-             onChange={handleCopyTextTwo}
-                className="font-[600]  text-[#7C7C7C] text-[7px] leading-[11px]
+        <input value={copyTextTwo}
+        onChange={(e)=> {
+          setCopyTextTwo(e.target.value);
+        }}
+          className="copy-content2 font-[600]  text-[#7C7C7C] text-[7px] leading-[11px]
        lg:text-[16px] lg:leading-[24px] 
-        md:text-[9.167px] md:leading-[14px]  md:overflow-auto overflow-x-scroll"
-              >
-                 {copyTextTwo}  
-              </p>
-              </div>
+        md:text-[9.167px] md:leading-[14px]  md:overflow-auto overflow-x-scroll  w-[75%] h-[100%]  border-l-[1px] border-y-[1px] 
+          border-[#7C7C7C] pl-[5px] lg:pl-[18px] md:pl-[13px]
+         lg:rounded-s-[22px] rounded-s-[9.333px] md:rounded-s-[12.607px] focus:outline-none" readOnly/>
+            
+                
+              
               {/* COPY LINK */}
              <div
-             onClick={copyToClipBoardTwo}
-                className="copy-btn2 flex justify-center 
+             id='copy-btn2'
+             onClick={(e)=> {
+              handleCopyClick(e);
+             
+             }}
+                className=" flex justify-center 
        gap-[10px] w-[25%] h-[100%] bg-[#04177F] items-center
         rounded-e-[9.333px] lg:rounded-e-[22px] md:rounded-e-[12.607px]"
               >
