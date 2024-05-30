@@ -83,8 +83,8 @@ const [nabtebMethodOptions,setNabtebMethodOptions] = useState([
 // CONFIRM EXAM TYPE
 const nabtebExams  = [
 { examType :'NABTEB',   id : 1},
-{ examType :'NECO', path :  "/NecoEducationPin", id : 2 },
-{ examType :'WAEC', path : "/WaecEducationPin", id : 3 },
+{ examType :'NECO(₦1,200)', path :  "/NecoEducationPin", id : 2 },
+{ examType :'WAEC(₦3,200)', path : "/WaecEducationPin", id : 3 },
 { examType :'JAMB ', path : "/JambEducationPin", id : 4 }
  ]
 function nabtebExamDropDown(){
@@ -582,7 +582,7 @@ className='relative w-[100%]'>
                 text-[10px] leading-[15px] text-center mt-[26px] mx-[10px] mb-[20px] font-[600]">
                   You are about to purchase{" "}
                   <span className="font-[600] lg:text-[16.9px] md:leading-[14.9px] text-[10.9px]">
-                    NABTEB PINS (₦100)</span> from
+                    NABTEB PINS (₦1000)</span> from
                   your {nabtebPaymentResult} to
                 </h2>
 
