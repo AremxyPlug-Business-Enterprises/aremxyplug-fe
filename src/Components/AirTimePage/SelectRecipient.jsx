@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ContextProvider } from '../Context';
 import { useContext } from "react";
 import "../Dashboard/DashboardComponents/DataTopUpPage/DataTopUp.css"
@@ -20,6 +20,7 @@ const SelectRecipient = () => {
   const { recipientName, setRecipientName } = useContext(ContextProvider);
   const { recipientNumber, setRecipientNumber } = useContext(ContextProvider);
   const { networkImage, setNetworkImage } = useContext(ContextProvider);
+  const [recipients, setRecipients] = useState([]);
 
   const [errors, setErrors] = useState({});
   const [showList, setShowList] = useState(false);
@@ -32,6 +33,88 @@ const SelectRecipient = () => {
   const [activeImage, setActiveImage] = useState(null);
   const [edit, setEdit] = useState("");
   const [continueState, setContinue] = useState("");
+
+  useEffect(() => {
+    // Fetch initial recipients data from the backend or database
+    fetchRecipients();
+  }, []);
+
+  const fetchRecipients = async () => {
+    try {
+      const response = await fetch('https://aremxyplug.onrender.com/api/v1/airtime/recipient');
+      const data = await response.json();
+      setRecipients(data);
+    } catch (error) {
+      console.error('Error fetching recipients:', error);
+    }
+  };
+
+  const saveRecipient = async () => {
+    try {
+      const response = await fetch('/api/recipients', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          networkName,
+          recipientName,
+          recipientNumber,
+        }),
+      });
+
+      if (response.ok) {
+        const newRecipient = await response.json();
+        setRecipients([...recipients, newRecipient]);
+      } else {
+        console.error('Error saving recipient');
+      }
+    } catch (error) {
+      console.error('Error saving recipient:', error);
+    }
+  };
+
+  const updateRecipient = async (updatedRecipient) => {
+    try {
+      const response = await fetch(`/api/recipients/${updatedRecipient.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedRecipient),
+      });
+
+      if (response.ok) {
+        const updatedRecipients = recipients.map((recipient) =>
+          recipient.id === updatedRecipient.id ? updatedRecipient : recipient
+        );
+        setRecipients(updatedRecipients);
+      } else {
+        console.error('Error updating recipient');
+      }
+    } catch (error) {
+      console.error('Error updating recipient:', error);
+    }
+  };
+
+  const deleteRecipient = async (recipientId) => {
+    try {
+      const response = await fetch(`/api/recipients/${recipientId}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        const updatedRecipients = recipients.filter(
+          (recipient) => recipient.id !== recipientId
+        );
+        setRecipients(updatedRecipients);
+      } else {
+        console.error('Error deleting recipient');
+      }
+    } catch (error) {
+      console.error('Error deleting recipient:', error);
+    }
+  };
 
   const handleRecipient = (index) => {
     if (activeImage === index) {
@@ -62,32 +145,32 @@ const SelectRecipient = () => {
     setdeleted(false);
   };
 
-    const networkList = [
-        {
-            id:1,
-            name:'MTN',
-            image: require('./Images/mtn.svg').default,
-            discount: 3,
-        },
-        {
-            id:2,
-            name:'AIRTEL',
-            image: require('./Images/airtel.png'),
-            discount: 4,
-        },
-        {
-            id:3,
-            name:'GLO',
-            image: require('./Images/glo.png'),
-            discount: 3,
-        },
-        {
-            id:4,
-            name:'9MOBILE',
-            image: require('./Images/9mobile.svg').default,
-            discount: 3,
-        }
-    ];
+  const networkList = [
+    {
+      id: 1,
+      name: 'MTN',
+      image: require('./Images/mtn.svg').default,
+      discount: 3,
+    },
+    {
+      id: 2,
+      name: 'AIRTEL',
+      image: require('./Images/airtel.png'),
+      discount: 4,
+    },
+    {
+      id: 3,
+      name: 'GLO',
+      image: require('./Images/glo.png'),
+      discount: 3,
+    },
+    {
+      id: 4,
+      name: '9MOBILE',
+      image: require('./Images/9mobile.svg').default,
+      discount: 3,
+    }
+  ];
 
   const Network = ({ name, image, onClick }) => {
     return (
@@ -159,18 +242,18 @@ const SelectRecipient = () => {
     <DashBoardLayout>
       <div className="AirtimeTops1">
         <div className={styles.airtimeTop}>
-                <div className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] bg-gradient-to-r from-[#73FF9A] to-[#6EDCFF] flex px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px]">
-                    <div className="w-[80%] pt-[19px] lg:pt-[20px]">
-                        <h2 className="text-[10px] md:text-[13.75px] font-bold mb-2 lg:text-[24px] lg:mb-4">
-                        AIRTIME VTU, FAST AND AUTOMATED.</h2>
-                        <h2 className="text-[7px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3">
-                        Top up your mobile sim using our automated airtime vending directly from network providers, enjoy discounts without any hassle or hidden fee.
-                    </h2>
-                    </div>
-                    <div className="w-[91px] h-[66px] lg:w-[170px] lg:h-[150px]">
-                        <img src="./Images/airtimeTopUp/young.png" className="h-full" alt="" />
-                    </div>
-                </div>
+          <div className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] bg-gradient-to-r from-[#73FF9A] to-[#6EDCFF] flex px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px]">
+            <div className="w-[80%] pt-[19px] lg:pt-[20px]">
+              <h2 className="text-[10px] md:text-[13.75px] font-bold mb-2 lg:text-[24px] lg:mb-4">
+                AIRTIME VTU, FAST AND AUTOMATED.</h2>
+              <h2 className="text-[7px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3">
+                Top up your mobile sim using our automated airtime vending directly from network providers, enjoy discounts without any hassle or hidden fee.
+              </h2>
+            </div>
+            <div className="w-[91px] h-[66px] lg:w-[170px] lg:h-[150px]">
+              <img src="./Images/airtimeTopUp/young.png" className="h-full" alt="" />
+            </div>
+          </div>
           <div className="flex text-[#7c7c7c] mt-[5%] text-[10px] leading-[26px] items-center gap-[8px] md:text-[12px] lg:text-[20px]">
             <p>Select Recipient Details </p>
             <img
@@ -197,23 +280,21 @@ const SelectRecipient = () => {
           </div>
 
           <div className="flex flex-col gap-5 mt-[5%]">
-            {[0, 1, 2, 3].map((index) => (
+            {recipients.map((recipient) => (
               <div
-                key={index}
+                key={recipient.id}
                 className="w-[100%] mx-auto flex justify-between border py-2 px-2 rounded-[7px] md:rounded-[7px] lg:py-2 lg:px-5"
               >
                 <div className="flex flex-col my-auto gap-[1.67px] md:gap-[2.93px]">
                   <h2 className="lg:text-[16px] font-medium lg:leading-6 md:text-[9px] text-[9px]">
-                    MTN(08160955592)
+                    {recipient.network}({recipient.recipientNumber})
                   </h2>
                   <p className="lg:text-[14.05px] lg:font-medium lg:leading-[21.07px] text-[#7C7C7C] text-[9px] font-semibold leading-3 md:text-[8px]">
-                    Aremxyplug
+                    {recipient.recipientName}
                   </p>
                 </div>
                 <div
-                  onClick={() => {
-                    handleRecipient(index);
-                  }}
+                  onClick={() => handleRecipient(recipient.id)}
                   className="relative h-[16px] w-[16px] my-auto lg:w-[50px] lg:h-[25px]"
                 >
                   <img
@@ -227,14 +308,14 @@ const SelectRecipient = () => {
                       style={{ boxShadow: "0 0 5px rgba(0, 0, 0, 0.2)" }}
                     >
                       <div
-                        onClick={handleEdit}
+                        onClick={() => handleEdit(recipient)}
                         className="text-[10px] text-[#7C7C7C] px-[5px] py-[5px]"
                       >
                         Edit Recipient
                       </div>
                       <hr className="w-full h-[5px]" />
                       <div
-                        onClick={handleDelete}
+                        onClick={() => handleDelete(recipient.id)}
                         className="text-[#FA6B6B] text-[10px] px-[5px] py-[5px]"
                       >
                         Delete Recipient
@@ -248,10 +329,9 @@ const SelectRecipient = () => {
             {edit && (
               <Modal>
                 <div
-                  className={`${airtimestyles.successfulTwo} ${
-                    toggleSideBar ? " lg:ml-[20%] lg:w-[40%]"
+                  className={`${airtimestyles.successfulTwo} ${toggleSideBar ? " lg:ml-[20%] lg:w-[40%]"
                     : "lg:w-[40%]"
-                } w-[90%] xl:w-[40%] md:w-[70%] overflow-auto`}
+                    } w-[90%] xl:w-[40%] md:w-[70%] overflow-auto`}
                 >
                   <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
                     <img
@@ -412,11 +492,10 @@ const SelectRecipient = () => {
                     className={`w-full h-[38px] mt-[80px] px-[20px] mx-auto lg:mt-[110px]`}
                   >
                     <button
-                      className={`${
-                        recipientNumber.length < 11
-                          ? "bg-[#0008]"
-                          : "bg-[#04177f]"
-                      } w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:mx-auto md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
+                      className={`${recipientNumber.length < 11
+                        ? "bg-[#0008]"
+                        : "bg-[#04177f]"
+                        } w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:mx-auto md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
                       onClick={handleContinue}
                     >
                       Continue
@@ -429,9 +508,8 @@ const SelectRecipient = () => {
             {continueState && (
               <Modal>
                 <div
-                  className={`${airtimestyles.successfulThree} ${
-                  toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-                } md:w-[45%] w-[90%] overflow-auto`}
+                  className={`${airtimestyles.successfulThree} ${toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+                    } md:w-[45%] w-[90%] overflow-auto`}
                 >
                   <div className="flex justify-end items-end my-[2%] lg:my-[1%] ">
                     <img
@@ -500,16 +578,15 @@ const SelectRecipient = () => {
                     </div>
                   </div>
 
-                    <button
-                      className={`${
-                        recipientNumber.length < 11
-                          ? "bg-[#0008]"
-                          : "bg-[#04177f]"
+                  <button
+                    className={`${recipientNumber.length < 11
+                      ? "bg-[#0008]"
+                      : "bg-[#04177f]"
                       } bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:mt-[8%]`}
-                      onClick={handleConfirm}
-                    >
-                      Confirmed
-                    </button>
+                    onClick={handleConfirm}
+                  >
+                    Confirmed
+                  </button>
                 </div>
               </Modal>
             )}
@@ -517,10 +594,9 @@ const SelectRecipient = () => {
             {confirm && (
               <Modal>
                 <div
-                  className={`${airtimestyles.inputPin} ${
-                    toggleSideBar
-                      ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
-                  } md:w-[55%] w-[90%]`}
+                  className={`${airtimestyles.inputPin} ${toggleSideBar
+                    ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
+                    } md:w-[55%] w-[90%]`}
                 >
                   <div className="flex justify-between items-center mx-[3%] my-[2%] lg:mt-[3%] ">
                     <img
@@ -580,10 +656,9 @@ const SelectRecipient = () => {
             {deleted && (
               <Modal>
                 <div
-                  className={`${airtimestyles.inputPin} ${
-                    toggleSideBar
-                      ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
-                  } md:w-[55%] w-[90%]`}
+                  className={`${airtimestyles.inputPin} ${toggleSideBar
+                    ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
+                    } md:w-[55%] w-[90%]`}
                 >
                   <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[2%]">
                     <img
@@ -645,10 +720,9 @@ const SelectRecipient = () => {
             {successDeleted && (
               <Modal>
                 <div
-                  className={`${airtimestyles.inputPin} ${
-                    toggleSideBar
-                      ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
-                  } md:w-[55%] w-[90%]`}
+                  className={`${airtimestyles.inputPin} ${toggleSideBar
+                    ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
+                    } md:w-[55%] w-[90%]`}
                 >
                   <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[2%]">
                     <img
@@ -707,18 +781,16 @@ const SelectRecipient = () => {
           </div>
         </div>
         <div
-          className={`${
-            isDarkMode ? "" : ""
-          } flex gap-[15px] justify-center items-center mt-[100%] pb-[25%] md:pb-[2%] md:mt-[40%] lg:mt-[40%] lg:pb-0`}
+          className={`${isDarkMode ? "" : ""
+            } flex gap-[15px] justify-center items-center mt-[100%] pb-[25%] md:pb-[2%] md:mt-[40%] lg:mt-[40%] lg:pb-0`}
         >
           <div className="text-[10px] md:text-[12px] lg:text-[14px]">
             You need help ?
           </div>
           <Link to="/ContactUs">
             <div
-              className={`${
-                isDarkMode ? "border" : "bg-[#04177f]"
-              } text-[10px] p-1 text-white rounded-[8px] lg:text-[18px]`}
+              className={`${isDarkMode ? "border" : "bg-[#04177f]"
+                } text-[10px] p-1 text-white rounded-[8px] lg:text-[18px]`}
             >
               Contact Us
             </div>

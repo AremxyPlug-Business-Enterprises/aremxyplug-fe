@@ -22,6 +22,8 @@ const AddRecipient = () => {
     const [selected, setSelected] = useState(false);
     const [confirm, setConfirm] = useState(false);
     const [inputValue, setInputValue] = useState("");
+    const [saveRecipient, setSaveRecipient] = useState(false);
+    const [isLoading, setIsLoading] = useState(false); // For managing loading state
 
     const networkList = [
         {
@@ -119,13 +121,52 @@ const AddRecipient = () => {
         // isVisible,
       } = useContext(ContextProvider);
 
-      const handleConfirm =()=> {
+      const handleConfirm = async () => {
         setSave(false);
         setConfirm(true);
         setSelected("");
         setRecipientNumber("");
-        setRecipientName("");
-      }
+        setRecipientName(""); 
+        
+        setIsLoading(true);
+        setErrors({});
+    
+        try {
+            const response = await fetch('https://aremxyplug.onrender.com/api/v1/airtime/recipient', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    networkName,
+                    recipientName,
+                    recipientNumber
+                })
+            });
+    
+            if (!response.ok) {
+                const errorData = await response.json();
+                setErrors(errorData.errors || { server: 'An error occurred' });
+                return;
+            }
+    
+            // Handle successful response
+            const data = await response.json();
+            console.log('Recipient added successfully:', data);
+            setSave(false);
+            setConfirm(true);
+            setSelected(false);
+            setRecipientNumber("");
+            setRecipientName("");
+    
+        } catch (error) {
+            console.error('Network error:', error);
+            setErrors({ network: 'Network error, please try again later.' });
+        } finally {
+            setIsLoading(false);
+        }
+    };
+    
 
   return (
     <DashBoardLayout>
@@ -268,11 +309,12 @@ const AddRecipient = () => {
                             </div>
 
                             <button
-                                onClick={handleConfirm}
+                                onClick={() => { setSaveRecipient(!saveRecipient); if (!saveRecipient) handleConfirm(); }}
                                 className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:mt-[8%]`}
                                 >
                                 Confirmed
                             </button>
+                            {isLoading && <p>Loading...</p>}
                         </div>
                     </Modal>
                 )}
