@@ -12,6 +12,7 @@ import arrowDown from "../AirTimePage/Images/arrow-down.svg";
 import call from "../AirTimePage/Images/call.svg";
 import user from "../AirTimePage/Images/user.svg";
 import Delete from "../AirTimePage/Images/Deleted.svg";
+// import { Oval } from 'react-loader-spinner';
 
 const SelectRecipient = () => {
   const { isDarkMode } = useContext(ContextProvider);
@@ -21,6 +22,7 @@ const SelectRecipient = () => {
   const { recipientNumber, setRecipientNumber } = useContext(ContextProvider);
   const { networkImage, setNetworkImage } = useContext(ContextProvider);
   const [recipients, setRecipients] = useState([]);
+  const [recipientToDelete, setRecipientToDelete] = useState(null);
 
   const [errors, setErrors] = useState({});
   const [showList, setShowList] = useState(false);
@@ -33,6 +35,28 @@ const SelectRecipient = () => {
   const [activeImage, setActiveImage] = useState(null);
   const [edit, setEdit] = useState("");
   const [continueState, setContinue] = useState("");
+  const [editingRecipientId, setEditingRecipientId] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredRecipients, setFilteredRecipients] = useState(recipients);
+  const [loading, setLoading] = useState(true);
+  const [inputValue, setInputValue] = useState("");
+
+  useEffect(() => {
+    if (searchQuery === "") {
+      setFilteredRecipients(recipients);
+    } else {
+      setFilteredRecipients(
+        recipients.filter((recipient) =>
+          recipient.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          recipient.phone.includes(searchQuery)
+        )
+      );
+    }
+  }, [searchQuery, recipients]);
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
 
   useEffect(() => {
     // Fetch initial recipients data from the backend or database
@@ -42,77 +66,110 @@ const SelectRecipient = () => {
   const fetchRecipients = async () => {
     try {
       const response = await fetch('https://aremxyplug.onrender.com/api/v1/airtime/recipient');
-      const data = await response.json();
-      setRecipients(data);
-    } catch (error) {
-      console.error('Error fetching recipients:', error);
-    }
-  };
+      const responseData = await response.json();
+      console.log('Fetched data:', responseData);
 
-  const saveRecipient = async () => {
-    try {
-      const response = await fetch('/api/recipients', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          networkName,
-          recipientName,
-          recipientNumber,
-        }),
-      });
-
-      if (response.ok) {
-        const newRecipient = await response.json();
-        setRecipients([...recipients, newRecipient]);
+      if (responseData.status === 200 && responseData.data) {
+        const recipients = responseData.data.recipients?.recipients;
+        if (Array.isArray(recipients)) {
+          setRecipients(recipients);
+        } else {
+          console.error('Unable to find recipients array in data', recipients);
+          setRecipients([]);
+        }
       } else {
-        console.error('Error saving recipient');
+        console.error('Unexpected data structure:', responseData);
+        setRecipients([]);
       }
     } catch (error) {
-      console.error('Error saving recipient:', error);
-    }
+      console.error('Error fetching recipients:', error);
+      setRecipients([]);
+    } 
+    // finally {
+    //   setLoading(false);
+    // }
   };
 
-  const updateRecipient = async (updatedRecipient) => {
+  // if (loading) {
+  //   return (
+  //     <div className="flex justify-center items-center h-screen">
+  //       <Oval
+  //         height={80}
+  //         width={80}
+  //         color="#4fa94d"
+  //         wrapperStyle={{}}
+  //         wrapperClass=""
+  //         visible={true}
+  //         ariaLabel='oval-loading'
+  //         secondaryColor="#4fa94d"
+  //         strokeWidth={2}
+  //         strokeWidthSecondary={2}
+  //       />
+  //     </div>
+  //   ); // Display a loading message or spinner
+  // }
+
+  const updateRecipient = async (recipientId) => {
+
+    const requestBody = {
+      id: recipientId,
+      network: networkName,  // Changed from networkName
+      name: recipientName,   // Changed from recipientName
+      phone: recipientNumber // Changed from recipientNumber
+    };
+
     try {
-      const response = await fetch(`/api/recipients/${updatedRecipient.id}`, {
+      const response = await fetch(`https://aremxyplug.onrender.com/api/v1/airtime/recipient`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(updatedRecipient),
+        body: JSON.stringify(requestBody),
       });
 
-      if (response.ok) {
-        const updatedRecipients = recipients.map((recipient) =>
-          recipient.id === updatedRecipient.id ? updatedRecipient : recipient
-        );
-        setRecipients(updatedRecipients);
+      const data = await response.json();
+
+      if (response.ok && data.status === 200) {
+        console.log('Recipient updated successfully:', data);
+        return true;
       } else {
-        console.error('Error updating recipient');
+        console.error('Error updating recipient:', data.message);
+        return false;
       }
     } catch (error) {
       console.error('Error updating recipient:', error);
+      return false;
     }
   };
 
   const deleteRecipient = async (recipientId) => {
     try {
-      const response = await fetch(`/api/recipients/${recipientId}`, {
+
+      const requestBody = {
+        id: recipientId,
+      };
+
+      const response = await fetch(`https://aremxyplug.onrender.com/api/v1/airtime/recipient`, {
         method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+          // Add any authentication headers if required
+        },
+        body: JSON.stringify(requestBody)
       });
 
-      if (response.ok) {
-        const updatedRecipients = recipients.filter(
-          (recipient) => recipient.id !== recipientId
-        );
-        setRecipients(updatedRecipients);
+      const data = await response.json();
+      console.log('Delete response:', data);
+
+      if (response.ok && data.status === 200) {
+        return true; // Indicate successful deletion
       } else {
-        console.error('Error deleting recipient');
+        console.error('Error deleting recipient:', data.message);
+        return false; // Indicate failed deletion
       }
     } catch (error) {
       console.error('Error deleting recipient:', error);
+      return false; // Indicate failed deletion
     }
   };
 
@@ -127,22 +184,71 @@ const SelectRecipient = () => {
     }
   };
 
-  const handleEdit = () => {
+  const handleEdit = (recipient) => {
     setEdit(true);
+    setEditingRecipientId(recipient.id);
+    setNetworkName(recipient.network);
+    setRecipientName(recipient.name);
+    setRecipientNumber(recipient.phone);
+    // setInputValue(recipient.phone);
   };
 
-  const handleConfirm = () => {
-    setConfirm(true);
-    setContinue(false);
+  const handleConfirm = async () => {
+    if (!editingRecipientId) {
+      console.error('No recipient selected for editing');
+      return;
+    }
+
+    const updatedRecipient = {
+      network: networkName,
+      name: recipientName,
+      phone: recipientNumber
+    };
+
+    const success = await updateRecipient(editingRecipientId, updatedRecipient);
+
+    if (success) {
+      setRecipients(prevRecipients =>
+        prevRecipients.map(recipient =>
+          recipient.id === editingRecipientId ? { ...recipient, ...updatedRecipient } : recipient
+        )
+      );
+      setConfirm(true);
+      setContinue(false);
+      setEdit(false);
+      setEditingRecipientId(null);
+      // Reset form fields
+      setNetworkName('');
+      setRecipientName('');
+      setRecipientNumber('');
+      setInputValue('');
+    } else {
+      // Handle error (e.g., show error message to user)
+      console.error('Failed to update recipient');
+    }
   };
 
-  const handleDelete = () => {
+  const handleDelete = (recipientId) => {
+    setRecipientToDelete(recipientId);
     setdeleted(true);
   };
 
-  const handleSuccessDelete = () => {
-    setSuccessDeleted(true);
+  const handleSuccessDelete = async (recipientId) => {
+    console.log('Attempting to delete recipient with id:', recipientId);
+    if (recipientToDelete !== null) {
+      const success = await deleteRecipient(recipientToDelete);
+      if (success) {
+        setRecipients(prevRecipients =>
+          prevRecipients.filter(recipient => recipient.id !== recipientToDelete)
+        );
+        setSuccessDeleted(true);
+      } else {
+        // Handle deletion failure
+        console.error('Failed to delete recipient');
+      }
+    }
     setdeleted(false);
+    setRecipientToDelete(null);
   };
 
   const networkList = [
@@ -209,6 +315,25 @@ const SelectRecipient = () => {
   const handleContinue = (e) => {
     e.preventDefault();
 
+    function validateNigerianNumberByNetwork(number) {
+      const networks = {
+        'AIRTEL': ['0701', '0708', '0802', '0808', '0812', '0901', '0902', '0904', '0907', '0912', '0911'],
+        'MTN': ['07025', '07026', '0703', '0704', '0706', '0803', '0806', '0810', '0813', '0814', '0816', '0903', '0906', '0913', '0916'],
+        'GLO': ['0705', '0805', '0807', '0811', '0815', '0905', '0915'],
+        '9MOBILE': ['0809', '0817', '0818', '0909', '0908']
+      };
+
+      for (let network in networks) {
+        for (let prefix of networks[network]) {
+          if (number.startsWith(prefix) && number.length === prefix.length + 7) {
+            return network;
+          }
+        }
+      }
+
+      return 'Unknown network';
+    }
+
     const { error } = schema.validate({
       networkName,
       recipientNumber,
@@ -221,14 +346,16 @@ const SelectRecipient = () => {
           return acc;
         }, {})
       );
+    } else if (validateNigerianNumberByNetwork(recipientNumber) !== networkName) {
+      setErrors({
+        recipientNumber: `Invalid ${networkName} number. Please enter a valid ${networkName} number.`,
+      });
     } else {
       setContinue(true);
       setEdit(false);
       setErrors({});
     }
   };
-
-  const [inputValue, setInputValue] = useState("");
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -269,6 +396,8 @@ const SelectRecipient = () => {
                   className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
                   type="text"
                   placeholder="Name Or Phone Number"
+                  value={searchQuery}
+                  onChange={handleSearchChange}
                 />
                 <img
                   className=" h-[13.3px] w-[13.3px] lg:w-[24px] lg:h-[24px] "
@@ -280,29 +409,29 @@ const SelectRecipient = () => {
           </div>
 
           <div className="flex flex-col gap-5 mt-[5%]">
-            {recipients.map((recipient) => (
+            {Array.isArray(filteredRecipients) && filteredRecipients.map((recipient) => (
               <div
                 key={recipient.id}
                 className="w-[100%] mx-auto flex justify-between border py-2 px-2 rounded-[7px] md:rounded-[7px] lg:py-2 lg:px-5"
               >
                 <div className="flex flex-col my-auto gap-[1.67px] md:gap-[2.93px]">
                   <h2 className="lg:text-[16px] font-medium lg:leading-6 md:text-[9px] text-[9px]">
-                    {recipient.network}({recipient.recipientNumber})
+                    {recipient.network}({recipient.phone})
                   </h2>
                   <p className="lg:text-[14.05px] lg:font-medium lg:leading-[21.07px] text-[#7C7C7C] text-[9px] font-semibold leading-3 md:text-[8px]">
-                    {recipient.recipientName}
+                    {recipient.name}
                   </p>
                 </div>
                 <div
                   onClick={() => handleRecipient(recipient.id)}
-                  className="relative h-[16px] w-[16px] my-auto lg:w-[50px] lg:h-[25px]"
+                  className="relative h-[16px] cursor-pointer w-[16px] my-auto lg:w-[50px] lg:h-[25px]"
                 >
                   <img
                     src="./Images/airtimeTopUp/Frame.png"
                     alt=""
                     className="h-full"
                   />
-                  {showPopup && activeImage === index && (
+                  {showPopup && activeImage === recipient.id && (
                     <div
                       className="input border absolute bg-white top-[8px] right-[17px] lg:top-[20px] lg:right-[50px] w-[100px] h-[60px] z-50 flex flex-col justify-center items-start py-[5px]"
                       style={{ boxShadow: "0 0 5px rgba(0, 0, 0, 0.2)" }}
@@ -315,7 +444,10 @@ const SelectRecipient = () => {
                       </div>
                       <hr className="w-full h-[5px]" />
                       <div
-                        onClick={() => handleDelete(recipient.id)}
+                        onClick={(e) => {
+                          e.stopPropagation(); // Prevent event from bubbling up
+                          handleDelete(recipient.id);
+                        }}
                         className="text-[#FA6B6B] text-[10px] px-[5px] py-[5px]"
                       >
                         Delete Recipient
@@ -492,7 +624,7 @@ const SelectRecipient = () => {
                     className={`w-full h-[38px] mt-[80px] px-[20px] mx-auto lg:mt-[110px]`}
                   >
                     <button
-                      className={`${recipientNumber.length < 11
+                      className={`${inputValue.length < 11
                         ? "bg-[#0008]"
                         : "bg-[#04177f]"
                         } w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:mx-auto md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
@@ -579,11 +711,12 @@ const SelectRecipient = () => {
                   </div>
 
                   <button
-                    className={`${recipientNumber.length < 11
+                    className={`${inputValue.length < 11
                       ? "bg-[#0008]"
                       : "bg-[#04177f]"
                       } bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:mt-[8%]`}
                     onClick={handleConfirm}
+                    disabled={inputValue.length < 11}
                   >
                     Confirmed
                   </button>
@@ -643,7 +776,6 @@ const SelectRecipient = () => {
                       className={`bg-[#04177F] w-full mt-[5%] flex justify-center items-center my-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:mx-auto md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:mx-auto lg:h-[38px] lg:mt-[10%]`}
                       onClick={() => {
                         setConfirm(false);
-                        window.location.reload();
                       }}
                     >
                       Done
@@ -653,7 +785,7 @@ const SelectRecipient = () => {
               </Modal>
             )}
 
-            {deleted && (
+            {deleted && recipientToDelete !== null && (
               <Modal>
                 <div
                   className={`${airtimestyles.inputPin} ${toggleSideBar
@@ -698,9 +830,7 @@ const SelectRecipient = () => {
                   >
                     <button
                       className={`bg-[#04177F] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
-                      onClick={() => {
-                        handleSuccessDelete();
-                      }}
+                      onClick={handleSuccessDelete}
                     >
                       Yes
                     </button>
@@ -708,6 +838,7 @@ const SelectRecipient = () => {
                       className={`bg-[#fff] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-[#F95252] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
                       onClick={() => {
                         setdeleted(false);
+                        setRecipientToDelete(null);
                       }}
                     >
                       Cancel
@@ -769,7 +900,6 @@ const SelectRecipient = () => {
                       className={`bg-[#04177F] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
                       onClick={() => {
                         setSuccessDeleted(false);
-                        window.location.reload();
                       }}
                     >
                       Done

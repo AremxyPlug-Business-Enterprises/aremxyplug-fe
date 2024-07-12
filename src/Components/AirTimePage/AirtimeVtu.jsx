@@ -70,16 +70,19 @@ const AirtimeVtu = () => {
         setIsLoading(true);
         setErrors({});
         try {
+
+            const requestBody = {
+                network: networkName,  // Changed from networkName
+                name: recipientName,   // Changed from recipientName
+                phone: recipientNumber // Changed from recipientNumber
+            };
+
             const response = await fetch('https://aremxyplug.onrender.com/api/v1/airtime/recipient', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({
-                    networkName,
-                    recipientName,
-                    recipientNumber
-                })
+                body: JSON.stringify(requestBody)  // Use the new object here
             });
 
             if (!response.ok) {
