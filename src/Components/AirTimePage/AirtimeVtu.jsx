@@ -56,14 +56,55 @@ const AirtimeVtu = () => {
     const [orderID, setOrderID] = useState("");
     const [refNumber, setRefNumber] = useState("");
     const [description, setDescription] = useState("");
+    const [isLoading, setIsLoading] = useState(false); // For managing loading state
 
 
 
-    if (addRecipient) {
-        console.log('recipient added')
-    } else {
-        console.log('did not add recipient')
-    }
+    // if (addRecipient) {
+    //     console.log('recipient added')
+    // } else {
+    //     console.log('did not add recipient')
+    // }
+
+    const handleAddRecipient = async () => {
+        setIsLoading(true);
+        setErrors({});
+        try {
+
+            const requestBody = {
+                network: networkName,  // Changed from networkName
+                name: recipientName,   // Changed from recipientName
+                phone: recipientNumber // Changed from recipientNumber
+            };
+
+            const response = await fetch('https://aremxyplug.onrender.com/api/v1/airtime/recipient', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestBody)  // Use the new object here
+            });
+
+            if (!response.ok) {
+                // Handle non-200 responses
+                const errorData = await response.json();
+                setErrors(errorData.errors || { server: 'An error occurred' });
+                return;
+            }
+
+            // Handle successful response
+            const data = await response.json();
+            console.log('Recipient added successfully:', data);
+
+        } catch (error) {
+            console.error('Network error:', error);
+            setErrors({ network: 'Network error, please try again later.' });
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+
 
 
     const networkList = [
@@ -641,14 +682,14 @@ const AirtimeVtu = () => {
                     </div>
                     <div className={styles.add}>
                         <h2>Add to Recipient?</h2>
-                        <div onClick={() => setAddRecipient(!addRecipient)}
-                            className={` w-[15px] h-[6.4px] md:w-[30px] md:h-[12px] lg:w-[50px] lg:h-[22px] lg:rounded-full rounded cursor-pointer 
-                    ${addRecipient ? "bg-[#77ff60]" : "bg-[#b1b0b0]"}`}>
-                            <div className={`rounded-full w-[7.5px] h-[6.4px] md:w-[14px] md:h-[12px] lg:h-[22px] lg:w-[21px] lg:drop-shadow-md bg-[#fff] 
-                    ${addRecipient ? "float-right" : "float-left"}`}>
+                        <div onClick={() => { setAddRecipient(!addRecipient); if (!addRecipient) handleAddRecipient(); }}
+                            className={`w-[15px] h-[6.4px] md:w-[30px] md:h-[12px] lg:w-[50px] lg:h-[22px] lg:rounded-full rounded cursor-pointer ${addRecipient ? "bg-[#77ff60]" : "bg-[#b1b0b0]"}`}>
+                            <div className={`rounded-full w-[7.5px] h-[6.4px] md:w-[14px] md:h-[12px] lg:h-[22px] lg:w-[21px] lg:drop-shadow-md bg-[#fff] ${addRecipient ? "float-right" : "float-left"}`}>
                             </div>
                         </div>
+                        {isLoading && <p>Loading...</p>}
                     </div>
+
                     {codes && (
                         <Modal>
                             (

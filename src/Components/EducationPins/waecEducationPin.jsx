@@ -188,20 +188,22 @@ const requestEducationPin = async(e) =>{
   return null;
   }
 }
-useEffect(()=> {
-acceptData();
-},[])
-const acceptData = async()=>{
-  try{
-  const dataCollected = await requestEducationPin();
-  if(dataCollected){
-    setEduResponse(dataCollected);
-  }
-  }catch(error){
-  console.error('There was an error trying to get the token:', error);
 
-  }
-}
+useEffect(() => {
+  const acceptData = async () => {
+    try {
+      const dataCollected = await requestEducationPin();
+      if (dataCollected) {
+        setEduResponse(dataCollected);
+      }
+    } catch (error) {
+      console.error('There was an error trying to get the token:', error);
+    }
+  };
+
+  acceptData();
+}, []);
+
 // console.log(eduResponse);
 
   return (

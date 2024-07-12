@@ -801,6 +801,10 @@ export const Context = ({ children }) => {
   const [recipientNumber, setRecipientNumber] = useState("");
   const [amount, setAmount] = useState("");
   const [networkImage, setNetworkImage] = useState("");
+  const [transactFailedPopUp, setTransactFailedPopUp] = useState("");
+  const [inputValues, setInputValues] = useState("");
+  const [networkId, setNetworkId] = useState("");
+  const [productId, setProductId] = useState("");
 
   // =====================DATABUNDLE========================
   const [selectedOption, setSelectedOption] = useState("");
@@ -834,6 +838,9 @@ export const Context = ({ children }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [ikedcEmail, setEmail] = useState("");
   const [ikedcamount, setIkedcamount] = useState("");
+  const [billGenerate, setBillGenerate] = useState("");
+  const [serviceID, setServiceID] = useState("");
+  const [flag, setFlag] = useState("");
 
   //------------Airtime Conversion---------
   const [inputValueA, setInputValueA] = useState("");
@@ -1250,6 +1257,14 @@ export const Context = ({ children }) => {
     setAmount,
     networkImage,
     setNetworkImage,
+    transactFailedPopUp,
+    setTransactFailedPopUp,
+    networkId,
+    setNetworkId,
+    inputValues,
+    setInputValues,
+    productId,
+    setProductId,
 
     // ==============DataBundle===============
     selectedOption,
@@ -1306,6 +1321,12 @@ export const Context = ({ children }) => {
     setEmail,
     ikedcamount,
     setIkedcamount,
+    billGenerate,
+    setBillGenerate,
+    serviceID,
+    setServiceID,
+    flag,
+    setFlag,
 
     //Airtime Conversion
     inputValueA,
@@ -1558,4 +1579,3 @@ export const Context = ({ children }) => {
     </div>
   );
 };
-
