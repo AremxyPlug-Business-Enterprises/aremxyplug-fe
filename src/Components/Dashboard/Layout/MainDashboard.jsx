@@ -102,7 +102,7 @@ export const MainDashboard = () => {
       : setSymbol("");
     return;
   };
-  
+
   return (
     <div>
       {/* ==============TOP BAR========== */}
@@ -196,7 +196,7 @@ export const MainDashboard = () => {
             </SwiperSlide>
           </Swiper>
           {/* ==============HERO SECTION CLOSE========== */}
-          
+
           {/* ==========AVAILABLE BALANCE=========== */}
           <div className={styles.balance}>
             <div
@@ -254,7 +254,7 @@ export const MainDashboard = () => {
                   }`}
                 >
                   <select
-                  className={`${styles.selected}`}
+                    className={`${styles.selected}`}
                     name="curr"
                     id="curr"
                     onChange={handleSelectedOption2}
@@ -411,7 +411,7 @@ export const MainDashboard = () => {
                   </p>
 
                   <select
-                  className={`${styles.selected}`}
+                    className={`${styles.selected}`}
                     name="curr"
                     id="curr"
                     onChange={handleSelectedOption}
@@ -455,7 +455,7 @@ export const MainDashboard = () => {
                   } flex text-[10px] gap-[90px] md:gap-[110px]  md:text-[15px]`}
                 >
                   <div className="md:font-semibold">Bank Name</div>
-                  <div>SBI</div>
+                  <div>SBI</div> 
                 </div>
                 <div
                   className={`${styles.virtualaccounttxt} ${
@@ -480,12 +480,25 @@ export const MainDashboard = () => {
                       <RiFileCopyFill />
                     </div>
                   </div>
+                  <Link to={{
+    pathname: "/ProfileSettingMain",
+    state: { verificationOpen: true }
+  }}>
+                {" "}
+                <button
+                  className={`${
+                    isDarkMode ? "border bg-black" : "bg-[#04177f]"
+                  } ${styles.viewWallet}`}
+                >
+                  Generate
+                </button>
+              </Link>
                 </div>
               </div>
             </div>
           </div>
           {/* ================VIRTUAL ACCOUNT CLOSE=============== */}
-          
+
           <div
             className={`${styles.ttwc} ${
               toggleSideBar ? "lg:gap-[63px]" : "lg:gap-[80px]"
