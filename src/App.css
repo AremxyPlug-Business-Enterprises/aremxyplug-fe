@@ -273,7 +273,7 @@ border-radius : 10px;
   }
   .deleteRecipientSuccess{
     overflow-y: scroll;
-    scrollbar-width: thin;
+    scrollbar-width: none;
     scrollbar-color: transparent transparent;
   }
   .deleteRecipientSuccess::-webkit-scrollbar{

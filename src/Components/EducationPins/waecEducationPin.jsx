@@ -26,7 +26,7 @@ import { AiFillEye } from "react-icons/ai";
 import WaecReceipt from './ReceiptEducationPins/waecReceipt';
 import axios from 'axios';
 import '../Dashboard/DashboardComponents/DataTopUpPage/DataTopUp.css';
-
+import eduFailed from "./imagesEducation/WaecFailedTransaction.svg";
 
 export default function WaecEducationPin() {
   const { isDarkMode } = useContext(ContextProvider);
@@ -48,6 +48,7 @@ const [educationProceed, setEducationProceed] = useState(false);
 const [errors, setErrors] = useState({});
 const [educationConfirm, setEducationConfirm] = useState(false);
 const [receipt] = useState(false);
+const [waecFailedTransaction, setWaecFailedTransaction] = useState(false)
 
 
 //==========  QUANTITY RESULT SLIP CHECKERS ==============
@@ -56,11 +57,11 @@ function waecQuantityDropDown(){
 document.querySelector('.imgdrop').classList.toggle('DropIt');
 }
 const options = [
-  {quantity :  '1 Piece Of Result Checker', Amount : "₦100", id : 1},
-  {quantity :  '2 Piece Of Result Checker', Amount : "₦200", id : 2},
-  {quantity :  '3 Piece Of Result Checker', Amount : "₦300", id : 3},
-  {quantity :  '4 Piece Of Result Checker', Amount : "₦400", id : 4},
-  {quantity :  '5 Piece Of Result Checker', Amount : "₦500", id : 5}
+  {quantity :  '1 Piece Of Result Checker', Amount :"₦3400", id : 1},
+  {quantity :  '2 Piece Of Result Checker', Amount : "₦6800", id : 2},
+  {quantity :  '3 Piece Of Result Checker', Amount : "₦10200", id : 3},
+  {quantity :  '4 Piece Of Result Checker', Amount : "₦13600", id : 4},
+  {quantity :  '5 Piece Of Result Checker', Amount : "₦17000", id : 5}
 ]
 
 
@@ -96,7 +97,6 @@ const {
   toggleSideBar,
   inputPin,
   setInputPin,
-  inputPinHandler,
   toggleVisibility,
   isVisible,
 } = useContext(ContextProvider);
@@ -144,56 +144,68 @@ const waecTransactionSuccessClose = () => {
 const waecReceipt = () => {
   setTransactSuccessPopUp(false);
 };
-const [sendWaecForm, setSendWaecForm] = useState({
-  waecUserExamType : examType,
-  waecUserQuantity :  quantityResult.slice(0,22),
-  waecUserPhoneNumber : educationPinPhone,
-  waecUserEmail : educationPinEmail,
-  waecUserAmount : educationAmount,
-  waecUserCountry: paymentResult,
-  id : 1
-})
-console.log(sendWaecForm);
-console.log(examType, quantityResult, educationPinPhone,educationPinEmail,educationAmount,paymentResult);
-const handleWaecChange = (e) => {
-  setSendWaecForm({...sendWaecForm, [e.target.name ]: e.target.value});
-};
+
+const eduPinSuccess= (e) =>{
+  setTransactSuccessPopUp(true);
+  setEducationConfirm(false);
+  setInputPin('');
+}
+const waecEduPinFailed = ()=> {
+  setEducationConfirm(false);
+  setWaecFailedTransaction(true);
+  setInputPin('');
+}
 const handleWaecSubmitPost = async(e) => {
   e.preventDefault();
   try{
-    const response = await axios.post('', sendWaecForm);
-    console.log(response.data);
+    const sendWaecForm ={
+     exam_type : examType.toLowerCase(),
+      quantity :  parseInt(quantityResult.slice(0,1)),
+      phone_no : educationPinPhone,
+      email : educationPinEmail,
+       amount : educationAmount.slice(1),
+      wallet_type: '',
+     }
+     console.log(sendWaecForm);
+    const response = await axios.post('https://aremxyplug.onrender.com/api/v1/edu', sendWaecForm);
+    if(response.status === "success" || 201 || "Successful" || 200){
+      eduPinSuccess();
+    } 
     alert('submitted');
   }catch(error)  {
 console.error(`The Data brought back an error Of ${error}`);
-alert(error);
+waecEduPinFailed()
   }
 }
 // GET RESPONSE SUCCESSFUL
-const {eduResponse,setEduResponse} = useContext(ContextProvider);
+const {setEduResponse} = useContext(ContextProvider);
 const requestEducationPin = async(e) =>{
   try{
-    const EducationResponse = await axios.get('/');
+    const EducationResponse = await axios.get('https://aremxyplug.onrender.com/api/v1/edu');
     return EducationResponse.data;                                 
   }catch(error){
     console.error('There was error fetching the Education Pins', error)
   return null;
   }
 }
-useEffect(()=> {
-acceptData();
-})
-const acceptData = async()=>{
-  try{
-  const dataCollected = await requestEducationPin();
-  if(dataCollected){
-    setEduResponse(dataCollected);
-  }
-  }catch(error){
-  console.error('There was an error trying to get the token:', error);
-  }
-}
-console.log(eduResponse);
+
+useEffect(() => {
+  const acceptData = async () => {
+    try {
+      const dataCollected = await requestEducationPin();
+      if (dataCollected) {
+        setEduResponse(dataCollected);
+      }
+    } catch (error) {
+      console.error('There was an error trying to get the token:', error);
+    }
+  };
+
+  acceptData();
+}, []);
+
+// console.log(eduResponse);
+
   return (
     <DashBoardLayout>
     <div className='flex flex-col lg:h-[150%] h-[115%] justify-between '>
@@ -231,28 +243,28 @@ console.log(eduResponse);
    <div className='relative flex flex-col w-[100%] gap-[5.868px] md:w-1/2 md:gap-[5.868px]  
    lg:gap-[10px]'>
     {/* header */}
-    <h2 className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px]  
+    <label className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px]  
      md:text-[9.389px] md:leading-[12.206px]
     lg:text-[16px] lg:leading-[20.8px]'>
     Confirm Exam Type
-    </h2>
+    </label>
     {/* input */}
     <div className='w-[100%] relative'
 onClick={(e) => {
   waecExamDropDown();
-  console.log(e.target.value)}}>
+  }}>
   <input type="text"
-  name='ExamType'
-   value={examType}
+ value={examType}
    onChange={(e) => {
-   handleWaecChange(e)}}
-className=' flex  justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
+    setExamType(e.target.value)
+   }}
+className=' pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
  md:pt-[8.802px] md:pb-[7.042px] w-[100%]
 md:pr-[5.282px] md:pl-[5.867px] bg-white
 lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
 border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]
 font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
-    lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer focus:outline-none' disabled={false}/>
+    lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer focus:outline-none' readOnly/>
    <img 
        className='absolute lg:top-[15px] lg:right-[9px] md:top-[8.802px] md:right-[5.282px]
         top-[8.802px] right-[13px]
@@ -292,29 +304,28 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
     <div className='relative gap-[5.868px] flex flex-col w-[100%] md:w-1/2  
     md:gap-[5.868px] lg:gap-[10px] '>
     {/* header */}
-    <h2 className='  font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px]
+    <label className='  font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px]
       md:text-[9.389px] md:leading-[12.206px]
      lg:text-[16px] lg:leading-[20.8px]'>
     Quantity
-    </h2>
+    </label>
     {/* input */}
 <div className='w-[100%] relative'
 onClick={(e) => {
   waecQuantityDropDown();
-  console.log(e.target.value)}}>
+ }}>
   <input type="text"
-  name='Waec-Quantity'
-   onChange={(e)=>{
-    handleWaecChange(e)
+ onChange={(e)=>{
+  setQuantityResult(e.target.value)
   }}
   value={quantityResult}
-className=' flex  justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
+className=' pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
  md:pt-[8.802px] md:pb-[7.042px] w-[100%]
 md:pr-[5.282px] md:pl-[5.867px] bg-white
 lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
 border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]
 font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
-    lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer focus:outline-none' disabled={true}/>
+    lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer focus:outline-none'  readOnly/>
    
       <img 
        className='absolute lg:top-[15px] lg:right-[9px] md:top-[8.802px] md:right-[5.282px]
@@ -359,12 +370,12 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
     {/* LeftSide */}
      <div className=' container-phone gap-[5.868px] 
      flex flex-col md:w-1/2 md:gap-[10px] z-0'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px]
+   <label className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px]
      md:text-[9.389px] md:leading-[12.206px]
    lg:text-[16px] lg:leading-[20.8px] '>
   Phone Number
 
-   </h2>
+   </label>
    
    <input onInput={(e =>{
   
@@ -394,8 +405,7 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
     value={educationPinPhone}
      onChange={(e)=>{
       setEducationPinPhone(e.target.value);
-      console.log(e.target.value);
-       handleWaecChange(e);
+    
      }}/>
      {errors.educationPinPhone && (
             <div className="text-[12px] text-red-500 italic lg:text-[14px]">
@@ -407,11 +417,11 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
         
    {/* right-side */}
    <div className='flex flex-col gap-[5.868px] md:w-1/2 md:gap-[10px]'>
-   <h2 className='font-[600] text-[8px] leading-[10.4px]
+   <label className='font-[600] text-[8px] leading-[10.4px]
    text-[#7E7E7E]  md:text-[9.389px] md:leading-[12.206px]
    lg:text-[16px] lg:leading-[20.8px]'>
    Email
-   </h2>
+   </label>
    
    <input className ='EmailPins font-[500]  flex h-[29.927px] lg:h-[51px] md:h-[29.93px] w-[100%]
    lg:text-[16px] lg:leading-[21.8px] text-black
@@ -428,8 +438,6 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
     value={educationPinEmail}
    onChange={(e) =>{
     setEducationPinEmail(e.target.value);
-    console.log(e.target.value);
-    handleWaecChange(e);
    }}
     type="Email" 
     placeholder='example@gmail.com'/>
@@ -449,13 +457,13 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
 {/* Amount Step /Leftside */}
    <div className='flex flex-col gap-[5.868px] w-[100%] md:w-1/2 md:gap-[10px]'>
     {/* header */}
-    <h2 className='font-[600] text-[8px] leading-[10.4px]
+    <label className='font-[600] text-[8px] leading-[10.4px]
      md:text-[9.389px] md:leading-[12.206px]
      text-[#7E7E7E] lg:text-[16px] lg:leading-[20.8px]'>
     Amount
-    </h2>
+    </label>
     {/* input */}
-    <input name='Waec-Amount' 
+    <input 
      className='h-[29.927px]  lg:h-[51px] md:h-[29.93px]
         md:pt-[8.802px] md:pb-[7.042px] 
        pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
@@ -467,37 +475,36 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
   lg:text-[16px] text-black lg:leading-[20.8px]'
   maxLength={7} value={educationAmount}
   onChange={(e)=>{
-    handleWaecChange(e);
-  }} disabled={false}/>
+   setEducationAmount(e.target.value);
+  }} readOnly/>
  </div>
     {/* payment method */}
     <div className='relative payment-parent gap-[5.868px]
      flex w-[100%] flex-col md:w-1/2   md:gap-[10px]'>
     {/* header */}
-    <h2 className='font-[600] text-[8px] leading-[10.4px]
+    <label className='font-[600] text-[8px] leading-[10.4px]
      text-[#7E7E7E]  md:text-[9.389px] md:leading-[12.206px]
      lg:text-[16px] lg:leading-[20.8px]'>
     Payment Method
-    </h2>
+    </label>
     {/* input */}
     <div className='w-[100%] relative'
 onClick={(e) => {
   waecMethodDropDown();
-  console.log(e.target.value);
 }}>
-  <input type="text" name='Waec-PaymentMethod'
+  <input type="text" 
   onChange={(e)=> {
-    handleWaecChange(e);
+  setPaymentResult(e.target.value)
   }}
   value={paymentResult}
-className=' flex  justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
+className=' pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
  md:pt-[8.802px] md:pb-[7.042px] w-[100%]
 md:pr-[5.282px] md:pl-[5.867px] bg-white
 lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
 border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]
 font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
     lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer focus:outline-none'
-  disabled = {false}/>
+  readOnly/>
    
       <img 
        className='absolute lg:top-[15px] lg:right-[9px] md:top-[8.802px] md:right-[5.282px]
@@ -781,7 +788,10 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
                     <OtpInput
                       value={inputPin}
                       inputType="tel"
-                      onChange={setInputPin}
+                      onChange={(e)=>{
+                        setInputPin(e);
+                        console.log(setInputPin);
+                      }}
                       numInputs={4}
                       shouldAutoFocus={true}
                       inputStyle={{
@@ -813,9 +823,8 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
 
               <button
                 onClick={(e) => {
-                  e.preventDefault();
-                  setEducationConfirm(false);
-                  inputPinHandler(e);
+                e.preventDefault()
+                  handleWaecSubmitPost(e);
                 }}
                 disabled={inputPin.length !== 4}
                 className={`${
@@ -947,17 +956,7 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
                   </div>
                 </div>
 
-                {/* <div className="flex items-center justify-between">
-                  <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                    Amount
-                  </h2>
-                  <div className="flex gap-1">
-                    <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                      {selectedAmount}
-                    </h2>
-                  </div>
-                </div> */}
-
+      
                 <div className="flex items-center justify-between">
                   <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] font-[500]
                    md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
@@ -1082,7 +1081,89 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
 
     </form>
 </div>
-    
+
+{waecFailedTransaction && (
+ <Modal>
+     <div
+              className={`deleteRecipientSuccess  mx-[5%]  ${
+                isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
+              } ${
+                toggleSideBar
+                  ? "confirm01"
+                  : "confirm"
+              } grow  pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative 
+              md:rounded-[11.5px] md:mx-auto md:my-auto md:overflow-auto`}
+            >
+              <div className="w-full flex justify-between border-b-[6px] items-center
+               border-primary px-[12px] h-[45px] md:h-[55px] lg:h-[70px]  lg:border-b-[10px] ">
+                 <img
+                  className=" w-[18px] h-[18px] md:w-[35px] cursor-pointer
+                  md:h-[35px] lg:w-[35px] lg:h-[42px]"
+                  src={AremxyPlugIcon}
+                  alt=""
+                />
+
+              <img
+              src={closeIcon}
+              alt=""
+              onClick={() => {
+                setWaecFailedTransaction(false)
+                window.location.reload();
+              }}
+              className="w-[18px] h-[18px]  md:w-[25px] cursor-pointer
+               md:h-[25px] lg:w-[35px] lg:h-[35px]"
+               />
+              </div>
+
+              <div className='flex flex-col justify-between items-center h-[100%]'>
+                <h2 className="lg:text-[16px] lg:leading-[24px] text-center mb-1
+                text-[12px] md:text-[13px] md:leading-[20px] font-[600] mt-[20px] leading-[16px]">
+                  Purchase Failed
+                </h2>
+              <img src = {eduFailed}
+              className='w-[150px] md:w-[200px]' alt='transaction failed'/>
+
+              <p className='text-center text-[#F95252]  lg:text-[16px] lg:leading-[20.8px] font-[600]
+                text-[12px] md:text-[13px] md:leading-[20px] leading-[16px]'>
+                    An unexpected error has occurred, please try again.
+                </p>
+                <div className="flex  justify-center  w-[100%] 
+              items-center gap-[15px] md:gap-[20px] mt-[50px]  lg:gap-[20px] 
+              lg:my-[5%] md:mt-[20px] mb-[20px] ">
+                 
+                <Link 
+               to="/WaecEducationPin"
+                 onClick=  {() => {
+                  setWaecFailedTransaction(false)
+                      window.location.reload();
+                    }}
+                    className={`bg-[#04177f] w-[111px] flex justify-center 
+                    items-center  cursor-pointer text-center text-[12px] font-extrabold h-[40px]
+                     text-white rounded-[6px] md:w-[150px] md:rounded-[8px] 
+                     md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%] `}>
+                  
+                    Done
+               
+                </Link>
+                <Link to="/WaecFailedReceipt"
+                onClick={()=> {
+                  setWaecFailedTransaction(false);
+                }}
+                 className={`bg-[#ffffff] border-[1px] w-[111px] border-[#0003] 
+                 flex justify-center items-center text-center  cursor-pointer text-[12px] 
+                 font-extrabold h-[40px] rounded-[6px] md:w-[150px] md:rounded-[8px] 
+                 md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}>
+              
+                Receipt
+              
+            </Link>
+                
+               
+                </div>
+              </div>
+              </div>
+ </Modal>
+)}
 
     <div className=" flex gap-[8.729px]  md:gap-[14.896px] 
      justify-center px-[8.594px] mb-[50px]">

@@ -161,7 +161,7 @@ export const CardPaymentReceipt = () => {
                   <p>Wallet Info</p>
                   <img
                     className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                    src="./Images/Dashboardimages/arrowright.png"
+                    src="./Images/dashboardImages/arrowright.png"
                     alt="/"
                   />
                 </div>
@@ -177,7 +177,7 @@ export const CardPaymentReceipt = () => {
                   <p>Card Info</p>
                   <img
                     className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                    src="./Images/Dashboardimages/arrowright.png"
+                    src="./Images/dashboardImages/arrowright.png"
                     alt="/"
                   />
                 </div>
@@ -197,7 +197,7 @@ export const CardPaymentReceipt = () => {
                   <p>Transaction Info</p>
                   <img
                     className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                    src="./Images/Dashboardimages/arrowright.png"
+                    src="./Images/dashboardImages/arrowright.png"
                     alt="/"
                   />
                 </div>

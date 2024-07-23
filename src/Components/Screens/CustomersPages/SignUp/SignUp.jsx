@@ -98,7 +98,7 @@ export const SignUp = () => {
             <div
               className={`inputBorder px-[2%] w-[98%] border h-[22px] rounded-[2.9px] lg:w-[286px] lg:h-[39px]`}
             >
-              <div className="mt-[-3%] md:mt-[-1%] ">
+              <div className="mt-[-3%] md:mt-[-1%]">
                 <ReactFlagsSelect
                   selected={state.country}
                   className="w-[100%]"

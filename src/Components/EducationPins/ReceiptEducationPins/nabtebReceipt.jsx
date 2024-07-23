@@ -8,7 +8,7 @@ import html2canvas from "html2canvas";
 import AremxyPlugIcon from '../imagesEducation/AremxyPlug.svg';
 
 export default function NabtebReceipt() {
-    const {
+  const {
         nabtebExamType,
         nabtebQuantityResult,
         nabtebEducationPinPhone,
@@ -21,8 +21,8 @@ export default function NabtebReceipt() {
         setNabtebEducationPinPhone,
         setNabtebPaymentResult,
         setNabtebEducationAmount,
-        setNabtebWalletBalance
-        
+        setNabtebWalletBalance,
+        nabtebEduResponse
         }
          = useContext(ContextProvider);
   
@@ -149,7 +149,7 @@ export default function NabtebReceipt() {
                   <p>Recipient Info</p>
                   <img
                     className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                    src="./Images/Dashboardimages/arrowright.png"
+                    src="./Images/dashboardImages/arrowright.png"
                     alt="/"
                   />
                 </div>
@@ -171,7 +171,7 @@ export default function NabtebReceipt() {
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
                 justify-between  lg:text-[16px] font-[500]">
                   <p className="text-[#0008]">Phone Number</p>
-                  <span>{nabtebEducationPinPhone}</span>
+          <span>{nabtebEducationPinPhone}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] 
                 mx-auto justify-between  lg:text-[16px] font-[500]">
@@ -191,7 +191,7 @@ export default function NabtebReceipt() {
                   <p>Sender Info</p>
                   <img
                     className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                    src="./Images/Dashboardimages/arrowright.png"
+                    src="./Images/dashboardImages/arrowright.png"
                     alt="/"
                   />
                 </div>
@@ -213,7 +213,7 @@ export default function NabtebReceipt() {
                   <p>Transaction Info</p>
                   <img
                     className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                    src="./Images/Dashboardimages/arrowright.png"
+                    src="./Images/dashboardImages/arrowright.png"
                     alt="/"
                   />
                 </div>
@@ -225,22 +225,22 @@ export default function NabtebReceipt() {
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  
                 lg:text-[16px] font-[500]">
                   <p className="text-[#0008]">Description</p>
-                  <span>NABTEB E-PINS</span>
+                  <span>{nabtebEduResponse.description}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] 
                 mx-auto justify-between  lg:text-[16px] font-[500]">
                   <p className="text-[#0008]"> NABTEB PIN Generated</p>
-                  <span>0123456789AP</span>
+                  <span>{nabtebEduResponse.pins_generated}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
                 justify-between  lg:text-[16px] font-[500]">
                   <p className="text-[#0008]">Order Number</p>
-                  <span>1256478999</span>
+                  <span>{nabtebEduResponse.order_id}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] 
                 mx-auto justify-between  lg:text-[16px] font-[500]">
-                  <p className="text-[#0008]">Transactiom ID</p>
-                  <span>0331njokdhtf55</span>
+                  <p className="text-[#0008]">Transaction ID</p>
+                  <span>{nabtebEduResponse.transaction_id}</span>
                 </div>
               </div>
             </div>
