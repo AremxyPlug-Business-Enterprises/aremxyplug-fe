@@ -202,6 +202,7 @@ useEffect(() => {
   };
 
   acceptData();
+  // eslint-disable-next-line
 }, []);
 
 // console.log(eduResponse);

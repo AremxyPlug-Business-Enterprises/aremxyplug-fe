@@ -190,18 +190,21 @@ const requestEducationPin = async() =>{
 }
 
 useEffect(()=> {
+  const acceptData = async() => {
+    try{
+    const dataCollected = await requestEducationPin();
+    if(dataCollected){
+      setNabtebEduResponse(dataCollected);
+     }
+    }catch(error){
+    console.error('There was an error trying to get the token:', error);
+    }
+  };
+
  acceptData();
-},[])
-const acceptData = async() => {
-  try{
-  const dataCollected = await requestEducationPin();
-  if(dataCollected){
-    setNabtebEduResponse(dataCollected);
-   }
-  }catch(error){
-  console.error('There was an error trying to get the token:', error);
-  }
-};
+ // eslint-disable-next-line
+},[]);
+
 
 
 // console.log(eduResponse);

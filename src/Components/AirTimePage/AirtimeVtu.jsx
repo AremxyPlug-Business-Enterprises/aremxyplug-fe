@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './AirtimeVtu.module.css'
 import { DashBoardLayout } from '../Dashboard/Layout/DashBoardLayout';
 import { Modal } from "../Screens/Modal/Modal";
@@ -57,6 +57,10 @@ const AirtimeVtu = () => {
     const [refNumber, setRefNumber] = useState("");
     const [description, setDescription] = useState("");
     const [isLoading, setIsLoading] = useState(false); // For managing loading state
+
+    useEffect(() => {
+        // Populate input fields with the selected recipient's data from context
+    }, [networkName, recipientName, recipientNumber]);
 
 
 
@@ -525,16 +529,16 @@ const AirtimeVtu = () => {
                                     <h2 className={styles.head3}>Select Network</h2>
                                     <div className={styles.input}>
                                         <div className={styles.output2}>
-                                            {selected ?
+                                            {networkName ? (
                                                 <li onClick={handleShowList} className={styles.labelInput}>
                                                     <div className={styles.network}>
-                                                        {networkImage && <img src={networkImage} alt="" />}
+                                                        {networkImage && <img src={networkImage} className=' rounded-full overflow-hidden object-cover' alt="" />}
                                                     </div>
                                                     <h2 className={styles.head2}>{networkName}</h2>
                                                 </li>
-                                                :
+                                            ) : (
                                                 <h2 onClick={handleShowList} className={styles.head6}>Select Network</h2>
-                                            }
+                                            )}
                                             <button className={styles.btnDrop} onClick={handleShowList}>
                                                 <img src={arrowDown} alt="" />
                                             </button>
@@ -593,7 +597,7 @@ const AirtimeVtu = () => {
                                             onChange={(event) => {
                                                 handleChange(event);
                                                 setRecipientNumber(event.target.value);
-                                            }} value={inputValues} />
+                                            }} value={recipientNumber} />
                                         <div className={styles.call}>
                                             <img src={call} alt="" />
                                         </div>
