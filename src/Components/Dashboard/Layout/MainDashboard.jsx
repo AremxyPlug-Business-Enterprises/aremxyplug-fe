@@ -11,7 +11,7 @@ import { RiFileCopyFill } from "react-icons/ri";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
-import { Autoplay, Pagination } from "swiper";
+import { Autoplay, Pagination } from "swiper/modules";
 import QuickFeatures from "../DashboardComponents/QuickFeatures";
 import { WalletInOutFlows } from "../DashboardComponents/WalletInOutFlows";
 import { RecentTransaction } from "../DashboardComponents/RecentTransaction";

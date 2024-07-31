@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ReactCodeInput from "dees-verification-code-input";
+import VerificationInput from 'react-verification-input';
 import { Modal } from "../../Screens/Modal/Modal";
 import { VerificationSuccessful } from "../VeirifcationSuccessful/VerificationSuccessful";
 import { VerifyViaEmail } from "../VeirifyViaEmail/VerifyViaEmail";
@@ -55,7 +55,7 @@ export const VerifyViaSms = () => {
 
         <div className="flex flex-col gap-[2px] md:gap-[6px]">
           <div className="lg:hidden">
-            <ReactCodeInput
+            <VerificationInput
               className="custom-verification-input"
               length={6}
               type="number"
@@ -65,7 +65,7 @@ export const VerifyViaSms = () => {
             />
           </div>
           <div className="hidden lg:block mx-auto w-[100%] ml-[5%]">
-            <ReactCodeInput
+            <VerificationInput
               className="custom-verification-input"
               length={6}
               type="number"
