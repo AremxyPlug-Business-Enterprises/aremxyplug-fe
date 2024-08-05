@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { Modal } from "../Screens/Modal/Modal";
 import airtimestyles from "./AirtimeVtu.module.css";
 import Joi from "joi";
+import { useNavigate } from 'react-router-dom';
 import arrowDown from "../AirTimePage/Images/arrow-down.svg";
 import call from "../AirTimePage/Images/call.svg";
 import user from "../AirTimePage/Images/user.svg";
@@ -23,6 +24,7 @@ const SelectRecipient = () => {
   const { networkImage, setNetworkImage } = useContext(ContextProvider);
   const [recipients, setRecipients] = useState([]);
   const [recipientToDelete, setRecipientToDelete] = useState(null);
+  const navigate = useNavigate();
 
   const [errors, setErrors] = useState({});
   const [showList, setShowList] = useState(false);
@@ -38,7 +40,7 @@ const SelectRecipient = () => {
   const [editingRecipientId, setEditingRecipientId] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredRecipients, setFilteredRecipients] = useState(recipients);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const [inputValue, setInputValue] = useState("");
 
   useEffect(() => {
@@ -84,7 +86,7 @@ const SelectRecipient = () => {
     } catch (error) {
       console.error('Error fetching recipients:', error);
       setRecipients([]);
-    } 
+    }
     // finally {
     //   setLoading(false);
     // }
@@ -278,6 +280,13 @@ const SelectRecipient = () => {
     }
   ];
 
+  const networkImages = {
+    'MTN': './Images/pricngimages/mtn.logo.png',
+    'AIRTEL': './Images/pricngimages/airtel.logo.png',
+    'GLO': './Images/pricngimages/glo.logo.png',
+    '9MOBILE': './Images/pricngimages/9mobile.Logo.png',
+  };
+
   const Network = ({ name, image, onClick }) => {
     return (
       <li className={airtimestyles.netList} onClick={onClick}>
@@ -412,9 +421,17 @@ const SelectRecipient = () => {
             {Array.isArray(filteredRecipients) && filteredRecipients.map((recipient) => (
               <div
                 key={recipient.id}
-                className="w-[100%] mx-auto flex justify-between border py-2 px-2 rounded-[7px] md:rounded-[7px] lg:py-2 lg:px-5"
+                className="w-[100%] mx-auto flex justify-between border cursor-pointer py-2 px-2 rounded-[7px] md:rounded-[7px] lg:py-2 lg:px-5"
               >
-                <div className="flex flex-col my-auto gap-[1.67px] md:gap-[2.93px]">
+                <div
+                  onClick={() => {
+                    setNetworkName(recipient.network);
+                    setNetworkImage(networkImages[recipient.network]);
+                    setRecipientName(recipient.name);
+                    setRecipientNumber(recipient.phone);
+                    navigate('/airtime-vtu');
+                  }}
+                  className="flex flex-col my-auto gap-[1.67px] md:gap-[2.93px]">
                   <h2 className="lg:text-[16px] font-medium lg:leading-6 md:text-[9px] text-[9px]">
                     {recipient.network}({recipient.phone})
                   </h2>
