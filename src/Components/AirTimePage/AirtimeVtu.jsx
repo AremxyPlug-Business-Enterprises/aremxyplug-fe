@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './AirtimeVtu.module.css'
 import { DashBoardLayout } from '../Dashboard/Layout/DashBoardLayout';
 import { Modal } from "../Screens/Modal/Modal";
@@ -56,14 +56,59 @@ const AirtimeVtu = () => {
     const [orderID, setOrderID] = useState("");
     const [refNumber, setRefNumber] = useState("");
     const [description, setDescription] = useState("");
+    const [isLoading, setIsLoading] = useState(false); // For managing loading state
+
+    useEffect(() => {
+        // Populate input fields with the selected recipient's data from context
+    }, [networkName, recipientName, recipientNumber]);
 
 
 
-    if (addRecipient) {
-        console.log('recipient added')
-    } else {
-        console.log('did not add recipient')
-    }
+    // if (addRecipient) {
+    //     console.log('recipient added')
+    // } else {
+    //     console.log('did not add recipient')
+    // }
+
+    const handleAddRecipient = async () => {
+        setIsLoading(true);
+        setErrors({});
+        try {
+
+            const requestBody = {
+                network: networkName,  // Changed from networkName
+                name: recipientName,   // Changed from recipientName
+                phone: recipientNumber // Changed from recipientNumber
+            };
+
+            const response = await fetch('https://aremxyplug.onrender.com/api/v1/airtime/recipient', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestBody)  // Use the new object here
+            });
+
+            if (!response.ok) {
+                // Handle non-200 responses
+                const errorData = await response.json();
+                setErrors(errorData.errors || { server: 'An error occurred' });
+                return;
+            }
+
+            // Handle successful response
+            const data = await response.json();
+            console.log('Recipient added successfully:', data);
+
+        } catch (error) {
+            console.error('Network error:', error);
+            setErrors({ network: 'Network error, please try again later.' });
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+
 
 
     const networkList = [
@@ -484,16 +529,16 @@ const AirtimeVtu = () => {
                                     <h2 className={styles.head3}>Select Network</h2>
                                     <div className={styles.input}>
                                         <div className={styles.output2}>
-                                            {selected ?
+                                            {networkName ? (
                                                 <li onClick={handleShowList} className={styles.labelInput}>
                                                     <div className={styles.network}>
-                                                        {networkImage && <img src={networkImage} alt="" />}
+                                                        {networkImage && <img src={networkImage} className=' rounded-full overflow-hidden object-cover' alt="" />}
                                                     </div>
                                                     <h2 className={styles.head2}>{networkName}</h2>
                                                 </li>
-                                                :
+                                            ) : (
                                                 <h2 onClick={handleShowList} className={styles.head6}>Select Network</h2>
-                                            }
+                                            )}
                                             <button className={styles.btnDrop} onClick={handleShowList}>
                                                 <img src={arrowDown} alt="" />
                                             </button>
@@ -552,7 +597,7 @@ const AirtimeVtu = () => {
                                             onChange={(event) => {
                                                 handleChange(event);
                                                 setRecipientNumber(event.target.value);
-                                            }} value={inputValues} />
+                                            }} value={recipientNumber} />
                                         <div className={styles.call}>
                                             <img src={call} alt="" />
                                         </div>
@@ -641,14 +686,14 @@ const AirtimeVtu = () => {
                     </div>
                     <div className={styles.add}>
                         <h2>Add to Recipient?</h2>
-                        <div onClick={() => setAddRecipient(!addRecipient)}
-                            className={` w-[15px] h-[6.4px] md:w-[30px] md:h-[12px] lg:w-[50px] lg:h-[22px] lg:rounded-full rounded cursor-pointer 
-                    ${addRecipient ? "bg-[#77ff60]" : "bg-[#b1b0b0]"}`}>
-                            <div className={`rounded-full w-[7.5px] h-[6.4px] md:w-[14px] md:h-[12px] lg:h-[22px] lg:w-[21px] lg:drop-shadow-md bg-[#fff] 
-                    ${addRecipient ? "float-right" : "float-left"}`}>
+                        <div onClick={() => { setAddRecipient(!addRecipient); if (!addRecipient) handleAddRecipient(); }}
+                            className={`w-[15px] h-[6.4px] md:w-[30px] md:h-[12px] lg:w-[50px] lg:h-[22px] lg:rounded-full rounded cursor-pointer ${addRecipient ? "bg-[#77ff60]" : "bg-[#b1b0b0]"}`}>
+                            <div className={`rounded-full w-[7.5px] h-[6.4px] md:w-[14px] md:h-[12px] lg:h-[22px] lg:w-[21px] lg:drop-shadow-md bg-[#fff] ${addRecipient ? "float-right" : "float-left"}`}>
                             </div>
                         </div>
+                        {isLoading && <p>Loading...</p>}
                     </div>
+
                     {codes && (
                         <Modal>
                             (
