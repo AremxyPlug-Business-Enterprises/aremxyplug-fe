@@ -976,6 +976,9 @@ export const Context = ({ children }) => {
   const [eduResponse, setEduResponse] = useState(null);
   const [nabtebEduResponse,setNabtebEduResponse] = useState(null);
   const [necoEduResponse,setNecoEduResponse] =useState(null);
+
+  //============= LOGIN FORM ==========
+  const [loginAuthorisation, setLoginAuthorisation] = useState('')
   const hold = {
     handleRefresh,
     // ==================
@@ -1547,7 +1550,10 @@ export const Context = ({ children }) => {
     nabtebEduResponse,
     setNabtebEduResponse,
     necoEduResponse,
-    setNecoEduResponse
+    setNecoEduResponse,
+    // ====Login Authorisation
+    loginAuthorisation,
+    setLoginAuthorisation
   };
 
   return (

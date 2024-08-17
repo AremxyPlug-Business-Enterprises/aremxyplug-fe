@@ -13,10 +13,11 @@ import { Loader } from "../Loader/Loader";
 import { Modal } from "../Screens/Modal/Modal";
 
 function LoginForm() {
-  const { setOpenTranspin, setOpenResetTranspin, setOpen2StepVerification } =
+  const { setOpenTranspin, setOpenResetTranspin, setOpen2StepVerification,setLoginAuthorisation} =
     useContext(ContextProvider);
   const [usernameORemail, setUsernameORemail] = useState("username");
   const [loading, setLoading] = useState(false);
+ 
 
   // Check if login data exist starts here
   function checkUsername() {
@@ -148,8 +149,10 @@ function LoginForm() {
             .required()
             .messages({ "string.pattern.base": "Invalid Username" }),
         });
+       
 
         const { error } = schema.validate({ username });
+       
         if (error) {
           // Handle validation error
           setErrors(
@@ -160,7 +163,7 @@ function LoginForm() {
           );
         } else {
           setLoading(true);
-          const loginData = { username: username, password: password };
+          const loginData = { username: username, password: password};
           const config = {
             headers: { "Content-Type": "application/json" },
           };
@@ -172,9 +175,19 @@ function LoginForm() {
             )
             .then((response) => {
               console.log(response);
-              if (response.status === 201) {
-                setOpenTranspin(true);
-              } else if (response.status === 404) {
+              if (response.status === 202 && response.headers.hasAuthorization) {
+                 setOpenTranspin(true);
+                const authToken = response.headers.get('Authorization');
+               setLoginAuthorisation(authToken);
+                console.log(authToken);
+              } else if(response.status === 200){
+                setOpen2StepVerification(true);
+                console.log(response)
+              //   const getUserPhone = response.data.customer.phone;
+              //   const getUserEmail = response.data.customer.email
+              //   console.log(getUserPhone);
+              //  console.log(getUserEmail);
+              }else if (response.status === 404) {
                 alert("User not found");
               } else if (response.status === 401) {
                 alert("Incorrect Password");
@@ -229,9 +242,17 @@ function LoginForm() {
             )
             .then((response) => {
               console.log(response);
-              if (response.status === 201) {
+              if (response.status === 202  && response.headers.hasAuthorization) {
                 setOpenTranspin(true);
-              } else if (response.status === 404) {
+                const authToken = response.headers.get('Authorization');
+               setLoginAuthorisation(authToken);
+              
+              }else if(response.status === 200){
+                setOpen2StepVerification(true);
+                
+                // setPhoneNumber(phoneNumber.slice(0,4));
+                // setEmail(`${email.slice(0,4)}****${email.slice(8)}`)
+               } else if (response.status === 404) {
                 alert("User not found");
               } else if (response.status === 401) {
                 alert("Incorrect Password");
@@ -297,7 +318,9 @@ function LoginForm() {
                   className={`${
                     usernameORemail === "email" ? "text-[#04177F]" : ""
                   }  cursor-pointer hover:text-gray-700`}
-                  onClick={() => setUsernameORemail("email")}
+                  onClick={() =>{
+                    setUsernameORemail("email");
+                  } }
                 >
                   {" "}
                   Email
@@ -470,10 +493,6 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
         </form>
         <p
           className="text-center text-[14px] font-semibold text-[#575757] my-4 cursor-pointer"
-          onClick={() => {
-            //  setShowModal2(true)
-            setOpen2StepVerification(true);
-          }}
         >
           -OR-
         </p>

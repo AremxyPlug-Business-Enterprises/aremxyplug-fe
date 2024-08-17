@@ -4,6 +4,7 @@ import { Modal } from "../Screens/Modal/Modal";
 import OtpInput from "react-otp-input";
 import { Link } from "react-router-dom";
 import { primaryColor } from "../Screens/cardIssuing/cardIssuing";
+import axios from "axios";
 
 function LoginPopUp() {
   const {
@@ -14,10 +15,10 @@ function LoginPopUp() {
     open2StepVerification,
     open2StepOTP,
     setOpen2StepOTP,
-
     setOpenTranspin,
     setOpenResetTranspin,
     setOpen2StepVerification,
+    loginAuthorisation
   } = useContext(ContextProvider);
 
   const [countdown, setCountdown] = useState(60);
@@ -32,7 +33,7 @@ function LoginPopUp() {
   const [transpinError, setTranspinErrors] = useState("");
   const [verificationPinError, setVerificationPinError] = useState("");
   const [smsOrEmail, setSmsOrEmail] = useState("");
-
+  // const receiveAuthToken = localStorage.getItem("authorizationToken");
   useEffect(() => {
     if (open2StepOTP === true && smsOrEmail === "sms") {
       let timer;
@@ -63,12 +64,13 @@ function LoginPopUp() {
 
   function handleTranspin() {
     if (otp === otp2) {
-      setOtp("");
-      setOtp2("");
-      setTranspinErrors("");
-      setOpenTranspin(false);
-      setOpenTranspinSuccessful(true);
-    } else {
+     sendTransactPin()
+     setTranspinErrors("");
+     setOpenTranspin(false);
+     setOtp("");
+     setOtp2("");
+     localStorage.setItem(otp,"userTransactionOtp");
+ } else {
       setTranspinErrors("Pin does not match!");
     }
   }
@@ -86,6 +88,34 @@ function LoginPopUp() {
     setOpen2StepVerification(false);
     setOpen2StepOTP(true);
   }
+  const sendTransactPin = async(e)=>{
+  try{
+     if(loginAuthorisation.length > 4){
+      const forwardPin = {
+        pin : otp
+      }
+    
+      const response = await axios.post("https://aremxyplug.onrender.com/api/v1/pin",forwardPin,{headers: {"Content-Type" : "application/json",
+        "Authorization" : loginAuthorisation
+      }})
+    
+    if(response.status === 200){
+         console.log(response);
+      }else if(response.status === 401){
+      alert("Something went wrong on your end");
+      }else if(response.status === 500){
+        alert(`An error occured on our end`)
+      }else{
+        alert("An error has occured")
+      }
+    }else{
+      console.log("Didn't return string")
+    }
+    }catch(error){
+   console.log(`ERROR: ${error}`)
+    }
+  }
+ 
 
   return (
     <div>
@@ -239,7 +269,7 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
             <div className="w-full flex justify-center mt-[20px] mb-[10px] lg:mb-[10px] lg:mt-[50px]">
               <button
                 onClick={handleTranspin}
-                type="submit"
+                 type="submit"
                 disabled={otp.length !== 4 || otp2.length !== 4 ? true : false}
                 className={` ${
                   otp.length !== 4 || otp2.length !== 4
@@ -287,7 +317,7 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
                 Verification code has been sent to your
               </p>
               <p className=" lg:text-[14px] text-[8.02px] mb-[7] lg:mb-[10px]">
-                Phone- 700******0
+                Phone-070********
               </p>
               <p
                 className="text-[#737373] lg:text-[10px] text-[5.729px] cursor-pointer"
@@ -382,7 +412,7 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
           <div className="lg:ml-[38.5%] md:ml-[40%] md:-mt-[20%] lg:-mb-[30%] px-[17.609px] py-[35.536px] bg-white rounded-[10.3px] md:py-[34.96px] md:px-[17.6px] lg:py-[62px] lg:px-[31px]">
             <div className="mb-[25px] lg:mb-[30px]">
               <p className="  lg:text-[14px] text-[8.02px] ">
-                Verification code has been sent to
+                Verification code has been sent to email
               </p>
               <p className=" lg:text-[14px] text-[8.02px] mb-[7] lg:mb-[10px]">
                 your email habib****@gmail.com
