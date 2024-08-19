@@ -25,7 +25,6 @@ const DataBundleAddRecipient = () => {
   const [confirm, setConfirm] = useState(false);
   const [isLoading, setIsLoading] = useState(false); // For managing loading state
 
-
   const networkList = [
     {
       id: 1,
@@ -137,7 +136,6 @@ const DataBundleAddRecipient = () => {
   //   setRecipientName(event.target.value);
   // };
 
-
   const handleConfirm = async () => {
     // setSave(false);
     // setConfirm(true);
@@ -145,53 +143,53 @@ const DataBundleAddRecipient = () => {
     // setRecipientNumber("");
     setRecipientName("");
     setSave(false);
-  setConfirm(true);
-  setRecipientNumber(false);
-  // setRecipientName(event.target.value);
+    setConfirm(true);
+    setRecipientNumber(false);
+    // setRecipientName(event.target.value);
 
     setIsLoading(true);
     setErrors({});
 
     try {
+      const requestBody = {
+        network: networkName, // Changed from networkName
+        name: recipientName, // Changed from recipientName
+        phone: recipientNumber, // Changed from recipientNumber
+      };
 
-        const requestBody = {
-            network: networkName,  // Changed from networkName
-            name: recipientName,   // Changed from recipientName
-            phone: recipientNumber // Changed from recipientNumber
-        };
-
-        const response = await fetch('https://aremxyplug.onrender.com/api/v1/data/recipient', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(requestBody)  // Use the new object here
-        });
-
-        if (!response.ok) {
-            const errorData = await response.json();
-            setErrors(errorData.errors || { server: 'An error occurred' });
-            return;
+      const response = await fetch(
+        "https://aremxyplug.onrender.com/api/v1/data/recipient",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestBody), // Use the new object here
         }
+      );
 
-        // Handle successful response
-        const data = await response.json();
-        console.log('Recipient added successfully:', data, requestBody);
-        setSave(false);
-        setConfirm(true);
-        setSelected(false);
-        setRecipientNumber("");
-        setRecipientName("");
+      if (!response.ok) {
+        const errorData = await response.json();
+        setErrors(errorData.errors || { server: "An error occurred" });
+        return;
+      }
 
+      // Handle successful response
+      const data = await response.json();
+      console.log("Recipient added successfully:", data, requestBody);
+      setSave(false);
+      setConfirm(true);
+      setSelected(false);
+      setRecipientNumber("");
+      setRecipientName("");
     } catch (error) {
-        console.error('Network error:', error);
-        setErrors({ network: 'Network error, please try again later.' });
+      console.error("Network error:", error);
+      setErrors({ network: "Network error, please try again later." });
     } finally {
-        setIsLoading(false);
+      setIsLoading(false);
     }
-};
+  };
 
-  
   const [inputValue, setInputValue] = useState("");
 
   const handleChange = (e) => {
@@ -503,20 +501,20 @@ const DataBundleAddRecipient = () => {
                     New recipient contact has been added successfully.
                   </p>
                 </div>
-                
+
                 <div
                   className={`w-full h-[38px] mt-[35px] md:mt-[10%] px-[20px] mx-auto lg:mt-[5%] xl:mt-[5%]`}
                 >
                   <Link to="/data-bundles">
-                  <button
-                    className={`bg-[#04177f] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:mx-auto md:px-[10%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
-                    onClick={() => {
-                      setConfirm(false);
-                      window.location.reload();
-                    }}
-                  >
-                    Done
-                  </button>
+                    <button
+                      className={`bg-[#04177f] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:mx-auto md:px-[10%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
+                      onClick={() => {
+                        setConfirm(false);
+                        window.location.reload();
+                      }}
+                    >
+                      Done
+                    </button>
                   </Link>
                 </div>
               </div>
