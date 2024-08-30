@@ -54,7 +54,7 @@ const getOtpSmsorEmail = ()=> {
     const url = " https://aremxyplug.onrender.com/api/v1/send-otp"
     await axios.post(url, getOtpSmsorEmail())
 .then((response)=>{
-if(response.status === 200 || 201){
+if((response.status === 200 || 201) && (response.headers.hasAuthorization)){
   twoStepVerificationHandler();
  alert("An Otp has been sent to you")
 }else if(response.status === 401){
