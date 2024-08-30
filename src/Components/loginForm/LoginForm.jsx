@@ -182,7 +182,7 @@ function LoginForm() {
                 console.log(authToken);
               } else if(response.status === 200){
                 setOpen2StepVerification(true);
-                console.log(response)
+                console.log(response);
               //   const getUserPhone = response.data.customer.phone;
               //   const getUserEmail = response.data.customer.email
               //   console.log(getUserPhone);
@@ -249,7 +249,7 @@ function LoginForm() {
               
               }else if(response.status === 200){
                 setOpen2StepVerification(true);
-                
+                // console.log(response);
                 // setPhoneNumber(phoneNumber.slice(0,4));
                 // setEmail(`${email.slice(0,4)}****${email.slice(8)}`)
                } else if (response.status === 404) {

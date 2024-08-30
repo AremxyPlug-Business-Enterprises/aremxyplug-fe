@@ -33,7 +33,47 @@ function LoginPopUp() {
   const [transpinError, setTranspinErrors] = useState("");
   const [verificationPinError, setVerificationPinError] = useState("");
   const [smsOrEmail, setSmsOrEmail] = useState("");
+  
   // const receiveAuthToken = localStorage.getItem("authorizationToken");
+// API fetch function for getting the OTP
+const getOtpSmsorEmail = ()=> {
+  // const [sendSmsOrEmail, setSendSmsOrEmail] = useState("")
+  if(smsOrEmail === "sms"){
+  return {
+    phone : "09065013817"
+  }
+  }else if(smsOrEmail === "email" ){
+     return {
+      email : "balooladimeji29@gmail.com"
+     }
+  }
+}
+
+  const gettingOtpFunction= async()=> {
+    try{
+    const url = " https://aremxyplug.onrender.com/api/v1/send-otp"
+    await axios.post(url, getOtpSmsorEmail())
+.then((response)=>{
+if(response.status === 200 || 201){
+  twoStepVerificationHandler();
+ alert("An Otp has been sent to you")
+}else if(response.status === 401){
+  alert("It requires an authentication token")
+}else if(response.status === 404){
+  alert("An error has occured at your end")
+} else if(response.status === 500){
+  alert("INTERNAL_SERVER_ERROR")
+}
+}).catch((error)=>{
+  alert(error)
+})
+  }catch(error){
+  alert(Error);
+  }
+  }
+
+
+
   useEffect(() => {
     if (open2StepOTP === true && smsOrEmail === "sms") {
       let timer;
@@ -176,7 +216,7 @@ function LoginPopUp() {
 
               <div className="w-full flex justify-center mt-[30px] md:mt-[35px] lg:mt-[50px]">
                 <button
-                  onClick={twoStepVerificationHandler}
+                  onClick={gettingOtpFunction}
                   type="submit"
                   disabled={smsOrEmail === "" ? true : false}
                   className={` ${
@@ -483,6 +523,7 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
               </div>
 
               <div className="w-full flex justify-center mt-[20px] mb-[10px] lg:mb-[10px] lg:mt-[50px]">
+          
                 <button
                   onClick={handleVerificationOTP}
                   type="submit"

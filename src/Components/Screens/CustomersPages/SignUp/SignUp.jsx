@@ -11,6 +11,7 @@ import { Verification } from "../../../VerificationCode/Verification";
 import { Modal } from "../../Modal/Modal";
 import FirstModal from "../Password/FirstModal";
 import { useState } from "react";
+// import { number } from "joi";
 
 export const SignUp = () => {
   const {
@@ -48,16 +49,17 @@ export const SignUp = () => {
 
   const {
     country,
-    // fullName,
-    // userName,
+    fullName,
+    userName,
     email,
     phoneNumber,
     IVcode,
-    // checkboxChecked,
-    // password,
+    checkbox,
+    password,
     // confirmPassword,
   } = state;
-
+  const checkInput = country.length > 1 && email.length > 1 && phoneNumber.length > 1 && userName.length > 1
+  && password.length > 1 && fullName.length > 1 && checkbox === true;
   console.log(checkboxChecked);
   console.log(state);
 
@@ -406,8 +408,10 @@ export const SignUp = () => {
 
         <button
           onClick={handleSubmit}
-          // disabled={true}
-          className="hover:cursor-pointer px-[35px] py-[10px] flex justify-center item-center mb-[5%] lg:mb-[2%] bg-[#0003]  text-white p-[%] rounded-[4px] mx-auto text-center mt-[7%] text-[9px] lg:px-[37px] lg:mt-[3%] lg:w-[140px] lg:h-[42px] lg:text-[14px] lg:rounded-lg"
+          disabled={checkInput ? false : true}
+          className={`${checkInput === true ? "hover:cursor-pointer px-[35px] py-[10px] flex justify-center item-center mb-[5%] lg:mb-[2%] bg-[#04177F]  text-white p-[%] rounded-[4px] mx-auto text-center  mt-[7%] text-[9px] lg:px-[37px] lg:mt-[3%] lg:w-[140px] lg:h-[42px] lg:text-[14px] lg:rounded-lg" : 
+            "hover:cursor-not-allowed px-[35px] py-[10px] flex justify-center item-center mb-[5%] lg:mb-[2%] bg-gray-300  text-white p-[%] rounded-[4px] mx-auto text-center  mt-[7%] text-[9px] lg:px-[37px] lg:mt-[3%] lg:w-[140px] lg:h-[42px] lg:text-[14px] lg:rounded-lg"
+          }`}
         >
           Sign Up
         </button>
@@ -438,3 +442,6 @@ export const SignUp = () => {
     </div>
   );
 };
+// over:cursor-pointer px-[35px] py-[10px] flex justify-center item-center
+//            mb-[5%] lg:mb-[2%] bg-[#0003]  text-white p-[%] rounded-[4px] mx-auto text-center 
+//            mt-[7%] text-[9px] lg:px-[37px] lg:mt-[3%] lg:w-[140px] lg:h-[42px] lg:text-[14px] lg:rounded-lg
