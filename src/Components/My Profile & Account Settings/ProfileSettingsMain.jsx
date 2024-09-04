@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import '../../App.css';
 import { DashBoardLayout } from '../Dashboard/Layout/DashBoardLayout';
 import ProfileHero from './ProfileHero';
@@ -8,6 +8,8 @@ import AccountVerficationPage from './Account Verification/AccountVerficationPag
 import BusinessKYC from './My Profile Page/BusinessKYC';
 import ChangePin from './My Profile Page/ChangePin';
 import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+
 
 export default function ProfileSettingsMain() {
 const {profilePage, setProfilePage} = useContext(ContextProvider);
@@ -17,6 +19,26 @@ const {authenticationOpen, setAuthenticationOpen} = useContext(ContextProvider);
 const {bvnVerificationOpen, setBvnVerificationOpen} = useContext(ContextProvider);
 const {accountUpgrade, setAccountUpgrade} = useContext(ContextProvider);
 const{idVerificationOpen, setIdVerificationOpen} = useContext(ContextProvider)
+
+const location = useLocation();
+
+useEffect(() => {
+  if (location.state && location.state.verificationOpen) {
+    setProfilePage(false);
+    setIdVerificationOpen(false);
+    setVerificationOpen(true);
+    setAuthenticationOpen(false);
+    setBvnVerificationOpen(false);
+    setAccountUpgrade(false);
+  } else {
+    // Set default state here if the verificationOpen state is not passed
+  }
+}, [location.state, setProfilePage, setIdVerificationOpen, setVerificationOpen, setAuthenticationOpen, setBvnVerificationOpen, setAccountUpgrade]);
+
+
+
+
+
 return (
     <DashBoardLayout>
         <div className=''>
@@ -113,6 +135,7 @@ return (
         <AccountVerficationPage/>
         <BusinessKYC/>
         <ChangePin/>
+
      </div>
      <div className={` flex gap-[8.729px]
      pt-[30%] pb-[20%]

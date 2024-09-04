@@ -33,7 +33,7 @@ const PasswordReset = () => {
         event.preventDefault();
         setShowModal(true);
     }
-
+    
     const setNav = () => {
         setHideNavbar(true);
       };

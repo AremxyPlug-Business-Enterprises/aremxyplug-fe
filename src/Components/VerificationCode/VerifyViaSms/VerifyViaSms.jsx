@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import VerificationInput from 'react-verification-input';
+// import VerificationInput from 'react-verification-input';
+import VerificationInput from "react-verification-input"
 import { Modal } from "../../Screens/Modal/Modal";
 import { VerificationSuccessful } from "../VeirifcationSuccessful/VerificationSuccessful";
 import { VerifyViaEmail } from "../VeirifyViaEmail/VerifyViaEmail";
