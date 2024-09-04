@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ContextProvider } from "../../../../Context";
 import { useContext } from "react";
 import "../DataTopUp.css";
@@ -13,6 +13,7 @@ import arrowDown from "../../../../AirTimePage/Images/arrow-down.svg";
 import call from "../../../../AirTimePage/Images/call.svg";
 import user from "../../../../AirTimePage/Images/user.svg";
 import Delete from "./DataBundles-Images/Deleted.svg";
+import { useNavigate } from "react-router-dom";
 
 const DataBundleSelectRecipient = () => {
   const { isDarkMode } = useContext(ContextProvider);
@@ -21,6 +22,9 @@ const DataBundleSelectRecipient = () => {
   const { recipientName, setRecipientName } = useContext(ContextProvider);
   const { recipientNumber, setRecipientNumber } = useContext(ContextProvider);
   const { networkImage, setNetworkImage } = useContext(ContextProvider);
+  const [recipients, setRecipients] = useState([]);
+  const [recipientToDelete, setRecipientToDelete] = useState(null);
+  const navigate = useNavigate();
 
   const [errors, setErrors] = useState({});
   const [showList, setShowList] = useState(false);
@@ -33,6 +37,132 @@ const DataBundleSelectRecipient = () => {
   const [activeImage, setActiveImage] = useState(null);
   const [edit, setEdit] = useState("");
   const [continueState, setContinue] = useState("");
+
+  const [editingRecipientId, setEditingRecipientId] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredRecipients, setFilteredRecipients] = useState(recipients);
+  // const [loading, setLoading] = useState(true);
+  const [inputValue, setInputValue] = useState("");
+
+  useEffect(() => {
+    if (searchQuery === "") {
+      setFilteredRecipients(recipients);
+    } else {
+      setFilteredRecipients(
+        recipients.filter(
+          (recipient) =>
+            recipient.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            recipient.phone.includes(searchQuery)
+        )
+      );
+    }
+  }, [searchQuery, recipients]);
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  useEffect(() => {
+    // Fetch initial recipients data from the backend or database
+    fetchRecipients();
+  }, []);
+
+  const fetchRecipients = async () => {
+    try {
+      const response = await fetch(
+        "https://aremxyplug.onrender.com/api/v1/data/recipient"
+      );
+      const responseData = await response.json();
+      console.log("Fetched data:", responseData);
+
+      if (responseData.status === 200 && responseData.data) {
+        const recipients = responseData.data.recipients?.recipients;
+        if (Array.isArray(recipients)) {
+          setRecipients(recipients);
+        } else {
+          console.error("Unable to find recipients array in data", recipients);
+          setRecipients([]);
+        }
+      } else {
+        console.error("Unexpected data structure:", responseData);
+        setRecipients([]);
+      }
+    } catch (error) {
+      console.error("Error fetching recipients:", error);
+      setRecipients([]);
+    }
+    // finally {
+    //   setLoading(false);
+    // }
+  };
+
+  const updateRecipient = async (recipientId) => {
+    const requestBody = {
+      id: recipientId,
+      network: networkName, // Changed from networkName
+      name: recipientName, // Changed from recipientName
+      phone: recipientNumber, // Changed from recipientNumber
+    };
+
+    try {
+      const response = await fetch(
+        `https://aremxyplug.onrender.com/api/v1/data/recipient`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestBody),
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok && data.status === 200) {
+        console.log("Recipient updated successfully:", data);
+        return true;
+      } else {
+        console.error("Error updating recipient:", data.message);
+        return false;
+      }
+    } catch (error) {
+      console.error("Error updating recipient:", error);
+      return false;
+    }
+  };
+
+  const deleteRecipient = async (recipientId) => {
+    try {
+      const requestBody = {
+        id: recipientId,
+      };
+
+      const response = await fetch(
+        `https://aremxyplug.onrender.com/api/v1/data/recipient`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            // Add any authentication headers if required
+          },
+          body: JSON.stringify(requestBody),
+        }
+      );
+
+      const data = await response.json();
+      console.log("Delete response:", data);
+
+      if (response.ok && data.status === 200) {
+        return true; // Indicate successful deletion
+      } else {
+        console.error("Error deleting recipient:", data.message);
+        return false; // Indicate failed deletion
+      }
+    } catch (error) {
+      console.error("Error deleting recipient:", error);
+      return false; // Indicate failed deletion
+    }
+  };
 
   const handleRecipient = (index) => {
     if (activeImage === index) {
@@ -71,19 +201,81 @@ const DataBundleSelectRecipient = () => {
     }
   };
 
-  const handleConfirm = () => {
-    setConfirm(true);
-    setContinue(false);
+  // const handleConfirm = () => {
+  //   setConfirm(true);
+  //   setContinue(false);
+  // };
+
+  const handleConfirm = async () => {
+    if (!editingRecipientId) {
+      console.error("No recipient selected for editing");
+      return;
+    }
+
+    const updatedRecipient = {
+      network: networkName,
+      name: recipientName,
+      phone: recipientNumber,
+    };
+
+    const success = await updateRecipient(editingRecipientId, updatedRecipient);
+
+    if (success) {
+      setRecipients((prevRecipients) =>
+        prevRecipients.map((recipient) =>
+          recipient.id === editingRecipientId
+            ? { ...recipient, ...updatedRecipient }
+            : recipient
+        )
+      );
+      setConfirm(true);
+      setContinue(false);
+      setEdit(false);
+      setEditingRecipientId(null);
+      // Reset form fields
+      setNetworkName("");
+      setRecipientName("");
+      setRecipientNumber("");
+      setInputValue("");
+    } else {
+      // Handle error (e.g., show error message to user)
+      console.error("Failed to update recipient");
+    }
   };
 
-  const handleDelete = () => {
+  // const handleDelete = () => {
+  //   setdeleted(true);
+  // };
+
+  const handleDelete = (recipientId) => {
+    setRecipientToDelete(recipientId);
     setdeleted(true);
   };
 
-  const handleSuccessDelete = () => {
-    setSuccessDeleted(true);
+  const handleSuccessDelete = async (recipientId) => {
+    console.log("Attempting to delete recipient with id:", recipientId);
+    if (recipientToDelete !== null) {
+      const success = await deleteRecipient(recipientToDelete);
+      if (success) {
+        setRecipients((prevRecipients) =>
+          prevRecipients.filter(
+            (recipient) => recipient.id !== recipientToDelete
+          )
+        );
+        setSuccessDeleted(true);
+      } else {
+        // Handle deletion failure
+        console.error("Failed to delete recipient");
+      }
+    }
     setdeleted(false);
+    setRecipientToDelete(null);
   };
+
+  // const handleSuccessDelete = () => {
+  //   setSuccessDeleted(true);
+  //   setdeleted(false);
+  // };
 
   const networkList = [
     {
@@ -161,7 +353,7 @@ const DataBundleSelectRecipient = () => {
       }),
   });
 
-  const [inputValue, setInputValue] = useState("");
+  // const [inputValue, setInputValue] = useState("");
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -215,7 +407,7 @@ const DataBundleSelectRecipient = () => {
             </section>
           </div>
           <div className="flex text-[#7c7c7c] mt-[5%] text-[10px] leading-[26px] items-center gap-[8px] md:text-[12px] lg:text-[16px] 2xl:text-[20px]">
-            <p>Add Recipient Details </p>
+            <p>Select Recipient Details </p>
             <img
               className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
               src="./Images/dashboardImages/arrowright.png"
@@ -229,6 +421,8 @@ const DataBundleSelectRecipient = () => {
                   className="text-[10px] w-[100%] h-[100%] md: outline-none lg:text-[14px]"
                   type="text"
                   placeholder="Name Or Phone Number"
+                  value={searchQuery}
+                  onChange={handleSearchChange}
                 />
                 <img
                   className=" h-[13.3px] w-[13.3px] lg:w-[24px] lg:h-[24px] "
@@ -240,7 +434,65 @@ const DataBundleSelectRecipient = () => {
           </div>
 
           <div className="flex flex-col gap-5 mt-[5%]">
-            {[0, 1, 2, 3].map((index) => (
+            {Array.isArray(filteredRecipients) &&
+              filteredRecipients.map((recipient) => (
+                <div
+                  key={recipient.id}
+                  className="w-[100%] mx-auto flex justify-between border cursor-pointer py-2 px-2 rounded-[7px] md:rounded-[7px] lg:py-2 lg:px-5"
+                >
+                  <div
+                    onClick={() => {
+                      setNetworkName(recipient.network);
+                      // setNetworkImage(networkImages[recipient.network]);
+                      setRecipientName(recipient.name);
+                      setRecipientNumber(recipient.phone);
+                      navigate("/data-bundles");
+                    }}
+                    className="flex flex-col my-auto gap-[1.67px] md:gap-[2.93px]"
+                  >
+                    <h2 className="lg:text-[16px] font-medium lg:leading-6 md:text-[9px] text-[9px]">
+                      {recipient.network}({recipient.phone})
+                    </h2>
+                    <p className="lg:text-[14.05px] lg:font-medium lg:leading-[21.07px] text-[#7C7C7C] text-[9px] font-semibold leading-3 md:text-[8px]">
+                      {recipient.name}
+                    </p>
+                  </div>
+                  <div
+                    onClick={() => handleRecipient(recipient.id)}
+                    className="relative h-[16px] cursor-pointer w-[16px] my-auto lg:w-[50px] lg:h-[25px]"
+                  >
+                    <img
+                      src="./Images/airtimeTopUp/Frame.png"
+                      alt=""
+                      className="h-full"
+                    />
+                    {showPopup && activeImage === recipient.id && (
+                      <div
+                        className="input border absolute bg-white top-[8px] right-[17px] lg:top-[20px] lg:right-[50px] w-[100px] h-[60px] z-50 flex flex-col justify-center items-start py-[5px]"
+                        style={{ boxShadow: "0 0 5px rgba(0, 0, 0, 0.2)" }}
+                      >
+                        <div
+                          onClick={() => handleEdit(recipient)}
+                          className="text-[10px] text-[#7C7C7C] px-[5px] py-[5px]"
+                        >
+                          Edit Recipient
+                        </div>
+                        <hr className="w-full h-[5px]" />
+                        <div
+                          onClick={(e) => {
+                            e.stopPropagation(); // Prevent event from bubbling up
+                            handleDelete(recipient.id);
+                          }}
+                          className="text-[#FA6B6B] text-[10px] px-[5px] py-[5px]"
+                        >
+                          Delete Recipient
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            {/* {[0, 1, 2, 3].map((index) => (
               <div
                 key={index}
                 className="w-[100%] mx-auto flex justify-between border py-2 px-2 rounded-[7px] md:rounded-[7px] lg:py-2 lg:px-5"
@@ -286,17 +538,15 @@ const DataBundleSelectRecipient = () => {
                   )}
                 </div>
               </div>
-            ))}
-            
+            ))} */}
+
             {edit && (
               <Modal>
                 <div
                   className={` scroll-bar mx-[5%] ${
                     isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
                   } ${
-                    toggleSideBar
-                      ? "confirmEdit01"
-                      : "confirmEdit"
+                    toggleSideBar ? "confirmEdit01" : "confirmEdit"
                   } grow pt-[10px] pb-[20px] rounded-tr-[8px] rounded-br-[8px] rounded-bl-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:overflow-auto`}
                 >
                   <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
@@ -478,9 +728,7 @@ const DataBundleSelectRecipient = () => {
                   className={`mx-[5%] ${
                     isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
                   } ${
-                    toggleSideBar
-                      ? "confirmEdit01"
-                      : "confirmEdit"
+                    toggleSideBar ? "confirmEdit01" : "confirmEdit"
                   } grow pt-[10px] pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:overflow-auto`}
                 >
                   <div className="flex justify-end items-end mx-[3%] my-[2%] lg:my-[1%] ">
@@ -568,9 +816,7 @@ const DataBundleSelectRecipient = () => {
               <Modal>
                 <div
                   className={` ${
-                    toggleSideBar
-                    ? "confirm02"
-                    : "confirm2"
+                    toggleSideBar ? "confirm02" : "confirm2"
                   } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
                 >
                   <div className="flex justify-between items-center mx-[3%] my-[2%] lg:mt-[3%] xl:mt-0 ">
@@ -631,11 +877,9 @@ const DataBundleSelectRecipient = () => {
             {deleted && (
               <Modal>
                 <div
-                className={` ${
-                  toggleSideBar
-                  ? "confirm02"
-                  : "confirm2"
-                } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto md:overflow-auto rounded-[12px]`}
+                  className={` ${
+                    toggleSideBar ? "confirm02" : "confirm2"
+                  } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto md:overflow-auto rounded-[12px]`}
                 >
                   <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[2%] xl:mt-[3%]">
                     <img
@@ -699,9 +943,7 @@ const DataBundleSelectRecipient = () => {
               <Modal>
                 <div
                   className={` ${
-                    toggleSideBar
-                    ? "confirm02"
-                    : "confirm2"
+                    toggleSideBar ? "confirm02" : "confirm2"
                   } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto md:overflow-auto rounded-[12px]`}
                 >
                   <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[2%]">

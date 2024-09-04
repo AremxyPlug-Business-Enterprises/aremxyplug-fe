@@ -403,7 +403,7 @@ export const SignUp = () => {
             </p>
           </Link>
         </div>
-
+        
         <button
           onClick={handleSubmit}
           // disabled={true}

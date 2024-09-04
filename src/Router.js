@@ -181,6 +181,8 @@ import { JedReceiptFailed } from "./Components/Dashboard/DashboardComponents/Ele
 import { KaedcoReceiptFailed } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/kaedcoReceiptFailed";
 import { KedcoReceiptFailed } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/kedcoReceiptFailed";
 import { PhedReceiptFailed } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/phedReceiptFailed";
+import BvnVerification from "./Components/My Profile & Account Settings/Account Verification/BvnVerification";
+import AccountVerficationPage from "./Components/My Profile & Account Settings/Account Verification/AccountVerficationPage";
 
 export const Router = () => {
   return (
@@ -431,6 +433,11 @@ export const Router = () => {
           element={<GlobalTransferAddRecipient />}
         />
         <Route path="/EditSelectRecipient" element={<EditSelectRecipient />} />
+        <Route path="/BVNVerification" element={<BvnVerification/>} />
+        <Route path="/AccountVerification" element={<AccountVerficationPage/>} />
+        <Route path="/ProfileSettingMain/AccountVerification" element={<ProfileSettingsMain />} />
+
+
         <Route path ="/WaecFailedReceipt" element={<WaecFailedReceipt/>}/>
         <Route path = "/NecoFailedReceipt" element = {<NecoFailedReceipt/>}/>
         <Route path="/NabtebFailedReceipt" element= {<NabtebFailedReceipt/>}/>
