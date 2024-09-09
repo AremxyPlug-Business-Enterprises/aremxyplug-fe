@@ -15,7 +15,8 @@ import { Autoplay, Pagination } from "swiper/modules";
 import QuickFeatures from "../DashboardComponents/QuickFeatures";
 import { WalletInOutFlows } from "../DashboardComponents/WalletInOutFlows";
 import { RecentTransaction } from "../DashboardComponents/RecentTransaction";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+// import AccountVerficationPage from "../../My Profile & Account Settings/Account Verification/AccountVerficationPage";
 
 export const MainDashboard = () => {
   const { setHideNavbar, toggleSideBar, isDarkMode } =
@@ -29,6 +30,14 @@ export const MainDashboard = () => {
   const [selected, setSelected] = useState("");
   const [selected2, setSelected2] = useState("");
   const [symbol, setSymbol] = useState("₦");
+  const navigate = useNavigate();
+
+
+
+
+  const handleAccountVerificationClick = () => {
+    navigate('/profile-settings', { state: { verificationOpen: true } });
+  };
 
   const handleCopyClick = () => {
     const text = textRef.current.innerText;
@@ -455,7 +464,7 @@ export const MainDashboard = () => {
                   } flex text-[10px] gap-[90px] md:gap-[110px]  md:text-[15px]`}
                 >
                   <div className="md:font-semibold">Bank Name</div>
-                  <div>SBI</div> 
+                  <div>SBI</div>
                 </div>
                 <div
                   className={`${styles.virtualaccounttxt} ${
@@ -480,19 +489,16 @@ export const MainDashboard = () => {
                       <RiFileCopyFill />
                     </div>
                   </div>
-                  <Link to={{
-    pathname: "/ProfileSettingMain",
-    state: { verificationOpen: true }
-  }}>
-                {" "}
-                <button
-                  className={`${
-                    isDarkMode ? "border bg-black" : "bg-[#04177f]"
-                  } ${styles.viewWallet}`}
-                >
-                  Generate
-                </button>
-              </Link>
+                  {/* <Link to="/AccountVerificationPage"> */}
+                  <button
+  onClick={handleAccountVerificationClick}
+  className={`${
+    isDarkMode ? "border bg-black" : "bg-[#04177f]"
+  } ${styles.viewWallet}`}
+>
+  Generate
+</button>
+                  {/* </Link> */}
                 </div>
               </div>
             </div>

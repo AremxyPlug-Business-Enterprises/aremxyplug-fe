@@ -434,13 +434,16 @@ export const Router = () => {
         />
         <Route path="/EditSelectRecipient" element={<EditSelectRecipient />} />
         <Route path="/BVNVerification" element={<BvnVerification/>} />
-        <Route path="/AccountVerification" element={<AccountVerficationPage/>} />
+        <Route path="/AccountVerificationPage" element={<AccountVerficationPage/>} />
         <Route path="/ProfileSettingMain/AccountVerification" element={<ProfileSettingsMain />} />
+
 
 
         <Route path ="/WaecFailedReceipt" element={<WaecFailedReceipt/>}/>
         <Route path = "/NecoFailedReceipt" element = {<NecoFailedReceipt/>}/>
         <Route path="/NabtebFailedReceipt" element= {<NabtebFailedReceipt/>}/>
+        <Route path="/ProfileSettingMain/AccountVerification/BvnVerification" element= {<BvnVerification/>} />
+        <Route path="/profile-settings" element={<ProfileSettingsMain />} />
       </Routes>
     </div>
   );

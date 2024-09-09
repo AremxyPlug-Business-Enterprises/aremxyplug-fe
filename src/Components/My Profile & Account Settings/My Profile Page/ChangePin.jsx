@@ -71,22 +71,34 @@ const ChangePin = () => {
   const [verify, setVerify] = useState("");
   const [newResetPin, setNewResetPin] = useState("");
 
-  const handleResetPinUpdate = (e) => {
-    const isEmail = (input) => {
-      const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{3,}$/i;
-      return emailRegex.test(input);
-    };
+  // const handleResetPinUpdate = (e) => {
+  //   const isEmail = (input) => {
+  //     const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{3,}$/i;
+  //     return emailRegex.test(input);
+  //   };
 
-    if (isEmail(emailId)) {
+  //   if (isEmail(emailId)) {
+  //     setResetPinErrorMessage("");
+  //     setEmailInputColor("#2ED173");
+  //     setResetPinUpdate(true);
+  //     setCountdown(60);
+  //   } else {
+  //     setResetPinErrorMessage("Invalid email..");
+  //     setEmailInputColor("#F95252");
+  //     setResetPinUpdate(false);
+  //   }
+  // };
+
+  const handleResetPinUpdate = (e) => {
+    // const isEmail = (input) => {
+    //   const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{3,}$/i;
+    //   return emailRegex.test(input);
+    // };
       setResetPinErrorMessage("");
-      setEmailInputColor("#2ED173");
+      // setEmailInputColor("#2ED173");
       setResetPinUpdate(true);
       setCountdown(60);
-    } else {
-      setResetPinErrorMessage("Invalid email..");
-      setEmailInputColor("#F95252");
-      setResetPinUpdate(false);
-    }
+   
   };
 
   const [countdown, setCountdown] = useState(60);
@@ -389,7 +401,7 @@ const ChangePin = () => {
                         type="text"
                         className="w-full md:w-[45%] text-[#7E7E7E] lg:w-[40%] h-8 px-2 py-[10px] border-[1px] rounded-md text-[10px] md:text-[14px] lg:text-[18px] font-semibold focus:outline-none lg:h-[51px]"
                         placeholder=""
-                        value={emailId}
+                        value={"habib@aremxy.com"}
                         style={{ borderColor: emailInputColor }}
                         onChange={(event) => {
                           setEmailId(event.target.value);
@@ -404,8 +416,8 @@ const ChangePin = () => {
                       </p>
                     )}
                   </div>
-
-                  <div className="mt-[10%] md:mt-[5%]">
+                  
+                  {/* <div className="mt-[10%] md:mt-[5%]">
                     <h2 className="text-[10px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px]">
                       Input PIN{" "}
                     </h2>
@@ -443,17 +455,19 @@ const ChangePin = () => {
                         isInputNum
                       />
                     </div>
-                  </div>
+                  </div> */}
 
                   <div className="py-[30px] lg:py-[60px]">
                     <button
-                      className={`${
-                        !emailId || pin.length !== 4
-                          ? "bg-[#63616188] cursor-not-allowed"
-                          : "bg-primary"
-                      } w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[600] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px]
-                    `}
-                      disabled={!emailId || pin.length !== 4}
+
+// ${!emailId || pin.length !== 4
+//   ? "bg-[#63616188] cursor-not-allowed"
+//   : "bg-primary"} 
+                      className="
+                       
+                        bg-primary w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[600] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px]
+                    "
+                      // disabled={!emailId || pin.length !== 4}
                       onClick={() => {
                         handleResetPinUpdate();
                       }}
@@ -475,7 +489,7 @@ const ChangePin = () => {
               } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
             >
               <img
-                onClick={() => setUpdate(false)}
+                onClick={() => setResetPinUpdate(false)}
                 className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[45px] lg:h-[45px] "
                 src={Cancel}
                 alt=""
