@@ -5,8 +5,9 @@ import { ContextProvider } from "../../Context";
 import styles from "./Dashboard.module.css";
 
 export const SideBar = () => {
-  const { setToggleSideBar, isDarkMode, handleClickOutside } =
+  const { setToggleSideBar, isDarkMode, handleClickOutside, customerDetail } =
     useContext(ContextProvider);
+    const {full_name} = customerDetail;
   const [dropDownOpen, setDropDownOpen] = useState({
     dropdown1: false,
     dropdown2: false,
@@ -80,16 +81,18 @@ export const SideBar = () => {
                 />
                 <div className="flex flex-col gap-[3px] justify-center mt-[4%]">
                   <p className="text-[8px] font-semibold md:text-[14px] lg:text-[14px]">
-                    Habib Kamaldeen
+                    {full_name}
                   </p>
                   <p className="text-[8px] font-semibold md:text-[14px] lg:text-[14px]">
                     UID: 508373
                   </p>
                   <div className="flex gap-[3px] lg:gap-[5px]">
-                    <div className=" rounded-[1px] px-[4px] py-[1px] font-semibold text-[6px] bg-[#b4b4b4] md:text-[10px] lg:text-[12px] lg:rounded-[2px]">
+                    <div className=" rounded-[1px] px-[4px] py-[1px] font-semibold text-[6px]
+                     bg-[#b4b4b4] md:text-[10px] lg:text-[12px] lg:rounded-[2px]">
                       Verified
                     </div>
-                    <div className="rounded-[1px] px-[4px] py-[1px] font-semibold text-[6px] bg-[#b4b4b4] md:text-[10px] lg:text-[12px] lg:rounded-[2px]">
+                    <div className="rounded-[1px] px-[4px] py-[1px] font-semibold text-[6px]
+                     bg-[#b4b4b4] md:text-[10px] lg:text-[12px] lg:rounded-[2px]">
                       KYCed
                     </div>
                   </div>
