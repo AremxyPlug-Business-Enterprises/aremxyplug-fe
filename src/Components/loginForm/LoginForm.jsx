@@ -13,8 +13,13 @@ import { Loader } from "../Loader/Loader";
 import { Modal } from "../Screens/Modal/Modal";
 
 function LoginForm() {
-  const { setOpenTranspin, setOpenResetTranspin, setOpen2StepVerification,setLoginAuthorisation} =
-    useContext(ContextProvider);
+  const { setOpenTranspin,
+     setOpenResetTranspin,
+      setOpen2StepVerification,
+      setLoginAuthorisation,
+//customerDetail,
+      setCustomerDetail,
+      } = useContext(ContextProvider);
   const [usernameORemail, setUsernameORemail] = useState("username");
   const [loading, setLoading] = useState(false);
  
@@ -136,6 +141,13 @@ function LoginForm() {
     }
   };
 
+//USEEFFECT FOR SETCUSTOMER DETAIL,TO PASS THE RESPONSE OBJECT
+
+   
+
+  
+
+
   // ==========Login Handler===========
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -182,12 +194,11 @@ function LoginForm() {
                 console.log(authToken);
               } else if(response.status === 200){
                 setOpen2StepVerification(true);
-                console.log(response);
-              //   const getUserPhone = response.data.customer.phone;
-              //   const getUserEmail = response.data.customer.email
-              //   console.log(getUserPhone);
-              //  console.log(getUserEmail);
-              }else if (response.status === 404) {
+             const customer  =  response.data.data.customer;
+            if(customer){
+            setCustomerDetail(customer);
+            }
+            }else if (response.status === 404) {
                 alert("User not found");
               } else if (response.status === 401) {
                 alert("Incorrect Password");
@@ -249,10 +260,9 @@ function LoginForm() {
               
               }else if(response.status === 200){
                 setOpen2StepVerification(true);
-                // console.log(response);
-                // setPhoneNumber(phoneNumber.slice(0,4));
-                // setEmail(`${email.slice(0,4)}****${email.slice(8)}`)
-               } else if (response.status === 404) {
+               // const customer = response.data.data.customer;
+              //  setCustomerDetail(customer);
+              //  console.log(customerDetail);  
                 alert("User not found");
               } else if (response.status === 401) {
                 alert("Incorrect Password");
