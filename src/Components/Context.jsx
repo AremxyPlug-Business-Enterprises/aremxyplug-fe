@@ -985,8 +985,13 @@ export const Context = ({ children }) => {
   const [necoEduResponse,setNecoEduResponse] =useState(null);
 
   //============= LOGIN FORM ==========
-  const [loginAuthorisation, setLoginAuthorisation] = useState('')
+  const [loginAuthorisation, setLoginAuthorisation] = useState('');
+  const [twoStepVerificationSuccess, setTwoStepVerificationSuccess]= useState(false);
+ const [customerDetail, setCustomerDetail] = useState({});
+
   const hold = {
+    customerDetail, 
+    setCustomerDetail,
     handleRefresh,
     // ==================
     tfImage, settfImage,
@@ -1574,10 +1579,12 @@ export const Context = ({ children }) => {
     setNecoEduResponse,
     // ====Login Authorisation
     loginAuthorisation,
-    setLoginAuthorisation
-  };
-
-  return (
+    setLoginAuthorisation,
+    twoStepVerificationSuccess, 
+    setTwoStepVerificationSuccess,
+   
+  }
+return (
     <div>
       <ContextProvider.Provider value={hold}>
         {children}

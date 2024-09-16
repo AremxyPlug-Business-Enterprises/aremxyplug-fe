@@ -18,8 +18,19 @@ function LoginPopUp() {
     setOpenTranspin,
     setOpenResetTranspin,
     setOpen2StepVerification,
-    loginAuthorisation
-  } = useContext(ContextProvider);
+    loginAuthorisation,
+    twoStepVerificationSuccess, 
+    setTwoStepVerificationSuccess,
+    customerDetail,
+   // setcustomerDetails
+} = useContext(ContextProvider);
+
+const {
+  //full_name,
+  email,
+  //username,
+  phone} = customerDetail;
+
 
   const [countdown, setCountdown] = useState(60);
   const [countdown2, setCountdown2] = useState(60);
@@ -31,7 +42,7 @@ function LoginPopUp() {
   const [otp3, setOtp3] = useState("");
 
   const [transpinError, setTranspinErrors] = useState("");
-  const [verificationPinError, setVerificationPinError] = useState("");
+  const [verificationPinError, setVerificationPinError] = useState(false);
   const [smsOrEmail, setSmsOrEmail] = useState("");
   
   // const receiveAuthToken = localStorage.getItem("authorizationToken");
@@ -40,40 +51,66 @@ const getOtpSmsorEmail = ()=> {
   // const [sendSmsOrEmail, setSendSmsOrEmail] = useState("")
   if(smsOrEmail === "sms"){
   return {
-    phone : "09065013817"
+    phone : phone
   }
   }else if(smsOrEmail === "email" ){
      return {
-      email : "balooladimeji29@gmail.com"
+      email : email
      }
   }
 }
-
+   //THIS FUNCTION IS TO DERIVE THE OTP FROM THE BACKEND
   const gettingOtpFunction= async()=> {
     try{
-    const url = " https://aremxyplug.onrender.com/api/v1/send-otp"
-    await axios.post(url, getOtpSmsorEmail())
-.then((response)=>{
+    const url = "https://aremxyplug.onrender.com/api/v1/send-otp"
+    const response = await axios.post(url, getOtpSmsorEmail())
+
 if((response.status === 200 || 201) && (response.headers.hasAuthorization)){
   twoStepVerificationHandler();
  alert("An Otp has been sent to you")
-}else if(response.status === 401){
-  alert("It requires an authentication token")
-}else if(response.status === 404){
-  alert("An error has occured at your end")
-} else if(response.status === 500){
-  alert("INTERNAL_SERVER_ERROR")
+} 
+ }catch(error){
+  if(error.response && error.response.status === 401){
+  alert(`${error}, An error occured from your end`)
+  } else if(error.response && error.response.status === 500){
+    alert(`INTERNAL_SERVER_ERROR`)
+  }
+  }
 }
-}).catch((error)=>{
-  alert(error)
-})
-  }catch(error){
-  alert(Error);
+  // FUNCTION TO HANDLE VERIFICATION OF OTP
+  function handleVerificationOTP() {
+    if (otp3) {
+      setVerificationPinError("");  
+      setTwoStepVerificationSuccess(true);
+     setOtp3("");
+      setOpen2StepOTP(false);
+      console.log(otp3);
+    } 
   }
-  }
+  //Verification of the otp
+  const VerifyOtpFunction = async()=>{
+    try{
+    const url = `https://aremxyplug.onrender.com/api/v1/verify-otp?email=${email}`
+     const body ={
+     otp :otp3
+     }
+     console.log(otp3);
+      const response = await axios.post(url,body,{ headers : {"Content-Type" : "application/json"}})
+      if(response.status === 200 || 201){
+        handleVerificationOTP();
+      } 
+    }catch(error){
+      if( error.response && error.response.status === 400){
+        setVerificationPinError(true);
+        console.log("The Verification falied")
+      }else if(error.response &&error.response.status === 500){
+        alert("INTERNAL_SERVER_ERROR");
+      }
+    }
+    }
 
 
-
+  
   useEffect(() => {
     if (open2StepOTP === true && smsOrEmail === "sms") {
       let timer;
@@ -114,15 +151,7 @@ if((response.status === 200 || 201) && (response.headers.hasAuthorization)){
       setTranspinErrors("Pin does not match!");
     }
   }
-  function handleVerificationOTP() {
-    if (otp3 === "123456") {
-      setVerificationPinError("");
-      setOtp3("");
-      setOpen2StepOTP(false);
-    } else {
-      setVerificationPinError("Incorrect verification code!");
-    }
-  }
+
 
   function twoStepVerificationHandler() {
     setOpen2StepVerification(false);
@@ -189,14 +218,17 @@ if((response.status === 200 || 201) && (response.headers.hasAuthorization)){
                 />
                 <div className="text-[6px] lg:text-[12px]">
                   <div>Via SMS</div>
-                  <div>0700&#42;&#42;&#42;&#42;&#42;&#42;</div>
+                  <div>{`${phone.slice(3,6)}********`}</div>
                 </div>
               </div>
               {/* VIA SMS ENDS HERE*/}
               {/* VIA Email STARTS HERE*/}
               <div
                 className=" flex items-center mt-[17px] h-[32px] w-[92px] cursor-pointer rounded-[4.5px] p-1 gap-[5px] lg:w-[161px] lg:h-[60px] lg:rounded-[8px] "
-                onClick={() => setSmsOrEmail("email")}
+                onClick={() => {
+                  setSmsOrEmail("email");
+                  console.log(customerDetail);
+                }}
                 style={{
                   borderWidth: 1,
                   borderColor: smsOrEmail === "email" ? "#d166ff" : "#b3b3b3",
@@ -209,7 +241,7 @@ if((response.status === 200 || 201) && (response.headers.hasAuthorization)){
                 />
                 <div className="text-[6px] lg:text-[12px]">
                   <div>Via Email</div>
-                  <div>habib@&#42;&#42;&#42;&#42;&#42;&#42;</div>
+                  <div>{`${email.slice(0,3)}********`}</div>
                 </div>
               </div>
               {/* VIA Email ENDS HERE*/}
@@ -326,22 +358,7 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
               </button>
             </div>
 
-            {/* <div className="w-full flex justify-center mt-[20px] mb-[10px] lg:mb-[10px] lg:mt-[50px]">
-              <div
-                onClick={() => {
-                  setOpenTranspin(false);
-                  setOpenTranspinSuccessful(true);
-                }}
-                className=" inline-flex justify-center items-center text-[#fff]   text-center  cursor-pointer 
-                text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rounded-[7px] lg:px-[37px] lg:py-[15px] lg:text-[14px]
-                "
-                style={{
-                  backgroundColor: primaryColor,
-                }}
-              >
-                <p> Create</p>
-              </div>
-            </div> */}
+           
           </div>
         </Modal>
       )}
@@ -357,7 +374,7 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
                 Verification code has been sent to your
               </p>
               <p className=" lg:text-[14px] text-[8.02px] mb-[7] lg:mb-[10px]">
-                Phone-070********
+              {`${phone.slice(3,6)}********`}
               </p>
               <p
                 className="text-[#737373] lg:text-[10px] text-[5.729px] cursor-pointer"
@@ -455,7 +472,7 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
                 Verification code has been sent to email
               </p>
               <p className=" lg:text-[14px] text-[8.02px] mb-[7] lg:mb-[10px]">
-                your email habib****@gmail.com
+                your email  {`${email.slice(0,3)}********`}
               </p>
               <p
                 className="text-[#737373] lg:text-[10px] text-[5.729px] cursor-pointer"
@@ -489,9 +506,9 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
                     )}
                   />
                   {/* Error message starts here */}
-                  {verificationPinError.length > 0 ? (
-                    <p className="text-center text-red-500 lg:text-[16px] text-[9.167px] mt-[3px] lg:mt-[15px]">
-                      {verificationPinError}
+                  {verificationPinError === true ? (
+                    <p className="text-center text-red-500 md:font-[500] font-[400] lg:text-[16px] text-[9.167px] mt-[3px] lg:mt-[15px]">
+                     Incorrect otp provided
                     </p>
                   ) : (
                     ""
@@ -525,7 +542,7 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
               <Link to="/dashboard" className="w-full flex justify-center mt-[20px] mb-[10px] lg:mb-[10px] lg:mt-[50px]">
               
                 <button
-                  onClick={handleVerificationOTP}
+                  onClick={VerifyOtpFunction}
                   type="submit"
                   disabled={otp3.length !== 6 ? true : false}
                   className={` ${
@@ -589,8 +606,45 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
         </Modal>
       )}
       {/* FORM OVERLAY AND TRANSACTION PIN SUCCESSFUL ENDS HERE*/}
+  {/*TRANSACTION SUCCESSFUL MODAL STARTS HERE */}
+  {twoStepVerificationSuccess === true && (
+        <Modal>
+          <div className="flex flex-col lg:items-center  lg:mx-[0px] mx-[20px] w-[100%] md:w-[30%]  px-[20px]
+           py-[35.536px] bg-white rounded-[10.3px] md:py-[34.96px] md:px-[17.6px] lg:py-[62px] lg:px-[31px] ">
+            
+                <div className="flex flex-col items-center w-[100%] ">
+                  <p className="lg:text-[16px] font-[500]  text-[14.021px]  text-green-500 mb-[30px]">
+                    Verification Successfull
+                  </p>
 
-
+                  <img
+                    className="lg:w-[50px] lg:h-[50px] w-[32px] h-[32px]"
+                    src="./Gif/checkMarkGif.gif"
+                    alt="thumbsUpGif"
+                  />
+                </div>
+           
+              {/* <Link to="/"> */}
+               <Link to="/dashboard" className="w-[100%] flex justify-center">
+                  <div onClick={() => setTwoStepVerificationSuccess(false)}
+                   className="flex w-[100%] lg:w-[50%]  rounded-[8px] lg:rounded-[16px]
+                mt-[20px] justify-center  lg:mt-[50px]  cursor-pointer text-[10px] font-bold leading-[11.31px] 
+                     py-[14px]   lg:py-[15px] lg:text-[14px]"  style={{
+                      backgroundColor: primaryColor,
+                    }}
+                  >
+                    <p className="text-[12px] text-white lg:text-[16px] text-center"> 
+                      Okay
+                      </p>
+                  </div>
+                </Link>
+              
+              {/* </Link> */}
+        
+          </div>
+        </Modal>
+      )}
+ {/*TRANSACTION SUCCESSFUL MODAL STOPS HERE */}
 
       {/* FORM OVERLAY AND RESET TRANSACTION PIN  HERE */}
       {openResetTranspin === true && (
@@ -643,3 +697,26 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
 }
 
 export default LoginPopUp;
+
+//const gettingOtpFunction= async()=> {
+//  try{
+ // const url = "https://aremxyplug.onrender.com/api/v1/send-otp"
+  //await axios.post(url, getOtpSmsorEmail())
+//.then((response)=>{
+//if((response.status === 200 || 201) && (response.headers.hasAuthorization)){
+//twoStepVerificationHandler();
+//alert("An Otp has been sent to you")
+//}else if(response.status === 401){
+//alert("It requires an authentication token")
+//}else if(response.status === 404){
+//alert("An error has occured at your end")
+//} else if(response.status === 500){
+//alert("INTERNAL_SERVER_ERROR")
+//}
+//}).catch((error)=>{
+//alert(error)
+//})
+//}catch(error){
+//console.log(error);
+//}
+//}
