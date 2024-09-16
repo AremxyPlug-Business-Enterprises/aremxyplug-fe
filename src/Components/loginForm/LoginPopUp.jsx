@@ -522,8 +522,8 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
                 </div>
               </div>
 
-              <div className="w-full flex justify-center mt-[20px] mb-[10px] lg:mb-[10px] lg:mt-[50px]">
-          
+              <Link to="/dashboard" className="w-full flex justify-center mt-[20px] mb-[10px] lg:mb-[10px] lg:mt-[50px]">
+              
                 <button
                   onClick={handleVerificationOTP}
                   type="submit"
@@ -541,7 +541,7 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
                 >
                   <p> Continue</p>
                 </button>
-              </div>
+              </Link>
             </div>
           </div>
         </Modal>
