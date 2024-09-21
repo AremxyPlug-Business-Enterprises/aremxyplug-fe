@@ -176,7 +176,7 @@ return () => clearInterval(timer);
 
 //THE FUNCTION TO OPEN VERIFICATION POPUP FOR EITHER SMS OR EMAIL
   function twoStepVerificationHandler() {
-    setOpen2StepVerification(false);
+    setOpen2StepVerification(false); 
     setOpen2StepOTP(true);
   }
 
