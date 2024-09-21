@@ -15,11 +15,10 @@ import OwnVTU from "./Components/Screens/ownVTU/OwnVTU";
 import TermsAndCondition from "./Components/Screens/TermsAndCondition/TermsAndCondition";
 import PrivacyPolicy from "./Components/Screens/PrivacyPolicy/PrivacyPolicy";
 import Team from "./Components/Screens/Team/Team";
-import { SignUp } from "./Components/Screens/CustomersPages/SignUp/SignUp";
+import {SignUp } from "./Components/Screens/CustomersPages/SignUp/SignUp";
+import Verification from "./Components/VerificationCode/Verification";
 import Login from "./Components/Screens/CustomersPages/login/Login";
 import PasswordReset from "./Components/Screens/CustomersPages/Password/PasswordReset";
-import { VerifyViaEmail } from "./Components/VerificationCode/VeirifyViaEmail/VerifyViaEmail";
-import { VerifyViaSms } from "./Components/VerificationCode/VerifyViaSms/VerifyViaSms";
 import NewPassword from "./Components/Screens/CustomersPages/Password/NewPassword";
 import { MainDashboard } from "./Components/Dashboard/Layout/MainDashboard";
 import Wallet from "./Components/Wallet/Wallet";
@@ -217,10 +216,9 @@ export const Router = () => {
         <Route path="/Login" element={<Login />} />
         <Route path="/team" element={<Team />} />
         <Route path="/signUp" element={<SignUp />} />
+        <Route path="/Verification" element={<Verification/>}/>
         <Route path="/passwordReset" element={<PasswordReset />} />
         <Route path="/newPassword" element={<NewPassword />} />
-        <Route path="/emailRoute" element={<VerifyViaEmail />} />
-        <Route path="/smsRoute" element={<VerifyViaSms />} />
         <Route path="/dashboard" element={<MainDashboard />} />
         <Route path="/wallet" element={<Wallet />} />
         <Route path="/top-up" element={<TopUpScreen />} />

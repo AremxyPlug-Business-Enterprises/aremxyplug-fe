@@ -125,10 +125,13 @@ export const Context = ({ children }) => {
   const [withdrawImage, setWithdrawImage] = useState("");
 
   // =========Start For SignUp.jsx==========
+  const [otpVerifyEmailSignup,setOtpVerifyEmailSignup] = useState("");
+  const [otpVerifySmsSignup,setOtpVerifySmsSignup] = useState("")
   const [isFocused, setIsFocused] = useState([]);
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordTwo, setShowPasswordTwo] = useState(false);
   const [errors, setErrors] = useState({});
+  const [loadSignUp, setLoadSignUp] = useState(false);
   const [verification, setVerification] = useState(false);
   const [state, setState] = useState({
     country: "",
@@ -225,8 +228,9 @@ export const Context = ({ children }) => {
 
   // ======on submit function=======
   const handleSubmit = (event) => {
+    
     event.preventDefault();
-
+  
     const {
       country,
       fullName,
@@ -265,6 +269,7 @@ export const Context = ({ children }) => {
         }, {})
       );
     } else {
+      setLoadSignUp(true);
       const data = {
         fullname: fullName,
         username: userName,
@@ -282,27 +287,20 @@ export const Context = ({ children }) => {
         .post(url, data, config)
         .then((response) => {
           console.log(response);
-          if (response.status === 201) {
+          if (response.status === 201 || 201) {
+            setLoadSignUp(false)
             setVerification(true);
-            setState({
-              country: "",
-              fullName: "",
-              userName: "",
-              email: "",
-              phoneNumber: "",
-              password: "",
-              confirmPassword: "",
-            });
             setErrors({});
-          } else if (response.status === 200) {
-            alert("User Exist Already");
           } else if (response.status === 409) {
+            setLoadSignUp(false)
             alert("Input already in use: " + response.data);
           } else {
             console.log(response.data);
+            setLoadSignUp(false)
           }
         })
         .catch((error) => {
+          setLoadSignUp(false)
           console.error(error);
           alert(error.response.data.error);
         });
@@ -311,35 +309,25 @@ export const Context = ({ children }) => {
   // ========End for SignUp.jsx======
 
   // ============Start For Verification.jsx ==========
-  const [buttonColor, setButtonColor] = useState("#0003");
-  const [smsborderColor, setSmsBorderColor] = useState("#0003");
-  const [emailborderColor, setEmailBorderColor] = useState("#0003");
+
+  
   const [viaEmailOrSms, setViaEmailOrSms] = useState("");
   const [viaSms, setViaSms] = useState(false);
   const [viaEmail, setViaEmail] = useState(false);
   const [sms] = useState(true);
   const [email] = useState(true);
   const [success, setSuccess] = useState("");
-
-  const onClickSms = () => {
-    setButtonColor("#04177f");
-    setSmsBorderColor("#d166ff");
-    setEmailBorderColor("#0003");
-    setViaEmailOrSms("sms");
-  };
-  const onClickEmail = () => {
-    setButtonColor("#04177f");
-    setSmsBorderColor("#0003");
-    setEmailBorderColor("#d166ff");
-    setViaEmailOrSms("email");
-  };
+ 
 
   const submitHandler = () => {
     if (viaEmailOrSms === "sms") {
       setViaSms(true);
+      setVerification(false);
     } else if (viaEmailOrSms === "email") {
       setViaEmail(true);
+      setVerification(false);
     }
+   
   };
 
   const emailorsmsHandler = () => {
@@ -1070,23 +1058,27 @@ export const Context = ({ children }) => {
     // *****************************************
 
     // ======Verification.jsx=====
-    buttonColor,
-    smsborderColor,
-    emailborderColor,
+   
+   
     viaEmail,
     viaSms,
+    viaEmailOrSms,
+     setViaEmailOrSms,
     setViaEmail,
     setViaSms,
     sms,
     email,
-    onClickSms,
-    onClickEmail,
     submitHandler,
     emailorsmsHandler,
-    success,
+    success, 
     setSuccess,
+   
 
     // ========SignUp.jsx========
+    otpVerifyEmailSignup,
+    setOtpVerifyEmailSignup,
+    otpVerifySmsSignup,
+    setOtpVerifySmsSignup,
     isFocused,
     showPassword,
     showPasswordTwo,
@@ -1094,6 +1086,7 @@ export const Context = ({ children }) => {
     verification,
     setVerification,
     state,
+    setState,
     handleCountryChange,
     handlePhoneNumberChange,
     changeHandler,
@@ -1108,6 +1101,8 @@ export const Context = ({ children }) => {
     setResetEmail,
     resetNumber,
     setResetNumber,
+    loadSignUp,
+     setLoadSignUp,
 
     // ============Dashboard=============
     toggleSideBar,
@@ -1582,6 +1577,7 @@ export const Context = ({ children }) => {
     setLoginAuthorisation,
     twoStepVerificationSuccess, 
     setTwoStepVerificationSuccess,
+    
    
   }
 return (
