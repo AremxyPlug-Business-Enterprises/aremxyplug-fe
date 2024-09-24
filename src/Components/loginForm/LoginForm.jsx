@@ -12,6 +12,8 @@ import axios from "axios";
 import { Loader } from "../Loader/Loader";
 import { Modal } from "../Screens/Modal/Modal";
 
+
+
 function LoginForm() {
   const { setOpenTranspin,
      setOpenResetTranspin,
@@ -141,7 +143,7 @@ function LoginForm() {
     }
   };
 
-//USEEFFECT FOR SETCUSTOMER DETAIL,TO PASS THE RESPONSE OBJECT
+
 
    
 
@@ -258,14 +260,16 @@ function LoginForm() {
                 setOpenTranspin(true);
                 const authToken = response.headers.get('Authorization');
                setLoginAuthorisation(authToken);
-              
-              }else if(response.status === 200){
+               }else if(response.status === 200){
                 setOpen2StepVerification(true);
-               // const customer = response.data.data.customer;
-              //  setCustomerDetail(customer);
-              //  console.log(customerDetail);  
-                alert("User not found");
-              } else if (response.status === 401) {
+             const customer  =  response.data.data.customer;
+            if(customer){
+            setCustomerDetail(customer);
+            }
+              } else if(response.status === 404){
+           alert("User not found")
+              }
+              else if (response.status === 401) {
                 alert("Incorrect Password");
               } else {
                 console.log(response.data);
@@ -282,7 +286,7 @@ function LoginForm() {
         }
       } catch (error) {
         console.log(error);
-      } finally {
+      } finally{
         setLoading(false);
       }
     }
