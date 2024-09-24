@@ -15,9 +15,10 @@ import BvnQueryImage from "../ProfileImages/Bvnqueryimage.svg";
 import BvnMessageImage from "../ProfileImages/BvnMessageImage.svg";
 import Spinner from "../../Dashboard/DashboardComponents/DataTopUpPage/DataBundles/MtnDataTopUpBundle/Spinner";
 import Delete from "../ProfileImages/Cancel.svg"
+import axios from "axios";
 
 export default function BvnVerification() {
-  const { bvnVerificationOpen } = useContext(ContextProvider);
+  const { bvnVerificationOpen,loginAuthorisation, setLoginAuthorisation } = useContext(ContextProvider);
   const { verificationOpen } = useContext(ContextProvider);
   const [bvnVerifyImage, setBvnVerifyImage] = useState(NotVerifiedIcon);
   const [bvnStatus, setBvnStatus] = useState("Not Verified");
@@ -31,7 +32,7 @@ export default function BvnVerification() {
   const { toggleSideBar } = useContext(ContextProvider);
   const [loading, setLoading] = useState(false);
   const [verificationFailed, setVerificationFailed] = useState(false);
-
+  
 
   //  const checkBvnform = () =>{
 
@@ -55,48 +56,49 @@ export default function BvnVerification() {
   // let formattedDate = trimmedDate.replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3');
   // console.log(formattedDate);
 
-  const checkBvnform = () => {
+  const checkBvnform = async () => {
     if (bvnNumber) {
       setLoading(true);
-  
+
       const data = {
         bvn: bvnNumber.toString(),
       };
-  
-      console.log(data);
-  
-      fetch("https://aremxyplug.onrender.com/api/v1/virtualacc", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      })
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          } else {
-            throw new Error("Failed to fetch");
-          }
-        })
-        .then((data) => {
-          console.log("API Response:", data); // Log the response data
-          setBvnVerifyImage(bvnVerifiedSuccess);
-          setBvnStatus("Verified");
-          setBvnPopVerified(true); // Show successful verification popup
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-          setBvnVerifyImage(NotVerifiedIcon);
-          setBvnStatus("Not Verified");
-          setVerificationFailed(true); // Show verification not successful popup
-        })
-        .finally(() => {
-          setLoading(false);
-        });
+
+      const headers = {
+        "Content-Type": "application/json",
+        "Authorization": `eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjY5MjUwMTksImlkIjoiMDFqN2VzZXR2Z2J5ZzU5cTI4Z3g0ZndnM3gifQ.QnVsxcWaSHM-bse5b-oCybF_BZ4Aag4OlgZBdC5GLyoGROtu6EtUIuFzMplD68RNrfbIL2p6VIjy24q4LA_bGcUix0QgPtWSEtls5NKTDd-ovMkkgYy8KM3buKz3TuuKZdGNWOQUD_YN9fuFMD36WmXGVD52MpfWJcRGybRFVTjG_OfNP0MdQlgcitRlbEaDnz10UrUjJOZFc3dF-UZHMTulqz8PnRFmU-giS99eIQDufVDifyBOodp6jQteLr0c-UCx4VDNiwTkUjbqWzOyrqFkk3WjJZggAWcISXGJQYU3a_ggFlS8v75luvyZnaprAO-0Cl6BgJMwOnPspRImsg`
+      };
+      
+      console.log("Request Data:", data);
+      console.log("Request Headers:", headers);
+
+      try {
+        const response = await axios.post(
+          "https://aremxyplug.onrender.com/api/v1/virtualacc",
+          data,
+          { headers }
+        );
+
+        console.log("API Response:", response.data);
+        setBvnVerifyImage(bvnVerifiedSuccess);
+        setBvnStatus("Verified");
+        setBvnPopVerified(true); // Show successful verification popup
+      } catch (error) {
+        console.error("Error:", error);
+        if (error.response) {
+          console.error("Response status:", error.response.status);
+          console.error("Response data:", error.response.data);
+        }
+        setBvnVerifyImage(NotVerifiedIcon);
+        setBvnStatus("Not Verified");
+        setVerificationFailed(true); // Show verification not successful popup
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
+  
   // console.log(bvnDateOfBirth);
   return (
     <div>

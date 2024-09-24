@@ -162,7 +162,7 @@ function LoginForm() {
             .messages({ "string.pattern.base": "Invalid Username" }),
         });
        
-
+       
         const { error } = schema.validate({ username });
        
         if (error) {
@@ -192,6 +192,7 @@ function LoginForm() {
                 const authToken = response.headers.get('Authorization');
                setLoginAuthorisation(authToken);
                 console.log(authToken);
+                console.log("Auth token: authToken")
               } else if(response.status === 200){
                 setOpen2StepVerification(true);
              const customer  =  response.data.data.customer;
