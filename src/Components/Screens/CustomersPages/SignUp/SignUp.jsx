@@ -422,8 +422,7 @@ const setNav = () => {
               Forgot password ?
             </p>
           </Link>
-        </div>
-      
+        </div>  
         <button
           onClick={(e)=>{
            handleSubmit(e);

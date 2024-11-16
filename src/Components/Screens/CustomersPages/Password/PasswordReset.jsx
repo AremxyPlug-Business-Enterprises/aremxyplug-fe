@@ -41,11 +41,6 @@ const PasswordReset = () => {
 
 // FUNCTION TO START THRE COUNTDOWN TO RESND OTP
 
-//const stopClearInterval = (timer)=>{
- //clearInterval(timer);
- //if(forgetPassCountdown === 0)
-//}
-
  useEffect(()=> {
    if (selectionType === "otp" && submission === false ) {
            let timer;

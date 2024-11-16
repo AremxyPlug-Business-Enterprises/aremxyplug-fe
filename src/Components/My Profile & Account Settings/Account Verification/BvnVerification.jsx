@@ -13,6 +13,7 @@ import PopUpGreenDeskTop from "../ProfileImages/PopUpGreenDeskTop.svg"
 import Success from "../ProfileImages/success.gif";
 import BvnQueryImage from '../ProfileImages/Bvnqueryimage.svg';
 import BvnMessageImage from '../ProfileImages/BvnMessageImage.svg';
+import Spinner from '../../Dashboard/DashboardComponents/DataTopUpPage/DataBundles/MtnDataTopUpBundle/Spinner';
 
 export default function BvnVerification() {
     const {bvnVerificationOpen} = useContext(ContextProvider);
@@ -27,32 +28,75 @@ export default function BvnVerification() {
    const [bvnPhoneMessage, setBvnPhoneMessage] = useState(false);
    const [errorVerify, setErrorVerify] = useState(false);
    const {toggleSideBar} = useContext(ContextProvider);
-   
-   const checkBvnform = () =>{
+   const [loading, setLoading] = useState(false);
 
-    if(bvnNumber && bvnPhone && bvnDateOfBirth ){
-       setBvnVerifyImage(bvnVerifiedSuccess);
-        setBvnStatus('Verified');
-          setTimeout(()=>{
-      setBvnPopVerified(true);
-      setErrorVerify(false);
-      },2000)
-        }
-   else   {
-    setBvnVerifyImage(NotVerifiedIcon);
-       setBvnStatus('Not Verified');
-       setErrorVerify(true);
-        }
-    }
+   
+  //  const checkBvnform = () =>{
+
+  //   if(bvnNumber && bvnPhone && bvnDateOfBirth ){
+  //      setBvnVerifyImage(bvnVerifiedSuccess);
+  //       setBvnStatus('Verified');
+  //         setTimeout(()=>{
+  //     setBvnPopVerified(true);
+  //     setErrorVerify(false);
+  //     },2000)
+  //       }
+  //  else   {
+  //   setBvnVerifyImage(NotVerifiedIcon);
+  //      setBvnStatus('Not Verified');
+  //      setErrorVerify(true);
+  //       }
+  //   }
     //======= SETTING DATE FORMAT FOR DATE OF BIRTH =====
 // let inputDate = "20231129";
 // let  trimmedDate = inputDate.trim();
 // let formattedDate = trimmedDate.replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3');
 // console.log(formattedDate);
 
+const checkBvnform = () => {
+  if (bvnNumber) {
+    setLoading(true);
+
+    const data = {
+      bvn: bvnNumber.toString(),
+    };
+
+    console.log(data)
+
+    fetch('https://aremxyplug.onrender.com/api/v1/virtualacc', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => {
+        if (response.ok) {
+          setBvnVerifyImage(bvnVerifiedSuccess);
+          setBvnStatus('Verified');
+          return response.json();
+        } else {
+          throw new Error('Failed to fetch');
+        }
+      })
+      .then((data) => {
+        console.log(data); // Log the response data
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        setBvnVerifyImage(NotVerifiedIcon);
+        setBvnStatus('Not Verified');
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }
+};
+
+
 
   
-console.log(bvnDateOfBirth);
+// console.log(bvnDateOfBirth);
   return (
     <div>
         {bvnVerificationOpen && (
@@ -83,6 +127,14 @@ src={Arrowright} alt="" />
           </h2>
      </div>
     </div>
+
+
+
+    {loading && (
+            <Modal>
+              <Spinner size="large" />
+            </Modal>
+          )}
   {/*  */}
     <div className='flex md:gap-[14px] gap-[11px] items-center'>
         <h2 className='font-[500] text-[#7E7E7E] text-[8px] leading-[10.4px]
