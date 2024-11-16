@@ -3,7 +3,7 @@ import "./LoginForm.css";
 import { Link } from "react-router-dom";
 // import { useNavigate } from "react-router-dom";
 import FirstModal from "../Screens/CustomersPages/Password/FirstModal";
-import { ContextProvider } from "../Context";
+import {  ContextProvider } from "../Context";
 import { primaryColor } from "../Screens/cardIssuing/cardIssuing";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import LoginPopUp from "./LoginPopUp";
@@ -56,7 +56,7 @@ function LoginForm() {
 
   const [passwordHidden, setPasswordHidden] = useState("password");
   const [isFocused, setIsFocused] = useState([]);
-  const [showModal, setShowModal] = useState(false);
+  const {showModal, setShowModal} = useContext(ContextProvider);
 
   const [toolTipWidth, setToolTipWidth] = useState("");
   const [toolTipOffset, setToolTipOffset] = useState("");
@@ -450,7 +450,9 @@ function LoginForm() {
             <p
               className="text-[#04177F] lg:text-[14px] md:text-[8.02px] text-[8.02px]
               font-semibold my-2 cursor-pointer tracking-wider"
-              onClick={() => setShowModal(!showModal)}
+              onClick={() =>{
+                setShowModal(true)
+              }}
             >
               Forgot password ?
             </p>

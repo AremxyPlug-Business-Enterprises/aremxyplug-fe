@@ -4,7 +4,8 @@ import { Modal } from "../Screens/Modal/Modal";
 import { useNavigate } from "react-router-dom";
 import OtpInput from "react-otp-input";
 import CloseIcon from '../EducationPins/imagesEducation/close-circle.svg';
-
+import axios from "axios";
+import { Loader } from "../Loader/Loader";
 function Verification() {
   const {
     viaEmail,
@@ -12,7 +13,6 @@ function Verification() {
     setViaSms, 
     setViaEmail,
     setViaEmailOrSms,
-  submitHandler,
   verification,
   setVerification,
     viaEmailOrSms,
@@ -26,14 +26,118 @@ function Verification() {
     state,
     setState
   } = useContext(ContextProvider);
+const {phone, email} = state;
+
+
+
 //VerifyViaEmail Authentication ==============
+const [loading, setLoading] = useState(false);
 const [countdown, setCountdown] = useState(60);
   const [countdown2, setCountdown2] = useState(60);
   const [canResend, setCanResend] = useState(false);
-  const [verificationPinError] = useState(false);
-  const [verificationPinError2] = useState(false);
+  //const [verificationPinError, setVerificationPinError] = useState(false);
+  const [verificationPinError, setVerificationPinError] = useState(false);
   const [canResend2, setCanResend2] = useState(false);
  
+// PASSING THE SEND OTP FUNCTION
+const getOtpSmsorEmail = ()=> {
+  // const [sendSmsOrEmail, setSendSmsOrEmail] = useState("")
+  if(viaEmailOrSms === "sms"){
+  return {
+    sms : phone
+  }
+  }else if(viaEmailOrSms === "email" ){
+     return {
+      email : email
+     }
+  }
+}
+   //THIS FUNCTION IS TO DERIVE THE OTP FROM THE BACKEND
+  const gettingOtpFunction= async()=> {
+    setLoading(true);
+    try{
+    const url = "https://aremxyplug.onrender.com/api/v1/send-otp/signup"
+    const response = await axios.post(url, getOtpSmsorEmail())
+
+if(response.status === 200 || 201){
+  twoStepVerificationHandler();
+  console.log(response);
+ alert("An Otp has been sent to you")
+} 
+ }catch(error){
+  if(error.response && error.response.status === 404){
+  alert("ERROR:", "An error occured from your end")
+  } else if(error.response && error.response.status === 500){
+    alert(`INTERNAL_SERVER_ERROR`)
+  }else{
+    alert(`ERROR: ${error.message}`)
+   console.log(error)
+  }
+  }finally{
+    setLoading(false);
+    setCountdown2(60);
+    setCountdown(60)
+  }
+}
+
+//IF SUCCESSFUL RUN THIS FUNCTION TO CLOSE THE TWO STEP MODAL
+function twoStepVerificationHandler() {
+ setVerification(false); 
+    if(viaEmailOrSms === "sms"){
+      setViaSms(true)
+    }else{
+      setViaEmail(true);
+    }
+}
+
+const gettingSmsOrEmailFunctionOtp = async(url, body)=> {
+  if( viaEmailOrSms === "email"){
+     url = `https://aremxyplug.onrender.com/api/v1/verify-otp/signup?email=${email}`
+       body ={
+       otp :otpVerifyEmailSignup
+       }
+     console.log(otpVerifyEmailSignup);
+      }else if(viaEmailOrSms === "sms"){
+       url = `https://aremxyplug.onrender.com/api/v1/verify-otp/signup?sms=${phone}`
+       body ={
+       otp :otpVerifySmsSignup
+       }
+       console.log(otpVerifySmsSignup);
+        }
+        console.log(`URL:${url}`,`BODY:${body}`)
+        await VerifyOtpFunction(url, body)
+}
+
+
+
+const VerifyOtpFunction = async(url, body)=>{
+  setLoading(true);
+  try{
+ const response = await axios.post(url,body,{ headers : {"Content-Type" : "application/json"}})
+
+    if(response.status === 200 || 201){
+      submitVerify()
+    } 
+  }catch(error){
+    if( error.response  && error.response.status === 400){
+      setVerificationPinError(true);
+     console.log("The Verification failed")
+    } if( error.response  && error.response.status === 404){
+      alert(`ERROR: ${error.message}`,)
+    }else if(error.response &&error.response.status === 500){
+      alert("INTERNAL_SERVER_ERROR");
+    }
+  }finally{
+    setLoading(false);
+  }
+  }
+
+
+
+
+
+
+
   useEffect(() => {
     if (viaSms === true &&  viaEmailOrSms=== "sms") {
       let timer;
@@ -66,27 +170,22 @@ return () => clearInterval(timer);
 
   // Resend OTP
   const handleResendOTP = () => {
+    gettingOtpFunction()
     setCanResend(false);
-    setCountdown(60);
-
   };
   const handleResendOTP2 = () => {
+    gettingOtpFunction()
     setCanResend2(false);
-    setCountdown2(60);
-   
-  };
+    };
   
 
-  const submitVerifyEmail = () => {
-    if (!otpVerifyEmailSignup) {
-      alert("Please enter the verification code");
-    } else {
-      setSuccess(true);
+  const submitVerify = () => {
+   setSuccess(true);
       setViaSms(false);
       setViaEmail(false);
       setVerification(false);
       setOtpVerifyEmailSignup('');
-    }
+      setOtpVerifySmsSignup("")
   };
 
   //VERIFY_VIA_SMS CODE ================
@@ -98,24 +197,10 @@ return () => clearInterval(timer);
 
   
 
- // const onClick = (code) => {
-  // setVerificationSmsCode(code);
-    // window.location.href="/dashboard";
- // };
+ 
 
 
-
-  const submitVerifySms = () => {
-    if (! otpVerifySmsSignup) {
-      alert("Please enter the verification code");
-    } else {
-      setSuccess(true);
-      setViaSms(false);
-      setViaEmail(false);
-      setVerification(false);
-      setOtpVerifySmsSignup('');
-    }
-  };
+ 
 
 //End of VerifyViaEmail Code
 
@@ -208,7 +293,7 @@ return () => clearInterval(timer);
 
           {/* ==========Continue Button======== */}
           <button
-            onClick={submitHandler}
+            onClick={gettingOtpFunction}
             disabled={viaEmailOrSms=== "" ? true : false}
  className={`${viaEmailOrSms === "" ? "bg-gray-200"  : "bg-blue-800"}
   cursor-pointer mt-[5%] mx-auto w-[80px] py-[8px] flex justify-center items-center text-[#ffffff] 
@@ -259,7 +344,7 @@ return () => clearInterval(timer);
                   {...props} className="inputOTP mx-[3px] " />
                 )}/>
   {/* Error message starts here */}
-  {verificationPinError2 === true ? (
+  {verificationPinError === true ? (
                     <p className="text-center text-red-500 md:font-[500] font-[400] lg:text-[16px] text-[9.167px] mt-[3px] lg:mt-[15px]">
                      Incorrect otp provided
                     </p>
@@ -291,7 +376,7 @@ return () => clearInterval(timer);
      
 
         <button
-          onClick={submitVerifyEmail }
+          onClick={gettingSmsOrEmailFunctionOtp}
           disabled={ otpVerifyEmailSignup.length < 6 ? true : false}
           className={`${
              otpVerifyEmailSignup.length < 6 ? "bg-[#0003]" : "bg-[#04177f]"
@@ -379,7 +464,7 @@ return () => clearInterval(timer);
         </div>
 
         <button
-          onClick={submitVerifySms}
+          onClick={gettingSmsOrEmailFunctionOtp}
           disabled={otpVerifySmsSignup.length < 6 ? true : false}
           className={`${
             otpVerifySmsSignup.length < 6 ? "bg-[#0003]" : "bg-[#04177f]"
@@ -423,7 +508,11 @@ return () => clearInterval(timer);
         </div>
         </Modal>
       )}
-
+  {loading && (
+        <Modal>
+          <Loader />
+        </Modal>
+      )}
     </div>
     
   );
