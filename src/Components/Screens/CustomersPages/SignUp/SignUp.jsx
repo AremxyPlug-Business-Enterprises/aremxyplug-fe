@@ -12,6 +12,9 @@ import FirstModal from "../Password/FirstModal";
 import { useState } from "react";
 import { Loader } from "../../../Loader/Loader";
 import { Modal } from "../../Modal/Modal";
+
+
+
 // import { number } from "joi";
 
 export const SignUp = () => {
@@ -23,8 +26,9 @@ export const SignUp = () => {
     showPasswordTwo,
     errors,
     state,
+    setState,
     handleCountryChange,
-    handlePhoneNumberChange,
+    //handlePhoneNumberChange,
     changeHandler,
     handleFocus,
     handleBlur,
@@ -35,7 +39,17 @@ export const SignUp = () => {
     loadSignUp
   } = useContext(ContextProvider);
 
-  const setNav = () => {
+  const [countryCode] = useState('ng')
+
+   const handlePhoneNumberChange = (value)=> {
+    //Allowing state to hold on to the value
+    setState({...state,
+     phoneNumber : value
+  })
+
+}
+
+const setNav = () => {
     setHideNavbar(true);
   };
   // console.log(hideNavbar);
@@ -226,14 +240,15 @@ export const SignUp = () => {
               onBlur={() => handleBlur(4)}
             >
               <PhoneInput
+              country={countryCode}
                 selected={phoneNumber}
-                value={state.phoneNumber}
+                value={state.phoneNumber ? state.phoneNumber : '234'}
                 name="phoneNumber"
                 placeholder=""
-                onChange={handlePhoneNumberChange}
+                onChange={(value)=>handlePhoneNumberChange(value)}
                 enableSearch
                 disableSearchIcon
-                className="inputClass bg-black "
+                className="inputClass bg-black"
                 inputStyle={{
                   fontSize: "16px",
                   color: "#403f3f",
@@ -245,7 +260,7 @@ export const SignUp = () => {
                   backgroundColor: "transparent",
                 }}
                 dropdownStyle={{
-                  color: "#403f3f",
+                  color: "#000",
                   fontSize: "18px",
                 }}
               />

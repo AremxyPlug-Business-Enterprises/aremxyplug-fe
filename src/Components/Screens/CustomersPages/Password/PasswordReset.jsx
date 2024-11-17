@@ -5,35 +5,65 @@ import aremxyPlug from './aremxyPlug.svg'
 import { Link, Navigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { ContextProvider } from "../../../Context";
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Loader } from '../../../Loader/Loader';
 import SecondModal from './SecondModal';
+import { Modal } from '../../Modal/Modal';
 
 const PasswordReset = () => {
     const { hideNavbar, setHideNavbar } = useContext(ContextProvider);
-    const { resetEmail } = useContext(ContextProvider);
-    const [selectNumber, setSelectNumber] = useState('');
-    const [selectEmail, setSelectEmail] = useState('');
+   
+    const {inputForgetEmail,
+        forgetPassCountdown,
+         setForgetPassCountdown,
+           setForgetPassCanResend,
+           forgetPassCanResend,
+           submission, setSubmission
+        } = useContext(ContextProvider);
+  
+
     const [select, setSelect] = useState(false);
     const [selectionType, setSelectionType] = useState('');
-    const [showModal, setShowModal] = useState(false);
-
+    const [showSecondModal, setShowSecondModal] = useState(false);
+   const [loading, setLoading] = useState(false)
+ 
+   // TO SET THE VALUE TO OTP
     const handleSubmitNumber = ()=> {
-        setSelectNumber('07034445523');
         setSelect(true);
-        setSelectionType('number');
+        setSelectionType('otp');
+    }
+ // TO SET THE VALUE TO LINK
+  const handleSubmitEmail =()=> {
+        setSelect(true);
+        setSelectionType('link');
     }
 
-    const handleSubmitEmail =()=> {
-        setSelectEmail('onome@gmail.com');
-        setSelect(true);
-        setSelectionType('email');
-    }
-    const handleSubmit =(event)=> {
-        event.preventDefault();
-        setShowModal(true);
-    }
-    
+// FUNCTION TO START THRE COUNTDOWN TO RESND OTP
+
+ useEffect(()=> {
+   if (selectionType === "otp" && submission === false ) {
+           let timer;
+           if (forgetPassCountdown > 0  ) {
+             timer = setInterval(() => {
+               setForgetPassCountdown((prevCountdown) => {
+                  if(prevCountdown > 1){
+                    return prevCountdown -1
+                  }else{
+                     clearInterval(timer);
+                    setForgetPassCanResend(true)
+                  }
+               }) 
+             }, 1000);
+         } else  {
+             setForgetPassCanResend(true);
+           }
+          }
+         
+       },[selectionType === "otp",submission === false])
+//console.log(forgetPassCountdown)
+
+
     const setNav = () => {
         setHideNavbar(true);
       };
@@ -47,15 +77,77 @@ const PasswordReset = () => {
         // eslint-disable-next-line
       }, []);
 
-      if (!resetEmail) {
+      if (!inputForgetEmail) {
         return <Navigate to={'/Login'}/>
       }
+
+// TO CHECK IF THE USER WANTS TO GET OTP VIA LINK OR OTP
+const userForgetPasswordSystem = async(url, alertMessage)=>{
+if(selectionType ==="otp"){
+  url = "https://aremxyplug.onrender.com/api/v1/send-otp/resetpassword"
+  alertMessage = "An otp has been sent to your email"
+}else if(selectionType === "link"){
+url = "https://aremxyplug.onrender.com/api/v1/forgot-password"
+alertMessage = "A link has been sent to your email"
+}
+resetPasswordOtp(url, alertMessage)
+}
+
+// TO HANDLE IF THE API COMES TRUE
+const handleSubmit =()=> {
+    setShowSecondModal(true);
+    setSubmission(false)
+}
+
+
+
+    // Getting both the Link and Otp reset password
+const resetPasswordOtp = async(url, alertMessage)=> {
+    setLoading(true);
+   const body = {
+    email : inputForgetEmail
+   }
+    try{
+    const response = await axios.post(url, body)
+if(response.status === 200 || 201){
+ handleSubmit();
+  console.log(response);
+ alert(alertMessage)
+} 
+ }catch(error){
+  if(error.response && error.response.status === 404){
+  alert("ERROR:", "An error occured from your end")
+  } else if(error.response && error.response.status === 500){
+    alert(`INTERNAL_SERVER_ERROR`)
+  }else{
+    alert(`ERROR: ${error.message}`)
+   console.log(error)
+  }
+  }finally{
+    setLoading(false);
+    setForgetPassCountdown(60)
+  }
+}
+
+
+
+
+
+
+
+
+// TO RESEND OTP FOR THE VERIFICATION UI
 
   return (
     <>
         {/* tmobile screen view */}
         <div className='md:hidden h-[150vh] relative w-[100%] xl:w-[85%] md:mx-[unset]'>
-            {showModal && <SecondModal value={selectionType} />}
+            {showSecondModal && <SecondModal value={selectionType}  userForgetPasswordSystem={userForgetPasswordSystem}/>}
+            {loading && (
+        <Modal>
+          <Loader />
+        </Modal>
+      )}
             <div className='pt-[27%] pb-[33%] bg-primary'>
                 <h2 className='text-white font-bold text-[18.33px] leading-[27.5px] text-center'>Welcome to AremxyPlug!</h2>
                 <p className='text-white text-[9.17px] leading-[13.75px] text-center'>The one-stop shop solution for all your digital needs.</p>
@@ -71,11 +163,11 @@ const PasswordReset = () => {
                     <h2 className='text-[11.5px] font-bold leading-normal '>Reset Password</h2>
                     <h2 className='text-[9.16px] font-bold leading-normal'>Select how you want to reset your password ?</h2>
                     <div className='flex flex-col gap-[14.32px]'>
-                        <button className={selectionType === 'email' ? `text-[9.16px] py-[9.17px] px-[5px] rounded border-[#d166ff] border` : `text-[9.16px] py-[9.17px] px-[5px] rounded`} value={selectEmail} style={{boxShadow: `0px 0px 11.5px 0px rgba(0, 0, 0, 0.25)`}} onClick={handleSubmitEmail}>Send a verification link to my email- {resetEmail}</button>
-                        <button className={selectionType === 'number' ? `text-[9.16px] py-[9.17px] px-[5px] rounded border-[#d166ff] border` : `text-[9.16px] py-[9.17px] px-[5px] rounded`} value={selectNumber} style={{boxShadow: `0px 0px 11.5px 0px rgba(0, 0, 0, 0.25)`}} onClick={handleSubmitNumber}>Send a verification code to email- {resetEmail}</button>
+                        <button className={selectionType === 'link' ? `text-[9.16px] py-[9.17px] px-[5px] rounded border-[#d166ff] border` : `text-[9.16px] py-[9.17px] px-[5px] rounded`}  style={{boxShadow: `0px 0px 11.5px 0px rgba(0, 0, 0, 0.25)`}} onClick={handleSubmitEmail}>Send a verification link to my email- {inputForgetEmail}</button>
+                        <button className={selectionType === 'otp' ? `text-[9.16px] py-[9.17px] px-[5px] rounded border-[#d166ff] border` : `text-[9.16px] py-[9.17px] px-[5px] rounded`} style={{boxShadow: `0px 0px 11.5px 0px rgba(0, 0, 0, 0.25)`}} onClick={handleSubmitNumber}>Send a verification code to email- {inputForgetEmail}</button>
                     </div>
                     <div className='flex justify-center my-[14.32px] lg:my-[35px]'>
-                        <button className='py-[5.729px] px-[20.052px] border rounded-[4.583px] disabled:bg-[#ccc] font-bold text-white text-[6.875px] leading-normal bg-primary lg:py-[10px] lg:px-[35px] lg:text-[12px] lg:rounded-[8px]' disabled={!select} onClick={handleSubmit}>Send</button>
+                        <button className='py-[5.729px] px-[20.052px] border rounded-[4.583px] disabled:bg-[#ccc] font-bold text-white text-[6.875px] leading-normal bg-primary lg:py-[10px] lg:px-[35px] lg:text-[12px] lg:rounded-[8px]' disabled={!select} onClick={userForgetPasswordSystem}>Send</button>
                     </div>
                 </div>
             </div>
@@ -85,7 +177,12 @@ const PasswordReset = () => {
             <div className="bg-primary"></div>
             <div className="bg-[#ffff]"></div>
             <div className="absolute left-0 top-0 right-0 bottom-0 grid grid-cols-2 px-[70px] items-center z-30">
-                {showModal && <SecondModal value={selectionType}/>}
+                {showSecondModal && <SecondModal value={selectionType}/>}
+                {loading && (
+        <Modal>
+          <Loader />
+        </Modal>
+      )}
                 <div className="h-[100%] md:mb-[-23%] lg:mb-[unset] flex flex-col md:justify-center items-center">
                     <div className="mt-[10px]">
                         <p className="text-[18.33px] lg:text-[32px] font-bold text-[#fff]">Welcome to AremxyPlug!{" "}</p>
@@ -102,19 +199,18 @@ const PasswordReset = () => {
                         <h2 className='text-[11.5px] font-bold leading-normal lg:text-[20px]'>Reset Password</h2>
                         <h2 className='text-[9.16px] font-bold leading-normal lg:text-[16px]'>Select how you want to reset your password ?</h2>
                         <div className='flex flex-col gap-[14.32px]'>
-                            <button className={selectionType === 'email' ? `text-[9.16px] py-[9.17px] lg:text-[16px] px-[5px] rounded border-[#d166ff] border` : `text-[9.16px] py-[9.17px] lg:text-[16px] px-[5px] rounded`} value={selectEmail} style={{boxShadow: `0px 0px 11.5px 0px rgba(0, 0, 0, 0.25)`}} onClick={handleSubmitEmail}>Send a verification link to my email-{resetEmail}</button>
-                            <button className={selectionType === 'number' ? `text-[9.16px] py-[9.17px] lg:text-[16px] px-[5px] rounded border-[#d166ff] border` : `text-[9.16px] py-[9.17px] lg:text-[16px] px-[5px] rounded`} value={selectNumber} style={{boxShadow: `0px 0px 11.5px 0px rgba(0, 0, 0, 0.25)`}} onClick={handleSubmitNumber}>Send a verification code to my email-{resetEmail}</button>
+                            <button className={selectionType === 'link' ? `text-[9.16px] py-[9.17px] lg:text-[16px] px-[5px] rounded border-[#d166ff] border` : `text-[9.16px] py-[9.17px] lg:text-[16px] px-[5px] rounded`}  style={{boxShadow: `0px 0px 11.5px 0px rgba(0, 0, 0, 0.25)`}} onClick={handleSubmitEmail}>Send a verification link to my email-{inputForgetEmail}</button>
+                            <button className={selectionType === 'otp' ? `text-[9.16px] py-[9.17px] lg:text-[16px] px-[5px] rounded border-[#d166ff] border` : `text-[9.16px] py-[9.17px] lg:text-[16px] px-[5px] rounded`}  style={{boxShadow: `0px 0px 11.5px 0px rgba(0, 0, 0, 0.25)`}} onClick={handleSubmitNumber}>Send a verification code to my email-{inputForgetEmail}</button>
                         </div>
                         <div className='flex justify-center my-[14.32px] lg:my-[35px]'>
-                            <button className='py-[5.729px] px-[20.052px] border rounded-[4.583px] disabled:bg-[#ccc] font-bold text-white text-[6.875px] lg:text-[12px]leading-normal bg-primary lg:py-[10px] lg:px-[35px] lg:text-[12px] lg:rounded-[8px]' disabled={!select} onClick={handleSubmit}>Send</button>
+                            <button className='py-[5.729px] px-[20.052px] border rounded-[4.583px] disabled:bg-[#ccc] font-bold text-white text-[6.875px] lg:text-[12px]leading-normal bg-primary lg:py-[10px] lg:px-[35px] lg:text-[12px] lg:rounded-[8px]' disabled={!select} onClick={userForgetPasswordSystem}>Send</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </>
-
-  );
+);
 }
 
 export default PasswordReset;

@@ -1,53 +1,96 @@
 import React from 'react';
 import { useState } from 'react';
-import OTPInput, { ResendOTP } from "otp-input-react";
+import OtpInput from "react-otp-input";
 import { Navigate } from 'react-router-dom';
 import tickGif from './tick.gif'
 import { useContext } from 'react';
 import { ContextProvider } from "../../../Context";
+import axios from 'axios';
+import { Modal } from '../../Modal/Modal';
+import { Loader } from '../../../Loader/Loader';
 
-const SecondModal = ({value}) => {
-    const { resetEmail } = useContext(ContextProvider);
-    const [OTP, setOTP] = useState("");
-    const presetNum = 123456;
-    const [error, setError] = useState('');
-    const [border, setBorder] = useState('border');
-    const [submision, setSubmission] = useState(false);
-    const [checked, setChecked] = useState(false);
+const SecondModal = ({value, userForgetPasswordSystem}) => {
+    const { inputForgetEmail } = useContext(ContextProvider);
+    const {otpSent, setOtpSent} = useContext(ContextProvider);
+   // const {clickResend,setClickResend} = useContext(ContextProvider)
 
+   const {forgetPassCountdown,
+    forgetPassVerificationPinError, 
+    setForgetPassVerificationPinError,
+     setForgetPassCountdown,
+      forgetPassCanResend,
+       setForgetPassCanResend,
+       submission, setSubmission,
+      // passwordAuthorisation,
+       setPasswordAuthorisation
+    } = useContext(ContextProvider);
+     const [loading, setLoading] = useState(false);
+    const {checked, setChecked} = useContext(ContextProvider);
     const [redirect, setRedirect] = useState(false);
 
     if (redirect) {
         return <Navigate to={`/newPassword`}/>
     }
+ 
+  const successVerifyPassword =()=> {
+   setRedirect(true);
+     setSubmission(null);
+   // console.log(e.target)
+  }
 
-    const renderButton = (buttonProps) => {
-        return <button {...buttonProps} className='disabled:text-[#ccc] text-primary lg:text-sm text-xs'>Resend</button>
-    }
-
-    const renderTime =(remainingTime)=> {
-        return <span className='lg:text-sm text-xs text-primary'>{remainingTime}</span>
-    }
-    const handleSubmit =(event)=> {
-        event.preventDefault();
-        if (+OTP !== presetNum) {
-            setError('Incorrect verification code');
-            setBorder('border border-red-500')
-            setSubmission(false);
-        } else {
-            setError('');
-            setBorder('');
-            setSubmission(true);
+    const VerifyOtpFunction = async()=>{
+        setLoading(true);
+        const body = {
+            otp : otpSent
         }
+        try{
+            const url =  `https://aremxyplug.onrender.com/api/v1/verify-otp/resetpassword?email=${inputForgetEmail}`
+       const response = await axios.post(url,body,{ headers : {"Content-Type" : "application/json"}})
+      
+          if((response.status === 200 || 201)  && response.headers.hasAuthorization){
+            const getAuthorisation = response.headers.get("Authorization");
+              setPasswordAuthorisation(getAuthorisation);
+          successVerifyPassword();
+          setOtpSent('');
+          } 
+        }catch(error){
+          if( error.response  && error.response.status === 400 ){
+            setForgetPassVerificationPinError(true);
+           console.log("The Verification failed")
+          } if( error.response  && error.response.status === 404){
+            alert(`ERROR: ${error.message}`,)
+          }else if(error.response &&error.response.status === 500){
+            alert("INTERNAL_SERVER_ERROR");
+          }else{
+            return ()=> <Navigate to ={`/newPassword`}/>
+          }
+        }finally{
+          setLoading(false);
+        }
+        }
+    //console.log(otpSent);
+
+   // TO HANDLE RESEND OF OTP 
+ const handleResendOTP = async()=> {
+    await userForgetPasswordSystem();
+    if(userForgetPasswordSystem){
+        setForgetPassCountdown(60)
+        setForgetPassCanResend(false)
     }
-    console.log(+OTP);
+ }
+
+
+
+
+
+
   return (
     <>
         {/* this is such that whatever is selected determines the kind of modal that shows and it contents */}
-        { value === 'number' ?         
-        <div className='bg-black/[0.48] fixed top-0 bottom-0 right-0 left-0 flex items-center justify-center z-50'>
+        { value === 'otp' ?         
+        <div className='bg-black/[0.48] fixed top-0 bottom-0 right-0 left-0 flex items-center lg:justify-end justify-center lg:pr-[170px] z-50 '>
             {/* if submision is true, it will display next content but if submission is not true then next content is not displayed. this prevents me from using two modals */}
-            { submision ? 
+            { submission ? 
                 <div className="w-[285px] h-[190px] lg:w-[450px] lg:h-[280px] md:ml-[45%] px-[17.609px] py-[35.536px] bg-white rounded-[10.3px] md:py-[34.96px] md:px-[17.6px] lg:py-[62px] lg:px-[31px]">
                     <div className=''>
                         <div className="flex items-center justify-center mb-[14.32px]">
@@ -62,43 +105,78 @@ const SecondModal = ({value}) => {
                         </div>
                     </div>
                 </div> : 
-                <div className="w-[285px] h-[240px] lg:w-[450px] lg:h-[330px] md:ml-[42%] lg:ml-[45%] lg:mt-[10%] px-[17.19px] pt-[30px] pb-[35px] bg-white rounded-[10.3px] md:px-[17.6px] lg:py-[62px] lg:px-[31px] flex flex-col gap-[41.32px]">
-                    <h2 className="text-xs lg:text-[14px] lg:leading-normal">Verification code has been sent to your email - {resetEmail}</h2>               
-                    <form>
-                        <div className="lg:hidden">
-                            <OTPInput 
-                                value={OTP} 
-                                onChange={setOTP}
-                                autoFocus
-                                OTPLength={6}
-                                otpType="number"
-                                disabled={false}
-                                resendOTP={true}
-                                inputClassName={`${border} rounded focus:outline-none p-[5px] text-[12px] `}
-                                style={{justifyContent: 'space-between', display: 'flex'}}
-                                inputStyles={{width: 30, height: 30, marginRight: 0}}
-                            />
-                        </div> 
-                        <div className="hidden lg:block">
-                            <OTPInput 
-                                value={OTP} 
-                                onChange={setOTP}
-                                autoFocus
-                                OTPLength={6}
-                                otpType="number"
-                                disabled={false}
-                                resendOTP={true}
-                                inputClassName={`${border} rounded focus:outline-none p-[5px] text-[12px]`}
-                                style={{justifyContent: 'space-between', display: 'flex'}}
-                                inputStyles={{width: 45, height: 45, marginRight: 0}}
-                            />
-                        </div>
-                        <h2 className='text-red-500 text-[5.7px] text-center leading-normal lg:text-[10px] mt-[3px]'>{error}</h2>
-                        <ResendOTP renderButton={renderButton} renderTime={renderTime}/>
-                        <div className='flex justify-center mt-[20.65px]'>
-                            <button className='py-[5.729px] px-[20.052px] border rounded-[4.583px] disabled:bg-[#ccc] font-bold text-white text-xs leading-normal bg-primary lg:py-[10px] lg:px-[35px] lg:text-[12px] lg:rounded-[8px]' disabled={OTP.length !==6 } onClick={handleSubmit}>Continue</button>
-                        </div>
-                    </form>
+
+                <div className="w-[100%] mx-[24px] flex flex-col lg:mx-[0px] 
+                 rounded-[8.6px] h-auto bg-white py-6  lg:gap-[18px] p-4 lg:h-[301px] lg:w-[348px] lg:rounded-[15px]">
+                    <p className="text-[12px] lg:text-[14px] font-[500] lg:font-[700] mb-[20px]">Verification code has been sent to your email - {inputForgetEmail}</p>               
+                    <div className=' flex flex-col  gap-[20px] lg:gap-[30px]'>
+                        <div className="flex flex-col ">
+                            <OtpInput 
+                                value={otpSent} 
+                                onChange={setOtpSent}
+                                inputType='tel'
+                                numInputs={6}
+                                inputStyle={{
+                                    color: "#403f3f",
+                                    width: 35,
+                                    height: 35,
+                                    borderRadius: 3,
+                                    columnGap : 7
+                                  }}
+                                  renderInput={(props) => (
+                                    <input 
+                                    type="password"
+                                    {...props} className="inputOTP mx-[3px] " />
+                                  )}/>
+                          
+                      
+                      
+                        {forgetPassVerificationPinError === true ? (
+                    <p className="text-center text-red-500 md:font-[500] font-[400] lg:text-[16px] text-[9.167px] mt-[3px] lg:mt-[15px]">
+                     Incorrect otp provided
+                    </p>
+                  ) : (
+                    ""
+                  )}
+      </div>
+
+ <div className="w-[100%] flex justify-between">
+                    <p className="text-[#04177F] font-[400] lg:font-[600] text-[10.729px] lg:text-[12px]">
+                      {forgetPassCountdown}
+                      <span>sec</span>
+                    </p>
+                    {forgetPassCanResend ? (
+                      <p
+                        className="text-[#04177F] font-[400] lg:font-[600] text-[10.729px] lg:text-[12px] cursor-pointer"
+                        onClick={handleResendOTP}
+                      >
+                        Resend OTP
+                      </p>
+                    ) : (
+                      <p className="text-gray-400 font-[400] lg:font-[600] text-[10.729px] lg:text-[12px] cursor-not-allowed">
+                        Resend OTP
+                      </p>
+                    )}
+                  </div>
+            
+
+     <button
+     onClick={VerifyOtpFunction}
+          disabled={ otpSent.length < 6 ? true : false}
+          className={`${
+             otpSent.length < 6 ? "bg-[#0003]" : "bg-[#04177f]"
+          } cursor-pointer mt-[5%] mx-auto w-[80px] py-[8px] flex justify-center items-center text-[#ffffff] 
+            text-[10px] font-[400] lg:font-[600] rounded-md md:w-[95px] md:h-[26px] md:p-[2%]
+             lg:w-[113px] lg:h-[38px] lg:text-[13px]`}
+        >
+          Continue
+        </button>
+                    </div>
+                    {loading && (
+        <Modal>
+          <Loader />
+        </Modal>
+      )}
                 </div>
             }
         </div> : 
@@ -124,7 +202,7 @@ const SecondModal = ({value}) => {
                     <div className=''>
                         <h2 className="text-[8.02px] leading-[13.74px] lg:text-[14px] lg:leading-[24px]">Your reset password link has been sent to your email. Please kindly confirm the link to reset your password.</h2>
                         <div className='flex justify-center mt-[28.65px] lg:mt-[50px]'>
-                            <a href={`https://mail.google.com/mail/${resetEmail}`} target="_blank" rel="noopener noreferrer" className='py-[5.729px] px-[20.052px] border rounded-[4.583px] disabled:bg-[#ccc] font-bold text-white text-[6.875px] leading-normal bg-primary lg:py-[10px] lg:px-[35px] lg:text-[12px] lg:rounded-[8px]' onClick={() => setChecked(true)}>Check</a>
+                            <a href={`https://mail.google.com/mail/${inputForgetEmail}`} target="_blank" rel="noopener noreferrer" className='py-[5.729px] px-[20.052px] border rounded-[4.583px] disabled:bg-[#ccc] font-bold text-white text-[6.875px] leading-normal bg-primary lg:py-[10px] lg:px-[35px] lg:text-[12px] lg:rounded-[8px]' onClick={() => setChecked(true)}>Check</a>
                         </div>
                     </div>
                 </div>

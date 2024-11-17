@@ -310,25 +310,24 @@ export const Context = ({ children }) => {
 
   // ============Start For Verification.jsx ==========
 
-  
+  const [showModal, setShowModal] = useState(false);
+  const [inputForgetEmail, setInputForgetEmail] = useState("");
   const [viaEmailOrSms, setViaEmailOrSms] = useState("");
   const [viaSms, setViaSms] = useState(false);
   const [viaEmail, setViaEmail] = useState(false);
   const [sms] = useState(true);
   const [email] = useState(true);
   const [success, setSuccess] = useState("");
- 
+  const [otpSent, setOtpSent] = useState('');
+  const [forgetPassVerificationPinError, setForgetPassVerificationPinError] = useState("");
+  const [forgetPassCountdown, setForgetPassCountdown] = useState(60);
+  const [forgetPassCanResend, setForgetPassCanResend] = useState(false);
+  const [submission, setSubmission] = useState(null);
+  const [checked, setChecked] = useState(false);
+  const[passwordAuthorisation, setPasswordAuthorisation] = useState("")
+  
 
-  const submitHandler = () => {
-    if (viaEmailOrSms === "sms") {
-      setViaSms(true);
-      setVerification(false);
-    } else if (viaEmailOrSms === "email") {
-      setViaEmail(true);
-      setVerification(false);
-    }
-   
-  };
+ 
 
   const emailorsmsHandler = () => {
     if (!viaEmail) {
@@ -1059,7 +1058,8 @@ export const Context = ({ children }) => {
 
     // ======Verification.jsx=====
    
-   
+    showModal,
+     setShowModal,
     viaEmail,
     viaSms,
     viaEmailOrSms,
@@ -1068,11 +1068,21 @@ export const Context = ({ children }) => {
     setViaSms,
     sms,
     email,
-    submitHandler,
     emailorsmsHandler,
     success, 
     setSuccess,
-   
+    otpSent, 
+    setOtpSent,
+    forgetPassVerificationPinError, 
+    setForgetPassVerificationPinError,
+   forgetPassCountdown, setForgetPassCountdown,
+   forgetPassCanResend, setForgetPassCanResend,
+   inputForgetEmail, 
+   setInputForgetEmail,
+   submission, setSubmission,
+   checked, setChecked,
+   passwordAuthorisation, setPasswordAuthorisation,
+  
 
     // ========SignUp.jsx========
     otpVerifyEmailSignup,

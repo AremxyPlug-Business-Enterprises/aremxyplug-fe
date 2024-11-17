@@ -45,7 +45,6 @@ const {
 
   const [transpinError, setTranspinErrors] = useState("");
   const [verificationPinError, setVerificationPinError] = useState(false);
-  const [verificationPinError2, setVerificationPinError2] = useState(false);
   const [smsOrEmail, setSmsOrEmail] = useState("");
   const navigate = useNavigate();
   // const receiveAuthToken = localStorage.getItem("authorizationToken");
@@ -66,7 +65,7 @@ const getOtpSmsorEmail = ()=> {
   const gettingOtpFunction= async()=> {
     setLoading(true);
     try{
-    const url = "https://aremxyplug.onrender.com/api/v1/send-otp"
+    const url = "https://aremxyplug.onrender.com/api/v1/send-otp/signin"
     const response = await axios.post(url, getOtpSmsorEmail())
 
 if((response.status === 200 || 201) && (response.headers.hasAuthorization)){
@@ -86,32 +85,49 @@ if((response.status === 200 || 201) && (response.headers.hasAuthorization)){
   }
 }
   // FUNCTION TO HANDLE VERIFICATION OF OTP
-  function handleVerificationOTP() {
-    if (otp3) {
-      setVerificationPinError("");  
+function handleVerificationOTP() {
+  if (otp3) {
+     setVerificationPinError("");  
       setTwoStepVerificationSuccess(true);
-     setOtp3("");
-      setOpen2StepOTP(false);
-      console.log(otp3);
-    } 
+    setOtp3("");
+     setOpen2StepOTP(false);
+    console.log(otp3);
+   } 
   }
+
+// THE FUNCTION FOR DERIVING THE GET OPT METHOD
+const gettingSmsOrEmailFunctionOtp = async(url, body)=> {
+  if( smsOrEmail === "email"){
+     url = `https://aremxyplug.onrender.com/api/v1/verify-otp/signin?email=${email}`
+       body ={
+       otp : otp3
+       }
+     console.log(otp3);
+      }else if(smsOrEmail === "sms"){
+       url = `https://aremxyplug.onrender.com/api/v1/verify-otp/signin?sms=${phone}`
+       body ={
+       otp :otp3
+       }
+       console.log(otp3);
+        }
+        console.log(`URL:${url}`,`BODY:${body}`)
+        await VerifyOtpFunction(url, body)
+}
+
+
+
+
   //Verification of the otp
-  const VerifyOtpFunction = async()=>{
+  const VerifyOtpFunction = async(url, body)=>{
     setLoading(true);
     try{
-    const url = `https://aremxyplug.onrender.com/api/v1/verify-otp?email=${email}`
-     const body ={
-     otp :otp3
-     }
-     console.log(otp3);
-
-      const response = await axios.post(url,body,{ headers : {"Content-Type" : "application/json"}})
+     const response = await axios.post(url,body,{ headers : {"Content-Type" : "application/json"}})
       if(response.status === 200 || 201){
         handleVerificationOTP();
       } 
     }catch(error){
       if( error.response && error.response.status === 400){
-        setVerificationPinError2(true);
+        setVerificationPinError(true);
         console.log("The Verification failed")
       }else if(error.response &&error.response.status === 500){
         alert("INTERNAL_SERVER_ERROR");
@@ -154,10 +170,12 @@ return () => clearInterval(timer);
   const handleResendOTP = () => {
     gettingOtpFunction();
     setCanResend(false);
+    setVerificationPinError("")
   };
   const handleResendOTP2 = () => {
     gettingOtpFunction()
     setCanResend2(false);
+    setVerificationPinError("")
   };
 
   function handleTranspin() {
@@ -409,10 +427,11 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
 
       {open2StepOTP === true && smsOrEmail === "sms" && (
         <Modal>
-          <div className="lg:ml-[38.5%] md:ml-[40%] md:-mt-[20%] lg:-mb-[30%] px-[17.609px] py-[35.536px] bg-white rounded-[10.3px] md:py-[34.96px] md:px-[17.6px] lg:py-[62px] lg:px-[31px]">
+          <div className="lg:ml-[38.5%] md:ml-[40%] md:w-[20%] md:-mt-[20%] lg:-mb-[30%] w-[100%] 
+           mx-[24px] px-[20.609px] py-[35.536px] bg-white rounded-[10.3px] md:py-[34.96px] md:px-[17.6px] lg:py-[30px] lg:px-[31px]">
             <div className="mb-[25px] lg:mb-[30px]">
-              <p className="  lg:text-[14px] font-[500] lg:font-[700] text-[10px] ">
-                Verification code has been sent to your
+              <p className="  lg:text-[14px] font-[500] lg:font-[700] text-[12px] ">
+                Verification code has been sent to your phone
               </p>
               <p className=" lg:text-[14px] font-[500] lg:font-[700] text-[10px] mb-[7] lg:mb-[10px]">
               {`${phone.slice(3,6)}********`}
@@ -484,7 +503,7 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
 
               <div className="w-full flex justify-center mt-[20px] mb-[10px] lg:mb-[10px] lg:mt-[50px]">
                 <button
-                  onClick={handleVerificationOTP}
+                  onClick={gettingSmsOrEmailFunctionOtp}
                   type="submit"
                   disabled={otp3.length !== 6 ? true : false}
                   className={` ${
@@ -507,7 +526,7 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
       )}
       {open2StepOTP === true && smsOrEmail === "email" && (
         <Modal>
-          <div className="lg:ml-[38.5%] md:ml-[40%] md:-mt-[20%] lg:-mb-[30%] px-[17.609px] py-[35.536px] bg-white rounded-[10.3px] md:py-[34.96px] md:px-[17.6px] lg:py-[62px] lg:px-[31px]">
+          <div className="lg:ml-[38.5%] md:ml-[40%] md:w-[20%] md:-mt-[20%] lg:-mb-[30%] w-[100%]  mx-[24px] px-[20.609px] py-[35.536px] bg-white rounded-[10.3px] md:py-[34.96px] md:px-[17.6px] lg:py-[30px] lg:px-[31px]">
             <div className="mb-[25px] lg:mb-[30px]">
               <p className="  lg:text-[14px] text-[12px] font-[500] lg:font-[700]">
                 Verification code has been sent to 
@@ -547,7 +566,7 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
                     )}
                   />
                   {/* Error message starts here */}
-                  {verificationPinError2 === true ? (
+                  {verificationPinError === true ? (
                     <p className="text-center text-red-500 md:font-[500] font-[400] lg:text-[16px] text-[9.167px] mt-[3px] lg:mt-[15px]">
                      Incorrect otp provided
                     </p>
@@ -580,10 +599,10 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
                 </div>
               </div>
 
-              <div className="w-full flex justify-center mt-[20px] mb-[10px] lg:mb-[10px] lg:mt-[50px]">
+              <div className="w-full flex justify-center mt-[20px] mb-[10px] lg:mb-[10px] lg:mt-[35px]">
           
                 <button
-                  onClick={VerifyOtpFunction}
+                  onClick={gettingSmsOrEmailFunctionOtp}
                   type="submit"
                   disabled={otp3.length !== 6 ? true : false}
                   className={` ${

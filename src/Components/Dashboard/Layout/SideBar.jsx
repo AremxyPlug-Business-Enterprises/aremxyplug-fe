@@ -35,7 +35,9 @@ export const SideBar = () => {
       document.removeEventListener("click", handleClickOutside);
     };
   });
-  
+
+
+
   return (
     <div
       className={`${styles.sidebar}  fixed overflow-auto ${
@@ -81,7 +83,7 @@ export const SideBar = () => {
                 />
                 <div className="flex flex-col gap-[3px] justify-center mt-[4%]">
                   <p className="text-[8px] font-semibold md:text-[14px] lg:text-[14px]">
-                    {full_name}
+                    {full_name ? full_name : "Hi User"}
                   </p>
                   <p className="text-[8px] font-semibold md:text-[14px] lg:text-[14px]">
                     UID: 508373
