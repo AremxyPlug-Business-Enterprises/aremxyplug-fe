@@ -170,10 +170,12 @@ return () => clearInterval(timer);
   const handleResendOTP = () => {
     gettingOtpFunction();
     setCanResend(false);
+    setVerificationPinError("")
   };
   const handleResendOTP2 = () => {
     gettingOtpFunction()
     setCanResend2(false);
+    setVerificationPinError("")
   };
 
   function handleTranspin() {
@@ -425,7 +427,8 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
 
       {open2StepOTP === true && smsOrEmail === "sms" && (
         <Modal>
-          <div className="lg:ml-[38.5%] md:ml-[40%] md:-mt-[20%] lg:-mb-[30%] w-[100%] px-[20px] mx-[24px] py-[35.536px] bg-white rounded-[10.3px] md:py-[34.96px] md:px-[17.6px] lg:py-[62px] lg:px-[31px]">
+          <div className="lg:ml-[38.5%] md:ml-[40%] md:w-[20%] md:-mt-[20%] lg:-mb-[30%] w-[100%] 
+           mx-[24px] px-[20.609px] py-[35.536px] bg-white rounded-[10.3px] md:py-[34.96px] md:px-[17.6px] lg:py-[30px] lg:px-[31px]">
             <div className="mb-[25px] lg:mb-[30px]">
               <p className="  lg:text-[14px] font-[500] lg:font-[700] text-[12px] ">
                 Verification code has been sent to your phone
@@ -523,7 +526,7 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
       )}
       {open2StepOTP === true && smsOrEmail === "email" && (
         <Modal>
-          <div className="lg:ml-[38.5%] md:ml-[40%] md:w-auto md:-mt-[20%] lg:-mb-[30%] w-[100%] mx-[24px] px-[20.609px] py-[35.536px] bg-white rounded-[10.3px] md:py-[34.96px] md:px-[17.6px] lg:py-[62px] lg:px-[31px]">
+          <div className="lg:ml-[38.5%] md:ml-[40%] md:w-[20%] md:-mt-[20%] lg:-mb-[30%] w-[100%]  mx-[24px] px-[20.609px] py-[35.536px] bg-white rounded-[10.3px] md:py-[34.96px] md:px-[17.6px] lg:py-[30px] lg:px-[31px]">
             <div className="mb-[25px] lg:mb-[30px]">
               <p className="  lg:text-[14px] text-[12px] font-[500] lg:font-[700]">
                 Verification code has been sent to 
@@ -596,7 +599,7 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
                 </div>
               </div>
 
-              <div className="w-full flex justify-center mt-[20px] mb-[10px] lg:mb-[10px] lg:mt-[50px]">
+              <div className="w-full flex justify-center mt-[20px] mb-[10px] lg:mb-[10px] lg:mt-[35px]">
           
                 <button
                   onClick={gettingSmsOrEmailFunctionOtp}

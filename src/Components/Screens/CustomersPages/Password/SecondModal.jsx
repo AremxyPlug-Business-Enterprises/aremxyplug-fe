@@ -88,7 +88,7 @@ const SecondModal = ({value, userForgetPasswordSystem}) => {
     <>
         {/* this is such that whatever is selected determines the kind of modal that shows and it contents */}
         { value === 'otp' ?         
-        <div className='bg-black/[0.48] fixed top-0 bottom-0 right-0 left-0 flex items-center justify-center z-50'>
+        <div className='bg-black/[0.48] fixed top-0 bottom-0 right-0 left-0 flex items-center lg:justify-end justify-center lg:pr-[170px] z-50 '>
             {/* if submision is true, it will display next content but if submission is not true then next content is not displayed. this prevents me from using two modals */}
             { submission ? 
                 <div className="w-[285px] h-[190px] lg:w-[450px] lg:h-[280px] md:ml-[45%] px-[17.609px] py-[35.536px] bg-white rounded-[10.3px] md:py-[34.96px] md:px-[17.6px] lg:py-[62px] lg:px-[31px]">
@@ -106,8 +106,8 @@ const SecondModal = ({value, userForgetPasswordSystem}) => {
                     </div>
                 </div> : 
 
-                <div className="w-[100%] mx-[24px] flex flex-col justify-center lg:justify-end lg:mr-[300px]
-                 rounded-[8.6px] h-auto bg-white  lg:gap-[18px] p-4 lg:h-[301px] lg:w-[348px] lg:rounded-[15px]">
+                <div className="w-[100%] mx-[24px] flex flex-col lg:mx-[0px] 
+                 rounded-[8.6px] h-auto bg-white py-6  lg:gap-[18px] p-4 lg:h-[301px] lg:w-[348px] lg:rounded-[15px]">
                     <p className="text-[12px] lg:text-[14px] font-[500] lg:font-[700] mb-[20px]">Verification code has been sent to your email - {inputForgetEmail}</p>               
                     <div className=' flex flex-col  gap-[20px] lg:gap-[30px]'>
                         <div className="flex flex-col ">
