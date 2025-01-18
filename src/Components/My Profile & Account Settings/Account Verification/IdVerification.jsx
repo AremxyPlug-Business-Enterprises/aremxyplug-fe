@@ -35,8 +35,9 @@ export default function IdVerification() {
     const [idBackView, setIdBackView] = useState(false);
       const [idPopVerified, setIdPopVerified] = useState(false);
       const [idCustomerQuery, setIdCustomerQuery] = useState(false);
- const {toggleSideBar} = useContext(ContextProvider);
 
+ const {toggleSideBar, customerDetail} = useContext(ContextProvider);
+  const {full_name} =  customerDetail
     // Genders
     const genderInfo = ['Male', 'Female', 'Others..'];
     const [genderResult, setGenderResult] = useState('');
@@ -161,7 +162,7 @@ const checkform = () =>{
     lg:py-[15.5px] lg:pl-[10px] border-[0.4px]
     text-[8px] leading-[10.4px] 
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px]'>
-      Habib Kamaldeen
+     {full_name ? full_name : 'Hi user'}
    </div>
     </div>
     {/* Gender */}

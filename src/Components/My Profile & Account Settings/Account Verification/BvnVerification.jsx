@@ -4,7 +4,6 @@ import '../../../App.css';
 import styles from "../../../Components/Dashboard/DashboardComponents/TransferComponent/transfer.module.css";
 import Arrowright from '../../EducationPins/imagesEducation/educationArrowRight.svg';
 import { Modal } from '../../Screens/Modal/Modal';
-import NotVerifiedIcon from '../ProfileImages/NotVerifiedIcon.svg';
 import messageIcon from '../ProfileImages/message-question.svg';
 import bvnVerifiedSuccess from '../ProfileImages/user-tick.svg';
 import PopUpGreen from "../ProfileImages/PopUpGreen.svg";
@@ -14,23 +13,31 @@ import Success from "../ProfileImages/success.gif";
 import BvnQueryImage from '../ProfileImages/Bvnqueryimage.svg';
 import BvnMessageImage from '../ProfileImages/BvnMessageImage.svg';
 import Spinner from '../../Dashboard/DashboardComponents/DataTopUpPage/DataBundles/MtnDataTopUpBundle/Spinner';
+import axios from "axios";
+import PendingImage from"../ProfileImages/Pending.svg"
+import NotVerifiedImage from "../ProfileImages/NotVerifiedIcon.svg";
+
 
 export default function BvnVerification() {
     const {bvnVerificationOpen} = useContext(ContextProvider);
     const {verificationOpen} = useContext(ContextProvider);
-   const [bvnVerifyImage, setBvnVerifyImage] = useState(NotVerifiedIcon);
-   const [bvnStatus, setBvnStatus] = useState('Not Verified');
+   const {bvnVerifyImage, setBvnVerifyImage} = useContext(ContextProvider);
+   const {bvnStatus, setBvnStatus} = useContext(ContextProvider);
    const[bvnDateOfBirth, setBvnDateOfBirth] = useState('');
-   const[ bvnNumber, setBvnNumber] = useState('');
+   const{ bvnNumber, setBvnNumber} = useContext(ContextProvider);
    const [bvnQuery, setBvnQuery] = useState(false);
    const [bvnPhone, setBvnPhone] = useState('');
    const[bvnPopVerified, setBvnPopVerified] = useState(false);
    const [bvnPhoneMessage, setBvnPhoneMessage] = useState(false);
    const [errorVerify, setErrorVerify] = useState(false);
-   const {toggleSideBar} = useContext(ContextProvider);
+   const {toggleSideBar , customerDetail, setLoginAuthorisation, loginAuthorisation,
+    virtualAccCreated
+   } = useContext(ContextProvider);
    const [loading, setLoading] = useState(false);
 
-   
+const {full_name} = customerDetail;
+
+
   //  const checkBvnform = () =>{
 
   //   if(bvnNumber && bvnPhone && bvnDateOfBirth ){
@@ -53,43 +60,54 @@ export default function BvnVerification() {
 // let formattedDate = trimmedDate.replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3');
 // console.log(formattedDate);
 
-const checkBvnform = () => {
-  if (bvnNumber) {
-    setLoading(true);
 
+const getTokenNeeded =(Token)=> {
+  Token=localStorage.getItem("getToken")
+  //console.log(Token)
+  console.log(Token)
+  return Token;
+}
+
+
+
+
+const checkBvnform = async(Token) => {
+  getTokenNeeded(Token)
+  if (bvnNumber){
+    setLoading(true);
     const data = {
       bvn: bvnNumber.toString(),
     };
-
-    console.log(data)
-
-    fetch('https://aremxyplug.onrender.com/api/v1/virtualacc', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => {
-        if (response.ok) {
+const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc'
+   // console.log(data)
+   try{
+    setBvnVerifyImage(PendingImage)
+    setBvnStatus("Pending")
+        const response = await axios.post(url, data, {headers : {"Content-Type" : "application/json",
+    Authorization : Token || loginAuthorisation
+    }})
+  
+      if (response.status === 201 || 200 ) {
           setBvnVerifyImage(bvnVerifiedSuccess);
           setBvnStatus('Verified');
-          return response.json();
-        } else {
-          throw new Error('Failed to fetch');
-        }
-      })
-      .then((data) => {
-        console.log(data); // Log the response data
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-        setBvnVerifyImage(NotVerifiedIcon);
+          setBvnNumber(bvnNumber);
+        } 
+      
+    }catch(error){
+     if(error.status === 401 || 400){
+        alert(`An error has occurred`);
+        setBvnVerifyImage(NotVerifiedImage)
+        setBvnStatus("Not Verified")
+          }
+        else if(error.status === 500){
+          alert('Error:', "INTERNAL_SERVER_ERROR");
         setBvnStatus('Not Verified');
-      })
-      .finally(() => {
+        setBvnVerifyImage(NotVerifiedImage)
+        }
+      }finally {
         setLoading(false);
-      });
+        //alert("success")
+      }
   }
 };
 
@@ -168,7 +186,7 @@ src={Arrowright} alt="" />
     lg:py-[15.5px] lg:pl-[10px] border-[0.4px]
     text-[8px] leading-[10.4px] 
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px]'>
-      Habib Kamaldeen
+      {full_name ? full_name : "Balogun Oladimeji"}
    </div>
   </div>
   {/* PHONE NUMBER */}
@@ -186,7 +204,11 @@ src={Arrowright} alt="" />
    className='h-[14.083px] w-[14.083px] lg:h-[24px] lg:w-[24px] cursor-pointer'/>
    </div>
    {/* Input */}
-   <input value={bvnPhone} onChange={(e) =>{
+   <input readOnly={bvnStatus === "Verified"} value={bvnPhone} onInput={(e)=>  {
+   const numericValue = e.target.value.replace(/\D/g,"") 
+    e.target.value = numericValue
+  }}
+    onChange={(e) =>{
     setBvnPhone(e.target.value);
    }} type="tel" name='phone' id='phone' maxLength={11} inputMode='tel' required
    className='font-[500] py-[10.33px] pl-[5.867px] 
@@ -205,7 +227,7 @@ src={Arrowright} alt="" />
    lg:text-[16px] lg:leading-[20.8px]'>
      D.O.B
     </h2>
-    <input 
+    <input disabled={bvnStatus === "Verified"}
     value={bvnDateOfBirth}
    
     onChange={(e => {
@@ -227,10 +249,14 @@ src={Arrowright} alt="" />
    lg:text-[16px] lg:leading-[20.8px]'>
      BVN Number
     </h2>
-    <input onInput={( e => {
+    <input readOnly={bvnStatus === "Verified"}
+    onInput={( e => {
       const numbersOnly = e.target.value.replace(/\D/g, '');
       e.target.value = numbersOnly;
-    })}
+        })}
+        onClick={()=> {
+          setLoginAuthorisation(localStorage.getItem("authorisedLogin"))
+        }}
     value={bvnNumber}
     onChange={(e) => {
       setBvnNumber(e.target.value)
@@ -247,11 +273,11 @@ src={Arrowright} alt="" />
 </div>
 
 <div className='flex flex-col md:gap-[15px] gap-[10px] justify-start'>
-        <button onClick={()=>{
+        <button disabled={bvnStatus === "Verified"} onClick={()=>{
           checkBvnform()
         }}
          className={`lg:py-[13px] md:py-[7.868px] py-[16.531px] rounded-[4.241px] w-[100%] md:w-[150px] lg:w-[163px] lg:rounded-[12px] bg-[#04177F]
-         font-[600] text-[12px] leading-[18px] lg:text-[16px] text-center text-white lg:leading-[24px`}>
+         font-[600] text-[12px] leading-[18px] lg:text-[16px] text-center text-white lg:leading-[24px ${bvnStatus === "Verified" ? "bg-gray-600": "bg-[#04177F]" }`}>
         Verify
         </button>
         { errorVerify  && (

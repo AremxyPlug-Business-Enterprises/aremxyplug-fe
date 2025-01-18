@@ -11,7 +11,9 @@ import Joi from "joi";
 import axios from "axios";
 import { Loader } from "../Loader/Loader";
 import { Modal } from "../Screens/Modal/Modal";
-
+import bvnVerifiedSuccess  from "../My Profile & Account Settings/ProfileImages/user-tick.svg";
+import NotVerifiedImage from "../My Profile & Account Settings/ProfileImages/NotVerifiedIcon.svg";
+import PendingImage from "../My Profile & Account Settings/ProfileImages/Pending.svg";
 
 
 function LoginForm() {
@@ -19,6 +21,10 @@ function LoginForm() {
      setOpenResetTranspin,
       setOpen2StepVerification,
       setLoginAuthorisation,
+      loginAuthorisation,
+      setBvnStatus,
+      setBvnVerifyImage,
+      setDashLoading,
 //customerDetail,
       setCustomerDetail,
       } = useContext(ContextProvider);
@@ -144,7 +150,52 @@ function LoginForm() {
   };
 
 
+// Function to get user Token
+const getTokenNeeded =(Token)=> {
+  Token=localStorage.getItem("getToken")
+  //console.log(Token)
+  console.log(Token)
+  return Token;
+}
 
+
+//Function to get User Bank Details
+const checkBvnform = async(Token) => {
+  getTokenNeeded(Token)
+  if (loginAuthorisation) {
+    setDashLoading(true);
+const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc'
+   // console.log(data)
+   try{
+    setBvnVerifyImage(PendingImage)
+    setBvnStatus("Pending")
+        const response = await axios.get(url, {headers : {"Content-Type" : "application/json",
+    Authorization : Token || loginAuthorisation
+    }})
+  
+      if (response.status === 201 || 200 ) {
+          setBvnVerifyImage(bvnVerifiedSuccess);
+          setBvnStatus('Verified');
+          console.log(response)
+        } 
+      
+    }catch(error){
+     if(error.status === 401 || 400){
+      alert("An error has occured")
+      setBvnStatus('Not Verified');
+      setBvnVerifyImage(NotVerifiedImage)
+          }
+        else if(error.status === 500){
+          alert('Error:', "INTERNAL_SERVER_ERROR");
+        setBvnStatus('Not Verified');
+       setBvnVerifyImage(NotVerifiedImage)
+        }
+      }finally {
+        setDashLoading(false);
+        //alert("success")
+      }
+  }
+};
    
 
   
@@ -192,14 +243,19 @@ function LoginForm() {
               if (response.status === 202 && response.headers.hasAuthorization) {
                  setOpenTranspin(true);
                 const authToken = response.headers.get('Authorization');
-               setLoginAuthorisation(authToken);
-                console.log(authToken);
-              } else if(response.status === 200){
+                setLoginAuthorisation(authToken);
+                } else if(response.status === 200){
                 setOpen2StepVerification(true);
              const customer  =  response.data.data.customer;
+             const getToken = response.data.data.auth_token;
+             localStorage.setItem("getToken", getToken)
             if(customer){
             setCustomerDetail(customer);
+            setLoginAuthorisation(getToken)
             }
+            
+            console.log(getToken);
+
             }else if (response.status === 404) {
                 alert("User not found");
               } else if (response.status === 401) {
@@ -258,7 +314,10 @@ function LoginForm() {
               if (response.status === 202  && response.headers.hasAuthorization) {
                 setOpenTranspin(true);
                 const authToken = response.headers.get('Authorization');
+                if(authToken){
+                localStorage.setItem('authorisedLogin', authToken)
                setLoginAuthorisation(authToken);
+                }
                }else if(response.status === 200){
                 setOpen2StepVerification(true);
              const customer  =  response.data.data.customer;
@@ -293,8 +352,10 @@ function LoginForm() {
 
   // if (redirect) {
   //   navigate("/dashboard", { replace: true });
-  // }
+  // }console.log(response.data.data.customer)
 
+
+  
   return (
     <div
       className="relative overflow-hidden w-[100%] xl:w-[85%] md:mx-[unset]   loginForm p-[25px] rounded-lg md:rounded-xl xl:rounded-3xl "

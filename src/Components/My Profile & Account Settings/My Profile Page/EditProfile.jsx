@@ -15,7 +15,7 @@ import closeCircle from '../../EducationPins/imagesEducation/close-circle.svg';
 
 export default function EditProfile() {
   const {openImage, setOpenImage} = useContext(ContextProvider);
-   
+  
   return (
     <div>
        <DashBoardLayout>
@@ -54,7 +54,7 @@ export default function EditProfile() {
    <div className='flex flex-col justify-center gap-[3.52px] lg:gap-[12px]'>
   <p className='font-[500] text-[10px] leading-[15px] md:text-[9.389px] md:leading-[12.206px] 
   lg:text-[16px] lg:leading-[20.8px]'>
-    Habib Kamaldeen
+   
     </p>
   <p className='font-[500] text-[#7C7C7C] text-[10px] leading-[15px]
   md:text-[7.042px] md:leading-[9.154px]

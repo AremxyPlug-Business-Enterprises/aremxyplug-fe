@@ -5,9 +5,10 @@ import { ContextProvider } from "../../Context";
 import styles from "./Dashboard.module.css";
 
 export const SideBar = () => {
-  const { setToggleSideBar, isDarkMode, handleClickOutside, customerDetail } =
+  const { setToggleSideBar, isDarkMode, handleClickOutside, customerDetail, virtualAccCreated, bvnStatus } =
     useContext(ContextProvider);
     const {full_name} = customerDetail;
+    const {user_id} = virtualAccCreated
   const [dropDownOpen, setDropDownOpen] = useState({
     dropdown1: false,
     dropdown2: false,
@@ -38,11 +39,12 @@ export const SideBar = () => {
 
 
 
+
   return (
     <div
       className={`${styles.sidebar}  fixed overflow-auto ${
         isDarkMode ? "bg-[#000] border" : " bg-[#04177f]"
-      } flex flex-col  justify-between  leading-normal text-white  w-[145px] h-[] rounded-tr-[11.17px] rounded-br-[11.17px] md:w-[178px] md:rounded-tr-[18px] md:rounded-br-[18px] 
+      } flex flex-col  justify-between  leading-normal text-white   w-[152px] h-[] rounded-tr-[11.17px] rounded-br-[11.17px] md:w-[178px] md:rounded-tr-[18px] md:rounded-br-[18px] 
       lg:w-[300px] lg:rounded-br-[32px] lg:rounded-tr-[32px] lg:h-[100vh]`}
     >
       {/* =======Nav Bar========= */}
@@ -83,18 +85,18 @@ export const SideBar = () => {
                 />
                 <div className="flex flex-col gap-[3px] justify-center mt-[4%]">
                   <p className="text-[8px] font-semibold md:text-[14px] lg:text-[14px]">
-                    {full_name ? full_name : "Hi User"}
+                    {full_name ? full_name : `Hi User`}
                   </p>
-                  <p className="text-[8px] font-semibold md:text-[14px] lg:text-[14px]">
-                    UID: 508373
+                  <p className="text-[8px] font-semibold md:text-[14px] lg:text-[14px] ">
+                    UID: {`${user_id ? user_id: "No UserID"} `} 
                   </p>
                   <div className="flex gap-[3px] lg:gap-[5px]">
-                    <div className=" rounded-[1px] px-[4px] py-[1px] font-semibold text-[6px]
-                     bg-[#b4b4b4] md:text-[10px] lg:text-[12px] lg:rounded-[2px]">
-                      Verified
+                    <div className={`px-[4px] py-[1px] font-[600] lg:font-[700] text-[10px]
+                      md:text-[10px] lg:text-[12px] lg:rounded-[2px] ${bvnStatus === "Verified" ? "text-green-600" : "text-red-600"}`}>
+                      {bvnStatus}
                     </div>
-                    <div className="rounded-[1px] px-[4px] py-[1px] font-semibold text-[6px]
-                     bg-[#b4b4b4] md:text-[10px] lg:text-[12px] lg:rounded-[2px]">
+                    <div className=" px-[4px] py-[1px] font-[600] lg:font-[700] text-[10px]
+                     text-white md:text-[10px] lg:text-[12px] lg:rounded-[2px]">
                       KYCed
                     </div>
                   </div>

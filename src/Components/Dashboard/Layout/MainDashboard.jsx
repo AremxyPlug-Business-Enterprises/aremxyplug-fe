@@ -16,9 +16,16 @@ import QuickFeatures from "../DashboardComponents/QuickFeatures";
 import { WalletInOutFlows } from "../DashboardComponents/WalletInOutFlows";
 import { RecentTransaction } from "../DashboardComponents/RecentTransaction";
 import { Link } from "react-router-dom";
+import { Loader } from "../../Loader/Loader";
+import bvnVerifiedSuccess from "../../My Profile & Account Settings/ProfileImages/user-tick.svg";
+import NotVerifiedImage from "../../My Profile & Account Settings/ProfileImages/NotVerifiedIcon.svg";
+import PendingImage from '../../My Profile & Account Settings/ProfileImages/Pending.svg';
+import axios from "axios";
+
 
 export const MainDashboard = () => {
-  const { setHideNavbar, toggleSideBar, isDarkMode } =
+  const { setHideNavbar, toggleSideBar, isDarkMode,dashLoading, customerDetail, 
+    setDashLoading, setBvnStatus, setBvnVerifyImage, loginAuthorisation, setVirtualAccCreated, virtualAccCreated} =
     useContext(ContextProvider);
   const [visible, setVisibility] = useState(true);
   const [activeButtons, setActiveButtons] = useState([true, false, false]);
@@ -29,6 +36,11 @@ export const MainDashboard = () => {
   const [selected, setSelected] = useState("");
   const [selected2, setSelected2] = useState("");
   const [symbol, setSymbol] = useState("₦");
+  const [bankNameState, setBankNameState] = useState("....")
+  const [accountNameState, setAccountNameState] = useState("...")
+  const [accountNumberState, setAccountNumberState] = useState("...");
+  const {bank_name, account_no, account_name} = virtualAccCreated
+  const {full_name} = customerDetail
 
   const handleCopyClick = () => {
     const text = textRef.current.innerText;
@@ -102,6 +114,101 @@ export const MainDashboard = () => {
       : setSymbol("");
     return;
   };
+
+
+  const getTokenNeeded =(Token)=> {
+    Token=localStorage.getItem("getToken")
+    //console.log(Token)
+    console.log(Token)
+    return Token;
+  }
+  
+  
+//The syntax of this fxn is to set this useStates to the bank name,
+//account number , account name if virtual account is true 
+// virtual account can only be true if user sign properly 
+//through the various user authentications and flows provided
+  const GetVirtualAccountValue = (bankname, accountname, accountno)=> {
+   
+     setBankNameState(bankname);
+     setAccountNameState(accountname.slice(11));
+     setAccountNumberState(`${accountno.slice(0,4)}********`)
+    
+  }
+  
+  const DataLostDetails = ()=> {
+    if(full_name === undefined){
+      alert("ERROR : Re-do the Sign-in process to continue operations and retrieve data history")
+     setBankNameState("Couldn't resolve your bank name");
+     setAccountNameState("Couldn't resolve your account name");
+     setAccountNumberState("Couldn't resolve your account number")
+    }
+  }
+  //Function to get User Bank Details
+  const CheckVirtualAcc = async(Token) => {
+    getTokenNeeded(Token)
+    if (loginAuthorisation) {
+      setDashLoading(true);
+  const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc'
+     // console.log(data)
+     try{
+      setBvnVerifyImage(PendingImage)
+      setBvnStatus("Pending")
+          const response = await axios.get(url, {headers : {"Content-Type" : "application/json",
+      Authorization : Token || loginAuthorisation
+      }})
+    
+        if (response.status === 201 || 200 ) {
+            setBvnVerifyImage(bvnVerifiedSuccess);
+            setBvnStatus('Verified');
+            const virtualAccount = response.data.data.acc_details
+            setVirtualAccCreated(virtualAccount);
+            const {bank_name, account_no, account_name} = virtualAccCreated
+            console.log(virtualAccCreated)
+            if(virtualAccCreated) return GetVirtualAccountValue(bank_name, account_name, account_no);
+          } 
+        
+      }catch(error){
+       if(error.status === 401 || 400){
+        alert("An error has occured")
+        setBvnStatus('Not Verified');
+        setBvnVerifyImage(NotVerifiedImage);
+        console.log(`ERROR: ${error}`)
+     
+            }
+          else if(error.status === 500){
+            alert('Error:', "INTERNAL_SERVER_ERROR");
+          setBvnStatus('Not Verified');
+         setBvnVerifyImage(NotVerifiedImage)
+        
+          }
+        }finally {
+          setDashLoading(false);
+          //alert("success")
+        }
+    }
+  }
+
+
+// USEEEFECT TO RETURN USERS BANK DETAILS
+
+// To help get the user bank details and check if the user details is in the app
+
+useEffect(()=> {
+  return async()=>{
+    if(full_name === undefined || ""){
+      DataLostDetails()
+    }else{
+      await CheckVirtualAcc()
+      }
+    }
+  },[full_name])
+
+  
+
+  
+
+
 
   return (
     <div>
@@ -198,6 +305,7 @@ export const MainDashboard = () => {
           {/* ==============HERO SECTION CLOSE========== */}
 
           {/* ==========AVAILABLE BALANCE=========== */}
+        
           <div className={styles.balance}>
             <div
               className={`${
@@ -206,15 +314,15 @@ export const MainDashboard = () => {
             >
               <Link to="/wallet">
                 <button
-                  className={`${
+                  className={`text-[10px] md:text-[11px] lg:text-[12px] font-[600] ${
                     isDarkMode ? "border bg-black" : "bg-[#04177f]"
                   } ${styles.viewWallet}`}
                 >
                   View Wallets
                 </button>
               </Link>
-              <p
-                className={`${
+              <p 
+                className={`cursor-pointer ${
                   toggleSideBar ? "lg:text-[18px]" : "lg:text-[24px]"
                 } ${styles.walletText} `}
               >
@@ -233,19 +341,7 @@ export const MainDashboard = () => {
                   This feature is currently not available...
                 </div>
               )}
-              {/* {blurThree && (
-                <div
-                  className={`${
-                    isDarkMode ? " text-[#fff]" : "text-[#04177f]"
-                  } ${
-                    toggleSideBar
-                      ? "backdrop-blur-[4.5px] md:absolute md:w-[80%] md:h-[65px] md:ml-[3%] md:text-[19px] md:text-center lg:absolute lg:mt-12 lg:font-extrabold lg:ml-[2%] lg:w-[14%] lg:text-[22px] lg:h-[50px] lg:left-[33%] text-[#04177f]"
-                      : "backdrop-blur-[4.5px] absolute w-[38%] right-[23%] h-[70px] text-[13px] font-bold text-center ml-[6%] pt-[5%] md:text-[20px] md:mt-[%] md:pb-[8%] md:pt-[0%] md:h-[40px] md:text-extrabold lg:text-[24px] lg:ml-[%] lg:w-[18%] lg:pb-0 lg:h-[60px] lg:flex lg:justify-center lg:items-center lg:mt-[2%] lg:right-[60%]"
-                  } `}
-                >
-                  Coming Soon...
-                </div>
-              )} */}
+             
               {/* ================= */}
               {!activeButtons[2] ? (
                 <div
@@ -385,6 +481,10 @@ export const MainDashboard = () => {
             </div>
 
             {/* ==========VIRTUAL ACCOUNTS============= */}
+            {dashLoading ? (<div className=" flex justify-center items-center lg:w-1/2  lg:h-[200px] w-[100%] h-[100px]">
+             <Loader/>
+            </div>):
+            (
             <div
               className={`${
                 isDarkMode ? "bg-[#000] border border-[#fff]" : "bg-[#e9edfb]"
@@ -393,7 +493,7 @@ export const MainDashboard = () => {
               <Link to="/virtual-account">
                 {" "}
                 <button
-                  className={`${
+                  className={`text-[10px] md:text-[11px] lg:text-[12px] font-[600]  ${
                     isDarkMode ? "border bg-black" : "bg-[#04177f]"
                   } ${styles.viewWallet}`}
                 >
@@ -402,10 +502,10 @@ export const MainDashboard = () => {
               </Link>
               <div>
                 <div className="flex mt-[8%] gap-[30px] md:mt-[5%] lg:mt-[9%]">
-                  <p
+                  <p 
                     className={`${styles.GVA} ${
                       toggleSideBar ? "lg:text-[10px]" : "lg:text-[24px]"
-                    } text-[11px] font-extrabold `}
+                    } text-[11px] font-extrabold cursor-pointer`}
                   >
                     Global Virtual Accounts
                   </p>
@@ -452,27 +552,28 @@ export const MainDashboard = () => {
                 <div
                   className={`${styles.virtualaccounttxt} ${
                     toggleSideBar ? "lg:text-[10px] lg:mt-[1%]" : ""
-                  } flex text-[10px] gap-[90px] md:gap-[110px]  md:text-[15px]`}
+                  } flex text-[10px] gap-[20px]  md:text-[15px]`}
                 >
-                  <div className="md:font-semibold">Bank Name</div>
-                  <div>SBI</div> 
+                  <h2 className="font-semibold w-1/2 text-[10px]  md:text-[11px] lg:text-[12px]">Bank Name</h2>
+                  <p className="text-[10px] text-right w-1/2 md:text-[11px] lg:text-[12px] font-[400]">{bankNameState}</p> 
                 </div>
                 <div
                   className={`${styles.virtualaccounttxt} ${
                     toggleSideBar ? "lg:text-[10px]" : ""
-                  }  flex text-[10px] gap-[75px] md:gap-[80px] md:text-[15px] `}
+                  }  flex text-[10px] gap-[20px] md:text-[15px] `}
                 >
-                  <div className="md:font-semibold">Account Name</div>
-                  <div>Habib Kamaldeen</div>
+                  <h2 className="font-semibold w-1/2 text-[10px]  md:text-[11px] lg:text-[12px]">Account Name</h2>
+                  <p className="text-[10px] w-1/2 md:text-[11px] text-right lg:text-[12px] font-[400]">{accountNameState}</p>
                 </div>
+               
                 <div
-                  className={`${styles.virtualaccounttxt} ${
+                className={`${styles.virtualaccounttxt} ${
                     toggleSideBar ? "lg:text-[10px]" : ""
-                  }  flex text-[10px] gap-[65px] md:gap-[60px] md:text-[15px] `}
+                  }  flex text-[10px] gap-[20px] md:text-[15px] `}
                 >
-                  <div className="md:font-semibold">Account Number</div>
-                  <div className="flex items-center gap-[10px]">
-                    <div ref={textRef}>1400 00xx xxxx</div>
+                  <h2 className="font-semibold w-1/2 text-[10px] md:text-[11px] lg:text-[12px]">Account Number</h2>
+                  <div className="flex justify-end items-center w-1/2 gap-[10px]">
+                    <p className="text-[10px]  md:text-[11px] lg:text-[12px] font-[400]" ref={textRef}>{accountNumberState}</p>
                     <div
                       onClick={handleCopyClick}
                       className="text-[#92abfec3] text-[13px] font-extrabold lg:text-[16px]"
@@ -480,22 +581,26 @@ export const MainDashboard = () => {
                       <RiFileCopyFill />
                     </div>
                   </div>
-                  <Link to={{
+                
+                </div>
+               
+                </div>
+              <Link to={{
     pathname: "/ProfileSettingMain",
     state: { verificationOpen: true }
   }}>
                 {" "}
                 <button
-                  className={`${
+                  className={`text-[10px] md:text-[11px] lg:text-[12px] font-[600] ${
                     isDarkMode ? "border bg-black" : "bg-[#04177f]"
                   } ${styles.viewWallet}`}
                 >
                   Generate
                 </button>
               </Link>
-                </div>
-              </div>
             </div>
+                )}
+            {/* Stop*/}
           </div>
           {/* ================VIRTUAL ACCOUNT CLOSE=============== */}
 
