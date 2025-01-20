@@ -2,6 +2,7 @@ import React, { createContext, useState, useRef, useEffect } from "react";
 import Joi from "joi";
 import axios from "axios";
 import arrowDown from "../../src/Components/EducationPins/imagesEducation/arrow-down.svg";
+import NotVerifiedIcon from "../Components/My Profile & Account Settings/ProfileImages/NotVerifiedIcon.svg"
 // import { BASE_URL } from "../config";
 
 export const ContextProvider = createContext();
@@ -133,6 +134,7 @@ export const Context = ({ children }) => {
   const [errors, setErrors] = useState({});
   const [loadSignUp, setLoadSignUp] = useState(false);
   const [verification, setVerification] = useState(false);
+  const [getCountry, setGetCountry] = useState('')
   const [state, setState] = useState({
     country: "",
     fullName: "",
@@ -242,6 +244,8 @@ export const Context = ({ children }) => {
       checkbox,
     } = state;
 
+
+   
     if (password !== confirmPassword) {
       setErrors({
         confirmPassword: "Password and Confirm Password do not match",
@@ -956,7 +960,11 @@ export const Context = ({ children }) => {
   const [idLGA, setIdLGA] = useState("");
   const [idNumber, setIdNumber] = useState("");
   const [idPostalCode, setIdPostalCode] = useState("");
-
+  const [bvnNumber, setBvnNumber] = useState("");
+  const [bvnVerifyImage, setBvnVerifyImage] = useState(NotVerifiedIcon);
+ const [bvnStatus, setBvnStatus] = useState('Not Verified');
+const [dashLoading, setDashLoading] = useState(false);
+const [virtualAccCreated, setVirtualAccCreated] = useState(false);
   //========== BUSINESS KYC =============
   const [businessPopUp, setBusinessPopUp] = useState(false);
 
@@ -972,10 +980,10 @@ export const Context = ({ children }) => {
   const [necoEduResponse,setNecoEduResponse] =useState(null);
 
   //============= LOGIN FORM ==========
-  const [loginAuthorisation, setLoginAuthorisation] = useState('');
+  const [loginAuthorisation, setLoginAuthorisation] = useState(false);
   const [twoStepVerificationSuccess, setTwoStepVerificationSuccess]= useState(false);
  const [customerDetail, setCustomerDetail] = useState({});
-
+ 
   const hold = {
     customerDetail, 
     setCustomerDetail,
@@ -1113,6 +1121,8 @@ export const Context = ({ children }) => {
     setResetNumber,
     loadSignUp,
      setLoadSignUp,
+     getCountry,
+      setGetCountry,
 
     // ============Dashboard=============
     toggleSideBar,
@@ -1564,6 +1574,16 @@ export const Context = ({ children }) => {
     setIdPostalCode,
     // ==========  BVN ========
 
+bvnNumber, 
+setBvnNumber,
+bvnVerifyImage, 
+setBvnVerifyImage,
+bvnStatus,
+setBvnStatus,
+dashLoading, 
+setDashLoading,
+virtualAccCreated,
+setVirtualAccCreated,
     //========== Business PopUp =======
     businessPopUp,
     setBusinessPopUp,

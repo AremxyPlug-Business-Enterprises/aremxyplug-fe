@@ -9,8 +9,9 @@ import { ContextProvider } from '../../Context';
 
 
 export default function ProfileUpdate() {
-  const {profilePage} = useContext(ContextProvider);
-
+  const {profilePage, customerDetail} = useContext(ContextProvider);
+  const {full_name,username, email, phone} = customerDetail
+ console.log(customerDetail);
   return (
     <div className=''>
      {profilePage && (
@@ -32,12 +33,12 @@ export default function ProfileUpdate() {
    <div className='flex flex-col justify-center gap-[3.52px] lg:gap-[12px]'>
   <p className='font-[500] text-[10px] leading-[15px] md:text-[9.389px] md:leading-[12.206px] 
   lg:text-[16px] lg:leading-[20.8px]'>
-    Habib Kamaldeen
+   {full_name ? full_name : 'Hi user'}
     </p>
   <p className='font-[500] text-[#7C7C7C] text-[10px] leading-[15px]
   md:text-[7.042px] md:leading-[9.154px]
   lg:text-[12px] lg:leading-[15.6px]'>
-    habib@aremxyplug.com
+   {email ? email : ''}
     </p>
    </div>
    
@@ -86,8 +87,8 @@ export default function ProfileUpdate() {
       text-[8px] leading-[10.4px]
       md:text-[9.389px] md:leading-[12.206px]
      lg:text-[16px] lg:leading-[20.8px] cursor-default'>
-     Habib Kamaldeen
-     </p>
+      {full_name ? full_name : 'Your name appears after the 2-step'}
+      </p>
      </div>
     
         </div>
@@ -113,7 +114,7 @@ export default function ProfileUpdate() {
       text-[8px] leading-[10.4px]
       md:text-[9.389px] md:leading-[12.206px]
      lg:text-[16px] lg:leading-[20.8px] cursor-default'>
-    AremxyPlug
+  {username ? username : 'your username appears after the 2-step'}
      </p>
      </div>
     
@@ -134,7 +135,7 @@ export default function ProfileUpdate() {
       text-[8px] leading-[10.4px]
       md:text-[9.389px] md:leading-[12.206px]
      lg:text-[16px] lg:leading-[20.8px]'>
-   habib@aremxy.com
+      {email ? email : "Your email appears after 2-step"}
      </p>
      </div>
     
@@ -162,7 +163,7 @@ export default function ProfileUpdate() {
       text-[8px] leading-[10.4px]
       md:text-[9.389px] md:leading-[12.206px]
      lg:text-[16px] lg:leading-[20.8px] cursor-default'>
-     09087654321
+      {`${phone ? phone.slice(3) : "Your phone Number appears after the 2-step" }`}
      </p>
      </div>
      {/* Start of the message / 2nd part */}

@@ -4,11 +4,11 @@ import { ContextProvider } from "../../Context";
 import { Link } from "react-router-dom";
 
 function NgnVirtualAccount() {
-  const { isDarkMode } = useContext(ContextProvider)
-
-  const accountNumber = '1234567890';
-  const accountName = 'Habib Kamaldeen';
-  const bankName = 'SBI';
+  const { isDarkMode, virtualAccCreated } = useContext(ContextProvider)
+const {account_no, account_name, bank_name} = virtualAccCreated
+  const accountNumber = account_no
+  const accountName = account_name.slice(11);
+  const bankName = bank_name;
 
   const accNoRef = useRef(null);
   const accNameRef = useRef(null);
@@ -107,16 +107,16 @@ function NgnVirtualAccount() {
             <div className="">
               <div className="mb-[8px] lg:mb-[15px] flex lg:gap-x-[20px] gap-x-[15px] font-semibold">
                 <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[15%] md:w-[20%] w-[30%]">BANK NAME</p>
-                <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[85%] md:w-[20%] w-[70%]" ref={bankNameRef}>{bankName}</p>
+                <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[85%] md:w-[20%] w-[70%]" ref={bankNameRef}>{bankName ? bank_name : "Null"}</p>
               </div>
               <div className="mb-[8px] lg:mb-[15px] flex lg:gap-x-[20px] gap-x-[15px] font-semibold">
                 <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[15%] md:w-[20%] w-[30%]">ACCOUNT NAME</p> 
-                <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[85%] md:w-[20%] w-[70%]" ref={accNameRef}>{accountName}</p>
+                <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[85%] md:w-[20%] w-[70%]" ref={accNameRef}>{accountName ? account_no : "Null"}</p>
               </div>
               <div className=" flex lg:gap-x-[20px] gap-x-[15px] font-semibold">
                 <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[15%] md:w-[20%] w-[30%]">ACCOUNT NUMBER</p>{" "}
                 <div className="flex items-center lg:w-[85%] md:w-[20%] w-[70%]">
-                  <p className="md:text-[10px] text-[8px] lg:text-[16px]" ref={accNoRef}>{formatAccountNumber(accountNumber)}</p>
+                  <p className="md:text-[10px] text-[8px] lg:text-[16px]" ref={accNoRef}>{accountNumber ?  formatAccountNumber(accountNumber) : "Null" }</p>
                   <button onClick={handleCopyText}>
                     <img
                       src="Images/virtual-account/copy.png"
@@ -133,7 +133,7 @@ function NgnVirtualAccount() {
             <Link to='/CardPayment' className='bg-primary text-white text-[7px] leading-[10.5px] rounded-[4px] md:rounded-[7px] md:text-[9.17px] md:leading-[13.75px] flex items-center lg:text-[16px] lg:leading-[24px] justify-center py-[5px] w-[85.5px] md:w-[124px] lg:w-[231px] lg:py-[10px]'>
               <div className='mr-1 w-[11.38px] h-[11.38px] md:w-[19.48px] md:h-[19.48px] lg:w-[34px] lg:h-[34px]'>
                 <img src="./Images/wallet/card-add.png" alt="" className='object-cover w-full'/>
-              </div>
+              </div>================
               <h2>Fund with card</h2>
             </Link>
             <button
