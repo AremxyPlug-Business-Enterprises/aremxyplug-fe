@@ -273,6 +273,7 @@ export const Context = ({ children }) => {
         }, {})
       );
     } else {
+      setErrors({});
       setLoadSignUp(true);
       const data = {
         fullname: fullName,
@@ -291,23 +292,23 @@ export const Context = ({ children }) => {
         .post(url, data, config)
         .then((response) => {
           console.log(response);
-          if (response.status === 201 || 201) {
-            setLoadSignUp(false)
-            setVerification(true);
-            setErrors({});
-          } else if (response.status === 409) {
-            setLoadSignUp(false)
-            alert("Input already in use: " + response.data);
-          } else {
-            console.log(response.data);
-            setLoadSignUp(false)
-          }
+          if (response.status === 201 || 200) {
+           setVerification(true);
+          } 
         })
-        .catch((error) => {
+        .catch(error => {
+       if (error.response.data.status === 409) {
+            alert("Input already in use: " + error.response.data.data.data);
+            console.log("The phone number already exists");
+          } else if(error.response.data.status === 400){
+            alert("An error has occured on your end")
+            console.log(error.response.data.data.data)
+          } else{
+            console.log(error.json());
+            }
+         }).finally(()=> {
           setLoadSignUp(false)
-          console.error(error);
-          alert(error.response.data.error);
-        });
+         });
     }
   };
   // ========End for SignUp.jsx======
@@ -983,11 +984,23 @@ const [virtualAccCreated, setVirtualAccCreated] = useState(false);
   const [loginAuthorisation, setLoginAuthorisation] = useState(false);
   const [twoStepVerificationSuccess, setTwoStepVerificationSuccess]= useState(false);
  const [customerDetail, setCustomerDetail] = useState({});
- 
+ const [bankNameState, setBankNameState] = useState("Null")
+     const [accountNameState, setAccountNameState] = useState("Null")
+     const [accountNumberState, setAccountNumberState] = useState("Null");
+ const {full_name} = customerDetail;
+ const virtualAccObject ={
+  bankName
+ }
   const hold = {
     customerDetail, 
     setCustomerDetail,
     handleRefresh,
+   bankNameState, 
+   setBankNameState,
+      accountNameState,
+       setAccountNameState,
+        accountNumberState, 
+        setAccountNumberState,   
     // ==================
     tfImage, settfImage,
     withdrawImage,

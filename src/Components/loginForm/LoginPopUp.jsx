@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import "./LoginForm.css"
 import { ContextProvider } from "../Context";
 import { Modal } from "../Screens/Modal/Modal";
 import OtpInput from "react-otp-input";
@@ -8,6 +9,10 @@ import axios from "axios";
 import CloseIcon from '../EducationPins/imagesEducation/close-circle.svg';
 import { Loader } from "../Loader/Loader";
 import { useNavigate } from "react-router-dom";
+import PendingImage from "../My Profile & Account Settings/ProfileImages/Pending.svg";
+import NotVerifiedImage from "../My Profile & Account Settings/ProfileImages/NotVerifiedIcon.svg"
+import bvnVerifiedSuccess from "../My Profile & Account Settings/ProfileImages/user-tick.svg";
+
 function LoginPopUp() {
   const {
     openTranspin,
@@ -24,11 +29,17 @@ function LoginPopUp() {
     twoStepVerificationSuccess, 
     setTwoStepVerificationSuccess,
     customerDetail,
-   // setcustomerDetails
+    setDashLoading,
+     setBvnStatus, 
+     setBvnVerifyImage, 
+      setVirtualAccCreated, 
+      virtualAccCreated,
+      setAccountNumberState,
+      setBankNameState,
+      setAccountNameState
 } = useContext(ContextProvider);
 
 const {
-  //full_name,
   email,
   //username,
   phone} = customerDetail;
@@ -46,27 +57,18 @@ const {
   const [transpinError, setTranspinErrors] = useState("");
   const [verificationPinError, setVerificationPinError] = useState(false);
   const [smsOrEmail, setSmsOrEmail] = useState("");
+  
   const navigate = useNavigate();
   // const receiveAuthToken = localStorage.getItem("authorizationToken");
 // API fetch function for getting the OTP
-const getOtpSmsorEmail = ()=> {
-  // const [sendSmsOrEmail, setSendSmsOrEmail] = useState("")
-  if(smsOrEmail === "sms"){
-  return {
-    phone : phone
-  }
-  }else if(smsOrEmail === "email" ){
-     return {
-      email : email
-     }
-  }
-}
+
    //THIS FUNCTION IS TO DERIVE THE OTP FROM THE BACKEND
-  const gettingOtpFunction= async()=> {
+  const gettingOtpFunction= async(url, body)=> {
+
     setLoading(true);
     try{
-    const url = "https://aremxyplug.onrender.com/api/v1/send-otp/signin"
-    const response = await axios.post(url, getOtpSmsorEmail())
+    
+    const response = await axios.post(url,body)
 
 if((response.status === 200 || 201) && (response.headers.hasAuthorization)){
   twoStepVerificationHandler();
@@ -75,7 +77,10 @@ if((response.status === 200 || 201) && (response.headers.hasAuthorization)){
  }catch(error){
   if(error.response && error.response.status === 401){
   alert(`${error}, An error occured from your end`)
-  } else if(error.response && error.response.status === 500){
+  } else if(error.response.status === 404){
+   alert(`ERROR: ${error.response.data.data.message.toUpperCase()}`)
+  } 
+  else if(error.response && error.response.status === 500){
     alert(`INTERNAL_SERVER_ERROR`)
   }
   }finally{
@@ -84,16 +89,113 @@ if((response.status === 200 || 201) && (response.headers.hasAuthorization)){
     setCountdown(60)
   }
 }
+// Function to help store get the url and send-otp type
+const getOtpSmsorEmail = async(url, body)=> {
+  // const [sendSmsOrEmail, setSendSmsOrEmail] = useState("")
+  if(smsOrEmail === "sms"){
+  body = {
+    phone_number : phone
+  }
+  url ="https://aremxyplug.onrender.com/api/v1/sms/send"
+  console.log(body.phone);
+  }else if(smsOrEmail === "email" ){
+    body = {
+      email : email
+     }
+     url = "https://aremxyplug.onrender.com/api/v1/send-otp/signin"
+  }
+ 
+await  gettingOtpFunction(url,body)
+}
+ 
+//The function to help check if the user has a virtual account
+const getTokenNeeded =(Token)=> {
+  Token=localStorage.getItem("getToken")
+  //console.log(Token)
+  console.log(Token)
+  return Token;
+}
+
+
+//The syntax of this fxn is to set this useStates to the bank name,
+//account number , account name if virtual account is true 
+// virtual account can only be true if user sign properly 
+//through the various user authentications and flows provided
+const GetVirtualAccountValue = (bankname, accountname, accountno)=> {
+ 
+   setBankNameState(bankname);
+   setAccountNameState(accountname.slice(11));
+   setAccountNumberState(`${accountno.slice(0,4)}********`)
+  console.log("The GetVirtualAccountValue is running")
+}
+
+//Function to get User Bank Details
+const CheckVirtualAcc = async(Token) => {
+  getTokenNeeded(Token)
+  if (loginAuthorisation) {
+    setDashLoading(true);
+const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc'
+   // console.log(data)
+   try{
+    setBvnVerifyImage(PendingImage)
+    setBvnStatus("Pending")
+        const response = await axios.get(url, {headers : {"Content-Type" : "application/json",
+    Authorization : Token || loginAuthorisation
+    }})
+  
+      if (response.status === 201 || 200 ) {
+          setBvnVerifyImage(bvnVerifiedSuccess);
+          setBvnStatus('Verified');
+          const virtualAccount = response.data.data.acc_details;
+          setVirtualAccCreated(virtualAccount);
+        } 
+      
+    }catch(error){
+     if(error.status === 401 || 400){
+      alert("An error has occured")
+      setBvnStatus('Not Verified');
+      setBvnVerifyImage(NotVerifiedImage);
+      console.log(`ERROR: ${error}`)
+   
+          }
+        else if(error.status === 500){
+          alert('Error:', "INTERNAL_SERVER_ERROR");
+        setBvnStatus('Not Verified');
+       setBvnVerifyImage(NotVerifiedImage)
+      
+        }
+      }finally {
+        setDashLoading(false);
+      }
+  }
+}
+
+
+
   // FUNCTION TO HANDLE VERIFICATION OF OTP
-function handleVerificationOTP() {
+const handleVerificationOTP = async()=> {
   if (otp3) {
      setVerificationPinError("");  
       setTwoStepVerificationSuccess(true);
     setOtp3("");
      setOpen2StepOTP(false);
+  await CheckVirtualAcc();
     console.log(otp3);
    } 
   }
+
+  //Function to help set the user's account details such as bank name, 
+  //account name and account Number
+const handleAccountDetails =()=> {
+  const {bank_name, account_no, account_name} = virtualAccCreated
+  console.log(virtualAccCreated)
+  if(virtualAccCreated){
+    setTwoStepVerificationSuccess(false);
+    return GetVirtualAccountValue(bank_name, account_name, account_no);
+  }
+}
+
+
 
 // THE FUNCTION FOR DERIVING THE GET OPT METHOD
 const gettingSmsOrEmailFunctionOtp = async(url, body)=> {
@@ -104,8 +206,9 @@ const gettingSmsOrEmailFunctionOtp = async(url, body)=> {
        }
      console.log(otp3);
       }else if(smsOrEmail === "sms"){
-       url = `https://aremxyplug.onrender.com/api/v1/verify-otp/signin?sms=${phone}`
+       url = `https://aremxyplug.onrender.com/api/v1/sms/verify/signin?phone=${phone}`
        body ={
+      phone_number : phone,
        otp :otp3
        }
        console.log(otp3);
@@ -129,6 +232,9 @@ const gettingSmsOrEmailFunctionOtp = async(url, body)=> {
       if( error.response && error.response.status === 400){
         setVerificationPinError(true);
         console.log("The Verification failed")
+      }else if(error.response.status === 404){
+     setVerificationPinError(true)
+      alert("OOPs, an error has occured")
       }else if(error.response &&error.response.status === 500){
         alert("INTERNAL_SERVER_ERROR");
       }
@@ -168,12 +274,12 @@ return () => clearInterval(timer);
 }, [countdown2, open2StepOTP, smsOrEmail]);
 
   const handleResendOTP = () => {
-    gettingOtpFunction();
+    getOtpSmsorEmail();
     setCanResend(false);
     setVerificationPinError("")
   };
   const handleResendOTP2 = () => {
-    gettingOtpFunction()
+    getOtpSmsorEmail()
     setCanResend2(false);
     setVerificationPinError("")
   };
@@ -230,7 +336,7 @@ return () => clearInterval(timer);
       setLoading(false);
     }
   }
- 
+
 
   return (
     <div>
@@ -239,7 +345,7 @@ return () => clearInterval(timer);
         <Modal>
           <div className="w-[100%]  mx-[24px] flex justify-center lg:justify-end lg:mr-[300px]">
           <div className=" p-4 flex flex-col gap-[5px] rounded-[8.6px] h-auto w-[100%] bg-white
-             lg:h-auto lg:w-[348px] lg:rounded-[15px]">
+             lg:h-auto lg:w-[35%] lg:rounded-[15px]">
             <div 
             className="w-[100%] flex justify-end ">
             <img onClick={()=>{
@@ -249,10 +355,10 @@ return () => clearInterval(timer);
                md:h-[25px] " alt="" />  
                </div>
             <div className="mb-[25px] lg:mb-[30px]">
-              <p className="text-center text-[12px] lg:text-[14px] font-[500] lg:font-[700]  mb-[7] lg:mb-[10px]">
+              <p className="text-center text-[12px] lg:text-[16px] font-[500] lg:font-[700]  mb-[7] lg:mb-[10px]">
                 2-Step Verification!!!
               </p>
-              <p className="text-center text-gray-500 font-[400] lg:font-[500] lg:text-[12px] text-[10px]">
+              <p className="text-center text-gray-500 font-[400] lg:font-[500] lg:text-[14px] text-[10px]">
                 To ensure a safety security of your account, we want to verify
                 it’s really you.
               </p>
@@ -274,8 +380,8 @@ return () => clearInterval(timer);
                   alt=""
                 />
                 <div className="flex flex-col">
-                  <p className="text-[10px] lg:text-[12px] font-[400] lg:font-[600]">Via SMS</p>
-                  <p className="text-[8px] lg:text-[10px] text-gray-500 font-[400] lg:font-[600]">
+                  <p className="text-[10px] lg:text-[14px] font-[400] lg:font-[600]">Via SMS</p>
+                  <p className="text-[8px] lg:text-[12px] text-gray-500 font-[400] lg:font-[600]">
                     {`${phone.slice(3,6)}******`}
                     </p>
                 </div>
@@ -300,15 +406,15 @@ return () => clearInterval(timer);
                   alt=""
                 />
                 <div className="flex flex-col">
-                  <p className="text-[10px] lg:text-[12px] font-[400] lg:font-[600]"> Via Email</p>
-                  <p className="text-[8px] lg:text-[10px]  text-gray-500 font-[400] lg:font-[600]">{`${email.slice(0,3)}********`}</p>
+                  <p className="text-[10px] lg:text-[14px] font-[400] lg:font-[600]"> Via Email</p>
+                  <p className="text-[8px] lg:text-[12px]  text-gray-500 font-[400] lg:font-[600]">{`${email.slice(0,3)}********`}</p>
                 </div>
               </div>
               {/* VIA Email ENDS HERE*/}
 
               <div className="w-full flex justify-center mt-[30px] md:mt-[35px] lg:mt-[50px]">
                 <button
-                  onClick={gettingOtpFunction}
+                  onClick={getOtpSmsorEmail}
                   type="submit"
                   disabled={smsOrEmail === "" ? true : false}
                   className={` ${
@@ -333,7 +439,8 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
       {/* FORM OVERLAY AND TRANSACTION PIN INPUT STARTS HERE */}
       {openTranspin === true && (
         <Modal>
-          <div className="lg:ml-[38.5%] md:ml-[40%] md:-mt-[20%] lg:-mb-[30%] px-[17.609px] py-[35.536px] bg-white rounded-[10.3px] md:py-[34.96px] md:px-[17.6px] lg:py-[62px] lg:px-[31px]">
+          <div className="lg:ml-[38.5%] md:ml-[40%] md:-mt-[20%] lg:-mb-[30%] px-[17.609px] py-[35.536px]
+           bg-white rounded-[10.3px] md:py-[34.96px] md:px-[17.6px] lg:py-[62px] lg:px-[31px]">
             <p className="lg:text-[16px] text-[9.167px] text-[#000] mb-[30px] text-center">
               Create your transaction pin to continue operations!
             </p>
@@ -387,7 +494,7 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
                 renderInput={(props) => (
                   <input 
                   type="password"
-                  {...props} className="inputOTP mx-[3px] " />
+                  {...props} className="inputOTP mx-[3px]"/>
                 )}
               />
             </div>
@@ -427,17 +534,18 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
 
       {open2StepOTP === true && smsOrEmail === "sms" && (
         <Modal>
-          <div className="lg:ml-[38.5%] md:ml-[40%] md:w-[20%] md:-mt-[20%] lg:-mb-[30%] w-[100%] 
-           mx-[24px] px-[20.609px] py-[35.536px] bg-white rounded-[10.3px] md:py-[34.96px] md:px-[17.6px] lg:py-[30px] lg:px-[31px]">
+          <div className="lg:ml-[38.5%] md:ml-[40%] md:w-[30%] md:-mt-[20%] lg:-mb-[30%] w-[100%] 
+           mx-[24px] px-[20.609px] py-[35.536px] bg-white rounded-[10.3px] 
+           md:py-[34.96px] md:px-[17.6px] lg:py-[40px] lg:px-[31px]">
             <div className="mb-[25px] lg:mb-[30px]">
-              <p className="  lg:text-[14px] font-[500] lg:font-[700] text-[12px] ">
+              <p className=" lg:text-[16px] font-[500] lg:font-[700] text-[12px] ">
                 Verification code has been sent to your phone
               </p>
-              <p className=" lg:text-[14px] font-[500] lg:font-[700] text-[10px] mb-[7] lg:mb-[10px]">
+              <p className=" lg:text-[16px] font-[500] lg:font-[700] text-[12px] mb-[7] lg:mb-[10px]">
               {`${phone.slice(3,6)}********`}
               </p>
               <p
-                className="text-[#737373] font-[400] lg:font-[600] lg:text-[12px] text-[10px] cursor-pointer"
+                className="text-[#737373] font-[400] lg:font-[600] lg:text-[14px] text-[12px] cursor-pointer"
                 onClick={() => {
                   setCountdown2(60);
                   setSmsOrEmail("email");
@@ -447,8 +555,8 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
               </p>
             </div>
             <div>
-              <div className="flex justify-center">
-                <div className="flex flex-col gap-[3px] ">
+              <div className="flex justify-center gap-[10px] flex-col w-[100%]">
+               <div className="flex justify-center">
                   <OtpInput
                     value={otp3}
                     inputType="tel"
@@ -456,17 +564,17 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
                     numInputs={6}
                     shouldAutoFocus={true}
                     inputStyle={{
-                      color: "#403f3f",
-                      width: 30,
-                      height: 30,
-                      borderRadius: 3,
+                      width  : "16.67%",
                     }}
                     renderInput={(props) => (
                       <input
                       type="password"
-                      {...props} className="inputOTP mx-[3px]" />
+                      {...props} className="flex h-[35px] md:h-[45px] lg:h-[65px] text-[12px]
+                   md:text-[14px] lg:text-[20px] md:rounded-[12px] rounded-[10px]
+                        lg:rounded-[14px] border-2 border-blue-300 lg:mx-2 mx-1 focus:outline-pink-300"/>
                     )}
                   />
+                </div>
                   {/* Error message starts here */}
                   {verificationPinError === true ? (
                     <p className="text-center text-red-500 md:font-[500] font-[400] lg:text-[16px] text-[9.167px] mt-[3px] lg:mt-[15px]">
@@ -479,19 +587,21 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
                   {/* Resend OTP starts here */}
 
                   <div className="w-[100%] flex justify-between">
-                    <p className="text-[#04177F] font-[400] lg:font-[600] text-[10.729px] lg:text-[12px]">
+                    <p className="text-[#04177F] font-[400] lg:font-[600] text-[10.729px] lg:text-[16px]">
                       {countdown}
                       <span>sec</span>
                     </p>
                     {canResend ? (
                       <p
-                        className="text-[#04177F] font-[400] lg:font-[600] text-[10.729px] lg:text-[12px] cursor-pointer"
+                        className="text-[#04177F] font-[400] lg:font-[600] text-[10.729px] md:text-[12px] 
+                        lg:text-[16px] cursor-pointer"
                         onClick={handleResendOTP}
                       >
                         Resend OTP
                       </p>
                     ) : (
-                      <p className="text-gray-400 font-[400] lg:font-[600] text-[10.729px] lg:text-[12px] cursor-not-allowed">
+                      <p className="text-gray-400 font-[400] lg:font-[600] text-[10.729px] md:text-[12px] 
+                      lg:text-[16px] cursor-not-allowed">
                         Resend OTP
                       </p>
                     )}
@@ -499,7 +609,7 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
 
                   {/* Resend OTP ends here */}
                 </div>
-              </div>
+              
 
               <div className="w-full flex justify-center mt-[20px] mb-[10px] lg:mb-[10px] lg:mt-[50px]">
                 <button
@@ -526,16 +636,18 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
       )}
       {open2StepOTP === true && smsOrEmail === "email" && (
         <Modal>
-          <div className="lg:ml-[38.5%] md:ml-[40%] md:w-[20%] md:-mt-[20%] lg:-mb-[30%] w-[100%]  mx-[24px] px-[20.609px] py-[35.536px] bg-white rounded-[10.3px] md:py-[34.96px] md:px-[17.6px] lg:py-[30px] lg:px-[31px]">
+          <div className="lg:ml-[38.5%] md:ml-[40%] lg:w-[30%] md:w-[35%] md:-mt-[20%] lg:-mb-[30%] w-[100%] 
+           mx-[24px] px-[20.609px] py-[35.536px] bg-white rounded-[10.3px] 
+           md:py-[34.96px] md:px-[17.6px] lg:py-[40px] lg:px-[31px]">
             <div className="mb-[25px] lg:mb-[30px]">
-              <p className="  lg:text-[14px] text-[12px] font-[500] lg:font-[700]">
+              <p className="  lg:text-[16px] text-[14px] font-[500] lg:font-[700]">
                 Verification code has been sent to 
               </p>
-              <p className=" lg:text-[14px] text-[12px] font-[500] lg:font-[700] mb-[7] lg:mb-[10px]">
+              <p className=" lg:text-[16px] text-[12px] font-[500] lg:font-[700] mb-[7] lg:mb-[10px]">
                 your email  {`${email.slice(0,3)}********`}
               </p>
               <p
-                className="text-[#737373] lg:text-[12px] font-[400] lg:font-[600] text-[10px] cursor-pointer"
+                className="text-[#737373] lg:text-[14px] font-[400] lg:font-[600] text-[10px] cursor-pointer"
                 onClick={() => {
                   setCountdown(60);
                   setSmsOrEmail("sms");
@@ -545,8 +657,8 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
               </p>
             </div>
             <div>
-              <div className="flex justify-center">
-                <div className="flex flex-col gap-[3px] ">
+              <div className="flex flex-col justify-center gap-[10px] w-[100%]">
+                <div className="flex justify-center">
                   <OtpInput
                     value={otp3}
                     inputType="tel"
@@ -554,17 +666,17 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
                     numInputs={6}
                     shouldAutoFocus={true}
                     inputStyle={{
-                      color: "#403f3f",
-                      width: 30,
-                      height: 30,
-                      borderRadius: 3,
+                     width : "16.67%",
                     }}
                     renderInput={(props) => (
                       <input 
                       type="password"
-                      {...props} className="inputOTP mx-[3px]" />
+                      {...props} className="flex h-[35px] md:h-[45px] lg:h-[65px] text-[12px]
+                   md:text-[14px] lg:text-[20px] md:rounded-[12px] rounded-[10px]
+                        lg:rounded-[14px] border-2 border-blue-300 lg:mx-2 mx-1 focus:outline-pink-300" />
                     )}
                   />
+                  </div>
                   {/* Error message starts here */}
                   {verificationPinError === true ? (
                     <p className="text-center text-red-500 md:font-[500] font-[400] lg:text-[16px] text-[9.167px] mt-[3px] lg:mt-[15px]">
@@ -577,26 +689,26 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
                   {/* Resend OTP starts here */}
 
                   <div className="w-[100%] flex justify-between">
-                    <p className="text-[#04177F] font-[400] lg:font-[600] text-[10.729px] lg:text-[12px]">
+                    <p className="text-[#04177F] font-[400] lg:font-[600] text-[12.729px] lg:text-[16px]">
                       {countdown2}
                       <span>sec</span>
                     </p>
                     {canResend2 ? (
                       <p
-                        className="text-[#04177F] font-[400] lg:font-[600] text-[10.729px] lg:text-[12px] cursor-pointer"
+                        className="text-[#04177F] font-[400] lg:font-[600] text-[12.729px] lg:text-[16px] cursor-pointer"
                         onClick={handleResendOTP2}
                       >
                         Resend OTP
                       </p>
                     ) : (
-                      <p className="text-gray-400 font-[400] lg:font-[600] text-[10.729px] lg:text-[12px] cursor-not-allowed">
+                      <p className="text-gray-400 font-[400] lg:font-[600] text-[12.729px] lg:text-[16px] cursor-not-allowed">
                         Resend OTP
                       </p>
                     )}
                   </div>
 
                   {/* Resend OTP ends here */}
-                </div>
+                
               </div>
 
               <div className="w-full flex justify-center mt-[20px] mb-[10px] lg:mb-[10px] lg:mt-[35px]">
@@ -686,7 +798,7 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
            
               {/* <Link to="/"> */}
                <Link to="/dashboard" className="w-[100%] flex justify-center">
-                  <div onClick={() => setTwoStepVerificationSuccess(false)}
+                  <div onClick={() =>handleAccountDetails()}
                    className="flex w-[100%] lg:w-[50%]  rounded-[8px] lg:rounded-[16px]
                 mt-[20px] justify-center  lg:mt-[50px]  cursor-pointer text-[10px] font-bold leading-[11.31px] 
                      py-[14px]   lg:py-[15px] lg:text-[14px]"  style={{

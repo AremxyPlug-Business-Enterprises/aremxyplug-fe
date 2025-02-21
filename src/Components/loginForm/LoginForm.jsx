@@ -11,9 +11,6 @@ import Joi from "joi";
 import axios from "axios";
 import { Loader } from "../Loader/Loader";
 import { Modal } from "../Screens/Modal/Modal";
-import bvnVerifiedSuccess  from "../My Profile & Account Settings/ProfileImages/user-tick.svg";
-import NotVerifiedImage from "../My Profile & Account Settings/ProfileImages/NotVerifiedIcon.svg";
-import PendingImage from "../My Profile & Account Settings/ProfileImages/Pending.svg";
 
 
 function LoginForm() {
@@ -21,11 +18,6 @@ function LoginForm() {
      setOpenResetTranspin,
       setOpen2StepVerification,
       setLoginAuthorisation,
-      loginAuthorisation,
-      setBvnStatus,
-      setBvnVerifyImage,
-      setDashLoading,
-//customerDetail,
       setCustomerDetail,
       } = useContext(ContextProvider);
   const [usernameORemail, setUsernameORemail] = useState("username");
@@ -151,52 +143,8 @@ function LoginForm() {
 
 
 // Function to get user Token
-const getTokenNeeded =(Token)=> {
-  Token=localStorage.getItem("getToken")
-  //console.log(Token)
-  console.log(Token)
-  return Token;
-}
-
 
 //Function to get User Bank Details
-const checkBvnform = async(Token) => {
-  getTokenNeeded(Token)
-  if (loginAuthorisation) {
-    setDashLoading(true);
-const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc'
-   // console.log(data)
-   try{
-    setBvnVerifyImage(PendingImage)
-    setBvnStatus("Pending")
-        const response = await axios.get(url, {headers : {"Content-Type" : "application/json",
-    Authorization : Token || loginAuthorisation
-    }})
-  
-      if (response.status === 201 || 200 ) {
-          setBvnVerifyImage(bvnVerifiedSuccess);
-          setBvnStatus('Verified');
-          console.log(response)
-        } 
-      
-    }catch(error){
-     if(error.status === 401 || 400){
-      alert("An error has occured")
-      setBvnStatus('Not Verified');
-      setBvnVerifyImage(NotVerifiedImage)
-          }
-        else if(error.status === 500){
-          alert('Error:', "INTERNAL_SERVER_ERROR");
-        setBvnStatus('Not Verified');
-       setBvnVerifyImage(NotVerifiedImage)
-        }
-      }finally {
-        setDashLoading(false);
-        //alert("success")
-      }
-  }
-};
-   
 
   
 
@@ -321,8 +269,12 @@ const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc'
                }else if(response.status === 200){
                 setOpen2StepVerification(true);
              const customer  =  response.data.data.customer;
-            if(customer){
+             const authToken = response.headers.get('Authorization');
+
+            if(customer && authToken) {
             setCustomerDetail(customer);
+            localStorage.setItem('authorisedLogin', authToken)
+            setLoginAuthorisation(authToken);
             }
               } else if(response.status === 404){
            alert("User not found")
@@ -379,7 +331,7 @@ const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc'
         <form onSubmit={submitHandler}>
           <div className="px-[15%] lg:px-[20%]">
             <div className=" mb-[14px] md:mb-[18px] lg:mb-[20px]">
-              <p className="text-[8.93px] md:text-[11.58px] lg:text-[16px] font-[600] w-[70%] mb-[7px] lg:mb-[10px] tracking-wider">
+              <p className="text-[12.93px] md:text-[14.58px] lg:text-[20px] font-[600] w-[70%] mb-[7px] lg:mb-[10px] tracking-wider">
                 <span
                   className={`${
                     usernameORemail === "username" ? "text-[#04177F]" : ""
@@ -402,7 +354,8 @@ const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc'
                 </span>
               </p>
               <div
-                className={`inputBoxShadow w-[100%] h-[22.75px] lg:h-[39px] rounded flex items-center lg:hover:border-[#b3b3b3] lg:duration-300 
+                className={`inputBoxShadow w-[100%] h-[39.75px] lg:h-[42px]
+                   rounded flex items-center lg:hover:border-[#b3b3b3] lg:duration-300 
             ${
               isFocused.includes(1)
                 ? "border-[#2684fe] border-2"
@@ -412,7 +365,8 @@ const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc'
                 onBlur={() => handleBlur(1)}
               >
                 <input
-                  className="w-full h-full text-[8.93px] md:text-[11.58px] lg:text-[20px] px-[7.5px] md:px-[10px] rounded  text-[#403f3f] outline-none "
+                  className="w-full h-full text-[12.93px] 
+                  md:text-[14.58px] lg:text-[16px] px-[7.5px] md:px-[10px] rounded  text-[#403f3f] outline-none "
                   type="text"
                   value={usernameORemail === "username" ? username : email}
                   onChange={
@@ -465,11 +419,11 @@ const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc'
             {/* Email ends here*/}
             {/* Password starts here 268455*/}
             <div className="mb-[14px] md:mb-[18px] lg:mb-[20px]">
-              <p className="text-[8.93px] md:text-[11.58px] lg:text-[16px] font-[600] w-[30%] mb-[7px] lg:mb-[10px] tracking-wider">
+              <p className="text-[12.93px] md:text-[14.58px] lg:text-[20px] font-[600] w-[30%] mb-[7px] lg:mb-[10px] tracking-wider">
                 Password
               </p>
               <div
-                className={`relative inputBoxShadow w-[100%] h-[22.75px] lg:h-[39px]  rounded  flex items-center lg:hover:border-[#b3b3b3] lg:duration-300 
+                className={`relative inputBoxShadow w-[100%] h-[39.75px] lg:h-[42px]  rounded  flex items-center lg:hover:border-[#b3b3b3] lg:duration-300 
             ${
               isFocused.includes(2)
                 ? "border-[#2684fe] border-2"
@@ -496,8 +450,8 @@ const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc'
                 <input
                   className={`w-full h-full ${
                     passwordHidden === "password"
-                      ? "text-[8.93px] md:text-[8px] lg:text-[13px]"
-                      : "text-[8.93px] md:text-[11.58px] lg:text-[20px]"
+                      ? "text-[12.93px] md:text-[14px] lg:text-[16px]"
+                      : "text-[12.93px] md:text-[14.58px] lg:text-[16px]"
                   }  pl-[7.5px] md:pl-[10px] pr-[40px] md:pr-[50px] rounded  text-[#403f3f] outline-none`}
                   value={password}
                   onChange={passwordHandler}
@@ -509,7 +463,7 @@ const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc'
             </div>
             {/* Password ends here*/}
             <p
-              className="text-[#04177F] lg:text-[14px] md:text-[8.02px] text-[8.02px]
+              className="text-[#04177F] lg:text-[16px] md:text-[14.02px] text-[12.02px]
               font-semibold my-2 cursor-pointer tracking-wider"
               onClick={() =>{
                 setShowModal(true)
@@ -525,7 +479,7 @@ const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc'
                 checked={checkbox}
                 onChange={checkBoxHandler}
               />
-              <p className="ml-2 lg:text-[14px] md:text-[8.02px] text-[8.02px] text-[#575757]  tracking-wider  ">
+              <p className="ml-2 lg:text-[14px] md:text-[8.02px]  text-[8.02px] text-[#575757]  tracking-wider  ">
                 Remember me next time!
               </p>
             </div>
