@@ -17,16 +17,14 @@ import { WalletInOutFlows } from "../DashboardComponents/WalletInOutFlows";
 import { RecentTransaction } from "../DashboardComponents/RecentTransaction";
 import { Link } from "react-router-dom";
 import { Loader } from "../../Loader/Loader";
-import bvnVerifiedSuccess from "../../My Profile & Account Settings/ProfileImages/user-tick.svg";
-import NotVerifiedImage from "../../My Profile & Account Settings/ProfileImages/NotVerifiedIcon.svg";
-import PendingImage from '../../My Profile & Account Settings/ProfileImages/Pending.svg';
-import axios from "axios";
+
 
 
 export const MainDashboard = () => {
-  const { setHideNavbar, toggleSideBar, isDarkMode,dashLoading, customerDetail, 
-    setDashLoading, setBvnStatus, setBvnVerifyImage, loginAuthorisation, setVirtualAccCreated, virtualAccCreated} =
+  const { setHideNavbar, toggleSideBar, isDarkMode,dashLoading, bankNameState, setBankNameState, 
+    accountNameState, setAccountNameState, accountNumberState, setAccountNumberState, customerDetail} =
     useContext(ContextProvider);
+   
   const [visible, setVisibility] = useState(true);
   const [activeButtons, setActiveButtons] = useState([true, false, false]);
   const [blur, setBlur] = useState(false);
@@ -36,12 +34,7 @@ export const MainDashboard = () => {
   const [selected, setSelected] = useState("");
   const [selected2, setSelected2] = useState("");
   const [symbol, setSymbol] = useState("₦");
-  const [bankNameState, setBankNameState] = useState("....")
-  const [accountNameState, setAccountNameState] = useState("...")
-  const [accountNumberState, setAccountNumberState] = useState("...");
-  const {bank_name, account_no, account_name} = virtualAccCreated
-  const {full_name} = customerDetail
-
+  
   const handleCopyClick = () => {
     const text = textRef.current.innerText;
     navigator.clipboard
@@ -66,6 +59,7 @@ export const MainDashboard = () => {
     setNav();
     return () => {
       setHideNavbar(false);
+      console.log(customerDetail)
     };
     // eslint-disable-next-line
   }, []);
@@ -115,103 +109,31 @@ export const MainDashboard = () => {
     return;
   };
 
-
-  const getTokenNeeded =(Token)=> {
-    Token=localStorage.getItem("getToken")
-    //console.log(Token)
-    console.log(Token)
-    return Token;
-  }
-  
-  
-//The syntax of this fxn is to set this useStates to the bank name,
-//account number , account name if virtual account is true 
-// virtual account can only be true if user sign properly 
-//through the various user authentications and flows provided
-  const GetVirtualAccountValue = (bankname, accountname, accountno)=> {
-   
-     setBankNameState(bankname);
-     setAccountNameState(accountname.slice(11));
-     setAccountNumberState(`${accountno.slice(0,4)}********`)
-    
-  }
-  
-  const DataLostDetails = ()=> {
-    if(full_name === undefined){
-      alert("ERROR : Re-do the Sign-in process to continue operations and retrieve data history")
-     setBankNameState("Couldn't resolve your bank name");
-     setAccountNameState("Couldn't resolve your account name");
-     setAccountNumberState("Couldn't resolve your account number")
-    }
-  }
-  //Function to get User Bank Details
-  const CheckVirtualAcc = async(Token) => {
-    getTokenNeeded(Token)
-    if (loginAuthorisation) {
-      setDashLoading(true);
-  const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc'
-     // console.log(data)
-     try{
-      setBvnVerifyImage(PendingImage)
-      setBvnStatus("Pending")
-          const response = await axios.get(url, {headers : {"Content-Type" : "application/json",
-      Authorization : Token || loginAuthorisation
-      }})
-    
-        if (response.status === 201 || 200 ) {
-            setBvnVerifyImage(bvnVerifiedSuccess);
-            setBvnStatus('Verified');
-            const virtualAccount = response.data.data.acc_details
-            setVirtualAccCreated(virtualAccount);
-            const {bank_name, account_no, account_name} = virtualAccCreated
-            console.log(virtualAccCreated)
-            if(virtualAccCreated) return GetVirtualAccountValue(bank_name, account_name, account_no);
-          } 
-        
-      }catch(error){
-       if(error.status === 401 || 400){
-        alert("An error has occured")
-        setBvnStatus('Not Verified');
-        setBvnVerifyImage(NotVerifiedImage);
-        console.log(`ERROR: ${error}`)
-     
-            }
-          else if(error.status === 500){
-            alert('Error:', "INTERNAL_SERVER_ERROR");
-          setBvnStatus('Not Verified');
-         setBvnVerifyImage(NotVerifiedImage)
-        
-          }
-        }finally {
-          setDashLoading(false);
-          //alert("success")
-        }
-    }
-  }
+  console.log(customerDetail); 
 
 
 // USEEEFECT TO RETURN USERS BANK DETAILS
 
-// To help get the user bank details and check if the user details is in the app
+// To help get the user bank details and check if the user details is on the app
 
-useEffect(()=> {
-  return async()=>{
-    if(full_name === undefined || ""){
-      DataLostDetails()
-    }else{
-      await CheckVirtualAcc()
-      }
-    }
-  },[full_name])
+useEffect(()=>{
+ const DetailsError= ()=> {
+    if(bankNameState ==="Null" || accountNameState ==="Null"|| accountNumberState ==="Null"){
+     alert("ERROR : Re-do the Sign-in process to continue operations and retrieve data history")
+    setBankNameState("Null");
+    setAccountNameState("Null");
+     setAccountNumberState("Null")
+   }
+}
+  return DetailsError;
+},[(!bankNameState || !accountNameState || !accountNumberState)])
 
-  
 
-  
 
 
 
   return (
-    <div>
+    <div className="">
       {/* ==============TOP BAR========== */}
       <TopBar />
 
@@ -306,11 +228,13 @@ useEffect(()=> {
 
           {/* ==========AVAILABLE BALANCE=========== */}
         
-          <div className={styles.balance}>
+          <div className={` flex flex-col md:flex-row gap-5 mt-[10%] md:mt-4
+            lg:mt-12 lg:rounded-[16.32px]  w-full`}>
             <div
               className={`${
                 isDarkMode ? "bg-[#000] border border-[#fff]" : "bg-[#e9edfb]"
-              } ${styles.balance1}`}
+              } w-[100%] md:w-1/2 flex flex-col h-auto rounded-[8px] md:rounded-[10px] lg:rounded-[16.32px]
+              lg:p-[20px] md:p-[15px] p-[10px] justify-between`}
             >
               <Link to="/wallet">
                 <button
@@ -424,7 +348,7 @@ useEffect(()=> {
               <div
                 className={`${toggleSideBar ? "lg:mt-[20%]" : ""} ${
                   styles.fcp
-                } flex justify-center items-center gap-[75px] mt-[10%] md:mt-[9%] `}
+                } flex justify-between items-center mt-[10%] md:mt-[9%] `}
               >
                 <div
                   onClick={() => {
@@ -439,7 +363,9 @@ useEffect(()=> {
                       : " bg-[#92ABFE2E]"
                   } ${
                     isDarkMode ? " border" : " "
-                  } cursor-pointer w-[17%] md:w-[10%] flex py-[3.92px] justify-center items-center text-[7px] md:text-[10px] font-semibold leading-normal rounded-[10px] lg:text-[13px] lg:w-[16%] lg:py-[7.47px] lg:rounded-[19px] `}
+                  } cursor-pointer flex  justify-center
+                   items-center text-[10px] md:text-[11px] lg:text-[12px] font-[600] leading-normal 
+                   rounded-[10px] py-[10px] px-[20px] lg:w-[16%] lg:py-[10.47px] lg:px-[15px] lg:rounded-[19px] `}
                 >
                   Fiat
                 </div>
@@ -452,7 +378,9 @@ useEffect(()=> {
                   }}
                   className={`${styles.fcp2} ${
                     isDarkMode ? " border" : " "
-                  } md:text-[10px] md:w-[10%] cursor-pointer w-[17%] flex py-[3.92px] justify-center items-center text-[7px] font-semibold leading-normal rounded-[10px] lg:w-[16%] lg:text-[13px] lg:py-[7.47px] lg:rounded-[19px] ${
+                  } cursor-pointer flex  justify-center
+                   items-center text-[10px] md:text-[11px] lg:text-[12px] font-[600] leading-normal 
+                   rounded-[10px] py-[10px] px-[20px] lg:w-[16%] lg:py-[10.47px] lg:px-[15px] lg:rounded-[19px] ${
                     activeButtons[1]
                       ? "bg-[#04177f] text-[#fff]"
                       : "bg-[#92ABFE2E]"
@@ -469,7 +397,9 @@ useEffect(()=> {
                   }}
                   className={`${styles.fcp2} ${
                     isDarkMode ? " border" : " "
-                  } md:text-[10px] md:w-[10%] cursor-pointer w-[17%] flex py-[3.92px] justify-center items-center text-[7px] font-semibold leading-normal rounded-[10px] lg:w-[16%] lg:text-[13px] lg:py-[7.47px] lg:rounded-[19px] ${
+                  }  cursor-pointer flex  justify-center
+                   items-center text-[10px] md:text-[11px] lg:text-[12px] font-[600] leading-normal 
+                   rounded-[10px] py-[10px] px-[20px] lg:w-[16%] lg:py-[10.47px] lg:px-[15px] lg:rounded-[19px] ${
                     activeButtons[2]
                       ? "bg-[#04177f] text-[#fff]"
                       : "bg-[#92ABFE2E]"
@@ -481,15 +411,15 @@ useEffect(()=> {
             </div>
 
             {/* ==========VIRTUAL ACCOUNTS============= */}
-            {dashLoading ? (<div className=" flex justify-center items-center lg:w-1/2  lg:h-[200px] w-[100%] h-[100px]">
+            {dashLoading ? (<div className=" flex justify-center items-center md:w-1/2  lg:h-[200px] w-[100%] h-[100px]">
              <Loader/>
             </div>):
             (
             <div
               className={`${
                 isDarkMode ? "bg-[#000] border border-[#fff]" : "bg-[#e9edfb]"
-              } ${styles.balance2}`}
-            >
+              } w-full h-auto md:w-1/2 rounded-[8.32px] lg:rounded-[16.32px] md:rounded-[10px]
+              flex flex-col justify-between lg:p-[20px] md:p-[15px] p-[10px]`} >
               <Link to="/virtual-account">
                 {" "}
                 <button
@@ -591,7 +521,7 @@ useEffect(()=> {
   }}>
                 {" "}
                 <button
-                  className={`text-[10px] md:text-[11px] lg:text-[12px] font-[600] ${
+                  className={`text-[10px] md:text-[11px] lg:text-[12px] font-[600] mt-[20px] lg:mt-[30px] ${
                     isDarkMode ? "border bg-black" : "bg-[#04177f]"
                   } ${styles.viewWallet}`}
                 >
@@ -605,68 +535,74 @@ useEffect(()=> {
           {/* ================VIRTUAL ACCOUNT CLOSE=============== */}
 
           <div
-            className={`${styles.ttwc} ${
+            className={`flex justify-between w-[100%] ${
               toggleSideBar ? "lg:gap-[63px]" : "lg:gap-[80px]"
-            } flex mt-[5%] gap-[30px] md:gap-[90px] `}
+            } flex mt-[5%] gap-[10px] md:gap-[50px] `}
           >
             <Link
               to="/top-up"
               className={`${
                 isDarkMode ? " border bg-[#000]" : "bg-[#04177f]"
-              } ${styles.button}`}
+              } w-[25%] rounded-[10px] lg:rounded-[19px] lg:py-[15px]
+               py-[12px] flex items-center px-[10px] gap-[10%]
+                `}
             >
               <img
                 className="w-[11px] h-[11px] md:h-[20px] md:w-[20px] lg:w-[51px] lg:h-[51px]"
                 src="./Images/dashboardImages/topup.png"
                 alt="topup"
               />
-              <p>Topup</p>
+              <p className="text-white text-[10px] md:text-[12px] lg:text-[16px] 
+                font-[500] lg:font-[600]">Topup</p>
             </Link>
             <Link
               to="/money-transfer"
               className={`${
                 isDarkMode ? " border bg-[#000]" : "bg-[#04177f] "
-              } ${styles.button}`}
+              } w-[25%] py-[12px] px-[10px] lg:py-[15px]
+               flex items-center gap-[10%] rounded-[10px] lg:rounded-[19px]`}
             >
-              <div className="flex items-center gap-[10%]">
                 <img
                   className="w-[11px] h-[11px] md:h-[20px] md:w-[20px] lg:w-[51px] lg:h-[51px]"
                   src="./Images/dashboardImages/transfer.png"
                   alt="topup"
                 />
-                <p>Transfer</p>
-              </div>
+                <p className="text-white text-[10px] md:text-[12px] lg:text-[16px] 
+                font-[500] lg:font-[600]">Transfer</p>
             </Link>
             <Link
               to="/withdraw"
               className={`${
                 isDarkMode ? " border bg-[#000]" : "bg-[#04177f]"
-              } ${styles.button} pr-3`}
+              } w-[25%] py-[12px] px-[10px] lg:py-[15px]
+              flex items-center gap-[10%] rounded-[10px] lg:rounded-[19px]`}
             >
               {" "}
-              <div className="flex items-center gap-[10%]">
                 <img
                   className="w-[11px] h-[11px] md:h-[20px] md:w-[20px] lg:w-[51px] lg:h-[51px]"
                   src="./Images/dashboardImages/withdraw.png"
                   alt="topup"
                 />
-                <p>Withdraw</p>
-              </div>
+                <p className="text-white text-[10px] md:text-[12px] lg:text-[16px] 
+                font-[500] lg:font-[600]">Withdraw</p>
+            
             </Link>
             <Link
               to="/currencyConversion"
               className={`${
                 isDarkMode ? " border bg-[#000]" : "bg-[#04177f]"
-              } ${styles.button}`}
+              } w-[25%] py-[12px] flex items-center gap-[10%] 
+              rounded-[10px] lg:py-[15px] lg:rounded-[19px] px-[10px]`}
             >
-              <div className="flex items-center gap-[10%]">
                 <img
-                  className="w-[11px] h-[11px] md:h-[20px] md:w-[20px] lg:w-[51px] lg:h-[51px]"
+                  className="w-[11px] h-[11px]
+                   md:h-[20px] md:w-[20px] lg:w-[51px] lg:h-[51px]"
                   src="./Images/dashboardImages/convert.png"
                   alt="topup"
                 />
-                <p>Convert</p>
-              </div>
+                <p className="text-white text-[10px] md:text-[14px] lg:text-[16px] 
+                font-[500] lg:font-[600]">Convert</p>
+              
             </Link>
           </div>
 
