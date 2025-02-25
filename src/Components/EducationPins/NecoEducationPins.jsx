@@ -216,7 +216,7 @@ export default function NecoEducationPins() {
           <div className='flex lg:gap-[8px] items-center gap-[4.694px] md:gap-[5.868px] mb-[20px]  
       lg:mb-[50px] md:mb-[30px]'>
 
-            <h2 className='font-[600] text-[9px] leading-[12px] md:text-[9.389px]
+            <h2 className='font-[600] text-[13px] leading-[12px] md:text-[9.389px]
          md:leading-[11.267px] lg:text-[16px] text-[#7E7E7E] lg:leading-[20.2px]'>
               Purchase
             </h2>
@@ -224,7 +224,7 @@ export default function NecoEducationPins() {
             <img className='h-[12px] w-[12px] md:h-[14.083px] md-w-[14.083px] lg:h-[24px] lg:w-[24px] self-center'
               src={NecoImg} alt="" />
 
-            <h2 className='font-[600] text-[9px] leading-[12px] md:text-[9.389px]
+            <h2 className='font-[600] text-[13px] leading-[12px] md:text-[9.389px]
          md:leading-[11.267px] lg:text-[16px] text-[#7E7E7E] lg:leading-[20.2px]'>
               NECO E-PINs Instantly
             </h2>
@@ -244,7 +244,7 @@ export default function NecoEducationPins() {
                 <div className='relative flex flex-col w-[100%] gap-[5.868px] md:w-1/2 md:gap-[5.868px]  
      lg:gap-[10px]'>
                   {/* header */}
-                  <h2 className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px]  
+                  <h2 className='font-[600] text-[#7E7E7E] text-[12px] leading-[10.4px]  
        md:text-[9.389px] md:leading-[12.206px]
       lg:text-[16px] lg:leading-[20.8px]'>
                     Confirm Exam Type
@@ -258,24 +258,24 @@ export default function NecoEducationPins() {
                     <input type="text"
 
                       value={necoExamType}
-                      className=' flex  justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
+                      className=' flex  justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] mt-2 md:mt-0
  md:pt-[8.802px] md:pb-[7.042px] w-[100%]
 md:pr-[5.282px] md:pl-[5.867px] bg-white
 lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
 border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]
 font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
-    lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer focus:outline-none'
+    lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer focus:outline-none border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg'
                       readOnly />
 
                     <img
                       className='absolute lg:top-[15px] lg:right-[9px] md:top-[8.802px] md:right-[5.282px]
-        top-[8.802px] right-[13px]
+        top-[21.802px] right-[13px]
         Examdrop md:h-[14.038px] md:w-[14.038px] 
       lg:h-[24px] lg:w-[24px] w-[14px] h-[14px]'
                       src={arrowDown} alt="" />
                   </div>
                   {necoExamActive && (
-                    <div className='absolute lg:top-[90px] md:top-[60px] top-[50px] z-[5]  flex flex-col 
+                    <div className='absolute lg:top-[90px] md:top-[60px] top-[68px] z-[5]  flex flex-col 
            w-[100%] lg:h-225px md:h-[210px]  
           '>
                       {(necoExams.map(exam => {
@@ -287,7 +287,7 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
                               document.querySelector('.Examdrop').classList.remove('DropIt');
                               console.log(e);
                             })}
-                            className=' text-[8px] leading-[10.4px] 
+                            className='text-[12px] leading-[10.4px] 
                  shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
                 md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
            md:text-[13.227px] md:leading-[17.195px] w-[100%] bg-[white] 
@@ -309,7 +309,7 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
                 <div className='relative  gap-[5.868px] flex flex-col w-[100%] md:w-1/2  
       md:gap-[5.868px] lg:gap-[10px] '>
                   {/* header */}
-                  <h2 className='  font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px]
+                  <h2 className='  font-[600] text-[#7E7E7E] text-[12px] leading-[10.4px]
         md:text-[9.389px] md:leading-[12.206px]
        lg:text-[16px] lg:leading-[20.8px]'>
                     Quantity
@@ -323,18 +323,18 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
                     <input type="text"
 
                       value={necoQuantityResult}
-                      className=' pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
+                      className=' pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] mt-2 md:mt-0
  md:pt-[8.802px] md:pb-[7.042px] w-[100%]
 md:pr-[5.282px] md:pl-[5.867px] bg-white
 lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
 border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]
 font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
-    lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer focus:outline-none'
+    lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer focus:outline-none focus:outline-none border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg'
                       readOnly />
 
                     <img
                       className='absolute lg:top-[15px] lg:right-[9px] md:top-[8.802px] md:right-[5.282px]
-        top-[8.802px] right-[13px]
+        top-[21.802px] right-[13px]
         imgdrop md:h-[14.038px] md:w-[14.038px] 
       lg:h-[24px] lg:w-[24px] w-[14px] h-[14px]'
                       src={arrowDown} alt="" />
@@ -342,7 +342,7 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
                   {/* drop down */}
 
                   {necoQuantityActive && (
-                    <div className='absolute z-[2] lg:top-[90px] md:top-[60px] top-[50px] flex flex-col
+                    <div className='absolute z-[2] lg:top-[90px] md:top-[60px] top-[68px] flex flex-col
            w-[100%] lg:h-225px md:h-[210px]  
           '>
                       {(necoOptions.map(option => {
@@ -354,7 +354,7 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
                             document.querySelector('.imgdrop').classList.remove('DropIt');
 
                           })}
-                            className='text-[8px] leading-[10.4px] md:py-[15px] py-[8px] text-[#7C7C7C]
+                            className='text-[12px] leading-[10.4px] md:py-[15px] py-[8px] text-[#7C7C7C]
                 pl-[10px] font-[500]  shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
            md:text-[13.227px] md:leading-[17.195px] bg-white
            lg:text-[16px] lg:leading-[20.8px] cursor-pointer hover:bg-[#EDEAEA]'
@@ -375,7 +375,7 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
                 {/* LeftSide */}
                 <div className=' container-phone gap-[5.868px] 
        flex flex-col md:w-1/2 md:gap-[10px] '>
-                  <h2 className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px]
+                  <h2 className='font-[600] text-[#7E7E7E] text-[12px] leading-[10.4px]
        md:text-[9.389px] md:leading-[12.206px]
      lg:text-[16px] lg:leading-[20.8px] '>
                     Phone Number
@@ -394,17 +394,17 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
                     }
 
                   })}
-                    className='h-[29.927px] lg:h-[51px] font-[500]  md:h-[29.93px] w-[100%] border-[0.4px] border-[#9C9C9C] 
+                    className='h-[40.927px] lg:h-[51px] font-[500]  md:h-[29.93px] w-[100%] border-[0.4px] border-[#9C9C9C] mt-2 md:mt-0  
      text-[14.389px] leading-[18.206px]
      lg:text-[16px] lg:leading-[20.8px] text-black
- pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
+ pt-[12.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
      focus:outline-none 
      md:pt-[8.802px] md:pb-[7.042px] 
      md:pr-[5.282px] md:pl-[5.867px] 
      lg:pt-[14px] lg:pb-[15.5px] lg:pr-[16px] lg:pl-[10px]
      placeholder:text-[14.389px] placeholder:leading-[18.809.4px] 
      lg:placeholder:text-[16px] lg:placeholder:leading-[20.8px] placeholder:text-[#7E7E7E]
-     md:placeholder:text-[14.389px] md:placeholder:leading-[18.206px]'
+     md:placeholder:text-[14.389px] md:placeholder:leading-[18.206px] focus:outline-none border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg'
                     type="tel" name='phone' id='phone' maxLength={11} placeholder=''
                     value={necoEducationPinPhone} onChange={(e) => {
                       setNecoEducationPinPhone(e.target.value);
@@ -418,13 +418,13 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
 
                 {/* right-side */}
                 <div className='  flex flex-col gap-[5.868px] md:w-1/2 md:gap-[10px]'>
-                  <h2 className='font-[600] text-[8px] leading-[10.4px]
+                  <h2 className='font-[600] text-[12px] leading-[10.4px]
      text-[#7E7E7E]  md:text-[9.389px] md:leading-[12.206px]
      lg:text-[16px] lg:leading-[20.8px]'>
                     Email
                   </h2>
 
-                  < input className='flex h-[29.927px] lg:h-[51px] md:h-[29.93px] w-[100%]
+                  < input className='flex h-[40.927px] lg:h-[51px] md:h-[29.93px] w-[100%] mt-2 md:mt-0
      text-[14.389px] font-[500] leading-[18.206px] tracking-[0.4px]
      lg:text-[16px] lg:leading-[20.8px] text-black
      
@@ -434,7 +434,7 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
      md:pr-[5.282px] md:pl-[5.867px] 
     lg:pt-[14px] lg:pb-[15.5px] lg:pr-[16px] lg:pl-[10px] 
      lg:placeholder:text-[16px] lg:placeholder:leading-[20.8px] placeholder:text-[#7E7E7E]
-     placeholder:text-[14.389px] placeholder:leading-[18.809.4px]'
+     placeholder:text-[14.389px] placeholder:leading-[18.809.4px] focus:outline-none border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg'
                     value={necoEducationPinEmail}
                     onChange={(e) => {
                       setNecoEducationPinEmail(e.target.value);
@@ -459,22 +459,22 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
                 {/* Amount Step /Leftside */}
                 <div className='relative top-0 flex flex-col gap-[5.868px] w-[100%] md:w-1/2 md:gap-[10px]'>
                   {/* header */}
-                  <h2 className='font-[600] text-[8px] leading-[10.4px]
+                  <h2 className='font-[600] text-[12px] leading-[10.4px]
        md:text-[9.389px] md:leading-[12.206px]
        text-[#7E7E7E] lg:text-[16px] lg:leading-[20.8px]'>
                     Amount
                   </h2>
                   {/* input */}
                   <input
-                    className='h-[29.927px]  lg:h-[51px] md:h-[29.93px]
+                    className='h-[40.927px]  lg:h-[51px] md:h-[29.93px] mt-2 md:mt-0
         md:pt-[8.802px] md:pb-[7.042px] 
-       pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
+       pt-[12.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
      md:pr-[5.282px] md:pl-[5.867px]
   lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] border-[0.4px] border-[#9C9C9C]
   focus:outline-none text-start
     text-[8px] leading-[10.4px]
    font-[500]  md:text-[9.389px] md:leading-[12.206px]
-  lg:text-[16px] text-black lg:leading-[20.8px]'
+  lg:text-[16px] text-black lg:leading-[20.8px] focus:outline-none border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg'
                     value={necoEducationAmount}
                     onChange={(e) => {
                       setNecoEducationAmount(e.target.value);
@@ -488,7 +488,7 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
                 <div className='relative  payment-parent gap-[5.868px]
        flex w-[100%] flex-col md:w-1/2  md:gap-[10px] '>
                   {/* header */}
-                  <h2 className='font-[600] text-[8px] leading-[10.4px]
+                  <h2 className='font-[600] text-[12px] leading-[10.4px]
        text-[#7E7E7E]  md:text-[9.389px] md:leading-[12.206px]
        lg:text-[16px] lg:leading-[20.8px]'>
                     Payment Method
@@ -501,18 +501,18 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
                     }}>
                     <input type="text"
                       value={necoPaymentResult}
-                      className=' flex  justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
+                      className=' mt-2 md:mt-0 flex  justify-between pt-[12.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
  md:pt-[8.802px] md:pb-[7.042px] w-[100%]
 md:pr-[5.282px] md:pl-[5.867px] bg-white
 lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
 border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]
 font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
-    lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer focus:outline-none'
+    lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer focus:outline-none focus:outline-none border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg'
                       readOnly />
 
                     <img
                       className='absolute lg:top-[15px] lg:right-[9px] md:top-[8.802px] md:right-[5.282px]
-        top-[8.802px] right-[13px]
+        top-[21.802px] right-[13px]
         methodDrop md:h-[14.038px] md:w-[14.038px] 
       lg:h-[24px] lg:w-[24px] w-[14px] h-[14px]'
                       src={necoImageState} alt="CountryFlag" />
@@ -521,7 +521,7 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
 
                   {necoMethodActive && (
                     <div className=' flex flex-col w-[100%]  absolute z-[1] lg:top-[90px] md:top-[60px]
-            top-[50px]'>
+            top-[68px]'>
 
                       {(necoMethodOptions.map(methodOption => {
                         return (
@@ -542,7 +542,7 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
                             <img className='md:h-[29.27px]  h-[14.27px]' src={methodOption.flag} alt="" />
 
                             <h2
-                              className='text-[8px] leading-[10.4px]
+                              className='text-[12px] leading-[10.4px]
                  font-[500] text-[#7C7C7C]  
            md:text-[13.227px] md:leading-[17.195px] 
            lg:text-[16px] lg:leading-[20.8px] self-center cursor-pointer' >

@@ -216,14 +216,14 @@ useEffect(() => {
     <div className='flex lg:gap-[8px] items-center md:gap-[5.868px] gap-[4.694px] mb-[20px]  
     lg:mb-[50px] md:mb-[30px]'>
 
-      <h2 className='font-[600] text-[9px] leading-[12px] md:text-[9.389px]
+      <h2 className='font-[600] text-[13px] leading-[12px] md:text-[9.389px]
        md:leading-[11.267px] lg:text-[16px] text-[#7E7E7E] lg:leading-[19.2px]'>
     Purchase
       </h2>
  <img className='h-[12px] w-[12px] md:h-[14.083px] md-w-[14.083px] lg:h-[24px] lg:w-[24px] self-center'
       src={WaecImg} alt="" />
 
-      <h2 className='font-[600] text-[9px] leading-[12px] md:text-[9.389px]
+      <h2 className='font-[600] text-[13px] leading-[12px] md:text-[9.389px]
        md:leading-[11.267px] lg:text-[16px] text-[#7E7E7E] lg:leading-[19.2px]'>
       WAEC E-PINs Instantly
       </h2>
@@ -244,7 +244,7 @@ useEffect(() => {
    <div className='relative flex flex-col w-[100%] gap-[5.868px] md:w-1/2 md:gap-[5.868px]  
    lg:gap-[10px]'>
     {/* header */}
-    <label className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px]  
+    <label className='font-[600] text-[#7E7E7E] text-[12px] leading-[10.4px]  
      md:text-[9.389px] md:leading-[12.206px]
     lg:text-[16px] lg:leading-[20.8px]'>
     Confirm Exam Type
@@ -259,22 +259,22 @@ onClick={(e) => {
    onChange={(e) => {
     setExamType(e.target.value)
    }}
-className=' pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
- md:pt-[8.802px] md:pb-[7.042px] w-[100%]
+className=' pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] mt-2 md:mt-0
+ md:pt-[8.802px] md:pb-[7.042px] w-full
 md:pr-[5.282px] md:pl-[5.867px] bg-white
 lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
-border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]
-font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
-    lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer focus:outline-none' readOnly/>
+ border-[#9C9C9C] hover:bg-[#EDEAEA]
+font-[500] text-[8px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px]
+    lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer focus:outline-none border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 shadow-sm md:shadow-0 focus:outline-none focus:ring-2 text-xl p-4 sm:p-3 sm:text-lg ' readOnly/>
    <img 
        className='absolute lg:top-[15px] lg:right-[9px] md:top-[8.802px] md:right-[5.282px]
-        top-[8.802px] right-[13px]
+        top-[21.802px] right-[13px]
         Examdrop md:h-[14.038px] md:w-[14.038px] 
-      lg:h-[24px] lg:w-[24px] w-[14px] h-[14px]'
+      lg:h-[24px] lg:w-[24px] w-[16px] h-[16px]'
       src={arrowDown} alt="" />
        </div>
        {examActive && (
-         <div className='absolute lg:top-[90px] md:top-[60px]  top-[50px] z-[2]  flex flex-col w-[100%] lg:h-225px md:h-[210px]  
+         <div className='absolute lg:top-[90px] md:top-[60px] top-[68px] z-[2]  flex flex-col w-[100%] lg:h-225px md:h-[210px] rounded-[10px] rounded md:rounded-0
         '>
           {(Exams.map(exam => {
             return (
@@ -285,7 +285,7 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
              document.querySelector('.Examdrop').classList.remove('DropIt');
              console.log(e);
               })}
-              className=' text-[8px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
+              className='text-[12px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
          md:text-[13.227px] md:leading-[17.195px] 
          shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] bg-white
          lg:text-[16px] lg:leading-[20.8px] cursor-pointer hover:bg-[#EDEAEA]' 
@@ -305,7 +305,7 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
     <div className='relative gap-[5.868px] flex flex-col w-[100%] md:w-1/2  
     md:gap-[5.868px] lg:gap-[10px] '>
     {/* header */}
-    <label className='  font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px]
+    <label className='  font-[600] text-[#7E7E7E] text-[12px] leading-[10.4px]
       md:text-[9.389px] md:leading-[12.206px]
      lg:text-[16px] lg:leading-[20.8px]'>
     Quantity
@@ -320,26 +320,26 @@ onClick={(e) => {
   setQuantityResult(e.target.value)
   }}
   value={quantityResult}
-className=' pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
+className=' pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] mt-2 md:mt-0
  md:pt-[8.802px] md:pb-[7.042px] w-[100%]
 md:pr-[5.282px] md:pl-[5.867px] bg-white
 lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
 border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]
 font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
-    lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer focus:outline-none'  readOnly/>
+    lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer focus:outline-none border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 shadow-sm md:shadow-0 focus:outline-none focus:ring-2 text-xl p-4 sm:p-3 sm:text-lg'  readOnly/>
    
       <img 
        className='absolute lg:top-[15px] lg:right-[9px] md:top-[8.802px] md:right-[5.282px]
-        top-[8.802px] right-[13px]
+        top-[21.802px] right-[13px]
         imgdrop md:h-[14.038px] md:w-[14.038px] 
-      lg:h-[24px] lg:w-[24px] w-[14px] h-[14px]'
+      lg:h-[24px] lg:w-[24px] w-[16px] h-[16px]'
       src={arrowDown} alt=""  />
        </div>
        {/* drop down */}
        
       {quantityActive && (
-         <div className='absolute lg:top-[90px] md:top-[60px] top-[50px] z-[1] 
-         flex flex-col w-[100%] lg:h-225px md:h-[210px]  
+         <div className='absolute lg:top-[90px] md:top-[60px] top-[68px] z-[1] 
+         flex flex-col w-[100%] lg:h-225px md:h-[210px] rounded md:rounded-0
          '>
           {(options.map(option => {
             return (
@@ -350,7 +350,7 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
               document.querySelector('.imgdrop').classList.remove('DropIt');
          
               })}
-              className='text-[8px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
+              className='text-[10px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
          md:text-[13.227px] md:leading-[17.195px] w-[100%] bg-[white] 
        shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
          lg:text-[16px] lg:leading-[20.8px] cursor-pointer hover:bg-[#EDEAEA]' 
@@ -371,7 +371,7 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
     {/* LeftSide */}
      <div className=' container-phone gap-[5.868px] 
      flex flex-col md:w-1/2 md:gap-[10px] z-0'>
-   <label className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px]
+   <label className='font-[600] text-[#7E7E7E] text-[12px] leading-[10.4px]
      md:text-[9.389px] md:leading-[12.206px]
    lg:text-[16px] lg:leading-[20.8px] '>
   Phone Number
@@ -390,7 +390,7 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
   }
 
    })}
-   className='font-[410] h-[29.927px] lg:h-[51px]  md:h-[29.93px] w-[100%]
+   className='font-[410] h-[40.927px] lg:h-[51px]  md:h-[29.93px] w-[100%] mt-2 md:mt-0
     border-[0.4px] border-[#9C9C9C] 
    lg:text-[16px] lg:leading-[20.8px] text-black
      text-[10.389px] leading-[16.206px]
@@ -401,7 +401,7 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
    lg:pt-[14px] lg:pb-[15.5px] lg:pr-[16px] lg:pl-[10px]
    placeholder:text-[14.389px] placeholder:leading-[18.809.4px] 
    lg:placeholder:text-[16px] lg:placeholder:leading-[20.8px] placeholder:text-[#7E7E7E]
-   md:placeholder:text-[14.389px] md:placeholder:leading-[18.206px]'
+   md:placeholder:text-[14.389px] md:placeholder:leading-[18.206px] focus:outline-none border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg'
     type="tel" name='Waec-Phone' id='phone' maxLength={11} placeholder=''
     value={educationPinPhone}
      onChange={(e)=>{
@@ -418,13 +418,13 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
         
    {/* right-side */}
    <div className='flex flex-col gap-[5.868px] md:w-1/2 md:gap-[10px]'>
-   <label className='font-[600] text-[8px] leading-[10.4px]
+   <label className='font-[600] text-[12px] leading-[10.4px]
    text-[#7E7E7E]  md:text-[9.389px] md:leading-[12.206px]
    lg:text-[16px] lg:leading-[20.8px]'>
    Email
    </label>
    
-   <input className ='EmailPins font-[500]  flex h-[29.927px] lg:h-[51px] md:h-[29.93px] w-[100%]
+   <input className ='EmailPins font-[500]  flex h-[41.927px] lg:h-[51px] md:h-[29.93px] w-[100%] mt-2 md:mt-0
    lg:text-[16px] lg:leading-[21.8px] text-black
    text-[14.389px] leading-[18.206px] tracking-[0.4px]
    pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] 
@@ -434,7 +434,7 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
    lg:pt-[14px] lg:pb-[15.5px] lg:pr-[16px] lg:pl-[10px] 
    placeholder:text-[14.389px] placeholder:leading-[18.809.4px] 
    lg:placeholder:text-[16px] lg:placeholder:leading-[20.8px] placeholder:text-[#7E7E7E]
-   md:placeholder:text-[14.389px] md:placeholder:leading-[18.206px]'
+   md:placeholder:text-[14.389px] md:placeholder:leading-[18.206px] focus:outline-none border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg'
    name='Waec-Email'
     value={educationPinEmail}
    onChange={(e) =>{
@@ -458,22 +458,22 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
 {/* Amount Step /Leftside */}
    <div className='flex flex-col gap-[5.868px] w-[100%] md:w-1/2 md:gap-[10px]'>
     {/* header */}
-    <label className='font-[600] text-[8px] leading-[10.4px]
+    <label className='font-[600] text-[12px] leading-[10.4px]
      md:text-[9.389px] md:leading-[12.206px]
      text-[#7E7E7E] lg:text-[16px] lg:leading-[20.8px]'>
     Amount
     </label>
     {/* input */}
     <input 
-     className='h-[29.927px]  lg:h-[51px] md:h-[29.93px]
+     className='h-[41.927px]  lg:h-[51px] md:h-[29.93px] mt-2 md:mt-0
         md:pt-[8.802px] md:pb-[7.042px] 
-       pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
+       pt-[12.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
      md:pr-[5.282px] md:pl-[5.867px]
   lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] border-[0.4px] border-[#9C9C9C]
   focus:outline-none text-start
     text-[8px] leading-[10.4px]
    font-[500]  md:text-[9.389px] md:leading-[12.206px]
-  lg:text-[16px] text-black lg:leading-[20.8px]'
+  lg:text-[16px] text-black lg:leading-[20.8px] focus:outline-none border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg'
   maxLength={7} value={educationAmount}
   onChange={(e)=>{
    setEducationAmount(e.target.value);
@@ -481,9 +481,9 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
  </div>
     {/* payment method */}
     <div className='relative payment-parent gap-[5.868px]
-     flex w-[100%] flex-col md:w-1/2   md:gap-[10px]'>
+     flex w-[100%] flex-col md:w-1/2 md:gap-[10px]'>
     {/* header */}
-    <label className='font-[600] text-[8px] leading-[10.4px]
+    <label className='font-[600] text-[12px] leading-[10.4px]
      text-[#7E7E7E]  md:text-[9.389px] md:leading-[12.206px]
      lg:text-[16px] lg:leading-[20.8px]'>
     Payment Method
@@ -498,26 +498,26 @@ onClick={(e) => {
   setPaymentResult(e.target.value)
   }}
   value={paymentResult}
-className=' pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
+className=' pt-[12.803px] pb-[7.794px] pr-[13px] pl-[10.876px] mt-2 md:mt-0
  md:pt-[8.802px] md:pb-[7.042px] w-[100%]
 md:pr-[5.282px] md:pl-[5.867px] bg-white
 lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
 border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]
 font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
-    lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer focus:outline-none'
+    lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer focus:outline-none focus:outline-none border-0 md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 shadow-sm md:shadow-0 focus:outline-none focus:ring-2 text-xl p-4 sm:p-3 sm:text-lg'
   readOnly/>
    
       <img 
        className='absolute lg:top-[15px] lg:right-[9px] md:top-[8.802px] md:right-[5.282px]
-        top-[8.802px] right-[13px]
+        top-[21.802px] right-[13px]
         methodDrop md:h-[14.038px] md:w-[14.038px] 
-      lg:h-[24px] lg:w-[24px] w-[14px] h-[14px]'
+      lg:h-[24px] lg:w-[24px] w-[16px] h-[16px]'
       src={imageState} alt="" />
        </div>
        {/* drop down */}
        
       {methodActive && (
-         <div className='absolute lg:top-[90px] md:top-[60px] top-[50px] z-0 flex flex-col w-[100%]  
+         <div className='absolute lg:top-[90px] md:top-[60px] top-[68px] z-0 flex flex-col w-[100%] rounded md:rounded-0  
          '>
 
         {(methodOptions.map(methodOption => {
@@ -539,7 +539,7 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
           <img className='md:h-[29.27px]  h-[14.27px]' src={methodOption.flag} alt=""/>
 
             <h2 
-              className='text-[8px] leading-[10.4px]
+              className='text-[10px] leading-[10.4px]
                font-[500] text-[#7C7C7C]  
          md:text-[13.227px] md:leading-[17.195px] 
          lg:text-[16px] lg:leading-[20.8px] self-center cursor-pointer' >
@@ -1174,7 +1174,7 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
                 You need help?
               </p>
               <Link to ="/contactUs"
-                className="font-[500] text-white text-[10px]  py-[4.865px] 
+                className="font-[500] text-white text-[10px] py-[4.865px] 
  px-[10.594px] leading-[10.4px] rounded-[5.156px] bg-[#04177F]
  lg:text-[12px] lg:leading-[14.4px] 
   md:text-[4.583px]  md:py-[4.865px] 
