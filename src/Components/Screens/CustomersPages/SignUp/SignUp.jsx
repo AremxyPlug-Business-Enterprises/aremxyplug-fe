@@ -115,19 +115,20 @@ const setNav = () => {
               Country
             </p>
             <div
-              className={`inputBorder px-[2%] w-[98%] border h-[22px] rounded-[2.9px] lg:w-[286px] lg:h-[39px]`}
+              className={`inputBorder px-[2%] w-[98%] border 
+                 rounded-[2.9px] lg:w-[286px] lg:h-[39px]`}
             >
-              <div className="mt-[-3%] md:mt-[-1%]">
+           
                 <ReactFlagsSelect
                   selected={state.country}
-                  className="w-[100%]"
+                  className="w-[100%] m-[0px]"
                   placeholder=" "
                   searchable
                   value={country}
                   name="country"
                   onSelect={handleCountryChange}
                 />
-              </div>
+       
             </div>
             {errors.country && (
               <div className="text-[12px] text-red-500 italic lg:text-[14px]">

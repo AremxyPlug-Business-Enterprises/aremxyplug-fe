@@ -7,9 +7,6 @@ function NgnVirtualAccount() {
   const { isDarkMode, virtualAccCreated } = useContext(ContextProvider)
 const {account_no, account_name, bank_name} = virtualAccCreated
   const accountNumber = account_no
-  const accountName = account_name.slice(11);
-  const bankName = bank_name;
-
   const accNoRef = useRef(null);
   const accNameRef = useRef(null);
   const bankNameRef = useRef(null);
@@ -107,11 +104,11 @@ const {account_no, account_name, bank_name} = virtualAccCreated
             <div className="">
               <div className="mb-[8px] lg:mb-[15px] flex lg:gap-x-[20px] gap-x-[15px] font-semibold">
                 <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[15%] md:w-[20%] w-[30%]">BANK NAME</p>
-                <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[85%] md:w-[20%] w-[70%]" ref={bankNameRef}>{bankName ? bank_name : "Null"}</p>
+                <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[85%] md:w-[20%] w-[70%]" ref={bankNameRef}>{bank_name ? bank_name : "Null"}</p>
               </div>
               <div className="mb-[8px] lg:mb-[15px] flex lg:gap-x-[20px] gap-x-[15px] font-semibold">
                 <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[15%] md:w-[20%] w-[30%]">ACCOUNT NAME</p> 
-                <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[85%] md:w-[20%] w-[70%]" ref={accNameRef}>{accountName ? account_no : "Null"}</p>
+                <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[85%] md:w-[20%] w-[70%]" ref={accNameRef}>{account_name ? account_name.slice(11) : "Null"}</p>
               </div>
               <div className=" flex lg:gap-x-[20px] gap-x-[15px] font-semibold">
                 <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[15%] md:w-[20%] w-[30%]">ACCOUNT NUMBER</p>{" "}

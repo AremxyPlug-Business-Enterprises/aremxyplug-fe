@@ -18,6 +18,7 @@ import PendingImage from"../ProfileImages/Pending.svg"
 import NotVerifiedImage from "../ProfileImages/NotVerifiedIcon.svg";
 
 
+
 export default function BvnVerification() {
     const {bvnVerificationOpen} = useContext(ContextProvider);
     const {verificationOpen} = useContext(ContextProvider);
@@ -91,6 +92,7 @@ const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc'
           setBvnVerifyImage(bvnVerifiedSuccess);
           setBvnStatus('Verified');
           setBvnNumber(bvnNumber);
+          alert("Account Created Successfully");
         } 
       
     }catch(error){
@@ -186,7 +188,7 @@ src={Arrowright} alt="" />
     lg:py-[15.5px] lg:pl-[10px] border-[0.4px]
     text-[8px] leading-[10.4px] 
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px]'>
-      {full_name ? full_name : "Balogun Oladimeji"}
+      {full_name ? full_name : "Null"}
    </div>
   </div>
   {/* PHONE NUMBER */}
@@ -273,7 +275,7 @@ src={Arrowright} alt="" />
 </div>
 
 <div className='flex flex-col md:gap-[15px] gap-[10px] justify-start'>
-        <button disabled={bvnStatus === "Verified"} onClick={()=>{
+        <button disabled={ bvnStatus === "Verified" } onClick={()=>{
           checkBvnform()
         }}
          className={`lg:py-[13px] md:py-[7.868px] py-[16.531px] rounded-[4.241px] w-[100%] md:w-[150px] lg:w-[163px] lg:rounded-[12px] bg-[#04177F]
