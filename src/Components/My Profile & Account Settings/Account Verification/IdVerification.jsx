@@ -153,12 +153,12 @@ const checkform = () =>{
       <div className='flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]'>
     {/* Full Name */}
     <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] 
+   <h2 className='font-[600] text-[#7E7E7E] text-[10px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
     Full Name
     </h2>
     <div
-    className=' font-[500] py-[10.33px] pl-[5.867px] 
+    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-xl sm:p-3 sm:text-lg font-[500] py-[15.33px] pl-[5.867px] 
     lg:py-[15.5px] lg:pl-[10px] border-[0.4px]
     text-[8px] leading-[10.4px] 
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px]'>
@@ -168,12 +168,12 @@ const checkform = () =>{
     {/* Gender */}
     
     <div className='relative flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] 
+   <h2 className='font-[600] text-[#7E7E7E] text-[10px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
      Gender
     </h2>
     <div onClick={chooseGender}
-    className='flex justify-between font-[500] py-[10.33px] pl-[5.867px] pr-[10.917px]
+    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-xl p-4 sm:p-3 sm:text-lg flex justify-between font-[500] py-[15.33px] pl-[5.867px] pr-[10.917px]
      lg:pl-[16px] lg:py-[15.5px] lg:pr-[10px]
      border-[0.4px] border-[#9C9C9C] border-[solid]'>
       <h2 className='text-[#000] font-[500] text-[8px] leading-[10.4px]
@@ -210,7 +210,7 @@ const checkform = () =>{
       <div className='flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]'>
         {/* HOUSE ADDRESS */}
       <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] 
+   <h2 className='font-[600] text-[#7E7E7E] text-[10px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
     House Address
     </h2>
@@ -219,7 +219,7 @@ const checkform = () =>{
     onChange={(e) =>{
       setIdAddress(e.target.value)
     }}
-    className=' font-[500] py-[10.33px] pl-[5.867px] 
+    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-xl p-4 sm:p-3 sm:text-lg font-[500] py-[10.33px] pl-[5.867px] 
     lg:py-[15.5px] lg:pl-[10px] border-[0.4px]
     text-[8px] leading-[10.4px] 
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px]
@@ -230,7 +230,7 @@ const checkform = () =>{
     </div>
     {/* STATE */}
     <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] 
+   <h2 className='font-[600] text-[#7E7E7E] text-[10px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
     State or Province
     </h2>
@@ -239,7 +239,7 @@ const checkform = () =>{
     onChange={(e) =>{
       setIdState(e.target.value)
     }}
-    className=' font-[500] py-[10.33px] pl-[5.867px] 
+    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-xl p-4 sm:p-3 sm:text-lg font-[500] py-[10.33px] pl-[5.867px] 
     lg:py-[15.5px] lg:pl-[10px] border-[0.4px]
     text-[8px] leading-[10.4px] 
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px] focus:outline-none'
@@ -253,7 +253,7 @@ const checkform = () =>{
       <div className='flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]'>
         {/* CITY */}
       <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] 
+   <h2 className='font-[600] text-[#7E7E7E] text-[10px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
     City
     </h2>
@@ -262,7 +262,7 @@ const checkform = () =>{
     onChange={(e) => {
     setIdCity(e.target.value)
 }}
-    className=' font-[500] py-[10.33px] pl-[5.867px] 
+    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-xl p-4 sm:p-3 sm:text-lg font-[500] py-[10.33px] pl-[5.867px] 
     lg:py-[15.5px] lg:pl-[10px] border-[0.4px]
     text-[8px] leading-[10.4px] 
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px] focus:outline-none'
@@ -272,7 +272,7 @@ const checkform = () =>{
     </div>
     {/* LGA */}
     <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] 
+   <h2 className='font-[600] text-[#7E7E7E] text-[10px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
      L.G.A
     </h2>
@@ -281,7 +281,7 @@ const checkform = () =>{
     onChange={(e) => {
       setIdLGA(e.target.value);
     }}
-    className=' font-[500] py-[10.33px] pl-[5.867px] 
+    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-xl p-4 sm:p-3 sm:text-lg font-[500] py-[10.33px] pl-[5.867px] 
     lg:py-[15.5px] lg:pl-[10px] border-[0.4px] 
     text-[8px] leading-[10.4px] 
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px]
@@ -294,7 +294,7 @@ const checkform = () =>{
       {/* POSTAL CODE */}
      
       <div className='flex flex-col md:w-[49%] w-[100%] md:gap-[10px] gap-[5.868px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] 
+   <h2 className='font-[600] text-[#7E7E7E] text-[10px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
     Postal Code
     </h2>
@@ -306,7 +306,7 @@ const checkform = () =>{
     onChange={(e) => {
       setIdPostalCode(e.target.value);
     }}
-    className=' font-[500] py-[10.33px] pl-[5.867px] 
+    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-xl p-4 sm:p-3 sm:text-lg font-[500] py-[10.33px] pl-[5.867px] 
     lg:py-[15.5px] lg:pl-[10px] border-[0.4px]
     text-[8px] leading-[10.4px] 
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px] focus:outline-none'
@@ -318,12 +318,12 @@ const checkform = () =>{
     <div className='flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]'>
         {/* ID TYPE */}
         <div className='relative flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] 
+   <h2 className='font-[600] text-[#7E7E7E] text-[10px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
      ID Type
     </h2>
     <div onClick={chooseId}
-    className='flex justify-between font-[500] py-[10.33px] pl-[5.867px] pr-[10.917px]
+    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-xl p-4 sm:p-3 sm:text-lg flex justify-between font-[500] py-[10.33px] pl-[5.867px] pr-[10.917px]
      lg:pl-[16px] lg:py-[15.5px] lg:pr-[10px]
      border-[0.4px] border-[#9C9C9C] border-[solid]'>
       <h2 className='text-[#000] font-[500] text-[8px] leading-[10.4px]
@@ -357,7 +357,7 @@ const checkform = () =>{
   
     {/*  */}
     <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] 
+   <h2 className='font-[600] text-[#7E7E7E] text-[10px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
      ID Number
     </h2>
@@ -369,7 +369,7 @@ const checkform = () =>{
     onChange={(e) => {
       setIdNumber(e.target.value)
     }}
-    className=' font-[500] py-[10.33px] pl-[5.867px] 
+    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-xl p-4 sm:p-3 sm:text-lg font-[500] py-[10.33px] pl-[5.867px] 
     lg:py-[15.5px] lg:pl-[10px] border-[0.4px] 
     text-[8px] leading-[10.4px] 
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px]
@@ -385,10 +385,10 @@ const checkform = () =>{
     <div onClick={()=> {
      setIdFrontView(true);
    }} 
-    className='flex  lg:py-[14px] py-[8.771px] pr-[20.785px] pl-[20px]
+    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-xl p-4 sm:p-3 sm:text-lg flex  lg:py-[14px] py-[8.771px] pr-[20.785px] pl-[20px]
      lg:pr-[28px] lg:pl-[16px] md:gap-[14px] gap-[8.21px]
     border-[0.4px] border-[solid] border-[#9C9C9C] cursor-pointer'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] 
+   <h2 className='font-[600] text-[#7E7E7E] text-[10px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
    Upload ID Front View
    </h2>
@@ -399,10 +399,10 @@ const checkform = () =>{
 <div onClick={() => {
     setIdBackView(true);
    }}
- className='flex py-[8.771px] pr-[20.785px] pl-[20px]
+ className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-xl p-4 sm:p-3 sm:text-lg flex py-[8.771px] pr-[20.785px] pl-[20px]
   lg:py-[14px] lg:pr-[28px] lg:pl-[16px] gap-[8.21px] md:gap-[14px]
 border-[0.4px] border-[solid] border-[#9C9C9C] cursor-pointer'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] 
+   <h2 className='font-[600] text-[#7E7E7E] text-[10px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
    Upload Back View
    </h2>

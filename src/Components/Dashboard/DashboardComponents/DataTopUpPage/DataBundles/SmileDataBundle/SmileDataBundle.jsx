@@ -545,7 +545,7 @@ const SmileDataBundle = () => {
           </div>
           <div className="flex gap-[15px]  justify-between md:w-full md:gap-[10%]">
             <div className="flex gap-[15px] md:w-[50%] md:justify-between">
-              <p className="flex text-[#7c7c7c] gap-[7px] text-[10px] md:gap-[7px] leading-[130%] md:text-[12px] lg:text-[16px] 2xl:text-[20px]">
+              <p className="flex text-[#7c7c7c] gap-[7px] text-[12px] md:gap-[7px] leading-[130%] md:text-[12px] lg:text-[16px] 2xl:text-[20px]">
                 Purchase
                 <span>
                   <img
@@ -569,17 +569,17 @@ const SmileDataBundle = () => {
 
           <div className="grid grid-cols-1 mt-[25px] md:grid-cols-2 gap-y-[20px] md:gap-x-[58.68px] lg:gap-x-[100px] md:gap-y-[15px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[20px]">
             <div className="relative">
-              <h2 className="lg:text-[18px] lg:leading-[24px] mb-1 text-[10px] md:text-[12px] font-[600] leading-[12px]">
+              <h2 className="lg:text-[18px] lg:leading-[24px] mb-1 text-[12px] md:text-[12px] font-[600] leading-[12px]">
                 Select Product
               </h2>
               <div
-                className="input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between"
+                className="mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between"
                 onClick={() => setShowProductList(!showProductList)}
               >
                 <h2 className="text-[10px] font-[600] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
                   {selectedNetworkProduct}
                 </h2>
-                <button className="lg:w-6 lg:h-6 w-[11px] h-[11px]">
+                <button className="lg:w-6 lg:h-6 w-[11px] h-[12px]">
                   <img src={arrowDown} alt="" className="w-full h-full" />
                 </button>
               </div>
@@ -601,17 +601,17 @@ const SmileDataBundle = () => {
             </div>
 
             <div className="relative">
-              <h2 className="lg:text-[18px] md:text-[12px] lg:leading-[24px] mb-1 text-[10px] font-[600] leading-[12px]">
+              <h2 className="lg:text-[18px] md:text-[12px] lg:leading-[24px] mb-1 text-[12px] font-[600] leading-[12px]">
                 Select Plan
               </h2>
               <div
-                className="input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between"
+                className="mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between"
                 onClick={() => setShowOptionList(!showOptionList)}
               >
                 <h2 className="text-[10px] font-[600] leading-[12px] md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
                   {selectedOption}
                 </h2>
-                <button className="lg:w-6 lg:h-6 w-[11px] h-[11px]">
+                <button className="lg:w-6 lg:h-6 w-[11px] h-[12px]">
                   <img src={arrowDown} alt="" className="w-full h-full" />
                 </button>
               </div>
@@ -660,7 +660,7 @@ const SmileDataBundle = () => {
             <div className="">
               <input
                 type="text"
-                className="input border w-full h-[30px] bg-[#92ABFE2E] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-center text-[10px] text-[#7C7C7C] font-[600] leading-[12px] md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] text-start custom-placeholder"
+                className="mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 p-4 sm:p-3 input border w-full h-[30px] bg-[#92ABFE2E] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-center text-[10px] text-[#7C7C7C] font-[600] leading-[12px] md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] text-start custom-placeholder"
                 placeholder="Registered Email or Smile Account ID"
                 value={input}
                 onChange={(event) => {
@@ -687,13 +687,13 @@ const SmileDataBundle = () => {
             </div>
 
             <div className="">
-              <h2 className="text-[10px] font-[600] md:text-[12px] lg:text-[18px]">
+              <h2 className="text-[12px] font-[600] md:text-[12px] lg:text-[18px]">
                 Account ID{" "}
               </h2>
               <div className="relative mt-[5px]">
                 <input
                   type="text"
-                  className="input border w-full h-8 px-4 rounded-md text-[10px] lg:text-[16px] font-[600] focus:outline-none lg:h-[51px]"
+                  className="mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] lg:text-[16px] font-[600] focus:outline-none lg:h-[51px]"
                   placeholder=""
                   value={showAccountId ? accountId : ""}
                   readOnly
@@ -712,20 +712,20 @@ const SmileDataBundle = () => {
                 </div>
               </div>
               {errorMessage && (
-                <p className="text-[10px] text-red-500 lg:text-[14px]">
+                <p className="text-[12px] text-red-500 lg:text-[14px]">
                   {errorMessage}
                 </p>
               )}
             </div>
 
             <div className="">
-              <h2 className="text-[10px] font-[600] md:text-[12px] lg:text-[18px]">
+              <h2 className="text-[12px] font-[600] md:text-[12px] lg:text-[18px]">
                 Email ID{" "}
               </h2>
               <div className="relative mt-[5px]">
                 <input
                   type="text"
-                  className="input border w-full h-8 px-4 rounded-md text-[10px] lg:text-[16px] font-[600] focus:outline-none lg:h-[51px]"
+                  className="mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] lg:text-[16px] font-[600] focus:outline-none lg:h-[51px]"
                   placeholder=""
                   value={emailId}
                   onChange={handleInputChange}
@@ -739,14 +739,14 @@ const SmileDataBundle = () => {
                 </div>
               </div>
               {emailError && (
-                <p className="text-[10px] text-red-500 lg:text-[14px]">
+                <p className="text-[12px] text-red-500 lg:text-[14px]">
                   {emailError}
                 </p>
               )}
             </div>
 
             <div className="">
-              <h2 className="text-[10px] font-[600] md:text-[12px] lg:text-[18px]">
+              <h2 className="text-[12px] font-[600] md:text-[12px] lg:text-[18px]">
                 Phone Number{" "}
                 <span className="text-[#04177F]">
                   <Link to="/DataBundleSelectRecipient">
@@ -757,7 +757,7 @@ const SmileDataBundle = () => {
               <div className="relative mt-[5px]">
                 <input
                   type="number"
-                  className="input border w-full h-8 px-4 rounded-md text-[10px] lg:text-[16px] font-[600] focus:outline-none lg:h-[51px]"
+                  className="mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] lg:text-[16px] font-[600] focus:outline-none lg:h-[51px]"
                   placeholder=""
                   value={inputValue}
                   onChange={(event) => {
@@ -769,25 +769,25 @@ const SmileDataBundle = () => {
                   <img
                     src={PhoneNumber}
                     alt=""
-                    className="lg:w-[100%] lg:h-[50%]"
+                    className="lg:w-[100%] lg:h-[68%]"
                   />
                 </div>
               </div>
               {errors.recipientPhoneNumber && (
-                <p className="text-[10px] text-red-500 lg:text-[14px]">
+                <p className="text-[12px] text-red-500 lg:text-[14px]">
                   {errors.recipientPhoneNumber}
                 </p>
               )}
             </div>
 
             <div className="">
-              <h2 className="text-[10px] font-[600] md:text-[12px] lg:text-[18px]">
+              <h2 className="text-[12px] font-[600] md:text-[12px] lg:text-[18px]">
                 Recipient Name<span className="text-[#7C7C7C]">(optional)</span>{" "}
               </h2>
               <div className="relative mt-[5px]">
                 <input
                   type="text"
-                  className="input border w-full h-8 px-4 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px]"
+                  className="mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px]"
                   placeholder=""
                   value={recipientNames}
                   onChange={handleRecipientNameChange}
@@ -803,13 +803,13 @@ const SmileDataBundle = () => {
             </div>
 
             <div className="">
-              <h2 className="text-[10px] font-[600] md:text-[12px] lg:text-[18px]">
+              <h2 className="text-[12px] font-[600] md:text-[12px] lg:text-[18px]">
                 Amount
               </h2>
               <div className="relative mt-[5px]">
                 <input
                   type="text"
-                  className="input border w-full h-8 px-4 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px]"
+                  className="mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px]"
                   // placeholder="&#8358;100"
                   value={`${selectedAmount}`}
                   onChange={(event) => {
@@ -819,17 +819,17 @@ const SmileDataBundle = () => {
                   }}
                 />
                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                  <img src={Amount} alt="" className="lg:w-[100%] lg:h-[50%]" />
+                  <img src={Amount} alt="" className="lg:w-[100%] lg:h-[68%]" />
                 </div>
               </div>
             </div>
 
             <div>
               <div onClick={handleShowPayment}>
-                <h2 className="lg:text-[18px] mt-[5px] lg:leading-[24px] mb-2 text-[10px] md:text-[12px] font-[600] leading-[12px]">
+                <h2 className="lg:text-[18px] mt-[5px] lg:leading-[24px] mb-2 text-[12px] md:text-[12px] font-[600] leading-[12px]">
                   Payment Method
                 </h2>
-                <div className="input flex justify-between items-center border w-full h-8 px-2 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px]">
+                <div className="mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg input flex justify-between items-center border w-full h-8 px-2 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px]">
                   {paymentSelected ? (
                     <li
                       onClick={handleShowPayment}
@@ -843,7 +843,7 @@ const SmileDataBundle = () => {
                   ) : (
                     <h2
                       onClick={handleShowPayment}
-                      className="text-[10px] lg:text-[14px]"
+                      className="text-[12px] lg:text-[14px]"
                     >
                       Select Payment Method
                     </h2>
@@ -898,7 +898,7 @@ const SmileDataBundle = () => {
           </div>
 
           <div className="flex items-center gap-2 lg:mt-[30px]">
-            <h2 className="text-[10px] font-[600] leading-[12px] lg:leading-[24px] md:text-[12px] lg:text-[18px]">
+            <h2 className="text-[12px] font-[600] leading-[12px] lg:leading-[24px] md:text-[12px] lg:text-[18px]">
               Add to Recipient?
             </h2>
             <div

@@ -313,7 +313,7 @@ const EKEDC = () => {
           {/* top part after nav bar */}
           <div className="flex flex-row w-full pt-[10px]  h-[90px] md:h-[112.29px] lg:h-[196px] lg:px-[50px]  px-[16px] rounded-lg md:rounded-[11.5px] lg:rounded-[20px] justify-between  py-0 bg-gradient-to-r from-[#FFA733] via-[#58FF4A] to-[#98B0FF]">
             <div className="flex flex-col gap-2  ">
-              <div className="text-[8px] font-[600]  pt-[10px] md:text-[11px] md:leading-[20.63px] lg:pt-[25px] lg:text-[24px] lg:leading-[36px] text-[#000000] leading-[12px]">
+              <div className="text-[8px] font-[600]  pt-[10px] md:text-[12px] md:leading-[20.63px] lg:pt-[25px] lg:text-[24px] lg:leading-[36px] text-[#000000] leading-[12px]">
                 ELECTRICITY BILLS, PREPAID AND POSTPAID  <br /> PAYMENTS.
               </div>
               <div className="text-[8px] font-[400] leading-[9px] md:text-[10px] md:leading-[14.9px] lg:text-[20px] lg:leading-[26px] text-[#000000] ">
@@ -328,7 +328,7 @@ const EKEDC = () => {
               />{" "}
             </div>
           </div>
-          <div className=" flex lg:mt-[20px] text-[10px] lg:text-[16px] font-[600] pt-[30px] text-[#7E7E7E] items-center ">
+          <div className=" flex lg:mt-[20px] text-[12px] lg:text-[16px] font-[600] pt-[30px] text-[#7E7E7E] items-center ">
             <div>Recharge</div>
             <div><img className="w-[35px] lg:w-[130px] ml-1" src={logo} alt="" /></div>
             <div className=" ml-1">Eko Electric Payment-EKEDC Meter Instantly</div>
@@ -342,26 +342,26 @@ const EKEDC = () => {
 
 
 
-          <div className="text-[10px]  lg:text-[16px]  font-[600] mt-[20px] text-[#7E7E7E] "> Select <span className="text-[#04177F] font-[700]">Prepaid</span> MeterType if you load token on your meter.</div>
-          <div className="text-[10px]  lg:text-[16px]  font-[600] mt-[10px] text-[#7E7E7E] "> Select <span className="text-[#04177F] font-[700]">Postpaid</span> MeterType if you get a bill at the end of the month.</div>
+          <div className="text-[12px]  lg:text-[16px]  font-[600] mt-[20px] text-[#7E7E7E] "> Select <span className="text-[#04177F] font-[700]">Prepaid</span> MeterType if you load token on your meter.</div>
+          <div className="text-[12px]  lg:text-[16px]  font-[600] mt-[10px] text-[#7E7E7E] "> Select <span className="text-[#04177F] font-[700]">Postpaid</span> MeterType if you get a bill at the end of the month.</div>
 
           {/* input sections */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 md:gap-6 lg:gap-6 items-center lg:mt-[20px] ">
             <div className=" flex flex-col mt-[20px] gap-1">
-              <div className="text-[#7E7E7E] text-[10px] lg:text-[16px]  font-[600]">Select Meter Type</div>
+              <div className="text-[#7E7E7E] text-[12px] lg:text-[16px]  font-[600]">Select Meter Type</div>
               <div
-                className=" border-[1px] w-full h-[30px]  pl-[4px] pr-[8px]  lg:h-[51px] lg:pl-[14px] lg:pr-[16px] flex  items-center justify-between"
+                className=" border-[1px] w-full h-[40.927px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-xl p-4 sm:p-3 sm:text-lg   pl-[4px] pr-[8px]  lg:h-[51px] lg:pl-[14px] lg:pr-[16px] flex  items-center justify-between"
                 onClick={() => setShowProductList(!showProductList)}
               >
-                <h2 className="text-[10px] font-[600]  leading-[12px] text-[#7C7C7C] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                <h2 className="text-[12px] font-[600]  leading-[12px] text-[#7C7C7C] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
                   {selectedNetworkProduct}
                 </h2>
-                <button className="lg:w-6 lg:h-6 w-[11px] h-[11px]">
+                <button className="lg:w-6 lg:h-6 w-[11px] h-[13x]">
                   <img src={arrowDown} alt="" className="w-full h-full" />
                 </button>
               </div>
               {showProductList && (
-                <div className="border md:rounded-[10px] text-[10px] md:text-[12px] lg:text-[16px] mt-14 lg:mt-20 w-[90%] md:w-[44%]  rounded-[4px] absolute  bg-[#FFF] z-[10]">
+                <div className="border md:rounded-[10px] text-[12px]  md:text-[12px] lg:text-[16px] mt-16 lg:mt-20 w-[90%] md:w-[44%]  rounded-[4px] absolute  bg-[#FFF] z-[10]">
                   {productList.map((item) => (
                     <div
                       key={item.name}
@@ -376,10 +376,10 @@ const EKEDC = () => {
               )}
             </div>
 
-            <div className="flex flex-col mt-[10px] md:mt-[23px] lg:mt-[23px]">
-              <div className="text-[#7E7E7E] text-[10px] lg:text-[16px] font-[600] " >Meter Number</div>
+            <div className="flex flex-col mt-[12px] md:mt-[23px] lg:mt-[23px]">
+              <div className="text-[#7E7E7E] text-[12px] lg:text-[16px] font-[600] " >Meter Number</div>
               <div>
-                <input type="number" value={meterNumber} onChange={handleMeterNumber} className=" w-full text-[#7E7E7E] pl-[9px] lg:h-[51px] lg:text-[16px]  text-[10px] font-[500]  border-[1px] h-[30px]" />{" "}
+                <input type="number" value={meterNumber} onChange={handleMeterNumber} className=" w-full text-[#7E7E7E] pl-[9px] lg:h-[51px] lg:text-[16px]  text-[10px] font-[500]  border-[1px] h-[40.927px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-xl p-4 sm:p-3 sm:text-lg " />{" "}
               </div>
               {errors.meterNumber && (
                 <div className="text-[12px] text-red-500 italic lg:text-[14px]">
@@ -389,15 +389,15 @@ const EKEDC = () => {
             </div>
 
             <div className="flex flex-col mt-[10px]">
-              <div className="text-[#7E7E7E] text-[10px] lg:text-[16px] font-[600]" >Verified Name</div>
+              <div className="text-[#7E7E7E] text-[12px] lg:text-[16px] font-[600]" >Verified Name</div>
               <div>
-                <input type="text" value={verifiedName} onChange={handleVerifiedName} className=" w-full text-[#7E7E7E] lg:h-[51px] lg:text-[16px]  text-[10px] pl-[9px] font-[500]  border-[1px] h-[30px]" />{" "}
+                <input type="text" value={verifiedName} onChange={handleVerifiedName} className=" w-full text-[#7E7E7E] lg:h-[51px] lg:text-[16px]  text-[10px] pl-[9px] font-[500]  border-[1px] h-[40.927px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-xl p-4 sm:p-3 sm:text-lg " />{" "}
               </div>
             </div>
             <div className="flex flex-col mt-[10px]">
-              <div className="text-[#7E7E7E] text-[10px] lg:text-[16px] font-[600]" >Phone Number</div>
+              <div className="text-[#7E7E7E] text-[12px] lg:text-[16px] font-[600]" >Phone Number</div>
               <div>
-                <input type="number" value={phoneNumber} onChange={handlePhoneNumber} className=" w-full text-[#7E7E7E] lg:h-[51px] lg:text-[16px]  pl-[9px] text-[10px] font-[500]  border-[1px] h-[30px]" />
+                <input type="number" value={phoneNumber} onChange={handlePhoneNumber} className=" w-full text-[#7E7E7E] lg:h-[51px] lg:text-[16px]  pl-[9px] text-[10px] font-[500]  border-[1px] h-[40.927px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-xl p-4 sm:p-3 sm:text-lg " />
               </div>
               {errors.phoneNumber && (
                 <div className="text-[12px] text-red-500 italic lg:text-[14px]">
@@ -405,10 +405,10 @@ const EKEDC = () => {
                 </div>
               )}
             </div>
-            <div className="flex flex-col mt-[10px]">
-              <div className="text-[#7E7E7E] text-[10px] lg:text-[16px]   font-[600]" >Email</div>
+            <div className="flex flex-col mt-[12px]">
+              <div className="text-[#7E7E7E] text-[12px] lg:text-[16px]   font-[600]" >Email</div>
               <div>
-                <input type="text" value={ikedcEmail} onChange={handleEmail} className=" w-full lg:h-[51px] text-[#7E7E7E] pl-[9px] lg:text-[16px] text-[10px] font-[500]  border-[1px] h-[30px]" />
+                <input type="text" value={ikedcEmail} onChange={handleEmail} className=" w-full lg:h-[51px] text-[#7E7E7E] pl-[9px] lg:text-[16px] text-[10px] font-[500]  border-[1px] h-[40.927px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-xl p-4 sm:p-3 sm:text-lg " />
               </div>
               {errors.ikedcEmail && (
                 <div className="text-[12px] text-red-500 italic lg:text-[14px]">
@@ -417,24 +417,24 @@ const EKEDC = () => {
               )}
             </div>
             <div className="flex flex-col mt-[10px]">
-              <div className="text-[#7E7E7E] text-[10px] lg:text-[16px]  font-[600]" >Amount</div>
-              <div className="flex items-center lg:text-[16px] text-[#7E7E7E] text-[10px] pl-2 border-[1px]">
+              <div className="text-[#7E7E7E] text-[12px] lg:text-[16px]  font-[600]" >Amount</div>
+              <div className="flex items-center lg:text-[16px] text-[#7E7E7E] text-[12px] pl-2 border-[1px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[8px]  md:p-0 text-xl p-4 sm:p-3 sm:text-lg">
                 &#8358;
-                <input type="number" name="ikedcamount" value={ikedcamount} onChange={handleIkedcAmount} className=" w-full outline-none lg:h-[51px] lg:text-[16px]  text-[#7E7E7E] pl-[9px] text-[10px] font-[500]   h-[30px]" />
+                <input type="number" name="ikedcamount" value={ikedcamount} onChange={handleIkedcAmount} className=" w-full outline-none lg:h-[51px] lg:text-[16px]  text-[#7E7E7E] pl-[9px] text-[10px] font-[500]   h-[30px] " />
               </div>
             </div>
 
             <div className=" flex flex-col mt-[20px] gap-1">
-              <div className="text-[#7E7E7E] text-[10px] lg:text-[16px]  font-[600]">Payment Method</div>
+              <div className="text-[#7E7E7E] text-[12px] lg:text-[16px]  font-[600]">Payment Method</div>
               <div
-                className=" border-[1px] w-full h-[30px]  pl-[4px] pr-[8px] lg:h-[51px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between"
+                className=" border-[1px] w-full h-[40.927px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-xl p-4 sm:p-3 sm:text-lg   pl-[4px] pr-[8px] lg:h-[51px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between"
                 onClick={() => setShowList(!showList)}
               >
                 <p></p>
                 {selected ? (
                   <div className="flex w-[100%] justify-between items-center">
 
-                    <p className="text-[10px] text-[#7E7E7E] font-extrabold lg:text-[14px]">
+                    <p className="text-[12px] text-[#7E7E7E] font-extrabold lg:text-[14px]">
                       {" "}
                       {globalCountry}
                     </p>
@@ -472,7 +472,7 @@ const EKEDC = () => {
                   {" "}
                   {countryList.map((country) => (
                     <div
-                      className=" cursor-pointer border-b flex items-center p-2 gap-[5px] text-[9px]  md:text-[14px] lg:text-[16px]"
+                      className=" cursor-pointer border-b flex items-center p-2 gap-[5px] text-[11px]  md:text-[14px] lg:text-[16px]"
                       key={country.id}
                       onClick={() =>
                         handleCountryClick(

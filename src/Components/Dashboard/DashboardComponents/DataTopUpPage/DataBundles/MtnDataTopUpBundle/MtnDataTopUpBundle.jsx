@@ -793,7 +793,7 @@ const MtnDataTopUpBundle = () => {
               <p className="text-[10px] mb-2 font-bold uppercase w-[100%] md:text-[16px] md:w-[70%] lg:w-[70%] lg:text-[20px] 2xl:w-[80%] 2xl:text-[24px] lg:mb-4">
                 DATA BUNDLES, AFFORDABLE AND AUTOMATED.
               </p>
-              <p className="text-[7px] font-[400] leading-[9px] mb-3 md:text-[10px] md:leading-[12.2px] w-[90%] md:w-[75%] lg:w-[75%] 2xl:w-[85%] 2xl:mt-[5px] lg:mt-[20px] lg:text-[16px] lg:leading-[26px] 2xl:text-[20px] lg:mb-[20px]">
+              <p className="text-[8px] font-[400] leading-[9px] mb-3 md:text-[10px] md:leading-[12.2px] w-[90%] md:w-[75%] lg:w-[75%] 2xl:w-[85%] 2xl:mt-[5px] lg:mt-[20px] lg:text-[16px] lg:leading-[26px] 2xl:text-[20px] lg:mb-[20px]">
                 Top up your mobile sim with our automated data bundles directly
                 from network providers, enjoy discounts without any hassle or
                 hidden fee.
@@ -812,7 +812,7 @@ const MtnDataTopUpBundle = () => {
           {/* =========================Select/Add Recipient===================== */}
 
           <div className="flex gap-[10%] mt-[40px] md:w-full md:justify-between md:gap-[10%] ">
-            <div className="w-full flex items-center justify-between border text-[10px] md:py-[15px] md:w-[50%] rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
+            <div className="w-full flex items-center justify-between border text-[12px] md:py-[15px] md:w-[50%] rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
               <Link
                 to="/DataBundleSelectRecipient"
                 style={{ display: "inline-flex", width: "100%" }}
@@ -820,13 +820,13 @@ const MtnDataTopUpBundle = () => {
               >
                 <p className="font-semibold">Select Recipient</p>
                 <img
-                  className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
+                  className="w-[13px] h-[14px] lg:w-[29px] lg:h-[29px]"
                   src={Recipient}
                   alt=""
                 />
               </Link>
             </div>
-            <div className="w-full flex items-center justify-between border text-[10px] md:py-[15px] md:w-[40%] md:mr-[9%]  rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
+            <div className="w-full flex items-center justify-between border text-[12px] md:py-[15px] md:w-[40%] md:mr-[9%]  rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
               <Link
                 to="/DataBundleAddRecipient"
                 style={{ display: "inline-flex", width: "100%" }}
@@ -834,7 +834,7 @@ const MtnDataTopUpBundle = () => {
               >
                 <p className="font-semibold">Add Recipient</p>
                 <img
-                  className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
+                  className="w-[13px] h-[14px] lg:w-[29px] lg:h-[29px]"
                   src={Recipient2}
                   alt=""
                 />
@@ -847,7 +847,7 @@ const MtnDataTopUpBundle = () => {
             className="flex mt-[35px] my-[30px] md:w-[100%] md:gap-[10%]"
           >
             <div className="rounded-[4px] w-full bg-primary text-white md:w-[50%] h-[30px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-center md:justify-between gap-[10px] px-[5px]">
-              <h2 className="lg:text-[16px] lg:leading-[24px] text-[10px] md:text-[12px] leading-[12px]">
+              <h2 className="lg:text-[16px] lg:leading-[24px] text-[12px] md:text-[12px] leading-[12px]">
                 Data Balance USSD Codes
               </h2>
               <div className="lg:w-6 lg:h-6 w-[11px] h-[11px]">
@@ -867,7 +867,7 @@ const MtnDataTopUpBundle = () => {
           </div>
           <div className="flex gap-[15px]  justify-between md:w-full md:gap-[10%]">
             <div className="flex gap-[15px] md:w-[50%] md:justify-between">
-              <p className="flex text-[#7c7c7c] gap-[7px] text-[10px] md:gap-[7px] leading-[130%] md:text-[12px] lg:text-[16px] 2xl:text-[20px]">
+              <p className="flex text-[#7c7c7c] gap-[7px] text-[12px] md:gap-[7px] leading-[130%] md:text-[12px] lg:text-[16px] 2xl:text-[20px]">
                 Purchase
                 <span>
                   <img
@@ -957,17 +957,17 @@ const MtnDataTopUpBundle = () => {
 
           <div className="grid grid-cols-1 mt-[25px] md:grid-cols-2 gap-y-[20px] md:gap-x-[58.68px] lg:gap-x-[100px] md:gap-y-[15px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[20px]">
             <div className="relative">
-              <h2 className="lg:text-[18px] lg:leading-[24px] mb-1 text-[10px] md:text-[12px] font-[600] leading-[12px]">
+              <h2 className="lg:text-[18px] lg:leading-[24px] mb-1 text-[12px] md:text-[12px] font-[600] leading-[12px]">
                 Select Product
               </h2>
               <div
-                className="input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between"
+                className="mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between"
                 onClick={() => setShowProductList(!showProductList)}
               >
-                <h2 className="text-[10px] font-[600] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                <h2 className="text-[12px] font-[600] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
                   {selectedNetworkProduct}
                 </h2>
-                <button className="lg:w-6 lg:h-6 w-[11px] h-[11px]">
+                <button className="lg:w-6 lg:h-6 w-[12px] h-[12px]">
                   <img src={arrowDown} alt="" className="w-full h-full" />
                 </button>
               </div>
@@ -989,17 +989,17 @@ const MtnDataTopUpBundle = () => {
             </div>
 
             <div className="relative">
-              <h2 className="lg:text-[18px] md:text-[12px] lg:leading-[24px] mb-1 text-[10px] font-[600] leading-[12px]">
+              <h2 className="lg:text-[18px] md:text-[12px] lg:leading-[24px] mb-1 text-[12px] font-[600] leading-[12px]">
                 Select Plan
               </h2>
               <div
-                className="input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between"
+                className="mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between"
                 onClick={() => setShowOptionList(!showOptionList)}
               >
-                <h2 className="text-[10px] font-[600] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                <h2 className="text-[12px] font-[600] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
                   {selectedOption}
                 </h2>
-                <button className="lg:w-6 lg:h-6 w-[11px] h-[11px]">
+                <button className="lg:w-6 lg:h-6 w-[12px] h-[12px]">
                   <img src={arrowDown} alt="" className="w-full h-full" />
                 </button>
               </div>
@@ -1039,7 +1039,7 @@ const MtnDataTopUpBundle = () => {
             </div>
 
             <div className="">
-              <h2 className="text-[10px] font-[600] md:text-[12px] lg:text-[18px]">
+              <h2 className="text-[12px] font-[600] md:text-[12px] lg:text-[18px]">
                 Phone Number{" "}
                 <span className="text-[#04177F]">
                   <Link to="/DataBundleSelectRecipient">
@@ -1050,7 +1050,7 @@ const MtnDataTopUpBundle = () => {
               <div className="relative mt-[5px]">
                 <input
                   type="number"
-                  className="input border w-full h-8 px-4 rounded-md text-[10px] lg:text-[16px] font-[600] focus:outline-none lg:h-[51px]"
+                  className="mt-1 md:mt-0 border md:border-[0.4px] rounded-[11px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] lg:text-[16px] font-[600] focus:outline-none lg:h-[51px]"
                   placeholder=""
                   value={inputValue}
                   onChange={(event) => {
@@ -1058,7 +1058,7 @@ const MtnDataTopUpBundle = () => {
                     setRecipientPhoneNumber(event.target.value);
                   }}
                 />
-                <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                <div className="absolute inset-y-0 top-[4px] right-0 flex items-center pr-3 pointer-events-none">
                   <img
                     src={PhoneNumber}
                     alt=""
@@ -1075,18 +1075,18 @@ const MtnDataTopUpBundle = () => {
             </div>
 
             <div className="">
-              <h2 className="text-[10px] font-[600] md:text-[12px] lg:text-[18px]">
+              <h2 className="text-[12px] font-[600] md:text-[12px] lg:text-[18px]">
                 Recipient Name<span className="text-[#7C7C7C]">(optional)</span>{" "}
               </h2>
               <div className="relative mt-[5px]">
                 <input
                   type="text"
-                  className="input border w-full h-8 px-4 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px]"
+                  className="mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px]"
                   placeholder=""
                   value={recipientNames}
                   onChange={handleRecipientNameChange}
                 />
-                <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                <div className="absolute inset-y-0 top-[4px] right-0 flex items-center pr-3 pointer-events-none">
                   <img
                     src={Recipient3}
                     alt=""
@@ -1097,13 +1097,13 @@ const MtnDataTopUpBundle = () => {
             </div>
 
             <div className="">
-              <h2 className="text-[10px] font-[600] md:text-[12px] lg:text-[18px]">
+              <h2 className="text-[12px] font-[600] md:text-[12px] lg:text-[18px]">
                 Amount
               </h2>
               <div className="relative mt-[5px]">
                 <input
                   type="text"
-                  className="input border w-full h-8 px-4 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px]"
+                  className="mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px]"
                   // placeholder="&#8358;100"
                   value={`${selectedAmount}`}
                   onChange={(event) => {
@@ -1112,7 +1112,7 @@ const MtnDataTopUpBundle = () => {
                     // setSelectedAmount(event.target.value);
                   }}
                 />
-                <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                <div className="absolute top-[3px] inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                   <img src={Amount} alt="" className="lg:w-[100%] lg:h-[50%]" />
                 </div>
               </div>
@@ -1120,10 +1120,10 @@ const MtnDataTopUpBundle = () => {
 
             <div>
               <div onClick={handleShowPayment}>
-                <h2 className="lg:text-[18px] mt-[5px] lg:leading-[24px] mb-2 text-[10px] md:text-[12px] font-[600] leading-[12px]">
+                <h2 className="lg:text-[18px] mt-[5px] lg:leading-[24px] mb-2 text-[12px] md:text-[12px] font-[600] leading-[12px]">
                   Payment Method
                 </h2>
-                <div className="input flex justify-between items-center border w-full h-8 px-2 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px]">
+                <div className="mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg input flex justify-between items-center border w-full h-8 px-2 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px]">
                   {paymentSelected ? (
                     <li
                       onClick={handleShowPayment}
@@ -1137,14 +1137,14 @@ const MtnDataTopUpBundle = () => {
                   ) : (
                     <h2
                       onClick={handleShowPayment}
-                      className="text-[10px] lg:text-[14px]"
+                      className="text-[12px] lg:text-[14px]"
                     >
                       Select Payment Method
                     </h2>
                   )}
                   {paymentSelected ? (
                     <button
-                      className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]"
+                      className=" rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[8px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]"
                       onClick={handleShowPayment}
                     >
                       <img

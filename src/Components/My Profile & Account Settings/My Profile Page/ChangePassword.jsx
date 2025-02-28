@@ -52,7 +52,7 @@ const ChangePassword = () => {
             <div className="relative mt-[5px] lg:mt-[15px]">
               <input
                 type="text"
-                className="w-full md:w-[90%] lg:w-[80%] h-8 px-2 py-[10px] border-[1px] rounded-[2px] text-[10px] md:text-[14px] text-[#7E7E7E] lg:text-[18px] font-semibold focus:outline-none lg:h-[51px]"
+                className="mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-xl p-4 sm:p-3 sm:text-lg w-full md:w-[90%] lg:w-[80%] h-8 px-2 py-[10px] border-[1px] rounded-[2px] text-[10px] md:text-[14px] text-[#7E7E7E] lg:text-[18px] font-semibold focus:outline-none lg:h-[51px]"
                 placeholder=""
                 value={oldPassword}
                 onChange={(event) => setOldPassword(event.target.value)}
@@ -67,7 +67,7 @@ const ChangePassword = () => {
             <div className="relative mt-[5px] lg:mt-[15px]">
               <input
                 type="text"
-                className="w-full md:w-[80%] text-[#7E7E7E] lg:w-[70%]  h-8 px-2 py-[10px] border-[1px] rounded-[2px] text-[10px] md:text-[14px] lg:text-[18px] font-semibold focus:outline-none lg:h-[51px]"
+                className="w-full md:w-[80%] text-[#7E7E7E] lg:w-[70%]  h-8 px-2 py-[10px] border-[1px] rounded-[2px] text-[10px] md:text-[14px] lg:text-[18px] font-semibold focus:outline-none lg:h-[51px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-xl p-4 sm:p-3 sm:text-lg"
                 placeholder=""
                 value={newPassword}
                 onChange={(event) => setNewPassword(event.target.value)}

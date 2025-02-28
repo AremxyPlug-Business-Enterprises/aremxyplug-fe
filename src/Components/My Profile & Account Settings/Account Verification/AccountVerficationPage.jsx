@@ -18,7 +18,7 @@ export default function AccountVerficationPage() {
         { verificationOpen && (
         <div className=''>
        <div className='flex lg:gap-[10px] lg:py-[50px] py-[35px]'> 
-     <h2 className='font-[500] text-[#7C7C7C] text-[9.389px] leading-[14px] 
+     <h2 className='font-[500] text-[#7C7C7C] text-[11.389px] leading-[14px] 
      lg:text-[20px] lg:leading-[30px]'>
         Verify your account to upgrade your transaction limit with other benefits.
 </h2>
@@ -38,7 +38,7 @@ src={Arrowright} alt="" />
        ${idVerificationOpen 
         ? "bg-[#E2F3FF] lg:rounded-[6px] lg:border-b-[4px] border-b-[2px] rounded-[3.521px] border-[#04177F]"
        : "bg-transparent" } `}>
-     <h2 className='font-[500] text-center text-[10px] leading-[14px] 
+     <h2 className='font-[500] text-center text-[12px] leading-[14px] 
      lg:text-[20px] lg:leading-[30px]'>
      ID Verification
      </h2>
@@ -53,7 +53,7 @@ src={Arrowright} alt="" />
        ${bvnVerificationOpen 
         ? "bg-[#E2F3FF] lg:rounded-[6px] lg:border-b-[4px] border-b-[2px] rounded-[3.521px] border-[#04177F]"
        : "bg-transparent"}  `} >
-     <h2 className='font-[500] text-center  text-[10px] leading-[14px]
+     <h2 className='font-[500] text-center  text-[12px] leading-[14px]
      lg:text-[20px] lg:leading-[30px]'>
      BVN Verification
      </h2>
@@ -68,7 +68,7 @@ src={Arrowright} alt="" />
     ${accountUpgrade
     ? "bg-[#E2F3FF] lg:rounded-[6px] lg:border-b-[4px] border-b-[2px] rounded-[3.521px] border-[#04177F]"
     : "bg-transparent"}  `} >
-     <h2 className='font-[500] text-center text-[10px] leading-[14px]
+     <h2 className='font-[500] text-center text-[12px] leading-[14px]
      lg:text-[20px] lg:leading-[30px]'>
      Account Upgrade
      </h2>
