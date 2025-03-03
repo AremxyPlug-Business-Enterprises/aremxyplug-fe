@@ -372,9 +372,9 @@ const AirtimeVtu = () => {
                 <div>
                     <div>
                         <h2 className='lg:text-[16px] lg:leading-[24px] mb-1 text-[8px] leading-[12px]'>Payment Method</h2>
-                        <div className="border rounded-[4px] pl-[4px] pr-[8px] w-full h-[30px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between">
+                        <div className="border rounded-[4px] pl-[4px] pr-[8px] w-full h-[80px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between">
                             { paymentSelected ? 
-                                <li className="flex items-center py-[3px] gap-1 h-[30px] last:border-b-0 md:py-[6px] cursor-pointer lg:gap-2 lg:h-[45px]"> 
+                                <li className="flex items-center py-[80px] gap-1 h-[100px] last:border-b-0 md:py-[6px] cursor-pointer lg:gap-2 lg:h-[45px]"> 
                                     <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">{name}</h2>
                                     <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">Wallet({paymentAmount.toLocaleString()}.00)</h2>
                                 </li> 
