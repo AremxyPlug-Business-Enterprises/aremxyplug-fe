@@ -11,6 +11,9 @@ import Joi from "joi";
 import axios from "axios";
 import { Loader } from "../Loader/Loader";
 import { Modal } from "../Screens/Modal/Modal";
+import PendingImage from "../My Profile & Account Settings/ProfileImages/Pending.svg";
+import bvnVerifiedSuccess from "../My Profile & Account Settings/ProfileImages/user-tick.svg";
+import NotVerifiedIcon from "../My Profile & Account Settings/ProfileImages/NotVerifiedIcon.svg";
 
 
 function LoginForm() {
@@ -19,6 +22,10 @@ function LoginForm() {
       setOpen2StepVerification,
       setLoginAuthorisation,
       setCustomerDetail,
+      loginAuthorisation,
+     setBvnVerifyImage, 
+        setBvnStatus, 
+        setVirtualAccCreated
       } = useContext(ContextProvider);
   const [usernameORemail, setUsernameORemail] = useState("username");
   const [loading, setLoading] = useState(false);
@@ -143,8 +150,53 @@ function LoginForm() {
 
 
 // Function to get user Token
-
+const getTokenNeeded =(Token)=> {
+  Token=localStorage.getItem("getToken")
+  console.log(Token)
+   console.log(Token)
+   return Token;
+ }
 //Function to get User Bank Details
+const CheckVirtualAcc = async(Token) => {
+  getTokenNeeded(Token)
+if (loginAuthorisation) {
+const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc'
+ // console.log(data)
+ try{
+  setLoading(true)
+  setBvnVerifyImage(PendingImage)
+  setBvnStatus("Pending")
+      const response = await axios.get(url, {headers : {"Content-Type" : "application/json",
+  Authorization : Token || loginAuthorisation
+  }})
+
+    if (response.status === 201 || 200 ) {
+        setBvnVerifyImage(bvnVerifiedSuccess);
+        setBvnStatus('Verified');
+        const virtualAccount = response.data.data.acc_details;
+        setVirtualAccCreated(virtualAccount);
+      } 
+    
+  }catch(error){
+   if(error.status === 401 || 400){
+    alert("We had an error trying to get your details, click okay to repeat the login process");
+    console.log(`LoginAuth :${loginAuthorisation}`)
+    setBvnStatus('Not Verified');
+    setBvnVerifyImage(NotVerifiedIcon);
+    console.log(`ERROR: ${error}`)
+ 
+        }
+      else if(error.status === 500){
+        alert('Error:', "INTERNAL_SERVER_ERROR");
+      setBvnStatus('Not Verified');
+     setBvnVerifyImage(NotVerifiedIcon)
+    
+      }
+    }finally{
+      setLoading(false)
+    }
+}
+}
 
   
 
@@ -193,15 +245,20 @@ function LoginForm() {
                 const authToken = response.headers.get('Authorization');
                 setLoginAuthorisation(authToken);
                 } else if(response.status === 200){
-                setOpen2StepVerification(true);
+                
              const customer  =  response.data.data.customer;
              const getToken = response.data.data.auth_token;
              localStorage.setItem("getToken", getToken)
+             console.log()
             if(customer){
             setCustomerDetail(customer);
             setLoginAuthorisation(getToken)
-            }
-            
+           if(loginAuthorisation){
+            setOpen2StepVerification(true);
+       const runCheck = async()=>  await CheckVirtualAcc()
+            return runCheck();
+           }
+          }
             console.log(getToken);
 
             }else if (response.status === 404) {
@@ -224,7 +281,9 @@ function LoginForm() {
       } catch (error) {
         console.log(error);
       } finally {
-        setLoading(false);
+        if(CheckVirtualAcc){
+          setLoading(false);
+          }
       }
     }
 
@@ -267,15 +326,19 @@ function LoginForm() {
                setLoginAuthorisation(authToken);
                 }
                }else if(response.status === 200){
-                setOpen2StepVerification(true);
+               
              const customer  =  response.data.data.customer;
              const authToken = response.headers.get('Authorization');
-
-            if(customer && authToken) {
-            setCustomerDetail(customer);
-            localStorage.setItem('authorisedLogin', authToken)
-            setLoginAuthorisation(authToken);
-            }
+             setLoginAuthorisation(authToken);
+             if(customer){
+              setCustomerDetail(customer);
+              if(loginAuthorisation){
+                setOpen2StepVerification(true);
+                const runCheck = async()=>  await CheckVirtualAcc()
+                     return runCheck();
+                    }
+                  }
+            console.log(authToken);
               } else if(response.status === 404){
            alert("User not found")
               }
@@ -297,7 +360,9 @@ function LoginForm() {
       } catch (error) {
         console.log(error);
       } finally{
+        if(CheckVirtualAcc){
         setLoading(false);
+        }
       }
     }
   };
