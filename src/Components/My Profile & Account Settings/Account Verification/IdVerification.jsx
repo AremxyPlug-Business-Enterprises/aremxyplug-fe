@@ -16,9 +16,10 @@ import PopUpGreenTab from "../ProfileImages/PopUpGreenTab.svg"
 import PopUpGreenDeskTop from "../ProfileImages/PopUpGreenDeskTop.svg"
 import Success from "../ProfileImages/success.gif"
 import QueryId from '../ProfileImages/IdCustomerQuery.svg';
-
+import axios from "axios";
+import { Loader } from '../../Loader/Loader';
 export default function IdVerification() {
-  const {verificationOpen} = useContext(ContextProvider)
+  const {verificationOpen, loginAuthorisation} = useContext(ContextProvider)
     const {idVerificationOpen} = useContext(ContextProvider);
     const {dropDownGender, setDropDownGender} = useContext(ContextProvider);
     const [idDropDown, setIdDropDown]= useState(false);
@@ -35,7 +36,7 @@ export default function IdVerification() {
     const [idBackView, setIdBackView] = useState(false);
       const [idPopVerified, setIdPopVerified] = useState(false);
       const [idCustomerQuery, setIdCustomerQuery] = useState(false);
-
+     const [loading, setLoading] = useState(false)
  const {toggleSideBar, customerDetail} = useContext(ContextProvider);
   const {full_name} =  customerDetail
     // Genders
@@ -47,7 +48,10 @@ export default function IdVerification() {
    }
 
    // ID 
-   const idType = ['National ID', 'International Passport', 'Permanent Voters Card', 'Driver’s License','NIN Slip'];
+   const idTypes =[{ idType :'National ID', Status : "Active", id : 1},
+    { idType :'International Passport' ,Status : "Inactive", id : 2},
+    {idType :'Permanent Voters Card', Status : "Inactive", id: 3},
+    {idType : 'Driver’s License', Status : "Inactive", id: 4}];
    const [idResult, setIdResult] = useState('');
    const chooseId = () => {
     setIdDropDown(!idDropDown);
@@ -78,24 +82,45 @@ export default function IdVerification() {
   const addLGA = e.target.value;
  e.target.setCustomValidity(addLGA ? '' : 'This is required to proceed');
 }
-
-const checkform = () =>{
-
-  if(genderResult &&
-    idResult &&
-    idAddress &&
-    idCity &&
-    idState &&
-    idLGA &&
-    idPostalCode &&
+//This form is to check if the form filled are filled correctly and completely 
+//for the id Verification
+const getTokenNeeded =(Token)=> {
+  Token=localStorage.getItem("getToken")
+  console.log(Token)
+   console.log(Token)
+   return Token;
+ }
+const checkform = async(Token) =>{
+  getTokenNeeded(Token)
+ if(
     idNumber){
-     setVerifyImage(Pending);
-      setIdStatus('Pending');
-      setErrorSubmit(false);
-    setTimeout(()=> {
-     setIdPopVerified(true);
-     
-    },2000)
+    try {
+      setLoading(true);
+      setVerifyImage(Pending);
+
+      const body ={
+      nin: idNumber
+      }
+      const url ="https://aremxyplug.onrender.com/api/v1/verify"
+      const response = await axios.post(url, body, {headers:{"Content-Type": "application/json", Authorization : loginAuthorisation || Token }})
+      if(response.status === 200 || 201){
+        setVerifyImage(idPopVerified)
+        alert("Verification is Successful")
+      }
+    }catch(error) {
+      
+     if(error.status === 400 || 401 || 404){
+      alert("Verification failed")
+      setVerifyImage(NotVerifiedIcon)
+      console.log(`ERROR : ${error}`)
+     }else if(error.status === 500){
+      alert("INTERNAL_SERVER_ERROR");
+      setVerifyImage(NotVerifiedIcon);
+     }
+    }finally{
+      setLoading(false)
+    }
+    
   }
  else   {
   
@@ -336,19 +361,43 @@ const checkform = () =>{
       {idDropDown  && (
         <div 
         className=' absolute lg:top-[90px] md:top-[60px] top-[60px] z-[5] flex flex-col w-[100%]'>
-      {(idType.map(info => {
+      {(idTypes.map(info => {
         return (
-          <h2 onClick={() => {
-            setIdResult(info);
-             setIdDropDown(false);
+          <div 
+          key={info.id} onClick={() => {
+           setIdResult(()=> {
+            if(info.id ===1 ){
+           return info.idType;
+          
+           
+         }
+           else if(info.id !== 1 && idResult === ""){
+           return ""
+             }else if(  (idResult === "National ID") &&(info.id === 2 || info.id ===3|| info.id === 4)){
+              return "National ID"
+              
+            }
+          })
+             setIdDropDown((e)=>{
+          return false ? info.id === 1 : true
+             });
              document.querySelector('.idDrop').classList.remove('DropIt');
           }}
-           className='font-[500] text-[#7C7C7C] text-[8px] leading-[10.4px]
+           className={`font-[500] px-2 flex justify-between text-[#7C7C7C] text-[8px] leading-[10.4px]
            lg:text-[16px] lg:leading-[20.8px] md:py-[20px] py-[15px] pl-[10px]
           lg:pl-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
-          md:shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)] bg-white cursor-pointer'>
-        {info}
-          </h2>
+          md:shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)]  cursor-pointer ${info.Status === "Inactive" ? "bg-gray-300 cursor-not-allowed" : "bg-white"}`}>
+
+         <h2 className="font-[500] text-[#7C7C7C] text-[8px] leading-[10.4px]
+           lg:text-[16px] lg:leading-[20.8px]
+           ">{info.idType}</h2>
+           <p
+            className={`font-[500] text-[#7C7C7C] text-[8px] leading-[10.4px]
+           lg:text-[16px] lg:leading-[20.8px] ${info.Status === "Inactive" ? "text-red-500": "text-green-500"}`}>
+    {info.Status}
+           </p>
+          </div>
+        
         )
       }))}
         </div>
@@ -618,6 +667,12 @@ Confirming your identity ensures that the person accessing the account is indeed
           </Modal>
         )}
         </div>
+        )}
+
+        {loading && (
+          <Modal>
+          <Loader/>
+          </Modal>
         )}
         </div>
   )

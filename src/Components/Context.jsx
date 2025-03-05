@@ -988,9 +988,9 @@ const [virtualAccCreated, setVirtualAccCreated] = useState(false);
      const [accountNameState, setAccountNameState] = useState("Null")
      const [accountNumberState, setAccountNumberState] = useState("Null");
  const {full_name} = customerDetail;
- const virtualAccObject ={
-  bankName
- }
+ // Function to check if the user has a virtual account
+
+
   const hold = {
     customerDetail, 
     setCustomerDetail,

@@ -9,9 +9,7 @@ import axios from "axios";
 import CloseIcon from '../EducationPins/imagesEducation/close-circle.svg';
 import { Loader } from "../Loader/Loader";
 import { useNavigate } from "react-router-dom";
-import PendingImage from "../My Profile & Account Settings/ProfileImages/Pending.svg";
-import NotVerifiedImage from "../My Profile & Account Settings/ProfileImages/NotVerifiedIcon.svg"
-import bvnVerifiedSuccess from "../My Profile & Account Settings/ProfileImages/user-tick.svg";
+
 
 function LoginPopUp() {
   const {
@@ -26,13 +24,10 @@ function LoginPopUp() {
     setOpenResetTranspin,
     setOpen2StepVerification,
     loginAuthorisation,
+    setLoginAuthorisation,
     twoStepVerificationSuccess, 
     setTwoStepVerificationSuccess,
     customerDetail,
-    setDashLoading,
-     setBvnStatus, 
-     setBvnVerifyImage, 
-      setVirtualAccCreated, 
       virtualAccCreated,
       setAccountNumberState,
       setBankNameState,
@@ -107,13 +102,12 @@ const getOtpSmsorEmail = async(url, body)=> {
  
 await  gettingOtpFunction(url,body)
 }
- 
-//The function to help check if the user has a virtual account
-const getTokenNeeded =(Token)=> {
-  Token=localStorage.getItem("getToken")
-  //console.log(Token)
-  console.log(Token)
-  return Token;
+ // Functio to help resetthe login and local storage authToenand getToken to help for User LoogIn
+const Close2StepPopUp =()=> {
+  setOpen2StepVerification(false)
+  setLoginAuthorisation(false);
+  localStorage.removeItem("authorisedLogin");
+  localStorage.removeItem("getToken")
 }
 
 
@@ -130,45 +124,6 @@ const GetVirtualAccountValue = (bankname, accountname, accountno)=> {
 }
 
 //Function to get User Bank Details
-const CheckVirtualAcc = async(Token) => {
-  getTokenNeeded(Token)
-  if (loginAuthorisation) {
-    setDashLoading(true);
-const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc'
-   // console.log(data)
-   try{
-    setBvnVerifyImage(PendingImage)
-    setBvnStatus("Pending")
-        const response = await axios.get(url, {headers : {"Content-Type" : "application/json",
-    Authorization : Token || loginAuthorisation
-    }})
-  
-      if (response.status === 201 || 200 ) {
-          setBvnVerifyImage(bvnVerifiedSuccess);
-          setBvnStatus('Verified');
-          const virtualAccount = response.data.data.acc_details;
-          setVirtualAccCreated(virtualAccount);
-        } 
-      
-    }catch(error){
-     if(error.status === 401 || 400){
-      alert("An error has occured")
-      setBvnStatus('Not Verified');
-      setBvnVerifyImage(NotVerifiedImage);
-      console.log(`ERROR: ${error}`)
-   
-          }
-        else if(error.status === 500){
-          alert('Error:', "INTERNAL_SERVER_ERROR");
-        setBvnStatus('Not Verified');
-       setBvnVerifyImage(NotVerifiedImage)
-      
-        }
-      }finally {
-        setDashLoading(false);
-      }
-  }
-}
 
 
 
@@ -179,7 +134,7 @@ const handleVerificationOTP = async()=> {
       setTwoStepVerificationSuccess(true);
     setOtp3("");
      setOpen2StepOTP(false);
-  await CheckVirtualAcc();
+  //await CheckVirtualAcc();
     console.log(otp3);
    } 
   }
@@ -208,7 +163,6 @@ const gettingSmsOrEmailFunctionOtp = async(url, body)=> {
       }else if(smsOrEmail === "sms"){
        url = `https://aremxyplug.onrender.com/api/v1/sms/verify/signin?phone=${phone}`
        body ={
-      phone_number : phone,
        otp :otp3
        }
        console.log(otp3);
@@ -348,9 +302,9 @@ return () => clearInterval(timer);
              lg:h-auto lg:w-[35%] lg:rounded-[15px]">
             <div 
             className="w-[100%] flex justify-end ">
-            <img onClick={()=>{
-              setOpen2StepVerification(false);
-            }}
+            <img onClick={()=>(
+             Close2StepPopUp()
+      )}
              src={CloseIcon} className="w-[18px] h-[18px]  md:w-[25px] cursor-pointer
                md:h-[25px] " alt="" />  
                </div>
