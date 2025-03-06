@@ -255,18 +255,20 @@ const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc'
                 setLoginAuthorisation(authToken);
                 } else if(response.status === 200){
                   setOpen2StepVerification(true);
-             const customer  =  response.data.data.customer;
-             const getToken = response.data.data.auth_token;
-             setLoginAuthorisation(getToken)
-             localStorage.setItem("getToken", getToken)
-             setTimeout(()=>{
-              CheckVirtualAcc()
-             },1000)
-            if(customer){
-            setCustomerDetail(customer);
-        
-          }
-            console.log(getToken);
+                  const customer  =  response.data.data.customer;
+                  
+                  if(customer){
+                   setCustomerDetail(customer);
+                const authToken = response.headers.get('Authorization');
+                  if(authToken){
+                  setLoginAuthorisation(authToken);
+                  localStorage.setItem("getToken", authToken)
+                  setTimeout(async()=>{
+                   console.log(`AUTHTOKEN:${authToken}`)
+                 await CheckVirtualAcc(authToken);
+                  },10000)
+                  }
+                   }
 
             }else if (response.status === 404) {
                 alert("User not found");
