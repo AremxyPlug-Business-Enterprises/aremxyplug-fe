@@ -110,7 +110,7 @@ const checkform = async(Token) =>{
     }catch(error) {
       
      if(error.status === 400 || 401 || 404){
-      alert("Verification failed")
+      alert("NIN verification failed")
       setVerifyImage(NotVerifiedIcon)
       console.log(`ERROR : ${error}`)
      }else if(error.status === 500){

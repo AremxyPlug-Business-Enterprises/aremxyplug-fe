@@ -25,7 +25,9 @@ function LoginForm() {
       loginAuthorisation,
      setBvnVerifyImage, 
         setBvnStatus, 
-        setVirtualAccCreated
+        setVirtualAccCreated,
+        virtualAccCreated,
+        setBvnButtonState
       } = useContext(ContextProvider);
   const [usernameORemail, setUsernameORemail] = useState("username");
   const [loading, setLoading] = useState(false);
@@ -147,34 +149,44 @@ function LoginForm() {
       setIsFocused(isFocused.filter((item) => item !== index));
     }
   };
+//To set the different states for  virtual account
+const virtualAccountState=()=>{
+  const {bank_name, account_no, account_name} = virtualAccCreated;
+  if(bank_name && account_no && account_name){
+  setBvnVerifyImage(bvnVerifiedSuccess);
+  setBvnStatus('Verified');
+  setBvnButtonState("Verified");
+  }else{
+    setBvnVerifyImage(NotVerifiedIcon);
+    setBvnStatus('UnVerified');
+  }
+}
 
-
-// Function to get user Token
-const getTokenNeeded =(Token)=> {
-  Token=localStorage.getItem("getToken")
-  console.log(Token)
-   console.log(Token)
-   return Token;
- }
 //Function to get User Bank Details
-const CheckVirtualAcc = async(Token) => {
-  getTokenNeeded(Token)
-if (loginAuthorisation) {
+const CheckVirtualAcc = async(authToken) => {
+  
+  
+  console.log(`LOGINAUTH :${authToken}`);
+if (authToken) {
 const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc'
  // console.log(data)
  try{
+
   setLoading(true)
   setBvnVerifyImage(PendingImage)
   setBvnStatus("Pending")
       const response = await axios.get(url, {headers : {"Content-Type" : "application/json",
-  Authorization : Token || loginAuthorisation
+  Authorization : authToken
   }})
 
     if (response.status === 201 || 200 ) {
-        setBvnVerifyImage(bvnVerifiedSuccess);
-        setBvnStatus('Verified');
-        const virtualAccount = response.data.data.acc_details;
+         const virtualAccount = response.data.data.acc_details;
         setVirtualAccCreated(virtualAccount);
+        if(virtualAccount){
+        virtualAccountState();
+
+        }
+        
       } 
     
   }catch(error){
@@ -184,14 +196,11 @@ const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc'
     setBvnStatus('Not Verified');
     setBvnVerifyImage(NotVerifiedIcon);
     console.log(`ERROR: ${error}`)
- 
-        }
-      else if(error.status === 500){
+ }else if(error.status === 500){
         alert('Error:', "INTERNAL_SERVER_ERROR");
       setBvnStatus('Not Verified');
      setBvnVerifyImage(NotVerifiedIcon)
-    
-      }
+    }
     }finally{
       setLoading(false)
     }
@@ -245,19 +254,17 @@ const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc'
                 const authToken = response.headers.get('Authorization');
                 setLoginAuthorisation(authToken);
                 } else if(response.status === 200){
-                
+                  setOpen2StepVerification(true);
              const customer  =  response.data.data.customer;
              const getToken = response.data.data.auth_token;
+             setLoginAuthorisation(getToken)
              localStorage.setItem("getToken", getToken)
-             console.log()
+             setTimeout(()=>{
+              CheckVirtualAcc()
+             },1000)
             if(customer){
             setCustomerDetail(customer);
-            setLoginAuthorisation(getToken)
-           if(loginAuthorisation){
-            setOpen2StepVerification(true);
-       const runCheck = async()=>  await CheckVirtualAcc()
-            return runCheck();
-           }
+        
           }
             console.log(getToken);
 
@@ -326,20 +333,22 @@ const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc'
                setLoginAuthorisation(authToken);
                 }
                }else if(response.status === 200){
-               
+                setOpen2StepVerification(true);
              const customer  =  response.data.data.customer;
-             const authToken = response.headers.get('Authorization');
-             setLoginAuthorisation(authToken);
+             
              if(customer){
               setCustomerDetail(customer);
-              if(loginAuthorisation){
-                setOpen2StepVerification(true);
-                const runCheck = async()=>  await CheckVirtualAcc()
-                     return runCheck();
-                    }
-                  }
-            console.log(authToken);
-              } else if(response.status === 404){
+           const authToken = response.headers.get('Authorization');
+             if(authToken){
+             setLoginAuthorisation(authToken);
+             localStorage.setItem("authorisedLogin", authToken)
+             setTimeout(async()=>{
+              console.log(`AUTHTOKEN:${authToken}`)
+            await CheckVirtualAcc(authToken);
+             },10000)
+             }
+              }
+         } else if(response.status === 404){
            alert("User not found")
               }
               else if (response.status === 401) {
