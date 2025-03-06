@@ -102,10 +102,10 @@ const getOtpSmsorEmail = async(url, body)=> {
  
 await  gettingOtpFunction(url,body)
 }
- // Functio to help resetthe login and local storage authToenand getToken to help for User LoogIn
+ // Function to help resetthe login and local storage authToenand getToken to help for User LoogIn
 const Close2StepPopUp =()=> {
   setOpen2StepVerification(false)
-  setLoginAuthorisation(false);
+  setLoginAuthorisation("");
   localStorage.removeItem("authorisedLogin");
   localStorage.removeItem("getToken")
 }
@@ -143,7 +143,8 @@ const handleVerificationOTP = async()=> {
   //account name and account Number
 const handleAccountDetails =()=> {
   const {bank_name, account_no, account_name} = virtualAccCreated
-  console.log(virtualAccCreated)
+  console.log(virtualAccCreated);
+  setTwoStepVerificationSuccess(false);
   if(virtualAccCreated){
     setTwoStepVerificationSuccess(false);
     return GetVirtualAccountValue(bank_name, account_name, account_no);

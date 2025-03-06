@@ -965,6 +965,7 @@ export const Context = ({ children }) => {
   const [bvnVerifyImage, setBvnVerifyImage] = useState(NotVerifiedIcon);
  const [bvnStatus, setBvnStatus] = useState('Not Verified');
 const [dashLoading, setDashLoading] = useState(false);
+const [bvnButtonState, setBvnButtonState] = useState("Verify")
 const [virtualAccCreated, setVirtualAccCreated] = useState(false);
   //========== BUSINESS KYC =============
   const [businessPopUp, setBusinessPopUp] = useState(false);
@@ -1597,6 +1598,8 @@ dashLoading,
 setDashLoading,
 virtualAccCreated,
 setVirtualAccCreated,
+bvnButtonState,
+ setBvnButtonState,
     //========== Business PopUp =======
     businessPopUp,
     setBusinessPopUp,

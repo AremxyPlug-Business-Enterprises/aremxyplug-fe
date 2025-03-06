@@ -22,9 +22,9 @@ import { Loader } from "../../Loader/Loader";
 
 export const MainDashboard = () => {
   const { setHideNavbar, toggleSideBar, isDarkMode,dashLoading, bankNameState, setBankNameState, 
-    accountNameState, setAccountNameState, accountNumberState, setAccountNumberState, customerDetail} =
+    accountNameState, setAccountNameState, accountNumberState, setAccountNumberState,virtualAccCreated, customerDetail} =
     useContext(ContextProvider);
-   
+   const {account_no, bank_name, account_name} = virtualAccCreated;
   const [visible, setVisibility] = useState(true);
   const [activeButtons, setActiveButtons] = useState([true, false, false]);
   const [blur, setBlur] = useState(false);
@@ -129,7 +129,9 @@ useEffect(()=>{
 },[(!bankNameState || !accountNameState || !accountNumberState)])
 
 
-
+console.log(`BANKNAMESTATE : ${bankNameState}`);
+console.log(`ACCOUNTNAME : ${accountNameState}`);
+console.log(`ACCOUNTNUMBER : ${accountNumberState}`);
 
 
   return (
@@ -525,7 +527,7 @@ useEffect(()=>{
                     isDarkMode ? "border bg-black" : "bg-[#04177f]"
                   } ${styles.viewWallet}`}
                 >
-                  Generate
+                  {bankNameState.length > 4 && accountNameState.length > 4 && bankNameState.length > 4  ? "Verified" : "Verify"}
                 </button>
               </Link>
             </div>

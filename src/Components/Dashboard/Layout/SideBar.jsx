@@ -7,8 +7,8 @@ import styles from "./Dashboard.module.css";
 export const SideBar = () => {
   const { setToggleSideBar, isDarkMode, handleClickOutside, customerDetail, virtualAccCreated, bvnStatus } =
     useContext(ContextProvider);
-    const {full_name} = customerDetail;
-    const {user_id} = virtualAccCreated
+    const {full_name,id} = customerDetail;
+   
   const [dropDownOpen, setDropDownOpen] = useState({
     dropdown1: false,
     dropdown2: false,
@@ -88,7 +88,7 @@ export const SideBar = () => {
                     {full_name ? full_name : `Hi User`}
                   </p>
                   <p className="text-[8px] font-semibold md:text-[14px] lg:text-[14px] ">
-                    UID: {`${user_id ? user_id: "No UserID"} `} 
+                    UID: {`${id ? id: "No UserID"} `} 
                   </p>
                   <div className="flex gap-[3px] lg:gap-[5px]">
                     <div className={`px-[4px] py-[1px] font-[600] lg:font-[700] text-[10px]

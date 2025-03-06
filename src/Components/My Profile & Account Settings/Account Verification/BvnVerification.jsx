@@ -31,73 +31,59 @@ export default function BvnVerification() {
    const[bvnPopVerified, setBvnPopVerified] = useState(false);
    const [bvnPhoneMessage, setBvnPhoneMessage] = useState(false);
    const [errorVerify, setErrorVerify] = useState(false);
-   const {toggleSideBar , customerDetail, setLoginAuthorisation, loginAuthorisation,
-    virtualAccCreated
+   const {bvnButtonState, setBvnButtonState} = useContext(ContextProvider);
+   const {toggleSideBar , customerDetail, setLoginAuthorisation
    } = useContext(ContextProvider);
    const [loading, setLoading] = useState(false);
 
 const {full_name} = customerDetail;
 
-
-  //  const checkBvnform = () =>{
-
-  //   if(bvnNumber && bvnPhone && bvnDateOfBirth ){
-  //      setBvnVerifyImage(bvnVerifiedSuccess);
-  //       setBvnStatus('Verified');
-  //         setTimeout(()=>{
-  //     setBvnPopVerified(true);
-  //     setErrorVerify(false);
-  //     },2000)
-  //       }
-  //  else   {
-  //   setBvnVerifyImage(NotVerifiedIcon);
-  //      setBvnStatus('Not Verified');
-  //      setErrorVerify(true);
-  //       }
-  //   }
-    //======= SETTING DATE FORMAT FOR DATE OF BIRTH =====
-// let inputDate = "20231129";
-// let  trimmedDate = inputDate.trim();
-// let formattedDate = trimmedDate.replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3');
-// console.log(formattedDate);
-
-
-const getTokenNeeded =(Token)=> {
-  Token=localStorage.getItem("getToken")
-  //console.log(Token)
-  console.log(Token)
-  return Token;
+const BvnFunctionState=async(url, alertSuccess, buttonStateSuccess, ErrorMessage)=>{
+  if(bvnButtonState === "Verify"){
+    url='https://aremxyplug.onrender.com/api/v1/verify';
+    alertSuccess = "Bvn Verification Successful";
+    buttonStateSuccess = "Create Virtual Account";
+    ErrorMessage = "Bvn Verification Failed"
+  
+  }else{
+    url= 'https://aremxyplug.onrender.com/api/v1/virtualacc';
+    alertSuccess = "Virtual Account Created Successfully"
+    buttonStateSuccess = "Verified";
+    ErrorMessage = "Virtual Account Creation Failed"
+ }
+  checkBvnform(url, alertSuccess,buttonStateSuccess, ErrorMessage)
 }
 
 
 
-
-const checkBvnform = async(Token) => {
-  getTokenNeeded(Token)
+const checkBvnform = async(url, alertSuccess, buttonStateSuccess, ErrorMessage)=>{
+ const authToken = localStorage.getItem("authorisedLogin")
+ console.log(authToken)
   if (bvnNumber){
     setLoading(true);
     const data = {
       bvn: bvnNumber.toString(),
     };
-const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc'
+
    // console.log(data)
    try{
     setBvnVerifyImage(PendingImage)
     setBvnStatus("Pending")
         const response = await axios.post(url, data, {headers : {"Content-Type" : "application/json",
-    Authorization : Token || loginAuthorisation
+    Authorization : authToken 
     }})
   
       if (response.status === 201 || 200 ) {
           setBvnVerifyImage(bvnVerifiedSuccess);
           setBvnStatus('Verified');
           setBvnNumber(bvnNumber);
-          alert("Account Created Successfully");
+          alert(alertSuccess);
+          setBvnButtonState(buttonStateSuccess)
         } 
       
     }catch(error){
      if(error.status === 401 || 400){
-        alert(`An error has occurred`);
+        alert(ErrorMessage);
         setBvnVerifyImage(NotVerifiedImage)
         setBvnStatus("Not Verified")
           }
@@ -276,11 +262,11 @@ src={Arrowright} alt="" />
 
 <div className='flex flex-col md:gap-[15px] gap-[10px] justify-start'>
         <button disabled={ bvnStatus === "Verified" } onClick={()=>{
-          checkBvnform()
+         BvnFunctionState()
         }}
          className={`lg:py-[13px] md:py-[7.868px] py-[16.531px] rounded-[4.241px] w-[100%] md:w-[150px] lg:w-[163px] lg:rounded-[12px] bg-[#04177F]
          font-[600] text-[12px] leading-[18px] lg:text-[16px] text-center text-white lg:leading-[24px ${bvnStatus === "Verified" ? "bg-gray-600": "bg-[#04177F]" }`}>
-        Verify
+       {bvnButtonState}
         </button>
         { errorVerify  && (
         <h2 className={`font-[500] lg:text-[14px] lg:leading-[18px] md:text-[14px] md:leading-[18px] 
