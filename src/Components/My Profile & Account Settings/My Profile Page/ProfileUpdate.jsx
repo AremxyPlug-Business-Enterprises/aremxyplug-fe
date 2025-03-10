@@ -53,7 +53,7 @@ export default function ProfileUpdate() {
         md:flex md:flex-row md:gap-[12.91px] lg:gap-[22px] w-[100%]'>
           {/* Country */}
       <div className='flex flex-col w-[100%] md:w-[50%] gap-[5.868px] lg:gap-[10px]'>
-     <h2 className='text-[#7E7E7E] text-[10px] leading-[10.4px] 
+     <h2 className='text-[#7E7E7E] text-[12px] leading-[10.4px] 
      md:text-[9.389px] md:leading-[12.206px] 
      font-[600] lg:text-[16px] lg:leading-[20.8px] cursor-default'>
       Country
@@ -66,7 +66,7 @@ export default function ProfileUpdate() {
       className='h-[17.176px] w-[17.176px] lg:h-[29.27px] lg:w-[29.27px]'
       alt="" />
      <p className='font-[500] text-[#7E7E7E]
-     text-[10px] leading-[10.4px]
+     text-[12px] leading-[10.4px]
      md:text-[10.389px] md:leading-[12.206px]
      lg:text-[16px] lg:leading-[20.8px]'>
       Nigeria</p>
@@ -75,7 +75,7 @@ export default function ProfileUpdate() {
        
           {/* Country */}
       <div className=' flex flex-col w-[100%] md:w-[50%] gap-[5.868px] lg:gap-[10px] '>
-     <h2 className='text-[#7E7E7E] font-[600] text-[10px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px]
+     <h2 className='text-[#7E7E7E] font-[600] text-[12px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px]
      lg:text-[16px] lg:leading-[20.8px] cursor-default'>
         Full Name
      </h2>
@@ -84,7 +84,7 @@ export default function ProfileUpdate() {
       border-[0.4px] border-[#9C9C9C] 
      border-[solid] '>
       <p className='font-[500] text-[#7E7E7E] 
-      text-[8px] leading-[10.4px]
+      text-[12px] leading-[10.4px]
       md:text-[9.389px] md:leading-[12.206px]
      lg:text-[16px] lg:leading-[20.8px] cursor-default'>
       {full_name ? full_name : 'Your name appears after the 2-step'}
@@ -101,7 +101,7 @@ export default function ProfileUpdate() {
         md:flex md:flex-row  md:gap-[12.91px] lg:gap-[22px] w-[100%]'>
   <div className='flex flex-col gap-[5.868px] w-[100%] md:w-[50%] lg:gap-[10px] '>
      <h2 className='text-[#7E7E7E] font-[600] 
-     text-[10px] leading-[10.4px]
+     text-[12px] leading-[10.4px]
        md:text-[9.389px] md:leading-[12.206px] lg:text-[16px] 
      lg:leading-[20.8px] cursor-default'>
        UserName
@@ -111,7 +111,7 @@ export default function ProfileUpdate() {
       border-[0.4px] border-[#9C9C9C] 
      border-[solid]'>
       <p className='font-[500] text-[#7E7E7E] 
-      text-[8px] leading-[10.4px]
+      text-[12px] leading-[10.4px]
       md:text-[9.389px] md:leading-[12.206px]
      lg:text-[16px] lg:leading-[20.8px] cursor-default'>
   {username ? username : 'your username appears after the 2-step'}
@@ -122,7 +122,7 @@ export default function ProfileUpdate() {
 {/* second part level two */}
 <div className='flex flex-col w-[100%] md:w-[50%] gap-[5.868px] lg:gap-[10px] cursor-default'>
      <h2 className='text-[#7E7E7E] font-[600] 
-     text-[10px] leading-[10.4px]
+     text-[12px] leading-[10.4px]
      md:text-[9.389px] md:leading-[12.206px]
      lg:text-[16px] lg:leading-[20.8px] '>
      Email
@@ -132,7 +132,7 @@ export default function ProfileUpdate() {
       border-[0.4px] border-[#9C9C9C] 
      border-[solid]'>
       <p className='font-[500] text-[#7E7E7E] 
-      text-[8px] leading-[10.4px]
+      text-[12px] leading-[10.4px]
       md:text-[9.389px] md:leading-[12.206px]
      lg:text-[16px] lg:leading-[20.8px]'>
       {email ? email : "Your email appears after 2-step"}
@@ -146,7 +146,7 @@ export default function ProfileUpdate() {
     {/* Start of level three */}
       <div className=''>
     <h2 className='text-start text-[#7E7E7E] font-[600] 
-    text-[10px] leading-[10.4px]
+    text-[12px] leading-[10.4px]
     md:text-[9.389px] md:leading-[12.206px]
     lg:text-[16px] lg:leading-[20.8px] lg:mb-[10px] mb-[5.868px] 
      cursor-default'>
@@ -160,7 +160,7 @@ export default function ProfileUpdate() {
       border-[0.4px] border-[#9C9C9C] 
      border-[solid]'>
       <p className='font-[500] text-[#7E7E7E] 
-      text-[10px] leading-[10.4px]
+      text-[12px] leading-[10.4px]
       md:text-[9.389px] md:leading-[12.206px]
      lg:text-[16px] lg:leading-[20.8px] cursor-default'>
       {`${phone ? phone.slice(3) : "Your phone Number appears after the 2-step" }`}
@@ -170,7 +170,7 @@ export default function ProfileUpdate() {
      <div className='flex w-[100%]  md:w-[50%] items-center  gap-[10px] lg:gap-[16px]'>
    <div className='flex gap-[5px] md:gap-[8px]'>
   <h2 className='text-[#7E7E7E] font-[500]
-  text-[10px] leading-[10.4px]
+  text-[12px] leading-[10.4px]
   md:text-[9.389px] md:leading-[12.206px]
    lg:text-[16px] lg:leading-[20.8px] gap-[10px] cursor-default'>
     About AremxyPlug
@@ -185,7 +185,7 @@ export default function ProfileUpdate() {
    {/* Faq */}
    <div className='flex gap-[5px] md:gap-[8px]'>
   <h2 className='text-[#7E7E7E] font-[500]
-  text-[10px] leading-[10.4px]
+  text-[12px] leading-[10.4px]
   md:text-[9.389px] md:leading-[12.206px]
    lg:text-[16px] lg:leading-[20.8px] gap-[10px] cursor-default'>
    FAQ’s

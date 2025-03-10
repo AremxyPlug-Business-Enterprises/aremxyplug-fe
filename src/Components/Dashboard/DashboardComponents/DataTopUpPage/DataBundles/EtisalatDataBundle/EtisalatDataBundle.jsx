@@ -564,10 +564,10 @@ const EtisalatDataBundle = () => {
             className="w-full h-[90px] gap-[5px] md:h-[112.29px] lg:h-[196px] md:rounded-[11.5px] rounded-[7px] md:mt-[-1px] px-[10px] lg:gap-[50px] pt-[10px] lg:px-[30px] lg:rounded-[20px] lg:py-[20px] pb-[16px] flex justify-between items-center lg:ml-[-20px] lg:w-[102%] 2xl:w-full 2xl:ml-0"
           >
             <div className="w-[100%] pt-[19px] lg:pt-[20px] pl-[8.5px] md:pl-[9px]">
-              <p className="text-[10px] mb-2 font-bold uppercase w-[100%] md:text-[16px] md:w-[70%] lg:w-[70%] lg:text-[20px] 2xl:w-[80%] 2xl:text-[24px] lg:mb-4">
+              <p className="text-[11px] mb-2 font-bold uppercase w-[100%] md:text-[16px] md:w-[70%] lg:w-[70%] lg:text-[20px] 2xl:w-[80%] 2xl:text-[24px] lg:mb-4">
                 DATA BUNDLES, AFFORDABLE AND AUTOMATED.
               </p>
-              <p className="text-[7px] font-[400] leading-[9px] mb-3 md:text-[10px] md:leading-[12.2px] w-[90%] md:w-[75%] lg:w-[75%] 2xl:w-[85%] 2xl:mt-[5px] lg:mt-[20px] lg:text-[16px] lg:leading-[26px] 2xl:text-[20px] lg:mb-[20px]">
+              <p className="text-[9px] font-[400] leading-[9px] mb-3 md:text-[10px] md:leading-[12.2px] w-[90%] md:w-[75%] lg:w-[75%] 2xl:w-[85%] 2xl:mt-[5px] lg:mt-[20px] lg:text-[16px] lg:leading-[26px] 2xl:text-[20px] lg:mb-[20px]">
                 Top up your mobile sim with our automated data bundles directly
                 from network providers, enjoy discounts without any hassle or
                 hidden fee.
@@ -621,7 +621,7 @@ const EtisalatDataBundle = () => {
             className="flex mt-[35px] my-[30px] md:w-[100%] md:gap-[10%]"
           >
             <div className="rounded-[4px] w-full bg-primary text-white md:w-[50%] h-[30px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-center md:justify-between gap-[10px] px-[5px]">
-              <h2 className="lg:text-[16px] lg:leading-[24px] text-[10px] md:text-[12px] leading-[12px]">
+              <h2 className="lg:text-[16px] lg:leading-[24px] text-[12px] md:text-[12px] leading-[12px]">
                 Data Balance USSD Codes
               </h2>
               <div className="lg:w-6 lg:h-6 w-[11px] h-[11px]">
@@ -641,7 +641,7 @@ const EtisalatDataBundle = () => {
           </div>
           <div className="flex gap-[15px]  justify-between md:w-full md:gap-[10%]">
             <div className="flex gap-[15px] md:w-[50%] md:justify-between">
-              <p className="flex text-[#7c7c7c] gap-[7px] text-[12px] md:gap-[7px] leading-[130%] md:text-[12px] lg:text-[16px] 2xl:text-[20px]">
+              <p className="flex text-[#7c7c7c] gap-[7px] text-[14px] md:gap-[7px] leading-[130%] md:text-[12px] lg:text-[16px] 2xl:text-[20px]">
                 Purchase
                 <span>
                   <img
@@ -716,7 +716,7 @@ const EtisalatDataBundle = () => {
 
           <div className="grid grid-cols-1 mt-[25px] md:grid-cols-2 gap-y-[20px] md:gap-x-[58.68px] lg:gap-x-[100px] md:gap-y-[15px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[20px]">
             <div className="relative">
-              <h2 className="lg:text-[18px] lg:leading-[24px] mb-1 text-[12px] md:text-[12px] font-[600] leading-[12px]">
+              <h2 className="lg:text-[18px] lg:leading-[24px] mb-1 text-[14px] md:text-[12px] font-[600] leading-[12px]">
                 Select Product
               </h2>
               <div
@@ -731,11 +731,11 @@ const EtisalatDataBundle = () => {
                 </button>
               </div>
               {showProductList && (
-                <div className="border md:rounded-[10px] text-[12px] md:text-[12px] lg:text-[16px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[10]">
+                <div className="border md:rounded-[10px] text-[14px] md:text-[12px] lg:text-[16px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[10]">
                   {productList.map((item) => (
                     <div
                       key={item.name}
-                      className={`cursor-pointer border-b-[0.5px] text-[#7C7C7C] md:text-[12px] lg:text-[16px]  md:rounded-[0px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
+                      className={`pb-[13px] md:pb-0 pt-[13px] md:pt-0 font-weight-bold text-[13px] cursor-pointer border-b-[0.5px] text-[#7C7C7C] md:text-[12px] lg:text-[16px]  md:rounded-[0px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
                         selectedNetworkProduct === item.name ? "bg-white" : ""
                       }`}
                       onClick={() => handleSelectProduct(item.name)}
@@ -748,7 +748,7 @@ const EtisalatDataBundle = () => {
             </div>
 
             <div className="relative">
-              <h2 className="lg:text-[18px] md:text-[12px] lg:leading-[24px] mb-1 text-[12px] font-[600] leading-[12px]">
+              <h2 className="lg:text-[18px] md:text-[14px] lg:leading-[24px] mb-1 text-[12px] font-[600] leading-[12px]">
                 Select Plan
               </h2>
               <div
@@ -775,7 +775,7 @@ const EtisalatDataBundle = () => {
                       return (
                         <div
                           key={option.id}
-                          className={`cursor-pointer border-b-[0.5px] md:rounded-[0px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
+                          className={`pb-[13px] md:pb-0 pt-[13px] md:pt-0 font-weight-bold text-[13px] cursor-pointer border-b-[0.5px] md:rounded-[0px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
                             selectedOption === option.id ? "bg-gray-200" : ""
                           }`}
                           onClick={() =>
@@ -798,7 +798,7 @@ const EtisalatDataBundle = () => {
             </div>
             
             <div className="">
-              <h2 className="text-[12px] font-[600] md:text-[12px] lg:text-[18px]">
+              <h2 className="text-[15px] font-[600] md:text-[12px] lg:text-[18px]">
                 Phone Number{" "}
                 <span className="text-[#04177F]">
                   <Link to="/DataBundleSelectRecipient">
@@ -827,14 +827,14 @@ const EtisalatDataBundle = () => {
               </div>
 
               {errors.recipientPhoneNumber && (
-                <div className="text-[12px] text-red-500 italic lg:text-[14px]">
+                <div className="text-[14px] text-red-500 italic lg:text-[14px]">
                   {errors.recipientPhoneNumber}
                 </div>
               )}
             </div>
 
             <div className="">
-              <h2 className="text-[12px] font-[600] md:text-[12px] lg:text-[18px]">
+              <h2 className="text-[15px] font-[600] md:text-[12px] lg:text-[18px]">
                 Recipient Name<span className="text-[#7C7C7C]">(optional)</span>{" "}
               </h2>
               <div className="relative mt-[5px]">
@@ -856,7 +856,7 @@ const EtisalatDataBundle = () => {
             </div>
 
             <div className="">
-              <h2 className="text-[12px] font-[600] md:text-[12px] lg:text-[18px]">
+              <h2 className="text-[15px] font-[600] md:text-[12px] lg:text-[18px]">
                 Amount
               </h2>
               <div className="relative mt-[5px]">
@@ -879,7 +879,7 @@ const EtisalatDataBundle = () => {
 
             <div>
               <div onClick={handleShowPayment}>
-                <h2 className="lg:text-[18px] mt-[5px] lg:leading-[24px] mb-2 text-[12px] md:text-[12px] font-[600] leading-[12px]">
+                <h2 className="lg:text-[18px] mt-[5px] lg:leading-[24px] mb-2 text-[15px] md:text-[12px] font-[600] leading-[12px]">
                   Payment Method
                 </h2>
                 <div className="mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg input flex justify-between items-center border w-full h-8 px-2 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px]">
@@ -924,7 +924,7 @@ const EtisalatDataBundle = () => {
               </div>
               {showPayment && (
                 <div
-                  className={`border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute ${
+                  className={`pb-[13px] md:pb-0 pt-[13px] md:pt-0 font-weight-bold text-[13px] border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute ${
                     toggleSideBar
                       ? "w-full md:w-[44.5%] lg:w-[45%] 2xl:w-[46%]"
                       : "w-full md:w-[46%] 2xl:w-[46.5%]"
@@ -951,7 +951,7 @@ const EtisalatDataBundle = () => {
           </div>
 
           <div className="flex items-center gap-2 lg:mt-[30px]">
-            <h2 className="text-[10px] font-[600] leading-[12px] lg:leading-[24px] md:text-[12px] lg:text-[18px]">
+            <h2 className="text-[13px] font-[600] leading-[12px] lg:leading-[24px] md:text-[12px] lg:text-[18px]">
               Add to Recipient?
             </h2>
             <div

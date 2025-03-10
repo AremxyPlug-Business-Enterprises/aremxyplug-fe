@@ -216,14 +216,14 @@ useEffect(() => {
     <div className='flex lg:gap-[8px] items-center md:gap-[5.868px] gap-[4.694px] mb-[20px]  
     lg:mb-[50px] md:mb-[30px]'>
 
-      <h2 className='font-[600] text-[13px] leading-[12px] md:text-[9.389px]
+      <h2 className='font-[600] text-[14px] leading-[12px] md:text-[9.389px]
        md:leading-[11.267px] lg:text-[16px] text-[#7E7E7E] lg:leading-[19.2px]'>
     Purchase
       </h2>
  <img className='h-[12px] w-[12px] md:h-[14.083px] md-w-[14.083px] lg:h-[24px] lg:w-[24px] self-center'
       src={WaecImg} alt="" />
 
-      <h2 className='font-[600] text-[13px] leading-[12px] md:text-[9.389px]
+      <h2 className='font-[600] text-[14px] leading-[12px] md:text-[9.389px]
        md:leading-[11.267px] lg:text-[16px] text-[#7E7E7E] lg:leading-[19.2px]'>
       WAEC E-PINs Instantly
       </h2>
@@ -244,7 +244,7 @@ useEffect(() => {
    <div className='relative flex flex-col w-[100%] gap-[5.868px] md:w-1/2 md:gap-[5.868px]  
    lg:gap-[10px]'>
     {/* header */}
-    <label className='font-[600] text-[#7E7E7E] text-[12px] leading-[10.4px]  
+    <label className='font-[600] text-[#7E7E7E] text-[14px] leading-[10.4px]  
      md:text-[9.389px] md:leading-[12.206px]
     lg:text-[16px] lg:leading-[20.8px]'>
     Confirm Exam Type
@@ -274,7 +274,7 @@ font-[500] text-[8px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px]
       src={arrowDown} alt="" />
        </div>
        {examActive && (
-         <div className='absolute lg:top-[90px] md:top-[60px] top-[68px] z-[2]  flex flex-col w-[100%] lg:h-225px md:h-[210px] rounded-[10px] rounded md:rounded-0
+         <div className='absolute lg:top-[90px] md:top-[60px] top-[70px] z-[2]  flex flex-col w-[100%] lg:h-225px md:h-[210px] rounded-[10px] rounded md:rounded-0
         '>
           {(Exams.map(exam => {
             return (
@@ -285,7 +285,7 @@ font-[500] text-[8px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px]
              document.querySelector('.Examdrop').classList.remove('DropIt');
              console.log(e);
               })}
-              className='text-[12px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
+              className='pb-[14px] md:pb-0 pt-[14px] md:pt-0 font-weight-bold text-[14px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
          md:text-[13.227px] md:leading-[17.195px] 
          shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] bg-white
          lg:text-[16px] lg:leading-[20.8px] cursor-pointer hover:bg-[#EDEAEA]' 
@@ -305,7 +305,7 @@ font-[500] text-[8px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px]
     <div className='relative gap-[5.868px] flex flex-col w-[100%] md:w-1/2  
     md:gap-[5.868px] lg:gap-[10px] '>
     {/* header */}
-    <label className='  font-[600] text-[#7E7E7E] text-[12px] leading-[10.4px]
+    <label className='  font-[600] text-[#7E7E7E] text-[14px] leading-[10.4px]
       md:text-[9.389px] md:leading-[12.206px]
      lg:text-[16px] lg:leading-[20.8px]'>
     Quantity
@@ -338,7 +338,7 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
        {/* drop down */}
        
       {quantityActive && (
-         <div className='absolute lg:top-[90px] md:top-[60px] top-[68px] z-[1] 
+         <div className='absolute lg:top-[90px] md:top-[60px] top-[70px] z-[1] 
          flex flex-col w-[100%] lg:h-225px md:h-[210px] rounded md:rounded-0
          '>
           {(options.map(option => {
@@ -350,7 +350,7 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
               document.querySelector('.imgdrop').classList.remove('DropIt');
          
               })}
-              className='text-[10px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
+              className='pb-[14px] md:pb-0 pt-[14px] md:pt-0 font-weight-bold text-[14px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
          md:text-[13.227px] md:leading-[17.195px] w-[100%] bg-[white] 
        shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
          lg:text-[16px] lg:leading-[20.8px] cursor-pointer hover:bg-[#EDEAEA]' 
@@ -371,7 +371,7 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
     {/* LeftSide */}
      <div className=' container-phone gap-[5.868px] 
      flex flex-col md:w-1/2 md:gap-[10px] z-0'>
-   <label className='font-[600] text-[#7E7E7E] text-[12px] leading-[10.4px]
+   <label className='font-[600] text-[#7E7E7E] text-[15px] leading-[10.4px]
      md:text-[9.389px] md:leading-[12.206px]
    lg:text-[16px] lg:leading-[20.8px] '>
   Phone Number
@@ -418,7 +418,7 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
         
    {/* right-side */}
    <div className='flex flex-col gap-[5.868px] md:w-1/2 md:gap-[10px]'>
-   <label className='font-[600] text-[12px] leading-[10.4px]
+   <label className='font-[600] text-[15px] leading-[10.4px]
    text-[#7E7E7E]  md:text-[9.389px] md:leading-[12.206px]
    lg:text-[16px] lg:leading-[20.8px]'>
    Email
@@ -458,7 +458,7 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
 {/* Amount Step /Leftside */}
    <div className='flex flex-col gap-[5.868px] w-[100%] md:w-1/2 md:gap-[10px]'>
     {/* header */}
-    <label className='font-[600] text-[12px] leading-[10.4px]
+    <label className='font-[600] text-[15px] leading-[10.4px]
      md:text-[9.389px] md:leading-[12.206px]
      text-[#7E7E7E] lg:text-[16px] lg:leading-[20.8px]'>
     Amount
@@ -483,7 +483,7 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
     <div className='relative payment-parent gap-[5.868px]
      flex w-[100%] flex-col md:w-1/2 md:gap-[10px]'>
     {/* header */}
-    <label className='font-[600] text-[12px] leading-[10.4px]
+    <label className='font-[600] text-[15px] leading-[10.4px]
      text-[#7E7E7E]  md:text-[9.389px] md:leading-[12.206px]
      lg:text-[16px] lg:leading-[20.8px]'>
     Payment Method
@@ -517,7 +517,7 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
        {/* drop down */}
        
       {methodActive && (
-         <div className='absolute lg:top-[90px] md:top-[60px] top-[68px] z-0 flex flex-col w-[100%] rounded md:rounded-0  
+         <div className='absolute lg:top-[90px] md:top-[60px] top-[72px] z-0 flex flex-col w-[100%] rounded md:rounded-0  
          '>
 
         {(methodOptions.map(methodOption => {
@@ -539,7 +539,7 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
           <img className='md:h-[29.27px]  h-[14.27px]' src={methodOption.flag} alt=""/>
 
             <h2 
-              className='text-[10px] leading-[10.4px]
+              className='pb-[10px] md:pb-0 pt-[10px] md:pt-0 font-weight-bold text-[13px] leading-[10.4px]
                font-[500] text-[#7C7C7C]  
          md:text-[13.227px] md:leading-[17.195px] 
          lg:text-[16px] lg:leading-[20.8px] self-center cursor-pointer' >

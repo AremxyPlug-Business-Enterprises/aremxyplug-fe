@@ -394,7 +394,7 @@ const SpectranetDataBundle = () => {
 
           <div className="grid grid-cols-1 mt-[25px] md:grid-cols-2 gap-y-[20px] md:gap-x-[58.68px] lg:gap-x-[100px] md:gap-y-[15px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[20px]">
             <div className="relative">
-              <h2 className="lg:text-[18px] lg:leading-[24px] mb-1 text-[12px] md:text-[12px] font-[600] leading-[12px]">
+              <h2 className="lg:text-[18px] lg:leading-[24px] mb-1 text-[14px] md:text-[12px] font-[600] leading-[12px]">
                 Select Product
               </h2>
               <div
@@ -409,11 +409,11 @@ const SpectranetDataBundle = () => {
                 </button>
               </div>
               {showProductList && (
-                <div className="border md:rounded-[10px] text-[10px] md:text-[12px] lg:text-[16px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[10]">
+                <div className="border md:rounded-[10px] text-[13px] md:text-[12px] lg:text-[16px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[10]">
                   {productList.map((item) => (
                     <div
                       key={item.name}
-                      className={`cursor-pointer border-b-[0.5px] text-[#7C7C7C] md:text-[12px] lg:text-[16px]  md:rounded-[0px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
+                      className={`pb-[13px] md:pb-0 pt-[13px] md:pt-0 font-weight-bold text-[14px] cursor-pointer border-b-[0.5px] text-[#7C7C7C] md:text-[12px] lg:text-[16px]  md:rounded-[0px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
                         selectedNetworkProduct === item.name ? "bg-white" : ""
                       }`}
                       onClick={() => handleSelectProduct(item.name)}
@@ -426,14 +426,14 @@ const SpectranetDataBundle = () => {
             </div>
 
             <div className="relative">
-              <h2 className="lg:text-[18px] md:text-[12px] lg:leading-[24px] mb-1 text-[12px] font-[600] leading-[12px]">
+              <h2 className="lg:text-[18px] md:text-[14px] lg:leading-[24px] mb-1 text-[14px] font-[600] leading-[12px]">
                 Select Plan
               </h2>
               <div
                 className="mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between"
                 onClick={() => setShowOptionList(!showOptionList)}
               >
-                <h2 className="text-[10px] font-[600] leading-[12px] md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                <h2 className="text-[13px] font-[600] leading-[12px] md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
                   {selectedOption}
                 </h2>
                 <button className="lg:w-6 lg:h-6 w-[11px] h-[12px]">
@@ -461,7 +461,7 @@ const SpectranetDataBundle = () => {
                         return (
                           <div
                             key={index}
-                            className={`cursor-pointer border-b-[0.5px] md:rounded-[0px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
+                            className={`pb-[13px] md:pb-0 pt-[13px] md:pt-0 font-weight-bold text-[14px] cursor-pointer border-b-[0.5px] md:rounded-[0px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
                               selectedOption === optionItem ? "bg-gray-200" : ""
                             }`}
                             onClick={() =>
@@ -483,7 +483,7 @@ const SpectranetDataBundle = () => {
             </div>
 
             <div className="">
-              <h2 className="text-[12px] font-[600] md:text-[12px] lg:text-[18px]">
+              <h2 className="text-[15px] font-[600] md:text-[12px] lg:text-[18px]">
                 Email ID{" "}
               </h2>
               <div className="relative mt-[5px]">
@@ -508,14 +508,14 @@ const SpectranetDataBundle = () => {
               </div>
 
               {errorMessage && (
-                <p className="text-red-500 text-start text-[10px] mt-[5px]">
+                <p className="text-red-500 text-start text-[13px] mt-[5px]">
                   {errorMessage}
                 </p>
               )}
             </div>
 
             <div className="">
-              <h2 className="text-[12px] font-[600] md:text-[12px] lg:text-[18px]">
+              <h2 className="text-[15px] font-[600] md:text-[12px] lg:text-[18px]">
                 Phone Number{" "}
                 <span className="text-[#04177F]">
                   <Link to="/DataBundleSelectRecipient">
@@ -526,7 +526,7 @@ const SpectranetDataBundle = () => {
               <div className="relative mt-[5px]">
                 <input
                   type="number"
-                  className="mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] lg:text-[16px] font-[600] focus:outline-none lg:h-[51px]"
+                  className="mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[13px] lg:text-[16px] font-[600] focus:outline-none lg:h-[51px]"
                   placeholder=""
                   value={inputValue}
                   onChange={(event) => {
@@ -545,13 +545,13 @@ const SpectranetDataBundle = () => {
             </div>
 
             {errors.recipientPhoneNumber && (
-              <div className="text-[12px] text-red-500 italic lg:text-[14px]">
+              <div className="text-[13px] text-red-500 italic lg:text-[14px]">
                 {errors.recipientPhoneNumber}
               </div>
             )}
 
             <div className="">
-              <h2 className="text-[12px] font-[600] md:text-[12px] lg:text-[18px]">
+              <h2 className="text-[15px] font-[600] md:text-[12px] lg:text-[18px]">
                 Recipient Name<span className="text-[#7C7C7C]">(optional)</span>{" "}
               </h2>
               <div className="relative mt-[5px]">
@@ -573,7 +573,7 @@ const SpectranetDataBundle = () => {
             </div>
 
             <div className="">
-              <h2 className="text-[12px] font-[600] md:text-[12px] lg:text-[18px]">
+              <h2 className="text-[15px] font-[600] md:text-[12px] lg:text-[18px]">
                 Amount
               </h2>
               <div className="relative mt-[5px]">
@@ -595,7 +595,7 @@ const SpectranetDataBundle = () => {
             </div>
 
             <div className="">
-              <h2 className="text-[12px] font-[600] md:text-[12px] lg:text-[18px]">
+              <h2 className="text-[13px] font-[600] md:text-[15px] lg:text-[18px]">
                 Number Of PINs
               </h2>
               <div className="relative mt-[5px]">
@@ -618,7 +618,7 @@ const SpectranetDataBundle = () => {
 
             <div>
               <div onClick={handleShowPayment}>
-                <h2 className="lg:text-[18px] mt-[5px] lg:leading-[24px] mb-2 text-[12px] md:text-[12px] font-[600] leading-[12px]">
+                <h2 className="lg:text-[18px] mt-[5px] lg:leading-[24px] mb-2 text-[15px] md:text-[12px] font-[600] leading-[12px]">
                   Payment Method
                 </h2>
                 <div className="mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg input flex justify-between items-center border w-full h-8 px-2 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px]">
@@ -635,7 +635,7 @@ const SpectranetDataBundle = () => {
                   ) : (
                     <h2
                       onClick={handleShowPayment}
-                      className="text-[10px] lg:text-[14px]"
+                      className="text-[13px] lg:text-[14px]"
                     >
                       Select Payment Method
                     </h2>
@@ -663,7 +663,7 @@ const SpectranetDataBundle = () => {
               </div>
               {showPayment && (
                 <div
-                  className={`border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute ${
+                  className={`pb-[13px] md:pb-0 pt-[13px] md:pt-0 font-weight-bold text-[15px] border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute ${
                     toggleSideBar
                       ? "w-full md:w-[44.5%] lg:w-[45%] 2xl:w-[46%]"
                       : "w-full md:w-[46%] 2xl:w-[46.5%]"
@@ -690,7 +690,7 @@ const SpectranetDataBundle = () => {
           </div>
 
           <div className="flex items-center gap-2 lg:mt-[30px]">
-            <h2 className="text-[10px] font-[600] leading-[12px] lg:leading-[24px] md:text-[12px] lg:text-[18px]">
+            <h2 className="text-[13px] font-[600] leading-[12px] lg:leading-[24px] md:text-[12px] lg:text-[18px]">
               Add to Recipient?
             </h2>
             <div

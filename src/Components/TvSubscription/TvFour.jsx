@@ -209,7 +209,7 @@ const Showmax = () => {
         </div>
 
         <div className=" mx-auto flex gap-1.5 py-[25.29px] lg:py-[37px] md:py-[28.64px]">
-          <div className="flex text-[#7E7E7E] text-[10px] lg:text-[18px] md:text-[13px] font-semibold">
+          <div className="flex text-[#7E7E7E] text-[13px] lg:text-[18px] md:text-[13px] font-semibold">
             <span>Subscribe Your</span> &nbsp;
             <img src="./Images/TvSubscription/showmaxIcon.svg" alt="" className="md:w-[60px] md:h-[20px] lg:w-[90px] lg:h-[27px]"/>
             <span>Decoder Instantly</span>
@@ -220,7 +220,7 @@ const Showmax = () => {
         <div className="flex flex-col gap-[20px] md:gap-0">
           <div className="flex flex-col md:flex-row gap-[20px] md:gap-[12px] lg:gap-[22px] md:my-2 lg:my-4">
             <div className="relative flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
-              <label htmlFor="decoderType" className="text-[#7E7E7E] text-[13px] lg:text-[17px] md:text-[13px] font-semibold">
+              <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] font-semibold">
                 Confirm Decoder Type</label>
               {/* <button className="border-[0.23px] lg:border-[0.4px] w-full md:w-1/2 h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C]">Showmax</button> */}
               <div className="mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg relative flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[600] text-[9px] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
@@ -231,7 +231,7 @@ const Showmax = () => {
               </div>
 
               {decoderActive && (
-         <div className='absolute lg:top-[90px] md:top-[60px]  top-[72px] z-[2]  flex flex-col w-[100%] lg:h-225px md:h-[210px]  
+         <div className='absolute lg:top-[90px] md:top-[60px]  top-[75px] z-[2]  flex flex-col w-[100%] lg:h-225px md:h-[210px]  
         '>
           {(Decoders.map(decoder => {
             return (
@@ -242,7 +242,7 @@ const Showmax = () => {
              document.querySelector('.decdrop').classList.remove('DropIt');
              console.log(e);
               })}
-              className=' text-[12px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
+              className='pb-[14px] md:pb-0 pt-[14px] md:pt-0 font-weight-bold text-[14px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
          md:text-[13.227px] md:leading-[17.195px] 
          shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] bg-white
          lg:text-[16px] lg:leading-[20.8px] cursor-pointer hover:bg-[#EDEAEA]' 
@@ -259,7 +259,7 @@ const Showmax = () => {
             </div>
 
             <div className="relative flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
-              <label htmlFor="decoderType" className="text-[#7E7E7E] text-[13px] lg:text-[17px] md:text-[13px] font-semibold">
+              <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] font-semibold">
                 Select Package</label>
 
               <div className="mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[600] text-[9px] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
@@ -273,7 +273,7 @@ const Showmax = () => {
                 <ul className="dropdown-options z-[2] absolute top-[100%] w-full bg-white cursor-pointer">
                   {options.map((option, index) => (
                     <li
-                      className={`text-[12px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
+                      className={`pb-[14px] md:pb-0 pt-[14px] md:pt-0 font-weight-bold text-[15px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
                       md:text-[13.227px] md:leading-[17.195px] 
                       shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] bg-white
                       lg:text-[16px] lg:leading-[20.8px] cursor-pointer hover:bg-[#EDEAEA] dropdownCSS `}
@@ -292,7 +292,7 @@ const Showmax = () => {
           </div>
           <div className="flex flex-col md:flex-row gap-[20px] md:gap-[12px lg:gap-[22px]] md:my-2 lg:my-4">
             <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
-              <label htmlFor="decoderType" className="text-[#7E7E7E] text-[13px] lg:text-[17px] md:text-[13px] font-semibold">
+              <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] font-semibold">
                 Smart Card / IUC Number</label>
               <input type="tel"
               onInput={(e =>{
@@ -316,7 +316,7 @@ const Showmax = () => {
           </div>
           <div className="flex flex-col md:flex-row gap-[20px] md:gap-[12px] lg:gap-[22px] md:my-2 lg:my-4">
             <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
-              <label htmlFor="decoderType" className="text-[#7E7E7E] text-[13px] lg:text-[17px] md:text-[13px] font-semibold">
+              <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] font-semibold">
                 Phone Number</label>
               <input id="val" value={mobileNumber}
                 onChange={handleShowmaxMobileNumberChange}
@@ -338,7 +338,7 @@ const Showmax = () => {
                 {errors.mobileNumber}</p>}
             </div>
             <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
-              <label htmlFor="Email" className="text-[#7E7E7E] text-[13px] lg:text-[17px] md:text-[13px] font-semibold">
+              <label htmlFor="Email" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] font-semibold">
                 Email</label>
               <input type="email" onChange={handleTvEmail} placeholder="example@gmail.com" required className="mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[600] text-[9px] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] hover:bg-[#EDEAEA] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center" />
@@ -349,7 +349,7 @@ const Showmax = () => {
           </div>
           <div className="flex flex-col md:flex-row gap-[20px] md:gap-[12px] lg:gap-[22px] md:my-2 lg:my-4">
             <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
-              <label htmlFor="decoderType" className="text-[#7E7E7E] text-[13px] lg:text-[17px] md:text-[13px] font-semibold">
+              <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] font-semibold">
                 Amount</label>
 
 
@@ -363,10 +363,10 @@ const Showmax = () => {
             </div>
 
             <div className="flex relative flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
-              <label htmlFor="decoderType" className="text-[#7E7E7E] text-[13px] lg:text-[17px] md:text-[13px] font-semibold">
+              <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] font-semibold">
                 Payment Method</label>
               <div onClick={methodDropDown} className="mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg flex items-center justify-between border-[0.23px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] border-[#9C9C9C]">
-                <p className='font-[600] text-[9px] leading-[10.4px] md:text-[12px] md:leading-[12.206px] lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px] cursor-pointer'>
+                <p className='font-[600] text-[13px] leading-[10.4px] md:text-[12px] md:leading-[12.206px] lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px] cursor-pointer'>
                   {flagResult + tvWalletBalance}
                 </p>
                 <img className='methodDrop h-[16px] w-[14px] md:h-[14.038px] md:w-[14.038px] lg:h-[24px] lg:w-[24px]'
@@ -386,7 +386,7 @@ const Showmax = () => {
                           setMethodPayment(false);
                           document.querySelector('.methodDrop').classList.remove('DropIt');
                         })}
-                        className='flex gap-[10px] lg:py-[15px] py-[10px] pl-[10px]
+                        className='pb-[14px] md:pb-0 pt-[14px] md:pt-0 font-weight-bold text-[14px] flex gap-[10px] lg:py-[15px] py-[10px] pl-[10px]
         cursor-pointer hover:bg-[#EDEAEA] items-center bg-white
         shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]'
                         key={methodOption.id}>
@@ -394,7 +394,7 @@ const Showmax = () => {
                         <img className='md:h-[29.27px]  h-[14.27px]' src={methodOption.flag} alt="" />
 
                         <h2
-                          className='text-[12px] leading-[10.4px]
+                          className='text-[13px] leading-[10.4px]
                font-[500] text-[#7C7C7C]  
          md:text-[13.227px] md:leading-[17.195px] 
          lg:text-[16px] lg:leading-[20.8px] self-center cursor-pointer' >

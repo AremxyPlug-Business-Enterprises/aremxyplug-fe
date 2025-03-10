@@ -121,7 +121,7 @@ const checkform = () =>{
     <img src={verifyImage} alt="" 
      className={`h-[24px] w-[24px] md:h-[44px] md:w-[44px] lg:h-[62px] lg:w-[62px]`}/>
      <div className='flex flex-col gap-[4.694px] md:gap-[8px] justify-center'>
-        <h2 className='font-[500] lg:text-[12px] lg:leading-[15.6px] text-[8.042px] leading-[10.45px]'>
+        <h2 className='font-[500] lg:text-[12px] lg:leading-[15.6px] text-[12.042px] leading-[10.45px]'>
           ID Status</h2>
         <h2 className='font-[500] lg:text-[12px] lg:leading-[15.6px] text-[8.042px] leading-[10.45px]'>
           {idStatus}
@@ -130,7 +130,7 @@ const checkform = () =>{
     </div>
   {/*  */}
     <div className='flex md:gap-[14px] gap-[11px] items-center'>
-        <h2 className='font-[500] text-[#7E7E7E] text-[8px] leading-[10.4px]
+        <h2 className='font-[500] text-[#7E7E7E] text-[11px] leading-[10.4px]
         lg:text-[16px] lg:leading-[20.8px]'>
         Why Account Verification with my ID Document?
        </h2>
@@ -153,7 +153,7 @@ const checkform = () =>{
       <div className='flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]'>
     {/* Full Name */}
     <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[10px] leading-[10.4px] 
+   <h2 className='font-[600] text-[#7E7E7E] text-[12px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
     Full Name
     </h2>
@@ -168,7 +168,7 @@ const checkform = () =>{
     {/* Gender */}
     
     <div className='relative flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[10px] leading-[10.4px] 
+   <h2 className='font-[600] text-[#7E7E7E] text-[12px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
      Gender
     </h2>
@@ -210,7 +210,7 @@ const checkform = () =>{
       <div className='flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]'>
         {/* HOUSE ADDRESS */}
       <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[10px] leading-[10.4px] 
+   <h2 className='font-[600] text-[#7E7E7E] text-[12px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
     House Address
     </h2>
@@ -230,7 +230,7 @@ const checkform = () =>{
     </div>
     {/* STATE */}
     <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[10px] leading-[10.4px] 
+   <h2 className='font-[600] text-[#7E7E7E] text-[12px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
     State or Province
     </h2>
@@ -253,7 +253,7 @@ const checkform = () =>{
       <div className='flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]'>
         {/* CITY */}
       <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[10px] leading-[10.4px] 
+   <h2 className='font-[600] text-[#7E7E7E] text-[12px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
     City
     </h2>
@@ -272,7 +272,7 @@ const checkform = () =>{
     </div>
     {/* LGA */}
     <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[10px] leading-[10.4px] 
+   <h2 className='font-[600] text-[#7E7E7E] text-[12px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
      L.G.A
     </h2>
@@ -294,7 +294,7 @@ const checkform = () =>{
       {/* POSTAL CODE */}
      
       <div className='flex flex-col md:w-[49%] w-[100%] md:gap-[10px] gap-[5.868px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[10px] leading-[10.4px] 
+   <h2 className='font-[600] text-[#7E7E7E] text-[12px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
     Postal Code
     </h2>
@@ -318,7 +318,7 @@ const checkform = () =>{
     <div className='flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]'>
         {/* ID TYPE */}
         <div className='relative flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[10px] leading-[10.4px] 
+   <h2 className='font-[600] text-[#7E7E7E] text-[12px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
      ID Type
     </h2>
@@ -357,7 +357,7 @@ const checkform = () =>{
   
     {/*  */}
     <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[10px] leading-[10.4px] 
+   <h2 className='font-[600] text-[#7E7E7E] text-[12px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
      ID Number
     </h2>

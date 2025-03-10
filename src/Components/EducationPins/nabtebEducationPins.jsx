@@ -217,7 +217,7 @@ useEffect(()=> {
     <div className='flex lg:gap-[8px] items-center md:gap-[5.868px] gap-[4.694px] 
     mb-[20px]  lg:mb-[50px] md:mb-[30px]'>
 
-      <h2 className='font-[600] text-[13px] leading-[12px] md:text-[9.389px]
+      <h2 className='font-[600] text-[14px] leading-[12px] md:text-[9.389px]
        md:leading-[11.267px] lg:text-[16px] text-[#7E7E7E] lg:leading-[19.2px]'>
     Purchase
       </h2>
@@ -225,7 +225,7 @@ useEffect(()=> {
       <img className='h-[12px] w-[12px] md:h-[14.083px] md-w-[14.083px] lg:h-[24px] lg:w-[24px] self-center'
       src={NabtebImg} alt="" />
 
-      <h2 className='font-[600] text-[13px] leading-[12px] md:text-[9.389px]
+      <h2 className='font-[600] text-[14px] leading-[12px] md:text-[9.389px]
        md:leading-[11.267px] lg:text-[16px] text-[#7E7E7E] lg:leading-[19.2px]'>
       NABTEB E-PINs Instantly
       </h2>
@@ -245,7 +245,7 @@ useEffect(()=> {
    <div className='relative flex flex-col w-[100%] gap-[5.868px] md:w-1/2 md:gap-[5.868px]  
    lg:gap-[10px]'>
     {/* header */}
-    <label className='font-[600] text-[#7E7E7E] text-[12px] leading-[10.4px]  
+    <label className='font-[600] text-[#7E7E7E] text-[14px] leading-[10.4px]  
      md:text-[9.389px] md:leading-[12.206px]
     lg:text-[16px] lg:leading-[20.8px]'>
     Confirm Exam Type
@@ -274,7 +274,7 @@ className='relative w-[100%] '>
       src= {arrowDown} alt="" />
        </div>
        {nabtebExamActive && (
-         <div className='absolute lg:top-[90px] md:top-[60px] top-[68px] z-[3]  
+         <div className='absolute lg:top-[90px] md:top-[60px] top-[70px] z-[3]  
          flex flex-col w-[100%] lg:h-225px md:h-[210px] '>
           {(nabtebExams.map(exam => {
             return (
@@ -285,7 +285,7 @@ className='relative w-[100%] '>
              document.querySelector('.Examdrop').classList.remove('DropIt');
              console.log(e);
               })}
-              className=' text-[12px] leading-[10.4px]
+              className=' pb-[14px] md:pb-0 pt-[14px] md:pt-0 font-weight-bold text-[14px] leading-[10.4px]
            bg-white    md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
          md:text-[13.227px] md:leading-[17.195px]
          shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
@@ -306,7 +306,7 @@ className='relative w-[100%] '>
     <div className='relative gap-[5.868px] flex flex-col w-[100%] md:w-1/2  
     md:gap-[5.868px] lg:gap-[10px] '>
     {/* header */}
-    <label className='font-[600] text-[#7E7E7E] text-[12px] leading-[10.4px]
+    <label className='font-[600] text-[#7E7E7E] text-[14px] leading-[10.4px]
       md:text-[9.389px] md:leading-[12.206px]
      lg:text-[16px] lg:leading-[20.8px]'>
     Quantity
@@ -337,7 +337,7 @@ className=' relative w-[100%]'>
        {/* drop down */}
        
       {nabtebQuantityActive && (
-         <div className='absolute z-[2] lg:top-[90px] md:top-[60px] top-[68px]  
+         <div className='absolute z-[2] lg:top-[90px] md:top-[60px] top-[72px]  
           flex flex-col w-[100%]   
         '>
           {(nabtebOptions.map(option => {
@@ -349,7 +349,7 @@ className=' relative w-[100%]'>
               document.querySelector('.imgdrop').classList.remove('DropIt');
          
               })}
-              className='text-[12px] text-[#7E7E7E] leading-[10.4px] md:py-[15px] 
+              className='pb-[14px] md:pb-0 pt-[14px] md:pt-0 font-weight-bold text-[14px] text-[#7E7E7E] leading-[10.4px] md:py-[15px] 
               py-[8px] pl-[10px] font-[500]
                bg-white shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
          md:text-[13.227px] md:leading-[17.195px] w-[100%]
@@ -371,7 +371,7 @@ className=' relative w-[100%]'>
     {/* LeftSide */}
      <div className=' container-phone gap-[5.868px] mt-2 md:mt-0
      flex flex-col md:w-1/2 md:gap-[10px] '>
-   <label className='font-[600] text-[#7E7E7E] text-[12px] leading-[10.4px]
+   <label className='font-[600] text-[#7E7E7E] text-[15px] leading-[10.4px]
      md:text-[9.389px] md:leading-[12.206px]
    lg:text-[16px] lg:leading-[20.8px] '>
   Phone Number
@@ -416,7 +416,7 @@ className=' relative w-[100%]'>
         
    {/* right-side */}
    <div className='flex flex-col gap-[5.868px] md:w-1/2 md:gap-[10px]'>
-   <label className='font-[600] text-[12px] leading-[10.4px]
+   <label className='font-[600] text-[15px] leading-[10.4px]
    text-[#7E7E7E]  md:text-[9.389px] md:leading-[12.206px]
    lg:text-[16px] lg:leading-[20.8px]'>
    Email
@@ -458,7 +458,7 @@ className=' relative w-[100%]'>
  {/* Amount Step /Leftside */}
    <div className='flex flex-col gap-[5.868px] w-[100%] md:w-1/2 md:gap-[10px]'>
     {/* header */}
-    <label className='font-[600] text-[12px] leading-[10.4px]
+    <label className='font-[600] text-[15px] leading-[10.4px]
      md:text-[9.389px] md:leading-[12.206px]
      text-[#7E7E7E] lg:text-[16px] lg:leading-[20.8px]'>
     Amount
@@ -481,7 +481,7 @@ className=' relative w-[100%]'>
     <div className=' relative gap-[5.868px]
      flex w-[100%] flex-col md:w-1/2   md:gap-[10px]'>
     {/* header */}
-    <label className='font-[600] text-[12px] leading-[10.4px]
+    <label className='font-[600] text-[15px] leading-[10.4px]
      text-[#7E7E7E]  md:text-[9.389px] md:leading-[12.206px]
      lg:text-[16px] lg:leading-[20.8px]'>
     Payment Method
@@ -514,7 +514,7 @@ className='relative w-[100%]'>
        
       {nabtebMethodActive && (
          <div className=' flex flex-col w-[100%]
-         absolute z-0 lg:top-[90px] md:top-[60px] top-[68px]'>
+         absolute z-0 lg:top-[90px] md:top-[60px] top-[72px]'>
 
         {(nabtebMethodOptions.map(methodOption => {
             return (
@@ -536,7 +536,7 @@ className='relative w-[100%]'>
           <img className='md:h-[29.27px]  h-[14.27px]' src={methodOption.flag} alt=""/>
 
             <h2 
-              className='text-[12px] leading-[10.4px]
+              className='pb-[10px] md:pb-0 pt-[10px] md:pt-0 font-weight-bold text-[13px] leading-[10.4px]
                font-[500] text-[#7C7C7C] 
          md:text-[13.227px] md:leading-[17.195px] 
          lg:text-[16px] lg:leading-[20.8px] self-center cursor-pointer' >

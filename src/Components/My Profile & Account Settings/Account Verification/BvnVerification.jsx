@@ -140,7 +140,7 @@ src={Arrowright} alt="" />
     <img src={bvnVerifyImage} alt="" 
      className={`h-[24px] w-[24px] md:h-[44px] md:w-[44px] lg:h-[62px] lg:w-[62px]`}/>
      <div className='flex flex-col gap-[4.694px] md:gap-[8px] justify-center'>
-        <h2 className='font-[500] lg:text-[12px] lg:leading-[15.6px] text-[10.042px] leading-[10.45px]'>
+        <h2 className='font-[500] lg:text-[12px] lg:leading-[15.6px] text-[12.042px] leading-[10.45px]'>
           Bvn Status</h2>
         <h2 className='font-[500] lg:text-[12px] lg:leading-[15.6px] text-[8.042px] leading-[10.45px]'>
           {bvnStatus}
@@ -157,7 +157,7 @@ src={Arrowright} alt="" />
           )}
   {/*  */}
     <div className='flex md:gap-[14px] gap-[11px] items-center'>
-        <h2 className='font-[500] text-[#7E7E7E] text-[8px] leading-[10.4px]
+        <h2 className='font-[500] text-[#7E7E7E] text-[12px] leading-[10.4px]
         lg:text-[16px] lg:leading-[20.8px]'>
         Why Account Verification with my BVN?
        </h2>

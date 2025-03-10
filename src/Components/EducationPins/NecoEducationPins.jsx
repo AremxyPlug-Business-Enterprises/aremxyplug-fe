@@ -216,7 +216,7 @@ export default function NecoEducationPins() {
           <div className='flex lg:gap-[8px] items-center gap-[4.694px] md:gap-[5.868px] mb-[20px]  
       lg:mb-[50px] md:mb-[30px]'>
 
-            <h2 className='font-[600] text-[13px] leading-[12px] md:text-[9.389px]
+            <h2 className='font-[600] text-[14px] leading-[12px] md:text-[9.389px]
          md:leading-[11.267px] lg:text-[16px] text-[#7E7E7E] lg:leading-[20.2px]'>
               Purchase
             </h2>
@@ -224,7 +224,7 @@ export default function NecoEducationPins() {
             <img className='h-[12px] w-[12px] md:h-[14.083px] md-w-[14.083px] lg:h-[24px] lg:w-[24px] self-center'
               src={NecoImg} alt="" />
 
-            <h2 className='font-[600] text-[13px] leading-[12px] md:text-[9.389px]
+            <h2 className='font-[600] text-[14px] leading-[12px] md:text-[9.389px]
          md:leading-[11.267px] lg:text-[16px] text-[#7E7E7E] lg:leading-[20.2px]'>
               NECO E-PINs Instantly
             </h2>
@@ -244,7 +244,7 @@ export default function NecoEducationPins() {
                 <div className='relative flex flex-col w-[100%] gap-[5.868px] md:w-1/2 md:gap-[5.868px]  
      lg:gap-[10px]'>
                   {/* header */}
-                  <h2 className='font-[600] text-[#7E7E7E] text-[12px] leading-[10.4px]  
+                  <h2 className='font-[600] text-[#7E7E7E] text-[14px] leading-[10.4px]  
        md:text-[9.389px] md:leading-[12.206px]
       lg:text-[16px] lg:leading-[20.8px]'>
                     Confirm Exam Type
@@ -287,7 +287,7 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
                               document.querySelector('.Examdrop').classList.remove('DropIt');
                               console.log(e);
                             })}
-                            className='text-[12px] leading-[10.4px] 
+                            className='pb-[14px] md:pb-0 pt-[14px] md:pt-0 font-weight-bold text-[14px] leading-[10.4px] 
                  shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
                 md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
            md:text-[13.227px] md:leading-[17.195px] w-[100%] bg-[white] 
@@ -309,7 +309,7 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
                 <div className='relative  gap-[5.868px] flex flex-col w-[100%] md:w-1/2  
       md:gap-[5.868px] lg:gap-[10px] '>
                   {/* header */}
-                  <h2 className='  font-[600] text-[#7E7E7E] text-[12px] leading-[10.4px]
+                  <h2 className='  font-[600] text-[#7E7E7E] text-[14px] leading-[10.4px]
         md:text-[9.389px] md:leading-[12.206px]
        lg:text-[16px] lg:leading-[20.8px]'>
                     Quantity
@@ -352,9 +352,9 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
                             setNecoQuantityActive(false);
                             setNecoEducationAmount(option.Amount);
                             document.querySelector('.imgdrop').classList.remove('DropIt');
-
+                            
                           })}
-                            className='text-[12px] leading-[10.4px] md:py-[15px] py-[8px] text-[#7C7C7C]
+                            className='pb-[14px] md:pb-0 pt-[14px] md:pt-0 font-weight-bold text-[14px] leading-[10.4px] md:py-[15px] py-[8px] text-[#7C7C7C]
                 pl-[10px] font-[500]  shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
            md:text-[13.227px] md:leading-[17.195px] bg-white
            lg:text-[16px] lg:leading-[20.8px] cursor-pointer hover:bg-[#EDEAEA]'
@@ -375,7 +375,7 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
                 {/* LeftSide */}
                 <div className=' container-phone gap-[5.868px] 
        flex flex-col md:w-1/2 md:gap-[10px] '>
-                  <h2 className='font-[600] text-[#7E7E7E] text-[12px] leading-[10.4px]
+                  <h2 className='font-[600] text-[#7E7E7E] text-[15px] leading-[10.4px]
        md:text-[9.389px] md:leading-[12.206px]
      lg:text-[16px] lg:leading-[20.8px] '>
                     Phone Number
@@ -418,7 +418,7 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
 
                 {/* right-side */}
                 <div className='  flex flex-col gap-[5.868px] md:w-1/2 md:gap-[10px]'>
-                  <h2 className='font-[600] text-[12px] leading-[10.4px]
+                  <h2 className='font-[600] text-[15px] leading-[10.4px]
      text-[#7E7E7E]  md:text-[9.389px] md:leading-[12.206px]
      lg:text-[16px] lg:leading-[20.8px]'>
                     Email
@@ -459,7 +459,7 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
                 {/* Amount Step /Leftside */}
                 <div className='relative top-0 flex flex-col gap-[5.868px] w-[100%] md:w-1/2 md:gap-[10px]'>
                   {/* header */}
-                  <h2 className='font-[600] text-[12px] leading-[10.4px]
+                  <h2 className='font-[600] text-[15px] leading-[10.4px]
        md:text-[9.389px] md:leading-[12.206px]
        text-[#7E7E7E] lg:text-[16px] lg:leading-[20.8px]'>
                     Amount
@@ -488,7 +488,7 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
                 <div className='relative  payment-parent gap-[5.868px]
        flex w-[100%] flex-col md:w-1/2  md:gap-[10px] '>
                   {/* header */}
-                  <h2 className='font-[600] text-[12px] leading-[10.4px]
+                  <h2 className='font-[600] text-[15px] leading-[10.4px]
        text-[#7E7E7E]  md:text-[9.389px] md:leading-[12.206px]
        lg:text-[16px] lg:leading-[20.8px]'>
                     Payment Method
@@ -507,7 +507,7 @@ md:pr-[5.282px] md:pl-[5.867px] bg-white
 lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
 border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]
 font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
-    lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer focus:outline-none focus:outline-none border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg'
+    lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer focus:outline-none focus:outline-none border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[18px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg'
                       readOnly />
 
                     <img
@@ -521,7 +521,7 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
 
                   {necoMethodActive && (
                     <div className=' flex flex-col w-[100%]  absolute z-[1] lg:top-[90px] md:top-[60px]
-            top-[68px]'>
+            top-[72px]'>
 
                       {(necoMethodOptions.map(methodOption => {
                         return (
@@ -534,7 +534,7 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
                               document.querySelector('.methodDrop').classList.remove('DropIt');
                             })}
                             onChange={setNecoMethodOptions}
-                            className='flex gap-[10px] lg:py-[15px] py-[10px]  pl-[10px]
+                            className=' flex gap-[10px] lg:py-[15px] py-[10px]  pl-[10px]
           cursor-pointer bg-white hover:bg-[#EDEAEA] items-center 
           shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]'
                             key={methodOption.id}>
@@ -542,7 +542,7 @@ font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
                             <img className='md:h-[29.27px]  h-[14.27px]' src={methodOption.flag} alt="" />
 
                             <h2
-                              className='text-[12px] leading-[10.4px]
+                              className='pb-[10px] md:pb-0 pt-[10px] md:pt-0 font-weight-bold text-[13px] leading-[10.4px]
                  font-[500] text-[#7C7C7C]  
            md:text-[13.227px] md:leading-[17.195px] 
            lg:text-[16px] lg:leading-[20.8px] self-center cursor-pointer' >
