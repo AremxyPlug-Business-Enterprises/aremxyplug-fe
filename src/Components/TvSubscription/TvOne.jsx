@@ -310,7 +310,7 @@ const GoTv = () => {
             <p className="text-[9px] lg:text-[24px] md:text-[13.75px] font-semibold">
               SUBSCRIBE YOUR TV CHANNELS WITH AREMXYPLUG.
             </p>
-            <p className="text-[7.5px] lg:text-[20px] md:text-[11.46px]">
+            <p className="text-[8px] lg:text-[20px] md:text-[11.46px]">
               Never miss a beat! Subscribe your tv channels on our platform to watch and stream your favorite movies without any hassle.
             </p>
           </div>
@@ -331,10 +331,10 @@ const GoTv = () => {
         <div className="flex flex-col gap-[20px] md:gap-0">
           <div className="flex flex-col md:flex-row gap-[20px] md:gap-[12px] lg:gap-[22px] md:my-2 lg:my-4">
             <div className="relative flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
-              <label htmlFor="decoderType" className="text-[#7E7E7E] text-[14px] lg:text-[17px] md:text-[13px] font-semibold">
+              <label htmlFor="decoderType" className="text-[#7E7E7E] text-[14px] lg:text-[17px] md:text-[13px] font-[400]">
                 Confirm Decoder Type</label>
               {/* <button className="border-[0.23px] lg:border-[0.4px] w-full md:w-1/2 h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C]">Gotv</button> */}
-              <div className="mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[600] text-[9px] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+              <div className="mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] p-4 sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] hover:bg-[#EDEAEA] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center" onClick={decoderDropdown}>
                 {decoderType }
                 <img className="decdrop absolute left-[92%] lg:left-[94%] self-center align-middle md:h-[14.038px] md:w-[14.038px] 
@@ -354,7 +354,7 @@ const GoTv = () => {
              document.querySelector('.decdrop').classList.remove('DropIt');
              console.log(e);
               })}
-              className=' pb-[14px] md:pb-0 pt-[14px] md:pt-0 font-weight-bold text-[14px]  leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
+              className=' pb-[20px] pt-[20px] md:pb-0 md:pt-0 font-weight-bold text-[14px]  leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
          md:text-[13.227px] md:leading-[17.195px] 
          shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] bg-white
          lg:text-[16px] lg:leading-[20.8px] cursor-pointer hover:bg-[#EDEAEA]' 
@@ -371,10 +371,10 @@ const GoTv = () => {
             </div>
 
             <div className="relative flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
-              <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] font-semibold">
+              <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] font-[400]">
                 Select Package</label>
 
-              <div className="mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[600] text-[9px] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+              <div className="mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] p-4 sm:p-3 sm:text-lg  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] hover:bg-[#EDEAEA] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center" onClick={packageDropdown}>
                 {selectedOptionGOTV}
                 <img className="imgdrop absolute left-[90%] lg:left-[94%] self-center align-middle md:h-[14.038px] md:w-[14.038px] 
@@ -390,7 +390,7 @@ const GoTv = () => {
 
                     return (
                     <li
-                      className={`pb-[14px] md:pb-0 pt-[14px] md:pt-0 font-weight-bold text-[15px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
+                      className={` pb-[20px] pt-[20px] md:pb-0 md:pt-0 font-weight-bold text-[15px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
                       md:text-[13.227px] md:leading-[17.195px] 
                       shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] bg-white
                       lg:text-[16px] lg:leading-[20.8px] cursor-pointer hover:bg-[#EDEAEA]`}
@@ -412,7 +412,7 @@ const GoTv = () => {
           </div>
           <div className="flex flex-col md:flex-row gap-[20px] md:gap-[12px lg:gap-[22px]] md:my-2 lg:my-4">
             <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
-              <label htmlFor="decoderType" className="text-[#7E7E7E] text-[14px] lg:text-[17px] md:text-[13px] font-semibold">
+              <label htmlFor="decoderType" className="text-[#7E7E7E] text-[14px] lg:text-[17px] md:text-[13px] font-[400]">
                 Smart Card / IUC Number</label>
                 {/* style={{ backgroundColor: smartCard.length !== 10 ? '#FFD8D8' : 'white' }} */}
               <input type="tel" onChange={handleSmartCard}
@@ -421,23 +421,23 @@ const GoTv = () => {
                   const numericValue = e.target.value.replace(/\D/g, '');
                       e.target.value = numericValue
                 })}
-                className="mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[600] text-[9px] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+                className="mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] hover:bg-[#EDEAEA] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center" />
-              {errors.smartCard && <p className="text-[#F95252] text-[13px] md:text-[12px] lg:text-[14px] font-semibold italic">
+              {errors.smartCard && <p className="text-[#F95252] text-[13px] md:text-[12px] lg:text-[14px] font-[400] italic">
                 {errors.smartCard}</p>}
             </div>
 
             <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
-              <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] font-semibold">
+              <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] font-[400]">
                 Card Name</label>
               <input type="text"
-                onChange={handleCardName} onInput={(event)=> {event.target.value = event.target.value.replace(/[0-9]/g, '')}} className="mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[600] text-[9px] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+                onChange={handleCardName} onInput={(event)=> {event.target.value = event.target.value.replace(/[0-9]/g, '')}} className="mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] text-[9px] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] hover:bg-[#EDEAEA] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center" />
             </div>
           </div>
           <div className="flex flex-col md:flex-row gap-[20px] md:gap-[12px] lg:gap-[22px] md:my-2 lg:my-4">
             <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
-              <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] font-semibold">
+              <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] font-[400]">
                 Phone Number</label>
               <input id="val" value={mobileNumber} onChange={handleGOTVMobileNumberChange}
                 onInput={(e =>{
@@ -452,31 +452,31 @@ const GoTv = () => {
                   }
                 
                    })}
-                type="tel" maxLength={11} className="mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[600] text-[9px] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+                type="tel" maxLength={11} className="mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] text-[9px] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] hover:bg-[#EDEAEA] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center" />
-              {errors.mobileNumber && <p className="text-[#F95252] text-[9px] md:text-[12px] lg:text-[14px] font-semibold italic">
+              {errors.mobileNumber && <p className="text-[#F95252] text-[14px] md:text-[12px] lg:text-[14px] font-[400] italic">
                 {errors.mobileNumber}</p>}
 
             </div>
             <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
-              <label htmlFor="Email" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] font-semibold">
+              <label htmlFor="Email" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] font-[400]">
                 Email</label>
-              <input type="email" onChange={handleTvEmail} placeholder="example@gmail.com" required className="mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[600] text-[9px] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+              <input type="email" onChange={handleTvEmail} placeholder="example@gmail.com" required className="mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] text-[14px] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] hover:bg-[#EDEAEA] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center" />
-             {errors.tvEmail && <p className="text-[#F95252] text-[9px] md:text-[12px] lg:text-[14px] font-semibold italic">
+             {errors.tvEmail && <p className="text-[#F95252] text-[13.4px] md:text-[14px] lg:text-[14px] font-[400] italic">
                 {errors.tvEmail}</p>}
             </div>
 
           </div>
           <div className="flex flex-col md:flex-row gap-[20px] md:gap-[12px] lg:gap-[22px] md:my-2 lg:my-4">
             <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
-              <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[16px] md:text-[12px] font-semibold">
+              <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[16px] md:text-[12px] font-[400]">
                 Amount</label>
 
 
               <input
                 type="text"
-                className="mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[600] text-[9px] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+                className="mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.8px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] text-[13.2px] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
                 lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] hover:bg-[#EDEAEA] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center"
                 value={'₦' + getNumericValue(selectedOptionGOTV)} onChange={handleTvAmount}
               />
@@ -484,10 +484,10 @@ const GoTv = () => {
             </div>
 
             <div className="relative flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
-              <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] font-semibold">
+              <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] font-[400]">
                 Payment Method</label>
-              <div onClick={methodDropDown} className="mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg flex items-center justify-between border-[0.23px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] border-[#9C9C9C]">
-                <p className='font-[500] text-[14px] leading-[10.4px] md:text-[12px] md:leading-[12.206px] lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px] cursor-pointer'>
+              <div onClick={methodDropDown} className="mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg flex items-center justify-between border-[0.23px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] border-[#9C9C9C]">
+                <p className='font-[500] text-[13px] leading-[10.4px] md:text-[12px] md:leading-[12.206px] lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px] cursor-pointer'>
                   {flagResult + tvWalletBalance}
                 </p>
                 <img className='methodDrop h-[16px] w-[14px] md:h-[14.038px] md:w-[14.038px] lg:h-[24px] lg:w-[24px]'
@@ -507,7 +507,7 @@ const GoTv = () => {
                           setMethodPayment(false);
                           document.querySelector('.methodDrop').classList.remove('DropIt');
                         })}
-                        className=' flex gap-[10px] lg:py-[15px] py-[10px] pl-[10px]
+                        className=' flex gap-[10px] lg:py-[15px] py-[10px] pl-[10px]  pb-[20px] pt-[20px] md:pb-0 md:pt-0
         cursor-pointer hover:bg-[#EDEAEA] items-center bg-white
         shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]'
                         key={methodOption.id}>
@@ -515,7 +515,7 @@ const GoTv = () => {
                         <img className='md:h-[29.27px]  h-[14.27px]' src={methodOption.flag} alt="" />
 
                         <h2
-                          className=' text-[14px] leading-[10.4px]
+                          className='text-[14px] leading-[10.4px]
                font-[500] text-[#7C7C7C]  
          md:text-[13.227px] md:leading-[17.195px] 
          lg:text-[16px] lg:leading-[20.8px] self-center cursor-pointer' >

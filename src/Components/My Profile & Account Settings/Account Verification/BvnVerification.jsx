@@ -157,7 +157,7 @@ src={Arrowright} alt="" />
           )}
   {/*  */}
     <div className='flex md:gap-[14px] gap-[11px] items-center'>
-        <h2 className='font-[500] text-[#7E7E7E] text-[12px] leading-[10.4px]
+        <h2 className='font-[500] text-[#7E7E7E] text-[11px] leading-[10.4px]
         lg:text-[16px] lg:leading-[20.8px]'>
         Why Account Verification with my BVN?
        </h2>
@@ -178,15 +178,15 @@ src={Arrowright} alt="" />
    <div className='flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]'>
     {/* Full Name */}
     <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[10px] leading-[10.4px] 
+   <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
     Full Name
     </h2>
     <div
-    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-xl p-4 sm:p-3 sm:text-lg font-[500] py-[15.33px] pl-[5.867px] 
+    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px] sm:p-3 sm:text-lg font-[500] py-[15.33px] pl-[5.867px] 
     md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px]
     lg:py-[15.5px] lg:pl-[10px] border-[0.4px]
-    text-[8px] leading-[10.4px] 
+    leading-[10.4px] 
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px]'>
       {full_name ? full_name : "Null"}
    </div>
@@ -195,7 +195,7 @@ src={Arrowright} alt="" />
    <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
     {/* header */}
    <div className='flex md:gap-[10px] gap-[5px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[10px] leading-[10.4px] 
+   <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
    Phone Number
    </h2>
@@ -213,10 +213,10 @@ src={Arrowright} alt="" />
     onChange={(e) =>{
     setBvnPhone(e.target.value);
    }} type="tel" name='phone' id='phone' maxLength={11} inputMode='tel' required
-   className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-xl p-4 sm:p-3 sm:text-lg font-[500] py-[10.33px] pl-[5.867px] 
+   className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px] p-4 sm:p-3 sm:text-lg font-[500] py-[10.33px] pl-[5.867px] 
    lg:py-[15.5px] lg:pl-[10px] border-[0.4px] 
    md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px]
-   text-[8px] leading-[10.4px] 
+    leading-[10.4px] 
     border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px]
      focus:outline-none placeholder:text-[8px] placeholdee:leading-[10.4px]
      placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px]'/>
@@ -225,7 +225,7 @@ src={Arrowright} alt="" />
 {/* Date of Birth / BVN */}
 <div className='flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]'>
 <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[10px] leading-[10.4px] 
+   <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
      D.O.B
     </h2>
@@ -235,10 +235,10 @@ src={Arrowright} alt="" />
     onChange={(e => {
       setBvnDateOfBirth(e.target.value);
    })}
-    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-xl p-4 sm:p-3 sm:text-lg font-[500] w-[100%] py-[10.33px] pl-[5.867px] bg-white
+    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px]  sm:p-3 sm:text-lg font-[500] w-[100%] py-[10.33px] pl-[5.867px] bg-white
     lg:py-[15.5px] lg:pl-[10px] border-[0.4px] 
     md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px]
-    text-[8px] leading-[10.4px] lg:pr-[16px] pr-[9px]
+     leading-[10.4px] lg:pr-[16px] pr-[9px]
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px]
       focus:outline-none cursor-pointer'
     type="date" id='dob' name='dob' />
@@ -247,7 +247,7 @@ src={Arrowright} alt="" />
 
     {/*========= BVN ==========*/}
     <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[10px] leading-[10.4px] 
+   <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
      BVN Number
     </h2>
@@ -263,10 +263,10 @@ src={Arrowright} alt="" />
     onChange={(e) => {
       setBvnNumber(e.target.value)
     }}
-    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-xl p-4 sm:p-3 sm:text-lg font-[500] py-[10.33px] pl-[5.867px] 
+    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px] p-4 sm:p-3 sm:text-lg font-[500] py-[10.33px] pl-[5.867px] 
     lg:py-[15.5px] lg:pl-[10px] border-[0.4px] 
     md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px]
-    text-[8px] leading-[10.4px] 
+     leading-[10.4px] 
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px]
       focus:outline-none'
     type="text"  inputMode='numeric' maxLength={11}   required/>
@@ -279,12 +279,12 @@ src={Arrowright} alt="" />
           checkBvnform()
         }}
          className={`lg:py-[13px] md:py-[7.868px] py-[16.531px] rounded-[4.241px] w-[100%] md:w-[150px] lg:w-[163px] lg:rounded-[12px] bg-[#04177F]
-         font-[600] text-[12px] leading-[18px] lg:text-[16px] text-center text-white lg:leading-[24px ${bvnStatus === "Verified" ? "bg-gray-600": "bg-[#04177F]" }`}>
+         font-[600] text-[13px] leading-[18px] lg:text-[16px] text-center text-white lg:leading-[24px ${bvnStatus === "Verified" ? "bg-gray-600": "bg-[#04177F]" }`}>
         Verify
         </button>
         { errorVerify  && (
         <h2 className={`font-[500] lg:text-[14px] lg:leading-[18px] md:text-[14px] md:leading-[18px] 
-        text-[12px] leading-[16px] text-red-600` }>
+        text-[13px] leading-[16px] text-red-600` }>
           Fill all to Confirm Verification
        </h2>
        )}

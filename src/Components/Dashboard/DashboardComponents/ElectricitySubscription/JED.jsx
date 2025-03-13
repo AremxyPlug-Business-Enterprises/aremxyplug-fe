@@ -348,12 +348,12 @@ const JED = () => {
           {/* input sections */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 md:gap-6 lg:gap-6 items-center lg:mt-[20px] ">
             <div className=" flex flex-col mt-[20px] gap-1">
-              <div className="text-[#7E7E7E] text-[15px] lg:text-[16px]  font-[600]">Select Meter Type</div>
+              <div className="text-[#7E7E7E] text-[15px] lg:text-[16px]  font-[400]">Select Meter Type</div>
               <div
-                className=" border-[1px] w-full mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-xl p-4 sm:p-3 sm:text-lg  pl-[4px] pr-[8px]  lg:h-[51px] lg:pl-[14px] lg:pr-[16px] flex  items-center justify-between"
+                className=" border-[1px] w-full mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[14px] p-4 sm:p-3 sm:text-lg  pl-[4px] pr-[8px]  lg:h-[51px] lg:pl-[14px] lg:pr-[16px] flex  items-center justify-between"
                 onClick={() => setShowProductList(!showProductList)}
               >
-                <h2 className="text-[14px] font-[600]  leading-[12px] text-[#7C7C7C] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                <h2 className="text-[14px] font-[400]  leading-[12px] text-[#7C7C7C] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
                   {selectedNetworkProduct}
                 </h2>
                 <button className="lg:w-6 lg:h-6 w-[11px] h-[11px]">
@@ -365,7 +365,7 @@ const JED = () => {
                   {productList.map((item) => (
                     <div
                       key={item.name}
-                      className={`pb-[14px] md:pb-0 pt-[14px] md:pt-0 font-weight-bold text-[14px] cursor-pointer border-b-[0.5px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] w-[100%]  md:rounded-[0px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${selectedNetworkProduct === item.name ? "bg-white" : ""
+                      className={`pb-[18px] md:pb-0 pt-[18px] md:pt-0 font-weight-bold text-[14px] cursor-pointer border-b-[0.5px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] w-[100%]  md:rounded-[0px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${selectedNetworkProduct === item.name ? "bg-white" : ""
                         }`}
                       onClick={() => handleSelectProduct(item.name)}
                     >
@@ -377,9 +377,9 @@ const JED = () => {
             </div>
 
             <div className="flex flex-col mt-[10px] md:mt-[23px] lg:mt-[23px]">
-              <div className="text-[#7E7E7E] text-[14px] lg:text-[16px] font-[600] " >Meter Number</div>
+              <div className="text-[#7E7E7E] text-[14px] lg:text-[16px] font-[400] " >Meter Number</div>
               <div>
-                <input type="number" value={meterNumber} onChange={handleMeterNumber} className=" w-full text-[#7E7E7E] pl-[9px] lg:h-[51px] lg:text-[16px]  text-[10px] font-[500]  border-[1px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-xl p-4 sm:p-3 sm:text-lg" />{" "}
+                <input type="number" value={meterNumber} onChange={handleMeterNumber} className=" w-full text-[#7E7E7E] pl-[9px] lg:h-[51px] lg:text-[16px]  text-[14px] font-[500]  border-[1px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg" />{" "}
               </div>
               {errors.meterNumber && (
                 <div className="text-[14px] text-red-500 italic lg:text-[14px]">
@@ -389,15 +389,15 @@ const JED = () => {
             </div>
 
             <div className="flex flex-col mt-[10px]">
-              <div className="text-[#7E7E7E] text-[15px] lg:text-[16px] font-[600]" >Verified Name</div>
+              <div className="text-[#7E7E7E] text-[15px] lg:text-[16px] font-[400]" >Verified Name</div>
               <div>
-                <input type="text" value={verifiedName} onChange={handleVerifiedName} className=" w-full text-[#7E7E7E] lg:h-[51px] lg:text-[16px]  text-[10px] pl-[9px] font-[500]  border-[1px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-xl p-4 sm:p-3 sm:text-lg" />{" "}
+                <input type="text" value={verifiedName} onChange={handleVerifiedName} className=" w-full text-[#7E7E7E] lg:h-[51px] lg:text-[16px]  text-[14px] pl-[9px] font-[500]  border-[1px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg" />{" "}
               </div>
             </div>
             <div className="flex flex-col mt-[10px]">
-              <div className="text-[#7E7E7E] text-[15px] lg:text-[16px] font-[600]" >Phone Number</div>
+              <div className="text-[#7E7E7E] text-[15px] lg:text-[16px] font-[400]" >Phone Number</div>
               <div>
-                <input type="number" value={phoneNumber} onChange={handlePhoneNumber} className=" w-full text-[#7E7E7E] lg:h-[51px] lg:text-[16px]  pl-[9px] text-[10px] font-[500]  border-[1px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-xl p-4 sm:p-3 sm:text-lg" />
+                <input type="number" value={phoneNumber} onChange={handlePhoneNumber} className=" w-full text-[#7E7E7E] lg:h-[51px] lg:text-[16px]  pl-[9px] text-[14px] font-[500]  border-[1px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg" />
               </div>
               {errors.phoneNumber && (
                 <div className="text-[14px] text-red-500 italic lg:text-[14px]">
@@ -406,9 +406,9 @@ const JED = () => {
               )}
             </div>
             <div className="flex flex-col mt-[10px]">
-              <div className="text-[#7E7E7E] text-[15px] lg:text-[16px]   font-[600]" >Email</div>
+              <div className="text-[#7E7E7E] text-[15px] lg:text-[16px]   font-[400]" >Email</div>
               <div>
-                <input type="text" value={ikedcEmail} onChange={handleEmail} className=" w-full lg:h-[51px] text-[#7E7E7E] pl-[9px] lg:text-[16px] text-[10px] font-[500]  border-[1px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-xl p-4 sm:p-3 sm:text-lg" />
+                <input type="text" value={ikedcEmail} onChange={handleEmail} className=" w-full lg:h-[51px] text-[#7E7E7E] pl-[9px] lg:text-[16px] text-[10px] font-[500]  border-[1px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg" />
               </div>
               {errors.ikedcEmail && (
                 <div className="text-[14px] text-red-500 italic lg:text-[14px]">
@@ -417,17 +417,17 @@ const JED = () => {
               )}
             </div>
             <div className="flex flex-col mt-[10px]">
-              <div className="text-[#7E7E7E] text-[15px] lg:text-[16px]  font-[600]" >Amount</div>
-              <div className="flex items-center lg:text-[16px] text-[#7E7E7E] text-[10px] pl-2 border-[1px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[8px]  md:p-0 text-xl p-4 sm:p-3 sm:text-lg">
+              <div className="text-[#7E7E7E] text-[15px] lg:text-[16px]  font-[400]" >Amount</div>
+              <div className="flex items-center lg:text-[16px] text-[#7E7E7E] text-[14px] pl-2 border-[1px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[8px]  md:p-0 text-[14px] p-4 sm:p-3 sm:text-lg">
                 &#8358;
                 <input type="number" name="ikedcamount" value={ikedcamount} onChange={handleIkedcAmount} className=" w-full outline-none lg:h-[51px] lg:text-[16px]  text-[#7E7E7E] pl-[9px] text-[10px] font-[500] h-[30px]" />
               </div>
             </div>
 
             <div className=" flex flex-col mt-[20px] gap-1">
-              <div className="text-[#7E7E7E] text-[15px] lg:text-[16px]  font-[600]">Payment Method</div>
+              <div className="text-[#7E7E7E] text-[15px] lg:text-[16px]  font-[400]">Payment Method</div>
               <div
-                className=" border-[1px] w-full mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-xl p-4 sm:p-3 sm:text-lg  pl-[4px] pr-[8px] lg:h-[51px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between"
+                className=" border-[1px] w-full mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[14px] p-4 sm:p-3 sm:text-lg  pl-[4px] pr-[8px] lg:h-[51px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between"
                 onClick={() => setShowList(!showList)}
               >
                 <p></p>
@@ -472,7 +472,7 @@ const JED = () => {
                   {" "}
                   {countryList.map((country) => (
                     <div
-                      className="pb-[14px] md:pb-0 pt-[14px] md:pt-0 font-weight-bold text-[15px] cursor-pointer border-b flex items-center p-2 gap-[5px] text-[11px]  md:text-[14px] lg:text-[16px]"
+                      className="pb-[18px] md:pb-0 pt-[18px] md:pt-0 font-weight-bold text-[13.5px] cursor-pointer border-b flex items-center p-2 gap-[5px] text-[11px]  md:text-[14px] lg:text-[16px]"
                       key={country.id}
                       onClick={() =>
                         handleCountryClick(
@@ -681,7 +681,7 @@ const JED = () => {
                   </div>
                 )}
                 <div
-                  className="text-[#0003] text-xl md:text-3xl"
+                  className="text-[#0003] text-[13px] md:text-3xl"
                   onClick={toggleVisibility}
                 >
                   {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}

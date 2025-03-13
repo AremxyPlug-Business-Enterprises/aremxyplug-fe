@@ -21,9 +21,9 @@ export default function HeroComponent() {
             </h2>
             {/* sub-text */}
             <p
-              className="font-[400] text-[9.300px] leading-[9.1px] 
+              className="font-[400] text-[10px] leading-[9.1px] 
       md:text-[9.167px]  md:leading-[11.917px]
-      lg:text-[16px] lg:leading-[20.8px] "
+      lg:text-[16px] lg:leading-[20.8px]"
             >
               <span className="md:block">
          Purchase an affordable education scratch pins / token to{' '}

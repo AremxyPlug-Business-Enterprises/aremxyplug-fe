@@ -245,7 +245,7 @@ useEffect(()=> {
    <div className='relative flex flex-col w-[100%] gap-[5.868px] md:w-1/2 md:gap-[5.868px]  
    lg:gap-[10px]'>
     {/* header */}
-    <label className='font-[600] text-[#7E7E7E] text-[14px] leading-[10.4px]  
+    <label className='font-[400] text-[#7E7E7E] text-[14px] leading-[10.4px]  
      md:text-[9.389px] md:leading-[12.206px]
     lg:text-[16px] lg:leading-[20.8px]'>
     Confirm Exam Type
@@ -258,13 +258,13 @@ className='relative w-[100%] '>
     onChange={(e)=> {
       setNabtebExamType(e.target.value);
     }}
-    className='pt-[12.803px] pb-[7.794px] pr-[13px] pl-[10.876px] mt-2 md:mt-0
+    className='pt-[10.803px] pb-[13.794px] pr-[13px] pl-[10.876px] mt-2 md:mt-0
     md:pt-[8.802px] md:pb-[7.042px] w-[100%]
    md:pr-[5.282px] md:pl-[5.867px] bg-white
    lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
    border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]
-   font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
-       lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer focus:outline-none border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg' readOnly/>
+   font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
+       lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer focus:outline-none border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] sm:p-3 sm:text-lg' readOnly/>
 
       <img  
       className='absolute lg:top-[15px] lg:right-[9px] md:top-[8.802px] md:right-[5.282px]
@@ -285,8 +285,8 @@ className='relative w-[100%] '>
              document.querySelector('.Examdrop').classList.remove('DropIt');
              console.log(e);
               })}
-              className=' pb-[14px] md:pb-0 pt-[14px] md:pt-0 font-weight-bold text-[14px] leading-[10.4px]
-           bg-white    md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
+              className=' pb-[21px] md:pb-0 pt-[21px] md:pt-0 font-[400] text-[13.5px] leading-[10.4px]
+           bg-white  md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
          md:text-[13.227px] md:leading-[17.195px]
          shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
          lg:text-[16px] lg:leading-[20.8px] cursor-pointer hover:bg-[#EDEAEA]' 
@@ -319,13 +319,13 @@ className=' relative w-[100%]'>
     onChange={(e)=>{
       nabtebQuantityResult(e.target.value);
     }}
-     className='pt-[12.803px] pb-[7.794px] pr-[13px] pl-[10.876px] mt-2 md:mt-0
+     className='pt-[10.803px] pb-[13.794px] pr-[13px] pl-[10.876px] mt-2 md:mt-0
      md:pt-[8.802px] md:pb-[7.042px] w-[100%]
     md:pr-[5.282px] md:pl-[5.867px] bg-white
     lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
     border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]
-    font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
-        lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer focus:outline-none border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg' readOnly/>
+    font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
+        lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer focus:outline-none border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.5px] sm:p-3 sm:text-lg' readOnly/>
      
       <img 
        className='absolute lg:top-[15px] lg:right-[9px] md:top-[8.802px] md:right-[5.282px]
@@ -349,8 +349,8 @@ className=' relative w-[100%]'>
               document.querySelector('.imgdrop').classList.remove('DropIt');
          
               })}
-              className='pb-[14px] md:pb-0 pt-[14px] md:pt-0 font-weight-bold text-[14px] text-[#7E7E7E] leading-[10.4px] md:py-[15px] 
-              py-[8px] pl-[10px] font-[500]
+              className='pb-[21px] md:pb-0 pt-[21px] md:pt-0 font-[400] text-[13.5px] text-[#7E7E7E] leading-[10.4px] md:py-[15px] 
+              py-[8px] pl-[10px] font-[400]
                bg-white shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
          md:text-[13.227px] md:leading-[17.195px] w-[100%]
          lg:text-[16px] lg:leading-[20.8px] cursor-pointer hover:bg-[#EDEAEA]' 
@@ -371,7 +371,7 @@ className=' relative w-[100%]'>
     {/* LeftSide */}
      <div className=' container-phone gap-[5.868px] mt-2 md:mt-0
      flex flex-col md:w-1/2 md:gap-[10px] '>
-   <label className='font-[600] text-[#7E7E7E] text-[15px] leading-[10.4px]
+   <label className='font-[400] text-[#7E7E7E] text-[15px] leading-[10.4px]
      md:text-[9.389px] md:leading-[12.206px]
    lg:text-[16px] lg:leading-[20.8px] '>
   Phone Number
@@ -390,18 +390,18 @@ className=' relative w-[100%]'>
   }
 
    })}
-   className='h-[40.927px] lg:h-[51px]  md:h-[29.93px] font-[500] mt-2 md:mt-0
+   className='h-[40.927px] lg:h-[51px]  md:h-[29.93px] font-[400] mt-2 md:mt-0
    w-[100%] border-[0.4px] border-[#9C9C9C] 
-   text-[14.389px] leading-[18.206px]
+   leading-[18.206px]
    lg:text-[16px] lg:leading-[20.8px] text-black
- pt-[12.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
+ pt-[10.803px] pb-[13.794px] pr-[13px] pl-[10.876px]
    focus:outline-none 
    md:pt-[8.802px] md:pb-[7.042px] 
    md:pr-[5.282px] md:pl-[5.867px] 
    lg:pt-[14px] lg:pb-[15.5px] lg:pr-[16px] lg:pl-[10px]
    placeholder:text-[14.389px] placeholder:leading-[18.809.4px] 
      lg:placeholder:text-[16px] lg:placeholder:leading-[20.8px] placeholder:text-[#7E7E7E]
-     md:placeholder:text-[14.389px] md:placeholder:leading-[18.206px] border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg'
+     md:placeholder:text-[14.389px] md:placeholder:leading-[18.206px] border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.5px] sm:p-3 sm:text-lg'
     type="tel" name='phone' id='phone' maxLength={11} placeholder=''
     value={nabtebEducationPinPhone} onChange={(e)=>{
       setNabtebEducationPinPhone(e.target.value);
@@ -416,24 +416,24 @@ className=' relative w-[100%]'>
         
    {/* right-side */}
    <div className='flex flex-col gap-[5.868px] md:w-1/2 md:gap-[10px]'>
-   <label className='font-[600] text-[15px] leading-[10.4px]
+   <label className='font-[400] text-[15px] leading-[10.4px]
    text-[#7E7E7E]  md:text-[9.389px] md:leading-[12.206px]
    lg:text-[16px] lg:leading-[20.8px]'>
    Email
    </label>
    
-   <input className ='EmailPins font-[500] flex h-[40.927px] lg:h-[51px] md:h-[29.93px] w-[100%] mt-2 md:mt-0
+   <input className ='EmailPins font-[400] flex h-[40.927px] lg:h-[51px] md:h-[29.93px] w-[100%] mt-2 md:mt-0
    lg:text-[16px] lg:leading-[20.8px] 
    text-black
-   text-[14.389px] leading-[18.206px] tracking-[0.4px]
-   pt-[12.803px] pb-[7.794px] pr-[13px] pl-[10.876px] 
+   leading-[18.206px] tracking-[0.4px]
+   pt-[10.803px] pb-[13.794px] pr-[13px] pl-[10.876px] 
     border-[0.4px] border-[#9C9C9C] focus:outline-none self-center
    md:pt-[8.802px] md:pb-[7.042px] 
    md:pr-[5.282px] md:pl-[5.867px] 
   lg:pt-[14px] lg:pb-[15.5px] lg:pr-[16px] lg:pl-[10px] 
    placeholder:text-[14.389px] placeholder:leading-[18.809.4px] 
    lg:placeholder:text-[16px] lg:placeholder:leading-[20.8px] placeholder:text-[#7E7E7E]
-   md:placeholder:text-[14.389px] md:placeholder:leading-[18.206px] border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg'
+   md:placeholder:text-[14.389px] md:placeholder:leading-[18.206px] border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.6px] sm:p-3 sm:text-lg'
     value={nabtebEducationPinEmail}
    onChange={(e) =>{
     setNabtebEducationPinEmail(e.target.value)
@@ -468,13 +468,13 @@ className=' relative w-[100%]'>
       onChange={setNabtebEducationAmount}
      className='h-[40.927px] lg:h-[51px] md:h-[40.93px] mt-2 md:mt-0
         md:pt-[8.802px] md:pb-[7.042px] 
-       pt-[12.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
+       pt-[10.803px] pb-[13.794px] pr-[13px] pl-[10.876px]
      md:pr-[5.282px] md:pl-[5.867px]
   lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] border-[0.4px] border-[#9C9C9C]
   focus:outline-none text-start
-    text-[8px] leading-[10.4px]
-   font-[500]  md:text-[9.389px] md:leading-[12.206px]
-  lg:text-[16px] text-black lg:leading-[20.8px] border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg'/>
+     leading-[10.4px]
+   font-[400]  md:text-[9.389px] md:leading-[12.206px]
+  lg:text-[16px] text-black lg:leading-[20.8px] border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.5px] sm:p-3 sm:text-lg'/>
 </div>
 
     {/*================== PAYMENT METHOD ===============*/}
@@ -494,13 +494,13 @@ className=' relative w-[100%]'>
  }}
 className='relative w-[100%]'>
     <input value={nabtebPaymentResult}
-     className=' pt-[12.803px] pb-[7.794px] pr-[13px] pl-[10.876px] mt-2 md:mt-0
+     className=' pt-[10.803px] pb-[13.794px] pr-[13px] pl-[10.876px] mt-2 md:mt-0
      md:pt-[8.802px] md:pb-[7.042px] w-[100%]
     md:pr-[5.282px] md:pl-[5.867px] bg-white
     lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
     border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]
-    font-[500] text-[8px] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
-        lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer focus:outline-none border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg' readOnly/>
+    font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
+        lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer focus:outline-none border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.5px] sm:p-3 sm:text-lg' readOnly/>
    
    
       <img 
@@ -536,8 +536,8 @@ className='relative w-[100%]'>
           <img className='md:h-[29.27px]  h-[14.27px]' src={methodOption.flag} alt=""/>
 
             <h2 
-              className='pb-[10px] md:pb-0 pt-[10px] md:pt-0 font-weight-bold text-[13px] leading-[10.4px]
-               font-[500] text-[#7C7C7C] 
+              className='pb-[18px] md:pb-0 pt-[18px] md:pt-0 font-[400] text-[13px] leading-[10.4px]
+               font-[400] text-[#7C7C7C] 
          md:text-[13.227px] md:leading-[17.195px] 
          lg:text-[16px] lg:leading-[20.8px] self-center cursor-pointer' >
         {methodOption.method + ' ' + methodOption.balance}

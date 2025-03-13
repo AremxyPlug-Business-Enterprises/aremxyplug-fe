@@ -793,7 +793,7 @@ const MtnDataTopUpBundle = () => {
               <p className="text-[11px] mb-2 font-bold uppercase w-[100%] md:text-[16px] md:w-[70%] lg:w-[70%] lg:text-[20px] 2xl:w-[80%] 2xl:text-[24px] lg:mb-4">
                 DATA BUNDLES, AFFORDABLE AND AUTOMATED.
               </p>
-              <p className="text-[9px] font-[400] leading-[9px] mb-3 md:text-[10px] md:leading-[12.2px] w-[90%] md:w-[75%] lg:w-[75%] 2xl:w-[85%] 2xl:mt-[5px] lg:mt-[20px] lg:text-[16px] lg:leading-[26px] 2xl:text-[20px] lg:mb-[20px]">
+              <p className="text-[10px] font-[400] leading-[9px] mb-3 md:text-[10px] md:leading-[12.2px] w-[90%] md:w-[75%] lg:w-[75%] 2xl:w-[85%] 2xl:mt-[5px] lg:mt-[20px] lg:text-[16px] lg:leading-[26px] 2xl:text-[20px] lg:mb-[20px]">
                 Top up your mobile sim with our automated data bundles directly
                 from network providers, enjoy discounts without any hassle or
                 hidden fee.
@@ -957,14 +957,14 @@ const MtnDataTopUpBundle = () => {
 
           <div className="grid grid-cols-1 mt-[25px] md:grid-cols-2 gap-y-[20px] md:gap-x-[58.68px] lg:gap-x-[100px] md:gap-y-[15px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[20px]">
             <div className="relative">
-              <h2 className="lg:text-[18px] lg:leading-[24px] mb-1 text-[14px] md:text-[12px] font-[600] leading-[12px]">
+              <h2 className="lg:text-[18px] lg:leading-[24px] mb-1 text-[14px] md:text-[12px] font-[400] leading-[12px]">
                 Select Product
               </h2>
               <div
-                className="mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between"
+                className="mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between"
                 onClick={() => setShowProductList(!showProductList)}
               >
-                <h2 className=" text-[14px] font-[600] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                <h2 className=" text-[12px] font-[400] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
                   {selectedNetworkProduct}
                 </h2>
                 <button className="lg:w-6 lg:h-6 w-[12px] h-[12px]">
@@ -976,7 +976,7 @@ const MtnDataTopUpBundle = () => {
                   {productList.map((item) => (
                     <div
                       key={item.name}
-                      className={`pb-[13px] md:pb-0 pt-[13px] md:pt-0 font-weight-bold text-[13px] cursor-pointer border-b-[0.5px] text-[#7C7C7C] md:text-[12px] lg:text-[16px]  md:rounded-[0px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
+                      className={`pb-[15px] md:pb-0 pt-[15px] md:pt-0 font-weight-bold text-[13px] cursor-pointer border-b-[0.5px] text-[#7C7C7C] md:text-[12px] lg:text-[16px]  md:rounded-[0px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
                         selectedNetworkProduct === item.name ? "bg-white" : ""
                       }`}
                       onClick={() => handleSelectProduct(item.name)}
@@ -989,14 +989,14 @@ const MtnDataTopUpBundle = () => {
             </div>
 
             <div className="relative">
-              <h2 className="lg:text-[18px] md:text-[12px] lg:leading-[24px] mb-1 text-[14px] font-[600] leading-[12px]">
+              <h2 className="lg:text-[18px] md:text-[12px] lg:leading-[24px] mb-1 text-[14px] font-[400] leading-[12px]">
                 Select Plan
               </h2>
               <div
-                className="mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between"
+                className="mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between"
                 onClick={() => setShowOptionList(!showOptionList)}
               >
-                <h2 className="text-[14px] font-[600] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                <h2 className="text-[12px] font-[400] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
                   {selectedOption}
                 </h2>
                 <button className="lg:w-6 lg:h-6 w-[12px] h-[12px]">
@@ -1016,7 +1016,7 @@ const MtnDataTopUpBundle = () => {
                       return (
                         <div
                           key={option.id}
-                          className={`pb-[13px] md:pb-0 pt-[13px] md:pt-0 font-weight-bold text-[13px] cursor-pointer border-b-[0.5px] md:rounded-[0px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
+                          className={`pb-[18px] md:pb-0 pt-[18px] md:pt-0 font-weight-bold text-[13px] cursor-pointer border-b-[0.5px] md:rounded-[0px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
                             selectedOption === option.id ? "bg-gray-200" : ""
                           }`}
                           onClick={() =>
@@ -1039,7 +1039,7 @@ const MtnDataTopUpBundle = () => {
             </div>
 
             <div className="">
-              <h2 className="text-[15px] font-[600] md:text-[12px] lg:text-[18px]">
+              <h2 className="text-[15px] font-[400] md:text-[12px] lg:text-[18px]">
                 Phone Number{" "}
                 <span className="text-[#04177F]">
                   <Link to="/DataBundleSelectRecipient">
@@ -1050,7 +1050,7 @@ const MtnDataTopUpBundle = () => {
               <div className="relative mt-[5px]">
                 <input
                   type="number"
-                  className="mt-1 md:mt-0 border md:border-[0.4px] rounded-[11px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] lg:text-[16px] font-[600] focus:outline-none lg:h-[51px]"
+                  className="mt-1 md:mt-0 border md:border-[0.4px] rounded-[11px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md  lg:text-[16px] font-[400] focus:outline-none lg:h-[51px]"
                   placeholder=""
                   value={inputValue}
                   onChange={(event) => {
@@ -1068,20 +1068,20 @@ const MtnDataTopUpBundle = () => {
               </div>
 
               {errors.recipientPhoneNumber && (
-                <div className="text-[14px] text-red-500 italic lg:text-[14px]">
+                <div className="text-[13px] text-red-500 italic lg:text-[14px]">
                   {errors.recipientPhoneNumber}
                 </div>
               )}
             </div>
 
             <div className="">
-              <h2 className="text-[15px] font-[600] md:text-[12px] lg:text-[18px]">
+              <h2 className="text-[15px] font-[400] md:text-[12px] lg:text-[18px]">
                 Recipient Name<span className="text-[#7C7C7C]">(optional)</span>{" "}
               </h2>
               <div className="relative mt-[5px]">
                 <input
                   type="text"
-                  className="mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px]"
+                  className="mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.4px] p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] font-[400] focus:outline-none lg:h-[51px] lg:text-[16px]"
                   placeholder=""
                   value={recipientNames}
                   onChange={handleRecipientNameChange}
@@ -1097,13 +1097,13 @@ const MtnDataTopUpBundle = () => {
             </div>
 
             <div className="">
-              <h2 className="text-[15px] font-[600] md:text-[12px] lg:text-[18px]">
+              <h2 className="text-[15px] font-[400] md:text-[12px] lg:text-[18px]">
                 Amount
               </h2>
               <div className="relative mt-[5px]">
                 <input
                   type="text"
-                  className="mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px]"
+                  className="mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] font-[400] focus:outline-none lg:h-[51px] lg:text-[16px]"
                   // placeholder="&#8358;100"
                   value={`${selectedAmount}`}
                   onChange={(event) => {
@@ -1120,14 +1120,15 @@ const MtnDataTopUpBundle = () => {
 
             <div>
               <div onClick={handleShowPayment}>
-                <h2 className="lg:text-[18px] mt-[5px] lg:leading-[24px] mb-2 text-[15px] md:text-[12px] font-[600] leading-[12px]">
+                <h2 className="lg:text-[18px] mt-[5px] lg:leading-[24px] mb-2 text-[15px] md:text-[12px] font-[400] leading-[12px]">
                   Payment Method
                 </h2>
-                <div className="mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl p-4 sm:p-3 sm:text-lg input flex justify-between items-center border w-full h-8 px-2 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px]">
+                <div className=" mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[12px] p-4 sm:p-3 sm:text-lg input flex justify-between items-center border w-full h-8 px-2 rounded-md font-[400] focus:outline-none lg:h-[51px] lg:text-[16px]">
                   {paymentSelected ? (
                     <li
                       onClick={handleShowPayment}
                       className={airtimestyles.labelInput}
+                      
                     >
                       <h2 className="text-[#7C7C7C]">{walletName}</h2>
                       <h2 className="text-[#7C7C7C]">
@@ -1137,14 +1138,14 @@ const MtnDataTopUpBundle = () => {
                   ) : (
                     <h2
                       onClick={handleShowPayment}
-                      className="text-[12px] lg:text-[14px]"
+                      className="text-[13.2px] lg:text-[14px]"
                     >
                       Select Payment Method
                     </h2>
                   )}
                   {paymentSelected ? (
                     <button
-                      className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[8px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]"
+                      className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[15px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]"
                       onClick={handleShowPayment}
                     >
                       <img
@@ -1155,7 +1156,7 @@ const MtnDataTopUpBundle = () => {
                     </button>
                   ) : (
                     <button
-                      className=" lg:w-6 lg:h-6 h-[11px] w-[11px]"
+                      className="lg:w-6 lg:h-6 h-[11px] w-[11px]"
                       onClick={handleShowPayment}
                     >
                       <img src={arrowDown} alt="" className="w-full h-full" />
@@ -1165,14 +1166,14 @@ const MtnDataTopUpBundle = () => {
               </div>
               {showPayment && (
                 <div
-                  className={`pb-[13px] md:pb-0 pt-[13px] md:pt-0 font-weight-bold text-[15px] border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute ${
+                  className={`pb-[16px] pt-[16px] md:pb-0 md:pt-0 font-[400] text-[15px] border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute ${
                     toggleSideBar
-                      ? "w-full md:w-[44.5%] lg:w-[45%] 2xl:w-[46%]"
-                      : "w-full md:w-[46%] 2xl:w-[46.5%]"
-                  } bg-[#FFF] z-[100] pb-[13px] md:pb-0 pt-[13px] md:pt-0 font-weight-bold text-[15px] `}
+                      ? "w-full md:w-[44.5%] lg:w-[45%] 2xl:w-[46%] text-[15px]"
+                      : "w-full md:w-[46%] 2xl:w-[46.5%] text-[15px]"
+                  } bg-[#FFF] z-[100] font-weight-bold text-[15px]`}
                 >
                   {countryList.map((country) => (
-                    <Payment
+                    <Payment 
                       key={country.id}
                       flag={country.flag}
                       code={country.code}
@@ -1185,16 +1186,17 @@ const MtnDataTopUpBundle = () => {
                         )
                       }
                     />
-                    
+                   
                   ))}
                  
                 </div>
               )}
+        
             </div>
           </div>
 
           <div className="flex items-center gap-2 lg:mt-[30px]">
-            <h2 className="text-[13px] font-[600] leading-[12px] lg:leading-[24px] md:text-[12px] lg:text-[18px]">
+            <h2 className="text-[13px] font-[400] leading-[12px] lg:leading-[24px] md:text-[12px] lg:text-[18px]">
               Add to Recipient?
             </h2>
             <div
@@ -1236,12 +1238,12 @@ const MtnDataTopUpBundle = () => {
                 </div>
 
                 <div>
-                  <h2 className="lg:text-[16px] lg:leading-[24px] text-center mb-1 text-[10px] md:text-[13px] font-[600] mt-[20px] leading-[12px]">
+                  <h2 className="lg:text-[16px] lg:leading-[24px] text-center mb-1 text-[10px] md:text-[13px] font-[400] mt-[20px] leading-[12px]">
                     Confirm Transaction
                   </h2>
                   <h2 className="lg:text-[16px] md:text-[12px] md:px-[30px] lg:leading-[24px] text-[10px] leading-[12px] text-center mt-[26px] mx-[10px] mb-[20px]">
                     You are about to purchase{" "}
-                    <span className="font-[600]">{selectedOption}</span> from
+                    <span className="font-[400]">{selectedOption}</span> from
                     your {walletName + " Wallet"} to
                   </h2>
 
@@ -1499,7 +1501,7 @@ const MtnDataTopUpBundle = () => {
                         </div>
                       )}
                       <div
-                        className="text-[#0003] text-xl md:text-3xl"
+                        className="text-[#0003] text-[13px] md:text-3xl"
                         onClick={toggleVisibility}
                       >
                         {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
@@ -1687,7 +1689,7 @@ const MtnDataTopUpBundle = () => {
                         handleTransactionSuccessClose();
                         window.location.reload();
                       }}
-                      className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-[600] h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[12px] lg:w-[163px] lg:h-[38px] lg:my-[2%] md:px-[60px] md:h-[30px]`}
+                      className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-[400] h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[12px] lg:w-[163px] lg:h-[38px] lg:my-[2%] md:px-[60px] md:h-[30px]`}
                     >
                       Done
                     </button>
@@ -1707,7 +1709,7 @@ const MtnDataTopUpBundle = () => {
                                     }}>
                     <button
                       onClick={handleReceipt}
-                      className={`border-[1px] w-[100px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-[600] h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[12px] lg:w-[163px] lg:h-[38px] lg:my-[2%] md:px-[60px] md:h-[30px]`}
+                      className={`border-[1px] w-[100px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-[400] h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[12px] lg:w-[163px] lg:h-[38px] lg:my-[2%] md:px-[60px] md:h-[30px]`}
                     >
                       Receipt
                     </button>
@@ -1749,7 +1751,7 @@ const MtnDataTopUpBundle = () => {
 
           <div className="py-[30px] lg:py-[60px] mt-10">
             <button
-              className={`w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[600] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px] ${
+              className={`w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[400] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px] ${
                 !selectedNetworkProduct ||
                 !selectedOption ||
                 !inputValue ||
