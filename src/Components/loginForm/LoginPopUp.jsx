@@ -9,8 +9,7 @@ import axios from "axios";
 import CloseIcon from '../EducationPins/imagesEducation/close-circle.svg';
 import { Loader } from "../Loader/Loader";
 import { useNavigate } from "react-router-dom";
-
-
+import { GetLocalStorage, SetLocalStorage } from "../LocalStorage/LocalStorage";
 function LoginPopUp() {
   const {
     openTranspin,
@@ -36,8 +35,7 @@ function LoginPopUp() {
 
 const {
   email,
-  //username,
-  phone} = customerDetail;
+  phone, username, full_name, id} = customerDetail;
 
   const [loading, setLoading] = useState(false);
   const [countdown, setCountdown] = useState(60);
@@ -145,8 +143,15 @@ const handleAccountDetails =()=> {
   const {bank_name, account_no, account_name} = virtualAccCreated
   console.log(virtualAccCreated);
   setTwoStepVerificationSuccess(false);
+ // SetLocalStorage(email, full_name,phone, username, bank_name, account_name, account_no);
   if(virtualAccCreated){
+  
     setTwoStepVerificationSuccess(false);
+    SetLocalStorage(email, full_name,phone, username, bank_name, account_name, account_no, id);
+    if(SetLocalStorage) {
+      console.log("SetLocalStorage has completely ran");
+      GetLocalStorage()
+    }
     return GetVirtualAccountValue(bank_name, account_name, account_no);
   }
 }
@@ -292,7 +297,7 @@ return () => clearInterval(timer);
     }
   }
 
-
+//console.log(GetLocalStorage());
   return (
     <div>
       {/* FORM OVERLAY AND 2 STEP VERIFICATION */}
@@ -337,7 +342,7 @@ return () => clearInterval(timer);
                 <div className="flex flex-col">
                   <p className="text-[10px] lg:text-[14px] font-[400] lg:font-[600]">Via SMS</p>
                   <p className="text-[8px] lg:text-[12px] text-gray-500 font-[400] lg:font-[600]">
-                    {`${phone.slice(3,6)}******`}
+                    {`${phone.slice(0,3)}***${phone.slice(10)}`}
                     </p>
                 </div>
               </div>
@@ -362,7 +367,7 @@ return () => clearInterval(timer);
                 />
                 <div className="flex flex-col">
                   <p className="text-[10px] lg:text-[14px] font-[400] lg:font-[600]"> Via Email</p>
-                  <p className="text-[8px] lg:text-[12px]  text-gray-500 font-[400] lg:font-[600]">{`${email.slice(0,3)}********`}</p>
+                  <p className="text-[8px] lg:text-[12px]  text-gray-500 font-[400] lg:font-[600]">{`${email.slice(0,3)}****** ${email.slice(15)}`}</p>
                 </div>
               </div>
               {/* VIA Email ENDS HERE*/}
