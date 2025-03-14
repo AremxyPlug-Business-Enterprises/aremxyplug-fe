@@ -14,7 +14,7 @@ import { Modal } from "../Screens/Modal/Modal";
 import PendingImage from "../My Profile & Account Settings/ProfileImages/Pending.svg";
 import bvnVerifiedSuccess from "../My Profile & Account Settings/ProfileImages/user-tick.svg";
 import NotVerifiedIcon from "../My Profile & Account Settings/ProfileImages/NotVerifiedIcon.svg";
-
+//import { SetLocalStorage } from "../LocalStorage/LocalStorage";
 
 function LoginForm() {
   const { setOpenTranspin,
@@ -252,6 +252,7 @@ const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc'
               if (response.status === 202 && response.headers.hasAuthorization) {
                  setOpenTranspin(true);
                 const authToken = response.headers.get('Authorization');
+              
                 setLoginAuthorisation(authToken);
                 } else if(response.status === 200){
                   setOpen2StepVerification(true);
@@ -266,7 +267,8 @@ const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc'
                   setTimeout(async()=>{
                    console.log(`AUTHTOKEN:${authToken}`)
                  await CheckVirtualAcc(authToken);
-                  },10000)
+          
+},10000)
                   }
                    }
 
@@ -283,7 +285,6 @@ const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc'
               alert("User Not Found");
             });
           if (checkbox === true) {
-            localStorage.setItem("aremxyUsername", JSON.stringify(username));
             localStorage.setItem("aremxyPassword", JSON.stringify(password));
           }
         }
@@ -364,7 +365,6 @@ const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc'
               alert("User Not Found");
             });
           if (checkbox === true) {
-            localStorage.setItem("aremxyEmail", JSON.stringify(email));
             localStorage.setItem("aremxyPassword", JSON.stringify(password));
           }
         }

@@ -3,11 +3,15 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { ContextProvider } from "../../Context";
 import styles from "./Dashboard.module.css";
-
-export const SideBar = () => {
-  const { setToggleSideBar, isDarkMode, handleClickOutside, customerDetail, virtualAccCreated, bvnStatus } =
+import { RemoveLocalStorage } from "../../LocalStorage/LocalStorage";
+export const SideBar = ({fullName, userId}) => {
+  const { setToggleSideBar, isDarkMode, handleClickOutside, customerDetail, bvnStatus } =
     useContext(ContextProvider);
-    const {full_name,id} = customerDetail;
+    const {full_name, id} = customerDetail;
+  const RemoveLocalStorageKeys=()=> {
+    RemoveLocalStorage()
+  }
+  
    
   const [dropDownOpen, setDropDownOpen] = useState({
     dropdown1: false,
@@ -85,10 +89,10 @@ export const SideBar = () => {
                 />
                 <div className="flex flex-col gap-[3px] justify-center mt-[4%]">
                   <p className="text-[8px] font-semibold md:text-[14px] lg:text-[14px]">
-                    {full_name ? full_name : `Hi User`}
+                {full_name ? full_name : `${fullName ? fullName : "Hi User" }`}
                   </p>
                   <p className="text-[8px] font-semibold md:text-[14px] lg:text-[14px] ">
-                    UID: {`${id ? id: "No UserID"} `} 
+                    UID: {`${id ? id: `${userId ? userId : "No User ID"}`} `} 
                   </p>
                   <div className="flex gap-[3px] lg:gap-[5px]">
                     <div className={`px-[4px] py-[1px] font-[600] lg:font-[700] text-[10px]
@@ -584,7 +588,7 @@ export const SideBar = () => {
         <p
           className={`${styles.logouttxt} cursor-pointer text-[7px] md:text-[7px] lg:text-[14px]`}
         >
-          <Link to="/Login">Logout</Link>
+          <Link to="/Login" onClick={()=> RemoveLocalStorageKeys()}>Logout</Link>
         </p>
       </div>
     </div>

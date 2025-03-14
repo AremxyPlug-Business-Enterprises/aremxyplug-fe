@@ -14,18 +14,18 @@ export const CookiesSettings = () => {
   console.log(accepted);
 
   // const { toggleDarkMode } = useContext;
-  const [isMovedRight1, setIsMovedRight1] = useState(false);
-  const [isMovedRight2, setIsMovedRight2] = useState(false);
+ // const [isMovedRight1, setIsMovedRight1] = useState(false);
+ // const [isMovedRight2, setIsMovedRight2] = useState(false);
   const [isMovedRight3, setIsMovedRight3] = useState(false);
   const [isMovedRight4, setIsMovedRight4] = useState(false);
 
-  const handleMove1 = () => {
-    setIsMovedRight1((prevIsMovedRight) => !prevIsMovedRight);
-  };
+  //const handleMove1 = () => {
+   // setIsMovedRight1((prevIsMovedRight) => !prevIsMovedRight);
+ // };
 
-  const handleMove2 = () => {
-    setIsMovedRight2((prevIsMovedRight) => !prevIsMovedRight);
-  };
+  //const handleMove2 = () => {
+   // setIsMovedRight2((prevIsMovedRight) => !prevIsMovedRight);
+ // };
 
   const handleMove3 = () => {
     setIsMovedRight3((prevIsMovedRight) => !prevIsMovedRight);
@@ -36,8 +36,8 @@ export const CookiesSettings = () => {
   };
 
   const allowAll = async () => {
-    setIsMovedRight1(true);
-    setIsMovedRight2(true);
+    //setIsMovedRight1(true);
+   // setIsMovedRight2(true);
     setIsMovedRight3(true);
     setIsMovedRight4(true);
   };
@@ -91,15 +91,12 @@ export const CookiesSettings = () => {
             </p>
           </div>
           <div
-            onClick={handleMove1}
+        //    onClick={handleMove1}
             className={`border-[1.5px] mt-[3px] flex items-center border-[#04177f] bg-[#04177f30]  w-[18px] h-[10px] md:w-[30px] md:h-[12px] lg:w-[50px] lg:h-[22px] lg:rounded-full rounded`}
           >
             <div
-              className={`${
-                isMovedRight1
-                  ? "translate-x-[8px] md:translate-x-[14px] lg:translate-x-[27px]"
-                  : ""
-              } bg-[#04177f] rounded-full w-[7.5px] flex h-[8px] md:w-[14px] md:h-[12px] lg:h-[22px] lg:w-[21px] lg:drop-shadow-md`}
+              className={`translate-x-[8px] md:translate-x-[14px] lg:translate-x-[27px]
+                  bg-[#04177f] rounded-full w-[7.5px] flex h-[8px] md:w-[14px] md:h-[12px] lg:h-[22px] lg:w-[21px] lg:drop-shadow-md`}
             ></div>
           </div>
         </div>
@@ -115,15 +112,12 @@ export const CookiesSettings = () => {
             </p>
           </div>
           <div
-            onClick={handleMove2}
+           // onClick={handleMove2}
             className={`border-[1.5px] mt-[3px] flex items-center border-[#04177f] bg-[#04177f30]  w-[18px] h-[10px] md:w-[30px] md:h-[12px] lg:w-[50px] lg:h-[22px] lg:rounded-full rounded`}
           >
             <div
-              className={`${
-                isMovedRight2
-                  ? "translate-x-[8px] md:translate-x-[14px] lg:translate-x-[27px]"
-                  : ""
-              } bg-[#04177f] rounded-full w-[7.5px] flex h-[8px] md:w-[14px] md:h-[12px] lg:h-[22px] lg:w-[21px] lg:drop-shadow-md`}
+              className={`translate-x-[8px] md:translate-x-[14px] lg:translate-x-[27px] 
+                bg-[#04177f] rounded-full w-[7.5px] flex h-[8px] md:w-[14px] md:h-[12px] lg:h-[22px] lg:w-[21px] lg:drop-shadow-md`}
             ></div>
           </div>
         </div>
