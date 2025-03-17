@@ -11,7 +11,10 @@ import Joi from "joi";
 import axios from "axios";
 import { Loader } from "../Loader/Loader";
 import { Modal } from "../Screens/Modal/Modal";
-
+import PendingImage from "../My Profile & Account Settings/ProfileImages/Pending.svg";
+import bvnVerifiedSuccess from "../My Profile & Account Settings/ProfileImages/user-tick.svg";
+import NotVerifiedIcon from "../My Profile & Account Settings/ProfileImages/NotVerifiedIcon.svg";
+//import { SetLocalStorage } from "../LocalStorage/LocalStorage";
 
 function LoginForm() {
   const { setOpenTranspin,
@@ -19,6 +22,12 @@ function LoginForm() {
       setOpen2StepVerification,
       setLoginAuthorisation,
       setCustomerDetail,
+      loginAuthorisation,
+     setBvnVerifyImage, 
+        setBvnStatus, 
+        setVirtualAccCreated,
+        virtualAccCreated,
+        setBvnButtonState
       } = useContext(ContextProvider);
   const [usernameORemail, setUsernameORemail] = useState("username");
   const [loading, setLoading] = useState(false);
@@ -140,11 +149,63 @@ function LoginForm() {
       setIsFocused(isFocused.filter((item) => item !== index));
     }
   };
-
-
-// Function to get user Token
+//To set the different states for  virtual account
+const virtualAccountState=()=>{
+  const {bank_name, account_no, account_name} = virtualAccCreated;
+  if(bank_name && account_no && account_name){
+  setBvnVerifyImage(bvnVerifiedSuccess);
+  setBvnStatus('Verified');
+  setBvnButtonState("Verified");
+  }else{
+    setBvnVerifyImage(NotVerifiedIcon);
+    setBvnStatus('UnVerified');
+  }
+}
 
 //Function to get User Bank Details
+const CheckVirtualAcc = async(authToken) => {
+  
+  
+  console.log(`LOGINAUTH :${authToken}`);
+if (authToken) {
+const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc'
+ // console.log(data)
+ try{
+
+  setLoading(true)
+  setBvnVerifyImage(PendingImage)
+  setBvnStatus("Pending")
+      const response = await axios.get(url, {headers : {"Content-Type" : "application/json",
+  Authorization : authToken
+  }})
+
+    if (response.status === 201 || 200 ) {
+         const virtualAccount = response.data.data.acc_details;
+        setVirtualAccCreated(virtualAccount);
+        if(virtualAccount){
+        virtualAccountState();
+
+        }
+        
+      } 
+    
+  }catch(error){
+   if(error.status === 401 || 400){
+    alert("We had an error trying to get your details, click okay to repeat the login process");
+    console.log(`LoginAuth :${loginAuthorisation}`)
+    setBvnStatus('Not Verified');
+    setBvnVerifyImage(NotVerifiedIcon);
+    console.log(`ERROR: ${error}`)
+ }else if(error.status === 500){
+        alert('Error:', "INTERNAL_SERVER_ERROR");
+      setBvnStatus('Not Verified');
+     setBvnVerifyImage(NotVerifiedIcon)
+    }
+    }finally{
+      setLoading(false)
+    }
+}
+}
 
   
 
@@ -191,18 +252,25 @@ function LoginForm() {
               if (response.status === 202 && response.headers.hasAuthorization) {
                  setOpenTranspin(true);
                 const authToken = response.headers.get('Authorization');
+              
                 setLoginAuthorisation(authToken);
                 } else if(response.status === 200){
-                setOpen2StepVerification(true);
-             const customer  =  response.data.data.customer;
-             const getToken = response.data.data.auth_token;
-             localStorage.setItem("getToken", getToken)
-            if(customer){
-            setCustomerDetail(customer);
-            setLoginAuthorisation(getToken)
-            }
-            
-            console.log(getToken);
+                  setOpen2StepVerification(true);
+                  const customer  =  response.data.data.customer;
+                  
+                  if(customer){
+                   setCustomerDetail(customer);
+                const authToken = response.headers.get('Authorization');
+                  if(authToken){
+                  setLoginAuthorisation(authToken);
+                  localStorage.setItem("getToken", authToken)
+                  setTimeout(async()=>{
+                   console.log(`AUTHTOKEN:${authToken}`)
+                 await CheckVirtualAcc(authToken);
+          
+},10000)
+                  }
+                   }
 
             }else if (response.status === 404) {
                 alert("User not found");
@@ -217,14 +285,15 @@ function LoginForm() {
               alert("User Not Found");
             });
           if (checkbox === true) {
-            localStorage.setItem("aremxyUsername", JSON.stringify(username));
             localStorage.setItem("aremxyPassword", JSON.stringify(password));
           }
         }
       } catch (error) {
         console.log(error);
       } finally {
-        setLoading(false);
+        if(CheckVirtualAcc){
+          setLoading(false);
+          }
       }
     }
 
@@ -269,14 +338,20 @@ function LoginForm() {
                }else if(response.status === 200){
                 setOpen2StepVerification(true);
              const customer  =  response.data.data.customer;
-             const authToken = response.headers.get('Authorization');
-
-            if(customer && authToken) {
-            setCustomerDetail(customer);
-            localStorage.setItem('authorisedLogin', authToken)
-            setLoginAuthorisation(authToken);
-            }
-              } else if(response.status === 404){
+             
+             if(customer){
+              setCustomerDetail(customer);
+           const authToken = response.headers.get('Authorization');
+             if(authToken){
+             setLoginAuthorisation(authToken);
+             localStorage.setItem("authorisedLogin", authToken)
+             setTimeout(async()=>{
+              console.log(`AUTHTOKEN:${authToken}`)
+            await CheckVirtualAcc(authToken);
+             },10000)
+             }
+              }
+         } else if(response.status === 404){
            alert("User not found")
               }
               else if (response.status === 401) {
@@ -290,14 +365,15 @@ function LoginForm() {
               alert("User Not Found");
             });
           if (checkbox === true) {
-            localStorage.setItem("aremxyEmail", JSON.stringify(email));
             localStorage.setItem("aremxyPassword", JSON.stringify(password));
           }
         }
       } catch (error) {
         console.log(error);
       } finally{
+        if(CheckVirtualAcc){
         setLoading(false);
+        }
       }
     }
   };

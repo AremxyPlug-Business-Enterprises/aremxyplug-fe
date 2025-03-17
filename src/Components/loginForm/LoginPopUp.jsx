@@ -9,10 +9,7 @@ import axios from "axios";
 import CloseIcon from '../EducationPins/imagesEducation/close-circle.svg';
 import { Loader } from "../Loader/Loader";
 import { useNavigate } from "react-router-dom";
-import PendingImage from "../My Profile & Account Settings/ProfileImages/Pending.svg";
-import NotVerifiedImage from "../My Profile & Account Settings/ProfileImages/NotVerifiedIcon.svg"
-import bvnVerifiedSuccess from "../My Profile & Account Settings/ProfileImages/user-tick.svg";
-
+import { GetLocalStorage, SetLocalStorage } from "../LocalStorage/LocalStorage";
 function LoginPopUp() {
   const {
     openTranspin,
@@ -26,13 +23,10 @@ function LoginPopUp() {
     setOpenResetTranspin,
     setOpen2StepVerification,
     loginAuthorisation,
+    setLoginAuthorisation,
     twoStepVerificationSuccess, 
     setTwoStepVerificationSuccess,
     customerDetail,
-    setDashLoading,
-     setBvnStatus, 
-     setBvnVerifyImage, 
-      setVirtualAccCreated, 
       virtualAccCreated,
       setAccountNumberState,
       setBankNameState,
@@ -41,8 +35,7 @@ function LoginPopUp() {
 
 const {
   email,
-  //username,
-  phone} = customerDetail;
+  phone, username, full_name, id} = customerDetail;
 
   const [loading, setLoading] = useState(false);
   const [countdown, setCountdown] = useState(60);
@@ -107,13 +100,12 @@ const getOtpSmsorEmail = async(url, body)=> {
  
 await  gettingOtpFunction(url,body)
 }
- 
-//The function to help check if the user has a virtual account
-const getTokenNeeded =(Token)=> {
-  Token=localStorage.getItem("getToken")
-  //console.log(Token)
-  console.log(Token)
-  return Token;
+ // Function to help resetthe login and local storage authToenand getToken to help for User LoogIn
+const Close2StepPopUp =()=> {
+  setOpen2StepVerification(false)
+  setLoginAuthorisation("");
+  localStorage.removeItem("authorisedLogin");
+  localStorage.removeItem("getToken")
 }
 
 
@@ -130,45 +122,6 @@ const GetVirtualAccountValue = (bankname, accountname, accountno)=> {
 }
 
 //Function to get User Bank Details
-const CheckVirtualAcc = async(Token) => {
-  getTokenNeeded(Token)
-  if (loginAuthorisation) {
-    setDashLoading(true);
-const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc'
-   // console.log(data)
-   try{
-    setBvnVerifyImage(PendingImage)
-    setBvnStatus("Pending")
-        const response = await axios.get(url, {headers : {"Content-Type" : "application/json",
-    Authorization : Token || loginAuthorisation
-    }})
-  
-      if (response.status === 201 || 200 ) {
-          setBvnVerifyImage(bvnVerifiedSuccess);
-          setBvnStatus('Verified');
-          const virtualAccount = response.data.data.acc_details;
-          setVirtualAccCreated(virtualAccount);
-        } 
-      
-    }catch(error){
-     if(error.status === 401 || 400){
-      alert("An error has occured")
-      setBvnStatus('Not Verified');
-      setBvnVerifyImage(NotVerifiedImage);
-      console.log(`ERROR: ${error}`)
-   
-          }
-        else if(error.status === 500){
-          alert('Error:', "INTERNAL_SERVER_ERROR");
-        setBvnStatus('Not Verified');
-       setBvnVerifyImage(NotVerifiedImage)
-      
-        }
-      }finally {
-        setDashLoading(false);
-      }
-  }
-}
 
 
 
@@ -179,7 +132,7 @@ const handleVerificationOTP = async()=> {
       setTwoStepVerificationSuccess(true);
     setOtp3("");
      setOpen2StepOTP(false);
-  await CheckVirtualAcc();
+  //await CheckVirtualAcc();
     console.log(otp3);
    } 
   }
@@ -188,9 +141,17 @@ const handleVerificationOTP = async()=> {
   //account name and account Number
 const handleAccountDetails =()=> {
   const {bank_name, account_no, account_name} = virtualAccCreated
-  console.log(virtualAccCreated)
+  console.log(virtualAccCreated);
+  setTwoStepVerificationSuccess(false);
+ // SetLocalStorage(email, full_name,phone, username, bank_name, account_name, account_no);
   if(virtualAccCreated){
+  
     setTwoStepVerificationSuccess(false);
+    SetLocalStorage(email, full_name,phone, username, bank_name, account_name, account_no, id);
+    if(SetLocalStorage) {
+      console.log("SetLocalStorage has completely ran");
+      GetLocalStorage()
+    }
     return GetVirtualAccountValue(bank_name, account_name, account_no);
   }
 }
@@ -208,7 +169,6 @@ const gettingSmsOrEmailFunctionOtp = async(url, body)=> {
       }else if(smsOrEmail === "sms"){
        url = `https://aremxyplug.onrender.com/api/v1/sms/verify/signin?phone=${phone}`
        body ={
-      phone_number : phone,
        otp :otp3
        }
        console.log(otp3);
@@ -337,7 +297,7 @@ return () => clearInterval(timer);
     }
   }
 
-
+//console.log(GetLocalStorage());
   return (
     <div>
       {/* FORM OVERLAY AND 2 STEP VERIFICATION */}
@@ -348,9 +308,9 @@ return () => clearInterval(timer);
              lg:h-auto lg:w-[35%] lg:rounded-[15px]">
             <div 
             className="w-[100%] flex justify-end ">
-            <img onClick={()=>{
-              setOpen2StepVerification(false);
-            }}
+            <img onClick={()=>(
+             Close2StepPopUp()
+      )}
              src={CloseIcon} className="w-[18px] h-[18px]  md:w-[25px] cursor-pointer
                md:h-[25px] " alt="" />  
                </div>
@@ -382,7 +342,7 @@ return () => clearInterval(timer);
                 <div className="flex flex-col">
                   <p className="text-[10px] lg:text-[14px] font-[400] lg:font-[600]">Via SMS</p>
                   <p className="text-[8px] lg:text-[12px] text-gray-500 font-[400] lg:font-[600]">
-                    {`${phone.slice(3,6)}******`}
+                    {`${phone.slice(0,3)}***${phone.slice(10)}`}
                     </p>
                 </div>
               </div>
@@ -407,7 +367,7 @@ return () => clearInterval(timer);
                 />
                 <div className="flex flex-col">
                   <p className="text-[10px] lg:text-[14px] font-[400] lg:font-[600]"> Via Email</p>
-                  <p className="text-[8px] lg:text-[12px]  text-gray-500 font-[400] lg:font-[600]">{`${email.slice(0,3)}********`}</p>
+                  <p className="text-[8px] lg:text-[12px]  text-gray-500 font-[400] lg:font-[600]">{`${email.slice(0,3)}****** ${email.slice(15)}`}</p>
                 </div>
               </div>
               {/* VIA Email ENDS HERE*/}

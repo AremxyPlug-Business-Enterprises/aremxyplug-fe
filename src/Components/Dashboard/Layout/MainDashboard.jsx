@@ -17,14 +17,12 @@ import { WalletInOutFlows } from "../DashboardComponents/WalletInOutFlows";
 import { RecentTransaction } from "../DashboardComponents/RecentTransaction";
 import { Link } from "react-router-dom";
 import { Loader } from "../../Loader/Loader";
+import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 
-
-
-export const MainDashboard = () => {
-  const { setHideNavbar, toggleSideBar, isDarkMode,dashLoading, bankNameState, setBankNameState, 
-    accountNameState, setAccountNameState, accountNumberState, setAccountNumberState, customerDetail} =
+export const MainDashboard = (Data) => {
+  const { setHideNavbar, toggleSideBar, isDarkMode,dashLoading, bankNameState, customerDetail, accountNameState, accountNumberState} =
     useContext(ContextProvider);
-   
+  // const {account_no, bank_name, account_name} = virtualAccCreated;
   const [visible, setVisibility] = useState(true);
   const [activeButtons, setActiveButtons] = useState([true, false, false]);
   const [blur, setBlur] = useState(false);
@@ -54,6 +52,9 @@ export const MainDashboard = () => {
   const setNav = () => {
     setHideNavbar(true);
   };
+
+  const getLocalData = useRef(null);
+
 
   useEffect(() => {
     setNav();
@@ -109,24 +110,13 @@ export const MainDashboard = () => {
     return;
   };
 
-  console.log(customerDetail); 
+ // console.log(Data); 
 
 
 // USEEEFECT TO RETURN USERS BANK DETAILS
 
 // To help get the user bank details and check if the user details is on the app
-
-useEffect(()=>{
- const DetailsError= ()=> {
-    if(bankNameState ==="Null" || accountNameState ==="Null"|| accountNumberState ==="Null"){
-     alert("ERROR : Re-do the Sign-in process to continue operations and retrieve data history")
-    setBankNameState("Null");
-    setAccountNameState("Null");
-     setAccountNumberState("Null")
-   }
-}
-  return DetailsError;
-},[(!bankNameState || !accountNameState || !accountNumberState)])
+console.log(Data);
 
 
 
@@ -141,7 +131,7 @@ useEffect(()=>{
         {/* ============SIDE BAR========= */}
         {toggleSideBar && (
           <div className="absolute top-0 left-0 z-50">
-            <SideBar />
+            <SideBar fullName ={Data.fullName} userId ={Data.userId} />
           </div>
         )}
         <div
@@ -485,7 +475,7 @@ useEffect(()=>{
                   } flex text-[10px] gap-[20px]  md:text-[15px]`}
                 >
                   <h2 className="font-semibold w-1/2 text-[10px]  md:text-[11px] lg:text-[12px]">Bank Name</h2>
-                  <p className="text-[10px] text-right w-1/2 md:text-[11px] lg:text-[12px] font-[400]">{bankNameState}</p> 
+                  <p className="text-[10px] text-right w-1/2 md:text-[11px] lg:text-[12px] font-[400]">{bankNameState ? bankNameState : Data.bankName}</p> 
                 </div>
                 <div
                   className={`${styles.virtualaccounttxt} ${
@@ -493,7 +483,7 @@ useEffect(()=>{
                   }  flex text-[10px] gap-[20px] md:text-[15px] `}
                 >
                   <h2 className="font-semibold w-1/2 text-[10px]  md:text-[11px] lg:text-[12px]">Account Name</h2>
-                  <p className="text-[10px] w-1/2 md:text-[11px] text-right lg:text-[12px] font-[400]">{accountNameState}</p>
+                  <p className="text-[10px] w-1/2 md:text-[11px] text-right lg:text-[12px] font-[400]">{accountNameState ? accountNameState : Data.accountName}</p>
                 </div>
                
                 <div
@@ -503,7 +493,7 @@ useEffect(()=>{
                 >
                   <h2 className="font-semibold w-1/2 text-[10px] md:text-[11px] lg:text-[12px]">Account Number</h2>
                   <div className="flex justify-end items-center w-1/2 gap-[10px]">
-                    <p className="text-[10px]  md:text-[11px] lg:text-[12px] font-[400]" ref={textRef}>{accountNumberState}</p>
+                    <p className="text-[10px]  md:text-[11px] lg:text-[12px] font-[400]" ref={textRef}>{accountNumberState ? accountNumberState : Data.accountNumber}</p>
                     <div
                       onClick={handleCopyClick}
                       className="text-[#92abfec3] text-[13px] font-extrabold lg:text-[16px]"
@@ -525,7 +515,7 @@ useEffect(()=>{
                     isDarkMode ? "border bg-black" : "bg-[#04177f]"
                   } ${styles.viewWallet}`}
                 >
-                  Generate
+                  {bankNameState.length > 4 && accountNameState.length > 4 && bankNameState.length > 4  ? "Verified" : "Verify"}
                 </button>
               </Link>
             </div>

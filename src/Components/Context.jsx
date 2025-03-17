@@ -965,6 +965,7 @@ export const Context = ({ children }) => {
   const [bvnVerifyImage, setBvnVerifyImage] = useState(NotVerifiedIcon);
  const [bvnStatus, setBvnStatus] = useState('Not Verified');
 const [dashLoading, setDashLoading] = useState(false);
+const [bvnButtonState, setBvnButtonState] = useState("Verify")
 const [virtualAccCreated, setVirtualAccCreated] = useState(false);
   //========== BUSINESS KYC =============
   const [businessPopUp, setBusinessPopUp] = useState(false);
@@ -988,9 +989,9 @@ const [virtualAccCreated, setVirtualAccCreated] = useState(false);
      const [accountNameState, setAccountNameState] = useState("Null")
      const [accountNumberState, setAccountNumberState] = useState("Null");
  const {full_name} = customerDetail;
- const virtualAccObject ={
-  bankName
- }
+ // Function to check if the user has a virtual account
+
+
   const hold = {
     customerDetail, 
     setCustomerDetail,
@@ -1597,6 +1598,8 @@ dashLoading,
 setDashLoading,
 virtualAccCreated,
 setVirtualAccCreated,
+bvnButtonState,
+ setBvnButtonState,
     //========== Business PopUp =======
     businessPopUp,
     setBusinessPopUp,
