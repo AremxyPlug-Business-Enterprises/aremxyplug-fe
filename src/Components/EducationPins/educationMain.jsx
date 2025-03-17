@@ -99,7 +99,7 @@ export default function EducationMain() {
        {/* Jamb Examination */}
        <Link to = "/JambEducationPin"
         className="md:w-1/4 md:h-[100%] h-auto w-[45%]">
-        <div className='flex h-[100%] p-[6.868px] gap-[3.35px] md:p-[5.868px] md:gap-[2.347px]
+        <div className='flex h-[100%] p-[6.869px] gap-[3.35px] md:p-[5.868px] md:gap-[2.347px]
          rounded-[2.934px]
        border-[0.587px] border-[solid] border-[black] border-opacity-[30%]
       shadow-[0px_0.58686px_0.34722px_0px_rgba(0,0,0,0.25)]
