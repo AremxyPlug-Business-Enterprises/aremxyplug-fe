@@ -17,7 +17,7 @@ export default function EducationMain() {
          {/* hero section */}
  <HeroComponent/>
  <div className='flex mb-5 gap-2 items-center md:gap-4 md:mb-8'>
-            <h2 className='font-semibold text-[19px] md:text-[18px] lg:text-[20px] text-[#7C7C7C]'>
+            <h2 className='font-semibold text-[16px] md:text-[18px] lg:text-[20px] text-[#7C7C7C]'>
               Select Exam Type
             </h2>
 
@@ -26,11 +26,11 @@ export default function EducationMain() {
     src={arrowRight} alt="arrow" />
       </div>
       {/* Examinations to click to request for the pins */}
-      <div className='flex flex-wrap justify-between gap-[20px] md:h-[70px] md:flex-row md:flex-nowrap  
+      <div className='flex flex-wrap justify-between w-full gap-[15px] md:h-[70px] md:flex-row md:flex-nowrap  
       md:gap-[21.27px] lg:h-[120px]  md:w-[100%] lg:gap-[37px]'>
         {/* WAEC Examination */}
         <Link to = "/WaecEducationPin"
-        className="md:w-1/4  md:h-[100%] h-[170px] w-[100%]">
+        className="md:w-1/4  md:h-[100%] h-auto w-[45%]">
        <div className='flex h-[100%] p-[5.868px] gap-[3.35px] md:p-[5.868px] md:gap-[2.347px] rounded-[2.934px]
        border-[0.587px] border-[solid] border-[black] border-opacity-[30%]
       shadow-[0px_0.58686px_0.34722px_0px_rgba(0,0,0,0.25)]
@@ -41,10 +41,10 @@ export default function EducationMain() {
        lg:gap-[6px]  cursor-pointer'>
         
         {/* Waec Logo */}
-         <img className='w-1/2 h-[100%]'
+         <img className='md:w-1/2 w-[42%]'
            src={Waec} alt="Waec logo" />
            {/* text */}
-         <h2 className='w-1/2 font-[600] text-[18.563px] leading-[12.675px] 
+         <h2 className='w-1/2 font-[600] text-[13px] leading-[12.675px] 
          md:text-[10.563px] md:leading-[12.675px] 
          lg:text-[18px] lg:leading-[21.6px] self-center'>
             WAEC
@@ -54,7 +54,7 @@ export default function EducationMain() {
        </Link>
        {/* Neco Examination */}
        <Link to = "/NecoEducationPin"
-       className="md:w-1/4 md:h-[100%] h-[170px] w-[100%]">
+       className="md:w-1/4 md:h-[100%] h-auto w-[45%]">
         <div className='flex h-[100%] p-[5.868px] gap-[3.35px] md:p-[5.868px] md:gap-[2.347px] rounded-[2.934px]
        border-[0.587px] border-[solid] border-[black] border-opacity-[30%]
       shadow-[0px_0.58686px_0.34722px_0px_rgba(0,0,0,0.25)]
@@ -64,10 +64,10 @@ export default function EducationMain() {
          lg:p-[10px] lg:rounded-[5px] 
        lg:gap-[6px]  cursor-pointer'>
         {/* Neco Logo */}
-         <img className='w-1/2'
+         <img className='md:w-1/2 w-[42%]'
            src={Neco} alt="Waec logo" />
            {/* text */}
-         <h2 className='w-1/2 font-[600] text-[18.563px] leading-[12.675px]
+         <h2 className='w-1/2 font-[600] text-[13px] leading-[12.675px]
           md:text-[10.563px] md:leading-[12.675px]
          lg:text-[18px] lg:leading-[21.6px] self-center'>
             NECO
@@ -76,8 +76,8 @@ export default function EducationMain() {
        </Link>
        {/* Nabteb Examination */}
        <Link to = "/NabtebEducationPin"
-       className="md:w-1/4 md:h-[100%] h-[170px] w-[100%] ">
-       <div className='flex h-[100%] p-[5.868px] gap-[3.35px] md:p-[5.868px] md:gap-[2.347px] rounded-[2.934px]
+       className="md:w-1/4 md:h-[100%] h-auto w-[45%] ">
+       <div className='flex h-[100%] p-[7.868px] gap-[3.35px] md:p-[5.868px] md:gap-[2.347px] rounded-[2.934px]
        border-[0.587px] border-[solid] border-[black] border-opacity-[30%]
       shadow-[0px_0.58686px_0.34722px_0px_rgba(0,0,0,0.25)]
        lg:shadow-[0px_1px_4px_0px_rgba(0,0,0,0.25)] 
@@ -86,10 +86,10 @@ export default function EducationMain() {
          lg:p-[10px] lg:rounded-[5px] 
        lg:gap-[6px]  cursor-pointer '>
         {/* Nabteb Logo */}
-         <img className='w-1/2'
+         <img className='md:w-1/2 w-[38%]'
            src={Nabteb} alt="Waec logo" />
            {/* text */}
-         <h2 className='w-1/2 font-[600] text-[18.563px] leading-[12.675px]
+         <h2 className='w-1/2 font-[600] text-[13px] leading-[12.675px]
           md:text-[10.563px] md:leading-[12.675px]
          lg:text-[18px] lg:leading-[21.6px] self-center'>
             NABTEB
@@ -98,8 +98,8 @@ export default function EducationMain() {
        </Link>
        {/* Jamb Examination */}
        <Link to = "/JambEducationPin"
-        className="md:w-1/4 md:h-[100%] h-[170px] w-[100%]">
-        <div className='flex h-[100%] p-[5.868px] gap-[3.35px] md:p-[5.868px] md:gap-[2.347px]
+        className="md:w-1/4 md:h-[100%] h-auto w-[45%]">
+        <div className='flex h-[100%] p-[6.868px] gap-[3.35px] md:p-[5.868px] md:gap-[2.347px]
          rounded-[2.934px]
        border-[0.587px] border-[solid] border-[black] border-opacity-[30%]
       shadow-[0px_0.58686px_0.34722px_0px_rgba(0,0,0,0.25)]
@@ -109,10 +109,10 @@ export default function EducationMain() {
          lg:p-[10px] lg:rounded-[5px] 
        lg:gap-[6px]  cursor-pointer'>
         {/* Jamb Logo */}
-         <img className='w-1/2'
+         <img className='md:w-1/2 w-[40%]'
            src={jamblogo} alt="Waec logo" />
            {/* text */}
-         <h2 className='w-1/2 font-[600] text-[18.563px] leading-[12.675px]
+         <h2 className='w-1/2 font-[600] text-[13px] leading-[12.675px]
          md:text-[10.563px] md:leading-[12.675px]
          lg:text-[18px] lg:leading-[21.6px] self-center'>
             JAMB
@@ -123,12 +123,12 @@ export default function EducationMain() {
       </div>
   
       {/* contact us */}
-      <div className="flex gap-3 md:gap-6 justify-center px-4 mt-10 md:mt-8 mb-12">
-          <p className="font-medium text-[16px] md:text-[14px] lg:text-[16px] self-center text-black">
+      <div className="flex gap-3 md:gap-6 justify-center px-4 mt-[100%] md:mt-8 mb-[25%] ">
+          <p className="font-medium text-[13px] md:text-[12px] lg:text-[16px] self-center text-black">
                 You need help?
               </p>
               <Link to ="/contactUs"
-                className="font-[500] text-white text-[16px]  py-[4.865px] 
+                className="font-[500] text-white text-[12px]  py-[4.865px] 
                 px-[10.594px] leading-[10.4px] rounded-[5.156px] bg-[#04177F]
                 lg:text-[12px] lg:leading-[14.4px] 
                  md:text-[4.583px]  md:py-[4.865px] 
