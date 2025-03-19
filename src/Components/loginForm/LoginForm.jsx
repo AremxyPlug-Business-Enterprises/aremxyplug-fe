@@ -14,9 +14,11 @@ import { Modal } from "../Screens/Modal/Modal";
 import PendingImage from "../My Profile & Account Settings/ProfileImages/Pending.svg";
 import bvnVerifiedSuccess from "../My Profile & Account Settings/ProfileImages/user-tick.svg";
 import NotVerifiedIcon from "../My Profile & Account Settings/ProfileImages/NotVerifiedIcon.svg";
+//import { useNavigate } from "react-router-dom";
 //import { SetLocalStorage } from "../LocalStorage/LocalStorage";
 
 function LoginForm() {
+
   const { setOpenTranspin,
      setOpenResetTranspin,
       setOpen2StepVerification,
@@ -29,6 +31,9 @@ function LoginForm() {
         virtualAccCreated,
         setBvnButtonState
       } = useContext(ContextProvider);
+
+
+
   const [usernameORemail, setUsernameORemail] = useState("username");
   const [loading, setLoading] = useState(false);
  

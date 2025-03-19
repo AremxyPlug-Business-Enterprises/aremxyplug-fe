@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useEffect, useRef} from 'react';
 import { ContextProvider } from '../../Context';
 import '../../../App.css';
 import styles from "../../../Components/Dashboard/DashboardComponents/TransferComponent/transfer.module.css";
@@ -16,10 +16,10 @@ import Spinner from '../../Dashboard/DashboardComponents/DataTopUpPage/DataBundl
 import axios from "axios";
 import PendingImage from"../ProfileImages/Pending.svg"
 import NotVerifiedImage from "../ProfileImages/NotVerifiedIcon.svg";
+import { GetLocalStorage } from '../../LocalStorage/LocalStorage';
 
 
-
-export default function BvnVerification() {
+export default function BvnVerification(Data) {
     const {bvnVerificationOpen} = useContext(ContextProvider);
     const {verificationOpen} = useContext(ContextProvider);
    const {bvnVerifyImage, setBvnVerifyImage} = useContext(ContextProvider);
@@ -38,10 +38,11 @@ export default function BvnVerification() {
 
 const {full_name} = customerDetail;
 
+
+
 const BvnFunctionState=async(url, alertSuccess, buttonStateSuccess, ErrorMessage)=>{
   if(bvnButtonState === "Verify"){
     url='https://aremxyplug.onrender.com/api/v1/verify';
-    alertSuccess = "Bvn Verification Successful";
     buttonStateSuccess = "Create Virtual Account";
     ErrorMessage = "Bvn Verification Failed"
   
@@ -76,8 +77,9 @@ const checkBvnform = async(url, alertSuccess, buttonStateSuccess, ErrorMessage)=
       if (response.status === 201 || 200 ) {
           setBvnVerifyImage(bvnVerifiedSuccess);
           setBvnStatus('Verified');
+          setBvnPopVerified(true);
           setBvnNumber(bvnNumber);
-          alert(alertSuccess);
+         alert(alertSuccess)
           setBvnButtonState(buttonStateSuccess)
         } 
       
@@ -99,6 +101,17 @@ const checkBvnform = async(url, alertSuccess, buttonStateSuccess, ErrorMessage)=
   }
 };
 
+//To GetLocalStorage Data
+const ValueRef = useRef()
+
+  Data = GetLocalStorage()
+  useEffect(() => {
+    ValueRef.current = Data;
+    console.log(ValueRef);
+  console.log(Data);
+   
+    // eslint-disable-next-line
+  }, []);
 
 
   
@@ -174,7 +187,7 @@ src={Arrowright} alt="" />
     lg:py-[15.5px] lg:pl-[10px] border-[0.4px]
     text-[8px] leading-[10.4px] 
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px]'>
-      {full_name ? full_name : "Null"}
+      {full_name ? full_name : Data.UserFullName}
    </div>
   </div>
   {/* PHONE NUMBER */}
@@ -261,7 +274,7 @@ src={Arrowright} alt="" />
 </div>
 
 <div className='flex flex-col md:gap-[15px] gap-[10px] justify-start'>
-        <button disabled={ bvnStatus === "Verified" } onClick={()=>{
+        <button  onClick={()=>{
          BvnFunctionState()
         }}
          className={`lg:py-[13px] md:py-[7.868px] py-[16.531px] rounded-[4.241px] w-[100%] md:w-[150px] lg:w-[163px] lg:rounded-[12px] bg-[#04177F]

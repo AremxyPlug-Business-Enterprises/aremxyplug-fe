@@ -29,7 +29,7 @@ function LoginPopUp() {
     customerDetail,
       virtualAccCreated,
       setAccountNumberState,
-      setBankNameState,
+    setBankNameState,
       setAccountNameState
 } = useContext(ContextProvider);
 

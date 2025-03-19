@@ -8,9 +8,9 @@ import { Link } from 'react-router-dom';
 import { ContextProvider } from '../../Context';
 
 
-export default function ProfileUpdate() {
+export default function ProfileUpdate({fullName, Email, Phone, Username}) {
   const {profilePage, customerDetail} = useContext(ContextProvider);
-  const {full_name,username, email, phone} = customerDetail
+  const {full_name,username, email, phone} = customerDetail;
  console.log(customerDetail);
   return (
     <div className=''>
@@ -33,12 +33,12 @@ export default function ProfileUpdate() {
    <div className='flex flex-col justify-center gap-[3.52px] lg:gap-[12px]'>
   <p className='font-[500] text-[10px] leading-[15px] md:text-[9.389px] md:leading-[12.206px] 
   lg:text-[16px] lg:leading-[20.8px]'>
-   {full_name ? full_name : 'Hi user'}
+   {full_name ? full_name : `${fullName ? fullName : "Hi User"}`}
     </p>
   <p className='font-[500] text-[#7C7C7C] text-[10px] leading-[15px]
   md:text-[7.042px] md:leading-[9.154px]
   lg:text-[12px] lg:leading-[15.6px]'>
-   {email ? email : ''}
+   {email ? email : `${Email ? Email : ""}`}
     </p>
    </div>
    
@@ -87,7 +87,7 @@ export default function ProfileUpdate() {
       text-[8px] leading-[10.4px]
       md:text-[9.389px] md:leading-[12.206px]
      lg:text-[16px] lg:leading-[20.8px] cursor-default'>
-      {full_name ? full_name : 'Your name appears after the 2-step'}
+     {full_name ? full_name : `${fullName ? fullName : "Hi User"}`}
       </p>
      </div>
     
@@ -114,7 +114,7 @@ export default function ProfileUpdate() {
       text-[8px] leading-[10.4px]
       md:text-[9.389px] md:leading-[12.206px]
      lg:text-[16px] lg:leading-[20.8px] cursor-default'>
-  {username ? username : 'your username appears after the 2-step'}
+  {username ? username : `${Username ? Username : ""}`}
      </p>
      </div>
     
@@ -135,7 +135,7 @@ export default function ProfileUpdate() {
       text-[8px] leading-[10.4px]
       md:text-[9.389px] md:leading-[12.206px]
      lg:text-[16px] lg:leading-[20.8px]'>
-      {email ? email : "Your email appears after 2-step"}
+      {email ? email : `${Email ? Email : ""}`}
      </p>
      </div>
     
@@ -163,7 +163,7 @@ export default function ProfileUpdate() {
       text-[8px] leading-[10.4px]
       md:text-[9.389px] md:leading-[12.206px]
      lg:text-[16px] lg:leading-[20.8px] cursor-default'>
-      {`${phone ? phone.slice(3) : "Your phone Number appears after the 2-step" }`}
+      {`${phone ? phone.slice(3) : `${Phone ?  Phone.slice(3)  : ""} `}`}
      </p>
      </div>
      {/* Start of the message / 2nd part */}
