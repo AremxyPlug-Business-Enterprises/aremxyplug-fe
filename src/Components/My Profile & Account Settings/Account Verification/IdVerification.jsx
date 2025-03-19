@@ -16,11 +16,13 @@ import PopUpGreenTab from "../ProfileImages/PopUpGreenTab.svg"
 import PopUpGreenDeskTop from "../ProfileImages/PopUpGreenDeskTop.svg"
 import Success from "../ProfileImages/success.gif"
 import QueryId from '../ProfileImages/IdCustomerQuery.svg';
+
 import axios from "axios";
 import { Loader } from '../../Loader/Loader';
 import { GetLocalStorage } from '../../LocalStorage/LocalStorage';
 export default function IdVerification(Data) {
   const {verificationOpen, loginAuthorisation} = useContext(ContextProvider)
+
     const {idVerificationOpen} = useContext(ContextProvider);
     const {dropDownGender, setDropDownGender} = useContext(ContextProvider);
     const [idDropDown, setIdDropDown]= useState(false);
@@ -37,7 +39,7 @@ export default function IdVerification(Data) {
     const [idBackView, setIdBackView] = useState(false);
       const [idPopVerified, setIdPopVerified] = useState(false);
       const [idCustomerQuery, setIdCustomerQuery] = useState(false);
-     const [loading, setLoading] = useState(false)
+
  const {toggleSideBar, customerDetail} = useContext(ContextProvider);
   const {full_name} =  customerDetail
     // Genders
@@ -49,10 +51,7 @@ export default function IdVerification(Data) {
    }
 
    // ID 
-   const idTypes =[{ idType :'National ID', Status : "Active", id : 1},
-    { idType :'International Passport' ,Status : "Inactive", id : 2},
-    {idType :'Permanent Voters Card', Status : "Inactive", id: 3},
-    {idType : 'Driver’s License', Status : "Inactive", id: 4}];
+   const idType = ['National ID', 'International Passport', 'Permanent Voters Card', 'Driver’s License','NIN Slip'];
    const [idResult, setIdResult] = useState('');
    const chooseId = () => {
     setIdDropDown(!idDropDown);
@@ -83,45 +82,24 @@ export default function IdVerification(Data) {
   const addLGA = e.target.value;
  e.target.setCustomValidity(addLGA ? '' : 'This is required to proceed');
 }
-//This form is to check if the form filled are filled correctly and completely 
-//for the id Verification
-const getTokenNeeded =(Token)=> {
-  Token=localStorage.getItem("getToken")
-  console.log(Token)
-   console.log(Token)
-   return Token;
- }
-const checkform = async(Token) =>{
-  getTokenNeeded(Token)
- if(
-    idNumber){
-    try {
-      setLoading(true);
-      setVerifyImage(Pending);
 
-      const body ={
-      nin: idNumber
-      }
-      const url ="https://aremxyplug.onrender.com/api/v1/verify"
-      const response = await axios.post(url, body, {headers:{"Content-Type": "application/json", Authorization : loginAuthorisation || Token }})
-      if(response.status === 200 || 201){
-        setVerifyImage(idPopVerified)
-        alert("Verification is Successful")
-      }
-    }catch(error) {
-      
-     if(error.status === 400 || 401 || 404){
-      alert("NIN verification failed")
-      setVerifyImage(NotVerifiedIcon)
-      console.log(`ERROR : ${error}`)
-     }else if(error.status === 500){
-      alert("INTERNAL_SERVER_ERROR");
-      setVerifyImage(NotVerifiedIcon);
-     }
-    }finally{
-      setLoading(false)
-    }
-    
+const checkform = () =>{
+
+  if(genderResult &&
+    idResult &&
+    idAddress &&
+    idCity &&
+    idState &&
+    idLGA &&
+    idPostalCode &&
+    idNumber){
+     setVerifyImage(Pending);
+      setIdStatus('Pending');
+      setErrorSubmit(false);
+    setTimeout(()=> {
+     setIdPopVerified(true);
+     
+    },2000)
   }
  else   {
   
@@ -153,7 +131,7 @@ useEffect(()=> {
     <img src={verifyImage} alt="" 
      className={`h-[24px] w-[24px] md:h-[44px] md:w-[44px] lg:h-[62px] lg:w-[62px]`}/>
      <div className='flex flex-col gap-[4.694px] md:gap-[8px] justify-center'>
-        <h2 className='font-[500] lg:text-[12px] lg:leading-[15.6px] text-[8.042px] leading-[10.45px]'>
+        <h2 className='font-[500] lg:text-[12px] lg:leading-[15.6px] text-[12.042px] leading-[10.45px]'>
           ID Status</h2>
         <h2 className='font-[500] lg:text-[12px] lg:leading-[15.6px] text-[8.042px] leading-[10.45px]'>
           {idStatus}
@@ -162,7 +140,7 @@ useEffect(()=> {
     </div>
   {/*  */}
     <div className='flex md:gap-[14px] gap-[11px] items-center'>
-        <h2 className='font-[500] text-[#7E7E7E] text-[8px] leading-[10.4px]
+        <h2 className='font-[500] text-[#7E7E7E] text-[11px] leading-[10.4px]
         lg:text-[16px] lg:leading-[20.8px]'>
         Why Account Verification with my ID Document?
        </h2>
@@ -185,14 +163,14 @@ useEffect(()=> {
       <div className='flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]'>
     {/* Full Name */}
     <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] 
+   <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
     Full Name
     </h2>
     <div
-    className=' font-[500] py-[10.33px] pl-[5.867px] 
+    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px] sm:p-3 sm:text-lg font-[400] py-[15.33px] pl-[5.867px] 
     lg:py-[15.5px] lg:pl-[10px] border-[0.4px]
-    text-[8px] leading-[10.4px] 
+     leading-[10.4px] 
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px]'>
     { full_name ? full_name :  `${Data.UserFullName ? Data.UserFullName : "Hi User"}` }
    </div>
@@ -200,15 +178,15 @@ useEffect(()=> {
     {/* Gender */}
     
     <div className='relative flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] 
+   <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
      Gender
     </h2>
     <div onClick={chooseGender}
-    className='flex justify-between font-[500] py-[10.33px] pl-[5.867px] pr-[10.917px]
+    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px] p-4 sm:p-3 sm:text-lg flex justify-between font-[400] py-[15.33px] pl-[5.867px] pr-[10.917px]
      lg:pl-[16px] lg:py-[15.5px] lg:pr-[10px]
      border-[0.4px] border-[#9C9C9C] border-[solid]'>
-      <h2 className='text-[#000] font-[500] text-[8px] leading-[10.4px]
+      <h2 className='text-[#000] font-[400] leading-[10.4px]
       lg:text-[16px] lg:leading-[20.8px]'>
         {genderResult}
       </h2>
@@ -217,7 +195,7 @@ useEffect(()=> {
       </div>
       {dropDownGender  && (
         <div 
-        className=' absolute lg:top-[90px] md:top-[60px] top-[60px] z-[5] flex flex-col w-[100%]'>
+        className=' absolute lg:top-[90px] md:top-[60px] top-[70px] z-[5] flex flex-col w-[100%]'>
       {(genderInfo.map(info => {
         return (
           <h2 onClick={() => {
@@ -225,7 +203,7 @@ useEffect(()=> {
              setDropDownGender(false);
              document.querySelector('.genderDrop').classList.remove('DropIt');
           }}
-           className='font-[500] text-[#7C7C7C] text-[8px] leading-[10.4px]
+           className='font-[500] text-[#7C7C7C] text-[12px] leading-[10.4px]
            lg:text-[16px] lg:leading-[20.8px] md:py-[20px] py-[15px] pl-[10px]
           lg:pl-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
           md:shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)] bg-white cursor-pointer'>
@@ -242,7 +220,7 @@ useEffect(()=> {
       <div className='flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]'>
         {/* HOUSE ADDRESS */}
       <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] 
+   <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
     House Address
     </h2>
@@ -251,9 +229,9 @@ useEffect(()=> {
     onChange={(e) =>{
       setIdAddress(e.target.value)
     }}
-    className=' font-[500] py-[10.33px] pl-[5.867px] 
+    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px] p-4 sm:p-3 sm:text-lg font-[500] py-[10.33px] pl-[5.867px] 
     lg:py-[15.5px] lg:pl-[10px] border-[0.4px]
-    text-[8px] leading-[10.4px] 
+     leading-[10.4px] 
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px]
       focus:outline-none'
     placeholder=''
@@ -262,7 +240,7 @@ useEffect(()=> {
     </div>
     {/* STATE */}
     <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] 
+   <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
     State or Province
     </h2>
@@ -271,9 +249,9 @@ useEffect(()=> {
     onChange={(e) =>{
       setIdState(e.target.value)
     }}
-    className=' font-[500] py-[10.33px] pl-[5.867px] 
+    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px] p-4 sm:p-3 sm:text-lg font-[500] py-[10.33px] pl-[5.867px] 
     lg:py-[15.5px] lg:pl-[10px] border-[0.4px]
-    text-[8px] leading-[10.4px] 
+     leading-[10.4px] 
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px] focus:outline-none'
     placeholder='' 
     type="text" onInvalid={validState} required/>
@@ -285,7 +263,7 @@ useEffect(()=> {
       <div className='flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]'>
         {/* CITY */}
       <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] 
+   <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
     City
     </h2>
@@ -294,9 +272,9 @@ useEffect(()=> {
     onChange={(e) => {
     setIdCity(e.target.value)
 }}
-    className=' font-[500] py-[10.33px] pl-[5.867px] 
+    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px] p-4 sm:p-3 sm:text-lg font-[500] py-[10.33px] pl-[5.867px] 
     lg:py-[15.5px] lg:pl-[10px] border-[0.4px]
-    text-[8px] leading-[10.4px] 
+     leading-[10.4px] 
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px] focus:outline-none'
     placeholder=''
     type="text" onInvalid={validCity}   required/>
@@ -304,7 +282,7 @@ useEffect(()=> {
     </div>
     {/* LGA */}
     <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] 
+   <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
      L.G.A
     </h2>
@@ -313,9 +291,9 @@ useEffect(()=> {
     onChange={(e) => {
       setIdLGA(e.target.value);
     }}
-    className=' font-[500] py-[10.33px] pl-[5.867px] 
+    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px] p-4 sm:p-3 sm:text-lg font-[500] py-[10.33px] pl-[5.867px] 
     lg:py-[15.5px] lg:pl-[10px] border-[0.4px] 
-    text-[8px] leading-[10.4px] 
+     leading-[10.4px] 
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px]
       focus:outline-none'
     placeholder=''
@@ -326,7 +304,7 @@ useEffect(()=> {
       {/* POSTAL CODE */}
      
       <div className='flex flex-col md:w-[49%] w-[100%] md:gap-[10px] gap-[5.868px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] 
+   <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
     Postal Code
     </h2>
@@ -338,9 +316,9 @@ useEffect(()=> {
     onChange={(e) => {
       setIdPostalCode(e.target.value);
     }}
-    className=' font-[500] py-[10.33px] pl-[5.867px] 
+    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px] p-4 sm:p-3 sm:text-lg font-[500] py-[10.33px] pl-[5.867px] 
     lg:py-[15.5px] lg:pl-[10px] border-[0.4px]
-    text-[8px] leading-[10.4px] 
+     leading-[10.4px] 
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px] focus:outline-none'
     placeholder=''
     type="text" inputMode='numeric' required/>
@@ -350,15 +328,15 @@ useEffect(()=> {
     <div className='flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]'>
         {/* ID TYPE */}
         <div className='relative flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] 
+   <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
      ID Type
     </h2>
     <div onClick={chooseId}
-    className='flex justify-between font-[500] py-[10.33px] pl-[5.867px] pr-[10.917px]
+    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px] p-4 sm:p-3 sm:text-lg flex justify-between font-[500] py-[10.33px] pl-[5.867px] pr-[10.917px]
      lg:pl-[16px] lg:py-[15.5px] lg:pr-[10px]
      border-[0.4px] border-[#9C9C9C] border-[solid]'>
-      <h2 className='text-[#000] font-[500] text-[8px] leading-[10.4px]
+      <h2 className='text-[#000] font-[400]  leading-[10.4px]
       lg:text-[16px] lg:leading-[20.8px]'>
         {idResult}
       </h2>
@@ -367,44 +345,20 @@ useEffect(()=> {
       </div>
       {idDropDown  && (
         <div 
-        className=' absolute lg:top-[90px] md:top-[60px] top-[60px] z-[5] flex flex-col w-[100%]'>
-      {(idTypes.map(info => {
+        className=' absolute lg:top-[90px] md:top-[60px] top-[70px] z-[5] flex flex-col w-[100%]'>
+      {(idType.map(info => {
         return (
-          <div 
-          key={info.id} onClick={() => {
-           setIdResult(()=> {
-            if(info.id ===1 ){
-           return info.idType;
-          
-           
-         }
-           else if(info.id !== 1 && idResult === ""){
-           return ""
-             }else if(  (idResult === "National ID") &&(info.id === 2 || info.id ===3|| info.id === 4)){
-              return "National ID"
-              
-            }
-          })
-             setIdDropDown((e)=>{
-          return false ? info.id === 1 : true
-             });
+          <h2 onClick={() => {
+            setIdResult(info);
+             setIdDropDown(false);
              document.querySelector('.idDrop').classList.remove('DropIt');
           }}
-           className={`font-[500] px-2 flex justify-between text-[#7C7C7C] text-[8px] leading-[10.4px]
+           className='font-[400] text-[#7C7C7C] text-[12px] leading-[10.4px]
            lg:text-[16px] lg:leading-[20.8px] md:py-[20px] py-[15px] pl-[10px]
           lg:pl-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
-          md:shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)]  cursor-pointer ${info.Status === "Inactive" ? "bg-gray-300 cursor-not-allowed" : "bg-white"}`}>
-
-         <h2 className="font-[500] text-[#7C7C7C] text-[8px] leading-[10.4px]
-           lg:text-[16px] lg:leading-[20.8px]
-           ">{info.idType}</h2>
-           <p
-            className={`font-[500] text-[#7C7C7C] text-[8px] leading-[10.4px]
-           lg:text-[16px] lg:leading-[20.8px] ${info.Status === "Inactive" ? "text-red-500": "text-green-500"}`}>
-    {info.Status}
-           </p>
-          </div>
-        
+          md:shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)] bg-white cursor-pointer'>
+        {info}
+          </h2>
         )
       }))}
         </div>
@@ -413,7 +367,7 @@ useEffect(()=> {
   
     {/*  */}
     <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] 
+   <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
      ID Number
     </h2>
@@ -425,9 +379,9 @@ useEffect(()=> {
     onChange={(e) => {
       setIdNumber(e.target.value)
     }}
-    className=' font-[500] py-[10.33px] pl-[5.867px] 
+    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px] p-4 sm:p-3 sm:text-lg font-[500] py-[10.33px] pl-[5.867px] 
     lg:py-[15.5px] lg:pl-[10px] border-[0.4px] 
-    text-[8px] leading-[10.4px] 
+     leading-[10.4px] 
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px]
       focus:outline-none'
     placeholder=''
@@ -441,10 +395,10 @@ useEffect(()=> {
     <div onClick={()=> {
      setIdFrontView(true);
    }} 
-    className='flex  lg:py-[14px] py-[8.771px] pr-[20.785px] pl-[20px]
+    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px] p-4 sm:p-3 sm:text-lg flex  lg:py-[14px] py-[8.771px] pr-[20.785px] pl-[20px]
      lg:pr-[28px] lg:pl-[16px] md:gap-[14px] gap-[8.21px]
     border-[0.4px] border-[solid] border-[#9C9C9C] cursor-pointer'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] 
+   <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
    Upload ID Front View
    </h2>
@@ -455,10 +409,10 @@ useEffect(()=> {
 <div onClick={() => {
     setIdBackView(true);
    }}
- className='flex py-[8.771px] pr-[20.785px] pl-[20px]
+ className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px] p-4 sm:p-3 sm:text-lg flex py-[8.771px] pr-[20.785px] pl-[20px]
   lg:py-[14px] lg:pr-[28px] lg:pl-[16px] gap-[8.21px] md:gap-[14px]
 border-[0.4px] border-[solid] border-[#9C9C9C] cursor-pointer'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] 
+   <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
    Upload Back View
    </h2>
@@ -476,12 +430,12 @@ border-[0.4px] border-[solid] border-[#9C9C9C] cursor-pointer'>
           checkform();
         }}
          className={`lg:py-[13px] md:py-[5.868px] md:rounded-[7.042px] py-[16.531px] rounded-[4.241px] w-[100%] md:w-[150px] lg:w-[163px] lg:rounded-[12px] bg-[#04177F]
-         font-[600] text-[12px] leading-[18px] lg:text-[16px] text-center text-white lg:leading-[24px`}>
+         font-[600] text-[13px] leading-[18px] lg:text-[16px] text-center text-white lg:leading-[24px`}>
         Submit
         </button>
        { errorSubmit  && (
         <h2 className={`font-[500] lg:text-[14px] lg:leading-[18px] md:text-[14px] md:leading-[18px] 
-        text-[12px] leading-[16px] text-red-600` }>
+        text-[13px] leading-[16px] text-red-600` }>
           Fill the forms complete to proceed
        </h2>
        )}
@@ -674,12 +628,6 @@ Confirming your identity ensures that the person accessing the account is indeed
           </Modal>
         )}
         </div>
-        )}
-
-        {loading && (
-          <Modal>
-          <Loader/>
-          </Modal>
         )}
         </div>
   )

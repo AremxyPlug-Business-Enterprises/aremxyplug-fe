@@ -313,10 +313,10 @@ const BEDC = () => {
           {/* top part after nav bar */}
           <div className="flex flex-row w-full pt-[10px]  h-[90px] md:h-[112.29px] lg:h-[196px] lg:px-[50px]  px-[16px] rounded-lg md:rounded-[11.5px] lg:rounded-[20px] justify-between  py-0 bg-gradient-to-r from-[#FFA733] via-[#58FF4A] to-[#98B0FF]">
             <div className="flex flex-col gap-2  ">
-              <div className="text-[8px] font-[600]  pt-[10px] md:text-[11px] md:leading-[20.63px] lg:pt-[25px] lg:text-[24px] lg:leading-[36px] text-[#000000] leading-[12px]">
+              <div className="text-[11px] font-[600]  pt-[10px] md:text-[11px] md:leading-[20.63px] lg:pt-[25px] lg:text-[24px] lg:leading-[36px] text-[#000000] leading-[12px]">
                 ELECTRICITY BILLS, PREPAID AND POSTPAID  <br /> PAYMENTS.
               </div>
-              <div className="text-[8px] font-[400] leading-[9px] md:text-[10px] md:leading-[14.9px] lg:text-[20px] lg:leading-[26px] text-[#000000] ">
+              <div className="text-[9px] font-[400] leading-[9px] md:text-[10px] md:leading-[14.9px] lg:text-[20px] lg:leading-[26px] text-[#000000] ">
                 Recharge your metre and pay bills  with our electricity bills <br /> payment feature for both prepaid and postpaid metertypes.
               </div>
             </div>
@@ -328,7 +328,7 @@ const BEDC = () => {
               />{" "}
             </div>
           </div>
-          <div className=" flex lg:mt-[20px] text-[10px] lg:text-[16px] font-[600] pt-[30px] text-[#7E7E7E] items-center ">
+          <div className=" flex lg:mt-[20px] text-[12px] lg:text-[16px] font-[600] pt-[30px] text-[#7E7E7E] items-center ">
             <div>Recharge</div>
             <div><img className="w-[35px] lg:w-[130px] ml-1" src={logo} alt="" /></div>
             <div className=" ml-1">Benin Electric Payment-BEDC Meter Instantly</div>
@@ -342,18 +342,18 @@ const BEDC = () => {
 
 
 
-          <div className="text-[10px]  lg:text-[16px]  font-[600] mt-[20px] text-[#7E7E7E] "> Select <span className="text-[#04177F] font-[700]">Prepaid</span> MeterType if you load token on your meter.</div>
-          <div className="text-[10px]  lg:text-[16px]  font-[600] mt-[10px] text-[#7E7E7E] "> Select <span className="text-[#04177F] font-[700]">Postpaid</span> MeterType if you get a bill at the end of the month.</div>
+          <div className="text-[14px]  lg:text-[16px]  font-[600] mt-[20px] text-[#7E7E7E] "> Select <span className="text-[#04177F] font-[700]">Prepaid</span> MeterType if you load token on your meter.</div>
+          <div className="text-[14px]  lg:text-[16px]  font-[600] mt-[10px] text-[#7E7E7E] "> Select <span className="text-[#04177F] font-[700]">Postpaid</span> MeterType if you get a bill at the end of the month.</div>
 
           {/* input sections */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 md:gap-6 lg:gap-6 items-center lg:mt-[20px] ">
             <div className=" flex flex-col mt-[20px] gap-1">
-              <div className="text-[#7E7E7E] text-[10px] lg:text-[16px]  font-[600]">Select Meter Type</div>
+              <div className="text-[#7E7E7E] text-[14px] lg:text-[16px]  font-[400]">Select Meter Type</div>
               <div
-                className=" border-[1px] w-full h-[30px]  pl-[4px] pr-[8px]  lg:h-[51px] lg:pl-[14px] lg:pr-[16px] flex  items-center justify-between"
+                className=" border-[1px] w-full h-[40.927px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg   pl-[4px] pr-[8px]  lg:h-[51px] lg:pl-[14px] lg:pr-[16px] flex  items-center justify-between"
                 onClick={() => setShowProductList(!showProductList)}
               >
-                <h2 className="text-[10px] font-[600]  leading-[12px] text-[#7C7C7C] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                <h2 className="text-[14px] font-[400]  leading-[12px] text-[#7C7C7C] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
                   {selectedNetworkProduct}
                 </h2>
                 <button className="lg:w-6 lg:h-6 w-[11px] h-[11px]">
@@ -361,11 +361,11 @@ const BEDC = () => {
                 </button>
               </div>
               {showProductList && (
-                <div className="border md:rounded-[10px] text-[10px] md:text-[12px] lg:text-[16px] mt-14 lg:mt-20 w-[90%] md:w-[44%]  rounded-[4px] absolute  bg-[#FFF] z-[10]">
+                <div className="border md:rounded-[10px] text-[14px] md:text-[11px] lg:text-[16px] mt-20 lg:mt-20 w-[90%] md:w-[44%]  rounded-[4px] absolute  bg-[#FFF] z-[10]">
                   {productList.map((item) => (
                     <div
                       key={item.name}
-                      className={`cursor-pointer border-b-[0.5px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] w-[100%]  md:rounded-[0px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${selectedNetworkProduct === item.name ? "bg-white" : ""
+                      className={`pb-[18px] md:pb-0 pt-[18px] md:pt-0 font-[400] text-[14px] cursor-pointer border-b-[0.5px] text-[#7C7C7C] md:text-[11px] lg:text-[16px] w-[100%]  md:rounded-[0px] lg:mt-2 py-[4px] text-[13px] pl-[5px] ${selectedNetworkProduct === item.name ? "bg-white" : ""
                         }`}
                       onClick={() => handleSelectProduct(item.name)}
                     >
@@ -377,64 +377,64 @@ const BEDC = () => {
             </div>
 
             <div className="flex flex-col mt-[10px] md:mt-[23px] lg:mt-[23px]">
-              <div className="text-[#7E7E7E] text-[10px] lg:text-[16px] font-[600] " >Meter Number</div>
+              <div className="text-[#7E7E7E] text-[14px] lg:text-[16px] font-[400] " >Meter Number</div>
               <div>
-                <input type="number" value={meterNumber} onChange={handleMeterNumber} className=" w-full text-[#7E7E7E] pl-[9px] lg:h-[51px] lg:text-[16px]  text-[10px] font-[500]  border-[1px] h-[30px]" />{" "}
+                <input type="number" value={meterNumber} onChange={handleMeterNumber} className=" w-full text-[#7E7E7E] pl-[9px] lg:h-[51px] lg:text-[16px]  text-[10px] font-[500]  border-[1px] h-[40.927px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg " />{" "}
               </div>
               {errors.meterNumber && (
-                <div className="text-[12px] text-red-500 italic lg:text-[14px]">
+                <div className="text-[14px] text-red-500 italic lg:text-[14px]">
                   {errors.meterNumber}
                 </div>
               )}
             </div>
 
             <div className="flex flex-col mt-[10px]">
-              <div className="text-[#7E7E7E] text-[10px] lg:text-[16px] font-[600]" >Verified Name</div>
+              <div className="text-[#7E7E7E] text-[15px] lg:text-[16px] font-[400]" >Verified Name</div>
               <div>
-                <input type="text" value={verifiedName} onChange={handleVerifiedName} className=" w-full text-[#7E7E7E] lg:h-[51px] lg:text-[16px]  text-[10px] pl-[9px] font-[500]  border-[1px] h-[30px]" />{" "}
+                <input type="text" value={verifiedName} onChange={handleVerifiedName} className=" w-full text-[#7E7E7E] lg:h-[51px] lg:text-[16px]  text-[14px] pl-[9px] font-[500]  border-[1px] h-[40.927px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg " />{" "}
               </div>
             </div>
             <div className="flex flex-col mt-[10px]">
-              <div className="text-[#7E7E7E] text-[10px] lg:text-[16px] font-[600]" >Phone Number</div>
+              <div className="text-[#7E7E7E] text-[15px] lg:text-[16px] font-[400]" >Phone Number</div>
               <div>
-                <input type="number" value={phoneNumber} onChange={handlePhoneNumber} className=" w-full text-[#7E7E7E] lg:h-[51px] lg:text-[16px]  pl-[9px] text-[10px] font-[500]  border-[1px] h-[30px]" />
+                <input type="number" value={phoneNumber} onChange={handlePhoneNumber} className=" w-full text-[#7E7E7E] lg:h-[51px] lg:text-[16px]  pl-[9px] text-[14px] font-[500]  border-[1px] h-[40.927px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg " />
               </div>
               {errors.phoneNumber && (
-                <div className="text-[12px] text-red-500 italic lg:text-[14px]">
+                <div className="text-[14px] text-red-500 italic lg:text-[14px]">
                   {errors.phoneNumber}
                 </div>
               )}
             </div>
             <div className="flex flex-col mt-[10px]">
-              <div className="text-[#7E7E7E] text-[10px] lg:text-[16px]   font-[600]" >Email</div>
+              <div className="text-[#7E7E7E] text-[15px] lg:text-[16px] font-[400]" >Email</div>
               <div>
-                <input type="text" value={ikedcEmail} onChange={handleEmail} className=" w-full lg:h-[51px] text-[#7E7E7E] pl-[9px] lg:text-[16px] text-[10px] font-[500]  border-[1px] h-[30px]" />
+                <input type="text" value={ikedcEmail} onChange={handleEmail} className=" w-full lg:h-[51px] text-[#7E7E7E] pl-[9px] lg:text-[16px] text-[14px] font-[500]  border-[1px] h-[40.927px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg " />
               </div>
               {errors.ikedcEmail && (
-                <div className="text-[12px] text-red-500 italic lg:text-[14px]">
+                <div className="text-[14px] text-red-500 italic lg:text-[14px]">
                   {errors.ikedcEmail}
                 </div>
               )}
             </div>
             <div className="flex flex-col mt-[10px]">
-              <div className="text-[#7E7E7E] text-[10px] lg:text-[16px]  font-[600]" >Amount</div>
+              <div className="text-[#7E7E7E] text-[14px] lg:text-[16px]  font-[400]" >Amount</div>
               <div className="flex items-center lg:text-[16px] text-[#7E7E7E] text-[10px] pl-2 border-[1px]">
                 &#8358;
-                <input type="number" name="ikedcamount" value={ikedcamount} onChange={handleIkedcAmount} className=" w-full outline-none lg:h-[51px] lg:text-[16px]  text-[#7E7E7E] pl-[9px] text-[10px] font-[500]   h-[30px]" />
+                <input type="number" name="ikedcamount" value={ikedcamount} onChange={handleIkedcAmount} className=" w-full outline-none lg:h-[51px] lg:text-[16px]  text-[#7E7E7E] pl-[9px] text-[13px] font-[500]   h-[40.927px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[8px]  md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg " />
               </div>
             </div>
 
             <div className=" flex flex-col mt-[20px] gap-1">
-              <div className="text-[#7E7E7E] text-[10px] lg:text-[16px]  font-[600]">Payment Method</div>
+              <div className="text-[#7E7E7E] text-[14px] lg:text-[16px]  font-[400]">Payment Method</div>
               <div
-                className=" border-[1px] w-full h-[30px]  pl-[4px] pr-[8px] lg:h-[51px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between"
+                className=" border-[1px] w-full h-[40.927px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg   pl-[4px] pr-[8px] lg:h-[51px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between"
                 onClick={() => setShowList(!showList)}
               >
                 <p></p>
                 {selected ? (
                   <div className="flex w-[100%] justify-between items-center">
 
-                    <p className="text-[10px] text-[#7E7E7E] font-extrabold lg:text-[14px]">
+                    <p className="text-[14px] text-[#7E7E7E] font-extrabold lg:text-[14px]">
                       {" "}
                       {globalCountry}
                     </p>
@@ -457,7 +457,7 @@ const BEDC = () => {
 
               </div>
               {globalTransferErrors.country && (
-                <div className="text-[12px] text-red-500 italic lg:text-[14px]">
+                <div className="text-[11px] text-red-500 italic lg:text-[14px]">
                   {globalTransferErrors.country}
                 </div>
               )}
@@ -472,7 +472,7 @@ const BEDC = () => {
                   {" "}
                   {countryList.map((country) => (
                     <div
-                      className=" cursor-pointer border-b flex items-center p-2 gap-[5px] text-[9px]  md:text-[14px] lg:text-[16px]"
+                      className="pb-[18px] md:pb-0 pt-[18px] md:pt-0 font-[400] text-[13px] cursor-pointer border-b flex items-center p-2 gap-[5px] text-[11px]  md:text-[14px] lg:text-[16px]"
                       key={country.id}
                       onClick={() =>
                         handleCountryClick(
@@ -498,7 +498,7 @@ const BEDC = () => {
           </div>
           <div
             onClick={handleProceed}
-            className={`text-[12px] mt-[30px] md:mt-[40px] bg-[#0008] md:w-fit lg:px-12 lg:text-[16px] lg:px md:py-1 md:rounded-md md:px-6   py-3 rounded-md font-[600] text-center text-white
+            className={`text-[11px] mt-[30px] md:mt-[40px] bg-[#0008] md:w-fit lg:px-12 lg:text-[16px] lg:px md:py-1 md:rounded-md md:px-6   py-3 rounded-md font-[600] text-center text-white
             ${!meterNumber ||
                 !verifiedName ||
                 !phoneNumber ||
@@ -523,7 +523,7 @@ const BEDC = () => {
           </div>
         </div>
         <footer className="flex justify-center text-center gap-[20px] mt-[200px] pb-[10%] md:mt-[750px]  lg:mt-[850px]">
-          <p className="text-[8px] md:text-[12px] lg:text-[20px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
+          <p className="text-[8px] md:text-[11px] lg:text-[20px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
             You need help?
           </p>
 
@@ -552,16 +552,16 @@ const BEDC = () => {
               alt=""
             />
             <hr className="h-[6px] bg-[#04177f] border-none mt-[9%] md:mt-[8%] md:h-[10px]" />
-            <h2 className="text-[12px] font-[600] my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
+            <h2 className="text-[11px] font-[600] my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
               Confirm Transaction
             </h2>
-            <p className="text-[10px] text-[#000] pt-[20px] font-[500] text-center mb-2 md:text-[12px] lg:text-[14px]">
+            <p className="text-[10px] text-[#000] pt-[20px] font-[500] text-center mb-2 md:text-[11px] lg:text-[14px]">
               You are about to Purchase{" "}
-              <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">
+              <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[11px]">
                 {selectedNetworkProduct} Meter (&#8358;{ikedcamount})
               </span>{" "}
               {/* Points to <br></br>
-              <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">
+              <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[11px]">
                 &#8358;{}{" "}
               </span> */}
               From <br /> your NGN Wallet to{" "}
@@ -681,13 +681,13 @@ const BEDC = () => {
                   </div>
                 )}
                 <div
-                  className="text-[#0003] text-xl md:text-3xl"
+                  className="text-[#0003] text-[13px] md:text-3xl"
                   onClick={toggleVisibility}
                 >
                   {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
                 </div>
               </div>
-              <p className="text-[8px] md:text-[12px] text-[#04177f]">
+              <p className="text-[8px] md:text-[11px] text-[#04177f]">
                 Forgot Pin ?
               </p>
             </div>
@@ -737,7 +737,7 @@ const BEDC = () => {
               />
             </div>
             <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
-            <h2 className="text-[12px] my-[4%] text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%]">
+            <h2 className="text-[11px] my-[4%] text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%]">
               Purchase Successful
             </h2>
             <img
@@ -821,7 +821,7 @@ const BEDC = () => {
                   setFlag("");
                   setSuccessPopup(false);
                 }}
-                className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:px-[50px] md:w-[70%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[11px] font-extrabold h-[40px] text-white rounded-[6px] md:px-[50px] md:w-[70%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
               >
                 Done
               </button>
@@ -841,7 +841,7 @@ const BEDC = () => {
                   onClick={() => {
                     setSuccessPopup(false);
                   }}
-                  className={`border-[1px] w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                  className={`border-[1px] w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[11px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
                 >
                   Receipt
                 </button>
@@ -884,7 +884,7 @@ const BEDC = () => {
               />
             </div>
             <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
-            <h2 className="text-[12px] my-[5%] text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%]">
+            <h2 className="text-[11px] my-[5%] text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%]">
               Transaction Failed
             </h2>
             <img
@@ -892,7 +892,7 @@ const BEDC = () => {
               src="./Images/failed.png"
               alt="/"
             />
-            <p className="text-[10px] text-[#0008] mx-[10px] text-center my-[60px] md:text-[14px] lg:text-[12px]">
+            <p className="text-[10px] text-[#0008] mx-[10px] text-center my-[60px] md:text-[14px] lg:text-[11px]">
               An unexpected error has occurred, please try again.
             </p>
             <div className="flex w-[70%] mx-auto items-center my-6  gap-[6%] md:gap-[20px] justify-center md:w-[20%] lg:my-[5%]">
@@ -900,7 +900,7 @@ const BEDC = () => {
                 onClick={() => {
                   setFailedPopup(false);
                 }}
-                className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:px-[50px] md:w-[70%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[11px] font-extrabold h-[40px] text-white rounded-[6px] md:px-[50px] md:w-[70%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
               >
                 Done
               </button>

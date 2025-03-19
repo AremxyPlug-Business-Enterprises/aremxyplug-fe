@@ -31,12 +31,13 @@ export default function BvnVerification(Data) {
    const[bvnPopVerified, setBvnPopVerified] = useState(false);
    const [bvnPhoneMessage, setBvnPhoneMessage] = useState(false);
    const [errorVerify, setErrorVerify] = useState(false);
-   const {bvnButtonState, setBvnButtonState} = useContext(ContextProvider);
-   const {toggleSideBar , customerDetail, setLoginAuthorisation
+   const {toggleSideBar , customerDetail, setLoginAuthorisation, loginAuthorisation,
+    virtualAccCreated
    } = useContext(ContextProvider);
    const [loading, setLoading] = useState(false);
 
 const {full_name} = customerDetail;
+
 
 
 
@@ -53,25 +54,26 @@ const BvnFunctionState=async(url, alertSuccess, buttonStateSuccess, ErrorMessage
     ErrorMessage = "Virtual Account Creation Failed"
  }
   checkBvnform(url, alertSuccess,buttonStateSuccess, ErrorMessage)
+
 }
 
 
 
-const checkBvnform = async(url, alertSuccess, buttonStateSuccess, ErrorMessage)=>{
- const authToken = localStorage.getItem("authorisedLogin")
- console.log(authToken)
+
+const checkBvnform = async(Token) => {
+  getTokenNeeded(Token)
   if (bvnNumber){
     setLoading(true);
     const data = {
       bvn: bvnNumber.toString(),
     };
-
+const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc'
    // console.log(data)
    try{
     setBvnVerifyImage(PendingImage)
     setBvnStatus("Pending")
         const response = await axios.post(url, data, {headers : {"Content-Type" : "application/json",
-    Authorization : authToken 
+    Authorization : Token || loginAuthorisation
     }})
   
       if (response.status === 201 || 200 ) {
@@ -79,13 +81,15 @@ const checkBvnform = async(url, alertSuccess, buttonStateSuccess, ErrorMessage)=
           setBvnStatus('Verified');
           setBvnPopVerified(true);
           setBvnNumber(bvnNumber);
+
          alert(alertSuccess)
           setBvnButtonState(buttonStateSuccess)
+
         } 
       
     }catch(error){
      if(error.status === 401 || 400){
-        alert(ErrorMessage);
+        alert(`An error has occurred`);
         setBvnVerifyImage(NotVerifiedImage)
         setBvnStatus("Not Verified")
           }
@@ -123,7 +127,7 @@ const ValueRef = useRef()
       ? 'block'  : 'hidden'} `}>
       
       <div className='flex lg:gap-[10px] lg:py-[50px] py-[35px] '> 
-     <h2 className='font-[500] text-[#7C7C7C] text-[9.389px] leading-[14px] 
+     <h2 className='font-[500] text-[#7C7C7C] text-[10.389px] leading-[14px] 
      lg:text-[20px] lg:leading-[30px]'>
       For Nigerian User's Only
 </h2>
@@ -139,7 +143,7 @@ src={Arrowright} alt="" />
     <img src={bvnVerifyImage} alt="" 
      className={`h-[24px] w-[24px] md:h-[44px] md:w-[44px] lg:h-[62px] lg:w-[62px]`}/>
      <div className='flex flex-col gap-[4.694px] md:gap-[8px] justify-center'>
-        <h2 className='font-[500] lg:text-[12px] lg:leading-[15.6px] text-[8.042px] leading-[10.45px]'>
+        <h2 className='font-[500] lg:text-[12px] lg:leading-[15.6px] text-[12.042px] leading-[10.45px]'>
           Bvn Status</h2>
         <h2 className='font-[500] lg:text-[12px] lg:leading-[15.6px] text-[8.042px] leading-[10.45px]'>
           {bvnStatus}
@@ -156,7 +160,7 @@ src={Arrowright} alt="" />
           )}
   {/*  */}
     <div className='flex md:gap-[14px] gap-[11px] items-center'>
-        <h2 className='font-[500] text-[#7E7E7E] text-[8px] leading-[10.4px]
+        <h2 className='font-[500] text-[#7E7E7E] text-[11px] leading-[10.4px]
         lg:text-[16px] lg:leading-[20.8px]'>
         Why Account Verification with my BVN?
        </h2>
@@ -177,15 +181,15 @@ src={Arrowright} alt="" />
    <div className='flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]'>
     {/* Full Name */}
     <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] 
+   <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
     Full Name
     </h2>
     <div
-    className=' font-[500] py-[10.33px] pl-[5.867px] 
+    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px] sm:p-3 sm:text-lg font-[500] py-[15.33px] pl-[5.867px] 
     md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px]
     lg:py-[15.5px] lg:pl-[10px] border-[0.4px]
-    text-[8px] leading-[10.4px] 
+    leading-[10.4px] 
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px]'>
       {full_name ? full_name : Data.UserFullName}
    </div>
@@ -194,7 +198,7 @@ src={Arrowright} alt="" />
    <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
     {/* header */}
    <div className='flex md:gap-[10px] gap-[5px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] 
+   <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
    Phone Number
    </h2>
@@ -212,10 +216,10 @@ src={Arrowright} alt="" />
     onChange={(e) =>{
     setBvnPhone(e.target.value);
    }} type="tel" name='phone' id='phone' maxLength={11} inputMode='tel' required
-   className='font-[500] py-[10.33px] pl-[5.867px] 
+   className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px] p-4 sm:p-3 sm:text-lg font-[500] py-[10.33px] pl-[5.867px] 
    lg:py-[15.5px] lg:pl-[10px] border-[0.4px] 
    md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px]
-   text-[8px] leading-[10.4px] 
+    leading-[10.4px] 
     border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px]
      focus:outline-none placeholder:text-[8px] placeholdee:leading-[10.4px]
      placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px]'/>
@@ -224,7 +228,7 @@ src={Arrowright} alt="" />
 {/* Date of Birth / BVN */}
 <div className='flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]'>
 <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] 
+   <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
      D.O.B
     </h2>
@@ -234,10 +238,10 @@ src={Arrowright} alt="" />
     onChange={(e => {
       setBvnDateOfBirth(e.target.value);
    })}
-    className=' font-[500] w-[100%] py-[10.33px] pl-[5.867px] bg-white
+    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px]  sm:p-3 sm:text-lg font-[500] w-[100%] py-[10.33px] pl-[5.867px] bg-white
     lg:py-[15.5px] lg:pl-[10px] border-[0.4px] 
     md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px]
-    text-[8px] leading-[10.4px] lg:pr-[16px] pr-[9px]
+     leading-[10.4px] lg:pr-[16px] pr-[9px]
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px]
       focus:outline-none cursor-pointer'
     type="date" id='dob' name='dob' />
@@ -246,7 +250,7 @@ src={Arrowright} alt="" />
 
     {/*========= BVN ==========*/}
     <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] 
+   <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
      BVN Number
     </h2>
@@ -262,10 +266,10 @@ src={Arrowright} alt="" />
     onChange={(e) => {
       setBvnNumber(e.target.value)
     }}
-    className=' font-[500] py-[10.33px] pl-[5.867px] 
+    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px] p-4 sm:p-3 sm:text-lg font-[500] py-[10.33px] pl-[5.867px] 
     lg:py-[15.5px] lg:pl-[10px] border-[0.4px] 
     md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px]
-    text-[8px] leading-[10.4px] 
+     leading-[10.4px] 
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px]
       focus:outline-none'
     type="text"  inputMode='numeric' maxLength={11}   required/>
@@ -274,16 +278,18 @@ src={Arrowright} alt="" />
 </div>
 
 <div className='flex flex-col md:gap-[15px] gap-[10px] justify-start'>
+
         <button  onClick={()=>{
          BvnFunctionState()
+
         }}
          className={`lg:py-[13px] md:py-[7.868px] py-[16.531px] rounded-[4.241px] w-[100%] md:w-[150px] lg:w-[163px] lg:rounded-[12px] bg-[#04177F]
-         font-[600] text-[12px] leading-[18px] lg:text-[16px] text-center text-white lg:leading-[24px ${bvnStatus === "Verified" ? "bg-gray-600": "bg-[#04177F]" }`}>
-       {bvnButtonState}
+         font-[600] text-[13px] leading-[18px] lg:text-[16px] text-center text-white lg:leading-[24px ${bvnStatus === "Verified" ? "bg-gray-600": "bg-[#04177F]" }`}>
+        Verify
         </button>
         { errorVerify  && (
         <h2 className={`font-[500] lg:text-[14px] lg:leading-[18px] md:text-[14px] md:leading-[18px] 
-        text-[12px] leading-[16px] text-red-600` }>
+        text-[13px] leading-[16px] text-red-600` }>
           Fill all to Confirm Verification
        </h2>
        )}

@@ -225,13 +225,13 @@ const ChangePin = () => {
               <div>
                 <div className="grid grid-cols-1 mt-[10px] md:grid-cols-2 gap-y-[10px] md:gap-x-[0px] lg:gap-x-[0px] md:gap-y-[0px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[20px]">
                   <div className="mt-[30px]">
-                    <h2 className="text-[10px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px]">
+                    <h2 className="text-[11px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] mt-2 md:mt-0">
                       Old PIN{" "}
                     </h2>
                     <div className="relative mt-[5px] lg:mt-[15px]">
                       <input
                         type="number"
-                        className="w-full md:w-[90%] lg:w-[80%] h-8 px-2 py-[10px] border-[1px] rounded-[2px] text-[10px] md:text-[14px] text-[#7E7E7E] lg:text-[18px] font-semibold focus:outline-none lg:h-[51px]"
+                        className="w-full md:w-[90%] lg:w-[80%] h-8 px-2 py-[10px] border-[1px] rounded-[2px] text-[10px] md:text-[14px] text-[#7E7E7E] lg:text-[18px] font-semibold focus:outline-none lg:h-[51px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 sm:p-3 sm:text-lg"
                         placeholder=""
                         value={oldPin}
                         onChange={(event) =>
@@ -242,13 +242,13 @@ const ChangePin = () => {
                   </div>
 
                   <div className="mt-[30px] md:ml-[-20px] lg:ml-[-50px]">
-                    <h2 className="text-[10px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px]">
+                    <h2 className="text-[11px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px]">
                       New PIN{" "}
                     </h2>
                     <div className="relative mt-[5px] lg:mt-[15px]">
                       <input
                         type="number"
-                        className="w-full md:w-[80%] text-[#7E7E7E] lg:w-[70%]  h-8 px-2 py-[10px] border-[1px] rounded-[2px] text-[10px] md:text-[14px] lg:text-[18px] font-semibold focus:outline-none lg:h-[51px]"
+                        className="w-full md:w-[80%] text-[#7E7E7E] lg:w-[70%]  h-8 px-2 py-[10px] border-[1px] rounded-[2px] text-[10px] md:text-[14px] lg:text-[18px] font-semibold focus:outline-none lg:h-[51px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 sm:p-3 sm:text-lg"
                         placeholder=""
                         value={newPin}
                         onChange={(event) =>
@@ -259,14 +259,14 @@ const ChangePin = () => {
                   </div>
 
                   <div className="mt-[30px]">
-                    <h2 className="text-[10px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px]">
+                    <h2 className="text-[11px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px]">
                       Confirm PIN{" "}
                     </h2>
                     <div className="relative mt-[5px] lg:mt-[15px]">
                       <input
                         id="confirmPinInput"
                         type="number"
-                        className="w-full md:w-[90%] text-[#7E7E7E] lg:w-[80%] h-8 px-2 py-[10px] border-[1px] rounded-[2px] text-[10px] md:text-[14px] lg:text-[18px] font-semibold focus:outline-none lg:h-[51px]"
+                        className="mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 sm:p-3 sm:text-lg w-full md:w-[90%] text-[#7E7E7E] lg:w-[80%] h-8 px-2 py-[10px] border-[1px] rounded-[2px] text-[10px] md:text-[14px] lg:text-[18px] font-semibold focus:outline-none lg:h-[51px]"
                         placeholder=""
                         value={confirmPin}
                         onChange={(event) =>
