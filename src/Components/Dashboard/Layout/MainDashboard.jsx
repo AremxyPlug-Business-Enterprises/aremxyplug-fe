@@ -20,9 +20,11 @@ import { Loader } from "../../Loader/Loader";
 import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 
 export const MainDashboard = (Data) => {
-  const { setHideNavbar, toggleSideBar, isDarkMode,dashLoading, bankNameState, customerDetail, accountNameState, accountNumberState} =
-    useContext(ContextProvider);
-  // const {account_no, bank_name, account_name} = virtualAccCreated;
+  const { setHideNavbar, toggleSideBar, isDarkMode,
+    dashLoading, bankNameState, accountNameState, accountNumberState,
+  } = useContext(ContextProvider);
+  //const {account_no, bank_name, account_name} = virtualAccCreated;
+ 
   const [visible, setVisibility] = useState(true);
   const [activeButtons, setActiveButtons] = useState([true, false, false]);
   const [blur, setBlur] = useState(false);
@@ -53,17 +55,21 @@ export const MainDashboard = (Data) => {
     setHideNavbar(true);
   };
 
-  const getLocalData = useRef(null);
-
-
+ // Handling the getLocalStoarge information by passing it to data and making available through
+ // the body of the  component
+const ValueRef = useRef()
+ Data = GetLocalStorage()
   useEffect(() => {
+    ValueRef.current = Data;
+    console.log(ValueRef);
+  console.log(Data);
     setNav();
     return () => {
       setHideNavbar(false);
-      console.log(customerDetail)
     };
     // eslint-disable-next-line
   }, []);
+
 
   const handleClick = (index) => {
     const updatedButtons = activeButtons.map((isActive, i) => i === index);
@@ -110,13 +116,12 @@ export const MainDashboard = (Data) => {
     return;
   };
 
- // console.log(Data); 
+ //console.log(Data); 
 
 
 // USEEEFECT TO RETURN USERS BANK DETAILS
 
 // To help get the user bank details and check if the user details is on the app
-console.log(Data);
 
 
 
@@ -131,7 +136,7 @@ console.log(Data);
         {/* ============SIDE BAR========= */}
         {toggleSideBar && (
           <div className="absolute top-0 left-0 z-50">
-            <SideBar fullName ={Data.fullName} userId ={Data.userId} />
+            <SideBar fullName ={Data.UserFullName} userId ={Data.aremxyUserId} />
           </div>
         )}
         <div
@@ -475,7 +480,7 @@ console.log(Data);
                   } flex text-[10px] gap-[20px]  md:text-[15px]`}
                 >
                   <h2 className="font-semibold w-1/2 text-[10px]  md:text-[11px] lg:text-[12px]">Bank Name</h2>
-                  <p className="text-[10px] text-right w-1/2 md:text-[11px] lg:text-[12px] font-[400]">{bankNameState ? bankNameState : Data.bankName}</p> 
+               <p className="text-[10px] text-right w-1/2 md:text-[11px] lg:text-[12px] font-[400]">{bankNameState ? bankNameState : Data.aremxyBankName ?Data.aremxyBankName : "" }</p> 
                 </div>
                 <div
                   className={`${styles.virtualaccounttxt} ${
@@ -483,7 +488,7 @@ console.log(Data);
                   }  flex text-[10px] gap-[20px] md:text-[15px] `}
                 >
                   <h2 className="font-semibold w-1/2 text-[10px]  md:text-[11px] lg:text-[12px]">Account Name</h2>
-                  <p className="text-[10px] w-1/2 md:text-[11px] text-right lg:text-[12px] font-[400]">{accountNameState ? accountNameState : Data.accountName}</p>
+                  <p className="text-[10px] w-1/2 md:text-[11px] text-right lg:text-[12px] font-[400]">{accountNameState ? accountNameState :Data.aremxyAccountName ? Data.aremxyAccountName.slice(11) : ""}</p>
                 </div>
                
                 <div
@@ -493,7 +498,7 @@ console.log(Data);
                 >
                   <h2 className="font-semibold w-1/2 text-[10px] md:text-[11px] lg:text-[12px]">Account Number</h2>
                   <div className="flex justify-end items-center w-1/2 gap-[10px]">
-                    <p className="text-[10px]  md:text-[11px] lg:text-[12px] font-[400]" ref={textRef}>{accountNumberState ? accountNumberState : Data.accountNumber}</p>
+                    <p className="text-[10px]  md:text-[11px] lg:text-[12px] font-[400]" ref={textRef}>{accountNumberState ? accountNumberState : Data.aremxyAccountNumber ? `${Data.aremxyAccountNumber.slice(0,4)}********` : ""}</p>
                     <div
                       onClick={handleCopyClick}
                       className="text-[#92abfec3] text-[13px] font-extrabold lg:text-[16px]"
@@ -515,7 +520,7 @@ console.log(Data);
                     isDarkMode ? "border bg-black" : "bg-[#04177f]"
                   } ${styles.viewWallet}`}
                 >
-                  {bankNameState.length > 4 && accountNameState.length > 4 && bankNameState.length > 4  ? "Verified" : "Verify"}
+                  {(bankNameState.length > 4 && accountNameState.length > 4 && accountNumberState.length > 4 )   ? "Verify" : "Verified"}
                 </button>
               </Link>
             </div>

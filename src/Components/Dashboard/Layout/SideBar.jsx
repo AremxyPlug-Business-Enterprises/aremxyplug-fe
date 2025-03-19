@@ -12,7 +12,7 @@ export const SideBar = ({fullName, userId}) => {
     RemoveLocalStorage()
   }
   
-   
+   console.log(`FULLNAME: ${fullName} ------- UserId : ${userId}`)
   const [dropDownOpen, setDropDownOpen] = useState({
     dropdown1: false,
     dropdown2: false,

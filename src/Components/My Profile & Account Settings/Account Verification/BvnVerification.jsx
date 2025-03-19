@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useEffect, useRef} from 'react';
 import { ContextProvider } from '../../Context';
 import '../../../App.css';
 import styles from "../../../Components/Dashboard/DashboardComponents/TransferComponent/transfer.module.css";
@@ -16,10 +16,10 @@ import Spinner from '../../Dashboard/DashboardComponents/DataTopUpPage/DataBundl
 import axios from "axios";
 import PendingImage from"../ProfileImages/Pending.svg"
 import NotVerifiedImage from "../ProfileImages/NotVerifiedIcon.svg";
+import { GetLocalStorage } from '../../LocalStorage/LocalStorage';
 
 
-
-export default function BvnVerification() {
+export default function BvnVerification(Data) {
     const {bvnVerificationOpen} = useContext(ContextProvider);
     const {verificationOpen} = useContext(ContextProvider);
    const {bvnVerifyImage, setBvnVerifyImage} = useContext(ContextProvider);
@@ -39,34 +39,22 @@ export default function BvnVerification() {
 const {full_name} = customerDetail;
 
 
-  //  const checkBvnform = () =>{
-
-  //   if(bvnNumber && bvnPhone && bvnDateOfBirth ){
-  //      setBvnVerifyImage(bvnVerifiedSuccess);
-  //       setBvnStatus('Verified');
-  //         setTimeout(()=>{
-  //     setBvnPopVerified(true);
-  //     setErrorVerify(false);
-  //     },2000)
-  //       }
-  //  else   {
-  //   setBvnVerifyImage(NotVerifiedIcon);
-  //      setBvnStatus('Not Verified');
-  //      setErrorVerify(true);
-  //       }
-  //   }
-    //======= SETTING DATE FORMAT FOR DATE OF BIRTH =====
-// let inputDate = "20231129";
-// let  trimmedDate = inputDate.trim();
-// let formattedDate = trimmedDate.replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3');
-// console.log(formattedDate);
 
 
-const getTokenNeeded =(Token)=> {
-  Token=localStorage.getItem("getToken")
-  //console.log(Token)
-  console.log(Token)
-  return Token;
+const BvnFunctionState=async(url, alertSuccess, buttonStateSuccess, ErrorMessage)=>{
+  if(bvnButtonState === "Verify"){
+    url='https://aremxyplug.onrender.com/api/v1/verify';
+    buttonStateSuccess = "Create Virtual Account";
+    ErrorMessage = "Bvn Verification Failed"
+  
+  }else{
+    url= 'https://aremxyplug.onrender.com/api/v1/virtualacc';
+    alertSuccess = "Virtual Account Created Successfully"
+    buttonStateSuccess = "Verified";
+    ErrorMessage = "Virtual Account Creation Failed"
+ }
+  checkBvnform(url, alertSuccess,buttonStateSuccess, ErrorMessage)
+
 }
 
 
@@ -91,8 +79,12 @@ const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc'
       if (response.status === 201 || 200 ) {
           setBvnVerifyImage(bvnVerifiedSuccess);
           setBvnStatus('Verified');
+          setBvnPopVerified(true);
           setBvnNumber(bvnNumber);
-          alert("Account Created Successfully");
+
+         alert(alertSuccess)
+          setBvnButtonState(buttonStateSuccess)
+
         } 
       
     }catch(error){
@@ -113,6 +105,17 @@ const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc'
   }
 };
 
+//To GetLocalStorage Data
+const ValueRef = useRef()
+
+  Data = GetLocalStorage()
+  useEffect(() => {
+    ValueRef.current = Data;
+    console.log(ValueRef);
+  console.log(Data);
+   
+    // eslint-disable-next-line
+  }, []);
 
 
   
@@ -188,7 +191,7 @@ src={Arrowright} alt="" />
     lg:py-[15.5px] lg:pl-[10px] border-[0.4px]
     leading-[10.4px] 
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px]'>
-      {full_name ? full_name : "Null"}
+      {full_name ? full_name : Data.UserFullName}
    </div>
   </div>
   {/* PHONE NUMBER */}
@@ -275,8 +278,10 @@ src={Arrowright} alt="" />
 </div>
 
 <div className='flex flex-col md:gap-[15px] gap-[10px] justify-start'>
-        <button disabled={ bvnStatus === "Verified" } onClick={()=>{
-          checkBvnform()
+
+        <button  onClick={()=>{
+         BvnFunctionState()
+
         }}
          className={`lg:py-[13px] md:py-[7.868px] py-[16.531px] rounded-[4.241px] w-[100%] md:w-[150px] lg:w-[163px] lg:rounded-[12px] bg-[#04177F]
          font-[600] text-[13px] leading-[18px] lg:text-[16px] text-center text-white lg:leading-[24px ${bvnStatus === "Verified" ? "bg-gray-600": "bg-[#04177F]" }`}>
