@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useRef, useEffect} from 'react';
 import '../../../App.css';
 import styles from "../../../Components/Dashboard/DashboardComponents/TransferComponent/transfer.module.css";
 import { ContextProvider } from '../../Context';
@@ -18,7 +18,8 @@ import Success from "../ProfileImages/success.gif"
 import QueryId from '../ProfileImages/IdCustomerQuery.svg';
 import axios from "axios";
 import { Loader } from '../../Loader/Loader';
-export default function IdVerification() {
+import { GetLocalStorage } from '../../LocalStorage/LocalStorage';
+export default function IdVerification(Data) {
   const {verificationOpen, loginAuthorisation} = useContext(ContextProvider)
     const {idVerificationOpen} = useContext(ContextProvider);
     const {dropDownGender, setDropDownGender} = useContext(ContextProvider);
@@ -130,7 +131,13 @@ const checkform = async(Token) =>{
      
     }
   }
-
+// UseEffect to retain the current data object of getLocalStorage data()
+const VerifyRef = useRef()
+Data = GetLocalStorage();
+useEffect(()=> {
+  VerifyRef.current = Data;
+ 
+},[Data])
   
   return (
     <div className='flex flex-col '>
@@ -187,7 +194,7 @@ const checkform = async(Token) =>{
     lg:py-[15.5px] lg:pl-[10px] border-[0.4px]
     text-[8px] leading-[10.4px] 
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px]'>
-     {full_name ? full_name : 'Hi user'}
+    { full_name ? full_name :  `${Data.UserFullName ? Data.UserFullName : "Hi User"}` }
    </div>
     </div>
     {/* Gender */}

@@ -14,7 +14,7 @@ export const SetLocalStorage = (email, fullName,phone, username,bankName, accoun
 }
 
 
-export const GetLocalStorage = (Data) => {
+export const GetLocalStorage = () => {
 const UserEmail = JSON.parse(localStorage.getItem("userEmail"));
  const UserPhone= JSON.parse(localStorage.getItem("userPhone"))
   const  UserFullName = JSON.parse(localStorage.getItem("userFullName"))
@@ -37,5 +37,5 @@ export const RemoveLocalStorage = () => {
  localStorage.removeItem("userBankName");
  localStorage.removeItem("aremxyAccountName")
  localStorage.removeItem("aremxyAccountNumber");
- localStorage.removeItem("aremxyuserId");
+ localStorage.removeItem("aremxyUserId");
 }

@@ -985,11 +985,13 @@ const [virtualAccCreated, setVirtualAccCreated] = useState(false);
   const [loginAuthorisation, setLoginAuthorisation] = useState(false);
   const [twoStepVerificationSuccess, setTwoStepVerificationSuccess]= useState(false);
  const [customerDetail, setCustomerDetail] = useState({});
- const [bankNameState, setBankNameState] = useState("Null")
-     const [accountNameState, setAccountNameState] = useState("Null")
-     const [accountNumberState, setAccountNumberState] = useState("Null");
- const {full_name} = customerDetail;
- // Function to check if the user has a virtual account
+
+ 
+ // Use Ref hook for user Deatils
+
+const [bankNameState, setBankNameState] = useState("")
+const [accountNameState, setAccountNameState] = useState("")
+const [accountNumberState, setAccountNumberState] = useState("");
 
 
   const hold = {
@@ -1001,7 +1003,7 @@ const [virtualAccCreated, setVirtualAccCreated] = useState(false);
       accountNameState,
        setAccountNameState,
         accountNumberState, 
-        setAccountNumberState,   
+       setAccountNumberState,   
     // ==================
     tfImage, settfImage,
     withdrawImage,
@@ -1623,7 +1625,6 @@ bvnButtonState,
     setLoginAuthorisation,
     twoStepVerificationSuccess, 
     setTwoStepVerificationSuccess,
-    
    
   }
 return (

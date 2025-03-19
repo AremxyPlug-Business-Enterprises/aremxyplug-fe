@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useRef} from 'react';
 import '../../App.css';
 import { DashBoardLayout } from '../Dashboard/Layout/DashBoardLayout';
 import ProfileHero from './ProfileHero';
@@ -9,9 +9,9 @@ import BusinessKYC from './My Profile Page/BusinessKYC';
 import ChangePin from './My Profile Page/ChangePin';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import { GetLocalStorage } from '../LocalStorage/LocalStorage';
 
-
-export default function ProfileSettingsMain() {
+export default function ProfileSettingsMain(Data) {
 const {profilePage, setProfilePage} = useContext(ContextProvider);
 const {verificationOpen, setVerificationOpen} = useContext(ContextProvider);
 const {setBusinessPopUp} = useContext(ContextProvider);
@@ -36,6 +36,16 @@ useEffect(() => {
 }, [location.state, setProfilePage, setIdVerificationOpen, setVerificationOpen, setAuthenticationOpen, setBvnVerificationOpen, setAccountUpgrade]);
 
 
+// UseEffect to get Users Data
+const ValueRef = useRef()
+
+  Data = GetLocalStorage()
+  useEffect(() => {
+    ValueRef.current = Data;
+    console.log(ValueRef);
+  console.log(Data);
+    
+  }, []);
 
 
 
@@ -131,7 +141,7 @@ return (
 
         </div>
        
-        <ProfileUpdate/>
+        <ProfileUpdate fullName = {Data.UserFullName} Email ={Data.UserEmail} Phone ={Data.UserPhone} Username ={Data.aremxyUsername} />
         <AccountVerficationPage/>
         <BusinessKYC/>
         <ChangePin/>

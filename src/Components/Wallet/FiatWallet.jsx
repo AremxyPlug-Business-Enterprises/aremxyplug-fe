@@ -2,16 +2,16 @@ import React, { useState } from 'react';
 import { DashBoardLayout } from '../Dashboard/Layout/DashBoardLayout';
 import { Link } from 'react-router-dom';
 import { BsEyeFill } from 'react-icons/bs'
-import { Navigate } from 'react-router-dom'
-import AddWallet from './AddWallet';
+import { Navigate } from 'react-router-dom';
 import CurrencyConversionModal from '../CurrencyConversion/CurrencyConversionModal';
- 
+ import ImageCurrencyNotAvailable from "../Add&SelectRecipient/RecipientImages/CurrencyNotAvaliable.svg";
+ import { Modal } from '../Screens/Modal/Modal';
 const FiatWallet = () => {
   const [showModal, setShowModal] = useState(false);
   const [clicked, setClicked] = useState(false);
   const [currentId, setCurrentId] = useState(null);
   const [selection, setSelection] = useState('');
-  const [addWalletModal, setAddWalletModal] = useState(false);
+  const [currencyNotAvailable, setCurrencyNotAvailable] = useState(false);
   const [inputValue, setInputValue] = useState('');
 
   const amt = 10000
@@ -71,7 +71,7 @@ const FiatWallet = () => {
 
       const closeModal =()=> {
         setShowModal(false);
-        refresh();
+
       }
       // check if the countries in the list is among the already existing countries
       const notAvailableCountries = ['United States', 'United Kingdom', 'Kenya', 'Australia', 'European Union']
@@ -121,20 +121,28 @@ const FiatWallet = () => {
                 </div>
                 <h2>Add Money</h2>
               </Link>
-              <button className='bg-primary text-white text-[7px] leading-[10.5px] md:text-[9.17px] md:leading-[13.75px] rounded-[4px] md:rounded-[7px] flex items-center lg:text-[16px] lg:leading-[24px] justify-center py-[5px] w-[85.5px] md:w-[124px] lg:w-[231px] lg:py-[10px]' onClick={() => setAddWalletModal(true)}>
+              <button className='bg-primary text-white text-[7px] leading-[10.5px] md:text-[9.17px] md:leading-[13.75px] rounded-[4px] md:rounded-[7px] flex items-center lg:text-[16px]
+               lg:leading-[24px] justify-center py-[5px] 
+               w-[85.5px] md:w-[124px] lg:w-[231px] lg:py-[10px]' onClick={() => setCurrencyNotAvailable(true)}>
                 <div className='mr-1 w-[11.38px] h-[11.38px] md:w-[19.48px] md:h-[19.48px] lg:w-[34px] lg:h-[34px]'>
                   <img src="./Images/wallet/wallet-add.png" alt="" className='object-cover w-full'/>
                 </div>
                 <h2>Add Wallets</h2>
               </button>
-              <Link to='/currencyConversion'>
-                <button className='bg-primary text-white text-[7px] leading-[10.5px] md:text-[9.17px] md:leading-[13.75px] rounded-[4px] md:rounded-[7px] flex items-center lg:text-[16px] lg:leading-[24px] justify-center py-[5px] w-[85.5px] md:w-[124px] lg:w-[231px] lg:py-[10px]'>
-                <div className='mr-1 w-[11.38px] h-[11.38px] md:w-[19.48px] md:h-[19.48px] lg:w-[34px] lg:h-[34px]'>
+              <div>
+                <button onClick={()=>{
+                  setCurrencyNotAvailable(true)
+                }} className='bg-primary text-white text-[7px] leading-[10.5px] md:text-[9.17px]
+                 md:leading-[13.75px] rounded-[4px] md:rounded-[7px] flex
+                  items-center lg:text-[16px] lg:leading-[24px] justify-center
+                   py-[5px] w-[85.5px] md:w-[124px] lg:w-[231px] lg:py-[10px]'>
+                <div className='mr-1 w-[11.38px] h-[11.38px] md:w-[19.48px]
+                 md:h-[19.48px] lg:w-[34px] lg:h-[34px]'>
                   <img src="./Images/wallet/recovery-convert.png" alt="" className='object-cover w-full'/>
                 </div>
                 <h2>Convert Currency</h2>
               </button>
-              </Link>
+              </div>
             </div>
             <div className="mt-[25.39px] md:mt-[35px] lg:mt-[60px] px-2 py-2 flex flex-col gap-2" style={{boxShadow: `0px 0px 6.666667461395264px 0px rgba(0, 0, 0, 0.25)`}}>
               <div className='flex justify-between items-baseline font-bold text-[8px] leading-[12px] md:text-[9.17px] md:leading-[11.92px] border-b py-1 lg:text-[16px] lg:leading-[24px]'>
@@ -187,7 +195,44 @@ const FiatWallet = () => {
             <Link to={`/ContactUs`} className='text-[7px] leading-[10.5px] text-white bg-primary px-2 py-1 rounded-full lg:text-[8px]'>Contact Us</Link>
           </div>
         </div>
-        {addWalletModal && <AddWallet onClick={() => setAddWalletModal(false)}/>}
+        {currencyNotAvailable && (
+              <Modal>
+              <div className='h-[100%] w-[100%] md:justify-center flex 
+              items-center  md:mx-[0px] mx-[19px]'>
+         <div className='flex flex-col  lg:w-[38%] md:w-[45%] h-[269px]  w-[100%] lg:h-[420px] bg-white lg:rounded-[20px]
+          shadow-[0px_0px_6.933px_0px_rgba(0,0,0,0.25)] md:rounded-[7.153px] rounded-[8px]
+          md:shadow-[0px_0px_11.922px_0px_rgba(0, 0, 0, 0.25)] 
+          lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] lg:py-[23px] lg:px-[0px] py-[10px] px-[24px]'>
+          <div className='flex flex-col lg:w-[100%] lg:gap-[20px] gap-[10px]  justify-between 
+           items-center h-[100%]'>
+  
+   <h2 className='font-[600] text-[#04177F] text-center text-[10px] leading-[14px] lg:text-[16.647px] lg:leading-[24px]'>
+   This Feature is Currently Not Available.
+    </h2>
+    <img src={ImageCurrencyNotAvailable} alt=""
+    className='lg:w-[217.263px] lg:h-[187.283px] h-[100px] w-[100px]'/>
+    
+ 
+  <div className='flex flex-col-reverse md:flex-row lg:gap-[125px] md:gap-[60px] w-[100%] 
+  justify-end gap-[20px] lg:pr-[30px]'>
+  <button onClick={() => {
+    setCurrencyNotAvailable(false);
+  }}
+className='bg-[#04177F] w-[100%] lg:py-[10px] md:py-[9px] py-[13px] md:w-[97.02px]
+ text-white text-center rounded-[4.41px]
+ lg:rounded-[12px] font-[600] lg:text-[16px] lg:leading-[24px]'>
+  Okay
+</button>
+<p className='font-[600] text-center text-[10px] leading-[14px] 
+lg:text-[16px] lg:leading-[24px] md:self-start self-end'>
+Coming Soon...
+</p>
+</div>
+  </div>
+         </div>
+              </div>
+              </Modal>
+            )}
         </> : 
         <>
           { notAvailable ? 
@@ -232,13 +277,19 @@ const FiatWallet = () => {
                     </div>
                     <h2>Add Money</h2>
                   </button>
-                  <button className='bg-primary text-white text-[7px] leading-[10.5px] md:text-[9.17px] md:leading-[13.75px] rounded-[4px] md:rounded-[7px] flex items-center lg:text-[16px] lg:leading-[24px] justify-center py-[5px] w-[85.5px] md:w-[124px] lg:w-[231px] lg:py-[10px]' onClick={() => setAddWalletModal(true)}>
+                  <button className='bg-primary text-white text-[7px] leading-[10.5px] md:text-[9.17px] md:leading-[13.75px] rounded-[4px]
+                   md:rounded-[7px] flex items-center lg:text-[16px] lg:leading-[24px] justify-center py-[5px] w-[85.5px] md:w-[124px]
+                    lg:w-[231px] lg:py-[10px]' onClick={() => setCurrencyNotAvailable(true)}>
                     <div className='mr-1 w-[11.38px] h-[11.38px] md:w-[19.48px] md:h-[19.48px] lg:w-[34px] lg:h-[34px]'>
                       <img src="./Images/wallet/wallet-add.png" alt="" className='object-cover w-full'/>
                     </div>
                     <h2>Add Wallets</h2>
                   </button>
-                  <button className='bg-primary text-white text-[7px] leading-[10.5px] md:text-[9.17px] md:leading-[13.75px] rounded-[4px] md:rounded-[7px] flex items-center lg:text-[16px] lg:leading-[24px] justify-center py-[5px] w-[85.5px] md:w-[124px] lg:w-[231px] lg:py-[10px]'>
+                  <button onClick={()=>{
+                  setCurrencyNotAvailable(true)
+                }}
+                  className='bg-primary text-white text-[7px] leading-[10.5px] md:text-[9.17px]
+                   md:leading-[13.75px] rounded-[4px] md:rounded-[7px] flex items-center lg:text-[16px] lg:leading-[24px] justify-center py-[5px] w-[85.5px] md:w-[124px] lg:w-[231px] lg:py-[10px]'>
                     <div className='mr-1 w-[11.38px] h-[11.38px] md:w-[19.48px] md:h-[19.48px] lg:w-[34px] lg:h-[34px]'>
                       <img src="./Images/wallet/recovery-convert.png" alt="" className='object-cover w-full'/>
                     </div>
@@ -298,7 +349,45 @@ const FiatWallet = () => {
                 <Link to={`/ContactUs`} className='text-[7px] leading-[10.5px] text-white bg-primary px-2 py-1 rounded-full lg:text-[8px]'>Contact Us</Link>
               </div>
             </div>
-            {addWalletModal && <AddWallet onClick={() => setAddWalletModal(false)}/>}
+           {currencyNotAvailable && (
+                <Modal>
+                <div className='h-[100%] w-[100%] md:justify-center flex 
+                items-center  md:mx-[0px] mx-[19px]'>
+           <div className='flex flex-col  lg:w-[38%] md:w-[45%] h-[269px]  w-[100%] lg:h-[420px] bg-white lg:rounded-[20px]
+            shadow-[0px_0px_6.933px_0px_rgba(0,0,0,0.25)] md:rounded-[7.153px] rounded-[8px]
+            md:shadow-[0px_0px_11.922px_0px_rgba(0, 0, 0, 0.25)] 
+            lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] lg:py-[23px] lg:px-[0px] py-[10px] px-[24px]'>
+            <div className='flex flex-col lg:w-[100%] lg:gap-[20px] gap-[10px]  justify-between 
+             items-center h-[100%]'>
+    
+     <h2 className='font-[600] text-[#04177F] text-center text-[10px] leading-[14px] lg:text-[16.647px] lg:leading-[24px]'>
+     This Feature is Currently Not Available.
+      </h2>
+      <img src={ImageCurrencyNotAvailable} alt=""
+      className='lg:w-[217.263px] lg:h-[187.283px] h-[100px] w-[100px]'/>
+      
+   
+    <div className='flex flex-col-reverse md:flex-row lg:gap-[125px] md:gap-[60px] w-[100%] 
+    justify-end gap-[20px] lg:pr-[30px]'>
+    <button onClick={() => {
+      setCurrencyNotAvailable(false);
+    }}
+  className='bg-[#04177F] w-[100%] lg:py-[10px] md:py-[9px] py-[13px] md:w-[97.02px]
+   text-white text-center rounded-[4.41px]
+   lg:rounded-[12px] font-[600] lg:text-[16px] lg:leading-[24px]'>
+    Okay
+  </button>
+  <p className='font-[600] text-center text-[10px] leading-[14px] 
+  lg:text-[16px] lg:leading-[24px] md:self-start self-end'>
+  Coming Soon...
+  </p>
+  </div>
+    </div>
+           </div>
+                </div>
+                </Modal>
+              )}
+          
             { showModal && 
               <CurrencyConversionModal 
                 title='Fiat Wallet'

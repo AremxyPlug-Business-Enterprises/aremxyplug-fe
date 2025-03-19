@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { ContextProvider } from "../../Context";
 import styles from "./component.module.css";
 import "../DashboardComponents/DataTopUpPage/DataTopUp.css";
+import NoRecordImage from "../../Add&SelectRecipient/RecipientImages/NoRecordImage.svg";
 // import arrows from "../../WalletSummaryPage/assets/arrow-square-right1.svg";
 // import arrows2 from "../../WalletSummaryPage/assets/arrow-square-right2.png";
 // import arrows3 from "../../WalletSummaryPage/assets/arrow-square-right3.svg";
@@ -172,6 +173,13 @@ const TransactionHistory = () => {
     return transaction.status === selectedStatus;
   });
 
+//Variable types to handle the filtering of the recent transaction history
+//which is viewed or displays the transaction receipt
+const AssumedResponseFromBackend = []
+
+
+
+
   return (
     <>
       {/* ======Mobile View==== */}
@@ -186,7 +194,8 @@ const TransactionHistory = () => {
             className="h-full md:hidden flex flex-col mt-9  w-full px-[20px] pb-[5px] border-x-[1.2px] border-b-[1.2px]
               border-gray-500 border-opacity-[25%] my-[50px] shadow-md"
           >
-            {filteredTransactions.map((transaction, index) => (
+            {AssumedResponseFromBackend.length > 1 ? (
+            filteredTransactions.map((transaction, index) => (
               <div key={index}>
                 <Link
                   to={`/${
@@ -283,7 +292,12 @@ const TransactionHistory = () => {
                   </div>
                 </Link>
               </div>
-            ))}
+            ))
+          ) :  <div className='flex justify-center '>
+          <img src={NoRecordImage} alt="" 
+              className='lg:w-[517px] lg:h-[456px]'/>
+              </div>}
+
 
             <div className="flex justify-center text-center gap-[20px] mt-[15px] mb-[30px]">
               <p className="text-[8px]  font-[500] leading-[9.1px] mt-[5px]">
@@ -332,7 +346,10 @@ const TransactionHistory = () => {
             <div>Status</div>
           </div>
 
-          {filteredTransactions.map((transaction, index) => (
+
+
+{AssumedResponseFromBackend.length > 1 ? (
+          filteredTransactions.map((transaction, index) => (
             <div key={index}>
               <Link
                 to={`/${
@@ -423,11 +440,14 @@ const TransactionHistory = () => {
                 </div>
               </Link>
             </div>
-          ))}
+          ))
+) : (
+<div className='flex justify-center '>
+<img src={NoRecordImage} alt="" 
+    className='lg:w-[517px] lg:h-[456px]'/>
+    </div>)}
 
-          <div className="md:text-center md:border-[1px] md:mt-[50px] md:mx-[43%] md:shadow-md hidden md:block">
-            <p className="md:text-[#707070] md:text-[10px]">---The End---</p>
-          </div>
+        
 
           <div
             className={`transaction2 md:flex md:justify-center md:pb-[30px]`}
