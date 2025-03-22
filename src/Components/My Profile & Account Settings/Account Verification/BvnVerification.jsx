@@ -12,15 +12,15 @@ import PopUpGreenDeskTop from "../ProfileImages/PopUpGreenDeskTop.svg"
 import Success from "../ProfileImages/success.gif";
 import BvnQueryImage from '../ProfileImages/Bvnqueryimage.svg';
 import BvnMessageImage from '../ProfileImages/BvnMessageImage.svg';
-import Spinner from '../../Dashboard/DashboardComponents/DataTopUpPage/DataBundles/MtnDataTopUpBundle/Spinner';
 import axios from "axios";
 import PendingImage from"../ProfileImages/Pending.svg"
 import NotVerifiedImage from "../ProfileImages/NotVerifiedIcon.svg";
 import { GetLocalStorage } from '../../LocalStorage/LocalStorage';
+import { Loader } from '../../Loader/Loader';
 
 
 export default function BvnVerification(Data) {
-    const {bvnVerificationOpen} = useContext(ContextProvider);
+    const {bvnVerificationOpen, virtualAccCreated} = useContext(ContextProvider);
     const {verificationOpen} = useContext(ContextProvider);
    const {bvnVerifyImage, setBvnVerifyImage} = useContext(ContextProvider);
    const {bvnStatus, setBvnStatus} = useContext(ContextProvider);
@@ -40,54 +40,64 @@ const {full_name} = customerDetail;
 
 
 
-const BvnFunctionState=async(url, alertSuccess, buttonStateSuccess, ErrorMessage)=>{
+const BvnFunctionState= async(url,data, alertSuccess, buttonStateSuccess, ErrorMessage,
+   ifStatement, PendingImageFxn, PendingText, verifyBvnImage, statusBvn, verifyPopBvn )=>{
   if(bvnButtonState === "Verify"){
     url='https://aremxyplug.onrender.com/api/v1/verify';
     buttonStateSuccess = "Create Virtual Account";
-    ErrorMessage = "Bvn Verification Failed"
-  
+    ErrorMessage = "Bvn Verification Failed";
+    ifStatement = bvnDateOfBirth && bvnNumber && bvnPhone;
+    PendingImageFxn =()=> setBvnVerifyImage(PendingImage);
+    PendingText =()=> setBvnStatus("Pending");
+    verifyBvnImage =()=> setBvnVerifyImage(bvnVerifiedSuccess);
+    statusBvn = ()=>setBvnStatus('Verified');
+    verifyPopBvn =()=> setBvnPopVerified(true);
+    data = {
+      bvn: bvnNumber.toString(),
+    };
   }else{
     url= 'https://aremxyplug.onrender.com/api/v1/virtualacc';
-    alertSuccess = "Virtual Account Created Successfully"
-    buttonStateSuccess = "Verified";
-    ErrorMessage = "Virtual Account Creation Failed"
+    alertSuccess =() => alert("Virtual Account Created Successfully");
+    buttonStateSuccess = "Virtual Account Created";
+    ErrorMessage = "Virtual Account Creation Failed";
+   ifStatement = bvnStatus === "Verified";
+   
  }
-  checkBvnform(url, alertSuccess,buttonStateSuccess, ErrorMessage)
+  checkBvnform(url,data, alertSuccess,buttonStateSuccess, ErrorMessage, 
+    ifStatement, PendingImageFxn, PendingText, verifyBvnImage, statusBvn, verifyPopBvn)
 }
 
 
 
-const checkBvnform = async(url, alertSuccess, buttonStateSuccess, ErrorMessage)=>{
+const checkBvnform = async(url,data, alertSuccess, buttonStateSuccess, ErrorMessage, 
+  ifStatement, PendingImageFxn, PendingText, verifyBvnImage, statusBvn, verifyPopBvn)=>{
  const authToken = localStorage.getItem("authorisedLogin")
- console.log(authToken)
-  if (bvnNumber){
+ const getToken = localStorage.getItem("getToken")
+  if (ifStatement){
     setLoading(true);
-    const data = {
-      bvn: bvnNumber.toString(),
-    };
-
+  
    // console.log(data)
    try{
-    setBvnVerifyImage(PendingImage)
-    setBvnStatus("Pending")
+    PendingImageFxn();
+    PendingText();
         const response = await axios.post(url, data, {headers : {"Content-Type" : "application/json",
-    Authorization : authToken 
+    Authorization : authToken || getToken
     }})
   
       if (response.status === 201 || 200 ) {
-          setBvnVerifyImage(bvnVerifiedSuccess);
-          setBvnStatus('Verified');
-          setBvnPopVerified(true);
-          setBvnNumber(bvnNumber);
-         alert(alertSuccess)
-          setBvnButtonState(buttonStateSuccess)
+           setBvnNumber(bvnNumber);
+           verifyBvnImage();
+            statusBvn();
+             verifyPopBvn();
+          alertSuccess();
+          setBvnButtonState(buttonStateSuccess);
         } 
       
     }catch(error){
      if(error.status === 401 || 400){
         alert(ErrorMessage);
-        setBvnVerifyImage(NotVerifiedImage)
-        setBvnStatus("Not Verified")
+       // setBvnVerifyImage(NotVerifiedImage)
+       // setBvnStatus("Not Verified");
           }
         else if(error.status === 500){
           alert('Error:', "INTERNAL_SERVER_ERROR");
@@ -98,6 +108,8 @@ const checkBvnform = async(url, alertSuccess, buttonStateSuccess, ErrorMessage)=
         setLoading(false);
         //alert("success")
       }
+  }else{
+    setErrorVerify(true);
   }
 };
 
@@ -146,15 +158,7 @@ src={Arrowright} alt="" />
           </h2>
      </div>
     </div>
-
-
-
-    {loading && (
-            <Modal>
-              <Spinner size="large" />
-            </Modal>
-          )}
-  {/*  */}
+ {/*  */}
     <div className='flex md:gap-[14px] gap-[11px] items-center'>
         <h2 className='font-[500] text-[#7E7E7E] text-[8px] leading-[10.4px]
         lg:text-[16px] lg:leading-[20.8px]'>
@@ -187,7 +191,7 @@ src={Arrowright} alt="" />
     lg:py-[15.5px] lg:pl-[10px] border-[0.4px]
     text-[8px] leading-[10.4px] 
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px]'>
-      {full_name ? full_name : Data.UserFullName}
+      {full_name ? full_name : Data.UserFullName ? Data.UserFullName : "Hi user"}
    </div>
   </div>
   {/* PHONE NUMBER */}
@@ -274,11 +278,11 @@ src={Arrowright} alt="" />
 </div>
 
 <div className='flex flex-col md:gap-[15px] gap-[10px] justify-start'>
-        <button  onClick={()=>{
+        <button disabled={virtualAccCreated ? true : false}  onClick={()=>{
          BvnFunctionState()
         }}
          className={`lg:py-[13px] md:py-[7.868px] py-[16.531px] rounded-[4.241px] w-[100%] md:w-[150px] lg:w-[163px] lg:rounded-[12px] bg-[#04177F]
-         font-[600] text-[12px] leading-[18px] lg:text-[16px] text-center text-white lg:leading-[24px ${bvnStatus === "Verified" ? "bg-gray-600": "bg-[#04177F]" }`}>
+         font-[600] text-[12px] leading-[18px] lg:text-[16px] text-center text-white lg:leading-[24px ${virtualAccCreated ? "bg-slate-400" : "bg-[#04177F]" }`}>
        {bvnButtonState}
         </button>
         { errorVerify  && (
@@ -400,7 +404,6 @@ text-[13px] leading-[16.4px]'>
                   e.preventDefault();
                   setBvnPopVerified(false);
                   setBvnDateOfBirth('');
-                  setBvnNumber('');
                   setBvnPhone('');
                 }}
                 className={`my-[5%] bg-[#04177f] w-[90%] flex 
@@ -443,6 +446,11 @@ text-[13px] leading-[16.4px]'>
         )}
         </div>
         )}
+        {loading && (
+            <Modal>
+             <Loader/>
+            </Modal>
+          )}
  
       </div>
   )
