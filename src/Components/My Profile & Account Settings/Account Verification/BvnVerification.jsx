@@ -32,7 +32,7 @@ export default function BvnVerification(Data) {
    const [bvnPhoneMessage, setBvnPhoneMessage] = useState(false);
    const [errorVerify, setErrorVerify] = useState(false);
    const {toggleSideBar , customerDetail, setLoginAuthorisation, loginAuthorisation,
-    virtualAccCreated
+    virtualAccCreated, bvnButtonState, setBvnButtonState
    } = useContext(ContextProvider);
    const [loading, setLoading] = useState(false);
 
@@ -60,8 +60,8 @@ const BvnFunctionState=async(url, alertSuccess, buttonStateSuccess, ErrorMessage
 
 
 
-const checkBvnform = async(Token) => {
-  getTokenNeeded(Token)
+const checkBvnform = async(url, alertSuccess,buttonStateSuccess, ErrorMessage) => {
+ 
   if (bvnNumber){
     setLoading(true);
     const data = {
@@ -73,7 +73,7 @@ const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc'
     setBvnVerifyImage(PendingImage)
     setBvnStatus("Pending")
         const response = await axios.post(url, data, {headers : {"Content-Type" : "application/json",
-    Authorization : Token || loginAuthorisation
+    Authorization :   loginAuthorisation
     }})
   
       if (response.status === 201 || 200 ) {
