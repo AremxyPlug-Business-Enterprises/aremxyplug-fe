@@ -117,6 +117,9 @@ const ValueRef = useRef()
   };
 
  //console.log(Data); 
+console.log(` BankName:   ${bankNameState.length}`);
+console.log(`AccountName   ${accountNameState.length}`);
+console.log(`AccountNumber    ${accountNumberState.length}`);
 
 
 // USEEEFECT TO RETURN USERS BANK DETAILS

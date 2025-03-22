@@ -58,7 +58,7 @@ export default function ProfileUpdate({fullName, Email, Phone, Username}) {
      font-[600] lg:text-[16px] lg:leading-[20.8px] cursor-default'>
       Country
      </h2>
-     <div className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-xl p-4 sm:p-3 sm:text-lg flex lg:gap-[7px] gap-[5px] items-center h-[30px] md:h-[40px] lg:h-[51px]
+     <div className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-xl sm:p-3 sm:text-lg flex lg:gap-[7px] gap-[5px] items-center h-[30px] md:h-[40px] lg:h-[51px]
       pl-[5.868px]  lg:pl-[10px] 
       border-[0.4px] border-[#9C9C9C] 
      border-[solid] cursor-default'>
@@ -79,7 +79,7 @@ export default function ProfileUpdate({fullName, Email, Phone, Username}) {
      lg:text-[16px] lg:leading-[20.8px] cursor-default'>
         Full Name
      </h2>
-    <div className='flex  items-center h-[30px] md:h-[40px] lg:h-[51px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-xl p-4 sm:p-3 sm:text-lg 
+    <div className='flex  items-center h-[30px] md:h-[40px] lg:h-[51px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-xl  sm:p-3 sm:text-lg 
       pl-[5.868px]   lg:pl-[10px] 
       border-[0.4px] border-[#9C9C9C] 
      border-[solid] '>
@@ -106,7 +106,7 @@ export default function ProfileUpdate({fullName, Email, Phone, Username}) {
      lg:leading-[20.8px] cursor-default'>
        UserName
      </h2>
-     <div className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-xl p-4 sm:p-3 sm:text-lg flex  items-center h-[30px] md:h-[40px] lg:h-[51px] 
+     <div className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-xl  sm:p-3 sm:text-lg flex  items-center h-[30px] md:h-[40px] lg:h-[51px] 
        pl-[5.868px]  lg:pl-[10px] 
       border-[0.4px] border-[#9C9C9C] 
      border-[solid]'>
@@ -127,7 +127,7 @@ export default function ProfileUpdate({fullName, Email, Phone, Username}) {
      lg:text-[16px] lg:leading-[20.8px] '>
      Email
      </h2>
-     <div className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-xl p-4 sm:p-3 sm:text-lg flex  items-center h-[30px] md:h-[40px] lg:h-[51px]
+     <div className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-xl  sm:p-3 sm:text-lg flex  items-center h-[30px] md:h-[40px] lg:h-[51px]
         pl-[5.868px]  lg:pl-[10px] 
       border-[0.4px] border-[#9C9C9C] 
      border-[solid]'>
@@ -155,7 +155,7 @@ export default function ProfileUpdate({fullName, Email, Phone, Username}) {
       {/* first part */}
     <div className='flex flex-col 
         md:flex md:flex-row gap-[20px] md:gap-[12.91px] lg:gap-[22px] w-[100%] '>
-     <div className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-xl p-4 sm:p-3 sm:text-lg flex  md:w-[50%] items-center md:h-[40px] h-[30px]
+     <div className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-xl sm:p-3 sm:text-lg flex  md:w-[50%] items-center md:h-[40px] h-[30px]
       lg:h-[51px] pl-[5.586px] lg:pl-[10px] 
       border-[0.4px] border-[#9C9C9C] 
      border-[solid]'>
