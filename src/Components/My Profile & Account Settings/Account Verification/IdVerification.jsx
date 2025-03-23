@@ -27,9 +27,10 @@ export default function IdVerification(Data) {
     const {dropDownGender, setDropDownGender} = useContext(ContextProvider);
     const [idDropDown, setIdDropDown]= useState(false);
     const {idAddress, setIdAddress} = useContext(ContextProvider);
-    const {idState, setIdState} = useContext(ContextProvider);
+    // const {idState, setIdState} = useContext(ContextProvider);
     const {idCity, setIdCity} = useContext(ContextProvider);
-    const {idLGA, setIdLGA} = useContext(ContextProvider);
+    const {idCountry, setIdCountry} = useContext(ContextProvider);
+    // const {idLGA, setIdLGA} = useContext(ContextProvider);
     const {idNumber, setIdNumber} = useContext(ContextProvider);
     const {idPostalCode, setIdPostalCode} = useContext(ContextProvider);
    const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
@@ -38,7 +39,8 @@ export default function IdVerification(Data) {
     const [idFrontView, setIdFrontView] = useState(false);
     const [idBackView, setIdBackView] = useState(false);
       const [idPopVerified, setIdPopVerified] = useState(false);
-      const [idCustomerQuery, setIdCustomerQuery] = useState(false);
+  const [idCustomerQuery, setIdCustomerQuery] = useState(false);
+    const [idDateOfBirth, setIdDateOfBirth] = useState("");
 const [loading, setLoading] =useState(false);
  const {toggleSideBar, customerDetail} = useContext(ContextProvider);
   const {full_name} =  customerDetail
@@ -61,10 +63,15 @@ const [loading, setLoading] =useState(false);
     setIdDropDown(!idDropDown);
     document.querySelector('.idDrop').classList.toggle('DropIt');
    }
-  //  CUSTOM VALIDITY FORHOUSE ADDRESS
+  //  CUSTOM VALIDITY FOR HOUSE ADDRESS
   const validAddress = (e) => {
     const addAddress = e.target.value;
     e.target.setCustomValidity(addAddress ? '' : 'Your Address must be entered');
+  }
+  //  CUSTOM VALIDITY FOR COUNTRY
+  const validCountry  = (e) => {
+    const addCity = e.target.value;
+    e.target.setCustomValidity(addCity ? '' : 'Your City must be entered')
   }
   //  CUSTOM VALIDITY FOR CITY
   const validCity  = (e) => {
@@ -72,20 +79,20 @@ const [loading, setLoading] =useState(false);
     e.target.setCustomValidity(addCity ? '' : 'Your City must be entered')
   }
   // CUSTOM VALIDITY FOR STATE
-  const validState  = (e) => {
-    const addState = e.target.value;
-    e.target.setCustomValidity(addState ? '' : 'Your State must be entered')
-  }
+  // const validState  = (e) => {
+  //   const addState = e.target.value;
+  //   e.target.setCustomValidity(addState ? '' : 'Your State must be entered')
+  // }
   //CUSTOM VALIDITY FOR ID
   const validId = (e) => {
     const addId = e.target.value;
    e.target.setCustomValidity(addId ? '' : 'Your ID must be inputed and must be 11 digits');
  }
  //CUSTOM VALIDITY FOR LGA
- const validLGA = (e) => {
-  const addLGA = e.target.value;
- e.target.setCustomValidity(addLGA ? '' : 'This is required to proceed');
-}
+//  const validLGA = (e) => {
+//   const addLGA = e.target.value;
+//  e.target.setCustomValidity(addLGA ? '' : 'This is required to proceed');
+// }
 
 const checkform = async() =>{
 const getToken = localStorage.getItem("getToken");
@@ -94,8 +101,9 @@ const authToken = localStorage.getItem("authorisedLogin");
     idResult &&
     idAddress &&
     idCity &&
-    idState &&
-    idLGA &&
+    idCountry &&
+    // idState &&
+    // idLGA &&
     
     idNumber){
       try {
@@ -207,9 +215,9 @@ useEffect(()=> {
      Gender
     </h2>
     <div onClick={chooseGender}
-    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px]sm:p-3 sm:text-lg flex justify-between font-[400] py-[15.33px] pl-[5.867px] pr-[10.917px]
+    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[12px] sm:p-3 sm:text-lg flex justify-between font-[400] py-[15.33px] pl-[5.867px] pr-[10.917px]
      lg:pl-[16px] lg:py-[15.5px] lg:pr-[10px]
-     border-[0.4px] border-[#9C9C9C] border-[solid]'>
+     border-[0.4px] border-[#9C9C9C]'>
       <h2 className='text-[#000] font-[400] leading-[10.4px]
       lg:text-[16px] lg:leading-[20.8px]'>
         {genderResult}
@@ -261,9 +269,30 @@ useEffect(()=> {
     placeholder=''
     type="text" onInvalid={validAddress}  required/>
    
-    </div>
+                </div>
+                
+                {/* Date of Birth / BVN */}
+                <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]">
+                  <h2
+                    className="font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] 
+   lg:text-[16px] lg:leading-[20.8px]"
+                  >
+                    D.O.B
+                  </h2>
+                  <input
+                    value={idDateOfBirth}
+                    onChange={(e) => {
+                      setIdDateOfBirth(e.target.value);
+                    }}
+                    className="mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[8px] sm:p-3 sm:text-lg font-normal py-[15.33px] pl-[5.867px] pr-[10.917px] lg:pl-[16px] lg:py-[15.5px] lg:pr-[10px] border-[0.4px] border-[#9C9C9C] bg-white leading-[10.4px]
+      lg:text-[16px] lg:leading-[20.8px] focus:outline-none cursor-pointer"
+                    type="date"
+                    id="dob"
+                    name="dob"
+                  />
+              </div>
     {/* STATE */}
-    <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
+    {/* <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
    <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
     State or Province
@@ -280,11 +309,30 @@ useEffect(()=> {
     placeholder='' 
     type="text" onInvalid={validState} required/>
    
-    </div>
+    </div> */}
 
       </div>
       {/* CITY AND LGA */}
       <div className='flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]'>
+        {/* COUNTRY */}
+      <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
+   <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
+   lg:text-[16px] lg:leading-[20.8px]'>
+    Country
+    </h2>
+    <input 
+    value={idCountry}
+    onChange={(e) => {
+    setIdCountry(e.target.value)
+}}
+    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px] sm:p-3 sm:text-lg font-[500] py-[10.33px] pl-[5.867px] 
+    lg:py-[15.5px] lg:pl-[10px] border-[0.4px]
+     leading-[10.4px] 
+     border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px] focus:outline-none'
+    placeholder=''
+    type="text" onInvalid={validCountry}   required/>
+   
+    </div>
         {/* CITY */}
       <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
    <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
@@ -305,7 +353,7 @@ useEffect(()=> {
    
     </div>
     {/* LGA */}
-    <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
+    {/* <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
    <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
      L.G.A
@@ -323,14 +371,14 @@ useEffect(()=> {
     placeholder=''
     type="text"  onInvalid={validLGA}  required/>
    
-    </div>
+    </div> */}
       </div>
       {/* POSTAL CODE */}
      
       <div className='flex flex-col md:w-[49%] w-[100%] md:gap-[10px] gap-[5.868px]'>
    <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
-    Postal Code
+    Postal Code(optional)
     </h2>
     <input onInput={(e => {
        const numbersOnly = e.target.value.replace(/\D/g, '');
@@ -345,7 +393,7 @@ useEffect(()=> {
      leading-[10.4px] 
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px] focus:outline-none'
     placeholder=''
-    type="text" inputMode='numeric' required/>
+    type="text" inputMode='numeric'/>
     </div>
 
     {/* ID TYPE & ID NUMBER */}
@@ -660,8 +708,9 @@ Confirming your identity ensures that the person accessing the account is indeed
                  setGenderResult('');
                   setIdAddress('')
                   setIdCity('')
-                  setIdState('')
-                  setIdLGA('')
+                  setIdCountry('')
+                  // setIdState('')
+                  // setIdLGA('')
                   setIdPostalCode('')
                   setIdNumber('');
                   setIdResult('');
