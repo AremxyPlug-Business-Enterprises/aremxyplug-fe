@@ -16,12 +16,12 @@ import PopUpGreenTab from "../ProfileImages/PopUpGreenTab.svg"
 import PopUpGreenDeskTop from "../ProfileImages/PopUpGreenDeskTop.svg"
 import Success from "../ProfileImages/success.gif"
 import QueryId from '../ProfileImages/IdCustomerQuery.svg';
-
 import axios from "axios";
 import { Loader } from '../../Loader/Loader';
 import { GetLocalStorage } from '../../LocalStorage/LocalStorage';
+import idSuccess from "../ProfileImages/user-tick.svg";
 export default function IdVerification(Data) {
-  const {verificationOpen, loginAuthorisation} = useContext(ContextProvider)
+  const {verificationOpen} = useContext(ContextProvider)
 
     const {idVerificationOpen} = useContext(ContextProvider);
     const {dropDownGender, setDropDownGender} = useContext(ContextProvider);
@@ -39,7 +39,7 @@ export default function IdVerification(Data) {
     const [idBackView, setIdBackView] = useState(false);
       const [idPopVerified, setIdPopVerified] = useState(false);
       const [idCustomerQuery, setIdCustomerQuery] = useState(false);
-
+const [loading, setLoading] =useState(false);
  const {toggleSideBar, customerDetail} = useContext(ContextProvider);
   const {full_name} =  customerDetail
     // Genders
@@ -51,7 +51,11 @@ export default function IdVerification(Data) {
    }
 
    // ID 
-   const idType = ['National ID', 'International Passport', 'Permanent Voters Card', 'Driver’s License','NIN Slip'];
+   const idTypes =[{ idType :'National ID', Status : "Active", id : 1},
+    { idType :'International Passport' ,Status : "Inactive", id : 2},
+    {idType :'Permanent Voters Card', Status : "Inactive", id: 3},
+    {idType : 'Driver’s License', Status : "Inactive", id: 4}];
+
    const [idResult, setIdResult] = useState('');
    const chooseId = () => {
     setIdDropDown(!idDropDown);
@@ -83,29 +87,49 @@ export default function IdVerification(Data) {
  e.target.setCustomValidity(addLGA ? '' : 'This is required to proceed');
 }
 
-const checkform = () =>{
-
+const checkform = async() =>{
+const getToken = localStorage.getItem("getToken");
+const authToken = localStorage.getItem("authorisedLogin");
   if(genderResult &&
     idResult &&
     idAddress &&
     idCity &&
     idState &&
     idLGA &&
-    idPostalCode &&
+    
     idNumber){
-     setVerifyImage(Pending);
-      setIdStatus('Pending');
-      setErrorSubmit(false);
-    setTimeout(()=> {
-     setIdPopVerified(true);
-     
-    },2000)
+      try {
+        setLoading(true);
+        setVerifyImage(Pending);
+  
+        const body ={
+        nin: idNumber
+        }
+        const url ="https://aremxyplug.onrender.com/api/v1/verify"
+        const response = await axios.post(url, body, {headers:{"Content-Type": "application/json", Authorization : getToken || authToken}})
+        if(response.status === 200 || 201){
+          setVerifyImage(idSuccess);
+          setIdPopVerified(true);
+          setIdStatus("Verified")
+        }
+      }catch(error) {
+        
+       if(error.status === 400 || 401 || 404){
+        alert("Verification failed")
+        setVerifyImage(NotVerifiedIcon)
+        console.log(`ERROR : ${error}`)
+       }else if(error.status === 500){
+        alert("INTERNAL_SERVER_ERROR");
+        setVerifyImage(NotVerifiedIcon);
+       }
+      }finally{
+        setLoading(false)
+      }
   }
  else   {
   
      setErrorSubmit(true);
-     setVerifyImage(NotVerifiedIcon);
-     setIdStatus('Not Verified');
+    
      
     }
   }
@@ -131,16 +155,16 @@ useEffect(()=> {
     <img src={verifyImage} alt="" 
      className={`h-[24px] w-[24px] md:h-[44px] md:w-[44px] lg:h-[62px] lg:w-[62px]`}/>
      <div className='flex flex-col gap-[4.694px] md:gap-[8px] justify-center'>
-        <h2 className='font-[500] lg:text-[12px] lg:leading-[15.6px] text-[12.042px] leading-[10.45px]'>
+        <h2 className='font-[500] lg:text-[12px] lg:leading-[15.6px] text-[9.042px] leading-[12.45px]'>
           ID Status</h2>
-        <h2 className='font-[500] lg:text-[12px] lg:leading-[15.6px] text-[8.042px] leading-[10.45px]'>
+        <h2 className='font-[500] lg:text-[12px] lg:leading-[15.6px] text-[8.042px] leading-[12.45px]'>
           {idStatus}
           </h2>
      </div>
     </div>
   {/*  */}
     <div className='flex md:gap-[14px] gap-[11px] items-center'>
-        <h2 className='font-[500] text-[#7E7E7E] text-[11px] leading-[10.4px]
+        <h2 className='font-[500] text-[#7E7E7E] text-[11px] leading-[14.4px]
         lg:text-[16px] lg:leading-[20.8px]'>
         Why Account Verification with my ID Document?
        </h2>
@@ -183,7 +207,7 @@ useEffect(()=> {
      Gender
     </h2>
     <div onClick={chooseGender}
-    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px] p-4 sm:p-3 sm:text-lg flex justify-between font-[400] py-[15.33px] pl-[5.867px] pr-[10.917px]
+    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px]sm:p-3 sm:text-lg flex justify-between font-[400] py-[15.33px] pl-[5.867px] pr-[10.917px]
      lg:pl-[16px] lg:py-[15.5px] lg:pr-[10px]
      border-[0.4px] border-[#9C9C9C] border-[solid]'>
       <h2 className='text-[#000] font-[400] leading-[10.4px]
@@ -229,7 +253,7 @@ useEffect(()=> {
     onChange={(e) =>{
       setIdAddress(e.target.value)
     }}
-    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px] p-4 sm:p-3 sm:text-lg font-[500] py-[10.33px] pl-[5.867px] 
+    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px] sm:p-3 sm:text-lg font-[500] py-[10.33px] pl-[5.867px] 
     lg:py-[15.5px] lg:pl-[10px] border-[0.4px]
      leading-[10.4px] 
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px]
@@ -249,7 +273,7 @@ useEffect(()=> {
     onChange={(e) =>{
       setIdState(e.target.value)
     }}
-    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px] p-4 sm:p-3 sm:text-lg font-[500] py-[10.33px] pl-[5.867px] 
+    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px] sm:p-3 sm:text-lg font-[500] py-[10.33px] pl-[5.867px] 
     lg:py-[15.5px] lg:pl-[10px] border-[0.4px]
      leading-[10.4px] 
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px] focus:outline-none'
@@ -272,7 +296,7 @@ useEffect(()=> {
     onChange={(e) => {
     setIdCity(e.target.value)
 }}
-    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px] p-4 sm:p-3 sm:text-lg font-[500] py-[10.33px] pl-[5.867px] 
+    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px] sm:p-3 sm:text-lg font-[500] py-[10.33px] pl-[5.867px] 
     lg:py-[15.5px] lg:pl-[10px] border-[0.4px]
      leading-[10.4px] 
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px] focus:outline-none'
@@ -291,7 +315,7 @@ useEffect(()=> {
     onChange={(e) => {
       setIdLGA(e.target.value);
     }}
-    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px] p-4 sm:p-3 sm:text-lg font-[500] py-[10.33px] pl-[5.867px] 
+    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px]  sm:p-3 sm:text-lg font-[500] py-[10.33px] pl-[5.867px] 
     lg:py-[15.5px] lg:pl-[10px] border-[0.4px] 
      leading-[10.4px] 
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px]
@@ -316,7 +340,7 @@ useEffect(()=> {
     onChange={(e) => {
       setIdPostalCode(e.target.value);
     }}
-    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px] p-4 sm:p-3 sm:text-lg font-[500] py-[10.33px] pl-[5.867px] 
+    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px] sm:p-3 sm:text-lg font-[500] py-[10.33px] pl-[5.867px] 
     lg:py-[15.5px] lg:pl-[10px] border-[0.4px]
      leading-[10.4px] 
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px] focus:outline-none'
@@ -333,7 +357,7 @@ useEffect(()=> {
      ID Type
     </h2>
     <div onClick={chooseId}
-    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px] p-4 sm:p-3 sm:text-lg flex justify-between font-[500] py-[10.33px] pl-[5.867px] pr-[10.917px]
+    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px]  sm:p-3 sm:text-lg flex justify-between font-[500] py-[10.33px] pl-[5.867px] pr-[10.917px]
      lg:pl-[16px] lg:py-[15.5px] lg:pr-[10px]
      border-[0.4px] border-[#9C9C9C] border-[solid]'>
       <h2 className='text-[#000] font-[400]  leading-[10.4px]
@@ -346,24 +370,48 @@ useEffect(()=> {
       {idDropDown  && (
         <div 
         className=' absolute lg:top-[90px] md:top-[60px] top-[70px] z-[5] flex flex-col w-[100%]'>
-      {(idType.map(info => {
+      {idTypes.map(info => {
         return (
-          <h2 onClick={() => {
-            setIdResult(info);
-             setIdDropDown(false);
-             document.querySelector('.idDrop').classList.remove('DropIt');
-          }}
-           className='font-[400] text-[#7C7C7C] text-[12px] leading-[10.4px]
-           lg:text-[16px] lg:leading-[20.8px] md:py-[20px] py-[15px] pl-[10px]
-          lg:pl-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
-          md:shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)] bg-white cursor-pointer'>
-        {info}
-          </h2>
-        )
-      }))}
-        </div>
+          <div 
+           key={info.id} onClick={() => {
+            setIdResult(()=> {
+             if(info.id ===1 ){
+            return info.idType;
+           
+            
+          }
+            else if(info.id !== 1 && idResult === ""){
+            return ""
+              }else if(  (idResult === "National ID") &&(info.id === 2 || info.id ===3|| info.id === 4)){
+               return "National ID"
+               
+             }
+           })
+              setIdDropDown((e)=>{
+           return false ? info.id === 1 : true
+              });
+                document.querySelector('.idDrop').classList.remove('DropIt');
+      
+            }}
+        className ={`font-[500] px-2 flex justify-between text-[#7C7C7C] text-[8px] leading-[10.4px]
+            lg:text-[16px] lg:leading-[20.8px] md:py-[20px] py-[15px] pl-[10px]
+           lg:pl-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] md:shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)]  
+           cursor-pointer ${info.Status === "Inactive" ? "bg-gray-300 cursor-not-allowed" : "bg-white"} `}>
+            <h2 className="font-[500] text-[#7C7C7C] text-[8px] leading-[10.4px]
+            lg:text-[16px] lg:leading-[20.8px]
+            ">{info.idType}</h2>
+            <p
+             className={`font-[500] text-[#7C7C7C] text-[8px] leading-[10.4px]
+            lg:text-[16px] lg:leading-[20.8px] ${info.Status === "Inactive" ? "text-red-500": "text-green-500"}`}>
+     {info.Status}
+            </p>
+           </div>
+         
+         )
+       })}
+         </div>
       )}
-   </div>
+      </div>
   
     {/*  */}
     <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
@@ -379,7 +427,7 @@ useEffect(()=> {
     onChange={(e) => {
       setIdNumber(e.target.value)
     }}
-    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px] p-4 sm:p-3 sm:text-lg font-[500] py-[10.33px] pl-[5.867px] 
+    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px] sm:p-3 sm:text-lg font-[500] py-[10.33px] pl-[5.867px] 
     lg:py-[15.5px] lg:pl-[10px] border-[0.4px] 
      leading-[10.4px] 
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px]
@@ -395,10 +443,10 @@ useEffect(()=> {
     <div onClick={()=> {
      setIdFrontView(true);
    }} 
-    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px] p-4 sm:p-3 sm:text-lg flex  lg:py-[14px] py-[8.771px] pr-[20.785px] pl-[20px]
+    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px]  sm:p-3 sm:text-lg flex  lg:py-[14px] py-[8.771px] pr-[20.785px] pl-[20px]
      lg:pr-[28px] lg:pl-[16px] md:gap-[14px] gap-[8.21px]
     border-[0.4px] border-[solid] border-[#9C9C9C] cursor-pointer'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
+   <h2 className='font-[600] text-[#7E7E7E] text-[11px] leading-[14.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
    Upload ID Front View
    </h2>
@@ -409,10 +457,10 @@ useEffect(()=> {
 <div onClick={() => {
     setIdBackView(true);
    }}
- className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px] p-4 sm:p-3 sm:text-lg flex py-[8.771px] pr-[20.785px] pl-[20px]
+ className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px]  sm:p-3 sm:text-lg flex py-[8.771px] pr-[20.785px] pl-[20px]
   lg:py-[14px] lg:pr-[28px] lg:pl-[16px] gap-[8.21px] md:gap-[14px]
 border-[0.4px] border-[solid] border-[#9C9C9C] cursor-pointer'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
+   <h2 className='font-[600] text-[#7E7E7E] text-[11px] leading-[14.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
    Upload Back View
    </h2>
@@ -628,6 +676,11 @@ Confirming your identity ensures that the person accessing the account is indeed
           </Modal>
         )}
         </div>
+        )}
+        {loading && (
+   <Modal>
+    <Loader/>
+   </Modal>
         )}
         </div>
   )

@@ -244,7 +244,7 @@ useEffect(() => {
    <div className='relative flex flex-col w-[100%] gap-[5.868px] md:w-1/2 md:gap-[5.868px]  
    lg:gap-[10px]'>
     {/* header */}
-    <label className='font-[600] text-[#7E7E7E] text-[14px] leading-[10.4px]  
+    <label className='md:font-[600] font-[400] text-[#7E7E7E] text-[14px] leading-[10.4px]  
      md:text-[9.389px] md:leading-[12.206px]
     lg:text-[16px] lg:leading-[20.8px]'>
     Confirm Exam Type
@@ -285,7 +285,7 @@ font-[400] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px]
              document.querySelector('.Examdrop').classList.remove('DropIt');
              console.log(e);
               })}
-              className='pb-[20px] pt-[20px] md:pb-0 md:pt-0 font-[400] text-[13.2px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
+              className='pb-[20px] pt-[20px] md:pb-[14px] md:pt-[14px] font-[400] text-[13.2px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
          md:text-[13.227px] md:leading-[17.195px] 
          shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] bg-white
          lg:text-[16px] lg:leading-[20.8px] cursor-pointer hover:bg-[#EDEAEA]' 
@@ -305,7 +305,7 @@ font-[400] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px]
     <div className='relative gap-[5.868px] flex flex-col w-[100%] md:w-1/2  
     md:gap-[5.868px] lg:gap-[10px] '>
     {/* header */}
-    <label className=' font-[600] text-[#7E7E7E] text-[14px] leading-[10.4px]
+    <label className=' md:font-[600] font-[400] text-[#7E7E7E] text-[14px] leading-[10.4px]
       md:text-[9.389px] md:leading-[12.206px]
      lg:text-[16px] lg:leading-[20.8px]'>
     Quantity
@@ -350,7 +350,7 @@ font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
               document.querySelector('.imgdrop').classList.remove('DropIt');
          
               })}
-              className='pb-[20px] md:pb-0 pt-[20px] md:pt-0 font-[400] text-[13.5px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
+              className='pb-[20px] md:pb-[14px] md:pt-[14px] pt-[20px]  font-[400] text-[13.5px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
          md:text-[13.227px] md:leading-[17.195px] w-[100%] bg-[white] 
        shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
          lg:text-[16px] lg:leading-[20.8px] cursor-pointer hover:bg-[#EDEAEA]' 
@@ -371,7 +371,7 @@ font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
     {/* LeftSide */}
      <div className=' container-phone gap-[5.868px] 
      flex flex-col md:w-1/2 md:gap-[10px] z-0'>
-   <label className='font-[400] text-[#7E7E7E] text-[15px] leading-[10.4px]
+   <label className='md:font-[600] font-[400] text-[#7E7E7E] text-[15px] leading-[10.4px]
      md:text-[9.389px] md:leading-[12.206px]
    lg:text-[16px] lg:leading-[20.8px] '>
   Phone Number
@@ -418,7 +418,7 @@ font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
         
    {/* right-side */}
    <div className='flex flex-col gap-[5.868px] md:w-1/2 md:gap-[10px]'>
-   <label className='font-[400] text-[15px] leading-[10.4px]
+   <label className='md:font-[600] font-[400] text-[15px] leading-[10.4px]
    text-[#7E7E7E]  md:text-[9.389px] md:leading-[12.206px]
    lg:text-[16px] lg:leading-[20.8px]'>
    Email
@@ -458,7 +458,7 @@ font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
 {/* Amount Step /Leftside */}
    <div className='flex flex-col gap-[5.868px] w-[100%] md:w-1/2 md:gap-[10px]'>
     {/* header */}
-    <label className='font-[400] text-[15px] leading-[10.4px]
+    <label className='md:font-[600] font-[400] text-[15px] leading-[10.4px]
      md:text-[9.389px] md:leading-[12.206px]
      text-[#7E7E7E] lg:text-[16px] lg:leading-[20.8px]'>
     Amount
@@ -483,7 +483,7 @@ font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
     <div className='relative payment-parent gap-[5.868px]
      flex w-[100%] flex-col md:w-1/2 md:gap-[10px]'>
     {/* header */}
-    <label className='font-[400] text-[15px] leading-[10.4px]
+    <label className='md:font-[600] font-[400] text-[15px] leading-[10.4px]
      text-[#7E7E7E]  md:text-[9.389px] md:leading-[12.206px]
      lg:text-[16px] lg:leading-[20.8px]'>
     Payment Method
@@ -539,7 +539,7 @@ font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
           <img className='md:h-[29.27px]  h-[14.27px]' src={methodOption.flag} alt=""/>
 
             <h2 
-              className='pb-[20px] md:pb-0 pt-[20px] md:pt-0 font-[400] text-[13.5px] leading-[10.4px]
+              className='pb-[20px] md:pb-0 md:pt-0 pt-[20px] font-[400] text-[13.5px] leading-[10.4px]
                font-[400] text-[#7C7C7C]  
          md:text-[13.227px] md:leading-[17.195px] 
          lg:text-[16px] lg:leading-[20.8px] self-center cursor-pointer' >

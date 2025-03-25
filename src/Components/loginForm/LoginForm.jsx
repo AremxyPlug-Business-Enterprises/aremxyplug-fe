@@ -160,7 +160,7 @@ const virtualAccountState=()=>{
   if(bank_name && account_no && account_name){
   setBvnVerifyImage(bvnVerifiedSuccess);
   setBvnStatus('Verified');
-  setBvnButtonState("Verified");
+  setBvnButtonState("Virtual Account Created");
   }else{
     setBvnVerifyImage(NotVerifiedIcon);
     setBvnStatus('UnVerified');
@@ -169,8 +169,6 @@ const virtualAccountState=()=>{
 
 //Function to get User Bank Details
 const CheckVirtualAcc = async(authToken) => {
-  
-  
   console.log(`LOGINAUTH :${authToken}`);
 if (authToken) {
 const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc'
@@ -189,10 +187,8 @@ const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc'
         setVirtualAccCreated(virtualAccount);
         if(virtualAccount){
         virtualAccountState();
-
-        }
-        
-      } 
+      }
+     } 
     
   }catch(error){
    if(error.status === 401 || 400){

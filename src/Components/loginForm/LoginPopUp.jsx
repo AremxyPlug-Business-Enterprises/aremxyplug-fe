@@ -9,7 +9,7 @@ import axios from "axios";
 import CloseIcon from '../EducationPins/imagesEducation/close-circle.svg';
 import { Loader } from "../Loader/Loader";
 import { useNavigate } from "react-router-dom";
-import { GetLocalStorage, SetLocalStorage } from "../LocalStorage/LocalStorage";
+import {  SetLocalStorage } from "../LocalStorage/LocalStorage";
 function LoginPopUp() {
   const {
     openTranspin,
@@ -30,12 +30,16 @@ function LoginPopUp() {
       virtualAccCreated,
       setAccountNumberState,
     setBankNameState,
-      setAccountNameState
+     setAccountNameState
 } = useContext(ContextProvider);
 
 const {
   email,
-  phone, username, full_name, id} = customerDetail;
+  phone,
+   username, 
+   full_name, 
+   id
+  } = customerDetail;
 
   const [loading, setLoading] = useState(false);
   const [countdown, setCountdown] = useState(60);
@@ -132,7 +136,6 @@ const handleVerificationOTP = async()=> {
       setTwoStepVerificationSuccess(true);
     setOtp3("");
      setOpen2StepOTP(false);
-  //await CheckVirtualAcc();
     console.log(otp3);
    } 
   }
@@ -141,18 +144,12 @@ const handleVerificationOTP = async()=> {
   //account name and account Number
 const handleAccountDetails =()=> {
   const {bank_name, account_no, account_name} = virtualAccCreated
-  console.log(virtualAccCreated);
+ // console.log(virtualAccCreated);
   setTwoStepVerificationSuccess(false);
- // SetLocalStorage(email, full_name,phone, username, bank_name, account_name, account_no);
   if(virtualAccCreated){
-  
-    setTwoStepVerificationSuccess(false);
+  // setTwoStepVerificationSuccess(false);
     SetLocalStorage(email, full_name,phone, username, bank_name, account_name, account_no, id);
-    if(SetLocalStorage) {
-      console.log("SetLocalStorage has completely ran");
-      GetLocalStorage()
-    }
-    return GetVirtualAccountValue(bank_name, account_name, account_no);
+     GetVirtualAccountValue(bank_name, account_name, account_no);
   }
 }
 

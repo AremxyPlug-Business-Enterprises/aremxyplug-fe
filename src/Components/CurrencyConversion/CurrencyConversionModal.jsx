@@ -1,7 +1,7 @@
 import { Modal } from '../Screens/Modal/Modal';
 import "../CurrencyConversion/currencyConversion.css";
 
-const CurrencyConversionModal = ({title, image, onClick, tag}) => {
+const CurrencyConversionModal = ({title, image, onClick, tag }) => {
   return (
     <Modal>
       <div className="modal-content">
