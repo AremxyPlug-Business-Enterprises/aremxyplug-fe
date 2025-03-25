@@ -23,7 +23,7 @@ import {
   Label,
 } from "recharts";
 
-export const WalletInOutFlows = () => {
+export const WalletInOutFlows = ({className}) => {
   const { volumeValueToggle, isValue, isDarkMode, toggleSideBar } =
     useContext(ContextProvider);
   const [blur, setBlur] = useState(false);
@@ -256,6 +256,7 @@ export const WalletInOutFlows = () => {
         <select
           name="curr"
           id="curr"
+          className={className}
           onChange={handleSelectedOption}
           value={selected}
         >

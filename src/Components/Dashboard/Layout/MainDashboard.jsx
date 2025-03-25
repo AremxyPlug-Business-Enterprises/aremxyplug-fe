@@ -605,7 +605,7 @@ console.log(`AccountNumber    ${accountNumberState.length}`);
           </div>
 
           <QuickFeatures />
-          <WalletInOutFlows />
+          <WalletInOutFlows className={styles.selected} />
           <RecentTransaction />
         </div>
       </div>
