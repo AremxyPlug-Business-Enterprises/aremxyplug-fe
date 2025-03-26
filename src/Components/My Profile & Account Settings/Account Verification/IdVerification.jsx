@@ -107,6 +107,7 @@ const authToken = localStorage.getItem("authorisedLogin");
     
     idNumber){
       try {
+        setErrorSubmit(false);
         setLoading(true);
         setVerifyImage(Pending);
         setIdStatus("Pending");
@@ -119,18 +120,18 @@ const authToken = localStorage.getItem("authorisedLogin");
           setVerifyImage(idSuccess);
           setIdPopVerified(true);
           setIdStatus("Verified");
+
         }
       }catch(error) {
         
        if(error.status === 400 || 401 || 404){
-        alert("Verification failed")
+        alert(" NIN Verification name mismatch or network failure")
         setVerifyImage(NotVerifiedIcon);
         setIdStatus("Not Verified")
         console.log(`ERROR : ${error}`)
        }else if(error.status === 500){
         alert("INTERNAL_SERVER_ERROR");
         setVerifyImage(NotVerifiedIcon);
-        setIdStatus("Verified")
         setIdStatus("Not Verified")
        }
       }finally{
@@ -138,11 +139,8 @@ const authToken = localStorage.getItem("authorisedLogin");
       }
   }
  else   {
-  
-     setErrorSubmit(true);
-    
-     
-    }
+    setErrorSubmit(true);
+  }
   }
 // UseEffect to retain the current data object of getLocalStorage data()
 const VerifyRef = useRef()
@@ -708,15 +706,15 @@ Confirming your identity ensures that the person accessing the account is indeed
                 onClick={(e) => {
                   e.preventDefault();
                   setIdPopVerified(false);
-                 setGenderResult('');
-                  setIdAddress('')
-                  setIdCity('')
+                 setGenderResult(genderResult);
+                  setIdAddress(idAddress)
+                  setIdCity(idCity)
                   setIdCountry('')
                   // setIdState('')
                   // setIdLGA('')
-                  setIdPostalCode('')
-                  setIdNumber('');
-                  setIdResult('');
+                  setIdPostalCode(idPostalCode)
+                  setIdNumber(idNumber);
+                  setIdResult(idResult);
                 }}
                 className={`my-[5%] bg-[#04177f] w-[90%] flex 
                 justify-center items-center mx-auto cursor-pointer text-[10px] 

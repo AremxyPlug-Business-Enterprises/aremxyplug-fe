@@ -57,8 +57,8 @@
     "webpack-dev-server": "^5.0.4"
   },
   "scripts": {
-    "start": "npx cross-env NODE_OPTIONS=--openssl-legacy-provider react-scripts start",
-    "build": "react-scripts build",
+    "start": "npx cross-env NODE_OPTIONS= \"--max-old-space-size=4000 --openssl-legacy-provider\" react-scripts start",
+    "build": "set NODE_OPTIONS=--max-old-space-size=8000 && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

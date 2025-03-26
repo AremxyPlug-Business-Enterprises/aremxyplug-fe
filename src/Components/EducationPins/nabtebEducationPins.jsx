@@ -245,7 +245,7 @@ useEffect(()=> {
    <div className='relative flex flex-col w-[100%] gap-[5.868px] md:w-1/2 md:gap-[5.868px]  
    lg:gap-[10px]'>
     {/* header */}
-    <label className='font-[400] text-[#7E7E7E] text-[14px] leading-[10.4px]  
+    <label className='md:font-[600] font-[400] text-[#7E7E7E] text-[14px] leading-[10.4px]  
      md:text-[9.389px] md:leading-[12.206px]
     lg:text-[16px] lg:leading-[20.8px]'>
     Confirm Exam Type
@@ -285,7 +285,7 @@ className='relative w-[100%] '>
              document.querySelector('.Examdrop').classList.remove('DropIt');
              console.log(e);
               })}
-              className=' pb-[21px] md:pb-0 pt-[21px] md:pt-0 font-[400] text-[13.5px] leading-[10.4px]
+              className=' pb-[21px] md:pb-[14px] md:pt-[14px] pt-[21px] font-[400] text-[13.5px] leading-[10.4px]
            bg-white  md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
          md:text-[13.227px] md:leading-[17.195px]
          shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
@@ -306,7 +306,7 @@ className='relative w-[100%] '>
     <div className='relative gap-[5.868px] flex flex-col w-[100%] md:w-1/2  
     md:gap-[5.868px] lg:gap-[10px] '>
     {/* header */}
-    <label className='font-[600] text-[#7E7E7E] text-[14px] leading-[10.4px]
+    <label className='md:font-[600] font-[400] text-[#7E7E7E] text-[14px] leading-[10.4px]
       md:text-[9.389px] md:leading-[12.206px]
      lg:text-[16px] lg:leading-[20.8px]'>
     Quantity
@@ -349,7 +349,7 @@ className=' relative w-[100%]'>
               document.querySelector('.imgdrop').classList.remove('DropIt');
          
               })}
-              className='pb-[21px] md:pb-0 pt-[21px] md:pt-0 font-[400] text-[13.5px] text-[#7E7E7E] leading-[10.4px] md:py-[15px] 
+              className='pb-[21px] md:pb-[14px] md:pt-[14px] pt-[21px] font-[400] text-[13.5px] text-[#7E7E7E] leading-[10.4px] md:py-[15px] 
               py-[8px] pl-[10px] font-[400]
                bg-white shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
          md:text-[13.227px] md:leading-[17.195px] w-[100%]
@@ -371,7 +371,7 @@ className=' relative w-[100%]'>
     {/* LeftSide */}
      <div className=' container-phone gap-[5.868px] mt-2 md:mt-0
      flex flex-col md:w-1/2 md:gap-[10px] '>
-   <label className='font-[400] text-[#7E7E7E] text-[15px] leading-[10.4px]
+   <label className='md:font-[600] font-[400] text-[#7E7E7E] text-[15px] leading-[10.4px]
      md:text-[9.389px] md:leading-[12.206px]
    lg:text-[16px] lg:leading-[20.8px] '>
   Phone Number
@@ -416,7 +416,7 @@ className=' relative w-[100%]'>
         
    {/* right-side */}
    <div className='flex flex-col gap-[5.868px] md:w-1/2 md:gap-[10px]'>
-   <label className='font-[400] text-[15px] leading-[10.4px]
+   <label className='md:font-[600] font-[400] text-[15px] leading-[10.4px]
    text-[#7E7E7E]  md:text-[9.389px] md:leading-[12.206px]
    lg:text-[16px] lg:leading-[20.8px]'>
    Email
@@ -458,7 +458,7 @@ className=' relative w-[100%]'>
  {/* Amount Step /Leftside */}
    <div className='flex flex-col gap-[5.868px] w-[100%] md:w-1/2 md:gap-[10px]'>
     {/* header */}
-    <label className='font-[600] text-[15px] leading-[10.4px]
+    <label className='md:font-[600] font-[400] text-[15px] leading-[10.4px]
      md:text-[9.389px] md:leading-[12.206px]
      text-[#7E7E7E] lg:text-[16px] lg:leading-[20.8px]'>
     Amount
@@ -481,7 +481,7 @@ className=' relative w-[100%]'>
     <div className=' relative gap-[5.868px]
      flex w-[100%] flex-col md:w-1/2   md:gap-[10px]'>
     {/* header */}
-    <label className='font-[600] text-[15px] leading-[10.4px]
+    <label className='md:font-[600] font-[400] text-[15px] leading-[10.4px]
      text-[#7E7E7E]  md:text-[9.389px] md:leading-[12.206px]
      lg:text-[16px] lg:leading-[20.8px]'>
     Payment Method
@@ -536,7 +536,7 @@ className='relative w-[100%]'>
           <img className='md:h-[29.27px]  h-[14.27px]' src={methodOption.flag} alt=""/>
 
             <h2 
-              className='pb-[18px] md:pb-0 pt-[18px] md:pt-0 font-[400] text-[13px] leading-[10.4px]
+              className='pb-[18px] md:pb-0 md:pt-0 pt-[18px] font-[400] text-[13px] leading-[10.4px]
                font-[400] text-[#7C7C7C] 
          md:text-[13.227px] md:leading-[17.195px] 
          lg:text-[16px] lg:leading-[20.8px] self-center cursor-pointer' >

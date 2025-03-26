@@ -25,7 +25,7 @@ function LoginForm() {
       setCustomerDetail, setVirtualAccCreated, 
         setBankNameState, setAccountNameState, setAccountNumberState,
          verificationOpen, idVerificationOpen, bvnVerificationOpen,
-         setBvnButtonState
+         setBvnButtonState, bankNameState
       } = useContext(ContextProvider);
 
 
@@ -260,7 +260,7 @@ function LoginForm() {
                   await CheckVirtualAcc(authToken, customerDetail, setLoading,
                       setVirtualAccCreated, 
                     setBankNameState, setAccountNameState, setAccountNumberState,
-                     verificationOpen, idVerificationOpen, bvnVerificationOpen, setBvnButtonState);
+                     verificationOpen, idVerificationOpen, bvnVerificationOpen, setBvnButtonState, bankNameState);
           
         },10000)
                   }
@@ -343,7 +343,7 @@ function LoginForm() {
              setTimeout(async()=>{
       await CheckVirtualAcc( authToken, customerDetail, setLoading, setVirtualAccCreated, 
         setBankNameState, setAccountNameState, setAccountNumberState,
-         verificationOpen, idVerificationOpen, bvnVerificationOpen, setBvnButtonState);
+         verificationOpen, idVerificationOpen, bvnVerificationOpen, setBvnButtonState, bankNameState);
              },10000)
              }
               }

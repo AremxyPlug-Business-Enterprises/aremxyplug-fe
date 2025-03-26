@@ -66,7 +66,7 @@ export const GetVirtualAccountValue = ( virtualAccCreated,
 // as necessary
 export const CheckVirtualAcc = async(authToken, customerDetail, setLoading,
     setVirtualAccCreated, setBankNameState, setAccountNameState, setAccountNumberState,
-    verificationOpen, idVerificationOpen, bvnVerificationOpen, setBvnButtonState) => {
+    verificationOpen, idVerificationOpen, bvnVerificationOpen, setBvnButtonState, bankNameState) => {
   
     
 
@@ -86,18 +86,16 @@ if (authToken) {
             setVirtualAccCreated(virtualAccCreated);
             console.log(`CustomerDetail : ${customerDetail}`)
             console.log(`virtualAccCreated : ${virtualAccCreated}`)
-            if(verificationOpen && (bvnVerificationOpen || idVerificationOpen)){
+            if((verificationOpen && (bvnVerificationOpen || idVerificationOpen)) && bankNameState.length > 1){
                 InActionVirtualAccountState(virtualAccCreated,setBankNameState, 
                   setAccountNameState, setAccountNumberState);
                 setBvnButtonState("Virtual Account Created");
-                alert("In Action Running");
                 console.log(response.json);
           }else{
             if(virtualAccCreated){
             SignInVirtualAccountState(customerDetail, virtualAccCreated
                ,setBankNameState, setAccountNameState, setAccountNumberState
             );
-            alert("Sign In virtual account running")
            console.log(response)
          }
           }

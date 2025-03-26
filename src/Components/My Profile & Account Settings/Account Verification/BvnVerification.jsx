@@ -21,8 +21,7 @@ import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 import { Loader } from "../../Loader/Loader";
 
 export default function BvnVerification(Data) {
-  const { bvnVerificationOpen } =
-    useContext(ContextProvider);
+  const { bvnVerificationOpen } = useContext(ContextProvider);
   const { verificationOpen } = useContext(ContextProvider);
   const { bvnVerifyImage, setBvnVerifyImage } = useContext(ContextProvider);
   const { bvnStatus, setBvnStatus } = useContext(ContextProvider);
@@ -40,6 +39,7 @@ export default function BvnVerification(Data) {
   const { dropDownGender, setDropDownGender } = useContext(ContextProvider);
   const [loading, setLoading] = useState(false);
   const [genderResult, setGenderResult] = useState("");
+
 
   const genderInfo = ["Male", "Female", "Others.."];
   const chooseGender = () => {
@@ -71,7 +71,7 @@ export default function BvnVerification(Data) {
     if (bvnButtonState === "Verify") {
       url = "https://aremxyplug.onrender.com/api/v1/verify";
       buttonStateSuccess = "Create Virtual Account";
-      ErrorMessage = "Bvn Verification Failed";
+      ErrorMessage = "Bvn Name Mismatch or network failure";
       ifStatement = bvnDateOfBirth && bvnNumber && bvnPhone;
       PendingImageFxn = () => setBvnVerifyImage(PendingImage);
       PendingText = () => setBvnStatus("Pending");
@@ -82,6 +82,7 @@ export default function BvnVerification(Data) {
         bvn: bvnNumber.toString(),
       };
     } else {
+      data =""
       url = "https://aremxyplug.onrender.com/api/v1/virtualacc";
       alertSuccess = () => alert("Virtual Account Created Successfully");
       buttonStateSuccess = "Virtual Account Created";
@@ -123,26 +124,39 @@ export default function BvnVerification(Data) {
 
       // console.log(data)
       try {
+        if(bvnButtonState === "Verify"){
         PendingImageFxn();
         PendingText();
-        const response = await axios.post(url, data, {
+        }
+        let response;
+        bvnButtonState === "Verify" ?
+       response  = await axios.post(url, data , {
           headers: {
             "Content-Type": "application/json",
             Authorization: authToken || getToken,
           },
-        });
-
-        if (response.status === 201 || 200) {
+        }) : response  = await axios.post(url, data, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: authToken || getToken,
+          },
+        })
+ if (response.status === 201 || 200) {
+  if(bvnButtonState === "Verify"){
           setBvnNumber(bvnNumber);
           verifyBvnImage();
           statusBvn();
           verifyPopBvn();
-          alertSuccess();
           setBvnButtonState(buttonStateSuccess);
-        }
+    }  else{
+            alertSuccess();
+            setBvnButtonState(buttonStateSuccess);
+          }
+ }
       } catch (error) {
         if (error.status === 401 || 400) {
           alert(ErrorMessage);
+          console.log(`ERROR : ${error}`)
           // setBvnVerifyImage(NotVerifiedImage)
           // setBvnStatus("Not Verified");
         } else if (error.status === 500) {
@@ -165,11 +179,7 @@ export default function BvnVerification(Data) {
   Data = GetLocalStorage();
   useEffect(() => {
     ValueRef.current = Data;
-    console.log(ValueRef);
-    console.log(Data);
-
-    // eslint-disable-next-line
-  }, []);
+  }, [Data]);
 
   // console.log(bvnDateOfBirth);
   return (
@@ -612,8 +622,8 @@ text-[13px] leading-[16.4px]"
                   onClick={(e) => {
                     e.preventDefault();
                     setBvnPopVerified(false);
-                    setBvnDateOfBirth("");
-                    setBvnPhone("");
+                    setBvnDateOfBirth(bvnDateOfBirth);
+                    setBvnPhone(bvnPhone);
                   }}
                   className={`my-[5%] bg-[#04177f] w-[90%] flex 
                 justify-center items-center mx-auto cursor-pointer text-[10px] 
