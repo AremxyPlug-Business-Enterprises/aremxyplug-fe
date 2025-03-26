@@ -21,7 +21,7 @@ import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 import { Loader } from "../../Loader/Loader";
 
 export default function BvnVerification(Data) {
-  const { bvnVerificationOpen, virtualAccCreated } =
+  const { bvnVerificationOpen } =
     useContext(ContextProvider);
   const { verificationOpen } = useContext(ContextProvider);
   const { bvnVerifyImage, setBvnVerifyImage } = useContext(ContextProvider);
@@ -34,7 +34,7 @@ export default function BvnVerification(Data) {
   const [bvnPhoneMessage, setBvnPhoneMessage] = useState(false);
   const [errorVerify, setErrorVerify] = useState(false);
   const { bvnButtonState, setBvnButtonState } = useContext(ContextProvider);
-  const { toggleSideBar, customerDetail, setLoginAuthorisation } =
+  const { toggleSideBar, customerDetail, setLoginAuthorisation , bankNameState, accountNumberState, accountNameState} =
     useContext(ContextProvider);
   const {idAddress, setIdAddress} = useContext(ContextProvider);
   const { dropDownGender, setDropDownGender } = useContext(ContextProvider);
@@ -451,13 +451,13 @@ export default function BvnVerification(Data) {
 
               <div className="flex flex-col md:gap-[15px] gap-[10px] justify-start">
                 <button
-                  disabled={virtualAccCreated ? true : false}
+                  disabled={bankNameState.length > 1 && accountNumberState.length > 1 && accountNameState.length > 1 ? true : false}
                   onClick={() => {
                     BvnFunctionState();
                   }}
                   className={`lg:py-[13px] md:py-[7.868px] py-[16.531px] rounded-[4.241px] w-[100%] md:w-[150px] lg:w-[163px] lg:rounded-[12px] bg-[#04177F]
          font-[600] text-[12px] leading-[18px] lg:text-[16px] text-center text-white lg:leading-[24px ${
-           virtualAccCreated ? "bg-slate-400" : "bg-[#04177F]"
+           bankNameState.length > 1 ? "bg-slate-400" : "bg-[#04177F]"
          }`}
                 >
                   {bvnButtonState}

@@ -11,7 +11,7 @@ import { ContextProvider } from '../../Context';
 export default function ProfileUpdate({fullName, Email, Phone, Username}) {
   const {profilePage, customerDetail} = useContext(ContextProvider);
   const {full_name,username, email, phone} = customerDetail;
- console.log(customerDetail);
+ //console.log(customerDetail);
   return (
     <div className=''>
      {profilePage && (

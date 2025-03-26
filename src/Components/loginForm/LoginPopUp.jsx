@@ -94,7 +94,7 @@ const getOtpSmsorEmail = async(url, body)=> {
     phone_number : phone
   }
   url ="https://aremxyplug.onrender.com/api/v1/sms/send"
-  console.log(body.phone);
+ 
   }else if(smsOrEmail === "email" ){
     body = {
       email : email

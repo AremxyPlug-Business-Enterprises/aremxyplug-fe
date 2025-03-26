@@ -18,7 +18,7 @@ export const DashBoardLayout = ({children}, Data) => {
     useEffect(() => {
       ValueRef.current = Data;
       console.log(ValueRef);
-    console.log(Data);
+    //console.log(Data);
       setNav();
       return () => {
         setHideNavbar(false);
