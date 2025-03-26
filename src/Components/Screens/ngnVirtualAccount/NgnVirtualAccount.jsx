@@ -1,12 +1,14 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef, useEffect } from "react";
 import { DashBoardLayout } from "../../Dashboard/Layout/DashBoardLayout";
 import { ContextProvider } from "../../Context";
 import { Link } from "react-router-dom";
+import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
+function NgnVirtualAccount(Data) {
+  const { isDarkMode,
+     bankNameState,
+      accountNameState, 
+      accountNumberState } = useContext(ContextProvider)
 
-function NgnVirtualAccount() {
-  const { isDarkMode, virtualAccCreated } = useContext(ContextProvider)
-const {account_no, account_name, bank_name} = virtualAccCreated
-  const accountNumber = account_no
   const accNoRef = useRef(null);
   const accNameRef = useRef(null);
   const bankNameRef = useRef(null);
@@ -63,6 +65,15 @@ const {account_no, account_name, bank_name} = virtualAccCreated
       alert('Copied to clipboard')})
     .catch((error) => console.log('Unable to copy text', error));
   }
+// To get Data from LocalStorage
+const VerifyRef = useRef()
+Data = GetLocalStorage();
+useEffect(()=> {
+  VerifyRef.current = Data;
+ 
+},[Data])
+
+
 
   return (
     <DashBoardLayout>
@@ -104,16 +115,16 @@ const {account_no, account_name, bank_name} = virtualAccCreated
             <div className="">
               <div className="mb-[8px] lg:mb-[15px] flex lg:gap-x-[20px] gap-x-[15px] font-semibold">
                 <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[15%] md:w-[20%] w-[30%]">BANK NAME</p>
-                <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[85%] md:w-[20%] w-[70%]" ref={bankNameRef}>{bank_name ? bank_name : "Null"}</p>
+                <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[85%] md:w-[20%] w-[70%]" ref={bankNameRef}>{bankNameState ? bankNameState : "Null"}</p>
               </div>
               <div className="mb-[8px] lg:mb-[15px] flex lg:gap-x-[20px] gap-x-[15px] font-semibold">
                 <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[15%] md:w-[20%] w-[30%]">ACCOUNT NAME</p> 
-                <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[85%] md:w-[20%] w-[70%]" ref={accNameRef}>{account_name ? account_name.slice(11) : "Null"}</p>
+                <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[85%] md:w-[20%] w-[70%]" ref={accNameRef}>{accountNameState ? accountNameState.slice(11) : "Null"}</p>
               </div>
               <div className=" flex lg:gap-x-[20px] gap-x-[15px] font-semibold">
                 <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[15%] md:w-[20%] w-[30%]">ACCOUNT NUMBER</p>{" "}
                 <div className="flex items-center lg:w-[85%] md:w-[20%] w-[70%]">
-                  <p className="md:text-[10px] text-[8px] lg:text-[16px]" ref={accNoRef}>{accountNumber ?  formatAccountNumber(accountNumber) : "Null" }</p>
+                  <p className="md:text-[10px] text-[8px] lg:text-[16px]" ref={accNoRef}>{accountNumberState ?  formatAccountNumber(accountNumberState) : "Null" }</p>
                   <button onClick={handleCopyText}>
                     <img
                       src="Images/virtual-account/copy.png"
@@ -130,7 +141,7 @@ const {account_no, account_name, bank_name} = virtualAccCreated
             <Link to='/CardPayment' className='bg-primary text-white text-[7px] leading-[10.5px] rounded-[4px] md:rounded-[7px] md:text-[9.17px] md:leading-[13.75px] flex items-center lg:text-[16px] lg:leading-[24px] justify-center py-[5px] w-[85.5px] md:w-[124px] lg:w-[231px] lg:py-[10px]'>
               <div className='mr-1 w-[11.38px] h-[11.38px] md:w-[19.48px] md:h-[19.48px] lg:w-[34px] lg:h-[34px]'>
                 <img src="./Images/wallet/card-add.png" alt="" className='object-cover w-full'/>
-              </div>================
+              </div>
               <h2>Fund with card</h2>
             </Link>
             <button

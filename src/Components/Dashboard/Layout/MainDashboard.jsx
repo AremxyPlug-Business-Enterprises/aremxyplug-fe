@@ -523,7 +523,7 @@ console.log(`AccountNumber    ${accountNumberState.length}`);
                     isDarkMode ? "border bg-black" : "bg-[#04177f]"
                   } ${styles.viewWallet}`}
                 >
-                  {(bankNameState.length > 4 && accountNameState.length > 4 && accountNumberState.length > 4 )   ? "Verify" : "Verified"}
+                  {(bankNameState.length > 4 && accountNameState.length > 4 && accountNumberState.length > 4 )   ? "Verified" : "Verify"}
                 </button>
               </Link>
             </div>
