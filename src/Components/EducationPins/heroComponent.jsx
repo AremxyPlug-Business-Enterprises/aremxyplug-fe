@@ -11,17 +11,17 @@ export default function HeroComponent() {
         <div className="flex flex-col gap-[5.016px]  w-[80%] lg:gap-[15px] md:gap-[8.802px]">
             {/* header */}
             <h2
-              className="font-[600] leading-[12px] text-[11px] text-[#000] 
+              className="font-[600] leading-[12px] text-[10px] text-[#000] 
      md:text-[14.75px] md:leading-[22px]
       lg:text-[24px] lg:leading-[36px]"
             >
             CHECK YOUR EXAMS RESULT WITH OUR EDUCATION 
-              <br />
+              {/* <br /> */}
               PIN FEATURES.
             </h2>
             {/* sub-text */}
             <p
-              className="font-[400] text-[10px] leading-[9.1px] 
+              className="font-[400] text-[9px] leading-[9.1px] 
       md:text-[9.167px]  md:leading-[11.917px]
       lg:text-[16px] lg:leading-[20.8px]"
             >

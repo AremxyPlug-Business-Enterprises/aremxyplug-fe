@@ -293,7 +293,7 @@ const AirtimeVtu = () => {
                                     <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">{networkName}</h2>
                                 </li>
                             : 
-                                <h2 className='lg:text-[16px] lg:leading-[24px] text-[8px] leading-[12px]'>Select Network</h2>
+                                <h2 className='lg:text-[16px] lg:leading-[24px] text-[15px] leading-[12px]'>Select Network</h2>
                             }
                             <button className='lg:w-6 lg:h-6 w-[11px] h-[11px]' onClick={handleShowList}>
                                 <img src={arrowDown} alt="" className='w-full h-full'/>
@@ -301,7 +301,7 @@ const AirtimeVtu = () => {
                         </div>
                     </div>
                     { showList && 
-                        <div className='border md:rounded-[10px] lg:mt-2 mt-1 rounded-[4px]'>
+                        <div className='border rounded-[10px] lg:mt-2 mt-1 border md:border-[0.4px] rounded-[10px]'>
                             {networkList.map((item) => (
                                 <Network key={item.id} image={item.image} name={item.name} onClick={()=>handleSelectNetwork(item.name, item.image, item.discount)}/>
                             ))}
@@ -309,7 +309,7 @@ const AirtimeVtu = () => {
                     }
                 </div>
                 <div>
-                    <h2 className='lg:text-[16px] lg:leading-[24px] mb-1 text-[8px] leading-[12px]'>Select Product</h2>
+                    <h2 className='lg:text-[16px] lg:leading-[24px] mb-1 text-[15px] leading-[12px]'>Select Product</h2>
                     <div className="border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between">
                         <h2 className='text-[8px] leading-[12px] lg:text-[16px] lg:leading-[24px]'>{selectedProduct ? selectedProduct : 'Select Product'}</h2>
                         <button className='lg:w-6 lg:h-6 w-[11px] h-[11px]' onClick={handleShowProduct}>

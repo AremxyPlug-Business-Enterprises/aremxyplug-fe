@@ -480,9 +480,9 @@ const AirtimeVtu = () => {
                 <div className={styles.airtimeTop}>
                     <div className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] bg-gradient-to-r from-[#73FF9A] to-[#6EDCFF] flex px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px]">
                         <div className="w-[80%] pt-[19px] lg:pt-[20px]">
-                            <h2 className="text-[10px] md:text-[13.75px] font-bold mb-2 lg:text-[24px] lg:mb-4">
+                            <h2 className="text-[12px] md:text-[13.75px] font-bold mb-2 lg:text-[24px] lg:mb-4">
                                 AIRTIME VTU, FAST AND AUTOMATED.</h2>
-                            <h2 className="text-[7px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3">
+                            <h2 className="text-[9px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3">
                                 Top up your mobile sim using our automated airtime vending directly from network providers, enjoy discounts without any hassle or hidden fee.
                             </h2>
                         </div>
@@ -490,7 +490,7 @@ const AirtimeVtu = () => {
                             <img src="./Images/airtimeTopUp/young.png" className="h-full" alt="" />
                         </div>
                     </div>
-                    <div className={styles.containFlex}>
+                    <div className={`${styles.containFlex} !text-[14px] md:!text-base`}>
                         <div className={styles.FlexPut}>
                             <Link to="/select-vtu-recipient">
                                 <div className={styles.conPut}>
@@ -501,7 +501,7 @@ const AirtimeVtu = () => {
                                 </div>
                             </Link>
                         </div>
-                        <div className={styles.FlexPut}>
+                        <div className={`${styles.FlexPut} !text-[15px] md:!text-base`}>
                             <Link to="/add-vtu-recipient">
                                 <div className={styles.conPut}>
                                     <h2>Add Recipient</h2>
@@ -512,7 +512,7 @@ const AirtimeVtu = () => {
                             </Link>
                         </div>
                     </div>
-                    <div className={styles.containFlex1}>
+                    <div className={`${styles.containFlex1} !text-[15px] md:!text-base`}>
                         <div className={styles.FlexPut1} onClick={handleCodes}>
                             <div className={styles.conPut1}>
                                 <h2>Airtime Balance USSD Codes</h2>
@@ -526,20 +526,23 @@ const AirtimeVtu = () => {
                         <div className={styles.mainGridCol}>
                             <div>
                                 <div className={styles.NetworkFlex}>
-                                    <h2 className={styles.head3}>Select Network</h2>
-                                    <div className={styles.input}>
-                                        <div className={styles.output2}>
+                                    <h2 className={`${styles.head3} !text-[15px] md:text-[15px]`}>Select Network</h2>
+                                    <div className={`${styles.input} !h-[44.927px] md:!h-[51px]`}>
+                                    {/* position: relative;
+    top: 14px;
+    left: 10px; */}
+                                        <div className={`${styles.output2} !relative !top-[17px] md:!relative md:!top-base !text-[14px] md:!text-base`}>
                                             {networkName ? (
                                                 <li onClick={handleShowList} className={styles.labelInput}>
                                                     <div className={styles.network}>
-                                                        {networkImage && <img src={networkImage} className=' rounded-full overflow-hidden object-cover' alt="" />}
+                                                        {networkImage && <img src={networkImage} alt="" />}
                                                     </div>
-                                                    <h2 className={styles.head2}>{networkName}</h2>
+                                                    <h2 className={`${styles.head2} !text-[13px] md:!text-[13px]`}>{networkName}</h2>
                                                 </li>
                                             ) : (
-                                                <h2 onClick={handleShowList} className={styles.head6}>Select Network</h2>
+                                                <h2 onClick={handleShowList} className={`${styles.head6} !text-[14px] md:!text-base`}>Select Network</h2>
                                             )}
-                                            <button className={styles.btnDrop} onClick={handleShowList}>
+                                            <button className={`${styles.btnDrop} !text-[14px] md:!text-base`} onClick={handleShowList}>
                                                 <img src={arrowDown} alt="" />
                                             </button>
                                         </div>
@@ -555,14 +558,14 @@ const AirtimeVtu = () => {
                                 }
                             </div>
                             <div>
-                                <h2 className={styles.head3}>Select Product</h2>
-                                <div className={styles.input1}>
+                                <h2 className={`${styles.head3} !text-[15px] md:!text-[15px] `}>Select Product</h2>
+                                <div className={`${styles.input1} !h-[44.927px] md:!h-[51px]`}>
                                     {selectedProduct ?
-                                        <h2 onClick={handleShowProduct} className={styles.span2} required>{selectedProduct}</h2>
+                                        <h2 onClick={handleShowProduct} className={`${styles.span2} !relative !top-[5px] md:!relative md:!top-base !text-[13px] md:!text-[13] !pr-[0] md:pr-[5px]`} required>{selectedProduct}</h2>
                                         :
-                                        <span onClick={handleShowProduct}>Select Product</span>
+                                        <span onClick={handleShowProduct} className='!relative !top-[5px] md:!relative md:!top-base !text-[14px] md:!text-base '>Select Product</span>
                                     }
-                                    <button className={styles.btnDrop} onClick={handleShowProduct} disabled={!selected}>
+                                    <button className={`${styles.btnDrop} !relative !top-[0px] md:!relative md:!top-base !text-[14px] md:!text-base`} onClick={handleShowProduct} disabled={!selected}>
                                         <img src={arrowDown} alt="" />
                                     </button>
                                 </div>
@@ -577,22 +580,22 @@ const AirtimeVtu = () => {
                         </div>
                         <div className={styles.mainGridCol}>
                             <div>
-                                <h2 className={styles.head3}>Discount</h2>
-                                <div className={styles.input2}>
-                                    <h2 className=''>{discount ? `${networkName + ' ' + discount}%` : ''}</h2>
-                                    <div className={styles.disc}>
+                                <h2 className={`${styles.head3} !text-[15px] md:text-base`}>Discount</h2>
+                                <div className={`${styles.input2} !h-[44.927px] md:!h-[57px]`}>
+                                    <h2 className='!relative !top-[6px] md:!relative md:!top-base !text-[13px] md:!text-[13px]'>{discount ? `${networkName + ' ' + discount}%` : ''}</h2>
+                                    <div className={`${styles.disc} !relative !top-[6px] md:!relative md:!top-base !text-[14px] md:text-[13px]`}>
                                         <img src={discountImg} alt="" />
                                     </div>
                                 </div>
                             </div>
                             <div>
-                                <h2 className={styles.head3}>Phone Number <span
-                                    className={styles.span3}><Link to="/select-vtu-recipient"> (Select Recipient) </Link>
+                                <h2 className={`${styles.head3} !text-[15px] md:!text-base`}>Phone Number <span
+                                    className={`${styles.span3} !text-[15px] md:!text-base`}><Link to="/select-vtu-recipient"> (Select Recipient) </Link>
                                 </span></h2>
-                                <div className={styles.input}>
-                                    <div className={styles.output}>
+                                <div className={`${styles.input} !h-[44.927px] md:!h-[50px]`}>
+                                    <div className={`${styles.output} !relative !top-[11px] md:!relative md:!top-[14px] !text-[14px] md:!text-base`}>
                                         <input type='number'
-                                            className={styles.phone} required
+                                            className={`${styles.phone} !text-[14px] md:!top-[14px]`} required
                                             placeholder='Add recipient phone number'
                                             onChange={(event) => {
                                                 handleChange(event);
@@ -604,7 +607,7 @@ const AirtimeVtu = () => {
                                     </div>
                                 </div>
                                 {errors.recipientNumber && (
-                                    <div className="text-[12px] text-red-500 italic lg:text-[14px]">
+                                    <div className="!text-[14px] text-red-500 italic lg:text-[14px]">
                                         {errors.recipientNumber}
                                     </div>
                                 )}
@@ -612,10 +615,10 @@ const AirtimeVtu = () => {
                         </div>
                         <div className={styles.mainGridCol}>
                             <div>
-                                <h2 className={styles.head3}>Recipient Name <span className={styles.span4}>(optional)</span></h2>
-                                <div className={styles.input}>
-                                    <div className={styles.output}>
-                                        <input type='text' className={styles.phone} required placeholder='Add recipient name' onChange={(event) => setRecipientName(event.target.value)} value={recipientName} />
+                                <h2 className={`${styles.head3} !text-[15px] md:!text-base`}>Recipient Name <span className={`${styles.span4} !text-[15px] md:!text-base`}>(optional)</span></h2>
+                                <div className={`${styles.input} !h-[44.927px] md:!h-[51px]`}>
+                                    <div className={`${styles.output} !relative !top-[11px] md:!relative md:!top-base !text-[14px] md:!text-base`}>
+                                        <input type='text' className={`${styles.phone} !text-[14px] md:!text-base`} required placeholder='Add recipient name' onChange={(event) => setRecipientName(event.target.value)} value={recipientName} />
                                         <div className={styles.call}>
                                             <img src={user} alt="" />
                                         </div>
@@ -623,18 +626,18 @@ const AirtimeVtu = () => {
                                 </div>
                             </div>
                             <div>
-                                <h2 className={styles.head3}>Type Amount</h2>
-                                <div className={styles.input}>
-                                    <div className={styles.output}>
-                                        <span className="text-gray-500 relative bottom-[1px]">&#8358;</span>
-                                        <input type='number' placeholder='Type amount' required className={styles.phones} onChange={(event) => setAmount(event.target.value)} value={amount.toLocaleString()} />
-                                        <div className={styles.call}>
+                                <h2 className={`${styles.head3} !text-[15px] md:!text-base`}>Type Amount</h2>
+                                <div className={`${styles.input} !h-[44.927px] md:!h-[56px]`}>
+                                    <div className={`${styles.output} !relative !top-[9px] md:!relative md:!top-base !text-[14px] md:!text-base`}>
+                                        <span className="text-gray-500 relative bottom-[1px] !relative !top-[7px] md:!relative md:!top-base !text-[14px] md:!text-base">&#8358;</span>
+                                        <input type='number' placeholder='Type amount' required className={`${styles.phones} !relative !top-[5px] md:!relative md:!top-base !text-[14px] md:!text-base`} onChange={(event) => setAmount(event.target.value)} value={amount.toLocaleString()} />
+                                        <div className={`${styles.call} !relative !top-[4px] md:!relative md:!top-base !text-[14px] md:!text-base`}>
                                             <img src={money} alt="" />
                                         </div>
                                     </div>
                                 </div>
                                 {errors.amount && (
-                                    <div className="text-[12px] text-red-500 italic lg:text-[14px]">
+                                    <div className="!text-[14px] text-red-500 italic lg:text-[14px]">
                                         {errors.amount}
                                     </div>
                                 )}
@@ -642,10 +645,10 @@ const AirtimeVtu = () => {
                         </div>
                         <div className={styles.mainGridCol}>
                             <div>
-                                <h2 className={styles.head3}>Total Amount</h2>
-                                <div className={styles.input}>
-                                    <div className={styles.output1}>
-                                        <h2>{newAmount ? `NGN${newAmount}` : `Total Amount`}</h2>
+                                <h2 className={`${styles.head3} !text-[15px] md:!text-base`}>Total Amount</h2>
+                                <div className={`${styles.input} !h-[44.927px] md:!h-[56px] `}>
+                                    <div className={`${styles.output1} !relative !top-[17px] md:!relative md:!top-base !text-[14px] md:!text-base`}>
+                                        <h2 className='!text-[14px] md:!text-[13px]'>{newAmount ? `NGN${newAmount}` : `Total Amount`}</h2>
                                         <div className={styles.disc}>
                                             <img src={money} alt="" className='w-full h-full' />
                                         </div>
@@ -654,28 +657,28 @@ const AirtimeVtu = () => {
                             </div>
                             <div>
                                 <div>
-                                    <h2 className={styles.head3}>Payment Method</h2>
-                                    <div className={styles.input1}>
+                                    <h2 className={`${styles.head3} !text-[15px] md:!text-base`}>Payment Method</h2>
+                                    <div className={`${styles.input1} !h-[44.927px] md:!h-[51px]`}>
                                         {paymentSelected ?
                                             <li onClick={handleShowPayment} className={styles.labelInput}>
-                                                <h2 className={styles.head4}>{name}</h2>
-                                                <h2 className={styles.head4}>Wallet({paymentAmount.toLocaleString()}.00)</h2>
+                                                <h2 className={`${styles.head4} !relative !top-[3.8px] md:!relative md:!top-base !text-[14px] md:!text-[13px]`}>{name}</h2>
+                                                <h2 className={`${styles.head4} !relative !top-[3.8px] md:!relative md:!top-base !text-[14px] md:!text-[13px]`}>Wallet({paymentAmount.toLocaleString()}.00)</h2>
                                             </li>
                                             :
-                                            <h2 onClick={handleShowPayment} className={styles.head9}>Select Payment Method</h2>}
+                                            <h2 onClick={handleShowPayment} className={`${styles.head9} !relative !top-[5px] md:!relative md:!top-base !text-[14px] md:!text-base`}>Select Payment Method</h2>}
                                         {paymentSelected ?
-                                            <button className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]" onClick={handleShowPayment}>
-                                                <img src={image} alt="" className='w-full h-full object-cover' />
+                                            <button className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px] !relative !top-[4px] md:!relative md:!top-base !text-[14px] md:!text-base" onClick={handleShowPayment}>
+                                                <img src={image} alt="" className='w-full h-full object-cover ' />
                                             </button>
                                             :
-                                            <button className='lg:w-6 lg:h-6 h-[11px] w-[11px]' onClick={handleShowPayment}>
+                                            <button className='lg:w-6 lg:h-6 h-[11px] w-[11px] !relative !top-[5px] md:!relative md:!top-base !text-[14px] md:!text-base' onClick={handleShowPayment}>
                                                 <img src={arrowDown} alt="" className='w-full h-full' />
                                             </button>
                                         }
                                     </div>
                                 </div>
                                 {showPayment &&
-                                    <div className={styles.colDown}>
+                                    <div className={`${styles.colDown} `}>
                                         {countryList.map((country) => (
                                             <Payment key={country.id} flag={country.flag} code={country.code} amount={country.amount} onClick={() => handleSelectPayment(country.code, country.flag, country.amount)} />
                                         ))}
@@ -685,10 +688,10 @@ const AirtimeVtu = () => {
                         </div>
                     </div>
                     <div className={styles.add}>
-                        <h2>Add to Recipient?</h2>
+                        <h2 className='!text-[13px] md:!text-base'>Add to Recipient?</h2>
                         <div onClick={() => { setAddRecipient(!addRecipient); if (!addRecipient) handleAddRecipient(); }}
-                            className={`w-[15px] h-[6.4px] md:w-[30px] md:h-[12px] lg:w-[50px] lg:h-[22px] lg:rounded-full rounded cursor-pointer ${addRecipient ? "bg-[#77ff60]" : "bg-[#b1b0b0]"}`}>
-                            <div className={`rounded-full w-[7.5px] h-[6.4px] md:w-[14px] md:h-[12px] lg:h-[22px] lg:w-[21px] lg:drop-shadow-md bg-[#fff] ${addRecipient ? "float-right" : "float-left"}`}>
+                            className={`w-[16px] h-[8.4px] md:w-[30px] md:h-[12px] lg:w-[50px] lg:h-[22px] lg:rounded-full rounded cursor-pointer ${addRecipient ? "bg-[#77ff60]" : "bg-[#b1b0b0]"}`}>
+                            <div className={`rounded-full w-[8.5px] h-[7.4px] md:w-[14px] md:h-[12px] lg:h-[22px] lg:w-[21px] lg:drop-shadow-md bg-[#fff] ${addRecipient ? "float-right" : "float-left"}`}>
                             </div>
                         </div>
                         {isLoading && <p>Loading...</p>}

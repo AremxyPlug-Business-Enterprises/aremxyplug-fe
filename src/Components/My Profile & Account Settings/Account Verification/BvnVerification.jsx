@@ -21,22 +21,6 @@ import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 import { Loader } from "../../Loader/Loader";
 
 export default function BvnVerification(Data) {
-<<<<<<< HEAD
-    const {bvnVerificationOpen, virtualAccCreated} = useContext(ContextProvider);
-    const {verificationOpen} = useContext(ContextProvider);
-   const {bvnVerifyImage, setBvnVerifyImage} = useContext(ContextProvider);
-   const {bvnStatus, setBvnStatus} = useContext(ContextProvider);
-   const[bvnDateOfBirth, setBvnDateOfBirth] = useState('');
-   const{ bvnNumber, setBvnNumber} = useContext(ContextProvider);
-   const [bvnQuery, setBvnQuery] = useState(false);
-   const [bvnPhone, setBvnPhone] = useState('');
-   const[bvnPopVerified, setBvnPopVerified] = useState(false);
-   const [bvnPhoneMessage, setBvnPhoneMessage] = useState(false);
-   const [errorVerify, setErrorVerify] = useState(false);
-   const {toggleSideBar , customerDetail, setLoginAuthorisation, bvnButtonState, setBvnButtonState
-   } = useContext(ContextProvider);
-   const [loading, setLoading] = useState(false);
-=======
   const { bvnVerificationOpen, virtualAccCreated } =
     useContext(ContextProvider);
   const { verificationOpen } = useContext(ContextProvider);
@@ -56,7 +40,6 @@ export default function BvnVerification(Data) {
   const { dropDownGender, setDropDownGender } = useContext(ContextProvider);
   const [loading, setLoading] = useState(false);
   const [genderResult, setGenderResult] = useState("");
->>>>>>> 3e68e705ad12c47294690c18fc8c22094d1bca54
 
   const genderInfo = ["Male", "Female", "Others.."];
   const chooseGender = () => {
