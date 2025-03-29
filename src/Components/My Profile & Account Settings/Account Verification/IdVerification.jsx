@@ -107,9 +107,10 @@ const authToken = localStorage.getItem("authorisedLogin");
     
     idNumber){
       try {
+        setErrorSubmit(false);
         setLoading(true);
         setVerifyImage(Pending);
-  
+        setIdStatus("Pending");
         const body ={
         nin: idNumber
         }
@@ -118,28 +119,28 @@ const authToken = localStorage.getItem("authorisedLogin");
         if(response.status === 200 || 201){
           setVerifyImage(idSuccess);
           setIdPopVerified(true);
-          setIdStatus("Verified")
+          setIdStatus("Verified");
+
         }
       }catch(error) {
         
        if(error.status === 400 || 401 || 404){
-        alert("Verification failed")
-        setVerifyImage(NotVerifiedIcon)
+        alert(" NIN Verification name mismatch or network failure")
+        setVerifyImage(NotVerifiedIcon);
+        setIdStatus("Not Verified")
         console.log(`ERROR : ${error}`)
        }else if(error.status === 500){
         alert("INTERNAL_SERVER_ERROR");
         setVerifyImage(NotVerifiedIcon);
+        setIdStatus("Not Verified")
        }
       }finally{
         setLoading(false)
       }
   }
  else   {
-  
-     setErrorSubmit(true);
-    
-     
-    }
+    setErrorSubmit(true);
+  }
   }
 // UseEffect to retain the current data object of getLocalStorage data()
 const VerifyRef = useRef()
@@ -190,34 +191,27 @@ useEffect(()=> {
         e.preventDefault();
       }} action="">
         {/* Container for all Forms */}
-        <div className='flex flex-col  lg:gap-[25px] gap-[20px]  w-[100%] mb-[50px]'>
+        <div className='flex flex-col  lg:gap-[25px] gap-[20px]  w-full mb-[50px]'>
       {/*  Full Name / Gender */}
       <div className='flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]'>
     {/* Full Name */}
-    <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
-   lg:text-[16px] lg:leading-[20.8px]'>
+    <div className='flex flex-col md:w-[50%] w-full md:gap-[10px] gap-[5.868px]'>
+   <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px]'>
     Full Name
     </h2>
     <div
-    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px] sm:p-3 sm:text-lg font-[400] py-[15.33px] pl-[5.867px] 
-    lg:py-[15.5px] lg:pl-[10px] border-[0.4px]
-     leading-[10.4px] 
-     border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px]'>
+    className='font-[500] py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[12px] md:pl-[8.67px] md:pr-[5.867px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[8px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-[10px] h-full'>
     { full_name ? full_name :  `${Data.UserFullName ? Data.UserFullName : "Hi User"}` }
    </div>
     </div>
     {/* Gender */}
     
     <div className='relative flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
-   lg:text-[16px] lg:leading-[20.8px]'>
+   <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px]'>
      Gender
     </h2>
     <div onClick={chooseGender}
-    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[12px] sm:p-3 sm:text-lg flex justify-between font-[400] py-[15.33px] pl-[5.867px] pr-[10.917px]
-     lg:pl-[16px] lg:py-[15.5px] lg:pr-[10px]
-     border-[0.4px] border-[#9C9C9C]'>
+    className='flex justify-between items-center font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px]'>
       <h2 className='text-[#000] font-[400] leading-[10.4px]
       lg:text-[16px] lg:leading-[20.8px]'>
         {genderResult}
@@ -261,11 +255,7 @@ useEffect(()=> {
     onChange={(e) =>{
       setIdAddress(e.target.value)
     }}
-    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px] sm:p-3 sm:text-lg font-[500] py-[10.33px] pl-[5.867px] 
-    lg:py-[15.5px] lg:pl-[10px] border-[0.4px]
-     leading-[10.4px] 
-     border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px]
-      focus:outline-none'
+    className='font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[10] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none'
     placeholder=''
     type="text" onInvalid={validAddress}  required/>
    
@@ -284,8 +274,7 @@ useEffect(()=> {
                     onChange={(e) => {
                       setIdDateOfBirth(e.target.value);
                     }}
-                    className="mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[8px] sm:p-3 sm:text-lg font-normal py-[15.33px] pl-[5.867px] pr-[10.917px] lg:pl-[16px] lg:py-[15.5px] lg:pr-[10px] border-[0.4px] border-[#9C9C9C] bg-white leading-[10.4px]
-      lg:text-[16px] lg:leading-[20.8px] focus:outline-none cursor-pointer"
+                    className=" font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none cursor-pointer"
                     type="date"
                     id="dob"
                     name="dob"
@@ -325,10 +314,7 @@ useEffect(()=> {
     onChange={(e) => {
     setIdCountry(e.target.value)
 }}
-    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px] sm:p-3 sm:text-lg font-[500] py-[10.33px] pl-[5.867px] 
-    lg:py-[15.5px] lg:pl-[10px] border-[0.4px]
-     leading-[10.4px] 
-     border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px] focus:outline-none'
+    className='font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none'
     placeholder=''
     type="text" onInvalid={validCountry}   required/>
    
@@ -344,10 +330,7 @@ useEffect(()=> {
     onChange={(e) => {
     setIdCity(e.target.value)
 }}
-    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px] sm:p-3 sm:text-lg font-[500] py-[10.33px] pl-[5.867px] 
-    lg:py-[15.5px] lg:pl-[10px] border-[0.4px]
-     leading-[10.4px] 
-     border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px] focus:outline-none'
+    className='font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none'
     placeholder=''
     type="text" onInvalid={validCity}   required/>
    
@@ -388,10 +371,7 @@ useEffect(()=> {
     onChange={(e) => {
       setIdPostalCode(e.target.value);
     }}
-    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px] sm:p-3 sm:text-lg font-[500] py-[10.33px] pl-[5.867px] 
-    lg:py-[15.5px] lg:pl-[10px] border-[0.4px]
-     leading-[10.4px] 
-     border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px] focus:outline-none'
+    className='font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none'
     placeholder=''
     type="text" inputMode='numeric'/>
     </div>
@@ -405,9 +385,7 @@ useEffect(()=> {
      ID Type
     </h2>
     <div onClick={chooseId}
-    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px]  sm:p-3 sm:text-lg flex justify-between font-[500] py-[10.33px] pl-[5.867px] pr-[10.917px]
-     lg:pl-[16px] lg:py-[15.5px] lg:pr-[10px]
-     border-[0.4px] border-[#9C9C9C] border-[solid]'>
+    className='flex justify-between items-center font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px]'>
       <h2 className='text-[#000] font-[400]  leading-[10.4px]
       lg:text-[16px] lg:leading-[20.8px]'>
         {idResult}
@@ -475,11 +453,7 @@ useEffect(()=> {
     onChange={(e) => {
       setIdNumber(e.target.value)
     }}
-    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px] sm:p-3 sm:text-lg font-[500] py-[10.33px] pl-[5.867px] 
-    lg:py-[15.5px] lg:pl-[10px] border-[0.4px] 
-     leading-[10.4px] 
-     border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px]
-      focus:outline-none'
+    className='flex justify-between items-center font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[10px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none'
     placeholder=''
     type="text" inputMode='numeric' maxLength={11} onInvalid={validId}  required/>
    
@@ -491,9 +465,8 @@ useEffect(()=> {
     <div onClick={()=> {
      setIdFrontView(true);
    }} 
-    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px]  sm:p-3 sm:text-lg flex  lg:py-[14px] py-[8.771px] pr-[20.785px] pl-[20px]
-     lg:pr-[28px] lg:pl-[16px] md:gap-[14px] gap-[8.21px]
-    border-[0.4px] border-[solid] border-[#9C9C9C] cursor-pointer'>
+    className='mt-2 md:mt-0 rounded-md md:rounded-[10px] md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] text-[12px] sm:p-3 sm:text-lg flex justify-between items-center  lg:py-[14px] py-[8.771px] pr-[20.785px] pl-[20px] lg:pr-[28px] lg:pl-[16px] md:gap-[14px] gap-[8.21px]
+    border-[0.4px] border-[#9C9C9C] cursor-pointer'>
    <h2 className='font-[600] text-[#7E7E7E] text-[11px] leading-[14.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
    Upload ID Front View
@@ -505,9 +478,7 @@ useEffect(()=> {
 <div onClick={() => {
     setIdBackView(true);
    }}
- className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px]  sm:p-3 sm:text-lg flex py-[8.771px] pr-[20.785px] pl-[20px]
-  lg:py-[14px] lg:pr-[28px] lg:pl-[16px] gap-[8.21px] md:gap-[14px]
-border-[0.4px] border-[solid] border-[#9C9C9C] cursor-pointer'>
+ className='mt-2 md:mt-0 rounded-md md:rounded-[10px] md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] text-[12px] sm:p-3 sm:text-lg flex justify-between items-center  lg:py-[14px] py-[8.771px] pr-[20.785px] pl-[20px] lg:pr-[28px] lg:pl-[16px] md:gap-[14px] gap-[8.21px] border-[0.4px] border-[#9C9C9C] cursor-pointer'>
    <h2 className='font-[600] text-[#7E7E7E] text-[11px] leading-[14.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
    Upload Back View
@@ -705,15 +676,15 @@ Confirming your identity ensures that the person accessing the account is indeed
                 onClick={(e) => {
                   e.preventDefault();
                   setIdPopVerified(false);
-                 setGenderResult('');
-                  setIdAddress('')
-                  setIdCity('')
+                 setGenderResult(genderResult);
+                  setIdAddress(idAddress)
+                  setIdCity(idCity)
                   setIdCountry('')
                   // setIdState('')
                   // setIdLGA('')
-                  setIdPostalCode('')
-                  setIdNumber('');
-                  setIdResult('');
+                  setIdPostalCode(idPostalCode)
+                  setIdNumber(idNumber);
+                  setIdResult(idResult);
                 }}
                 className={`my-[5%] bg-[#04177f] w-[90%] flex 
                 justify-center items-center mx-auto cursor-pointer text-[10px] 
