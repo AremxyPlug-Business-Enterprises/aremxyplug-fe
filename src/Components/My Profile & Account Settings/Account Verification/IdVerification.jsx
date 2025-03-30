@@ -426,18 +426,20 @@ useEffect(()=> {
             setIdResult(()=> {
              if(info.id ===1 ){
             return info.idType;
-           
-            
-          }
+            }
             else if(info.id !== 1 && idResult === ""){
             return ""
-              }else if(  (idResult === "National ID") &&(info.id === 2 || info.id ===3|| info.id === 4)){
+              }else if(  (idResult ==="National ID") &&(info.id === 2 || info.id ===3|| info.id === 4)){
                return "National ID"
                
              }
            })
-              setIdDropDown((e)=>{
-           return false ? info.id === 1 : true
+              setIdDropDown(()=>{
+                if(info.idType ==="National ID"){
+                  return false;
+                }else{
+                  return true;
+                }
               });
                 document.querySelector('.idDrop').classList.remove('DropIt');
       
@@ -489,26 +491,34 @@ useEffect(()=> {
       {/* UPLOAD IMAGES OFOR ID VERIFICATION */}
       <div className='flex lg:gap-[40px] md:w-[60%] w-[100%] md:justify-start justify-between gap-[24px]'>
         {/* FRONT VIEW */}
-    <div onClick={()=> {
-     setIdFrontView(true);
-   }} 
-    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px]  sm:p-3 sm:text-lg flex  lg:py-[14px] py-[8.771px] pr-[20.785px] pl-[20px]
+    <div
+  //    onClick={()=> {
+  //    setIdFrontView(true);
+  //  }} 
+    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px]  sm:p-3 sm:text-lg flex  lg:py-[14px] py-[8.771px] pr-[20.785px] pl-[20px]
      lg:pr-[28px] lg:pl-[16px] md:gap-[14px] gap-[8.21px]
     border-[0.4px] border-[solid] border-[#9C9C9C] cursor-pointer'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[11px] leading-[14.4px] 
+   <h2 className='font-[600] text-[#7E7E7E]  leading-[14.4px] 
+   lg:text-[16px] lg:leading-[20.8px] ${idResult === "National ID" ? "bg-gray-300" :"bg-white"}  `}>
+  <h2 className='font-[600] text-[#7E7E7E] text-[11px] leading-[14.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
-   Upload ID Front View
+   Upload Front View
    </h2>
+   
    <img src={UploadDoc} alt="" 
    className='lg:h-[24px] lg:w-[24px] h-[12px] w-[12px]'/>
-    </div>
+   </div>
+    
 {/* UPLOAD BACK VIEW */}
-<div onClick={() => {
-    setIdBackView(true);
-   }}
- className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px]  sm:p-3 sm:text-lg flex py-[8.771px] pr-[20.785px] pl-[20px]
+<div 
+// onClick={() => {
+//   if(idResult !== "National ID"){
+//     setIdBackView(true);
+//   }
+//    }}
+ className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px]  sm:p-3 sm:text-lg flex py-[8.771px] pr-[20.785px] pl-[20px]
   lg:py-[14px] lg:pr-[28px] lg:pl-[16px] gap-[8.21px] md:gap-[14px]
-border-[0.4px] border-[solid] border-[#9C9C9C] cursor-pointer'>
+border-[0.4px] border-[solid] border-[#9C9C9C] cursor-pointer ${idResult === "National ID" ? "bg-gray-300" : "bg-white"}`}>
    <h2 className='font-[600] text-[#7E7E7E] text-[11px] leading-[14.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
    Upload Back View
@@ -671,6 +681,7 @@ Confirming your identity ensures that the person accessing the account is indeed
       </Modal>
           )}
     </form>  
+    
     {idPopVerified && (
           <Modal className="">
             <div

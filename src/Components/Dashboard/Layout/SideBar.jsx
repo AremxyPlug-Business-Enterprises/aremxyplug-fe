@@ -5,14 +5,14 @@ import { ContextProvider } from "../../Context";
 import styles from "./Dashboard.module.css";
 import { RemoveLocalStorage } from "../../LocalStorage/LocalStorage";
 export const SideBar = ({fullName, userId}) => {
-  const { setToggleSideBar, isDarkMode, handleClickOutside, customerDetail, bvnStatus } =
+  const { setToggleSideBar, isDarkMode, handleClickOutside, customerDetail, bvnStatus,setUserStatus } =
     useContext(ContextProvider);
     const {full_name, id} = customerDetail;
   const RemoveLocalStorageKeys=()=> {
-    RemoveLocalStorage()
+    RemoveLocalStorage();
+    setUserStatus(false);
   }
   
-   console.log(`FULLNAME: ${fullName} ------- UserId : ${userId}`)
   const [dropDownOpen, setDropDownOpen] = useState({
     dropdown1: false,
     dropdown2: false,
@@ -40,11 +40,7 @@ export const SideBar = ({fullName, userId}) => {
       document.removeEventListener("click", handleClickOutside);
     };
   });
-
-
-
-
-  return (
+return (
     <div
       className={`${styles.sidebar}  fixed overflow-auto ${
         isDarkMode ? "bg-[#000] border" : " bg-[#04177f]"

@@ -5,6 +5,7 @@ import { ContextProvider } from "../../Context";
 import { TopBar } from "./TopBar";
 import "react-multi-carousel/lib/styles.css";
 import styles from "./Dashboard.module.css";
+import style from "../DashboardComponents/component.module.css";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import { RiFileCopyFill } from "react-icons/ri";
@@ -29,7 +30,7 @@ export const MainDashboard = (Data) => {
   const [activeButtons, setActiveButtons] = useState([true, false, false]);
   const [blur, setBlur] = useState(false);
   const [blurTwo, setBlurTwo] = useState(false);
-  // const [blurThree, setBlurThree] = useState(false);
+   //const [blurThree, setBlurThree] = useState(false);
   const textRef = useRef(null);
   const [selected, setSelected] = useState("");
   const [selected2, setSelected2] = useState("");
@@ -61,8 +62,6 @@ const ValueRef = useRef()
  Data = GetLocalStorage()
   useEffect(() => {
     ValueRef.current = Data;
-    console.log(ValueRef);
-  console.log(Data);
     setNav();
     return () => {
       setHideNavbar(false);
@@ -89,53 +88,45 @@ const ValueRef = useRef()
 
     return;
   };
+
   const handleSelectedOption2 = (event) => {
     const clickedoption = event.target.value;
     setSelected2(clickedoption);
-    // setBlurThree(
+console.log(clickedoption)
+if(clickedoption !== "NGN"){
+setBlur(true);
+setSymbol("₦")
+}else if(clickedoption === "NGN" && blur === true){
+     setBlur(false);
+    }
+    // setBlurTwo(
     //   clickedoption === "USD" ||
     //     clickedoption === "GBP" ||
     //     clickedoption === "AUD" ||
     //     clickedoption === "KES" ||
-    //     clickedoption === "EUR" ||
-    //     clickedoption === "fiat"
+    //     clickedoption === "EUR" 
     // );
-    clickedoption === "NGN"
-      ? setSymbol("₦")
-      : clickedoption === "USD"
-      ? setSymbol("$")
-      : clickedoption === "GBP"
-      ? setSymbol("£")
-      : clickedoption === "AUD"
-      ? setSymbol("AU$")
-      : clickedoption === "KES"
-      ? setSymbol("KSh")
-      : clickedoption === "EUR"
-      ? setSymbol("€")
-      : setSymbol("");
+    // clickedoption === "NGN"
+    //   ? setSymbol("₦")
+    //   : clickedoption === "USD"
+    //   ? setSymbol("$")
+    //   : clickedoption === "GBP"
+    //   ? setSymbol("£")
+    //   : clickedoption === "AUD"
+    //   ? setSymbol("AU$")
+    //   : clickedoption === "KES"
+    //   ? setSymbol("KSh")
+    //   : clickedoption === "EUR"
+    //   ? setSymbol("€")
+    //   : setSymbol("");
     return;
   };
-
- //console.log(Data); 
-console.log(` BankName:   ${bankNameState.length}`);
-console.log(`AccountName   ${accountNameState.length}`);
-console.log(`AccountNumber    ${accountNumberState.length}`);
-
-
-// USEEEFECT TO RETURN USERS BANK DETAILS
-
-// To help get the user bank details and check if the user details is on the app
-
-
-
-
-
-  return (
-    <div className="">
+return (
+    <div className="h-[150%]">
       {/* ==============TOP BAR========== */}
       <TopBar />
 
-      <div className="w-[100%]">
+      <div className="w-[100%] h-[200%]">
         {/* ============SIDE BAR========= */}
         {toggleSideBar && (
           <div className="absolute top-0 left-0 z-50">
@@ -145,7 +136,7 @@ console.log(`AccountNumber    ${accountNumberState.length}`);
         <div
           className={`${
             toggleSideBar ? "lg:w-[73.5%] lg:float-right" : ""
-          } w-[] mx-[5%] mt-[8%] lg:mt-[3%] `}
+          } w-[] mx-[5%] mt-[8%] lg:mt-[3%] h-[150%] mb-[5%] `}
         >
           {/* ==============HERO SECTION========== */}
           <Swiper
@@ -256,10 +247,10 @@ console.log(`AccountNumber    ${accountNumberState.length}`);
                     isDarkMode ? " text-[#fff]" : "text-[#04177f]"
                   } ${
                     toggleSideBar
-                      ? "backdrop-blur-[4.5px] md:absolute md:w-[80%] md:h-[65px] md:ml-[3%] md:text-[19px] md:text-center lg:absolute lg:mt-2 lg:ml-[2%] lg:w-[28%] lg:text-[20px] lg:h-[89px] text-[#04177f]"
-                      : "backdrop-blur-[4.5px] absolute w-[70%] h-[70px] text-[13px] font-bold text-center ml-[6%] pt-[3%] md:text-[20px] md:mt-[%] md:pb-[8%] md:pt-[0%] md:h-[40px] md:text-extrabold lg:text-[24px] lg:ml-[4%] lg:w-[33%] lg:pt-[1%] lg:h-[90px]"
-                  } `}
-                >
+                      ? "backdrop-blur-[4.5px] font-bold text-[13px] pt-[4%] md:absolute md:w-[30%]  md:ml-[3%] md:text-[19px] md:text-center lg:absolute lg:mt-2 lg:ml-[2%] lg:w-[33%] lg:text-[24px]  text-[#04177f] lg:pb-[70px]"
+                      : "backdrop-blur-[4.5px] absolute w-[75%] md:w-[30%] text-[13px] font-bold text-center mt-[2%] md:mt-[5%] ml-[6%] pt-[8%] md:pt-[4%] md:text-[15px] md:pb-[6%] lg:pb-[8%]  md:text-extrabold lg:text-[24px] lg:mt-[0px] lg:ml-[4%] lg:w-[37%] lg:pt-[%] "}
+                    ${activeButtons[1] 
+                    ? "h-[130px] md:h-[100px] lg:h-[220px] md:pt-[8%]" :" h-[70px] md:h-[40px] lg:h-[90px] md:pt-[4%]"}`}>
                   This feature is currently not available...
                 </div>
               )}
@@ -277,15 +268,17 @@ console.log(`AccountNumber    ${accountNumberState.length}`);
                     id="curr"
                     onChange={handleSelectedOption2}
                     value={selected2}
+                       
                   >
                     <option value="NGN">NGN</option>
-                    <option value="USD">USD</option>
-                    <option value="GBP">GBP</option>
-                    <option value="EUR">EUR</option>
-                    <option value="AUD">AUD</option>
-                    <option value="KES">KES</option>
+                    <option  value="USD">USD</option>
+                    <option  value="GBP">GBP</option>
+                    <option  value="EUR">EUR</option>
+                    <option  value="AUD">AUD</option>
+                    <option  value="KES">KES</option>
                   </select>
-                  {visible ? (
+                  {selected2 === "NGN" || "" ? (
+                  visible ? (
                     <span
                       className={` ${
                         toggleSideBar ? "lg:text-[19px]" : "lg:text-[37px]"
@@ -297,7 +290,11 @@ console.log(`AccountNumber    ${accountNumberState.length}`);
                     <span className="text-[19px] leading-normal lg:text-[37px]">
                       {symbol}0.00
                     </span>
-                  )}
+                    )) : (
+                      <div className="backdrop-blur-lg p-4"/>
+
+          
+                    )}
                   <div onClick={visibilityHandler} className=" text-[#92ABFE]">
                     {visible ? (
                       <div className={`lg:text-[40px] ${styles.eye}`}>
@@ -326,7 +323,7 @@ console.log(`AccountNumber    ${accountNumberState.length}`);
                     </span>
                   ) : (
                     <span className="flex items-center text-[19px] leading-normal lg:text-[37px]">
-                      5000.00
+                      0000.00
                     </span>
                   )}
                   <div onClick={visibilityHandler} className=" text-[#92ABFE]">
@@ -351,7 +348,11 @@ console.log(`AccountNumber    ${accountNumberState.length}`);
                 <div
                   onClick={() => {
                     handleClick(0);
+                    if(selected2 === "NGN"){
                     setBlur(false);
+                    }else{
+                    setBlur(true);
+                    }
                     // setBlurThree();
                   }}
                   value="fiat"
@@ -464,8 +465,8 @@ console.log(`AccountNumber    ${accountNumberState.length}`);
                     isDarkMode ? " text-[#fff]" : "text-[#04177f]"
                   } ${
                     toggleSideBar
-                      ? "backdrop-blur-[5px] absolute lg:h-[25%] lg:w-[30%] lg:ml-[-8px] lg:flex lg:justify-center lg:pt-[4%] lg:text-[25px] lg:text-[#04177f]"
-                      : "backdrop-blur-[4.5px] absolute text-[14px] h-[13%] w-[85%] font-extrabold flex justify-center pt-[7%] md:h-[11%] md:text-[25px] md:pt-[5%] lg:w-[32%] lg:h-[28%] lg:ml-[-1%]"
+                      ? "backdrop-blur-[5px]  font-extrabold absolute lg:h-[27%] lg:w-[35%] lg:ml-[-8px] lg:flex lg:justify-start lg:mt-[11%] lg:pt-[2%] lg:text-[25px] lg:text-[#04177f]"
+                      : "backdrop-blur-[4.5px] absolute text-[14px] h-[13%] w-[85%] mt-[28%] lg:mt-[11%] font-extrabold flex justify-start pt-[7%] md:h-[11%] md:text-[25px] md:pt-[5%] lg:w-[45%] lg:h-[28%] lg:ml-[-1%]"
                   } `}
                 >
                   Coming Soon...
@@ -608,6 +609,24 @@ console.log(`AccountNumber    ${accountNumberState.length}`);
           <WalletInOutFlows className={styles.selected} />
           <RecentTransaction />
         </div>
+        <div
+        className={`transaction2 flex justify-center pb-[10%]`}
+          >
+            <div className="flex gap-[15px] items-center md:mt-[40px]">
+              <div className="text-[8px] md:text-[12px] lg:text-[14px]">
+                You need help ?
+              </div>
+              <Link to="/ContactUs">
+                <div
+                  className={`${isDarkMode ? "border " : "bg-[#04177f]"} ${
+                    style.contactus
+                  }`}
+                >
+                  Contact Us
+                </div>
+              </Link>
+            </div>
+          </div> 
       </div>
     </div>
   );

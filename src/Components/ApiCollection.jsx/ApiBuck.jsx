@@ -66,7 +66,7 @@ export const GetVirtualAccountValue = ( virtualAccCreated,
 // as necessary
 export const CheckVirtualAcc = async(authToken, customerDetail, setLoading,
     setVirtualAccCreated, setBankNameState, setAccountNameState, setAccountNumberState,
-    verificationOpen, idVerificationOpen, bvnVerificationOpen, setBvnButtonState, bankNameState) => {
+    verificationOpen, idVerificationOpen, bvnVerificationOpen, setBvnButtonState, bankNameState, confirmVirtualState) => {
   
     
 
@@ -94,8 +94,10 @@ if (authToken) {
           }else{
             if(virtualAccCreated){
             SignInVirtualAccountState(customerDetail, virtualAccCreated
-               ,setBankNameState, setAccountNameState, setAccountNumberState
-            );
+               ,setBankNameState, setAccountNameState, setAccountNumberState);
+               if(SignInVirtualAccountState){
+             await confirmVirtualState();
+            }
            console.log(response)
          }
           }
@@ -110,7 +112,9 @@ if (authToken) {
             alert('Error:', "INTERNAL_SERVER_ERROR");
           }
         }finally{
+         if(confirmVirtualState){
           setLoading(false)
+         }
         }
 }
 }

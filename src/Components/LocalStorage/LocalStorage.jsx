@@ -23,19 +23,25 @@ const UserEmail = JSON.parse(localStorage.getItem("userEmail"));
   const aremxyAccountName = JSON.parse(localStorage.getItem("aremxyAccountName"))
  const aremxyAccountNumber = JSON.parse(localStorage.getItem("aremxyAccountNumber"))
   const aremxyUserId = JSON.parse(localStorage.getItem("aremxyUserId"))
-//console.log(email,fullName, username,phone,bankName, accountName, accountNumber, userId);
 return {UserEmail, UserPhone, aremxyUsername, UserFullName, aremxyBankName, aremxyAccountNumber, aremxyAccountName, aremxyUserId}
-
 }
 
 
 export const RemoveLocalStorage = () => {
- localStorage.removeItem("userEmail")
-  localStorage.removeItem("userPhone")
+ localStorage.removeItem("userEmail");
+  localStorage.removeItem("userPhone");
   localStorage.removeItem("aremxyUserName");
- localStorage.removeItem("userFullName")
+ localStorage.removeItem("userFullName");
  localStorage.removeItem("userBankName");
  localStorage.removeItem("aremxyAccountName")
  localStorage.removeItem("aremxyAccountNumber");
  localStorage.removeItem("aremxyUserId");
+ localStorage.removeItem("UserStatus");
+ const getToken = localStorage.getItem("getToken");
+ if(getToken){
+ localStorage.removeItem("getToken");
+ }
+ else {
+ localStorage.removeItem("authorisedLogin");
+ }
 }

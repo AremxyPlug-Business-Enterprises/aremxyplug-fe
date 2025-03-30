@@ -993,7 +993,7 @@ const [idCountry, setIdCountry] = useState("")
 const [bankNameState, setBankNameState] = useState("")
 const [accountNameState, setAccountNameState] = useState("")
 const [accountNumberState, setAccountNumberState] = useState("");
-
+const [userStatus, setUserStatus] = useState(false);
 
   const hold = {
     customerDetail, 
@@ -1004,7 +1004,9 @@ const [accountNumberState, setAccountNumberState] = useState("");
       accountNameState,
        setAccountNameState,
         accountNumberState, 
-       setAccountNumberState,   
+       setAccountNumberState, 
+       userStatus,
+        setUserStatus,
     // ==================
     tfImage, settfImage,
     withdrawImage,

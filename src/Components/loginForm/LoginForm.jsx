@@ -150,54 +150,29 @@ function LoginForm() {
       setIsFocused(isFocused.filter((item) => item !== index));
     }
   };
-//To set the different states for  virtual account
-// const virtualAccountState=()=>{
-//   const {bank_name, account_no, account_name} = virtualAccCreated;
-//   if(bank_name && account_no && account_name){
-//   setBvnButtonState("Virtual Account Created");
-//   }
-// }
 
-// //Function to get User Bank Details
-// const CheckVirtualAcc = async(authToken) => {
-//   console.log(`LOGINAUTH :${authToken}`);
-// if (authToken) {
-// const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc';
-//  // console.log(data)
-//  try{
 
-//   setLoading(true)
-//   setBvnVerifyImage(PendingImage);
-//   setBvnStatus("Pending")
-//       const response = await axios.get(url, {headers : {"Content-Type" : "application/json",
-//   Authorization : authToken
-//   }})
-
-//     if (response.status === 201 || 200 ) {
-//          const virtualAccount = response.data.data.acc_details;
-//         setVirtualAccCreated(virtualAccount);
-//         if(virtualAccount){
-//         virtualAccountState();
-//       }
-//      } 
-    
-//   }catch(error){
-//    if(error.status === 401 || 400){
-//     alert("We had an error trying to get your details, click okay to repeat the login process");
-//     console.log(`LoginAuth :${loginAuthorisation}`)
-//     setBvnStatus('Not Verified');
-//     setBvnVerifyImage(NotVerifiedIcon);
-//     console.log(`ERROR: ${error}`)
-//  }else if(error.status === 500){
-//         alert('Error:', "INTERNAL_SERVER_ERROR");
-//       setBvnStatus('Not Verified');
-//      setBvnVerifyImage(NotVerifiedIcon)
-//     }
-//     }finally{
-//       setLoading(false)
-//     }
-// }
-// }
+// Function to Verify user's Virtual Account situation 2
+ const confirmVirtualState = async() => {
+  const getToken = localStorage.getItem("getToken");
+ const authToken = localStorage.getItem("authToken");
+if (authToken || getToken) {
+const url = 'https://aremxyplug.onrender.com/api/v1/check-verification';
+ //
+ try{
+  const response = await axios.post(url, "",{headers : {"Content-Type" : "application/json",
+  Authorization : authToken || getToken
+  }})
+if (response.status === 201 || 200 ) {
+         alert("successful")
+      }
+    }catch(error){
+   if(error.status === 401 || 400){
+    alert(`ERROR : ${error}`)
+    }else if(error.status === 500){
+        alert('Error:', "INTERNAL_SERVER_ERROR");
+     
+    }}}}
 
   
 
@@ -242,17 +217,29 @@ function LoginForm() {
             .then((response) => {
               console.log(response);
               if (response.status === 202 && response.headers.hasAuthorization) {
-                 setOpenTranspin(true);
+                setOpenTranspin(true);
+                const customer  =  response.data.data.customer;
                 const authToken = response.headers.get('Authorization');
-              
-                setLoginAuthorisation(authToken);
+                if(customer){
+                  setCustomerDetail(customer);
+                if(authToken){
+                    localStorage.setItem("getToken", authToken);
+                setTimeout(async()=>{
+                  await CheckVirtualAcc(authToken, customerDetail, setLoading,
+                      setVirtualAccCreated, 
+                    setBankNameState, setAccountNameState, setAccountNumberState,
+                     verificationOpen, idVerificationOpen, bvnVerificationOpen, setBvnButtonState, bankNameState, confirmVirtualState);
+          
+        },10000)
+      }
+    }
                 } else if(response.status === 200){
                   setOpen2StepVerification(true);
                   const customer  =  response.data.data.customer;
-                  
-                  if(customer){
+                  const authToken = response.headers.get('Authorization');
+                   if(customer){
                    setCustomerDetail(customer);
-                const authToken = response.headers.get('Authorization');
+               
                   if(authToken){
                   setLoginAuthorisation(authToken);
                   localStorage.setItem("getToken", authToken)
@@ -260,7 +247,7 @@ function LoginForm() {
                   await CheckVirtualAcc(authToken, customerDetail, setLoading,
                       setVirtualAccCreated, 
                     setBankNameState, setAccountNameState, setAccountNumberState,
-                     verificationOpen, idVerificationOpen, bvnVerificationOpen, setBvnButtonState, bankNameState);
+                     verificationOpen, idVerificationOpen, bvnVerificationOpen, setBvnButtonState, bankNameState, confirmVirtualState);
           
         },10000)
                   }
@@ -324,26 +311,36 @@ function LoginForm() {
               console.log(response);
               if (response.status === 202  && response.headers.hasAuthorization) {
                 setOpenTranspin(true);
+                const customer  =  response.data.data.customer;
                 const authToken = response.headers.get('Authorization');
-                if(authToken){
-                localStorage.setItem('authorisedLogin', authToken)
-               setLoginAuthorisation(authToken);
-                }
+                if(customer){
+                  setCustomerDetail(customer);
+                  if(authToken){
+                    localStorage.setItem("authorisedLogin", authToken);
+                setTimeout(async()=>{
+                  await CheckVirtualAcc(authToken, customerDetail, setLoading,
+                      setVirtualAccCreated, 
+                    setBankNameState, setAccountNameState, setAccountNumberState,
+                     verificationOpen, idVerificationOpen, bvnVerificationOpen, setBvnButtonState, bankNameState, confirmVirtualState);
+          
+        },10000)
+      }
+    }
+     
                }else if(response.status === 200){
                 setOpen2StepVerification(true);
              const customer  =  response.data.data.customer;
-             
+             const authToken = response.headers.get('Authorization');
              if(customer){
               setCustomerDetail(customer);
-           const authToken = response.headers.get('Authorization');
-             if(authToken){
+           if(authToken){
              setLoginAuthorisation(authToken);
              localStorage.setItem("authorisedLogin", authToken)
              //To  Check if the user has a virtual Account
              setTimeout(async()=>{
       await CheckVirtualAcc( authToken, customerDetail, setLoading, setVirtualAccCreated, 
         setBankNameState, setAccountNameState, setAccountNumberState,
-         verificationOpen, idVerificationOpen, bvnVerificationOpen, setBvnButtonState, bankNameState);
+         verificationOpen, idVerificationOpen, bvnVerificationOpen, setBvnButtonState, bankNameState, confirmVirtualState);
              },10000)
              }
               }

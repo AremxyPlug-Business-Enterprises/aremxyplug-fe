@@ -125,6 +125,7 @@ export default function BvnVerification(Data) {
       // console.log(data)
       try {
         if(bvnButtonState === "Verify"){
+          setErrorVerify(false);
         PendingImageFxn();
         PendingText();
         }
