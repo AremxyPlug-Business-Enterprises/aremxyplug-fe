@@ -40,28 +40,30 @@ const [countdown, setCountdown] = useState(60);
   const [canResend2, setCanResend2] = useState(false);
  
 // PASSING THE SEND OTP FUNCTION
-const getOtpSmsorEmail = ()=> {
+const getOtpSmsorEmail = async(body, url)=> {
   // const [sendSmsOrEmail, setSendSmsOrEmail] = useState("")
   if(viaEmailOrSms === "sms"){
-  return {
-    sms : phone
-  }
+    body = {
+      phone : phone
+    }
+    url ="https://aremxyplug.onrender.com/api/v1/sms/send";
   }else if(viaEmailOrSms === "email" ){
-     return {
-      email : email
-     }
-  }
+    body = {
+    email : email
+   }
+   url = "https://aremxyplug.onrender.com/api/v1/send-otp/signup"
+}
+  await gettingOtpFunction(body,url)
 }
    //THIS FUNCTION IS TO DERIVE THE OTP FROM THE BACKEND
-  const gettingOtpFunction= async()=> {
+  const gettingOtpFunction= async(body, url)=> {
     setLoading(true);
     try{
-    const url = "https://aremxyplug.onrender.com/api/v1/send-otp/signup"
-    const response = await axios.post(url, getOtpSmsorEmail())
+ 
+    const response = await axios.post(url,body, {header:{ "Content-Type": "application/json"}})
 
 if(response.status === 200 || 201){
   twoStepVerificationHandler();
-  console.log(response);
  alert("An Otp has been sent to you")
 } 
  }catch(error){
@@ -293,7 +295,7 @@ return () => clearInterval(timer);
 
           {/* ==========Continue Button======== */}
           <button
-            onClick={gettingOtpFunction}
+            onClick={getOtpSmsorEmail}
             disabled={viaEmailOrSms=== "" ? true : false}
  className={`${viaEmailOrSms === "" ? "bg-gray-200"  : "bg-blue-800"}
   cursor-pointer mt-[5%] mx-auto w-[80px] py-[8px] flex justify-center items-center text-[#ffffff] 

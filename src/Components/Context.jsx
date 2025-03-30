@@ -967,6 +967,7 @@ export const Context = ({ children }) => {
 const [dashLoading, setDashLoading] = useState(false);
 const [bvnButtonState, setBvnButtonState] = useState("Verify")
 const [virtualAccCreated, setVirtualAccCreated] = useState(false);
+const [idCountry, setIdCountry] = useState("")
   //========== BUSINESS KYC =============
   const [businessPopUp, setBusinessPopUp] = useState(false);
 
@@ -1588,6 +1589,8 @@ const [accountNumberState, setAccountNumberState] = useState("");
     setIdNumber,
     idPostalCode,
     setIdPostalCode,
+    idCountry,
+     setIdCountry,
     // ==========  BVN ========
 
 bvnNumber, 

@@ -11,9 +11,7 @@ import Joi from "joi";
 import axios from "axios";
 import { Loader } from "../Loader/Loader";
 import { Modal } from "../Screens/Modal/Modal";
-import PendingImage from "../My Profile & Account Settings/ProfileImages/Pending.svg";
-import bvnVerifiedSuccess from "../My Profile & Account Settings/ProfileImages/user-tick.svg";
-import NotVerifiedIcon from "../My Profile & Account Settings/ProfileImages/NotVerifiedIcon.svg";
+import { CheckVirtualAcc } from "../ApiCollection.jsx/ApiBuck";
 //import { useNavigate } from "react-router-dom";
 //import { SetLocalStorage } from "../LocalStorage/LocalStorage";
 
@@ -23,13 +21,11 @@ function LoginForm() {
      setOpenResetTranspin,
       setOpen2StepVerification,
       setLoginAuthorisation,
-      setCustomerDetail,
-      loginAuthorisation,
-     setBvnVerifyImage, 
-        setBvnStatus, 
-        setVirtualAccCreated,
-        virtualAccCreated,
-        setBvnButtonState
+      customerDetail,
+      setCustomerDetail, setVirtualAccCreated, 
+        setBankNameState, setAccountNameState, setAccountNumberState,
+         verificationOpen, idVerificationOpen, bvnVerificationOpen,
+         setBvnButtonState, bankNameState
       } = useContext(ContextProvider);
 
 
@@ -155,58 +151,53 @@ function LoginForm() {
     }
   };
 //To set the different states for  virtual account
-const virtualAccountState=()=>{
-  const {bank_name, account_no, account_name} = virtualAccCreated;
-  if(bank_name && account_no && account_name){
-  setBvnVerifyImage(bvnVerifiedSuccess);
-  setBvnStatus('Verified');
-  setBvnButtonState("Virtual Account Created");
-  }else{
-    setBvnVerifyImage(NotVerifiedIcon);
-    setBvnStatus('UnVerified');
-  }
-}
+// const virtualAccountState=()=>{
+//   const {bank_name, account_no, account_name} = virtualAccCreated;
+//   if(bank_name && account_no && account_name){
+//   setBvnButtonState("Virtual Account Created");
+//   }
+// }
 
-//Function to get User Bank Details
-const CheckVirtualAcc = async(authToken) => {
-  console.log(`LOGINAUTH :${authToken}`);
-if (authToken) {
-const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc'
- // console.log(data)
- try{
+// //Function to get User Bank Details
+// const CheckVirtualAcc = async(authToken) => {
+//   console.log(`LOGINAUTH :${authToken}`);
+// if (authToken) {
+// const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc';
+//  // console.log(data)
+//  try{
 
-  setLoading(true)
-  setBvnVerifyImage(PendingImage)
-  setBvnStatus("Pending")
-      const response = await axios.get(url, {headers : {"Content-Type" : "application/json",
-  Authorization : authToken
-  }})
+//   setLoading(true)
+//   setBvnVerifyImage(PendingImage);
+//   setBvnStatus("Pending")
+//       const response = await axios.get(url, {headers : {"Content-Type" : "application/json",
+//   Authorization : authToken
+//   }})
 
-    if (response.status === 201 || 200 ) {
-         const virtualAccount = response.data.data.acc_details;
-        setVirtualAccCreated(virtualAccount);
-        if(virtualAccount){
-        virtualAccountState();
-      }
-     } 
+//     if (response.status === 201 || 200 ) {
+//          const virtualAccount = response.data.data.acc_details;
+//         setVirtualAccCreated(virtualAccount);
+//         if(virtualAccount){
+//         virtualAccountState();
+//       }
+//      } 
     
-  }catch(error){
-   if(error.status === 401 || 400){
-    alert("We had an error trying to get your details, click okay to repeat the login process");
-    console.log(`LoginAuth :${loginAuthorisation}`)
-    setBvnStatus('Not Verified');
-    setBvnVerifyImage(NotVerifiedIcon);
-    console.log(`ERROR: ${error}`)
- }else if(error.status === 500){
-        alert('Error:', "INTERNAL_SERVER_ERROR");
-      setBvnStatus('Not Verified');
-     setBvnVerifyImage(NotVerifiedIcon)
-    }
-    }finally{
-      setLoading(false)
-    }
-}
-}
+//   }catch(error){
+//    if(error.status === 401 || 400){
+//     alert("We had an error trying to get your details, click okay to repeat the login process");
+//     console.log(`LoginAuth :${loginAuthorisation}`)
+//     setBvnStatus('Not Verified');
+//     setBvnVerifyImage(NotVerifiedIcon);
+//     console.log(`ERROR: ${error}`)
+//  }else if(error.status === 500){
+//         alert('Error:', "INTERNAL_SERVER_ERROR");
+//       setBvnStatus('Not Verified');
+//      setBvnVerifyImage(NotVerifiedIcon)
+//     }
+//     }finally{
+//       setLoading(false)
+//     }
+// }
+// }
 
   
 
@@ -266,10 +257,12 @@ const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc'
                   setLoginAuthorisation(authToken);
                   localStorage.setItem("getToken", authToken)
                   setTimeout(async()=>{
-                   console.log(`AUTHTOKEN:${authToken}`)
-                 await CheckVirtualAcc(authToken);
+                  await CheckVirtualAcc(authToken, customerDetail, setLoading,
+                      setVirtualAccCreated, 
+                    setBankNameState, setAccountNameState, setAccountNumberState,
+                     verificationOpen, idVerificationOpen, bvnVerificationOpen, setBvnButtonState, bankNameState);
           
-},10000)
+        },10000)
                   }
                    }
 
@@ -346,9 +339,11 @@ const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc'
              if(authToken){
              setLoginAuthorisation(authToken);
              localStorage.setItem("authorisedLogin", authToken)
+             //To  Check if the user has a virtual Account
              setTimeout(async()=>{
-              console.log(`AUTHTOKEN:${authToken}`)
-            await CheckVirtualAcc(authToken);
+      await CheckVirtualAcc( authToken, customerDetail, setLoading, setVirtualAccCreated, 
+        setBankNameState, setAccountNameState, setAccountNumberState,
+         verificationOpen, idVerificationOpen, bvnVerificationOpen, setBvnButtonState, bankNameState);
              },10000)
              }
               }

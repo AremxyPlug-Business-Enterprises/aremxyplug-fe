@@ -274,8 +274,9 @@ useEffect(()=> {
                     onChange={(e) => {
                       setIdDateOfBirth(e.target.value);
                     }}
+
                     className=" font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none cursor-pointer"
-                    type="date"
+                  type="date"
                     id="dob"
                     name="dob"
                   />

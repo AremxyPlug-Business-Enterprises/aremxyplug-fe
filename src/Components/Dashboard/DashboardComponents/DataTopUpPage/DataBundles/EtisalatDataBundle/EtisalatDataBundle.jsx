@@ -716,7 +716,7 @@ const EtisalatDataBundle = () => {
 
           <div className="grid grid-cols-1 mt-[25px] md:grid-cols-2 gap-y-[20px] md:gap-x-[58.68px] lg:gap-x-[100px] md:gap-y-[15px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[20px]">
             <div className="relative">
-              <h2 className="lg:text-[18px] lg:leading-[24px] mb-1 text-[14px] md:text-[12px] font-[400] leading-[12px]">
+              <h2 className="lg:text-[18px] lg:leading-[24px] mb-1 text-[14px] md:text-[12px] md:font-[600] font-[400] leading-[12px]">
                 Select Product
               </h2>
               <div
@@ -735,7 +735,7 @@ const EtisalatDataBundle = () => {
                   {productList.map((item) => (
                     <div
                       key={item.name}
-                      className={`pb-[17px] md:pb-0 pt-[17px] md:pt-0 font-weight-bold text-[13px] cursor-pointer border-b-[0.5px] text-[#7C7C7C] md:text-[12px] lg:text-[16px]  md:rounded-[0px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
+                      className={`pb-[17px] md:pb-[6px] pt-[17px] md:pt-[6px] font-weight-bold text-[13px] cursor-pointer border-b-[0.5px] text-[#7C7C7C] md:text-[12px] lg:text-[16px]  md:rounded-[0px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
                         selectedNetworkProduct === item.name ? "bg-white" : ""
                       }`}
                       onClick={() => handleSelectProduct(item.name)}
@@ -748,7 +748,7 @@ const EtisalatDataBundle = () => {
             </div>
 
             <div className="relative">
-              <h2 className="lg:text-[18px] md:text-[14px] lg:leading-[24px] mb-1 text-[12px] font-[400] leading-[12px]">
+              <h2 className="lg:text-[18px] md:text-[14px] lg:leading-[24px] mb-1 text-[12px] md:font-[600] font-[400] leading-[12px]">
                 Select Plan
               </h2>
               <div
@@ -775,7 +775,7 @@ const EtisalatDataBundle = () => {
                       return (
                         <div
                           key={option.id}
-                          className={`pb-[17px] md:pb-0 pt-[17px] md:pt-0 font-weight-bold text-[13px] cursor-pointer border-b-[0.5px] md:rounded-[0px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
+                          className={`pb-[17px] md:pb-[6px] pt-[17px] md:pt-[6px] font-weight-bold text-[13px] cursor-pointer border-b-[0.5px] md:rounded-[0px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
                             selectedOption === option.id ? "bg-gray-200" : ""
                           }`}
                           onClick={() =>
@@ -798,7 +798,7 @@ const EtisalatDataBundle = () => {
             </div>
             
             <div className="">
-              <h2 className="text-[15px] font-[400] md:text-[12px] lg:text-[18px]">
+              <h2 className="text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px]">
                 Phone Number{" "}
                 <span className="text-[#04177F]">
                   <Link to="/DataBundleSelectRecipient">
@@ -834,7 +834,7 @@ const EtisalatDataBundle = () => {
             </div>
 
             <div className="">
-              <h2 className="text-[15px] font-[400] md:text-[12px] lg:text-[18px]">
+              <h2 className="text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px]">
                 Recipient Name<span className="text-[#7C7C7C]">(optional)</span>{" "}
               </h2>
               <div className="relative mt-[5px]">
@@ -856,7 +856,7 @@ const EtisalatDataBundle = () => {
             </div>
 
             <div className="">
-              <h2 className="text-[15px] font-[400] md:text-[12px] lg:text-[18px]">
+              <h2 className="text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px]">
                 Amount
               </h2>
               <div className="relative mt-[5px]">
@@ -879,7 +879,7 @@ const EtisalatDataBundle = () => {
 
             <div>
               <div onClick={handleShowPayment}>
-                <h2 className="lg:text-[18px] mt-[5px] lg:leading-[24px] mb-2 text-[15px] md:text-[12px] font-[400] leading-[12px]">
+                <h2 className="lg:text-[18px] mt-[5px] lg:leading-[24px] mb-2 text-[15px] md:text-[12px] md:font-[600] font-[400] leading-[12px]">
                   Payment Method
                 </h2>
                 <div className="mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input flex justify-between items-center border w-full h-8 px-2 rounded-md text-[10px] font-[400] focus:outline-none lg:h-[51px] lg:text-[16px]">
@@ -924,7 +924,7 @@ const EtisalatDataBundle = () => {
               </div>
               {showPayment && (
                 <div
-                  className={`pb-[13px] md:pb-0 pt-[13px] md:pt-0 font-weight-bold text-[13px] border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute ${
+                  className={`pb-[13px] md:pb-[6px] pt-[13px] md:pt-[6px] font-weight-bold text-[13px] border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute ${
                     toggleSideBar
                       ? "w-full md:w-[44.5%] lg:w-[45%] 2xl:w-[46%]"
                       : "w-full md:w-[46%] 2xl:w-[46.5%]"
