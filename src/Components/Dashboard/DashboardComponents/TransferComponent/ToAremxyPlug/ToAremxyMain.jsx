@@ -4,7 +4,7 @@ import styles from "../../TransferComponent/transfer.module.css";
 import styled from "../../../../AirTimePage/AirTime.module.css";
 import { ToConfirmAremxyMain } from "./ToConfirmAremxyMain";
 import { Modal } from "../../../../Screens/Modal/Modal";
-import pickPinIcon from '../../../../My Profile & Account Settings/ProfileImages/pickPinIcon.svg';
+import pickPinIcon from "../../../../My Profile & Account Settings/ProfileImages/pickPinIcon.svg";
 import { Link } from "react-router-dom";
 // import { useNavigate } from "react-router-dom";
 
@@ -28,7 +28,7 @@ export default function ToAremxyMain() {
 
   const [addToRecipient, SetAddToRecipient] = useState(false);
   const [saveToFavorite, setSaveTofavorite] = useState(false);
-  
+
   const countryList = [
     {
       id: 1,
@@ -88,17 +88,21 @@ export default function ToAremxyMain() {
   const refresh = () => window.location.reload(true);
 
   return (
-    <div className="flex flex-col gap-[20px] lg:gap-[40px]">
-      {" "}
+    <div className="flex flex-col gap-[20px] lg:gap-x-[40px] w-full ">
       <div className="flex flex-col gap-[15px] md:flex-row lg:gap-[30px]">
         {/* =====================Country========================= */}
-        <div className={styles.inputBox}>
-          <p className="text-[10px] font-extrabold md:text-[14px] lg:text-[20px]">
+        {/* <div className={styles.inputBox}> */}
+        <div className="flex flex-col md:w-[50%] w-full md:gap-[10px] gap-[5.868px] relative">
+          {/* <p className="text-[10px] font-extrabold md:text-[14px] lg:text-[20px]"> */}
+          <p
+            className="font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px]"
+          >
             Select Country
           </p>
           <div
             onClick={() => setShowList(!showList)}
-            className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]"
+            // className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]"
+            className="flex justify-between items-center font-[500] py-[10.33px] pl-[5.867px] md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] pr-1 lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] "
           >
             {selected ? (
               <div className="flex gap-[7px] items-center">
@@ -108,7 +112,6 @@ export default function ToAremxyMain() {
                   alt=""
                 />
                 <p className="text-[10px] font-extrabold lg:text-[14px]">
-                  {" "}
                   {mainCountry}
                 </p>
               </div>
@@ -130,16 +133,15 @@ export default function ToAremxyMain() {
             <div
               className={`${
                 toggleSideBar
-                  ? "lg:w-[31.5%] lg:top-[100.5%]"
-                  : "lg:w-[38.5%] lg:top-[105.3%]"
+                  ? "lg:w-full lg:top-[100.5%]"
+                  : "lg:w-full lg:top-[105.3%]"
               }  ${
                 styles.countryDropDown
-              } rounded-br-[7px] rounded-bl-[7px] shadow-xl bg-[#fff] border w-[100%] lg:w-full lg:rounded-br-[14px] lg:rounded-bl-[14px]`}
+              } rounded-b-[7px] shadow-xl bg-[#fff] border lg:rounded-b-[14px] absolute left-0 top-[3.5rem] lg:top-1 z-[3] w-full `}
             >
-              {" "}
               {countryList.map((country) => (
                 <div
-                  className=" cursor-pointer border-b flex items-center p-2 gap-[5px] text-[9px]  md:text-[14px] lg:text-[16px]"
+                  className=" cursor-pointer border-b flex items-center p-2 gap-[5px] text-[9px] md:text-[14px] lg:text-[16px] "
                   key={country.id}
                   onClick={() =>
                     handleCountryClick(
@@ -163,14 +165,22 @@ export default function ToAremxyMain() {
         </div>
 
         {/* =======================Currency============================ */}
-        <div className={styles.inputBox}>
-          <p className="text-[10px] font-extrabold md:text-[14px] lg:text-[20px]">
+        {/* <div className={styles.inputBox}> */}
+        <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]">
+          
+          <p
+            // className="text-[10px] font-extrabold md:text-[14px] lg:text-[20px]"
+            className="font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] 
+   lg:text-[16px] lg:leading-[20.8px]"
+          >
             Select Currency
           </p>
-          <div className="border text-[10px]  rounded-[5px] h-[25px] p-1 lg:h-[45px] lg:text-[14px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
+          <div
+            // className="border text-[10px]  rounded-[5px] h-[25px] p-1 lg:h-[45px] lg:text-[14px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]"
+            className="flex justify-between items-center font-[500] py-[10.33px] pl-[5.867px] md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] pr-1 lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] h-full "
+          >
             {selected ? (
               <div className="flex items-center gap-[7px]">
-                {" "}
                 <img
                   className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
                   src={flag}
@@ -190,83 +200,102 @@ export default function ToAremxyMain() {
         </div>
       </div>
       {/* ==========================Select/Add Recipient====================== */}
-      <div className="flex gap-[10%] lg:gap-[3%]">
+      <div className="flex flex-col gap-[15px] md:flex-row lg:gap-[30px]">
         <div className="w-full">
           <Link to="/aremxy-select-user">
-          <div className="w-full flex items-center justify-between border text-[10px] rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
-            <p>Select User</p>
-            <img
-              className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
-              src="./Images/otherBanksImages/weight.png"
-              alt=""
-            />
-          </div>
+            <div className="flex justify-between items-center font-[500] py-[10.33px] pl-[5.867px] md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] pr-1 lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px]">
+              <p className="">Select User</p>
+              <img
+                className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
+                src="./Images/otherBanksImages/weight.png"
+                alt=""
+              />
+            </div>
           </Link>
         </div>
         <div className="w-full">
           <Link to="/aremxy-add-user">
-          <div className="w-full flex items-center justify-between border text-[10px]  rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
-            <p>Add User</p>
+            <div className="flex justify-between items-center font-[500] py-[10.33px] pl-[5.867px] md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] pr-1 lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] ">
+              <p>Add User</p>
+              <img
+                className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
+                src="./Images/otherBanksImages/add-square.png"
+                alt=""
+              />
+            </div>
+          </Link>
+        </div>
+      </div>
+
+      {/* User details section */}
+      <div className="">
+        <div className="flex text-[#7c7c7c] text-[10px] leading-[130%] items-center my-[5%] gap-[8px] md:my-[5%] md:text-[18px] lg:text-[20px]">
+          <p>User Details </p>
+          <img
+            className="w-[15px] h-[15px] lg:w-[20px] lg:h-[20px]"
+            src="./Images/dashboardImages/arrowright.png"
+            alt="/"
+          />
+        </div>
+
+        <div className="flex md:justify-start justify-center gap-[7.042px] lg:gap-[12px]">
+          <div className="relative">
             <img
-              className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
-              src="./Images/otherBanksImages/add-square.png"
+              src="/Images/transferImages/man-fold.png"
+              className="h-[48px] w-[46.753px] rounded-[48px]
+              lg:h-[150px] lg:w-[150px] 
+              md:h-[88.801px]  md:w-[88.801px]
+              md:rounded-[88.201px] lg:rounded-[150px] z-[2] "
+              alt="profilePic"
+            />
+            <img
+              src={pickPinIcon}
+              className="absolute bottom-0 right-0 h-[25px] w-[25px] 
+              md:h-[25.82px] md:w-[25.82px] lg:h-[44px] lg:w-[44px]"
               alt=""
             />
           </div>
-          </Link>
-        </div>
-       </div>
-
-       {/* User details section */}
-        <div className="">
-            <div className="flex text-[#7c7c7c] text-[10px] leading-[130%] items-center my-[5%] gap-[8px] md:my-[5%] md:text-[18px] lg:text-[20px]">
-                <p>User Details </p>
-                <img
-                  className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                  src="./Images/dashboardImages/arrowright.png"
-                  alt="/"
-                />
-            </div>
-
-          <div className='flex md:justify-start justify-center gap-[7.042px] lg:gap-[12px]'>      
-            <div className='relative'>
-              <img src="/Images/transferImages/man-fold.png" className='h-[48px] w-[46.753px] rounded-[48px]
-              lg:h-[150px] lg:w-[150px] 
-              md:h-[88.801px]  md:w-[88.801px]
-              md:rounded-[88.201px] lg:rounded-[150px]' alt="profilePic"/>
-              <img  src={pickPinIcon}
-              className='absolute bottom-0 right-0 h-[25px] w-[25px] 
-              md:h-[25.82px] md:w-[25.82px] lg:h-[44px] lg:w-[44px]'  
-              alt="" />
-            </div>
-              {/* Profile text */}
-            <div className='flex flex-col justify-center gap-[3.52px] lg:gap-[12px]'>
-              <p className='font-[500] text-[10px] leading-[15px] md:text-[9.389px] md:leading-[12.206px] 
-              lg:text-[16px] lg:leading-[20.8px]'>
-                Habib Kamaldeen
-                </p>
-              <p className='font-[500] text-[#7C7C7C] text-[10px] leading-[15px]
+          {/* Profile text */}
+          <div className="flex flex-col justify-center gap-[3.52px] lg:gap-[12px]">
+            <p
+              className="font-[500] text-[10px] leading-[15px] md:text-[9.389px] md:leading-[12.206px] 
+              lg:text-[16px] lg:leading-[20.8px]"
+            >
+              Habib Kamaldeen
+            </p>
+            <p
+              className="font-[500] text-[#7C7C7C] text-[10px] leading-[15px]
               md:text-[7.042px] md:leading-[9.154px]
-              lg:text-[12px] lg:leading-[15.6px]'>
-                habib@aremxyplug.com
-                </p>
-            </div>  
+              lg:text-[12px] lg:leading-[15.6px]"
+            >
+              habib@aremxyplug.com
+            </p>
           </div>
         </div>
+      </div>
 
-      <div className="flex flex-col gap-[20px] md:grid md:grid-cols-2">
-        {/* =====================Email or Username=================== */}
+        {/* <div className={` ${styles.inputBox}`}> 
+      <div className="flex flex-col gap-[15px] md:flex-row lg:gap-[30px]">
+        *
+      */}
 
-        <div className={` ${styles.inputBox}`}>
-          <p className="text-[10px] font-extrabold md:text-[14px] lg:text-[20px]">
+      <div className='flex flex-col lg:gap-[25px] gap-[20px]  w-[100%] mb-[50px]'>
+      <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-full">
+        <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]">
+          <p className="font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px]">
             Email or Username
           </p>
-          <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
+            <div
+    //           className="h-[25px] flex justify-between items-center font-[500] py-[10.33px] pl-[5.867px]
+    // md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px]
+              // text-[8px] leading-[10.4px] border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px] rounded-[10px]"
+              className='flex justify-between items-center font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px]'
+            >
             <input
               onChange={handleMainInputChange}
               name="emailUsername"
               value={mainEmailUsername}
-              className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
+              className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px] "
               type="text"
             />
             <img
@@ -283,11 +312,18 @@ export default function ToAremxyMain() {
         </div>
 
         {/* ======================Phone Number================== */}
-        <div className={styles.inputBox}>
-          <p className="text-[10px] font-extrabold md:text-[14px] lg:text-[20px]">
+        {/* <div className={styles.inputBox}> */}
+        <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]">
+          <p
+            // className="text-[10px] font-extrabold md:text-[14px] lg:text-[20px]"
+            className="font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px]"
+          >
             Phone Number
           </p>
-          <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
+          <div
+            // className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]"
+            className="flex justify-between items-center font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px]"
+          >
             <input
               onChange={handleMainInputChange}
               name="userPhoneNumber"
@@ -307,14 +343,18 @@ export default function ToAremxyMain() {
               {mainTransferErrors.userPhoneNumber}
             </div>
           )}
-        </div>
+          </div>
+          </div>
 
         {/* =========================Amount To Transfer==================== */}
-        <div className={` ${styles.inputBox}`}>
-          <p className="text-[10px] font-extrabold md:text-[16px] lg:text-[20px]">
+        
+        <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%] ">
+            <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px] ">
+            <p className="font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px]">
+          {/* <p className="text-[10px] font-extrabold md:text-[16px] lg:text-[20px]"> */}
             Amount To Transfer
           </p>
-          <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
+          <div className="flex justify-between items-center font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px]">
             <span className="text-gray-500">&#8358;</span>
             <input
               onChange={amountHandler}
@@ -332,14 +372,15 @@ export default function ToAremxyMain() {
               {mainTransferErrors.amtToTransfer}
             </div>
           )}
-        </div>
+          </div>
 
         {/* ===========================Available Balance===================== */}
-        <div className={` ${styles.inputBox}`}>
-          <p className="text-[10px] font-extrabold md:text-[16px] lg:text-[20px]">
+           
+            <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]">
+          <p className="font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px]">
             Available Balance
           </p>
-          <div className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
+          <div className="flex justify-between items-center font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px]">
             <p className="text-[8px] text-[#0008] md:text-[14px] lg:text-[16px]">
               &#8358;50,000.00
             </p>
@@ -350,18 +391,24 @@ export default function ToAremxyMain() {
             />
           </div>
         </div>
+        
+       </div>
 
         {/* =============================Message======================= */}
-        <div className="w-[100%] mx-auto mt-[15px] md:mt-0 ">
-          <p className="text-[10px] font-extrabold md:text-[16px] lg:text-[20px]">
+        <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px] ">
+          <p
+            // className="text-[10px] font-extrabold md:text-[16px] lg:text-[20px]"
+            className="font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px]"
+          >
             Message
           </p>
           <textarea
             placeholder="Optional"
-            className="text-[10px] outline-none w-full border-[1px] h-[80px] flex flex-col justify-between p-[1%] rounded-[4px] md:h-[100px] md:text-[14px] md:rounded-[8px] md:border-[1px] lg:border-[#0003] lg:h-[120px] lg:w-[100%]"
+            className="outline-none h-[80px] flex flex-col justify-between p-[1%] md:h-[100px] md:text-[14px] md:rounded-[8px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md lg:h-[120px] "
           ></textarea>
         </div>
       </div>
+        
       {/* =========================Add to recipient ? ======================= */}
       <div className="flex gap-[10px]">
         <div className="flex items-center gap-[10px]">
@@ -411,19 +458,24 @@ export default function ToAremxyMain() {
       </button>
       {currencyAvailable && (
         <Modal>
-        <div className={styled.NotInterX} >
+          <div className={styled.NotInterX}>
             <div className={styled.timeAbleK}>
-                <h3>This Currency is Currently Not Available.</h3>
+              <h3>This Currency is Currently Not Available.</h3>
             </div>
             <div className={styled.InterAirtimeX}>
-                <img src="/Images/addAccountImages/account-unavailable.png" alt="" />
+              <img
+                src="/Images/addAccountImages/account-unavailable.png"
+                alt=""
+              />
             </div>
-            <div className={styled.comingX} >
-                <h2>Coming soon...</h2>
-                <button className={styled.btnOkX} onClick={refresh}>Okay</button>
+            <div className={styled.comingX}>
+              <h2>Coming soon...</h2>
+              <button className={styled.btnOkX} onClick={refresh}>
+                Okay
+              </button>
             </div>
-        </div>
-      </Modal>
+          </div>
+        </Modal>
       )}
       <ToConfirmAremxyMain />
     </div>

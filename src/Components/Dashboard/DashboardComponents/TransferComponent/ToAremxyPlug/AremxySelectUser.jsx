@@ -66,8 +66,8 @@ export default function AremxySelectUser() {
 
     const [flag, setFlag] = useState("");
     const [activeTab, setActiveTab] = useState('tab_1');
-    const [showPopup, setShowPopup] = useState(false);
-    const [activeImage, setActiveImage] = useState(null);
+    // const [showPopup, setShowPopup] = useState(false);
+    // const [activeImage, setActiveImage] = useState(null);
     const [deleted, setdeleted] = useState(false);
     const [edit, setEdit] = useState("");
     const [save, setSave] = useState(false);
@@ -111,42 +111,42 @@ export default function AremxySelectUser() {
         setCurrencyAvailable(id !== 1);
     };
 
-    const handleRecipient = (index) => {
-        if (activeImage === index) {
-          // If the same image is clicked again, close the pop-up
-          setActiveImage(null);
-          setShowPopup(false);
-        } else {
-          setActiveImage(index);
-          setShowPopup(true);
-        }
-    };
+    // const handleRecipient = (index) => {
+    //     if (activeImage === index) {
+    //       // If the same image is clicked again, close the pop-up
+    //       setActiveImage(null);
+    //       setShowPopup(false);
+    //     } else {
+    //       setActiveImage(index);
+    //       setShowPopup(true);
+    //     }
+    // };
 
     const handleConfirm = () => {
         setConfirm(true);
         setSave(false);
     };
 
-    const handleDelete = () => {
-        setdeleted(true);
-    };
+    // const handleDelete = () => {
+    //     setdeleted(true);
+    // };
     
     const handleSuccessDelete = () => {
         setSuccessDeleted(true);
         setdeleted(false);
     };
 
-    const handleAdd = () => {
-        setAdd(true);
-    }
+    // const handleAdd = () => {
+    //     setAdd(true);
+    // }
 
-    const handleRemove = () => {
-        setRemove(true);
-    }
+    // const handleRemove = () => {
+    //     setRemove(true);
+    // }
 
-    const handleEdit = () => {
-        setEdit(true);
-    };
+    // const handleEdit = () => {
+    //     setEdit(true);
+    // };
 
     const firmTransferSchema = Joi.object({
         mainCountry: Joi.string().required(),
@@ -242,16 +242,19 @@ export default function AremxySelectUser() {
                 className='absolute md:top-[10px] md:right-[10px] top-[7.997px] right-[7.997px] 
                 lg:w-[20px] lg:h-[20px] h-[12px] w-[12px] cursor-pointer'/>
             </div>
-            <div className=''>
-            <h2 className=' font-[600] text-left lg:mb-[20px] mb-[5.868px] text-[9px] leading-[12px] lg:text-[16px] lg:leading-[20.8px] '>
+            <div 
+            // className='flex flex-col md:flex-row md:items-center lg:gap-[22px] gap-[20px] w-full'
+            className='flex flex-col gap-[15px] md:flex-row md:items-end lg:gap-[30px]'
+            
+            >
+            <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px] relative">
+            <h2 className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] '>
                 Select Country
             </h2>
-            <div className="flex flex-col gap-[15px] md:flex-row lg:gap-[30px]">
                 {/* =====================Country========================= */}
-                <div className={styles.inputBox}>
                 <div
                     onClick={() => setShowDrop(!showDrop)}
-                    className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]"
+                    className="flex justify-between items-center font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px]"
                 >
                     {select ? (
                     <div className="flex gap-[7px] items-center">
@@ -261,7 +264,6 @@ export default function AremxySelectUser() {
                         alt=""
                         />
                         <p className="text-[10px] font-extrabold lg:text-[14px]">
-                        {" "}
                         {miniCountry}
                         </p>
                     </div>
@@ -283,16 +285,15 @@ export default function AremxySelectUser() {
                     <div
                     className={`${
                         toggleSideBar
-                        ? "lg:w-[31.5%] lg:top-[100.5%]"
-                        : "lg:w-[38.5%] lg:top-[105.3%]"
+                        ? "lg:w-full lg:top-[100.5%]"
+                        : "lg:w-full lg:top-[105.3%]"
                     }  ${
                         styles.countryDropDown
-                    } rounded-br-[7px] rounded-bl-[7px] shadow-xl bg-[#fff] border w-[100%] lg:w-full lg:rounded-br-[14px] lg:rounded-bl-[14px]`}
+                    } rounded-b-[7px] shadow-xl bg-[#fff] border w-full lg:rounded-b-[14px] absolute left-0 top-[3.5rem] lg:top-1 z-[2]`}
                     >
-                    {" "}
                     {countryList.map((country) => (
                         <div
-                        className=" cursor-pointer border-b flex items-center p-2 gap-[5px] text-[9px]  md:text-[14px] lg:text-[16px]"
+                        className=" cursor-pointer border-b flex items-center p-2 gap-[5px] text-[9px] md:text-[14px] lg:text-[16px]"
                         key={country.id}
                         onClick={() =>
                             handleCountryPress(
@@ -313,11 +314,13 @@ export default function AremxySelectUser() {
                     ))}
                     </div>
                 )}
+                      
+       
             </div>
 
-            <div className="w-full">
-            <Link to="/aremxy-add-user">
-            <div className="w-full flex items-center justify-between border text-[10px]  rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
+            {/* =====================Add User========================= */}
+            <Link to="/aremxy-add-user" className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]">
+            <div className="flex justify-between items-center font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[13px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px]">
                 <p>Add User</p>
                 <img
                 className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
@@ -326,16 +329,14 @@ export default function AremxySelectUser() {
                 />
             </div>
             </Link>
-            </div>          
-       
-            </div>
+
             </div>    
 
             <ul className={styled.localInter}>
                 <li className={activeTab === 'tab_1' ? active : inactive} onClick={handleTab1}>Users</li>
                 <li className={activeTab === 'tab_2' ? active : inactive} onClick={handleTab2}>Favorites</li>
             </ul>
-            <div className="">
+            {/* <div className="">
                 { activeTab === 'tab_1' &&
                     <div className={styled.containAir}>
                         {[0, 1, 2, 3].map((index) => (
@@ -485,7 +486,7 @@ export default function AremxySelectUser() {
                         ))}
                     </div> 
                 }   
-            </div>
+            </div> */}
             {add && (
               <Modal>
                 <div

@@ -14,6 +14,8 @@ export const TransferPage = () => {
   const [fiatTransfer, setFiatTransfer] = useState(true);
   const [cryptoTransfer, setCryptoTransfer] = useState(false);
   const [bulkTransfer, setBulkTransfer] = useState(false);
+  const [toMyAccount, setToMyAccount] = useState(false);
+  const [toOtherBanks, setToOtherBanks] = useState(false);
 
   const handleClick = (index) => {
     const clickedBtn = activeBtn.map((isActive, i) => i === index);
@@ -84,7 +86,37 @@ export const TransferPage = () => {
           {/* =================Transfer buttons==================== */}
           {fiatTransfer && (
             <div className="mt-[10%] flex flex-col gap-[20px] md:mt-[8%] md:gap-[30px]">
-              <Link to="/to-my-account">
+              <Link to="/to-aremxyplug">
+                <div
+                  className={`${isDarkMode ? "border" : "bg-[#fff]"} ${
+                    styles.toMyAcct
+                  }`}
+                >
+                  <div className="flex gap-[5px] items-center">
+                    <img
+                      className="w-[18px] h-[13px] md:w-[] md:h-[] lg:w-[30px] lg:h-[20px]"
+                      src="Images/dashboardImages/tf3.png"
+                      alt="/"
+                    />
+                    <div>
+                      <p className="text-[10px] md:text-[18px]">
+                        To AremxyPlug
+                      </p>
+                      <p className="text-[8px] text-[#7c7c7c] md:text-[16px]">
+                        Transfer money from your wallets to any AremxyPlug user.
+                      </p>
+                    </div>
+                  </div>
+                  <img
+                    className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
+                    src="./Images/dashboardImages/arrowright.png"
+                    alt="/"
+                  />
+                </div>
+              </Link>
+
+              {/* <Link to="/to-my-account"> */}
+              <Link to="" onClick={() => setToMyAccount(prev => !prev)}>
                 <div
                   className={`${isDarkMode ? "border" : "bg-[#fff]"} ${
                     styles.toMyAcct
@@ -114,7 +146,9 @@ export const TransferPage = () => {
                   />
                 </div>
               </Link>
-              <Link to="/To-other-banks">
+              
+              {/* <Link to="/To-other-banks"> */}
+              <Link to="" onClick={() => setToOtherBanks(prev => !prev)}>
                 <div
                   className={`${isDarkMode ? "border" : "bg-[#fff]"} ${
                     styles.toMyAcct
@@ -142,34 +176,8 @@ export const TransferPage = () => {
                   />
                 </div>
               </Link>
-              <Link to="/to-aremxyplug">
-                <div
-                  className={`${isDarkMode ? "border" : "bg-[#fff]"} ${
-                    styles.toMyAcct
-                  }`}
-                >
-                  <div className="flex gap-[5px] items-center">
-                    <img
-                      className="w-[18px] h-[13px] md:w-[] md:h-[] lg:w-[30px] lg:h-[20px]"
-                      src="Images/dashboardImages/tf3.png"
-                      alt="/"
-                    />
-                    <div>
-                      <p className="text-[10px] md:text-[18px]">To AremxyPlug</p>
-                      <p className="text-[8px] text-[#7c7c7c] md:text-[16px]">
-                        Transfer money from your wallets to any AremxyPlug user.
-                      </p>
-                    </div>
-                  </div>
-                  <img
-                    className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                    src="./Images/dashboardImages/arrowright.png"
-                    alt="/"
-                  />
-                </div>
-              </Link>  
               <div
-                onClick={()=> setBulkTransfer(true)}
+                onClick={() => setBulkTransfer(true)}
                 className={`${isDarkMode ? "border" : "bg-[#fff]"} ${
                   styles.toMyAcct
                 }`}
@@ -234,26 +242,27 @@ export const TransferPage = () => {
           </Modal>
         )}
 
-        {/* ============Bulk transfer modal============= */}
+        {/* ============ transfer modal============= */}
+        {toMyAccount && (
+          <TransferModal
+            headerText="To My Account"
+            setTransfer={setToMyAccount}
+            handleClick={handleClick}
+          />
+        )}
+        {toOtherBanks && (
+          <TransferModal
+            headerText="To Other Banks"
+            setTransfer={setToOtherBanks}
+            handleClick={handleClick}
+          />
+        )}
         {bulkTransfer && (
-          <Modal>
-            <div className={styled.NotInterX} >
-                <div className={styled.timeAbleX}>
-                    <h2>Bulk Transfer</h2>
-                    <h3>This Feature is Currently Not Available.</h3>
-                </div>
-                <div className={styled.InterAirtimeX}>
-                    <img src="./Images/transferImages/messages.png" alt="" />
-                </div>
-                <div className={styled.comingX} >
-                    <h2>Coming soon...</h2>
-                    <button className={styled.btnOkX} onClick={() => {
-                    setBulkTransfer(false);
-                    handleClick(0);
-                  }}>Okay</button>
-                </div>
-            </div>
-          </Modal>
+          <TransferModal
+            headerText="Bulk Transfer"
+            setTransfer={setBulkTransfer}
+            handleClick={handleClick}
+          />
         )}
 
         {/* ===========Contact Us==================== */}
@@ -279,3 +288,31 @@ export const TransferPage = () => {
     </DashBoardLayout>
   );
 };
+
+function TransferModal({ headerText, setTransfer, handleClick }) {
+  return (
+    <Modal>
+      <div className={styled.NotInterX}>
+        <div className={styled.timeAbleX}>
+          <h2>{headerText}</h2>
+          <h3>This Feature is Currently Not Available.</h3>
+        </div>
+        <div className={styled.InterAirtimeX}>
+          <img src="./Images/transferImages/messages.png" alt="" />
+        </div>
+        <div className={styled.comingX}>
+          <h2>Coming soon...</h2>
+          <button
+            className={styled.btnOkX}
+            onClick={() => {
+              setTransfer(false);
+              handleClick(0);
+            }}
+          >
+            Okay
+          </button>
+        </div>
+      </div>
+    </Modal>
+  );
+}
