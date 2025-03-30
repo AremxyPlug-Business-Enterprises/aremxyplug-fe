@@ -21,8 +21,7 @@ import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 import { Loader } from "../../Loader/Loader";
 
 export default function BvnVerification(Data) {
-  const { bvnVerificationOpen, virtualAccCreated } =
-    useContext(ContextProvider);
+  const { bvnVerificationOpen } = useContext(ContextProvider);
   const { verificationOpen } = useContext(ContextProvider);
   const { bvnVerifyImage, setBvnVerifyImage } = useContext(ContextProvider);
   const { bvnStatus, setBvnStatus } = useContext(ContextProvider);
@@ -34,17 +33,15 @@ export default function BvnVerification(Data) {
   const [bvnPhoneMessage, setBvnPhoneMessage] = useState(false);
   const [errorVerify, setErrorVerify] = useState(false);
   const { bvnButtonState, setBvnButtonState } = useContext(ContextProvider);
-  const { toggleSideBar, customerDetail, setLoginAuthorisation } =
+  const { toggleSideBar, customerDetail, setLoginAuthorisation , bankNameState, accountNumberState, accountNameState} =
     useContext(ContextProvider);
   const {idAddress, setIdAddress} = useContext(ContextProvider);
   const { dropDownGender, setDropDownGender } = useContext(ContextProvider);
   const [loading, setLoading] = useState(false);
   const [genderResult, setGenderResult] = useState("");
 
-  const genderInfo = ["Male", "Female", "Others.."];
   const chooseGender = () => {
     setDropDownGender(!dropDownGender);
-    document.querySelector(".genderDrop").classList.toggle("DropIt");
   };
 
    //  CUSTOM VALIDITY FORHOUSE ADDRESS
@@ -71,7 +68,7 @@ export default function BvnVerification(Data) {
     if (bvnButtonState === "Verify") {
       url = "https://aremxyplug.onrender.com/api/v1/verify";
       buttonStateSuccess = "Create Virtual Account";
-      ErrorMessage = "Bvn Verification Failed";
+      ErrorMessage = "Bvn Name Mismatch or network failure";
       ifStatement = bvnDateOfBirth && bvnNumber && bvnPhone;
       PendingImageFxn = () => setBvnVerifyImage(PendingImage);
       PendingText = () => setBvnStatus("Pending");
@@ -82,6 +79,7 @@ export default function BvnVerification(Data) {
         bvn: bvnNumber.toString(),
       };
     } else {
+      data =""
       url = "https://aremxyplug.onrender.com/api/v1/virtualacc";
       alertSuccess = () => alert("Virtual Account Created Successfully");
       buttonStateSuccess = "Virtual Account Created";
@@ -123,26 +121,39 @@ export default function BvnVerification(Data) {
 
       // console.log(data)
       try {
+        if(bvnButtonState === "Verify"){
         PendingImageFxn();
         PendingText();
-        const response = await axios.post(url, data, {
+        }
+        let response;
+        bvnButtonState === "Verify" ?
+       response  = await axios.post(url, data , {
           headers: {
             "Content-Type": "application/json",
             Authorization: authToken || getToken,
           },
-        });
-
-        if (response.status === 201 || 200) {
+        }) : response  = await axios.post(url, data, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: authToken || getToken,
+          },
+        })
+ if (response.status === 201 || 200) {
+  if(bvnButtonState === "Verify"){
           setBvnNumber(bvnNumber);
           verifyBvnImage();
           statusBvn();
           verifyPopBvn();
-          alertSuccess();
           setBvnButtonState(buttonStateSuccess);
-        }
+    }  else{
+            alertSuccess();
+            setBvnButtonState(buttonStateSuccess);
+          }
+ }
       } catch (error) {
         if (error.status === 401 || 400) {
           alert(ErrorMessage);
+          console.log(`ERROR : ${error}`)
           // setBvnVerifyImage(NotVerifiedImage)
           // setBvnStatus("Not Verified");
         } else if (error.status === 500) {
@@ -165,13 +176,11 @@ export default function BvnVerification(Data) {
   Data = GetLocalStorage();
   useEffect(() => {
     ValueRef.current = Data;
-    console.log(ValueRef);
-    console.log(Data);
-
-    // eslint-disable-next-line
-  }, []);
+  }, [Data]);
 
   // console.log(bvnDateOfBirth);
+  const genderInfo = ["Male", "Female", "Prefer not to say"];
+
   return (
     <div>
       {bvnVerificationOpen && (
@@ -451,13 +460,13 @@ export default function BvnVerification(Data) {
 
               <div className="flex flex-col md:gap-[15px] gap-[10px] justify-start">
                 <button
-                  disabled={virtualAccCreated ? true : false}
+                  disabled={bankNameState.length > 1 && accountNumberState.length > 1 && accountNameState.length > 1 ? true : false}
                   onClick={() => {
                     BvnFunctionState();
                   }}
                   className={`lg:py-[13px] md:py-[7.868px] py-[16.531px] rounded-[4.241px] w-[100%] md:w-[150px] lg:w-[163px] lg:rounded-[12px] bg-[#04177F]
          font-[600] text-[12px] leading-[18px] lg:text-[16px] text-center text-white lg:leading-[24px ${
-           virtualAccCreated ? "bg-slate-400" : "bg-[#04177F]"
+           bankNameState.length > 1 ? "bg-slate-400" : "bg-[#04177F]"
          }`}
                 >
                   {bvnButtonState}
@@ -612,8 +621,8 @@ text-[13px] leading-[16.4px]"
                   onClick={(e) => {
                     e.preventDefault();
                     setBvnPopVerified(false);
-                    setBvnDateOfBirth("");
-                    setBvnPhone("");
+                    setBvnDateOfBirth(bvnDateOfBirth);
+                    setBvnPhone(bvnPhone);
                   }}
                   className={`my-[5%] bg-[#04177f] w-[90%] flex 
                 justify-center items-center mx-auto cursor-pointer text-[10px] 

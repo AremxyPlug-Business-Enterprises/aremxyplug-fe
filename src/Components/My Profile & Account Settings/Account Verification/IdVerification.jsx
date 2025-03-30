@@ -107,9 +107,10 @@ const authToken = localStorage.getItem("authorisedLogin");
     
     idNumber){
       try {
+        setErrorSubmit(false);
         setLoading(true);
         setVerifyImage(Pending);
-  
+        setIdStatus("Pending");
         const body ={
         nin: idNumber
         }
@@ -118,28 +119,28 @@ const authToken = localStorage.getItem("authorisedLogin");
         if(response.status === 200 || 201){
           setVerifyImage(idSuccess);
           setIdPopVerified(true);
-          setIdStatus("Verified")
+          setIdStatus("Verified");
+
         }
       }catch(error) {
         
        if(error.status === 400 || 401 || 404){
-        alert("Verification failed")
-        setVerifyImage(NotVerifiedIcon)
+        alert(" NIN Verification name mismatch or network failure")
+        setVerifyImage(NotVerifiedIcon);
+        setIdStatus("Not Verified")
         console.log(`ERROR : ${error}`)
        }else if(error.status === 500){
         alert("INTERNAL_SERVER_ERROR");
         setVerifyImage(NotVerifiedIcon);
+        setIdStatus("Not Verified")
        }
       }finally{
         setLoading(false)
       }
   }
  else   {
-  
-     setErrorSubmit(true);
-    
-     
-    }
+    setErrorSubmit(true);
+  }
   }
 // UseEffect to retain the current data object of getLocalStorage data()
 const VerifyRef = useRef()
@@ -284,7 +285,7 @@ useEffect(()=> {
                     onChange={(e) => {
                       setIdDateOfBirth(e.target.value);
                     }}
-                    className="mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[8px] sm:p-3 sm:text-lg font-normal py-[15.33px] pl-[5.867px] pr-[10.917px] lg:pl-[16px] lg:py-[15.5px] lg:pr-[10px] border-[0.4px] border-[#9C9C9C] bg-white leading-[10.4px]
+                    className="mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[12px] sm:p-3 sm:text-lg font-normal py-[15.33px] pl-[5.867px] pr-[10.917px] lg:pl-[16px] lg:py-[15.5px] lg:pr-[10px] border-[0.4px] border-[#9C9C9C] bg-white leading-[16.4px]
       lg:text-[16px] lg:leading-[20.8px] focus:outline-none cursor-pointer"
                     type="date"
                     id="dob"
@@ -705,15 +706,15 @@ Confirming your identity ensures that the person accessing the account is indeed
                 onClick={(e) => {
                   e.preventDefault();
                   setIdPopVerified(false);
-                 setGenderResult('');
-                  setIdAddress('')
-                  setIdCity('')
+                 setGenderResult(genderResult);
+                  setIdAddress(idAddress)
+                  setIdCity(idCity)
                   setIdCountry('')
                   // setIdState('')
                   // setIdLGA('')
-                  setIdPostalCode('')
-                  setIdNumber('');
-                  setIdResult('');
+                  setIdPostalCode(idPostalCode)
+                  setIdNumber(idNumber);
+                  setIdResult(idResult);
                 }}
                 className={`my-[5%] bg-[#04177f] w-[90%] flex 
                 justify-center items-center mx-auto cursor-pointer text-[10px] 

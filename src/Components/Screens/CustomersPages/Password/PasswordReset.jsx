@@ -18,7 +18,6 @@ const PasswordReset = () => {
         forgetPassCountdown,
          setForgetPassCountdown,
            setForgetPassCanResend,
-           forgetPassCanResend,
            submission, setSubmission
         } = useContext(ContextProvider);
   

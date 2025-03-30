@@ -42,10 +42,7 @@ const ValueRef = useRef()
   Data = GetLocalStorage()
   useEffect(() => {
     ValueRef.current = Data;
-    console.log(ValueRef);
-  console.log(Data);
-    
-  }, []);
+  }, [Data]);
 
 
 

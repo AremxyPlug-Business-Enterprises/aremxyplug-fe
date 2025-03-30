@@ -490,10 +490,10 @@ const AirtimeVtu = () => {
                             <img src="./Images/airtimeTopUp/young.png" className="h-full" alt="" />
                         </div>
                     </div>
-                    <div className={`${styles.containFlex} !text-[14px] md:!text-base`}>
-                        <div className={styles.FlexPut}>
+                    <div className={`${styles.containFlex} !text-[12px] md:!text-base`}>
+                        <div className={`${styles.FlexPut} !h-[36.927px] md:!h-[51px]`}>
                             <Link to="/select-vtu-recipient">
-                                <div className={styles.conPut}>
+                                <div className={`${styles.conPut} !relative !top-[12px] md:!relative md:!top-base !text-[12px] md:!text-base`}>
                                     <h2>Select Recipient</h2>
                                     <div className={styles.FlexImg}>
                                         <img src={weight} alt="" className='' />
@@ -501,10 +501,10 @@ const AirtimeVtu = () => {
                                 </div>
                             </Link>
                         </div>
-                        <div className={`${styles.FlexPut} !text-[15px] md:!text-base`}>
+                        <div className={`${styles.FlexPut} !h-[36.927px] md:!h-[51px]`}>
                             <Link to="/add-vtu-recipient">
-                                <div className={styles.conPut}>
-                                    <h2>Add Recipient</h2>
+                                <div className={`${styles.conPut} !relative !top-[12px] md:!relative md:!top-base !text-[12px] md:!text-base`}>
+                                    <h2 >Add Recipient</h2>
                                     <div className={styles.FlexImg}>
                                         <img src={add} alt="" className='' />
                                     </div>
@@ -528,9 +528,7 @@ const AirtimeVtu = () => {
                                 <div className={styles.NetworkFlex}>
                                     <h2 className={`${styles.head3} !text-[15px] md:text-[15px]`}>Select Network</h2>
                                     <div className={`${styles.input} !h-[44.927px] md:!h-[51px]`}>
-                                    {/* position: relative;
-    top: 14px;
-    left: 10px; */}
+
                                         <div className={`${styles.output2} !relative !top-[17px] md:!relative md:!top-base !text-[14px] md:!text-base`}>
                                             {networkName ? (
                                                 <li onClick={handleShowList} className={styles.labelInput}>
