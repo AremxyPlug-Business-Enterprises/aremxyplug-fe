@@ -412,8 +412,7 @@ export default function BvnVerification(Data) {
                 {/*========= BVN ==========*/}
                 <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]">
                   <h2
-                    className="font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] 
-   lg:text-[16px] lg:leading-[20.8px]"
+                    className="font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px]"
                   >
                     BVN Number
                   </h2>
