@@ -1,6 +1,7 @@
 
 import { SetLocalStorage } from '../LocalStorage/LocalStorage';
 import axios from 'axios';
+import { Navigate } from 'react-router-dom';
 //To set the different states for  virtual account
 
 
@@ -67,10 +68,8 @@ export const GetVirtualAccountValue = ( virtualAccCreated,
 export const CheckVirtualAcc = async(authToken, customerDetail, setLoading,
     setVirtualAccCreated, setBankNameState, setAccountNameState, setAccountNumberState,
     verificationOpen, idVerificationOpen, bvnVerificationOpen, setBvnButtonState, bankNameState, confirmVirtualState) => {
-  
-    
-
-if (authToken) {
+     
+  if (authToken) {
     const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc';
      // console.log(data)
      try{
@@ -90,7 +89,8 @@ if (authToken) {
                 InActionVirtualAccountState(virtualAccCreated,setBankNameState, 
                   setAccountNameState, setAccountNumberState);
                 setBvnButtonState("Virtual Account Created");
-                console.log(response.json);
+                return <Navigate to ={"/dashboard"}/>
+                 
           }else{
             if(virtualAccCreated){
             SignInVirtualAccountState(customerDetail, virtualAccCreated

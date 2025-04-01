@@ -13,12 +13,12 @@ import Success from "../ProfileImages/success.gif";
 import BvnQueryImage from "../ProfileImages/Bvnqueryimage.svg";
 import BvnMessageImage from "../ProfileImages/BvnMessageImage.svg";
 import ArrowDown from "../ProfileImages/arrow-down.svg";
-
 import axios from "axios";
 import PendingImage from "../ProfileImages/Pending.svg";
 import NotVerifiedImage from "../ProfileImages/NotVerifiedIcon.svg";
 import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 import { Loader } from "../../Loader/Loader";
+import { CheckVirtualAcc } from "../../ApiCollection.jsx/ApiBuck";
 
 export default function BvnVerification(Data) {
   const { bvnVerificationOpen } = useContext(ContextProvider);
@@ -32,15 +32,17 @@ export default function BvnVerification(Data) {
   const [bvnPopVerified, setBvnPopVerified] = useState(false);
   const [bvnPhoneMessage, setBvnPhoneMessage] = useState(false);
   const [errorVerify, setErrorVerify] = useState(false);
-  const { bvnButtonState, setBvnButtonState } = useContext(ContextProvider);
-  const { toggleSideBar, customerDetail, setLoginAuthorisation , bankNameState, accountNumberState, accountNameState} =
+  const { bvnButtonState, setBvnButtonState,
+    setBankNameState, setAccountNameState, setAccountNumberState, idVerificationOpen, setVirtualAccCreated
+   } = useContext(ContextProvider);
+  const { toggleSideBar, customerDetail, setLoginAuthorisation , bankNameState} =
     useContext(ContextProvider);
   const {idAddress, setIdAddress} = useContext(ContextProvider);
   const { dropDownGender, setDropDownGender } = useContext(ContextProvider);
   const [loading, setLoading] = useState(false);
   const [genderResult, setGenderResult] = useState("");
-
-
+const ConfirmId = localStorage.getItem("ConfirmId")
+const ConfirmAcc = localStorage.getItem("ConfirmAcc")
   const genderInfo = ["Male", "Female", "Others.."];
   const chooseGender = () => {
     setDropDownGender(!dropDownGender);
@@ -152,14 +154,21 @@ export default function BvnVerification(Data) {
     }  else{
             alertSuccess();
             setBvnButtonState(buttonStateSuccess);
-          }
+             await CheckVirtualAcc(
+              authToken, customerDetail, setLoading,
+              setVirtualAccCreated, 
+               setBankNameState, setAccountNameState, setAccountNumberState,
+               verificationOpen, idVerificationOpen, bvnVerificationOpen, setBvnButtonState, bankNameState);
+            }
  }
       } catch (error) {
         if (error.status === 401 || 400) {
           alert(ErrorMessage);
           console.log(`ERROR : ${error}`)
-          // setBvnVerifyImage(NotVerifiedImage)
-          // setBvnStatus("Not Verified");
+          if(bvnButtonState === "Verify"){
+           setBvnVerifyImage(NotVerifiedImage)
+           setBvnStatus("Not Verified");
+}
         } else if (error.status === 500) {
           alert("Error:", "INTERNAL_SERVER_ERROR");
           setBvnStatus("Not Verified");
@@ -251,22 +260,17 @@ export default function BvnVerification(Data) {
           >
             {/* Header Container */}
 
-            <div className="flex flex-col  lg:gap-[25px] gap-[20px]  w-[100%] ">
+            <div className="flex flex-col lg:gap-[25px] gap-[20px]  w-full ">
               <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]">
                 {/* Full Name */}
-                <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]">
+                <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[13px] gap-[5.868px]">
                   <h2
-                    className="font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] 
-   lg:text-[16px] lg:leading-[20.8px]"
+                    className="font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px]"
                   >
                     Full Name
                   </h2>
                   <div
-                    className=" font-[500] py-[10.33px] pl-[5.867px] 
-    md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px]
-    lg:py-[15.5px] lg:pl-[10px] border-[0.4px]
-    text-[8px] leading-[10.4px] 
-     border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px]"
+                    className="font-[500] py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[8px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-[10px]"
                   >
                     {full_name
                       ? full_name
@@ -278,7 +282,7 @@ export default function BvnVerification(Data) {
                 {/* PHONE NUMBER */}
                 <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]">
                   {/* header */}
-                  <div className="flex md:gap-[10px] gap-[5px]">
+                  <div className="flex md:gap-x-[10px] gap-x-[5px]">
                     <h2
                       className="font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]"
@@ -311,13 +315,7 @@ export default function BvnVerification(Data) {
                     maxLength={11}
                     inputMode="tel"
                     required
-                    className="font-[500] py-[10.33px] pl-[5.867px] 
-   lg:py-[15.5px] lg:pl-[10px] border-[0.4px] 
-   md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px]
-   text-[8px] leading-[10.4px] 
-    border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px]
-     focus:outline-none placeholder:text-[8px] placeholdee:leading-[10.4px]
-     placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px]"
+                    className="font-[500] py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[8px] placeholdee:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-[10px]"
                   />
                 </div>
               </div>
@@ -341,7 +339,7 @@ export default function BvnVerification(Data) {
     md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px]
     text-[8px] leading-[10.4px] lg:pr-[16px] pr-[9px]
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px]
-      focus:outline-none cursor-pointer"
+      focus:outline-none cursor-pointer rounded-[10px]"
                     type="date"
                     id="dob"
                     name="dob"
@@ -376,7 +374,7 @@ export default function BvnVerification(Data) {
     md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px]
     text-[8px] leading-[10.4px] 
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px]
-      focus:outline-none"
+      focus:outline-none rounded-[10px]"
                     type="text"
                     inputMode="numeric"
                     maxLength={11}
@@ -399,7 +397,7 @@ export default function BvnVerification(Data) {
                     className="font-medium py-[10.33px] pl-[5.867px] 
     md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px]
     lg:py-[15.5px] lg:pl-[10px] flex justify-between pr-[10.917px] lg:pr-[10px]
-     border-[0.4px] border-[#9C9C9C] text-[8px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px]"
+     border-[0.4px] border-[#9C9C9C] text-[8px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] rounded-[10px]"
                   >
                     <h2
                       className="text-[#000] leading-[10.4px]
@@ -451,7 +449,7 @@ export default function BvnVerification(Data) {
                       onChange={(e) => {
                         setIdAddress(e.target.value);
                       }}
-                      className="font-medium py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none "
+                      className="font-medium py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none rounded-[10px] "
                       placeholder=""
                       type="text"
                       onInvalid={validAddress}
@@ -462,7 +460,7 @@ export default function BvnVerification(Data) {
 
               <div className="flex flex-col md:gap-[15px] gap-[10px] justify-start">
                 <button
-                  disabled={bankNameState.length > 1 && accountNumberState.length > 1 && accountNameState.length > 1 ? true : false}
+                 // disabled={bvn}
                   onClick={() => {
                     BvnFunctionState();
                   }}
@@ -471,7 +469,7 @@ export default function BvnVerification(Data) {
            bankNameState.length > 1 ? "bg-slate-400" : "bg-[#04177F]"
          }`}
                 >
-                  {bvnButtonState}
+                  {(bvnButtonState) || (ConfirmAcc === true && bvnButtonState === "Verify" ? "Virtual Account Created" : "" ) ||(ConfirmId === true && bvnButtonState === "Verify" && !ConfirmAcc  ? "Create Virtual Account" : "Verify" )}
                 </button>
                 {errorVerify && (
                   <h2

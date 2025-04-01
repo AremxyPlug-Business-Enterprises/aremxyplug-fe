@@ -14,7 +14,7 @@ export const SetLocalStorage = (email, fullName,phone, username,bankName, accoun
 }
 
 
-export const GetLocalStorage = () => {
+export const GetLocalStorage = (ConfirmId, ConfirmAcc) => {
 const UserEmail = JSON.parse(localStorage.getItem("userEmail"));
  const UserPhone= JSON.parse(localStorage.getItem("userPhone"))
   const  UserFullName = JSON.parse(localStorage.getItem("userFullName"))
@@ -22,8 +22,30 @@ const UserEmail = JSON.parse(localStorage.getItem("userEmail"));
  const aremxyBankName  = JSON.parse(localStorage.getItem("userBankName"));
   const aremxyAccountName = JSON.parse(localStorage.getItem("aremxyAccountName"))
  const aremxyAccountNumber = JSON.parse(localStorage.getItem("aremxyAccountNumber"))
-  const aremxyUserId = JSON.parse(localStorage.getItem("aremxyUserId"))
-return {UserEmail, UserPhone, aremxyUsername, UserFullName, aremxyBankName, aremxyAccountNumber, aremxyAccountName, aremxyUserId}
+  const aremxyUserId = JSON.parse(localStorage.getItem("aremxyUserId"));
+  const idVerification = localStorage.getItem("IdVerification");
+  const AccCreated = localStorage.getItem("AccCreated");
+   
+  if(idVerification && !AccCreated){
+ ConfirmId = JSON.parse(localStorage.getItem("idVerification"));
+  
+  }else if(AccCreated && !idVerification){
+ConfirmAcc = JSON.parse(localStorage.getItem("AccCreated"))
+   }else{
+   ConfirmId = JSON.parse(localStorage.getItem("idVerification"))
+   ConfirmAcc = JSON.parse(localStorage.getItem("AccCreated"))
+ }
+return {UserEmail, 
+  UserPhone, 
+  aremxyUsername,
+   UserFullName,
+    aremxyBankName, 
+    aremxyAccountNumber,
+     aremxyAccountName, 
+     aremxyUserId,
+     ConfirmAcc,
+     ConfirmId
+    }
 }
 
 

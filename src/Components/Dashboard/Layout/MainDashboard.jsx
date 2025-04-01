@@ -35,7 +35,9 @@ export const MainDashboard = (Data) => {
   const [selected, setSelected] = useState("");
   const [selected2, setSelected2] = useState("");
   const [symbol, setSymbol] = useState("₦");
-  
+  const ConfirmId = localStorage.getItem("ConfirmId")
+const ConfirmAcc = localStorage.getItem("ConfirmAcc")
+
   const handleCopyClick = () => {
     const text = textRef.current.innerText;
     navigator.clipboard
@@ -121,6 +123,7 @@ setSymbol("₦")
     //   : setSymbol("");
     return;
   };
+  console.log(selected2);
 return (
     <div className="h-[150%]">
       {/* ==============TOP BAR========== */}
@@ -277,7 +280,7 @@ return (
                     <option  value="AUD">AUD</option>
                     <option  value="KES">KES</option>
                   </select>
-                  {selected2 === "NGN" || "" ? (
+                  {selected2 === "NGN" || " " ? (
                   visible ? (
                     <span
                       className={` ${
@@ -524,7 +527,7 @@ return (
                     isDarkMode ? "border bg-black" : "bg-[#04177f]"
                   } ${styles.viewWallet}`}
                 >
-                  {(bankNameState.length > 4 && accountNameState.length > 4 && accountNumberState.length > 4 )   ? "Verified" : "Verify"}
+               {(ConfirmAcc ? "Verified" : "Generate") || (!ConfirmAcc && ConfirmId ? "Generate" : "" )|| (!ConfirmId ? "Verify" : "" )}
                 </button>
               </Link>
             </div>

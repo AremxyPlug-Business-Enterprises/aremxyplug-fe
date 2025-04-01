@@ -160,15 +160,22 @@ if (authToken || getToken) {
 const url = 'https://aremxyplug.onrender.com/api/v1/check-verification';
  //
  try{
-  const response = await axios.post(url, "",{headers : {"Content-Type" : "application/json",
+  const response = await axios.get(url,{headers : {"Content-Type" : "application/json",
   Authorization : authToken || getToken
   }})
 if (response.status === 201 || 200 ) {
+  setBvnButtonState("Virtual Account Created");
+  localStorage.setItem("AccCreated",true);
          alert("successful")
       }
     }catch(error){
    if(error.status === 401 || 400){
     alert(`ERROR : ${error}`)
+    if(error.message && error.message === "error"){
+      localStorage.setItem("IdVerification",false);
+    }else if(error.message && error.message === "action_required"){
+      localStorage.setItem("AccCreated",false)
+    }
     }else if(error.status === 500){
         alert('Error:', "INTERNAL_SERVER_ERROR");
      
@@ -207,6 +214,7 @@ if (response.status === 201 || 200 ) {
           const loginData = { username: username, password: password};
           const config = {
             headers: { "Content-Type": "application/json" },
+            withCredentials : true
           };
           await axios
             .post(
@@ -300,6 +308,7 @@ if (response.status === 201 || 200 ) {
           const loginData = { email: email, password: password };
           const config = {
             headers: { "Content-Type": "application/json" },
+            withCredentials : true
           };
           await axios
             .post(
