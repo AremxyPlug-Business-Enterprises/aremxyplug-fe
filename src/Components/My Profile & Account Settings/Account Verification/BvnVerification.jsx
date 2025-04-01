@@ -269,48 +269,8 @@ export default function BvnVerification(Data) {
                       : "Hi user"}
                   </div>
                 </div>
-                {/* PHONE NUMBER */}
-                <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]">
-                  {/* header */}
-                  <div className="flex md:gap-x-[10px] gap-x-[5px]">
-                    <h2
-                      className="font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] 
-   lg:text-[16px] lg:leading-[20.8px]"
-                    >
-                      Phone Number
-                    </h2>
-                    <img
-                      onClick={() => {
-                        setBvnPhoneMessage(true);
-                      }}
-                      src={messageIcon}
-                      alt=""
-                      className="h-[14.083px] w-[14.083px] lg:h-[24px] lg:w-[24px] cursor-pointer"
-                    />
-                  </div>
-                  {/* Input */}
-                  <input
-                    readOnly={bvnStatus === "Verified"}
-                    value={bvnPhone}
-                    onInput={(e) => {
-                      const numericValue = e.target.value.replace(/\D/g, "");
-                      e.target.value = numericValue;
-                    }}
-                    onChange={(e) => {
-                      setBvnPhone(e.target.value);
-                    }}
-                    type="tel"
-                    name="phone"
-                    id="phone"
-                    maxLength={11}
-                    inputMode="tel"
-                    required
-                    className="font-[500] py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[8px] placeholdee:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-[10px]"
-                  />
-                </div>
-              </div>
-              {/* Date of Birth / BVN */}
-              <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]">
+                
+                {/* Date of Birth */}
                 <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]">
                   <h2
                     className="font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] 
@@ -324,74 +284,31 @@ export default function BvnVerification(Data) {
                     onChange={(e) => {
                       setBvnDateOfBirth(e.target.value);
                     }}
-                    className=" font-[500] w-[100%] py-[10.33px] pl-[5.867px] bg-white
-    lg:py-[15.5px] lg:pl-[10px] border-[0.4px] 
-    md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px]
-    text-[8px] leading-[10.4px] lg:pr-[16px] pr-[9px]
-     border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px]
-      focus:outline-none cursor-pointer rounded-[10px]"
+                    className=" font-[500] w-[100%] py-[10.33px] pl-[5.867px] bg-white lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] text-[8px] leading-[10.4px] lg:pr-[16px] pr-[9px] border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px] focus:outline-none cursor-pointer rounded-[10px]"
                     type="date"
                     id="dob"
                     name="dob"
                   />
                 </div>
-
-                {/*========= BVN ==========*/}
-                <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]">
-                  <h2
-                    className="font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] 
-   lg:text-[16px] lg:leading-[20.8px]"
-                  >
-                    BVN Number
-                  </h2>
-                  <input
-                    readOnly={bvnStatus === "Verified"}
-                    onInput={(e) => {
-                      const numbersOnly = e.target.value.replace(/\D/g, "");
-                      e.target.value = numbersOnly;
-                    }}
-                    onClick={() => {
-                      setLoginAuthorisation(
-                        localStorage.getItem("authorisedLogin")
-                      );
-                    }}
-                    value={bvnNumber}
-                    onChange={(e) => {
-                      setBvnNumber(e.target.value);
-                    }}
-                    className=" font-[500] py-[10.33px] pl-[5.867px] 
-    lg:py-[15.5px] lg:pl-[10px] border-[0.4px] 
-    md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px]
-    text-[8px] leading-[10.4px] 
-     border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px]
-      focus:outline-none rounded-[10px]"
-                    type="text"
-                    inputMode="numeric"
-                    maxLength={11}
-                    required
-                  />
-                </div>
+                
               </div>
-
+              
               {/* Gender / House Address */}
               <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]">
-                <div className="flex flex-col relative md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]">
+                
+              <div className="flex flex-col relative md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]">
                   <h2
-                    className="font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] 
-   lg:text-[16px] lg:leading-[20.8px]"
+                    className="font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px]"
                   >
                     Gender
                   </h2>
                   <div
                     onClick={chooseGender}
                     className="font-medium py-[10.33px] pl-[5.867px] 
-    md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px]
-    lg:py-[15.5px] lg:pl-[10px] flex justify-between pr-[10.917px] lg:pr-[10px]
-     border-[0.4px] border-[#9C9C9C] text-[8px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] rounded-[10px]"
+    md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] flex justify-between pr-[10.917px] lg:pr-[10px] border-[0.4px] border-[#9C9C9C] text-[8px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] rounded-[10px]"
                   >
                     <h2
-                      className="text-[#000] leading-[10.4px]
-      lg:text-[16px] lg:leading-[20.8px]"
+                      className="text-[#000] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px]"
                     >
                       {genderResult}
                     </h2>
@@ -445,7 +362,87 @@ export default function BvnVerification(Data) {
                       onInvalid={validAddress}
                       required
                     />
+                </div>
+                
+              </div>
+
+              {/* PHONE NUMBER / BVN */}
+              <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]">
+                
+                
+                {/* PHONE NUMBER */}
+                <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]">
+                  {/* header */}
+                  <div className="flex md:gap-x-[10px] gap-x-[5px]">
+                    <h2
+                      className="font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px]"
+                    >
+                      Phone Number
+                    </h2>
+                    <img
+                      onClick={() => {
+                        setBvnPhoneMessage(true);
+                      }}
+                      src={messageIcon}
+                      alt=""
+                      className="h-[14.083px] w-[14.083px] lg:h-[24px] lg:w-[24px] cursor-pointer"
+                    />
                   </div>
+                  {/* Input */}
+                  <input
+                    readOnly={bvnStatus === "Verified"}
+                    value={bvnPhone}
+                    onInput={(e) => {
+                      const numericValue = e.target.value.replace(/\D/g, "");
+                      e.target.value = numericValue;
+                    }}
+                    onChange={(e) => {
+                      setBvnPhone(e.target.value);
+                    }}
+                    type="tel"
+                    name="phone"
+                    id="phone"
+                    maxLength={11}
+                    inputMode="tel"
+                    required
+                    className="font-[500] py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[8px] placeholdee:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-[10px]"
+                  />
+                </div>
+
+                {/*========= BVN ==========*/}
+                <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]">
+                  <h2
+                    className="font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px]"
+                  >
+                    BVN Number
+                  </h2>
+                  <input
+                    readOnly={bvnStatus === "Verified"}
+                    onInput={(e) => {
+                      const numbersOnly = e.target.value.replace(/\D/g, "");
+                      e.target.value = numbersOnly;
+                    }}
+                    onClick={() => {
+                      setLoginAuthorisation(
+                        localStorage.getItem("authorisedLogin")
+                      );
+                    }}
+                    value={bvnNumber}
+                    onChange={(e) => {
+                      setBvnNumber(e.target.value);
+                    }}
+                    className=" font-[500] py-[10.33px] pl-[5.867px] 
+    lg:py-[15.5px] lg:pl-[10px] border-[0.4px] 
+    md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px]
+    text-[8px] leading-[10.4px] 
+     border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px]
+      focus:outline-none rounded-[10px]"
+                    type="text"
+                    inputMode="numeric"
+                    maxLength={11}
+                    required
+                  />
+                </div>
               </div>
 
               <div className="flex flex-col md:gap-[15px] gap-[10px] justify-start">
