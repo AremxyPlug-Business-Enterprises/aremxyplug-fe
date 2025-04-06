@@ -10,8 +10,7 @@ export default function ProfileHero() {
        <div className="flex flex-col gap-[5.016px]  w-[70%] lg:gap-[15px] md:gap-[8.802px]">
            {/* header */}
            <h2
-             className={`font-[600] leading-[12px] text-[9px] text-[#000] 
-    md:text-[14.75px] md:leading-[22px]
+             className={`font-[600] leading-[12px] text-[9px] text-[#000] md:text-[14.75px] md:leading-[22px]
      lg:text-[24px] lg:leading-[36px] `}
            >
         MANAGE YOUR PROFILE AND ACCOUNT SETTINGS.
@@ -19,14 +18,13 @@ export default function ProfileHero() {
            {/* sub-text */}
            <p
              className="font-[400] text-[8px] leading-[9.1px] 
-     md:text-[9.167px]  md:leading-[11.917px]
-     lg:text-[20px] lg:leading-[26px]"
+md:text-[9.167px]  md:leading-[11.917px] lg:text-[20px] lg:leading-[26px]"
            >
              <span className="md:block">
              Manage, edit, and secure your profile and account settings without limitations,  {' '}
  </span>
          <span className="md:block">
-         explore the world of  digital possibilities  at your finger tips. {' '}
+         explore the world of  digital possibilities  at your finger tips. 
              </span>
           
            </p>

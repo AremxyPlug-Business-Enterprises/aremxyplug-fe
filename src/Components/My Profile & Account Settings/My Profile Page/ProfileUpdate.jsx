@@ -34,13 +34,13 @@ export default function ProfileUpdate({ fullName, Email, Phone, Username }) {
               {/* Profile text */}
               <div className="flex flex-col justify-center gap-[3.52px] lg:gap-[12px]">
                 <p
-                  className="font-[500] text-[10px] leading-[15px] md:text-[9.389px] md:leading-[12.206px] 
+                  className="text-sm leading-[15px] md:text-[9.389px] md:leading-[12.206px] 
   lg:text-[16px] lg:leading-[20.8px]"
                 >
                   {full_name ? full_name : `${fullName ? fullName : "Hi User"}`}
                 </p>
                 <p
-                  className="font-[500] text-[#7C7C7C] text-[10px] leading-[15px] md:text-[7.042px] md:leading-[9.154px] lg:text-[12px] lg:leading-[15.6px]"
+                  className=" text-[#7C7C7C] text-[10px] leading-[15px] md:text-[7.042px] md:leading-[9.154px] lg:text-[12px] lg:leading-[15.6px]"
                 >
                   {email ? email : `${Email ? Email : ""}`}
                 </p>
@@ -71,7 +71,7 @@ export default function ProfileUpdate({ fullName, Email, Phone, Username }) {
                         alt=""
                       />
                       <p
-                        className="font-[500] text-[#7E7E7E] text-[12px] leading-[10.4px] md:text-[10.389px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px]"
+                        className=" text-[#7E7E7E] text-sm leading-[18px] md:text-[10.389px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px]"
                       >
                         Nigeria
                       </p>
@@ -89,7 +89,7 @@ export default function ProfileUpdate({ fullName, Email, Phone, Username }) {
                       className={`flex items-center h-[30px] md:h-[40px] lg:h-[51px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl sm:p-3 sm:text-lg pl-[5.868px] lg:pl-[10px] border-[0.4px] border-[#9C9C9C] ${isDarkMode? "border-stone-50" : ""}`}
                     >
                       <p
-                        className="font-[500] text-[#7E7E7E] text-[12px] leading-[10.4px]md:text-[9.389px] md:leading-[12.206px]lg:text-[16px] lg:leading-[20.8px] cursor-default"
+                        className="text-[#7E7E7E] text-sm leading-[18px] md:text-[9.389px] md:leading-[12.206px]lg:text-[16px] lg:leading-[20.8px] cursor-default"
                       >
                         {full_name
                           ? full_name
@@ -114,7 +114,7 @@ export default function ProfileUpdate({ fullName, Email, Phone, Username }) {
                       className={`flex items-center h-[30px] md:h-[40px] lg:h-[51px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl sm:p-3 sm:text-lg pl-[5.868px] lg:pl-[10px] border-[0.4px] border-[#9C9C9C] ${isDarkMode? "border-stone-50" : ""}`}
                     >
                       <p
-                        className={`font-medium text-[#7E7E7E] text-[12px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] cursor-default ${isDarkMode ? "text-white" : ""}`}
+                        className={` text-[#7E7E7E] text-sm leading-[18px] md:text-[9.389px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] cursor-default ${isDarkMode ? "text-white" : ""}`}
                       >
                         {username ? username : `${Username ? Username : ""}`}
                       </p>
@@ -131,7 +131,7 @@ export default function ProfileUpdate({ fullName, Email, Phone, Username }) {
                       className={`flex items-center h-[30px] md:h-[40px] lg:h-[51px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl sm:p-3 sm:text-lg pl-[5.868px] lg:pl-[10px] border-[0.4px] border-[#9C9C9C] ${isDarkMode? "border-stone-50" : ""}`}
                     >
                       <p
-                        className={`font-medium text-[#7E7E7E] text-[12px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] cursor-default ${isDarkMode ? "text-white" : ""}`}
+                        className={` text-[#7E7E7E] text-sm leading-[18px] md:text-[9.389px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] cursor-default ${isDarkMode ? "text-white" : ""}`}
                       >
                         {email ? email : `${Email ? Email : ""}`}
                       </p>
@@ -155,7 +155,7 @@ export default function ProfileUpdate({ fullName, Email, Phone, Username }) {
                       className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-xl sm:p-3 sm:text-lg flex  md:w-[50%] items-center md:h-[40px] h-[30px] lg:h-[51px] pl-[5.586px] lg:pl-[10px] border-[0.4px] border-[#9C9C9C] ${isDarkMode? "border-stone-50" :""}`}
                     >
                       <p
-                        className={`font-medium text-[#7E7E7E] text-[12px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] cursor-default ${isDarkMode ? "text-white" : ""}`}
+                        className={` text-[#7E7E7E] text-sm leading-[18px] md:text-[9.389px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] cursor-default ${isDarkMode ? "text-white" : ""}`}
                       >
                         {`${
                           phone

@@ -62,8 +62,7 @@ export default function ProfileSettingsMain(Data) {
         <div className="">
           <ProfileHero />
           <div
-            className={`flex flex-wrap md:flex-nowrap  mt-[23px] md:w-[100%] md:gap-[53.4px] lg:gap-[91px] 
-        md:border-b-[2px] md:border-[#D9D9D999] border-opacity-[60%] justify-between `}
+            className={`flex flex-wrap md:flex-nowrap  mt-[23px] md:w-[100%] md:gap-[53.4px] lg:gap-[91px]  md:border-b-[2px] md:border-[#D9D9D999] border-opacity-[60%] justify-between `}
           >
             {/* Profile Tab */}
             <div
@@ -191,7 +190,7 @@ export default function ProfileSettingsMain(Data) {
           </p>
           <Link
             to="/contactUs"
-            className="font-[500] text-white text-[10px]  py-[4.865px] px-[10.594px] leading-[10.4px] rounded-[5.156px] bg-[#04177F] lg:text-[12px] lg:leading-[14.4px] md:text-[4.583px]  md:py-[4.865px] md:px-[14.594px] md:leading-[5.985px]  lg:py-[10px] lg:px-[16px] lg:rounded-[9px]"
+            className="font-[500] text-white text-xs  py-[4.865px] px-[10.594px] rounded-[5.156px] bg-[#04177F] lg:text-[12px] lg:leading-[14.4px] md:text-[4.583px]  md:py-[4.865px] md:px-[14.594px] md:leading-[5.985px]  lg:py-[10px] lg:px-[16px] lg:rounded-[9px]"
           >
             Contact Us
           </Link>

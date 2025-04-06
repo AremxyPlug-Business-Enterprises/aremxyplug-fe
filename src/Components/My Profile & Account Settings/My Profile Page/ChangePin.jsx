@@ -160,7 +160,7 @@ const ChangePin = () => {
               />
             </div>
 
-            <div className="text-[8px] flex gap-[2.5%] md:text-[18px] lg:text-[20px] justify-between md:justify-between md:gap-[5%]">
+            <div className="text-[12px] flex gap-[2.5%] md:text-[18px] lg:text-[20px] justify-between md:justify-between md:gap-[5%]">
               <div
                 onClick={() => {
                   handleClick(0);
@@ -238,7 +238,7 @@ const ChangePin = () => {
                 <div className="flex flex-col mt-[10px] lg:gap-[25px] gap-[20px] w-full pb-[30px] lg:py-[30px] md:mt-[20px]">
                   <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-full">
                     {/* <div className="mt-[30px] w-1/2 md:w-full "> */}
-                    <div className="mt-[30px] flex flex-col md:w-[50%] w-full md:gap-[10px] gap-[5.868px] ">
+                    <div className="mt-[30px] flex flex-col md:w-[50%] w-full md:gap-[10px] gap-2.5 ">
                       <h2
                         className={`text-[11px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] mt-2 md:mt-0 ${
                           isDarkMode ? "text-white" : ""
@@ -250,7 +250,7 @@ const ChangePin = () => {
                       <div className="relative">
                         <input
                           type="number"
-                          className={`w-full h-8 px-2 py-[10px] border-[1px] text-[10px] md:text-[14px] text-[#7E7E7E] lg:text-[18px] font-semibold focus:outline-none lg:h-[51px] mt-2 md:mt-0 rounded-[10px] p-[20px] md:pl-[8.67px] lg:pl-[10px] sm:p-3 sm:text-lg border-[#9C9C9C]  ${
+                          className={`w-full h-8 px-2 py-[10px] border text-sm leading-[18px] lg:leading-[20.8px] text-[#7E7E7E] lg:text-[18px] focus:outline-none lg:h-[51px] mt-2 md:mt-0 rounded-[10px] p-[20px] md:pl-[8.67px] lg:pl-[10px] sm:p-3 sm:text-lg border-[#9C9C9C]  ${
                             isDarkMode
                               ? "border-slate-50 text-slate-50 bg-black"
                               : "bg-white"
@@ -265,9 +265,9 @@ const ChangePin = () => {
                     </div>
 
                     {/* <div className="mt-[30px] md:ml-[-20px] lg:ml-[-50px] w-1/2 md:w-full "> */}
-                    <div className="mt-[30px] flex flex-col md:w-[50%] w-full md:gap-[10px] gap-[5.868px] ">
+                    <div className="mt-[30px] flex flex-col md:w-[50%] w-full md:gap-[10px] gap-2.5 ">
                       <h2
-                        className={`text-[11px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] mt-2 md:mt-0 ${
+                        className={`text-[12px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] mt-2 md:mt-0 ${
                           isDarkMode ? "text-slate-50" : ""
                         }`}
                       >
@@ -276,7 +276,7 @@ const ChangePin = () => {
                       <div className="relative ">
                         <input
                           type="number"
-                          className={`w-full md:w-full lg:w-full h-8 px-2 py-[10px] border-[1px] text-[10px] md:text-[14px] text-[#7E7E7E] lg:text-[18px] font-semibold focus:outline-none lg:h-[51px] mt-2 md:mt-0 rounded-[10px] p-[20px] md:pl-[8.67px] lg:pl-[10px] sm:p-3 sm:text-lg border-[#9C9C9C]  ${
+                          className={`w-full md:w-full lg:w-full h-8 px-2 py-[10px] border-[1px] text-sm leading-[18px] lg:leading-[20.8px] text-[#7E7E7E] lg:text-[18px]  focus:outline-none lg:h-[51px] mt-2 md:mt-0 rounded-[10px] p-[20px] md:pl-[8.67px] lg:pl-[10px] sm:p-3 sm:text-lg border-[#9C9C9C]  ${
                             isDarkMode
                               ? "border-slate-50 text-slate-50 bg-black"
                               : "bg-white"
@@ -291,9 +291,9 @@ const ChangePin = () => {
                     </div>
                   </div>
 
-                  <div className="mt-[30px] flex flex-col md:w-[50%] w-full md:gap-[10px] gap-[5.868px]">
+                  <div className="mt-[30px] flex flex-col md:w-[50%] w-full md:gap-[10px] gap-2.5">
                     <h2
-                      className={`text-[11px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] mt-2 md:mt-0 ${
+                      className={`text-[12px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] mt-2 md:mt-0 ${
                         isDarkMode ? "text-slate-50" : ""
                       }`}
                     >
@@ -303,7 +303,7 @@ const ChangePin = () => {
                       <input
                         id="confirmPinInput"
                         type="number"
-                        className={`w-full md:w-full lg:w-full h-8 px-2 py-[10px] border-[1px] text-[10px] md:text-[14px] text-[#7E7E7E] lg:text-[18px] font-semibold focus:outline-none lg:h-[51px] mt-2 md:mt-0 rounded-[10px] p-[20px] md:pl-[8.67px] lg:pl-[10px] sm:p-3 sm:text-lg border-[#9C9C9C]  ${
+                        className={`w-full md:w-full lg:w-full h-8 px-2 py-[10px] border-[1px] text-sm leading-[18px] lg:leading-[20.8px] text-[#7E7E7E] lg:text-[18px] focus:outline-none lg:h-[51px] mt-2 md:mt-0 rounded-[10px] p-[20px] md:pl-[8.67px] lg:pl-[10px] sm:p-3 sm:text-lg border-[#9C9C9C]  ${
                           isDarkMode
                             ? "border-slate-50 text-slate-50 bg-black"
                             : "bg-white"
@@ -408,18 +408,18 @@ const ChangePin = () => {
                 } flex flex-col justify-between h-full`}
               >
                 <section className="">
-                  <div className="mt-[30px]">
+                  <div className="mt-[30px] flex flex-col md:w-[50%] w-full md:gap-[10px] gap-2.5">
                     <h2
-                      className={`text-[10px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px]  ${
+                      className={`text-[12px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px]  ${
                         isDarkMode ? "text-white" : ""
                       }`}
                     >
                       New Email
                     </h2>
-                    <div className="relative mt-[5px] lg:mt-[15px]">
+                    <div className="relative ">
                       <input
                         type="text"
-                        className={`w-full md:w-[45%] text-[#7E7E7E] lg:w-[40%] h-8 px-2 py-[10px] border-[1px] rounded-md text-[10px] md:text-[14px] lg:text-[18px] font-semibold border-[#9C9C9C] focus:outline-none lg:h-[51px] ${
+                        className={`w-full md:w-[45%] text-[#7E7E7E] lg:w-[40%] h-8 px-2 py-[10px] border rounded-md text-sm leading-[18px] lg:leading-[20.8px] lg:text-[18px] font-semibold border-[#9C9C9C] focus:outline-none lg:h-[51px] ${
                           isDarkMode
                             ? "border-slate-50 text-slate-50 bg-black"
                             : "bg-white"
@@ -441,22 +441,22 @@ const ChangePin = () => {
                     )}
                   </div>
 
-                  <div className="mt-[10%] md:mt-[5%]">
+                  <div className="mt-[10%] md:mt-[5%] flex flex-col md:w-[50%] w-full md:gap-[10px] gap-2.5">
                     <h2
-                      className={`text-[10px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] ${
+                      className={`text-[12px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] ${
                         isDarkMode ? "text-slate-50" : ""
                       }`}
                     >
                       Input PIN
                     </h2>
-                    <div className="mt-[3%]">
+                    <div className="">
                       <OtpInput
                         value={pin}
                         inputType="tel"
                         onChange={setPin}
                         numInputs={4}
                         shouldAutoFocus={true}
-                        containerStyle="flex w-full justify-between md:justify-start md:gap-[30px] lg:gap-[50px]"
+                        containerStyle="flex w-full justify-between md:justify-start md:gap-[30px] lg:gap-[50px] text-sm leading-[18px] lg:leading-[20.8px] lg:text-[20px]"
                         inputStyle={{
                           color: isDarkMode ? "#ffffff" : "#403f3f",
                           width: 40,
@@ -479,7 +479,7 @@ const ChangePin = () => {
                         renderInput={(props) => (
                           <input
                             {...props}
-                            className="inputOTP text-[10px] md:text-[14px] lg:text-[20px] mx-[3px] "
+                            className="inputOTP text-sm leading-[18px] lg:leading-[20.8px] lg:text-[20px] mx-[3px] "
                           />
                         )}
                         isInputNum
@@ -512,8 +512,8 @@ const ChangePin = () => {
               <div
               // confirm02
                   className={` ${
-                    toggleSideBar ? "bottom-[0%] absolute w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] md:ml-[20%] h-[250px] lg:h-[405px] shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)] top-[0%] " : " bottom-[0%] absolute w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] h-[250px] lg:h-[405px]  shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)]"
-                  } md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px] ${isDarkMode ? "bg-stone-950 border-white border": "bg-white"} `}
+                    toggleSideBar ? "bottom-[0%] absolute w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] md:ml-[20%] h-[250px] lg:h-[405px] shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)] top-[0%] " : " bottom-[0%] absolute w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] h-[250px] lg:h-[405px]  shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)]"} 
+                    md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px] ${isDarkMode ? "bg-stone-950 border-white border" : "bg-white"} `}
                 >
                   <img
                     onClick={() => setUpdate(false)}
@@ -666,13 +666,13 @@ const ChangePin = () => {
               >
                 <section className="">
                   <div className="mt-[30px]">
-                    <h2 className={`text-[10px] text-[#04177F] font-semibold md:text-[14px] lg:text-[18px] text-center md:text-start ${isDarkMode? "text-white" : ""}`}>
+                    <h2 className={`text-[12px] text-[#04177F] font-semibold md:text-[14px] lg:text-[18px] text-center md:text-start ${isDarkMode? "text-white" : ""}`}>
                       Create New Transaction PIN to Continue Operations!
                     </h2>
                   </div>
 
                   <div className="mt-[10%] lg:mt-[3%]">
-                    <h2 className={`text-[10px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] ${isDarkMode ? "text-white" : ""}`}>
+                    <h2 className={`text-[12px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] ${isDarkMode ? "text-white" : ""}`}>
                       Input PIN
                     </h2>
                     <div className="mt-[3%]">
@@ -682,7 +682,7 @@ const ChangePin = () => {
                         onChange={setNewResetPin}
                         numInputs={4}
                         shouldAutoFocus={true}
-                        containerStyle="flex w-full justify-between md:justify-start md:gap-[30px] lg:gap-[50px]"
+                        containerStyle="flex w-full justify-between md:justify-start md:gap-[30px] lg:gap-[50px] text-sm leading-[18px] lg:leading-[20.8px] lg:text-[20px]"
                         inputStyle={{
                           color: isDarkMode ? "#ffffff" : "#403f3f",
                           width: 40,
@@ -706,7 +706,7 @@ const ChangePin = () => {
                         renderInput={(props) => (
                           <input
                             {...props}
-                            className="inputOTP text-[10px] md:text-[14px] lg:text-[20px] mx-[3px]"
+                            className="inputOTP text-sm leading-[18px] lg:leading-[20.8px] lg:text-[20px] mx-[3px]"
                           />
                         )}
                         isInputNum
@@ -715,7 +715,7 @@ const ChangePin = () => {
                   </div>
 
                   <div className="mt-[10%] lg:mt-[5%]">
-                    <h2 className={`text-[10px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] ${isDarkMode ? "text-white" : ""}`}>
+                    <h2 className={`text-[12px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] ${isDarkMode ? "text-white" : ""}`}>
                       Confirm PIN
                     </h2>
                     <div className="mt-[3%]">

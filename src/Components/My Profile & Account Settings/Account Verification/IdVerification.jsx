@@ -218,14 +218,14 @@ export default function IdVerification(Data) {
               {/*  Full Name / Gender */}
               <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]">
                 {/* Full Name */}
-                <div className="flex flex-col md:w-[50%] w-full md:gap-[10px] gap-[5.868px]">
+                <div className="flex flex-col md:w-[50%] w-full md:gap-[10px] gap-2.5">
                   <h2
                     className={`font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-slate-50" : ""}`}
                   >
                     Full Name
                   </h2>
                   <div
-                    className={`font-medium py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[12px] md:pl-[8.67px] md:pr-[5.867px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[8px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-[10px] h-full  ${isDarkMode ?"border-slate-50" : ""}`}
+                    className={`py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[12px] md:pl-[8.67px] md:pr-[5.867px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[8px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-[10px] h-full  ${isDarkMode ?"border-slate-50" : ""}`}
                   >
                     {full_name
                       ? full_name
@@ -234,7 +234,7 @@ export default function IdVerification(Data) {
                 </div>
                 {/* Gender */}
 
-                <div className="relative flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]">
+                <div className="relative flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
                   <h2
                     className={`font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-slate-50" : ""}`}
                   >
@@ -242,10 +242,10 @@ export default function IdVerification(Data) {
                   </h2>
                   <div
                     onClick={chooseGender}
-                    className={`flex justify-between items-center font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] ${isDarkMode? "border-slate-50": ""}`}
+                    className={`flex justify-between items-center py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] ${isDarkMode? "border-slate-50": ""}`}
                   >
                     <h2
-                      className={`text-[#000] font-[400] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-slate-50" :""}`}
+                      className={`text-[#000] font-[400] text-sm leading-[18px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-slate-50" :""}`}
                     >
                       {genderResult}
                     </h2>
@@ -280,7 +280,7 @@ export default function IdVerification(Data) {
               {/* HOUSE ADDRESS AND STATE*/}
               <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]">
                 {/* HOUSE ADDRESS */}
-                <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]">
+                <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
                   <h2
                     className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white": ""}`}
                   >
@@ -291,7 +291,7 @@ export default function IdVerification(Data) {
                     onChange={(e) => {
                       setIdAddress(e.target.value);
                     }}
-                    className={`font-medium py-[10.33px] pl-[5.867px] pr-1 md:py-[10] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none ${isDarkMode ? "bg-transparent text-slate-50 border-slate-50": ""}`}
+                    className={`py-[10.33px] pl-[5.867px] pr-1 md:py-[10] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none ${isDarkMode ? "bg-transparent text-slate-50 border-slate-50": ""}`}
                     placeholder=""
                     type="text"
                     onInvalid={validAddress}
@@ -300,7 +300,7 @@ export default function IdVerification(Data) {
                 </div>
 
                 {/* Date of Birth / BVN */}
-                <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]">
+                <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
                   <h2
                     className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-slate-50": ""}`}
                   >
@@ -311,14 +311,14 @@ export default function IdVerification(Data) {
                     onChange={(e) => {
                       setIdDateOfBirth(e.target.value);
                     }}
-                    className={`font-medium py-[10.33px] pl-[5.867px] pr-1 md:py-[10] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none ${isDarkMode ? "bg-transparent text-slate-50 border-slate-50": ""}`}
+                    className={`py-[10.33px] pl-[5.867px] pr-1 md:py-[10] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none ${isDarkMode ? "bg-transparent text-slate-50 border-slate-50": ""}`}
                     type="date"
                     id="dob"
                     name="dob"
                   />
                 </div>
                 {/* STATE */}
-                {/* <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
+                {/* <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5'>
    <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
     State or Province
@@ -340,7 +340,7 @@ export default function IdVerification(Data) {
               {/* CITY AND LGA */}
               <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]">
                 {/* COUNTRY */}
-                <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]">
+                <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
                   <h2
                     className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-slate-50": ""}`}
                   >
@@ -351,7 +351,7 @@ export default function IdVerification(Data) {
                     onChange={(e) => {
                       setIdCountry(e.target.value);
                     }}
-                    className={`font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none ${isDarkMode ? "bg-black text-slate-50 border-slate-50": ""}`}
+                    className={`py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none ${isDarkMode ? "bg-black text-slate-50 border-slate-50": ""}`}
                     placeholder=""
                     type="text"
                     onInvalid={validCountry}
@@ -359,7 +359,7 @@ export default function IdVerification(Data) {
                   />
                 </div>
                 {/* CITY */}
-                <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]">
+                <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
                   <h2
                     className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-slate-50": ""}`}
                   >
@@ -370,7 +370,7 @@ export default function IdVerification(Data) {
                     onChange={(e) => {
                       setIdCity(e.target.value);
                     }}
-                    className={`font-medium py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none ${isDarkMode ? "bg-transparent text-slate-50 border-slate-50": ""}`}
+                    className={`py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none ${isDarkMode ? "bg-transparent text-slate-50 border-slate-50": ""}`}
                     placeholder=""
                     type="text"
                     onInvalid={validCity}
@@ -378,7 +378,7 @@ export default function IdVerification(Data) {
                   />
                 </div>
                 {/* LGA */}
-                {/* <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
+                {/* <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5'>
    <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
      L.G.A
@@ -400,7 +400,7 @@ export default function IdVerification(Data) {
               </div>
               {/* POSTAL CODE */}
 
-              <div className="flex flex-col md:w-[49%] w-[100%] md:gap-[10px] gap-[5.868px]">
+              <div className="flex flex-col md:w-[49%] w-[100%] md:gap-[10px] gap-2.5">
                 <h2
                   className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-slate-50": ""}`}
                 >
@@ -415,7 +415,7 @@ export default function IdVerification(Data) {
                   onChange={(e) => {
                     setIdPostalCode(e.target.value);
                   }}
-                  className={`font-medium py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none ${isDarkMode ? "bg-black text-slate-50 border-slate-50": ""}`}
+                  className={` py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none ${isDarkMode ? "bg-black text-slate-50 border-slate-50": ""}`}
                   placeholder=""
                   type="text"
                   inputMode="numeric"
@@ -425,7 +425,7 @@ export default function IdVerification(Data) {
               {/* ID TYPE & ID NUMBER */}
               <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]">
                 {/* ID TYPE */}
-                <div className="relative flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]">
+                <div className="relative flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
                   <h2
                     className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-slate-50": ""}`}
                   >
@@ -436,7 +436,7 @@ export default function IdVerification(Data) {
                     className={`flex justify-between items-center font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] ${isDarkMode ? "bg-black text-slate-50 border-slate-50": ""}`}
                   >
                     <h2
-                      className={`text-[#000] font-normal leading-[10.4px]lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-slate-50": ""}`}
+                      className={`text-[#000] font-normal text-sm leading-[18px] md:text-[16px] md:leading-[20.8px] ${isDarkMode ? "text-slate-50": ""}`}
                     >
                       {idResult}
                     </h2>
@@ -480,7 +480,7 @@ export default function IdVerification(Data) {
                : "bg-white"
            } `}>
                             <h2
-                              className={`font-medium text-[#7C7C7C] text-[8px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-stone-800 ": ""}`}
+                              className={`font-medium text-[#7C7C7C] text-sm leading-[18px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-stone-800 ": ""}`}
                             >
                               {info.idType}
                             </h2>
@@ -498,7 +498,7 @@ export default function IdVerification(Data) {
                 </div>
 
                 {/*  */}
-                <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]">
+                <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
                   <h2
                     className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-slate-50 ": ""}`}
                   >
@@ -513,7 +513,7 @@ export default function IdVerification(Data) {
                     onChange={(e) => {
                       setIdNumber(e.target.value);
                     }}
-                    className={`flex justify-between items-center font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[10px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none ${isDarkMode ? "text-slate-50 bg-black border-slate-50": ""}`}
+                    className={`flex justify-between items-center py-[10.33px] pl-[5.867px] pr-1 md:py-[10px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none ${isDarkMode ? "text-slate-50 bg-black border-slate-50": ""}`}
                     placeholder=""
                     type="text"
                     inputMode="numeric"
@@ -653,8 +653,7 @@ export default function IdVerification(Data) {
                           setIdCustomerQuery(false);
                         }}
                         className="font-[600] bg-[#04177F] w-[100%] md:w-[163px] md:py-[5.868px] lg:py-[13px]
-    text-white lg:rounded-[12px] py-[16.531px] md:mb-[40px] mb-[20px]
-   lg:text-[16px] lg:leading-[24px] md:rounded-[7.042px] rounded-[4.61px]"
+    text-white lg:rounded-[12px] py-[16.531px] md:mb-[40px] mb-[20px] lg:text-[16px] lg:leading-[24px] md:rounded-[7.042px] rounded-[4.61px]"
                       >
                         Okay
                       </button>
@@ -666,8 +665,7 @@ export default function IdVerification(Data) {
             {idFrontView && (
               <Modal>
                 <div
-                  className={`flex flex-col rounded-[8px] w-[100%] h-[257.07px]  md:h-[350px] 
-  lg:h-[404px] lg:w-[45%] md:w-[60%] lg:rounded-[12px] mx-[19px] shadow-[0px_0px_11.73611px_0px_rgba(0,0,0,0.25)] md:mx-[0px] lg:shadow-[0px_0px_20px_0_px_rgba(0 0,0,0.25)] ${isDarkMode ? "bg-black border border-white" : "bg-white"}`}
+                  className={`flex flex-col rounded-[8px] w-[100%] h-[257.07px]  md:h-[350px] lg:h-[404px] lg:w-[45%] md:w-[60%] lg:rounded-[12px] mx-[19px] shadow-[0px_0px_11.73611px_0px_rgba(0,0,0,0.25)] md:mx-[0px] lg:shadow-[0px_0px_20px_0_px_rgba(0 0,0,0.25)] ${isDarkMode ? "bg-black border border-white" : "bg-white"}`}
                 >
                   <div className="flex justify-end p-[10px]">
                     <img
@@ -681,8 +679,7 @@ export default function IdVerification(Data) {
                   </div>
                   <div className="flex flex-col h-[100%]   md:gap-[30px] gap-[20px] justify-center items-center">
                     <h2
-                      className=" font-[500] text-center text-[10px] leading-[14.4px] 
-   lg:text-[16px] lg:leading-[20.8px]"
+                      className=" font-[500] text-center text-[10px] leading-[14.4px] lg:text-[16px] lg:leading-[20.8px]"
                     >
                       Upload ID Front View
                     </h2>
@@ -706,7 +703,7 @@ export default function IdVerification(Data) {
             {idBackView && (
               <Modal>
                 <div
-                  className={`flex flex-col rounded-[8px] w-[100%] h-[257.07px] md:h-[350px] lg:h-[404px] md:w-[60%] lg:w-[45%] lg:rounded-[12px] mx-[19px] shadow-[0px_0px_11.73611px_0px_rgba(0,0,0,0.25)] md:mx-[0px] lg:shadow-[0px_0px_20px_0_px_rgba(0 0,0,0.25)] ${isDarkMode ? "bg-black border border-white" : "bg-white"}`}
+                  className={`flex flex-col rounded-[8px] w-[100%] h-[257.07px] md:h-[350px] lg:h-[404px] md:w-[60%] lg:w-[45%] lg:rounded-[12px] mx-[19px] shadow-[0px_0px_11.73611px_0px_rgba(0,0,0,0.25)] md:mx-[0px] lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] ${isDarkMode ? "bg-black border border-white" : "bg-white"}`}
                 >
                   <div className="flex justify-end p-[10px]">
                     <img

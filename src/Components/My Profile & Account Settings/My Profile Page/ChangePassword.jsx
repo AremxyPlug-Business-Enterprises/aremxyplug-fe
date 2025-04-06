@@ -47,15 +47,15 @@ const ChangePassword = () => {
         {/* <div className="grid grid-cols-1 mt-[10px] md:grid-cols-2 gap-y-[10px] md:gap-x-[0px] lg:gap-x-[0px] md:gap-y-[0px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[20px]"> */}
         <div className="flex flex-col mt-[10px] lg:gap-[25px] gap-[20px] w-full pb-[30px] lg:py-[30px] md:mt-[20px]">
           <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-full">
-          <div className="mt-[30px] flex flex-col md:w-[50%] w-full md:gap-[10px] gap-[5.868px]">
-            <h2 className={`text-[10px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] ${isDarkMode ? "text-white" : "" }`}>
+          <div className="mt-[30px] flex flex-col md:w-[50%] w-full md:gap-[10px] gap-2.5">
+            <h2 className={`text-[12px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] ${isDarkMode ? "text-white" : "" }`}>
               Old Password
             </h2>
             {/* <div className="relative mt-[5px] lg:mt-[15px]"> */}
             <div className="relative">
               <input
                 type="text"
-                className={`w-full h-8 px-2 py-[10px] border-[1px] text-[10px] md:text-[14px] text-[#7E7E7E] lg:text-[18px] font-semibold focus:outline-none lg:h-[51px] mt-2 md:mt-0 rounded-[10px] p-[20px] md:pl-[8.67px] lg:pl-[10px] sm:p-3 sm:text-lg border-[#9C9C9C]  ${
+                className={`w-full h-8 px-2 py-[10px] border text-sm leading-[18px] lg:leading-[20.8px] text-[#7E7E7E] lg:text-[18px] focus:outline-none lg:h-[51px] mt-2 md:mt-0 rounded-[10px] p-[20px] md:pl-[8.67px] lg:pl-[10px] sm:p-3 sm:text-lg border-[#9C9C9C]  ${
                   isDarkMode
                     ? "border-slate-50 text-slate-50 bg-black"
                     : "bg-white"
@@ -67,16 +67,16 @@ const ChangePassword = () => {
             </div>
           </div>
 
-          <div className="mt-[30px] flex flex-col md:w-[50%] w-full md:gap-[10px] gap-[5.868px]">
-            <h2 className={`text-[10px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] ${isDarkMode ? "text-white" : "" }`}>
+          <div className="mt-[30px] flex flex-col md:w-[50%] w-full md:gap-[10px] gap-2.5">
+            <h2 className={`text-[12px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] ${isDarkMode ? "text-white" : "" }`}>
               New Password
             </h2>
             <div className="relative ">
               <input
                 type="text"
-                className={`w-full h-8 px-2 py-[10px] border-[1px] text-[10px] md:text-[14px] text-[#7E7E7E] lg:text-[18px] font-semibold focus:outline-none lg:h-[51px] mt-2 md:mt-0 rounded-[10px] p-[20px] md:pl-[8.67px] lg:pl-[10px] sm:p-3 sm:text-lg border-[#9C9C9C]  ${
+                className={`w-full h-8 px-2 py-[10px] bordertext-sm leading-[18px] lg:leading-[20.8px] text-[#7E7E7E] lg:text-[18px] focus:outline-none lg:h-[51px] mt-2 md:mt-0 rounded-[10px] p-[20px] md:pl-[8.67px] lg:pl-[10px] sm:p-3 sm:text-lg border-[#9C9C9C]  ${
                   isDarkMode
-                    ? "border-slate-50 text-slate-50 bg-black"
+                    ? "border-slate-50 border text-slate-50 bg-black"
                     : "bg-white"
                 }`}
                 placeholder=""
@@ -87,15 +87,15 @@ const ChangePassword = () => {
           </div>
           </div>
 
-          <div className="mt-[30px] flex flex-col md:w-[50%] w-full md:gap-[10px] gap-[5.868px]">
-            <h2 className={`text-[10px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] ${isDarkMode ? "text-white" : "" }`}>
+          <div className="mt-[30px] flex flex-col md:w-[50%] w-full md:gap-[10px] gap-2.5">
+            <h2 className={`text-[12px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] ${isDarkMode ? "text-white" : "" }`}>
               Confirm Password
             </h2>
             <div className="relative">
               <input
                 id="confirmPinInput"
                 type="text"
-                className={`w-full h-8 px-2 py-[10px] border-[1px] text-[10px] md:text-[14px] text-[#7E7E7E] lg:text-[18px] font-semibold focus:outline-none lg:h-[51px] mt-2 md:mt-0 rounded-[10px] p-[20px] md:pl-[8.67px] lg:pl-[10px] sm:p-3 sm:text-lg border-[#9C9C9C]  ${
+                className={`w-full h-8 px-2 py-[10px] border text-sm leading-[18px] lg:leading-[20.8px] text-[#7E7E7E] lg:text-[18px] focus:outline-none lg:h-[51px] mt-2 md:mt-0 rounded-[10px] p-[20px] md:pl-[8.67px] lg:pl-[10px] sm:p-3 sm:text-lg border-[#9C9C9C]  ${
                   isDarkMode
                     ? "border-slate-50 text-slate-50 focus:bg-black bg-black"
                     : "bg-white"

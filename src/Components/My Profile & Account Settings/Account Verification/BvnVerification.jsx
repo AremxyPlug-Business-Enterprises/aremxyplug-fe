@@ -205,8 +205,7 @@ export default function BvnVerification(Data) {
           <div className="flex md:gap-[25px] gap-[11px] lg:mb-[50px] mb-[35px]">
             {/* ICON == NOT VERIFIED */}
             <div
-              className=" flex gap-[5px] py-[23px] pr-[12px] pl-[12px] md:py-[25px] md:pr-[41px] md:pl-[16px] bg-white shadow-[0px_2.34722px_5.86806px_0px_rgba(0,0,0,0.25)]
-     md:shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)]"
+              className=" flex gap-[5px] py-[23px] pr-[12px] pl-[12px] md:py-[25px] md:pr-[41px] md:pl-[16px] bg-white shadow-[0px_2.34722px_5.86806px_0px_rgba(0,0,0,0.25)] md:shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)]"
             >
               <img
                 src={bvnVerifyImage}
@@ -251,14 +250,14 @@ export default function BvnVerification(Data) {
             <div className="flex flex-col lg:gap-[25px] gap-[20px]  w-full ">
               <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]">
                 {/* Full Name */}
-                <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[13px] gap-[5.868px]">
+                <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[13px] gap-2.5 ">
                   <h2
-                    className={`font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : ""}`}
+                    className={`font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : ""}`}
                   >
                     Full Name
                   </h2>
                   <div
-                    className={`font-[500] py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[8px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-[10px] ${isDarkMode ? "text-white border-white" : ""}`}
+                    className={`py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[8px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-[10px] ${isDarkMode ? "text-white border-white" : ""}`}
                   >
                     {full_name
                       ? full_name
@@ -269,9 +268,9 @@ export default function BvnVerification(Data) {
                 </div>
                 
                 {/* Date of Birth */}
-                <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]">
+                <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
                   <h2
-                    className={`font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : ""}`}
+                    className={`font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : ""}`}
                   >
                     D.O.B
                   </h2>
@@ -281,7 +280,7 @@ export default function BvnVerification(Data) {
                     onChange={(e) => {
                       setBvnDateOfBirth(e.target.value);
                     }}
-                    className={`font-[500] w-[100%] py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] text-[8px] leading-[10.4px] lg:pr-[16px] pr-[9px] border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px] focus:outline-none cursor-pointer rounded-[10px] ${isDarkMode ? "text-white border-white bg-black" : ""}`}
+                    className={`w-[100%] py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] text-sm leading-[18px] lg:pr-[16px] pr-[9px] border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px] focus:outline-none cursor-pointer rounded-[10px] ${isDarkMode ? "text-white border-white bg-black" : ""}`}
                     type="date"
                     id="dob"
                     name="dob"
@@ -293,18 +292,18 @@ export default function BvnVerification(Data) {
               {/* Gender / House Address */}
               <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]">
                 
-              <div className="flex flex-col relative md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]">
+              <div className="flex flex-col relative md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
                   <h2
-                    className={`font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : ""}`}
+                    className={`font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : ""}`}
                   >
                     Gender
                   </h2>
                   <div
                     onClick={chooseGender}
-                    className={`font-medium py-[10.33px] pl-[5.867px] md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] flex justify-between pr-[10.917px] lg:pr-[10px] border-[0.4px] border-[#9C9C9C] text-[8px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] rounded-[10px] ${isDarkMode ? "border-white" : ""}`}
+                    className={` py-[10.33px] pl-[5.867px] md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] flex justify-between pr-[10.917px] lg:pr-[10px] border-[0.4px] border-[#9C9C9C] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] rounded-[10px] ${isDarkMode ? "border-white" : ""}`}
                   >
                     <h2
-                      className={`text-[#000] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : ""}`}
+                      className={`text-[#000] text-sm leading-[18px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : ""}`}
                     >
                       {genderResult}
                     </h2>
@@ -337,9 +336,9 @@ export default function BvnVerification(Data) {
                 </div>
 
                   {/* HOUSE ADDRESS */}
-                  <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]">
+                  <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
                     <h2
-                      className={`font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : ""}`}
+                      className={`font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : ""}`}
                     >
                       House Address
                     </h2>
@@ -348,7 +347,7 @@ export default function BvnVerification(Data) {
                       onChange={(e) => {
                         setIdAddress(e.target.value);
                       }}
-                      className={`font-medium py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none rounded-[10px]  ${isDarkMode ? "text-white border-white bg-black" : ""}`}
+                      className={`py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none rounded-[10px]  ${isDarkMode ? "text-white border-white bg-black" : ""}`}
                       placeholder=""
                       type="text"
                       onInvalid={validAddress}
@@ -363,11 +362,11 @@ export default function BvnVerification(Data) {
                 
                 
                 {/* PHONE NUMBER */}
-                <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]">
+                <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
                   {/* header */}
                   <div className="flex md:gap-x-[10px] gap-x-[5px]">
                     <h2
-                      className={`font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : ""}`}
+                      className={`font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : ""}`}
                     >
                       Phone Number
                     </h2>
@@ -397,14 +396,14 @@ export default function BvnVerification(Data) {
                     maxLength={11}
                     inputMode="tel"
                     required
-                    className={`font-[500] py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[8px] placeholdee:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-[10px] ${isDarkMode ? "text-white border-white bg-black" : ""}`}
+                    className={`py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[9px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-[10px] ${isDarkMode ? "text-white border-white bg-black" : ""}`}
                   />
                 </div>
 
                 {/*========= BVN ==========*/}
-                <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]">
+                <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
                   <h2
-                    className={`font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : ""}`}
+                    className={`font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : ""}`}
                   >
                     BVN Number
                   </h2>
@@ -423,7 +422,7 @@ export default function BvnVerification(Data) {
                     onChange={(e) => {
                       setBvnNumber(e.target.value);
                     }}
-                    className={`font-[500] py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none rounded-[10px]  ${isDarkMode ? "text-white border-white bg-black" : ""}`}
+                    className={`py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none rounded-[10px]  ${isDarkMode ? "text-white border-white bg-black" : ""}`}
                     type="text"
                     inputMode="numeric"
                     maxLength={11}
@@ -457,9 +456,8 @@ export default function BvnVerification(Data) {
             <Modal>
               <div className=" h-[100%] flex flex-col w-[100%] items-center justify-center  ">
                 <div
-                  className={`bvnQuery flex flex-col shadow-[0px_0px_8.3274px_0px_rgba(0 0 0,0.25)] rounded-[8px] 
-             shadow-[0px_0px_8.3274px_0px_rgba(0 0 0,0.25)] md:rounded-[11.736px]  lg:rounded-[20px] md:w-[55%]
-            md:shadow-[0px_0px_11.73611px_0px_rgba(0,0,0,0.25) lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] justify-center  items-center px-[18px] md:px-[30px] md:h-[550px] h-[430px] gap-[10px] md:gap-[40px] lg:gap-[50px] lg:justify-normal md:mx-[0px] mx-[19px]  lg:pt-[30px]  md:pt-[270px] pt-[270px] ${isDarkMode ? "bg-black border border-white" : "bg-white"}`}
+                  className={`bvnQuery flex flex-col shadow-[0px_0px_8.3274px_0px_rgba(0 0 0,0.25)] rounded-[8px] shadow-[0px_0px_8.3274px_0px_rgba(0,0,0,0.25)] md:rounded-[11.736px]  lg:rounded-[20px] md:w-[55%]
+            md:shadow-[0px_0px_11.73611px_0px_rgba(0,0,0,0.25)] lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] justify-center  items-center px-[18px] md:px-[30px] md:h-[550px] h-[430px] gap-[10px] md:gap-[40px] lg:gap-[50px] lg:justify-normal md:mx-[0px] mx-[19px]  lg:pt-[30px]  md:pt-[270px] pt-[270px] ${isDarkMode ? "bg-black border border-white" : "bg-white"}`}
                 >
                   <div className="flex flex-col items-center ">
                     <div className="flex flex-col  md:gap-[20px] gap-[10px]">
@@ -488,16 +486,14 @@ export default function BvnVerification(Data) {
                   <div className="flex flex-col gap-[20px] md:gap-[23.47px] lg:gap-[40px] mb-[50px]">
                     {/* Header */}
                     <h2
-                      className="font-[700] lg:text-[16px] lg:leading-[19.2px] text-center
-   text-[13px] leading-[16.4px] "
+                      className="font-[700] lg:text-[16px] lg:leading-[19.2px] text-center text-[13px] leading-[16.4px] "
                     >
                       Why do we request your BVN for account verification?
                     </h2>
                     {/* Paragraph */}
                     <div className="flex flex-col md:gap-[20px] gap-[10px] items-center">
                       <p
-                        className="font-[500] lg:text-[16px] lg:leading-[19.2px] text-left
-  text-[13px] leading-[16.4px] "
+                        className="font-[500] lg:text-[16px] lg:leading-[19.2px] text-left text-[13px] leading-[16.4px] "
                       >
                         <span className="font-[700]">1. Security:</span> We take
                         your financial security seriously. Verifying your BVN
@@ -505,8 +501,7 @@ export default function BvnVerification(Data) {
                         transactions are secure.
                       </p>
                       <p
-                        className="font-[500] lg:text-[16px] lg:leading-[19.2px] text-left
-text-[13px] leading-[16.4px]"
+                        className="font-[500] lg:text-[16px] lg:leading-[19.2px] text-left text-[13px] leading-[16.4px]"
                       >
                         <span className="font-[700]">2. Accuracy: </span>To
                         provide you with the best service, we need accurate
@@ -520,9 +515,7 @@ text-[13px] leading-[16.4px]"
                       onClick={() => {
                         setBvnQuery(false);
                       }}
-                      className="font-[600] w-[100%] bg-[#04177F] md:w-[163px] md:py-[5.868px] lg:py-[13px]
-    text-white lg:rounded-[12px] text-[13px] leading-[16.4px] rounded-[7.042px]
-   lg:text-[16px] lg:leading-[24px]   py-[16.531px] md:mb-[40px] mb-[20px]"
+                      className="font-[600] w-[100%] bg-[#04177F] md:w-[163px] md:py-[5.868px] lg:py-[13px] text-white lg:rounded-[12px] text-[13px] leading-[16.4px] rounded-[7.042px] lg:text-[16px] lg:leading-[24px]   py-[16.531px] md:mb-[40px] mb-[20px]"
                     >
                       Okay
                     </button>
