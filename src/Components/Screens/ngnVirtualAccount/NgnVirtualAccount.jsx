@@ -3,6 +3,7 @@ import { DashBoardLayout } from "../../Dashboard/Layout/DashBoardLayout";
 import { ContextProvider } from "../../Context";
 import { Link } from "react-router-dom";
 import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
+
 function NgnVirtualAccount(Data) {
   const { isDarkMode,
      bankNameState,
@@ -73,9 +74,7 @@ useEffect(()=> {
  
 },[Data])
 
-
-
-  return (
+return (
     <DashBoardLayout>
       <div className="flex flex-col justify-between h-full">
         <div>
@@ -115,16 +114,16 @@ useEffect(()=> {
             <div className="">
               <div className="mb-[8px] lg:mb-[15px] flex lg:gap-x-[20px] gap-x-[15px] font-semibold">
                 <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[15%] md:w-[20%] w-[30%]">BANK NAME</p>
-                <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[85%] md:w-[20%] w-[70%]" ref={bankNameRef}>{bankNameState ? bankNameState : "Null"}</p>
+                <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[85%] md:w-[20%] w-[70%]" ref={bankNameRef}>{bankNameState ? bankNameState : Data.aremxyBankName ?Data.aremxyBankName : ""}</p>
               </div>
               <div className="mb-[8px] lg:mb-[15px] flex lg:gap-x-[20px] gap-x-[15px] font-semibold">
                 <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[15%] md:w-[20%] w-[30%]">ACCOUNT NAME</p> 
-                <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[85%] md:w-[20%] w-[70%]" ref={accNameRef}>{accountNameState ? accountNameState.slice(11) : "Null"}</p>
+                <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[85%] md:w-[20%] w-[70%]" ref={accNameRef}>{accountNameState ? accountNameState.slice(11) : Data.aremxyAccountName ? Data.aremxyAccountName.slice(11) : ""}</p>
               </div>
               <div className=" flex lg:gap-x-[20px] gap-x-[15px] font-semibold">
                 <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[15%] md:w-[20%] w-[30%]">ACCOUNT NUMBER</p>{" "}
                 <div className="flex items-center lg:w-[85%] md:w-[20%] w-[70%]">
-                  <p className="md:text-[10px] text-[8px] lg:text-[16px]" ref={accNoRef}>{accountNumberState ?  formatAccountNumber(accountNumberState) : "Null" }</p>
+                  <p className="md:text-[10px] text-[8px] lg:text-[16px]" ref={accNoRef}>{accountNumberState ?  formatAccountNumber(accountNumberState) : Data.aremxyAccountNumber ? `${Data.aremxyAccountNumber.slice(0,4)}********` : ""}</p>
                   <button onClick={handleCopyText}>
                     <img
                       src="Images/virtual-account/copy.png"

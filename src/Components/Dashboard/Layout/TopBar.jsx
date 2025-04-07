@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 import { ContextProvider } from "../../Context";
 import DarkModeToggle from "../DashboardComponents/DarkModeToggle";
 import styles from "./Dashboard.module.css";
-
+import { RemoveLocalStorage } from "../../LocalStorage/LocalStorage";
 export const TopBar = () => {
-  const { setToggleSideBar, isDarkMode, toggleSideBar, logout, setLogout } =
+  const { setToggleSideBar, isDarkMode, toggleSideBar, logout, setLogout, setUserStatus } =
     useContext(ContextProvider);
 
   const toggleTrueFalse = () => {
@@ -18,11 +18,16 @@ export const TopBar = () => {
     setLogout((prev) => !prev);
   };
 
+   const RemoveLocalStorageKeys=()=> {
+      RemoveLocalStorage();
+      setUserStatus(false);
+    }
+
   return (
     <div
       className={`${styles.topbar} ${
         toggleSideBar ? "sticky top-0 " : "sticky top-0"
-      } z-40 mt-[14px] flex gap-[4%] justify-center md:gap-[9%] md: lg:mt-[18px] lg:gap-[15%] ${
+      } z-40 mt-[14px] flex gap-[4%] justify-center  md:gap-[9%] md: lg:mt-[18px] lg:gap-[15%] ${
         isDarkMode
           ? "bg-black border-b-[1px] border-b-[#fff]"
           : "bg-white md:border-b-[1px] lg:border-b-[1.5px] lg:border-b-[#0003]]"
@@ -40,7 +45,7 @@ export const TopBar = () => {
         <div
           className={`${
             isDarkMode ? "border border-[#fff]" : "border-[#0003]"
-          } cursor-pointer flex justify-between items-center px-[2%] w-[102px] h-[17px] border-[0.5px] rounded-[3.4px] md:h-[33.8px] md:w-[202px] lg:border-[1.5px] lg:rounded-[10px] lg:w-[358px] lg:h-[60px]`}
+          } cursor-pointer flex justify-between  items-center px-[2%] w-[102px] h-[17px] border-[0.5px] rounded-[3.4px] md:h-[33.8px] md:w-[202px] lg:border-[1.5px] lg:rounded-[10px] lg:w-[358px] lg:h-[60px]`}
         >
           <div className="flex justify-center items-center gap-[3px] lg:gap-[7px]">
             <img
@@ -48,7 +53,7 @@ export const TopBar = () => {
               src="./Images/dashboardImages/largeprofile.png"
               alt="/"
             />
-            <p className="text-[7px] md:text-[14px] lg:text-[16px] lg:font-extrabold">
+            <p className="text-[8px] font-[400] md:text-[14px] lg:text-[16px] lg:font-[500]">
               Switch Account
             </p>
           </div>
@@ -59,7 +64,7 @@ export const TopBar = () => {
           />
         </div>
 
-        <p className="text-[8px] md:text-[14.167px] lg:text-[18px]">
+        <p className="text-[12px] font-[400] md:text-[14.167px] lg:text-[18px]">
           Dashboard
         </p>
 
@@ -103,7 +108,8 @@ export const TopBar = () => {
                 Contact Support
               </li>
             </Link>
-            <Link to="/Login">
+            <Link onClick={()=> RemoveLocalStorageKeys()}
+             to="/Login">
               <li className="z-[99px] cursor-pointer hover:underline pt-1 pb-1 pl-1 text-[5px] font-medium md:border-b-[0.335px] md:text-[8px] lg:pt-[6%] lg:pb-[6%] lg:pl-[6%] lg:border-b-[0.6px] lg:text-[14px] ">
                 Logout
               </li>

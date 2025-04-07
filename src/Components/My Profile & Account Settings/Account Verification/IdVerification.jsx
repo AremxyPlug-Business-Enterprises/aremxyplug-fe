@@ -1,30 +1,43 @@
-import React, {useContext, useState, useRef, useEffect} from 'react';
-import '../../../App.css';
+import React, { useContext, useState, useRef, useEffect } from "react";
+import "../../../App.css";
 import styles from "../../../Components/Dashboard/DashboardComponents/TransferComponent/transfer.module.css";
-import { ContextProvider } from '../../Context';
-import NotVerifiedIcon from '../ProfileImages/NotVerifiedIcon.svg';
- import messageIcon from '../ProfileImages/message-question.svg';
- import ArrowDown from '../ProfileImages/arrow-down.svg';
- import UploadDoc from '../ProfileImages/document-upload.svg';
-import Pending from '../ProfileImages/Pending.svg';
-import { Modal } from '../../Screens/Modal/Modal';
-import frontView from '../ProfileImages/UploadFront.svg';
-import closeIcon from '../ProfileImages/Cancel.svg';
-import BackView from '../ProfileImages/UploadBackView.svg';
+import { ContextProvider } from "../../Context";
+import NotVerifiedIcon from "../ProfileImages/NotVerifiedIcon.svg";
+import messageIcon from "../ProfileImages/message-question.svg";
+import ArrowDown from "../ProfileImages/arrow-down.svg";
+import UploadDoc from "../ProfileImages/document-upload.svg";
+import Pending from "../ProfileImages/Pending.svg";
+import { Modal } from "../../Screens/Modal/Modal";
+import frontView from "../ProfileImages/UploadFront.svg";
+import closeIcon from "../ProfileImages/Cancel.svg";
+import BackView from "../ProfileImages/UploadBackView.svg";
 import PopUpGreen from "../ProfileImages/PopUpGreen.svg";
-import PopUpGreenTab from "../ProfileImages/PopUpGreenTab.svg"
-import PopUpGreenDeskTop from "../ProfileImages/PopUpGreenDeskTop.svg"
-import Success from "../ProfileImages/success.gif"
-import QueryId from '../ProfileImages/IdCustomerQuery.svg';
+import PopUpGreenTab from "../ProfileImages/PopUpGreenTab.svg";
+import PopUpGreenDeskTop from "../ProfileImages/PopUpGreenDeskTop.svg";
+import Success from "../ProfileImages/success.gif";
+import QueryId from "../ProfileImages/IdCustomerQuery.svg";
 import axios from "axios";
-import { Loader } from '../../Loader/Loader';
-import { GetLocalStorage } from '../../LocalStorage/LocalStorage';
+import { Loader } from "../../Loader/Loader";
+import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 import idSuccess from "../ProfileImages/user-tick.svg";
+import { CheckVirtualAcc } from '../../ApiCollection.jsx/ApiBuck';
+
 export default function IdVerification(Data) {
   const {verificationOpen} = useContext(ContextProvider)
 
-    const {idVerificationOpen} = useContext(ContextProvider);
-    const {dropDownGender, setDropDownGender} = useContext(ContextProvider);
+    const {idVerificationOpen, 
+      bvnVerificationOpen, 
+      setBvnButtonState,
+    setVirtualAccCreated,
+  setBankNameState,
+setAccountNameState,
+setAccountNumberState,
+verifyImage,
+ setVerifyImage,
+ idStatus,
+ isDarkMode,
+ setIdStatus} = useContext(ContextProvider);
+    const {dropDownGender, setDropDownGender, idButtonState, setIdButtonState} = useContext(ContextProvider);
     const [idDropDown, setIdDropDown]= useState(false);
     const {idAddress, setIdAddress} = useContext(ContextProvider);
     // const {idState, setIdState} = useContext(ContextProvider);
@@ -33,8 +46,6 @@ export default function IdVerification(Data) {
     // const {idLGA, setIdLGA} = useContext(ContextProvider);
     const {idNumber, setIdNumber} = useContext(ContextProvider);
     const {idPostalCode, setIdPostalCode} = useContext(ContextProvider);
-   const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
-   const [idStatus, setIdStatus] = useState('Not Verified');
     const [errorSubmit, setErrorSubmit] = useState(false);
     const [idFrontView, setIdFrontView] = useState(false);
     const [idBackView, setIdBackView] = useState(false);
@@ -43,41 +54,46 @@ export default function IdVerification(Data) {
     const [idDateOfBirth, setIdDateOfBirth] = useState("");
 const [loading, setLoading] =useState(false);
  const {toggleSideBar, customerDetail} = useContext(ContextProvider);
-  const {full_name} =  customerDetail
+  const {full_name} =  customerDetail;
+  
     // Genders
     const genderInfo = ['Male', 'Female', 'Others..'];
     const [genderResult, setGenderResult] = useState('');
    const chooseGender = () => {
     setDropDownGender(!dropDownGender);
-    document.querySelector('.genderDrop').classList.toggle('DropIt');
-   }
+    document.querySelector(".genderDrop").classList.toggle("DropIt");
+  };
 
-   // ID 
-   const idTypes =[{ idType :'National ID', Status : "Active", id : 1},
-    { idType :'International Passport' ,Status : "Inactive", id : 2},
-    {idType :'Permanent Voters Card', Status : "Inactive", id: 3},
-    {idType : 'Driver’s License', Status : "Inactive", id: 4}];
+  // ID
+  const idTypes = [
+    { idType: "National ID", Status: "Active", id: 1 },
+    { idType: "International Passport", Status: "Inactive", id: 2 },
+    { idType: "Permanent Voters Card", Status: "Inactive", id: 3 },
+    { idType: "Driver’s License", Status: "Inactive", id: 4 },
+  ];
 
-   const [idResult, setIdResult] = useState('');
-   const chooseId = () => {
+  const [idResult, setIdResult] = useState("");
+  const chooseId = () => {
     setIdDropDown(!idDropDown);
-    document.querySelector('.idDrop').classList.toggle('DropIt');
-   }
+    document.querySelector(".idDrop").classList.toggle("DropIt");
+  };
   //  CUSTOM VALIDITY FOR HOUSE ADDRESS
   const validAddress = (e) => {
     const addAddress = e.target.value;
-    e.target.setCustomValidity(addAddress ? '' : 'Your Address must be entered');
-  }
+    e.target.setCustomValidity(
+      addAddress ? "" : "Your Address must be entered"
+    );
+  };
   //  CUSTOM VALIDITY FOR COUNTRY
-  const validCountry  = (e) => {
+  const validCountry = (e) => {
     const addCity = e.target.value;
-    e.target.setCustomValidity(addCity ? '' : 'Your City must be entered')
-  }
+    e.target.setCustomValidity(addCity ? "" : "Your City must be entered");
+  };
   //  CUSTOM VALIDITY FOR CITY
-  const validCity  = (e) => {
+  const validCity = (e) => {
     const addCity = e.target.value;
-    e.target.setCustomValidity(addCity ? '' : 'Your City must be entered')
-  }
+    e.target.setCustomValidity(addCity ? "" : "Your City must be entered");
+  };
   // CUSTOM VALIDITY FOR STATE
   // const validState  = (e) => {
   //   const addState = e.target.value;
@@ -86,62 +102,155 @@ const [loading, setLoading] =useState(false);
   //CUSTOM VALIDITY FOR ID
   const validId = (e) => {
     const addId = e.target.value;
-   e.target.setCustomValidity(addId ? '' : 'Your ID must be inputed and must be 11 digits');
- }
- //CUSTOM VALIDITY FOR LGA
-//  const validLGA = (e) => {
-//   const addLGA = e.target.value;
-//  e.target.setCustomValidity(addLGA ? '' : 'This is required to proceed');
-// }
+    e.target.setCustomValidity(
+      addId ? "" : "Your ID must be inputed and must be 11 digits"
+    );
+  };
+  //CUSTOM VALIDITY FOR LGA
+  //  const validLGA = (e) => {
+  //   const addLGA = e.target.value;
+  //  e.target.setCustomValidity(addLGA ? '' : 'This is required to proceed');
+  // }
 
-const checkform = async() =>{
-const getToken = localStorage.getItem("getToken");
-const authToken = localStorage.getItem("authorisedLogin");
-  if(genderResult &&
+
+
+const IdFunctionState = async (
+  url,
+  data,
+  alertSuccess,
+  buttonStateSuccess,
+  ErrorMessage,
+  ifStatement,
+  PendingImageFxn,
+  PendingText,
+  verifyIdImage,
+  statusId,
+  verifyPopId
+) => {
+  if (idButtonState === "Verify") {
+    url = "https://aremxyplug.onrender.com/api/v1/verify";
+    buttonStateSuccess = "Create Virtual Account";
+    ErrorMessage = "NIN Name Mismatch or Network failure";
+    ifStatement = genderResult &&
     idResult &&
     idAddress &&
     idCity &&
     idCountry &&
-    // idState &&
-    // idLGA &&
-    
-    idNumber){
-      try {
-        setErrorSubmit(false);
-        setLoading(true);
-        setVerifyImage(Pending);
-        setIdStatus("Pending");
-        const body ={
-        nin: idNumber
-        }
-        const url ="https://aremxyplug.onrender.com/api/v1/verify"
-        const response = await axios.post(url, body, {headers:{"Content-Type": "application/json", Authorization : getToken || authToken}})
-        if(response.status === 200 || 201){
-          setVerifyImage(idSuccess);
-          setIdPopVerified(true);
-          setIdStatus("Verified");
+    idNumber;
+    PendingImageFxn = () => setVerifyImage(Pending);
+    PendingText = () => setIdStatus("Pending");
+    verifyIdImage = () => setVerifyImage(idSuccess);
+    statusId = () => setIdStatus("Verified");
+    verifyPopId = () => setIdPopVerified(true);
+    data = {
+      Id: idNumber.toString(),
+    };
+  } else {
+    data =""
+    url = "https://aremxyplug.onrender.com/api/v1/virtualacc";
+    alertSuccess = () => alert("Virtual Account Created Successfully");
+    buttonStateSuccess = "Virtual Account Created";
+    ErrorMessage = "Virtual Account Creation Failed";
+    ifStatement = idStatus === "Verified";
+  }
+  CheckIdForm(
+    url,
+    data,
+    alertSuccess,
+    buttonStateSuccess,
+    ErrorMessage,
+    ifStatement,
+    PendingImageFxn,
+    PendingText,
+    verifyIdImage,
+    statusId,
+    verifyPopId
+  );
+};
 
+
+
+//The main function to verify the Id Number and create the virtual account
+const CheckIdForm = async (
+    url,
+    data,
+    alertSuccess,
+    buttonStateSuccess,
+    ErrorMessage,
+    ifStatement,
+    PendingImageFxn,
+    PendingText,
+    verifyIdImage,
+    statusId,
+    verifyPopId
+  ) => {
+    const authToken = localStorage.getItem("authorisedLogin");
+    const getToken = localStorage.getItem("getToken");
+    const AccCreated = localStorage.getItem("AccCreated")
+    if (ifStatement) {
+      setLoading(true);
+
+      // console.log(data)
+      try {
+        if(idButtonState === "Verify"){
+          setErrorSubmit(false);
+        PendingImageFxn();
+        PendingText();
         }
-      }catch(error) {
-        
-       if(error.status === 400 || 401 || 404){
-        alert(" NIN Verification name mismatch or network failure")
-        setVerifyImage(NotVerifiedIcon);
-        setIdStatus("Not Verified")
-        console.log(`ERROR : ${error}`)
-       }else if(error.status === 500){
-        alert("INTERNAL_SERVER_ERROR");
-        setVerifyImage(NotVerifiedIcon);
-        setIdStatus("Not Verified")
-       }
-      }finally{
-        setLoading(false)
+        let response;
+        idButtonState === "Verify" ?
+       response  = await axios.post(url, data , {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: authToken || getToken,
+          },
+        }) : response  = await axios.post(url, data, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: authToken || getToken,
+          },
+        })
+ if (response.status === 201 || 200) {
+  if(idButtonState === "Verify"){
+          setIdNumber(idNumber);
+          verifyIdImage();
+          statusId();
+          verifyPopId();
+          setIdButtonState(buttonStateSuccess);
+          localStorage.setItem("idVerification", true)
+    }  else{
+            alertSuccess();
+            setIdButtonState(buttonStateSuccess);
+            if(!AccCreated){
+             await CheckVirtualAcc(
+              authToken, customerDetail, setLoading,
+              setVirtualAccCreated, 
+               setBankNameState, setAccountNameState, setAccountNumberState,
+               verificationOpen, idVerificationOpen, bvnVerificationOpen,setIdButtonState, setBvnButtonState);
+            }
+          }
+ }
+      } catch (error) {
+        if (error.status === 401 || 400) {
+          alert(ErrorMessage);
+          console.log(`ERROR : ${error}`)
+          if(idButtonState === "Verify"){
+           setVerifyImage(NotVerifiedIcon)
+           setIdStatus("Not Verified");
+}
+        } else if (error.status === 500) {
+          alert("Error:", "INTERNAL_SERVER_ERROR");
+          setIdStatus("Not Verified");
+          setVerifyImage(NotVerifiedIcon);
+        }
+      } finally {
+        setLoading(false);
+        //alert("success")
       }
-  }
- else   {
-    setErrorSubmit(true);
-  }
-  }
+    } else {
+      setErrorSubmit(true);
+    }
+  };
 // UseEffect to retain the current data object of getLocalStorage data()
 const VerifyRef = useRef()
 Data = GetLocalStorage();
@@ -151,121 +260,146 @@ useEffect(()=> {
 },[Data])
   
   return (
-    <div className='flex flex-col '>
-        { idVerificationOpen && (
-        <div className={`flex flex-col  ${verificationOpen
-            ? 'block' : 'hidden'}
-           `}>
-         <div className='flex md:gap-[25px] gap-[11px] lg:pt-[50px]  pt-[35px] lg:mb-[50px] mb-[35px] '>
+    <div className="flex flex-col ">
+      {idVerificationOpen && (
+        <div
+          className={`flex flex-col  ${verificationOpen ? "block" : "hidden"}
+           `}
+        >
+          <div className="flex md:gap-[25px] gap-[11px] lg:pt-[50px]  pt-[35px] lg:mb-[50px] mb-[35px] ">
             {/* ICON == NOT VERIFIED */}
-    <div className=' flex gap-[5px] py-[23px] pr-[12px] pl-[12px] md:py-[25px] md:pr-[41px] md:pl-[16px] bg-white
-   shadow-[0px_2.34722px_5.86806px_0px_rgba(0,0,0,0.25)]
-     md:shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)]'>
-    <img src={verifyImage} alt="" 
-     className={`h-[24px] w-[24px] md:h-[44px] md:w-[44px] lg:h-[62px] lg:w-[62px]`}/>
-     <div className='flex flex-col gap-[4.694px] md:gap-[8px] justify-center'>
-        <h2 className='font-[500] lg:text-[12px] lg:leading-[15.6px] text-[9.042px] leading-[12.45px]'>
-          ID Status</h2>
-        <h2 className='font-[500] lg:text-[12px] lg:leading-[15.6px] text-[8.042px] leading-[12.45px]'>
-          {idStatus}
-          </h2>
-     </div>
-    </div>
-  {/*  */}
-    <div className='flex md:gap-[14px] gap-[11px] items-center'>
-        <h2 className='font-[500] text-[#7E7E7E] text-[11px] leading-[14.4px]
-        lg:text-[16px] lg:leading-[20.8px]'>
-        Why Account Verification with my ID Document?
-       </h2>
-        <img onClick={() => {
-          setIdCustomerQuery(true);
-        }}
-         src={messageIcon} alt="" 
-        className='h-[14.083px] w-[14.083px] lg:h-[24px] lg:w-[24px] cursor-pointer'/>
-    </div>
-         </div>
-         {/* Forms */}
-         
-      <form 
-      onSubmit={(e) => {
-        e.preventDefault();
-      }} action="">
-        {/* Container for all Forms */}
-        <div className='flex flex-col  lg:gap-[25px] gap-[20px]  w-full mb-[50px]'>
-      {/*  Full Name / Gender */}
-      <div className='flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]'>
-    {/* Full Name */}
-    <div className='flex flex-col md:w-[50%] w-full md:gap-[10px] gap-[5.868px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px]'>
-    Full Name
-    </h2>
-    <div
-    className='font-[500] py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[12px] md:pl-[8.67px] md:pr-[5.867px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[8px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-[10px] h-full'>
-    { full_name ? full_name :  `${Data.UserFullName ? Data.UserFullName : "Hi User"}` }
-   </div>
-    </div>
-    {/* Gender */}
-    
-    <div className='relative flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px]'>
-     Gender
-    </h2>
-    <div onClick={chooseGender}
-    className='flex justify-between items-center font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px]'>
-      <h2 className='text-[#000] font-[400] leading-[10.4px]
-      lg:text-[16px] lg:leading-[20.8px]'>
-        {genderResult}
-      </h2>
-      <img src={ArrowDown} alt=""
-      className='genderDrop lg:w-[24px] lg:h-[24px] w-[14.083px] h-[14.083px]'/>
-      </div>
-      {dropDownGender  && (
-        <div 
-        className=' absolute lg:top-[90px] md:top-[60px] top-[70px] z-[5] flex flex-col w-[100%]'>
-      {(genderInfo.map(info => {
-        return (
-          <h2 onClick={() => {
-            setGenderResult(info);
-             setDropDownGender(false);
-             document.querySelector('.genderDrop').classList.remove('DropIt');
-          }}
-           className='font-[500] text-[#7C7C7C] text-[12px] leading-[10.4px]
-           lg:text-[16px] lg:leading-[20.8px] md:py-[20px] py-[15px] pl-[10px]
-          lg:pl-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
-          md:shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)] bg-white cursor-pointer'>
-        {info}
-          </h2>
-        )
-      }))}
-        </div>
-      )}
-   </div>
-  
-      </div>
-      {/* HOUSE ADDRESS AND STATE*/}
-      <div className='flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]'>
-        {/* HOUSE ADDRESS */}
-      <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
-   lg:text-[16px] lg:leading-[20.8px]'>
-    House Address
-    </h2>
-    <input 
-    value={idAddress}
-    onChange={(e) =>{
-      setIdAddress(e.target.value)
-    }}
-    className='font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[10] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none'
-    placeholder=''
-    type="text" onInvalid={validAddress}  required/>
-   
-                </div>
-                
-                {/* Date of Birth / BVN */}
-                <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]">
+            <div
+              className=" flex gap-[5px] py-[23px] pr-[12px] pl-[12px] md:py-[25px] md:pr-[41px] md:pl-[16px] bg-white shadow-[0px_2.34722px_5.86806px_0px_rgba(0,0,0,0.25)] md:shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)]"
+            >
+              <img
+                src={verifyImage}
+                alt=""
+                className={`h-[24px] w-[24px] md:h-[44px] md:w-[44px] lg:h-[62px] lg:w-[62px]`}
+              />
+              <div className={`flex flex-col gap-[4.694px] md:gap-[8px] justify-center ${isDarkMode ? "text-stone-800" : ""}`}>
+                <h2 className="font-[500] lg:text-[12px] lg:leading-[15.6px] text-[9.042px] leading-[12.45px]">
+                  ID Status
+                </h2>
+                <h2 className="font-[500] lg:text-[12px] lg:leading-[15.6px] text-[8.042px] leading-[12.45px]">
+                  {idStatus}
+                </h2>
+              </div>
+            </div>
+            {/*  */}
+            <div className="flex md:gap-[14px] gap-[11px] items-center">
+              <h2
+                className={`font-[500] text-[#7E7E7E] text-[11px] leading-[14.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-slate-50" : ""}`}
+              >
+                Why Account Verification with my ID Document?
+              </h2>
+              <img
+                onClick={() => {
+                  setIdCustomerQuery(true);
+                }}
+                src={messageIcon}
+                alt=""
+                className="h-[14.083px] w-[14.083px] lg:h-[24px] lg:w-[24px] cursor-pointer"
+              />
+            </div>
+          </div>
+          {/* Forms */}
+
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+            }}
+            action=""
+          >
+            {/* Container for all Forms */}
+            <div className="flex flex-col lg:gap-[25px] gap-[20px] w-full mb-[50px]">
+              {/*  Full Name / Gender */}
+              <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]">
+                {/* Full Name */}
+                <div className="flex flex-col md:w-[50%] w-full md:gap-[10px] gap-2.5">
                   <h2
-                    className="font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] 
-   lg:text-[16px] lg:leading-[20.8px]"
+                    className={`font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-slate-50" : ""}`}
+                  >
+                    Full Name
+                  </h2>
+                  <div
+                    className={`py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[12px] md:pl-[8.67px] md:pr-[5.867px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[8px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-[10px] h-full  ${isDarkMode ?"border-slate-50" : ""}`}
+                  >
+                    {full_name
+                      ? full_name
+                      : `${Data.UserFullName ? Data.UserFullName : "Hi User"}`}
+                  </div>
+                </div>
+                {/* Gender */}
+
+                <div className="relative flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
+                  <h2
+                    className={`font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-slate-50" : ""}`}
+                  >
+                    Gender
+                  </h2>
+                  <div
+                    onClick={chooseGender}
+                    className={`flex justify-between items-center py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] ${isDarkMode? "border-slate-50": ""}`}
+                  >
+                    <h2
+                      className={`text-[#000] font-[400] text-sm leading-[18px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-slate-50" :""}`}
+                    >
+                      {genderResult}
+                    </h2>
+                    <img
+                      src={ArrowDown}
+                      alt=""
+                      className="genderDrop lg:w-[24px] lg:h-[24px] w-[14.083px] h-[14.083px]"
+                    />
+                  </div>
+                  {dropDownGender && (
+                    <div className=" absolute lg:top-[90px] md:top-[60px] top-[70px] z-[5] flex flex-col w-[100%]">
+                      {genderInfo.map((info) => {
+                        return (
+                          <h2
+                            onClick={() => {
+                              setGenderResult(info);
+                              setDropDownGender(false);
+                              document
+                                .querySelector(".genderDrop")
+                                .classList.remove("DropIt");
+                            }}
+                            className={`font-[500] text-[#7C7C7C] text-[12px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] md:py-[20px] py-[15px] pl-[10px] lg:pl-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] md:shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)] bg-white cursor-pointer ${isDarkMode?"":""}`}
+                          >
+                            {info}
+                          </h2>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              </div>
+              {/* HOUSE ADDRESS AND STATE*/}
+              <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]">
+                {/* HOUSE ADDRESS */}
+                <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
+                  <h2
+                    className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white": ""}`}
+                  >
+                    House Address
+                  </h2>
+                  <input
+                    value={idAddress}
+                    onChange={(e) => {
+                      setIdAddress(e.target.value);
+                    }}
+                    className={`py-[10.33px] pl-[5.867px] pr-1 md:py-[10] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none ${isDarkMode ? "bg-transparent text-slate-50 border-slate-50": ""}`}
+                    placeholder=""
+                    type="text"
+                    onInvalid={validAddress}
+                    required
+                  />
+                </div>
+
+                {/* Date of Birth / BVN */}
+                <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
+                  <h2
+                    className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-slate-50": ""}`}
                   >
                     D.O.B
                   </h2>
@@ -274,15 +408,14 @@ useEffect(()=> {
                     onChange={(e) => {
                       setIdDateOfBirth(e.target.value);
                     }}
-
-                    className=" font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none cursor-pointer"
-                  type="date"
+                    className={`py-[10.33px] pl-[5.867px] pr-1 md:py-[10] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none ${isDarkMode ? "bg-transparent text-slate-50 border-slate-50": ""}`}
+                    type="date"
                     id="dob"
                     name="dob"
                   />
-              </div>
-    {/* STATE */}
-    {/* <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
+                </div>
+                {/* STATE */}
+                {/* <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5'>
    <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
     State or Province
@@ -300,44 +433,49 @@ useEffect(()=> {
     type="text" onInvalid={validState} required/>
    
     </div> */}
-
-      </div>
-      {/* CITY AND LGA */}
-      <div className='flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]'>
-        {/* COUNTRY */}
-      <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
-   lg:text-[16px] lg:leading-[20.8px]'>
-    Country
-    </h2>
-    <input 
-    value={idCountry}
-    onChange={(e) => {
-    setIdCountry(e.target.value)
-}}
-    className='font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none'
-    placeholder=''
-    type="text" onInvalid={validCountry}   required/>
-   
-    </div>
-        {/* CITY */}
-      <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
-   lg:text-[16px] lg:leading-[20.8px]'>
-    City
-    </h2>
-    <input 
-    value={idCity}
-    onChange={(e) => {
-    setIdCity(e.target.value)
-}}
-    className='font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none'
-    placeholder=''
-    type="text" onInvalid={validCity}   required/>
-   
-    </div>
-    {/* LGA */}
-    {/* <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
+              </div>
+              {/* CITY AND LGA */}
+              <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]">
+                {/* COUNTRY */}
+                <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
+                  <h2
+                    className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-slate-50": ""}`}
+                  >
+                    Country
+                  </h2>
+                  <input
+                    value={idCountry}
+                    onChange={(e) => {
+                      setIdCountry(e.target.value);
+                    }}
+                    className={`py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none ${isDarkMode ? "bg-black text-slate-50 border-slate-50": ""}`}
+                    placeholder=""
+                    type="text"
+                    onInvalid={validCountry}
+                    required
+                  />
+                </div>
+                {/* CITY */}
+                <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
+                  <h2
+                    className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-slate-50": ""}`}
+                  >
+                    City
+                  </h2>
+                  <input
+                    value={idCity}
+                    onChange={(e) => {
+                      setIdCity(e.target.value);
+                    }}
+                    className={`py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none ${isDarkMode ? "bg-transparent text-slate-50 border-slate-50": ""}`}
+                    placeholder=""
+                    type="text"
+                    onInvalid={validCity}
+                    required
+                  />
+                </div>
+                {/* LGA */}
+                {/* <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5'>
    <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
      L.G.A
@@ -356,26 +494,30 @@ useEffect(()=> {
     type="text"  onInvalid={validLGA}  required/>
    
     </div> */}
-      </div>
-      {/* POSTAL CODE */}
-     
-      <div className='flex flex-col md:w-[49%] w-[100%] md:gap-[10px] gap-[5.868px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
-   lg:text-[16px] lg:leading-[20.8px]'>
-    Postal Code(optional)
-    </h2>
-    <input onInput={(e => {
-       const numbersOnly = e.target.value.replace(/\D/g, '');
-       e.target.value = numbersOnly;
-    })}
-    value={idPostalCode}
-    onChange={(e) => {
-      setIdPostalCode(e.target.value);
-    }}
-    className='font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none'
-    placeholder=''
-    type="text" inputMode='numeric'/>
-    </div>
+              </div>
+              {/* POSTAL CODE */}
+
+              <div className="flex flex-col md:w-[49%] w-[100%] md:gap-[10px] gap-2.5">
+                <h2
+                  className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-slate-50": ""}`}
+                >
+                  Postal Code(optional)
+                </h2>
+                <input
+                  onInput={(e) => {
+                    const numbersOnly = e.target.value.replace(/\D/g, "");
+                    e.target.value = numbersOnly;
+                  }}
+                  value={idPostalCode}
+                  onChange={(e) => {
+                    setIdPostalCode(e.target.value);
+                  }}
+                  className={` py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none ${isDarkMode ? "bg-black text-slate-50 border-slate-50": ""}`}
+                  placeholder=""
+                  type="text"
+                  inputMode="numeric"
+                />
+              </div>
 
     {/* ID TYPE & ID NUMBER */}
     <div className='flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]'>
@@ -404,18 +546,20 @@ useEffect(()=> {
             setIdResult(()=> {
              if(info.id ===1 ){
             return info.idType;
-           
-            
-          }
+            }
             else if(info.id !== 1 && idResult === ""){
             return ""
-              }else if(  (idResult === "National ID") &&(info.id === 2 || info.id ===3|| info.id === 4)){
+              }else if(  (idResult ==="National ID") &&(info.id === 2 || info.id ===3|| info.id === 4)){
                return "National ID"
                
              }
            })
-              setIdDropDown((e)=>{
-           return false ? info.id === 1 : true
+              setIdDropDown(()=>{
+                if(info.idType ==="National ID"){
+                  return false;
+                }else{
+                  return true;
+                }
               });
                 document.querySelector('.idDrop').classList.remove('DropIt');
       
@@ -463,23 +607,34 @@ useEffect(()=> {
       {/* UPLOAD IMAGES OFOR ID VERIFICATION */}
       <div className='flex lg:gap-[40px] md:w-[60%] w-[100%] md:justify-start justify-between gap-[24px]'>
         {/* FRONT VIEW */}
-    <div onClick={()=> {
-     setIdFrontView(true);
-   }} 
-    className='mt-2 md:mt-0 rounded-md md:rounded-[10px] md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] text-[12px] sm:p-3 sm:text-lg flex justify-between items-center  lg:py-[14px] py-[8.771px] pr-[20.785px] pl-[20px] lg:pr-[28px] lg:pl-[16px] md:gap-[14px] gap-[8.21px]
-    border-[0.4px] border-[#9C9C9C] cursor-pointer'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[11px] leading-[14.4px] 
+    <div
+  //    onClick={()=> {
+  //    setIdFrontView(true);
+  //  }} 
+    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px]  sm:p-3 sm:text-lg flex  lg:py-[14px] py-[8.771px] pr-[20.785px] pl-[20px]
+     lg:pr-[28px] lg:pl-[16px] md:gap-[14px] gap-[8.21px]
+    border-[0.4px] border-[solid] border-[#9C9C9C] cursor-pointer'>
+   <h2 className='font-[600] text-[#7E7E7E]  leading-[14.4px] 
+   lg:text-[16px] lg:leading-[20.8px] ${idResult === "National ID" ? "bg-gray-300" :"bg-white"}  `}>
+  <h2 className='font-[600] text-[#7E7E7E] text-[11px] leading-[14.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
-   Upload ID Front View
+   Upload Front View
    </h2>
+   
    <img src={UploadDoc} alt="" 
    className='lg:h-[24px] lg:w-[24px] h-[12px] w-[12px]'/>
-    </div>
+   </div>
+    
 {/* UPLOAD BACK VIEW */}
-<div onClick={() => {
-    setIdBackView(true);
-   }}
- className='mt-2 md:mt-0 rounded-md md:rounded-[10px] md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] text-[12px] sm:p-3 sm:text-lg flex justify-between items-center  lg:py-[14px] py-[8.771px] pr-[20.785px] pl-[20px] lg:pr-[28px] lg:pl-[16px] md:gap-[14px] gap-[8.21px] border-[0.4px] border-[#9C9C9C] cursor-pointer'>
+<div 
+// onClick={() => {
+//   if(idResult !== "National ID"){
+//     setIdBackView(true);
+//   }
+//    }}
+ className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px]  sm:p-3 sm:text-lg flex py-[8.771px] pr-[20.785px] pl-[20px]
+  lg:py-[14px] lg:pr-[28px] lg:pl-[16px] gap-[8.21px] md:gap-[14px]
+border-[0.4px] border-[solid] border-[#9C9C9C] cursor-pointer ${idResult === "National ID" ? "bg-gray-300" : "bg-white"}`}>
    <h2 className='font-[600] text-[#7E7E7E] text-[11px] leading-[14.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
    Upload Back View
@@ -495,11 +650,11 @@ useEffect(()=> {
         {/* SUBMIT BUTTON */}
         <div className='flex flex-col md:gap-[15px] gap-[10px] justify-start'>
         <button onClick={() => {
-          checkform();
+          IdFunctionState()
         }}
          className={`lg:py-[13px] md:py-[5.868px] md:rounded-[7.042px] py-[16.531px] rounded-[4.241px] w-[100%] md:w-[150px] lg:w-[163px] lg:rounded-[12px] bg-[#04177F]
          font-[600] text-[13px] leading-[18px] lg:text-[16px] text-center text-white lg:leading-[24px`}>
-        Submit
+       {(idButtonState) || (Data.ConfirmAcc === true && idButtonState === "Verify" ? "Virtual Account Created" : Data.ConfirmId === true && idButtonState === "Verify" && Data.ConfirmAcc === false  ? "Create Virtual Account" : "Verify" )}
         </button>
        { errorSubmit  && (
         <h2 className={`font-[500] lg:text-[14px] lg:leading-[18px] md:text-[14px] md:leading-[18px] 
@@ -642,6 +797,7 @@ Confirming your identity ensures that the person accessing the account is indeed
       </Modal>
           )}
     </form>  
+    
     {idPopVerified && (
           <Modal className="">
             <div
@@ -657,52 +813,54 @@ Confirming your identity ensures that the person accessing the account is indeed
                 <img src={PopUpGreenDeskTop} alt="" className="hidden lg:block rounded-tr-[20px]" />
               </div>
 
-              <div className="relative z-10">
-               
-
-                <p
-                  className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] 
+                <div className="relative z-10">
+                  <p
+                    className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] 
                   font-semibold text-center mt-[4%] lg:my-[%] z-[1000] ${styles.overlayText}`}
-                >
-                  Your request has been submitted successfully. 
-                  You can check your ID Status in the next 24 hours.
-                </p>
-              </div>
+                  >
+                    Your request has been submitted successfully. You can check
+                    your ID Status in the next 24 hours.
+                  </p>
+                </div>
 
-              <div>
-                <img src={Success} alt="" className="absolute top-[25%] left-[32%] h-[50%] lg:left-[36.5%]"/>
-              </div>
-              
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  setIdPopVerified(false);
-                 setGenderResult(genderResult);
-                  setIdAddress(idAddress)
-                  setIdCity(idCity)
-                  setIdCountry('')
-                  // setIdState('')
-                  // setIdLGA('')
-                  setIdPostalCode(idPostalCode)
-                  setIdNumber(idNumber);
-                  setIdResult(idResult);
-                }}
-                className={`my-[5%] bg-[#04177f] w-[90%] flex 
+                <div>
+                  <img
+                    src={Success}
+                    alt=""
+                    className="absolute top-[25%] left-[32%] h-[50%] lg:left-[36.5%]"
+                  />
+                </div>
+
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIdPopVerified(false);
+                    setGenderResult(genderResult);
+                    setIdAddress(idAddress);
+                    setIdCity(idCity);
+                    setIdCountry("");
+                    // setIdState('')
+                    // setIdLGA('')
+                    setIdPostalCode(idPostalCode);
+                    setIdNumber(idNumber);
+                    setIdResult(idResult);
+                  }}
+                  className={`my-[5%] bg-[#04177f] w-[90%] flex 
                 justify-center items-center mx-auto cursor-pointer text-[10px] 
                 font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
-              >
-                Done
-              </button>
+                >
+                  Done
+                </button>
               </div>
-          </Modal>
-        )}
+            </Modal>
+          )}
         </div>
-        )}
-        {loading && (
-   <Modal>
-    <Loader/>
-   </Modal>
-        )}
-        </div>
-  )
+      )}
+      {loading && (
+        <Modal>
+          <Loader />
+        </Modal>
+      )}
+    </div>
+  );
 }
