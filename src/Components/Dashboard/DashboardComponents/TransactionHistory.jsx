@@ -2,16 +2,9 @@ import { React, useState } from "react";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { ContextProvider } from "../../Context";
-import styles from "./component.module.css";
 import "../DashboardComponents/DataTopUpPage/DataTopUp.css";
 import NoRecordImage from "../../Add&SelectRecipient/RecipientImages/NoRecordImage.svg";
-// import arrows from "../../WalletSummaryPage/assets/arrow-square-right1.svg";
-// import arrows2 from "../../WalletSummaryPage/assets/arrow-square-right2.png";
-// import arrows3 from "../../WalletSummaryPage/assets/arrow-square-right3.svg";
-// import arrows4 from "../../WalletSummaryPage/assets/arrow-square-right4.svg";
-// import arrows5 from "../../WalletSummaryPage/assets/arrow-square-right5.svg";
-// import arrows6 from "../../WalletSummaryPage/assets/arrow-square-right6.png";
-// import arrows7 from "../../WalletSummaryPage/assets/arrow-square-right7.png";
+
 
 const TransactionHistory = () => {
   const { isDarkMode, toggleSideBar } = useContext(ContextProvider);
@@ -299,22 +292,9 @@ const AssumedResponseFromBackend = []
               </div>}
 
 
-            <div className="flex justify-center text-center gap-[20px] mt-[15px] mb-[30px]">
-              <p className="text-[8px]  font-[500] leading-[9.1px] mt-[5px]">
-                You need help?
-              </p>
-
-              <Link to="/ContactUs">
-                <div
-                  className={`${
-                    isDarkMode ? "border " : "bg-[#04177f]"
-                  } text-[8px] p-1 text-white rounded-[8px]`}
-                >
-                  Contact Us
-                </div>
-              </Link>
-            </div>
+           
           </div>
+         
         </div>
 
         {/* LARGER SCREENS */}
@@ -449,24 +429,8 @@ const AssumedResponseFromBackend = []
 
         
 
-          <div
-            className={`transaction2 md:flex md:justify-center md:pb-[30px]`}
-          >
-            <div className="flex gap-[15px] items-center md:mt-[40px]">
-              <div className="text-[8px] md:text-[12px] lg:text-[14px]">
-                You need help ?
-              </div>
-              <Link to="/ContactUs">
-                <div
-                  className={`${isDarkMode ? "border " : "bg-[#04177f]"} ${
-                    styles.contactus
-                  }`}
-                >
-                  Contact Us
-                </div>
-              </Link>
-            </div>
-          </div>
+          
+        
         </div>
       </div>
     </>

@@ -967,7 +967,9 @@ export const Context = ({ children }) => {
 const [dashLoading, setDashLoading] = useState(false);
 const [bvnButtonState, setBvnButtonState] = useState("Verify")
 const [virtualAccCreated, setVirtualAccCreated] = useState(false);
-const [idCountry, setIdCountry] = useState("")
+const [idCountry, setIdCountry] = useState("");
+const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
+   const [idStatus, setIdStatus] = useState('Not Verified');
   //========== BUSINESS KYC =============
   const [businessPopUp, setBusinessPopUp] = useState(false);
 
@@ -993,8 +995,8 @@ const [idCountry, setIdCountry] = useState("")
 const [bankNameState, setBankNameState] = useState("")
 const [accountNameState, setAccountNameState] = useState("")
 const [accountNumberState, setAccountNumberState] = useState("");
-
-
+const [userStatus, setUserStatus] = useState(false);
+const [idButtonState, setIdButtonState] = useState("Verify")
   const hold = {
     customerDetail, 
     setCustomerDetail,
@@ -1004,7 +1006,16 @@ const [accountNumberState, setAccountNumberState] = useState("");
       accountNameState,
        setAccountNameState,
         accountNumberState, 
-       setAccountNumberState,   
+       setAccountNumberState, 
+       userStatus,
+        setUserStatus,
+        setIdButtonState,
+        idButtonState,
+        verifyImage,
+         setVerifyImage,
+         idStatus,
+         setIdStatus,
+
     // ==================
     tfImage, settfImage,
     withdrawImage,
