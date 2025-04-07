@@ -206,7 +206,7 @@ setBvnButtonState("Virtual Account Created");
     }else if(error && error.response.data.message === "action_required"){
       localStorage.setItem("AccCreated",false);
       localStorage.setItem("idVerification",false);
-      localStorage.setItem("bvnVerification",true);
+      //localStorage.setItem("bvnVerification",true);
       // const CheckVerifyStatusNin = localStorage.getItem("idVerification");
       // const CheckVerifyStatusBvn = localStorage.getItem("idVerification");
 //       if(CheckVerifyStatusNin === true && CheckVerifyStatusBvn === false){

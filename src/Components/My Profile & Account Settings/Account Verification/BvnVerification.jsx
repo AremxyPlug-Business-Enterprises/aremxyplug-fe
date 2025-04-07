@@ -33,7 +33,7 @@ export default function BvnVerification(Data) {
   const [bvnPhoneMessage, setBvnPhoneMessage] = useState(false);
   const [errorVerify, setErrorVerify] = useState(false);
   const { bvnButtonState, setBvnButtonState,
-    setBankNameState, setAccountNameState, setAccountNumberState, idVerificationOpen, setVirtualAccCreated, setIdButtonState
+    setBankNameState, setAccountNameState,  setAccountNumberState, idVerificationOpen, setVirtualAccCreated, setIdButtonState
    } = useContext(ContextProvider);
   const { toggleSideBar, customerDetail, setLoginAuthorisation , bankNameState} =
     useContext(ContextProvider);

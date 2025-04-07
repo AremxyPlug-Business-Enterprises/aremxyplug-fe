@@ -546,7 +546,7 @@ return (
                     isDarkMode ? "border bg-black" : "bg-[#04177f]"
                   } ${styles.viewWallet}`}
                 >
-               {(Data.ConfirmId === false || Data.ConfirmBvn === false) ? "Verify" : `${Data.ConfirmAcc === false && (Data.ConfirmId === true || Data.ConfirmBvn === true) ?  "Generate" : "Verified"}` }
+               {(Data.ConfirmId === false && Data.ConfirmBvn === false) ? "Verify" : `${Data.ConfirmAcc === false  ?  "Verified" : "Generate"}` }
                 </button>
               </Link>
             </div>

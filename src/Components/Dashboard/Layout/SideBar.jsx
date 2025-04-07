@@ -19,7 +19,6 @@ export const SideBar = ({fullName, userId, bvnVerify, NinVerify}) => {
     navigate("/Login", {replace : true})
 ;
   }
-  console.log(bvnVerify, NinVerify)
   const [dropDownOpen, setDropDownOpen] = useState({
     dropdown1: false,
     dropdown2: false,
@@ -99,8 +98,8 @@ return (
                   </p>
                   <div className="flex gap-[3px] lg:gap-[5px]">
                     <div className={`px-[4px] py-[1px] font-[600] lg:font-[700] text-[10px]
-                      md:text-[10px] lg:text-[12px] lg:rounded-[2px] ${bvnVerify === true || NinVerify === true ? "text-green-600" : "text-red-600"}`}>
-                      {bvnVerify === true || NinVerify === true ? "Verified" : "UnVerified"}
+                      md:text-[10px] lg:text-[12px] lg:rounded-[2px] ${bvnVerify === true  ? "text-green-600" : "text-red-600"}`}>
+                      {bvnVerify === true  ? "Verified" : "UnVerified"}
                     </div>
                     <div className=" px-[4px] py-[1px] font-[600] lg:font-[700] text-[10px]
                      text-white md:text-[10px] lg:text-[12px] lg:rounded-[2px]">

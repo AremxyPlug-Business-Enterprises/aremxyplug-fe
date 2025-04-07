@@ -35,6 +35,7 @@ setAccountNumberState,
 verifyImage,
  setVerifyImage,
  idStatus,
+ isDarkMode,
  setIdStatus} = useContext(ContextProvider);
     const {dropDownGender, setDropDownGender, idButtonState, setIdButtonState} = useContext(ContextProvider);
     const [idDropDown, setIdDropDown]= useState(false);
