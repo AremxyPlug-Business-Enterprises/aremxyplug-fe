@@ -42,7 +42,7 @@ export default function BvnVerification(Data) {
   const { isDarkMode } = useContext(ContextProvider);
   const [loading, setLoading] = useState(false);
   const [genderResult, setGenderResult] = useState("");
-  const genderInfo = ["Male", "Female", "Others.."];
+  // const genderInfo = ["Male", "Female", "Others.."];
   const chooseGender = () => {
     setDropDownGender(!dropDownGender);
   };
