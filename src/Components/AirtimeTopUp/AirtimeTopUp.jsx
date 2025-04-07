@@ -52,7 +52,7 @@ const AirtimeTopUp = () => {
                         <img src='./Images/wallet/arrow-square-right.svg' alt="" className='h-full'/>
                     </div>
                 </div>
-                <ul className='flex items-center w-full mb-6 border-b md:mb-8'>
+                <ul className="flex items-center w-full mb-6 border-b md:mb-8 !text-[#7E7E7E] text-[10px] md:text-[12px] ">
                     <li className={activeTab === 'tab_1' ? active : inactive} onClick={handleTab1}>Local Airtime</li>
                     <li className={activeTab === 'tab_2' ? active : inactive} onClick={handleTab2}>International Airtime</li>
                 </ul>

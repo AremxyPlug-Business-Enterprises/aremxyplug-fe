@@ -57,6 +57,7 @@ const AirtimeVtu = () => {
     const [refNumber, setRefNumber] = useState("");
     const [description, setDescription] = useState("");
     const [isLoading, setIsLoading] = useState(false); // For managing loading state
+    const { isDarkMode } = useContext(ContextProvider);
 
     useEffect(() => {
         // Populate input fields with the selected recipient's data from context
@@ -480,9 +481,18 @@ const AirtimeVtu = () => {
                 <div className={styles.airtimeTop}>
                     <div className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] bg-gradient-to-r from-[#73FF9A] to-[#6EDCFF] flex px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px]">
                         <div className="w-[80%] pt-[19px] lg:pt-[20px]">
-                            <h2 className="text-[12px] md:text-[13.75px] font-bold mb-2 lg:text-[24px] lg:mb-4">
+                            <h2 className={`text-[12px] md:text-[13.75px] font-bold mb-2 lg:text-[24px] lg:mb-4 
+                                 ${
+                                    isDarkMode ? "text-black" : ""
+                                 }
+                                `}>
                                 AIRTIME VTU, FAST AND AUTOMATED.</h2>
-                            <h2 className="text-[9px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3">
+                            <h2 className={`text-[9px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3 
+                              ${
+                                    isDarkMode ? "text-black" : ""
+                                 }
+                            `
+                            }>
                                 Top up your mobile sim using our automated airtime vending directly from network providers, enjoy discounts without any hassle or hidden fee.
                             </h2>
                         </div>
@@ -491,21 +501,44 @@ const AirtimeVtu = () => {
                         </div>
                     </div>
                     <div className={`${styles.containFlex} !text-[12px] md:!text-base`}>
-                        <div className={`${styles.FlexPut} !h-[36.927px] md:!h-[51px]`}>
+                        <div className={`
+                                    ${
+                                        isDarkMode 
+                                            ? "!bg-black !text-white !border !border-solid !border-white" 
+                                            : "border border-solid border-[#0003] bg-white text-black"
+                                    }
+                        ${styles.FlexPut} !h-[36.927px] md:!h-[51px]
+                  `}>
                             <Link to="/select-vtu-recipient">
-                                <div className={`${styles.conPut} !relative !top-[12px] md:!relative md:!top-base !text-[12px] md:!text-base`}>
+                                <div className={`
+                                ${styles.conPut} !relative !top-[12px] md:!relative md:!top-base !text-[12px] md:!text-base
+                                `}>
                                     <h2>Select Recipient</h2>
-                                    <div className={styles.FlexImg}>
+                                    <div className={styles.FlexImg} 
+                                  
+                                    >
                                         <img src={weight} alt="" className='' />
                                     </div>
                                 </div>
                             </Link>
                         </div>
-                        <div className={`${styles.FlexPut} !h-[36.927px] md:!h-[51px]`}>
+                        <div className={`
+                                        ${
+                                        isDarkMode 
+                                            ? "!bg-black !text-white !border !border-solid !border-white" 
+                                            : "border border-solid border-[#0003] bg-white text-black"
+                                    }
+                        ${styles.FlexPut} !h-[36.927px] md:!h-[51px]
+                                  `}>
                             <Link to="/add-vtu-recipient">
-                                <div className={`${styles.conPut} !relative !top-[12px] md:!relative md:!top-base !text-[12px] md:!text-base`}>
-                                    <h2 >Add Recipient</h2>
-                                    <div className={styles.FlexImg}>
+                                <div className={`
+                                ${styles.conPut} !relative !top-[12px] md:!relative md:!top-base !text-[12px] md:!text-base
+                             
+                                  `}>
+                                    <h2>Add Recipient</h2>
+                                    <div className={styles.FlexImg}
+                                    
+                                    >
                                         <img src={add} alt="" className='' />
                                     </div>
                                 </div>
@@ -526,28 +559,58 @@ const AirtimeVtu = () => {
                         <div className={styles.mainGridCol}>
                             <div>
                                 <div className={styles.NetworkFlex}>
-                                    <h2 className={`${styles.head3} !text-[15px] md:text-[15px]`}>Select Network</h2>
-                                    <div className={`${styles.input} !h-[44.927px] md:!h-[51px]`}>
+                                    <h2 className={`${styles.head3} !text-[15px] md:text-[15px]   ${isDarkMode 
+                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                                          }`}>Select Network</h2>
+                                    <div className={`
+                                              ${
+        isDarkMode 
+            ? "!bg-black !text-white !border !border-solid !border-white" 
+            : "border border-solid border-[#0003] bg-white text-black"
+    }
+                                    ${styles.input} !h-[44.927px] md:!h-[58px]
+       `} >
 
-                                        <div className={`${styles.output2} !relative !top-[17px] md:!relative md:!top-base !text-[14px] md:!text-base`}>
+                                        <div className={`${styles.output2}
+
+                                        !relative !top-[17px] md:!relative md:!top-base !text-[14px] md:!text-base
+                                     `}>
                                             {networkName ? (
-                                                <li onClick={handleShowList} className={styles.labelInput}>
+                                                <li onClick={handleShowList} className={`${styles.labelInput}  
+                                              `}>
                                                     <div className={styles.network}>
                                                         {networkImage && <img src={networkImage} alt="" />}
                                                     </div>
-                                                    <h2 className={`${styles.head2} !text-[13px] md:!text-[13px]`}>{networkName}</h2>
+                                                    <h2 className={`
+                                                    ${
+                                                        isDarkMode ? "!text-[#7C7C7C]" : ""
+                                                    }
+                                                    ${styles.head2}
+                                                     !text-[13px] md:!text-[13px]`}>{networkName}</h2>
                                                 </li>
                                             ) : (
-                                                <h2 onClick={handleShowList} className={`${styles.head6} !text-[14px] md:!text-base`}>Select Network</h2>
+                                                <h2 onClick={handleShowList} className={`
+                                                    ${isDarkMode ? "!text-[#7C7C7C]" : ""}
+                                                    ${styles.head6}
+                                                 
+                                                
+                                                !text-[14px] md:!text-base`}>Select Network</h2>
                                             )}
-                                            <button className={`${styles.btnDrop} !text-[14px] md:!text-base`} onClick={handleShowList}>
+                                            <button className={`
+                                            ${isDarkMode ? "!text-[#7C7C7C]" : ""}
+                                            ${styles.btnDrop} !text-[14px] md:!text-base
+                                                     
+                                            `} onClick={handleShowList}>
                                                 <img src={arrowDown} alt="" />
                                             </button>
                                         </div>
                                     </div>
                                 </div>
                                 {showList &&
-                                    <div className={styles.colDown}>
+                                    <div className={`${styles.colDown}
+                                      ${isDarkMode ? "!bg-black !border !border-white !text-[#7E7E7E] !border-2" : ""}
+        `}
+                                    >
                                         {networkList.map((item) => (
                                             <Network key={item.id} image={item.image} name={item.name} onClick={() => handleSelectNetwork(item.name, item.image, item.discount, item.networkId)} />
                                         ))}
@@ -556,19 +619,46 @@ const AirtimeVtu = () => {
                                 }
                             </div>
                             <div>
-                                <h2 className={`${styles.head3} !text-[15px] md:!text-[15px] `}>Select Product</h2>
-                                <div className={`${styles.input1} !h-[44.927px] md:!h-[51px]`}>
-                                    {selectedProduct ?
-                                        <h2 onClick={handleShowProduct} className={`${styles.span2} !relative !top-[5px] md:!relative md:!top-base !text-[13px] md:!text-[13] !pr-[0] md:pr-[5px]`} required>{selectedProduct}</h2>
-                                        :
-                                        <span onClick={handleShowProduct} className='!relative !top-[5px] md:!relative md:!top-base !text-[14px] md:!text-base '>Select Product</span>
+                                <h2 className={`
+                                    ${
+                                        isDarkMode 
+                                            ? "!text-[#7E7E7E]" 
+                                            : ""
                                     }
-                                    <button className={`${styles.btnDrop} !relative !top-[0px] md:!relative md:!top-base !text-[14px] md:!text-base`} onClick={handleShowProduct} disabled={!selected}>
+                                    ${styles.head3} !text-[15px] md:!text-[15px]`}>Select Product</h2>
+                                <div className={`
+                                           ${
+                                            isDarkMode 
+                                                ? "!bg-black !text-white !border !border-solid !border-white" 
+                                                : "border border-solid border-[#0003] bg-white text-black"
+                                        }                  ${styles.input1} !h-[44.927px] md:!h-[58px]
+            `}
+                                >
+                                    {selectedProduct ?
+                                        <h2 onClick={handleShowProduct} className={`
+                                           
+                                            
+                                            ${styles.span2} !relative !top-[5px] md:!relative md:!top-base !text-[13px] md:!text-[13] !pr-[0] md:pr-[5px]`} required>{selectedProduct}</h2>
+                                        :
+                                        <span onClick={handleShowProduct} className={`
+                                            ${isDarkMode ? "!text-[#7E7E7E]" : ""}
+                                            !relative !top-[5px] md:!relative md:!top-base !text-[14px] md:!text-base
+                                             `}>Select Product</span>
+                                    }
+
+                                    <button className={`
+                                     ${isDarkMode ? "!text-[#7E7E7E]" : ""}
+                                    ${styles.btnDrop} !relative !top-[0px] md:!relative md:!top-base !text-[14px] md:!text-base
+                                     `} onClick={handleShowProduct} disabled={!selected}>
                                         <img src={arrowDown} alt="" />
                                     </button>
                                 </div>
                                 {showProduct &&
-                                    <div className={styles.colDown}>
+                                    <div className={`
+                                        ${isDarkMode ? "!bg-black !border !border-white !text-[#7E7E7E]" : ""}
+                                        ${styles.colDown} 
+           
+        `}>
                                         {productList.map((item) => (
                                             <Product key={item.id} product={item.name} onClick={() => handleSelectProduct(item.name, item.productId)} />
                                         ))}
@@ -578,34 +668,92 @@ const AirtimeVtu = () => {
                         </div>
                         <div className={styles.mainGridCol}>
                             <div>
-                                <h2 className={`${styles.head3} !text-[15px] md:text-base`}>Discount</h2>
-                                <div className={`${styles.input2} !h-[44.927px] md:!h-[57px]`}>
-                                    <h2 className='!relative !top-[6px] md:!relative md:!top-base !text-[13px] md:!text-[13px]'>{discount ? `${networkName + ' ' + discount}%` : ''}</h2>
-                                    <div className={`${styles.disc} !relative !top-[6px] md:!relative md:!top-base !text-[14px] md:text-[13px]`}>
+                                <h2 className={`${styles.head3} !text-[15px] md:text-base ${
+                                            isDarkMode 
+                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                                          }`}>Discount</h2>
+                                <div className={`${styles.input2} !h-[44.927px] md:!h-[57px]
+                                    ${
+                                            isDarkMode 
+                                                ? "!bg-black !text-[#7E7E7E] !border !border-solid !border-white" 
+                                                : "border border-solid border-[#0003] bg-white text-black"
+                                        }`}>
+                                    <h2 className={`!relative !top-[6px] md:!relative md:!top-base !text-[13px] md:!text-[13px]
+                                         ${
+                                            isDarkMode 
+                                                ? "!bg-black !text-[#7E7E7E]" 
+                                                : ""
+                                        }
+                                        `}>{discount ? `${networkName + ' ' + discount}%` : ''}</h2>
+                                    <div className={`
+                                        ${
+                                            isDarkMode 
+                                                ? "!bg-black !text-[#7E7E7E]" 
+                                                : ""
+                                        }
+                                        ${styles.disc} !relative !top-[6px] md:!relative md:!top-base !text-[14px] md:text-[13px]`}>
                                         <img src={discountImg} alt="" />
                                     </div>
                                 </div>
                             </div>
                             <div>
-                                <h2 className={`${styles.head3} !text-[15px] md:!text-base`}>Phone Number <span
-                                    className={`${styles.span3} !text-[15px] md:!text-base`}><Link to="/select-vtu-recipient"> (Select Recipient) </Link>
+                                <h2 className={`${styles.head3} !text-[15px] md:!text-base ${
+                                            isDarkMode 
+                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                                          }`}>Phone Number <span
+                                    className={`
+                                       
+                                       
+                                    ${styles.span3} !text-[15px] md:!text-base`}><Link to="/select-vtu-recipient"> (Select Recipient) </Link>
                                 </span></h2>
-                                <div className={`${styles.input} !h-[44.927px] md:!h-[50px]`}>
-                                    <div className={`${styles.output} !relative !top-[11px] md:!relative md:!top-[14px] !text-[14px] md:!text-base`}>
+                                <div className={`
+                                   ${
+                                            isDarkMode 
+                                                ? "!bg-black !text-white !border !border-solid !border-white" 
+                                                : "border border-solid border-[#0003] bg-white text-black"
+                                        }
+                                ${styles.input} !h-[44.927px] md:!h-[50px]
+                                          `}>
+                                    <div className={`
+                                         ${
+                                            isDarkMode 
+                                                ? "!bg-black !text-[#7E7E7E]]" 
+                                                : ""
+                                        }
+                                        ${styles.output} !relative !top-[11px] md:!relative md:!top-[14px] !text-[14px] md:!text-base`}>
                                         <input type='number'
-                                            className={`${styles.phone} !text-[14px] md:!top-[14px]`} required
+                                            className={`
+                                                  ${
+                                            isDarkMode 
+                                                ? "!bg-black !text-[#7E7E7E]" 
+                                                : ""
+                                        }
+                                                ${styles.phone} !text-[14px] md:!top-[14px]`}  required
                                             placeholder='Add recipient phone number'
                                             onChange={(event) => {
                                                 handleChange(event);
                                                 setRecipientNumber(event.target.value);
                                             }} value={recipientNumber} />
-                                        <div className={styles.call}>
+                                        <div className={`${styles.call}
+                                            ${
+                                            isDarkMode 
+                                                ? "!bg-black !text-white" 
+                                                : ""
+                                        }
+                                        `}>
                                             <img src={call} alt="" />
                                         </div>
                                     </div>
                                 </div>
                                 {errors.recipientNumber && (
-                                    <div className="!text-[14px] text-red-500 italic lg:text-[14px]">
+                                    <div className={`
+                                        ${
+                                            isDarkMode 
+                                                ? "!bg-black !text-white" 
+                                                : ""
+                                        }!text-[14px] text-red-500 italic lg:text-[14px]
+                                        
+                                        `}>
                                         {errors.recipientNumber}
                                     </div>
                                 )}
@@ -613,10 +761,31 @@ const AirtimeVtu = () => {
                         </div>
                         <div className={styles.mainGridCol}>
                             <div>
-                                <h2 className={`${styles.head3} !text-[15px] md:!text-base`}>Recipient Name <span className={`${styles.span4} !text-[15px] md:!text-base`}>(optional)</span></h2>
-                                <div className={`${styles.input} !h-[44.927px] md:!h-[51px]`}>
-                                    <div className={`${styles.output} !relative !top-[11px] md:!relative md:!top-base !text-[14px] md:!text-base`}>
-                                        <input type='text' className={`${styles.phone} !text-[14px] md:!text-base`} required placeholder='Add recipient name' onChange={(event) => setRecipientName(event.target.value)} value={recipientName} />
+                                <h2 className={`${styles.head3} !text-[15px] md:!text-base ${
+                                            isDarkMode 
+                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                                          }
+                                          `}>Recipient Name <span className={`${styles.span4} !text-[15px] md:!text-base`}>(optional)</span></h2>
+                                <div className={`
+                                     ${
+                                            isDarkMode 
+                                                ? "!bg-black !text-white !border !border-solid !border-white" 
+                                                : "border border-solid border-[#0003] bg-white text-black"
+                                        }
+                                    ${styles.input} !h-[44.927px] md:!h-[51px]`}>
+                                    <div className={` ${
+                                            isDarkMode 
+                                                ? "!bg-black !text-[#7E7E7E]" 
+                                                : ""
+                                        }
+                                        ${styles.output} !relative !top-[11px] md:!relative md:!top-base !text-[14px] md:!text-base`}>
+                                        <input type='text' className={`
+                                             ${
+                                            isDarkMode 
+                                                ? "!bg-black !text-[#7E7E7E]" 
+                                                : ""
+                                        }
+                                            ${styles.phone} !text-[14px] md:!text-base`} required placeholder='Add recipient name' onChange={(event) => setRecipientName(event.target.value)} value={recipientName} />
                                         <div className={styles.call}>
                                             <img src={user} alt="" />
                                         </div>
@@ -624,11 +793,38 @@ const AirtimeVtu = () => {
                                 </div>
                             </div>
                             <div>
-                                <h2 className={`${styles.head3} !text-[15px] md:!text-base`}>Type Amount</h2>
-                                <div className={`${styles.input} !h-[44.927px] md:!h-[56px]`}>
-                                    <div className={`${styles.output} !relative !top-[9px] md:!relative md:!top-base !text-[14px] md:!text-base`}>
-                                        <span className="text-gray-500 relative bottom-[1px] !relative !top-[7px] md:!relative md:!top-base !text-[14px] md:!text-base">&#8358;</span>
-                                        <input type='number' placeholder='Type amount' required className={`${styles.phones} !relative !top-[5px] md:!relative md:!top-base !text-[14px] md:!text-base`} onChange={(event) => setAmount(event.target.value)} value={amount.toLocaleString()} />
+                                <h2 className={`${styles.head3} !text-[15px] md:!text-base ${
+                                            isDarkMode 
+                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                                          }`}>Type Amount</h2>
+                                <div className={`
+                                     ${
+                                            isDarkMode 
+                                                ? "!bg-black !text-white !border !border-solid !border-white" 
+                                                : "border border-solid border-[#0003] bg-white text-black"
+                                        }
+                                    ${styles.input} !h-[44.927px] md:!h-[56px] `}>
+                                    <div className={`
+                                         ${
+                                            isDarkMode 
+                                                ? "!bg-black !text-[#7E7E7E]" 
+                                                : ""
+                                        }
+                                        ${styles.output} !relative !top-[9px] md:!relative md:!top-base !text-[14px] md:!text-base`}>
+                                        <span className={`text-gray-500 relative bottom-[1px] !relative !top-[7px] md:!relative md:!top-base !text-[14px] md:!text-base
+                                             ${
+                                            isDarkMode 
+                                                ? "!bg-black !text-[#7E7E7E]" 
+                                                : ""
+                                        }
+                                            `}>&#8358;</span>
+                                        <input type='number' placeholder='Type amount' required className={`
+                                             ${
+                                            isDarkMode 
+                                                ? "!bg-black !text-[#7E7E7E]" 
+                                                : ""
+                                        }
+                                            ${styles.phones} !relative !top-[5px] md:!relative md:!top-base !text-[14px] md:!text-base`} onChange={(event) => setAmount(event.target.value)} value={amount.toLocaleString()} />
                                         <div className={`${styles.call} !relative !top-[4px] md:!relative md:!top-base !text-[14px] md:!text-base`}>
                                             <img src={money} alt="" />
                                         </div>
@@ -643,10 +839,31 @@ const AirtimeVtu = () => {
                         </div>
                         <div className={styles.mainGridCol}>
                             <div>
-                                <h2 className={`${styles.head3} !text-[15px] md:!text-base`}>Total Amount</h2>
-                                <div className={`${styles.input} !h-[44.927px] md:!h-[56px] `}>
-                                    <div className={`${styles.output1} !relative !top-[17px] md:!relative md:!top-base !text-[14px] md:!text-base`}>
-                                        <h2 className='!text-[14px] md:!text-[13px]'>{newAmount ? `NGN${newAmount}` : `Total Amount`}</h2>
+                                <h2 className={`${styles.head3} !text-[15px] md:!text-base ${
+                                            isDarkMode 
+                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                                          }`}>Total Amount</h2>
+                                <div className={`
+                                ${
+        isDarkMode 
+            ? "!bg-black !text-white !border !border-solid !border-white" 
+            : "border border-solid border-[#0003] bg-white text-black"
+    }
+                                ${styles.input} !h-[44.927px] md:!h-[56px] `}>
+                                    <div className={`
+                                    ${
+        isDarkMode 
+            ? "!bg-black !text-[#7E7E7E]" 
+            : ""
+    }
+                                    ${styles.output1} !relative !top-[17px] md:!relative md:!top-base !text-[14px] md:!text-base`}>
+                                        <h2 className={`
+                                        ${
+        isDarkMode 
+            ? "!bg-black !text-[#7E7E7E] " 
+            : ""
+    }
+                                        !text-[14px] md:!text-[13px] `}>{newAmount ? `NGN${newAmount}` : `Total Amount`}</h2>
                                         <div className={styles.disc}>
                                             <img src={money} alt="" className='w-full h-full' />
                                         </div>
@@ -655,15 +872,37 @@ const AirtimeVtu = () => {
                             </div>
                             <div>
                                 <div>
-                                    <h2 className={`${styles.head3} !text-[15px] md:!text-base`}>Payment Method</h2>
-                                    <div className={`${styles.input1} !h-[44.927px] md:!h-[51px]`}>
+                                    <h2 className={`${styles.head3} !text-[15px] md:!text-base ${
+                                            isDarkMode 
+                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                                          }`}>Payment Method</h2>
+                                    <div className={`
+                                    ${
+        isDarkMode 
+            ? "!bg-black !text-white !border !border-solid !border-white" 
+            : "border border-solid border-[#0003] bg-white text-black"
+    }
+                                    ${styles.input1} !h-[44.927px] md:!h-[58px]
+                                  `}>
                                         {paymentSelected ?
                                             <li onClick={handleShowPayment} className={styles.labelInput}>
-                                                <h2 className={`${styles.head4} !relative !top-[3.8px] md:!relative md:!top-base !text-[14px] md:!text-[13px]`}>{name}</h2>
+                                                <h2 className={`
+                                                ${
+        isDarkMode 
+            ? "!bg-black !text-[#7E7E7E] " 
+            : ""
+    }
+                                                ${styles.head4} !relative !top-[3.8px] md:!relative md:!top-base !text-[14px] md:!text-[13px]`}>{name}</h2>
                                                 <h2 className={`${styles.head4} !relative !top-[3.8px] md:!relative md:!top-base !text-[14px] md:!text-[13px]`}>Wallet({paymentAmount.toLocaleString()}.00)</h2>
                                             </li>
                                             :
-                                            <h2 onClick={handleShowPayment} className={`${styles.head9} !relative !top-[5px] md:!relative md:!top-base !text-[14px] md:!text-base`}>Select Payment Method</h2>}
+                                            <h2 onClick={handleShowPayment} className={`
+                                             ${
+        isDarkMode 
+            ? "!bg-black !text-[#7E7E7E]" 
+            : ""
+    }
+                                            ${styles.head9} !relative !top-[5px] md:!relative md:!top-base !text-[14px] md:!text-base`}>Select Payment Method</h2>}
                                         {paymentSelected ?
                                             <button className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px] !relative !top-[4px] md:!relative md:!top-base !text-[14px] md:!text-base" onClick={handleShowPayment}>
                                                 <img src={image} alt="" className='w-full h-full object-cover ' />
@@ -676,7 +915,13 @@ const AirtimeVtu = () => {
                                     </div>
                                 </div>
                                 {showPayment &&
-                                    <div className={`${styles.colDown} `}>
+                                    <div className={`
+                                    
+                                    ${
+        isDarkMode 
+            ? "!bg-black !text-white !border !border-solid !border-white" 
+            : ""
+    }${styles.colDown} `}>
                                         {countryList.map((country) => (
                                             <Payment key={country.id} flag={country.flag} code={country.code} amount={country.amount} onClick={() => handleSelectPayment(country.code, country.flag, country.amount)} />
                                         ))}

@@ -41,7 +41,10 @@ const StarTimes = () => {
     decoderType,
     setMethodImage,
     methodImage,
+    isDarkMode
   } = useContext(ContextProvider)
+      
+       
 
 
   const handleOptionClickStarTimes = (option) => {
@@ -229,8 +232,14 @@ const StarTimes = () => {
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] font-[400] md:font-[600]">
                 Confirm Decoder Type</label>
               {/* <button className="border-[0.23px] lg:border-[0.4px] w-full md:w-1/2 h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C]">StarTimes</button> */}
-              <div className="mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.5px] p-4 sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] hover:bg-[#EDEAEA] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center" onClick={decoderDropdown}>
+              <div className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.5px] p-4 sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] self-center" onClick={decoderDropdown} 
+       ${
+        isDarkMode
+            ? "bg-black text-white border border-white"
+            : "border-[#9C9C9C] text-[#7C7C7C] hover:bg-[#EDEAEA]"
+       }`}
+    >
                 {decoderType}
                 <img className="absolute left-[90%] lg:left-[94%] self-center align-middle decdrop md:h-[14.038px] md:w-[14.038px] 
       lg:h-[24px] lg:w-[24px] w-[14px] h-[16px] " src={arrowDown} alt="" />
@@ -248,10 +257,14 @@ const StarTimes = () => {
              document.querySelector('.decdrop').classList.remove('DropIt');
              console.log(e);
               })}
-              className=' pb-[20px] md:pb-[14px] pt-[20px] md:pt-[14px] font-weight-bold text-[15px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
+              className={`pb-[20px] md:pb-[14px] pt-[20px] md:pt-[14px] font-weight-bold text-[15px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
          md:text-[13.227px] md:leading-[17.195px] 
-         shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] bg-white
-         lg:text-[16px] lg:leading-[20.8px] cursor-pointer hover:bg-[#EDEAEA]' 
+         shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
+         lg:text-[16px] lg:leading-[20.8px] cursor-pointer   ${
+        isDarkMode
+            ? "bg-black text-white border border-white"
+            : "bg-white hover:bg-[#EDEAEA]"
+       }`} 
          key= {decoder.id}>
       <h2>{decoder.decoderType}   </h2>
          </a>
@@ -268,8 +281,13 @@ const StarTimes = () => {
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] md:font-[600] font-[400]">
                 Select Package</label>
 
-              <div className="mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.4px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] hover:bg-[#EDEAEA] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center" onClick={packageDropdown}>
+              <div className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.4px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px]  self-center" onClick={packageDropdown} ${
+      
+        isDarkMode
+            ? "bg-black text-white border border-white"
+            : "border-[#9C9C9C] text-[#7C7C7C] hover:bg-[#EDEAEA]"
+       }`} >
                 {selectedOptionStarTimes}
                 <img className="absolute left-[90%] lg:left-[94%] self-center align-middle imgdrop  md:h-[14.038px] md:w-[14.038px] 
       lg:h-[24px] lg:w-[24px] w-[14px] h-[16px]" src={arrowDown} alt="" />
@@ -279,10 +297,15 @@ const StarTimes = () => {
                 <ul className="dropdown-options z-[2] absolute top-[100%] w-full bg-white cursor-pointer">
                   {options.map((option, index) => (
                     <li
-                      className={`pb-[20px] md:pb-[14px] pt-[20px] md:pt-[14px] font-weight-bold text-[14px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
+                      className={`pb-[20px] md:pb-[14px] pt-[20px] md:pt-[14px] font-weight-bold text-[14px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500] 
                       md:text-[13.227px] md:leading-[17.195px] 
                       shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] bg-white
-                      lg:text-[16px] lg:leading-[20.8px] cursor-pointer hover:bg-[#EDEAEA] dropdownCSS `}
+                      lg:text-[16px] lg:leading-[20.8px] cursor-pointer  dropdownCSS 
+                       ${
+        isDarkMode
+            ? "bg-black text-white border border-white"
+            : "border-[#9C9C9C] text-[#7C7C7C] hover:bg-[#EDEAEA]"
+       }`}
                       key={index}
                       onClick={() => handleOptionClickStarTimes(option)}
                     >
@@ -306,8 +329,12 @@ const StarTimes = () => {
                 const numericValue = e.target.value.replace(/\D/g, '');
                     e.target.value = numericValue
                 })}
-                onChange={handleSmartCard} className="mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] hover:bg-[#EDEAEA] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center" />
+                onChange={handleSmartCard} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
+      isDarkMode 
+        ? "bg-black text-white border border-white" 
+        : "text-[#7C7C7C] border-[#9C9C9C]"
+    }`}  />
             {errors.smartCard && <p className="text-[#F95252] text-[9px] md:text-[12px] lg:text-[14px] font-[400] italic">
                 {errors.smartCard}</p>}
             </div>
@@ -316,8 +343,12 @@ const StarTimes = () => {
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] font-[400] md:font-[600]">
                 Card Name</label>
               <input type="text"
-                onChange={handleCardName} onInput={(event)=> {event.target.value = event.target.value.replace(/[0-9]/g, '')}} className="mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] hover:bg-[#EDEAEA] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center" />
+                onChange={handleCardName} onInput={(event)=> {event.target.value = event.target.value.replace(/[0-9]/g, '')}} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] self-center ${
+      isDarkMode 
+      ? "bg-black text-white border border-white" 
+      : "text-[#7C7C7C] border-[#9C9C9C] hover:bg-[#EDEAEA]"
+  }`}    />
             </div>
           </div>
           <div className="flex flex-col md:flex-row gap-[20px] md:gap-[12px] lg:gap-[22px] md:my-2 lg:my-4">
@@ -337,16 +368,24 @@ const StarTimes = () => {
                   }
                 
                    })}
-                onChange={handleStarTimesMobileNumberChange} type="tel" maxLength={11} className="mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] hover:bg-[#EDEAEA] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center" />
+                onChange={handleStarTimesMobileNumberChange} type="tel" maxLength={11} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] self-center ${
+      isDarkMode 
+      ? "bg-black text-white border border-white" 
+      : "text-[#7C7C7C] border-[#9C9C9C] hover:bg-[#EDEAEA]"
+  }`}      />
               {errors.mobileNumber && <p className="text-[#F95252] text-[9px] md:text-[12px] lg:text-[14px] font-[400] italic">
                 {errors.mobileNumber}</p>}
             </div>
             <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
               <label htmlFor="Email" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] font-[400] md:font-[600]">
                 Email</label>
-              <input type="email" onChange={handleTvEmail} placeholder="example@gmail.com" required className="mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[14px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] hover:bg-[#EDEAEA] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center" />
+              <input type="email" onChange={handleTvEmail} placeholder="example@gmail.com" required className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[14px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] self-center ${
+      isDarkMode 
+      ? "bg-black text-white border border-white" 
+      : "text-[#7C7C7C] border-[#9C9C9C] hover:bg-[#EDEAEA]"
+  }`}      />
              {errors.tvEmail && <p className="text-[#F95252] text-[13.4px] md:text-[12px] lg:text-[14px] font-[400] italic">
                 {errors.tvEmail}</p>}
             </div>
@@ -360,8 +399,12 @@ const StarTimes = () => {
 
               <input
                 type="text"
-                className="mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
-                lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] hover:bg-[#EDEAEA] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center"
+                className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
+                lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] self-center ${
+                  isDarkMode 
+                  ? "bg-black text-white border border-white" 
+                  : "text-[#7C7C7C] border-[#9C9C9C] hover:bg-[#EDEAEA]"
+              }`}    
                 value={'₦' + getNumericValue(selectedOptionStarTimes)}
               />
 
@@ -370,7 +413,11 @@ const StarTimes = () => {
             <div className="flex relative flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] font-[400] md:font-[600]">
                 Payment Method</label>
-              <div onClick={methodDropDown} className="mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg flex items-center justify-between border-[0.23px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] border-[#9C9C9C]">
+              <div onClick={methodDropDown} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg flex items-center justify-between border-[0.23px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] ${
+       isDarkMode 
+       ? "bg-black text-white border border-white" 
+       : " border-[#9C9C9C]"
+   }`}     >
                 <p className='font-[400] text-[13px] leading-[10.4px] md:text-[12px] md:leading-[12.206px] lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px] cursor-pointer'>
                   {flagResult + tvWalletBalance}
                 </p>
@@ -391,18 +438,26 @@ const StarTimes = () => {
                           setMethodPayment(false);
                           document.querySelector('.methodDrop').classList.remove('DropIt');
                         })}
-                        className='pb-[20px] md:pb-0 pt-[20px] md:pt-0 font-weight-bold text-[15px] flex gap-[10px] lg:py-[15px] py-[10px] pl-[10px]
-        cursor-pointer hover:bg-[#EDEAEA] items-center bg-white
-        shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]'
-                        key={methodOption.id}>
+                        className={`pb-[20px] md:pb-0 pt-[20px] md:pt-0 font-weight-bold text-[15px] flex gap-[10px] lg:py-[15px] py-[10px] pl-[10px]
+        cursor-pointer items-center 
+        shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
+        ${ isDarkMode 
+          ? "bg-black text-white border border-white" 
+          : "bg-white hover:bg-[#EDEAEA]"
+      }`}    
+                        key={methodOption.id} >
 
                         <img className='md:h-[29.27px]  h-[14.27px]' src={methodOption.flag} alt="" />
 
                         <h2
-                          className='text-[14px] leading-[10.4px]
-               font-[500] text-[#7C7C7C]  
-         md:text-[13.227px] md:leading-[17.195px] 
-         lg:text-[16px] lg:leading-[20.8px] self-center cursor-pointer' >
+                          className={`text-[14px] leading-[10.4px]
+               font-[500]   
+         md:text-[13.227px] md:leading-[17.195px]  
+         lg:text-[16px] lg:leading-[20.8px] self-center cursor-pointer  
+          ${ isDarkMode 
+          ? "bg-black text-white" 
+          : "text-[#7C7C7C]"
+      }`}    >
                           {methodOption.method + ' ' + methodOption.balance}
                         </h2>
                       </div>
