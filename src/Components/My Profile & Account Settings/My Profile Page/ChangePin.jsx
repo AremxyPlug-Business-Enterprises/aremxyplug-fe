@@ -139,13 +139,18 @@ const ChangePin = () => {
         <div
           className={`bg-[#FFF] relative lg:ml-[20px] 2xl:ml-0 ${
             isDarkMode
-              ? "bg-[#000] text-[#fff] border-[#fff]"
+              ? // ? "bg-white text-[#fff] border-[#fff]"
+                "bg-black border-[#fff]"
               : "bg-[#ffffff] text-[#000] "
           } flex flex-col justify-between h-full`}
         >
           <section>
             <div className="flex items-center my-[10%] gap-[8px] md:my-[5%] md:text-[18px] lg:text-[px]">
-              <p className="text-[#7c7c7c] text-[10px] leading-[130%] md:text-[14px] lg:text-[18px] 2xl:text-[28px]">
+              <p
+                className={`text-[#7c7c7c] text-[10px] leading-[130%] md:text-[14px] lg:text-[18px] 2xl:text-[28px] ${
+                  isDarkMode ? "text-white" : ""
+                }`}
+              >
                 Secure Your Account Privacy
               </p>
               <img
@@ -155,7 +160,7 @@ const ChangePin = () => {
               />
             </div>
 
-            <div className="text-[8px] flex gap-[2.5%] md:text-[18px] lg:text-[20px] justify-between md:justify-between md:gap-[5%]">
+            <div className="text-[12px] flex gap-[2.5%] md:text-[18px] lg:text-[20px] justify-between md:justify-between md:gap-[5%]">
               <div
                 onClick={() => {
                   handleClick(0);
@@ -171,7 +176,9 @@ const ChangePin = () => {
                 }}
                 className={`${
                   activeBtn[0]
-                    ? "bg-[#E2F3FF] rounded-[2px] border-b-[2px] border-b-[#04177f] h-[25px] flex items-center p-[5px] md:h-[35px] lg:rounded-[6px] lg:border-b-[4px] lg:h-[60px]"
+                    ? `bg-[#E2F3FF] rounded-[2px] border-b-[2px] border-b-[#04177f] h-[25px] flex items-center p-[5px] md:h-[35px] lg:rounded-[6px] lg:border-b-[4px] lg:h-[60px] ${
+                        isDarkMode ? "text-black" : ""
+                      }`
                     : ""
                 } cursor-pointer w-[144px] justify-center rounded-[2px] md:w-[180px] md:rounded-[3px] md:justify-center md:items-center flex lg:w-[248px] lg:rounded-[6px] 2xl:text-[24px]`}
               >
@@ -193,9 +200,11 @@ const ChangePin = () => {
                 }}
                 className={`${
                   activeBtn[1]
-                    ? "bg-[#E2F3FF] rounded-[2px] border-b-[2px] border-b-[#04177f] h-[25px] flex items-center p-[5px]  md:h-[35px] lg:rounded-[6px] lg:border-b-[4px] lg:h-[60px] lg:py-[40px]"
+                    ? `bg-[#E2F3FF] rounded-[2px] border-b-[2px] border-b-[#04177f] h-[25px] flex items-center p-[5px] md:h-[35px] lg:rounded-[6px] lg:border-b-[4px] lg:h-[60px] ${
+                        isDarkMode ? "text-black" : ""
+                      }`
                     : ""
-                }cursor-pointer w-[144px] justify-center rounded-[2px] md:w-[180px] md:rounded-[3px] md:justify-center md:items-center flex lg:w-[248px] lg:rounded-[6px] 2xl:text-[24px]`}
+                } cursor-pointer w-[144px] justify-center rounded-[2px] md:w-[180px] md:rounded-[3px] md:justify-center md:items-center flex lg:w-[248px] lg:rounded-[6px] 2xl:text-[24px]`}
               >
                 Reset PIN
               </div>
@@ -212,9 +221,11 @@ const ChangePin = () => {
                 }}
                 className={`${
                   activeBtn[2]
-                    ? "bg-[#E2F3FF] rounded-[2px] border-b-[2px] border-b-[#04177f] h-[25px] flex items-center p-[5px]  md:h-[35px] lg:rounded-[6px] lg:border-b-[4px] lg:h-[60px] lg:py-[40px]"
+                    ? `bg-[#E2F3FF] rounded-[2px] border-b-[2px] border-b-[#04177f] h-[25px] flex items-center p-[5px] md:h-[35px] lg:rounded-[6px] lg:border-b-[4px] lg:h-[60px] ${
+                        isDarkMode ? "text-black" : ""
+                      }`
                     : ""
-                }cursor-pointer w-[144px] justify-center rounded-[2px] md:w-[180px] md:rounded-[3px] md:justify-center md:items-center flex lg:w-[248px] lg:rounded-[6px] 2xl:text-[24px]`}
+                } cursor-pointer w-[144px] justify-center rounded-[2px] md:w-[180px] md:rounded-[3px] md:justify-center md:items-center flex lg:w-[248px] lg:rounded-[6px] 2xl:text-[24px]`}
               >
                 Change Password
               </div>
@@ -223,50 +234,80 @@ const ChangePin = () => {
 
             {changePin && (
               <div>
-                <div className="grid grid-cols-1 mt-[10px] md:grid-cols-2 gap-y-[10px] md:gap-x-[0px] lg:gap-x-[0px] md:gap-y-[0px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[20px]">
-                  <div className="mt-[30px]">
-                    <h2 className="text-[11px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] mt-2 md:mt-0">
-                      Old PIN{" "}
-                    </h2>
-                    <div className="relative mt-[5px] lg:mt-[15px]">
-                      <input
-                        type="number"
-                        className="w-full md:w-[90%] lg:w-[80%] h-8 px-2 py-[10px] border-[1px] rounded-[2px] text-[10px] md:text-[14px] text-[#7E7E7E] lg:text-[18px] font-semibold focus:outline-none lg:h-[51px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 sm:p-3 sm:text-lg"
-                        placeholder=""
-                        value={oldPin}
-                        onChange={(event) =>
-                          handlePinInput(event.target.value, setOldPin)
-                        }
-                      />
+                {/* <div className="grid grid-cols-1 mt-[10px] md:grid-cols-2 gap-y-[10px] md:gap-x-6 lg:gap-x-6 md:gap-y-[0px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[20px]"> */}
+                <div className="flex flex-col mt-[10px] lg:gap-[25px] gap-[20px] w-full pb-[30px] lg:py-[30px] md:mt-[20px]">
+                  <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-full">
+                    {/* <div className="mt-[30px] w-1/2 md:w-full "> */}
+                    <div className="mt-[30px] flex flex-col md:w-[50%] w-full md:gap-[10px] gap-2.5 ">
+                      <h2
+                        className={`text-[11px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] mt-2 md:mt-0 ${
+                          isDarkMode ? "text-white" : ""
+                        }`}
+                      >
+                        Old PIN
+                      </h2>
+                      {/* <div className="relative mt-[5px] lg:mt-[0px]"> */}
+                      <div className="relative">
+                        <input
+                          type="number"
+                          className={`w-full h-8 px-2 py-[10px] border text-sm leading-[18px] lg:leading-[20.8px] text-[#7E7E7E] lg:text-[18px] focus:outline-none lg:h-[51px] mt-2 md:mt-0 rounded-[10px] p-[20px] md:pl-[8.67px] lg:pl-[10px] sm:p-3 sm:text-lg border-[#9C9C9C]  ${
+                            isDarkMode
+                              ? "border-slate-50 text-slate-50 bg-black"
+                              : "bg-white"
+                          }`}
+                          placeholder=""
+                          value={oldPin}
+                          onChange={(event) =>
+                            handlePinInput(event.target.value, setOldPin)
+                          }
+                        />
+                      </div>
+                    </div>
+
+                    {/* <div className="mt-[30px] md:ml-[-20px] lg:ml-[-50px] w-1/2 md:w-full "> */}
+                    <div className="mt-[30px] flex flex-col md:w-[50%] w-full md:gap-[10px] gap-2.5 ">
+                      <h2
+                        className={`text-[12px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] mt-2 md:mt-0 ${
+                          isDarkMode ? "text-slate-50" : ""
+                        }`}
+                      >
+                        New PIN
+                      </h2>
+                      <div className="relative ">
+                        <input
+                          type="number"
+                          className={`w-full md:w-full lg:w-full h-8 px-2 py-[10px] border-[1px] text-sm leading-[18px] lg:leading-[20.8px] text-[#7E7E7E] lg:text-[18px]  focus:outline-none lg:h-[51px] mt-2 md:mt-0 rounded-[10px] p-[20px] md:pl-[8.67px] lg:pl-[10px] sm:p-3 sm:text-lg border-[#9C9C9C]  ${
+                            isDarkMode
+                              ? "border-slate-50 text-slate-50 bg-black"
+                              : "bg-white"
+                          }`}
+                          placeholder=""
+                          value={newPin}
+                          onChange={(event) =>
+                            handlePinInput(event.target.value, setNewPin)
+                          }
+                        />
+                      </div>
                     </div>
                   </div>
 
-                  <div className="mt-[30px] md:ml-[-20px] lg:ml-[-50px]">
-                    <h2 className="text-[11px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px]">
-                      New PIN{" "}
+                  <div className="mt-[30px] flex flex-col md:w-[50%] w-full md:gap-[10px] gap-2.5">
+                    <h2
+                      className={`text-[12px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] mt-2 md:mt-0 ${
+                        isDarkMode ? "text-slate-50" : ""
+                      }`}
+                    >
+                      Confirm PIN
                     </h2>
-                    <div className="relative mt-[5px] lg:mt-[15px]">
-                      <input
-                        type="number"
-                        className="w-full md:w-[80%] text-[#7E7E7E] lg:w-[70%]  h-8 px-2 py-[10px] border-[1px] rounded-[2px] text-[10px] md:text-[14px] lg:text-[18px] font-semibold focus:outline-none lg:h-[51px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 sm:p-3 sm:text-lg"
-                        placeholder=""
-                        value={newPin}
-                        onChange={(event) =>
-                          handlePinInput(event.target.value, setNewPin)
-                        }
-                      />
-                    </div>
-                  </div>
-
-                  <div className="mt-[30px]">
-                    <h2 className="text-[11px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px]">
-                      Confirm PIN{" "}
-                    </h2>
-                    <div className="relative mt-[5px] lg:mt-[15px]">
+                    <div className="relative">
                       <input
                         id="confirmPinInput"
                         type="number"
-                        className="mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 sm:p-3 sm:text-lg w-full md:w-[90%] text-[#7E7E7E] lg:w-[80%] h-8 px-2 py-[10px] border-[1px] rounded-[2px] text-[10px] md:text-[14px] lg:text-[18px] font-semibold focus:outline-none lg:h-[51px]"
+                        className={`w-full md:w-full lg:w-full h-8 px-2 py-[10px] border-[1px] text-sm leading-[18px] lg:leading-[20.8px] text-[#7E7E7E] lg:text-[18px] focus:outline-none lg:h-[51px] mt-2 md:mt-0 rounded-[10px] p-[20px] md:pl-[8.67px] lg:pl-[10px] sm:p-3 sm:text-lg border-[#9C9C9C]  ${
+                          isDarkMode
+                            ? "border-slate-50 text-slate-50 bg-black"
+                            : "bg-white"
+                        }`}
                         placeholder=""
                         value={confirmPin}
                         onChange={(event) =>
@@ -299,95 +340,90 @@ const ChangePin = () => {
                 </div>
               </div>
             )}
-            
+
             {update && (
               <Modal className="">
-
-
-<div
-             className={` ${
-              toggleSideBar ? "confirm02" : "confirm2"
-            } bg-white flex flex-col justify-between items-center pb-[10px] md:pb-[30px] lg:pb-[30px] md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
-            >
-              <div className="absolute z-0 right-0" style={{ zIndex: 0 }}>
-                <img
-                  src={PopUpGreen}
-                  alt=""
-                  className="md:hidden rounded-tr-[10px]"
-                />
-                <img
-                  src={PopUpGreenTab}
-                  alt=""
-                  className="hidden md:block rounded-tr-[10px]"
-                />
-                <img
-                  src={PopUpGreenDeskTop}
-                  alt=""
-                  className="hidden rounded-tr-[20px]"
-                />
-              </div>
-
-              <div className="relative z-10">
-                <p
-                  className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[8%] lg:mt-[3%] z-[1000] ${styles.overlayText}`}
+                <div
+                  className={` ${
+                    toggleSideBar ? "absolute w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] md:ml-[20%] h-[250px] lg:h-[405px] shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)] top-[0%]" : "absolute w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] h-[250px] lg:h-[405px]  shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)]"
+                  } flex flex-col justify-between items-center pb-[10px] md:pb-[30px] lg:pb-[30px] md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px] ${isDarkMode ? "bg-stone-950 border-white border": "bg-white"}`}
                 >
-                  Successful
-                </p>
+                  <div className="absolute z-0 right-0" style={{ zIndex: 0 }}>
+                    <img
+                      src={PopUpGreen}
+                      alt=""
+                      className="md:hidden rounded-tr-[10px]"
+                    />
+                    <img
+                      src={PopUpGreenTab}
+                      alt=""
+                      className="hidden md:block rounded-tr-[10px]"
+                    />
+                    <img
+                      src={PopUpGreenDeskTop}
+                      alt=""
+                      className="hidden rounded-tr-[20px]"
+                    />
+                  </div>
 
-                <p
-                  className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[4%] lg:my-[%] z-[1000] ${styles.overlayText}`}
-                >
-                  You have successfully changed your transaction PIN.
-                </p>
-              </div>
+                  <div className="relative z-10">
+                    <p
+                      className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[8%] lg:mt-[3%] z-[1000] ${styles.overlayText}`}
+                    >
+                      Successful
+                    </p>
 
-              <img
-                  src={Success}
-                  alt=""
-                  className="h-[50%] md:h-[40%]"
-                />
+                    <p
+                      className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[4%] lg:my-[%] z-[1000] ${styles.overlayText}`}
+                    >
+                      You have successfully changed your transaction PIN.
+                    </p>
+                  </div>
 
-                <button
-  
-  onClick={(e) => {
-    e.preventDefault();
-    setUpdate(false);
-    setOldPin("");
-    setNewPin("");
-    setConfirmPin("");
-    handleClick(activeIndex);
-  }}
-    
-    className={`my-[%] mt-0  bg-[#04177f] w-[90%] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
-  >
-    Done
-  
-</button>
-              
-            
-              </div>
+                  <img src={Success} alt="" className="h-[50%] md:h-[40%]" />
 
-
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setUpdate(false);
+                      setOldPin("");
+                      setNewPin("");
+                      setConfirmPin("");
+                      handleClick(activeIndex);
+                    }}
+                    className={`my-[%] mt-0  bg-[#04177f] w-[90%] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                  >
+                    Done
+                  </button>
+                </div>
               </Modal>
             )}
 
             {resetPin && (
               <div
-                className={`bg-[#FFF] relative lg:ml-[20px] 2xl:ml-0 ${
+                className={` relative lg:ml-[20px] 2xl:ml-0 ${
                   isDarkMode
                     ? "bg-[#000] text-[#fff] border-[#fff]"
                     : "bg-[#ffffff] text-[#000] "
                 } flex flex-col justify-between h-full`}
               >
                 <section className="">
-                  <div className="mt-[30px]">
-                    <h2 className="text-[10px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px]">
-                      New Email{" "}
+                  <div className="mt-[30px] flex flex-col md:w-[50%] w-full md:gap-[10px] gap-2.5">
+                    <h2
+                      className={`text-[12px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px]  ${
+                        isDarkMode ? "text-white" : ""
+                      }`}
+                    >
+                      New Email
                     </h2>
-                    <div className="relative mt-[5px] lg:mt-[15px]">
+                    <div className="relative ">
                       <input
                         type="text"
-                        className="w-full md:w-[45%] text-[#7E7E7E] lg:w-[40%] h-8 px-2 py-[10px] border-[1px] rounded-md text-[10px] md:text-[14px] lg:text-[18px] font-semibold focus:outline-none lg:h-[51px]"
+                        className={`w-full md:w-[45%] text-[#7E7E7E] lg:w-[40%] h-8 px-2 py-[10px] border rounded-md text-sm leading-[18px] lg:leading-[20.8px] lg:text-[18px] font-semibold border-[#9C9C9C] focus:outline-none lg:h-[51px] ${
+                          isDarkMode
+                            ? "border-slate-50 text-slate-50 bg-black"
+                            : "bg-white"
+                        }`}
                         placeholder=""
                         value={emailId}
                         style={{ borderColor: emailInputColor }}
@@ -405,23 +441,31 @@ const ChangePin = () => {
                     )}
                   </div>
 
-                  <div className="mt-[10%] md:mt-[5%]">
-                    <h2 className="text-[10px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px]">
-                      Input PIN{" "}
+                  <div className="mt-[10%] md:mt-[5%] flex flex-col md:w-[50%] w-full md:gap-[10px] gap-2.5">
+                    <h2
+                      className={`text-[12px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] ${
+                        isDarkMode ? "text-slate-50" : ""
+                      }`}
+                    >
+                      Input PIN
                     </h2>
-                    <div className="mt-[3%]">
+                    <div className="">
                       <OtpInput
                         value={pin}
                         inputType="tel"
                         onChange={setPin}
                         numInputs={4}
                         shouldAutoFocus={true}
-                        containerStyle="flex w-full justify-between md:justify-start md:gap-[30px] lg:gap-[50px]"
+                        containerStyle="flex w-full justify-between md:justify-start md:gap-[30px] lg:gap-[50px] text-sm leading-[18px] lg:leading-[20.8px] lg:text-[20px]"
                         inputStyle={{
-                          color: "#403f3f",
+                          color: isDarkMode ? "#ffffff" : "#403f3f",
                           width: 40,
                           height: 40,
                           borderRadius: 3,
+                          backgroundColor: isDarkMode ? "black" : "white",
+                          border: isDarkMode
+                            ? "1px solid white"
+                            : "1px solid #ccc",
                           ...(window.innerWidth >= 768 &&
                             window.innerWidth < 1024 && {
                               width: "40px",
@@ -431,13 +475,11 @@ const ChangePin = () => {
                             width: "65px",
                             height: "65px",
                           }),
-
-                          //   marginRight: "4px",
                         }}
                         renderInput={(props) => (
                           <input
                             {...props}
-                            className="inputOTP text-[10px] md:text-[14px] lg:text-[20px] text-[] mx-[3px]"
+                            className="inputOTP text-sm leading-[18px] lg:leading-[20.8px] lg:text-[20px] mx-[3px] "
                           />
                         )}
                         isInputNum
@@ -467,180 +509,156 @@ const ChangePin = () => {
 
             {resetPinUpdate && (
               <Modal>
+              <div
+              // confirm02
+                  className={` ${
+                    toggleSideBar ? "bottom-[0%] absolute w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] md:ml-[20%] h-[250px] lg:h-[405px] shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)] top-[0%] " : " bottom-[0%] absolute w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] h-[250px] lg:h-[405px]  shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)]"} 
+                    md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px] ${isDarkMode ? "bg-stone-950 border-white border" : "bg-white"} `}
+                >
+                  <img
+                    onClick={() => setUpdate(false)}
+                    className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[45px] lg:h-[45px] "
+                    src={Cancel}
+                    alt=""
+                  />
 
-
-<div
-              className={` ${
-                toggleSideBar ? "confirm02" : "confirm2"
-              } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
-            >
-              <img
-                onClick={() => setUpdate(false)}
-                className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[45px] lg:h-[45px] "
-                src={Cancel}
-                alt=""
-              />
-
-              <hr className="h-[6px] bg-[#04177f] lg:mt-[10%] border-none mt-[8%] md:mt-[7%] md:h-[10px]" />
-              <p className="md:mt-[15%] lg:mt-[10%] text-[10px] px-[20px] md:text-[14px] lg:text-[18px] font-extrabold text-center my-[5%] lg:my-[%]">
-                Verification code has been sent to your email - {emailId}
-              </p>
-              <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
-                <div className=" flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
-                  {" "}
-                  {isVisible ? (
-                    <OtpInput
-                      value={inputPin}
-                      inputType="tel"
-                      onChange={setInputPin}
-                      numInputs={6}
-                      shouldAutoFocus={true}
-                      inputStyle={{
-                        color: "#403f3f",
-                        width: 30,
-                        height: 30,
-                        borderRadius: 3,
-                      }}
-                      renderInput={(props) => (
-                        <input {...props} className="inputOTP mx-[3px]" />
-                      )}
-                    />
-                  ) : (
-                    <div className="text-[24px] md:text-[24px] mt-1">
-                      * * * * * *{" "}
-                    </div>
-                  )}
-                  <div
-                    className="text-[#0003] text-xl md:text-3xl"
-                    onClick={toggleVisibility}
-                  >
-                    {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
-                  </div>
-                </div>
-                <p className="flex justify-between w-[67%] md:w-[55%] lg:w-[45%] text-[8px] md:text-[12px] text-[#04177f]">
-                  <p>{countdown > 0 ? `${countdown}sec` : "0sec"}</p>
-                  <p
-                    onClick={() => {
-                      if (resendActive) {
-                        handleResendOTP();
-                      }
-                    }}
-                    style={{
-                      cursor: resendActive ? "pointer" : "not-allowed",
-                      color: resendActive ? "#04177f" : "#808080",
-                    }}
-                  >
-                    Resend OTP
+                  <hr className="h-[6px] bg-[#04177f] lg:mt-[10%] border-none mt-[8%] md:mt-[7%] md:h-[10px]" />
+                  <p className="md:mt-[15%] lg:mt-[10%] text-[10px] px-[20px] md:text-[14px] lg:text-[18px] font-extrabold text-center my-[5%] lg:my-[%]">
+                    Verification code has been sent to your email - {emailId}
                   </p>
-                </p>
-              </div>
+                  <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
+                    <div className=" flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
+                      {isVisible ? (
+                        <OtpInput
+                          value={inputPin}
+                          inputType="tel"
+                          onChange={setInputPin}
+                          numInputs={6}
+                          shouldAutoFocus={true}
+                          inputStyle={{
+                            color: isDarkMode ? "#ffffff" : "#403f3f",
+                            width: 30,
+                            height: 30,
+                            borderRadius: 3,
+                            backgroundColor: isDarkMode ? "black" : "white",
+                          border: isDarkMode
+                            ? "1px solid white"
+                            : "1px solid #ccc",
+                          }}
+                          renderInput={(props) => (
+                            <input {...props} className="inputOTP mx-[3px]" />
+                          )}
+                        />
+                      ) : (
+                        <div className="text-[24px] md:text-[24px] mt-1">
+                          * * * * * *
+                        </div>
+                      )}
+                      <div
+                        className="text-[#0003] text-xl md:text-3xl"
+                        onClick={toggleVisibility}
+                      >
+                        {isVisible ? <AiFillEye className={`${isDarkMode ? "text-white" : ""}`} /> : <AiFillEyeInvisible className={`${isDarkMode ? "text-white" : ""}`} />}
+                      </div>
+                    </div>
+                    <p className={`flex justify-between w-[67%] md:w-[55%] lg:w-[45%] text-[8px] md:text-[12px] text-[#04177f] ${isDarkMode ? "text-white" : ""}`}>
+                      <p>{countdown > 0 ? `${countdown}sec` : "0sec"}</p>
+                      <p
+                        onClick={() => {
+                          if (resendActive) {
+                            handleResendOTP();
+                          }
+                        }}
+                        style={{
+                          cursor: resendActive ? "pointer" : "not-allowed",
+                          color: resendActive ? "#04177f" ? isDarkMode ? "#fff" : "" : "#808080" : "#fff",
+                        }}
+                      >
+                        Resend OTP
+                      </p>
+                    </p>
+                  </div>
 
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  setResetPinUpdate(false);
-                  inputPinHandler(e);
-                  setVerify(true);
-                }}
-                disabled={inputPin.length !== 6}
-                className={`${
-                  inputPin.length !== 6 ? "bg-[#0008]" : "bg-[#04177f]"
-                } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
-              >
-                Verify
-              </button>
-            </div>
-               
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setResetPinUpdate(false);
+                      inputPinHandler(e);
+                      setVerify(true);
+                    }}
+                    disabled={inputPin.length !== 6}
+                    className={`${
+                      inputPin.length !== 6 ? `bg-[#0008] cursor-not-allowed ${isDarkMode ? "bg-stone-400 cursor-not-allowed": ""}` : "bg-[#04177f] cursor-pointer"
+                    } my-[5%] w-[225px] flex justify-center items-center mx-auto text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                  >
+                    Verify
+                  </button>
+                </div>
               </Modal>
             )}
 
             {verify && (
               <Modal className="">
-
-
-
-<div
-             className={` ${
-              toggleSideBar ? "confirm02" : "confirm2"
-            } bg-white flex flex-col justify-between items-center pb-[10px] md:pb-[30px] lg:pb-[30px] md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
-            >
-              <div className="absolute z-0 right-0" style={{ zIndex: 0 }}>
-                <img
-                  src={PopUpGreen}
-                  alt=""
-                  className="md:hidden rounded-tr-[10px]"
-                />
-                <img
-                  src={PopUpGreenTab}
-                  alt=""
-                  className="hidden md:block rounded-tr-[10px]"
-                />
-                <img
-                  src={PopUpGreenDeskTop}
-                  alt=""
-                  className="hidden rounded-tr-[20px]"
-                />
-              </div>
-
-              <div className="relative z-10">
-                <p
-                  className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[8%] lg:mt-[3%] z-[1000] ${styles.overlayText}`}
+                <div
+                  className={` ${
+                    toggleSideBar ? "bottom-[0%] absolute w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] md:ml-[20%] h-[250px] lg:h-[405px] shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)] top-[0%]" : "bottom-[0%] absolute w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] h-[250px] lg:h-[405px]  shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)]"
+                    } bg-white flex flex-col justify-between items-center pb-[10px] md:pb-[30px] lg:pb-[30px] md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px] ${isDarkMode ? "bg-stone-950 border-white border": "bg-white"}`}
                 >
-                  Successful
-                </p>
+                  <div className="absolute z-0 right-0" style={{ zIndex: 0 }}>
+                    <img
+                      src={PopUpGreen}
+                      alt=""
+                      className="md:hidden rounded-tr-[10px]"
+                    />
+                    <img
+                      src={PopUpGreenTab}
+                      alt=""
+                      className="hidden md:block rounded-tr-[10px]"
+                    />
+                    <img
+                      src={PopUpGreenDeskTop}
+                      alt=""
+                      className="hidden rounded-tr-[20px]"
+                    />
+                  </div>
 
-                <p
-                  className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[4%] lg:my-[%] z-[1000] ${styles.overlayText}`}
-                >
-                 Your transaction PIN has been reset successfully.
-                </p>
-              </div>
+                  <div className="relative z-10">
+                    <p
+                      className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[8%] lg:mt-[3%] z-[1000] ${styles.overlayText}`}
+                    >
+                      Successful
+                    </p>
 
-              <img
-                  src={Success}
-                  alt=""
-                  className="h-[50%] md:h-[40%]"
-                />
+                    <p
+                      className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[4%] lg:my-[%] z-[1000] ${styles.overlayText}`}
+                    >
+                      Your transaction PIN has been reset successfully.
+                    </p>
+                  </div>
 
-                <button
-  
-  onClick={(e) => {
-    e.preventDefault();
-    setVerify(false);
-    setEmailId("");
-    setEmailInputColor("");
-    setPin("");
-    setResetPin(false);
-    setResetPin1(true);
-  }}
-    
-    className={`my-[%] mt-0  bg-[#04177f] w-[90%] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
-  >
-    Create New Pin
-  
-</button>
-              
-            
-              </div>
+                  <img src={Success} alt="" className="h-[50%] md:h-[40%]" />
 
-
-
-
-
-
-
-
-
-
-
-
-
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setVerify(false);
+                      setEmailId("");
+                      setEmailInputColor("");
+                      setPin("");
+                      setResetPin(false);
+                      setResetPin1(true);
+                    }}
+                    className={`my-[%] mt-0  bg-[#04177f] w-[90%] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                  >
+                    Create New Pin
+                  </button>
+                </div>
               </Modal>
             )}
 
             {resetPin1 && (
               <div
-                className={`bg-[#FFF] relative lg:ml-[20px] 2xl:ml-0 ${
+                className={` relative lg:ml-[20px] 2xl:ml-0 ${
                   isDarkMode
                     ? "bg-[#000] text-[#fff] border-[#fff]"
                     : "bg-[#ffffff] text-[#000] "
@@ -648,14 +666,14 @@ const ChangePin = () => {
               >
                 <section className="">
                   <div className="mt-[30px]">
-                    <h2 className="text-[10px] text-[#04177F] font-semibold md:text-[14px] lg:text-[18px] text-center md:text-start">
+                    <h2 className={`text-[12px] text-[#04177F] font-semibold md:text-[14px] lg:text-[18px] text-center md:text-start ${isDarkMode? "text-white" : ""}`}>
                       Create New Transaction PIN to Continue Operations!
                     </h2>
                   </div>
 
                   <div className="mt-[10%] lg:mt-[3%]">
-                    <h2 className="text-[10px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px]">
-                      Input PIN{" "}
+                    <h2 className={`text-[12px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] ${isDarkMode ? "text-white" : ""}`}>
+                      Input PIN
                     </h2>
                     <div className="mt-[3%]">
                       <OtpInput
@@ -664,12 +682,16 @@ const ChangePin = () => {
                         onChange={setNewResetPin}
                         numInputs={4}
                         shouldAutoFocus={true}
-                        containerStyle="flex w-full justify-between md:justify-start md:gap-[30px] lg:gap-[50px]"
+                        containerStyle="flex w-full justify-between md:justify-start md:gap-[30px] lg:gap-[50px] text-sm leading-[18px] lg:leading-[20.8px] lg:text-[20px]"
                         inputStyle={{
-                          color: "#403f3f",
+                          color: isDarkMode ? "#ffffff" : "#403f3f",
                           width: 40,
                           height: 40,
                           borderRadius: 3,
+                          backgroundColor: isDarkMode ? "black" : "white",
+                          border: isDarkMode
+                            ? "1px solid white"
+                            : "1px solid #ccc",
                           ...(window.innerWidth >= 768 &&
                             window.innerWidth < 1024 && {
                               width: "40px",
@@ -684,7 +706,7 @@ const ChangePin = () => {
                         renderInput={(props) => (
                           <input
                             {...props}
-                            className="inputOTP text-[10px] md:text-[14px] lg:text-[20px] mx-[3px]"
+                            className="inputOTP text-sm leading-[18px] lg:leading-[20.8px] lg:text-[20px] mx-[3px]"
                           />
                         )}
                         isInputNum
@@ -693,8 +715,8 @@ const ChangePin = () => {
                   </div>
 
                   <div className="mt-[10%] lg:mt-[5%]">
-                    <h2 className="text-[10px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px]">
-                      Confirm PIN{" "}
+                    <h2 className={`text-[12px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] ${isDarkMode ? "text-white" : ""}`}>
+                      Confirm PIN
                     </h2>
                     <div className="mt-[3%]">
                       <OtpInput
@@ -706,11 +728,14 @@ const ChangePin = () => {
                         shouldAutoFocus={true}
                         containerStyle="flex w-full justify-between md:justify-start md:gap-[30px] lg:gap-[50px]"
                         inputStyle={{
-                          color: "#403f3f",
+                          color: isDarkMode ? "#ffffff" : "#403f3f",
                           width: 40,
                           height: 40,
                           borderRadius: 3,
-                          backgroundColor: confirmPinInputBgColor,
+                          backgroundColor: isDarkMode ? "black" : confirmPinInputBgColor,
+                          border: isDarkMode
+                            ? "1px solid white"
+                            : "1px solid #ccc",
                           ...(window.innerWidth >= 768 &&
                             window.innerWidth < 1024 && {
                               width: "40px",
@@ -762,72 +787,61 @@ const ChangePin = () => {
 
             {createPin && (
               <Modal className="">
-
-<div
-             className={` ${
-              toggleSideBar ? "confirm02" : "confirm2"
-            } bg-white flex flex-col justify-between items-center pb-[10px] md:pb-[30px] lg:pb-[30px] md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
-            >
-              <div className="absolute z-0 right-0" style={{ zIndex: 0 }}>
-                <img
-                  src={PopUpGreen}
-                  alt=""
-                  className="md:hidden rounded-tr-[10px]"
-                />
-                <img
-                  src={PopUpGreenTab}
-                  alt=""
-                  className="hidden md:block rounded-tr-[10px]"
-                />
-                <img
-                  src={PopUpGreenDeskTop}
-                  alt=""
-                  className="hidden rounded-tr-[20px]"
-                />
-              </div>
-
-              <div className="relative z-10">
-                <p
-                  className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[8%] lg:mt-[3%] z-[1000] ${styles.overlayText}`}
+                <div
+                  className={` ${
+                    toggleSideBar ? "absolute w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] md:ml-[20%] h-[250px] lg:h-[405px] shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)] top-[0%]" : " absolute w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] h-[250px] lg:h-[405px]  shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)]"
+                  } bg-white flex flex-col justify-between items-center pb-[10px] md:pb-[30px] lg:pb-[30px] md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px] ${isDarkMode ? "bg-stone-950 border-white border": "bg-white"}`}
                 >
-                  Successful
-                </p>
+                  <div className="absolute z-0 right-0" style={{ zIndex: 0 }}>
+                    <img
+                      src={PopUpGreen}
+                      alt=""
+                      className="md:hidden rounded-tr-[10px]"
+                    />
+                    <img
+                      src={PopUpGreenTab}
+                      alt=""
+                      className="hidden md:block rounded-tr-[10px]"
+                    />
+                    <img
+                      src={PopUpGreenDeskTop}
+                      alt=""
+                      className="hidden rounded-tr-[20px]"
+                    />
+                  </div>
 
-                <p
-                  className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[4%] lg:my-[%] z-[1000] ${styles.overlayText}`}
-                >
-                  You have successfully changed your transaction PIN.
-                </p>
-              </div>
+                  <div className="relative z-10">
+                    <p
+                      className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[8%] lg:mt-[3%] z-[1000] ${styles.overlayText} `}
+                    >
+                      Successful
+                    </p>
 
-              <img
-                  src={Success}
-                  alt=""
-                  className="h-[50%] md:h-[40%]"
-                />
+                    <p
+                      className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[4%] lg:my-[%] z-[1000] ${styles.overlayText}`}
+                    >
+                      You have successfully changed your transaction PIN.
+                    </p>
+                  </div>
 
-                <button
-  
-  onClick={(e) => {
-    e.preventDefault();
-    setNewResetPin("");
-    setConfirmPin("");
-    setConfirmResetPin("");
-    setResetPin(true);
-    handleClick(activeIndex);
-    setCreatePin(false);
-    setResetPin1(false);
-  }}
-    
-    className={`my-[%] mt-0  bg-[#04177f] w-[90%] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
-  >
-    Done
-  
-</button>
-              
-            
-              </div>
+                  <img src={Success} alt="" className="h-[50%] md:h-[40%]" />
 
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setNewResetPin("");
+                      setConfirmPin("");
+                      setConfirmResetPin("");
+                      setResetPin(true);
+                      handleClick(activeIndex);
+                      setCreatePin(false);
+                      setResetPin1(false);
+                    }}
+                    className={`my-[%] mt-0  bg-[#04177f] w-[90%] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                  >
+                    Done
+                  </button>
+                </div>
               </Modal>
             )}
 
