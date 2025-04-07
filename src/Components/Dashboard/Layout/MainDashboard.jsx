@@ -35,9 +35,7 @@ export const MainDashboard = (Data) => {
   const [selected, setSelected] = useState("");
   const [selected2, setSelected2] = useState("");
   const [symbol, setSymbol] = useState("₦");
-  const ConfirmId = localStorage.getItem("ConfirmId")
-const ConfirmAcc = localStorage.getItem("ConfirmAcc")
-
+ 
   const handleCopyClick = () => {
     const text = textRef.current.innerText;
     navigator.clipboard
@@ -64,6 +62,7 @@ const ValueRef = useRef()
  Data = GetLocalStorage()
   useEffect(() => {
     ValueRef.current = Data;
+
     setNav();
     return () => {
       setHideNavbar(false);
@@ -98,7 +97,7 @@ console.log(clickedoption)
 if(clickedoption !== "NGN"){
 setBlur(true);
 setSymbol("₦")
-}else if(clickedoption === "NGN" && blur === true){
+}else if((clickedoption === "NGN" || " ") && blur === true){
      setBlur(false);
     }
     // setBlurTwo(
@@ -123,7 +122,7 @@ setSymbol("₦")
     //   : setSymbol("");
     return;
   };
-  console.log(selected2);
+//console.log(ConfirmAcc);
 return (
     <div className="h-[150%]">
       {/* ==============TOP BAR========== */}
@@ -133,7 +132,8 @@ return (
         {/* ============SIDE BAR========= */}
         {toggleSideBar && (
           <div className="absolute top-0 left-0 z-50">
-            <SideBar fullName ={Data.UserFullName} userId ={Data.aremxyUserId} />
+            <SideBar fullName ={Data.UserFullName} userId ={Data.aremxyUserId}
+            bvnVerify ={Data.ConfirmBvn} NinVerify={Data.ConfirmId}/>
           </div>
         )}
         <div
@@ -418,10 +418,13 @@ return (
             </div>):
             (
             <div
-              className={`${
+            className={`${
                 isDarkMode ? "bg-[#000] border border-[#fff]" : "bg-[#e9edfb]"
               } w-full h-auto md:w-1/2 rounded-[8.32px] lg:rounded-[16.32px] md:rounded-[10px]
               flex flex-col justify-between lg:p-[20px] md:p-[15px] p-[10px]`} >
+                <div className="h-full w-full">
+         {Data.ConfirmAcc === false ? (
+          <div ClassName="h-full w-full">
               <Link to="/virtual-account">
                 {" "}
                 <button
@@ -517,17 +520,33 @@ return (
                 </div>
                
                 </div>
+                </div>
+                ): (
+                  <div className="h-full w-full flex flex-col items-center justify-center ">
+              <p className={`text-[12px] md:text-[14px] lg:text-[16px] leading-[16px] 
+                 md:leading-[18px] lg:leading-[22px] font-[500] lg:font-[600]
+              md:my-[5%] lg:my-[7%] 
+               ${isDarkMode ? "text-white" : "text-black"}  `}>
+         Add a means of identification to create a virtual Account.
+              </p>
+              <p className={`lg:text-[16px] font-[500] lg:leading-[24px] hidden md:block ${isDarkMode ? "text-white" : "text-black"}`}>
+                This is Collected for secure and cyber-attack-free transactions among AremxyPlug's users</p>
+                </div>
+                )}
+                </div>
+                {/* Point of implementation */}
               <Link to={{
     pathname: "/ProfileSettingMain",
     state: { verificationOpen: true }
   }}>
                 {" "}
+
                 <button
                   className={`text-[10px] md:text-[11px] lg:text-[12px] font-[600] mt-[20px] lg:mt-[30px] ${
                     isDarkMode ? "border bg-black" : "bg-[#04177f]"
                   } ${styles.viewWallet}`}
                 >
-               {(ConfirmAcc ? "Verified" : "Generate") || (!ConfirmAcc && ConfirmId ? "Generate" : "" )|| (!ConfirmId ? "Verify" : "" )}
+               {(Data.ConfirmId === false || Data.ConfirmBvn === false) ? "Verify" : `${Data.ConfirmAcc === false && (Data.ConfirmId === true || Data.ConfirmBvn === true) ?  "Generate" : "Verified"}` }
                 </button>
               </Link>
             </div>

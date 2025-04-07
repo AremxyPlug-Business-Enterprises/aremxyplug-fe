@@ -4,15 +4,22 @@ import { Link } from "react-router-dom";
 import { ContextProvider } from "../../Context";
 import styles from "./Dashboard.module.css";
 import { RemoveLocalStorage } from "../../LocalStorage/LocalStorage";
-export const SideBar = ({fullName, userId}) => {
-  const { setToggleSideBar, isDarkMode, handleClickOutside, customerDetail, bvnStatus,setUserStatus } =
+import { useNavigate } from "react-router-dom";
+
+
+export const SideBar = ({fullName, userId, bvnVerify, NinVerify}) => {
+  const { setToggleSideBar, isDarkMode, handleClickOutside, customerDetail,setUserStatus } =
     useContext(ContextProvider);
+   
     const {full_name, id} = customerDetail;
+    const navigate= useNavigate()
   const RemoveLocalStorageKeys=()=> {
     RemoveLocalStorage();
     setUserStatus(false);
+    navigate("/Login", {replace : true})
+;
   }
-  
+  console.log(bvnVerify, NinVerify)
   const [dropDownOpen, setDropDownOpen] = useState({
     dropdown1: false,
     dropdown2: false,
@@ -92,8 +99,8 @@ return (
                   </p>
                   <div className="flex gap-[3px] lg:gap-[5px]">
                     <div className={`px-[4px] py-[1px] font-[600] lg:font-[700] text-[10px]
-                      md:text-[10px] lg:text-[12px] lg:rounded-[2px] ${bvnStatus === "Verified" ? "text-green-600" : "text-red-600"}`}>
-                      {bvnStatus}
+                      md:text-[10px] lg:text-[12px] lg:rounded-[2px] ${bvnVerify === true || NinVerify === true ? "text-green-600" : "text-red-600"}`}>
+                      {bvnVerify === true || NinVerify === true ? "Verified" : "UnVerified"}
                     </div>
                     <div className=" px-[4px] py-[1px] font-[600] lg:font-[700] text-[10px]
                      text-white md:text-[10px] lg:text-[12px] lg:rounded-[2px]">
@@ -584,7 +591,7 @@ return (
         <p
           className={`${styles.logouttxt} cursor-pointer text-[7px] md:text-[7px] lg:text-[14px]`}
         >
-          <Link to="/Login" onClick={()=> RemoveLocalStorageKeys()}>Logout</Link>
+          <div onClick={()=> RemoveLocalStorageKeys()}>Logout</div>
         </p>
       </div>
     </div>

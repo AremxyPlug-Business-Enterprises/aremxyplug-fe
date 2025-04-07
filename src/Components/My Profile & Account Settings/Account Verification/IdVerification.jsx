@@ -20,11 +20,23 @@ import axios from "axios";
 import { Loader } from '../../Loader/Loader';
 import { GetLocalStorage } from '../../LocalStorage/LocalStorage';
 import idSuccess from "../ProfileImages/user-tick.svg";
+import { CheckVirtualAcc } from '../../ApiCollection.jsx/ApiBuck';
+
 export default function IdVerification(Data) {
   const {verificationOpen} = useContext(ContextProvider)
 
-    const {idVerificationOpen} = useContext(ContextProvider);
-    const {dropDownGender, setDropDownGender} = useContext(ContextProvider);
+    const {idVerificationOpen, 
+      bvnVerificationOpen, 
+      setBvnButtonState,
+    setVirtualAccCreated,
+  setBankNameState,
+setAccountNameState,
+setAccountNumberState,
+verifyImage,
+ setVerifyImage,
+ idStatus,
+ setIdStatus} = useContext(ContextProvider);
+    const {dropDownGender, setDropDownGender, idButtonState, setIdButtonState} = useContext(ContextProvider);
     const [idDropDown, setIdDropDown]= useState(false);
     const {idAddress, setIdAddress} = useContext(ContextProvider);
     // const {idState, setIdState} = useContext(ContextProvider);
@@ -33,8 +45,6 @@ export default function IdVerification(Data) {
     // const {idLGA, setIdLGA} = useContext(ContextProvider);
     const {idNumber, setIdNumber} = useContext(ContextProvider);
     const {idPostalCode, setIdPostalCode} = useContext(ContextProvider);
-   const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
-   const [idStatus, setIdStatus] = useState('Not Verified');
     const [errorSubmit, setErrorSubmit] = useState(false);
     const [idFrontView, setIdFrontView] = useState(false);
     const [idBackView, setIdBackView] = useState(false);
@@ -43,7 +53,8 @@ export default function IdVerification(Data) {
     const [idDateOfBirth, setIdDateOfBirth] = useState("");
 const [loading, setLoading] =useState(false);
  const {toggleSideBar, customerDetail} = useContext(ContextProvider);
-  const {full_name} =  customerDetail
+  const {full_name} =  customerDetail;
+  
     // Genders
     const genderInfo = ['Male', 'Female', 'Others..'];
     const [genderResult, setGenderResult] = useState('');
@@ -94,54 +105,145 @@ const [loading, setLoading] =useState(false);
 //  e.target.setCustomValidity(addLGA ? '' : 'This is required to proceed');
 // }
 
-const checkform = async() =>{
-const getToken = localStorage.getItem("getToken");
-const authToken = localStorage.getItem("authorisedLogin");
-  if(genderResult &&
+
+
+const IdFunctionState = async (
+  url,
+  data,
+  alertSuccess,
+  buttonStateSuccess,
+  ErrorMessage,
+  ifStatement,
+  PendingImageFxn,
+  PendingText,
+  verifyIdImage,
+  statusId,
+  verifyPopId
+) => {
+  if (idButtonState === "Verify") {
+    url = "https://aremxyplug.onrender.com/api/v1/verify";
+    buttonStateSuccess = "Create Virtual Account";
+    ErrorMessage = "NIN Name Mismatch or Network failure";
+    ifStatement = genderResult &&
     idResult &&
     idAddress &&
     idCity &&
     idCountry &&
-    // idState &&
-    // idLGA &&
-    
-    idNumber){
-      try {
-        setErrorSubmit(false);
-        setLoading(true);
-        setVerifyImage(Pending);
-        setIdStatus("Pending");
-        const body ={
-        nin: idNumber
-        }
-        const url ="https://aremxyplug.onrender.com/api/v1/verify"
-        const response = await axios.post(url, body, {headers:{"Content-Type": "application/json", Authorization : getToken || authToken}})
-        if(response.status === 200 || 201){
-          setVerifyImage(idSuccess);
-          setIdPopVerified(true);
-          setIdStatus("Verified");
+    idNumber;
+    PendingImageFxn = () => setVerifyImage(Pending);
+    PendingText = () => setIdStatus("Pending");
+    verifyIdImage = () => setVerifyImage(idSuccess);
+    statusId = () => setIdStatus("Verified");
+    verifyPopId = () => setIdPopVerified(true);
+    data = {
+      Id: idNumber.toString(),
+    };
+  } else {
+    data =""
+    url = "https://aremxyplug.onrender.com/api/v1/virtualacc";
+    alertSuccess = () => alert("Virtual Account Created Successfully");
+    buttonStateSuccess = "Virtual Account Created";
+    ErrorMessage = "Virtual Account Creation Failed";
+    ifStatement = idStatus === "Verified";
+  }
+  CheckIdForm(
+    url,
+    data,
+    alertSuccess,
+    buttonStateSuccess,
+    ErrorMessage,
+    ifStatement,
+    PendingImageFxn,
+    PendingText,
+    verifyIdImage,
+    statusId,
+    verifyPopId
+  );
+};
 
+
+
+//The main function to verify the Id Number and create the virtual account
+const CheckIdForm = async (
+    url,
+    data,
+    alertSuccess,
+    buttonStateSuccess,
+    ErrorMessage,
+    ifStatement,
+    PendingImageFxn,
+    PendingText,
+    verifyIdImage,
+    statusId,
+    verifyPopId
+  ) => {
+    const authToken = localStorage.getItem("authorisedLogin");
+    const getToken = localStorage.getItem("getToken");
+    const AccCreated = localStorage.getItem("AccCreated")
+    if (ifStatement) {
+      setLoading(true);
+
+      // console.log(data)
+      try {
+        if(idButtonState === "Verify"){
+          setErrorSubmit(false);
+        PendingImageFxn();
+        PendingText();
         }
-      }catch(error) {
-        
-       if(error.status === 400 || 401 || 404){
-        alert(" NIN Verification name mismatch or network failure")
-        setVerifyImage(NotVerifiedIcon);
-        setIdStatus("Not Verified")
-        console.log(`ERROR : ${error}`)
-       }else if(error.status === 500){
-        alert("INTERNAL_SERVER_ERROR");
-        setVerifyImage(NotVerifiedIcon);
-        setIdStatus("Not Verified")
-       }
-      }finally{
-        setLoading(false)
+        let response;
+        idButtonState === "Submit" ?
+       response  = await axios.post(url, data , {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: authToken || getToken,
+          },
+        }) : response  = await axios.post(url, data, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: authToken || getToken,
+          },
+        })
+ if (response.status === 201 || 200) {
+  if(idButtonState === "Verify"){
+          setIdNumber(idNumber);
+          verifyIdImage();
+          statusId();
+          verifyPopId();
+          setIdButtonState(buttonStateSuccess);
+          localStorage.setItem("idVerification", true)
+    }  else{
+            alertSuccess();
+            setIdButtonState(buttonStateSuccess);
+            if(!AccCreated){
+             await CheckVirtualAcc(
+              authToken, customerDetail, setLoading,
+              setVirtualAccCreated, 
+               setBankNameState, setAccountNameState, setAccountNumberState,
+               verificationOpen, idVerificationOpen, bvnVerificationOpen,setIdButtonState, setBvnButtonState);
+            }
+          }
+ }
+      } catch (error) {
+        if (error.status === 401 || 400) {
+          alert(ErrorMessage);
+          console.log(`ERROR : ${error}`)
+          if(idButtonState === "Verify"){
+           setVerifyImage(NotVerifiedIcon)
+           setIdStatus("Not Verified");
+}
+        } else if (error.status === 500) {
+          alert("Error:", "INTERNAL_SERVER_ERROR");
+          setIdStatus("Not Verified");
+          setVerifyImage(NotVerifiedIcon);
+        }
+      } finally {
+        setLoading(false);
+        //alert("success")
       }
-  }
- else   {
-    setErrorSubmit(true);
-  }
-  }
+    } else {
+      setErrorSubmit(true);
+    }
+  };
 // UseEffect to retain the current data object of getLocalStorage data()
 const VerifyRef = useRef()
 Data = GetLocalStorage();
@@ -508,11 +610,11 @@ border-[0.4px] border-[solid] border-[#9C9C9C] cursor-pointer ${idResult === "Na
         {/* SUBMIT BUTTON */}
         <div className='flex flex-col md:gap-[15px] gap-[10px] justify-start'>
         <button onClick={() => {
-          checkform();
+          IdFunctionState()
         }}
          className={`lg:py-[13px] md:py-[5.868px] md:rounded-[7.042px] py-[16.531px] rounded-[4.241px] w-[100%] md:w-[150px] lg:w-[163px] lg:rounded-[12px] bg-[#04177F]
          font-[600] text-[13px] leading-[18px] lg:text-[16px] text-center text-white lg:leading-[24px`}>
-        Submit
+       {(idButtonState) || (Data.ConfirmAcc === true && idButtonState === "Verify" ? "Virtual Account Created" : Data.ConfirmId === true && idButtonState === "Verify" && Data.ConfirmAcc === false  ? "Create Virtual Account" : "Verify" )}
         </button>
        { errorSubmit  && (
         <h2 className={`font-[500] lg:text-[14px] lg:leading-[18px] md:text-[14px] md:leading-[18px] 

@@ -7,7 +7,7 @@ export const ProtectedRoute = ({children}) => {
  const authToken = localStorage.getItem("authorisedLogin")
  const getToken = localStorage.getItem("getToken");
  const UserStatus = localStorage.getItem("UserStatus");
- if((!authToken && !getToken || !UserStatus) ){
+ if((!authToken && !getToken) || !UserStatus ){
     return <Navigate to ="/login" replace/>
  }
  return children;

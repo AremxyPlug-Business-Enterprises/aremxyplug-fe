@@ -36,7 +36,7 @@ const updatePassword = async()=> {
    try{
     const url = `https://aremxyplug.onrender.com/api/v1/reset-password?email=${inputForgetEmail}`
     const response = await axios.patch(url, body, {headers : {"Authorization" : passwordAuthorisation}})
-    if(response.status === 201 || 201){
+    if(response.status === 201 || 200){
         setBorder('');
         setSubmit(true);
     }

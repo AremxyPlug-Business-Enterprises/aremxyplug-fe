@@ -14,7 +14,7 @@ export const SetLocalStorage = (email, fullName,phone, username,bankName, accoun
 }
 
 
-export const GetLocalStorage = (ConfirmId, ConfirmAcc) => {
+export const GetLocalStorage = (ConfirmId, ConfirmAcc, ConfirmBvn) => {
 const UserEmail = JSON.parse(localStorage.getItem("userEmail"));
  const UserPhone= JSON.parse(localStorage.getItem("userPhone"))
   const  UserFullName = JSON.parse(localStorage.getItem("userFullName"))
@@ -23,28 +23,29 @@ const UserEmail = JSON.parse(localStorage.getItem("userEmail"));
   const aremxyAccountName = JSON.parse(localStorage.getItem("aremxyAccountName"))
  const aremxyAccountNumber = JSON.parse(localStorage.getItem("aremxyAccountNumber"))
   const aremxyUserId = JSON.parse(localStorage.getItem("aremxyUserId"));
-  const idVerification = localStorage.getItem("IdVerification");
-  const AccCreated = localStorage.getItem("AccCreated");
-   
-  if(idVerification && !AccCreated){
- ConfirmId = JSON.parse(localStorage.getItem("idVerification"));
+ const idVerification = localStorage.getItem("idVerification");
+ const bvnVerification = localStorage.getItem("bvnVerification");
+   const AccCreated =localStorage.getItem("AccCreated");
+  if(idVerification && bvnVerification && !AccCreated){
+ ConfirmId = localStorage.getItem("idVerification");
+ ConfirmBvn = localStorage.getItem("bvnVerification");
   
-  }else if(AccCreated && !idVerification){
-ConfirmAcc = JSON.parse(localStorage.getItem("AccCreated"))
-   }else{
-   ConfirmId = JSON.parse(localStorage.getItem("idVerification"))
-   ConfirmAcc = JSON.parse(localStorage.getItem("AccCreated"))
- }
+  }else if(AccCreated){
+ConfirmAcc = localStorage.getItem("AccCreated")
+ConfirmId =localStorage.getItem("idVerification");
+ConfirmBvn = localStorage.getItem("bvnVerification");
+  } 
 return {UserEmail, 
   UserPhone, 
   aremxyUsername,
-   UserFullName,
+   UserFullName, 
     aremxyBankName, 
     aremxyAccountNumber,
      aremxyAccountName, 
      aremxyUserId,
      ConfirmAcc,
-     ConfirmId
+     ConfirmId,
+     ConfirmBvn
     }
 }
 
@@ -59,11 +60,20 @@ export const RemoveLocalStorage = () => {
  localStorage.removeItem("aremxyAccountNumber");
  localStorage.removeItem("aremxyUserId");
  localStorage.removeItem("UserStatus");
+ localStorage.removeItem("idVerification");
+//  localStorage.removeItem("bvnVerification");
+ const AccCreated = localStorage.getItem("AccCreated")
  const getToken = localStorage.getItem("getToken");
  if(getToken){
  localStorage.removeItem("getToken");
+ if(AccCreated){
+  localStorage.removeItem("AccCreated")
+ }
  }
  else {
  localStorage.removeItem("authorisedLogin");
+ if(AccCreated){
+  localStorage.removeItem("AccCreated")
+ }
  }
 }

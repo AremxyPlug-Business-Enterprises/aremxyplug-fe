@@ -33,7 +33,7 @@ export default function BvnVerification(Data) {
   const [bvnPhoneMessage, setBvnPhoneMessage] = useState(false);
   const [errorVerify, setErrorVerify] = useState(false);
   const { bvnButtonState, setBvnButtonState,
-    setBankNameState, setAccountNameState, setAccountNumberState, idVerificationOpen, setVirtualAccCreated
+    setBankNameState, setAccountNameState, setAccountNumberState, idVerificationOpen, setVirtualAccCreated, setIdButtonState
    } = useContext(ContextProvider);
   const { toggleSideBar, customerDetail, setLoginAuthorisation , bankNameState} =
     useContext(ContextProvider);
@@ -41,8 +41,6 @@ export default function BvnVerification(Data) {
   const { dropDownGender, setDropDownGender } = useContext(ContextProvider);
   const [loading, setLoading] = useState(false);
   const [genderResult, setGenderResult] = useState("");
-const ConfirmId = localStorage.getItem("ConfirmId")
-const ConfirmAcc = localStorage.getItem("ConfirmAcc")
   const genderInfo = ["Male", "Female", "Others.."];
   const chooseGender = () => {
     setDropDownGender(!dropDownGender);
@@ -106,6 +104,8 @@ const ConfirmAcc = localStorage.getItem("ConfirmAcc")
     );
   };
 
+
+  //The main function to verify id Verification and create virtual account
   const checkBvnform = async (
     url,
     data,
@@ -133,7 +133,8 @@ const ConfirmAcc = localStorage.getItem("ConfirmAcc")
         }
         let response;
         bvnButtonState === "Verify" ?
-       response  = await axios.post(url, data , {
+       response  = await axios.post(url, data ,
+         {
           headers: {
             "Content-Type": "application/json",
             Authorization: authToken || getToken,
@@ -151,16 +152,18 @@ const ConfirmAcc = localStorage.getItem("ConfirmAcc")
           statusBvn();
           verifyPopBvn();
           setBvnButtonState(buttonStateSuccess);
+          localStorage.setItem("bvnVerification",true)
     }  else{
             alertSuccess();
             setBvnButtonState(buttonStateSuccess);
+            if(Data.ConfirmAcc === false){
              await CheckVirtualAcc(
               authToken, customerDetail, setLoading,
               setVirtualAccCreated, 
                setBankNameState, setAccountNameState, setAccountNumberState,
-               verificationOpen, idVerificationOpen, bvnVerificationOpen, setBvnButtonState, bankNameState);
+               verificationOpen, idVerificationOpen, bvnVerificationOpen, setIdButtonState, setBvnButtonState);
             }
- }
+ }  }
       } catch (error) {
         if (error.status === 401 || 400) {
           alert(ErrorMessage);
@@ -466,7 +469,7 @@ const ConfirmAcc = localStorage.getItem("ConfirmAcc")
            bankNameState.length > 1 ? "bg-slate-400" : "bg-[#04177F]"
          }`}
                 >
-                  {(bvnButtonState) || (ConfirmAcc === true && bvnButtonState === "Verify" ? "Virtual Account Created" : "" ) ||(ConfirmId === true && bvnButtonState === "Verify" && !ConfirmAcc  ? "Create Virtual Account" : "Verify" )}
+                  {(bvnButtonState) || (Data.ConfirmAcc === true && bvnButtonState === "Verify" ? "Virtual Account Created" : Data.ConfirmId === true && bvnButtonState === "Verify" && Data.ConfirmAcc === false ? "Create Virtual Account" : "Verify" )}
                 </button>
                 {errorVerify && (
                   <h2
