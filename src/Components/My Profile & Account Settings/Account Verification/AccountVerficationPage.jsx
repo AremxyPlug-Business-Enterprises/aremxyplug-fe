@@ -10,7 +10,8 @@ export default function AccountVerficationPage() {
     const {verificationOpen} = useContext(ContextProvider);
     const {idVerificationOpen, setIdVerificationOpen} = useContext(ContextProvider);
     const {bvnVerificationOpen, setBvnVerificationOpen} = useContext(ContextProvider);
-    const {accountUpgrade, setAccountUpgrade} = useContext(ContextProvider);
+  const { accountUpgrade, setAccountUpgrade } = useContext(ContextProvider);
+  const {isDarkMode} = useContext(ContextProvider);
   return (
     
     
@@ -18,8 +19,8 @@ export default function AccountVerficationPage() {
         { verificationOpen && (
         <div className=''>
        <div className='flex lg:gap-[10px] lg:py-[50px] py-[35px]'> 
-     <h2 className='font-[500] text-[#7C7C7C] text-[11.389px] leading-[14px] 
-     lg:text-[20px] lg:leading-[30px]'>
+     <h2 className={`font-medium text-[#7C7C7C] text-[11.389px] leading-[14px] 
+     lg:text-[20px] lg:leading-[30px] ${isDarkMode ? "text-white":""}`}>
         Verify your account to upgrade your transaction limit with other benefits.
 </h2>
 <img  className='lg:h-[24px] lg:w-[24px] h-[14.083px] w-[14.083px] md:self-center'
@@ -36,10 +37,9 @@ src={Arrowright} alt="" />
     }}
     className= {`w-1/3 md:py-[10px] py-[5.868px] cursor-pointer
        ${idVerificationOpen 
-        ? "bg-[#E2F3FF] lg:rounded-[6px] lg:border-b-[4px] border-b-[2px] rounded-[3.521px] border-[#04177F]"
+        ? `bg-[#E2F3FF] lg:rounded-[6px] lg:border-b-[4px] border-b-[2px] rounded-[3.521px] border-[#04177F] ${isDarkMode ? "text-stone-800" : ""}`
        : "bg-transparent" } `}>
-     <h2 className='font-[500] text-center text-[12px] leading-[14px] 
-     lg:text-[20px] lg:leading-[30px]'>
+     <h2 className="font-medium text-center text-[12px] leading-[14px] lg:text-[20px] lg:leading-[30px]">
      ID Verification
      </h2>
     </div>
@@ -51,10 +51,9 @@ src={Arrowright} alt="" />
     }}
     className= {`w-1/3 lg:py-[10px] py-[5.868px] cursor-pointer
        ${bvnVerificationOpen 
-        ? "bg-[#E2F3FF] lg:rounded-[6px] lg:border-b-[4px] border-b-[2px] rounded-[3.521px] border-[#04177F]"
+        ? `bg-[#E2F3FF] lg:rounded-[6px] lg:border-b-[4px] border-b-[2px] rounded-[3.521px] border-[#04177F] ${isDarkMode ? "text-stone-800" : ""}`
        : "bg-transparent"}  `} >
-     <h2 className='font-[500] text-center  text-[12px] leading-[14px]
-     lg:text-[20px] lg:leading-[30px]'>
+     <h2 className="font-medium text-center text-[12px] leading-[14px] lg:text-[20px] lg:leading-[30px]">
      BVN Verification
      </h2>
     </div>
@@ -65,11 +64,12 @@ src={Arrowright} alt="" />
       setIdVerificationOpen(false);
     }}
     className= {`w-1/3 lg:py-[10px] py-[5.868px] cursor-pointer
-    ${accountUpgrade
-    ? "bg-[#E2F3FF] lg:rounded-[6px] lg:border-b-[4px] border-b-[2px] rounded-[3.521px] border-[#04177F]"
-    : "bg-transparent"}  `} >
-     <h2 className='font-[500] text-center text-[12px] leading-[14px]
-     lg:text-[20px] lg:leading-[30px]'>
+      ${accountUpgrade
+        ? `bg-[#E2F3FF] lg:rounded-[6px] lg:border-b-[4px] border-b-[2px] rounded-[3.521px] 
+           border-[#04177F] ${isDarkMode ? "text-stone-800" : ""}`
+        : "bg-transparent"
+      }`} >
+     <h2 className="font-medium text-center text-[12px] leading-[14px] lg:text-[20px] lg:leading-[30px]">
      Account Upgrade
      </h2>
     </div>

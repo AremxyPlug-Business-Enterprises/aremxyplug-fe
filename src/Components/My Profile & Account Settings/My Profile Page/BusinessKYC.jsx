@@ -16,7 +16,7 @@ const BusinessKYC = () => {
           <div
             className={`${
               toggleSideBar ? "datapopup011" : "datapopup1"
-            } bg-white `}
+            } ${isDarkMode ? "bg-[#000] border border-white" : "bg-white"} `}
           >
             <div
               className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
@@ -39,7 +39,7 @@ const BusinessKYC = () => {
               </p>
               <button
                 className={` ${
-                  isDarkMode ? "border" : "bg-[#04177f] "
+                  isDarkMode ? "border bg-[#04177f]" : "bg-[#04177f] "
                 } cursor-pointer text-white text-[10px] h-[40px] rounded-[5px] md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[25%] lg:mx-auto`}
                 onClick={() => {
                   setBusinessPopUp(false);

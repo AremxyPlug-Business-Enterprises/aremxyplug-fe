@@ -8,6 +8,7 @@ const AccountUpgrade = () => {
     const { toggleSideBar } = useContext(ContextProvider);
    const {accountUpgrade} = useContext(ContextProvider);
     const {verificationOpen} = useContext(ContextProvider);
+    const {isDarkMode} = useContext(ContextProvider);
     
   return (
        <div>
@@ -16,7 +17,7 @@ const AccountUpgrade = () => {
             ? 'block'  : 'hidden'}`}>
         <div className="px-20px flex flex-col h-full justify-between">
         <div className="flex items-center my-[10%] gap-[8px] md:my-[5%] md:text-[18px] lg:text-[px]">
-          <p className="text-[#7c7c7c] text-[10px] leading-[130%] md:text-[14px] lg:text-[18px] 2xl:text-[28px]">
+          <p className={`text-[#7c7c7c] text-[10px] leading-[130%] md:text-[14px] lg:text-[18px] 2xl:text-[28px] ${isDarkMode ? "text-stone-50" : ""}`}>
             My Accounts Limits And Levels
           </p>
           <img
@@ -38,35 +39,35 @@ const AccountUpgrade = () => {
             <div className={`bottom ${toggleSideBar ? "md:text-[10px] md:pt-[%] " : "md:text-[14px]"} border-[1px] h-[80%] mb-[15%] md:mb-[-60%] lg:mb-[-3%] text-center md:text-start md:pl-[20px] text-[10px] lg:text-[18px] rounded-br-[10px] rounded-bl-[10px]`}>
               <div className="mt-[10%] flex flex-col gap-[10px]">
                 <p className="font-semibold">To Others Banks</p>
-                <p className="text-[#7E7E7E]">
-                  Daily Transfer Limit:{" "}
-                  <span className="text-[#04177F]">$ 2,000</span>{" "}
-                  <span className="text-[#000000]">Equivalent</span>
+                <p className= {`text-[#7E7E7E] ${isDarkMode ? "text-white": ""}`} >
+                  Daily Transfer Limit:
+                  <span className= {`text-[#04177F] ${isDarkMode ? "text-white": ""}`}>$ 2,000 </span>
+                  <span className={`text-[#000000] ${isDarkMode ? "text-white": ""}`}>Equivalent</span>
                 </p>
-                <p className="text-[#7E7E7E]">
-                  Wallet Top-up(Per Transaction):{" "}
-                  <span className="text-[#04177F]">Unlimited</span>
+                <p className={`text-[#7E7E7E] ${isDarkMode ? "text-white": ""}`}>
+                  Wallet Top-up(Per Transaction):
+                  <span className={`text-[#04177F] ${isDarkMode ? "text-white": ""}`}>Unlimited</span>
                 </p>
-                <p className="text-[#7E7E7E]">
-                  Maximum Wallet Balance:{" "}
-                  <span className="text-[#04177F]">Unlimited</span>
+                <p className={`text-[#7E7E7E] ${isDarkMode ? "text-white": ""}`}>
+                  Maximum Wallet Balance:
+                  <span className={`text-[#04177F] ${isDarkMode ? "text-white": ""}`}>Unlimited</span>
                 </p>
               </div>
               <div className="mt-[10%] mb-[10%] md:mb-[50%] flex flex-col gap-[10px] lg:mb-[-70px]">
                 <p className="font-semibold">To AremxyPlug</p>
-                <p className="text-[#7E7E7E]">
-                  Daily Transfer Limit:{" "}
-                  <span className="text-[#04177F]">Unlimited</span>
+                <p className={`text-[#7E7E7E] ${isDarkMode ? "text-white": ""}`}>
+                  Daily Transfer Limit:
+                  <span className={`text-[#04177F] ${isDarkMode ? "text-white": ""}`}> Unlimited</span>
                 </p>
-                <p className="text-[#7E7E7E]">
-                  Wallet Top-up(Per Transaction):{" "}
-                  <span className="text-[#04177F]">Unlimited</span>
+                <p className={`text-[#7E7E7E] ${isDarkMode ? "text-white": ""}`}>
+                  Wallet Top-up(Per Transaction):
+                  <span className={`text-[#04177F] ${isDarkMode ? "text-white": ""}`}> Unlimited</span>
                 </p>
-                <p className="text-[#7E7E7E]">
-                  Maximum Wallet Balance:{" "}
-                  <span className="text-[#04177F]">Unlimited</span>
+                <p className={`text-[#7E7E7E] ${isDarkMode ? "text-white": ""}`}>
+                  Maximum Wallet Balance:
+                  <span className={`text-[#04177F] ${isDarkMode ? "text-white": ""}`}> Unlimited</span>
                 </p>
-                <p className="text-[#7E7E7E] mt-[20px] md:border-[1px] md:px-[5px] md:py-[5px] md:mr-[30px]">Requirement: Normal User</p>
+                <p className={`text-[#7E7E7E] mt-[20px] md:border-[1px] md:px-[5px] md:py-[5px] md:mr-[30px] ${isDarkMode ? "text-white": ""}`}>Requirement: Normal User</p>
               </div>
             </div>
           </div>
@@ -79,35 +80,35 @@ const AccountUpgrade = () => {
             <div className={`bottom ${toggleSideBar ? "md:text-[10px] md:pt-[%] " : "md:text-[14px]"} border-[1px] h-[80%] mb-[15%] md:mb-[-60%] lg:mb-[-3%] text-center md:text-start md:pl-[20px] text-[10px] lg:text-[18px] rounded-br-[10px] rounded-bl-[10px]`}>
               <div className="mt-[10%] flex flex-col gap-[10px]">
                 <p className="font-semibold">To Others Banks</p>
-                <p className="text-[#7E7E7E]">
-                  Daily Transfer Limit:{" "}
-                  <span className="text-[#04177F]">$ 2,000</span>{" "}
-                  <span className="text-[#000000]">Equivalent</span>
+                <p className={`text-[#7E7E7E] ${isDarkMode ? "text-white": ""}`}>
+                  Daily Transfer Limit:
+                  <span className={`text-[#04177F] ${isDarkMode ? "text-white": ""}`}> $ 2,000</span>
+                  <span className= {`text-[#000000] ${isDarkMode ? "text-white": ""}`}> Equivalent</span>
                 </p>
-                <p className="text-[#7E7E7E]">
-                  Wallet Top-up(Per Transaction):{" "}
-                  <span className="text-[#04177F]">Unlimited</span>
+                <p className={`text-[#7E7E7E] ${isDarkMode ? "text-white": ""}`}>
+                  Wallet Top-up(Per Transaction):
+                  <span className={`text-[#04177F] ${isDarkMode ? "text-white": ""}`}> Unlimited</span>
                 </p>
-                <p className="text-[#7E7E7E]">
-                  Maximum Wallet Balance:{" "}
-                  <span className="text-[#04177F]">Unlimited</span>
+                <p className={`text-[#7E7E7E] ${isDarkMode ? "text-white": ""}`}>
+                  Maximum Wallet Balance:
+                  <span className={`text-[#04177F] ${isDarkMode ? "text-white": ""}`}> Unlimited</span>
                 </p>
               </div>
               <div className="mt-[10%] mb-[15%] md:mb-[1%] flex flex-col gap-[10px] lg:mb-[-70px]">
                 <p className="font-semibold">To AremxyPlug</p>
-                <p className="text-[#7E7E7E]">
-                  Daily Transfer Limit:{" "}
-                  <span className="text-[#04177F]">Unlimited</span>
+                <p className={`text-[#7E7E7E] ${isDarkMode ? "text-white": ""}`}>
+                  Daily Transfer Limit:
+                  <span className={`text-[#04177F] ${isDarkMode ? "text-white": ""}`}> Unlimited</span>
                 </p>
-                <p className="text-[#7E7E7E]">
-                  Wallet Top-up(Per Transaction):{" "}
-                  <span className="text-[#04177F]">Unlimited</span>
+                <p className={`text-[#7E7E7E] ${isDarkMode ? "text-white": ""}`}>
+                  Wallet Top-up(Per Transaction):
+                  <span className={`text-[#04177F] ${isDarkMode ? "text-white": ""}`}> Unlimited</span>
                 </p>
-                <p className="text-[#7E7E7E]">
-                  Maximum Wallet Balance:{" "}
-                  <span className="text-[#04177F]">Unlimited</span>
+                <p className={`text-[#7E7E7E] ${isDarkMode ? "text-white": ""}`}>
+                  Maximum Wallet Balance:
+                  <span className={`text-[#04177F] ${isDarkMode ? "text-white": ""}`}> Unlimited</span>
                 </p>
-                <p className="text-[#7E7E7E] mt-[20px] md:border-[1px] md:px-[5px] md:py-[5px] md:mr-[30px]">Requirement: ID Verification</p>
+                <p className={`text-[#7E7E7E] mt-[20px] md:border-[1px] md:px-[5px] md:py-[5px] md:mr-[30px] ${isDarkMode ? "text-white": ""}`}>Requirement: ID Verification</p>
               </div>
             </div>
           </div>
@@ -120,35 +121,35 @@ const AccountUpgrade = () => {
             <div className={`bottom ${toggleSideBar ? "md:text-[10px] md:pt-[%] " : "md:text-[14px]"} border-[1px] h-[80%] mb-[15%] md:mb-[-3%] lg:mb-[-10%] text-center md:text-start md:pl-[20px] text-[10px] lg:text-[18px] rounded-br-[10px] rounded-bl-[10px]`}>
               <div className="mt-[10%] flex flex-col gap-[10px]">
                 <p className="font-semibold">To Others Banks</p>
-                <p className="text-[#7E7E7E]">
-                  Daily Transfer Limit:{" "}
-                  <span className="text-[#04177F]">$ 2,000</span>{" "}
-                  <span className="text-[#000000]">Equivalent</span>
+                <p className={`text-[#7E7E7E] ${isDarkMode ? "text-white": ""}`}>
+                  Daily Transfer Limit:
+                  <span className={`text-[#04177F] ${isDarkMode ? "text-white": ""}`}> $ 2,000</span>
+                  <span className={`text-[#000000] ${isDarkMode ? "text-white": ""}`}> Equivalent</span>
                 </p>
-                <p className="text-[#7E7E7E]">
-                  Wallet Top-up(Per Transaction):{" "}
-                  <span className="text-[#04177F]">Unlimited</span>
+                <p className={`text-[#7E7E7E] ${isDarkMode ? "text-white": ""}`}>
+                  Wallet Top-up(Per Transaction):
+                  <span className={`text-[#04177F] ${isDarkMode ? "text-white": ""}`}> Unlimited</span>
                 </p>
-                <p className="text-[#7E7E7E]">
-                  Maximum Wallet Balance:{" "}
-                  <span className="text-[#04177F]">Unlimited</span>
+                <p className={`text-[#7E7E7E] ${isDarkMode ? "text-white": ""}`}>
+                  Maximum Wallet Balance:
+                  <span className={`text-[#04177F] ${isDarkMode ? "text-white": ""}`}> Unlimited</span>
                 </p>
               </div>
               <div className="mt-[10%] mb-[15%] md:mb-[20%%] flex flex-col gap-[10px]">
                 <p className="font-semibold">To AremxyPlug</p>
-                <p className="text-[#7E7E7E]">
-                  Daily Transfer Limit:{" "}
-                  <span className="text-[#04177F]">Unlimited</span>
+                <p className={`text-[#7E7E7E] ${isDarkMode ? "text-white": ""}`}>
+                  Daily Transfer Limit:
+                  <span className={`text-[#04177F] ${isDarkMode ? "text-white": ""}`}> Unlimited</span>
                 </p>
-                <p className="text-[#7E7E7E]">
-                  Wallet Top-up(Per Transaction):{" "}
-                  <span className="text-[#04177F]">Unlimited</span>
+                <p className={`text-[#7E7E7E] ${isDarkMode ? "text-white": ""}`}>
+                  Wallet Top-up(Per Transaction):
+                  <span className={`text-[#04177F] ${isDarkMode ? "text-white": ""}`}> Unlimited</span>
                 </p>
-                <p className="text-[#7E7E7E]">
-                  Maximum Wallet Balance:{" "}
-                  <span className="text-[#04177F]">Unlimited</span>
+                <p className={`text-[#7E7E7E] ${isDarkMode ? "text-white": ""}`}>
+                  Maximum Wallet Balance:
+                  <span className={`text-[#04177F] ${isDarkMode ? "text-white": ""}`}> Unlimited</span>
                 </p>
-                <p className="text-[#7E7E7E] mt-[20px] md:border-[1px] md:px-[5px] md:py-[5px] md:mr-[30px]">Requirement: Business KYC/KYB</p>
+                <p className={`text-[#7E7E7E] mt-[20px] md:border-[1px] md:px-[5px] md:py-[5px] md:mr-[30px] ${isDarkMode ? "text-white": ""}`}>Requirement: Business KYC/KYB</p>
               </div>
             </div>
           </div>

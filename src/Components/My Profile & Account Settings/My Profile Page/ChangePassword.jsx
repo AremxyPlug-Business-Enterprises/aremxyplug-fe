@@ -9,7 +9,7 @@ import styles from "../../../Components/Dashboard/DashboardComponents/TransferCo
 import Success from "../ProfileImages/success.gif";
 
 const ChangePassword = () => {
-  const { toggleSideBar } = useContext(ContextProvider);
+  const { toggleSideBar, isDarkMode } = useContext(ContextProvider);
 
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -44,15 +44,22 @@ const ChangePassword = () => {
   return (
     <div>
       <div>
-        <div className="grid grid-cols-1 mt-[10px] md:grid-cols-2 gap-y-[10px] md:gap-x-[0px] lg:gap-x-[0px] md:gap-y-[0px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[20px]">
-          <div className="mt-[30px]">
-            <h2 className="text-[10px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px]">
-              Old Password{" "}
+        {/* <div className="grid grid-cols-1 mt-[10px] md:grid-cols-2 gap-y-[10px] md:gap-x-[0px] lg:gap-x-[0px] md:gap-y-[0px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[20px]"> */}
+        <div className="flex flex-col mt-[10px] lg:gap-[25px] gap-[20px] w-full pb-[30px] lg:py-[30px] md:mt-[20px]">
+          <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-full">
+          <div className="mt-[30px] flex flex-col md:w-[50%] w-full md:gap-[10px] gap-2.5">
+            <h2 className={`text-[12px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] ${isDarkMode ? "text-white" : "" }`}>
+              Old Password
             </h2>
-            <div className="relative mt-[5px] lg:mt-[15px]">
+            {/* <div className="relative mt-[5px] lg:mt-[15px]"> */}
+            <div className="relative">
               <input
                 type="text"
-                className="mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 sm:p-3 sm:text-lg w-full md:w-[90%] lg:w-[80%] h-8 px-2 py-[10px] border-[1px] rounded-[2px] text-[10px] md:text-[14px] text-[#7E7E7E] lg:text-[18px] font-semibold focus:outline-none lg:h-[51px]"
+                className={`w-full h-8 px-2 py-[10px] border text-sm leading-[18px] lg:leading-[20.8px] text-[#7E7E7E] lg:text-[18px] focus:outline-none lg:h-[51px] mt-2 md:mt-0 rounded-[10px] p-[20px] md:pl-[8.67px] lg:pl-[10px] sm:p-3 sm:text-lg border-[#9C9C9C]  ${
+                  isDarkMode
+                    ? "border-slate-50 text-slate-50 bg-black"
+                    : "bg-white"
+                }`}
                 placeholder=""
                 value={oldPassword}
                 onChange={(event) => setOldPassword(event.target.value)}
@@ -60,30 +67,39 @@ const ChangePassword = () => {
             </div>
           </div>
 
-          <div className="mt-[30px] md:ml-[-20px] lg:ml-[-50px]">
-            <h2 className="text-[10px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px]">
-              New Password{" "}
+          <div className="mt-[30px] flex flex-col md:w-[50%] w-full md:gap-[10px] gap-2.5">
+            <h2 className={`text-[12px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] ${isDarkMode ? "text-white" : "" }`}>
+              New Password
             </h2>
-            <div className="relative mt-[5px] lg:mt-[15px]">
+            <div className="relative ">
               <input
                 type="text"
-                className="w-full md:w-[80%] text-[#7E7E7E] lg:w-[70%]  h-8 px-2 py-[10px] border-[1px] rounded-[2px] text-[10px] md:text-[14px] lg:text-[18px] font-semibold focus:outline-none lg:h-[51px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 sm:p-3 sm:text-lg"
+                className={`w-full h-8 px-2 py-[10px] bordertext-sm leading-[18px] lg:leading-[20.8px] text-[#7E7E7E] lg:text-[18px] focus:outline-none lg:h-[51px] mt-2 md:mt-0 rounded-[10px] p-[20px] md:pl-[8.67px] lg:pl-[10px] sm:p-3 sm:text-lg border-[#9C9C9C]  ${
+                  isDarkMode
+                    ? "border-slate-50 border text-slate-50 bg-black"
+                    : "bg-white"
+                }`}
                 placeholder=""
                 value={newPassword}
                 onChange={(event) => setNewPassword(event.target.value)}
               />
             </div>
           </div>
+          </div>
 
-          <div className="mt-[30px]">
-            <h2 className="text-[10px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px]">
-              Confirm Password{" "}
+          <div className="mt-[30px] flex flex-col md:w-[50%] w-full md:gap-[10px] gap-2.5">
+            <h2 className={`text-[12px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] ${isDarkMode ? "text-white" : "" }`}>
+              Confirm Password
             </h2>
-            <div className="relative mt-[5px] lg:mt-[15px]">
+            <div className="relative">
               <input
                 id="confirmPinInput"
                 type="text"
-                className="w-full md:w-[90%] text-[#7E7E7E] lg:w-[80%] h-8 px-2 py-[10px] border-[1px] rounded-[2px] text-[10px] md:text-[14px] lg:text-[18px] font-semibold focus:outline-none lg:h-[51px]"
+                className={`w-full h-8 px-2 py-[10px] border text-sm leading-[18px] lg:leading-[20.8px] text-[#7E7E7E] lg:text-[18px] focus:outline-none lg:h-[51px] mt-2 md:mt-0 rounded-[10px] p-[20px] md:pl-[8.67px] lg:pl-[10px] sm:p-3 sm:text-lg border-[#9C9C9C]  ${
+                  isDarkMode
+                    ? "border-slate-50 text-slate-50 focus:bg-black bg-black"
+                    : "bg-white"
+                }`}
                 placeholder=""
                 value={confirmPassword}
                 onChange={(event) => setConfirmPassword(event.target.value)}
@@ -91,7 +107,7 @@ const ChangePassword = () => {
             </div>
 
             <div>
-              <p className="text-[10px] font-semibold text-[#04177F] md:text-[14px] lg:text-[18px] text-start mt-[5%]">
+              <p className={`text-[10px] font-semibold text-[#04177F] md:text-[14px] lg:text-[18px] text-start mt-[5%]  ${isDarkMode ? "text-white" : ""}`}>
                 Forgot Password?
               </p>
             </div>
@@ -124,8 +140,8 @@ const ChangePassword = () => {
         <Modal className="">
           <div
             className={` ${
-              toggleSideBar ? "confirm02" : "confirm2"
-            } bg-white flex flex-col justify-between items-center pb-[10px] md:pb-[30px] lg:pb-[30px] md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
+              toggleSideBar ? "absolute w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] md:ml-[20%] h-[250px] lg:h-[405px] shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)] top-[0%]" : "absolute w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] h-[250px] lg:h-[405px]  shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)]"
+            }  flex flex-col justify-between items-center pb-[10px] md:pb-[30px] lg:pb-[30px] md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px] ${isDarkMode ? "bg-stone-950 border-white border": "bg-white"}`}
           >
             <div className="absolute z-0 right-0" style={{ zIndex: 0 }}>
               <img
