@@ -258,26 +258,36 @@ export default function NecoEducationPins() {
                     <input type="text"
 
                       value={necoExamType}
-                      className=' flex  justify-between pt-[10.803px] pb-[13.794px]  pr-[13px] pl-[10.876px] mt-2 md:mt-0
+                      className={`flex  justify-between pt-[10.803px] pb-[13.794px]  pr-[13px] pl-[10.876px] mt-2 md:mt-0
  md:pt-[8.802px] md:pb-[7.042px] w-[100%]
-md:pr-[5.282px] md:pl-[5.867px] bg-white
+md:pr-[5.282px] md:pl-[5.867px]
 lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
- border-[#9C9C9C] hover:bg-[#EDEAEA]
 font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
-    lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer focus:outline-none border rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] sm:p-3 sm:text-lg'
+    lg:text-[16px]  lg:leading-[20.8px] cursor-pointer focus:outline-none border rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] sm:p-3 sm:text-lg
+          ${isDarkMode 
+      ? "bg-black text-white border border-white" 
+      : "border-[#9C9C9C] hover:bg-[#EDEAEA] bg-white text-black"
+  }`}
                       readOnly />
 
                     <img
-                      className='absolute lg:top-[15px] lg:right-[9px] md:top-[8.802px] md:right-[5.282px]
+                      className={`absolute lg:top-[15px] lg:right-[9px] md:top-[8.802px] md:right-[5.282px]
         top-[21.802px] right-[13px]
         Examdrop md:h-[14.038px] md:w-[14.038px] 
-      lg:h-[24px] lg:w-[24px] w-[14px] h-[14px]'
+      lg:h-[24px] lg:w-[24px] w-[14px] h-[14px]  
+       ${isDarkMode 
+      ? "bg-black text-white" 
+      : ""
+  }`}
                       src={arrowDown} alt="" />
                   </div>
                   {necoExamActive && (
-                    <div className='absolute lg:top-[90px] md:top-[60px] top-[68px] z-[5]  flex flex-col 
+                    <div className={`absolute lg:top-[90px] md:top-[60px] top-[68px] z-[5]  flex flex-col 
            w-[100%] lg:h-225px md:h-[210px]  
-          '>
+              ${isDarkMode 
+      ? "bg-black text-white border border-white" 
+      : ""
+  }`}>
                       {(necoExams.map(exam => {
                         return (
                           <a href={exam.path}
@@ -287,12 +297,16 @@ font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
                               document.querySelector('.Examdrop').classList.remove('DropIt');
                               console.log(e);
                             })}
-                            className='pb-[21px] md:pb-[14px] md:pt-[14px] pt-[21px]   text-[13.2px] leading-[10.4px] 
+                            className={`pb-[21px] md:pb-[14px] md:pt-[14px] pt-[21px]   text-[13.2px] leading-[10.4px] 
                  shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
-                md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
-           md:text-[13.227px] md:leading-[17.195px] w-[100%] bg-[white] 
+                md:py-[15px] py-[8px] pl-[10px] font-[500] 
+           md:text-[13.227px] md:leading-[17.195px] w-[100%]   
            lg:text-[16px] lg:leading-[20.8px] 
-           cursor-pointer hover:bg-[#EDEAEA]'
+           cursor-pointer     
+           ${isDarkMode 
+      ? "bg-black text-white border border-white" 
+      : " hover:bg-[#EDEAEA] bg-[white] text-[#7C7C7C]"
+  }`}
                             key={exam.id}>
                             <h2>{exam.examType}   </h2>
                           </a>
@@ -323,13 +337,16 @@ font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
                     <input type="text"
 
                       value={necoQuantityResult}
-                      className=' pt-[10.803px] pb-[13.794px]  pr-[13px] pl-[10.876px] mt-2 md:mt-0
+                      className={`pt-[10.803px] pb-[13.794px]  pr-[13px] pl-[10.876px] mt-2 md:mt-0
  md:pt-[8.802px] md:pb-[7.042px] w-[100%]
-md:pr-[5.282px] md:pl-[5.867px] bg-white
+md:pr-[5.282px] md:pl-[5.867px]
 lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
- border-[#9C9C9C] hover:bg-[#EDEAEA]
 font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
-    lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer  focus:outline-none border rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.5px] sm:p-3 sm:text-lg'
+    lg:text-[16px] lg:leading-[20.8px] cursor-pointer  focus:outline-none border rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.5px] sm:p-3 sm:text-lg
+       ${isDarkMode 
+      ? "bg-black text-white border border-white" 
+      : "border-[#9C9C9C] hover:bg-[#EDEAEA] bg-white text-black"
+  }`}
                       readOnly />
 
                     <img
@@ -342,9 +359,12 @@ font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
                   {/* drop down */}
 
                   {necoQuantityActive && (
-                    <div className='absolute z-[2] lg:top-[90px] md:top-[60px] top-[68px] flex flex-col
+                    <div className={`absolute z-[2] lg:top-[90px] md:top-[60px] top-[68px] flex flex-col
            w-[100%] lg:h-225px md:h-[210px]  
-          '>
+             ${isDarkMode 
+      ? "bg-black text-white border border-white" 
+      : ""
+  }`}>
                       {(necoOptions.map(option => {
                         return (
                           <h2 onClick={(e => {
@@ -354,10 +374,14 @@ font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
                             document.querySelector('.imgdrop').classList.remove('DropIt');
                             
                           })}
-                            className='pb-[21px] md:pb-[14px] md:pt-[14px] pt-[21px] text-[13.5px] leading-[10.4px] md:py-[15px] py-[8px] text-[#7C7C7C]
+                            className={`pb-[21px] md:pb-[14px] md:pt-[14px] pt-[21px] text-[13.5px] leading-[10.4px] md:py-[15px] py-[8px] 
                 pl-[10px] font-[500]  shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
-           md:text-[13.227px] md:leading-[17.195px] bg-white
-           lg:text-[16px] lg:leading-[20.8px] cursor-pointer hover:bg-[#EDEAEA]'
+           md:text-[13.227px] md:leading-[17.195px]
+           lg:text-[16px] lg:leading-[20.8px] cursor-pointer  
+            ${isDarkMode 
+      ? "bg-black text-white border border-white" 
+      : "hover:bg-[#EDEAEA] text-[#7C7C7C]"
+  }`}
                             key={option.id}>
                             {option.quantity}
                           </h2>
@@ -394,17 +418,21 @@ font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
                     }
 
                   })}
-                    className='h-[40.927px] lg:h-[51px] font-[400]  md:h-[29.93px] w-[100%]  border-[#9C9C9C] mt-2 md:mt-0  
+                    className={`h-[40.927px] lg:h-[51px] font-[400]  md:h-[29.93px] w-[100%]  mt-2 md:mt-0  
      text-[14px] leading-[18.206px]
-     lg:text-[16px] lg:leading-[20.8px] text-black
+     lg:text-[16px] lg:leading-[20.8px]
  pt-[12.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
      
      md:pt-[8.802px] md:pb-[7.042px] 
      md:pr-[5.282px] md:pl-[5.867px] 
      lg:pt-[14px] lg:pb-[15.5px] lg:pr-[16px] lg:pl-[10px]
      placeholder:text-[14.389px] placeholder:leading-[18.809.4px] 
-     lg:placeholder:text-[16px] lg:placeholder:leading-[20.8px] placeholder:text-[#7E7E7E]
-     md:placeholder:text-[14.389px] md:placeholder:leading-[18.206px] focus:outline-none border  rounded-[10px] md:rounded-0 p-[20px] md:p-0 sm:p-3 sm:text-lg'
+     lg:placeholder:text-[16px] lg:placeholder:leading-[20.8px] 
+     md:placeholder:text-[14.389px] md:placeholder:leading-[18.206px] focus:outline-none border rounded-[10px] md:rounded-0 p-[20px] md:p-0 sm:p-3 sm:text-lg
+       ${isDarkMode 
+      ? "bg-black text-white border border-white" 
+      : " border-[#9C9C9C] bg-white text-black"
+  }`}
                     type="tel" name='phone' id='phone' maxLength={11} placeholder=''
                     value={necoEducationPinPhone} onChange={(e) => {
                       setNecoEducationPinPhone(e.target.value);
@@ -424,16 +452,20 @@ font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
                     Email
                   </h2>
 
-                  < input className='flex h-[40.927px] lg:h-[51px] md:h-[29.93px] w-[100%] mt-2 md:mt-0
+                  < input className={`flex h-[40.927px] lg:h-[51px] md:h-[29.93px] w-[100%] mt-2 md:mt-0
      text-[14px] font-[400] leading-[18.206px] tracking-[0.4px]
-     lg:text-[16px] lg:leading-[20.8px] text-black
+     lg:text-[16px] lg:leading-[20.8px] 
       pt-[10.803px] pb-[13.794px]  pr-[13px] pl-[10.876px]
-       border-[#9C9C9C]  self-center
+         self-center
      md:pt-[8.802px] md:pb-[7.042px] 
      md:pr-[5.282px] md:pl-[5.867px] 
     lg:pt-[14px] lg:pb-[15.5px] lg:pr-[16px] lg:pl-[10px] 
-     lg:placeholder:text-[16px] lg:placeholder:leading-[20.8px] placeholder:text-[#7E7E7E]
-     placeholder:text-[14.389px] placeholder:leading-[18.809.4px] focus:outline-none border  rounded-[10px] md:rounded-0 p-[20px] md:p-0  sm:p-3 sm:text-lg'
+     lg:placeholder:text-[16px] lg:placeholder:leading-[20.8px] 
+     placeholder:text-[14.389px] placeholder:leading-[18.809.4px] focus:outline-none border  rounded-[10px] md:rounded-0 p-[20px] md:p-0  sm:p-3 sm:text-lg
+      ${isDarkMode 
+      ? "bg-black text-white border border-white" 
+      : " placeholder:text-[#7E7E7E] border-[#9C9C9C] text-black"
+  }`}
                     value={necoEducationPinEmail}
                     onChange={(e) => {
                       setNecoEducationPinEmail(e.target.value);
@@ -442,7 +474,11 @@ font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
                     placeholder='example@gmail.com'
                   />
                   {errors.necoEducationPinEmail && (
-                    <div className="text-[12px] text-red-500 italic lg:text-[14px]">
+                    <div className={`text-[12px] text-red-500 italic lg:text-[14px]
+                       ${isDarkMode 
+      ? "bg-black text-white" 
+      : ""
+  }`}>
                       {errors.necoEducationPinEmail}
                     </div>
                   )}
@@ -465,14 +501,18 @@ font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
                   </h2>
                   {/* input */}
                   <input
-                    className='h-[40.927px]  lg:h-[51px] md:h-[29.93px] mt-2 md:mt-0
+                    className={`h-[40.927px]  lg:h-[51px] md:h-[29.93px] mt-2 md:mt-0
         md:pt-[8.802px] md:pb-[7.042px] 
        pt-[12.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
      md:pr-[5.282px] md:pl-[5.867px]
-  lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  border-[#9C9C9C]  text-start
+  lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  text-start
    leading-[10.4px]
    font-[400]  md:text-[9.389px] md:leading-[12.206px]
-  lg:text-[16px] text-black lg:leading-[20.8px] focus:outline-none border  rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.5px] sm:p-3 sm:text-lg'
+  lg:text-[16px] lg:leading-[20.8px] focus:outline-none border  rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.5px] sm:p-3 sm:text-lg 
+   ${isDarkMode 
+      ? "bg-black text-white border border-white" 
+      : "border-[#9C9C9C] text-black"
+  }`}
                     value={necoEducationAmount}
                     onChange={(e) => {
                       setNecoEducationAmount(e.target.value);
@@ -499,14 +539,17 @@ font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
                     }}>
                     <input type="text"
                       value={necoPaymentResult}
-                      className=' mt-2 md:mt-0 flex  justify-between pt-[12.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
+                      className={`mt-2 md:mt-0 flex  justify-between pt-[12.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
  md:pt-[8.802px] md:pb-[7.042px] w-[100%]
-md:pr-[5.282px] md:pl-[5.867px] bg-white
-lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
- border-[#9C9C9C] hover:bg-[#EDEAEA]
+md:pr-[5.282px] md:pl-[5.867px]
+lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]
 font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
     lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer  focus:outline-none border rounded-[10px] 
-    md:rounded-0 p-[18px] md:p-0 text-[13.2px] sm:p-3 sm:text-lg'
+    md:rounded-0 p-[18px] md:p-0 text-[13.2px] sm:p-3 sm:text-lg   
+    ${isDarkMode 
+      ? "bg-black text-white border border-white" 
+      : "border-[#9C9C9C] hover:bg-[#EDEAEA] bg-white"
+  }`}
                       readOnly />
 
                     <img
@@ -519,8 +562,12 @@ font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
                   {/* drop down */}
 
                   {necoMethodActive && (
-                    <div className=' flex flex-col w-[100%]  absolute z-[1] lg:top-[90px] md:top-[60px]
-            top-[72px]'>
+                    <div className={`flex flex-col w-[100%]  absolute z-[1] lg:top-[90px] md:top-[60px]
+            top-[72px]   
+            ${isDarkMode 
+      ? "bg-black text-white border border-white" 
+      : ""
+  }`}>
 
                       {(necoMethodOptions.map(methodOption => {
                         return (
@@ -533,18 +580,26 @@ font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
                               document.querySelector('.methodDrop').classList.remove('DropIt');
                             })}
                             onChange={setNecoMethodOptions}
-                            className=' flex gap-[10px] lg:py-[15px] py-[10px]  pl-[10px]
-          cursor-pointer bg-white hover:bg-[#EDEAEA] items-center 
-          shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]'
+                            className={`flex gap-[10px] lg:py-[15px] py-[10px]  pl-[10px]
+          cursor-pointer items-center 
+          shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
+            ${isDarkMode 
+      ? "bg-black text-white border border-white" 
+      : "border-[#9C9C9C] hover:bg-[#EDEAEA] bg-white"
+  }`}
                             key={methodOption.id}>
 
                             <img className='md:h-[29.27px]  h-[14.27px]' src={methodOption.flag} alt="" />
 
                             <h2
-                              className='pb-[18px]  pt-[18px] md:pb-0 md:pt-0 font-weight-bold text-[13px] leading-[10.4px]
-                 font-[500] text-[#7C7C7C]  
+                              className={`pb-[18px]  pt-[18px] md:pb-0 md:pt-0 font-weight-bold text-[13px] leading-[10.4px]
+                 font-[500]  
            md:text-[13.227px] md:leading-[17.195px] 
-           lg:text-[16px] lg:leading-[20.8px] self-center cursor-pointer' >
+           lg:text-[16px] lg:leading-[20.8px] self-center cursor-pointer   
+           ${isDarkMode 
+      ? "bg-black text-white" 
+      : "text-[#7C7C7C] "
+  }`} >
                               {methodOption.method + ' ' + methodOption.balance}
                             </h2>
                           </div>

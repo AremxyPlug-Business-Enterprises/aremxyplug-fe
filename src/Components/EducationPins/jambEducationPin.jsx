@@ -188,13 +188,21 @@ const jambReceipt = () => {
       {/* input */}
   <div 
    onClick={jambExamDropDown}
-  className='mt-2 md:mt-0 w-[100%] h-[40.927px] lg:h-[51px]  md:h-[29.93px] flex justify-between pt-[10.803px] pb-[13.794px] pr-[13px] pl-[10.876px]
+  className={`mt-2 md:mt-0 w-[100%] h-[40.927px] lg:h-[51px]  md:h-[29.93px] flex justify-between pt-[10.803px] pb-[13.794px] pr-[13px] pl-[10.876px]
   md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] 
-  lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] border-[0.4px] border-[#9C9C9C]
-  hover:bg-[#EDEAEA] border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[13.5px] sm:p-3 sm:text-lg'>
+  lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] border-[0.4px] 
+   border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[13.5px] sm:p-3 sm:text-lg
+  ${isDarkMode 
+    ? "bg-black text-white border border-white" 
+    : "border-[#9C9C9C] hover:bg-[#EDEAEA] "
+}`}>
       <h2 
-      className='font-[400] text-[12px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] 
-      lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer'>
+      className={`font-[400] text-[12px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] 
+      lg:text-[16px]  lg:leading-[20.8px] cursor-pointer
+       ${isDarkMode 
+    ? "bg-black text-white" 
+    : " text-black"
+}`}>
       {jambExamType}
         </h2>
         <img  
@@ -203,9 +211,12 @@ const jambReceipt = () => {
         src= {arrowDown} alt="" />
          </div>
          {jambExamActive && (
-           <div className='absolute lg:top-[90px] md:top-[60px] top-[70px] z-[3]  
+           <div className={`absolute lg:top-[90px] md:top-[60px] top-[70px] z-[3]  
            flex flex-col w-[100%] lg:h-225px md:h-[210px]  
-           '>
+           ${isDarkMode 
+            ? "bg-black text-white border border-white" 
+            : ""
+        }`}>
             {(jambExams.map(exam => {
               return (
                  <a href={exam.path}
@@ -215,11 +226,15 @@ const jambReceipt = () => {
                document.querySelector('.Examdrop').classList.remove('DropIt');
                console.log(e);
                 })}
-                className=' pb-[21px] pt-[21px] md:pb-[14px] md:pt-[14px] font-[400] text-[13.5px] leading-[10.4px] bg-white
-                md:py-[15px] py-[12px] pl-[10px] font-[500] text-[#7C7C7C]  
+                className={`pb-[21px] pt-[21px] md:pb-[14px] md:pt-[14px] font-[400] text-[13.5px] leading-[10.4px]
+                md:py-[15px] py-[12px] pl-[10px] font-[500]  
                 shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
            md:text-[13.227px] md:leading-[17.195px] 
-           lg:text-[16px] lg:leading-[20.8px] cursor-pointer hover:bg-[#EDEAEA]' 
+           lg:text-[16px] lg:leading-[20.8px] cursor-pointer
+           ${isDarkMode 
+            ? "bg-black text-white border border-white" 
+            : "text-[#7C7C7C] bg-white hover:bg-[#EDEAEA]"
+        }`} 
            key= {exam.id}>
         <h2>{exam.examType}   </h2>
            </a>
@@ -244,13 +259,21 @@ const jambReceipt = () => {
       {/* input */}
   <div 
   onClick={jambQuantityDropDown}
-  className=' flex  justify-between pt-[10.803px] pb-[13.794px] pr-[13px] pl-[10.876px] h-[40.927px] lg:h-[51px]  md:h-[29.93px] mt-2 md:mt-0
+  className={`flex justify-between pt-[10.803px] pb-[13.794px] pr-[13px] pl-[10.876px] h-[40.927px] lg:h-[51px]  md:h-[29.93px] mt-2 md:mt-0
    md:pt-[8.802px] md:pb-[7.042px] 
   md:pr-[5.282px] md:pl-[5.867px] 
   lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
-  border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA] rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[13.5px] p-4 sm:p-3 sm:text-lg'>
-      <h2 className='font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
-      lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer '>
+  border-[0.4px] rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[13.5px] p-4 sm:p-3 sm:text-lg
+    ${isDarkMode 
+      ? "bg-black text-white border border-white" 
+      : "hover:bg-[#EDEAEA] border-[#9C9C9C]"
+  }`}>
+      <h2 className={`font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
+      lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer 
+      ${isDarkMode 
+        ? "bg-black text-white" 
+        : " text-black"
+    }`}>
       {jambQuantityResult}
         </h2>
         <img 
@@ -261,9 +284,12 @@ const jambReceipt = () => {
          {/* drop down */}
          
         {jambQuantityActive && (
-           <div className='absolute z-[2] lg:top-[90px] md:top-[60px] top-[70px]   
+           <div className={`absolute z-[2] lg:top-[90px] md:top-[60px] top-[70px]   
            flex flex-col w-[100%] lg:h-225px md:h-[210px]  
-          '>
+           ${isDarkMode 
+      ? "bg-black text-white" 
+      : ""
+  }`}>
             {(jambOptions.map(option => {
               return (
                 <h2 onClick={(e =>{
@@ -273,11 +299,15 @@ const jambReceipt = () => {
                 document.querySelector('.imgdrop').classList.remove('DropIt');
            
                 })}
-                className='pb-[21px] pt-[21px] md:pb-[14px] md:pt-[14px] font-[400] text-[13.5px] leading-[10.4px] md:py-[15px] py-[8px] bg-white
+                className={`pb-[21px] pt-[21px] md:pb-[14px] md:pt-[14px] font-[400] text-[13.5px] leading-[10.4px] md:py-[15px] py-[8px] 
                 shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
-                pl-[10px] font-[500] text-[#7C7C7C]  
+                pl-[10px] font-[500] 
            md:text-[13.227px] md:leading-[17.195px] 
-           lg:text-[16px] lg:leading-[20.8px] cursor-pointer hover:bg-[#EDEAEA]' 
+           lg:text-[16px] lg:leading-[20.8px] cursor-pointer 
+              ${isDarkMode 
+      ? "bg-black text-white border border-white" 
+      : "text-[#7C7C7C] bg-white hover:bg-[#EDEAEA]"
+  }`}
            key={option.id}>
           {option.quantity}
            </h2>
@@ -314,8 +344,8 @@ const jambReceipt = () => {
     }
   
      })}
-     className='mt-2 md:mt-0 h-[40.927px] lg:h-[51px]  md:h-[29.93px] w-[100%] border-[0.4px] border-[#9C9C9C]
-    font-[400]  leading-[18.206px] text-black
+     className={`mt-2 md:mt-0 h-[40.927px] lg:h-[51px]  md:h-[29.93px] w-[100%] border-[0.4px] border-[#9C9C9C]
+    font-[400]  leading-[18.206px] 
      lg:text-[16px] lg:leading-[20.8px]
    pt-[10.803px] pb-[13.794px] pr-[13px] pl-[10.876px]
      focus:outline-none 
@@ -323,8 +353,12 @@ const jambReceipt = () => {
      md:pr-[5.282px] md:pl-[5.867px] 
      lg:pt-[14px] lg:pb-[15.5px] lg:pr-[16px] lg:pl-[10px]
      placeholder:text-[14.389px] placeholder:leading-[18.809.4px] 
-     lg:placeholder:text-[16px] lg:placeholder:leading-[20.8px] placeholder:text-[#7E7E7E]
-     md:placeholder:text-[14.389px] md:placeholder:leading-[18.206px] rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[13.5px] p-4 sm:p-3 sm:text-lg'
+     lg:placeholder:text-[16px] lg:placeholder:leading-[20.8px] 
+     md:placeholder:text-[14.389px] md:placeholder:leading-[18.206px] rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[13.5px] p-4 sm:p-3 sm:text-lg 
+      ${isDarkMode 
+      ? "bg-black text-white border border-white" 
+      : "text-black placeholder:text-[#7E7E7E]"
+  }`}
       type="tel" name='phone' id='phone' maxLength={11} placeholder=''
       value={jambEducationPinPhone} onChange={(e)=>{
         setJambEducationPinPhone(e.target.value);
@@ -346,17 +380,21 @@ const jambReceipt = () => {
      
      < input 
      
-     className='flex h-[40.927px] lg:h-[51px] md:h-[29.93px] w-[100%] mt-2 md:mt-0
-   font-[400]  lg:text-[16px] lg:leading-[20.8px] text-[#000]
+     className={`flex h-[40.927px] lg:h-[51px] md:h-[29.93px] w-[100%] mt-2 md:mt-0
+   font-[400]  lg:text-[16px] lg:leading-[20.8px] 
      leading-[18.206px] tracking-[0.4px]
       pt-[10.803px] pb-[13.794px] pr-[13px] pl-[10.876px]
-      border-[0.4px] border-[#9C9C9C] focus:outline-none self-center
+      border-[0.4px] focus:outline-none self-center
      md:pt-[8.802px] md:pb-[7.042px] 
      md:pr-[5.282px] md:pl-[5.867px] 
      lg:pt-[14px] lg:pb-[15.5px] lg:pr-[16px] lg:pl-[10px] 
      placeholder:text-[14.389px] placeholder:leading-[18.809.4px] 
-     lg:placeholder:text-[16px] lg:placeholder:leading-[20.8px] placeholder:text-[#7E7E7E]
-     md:placeholder:text-[14.389px] md:placeholder:leading-[18.206px] rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[13.5px] p-4 sm:p-3 sm:text-lg'
+     lg:placeholder:text-[16px] lg:placeholder:leading-[20.8px] 
+     md:placeholder:text-[14.389px] md:placeholder:leading-[18.206px] rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[13.5px] p-4 sm:p-3 sm:text-lg
+     ${isDarkMode 
+      ? "bg-black text-white border border-white" 
+      : "placeholder:text-[#7E7E7E] border-[#9C9C9C] text-[#000]"
+  }`}
    
       type="Email" 
       placeholder='example@gmail.com'
@@ -391,15 +429,18 @@ const jambReceipt = () => {
     {/* input */}
     <div
       onchange={setJambEducationAmount}
-     className='h-[40.927px]  lg:h-[51px] md:h-[29.93px] mt-2 md:mt-0
+     className={`h-[40.927px]  lg:h-[51px] md:h-[29.93px] mt-2 md:mt-0
         md:pt-[8.802px] md:pb-[7.042px] 
        pt-[12.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
      md:pr-[5.282px] md:pl-[5.867px]
-  lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] border-[0.4px] border-[#9C9C9C]
+  lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] border-[0.4px] 
   focus:outline-none text-start
      leading-[10.4px]
    font-[400]  md:text-[9.389px] md:leading-[12.206px]
-  lg:text-[16px] text-black lg:leading-[20.8px] rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[13.5px] p-4 sm:p-3 sm:text-lg'
+  lg:text-[16px]  lg:leading-[20.8px] rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[13.5px] p-4 sm:p-3 sm:text-lg   ${isDarkMode 
+          ? "bg-black text-white border border-white" 
+          : "text-black border-[#9C9C9C]"
+      }`} 
   maxLength={7}>
   {jambEducationAmount}
    </div>
@@ -418,14 +459,22 @@ const jambReceipt = () => {
       {/* input */}
   <div 
    onClick={jambMethodDropDown}
-  className='flex  justify-between pt-[11.803px] pb-[13.794px] pr-[13px] pl-[10.876px] h-[40.927px]  lg:h-[51px] md:h-[29.93px] mt-2 md:mt-0
+  className={`flex  justify-between pt-[11.803px] pb-[13.794px] pr-[13px] pl-[10.876px] h-[40.927px]  lg:h-[51px] md:h-[29.93px] mt-2 md:mt-0
   md:pt-[8.802px] md:pb-[7.042px] 
   md:pr-[5.282px] md:pl-[5.867px] 
   lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
-  border-[0.4px] border-[#9C9C9C]  hover:bg-[#EDEAEA] rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg'>
-      <h2 className='font-[400] leading-[10.4px]
+  border-[0.4px]  rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg
+   ${isDarkMode 
+          ? "bg-black text-white" 
+          : "border-[#9C9C9C]  hover:bg-[#EDEAEA]"
+      }`} >
+      <h2 className={`font-[400] leading-[10.4px]
        md:text-[9.389px] md:leading-[12.206px]
-      lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer'>
+      lg:text-[16px]  lg:leading-[20.8px] cursor-pointer
+      ${isDarkMode 
+        ? "bg-black text-white" 
+        : " "
+    }`}>
       {jambPaymentResult + '' + jambWalletBalance }
         </h2>
         <img 
@@ -437,8 +486,12 @@ const jambReceipt = () => {
          {/* drop down */}
          
         {jambMethodActive && (
-           <div className='absolute lg:top-[90px] md:top-[60px] top-[72px] 
-           flex flex-col w-[100%]'>
+           <div className={`absolute lg:top-[90px] md:top-[60px] top-[72px] 
+           flex flex-col w-[100%]
+            ${isDarkMode 
+        ? "bg-black text-white border border-white" 
+        : ""
+    }`}>
 
           {(jambMethodOptions.map(methodOption => {
               return (
@@ -451,18 +504,24 @@ const jambReceipt = () => {
          document.querySelector('.methodDrop').classList.remove('DropIt');
           })}
           onChange={setJambMethodOptions}
-          className='flex gap-[10px] md:py-[15px] py-[10px] pl-[10px]
-          shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] bg-white
-          cursor-pointer hover:bg-[#EDEAEA] items-center' 
+          className={`flex gap-[10px] md:py-[15px] py-[10px] pl-[10px]
+          shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
+          cursor-pointer items-center  ${isDarkMode 
+          ? "bg-black text-white border border-white" 
+          : "bg-white hover:bg-[#EDEAEA]"
+      }`}
           key={ methodOption.id }>
 
             <img className='md:h-[29.27px]  h-[14.27px]' src={methodOption.flag} alt=""/>
 
               <h2 
-                className='pb-[18px] pb-[21px] pt-[21px] md:pb-0 md:pt-0 pt-[18px] font-[400] text-[13.5px] leading-[10.4px]
-                 font-[500] text-[#7C7C7C]  
+                className={`pb-[18px] pb-[21px] pt-[21px] md:pb-0 md:pt-0 pt-[18px] font-[400] text-[13.5px] leading-[10.4px]
+                 font-[500]  
            md:text-[13.227px] md:leading-[17.195px] 
-           lg:text-[16px] lg:leading-[20.8px] self-center cursor-pointer' >
+           lg:text-[16px] lg:leading-[20.8px] self-center cursor-pointer ${isDarkMode 
+            ? "bg-black text-white" 
+            : "text-[#7C7C7C] "
+        }`} >
           {methodOption.method + ' ' + methodOption.balance}
            </h2>
           </div>

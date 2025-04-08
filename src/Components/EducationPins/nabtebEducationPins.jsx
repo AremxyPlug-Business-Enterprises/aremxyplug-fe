@@ -258,13 +258,17 @@ className='relative w-[100%] '>
     onChange={(e)=> {
       setNabtebExamType(e.target.value);
     }}
-    className='pt-[10.803px] pb-[13.794px] pr-[13px] pl-[10.876px] mt-2 md:mt-0
+    className={`pt-[10.803px] pb-[13.794px] pr-[13px] pl-[10.876px] mt-2 md:mt-0
     md:pt-[8.802px] md:pb-[7.042px] w-[100%]
-   md:pr-[5.282px] md:pl-[5.867px] bg-white
+   md:pr-[5.282px] md:pl-[5.867px] 
    lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
-   border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]
+   border-[0.4px] 
    font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
-       lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer focus:outline-none border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] sm:p-3 sm:text-lg' readOnly/>
+       lg:text-[16px]  lg:leading-[20.8px] cursor-pointer focus:outline-none border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] sm:p-3 sm:text-lg
+        ${isDarkMode 
+      ? "bg-black text-white border border-white" 
+      : "border-[#9C9C9C] hover:bg-[#EDEAEA] text-black bg-white"
+  }`} readOnly/>
 
       <img  
       className='absolute lg:top-[15px] lg:right-[9px] md:top-[8.802px] md:right-[5.282px]
@@ -274,8 +278,12 @@ className='relative w-[100%] '>
       src= {arrowDown} alt="" />
        </div>
        {nabtebExamActive && (
-         <div className='absolute lg:top-[90px] md:top-[60px] top-[70px] z-[3]  
-         flex flex-col w-[100%] lg:h-225px md:h-[210px] '>
+         <div className={`absolute lg:top-[90px] md:top-[60px] top-[70px] z-[3]  
+         flex flex-col w-[100%] lg:h-225px md:h-[210px]   
+          ${isDarkMode 
+      ? "bg-black text-white" 
+      : ""
+  }`}>
           {(nabtebExams.map(exam => {
             return (
                <a href={exam.path}
@@ -285,11 +293,15 @@ className='relative w-[100%] '>
              document.querySelector('.Examdrop').classList.remove('DropIt');
              console.log(e);
               })}
-              className=' pb-[21px] md:pb-[14px] md:pt-[14px] pt-[21px] font-[400] text-[13.5px] leading-[10.4px]
-           bg-white  md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
+              className={`pb-[21px] md:pb-[14px] md:pt-[14px] pt-[21px] font-[400] text-[13.5px] leading-[10.4px]
+            md:py-[15px] py-[8px] pl-[10px] font-[500]   
          md:text-[13.227px] md:leading-[17.195px]
          shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
-         lg:text-[16px] lg:leading-[20.8px] cursor-pointer hover:bg-[#EDEAEA]' 
+         lg:text-[16px] lg:leading-[20.8px] cursor-pointer
+            ${isDarkMode 
+      ? "bg-black text-white border border-white" 
+      : " hover:bg-[#EDEAEA] text-[#7C7C7C] bg-white "
+  }`}
          key= {exam.id}>
       <h2>{exam.examType}   </h2>
          </a>
@@ -319,13 +331,17 @@ className=' relative w-[100%]'>
     onChange={(e)=>{
       nabtebQuantityResult(e.target.value);
     }}
-     className='pt-[10.803px] pb-[13.794px] pr-[13px] pl-[10.876px] mt-2 md:mt-0
+     className={`pt-[10.803px] pb-[13.794px] pr-[13px] pl-[10.876px] mt-2 md:mt-0
      md:pt-[8.802px] md:pb-[7.042px] w-[100%]
-    md:pr-[5.282px] md:pl-[5.867px] bg-white
+    md:pr-[5.282px] md:pl-[5.867px] 
     lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
-    border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]
+    border-[0.4px] 
     font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
-        lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer focus:outline-none border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.5px] sm:p-3 sm:text-lg' readOnly/>
+        lg:text-[16px]  lg:leading-[20.8px] cursor-pointer focus:outline-none border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.5px] sm:p-3 sm:text-lg
+         ${isDarkMode 
+          ? "bg-black text-white border border-white" 
+          : "text-[#7E7E7E] hover:bg-[#EDEAEA] text-black border-[#9C9C9C] bg-white"
+      }`} readOnly/>
      
       <img 
        className='absolute lg:top-[15px] lg:right-[9px] md:top-[8.802px] md:right-[5.282px]
@@ -337,9 +353,12 @@ className=' relative w-[100%]'>
        {/* drop down */}
        
       {nabtebQuantityActive && (
-         <div className='absolute z-[2] lg:top-[90px] md:top-[60px] top-[72px]  
+         <div className={`absolute z-[2] lg:top-[90px] md:top-[60px] top-[72px]  
           flex flex-col w-[100%]   
-        '>
+         ${isDarkMode 
+          ? "bg-black text-white" 
+          : ""
+      }`}>
           {(nabtebOptions.map(option => {
             return (
               <h2 onClick={(e =>{
@@ -349,11 +368,15 @@ className=' relative w-[100%]'>
               document.querySelector('.imgdrop').classList.remove('DropIt');
          
               })}
-              className='pb-[21px] md:pb-[14px] md:pt-[14px] pt-[21px] font-[400] text-[13.5px] text-[#7E7E7E] leading-[10.4px] md:py-[15px] 
+              className={`pb-[21px] md:pb-[14px] md:pt-[14px] pt-[21px] font-[400] text-[13.5px] leading-[10.4px] md:py-[15px] 
               py-[8px] pl-[10px] font-[400]
-               bg-white shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
+               shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
          md:text-[13.227px] md:leading-[17.195px] w-[100%]
-         lg:text-[16px] lg:leading-[20.8px] cursor-pointer hover:bg-[#EDEAEA]' 
+         lg:text-[16px] lg:leading-[20.8px] cursor-pointer 
+         ${isDarkMode 
+          ? "bg-black text-white border border-white" 
+          : "text-[#7E7E7E] hover:bg-[#EDEAEA]  bg-white  "
+      }`}
          key={option.id}>
         {option.quantity}
          </h2>
@@ -390,18 +413,22 @@ className=' relative w-[100%]'>
   }
 
    })}
-   className='h-[40.927px] lg:h-[51px]  md:h-[29.93px] font-[400] mt-2 md:mt-0
-   w-[100%] border-[0.4px] border-[#9C9C9C] 
+   className={`h-[40.927px] lg:h-[51px]  md:h-[29.93px] font-[400] mt-2 md:mt-0
+   w-[100%] border-[0.4px]  
    leading-[18.206px]
-   lg:text-[16px] lg:leading-[20.8px] text-black
+   lg:text-[16px] lg:leading-[20.8px] 
  pt-[10.803px] pb-[13.794px] pr-[13px] pl-[10.876px]
    focus:outline-none 
    md:pt-[8.802px] md:pb-[7.042px] 
    md:pr-[5.282px] md:pl-[5.867px] 
    lg:pt-[14px] lg:pb-[15.5px] lg:pr-[16px] lg:pl-[10px]
    placeholder:text-[14.389px] placeholder:leading-[18.809.4px] 
-     lg:placeholder:text-[16px] lg:placeholder:leading-[20.8px] placeholder:text-[#7E7E7E]
-     md:placeholder:text-[14.389px] md:placeholder:leading-[18.206px] border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.5px] sm:p-3 sm:text-lg'
+     lg:placeholder:text-[16px] lg:placeholder:leading-[20.8px] 
+     md:placeholder:text-[14.389px] md:placeholder:leading-[18.206px] border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.5px] sm:p-3 sm:text-lg
+      ${isDarkMode 
+          ? "bg-black text-white border border-white" 
+          : "placeholder:text-[#7E7E7E] text-black border-[#9C9C9C]"
+      }`}
     type="tel" name='phone' id='phone' maxLength={11} placeholder=''
     value={nabtebEducationPinPhone} onChange={(e)=>{
       setNabtebEducationPinPhone(e.target.value);
@@ -422,18 +449,21 @@ className=' relative w-[100%]'>
    Email
    </label>
    
-   <input className ='EmailPins font-[400] flex h-[40.927px] lg:h-[51px] md:h-[29.93px] w-[100%] mt-2 md:mt-0
+   <input className ={`EmailPins font-[400] flex h-[40.927px] lg:h-[51px] md:h-[29.93px] w-[100%] mt-2 md:mt-0
    lg:text-[16px] lg:leading-[20.8px] 
-   text-black
    leading-[18.206px] tracking-[0.4px]
    pt-[10.803px] pb-[13.794px] pr-[13px] pl-[10.876px] 
-    border-[0.4px] border-[#9C9C9C] focus:outline-none self-center
+    border-[0.4px] focus:outline-none self-center
    md:pt-[8.802px] md:pb-[7.042px] 
    md:pr-[5.282px] md:pl-[5.867px] 
   lg:pt-[14px] lg:pb-[15.5px] lg:pr-[16px] lg:pl-[10px] 
    placeholder:text-[14.389px] placeholder:leading-[18.809.4px] 
-   lg:placeholder:text-[16px] lg:placeholder:leading-[20.8px] placeholder:text-[#7E7E7E]
-   md:placeholder:text-[14.389px] md:placeholder:leading-[18.206px] border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.6px] sm:p-3 sm:text-lg'
+   lg:placeholder:text-[16px] lg:placeholder:leading-[20.8px] 
+   md:placeholder:text-[14.389px] md:placeholder:leading-[18.206px] border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.6px] sm:p-3 sm:text-lg
+    ${isDarkMode 
+          ? "bg-black text-white border border-white" 
+          : "placeholder:text-[#7E7E7E] text-black border-[#9C9C9C]"
+      }`}
     value={nabtebEducationPinEmail}
    onChange={(e) =>{
     setNabtebEducationPinEmail(e.target.value)
@@ -466,15 +496,20 @@ className=' relative w-[100%]'>
     {/* input */}
     <input value={ nabtebEducationAmount}
       onChange={setNabtebEducationAmount}
-     className='h-[40.927px] lg:h-[51px] md:h-[40.93px] mt-2 md:mt-0
+     className={`h-[40.927px] lg:h-[51px] md:h-[40.93px] mt-2 md:mt-0
         md:pt-[8.802px] md:pb-[7.042px] 
        pt-[10.803px] pb-[13.794px] pr-[13px] pl-[10.876px]
      md:pr-[5.282px] md:pl-[5.867px]
-  lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] border-[0.4px] border-[#9C9C9C]
+  lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] border-[0.4px] 
   focus:outline-none text-start
      leading-[10.4px]
    font-[400]  md:text-[9.389px] md:leading-[12.206px]
-  lg:text-[16px] text-black lg:leading-[20.8px] border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.5px] sm:p-3 sm:text-lg'/>
+  lg:text-[16px] lg:leading-[20.8px] border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.5px] sm:p-3 sm:text-lg
+   ${isDarkMode 
+          ? "bg-black text-white border border-white" 
+          : "text-black border-[#9C9C9C]"
+      }`}
+  />
 </div>
 
     {/*================== PAYMENT METHOD ===============*/}
@@ -494,13 +529,17 @@ className=' relative w-[100%]'>
  }}
 className='relative w-[100%]'>
     <input value={nabtebPaymentResult}
-     className=' pt-[10.803px] pb-[13.794px] pr-[13px] pl-[10.876px] mt-2 md:mt-0
+     className={`pt-[10.803px] pb-[13.794px] pr-[13px] pl-[10.876px] mt-2 md:mt-0
      md:pt-[8.802px] md:pb-[7.042px] w-[100%]
-    md:pr-[5.282px] md:pl-[5.867px] bg-white
+    md:pr-[5.282px] md:pl-[5.867px] 
     lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
-    border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]
+    border-[0.4px]
     font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
-        lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer focus:outline-none border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.5px] sm:p-3 sm:text-lg' readOnly/>
+        lg:text-[16px] lg:leading-[20.8px] cursor-pointer focus:outline-none border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.5px] sm:p-3 sm:text-lg 
+        ${isDarkMode 
+          ? "bg-black text-white border border-white" 
+          : "text-black border-[#9C9C9C] hover:bg-[#EDEAEA] bg-white"
+      }`} readOnly/>
    
    
       <img 
@@ -513,8 +552,11 @@ className='relative w-[100%]'>
        {/* drop down */}
        
       {nabtebMethodActive && (
-         <div className=' flex flex-col w-[100%]
-         absolute z-0 lg:top-[90px] md:top-[60px] top-[72px]'>
+         <div className={`flex flex-col w-[100%]
+         absolute z-0 lg:top-[90px] md:top-[60px] top-[72px]   ${isDarkMode 
+          ? "bg-black text-white" 
+          : ""
+      }`}>
 
         {(nabtebMethodOptions.map(methodOption => {
             return (
@@ -527,19 +569,26 @@ className='relative w-[100%]'>
        document.querySelector('.methodDrop').classList.remove('DropIt');
         })}
         onChange={setNabtebMethodOptions}
-        className='
+        className={`
           flex gap-[10px] lg:py-[15px] py-[10px] pl-[10px]
-        cursor-pointer items-center bg-white  hover:bg-[#EDEAEA]
-        shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]' 
+        cursor-pointer items-center
+        shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]   ${isDarkMode 
+          ? "bg-black text-white border border-white" 
+          : " hover:bg-[#EDEAEA] bg-white"
+      }`} 
         key={ methodOption.id }>
 
           <img className='md:h-[29.27px]  h-[14.27px]' src={methodOption.flag} alt=""/>
 
             <h2 
-              className='pb-[18px] md:pb-0 md:pt-0 pt-[18px] font-[400] text-[13px] leading-[10.4px]
-               font-[400] text-[#7C7C7C] 
+              className={`pb-[18px] md:pb-0 md:pt-0 pt-[18px] font-[400] text-[13px] leading-[10.4px]
+               font-[400] 
          md:text-[13.227px] md:leading-[17.195px] 
-         lg:text-[16px] lg:leading-[20.8px] self-center cursor-pointer' >
+         lg:text-[16px] lg:leading-[20.8px] self-center cursor-pointer 
+           ${isDarkMode 
+          ? "bg-black text-white" 
+          : "text-[#7C7C7C] "
+      }`} >
         {methodOption.method + ' ' + methodOption.balance}
          </h2>
         </div>

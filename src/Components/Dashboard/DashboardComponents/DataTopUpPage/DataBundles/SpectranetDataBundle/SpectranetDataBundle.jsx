@@ -315,7 +315,12 @@ const SpectranetDataBundle = () => {
           {/* =========================Select/Add Recipient===================== */}
 
           <div className="flex gap-[10%] mt-[40px] md:w-full md:justify-between md:gap-[10%] ">
-            <div className="w-full flex items-center justify-between border text-[10px] md:py-[15px] md:w-[50%] rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
+            <div className={`w-full flex items-center justify-between border text-[10px] md:py-[15px] md:w-[50%] rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]
+           ${
+                isDarkMode
+                  ? "bg-black text-white border !border-white"
+                  : "border border-[#0003]"
+              }`}>
               <Link
                 to="/DataBundleSelectRecipient"
                 style={{ display: "inline-flex", width: "100%" }}
@@ -329,7 +334,12 @@ const SpectranetDataBundle = () => {
                 />
               </Link>
             </div>
-            <div className="w-full flex items-center justify-between border text-[10px] md:py-[15px] md:w-[40%] md:mr-[9%]  rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
+            <div className={`w-full flex items-center justify-between border text-[10px] md:py-[15px] md:w-[40%] md:mr-[9%]  rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]
+           ${
+                isDarkMode
+                  ? "bg-black text-white border !border-white"
+                  : "border border-[#0003]"
+              }`}>
               <Link
                 to="/DataBundleAddRecipient"
                 style={{ display: "inline-flex", width: "100%" }}
@@ -394,11 +404,20 @@ const SpectranetDataBundle = () => {
 
           <div className="grid grid-cols-1 mt-[25px] md:grid-cols-2 gap-y-[20px] md:gap-x-[58.68px] lg:gap-x-[100px] md:gap-y-[15px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[20px]">
             <div className="relative">
-              <h2 className="lg:text-[18px] lg:leading-[24px] mb-1 text-[14px] md:text-[12px] md:font-[600] font-[400] leading-[12px]">
+              <h2 className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[14px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
+                                            isDarkMode 
+                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                                          }`}>
                 Select Product
               </h2>
               <div
-                className="mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between"
+                className={`mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between
+                 ${
+      isDarkMode
+        ? "bg-black text-white border !border-white"
+        : "border border-[#0003]"
+    }
+  `}
                 onClick={() => setShowProductList(!showProductList)}
               >
                 <h2 className="text-[12px] font-[400] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
@@ -409,13 +428,24 @@ const SpectranetDataBundle = () => {
                 </button>
               </div>
               {showProductList && (
-                <div className="border md:rounded-[10px] text-[13px] md:text-[12px] lg:text-[16px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[10]">
+                <div className={`border md:rounded-[10px] text-[13px] md:text-[12px] lg:text-[16px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[10]
+                  ${
+                    isDarkMode
+                      ? "bg-black text-white border !border-white"
+                      : "border border-[#0003]"
+                  }
+                `}>
                   {productList.map((item) => (
                     <div
                       key={item.name}
                       className={`pb-[17px] md:pb-[6px] pt-[17px] md:pt-[6px] font-[400] text-[14px] cursor-pointer border-b-[0.5px] text-[#7C7C7C] md:text-[12px] lg:text-[16px]  md:rounded-[0px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
                         selectedNetworkProduct === item.name ? "bg-white" : ""
-                      }`}
+                      }${
+                        isDarkMode
+                          ? "bg-black text-white"
+                          : "text-black bg-white"
+                      }
+                    `}
                       onClick={() => handleSelectProduct(item.name)}
                     >
                       {item.name}
@@ -426,11 +456,20 @@ const SpectranetDataBundle = () => {
             </div>
 
             <div className="relative">
-              <h2 className="lg:text-[18px] md:text-[14px] lg:leading-[24px] mb-1 text-[14px] md:font-[600] font-[400] leading-[12px]">
+              <h2 className={`lg:text-[18px] md:text-[14px] lg:leading-[24px] mb-1 text-[14px] md:font-[600] font-[400] leading-[12px] ${
+                                            isDarkMode 
+                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                                          }`}>
                 Select Plan
               </h2>
               <div
-                className="mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between"
+                className={`mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between
+                 ${
+      isDarkMode
+        ? "bg-black text-white border !border-white"
+        : "border border-[#0003]"
+    }
+  `}
                 onClick={() => setShowOptionList(!showOptionList)}
               >
                 <h2 className="text-[13px] font-[400] leading-[12px] md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
@@ -442,7 +481,12 @@ const SpectranetDataBundle = () => {
               </div>
 
               {showOptionList && (
-                <div className="border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[100]">
+                <div className={`border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[100] ${
+                  isDarkMode
+                    ? "bg-black text-white border !border-white"
+                    : "border border-[#0003]"
+                }
+              `}>
                   {productList
                     .find((item) => item.name === selectedNetworkProduct)
                     ?.options.map((optionItem, index) => {
@@ -463,6 +507,10 @@ const SpectranetDataBundle = () => {
                             key={index}
                             className={`pb-[17px] md:pb-[6px] pt-[17px] md:pt-[6px] font- text-[14px] cursor-pointer border-b-[0.5px] md:rounded-[0px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
                               selectedOption === optionItem ? "bg-gray-200" : ""
+                            } ${
+                              isDarkMode
+                                ? "bg-black text-white"
+                                : ""
                             }`}
                             onClick={() =>
                               handleSelectOption(
@@ -483,13 +531,22 @@ const SpectranetDataBundle = () => {
             </div>
 
             <div className="">
-              <h2 className="text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px]">
+              <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
+                                            isDarkMode 
+                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                                          }`}>
                 Email ID{" "}
               </h2>
               <div className="relative mt-[5px]">
                 <input
                   type="text"
-                  className="mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] lg:text-[16px] font-[400] focus:outline-none lg:h-[51px]"
+                  className={`mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] lg:text-[16px] font-[400] focus:outline-none lg:h-[51px]
+                   ${
+      isDarkMode
+        ? "bg-black text-white border !border-white"
+        : "border border-[#0003]"
+    }
+  `}
                   placeholder=""
                   value={emailId}
                   style={{ borderColor: emailInputColor }}
@@ -515,7 +572,10 @@ const SpectranetDataBundle = () => {
             </div>
 
             <div className="">
-              <h2 className="text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px]">
+              <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
+                                            isDarkMode 
+                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                                          }`}>
                 Phone Number{" "}
                 <span className="text-[#04177F]">
                   <Link to="/DataBundleSelectRecipient">
@@ -526,7 +586,13 @@ const SpectranetDataBundle = () => {
               <div className="relative mt-[5px]">
                 <input
                   type="number"
-                  className="mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[13px] lg:text-[16px] font-[400] focus:outline-none lg:h-[51px]"
+                  className={`mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[13px] lg:text-[16px] font-[400] focus:outline-none lg:h-[51px]
+                   ${
+      isDarkMode
+        ? "bg-black text-white border !border-white"
+        : "border border-[#0003]"
+    }
+  `}
                   placeholder=""
                   value={inputValue}
                   onChange={(event) => {
@@ -551,13 +617,22 @@ const SpectranetDataBundle = () => {
             )}
 
             <div className="">
-              <h2 className="text-[15px] font-[400] md:text-[12px] lg:text-[18px]">
+              <h2 className={`text-[15px] font-[400] md:text-[12px] lg:text-[18px] ${
+                                            isDarkMode 
+                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                                          }`}>
                 Recipient Name<span className="text-[#7C7C7C]">(optional)</span>{" "}
               </h2>
               <div className="relative mt-[5px]">
                 <input
                   type="text"
-                  className="mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] font-[400] focus:outline-none lg:h-[51px] lg:text-[16px]"
+                  className={`mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] font-[400] focus:outline-none lg:h-[51px] lg:text-[16px]
+                   ${
+      isDarkMode
+        ? "bg-black text-white border !border-white"
+        : "border border-[#0003]"
+    }
+  `}
                   placeholder=""
                   value={recipientNames}
                   onChange={handleRecipientNameChange}
@@ -573,13 +648,22 @@ const SpectranetDataBundle = () => {
             </div>
 
             <div className="">
-              <h2 className="text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px]">
+              <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
+                                            isDarkMode 
+                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                                          }`}>
                 Amount
               </h2>
               <div className="relative mt-[5px]">
                 <input
                   type="text"
-                  className="mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] font-[400] focus:outline-none lg:h-[51px] lg:text-[16px]"
+                  className={`mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] font-[400] focus:outline-none lg:h-[51px] lg:text-[16px]
+                   ${
+      isDarkMode
+        ? "bg-black text-white border !border-white"
+        : "border border-[#0003]"
+    }
+  `}
                   // placeholder="&#8358;100"
                   value={`${selectedAmount}`}
                   onChange={(event) => {
@@ -595,13 +679,22 @@ const SpectranetDataBundle = () => {
             </div>
 
             <div className="">
-              <h2 className="text-[13px] md:font-[600] font-[400] md:text-[15px] lg:text-[18px]">
+              <h2 className={`text-[13px] md:font-[600] font-[400] md:text-[15px] lg:text-[18px] ${
+                                            isDarkMode 
+                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                                          }`}>
                 Number Of PINs
               </h2>
               <div className="relative mt-[5px]">
                 <input
                   type="number"
-                  className="mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] font-[400] focus:outline-none lg:h-[51px] lg:text-[16px]"
+                  className={`mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] font-[400] focus:outline-none lg:h-[51px] lg:text-[16px]
+                   ${
+      isDarkMode
+        ? "bg-black text-white border !border-white"
+        : "border border-[#0003]"
+    }
+  `}
                   // placeholder="&#8358;100"
                   value={numberPins}
                   onChange={handlePin}
@@ -618,10 +711,19 @@ const SpectranetDataBundle = () => {
 
             <div>
               <div onClick={handleShowPayment}>
-                <h2 className="lg:text-[18px] mt-[5px] lg:leading-[24px] mb-2 text-[15px] md:text-[12px] md:font-[600] font-[400] leading-[12px]">
+                <h2 className={`lg:text-[18px] mt-[5px] lg:leading-[24px] mb-2 text-[15px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
+                                            isDarkMode 
+                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                                          }`}>
                   Payment Method
                 </h2>
-                <div className="mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input flex justify-between items-center border w-full h-8 px-2 rounded-md text-[10px] font-[400] focus:outline-none lg:h-[51px] lg:text-[16px]">
+                <div className={`mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input flex justify-between items-center border w-full h-8 px-2 rounded-md text-[10px] font-[400] focus:outline-none lg:h-[51px] lg:text-[16px]
+                 ${
+      isDarkMode
+        ? "bg-black text-white border !border-white"
+        : "border border-[#0003]"
+    }
+  `}>
                   {paymentSelected ? (
                     <li
                       onClick={handleShowPayment}
@@ -663,7 +765,14 @@ const SpectranetDataBundle = () => {
               </div>
               {showPayment && (
                 <div
-                  className={`pb-[13px] md:pb-[6px] pt-[13px] md:pt-[6px] font-weight-bold text-[15px] border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute ${
+                  className={`pb-[13px] md:pb-[6px] pt-[13px] md:pt-[6px] font-weight-bold text-[15px] border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute 
+                    ${
+                      isDarkMode
+                        ? "bg-black text-white"
+                        : "text-white"
+                    }
+                    ${
+                  
                     toggleSideBar
                       ? "w-full md:w-[44.5%] lg:w-[45%] 2xl:w-[46%]"
                       : "w-full md:w-[46%] 2xl:w-[46.5%]"
@@ -1227,8 +1336,8 @@ const SpectranetDataBundle = () => {
         {/* =======================FOOTER=================================== */}
         <div
           className={`${
-            isDarkMode ? "" : ""
-          } flex gap-[15px] justify-center items-center mt-[100%] pb-[25%] md:pb-[12%] md:mt-[40%] lg:mt-[40%] lg:pb-0`}
+            isDarkMode ? "bg-black text-white flex gap-[15px] justify-center items-center  pb-[25%] md:pb-[12%] lg:pb-0 py-[40%]" : "flex gap-[15px] justify-center items-center mt-[100%] pb-[25%] md:pb-[12%] md:mt-[40%] lg:mt-[40%] lg:pb-0"
+          } `}
         >
           <div className="text-[10px] md:text-[12px] lg:text-[14px]">
             You need help ?
@@ -1236,7 +1345,7 @@ const SpectranetDataBundle = () => {
           <Link to="/ContactUs">
             <div
               className={`${
-                isDarkMode ? "border" : "bg-[#04177f]"
+                isDarkMode ? "bg-[#04177f]" : "bg-[#04177f]"
               } text-[10px] p-1 text-white rounded-[8px] lg:text-[18px]`}
             >
               Contact Us

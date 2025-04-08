@@ -374,8 +374,8 @@ const DataBundlesPage = () => {
         </section>
         <div
             className={`${
-              isDarkMode ? "" : ""
-            } flex gap-[15px] justify-center items-center mt-[100%] pb-[25%] md:pb-[2%] md:mt-[40%] lg:mt-[40%] lg:pb-0`}
+              isDarkMode ? "bg-black text-white flex gap-[15px] justify-center items-center  pb-[25%] md:pb-[12%] lg:pb-0 py-[40%]" : "flex gap-[15px] justify-center items-center mt-[100%] pb-[25%] md:pb-[2%] md:mt-[40%] lg:mt-[40%] lg:pb-0"
+            } `}
           >
             <div className="text-[10px] md:text-[12px] lg:text-[14px]">
               You need help ?
@@ -383,7 +383,7 @@ const DataBundlesPage = () => {
             <Link to="/ContactUs">
               <div
                 className={`${
-                  isDarkMode ? "border" : "bg-[#04177f]"
+                  isDarkMode ? "bg-[#04177f]" : "bg-[#04177f]"
                 } text-[10px] p-1 text-white rounded-[8px] lg:text-[18px]`}
               >
                 Contact Us

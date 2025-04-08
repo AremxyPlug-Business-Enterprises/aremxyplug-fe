@@ -42,10 +42,9 @@ export default function BvnVerification(Data) {
   const { isDarkMode } = useContext(ContextProvider);
   const [loading, setLoading] = useState(false);
   const [genderResult, setGenderResult] = useState("");
-  const genderInfo = ["Male", "Female", "Others.."];
+  // const genderInfo = ["Male", "Female", "Others.."];
   const chooseGender = () => {
     setDropDownGender(!dropDownGender);
-    document.querySelector(".genderDrop").classList.toggle("DropIt");
   };
 
    //  CUSTOM VALIDITY FORHOUSE ADDRESS
@@ -196,6 +195,8 @@ export default function BvnVerification(Data) {
   }, [Data]);
 
   // console.log(bvnDateOfBirth);
+  const genderInfo = ["Male", "Female", "Prefer not to say"];
+
   return (
     <div>
       {bvnVerificationOpen && (
