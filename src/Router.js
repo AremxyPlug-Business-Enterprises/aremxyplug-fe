@@ -182,6 +182,7 @@ import { KedcoReceiptFailed } from "./Components/Dashboard/DashboardComponents/E
 import { PhedReceiptFailed } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/phedReceiptFailed";
 import BvnVerification from "./Components/My Profile & Account Settings/Account Verification/BvnVerification";
 import AccountVerficationPage from "./Components/My Profile & Account Settings/Account Verification/AccountVerficationPage";
+import { ProtectedRoute } from "./Components/ProtectedRoute";
 export const Router = () => {
   return (
     <div>
@@ -218,226 +219,777 @@ export const Router = () => {
         <Route path="/Verification" element={<Verification/>}/>
         <Route path="/passwordReset" element={<PasswordReset />} />
         <Route path="/newPassword" element={<NewPassword />} />
-        <Route path="/dashboard" element={<MainDashboard />} />
-        <Route path="/wallet" element={<Wallet />} />
-        <Route path="/top-up" element={<TopUpScreen />} />
-        <Route path="/fiat-wallet" element={<FiatWallet />} />
-        <Route path="/new-wallet" element={<NewWallet />} />
-        <Route path="/point-balance" element={<PointBalance />} />
-        <Route path="/money-transfer" element={<TransferPage />} />
-        <Route path="/to-my-account" element={<ToMyAccountPage />} />
-        <Route path="/virtual-account" element={<VirtualAccount />} />
-        <Route path="/personal-account" element={<PersonalAccountPage />} />
-        <Route path="/business-account" element={<BusinessAccountPage />} />
-        <Route path="/to-aremxyplug" element={<ToAremxyPlug />} />
-        <Route path="/to-aremxymain" element={<ToAremxyMain />} />
-        <Route path="/to-aremxymain-receipt" element={<AremxyMainReceipt />} />
-        <Route path="/aremxy-add-user" element={<AremxyAddUser />} />
-        <Route path="/aremxy-select-user" element={<AremxySelectUser />} />
-        <Route path="/airtime-topup" element={<AirTime />} />
-        <Route path="/airtime-vtu" element={<AirtimeVtu />} />
-        <Route path="/airtime-vtu-receipt" element={<AirtimeVtuReceipt />} />
-        <Route path="/airtime-receipt-failed" element={<AirtimeReceiptFailed />} />
-        <Route path="/add-vtu-recipient" element={<AddRecipient />} />
-        <Route path="/select-vtu-recipient" element={<SelectRecipient />} />
-        <Route path="/add-account" element={<AddAccount />} />
-        <Route path="/ngn-virtual-account" element={<NgnVirtualAccount />} />
-        <Route path="/cookie-settings" element={<CookiesSettings />} />
-        <Route path="/Receipt" element={<Receipt />} />
-        <Route path="/withdraw" element={<WithdrawPage />} />
-        <Route path="/wallet-summary" element={<WalletSummaryPage />} />
-        <Route path="/sales-summary" element={<SalesSummaryPage />} />
+        <Route path="/dashboard" element={
+          <ProtectedRoute>
+          <MainDashboard />
+          </ProtectedRoute>
+          } />
+        {/* To redirect the user back to the login page if there is attempt without login or authoorisation Token */}
+
+        <Route path="/wallet" element={
+          <ProtectedRoute>
+          <Wallet />
+          </ProtectedRoute>
+          } />
+        <Route path="/top-up" element={
+          <ProtectedRoute>
+          <TopUpScreen />
+          </ProtectedRoute>
+          } />
+        <Route path="/fiat-wallet" element={
+          <ProtectedRoute>
+          <FiatWallet />
+          </ProtectedRoute>
+          } />
+        <Route path="/new-wallet" element={<ProtectedRoute>
+          <NewWallet />
+          </ProtectedRoute>
+          } />
+        <Route path="/point-balance" element={<ProtectedRoute>
+          <PointBalance />
+          </ProtectedRoute>
+         } />
+        <Route path="/money-transfer" element={
+          <ProtectedRoute>
+          <TransferPage />
+          </ProtectedRoute>
+          } />
+        <Route path="/to-my-account" element={
+          <ProtectedRoute>
+          <ToMyAccountPage/>
+          </ProtectedRoute>} />
+        <Route path="/virtual-account" element={
+          <ProtectedRoute>
+          <VirtualAccount/>
+          </ProtectedRoute>
+          } />
+        <Route path="/personal-account" element={
+          <ProtectedRoute>
+              <PersonalAccountPage />
+          </ProtectedRoute>
+        
+          } />
+        <Route path="/business-account" element={
+          <ProtectedRoute>
+          <BusinessAccountPage />
+          </ProtectedRoute>
+          } />
+        <Route path="/to-aremxyplug" element={
+          <ProtectedRoute>
+          <ToAremxyPlug />
+          </ProtectedRoute>
+          } />
+        <Route path="/to-aremxymain" element={
+          <ProtectedRoute>
+          <ToAremxyMain />
+          </ProtectedRoute>} />
+        <Route path="/to-aremxymain-receipt" element={
+          <ProtectedRoute>
+          <AremxyMainReceipt />
+          </ProtectedRoute>
+          } />
+        <Route path="/aremxy-add-user" element={
+          <ProtectedRoute>
+          <AremxyAddUser />
+          </ProtectedRoute>
+          } />
+        <Route path="/aremxy-select-user" element={
+          <ProtectedRoute>
+          <AremxySelectUser />
+          </ProtectedRoute>} />
+        <Route path="/airtime-topup" element={
+          <ProtectedRoute>
+          <AirTime />
+          </ProtectedRoute>
+          } />
+        <Route path="/airtime-vtu" element={
+          <ProtectedRoute>
+          <AirtimeVtu />
+          </ProtectedRoute>
+          } />
+        <Route path="/airtime-vtu-receipt" element={
+          <ProtectedRoute>
+          <AirtimeVtuReceipt />
+          </ProtectedRoute>
+          } />
+        <Route path="/airtime-receipt-failed" element={
+          <ProtectedRoute>
+          <AirtimeReceiptFailed />
+          </ProtectedRoute>
+          } />
+        <Route path="/add-vtu-recipient" element={
+          <ProtectedRoute>
+          <AddRecipient />
+          </ProtectedRoute>
+          } />
+        <Route path="/select-vtu-recipient" element={
+          <ProtectedRoute>
+          <SelectRecipient />
+          </ProtectedRoute>
+          } />
+        <Route path="/add-account" element={
+          <ProtectedRoute>
+          <AddAccount />
+          </ProtectedRoute>
+          } />
+        <Route path="/ngn-virtual-account" element={
+          <ProtectedRoute>
+          <NgnVirtualAccount />
+          </ProtectedRoute>
+          } />
+        <Route path="/cookie-settings" element={
+          <CookiesSettings />
+          } />
+        <Route path="/Receipt" element={
+          <ProtectedRoute>x
+          <Receipt />
+          </ProtectedRoute>} />
+        <Route path="/withdraw" element={
+          <ProtectedRoute>
+          <WithdrawPage />
+          </ProtectedRoute>} />
+        <Route path="/wallet-summary" element={
+          <ProtectedRoute>
+          <WalletSummaryPage/>
+          </ProtectedRoute>} />
+        <Route path="/sales-summary" element={
+          <ProtectedRoute>
+          <SalesSummaryPage />
+          </ProtectedRoute>
+          } />
         {/* <Route path="/notifications" element={<NotificationsPage />} /> */}
-        <Route path="/notifications" element={<NotificationsPage2 />} />
+        <Route path="/notifications" element={
+          <ProtectedRoute>
+          <NotificationsPage2 />
+          </ProtectedRoute>} />
         <Route path="/launch-page" element={<LaunchPage />} />
         <Route path="/launch-page2" element={<LaunchPage2 />} />
         <Route path="/launch-page3" element={<LaunchPage3 />} />
         <Route
           path="/wallet-successful-receipt"
-          element={<WalletSuccessfulReceipt />}
+          element={
+            <ProtectedRoute>
+          <WalletSuccessfulReceipt />
+          </ProtectedRoute>
+        }
         />
         <Route
           path="/wallet-failed-receipt"
-          element={<WalletFailedReceipt />}
+          element={
+            <ProtectedRoute>
+          <WalletFailedReceipt />
+          </ProtectedRoute>
+        }
         />
         <Route
           path="/wallet-pending-receipt"
-          element={<WalletPendingReceipt />}
+          element={
+            <ProtectedRoute>
+               <WalletPendingReceipt />
+    </ProtectedRoute>}
         />
         <Route
           path="/wallet-cancelled-receipt"
-          element={<WalletCancelledReceipt />}
+          element={
+            <ProtectedRoute>
+          <WalletCancelledReceipt />
+          </ProtectedRoute>
+        }
         />
         <Route
           path="/wallet-refunded-receipt"
-          element={<WalletRefundedReceipt />}
+          element={<ProtectedRoute>
+          <WalletRefundedReceipt />
+          </ProtectedRoute>}
         />
         <Route
           path="/withdraw-to-account"
-          element={<WithdrawToMyAccountPage />}
+          element={<ProtectedRoute>
+          <WithdrawToMyAccountPage />
+          </ProtectedRoute>}
         />
 
         <Route
           path="/withdraw-to-personalaccount"
-          element={<WithdrawToPersonalAccountPage />}
+          element={
+            <ProtectedRoute>
+          <WithdrawToPersonalAccountPage />
+          </ProtectedRoute>}
         />
         <Route
           path="/withdraw-to-businessaccount"
-          element={<WithdrawToBusinessAccountPage />}
+          element={
+            <ProtectedRoute>
+          <WithdrawToBusinessAccountPage />
+          </ProtectedRoute>}
         />
-        <Route path="/withdrawal-receipt" element={<WithdrawalReceipt />} />
-        <Route path="/To-other-banks" element={<ToOtherBanks />} />
+        <Route path="/withdrawal-receipt" element={
+          <ProtectedRoute>
+          <WithdrawalReceipt />
+          </ProtectedRoute>} />
+        <Route path="/To-other-banks" element={
+          <ProtectedRoute>
+          <ToOtherBanks />
+          </ProtectedRoute>} />
         <Route
           path="/withdraw-to-other-banks"
-          element={<WithdrawToOtherBanks />}
+          element={
+            <ProtectedRoute>
+          <WithdrawToOtherBanks />
+          </ProtectedRoute>}
         />
-        <Route path="/other-bank-receipt" element={<OtherBankReceipt />} />
+        <Route path="/other-bank-receipt" element={
+          <ProtectedRoute>
+          <OtherBankReceipt />
+          </ProtectedRoute>
+          } />
         <Route
           path="/other-bank-withdrawalreceipt"
-          element={<WithdrawToOtherBankReceipt />}
+          element={<ProtectedRoute>
+          <WithdrawToOtherBankReceipt />
+          </ProtectedRoute>}
         />
         <Route
           path="/international-bank-receipt"
-          element={<InternationalReceipt />}
+          element={<ProtectedRoute>
+          <InternationalReceipt />
+          </ProtectedRoute>}
         />
         <Route path="/redeem-receipt" element={<RedeemReceipt />} />
-        <Route path="/ikedc-receipt" element={<IkedcReceipt />} />
-        <Route path="/ikedc-receipt-failed" element={<IkedcReceiptFailed />} />
-        <Route path="/aedc-receipt" element={<AedcReceipt />} />
-        <Route path="/aedc-receipt-failed" element={<AedcReceiptFailed />} />
-        <Route path="/ekedc-receipt" element={<EkedcReceipt />} />
-        <Route path="/ekedc-receipt-failed" element={<EkedcReceiptFailed />} />
-        <Route path="/eedc-receipt" element={<EedcReceipt />} />
-        <Route path="/eedc-receipt-failed" element={<EedcReceiptFailed />} />
-        <Route path="/kaedco-receipt" element={<KaedcoReceipt />} />
-        <Route path="/kaedco-receipt-failed" element={<KaedcoReceiptFailed />} />
-        <Route path="/bedc-receipt" element={<BedcReceipt />} />
-        <Route path="/bedc-receipt-failed" element={<BedcReceiptFailed />} />
-        <Route path="/ibedc-receipt" element={<IbedcReceipt />} />
-        <Route path="/ibedc-receipt-failed" element={<IbedcReceiptFailed />} />
-        <Route path="/jed-receipt" element={<JedReceipt />} />
-        <Route path="/jed-receipt-failed" element={<JedReceiptFailed />} />
-        <Route path="/kedco-receipt" element={<KedcoReceipt />} />
-        <Route path="/kedco-receipt-failed" element={<KedcoReceiptFailed />} />
-        <Route path="/phed-receipt" element={<PhedReceipt />} />
-        <Route path="/phed-receipt-failed" element={<PhedReceiptFailed />} />
-        <Route path="/bedc" element={<BEDC />} />
-        <Route path="/phed" element={<PHED />} />
-        <Route path="/kedco" element={<KEDCO />} />
-        <Route path="/jed" element={<JED />} />
-        <Route path="/ibedc" element={<IBEDC />} />
-        <Route path="/eedc" element={<EEDC />} />
-        <Route path="/kaedco" element={<KAEDCO />} />
-        <Route path="/ikedc" element={<IKEDC />} />
-        <Route path="/aedc" element={<AEDC />} />
-        <Route path="/ekedc" element={<EKEDC />} />
-        <Route path="/airtime-conversion" element={<AirtimeConversion />} />
-        <Route path="/airtime-receipt" element={<AirtimeReceipt />} />
+        <Route path="/ikedc-receipt" element={<ProtectedRoute>
+          <IkedcReceipt />
+          </ProtectedRoute>} />
+        <Route path="/ikedc-receipt-failed" element={
+          <ProtectedRoute>
+          <IkedcReceiptFailed />
+          </ProtectedRoute>
+          } />
+        <Route path="/aedc-receipt" element={
+          <ProtectedRoute>
+          <AedcReceipt />
+          </ProtectedRoute>} />
+        <Route path="/aedc-receipt-failed" element={
+          <ProtectedRoute>
+          <AedcReceiptFailed />
+          </ProtectedRoute>} />
+        <Route path="/ekedc-receipt" element={
+          <ProtectedRoute>
+          <EkedcReceipt />
+          </ProtectedRoute>} />
+        <Route path="/ekedc-receipt-failed" element={
+          <ProtectedRoute>
+          <EkedcReceiptFailed />
+          </ProtectedRoute>} />
+        <Route path="/eedc-receipt" element={
+          <ProtectedRoute>
+          <EedcReceipt />
+          </ProtectedRoute>} />
+        <Route path="/eedc-receipt-failed" element={
+          <ProtectedRoute>
+          <EedcReceiptFailed />
+          </ProtectedRoute>} />
+        <Route path="/kaedco-receipt" element={
+          <ProtectedRoute>
+          <KaedcoReceipt />
+          </ProtectedRoute>} />
+        <Route path="/kaedco-receipt-failed" element={
+          <ProtectedRoute>
+          <KaedcoReceiptFailed />
+          </ProtectedRoute>} />
+        <Route path="/bedc-receipt" element={
+          <ProtectedRoute>
+          <BedcReceipt />
+          </ProtectedRoute>} />
+        <Route path="/bedc-receipt-failed" element={
+          <ProtectedRoute>
+          <BedcReceiptFailed />
+          </ProtectedRoute>} />
+        <Route path="/ibedc-receipt" element={
+          <ProtectedRoute>
+          <IbedcReceipt />
+          </ProtectedRoute>} />
+        <Route path="/ibedc-receipt-failed" element={
+          <ProtectedRoute>
+          <IbedcReceiptFailed />
+          </ProtectedRoute>} />
+        <Route path="/jed-receipt" element={
+          <ProtectedRoute>
+          <JedReceipt />
+          </ProtectedRoute>} />
+        <Route path="/jed-receipt-failed" element={
+          <ProtectedRoute>
+          <JedReceiptFailed />
+          </ProtectedRoute>
+          } />
+        <Route path="/kedco-receipt" element={
+          <ProtectedRoute>
+          <KedcoReceipt />
+          </ProtectedRoute>
+          } />
+        <Route path="/kedco-receipt-failed" element={
+          <ProtectedRoute>
+          <KedcoReceiptFailed />
+          </ProtectedRoute>
+          } />
+        <Route path="/phed-receipt" element={
+          <ProtectedRoute>
+          <PhedReceipt />
+          </ProtectedRoute>
+          } />
+        <Route path="/phed-receipt-failed" element={
+          <ProtectedRoute>
+          <PhedReceiptFailed />
+          </ProtectedRoute>} />
+        <Route path="/bedc" element={
+          <ProtectedRoute>
+          <BEDC />
+          </ProtectedRoute>
+          } />
+        <Route path="/phed" element={
+          <ProtectedRoute>
+          <PHED />
+          </ProtectedRoute>} />
+        <Route path="/kedco" element={
+          <ProtectedRoute>
+          <KEDCO />
+          </ProtectedRoute>} />
+        <Route path="/jed" element={
+          <ProtectedRoute>
+          <JED />
+          </ProtectedRoute>
+          } />
+        <Route path="/ibedc" element={
+          <ProtectedRoute>
+          <IBEDC />
+          </ProtectedRoute>} />
+        <Route path="/eedc" element={
+          <ProtectedRoute>
+          <EEDC />
+          </ProtectedRoute>} />
+        <Route path="/kaedco" element={
+          <ProtectedRoute>
+          <KAEDCO />
+          </ProtectedRoute>
+          } />
+        <Route path="/ikedc" element={
+          <ProtectedRoute>
+          <IKEDC />
+          </ProtectedRoute>} />
+        <Route path="/aedc" element={
+          <ProtectedRoute>
+          <AEDC />
+          </ProtectedRoute>} />
+        <Route path="/ekedc" element={
+          <ProtectedRoute>
+          <EKEDC />
+          </ProtectedRoute>
+          } />
+        <Route path="/airtime-conversion" element={
+          <ProtectedRoute>
+          <AirtimeConversion />
+          </ProtectedRoute>} />
+        <Route path="/airtime-receipt" element={
+          <ProtectedRoute>
+          <AirtimeReceipt />
+          </ProtectedRoute>} />
         <Route path="/contact-team" element={<ContactTeam />} />
         <Route
           path="/electricity-subscription"
-          element={<ElectricitySubscription />}
+          element={
+            <ProtectedRoute>
+          <ElectricitySubscription />
+          </ProtectedRoute>
+        }
         />
-        <Route path="/global-transfer" element={<GlobalTransfer />} />
-        <Route path="/point-redeem" element={<PointRedeem />} />
-        <Route path="/fiat" element={<FiatConversion />} />
-        <Route path="/currencyConversion" element={<CurrencyConversion />} />
-        <Route path="/data-top-up" element={<DataTopUpPage />} />
-        <Route path="/data-bundles" element={<DataBundlesPage />} />
-        <Route path="/My-Referral" element={<Referral />} />
-        <Route path="/MtnDataTopUpBundle" element={<MtnDataTopUpBundle />} />
-        <Route path="/SuccessfulConversion" element={<SuccessfulReceipt />} />
-        <Route path="/MtnReceipt" element={<MtnReceipt />} />
-        <Route path="/AirtelDataBundle" element={<AirtelDataBundle />} />
-        <Route path="/GloDataBundle" element={<GloDataBundle />} />
-        <Route path="/EtisalatDataBundle" element={<EtisalatDataBundle />} />
-        <Route path="/AirtelReceipt" element={<AirtelReceipt />} />
-        <Route path="/EtisalatReceipt" element={<EtisalatReceipt />} />
-        <Route path="/GloReceipt" element={<GloReceipt />} />
+        <Route path="/global-transfer" element={
+          <ProtectedRoute>
+          <GlobalTransfer />
+          </ProtectedRoute>
+          } />
+        <Route path="/point-redeem" element={
+          <ProtectedRoute>
+          <PointRedeem />
+          </ProtectedRoute>
+          } />
+        <Route path="/fiat" element={
+          <ProtectedRoute>
+          <FiatConversion />
+          </ProtectedRoute>
+          } />
+        <Route path="/currencyConversion" element={
+          <ProtectedRoute>
+          <CurrencyConversion />
+          </ProtectedRoute>
+          } />
+        <Route path="/data-top-up" element={
+          <ProtectedRoute>
+          <DataTopUpPage />
+          </ProtectedRoute>
+          } />
+        <Route path="/data-bundles" element={
+          <ProtectedRoute>
+          <DataBundlesPage />
+          </ProtectedRoute>
+          } />
+        <Route path="/My-Referral" element={
+          <ProtectedRoute>
+          <Referral />
+
+          </ProtectedRoute>
+          } />
+        <Route path="/MtnDataTopUpBundle" element={
+          <ProtectedRoute>
+          <MtnDataTopUpBundle />
+          </ProtectedRoute>
+          } />
+        <Route path="/SuccessfulConversion" element={
+          <ProtectedRoute>
+          <SuccessfulReceipt />
+          </ProtectedRoute>} />
+        <Route path="/MtnReceipt" element={
+          <ProtectedRoute>
+          <MtnReceipt />
+          </ProtectedRoute>
+          } />
+        <Route path="/AirtelDataBundle" element={
+      <ProtectedRoute>
+          <AirtelDataBundle />
+          </ProtectedRoute>
+          } />
+        <Route path="/GloDataBundle" element={
+          <ProtectedRoute>
+          <GloDataBundle />
+          </ProtectedRoute>
+          } />
+        <Route path="/EtisalatDataBundle" element={
+          <ProtectedRoute>
+          <EtisalatDataBundle />
+          </ProtectedRoute>
+          } />
+        <Route path="/AirtelReceipt" element={
+          <ProtectedRoute>
+          <AirtelReceipt />
+          </ProtectedRoute>} />
+        <Route path="/EtisalatReceipt" element={
+          <ProtectedRoute>
+          <EtisalatReceipt />
+          </ProtectedRoute>
+          } />
+        <Route path="/GloReceipt" element={
+          <ProtectedRoute>
+          <GloReceipt />
+          </ProtectedRoute>
+          } />
         <Route
           path="/DataBundleSelectRecipient"
-          element={<DataBundleSelectRecipient />}
+          element={
+            <ProtectedRoute>
+          <DataBundleSelectRecipient />
+          </ProtectedRoute>
+        }
         />
         <Route
           path="/DataBundleAddRecipient"
-          element={<DataBundleAddRecipient />}
+          element={
+            <ProtectedRoute>
+          <DataBundleAddRecipient />
+          </ProtectedRoute>}
         />
         <Route path="/TvSubscription" element={<TvSubscription />} />
-        <Route path="/GoTv" element={<GoTv />} />
-        <Route path="/EducationPins" element={<EducationMain />} />
-        <Route path="/WaecEducationPin" element={<WaecEducationPin />} />
-        <Route path="/NecoEducationPin" element={<NecoEducationPins />} />
-        <Route path="/NabtebEducationPin" element={<NabtebEducationPins />} />
-        <Route path="/JambEducationPin" element={<JambEducationPin />} />
-        <Route path="/WaecReceipt" element={<WaecReceipt />} />
-        <Route path="/JambReceipt" element={<JambReceipt />} />
-        <Route path="/NecoReceipt" element={<NecoReceipt />} />
-        <Route path="/NabtebReceipt" element={<NabtebReceipt />} />
-        <Route path="/TvSubscription" element={<TvSubscription />} />
-        <Route path="/GoTv" element={<GoTv />} />
-        <Route path="/DsTv" element={<DsTv />} />
-        <Route path="/StarTimes" element={<StarTimes />} />
-        <Route path="/Showmax" element={<Showmax />} />
-        <Route path="/GotvReceipt" element={<GotvReceipt />} />
-        <Route path="/DstvReceipt" element={<DstvReceipt />} />
-        <Route path="/StarTimesReceipt" element={<StarTimesReceipt />} />
-        <Route path="/ShowmaxReceipt" element={<ShowmaxReceipt />} />
-        <Route path="/SuccessfulConversion" element={<SuccessfulReceipt />} />
-        <Route path="/SmileDataBundle" element={<SmileDataBundle />} />
-        <Route path="/Smilereceipt" element={<SmileReceipt />} />
+        <Route path="/GoTv" element={
+          <ProtectedRoute>
+          <GoTv />
+          </ProtectedRoute>} />
+        <Route path="/EducationPins" element={
+          <ProtectedRoute>
+          <EducationMain />
+          </ProtectedRoute>
+          } />
+        <Route path="/WaecEducationPin" element={
+          <ProtectedRoute>
+          <WaecEducationPin />
+          </ProtectedRoute>
+          } />
+        <Route path="/NecoEducationPin" element={
+          <ProtectedRoute>
+          <NecoEducationPins />
+          </ProtectedRoute>
+          } />
+        <Route path="/NabtebEducationPin" element={
+          <ProtectedRoute>
+          <NabtebEducationPins />
+          </ProtectedRoute>
+          } />
+        <Route path="/JambEducationPin" element={
+          <ProtectedRoute>
+          <JambEducationPin />
+          </ProtectedRoute>
+          } />
+        <Route path="/WaecReceipt" element={
+          <ProtectedRoute>
+          <WaecReceipt />
+          </ProtectedRoute>} />
+        <Route path="/JambReceipt" element={
+          <ProtectedRoute>
+          <JambReceipt />
+          </ProtectedRoute>
+
+          } />
+        <Route path="/NecoReceipt" element={
+          <ProtectedRoute>
+          <NecoReceipt />
+          </ProtectedRoute>} />
+        <Route path="/NabtebReceipt" element={
+          <ProtectedRoute>
+          <NabtebReceipt />
+          </ProtectedRoute>} />
+        <Route path="/TvSubscription" element={
+          <ProtectedRoute>
+          <TvSubscription />
+          </ProtectedRoute>
+          } />
+        <Route path="/GoTv" element={
+          <ProtectedRoute>
+          <GoTv />
+          </ProtectedRoute>} />
+        <Route path="/DsTv" element={
+          <ProtectedRoute>
+          <DsTv />
+          </ProtectedRoute>
+          } />
+        <Route path="/StarTimes" element={
+          <ProtectedRoute>
+          <StarTimes />
+          </ProtectedRoute>
+          } />
+        <Route path="/Showmax" element={
+          <ProtectedRoute>
+          <Showmax />
+          </ProtectedRoute>
+          } />
+        <Route path="/GotvReceipt" element={
+          <ProtectedRoute>
+          <GotvReceipt />
+          </ProtectedRoute>} />
+        <Route path="/DstvReceipt" element={
+          <ProtectedRoute>
+          <DstvReceipt />
+          </ProtectedRoute>
+          } />
+        <Route path="/StarTimesReceipt" element={
+          <ProtectedRoute>
+          <StarTimesReceipt />
+          </ProtectedRoute>} />
+        <Route path="/ShowmaxReceipt" element={
+          <ProtectedRoute>
+          <ShowmaxReceipt />
+          </ProtectedRoute>
+          } />
+        <Route path="/SuccessfulConversion" element={
+          <ProtectedRoute>
+          <SuccessfulReceipt />
+          </ProtectedRoute>
+          } />
+        <Route path="/SmileDataBundle" element={
+          <ProtectedRoute>
+          <SmileDataBundle />
+          </ProtectedRoute>
+          } />
+        <Route path="/Smilereceipt" element={
+          <ProtectedRoute>
+          <SmileReceipt />
+          </ProtectedRoute>
+          } />
         <Route
           path="/SpectranetDataBundle"
-          element={<SpectranetDataBundle />}
+          element={
+            <ProtectedRoute>
+          <SpectranetDataBundle />
+          </ProtectedRoute>
+        }
         />
-        <Route path="/SpectranetReceipt" element={<SpectranetReceipt />} />
+        <Route path="/SpectranetReceipt" element={
+          <ProtectedRoute>
+          <SpectranetReceipt />
+          </ProtectedRoute>
+          } />
         <Route
           path="/DataBundleSelectRecipient"
-          element={<DataBundleSelectRecipient />}
+          element={
+            <ProtectedRoute>
+          <DataBundleSelectRecipient />
+          </ProtectedRoute>}
         />
         <Route
           path="/DataBundleAddRecipient"
-          element={<DataBundleAddRecipient />}
+          element={
+            <ProtectedRoute>
+          <DataBundleAddRecipient />
+          </ProtectedRoute>}
         />
         <Route path="/ProfileSettingMain" element={<ProfileSettingsMain />} />
-        <Route path="/EditProfile" element={<EditProfile />} />
-        <Route path="/TransactionPage" element={<TransactionPage />} />
-        <Route path="/SuccessfullReceipt" element={<SuccessfullReceipt />} />
-        <Route path="/FailedReceipt" element={<FailedReceipt />} />
-        <Route path="/PendingReceipt" element={<PendingReceipt />} />
-        <Route path="/RefundedReceipt" element={<RefundedReceipt />} />
-        <Route path="/CancelledReceipt" element={<CancelledReceipt />} />
-        <Route path="/LaunchPage" element={<LaunchPage />} />
-        <Route path="/ChangeEmail" element={<ChangeEmail />} />
-        <Route path="/ChangePhoneNumber" element={<ChangePhoneNumber />} />
-        <Route path="/ChangePin" element={<ChangePin />} />
-        <Route path="/AccountUpgrade" element={<AccountUpgrade />} />
-        <Route path="/payment-page" element={<PaymentPage />} />
-        <Route path="/CardPayment" element={<CardPayment />} />
-        <Route path="/AddNewCardPayment" element={<AddNewCardPayment />} />
-        <Route path="/ExistingCardPage" element={<ExistingCardPage />} />
-        <Route path="/FundWithCard" element={<FundWithCard />} />
-        <Route path="/CardPaymentReceipt" element={<CardPaymentReceipt />} />
-        <Route path="/MtnfailedReceipt" element={<MtnFailedReceipt/>}/>
-        <Route path="/AirtelFailedReceipt" element={<AirtelFailedReceipt/>}/>
-        <Route path="GloFailedReceipt" element={<GloFailedReceipt/>}/>
-        <Route path="EtisalatFailedReceipt" element={<EtisalatFailedReceipt/>}/>
+        <Route path="/EditProfile" element={
+          <ProtectedRoute>
+          <EditProfile />
+          </ProtectedRoute>
+          } />
+        <Route path="/TransactionPage" element={
+          <ProtectedRoute>
+          <TransactionPage />
+          </ProtectedRoute>
+          } />
+        <Route path="/SuccessfullReceipt" element={
+          <ProtectedRoute>
+          <SuccessfullReceipt />
+          </ProtectedRoute>
+          } />
+        <Route path="/FailedReceipt" element={
+          <ProtectedRoute>
+          <FailedReceipt />
+          </ProtectedRoute>
+          } />
+        <Route path="/PendingReceipt" element={
+          <ProtectedRoute>
+          <PendingReceipt />
+          </ProtectedRoute>
+          } />
+        <Route path="/RefundedReceipt" element={
+          <ProtectedRoute>
+          <RefundedReceipt />
+          </ProtectedRoute>
+          } />
+        <Route path="/CancelledReceipt" element={
+          <ProtectedRoute>
+          <CancelledReceipt />
+          </ProtectedRoute>
+          } />
+        <Route path="/LaunchPage" element={
+          <ProtectedRoute>
+          <LaunchPage />
+          </ProtectedRoute>
+          } />
+        <Route path="/ChangeEmail" element={
+          <ProtectedRoute>
+          <ChangeEmail />
+          </ProtectedRoute>
+          } />
+        <Route path="/ChangePhoneNumber" element={
+          <ProtectedRoute>
+          <ChangePhoneNumber />
+          </ProtectedRoute>
+          } />
+        <Route path="/ChangePin" element={
+          <ProtectedRoute>
+          <ChangePin />
+          </ProtectedRoute>
+          } />
+        <Route path="/AccountUpgrade" element={
+          <ProtectedRoute>
+          <AccountUpgrade />
+          </ProtectedRoute>
+          } />
+        <Route path="/payment-page" element={
+          <ProtectedRoute>
+          <PaymentPage />
+          </ProtectedRoute>
+          } />
+        <Route path="/CardPayment" element={
+          <ProtectedRoute>
+          <CardPayment />
+          </ProtectedRoute>
+          } />
+        <Route path="/AddNewCardPayment" element={
+          <ProtectedRoute>
+          <AddNewCardPayment />
+          </ProtectedRoute>
+          } />
+        <Route path="/ExistingCardPage" element={
+          <ProtectedRoute>
+          <ExistingCardPage />
+          </ProtectedRoute>
+          } />
+        <Route path="/FundWithCard" element={
+          <ProtectedRoute>
+          <FundWithCard />
+          </ProtectedRoute>
+          } />
+        <Route path="/CardPaymentReceipt" element={
+          <ProtectedRoute>
+          <CardPaymentReceipt />
+          </ProtectedRoute>
+          } />
+        <Route path="/MtnfailedReceipt" element={
+          <ProtectedRoute>
+          <MtnFailedReceipt/>
+          </ProtectedRoute>
+          }/>
+        <Route path="/AirtelFailedReceipt" element={
+          <ProtectedRoute>
+          <AirtelFailedReceipt/>
+          </ProtectedRoute>
+          }/>
+        <Route path="GloFailedReceipt" element={
+          <ProtectedRoute>
+          <GloFailedReceipt/>
+          </ProtectedRoute>
+          }/>
+        <Route path="EtisalatFailedReceipt" element={
+          <ProtectedRoute>
+          <EtisalatFailedReceipt/>
+          </ProtectedRoute>
+          }/>
         <Route
           path="/GlobalTransferSelectRecipient"
-          element={<GlobalTransferSelectRecipient />}
+          element={
+            <ProtectedRoute>
+          <GlobalTransferSelectRecipient />
+          </ProtectedRoute>
+        }
         />
         <Route
           path="/GlobalTransferAddRecipient"
-          element={<GlobalTransferAddRecipient />}
+          element={
+            <ProtectedRoute>
+          <GlobalTransferAddRecipient />
+          </ProtectedRoute>
+        }
         />
-        <Route path="/EditSelectRecipient" element={<EditSelectRecipient />} />
-        <Route path="/BVNVerification" element={<BvnVerification/>} />
-        <Route path="/AccountVerification" element={<AccountVerficationPage/>} />
-        <Route path="/ProfileSettingMain/AccountVerification" element={<ProfileSettingsMain />} />
+        <Route path="/EditSelectRecipient" element={
+          <ProtectedRoute>
+          <EditSelectRecipient />
+          </ProtectedRoute>
+          } />
+        <Route path="/BVNVerification" element={
+          <ProtectedRoute>
+          <BvnVerification/>
+          </ProtectedRoute>
+          } />
+        <Route path="/AccountVerification" element={
+          <ProtectedRoute>
+          <AccountVerficationPage/>
+          </ProtectedRoute>} />
+        <Route path="/ProfileSettingMain/AccountVerification" element={
+          <ProtectedRoute>
+          <ProfileSettingsMain />
+          </ProtectedRoute>
+          } />
 
 
-        <Route path ="/WaecFailedReceipt" element={<WaecFailedReceipt/>}/>
-        <Route path = "/NecoFailedReceipt" element = {<NecoFailedReceipt/>}/>
-        <Route path="/NabtebFailedReceipt" element= {<NabtebFailedReceipt/>}/>
+        <Route path ="/WaecFailedReceipt" element={
+          <ProtectedRoute>
+          <WaecFailedReceipt/>
+          </ProtectedRoute>
+          }/>
+        <Route path = "/NecoFailedReceipt" element = {
+          <ProtectedRoute>
+          <NecoFailedReceipt/>
+          </ProtectedRoute>
+          }/>
+        <Route path="/NabtebFailedReceipt" element= {
+          <ProtectedRoute>
+          <NabtebFailedReceipt/>
+          </ProtectedRoute>}/>
+        
       </Routes>
     </div>
   );

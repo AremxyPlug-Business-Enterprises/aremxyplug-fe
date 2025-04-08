@@ -18,19 +18,17 @@ const QuickFeatures = () => {
         />
       </div>
       <div className={`${styles.quickgrid} grid grid-cols-5 gap-y-2 mt-[3%]`}>
-        <Link to="/airtime-topup">
-          <div
-            className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
+        <Link to="/airtime-topup"
+      className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
               styles.feature
-            }`}
-          >
+            }`} >
             <img
               className="h-[25px] w-[25px] md:w-[] md:h-[] lg:h-[79px] lg:w-[79px]"
               src="./Images/dashboardImages/feature1.png"
               alt="/"
             />
             <p>Airtime Topup</p>
-          </div>
+       
         </Link>
 
         <Link
@@ -47,9 +45,8 @@ const QuickFeatures = () => {
           />{" "}
           <p>Data Topup</p>
         </Link>
-        <Link to="/EducationPins">
-          <div
-            className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
+        <Link to="/EducationPins"
+        className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
               styles.feature
             }`}
           >
@@ -59,7 +56,7 @@ const QuickFeatures = () => {
               alt="/"
             />
             <p>Education Pins</p>
-          </div>
+        
         </Link>
         <Link to="/TvSubscription">
           <div
@@ -75,9 +72,8 @@ const QuickFeatures = () => {
             <p>TV Subscriptions</p>
           </div>
         </Link>
-        <Link to="/electricity-subscription">
-          <div
-            className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
+        <Link to="/electricity-subscription"
+         className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
               styles.feature
             }`}
           >
@@ -87,8 +83,7 @@ const QuickFeatures = () => {
               alt="/"
             />
             <p>Electricity Bills</p>
-          </div>
-        </Link>
+          </Link>
         <Link to="/payment-page"
             className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
               styles.feature

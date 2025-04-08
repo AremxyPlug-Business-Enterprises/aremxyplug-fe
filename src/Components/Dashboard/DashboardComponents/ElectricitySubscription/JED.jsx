@@ -336,7 +336,13 @@ const JED = () => {
 
           </div>
           <div className="lg:flex lg:items-start ">
-            <div className="bg-gradient-to-b mt-[10px] lg:mt-[15px] border-[1px] border-[] from-[#E2F3FF] font-[700] text-[10px] lg:text-[16px] lg:rounded-sm lg:py-2 text-center lg:px-3 py-1 to-[#FFF]">Jos Electric Covers: Bauchi | Benue | Gombe | Plateau.
+            <div className={` mt-[10px] lg:mt-[15px] border-[1px] border-[] from-[#E2F3FF] font-[700] text-[10px] lg:text-[16px] lg:rounded-sm lg:py-2 text-center lg:px-3 py-1 to-[#FFF]
+            ${
+                  
+              isDarkMode
+                ? "text-white bg-black border border-white"
+                : "bg-gradient-to-b"
+            }`}>Jos Electric Covers: Bauchi | Benue | Gombe | Plateau.
             </div>
           </div>
 
@@ -350,10 +356,21 @@ const JED = () => {
             <div className=" flex flex-col mt-[20px] gap-1">
               <div className="text-[#7E7E7E] text-[15px] lg:text-[16px]  md:font-[600] font-[400]">Select Meter Type</div>
               <div
-                className=" border-[1px] w-full mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[14px] p-4 sm:p-3 sm:text-lg  pl-[4px] pr-[8px]  lg:h-[51px] lg:pl-[14px] lg:pr-[16px] flex  items-center justify-between"
+                className={`border-[1px] w-full mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[14px] p-4 sm:p-3 sm:text-lg  pl-[4px] pr-[8px]  lg:h-[51px] lg:pl-[14px] lg:pr-[16px] flex  items-center justify-between ${
+                  
+                  isDarkMode
+                    ? "text-white bg-black border border-white"
+                    : ""
+                }`}
                 onClick={() => setShowProductList(!showProductList)}
               >
-                <h2 className="text-[14px] font-[400]  leading-[12px] text-[#7C7C7C] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                <h2 className={`text-[14px] font-[400]  leading-[12px] text-[#7C7C7C] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]
+                ${
+                  
+                  isDarkMode
+                    ? "text-white bg-black"
+                    : ""
+                }`}>
                   {selectedNetworkProduct}
                 </h2>
                 <button className="lg:w-6 lg:h-6 w-[11px] h-[11px]">
@@ -361,11 +378,24 @@ const JED = () => {
                 </button>
               </div>
               {showProductList && (
-                <div className="border md:rounded-[10px] text-[10px] md:text-[12px] lg:text-[16px] mt-20 lg:mt-20 w-[90%] md:w-[44%]  rounded-[4px] absolute  bg-[#FFF] z-[10]">
+                <div className={`border md:rounded-[10px] text-[10px] md:text-[12px] lg:text-[16px] mt-20 lg:mt-20 w-[90%] md:w-[44%]  rounded-[4px] absolute  z-[10]
+                  ${
+                  
+                    isDarkMode
+                      ? "text-white bg-black border border-white"
+                      : "bg-[#FFF]"
+                  }`}>
                   {productList.map((item) => (
                     <div
                       key={item.name}
-                      className={`pb-[18px] md:pb-[14px] pt-[18px] md:pt-[14px] font-weight-bold text-[14px] cursor-pointer border-b-[0.5px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] w-[100%]  md:rounded-[0px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${selectedNetworkProduct === item.name ? "bg-white" : ""
+                      className={`pb-[18px] md:pb-[14px] pt-[18px] md:pt-[14px] font-weight-bold text-[14px] cursor-pointer border-b-[0.5px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] w-[100%]  md:rounded-[0px] lg:mt-2 py-[4px] text-[10px] pl-[5px] 
+                        ${
+                  
+                          isDarkMode
+                            ? "text-white bg-black"
+                            : "bg-white"
+                        }
+                        ${selectedNetworkProduct === item.name ? "" : ""
                         }`}
                       onClick={() => handleSelectProduct(item.name)}
                     >
@@ -379,10 +409,19 @@ const JED = () => {
             <div className="flex flex-col mt-[10px] md:mt-[23px] lg:mt-[23px]">
               <div className="text-[#7E7E7E] text-[14px] lg:text-[16px] md:font-[600] font-[400] " >Meter Number</div>
               <div>
-                <input type="number" value={meterNumber} onChange={handleMeterNumber} className=" w-full text-[#7E7E7E] pl-[9px] lg:h-[51px] lg:text-[16px]  text-[14px] font-[500]  border-[1px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg" />{" "}
+                <input type="number" value={meterNumber} onChange={handleMeterNumber} className={`w-full pl-[9px] lg:h-[51px] lg:text-[16px]  text-[14px] font-[500]  border-[1px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg  ${
+              isDarkMode
+                ? "bg-black text-white border border-white"
+                : "text-[#7E7E7E] "
+            }`} />{" "}
               </div>
               {errors.meterNumber && (
-                <div className="text-[14px] text-red-500 italic lg:text-[14px]">
+                <div className={`text-[14px] text-red-500 italic lg:text-[14px]
+                  ${
+                    isDarkMode
+                      ? "bg-black text-white"
+                      : ""
+                  }`} >
                   {errors.meterNumber}
                 </div>
               )}
@@ -391,16 +430,31 @@ const JED = () => {
             <div className="flex flex-col mt-[10px]">
               <div className="text-[#7E7E7E] text-[15px] lg:text-[16px] md:font-[600] font-[400]" >Verified Name</div>
               <div>
-                <input type="text" value={verifiedName} onChange={handleVerifiedName} className=" w-full text-[#7E7E7E] lg:h-[51px] lg:text-[16px]  text-[14px] pl-[9px] font-[500]  border-[1px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg" />{" "}
+                <input type="text" value={verifiedName} onChange={handleVerifiedName} className={`w-full  lg:h-[51px] lg:text-[16px]  text-[14px] pl-[9px] font-[500]  border-[1px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg 
+             ${
+              isDarkMode
+              ? "bg-black text-white border border-white"
+              : "text-[#7E7E7E] "
+          }`}  />{" "}
               </div>
             </div>
             <div className="flex flex-col mt-[10px]">
               <div className="text-[#7E7E7E] text-[15px] lg:text-[16px] md:font-[600] font-[400]" >Phone Number</div>
               <div>
-                <input type="number" value={phoneNumber} onChange={handlePhoneNumber} className=" w-full text-[#7E7E7E] lg:h-[51px] lg:text-[16px]  pl-[9px] text-[14px] font-[500]  border-[1px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg" />
+                <input type="number" value={phoneNumber} onChange={handlePhoneNumber} className={`w-full text-[#7E7E7E] lg:h-[51px] lg:text-[16px]  pl-[9px] text-[14px] font-[500]  border-[1px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg 
+               ${
+              isDarkMode
+                ? "bg-black text-white border border-white"
+                : "text-[#7E7E7E] "
+            }`}  />
               </div>
               {errors.phoneNumber && (
-                <div className="text-[14px] text-red-500 italic lg:text-[14px]">
+                <div className={`text-[14px] text-red-500 italic lg:text-[14px]
+                  ${
+                    isDarkMode
+                      ? "text-white bg-black"
+                      : ""
+                  }`} >
                   {errors.phoneNumber}
                 </div>
               )}
@@ -408,33 +462,70 @@ const JED = () => {
             <div className="flex flex-col mt-[10px]">
               <div className="text-[#7E7E7E] text-[15px] lg:text-[16px]   md:font-[600] font-[400]" >Email</div>
               <div>
-                <input type="text" value={ikedcEmail} onChange={handleEmail} className=" w-full lg:h-[51px] text-[#7E7E7E] pl-[9px] lg:text-[16px] text-[10px] font-[500]  border-[1px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg" />
+                <input type="text" value={ikedcEmail} onChange={handleEmail} className={`w-full lg:h-[51px] text-[#7E7E7E] pl-[9px] lg:text-[16px] text-[10px] font-[500]  border-[1px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg
+                ${
+              isDarkMode
+                ? "bg-black text-white border border-white"
+                : "text-[#7E7E7E] "
+            }`} />
               </div>
               {errors.ikedcEmail && (
-                <div className="text-[14px] text-red-500 italic lg:text-[14px]">
+                <div className={`text-[14px] text-red-500 italic lg:text-[14px]
+                  ${
+                    isDarkMode
+                      ? "text-white bg-black"
+                      : ""
+                  }`} >
                   {errors.ikedcEmail}
                 </div>
               )}
             </div>
             <div className="flex flex-col mt-[10px]">
               <div className="text-[#7E7E7E] text-[15px] lg:text-[16px]  md:font-[600] font-[400]" >Amount</div>
-              <div className="flex items-center lg:text-[16px] text-[#7E7E7E] text-[14px] pl-2 border-[1px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[8px]  md:p-0 text-[14px] p-4 sm:p-3 sm:text-lg">
+              <div className={`flex items-center lg:text-[16px]  text-[14px] pl-2 border-[1px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[8px]  md:p-0 text-[14px] p-4 sm:p-3 sm:text-lg    ${
+              isDarkMode
+                ? ""
+                : ""
+            }`}>
                 &#8358;
-                <input type="number" name="ikedcamount" value={ikedcamount} onChange={handleIkedcAmount} className=" w-full outline-none lg:h-[51px] lg:text-[16px]  text-[#7E7E7E] pl-[9px] text-[10px] font-[500] h-[30px]" />
+                <input type="number" name="ikedcamount" value={ikedcamount} onChange={handleIkedcAmount} className={`w-full outline-none lg:h-[51px] lg:text-[16px] pl-[9px] text-[10px] font-[500] h-[30px]
+               ${
+              isDarkMode
+                ? "bg-black text-white border border-black"
+                : "text-[#7E7E7E] "
+            }`} />
               </div>
             </div>
 
             <div className=" flex flex-col mt-[20px] gap-1">
               <div className="text-[#7E7E7E] text-[15px] lg:text-[16px]  md:font-[600] font-[400]">Payment Method</div>
               <div
-                className=" border-[1px] w-full mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[14px] p-4 sm:p-3 sm:text-lg  pl-[4px] pr-[8px] lg:h-[51px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between"
+                className={`border-[1px] w-full mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[14px] p-4 sm:p-3 sm:text-lg  pl-[4px] pr-[8px] lg:h-[51px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between  ${
+                  
+                    isDarkMode
+                      ? "text-white bg-black border border-white"
+                      : "text-[#7E7E7E]"
+                  }`}
                 onClick={() => setShowList(!showList)}
               >
                 <p></p>
                 {selected ? (
-                  <div className="flex w-[100%] justify-between items-center">
+                  <div className={`flex w-[100%] justify-between items-center
+                    ${
+                  
+                      isDarkMode
+                        ? "text-white bg-black"
+                        : ""
+                    }`}
+                    >
 
-                    <p className="text-[12px] text-[#7E7E7E] font-extrabold lg:text-[14px]">
+                    <p className={`text-[12px] font-extrabold lg:text-[14px]
+                    ${
+                  
+                      isDarkMode
+                        ? "text-white bg-black"
+                        : "text-[#7E7E7E]"
+                    }`}>
                       {" "}
                       {globalCountry}
                     </p>
@@ -457,22 +548,40 @@ const JED = () => {
 
               </div>
               {globalTransferErrors.country && (
-                <div className="text-[14px] text-red-500 italic lg:text-[14px]">
+                <div className={`text-[14px] text-red-500 italic lg:text-[14px]
+                  ${
+                  
+                    isDarkMode
+                      ? "text-white bg-black border border-white"
+                      : "text-[#7E7E7E]"
+                  }`}>
                   {globalTransferErrors.country}
                 </div>
               )}
               {showList && (
                 <div
-                  className={`${toggleSideBar
+                  className={`
+                    ${
+                  
+                      isDarkMode
+                        ? "text-white bg-black"
+                        : "bg-[#FFF]"
+                    }${toggleSideBar
                     ? "lg:w-[31.5%] lg:top-[100.5%]"
                     : "lg:w-[38.5%] lg:top-[105.3%]"
                     }  ${styles.countryDropDown
-                    } rounded-br-[7px] rounded-bl-[7px] shadow-xl bg-[#fff] border w-[100%] lg:w-full lg:rounded-br-[14px] lg:rounded-bl-[14px]`}
+                    } rounded-br-[7px] rounded-bl-[7px] shadow-xl border w-[100%] lg:w-full lg:rounded-br-[14px] lg:rounded-bl-[14px]`}
                 >
                   {" "}
                   {countryList.map((country) => (
                     <div
-                      className="pb-[18px] md:pb-[14px] pt-[18px] md:pt-[14px] font-weight-bold text-[13.5px] cursor-pointer border-b flex items-center p-2 gap-[5px] text-[11px]  md:text-[14px] lg:text-[16px]"
+                      className={`pb-[18px] md:pb-[14px] pt-[18px] md:pt-[14px] font-weight-bold text-[13.5px] cursor-pointer border-b flex items-center p-2 gap-[5px] text-[11px]  md:text-[14px] lg:text-[16px]
+                        ${
+                  
+                          isDarkMode
+                            ? "text-white bg-black border border-white"
+                            : ""
+                        }`}
                       key={country.id}
                       onClick={() =>
                         handleCountryClick(

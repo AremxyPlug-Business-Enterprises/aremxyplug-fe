@@ -12,6 +12,8 @@ import axios from "axios";
 import { Loader } from "../Loader/Loader";
 import { Modal } from "../Screens/Modal/Modal";
 import { CheckVirtualAcc } from "../ApiCollection.jsx/ApiBuck";
+import NotVerifiedImage from "../My Profile & Account Settings/ProfileImages/NotVerifiedIcon.svg";
+import VerificationSuccess from "../My Profile & Account Settings/ProfileImages/user-tick.svg";
 //import { useNavigate } from "react-router-dom";
 //import { SetLocalStorage } from "../LocalStorage/LocalStorage";
 
@@ -25,7 +27,8 @@ function LoginForm() {
       setCustomerDetail, setVirtualAccCreated, 
         setBankNameState, setAccountNameState, setAccountNumberState,
          verificationOpen, idVerificationOpen, bvnVerificationOpen,
-         setBvnButtonState, bankNameState
+         setBvnButtonState, setIdButtonState, setIdStatus, setBvnStatus,
+         setVerifyImage,setBvnVerifyImage,
       } = useContext(ContextProvider);
 
 
@@ -61,7 +64,7 @@ function LoginForm() {
   const [email, setEmail] = useState(checkEmail());
   const [password, setPassword] = useState(checkPassword());
   const [checkbox, setCheckbox] = useState(false);
-
+ // const [cormfirmVirtualLoad, setConfirmVirtualLoad] = useState(false)
   const [passwordHidden, setPasswordHidden] = useState("password");
   const [isFocused, setIsFocused] = useState([]);
   const {showModal, setShowModal} = useContext(ContextProvider);
@@ -72,7 +75,7 @@ function LoginForm() {
 
   // const [redirect, setRedirect] = useState(false);
   // const navigate = useNavigate();
-
+  
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
@@ -92,11 +95,12 @@ function LoginForm() {
     };
     handleResize();
     window.addEventListener("resize", handleResize);
-
-    // Cleanup the event listener when the component unmounts
+ 
+   // Cleanup the event listener when the component unmounts
     return () => {
       window.removeEventListener("resize", handleResize);
     };
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -150,54 +154,84 @@ function LoginForm() {
       setIsFocused(isFocused.filter((item) => item !== index));
     }
   };
-//To set the different states for  virtual account
-// const virtualAccountState=()=>{
-//   const {bank_name, account_no, account_name} = virtualAccCreated;
-//   if(bank_name && account_no && account_name){
-//   setBvnButtonState("Virtual Account Created");
-//   }
-// }
 
-// //Function to get User Bank Details
-// const CheckVirtualAcc = async(authToken) => {
-//   console.log(`LOGINAUTH :${authToken}`);
-// if (authToken) {
-// const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc';
-//  // console.log(data)
-//  try{
 
-//   setLoading(true)
-//   setBvnVerifyImage(PendingImage);
-//   setBvnStatus("Pending")
-//       const response = await axios.get(url, {headers : {"Content-Type" : "application/json",
-//   Authorization : authToken
-//   }})
-
-//     if (response.status === 201 || 200 ) {
-//          const virtualAccount = response.data.data.acc_details;
-//         setVirtualAccCreated(virtualAccount);
-//         if(virtualAccount){
-//         virtualAccountState();
+// Function to Verify user's Virtual Account situation 2
+ const ConfirmVirtualState = async() => {
+  const getToken = localStorage.getItem("getToken");
+ const authToken = localStorage.getItem("authToken");
+if (authToken || getToken) {
+const url = 'https://aremxyplug.onrender.com/api/v1/check-verification';
+ //
+ try{
+  setLoading(true);
+  const response = await axios.get(url,{headers : {"Content-Type" : "application/json",
+  Authorization : authToken || getToken
+  }})
+if (response.status === 201 || 200 ) {
+  alert("successful")
+  localStorage.setItem("AccCreated",true);
+  const CheckVerifyStatusNin = localStorage.getItem("idVerification");
+  const CheckVerifyStatusBvn = localStorage.getItem("bvnVerification");
+if( CheckVerifyStatusNin === true && CheckVerifyStatusBvn === false){
+setIdButtonState("Virtual Account Created");
+setVerifyImage(VerificationSuccess);
+setIdStatus("Verified")
+}else if(CheckVerifyStatusNin === false && CheckVerifyStatusBvn === true){
+  setBvnButtonState("Virtual Account Created");
+  setBvnVerifyImage(VerificationSuccess);
+  setBvnStatus("Verified")
+}else{
+  setIdButtonState("Virtual Account Created");
+setVerifyImage(VerificationSuccess);
+setIdStatus("Verified")
+setBvnButtonState("Virtual Account Created");
+  setBvnVerifyImage(VerificationSuccess);
+  setBvnStatus("Verified")
+}
+}
+    } catch(error){
+   if(error.status === 401 || 400){
+   // alert(`ERROR : ${error}`)
+    console.log(error);
+    console.log(error.response.data.message);
+    if(error && error.response.data.message === "error"){
+      localStorage.setItem("idVerification",false);
+      localStorage.setItem("bvnVerification",false);
+      setVerifyImage(NotVerifiedImage);
+      setBvnVerifyImage(NotVerifiedImage);
+      setIdStatus("Not Verified");
+      setBvnStatus("Not Verified")
+     // console.log("ERROR",error.response.data.message)
+    }else if(error && error.response.data.message === "action_required"){
+      localStorage.setItem("AccCreated",false);
+      localStorage.setItem("idVerification",false);
+      //localStorage.setItem("bvnVerification",true);
+      // const CheckVerifyStatusNin = localStorage.getItem("idVerification");
+      // const CheckVerifyStatusBvn = localStorage.getItem("idVerification");
+//       if(CheckVerifyStatusNin === true && CheckVerifyStatusBvn === false){
+//         setIdStatus("Verified");
+//         setVerifyImage(VerificationSuccess);
+// }else if(CheckVerifyStatusNin === false && CheckVerifyStatusBvn === true){
+//      setBvnStatus("Verified");
+//      setBvnVerifyImage(VerificationSuccess);
+//       }else{
+//         setIdStatus("Verified");
+//         setVerifyImage(VerificationSuccess);
+//         setBvnStatus("Verified");
+//         setBvnVerifyImage(VerificationSuccess);
 //       }
-//      } 
-    
-//   }catch(error){
-//    if(error.status === 401 || 400){
-//     alert("We had an error trying to get your details, click okay to repeat the login process");
-//     console.log(`LoginAuth :${loginAuthorisation}`)
-//     setBvnStatus('Not Verified');
-//     setBvnVerifyImage(NotVerifiedIcon);
-//     console.log(`ERROR: ${error}`)
-//  }else if(error.status === 500){
-//         alert('Error:', "INTERNAL_SERVER_ERROR");
-//       setBvnStatus('Not Verified');
-//      setBvnVerifyImage(NotVerifiedIcon)
-//     }
-//     }finally{
-//       setLoading(false)
-//     }
-// }
-// }
+      //console.log("ERROR",error.response.data.message)
+    }
+    }else if (error && error.status === 404){
+      alert("Network Error, Please Check your Connection and try again");
+    }else if(error.status === 500){
+        alert('Error:', "A SERVER ERROR");
+     
+    }}finally{
+     setLoading(false)
+    }
+  }}
 
   
 
@@ -242,17 +276,29 @@ function LoginForm() {
             .then((response) => {
               console.log(response);
               if (response.status === 202 && response.headers.hasAuthorization) {
-                 setOpenTranspin(true);
+                setOpenTranspin(true);
+                const customer  =  response.data.data.customer;
                 const authToken = response.headers.get('Authorization');
-              
-                setLoginAuthorisation(authToken);
+                if(customer){
+                  setCustomerDetail(customer);
+                if(authToken){
+                    localStorage.setItem("getToken", authToken);
+                setTimeout(async()=>{
+                  await CheckVirtualAcc(authToken, customerDetail, setLoading,
+                      setVirtualAccCreated, 
+                    setBankNameState, setAccountNameState, setAccountNumberState,
+                     verificationOpen, idVerificationOpen, bvnVerificationOpen, setBvnButtonState);
+          
+        },10000)
+      }
+    }
                 } else if(response.status === 200){
                   setOpen2StepVerification(true);
                   const customer  =  response.data.data.customer;
-                  
-                  if(customer){
+                  const authToken = response.headers.get('Authorization');
+                   if(customer){
                    setCustomerDetail(customer);
-                const authToken = response.headers.get('Authorization');
+               
                   if(authToken){
                   setLoginAuthorisation(authToken);
                   localStorage.setItem("getToken", authToken)
@@ -260,7 +306,7 @@ function LoginForm() {
                   await CheckVirtualAcc(authToken, customerDetail, setLoading,
                       setVirtualAccCreated, 
                     setBankNameState, setAccountNameState, setAccountNumberState,
-                     verificationOpen, idVerificationOpen, bvnVerificationOpen, setBvnButtonState, bankNameState);
+                     verificationOpen, idVerificationOpen, bvnVerificationOpen, setBvnButtonState, setIdButtonState, ConfirmVirtualState);
           
         },10000)
                   }
@@ -275,8 +321,10 @@ function LoginForm() {
               }
             })
             .catch((error) => {
+              if(error.status === 500){
               console.error(error);
-              alert("User Not Found");
+              alert("A SERVER ERROR");
+              }
             });
           if (checkbox === true) {
             localStorage.setItem("aremxyPassword", JSON.stringify(password));
@@ -324,26 +372,36 @@ function LoginForm() {
               console.log(response);
               if (response.status === 202  && response.headers.hasAuthorization) {
                 setOpenTranspin(true);
+                const customer  =  response.data.data.customer;
                 const authToken = response.headers.get('Authorization');
-                if(authToken){
-                localStorage.setItem('authorisedLogin', authToken)
-               setLoginAuthorisation(authToken);
-                }
+                if(customer){
+                  setCustomerDetail(customer);
+                  if(authToken){
+                    localStorage.setItem("authorisedLogin", authToken);
+                setTimeout(async()=>{
+                  await CheckVirtualAcc(authToken, customerDetail, setLoading,
+                      setVirtualAccCreated, 
+                    setBankNameState, setAccountNameState, setAccountNumberState,
+                     verificationOpen, idVerificationOpen, bvnVerificationOpen, setBvnButtonState);
+          
+        },10000)
+      }
+    }
+     
                }else if(response.status === 200){
                 setOpen2StepVerification(true);
              const customer  =  response.data.data.customer;
-             
+             const authToken = response.headers.get('Authorization');
              if(customer){
               setCustomerDetail(customer);
-           const authToken = response.headers.get('Authorization');
-             if(authToken){
+           if(authToken){
              setLoginAuthorisation(authToken);
              localStorage.setItem("authorisedLogin", authToken)
              //To  Check if the user has a virtual Account
              setTimeout(async()=>{
       await CheckVirtualAcc( authToken, customerDetail, setLoading, setVirtualAccCreated, 
         setBankNameState, setAccountNameState, setAccountNumberState,
-         verificationOpen, idVerificationOpen, bvnVerificationOpen, setBvnButtonState, bankNameState);
+         verificationOpen, idVerificationOpen, bvnVerificationOpen, setIdButtonState,setBvnButtonState, ConfirmVirtualState);
              },10000)
              }
               }
@@ -357,8 +415,10 @@ function LoginForm() {
               }
             })
             .catch((error) => {
+            if(error.status=== 500){
               console.error(error);
-              alert("User Not Found");
+              alert("A SERVER ERROR");
+              }
             });
           if (checkbox === true) {
             localStorage.setItem("aremxyPassword", JSON.stringify(password));

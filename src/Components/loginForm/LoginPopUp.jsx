@@ -30,7 +30,7 @@ function LoginPopUp() {
       virtualAccCreated,
       setAccountNumberState,
     setBankNameState,
-     setAccountNameState
+     setAccountNameState   
 } = useContext(ContextProvider);
 
 const {
@@ -130,14 +130,14 @@ const GetVirtualAccountValue = (bankname, accountname, accountno)=> {
 
 
   // FUNCTION TO HANDLE VERIFICATION OF OTP
-const handleVerificationOTP = async()=> {
+const handleVerificationOTP = ()=> {
   if (otp3) {
      setVerificationPinError("");  
       setTwoStepVerificationSuccess(true);
     setOtp3("");
      setOpen2StepOTP(false);
     console.log(otp3);
-   } 
+ } 
   }
 
   //Function to help set the user's account details such as bank name, 
@@ -184,6 +184,7 @@ const gettingSmsOrEmailFunctionOtp = async(url, body)=> {
      const response = await axios.post(url,body,{ headers : {"Content-Type" : "application/json"}})
       if(response.status === 200 || 201){
         handleVerificationOTP();
+        localStorage.setItem("UserStatus", true);
       } 
     }catch(error){
       if( error.response && error.response.status === 400){
@@ -199,6 +200,8 @@ const gettingSmsOrEmailFunctionOtp = async(url, body)=> {
       setLoading(false);
     }
     }
+
+
 
 
  useEffect(() => {
@@ -293,6 +296,8 @@ return () => clearInterval(timer);
       setLoading(false);
     }
   }
+
+
 
 //console.log(GetLocalStorage());
   return (

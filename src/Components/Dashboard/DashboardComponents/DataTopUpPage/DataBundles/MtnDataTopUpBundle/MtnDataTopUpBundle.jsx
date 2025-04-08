@@ -812,7 +812,11 @@ const MtnDataTopUpBundle = () => {
           {/* =========================Select/Add Recipient===================== */}
 
           <div className="flex gap-[10%] mt-[40px] md:w-full md:justify-between md:gap-[10%] ">
-            <div className="w-full flex items-center justify-between border text-[12px] md:py-[15px] md:w-[50%] rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
+            <div className={`w-full flex items-center justify-between border text-[12px] md:py-[15px] md:w-[50%] rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003] ${
+                    isDarkMode
+                      ? "bg-black text-white border !border-white"
+                      : "border border-[#0003]"
+                  }`}>
               <Link
                 to="/DataBundleSelectRecipient"
                 style={{ display: "inline-flex", width: "100%" }}
@@ -826,7 +830,13 @@ const MtnDataTopUpBundle = () => {
                 />
               </Link>
             </div>
-            <div className="w-full flex items-center justify-between border text-[12px] md:py-[15px] md:w-[40%] md:mr-[9%]  rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
+            <div className={`w-full flex items-center justify-between border text-[12px] md:py-[15px] md:w-[40%] md:mr-[9%]  rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]
+               ${
+                isDarkMode
+                  ? "bg-black text-white border !border-white "
+                  : "border border-[#0003]"
+              }`}
+            >
               <Link
                 to="/DataBundleAddRecipient"
                 style={{ display: "inline-flex", width: "100%" }}
@@ -957,12 +967,23 @@ const MtnDataTopUpBundle = () => {
 
           <div className="grid grid-cols-1 mt-[25px] md:grid-cols-2 gap-y-[20px] md:gap-x-[58.68px] lg:gap-x-[100px] md:gap-y-[15px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[20px]">
             <div className="relative">
-              <h2 className="lg:text-[18px] lg:leading-[24px] mb-1 text-[14px] md:text-[12px] md:font-[600] font-[400] leading-[12px]">
+              <h2 className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[14px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
+                                            isDarkMode 
+                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                                          }`}>
                 Select Product
               </h2>
               <div
-                className="mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between"
-                onClick={() => setShowProductList(!showProductList)}
+                className={`mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between 
+                   ${
+      isDarkMode
+        ? "bg-black text-white border !border-white"
+        : "border border-[#0003]"
+    }
+  `}
+  
+              
+                  onClick={() => setShowProductList(!showProductList)}
               >
                 <h2 className=" text-[12px] font-[400] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
                   {selectedNetworkProduct}
@@ -972,13 +993,23 @@ const MtnDataTopUpBundle = () => {
                 </button>
               </div>
               {showProductList && (
-                <div className="border md:rounded-[10px] text-[12px] md:text-[12px] lg:text-[16px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[10]">
+                <div className={`border md:rounded-[10px] text-[12px] md:text-[12px] lg:text-[16px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[10] ${
+                  isDarkMode
+                    ? "bg-black text-white border !border-white"
+                    : "border border-[#0003]"
+                }
+              `}>
                   {productList.map((item) => (
                     <div
                       key={item.name}
                       className={`pb-[15px] md:pb-[6px] pt-[15px] md:pt-[6px] font-weight-bold text-[13px] cursor-pointer border-b-[0.5px] text-[#7C7C7C] md:text-[12px] lg:text-[16px]  md:rounded-[0px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
-                        selectedNetworkProduct === item.name ? "bg-white" : ""
-                      }`}
+                        selectedNetworkProduct === item.name ? "" : ""  }
+                        ${
+                          isDarkMode
+                            ? "bg-black text-white "
+                            : ""
+                        }
+                        `}
                       onClick={() => handleSelectProduct(item.name)}
                     >
                       {item.name}
@@ -989,11 +1020,20 @@ const MtnDataTopUpBundle = () => {
             </div>
 
             <div className="relative">
-              <h2 className="lg:text-[18px] md:text-[12px] lg:leading-[24px] mb-1 text-[14px] md:font-[600] font-[400] leading-[12px]">
+              <h2 className={`lg:text-[18px] md:text-[12px] lg:leading-[24px] mb-1 text-[14px] md:font-[600] font-[400] leading-[12px] ${
+                                            isDarkMode 
+                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                                          }`}>
                 Select Plan
               </h2>
               <div
-                className="mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between"
+                className={`mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between
+                              ${
+      isDarkMode
+        ? "bg-black text-white border !border-white"
+        : "border border-[#0003]"
+    }
+  `}
                 onClick={() => setShowOptionList(!showOptionList)}
               >
                 <h2 className="text-[12px] font-[400] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
@@ -1005,7 +1045,13 @@ const MtnDataTopUpBundle = () => {
               </div>
 
               {showOptionList && (
-                <div className=" text-[12px] border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[100]">
+                <div className={`text-[12px] border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[100]
+                  ${
+      isDarkMode
+        ? "bg-black text-white border !border-white"
+        : "border border-[#0003]"
+    }
+  `}>
                   {productList
                     .find((item) => item.name === selectedNetworkProduct)
                     ?.options.map((option, index) => {
@@ -1018,7 +1064,13 @@ const MtnDataTopUpBundle = () => {
                           key={option.id}
                           className={`pb-[18px] md:pb-[6px] pt-[18px] md:pt-[6px] font-weight-bold text-[13px] cursor-pointer border-b-[0.5px] md:rounded-[0px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
                             selectedOption === option.id ? "bg-gray-200" : ""
-                          }`}
+                          }
+                           ${
+                          isDarkMode
+                            ? "bg-black text-white "
+                            : ""
+                        }
+                        `}
                           onClick={() =>
                             handleSelectOption(
                               `${option.name} (${amount}) ~ ${duration}`,
@@ -1039,7 +1091,10 @@ const MtnDataTopUpBundle = () => {
             </div>
 
             <div className="">
-              <h2 className="text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px]">
+              <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
+                                            isDarkMode 
+                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                                          }`}>
                 Phone Number{" "}
                 <span className="text-[#04177F]">
                   <Link to="/DataBundleSelectRecipient">
@@ -1050,7 +1105,13 @@ const MtnDataTopUpBundle = () => {
               <div className="relative mt-[5px]">
                 <input
                   type="number"
-                  className="mt-1 md:mt-0 border md:border-[0.4px] rounded-[11px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md  lg:text-[16px] font-[400] focus:outline-none lg:h-[51px]"
+                  className={`mt-1 md:mt-0 border md:border-[0.4px] rounded-[11px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md  lg:text-[16px] font-[400] focus:outline-none lg:h-[51px] 
+                                  ${
+      isDarkMode
+        ? "bg-black text-white border !border-white"
+        : "border border-[#0003]"
+    }
+  `}
                   placeholder=""
                   value={inputValue}
                   onChange={(event) => {
@@ -1058,7 +1119,7 @@ const MtnDataTopUpBundle = () => {
                     setRecipientPhoneNumber(event.target.value);
                   }}
                 />
-                <div className="absolute inset-y-0 top-[4px] right-0 flex items-center pr-3 pointer-events-none">
+                <div className="absolute inset-y-0 top-[4px] right-0 flex items-center pr-6 pointer-events-none">
                   <img
                     src={PhoneNumber}
                     alt=""
@@ -1075,13 +1136,22 @@ const MtnDataTopUpBundle = () => {
             </div>
 
             <div className="">
-              <h2 className="text-[15px] font-[400] md:text-[12px] lg:text-[18px]">
+              <h2 className={`text-[15px] font-[400] md:text-[12px] lg:text-[18px] ${
+                                            isDarkMode 
+                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                                          }`}>
                 Recipient Name<span className="text-[#7C7C7C]">(optional)</span>{" "}
               </h2>
               <div className="relative mt-[5px]">
                 <input
                   type="text"
-                  className="mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.4px] p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] font-[400] focus:outline-none lg:h-[51px] lg:text-[16px]"
+                  className={`mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.4px] p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] font-[400] focus:outline-none lg:h-[51px] lg:text-[16px]
+                                  ${
+      isDarkMode
+        ? "bg-black text-white border !border-white"
+        : "border border-[#0003]"
+    }
+  `}
                   placeholder=""
                   value={recipientNames}
                   onChange={handleRecipientNameChange}
@@ -1097,13 +1167,22 @@ const MtnDataTopUpBundle = () => {
             </div>
 
             <div className="">
-              <h2 className="text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px]">
+              <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
+                                            isDarkMode 
+                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                                          }`}>
                 Amount
               </h2>
               <div className="relative mt-[5px]">
                 <input
                   type="text"
-                  className="mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] font-[400] focus:outline-none lg:h-[51px] lg:text-[16px]"
+                  className={`mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] font-[400] focus:outline-none lg:h-[51px] lg:text-[16px] 
+                                  ${
+      isDarkMode
+        ? "bg-black text-white border !border-white"
+        : "border border-[#0003]"
+    }
+  `}
                   // placeholder="&#8358;100"
                   value={`${selectedAmount}`}
                   onChange={(event) => {
@@ -1120,10 +1199,20 @@ const MtnDataTopUpBundle = () => {
 
             <div>
               <div onClick={handleShowPayment}>
-                <h2 className="lg:text-[18px] mt-[5px] lg:leading-[24px] mb-2 text-[15px] md:text-[12px] md:font-[600] font-[400] leading-[12px]">
+                <h2 className={`lg:text-[18px] mt-[5px] lg:leading-[24px] mb-2 text-[15px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
+                                            isDarkMode 
+                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                                          }`}>
                   Payment Method
                 </h2>
-                <div className=" mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[12px] p-4 sm:p-3 sm:text-lg input flex justify-between items-center border w-full h-8 px-2 rounded-md font-[400] focus:outline-none lg:h-[51px] lg:text-[16px]">
+                <div className={`mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[12px] p-4 sm:p-3 sm:text-lg input flex justify-between items-center border w-full h-8 px-2 rounded-md font-[400] focus:outline-none lg:h-[51px] lg:text-[16px]
+                                             ${
+      isDarkMode
+        ? "bg-black text-white border !border-white"
+        : "border border-[#0003]"
+    }
+  `}
+                 >
                   {paymentSelected ? (
                     <li
                       onClick={handleShowPayment}
@@ -1145,7 +1234,13 @@ const MtnDataTopUpBundle = () => {
                   )}
                   {paymentSelected ? (
                     <button
-                      className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[15px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]"
+                      className={`rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[15px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px] 
+                         ${
+                    isDarkMode
+                      ? "bg-black text-white"
+                      : ""
+                  }`}
+                        
                       onClick={handleShowPayment}
                     >
                       <img
@@ -1166,11 +1261,19 @@ const MtnDataTopUpBundle = () => {
               </div>
               {showPayment && (
                 <div
-                  className={`pb-[16px] pt-[16px] md:pb-[6px] md:pt-[6px] font-[400] text-[15px] border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute ${
+                  className={`pb-[16px] pt-[16px] md:pb-[6px] md:pt-[6px] font-[400] text-[15px] border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute
+                      ${
+                    isDarkMode
+                      ? "bg-black text-white"
+                      : "text-white"
+                  }
+                    ${ 
                     toggleSideBar
                       ? "w-full md:w-[44.5%] lg:w-[45%] 2xl:w-[46%] text-[15px]"
                       : "w-full md:w-[46%] 2xl:w-[46.5%] text-[15px]"
-                  } bg-[#FFF] z-[100] font-weight-bold text-[15px]`}
+                  } bg-[#FFF] z-[100] font-weight-bold text-[15px]
+                
+                  `}
                 >
                   {countryList.map((country) => (
                     <Payment 
@@ -1776,16 +1879,20 @@ const MtnDataTopUpBundle = () => {
         {/* =======================FOOTER=================================== */}
         <div
           className={`${
-            isDarkMode ? "" : ""
-          } flex gap-[15px] justify-center items-center mt-[100%] pb-[25%] md:pb-[12%] md:mt-[40%] lg:mt-[40%] lg:pb-0`}
+            isDarkMode ? "bg-black text-white flex gap-[15px] justify-center items-center  pb-[25%] md:pb-[12%] lg:pb-0 py-[40%]" : "flex gap-[15px] justify-center items-center mt-[100%] pb-[25%] md:pb-[12%] md:mt-[40%] lg:mt-[40%] lg:pb-0"
+          }  `}
         >
-          <div className="text-[10px] md:text-[12px] lg:text-[14px]">
+          <div className={`text-[10px] md:text-[12px] lg:text-[14px]
+            ${
+              isDarkMode ? "text-white" : "text-black"
+            }
+            `}>
             You need help ?
           </div>
           <Link to="/ContactUs">
             <div
               className={`${
-                isDarkMode ? "border" : "bg-[#04177f]"
+                isDarkMode ? "text-white bg-[#04177f]" : "bg-[#04177f]"
               } text-[10px] p-1 text-white rounded-[8px] lg:text-[18px]`}
             >
               Contact Us

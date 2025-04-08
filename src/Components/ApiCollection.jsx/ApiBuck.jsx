@@ -1,6 +1,7 @@
 
 import { SetLocalStorage } from '../LocalStorage/LocalStorage';
 import axios from 'axios';
+import { Navigate } from 'react-router-dom';
 //To set the different states for  virtual account
 
 
@@ -66,17 +67,13 @@ export const GetVirtualAccountValue = ( virtualAccCreated,
 // as necessary
 export const CheckVirtualAcc = async(authToken, customerDetail, setLoading,
     setVirtualAccCreated, setBankNameState, setAccountNameState, setAccountNumberState,
-    verificationOpen, idVerificationOpen, bvnVerificationOpen, setBvnButtonState, bankNameState) => {
-  
-    
-
-if (authToken) {
+    verificationOpen, idVerificationOpen, bvnVerificationOpen, setIdButtonState,setBvnButtonState, confirmVirtualState) => {
+     
+  if (authToken) {
     const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc';
      // console.log(data)
      try{
-    
-      setLoading(true)
-     
+    setLoading(true)
           const response = await axios.get(url, {headers : {"Content-Type" : "application/json",
       Authorization : authToken
       }})
@@ -86,31 +83,50 @@ if (authToken) {
             setVirtualAccCreated(virtualAccCreated);
             console.log(`CustomerDetail : ${customerDetail}`)
             console.log(`virtualAccCreated : ${virtualAccCreated}`)
-            if((verificationOpen && (bvnVerificationOpen || idVerificationOpen)) && bankNameState.length > 1){
+            const {bank_name} = virtualAccCreated
+            if((verificationOpen && (bvnVerificationOpen || idVerificationOpen)) && bank_name.length > 1){
                 InActionVirtualAccountState(virtualAccCreated,setBankNameState, 
                   setAccountNameState, setAccountNumberState);
+               alert("InAction Virtual is running")
+                  if(bvnVerificationOpen === true && idVerificationOpen === false){
                 setBvnButtonState("Virtual Account Created");
-                console.log(response.json);
+               }else if(idVerificationOpen === true && bvnVerificationOpen === false){
+                  setIdButtonState("Virtual Account Created")
+               }
+               // if(InActionVirtualAccountState){
+               //    return <Navigate to ={"/dashboard"}/>
+               //    }
           }else{
             if(virtualAccCreated){
             SignInVirtualAccountState(customerDetail, virtualAccCreated
-               ,setBankNameState, setAccountNameState, setAccountNumberState
-            );
+               ,setBankNameState, setAccountNameState, setAccountNumberState);
+               if(SignInVirtualAccountState){
+             await confirmVirtualState();
+            }
            console.log(response)
+         
          }
           }
-         
-      }
-        
-      }catch(error){
+         }
+        }catch(error){
        if(error.status === 401 || 400){
         alert("We had an error trying to get your details, click okay to repeat the login process");
         console.log(`ERROR: ${error}`)
+       }
+        else if(error.status === 404){
+         alert("Network Error, Please Check your Connection and try again");
+         console.log(`ERROR: ${error}`)
+       
      }else if(error.status === 500){
             alert('Error:', "INTERNAL_SERVER_ERROR");
           }
         }finally{
+         if(confirmVirtualState ){
           setLoading(false)
+         }else if(InActionVirtualAccountState){
+            setLoading(false)
+            return <Navigate to ={"/dashboard"}/>
+         }
         }
 }
 }

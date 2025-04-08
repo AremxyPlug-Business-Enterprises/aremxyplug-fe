@@ -13,12 +13,12 @@ import Success from "../ProfileImages/success.gif";
 import BvnQueryImage from "../ProfileImages/Bvnqueryimage.svg";
 import BvnMessageImage from "../ProfileImages/BvnMessageImage.svg";
 import ArrowDown from "../ProfileImages/arrow-down.svg";
-
 import axios from "axios";
 import PendingImage from "../ProfileImages/Pending.svg";
 import NotVerifiedImage from "../ProfileImages/NotVerifiedIcon.svg";
 import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 import { Loader } from "../../Loader/Loader";
+import { CheckVirtualAcc } from "../../ApiCollection.jsx/ApiBuck";
 
 export default function BvnVerification(Data) {
   const { bvnVerificationOpen } = useContext(ContextProvider);
@@ -32,20 +32,19 @@ export default function BvnVerification(Data) {
   const [bvnPopVerified, setBvnPopVerified] = useState(false);
   const [bvnPhoneMessage, setBvnPhoneMessage] = useState(false);
   const [errorVerify, setErrorVerify] = useState(false);
-  const { bvnButtonState, setBvnButtonState } = useContext(ContextProvider);
-  const { toggleSideBar, customerDetail, setLoginAuthorisation , bankNameState, accountNumberState, accountNameState} =
+  const { bvnButtonState, setBvnButtonState,
+    setBankNameState, setAccountNameState,  setAccountNumberState, idVerificationOpen, setVirtualAccCreated, setIdButtonState
+   } = useContext(ContextProvider);
+  const { toggleSideBar, customerDetail, setLoginAuthorisation , bankNameState} =
     useContext(ContextProvider);
   const {idAddress, setIdAddress} = useContext(ContextProvider);
   const { dropDownGender, setDropDownGender } = useContext(ContextProvider);
   const { isDarkMode } = useContext(ContextProvider);
   const [loading, setLoading] = useState(false);
   const [genderResult, setGenderResult] = useState("");
-
-
-  const genderInfo = ["Male", "Female", "Others.."];
+  // const genderInfo = ["Male", "Female", "Others.."];
   const chooseGender = () => {
     setDropDownGender(!dropDownGender);
-    document.querySelector(".genderDrop").classList.toggle("DropIt");
   };
 
    //  CUSTOM VALIDITY FORHOUSE ADDRESS
@@ -105,6 +104,8 @@ export default function BvnVerification(Data) {
     );
   };
 
+
+  //The main function to verify id Verification and create virtual account
   const checkBvnform = async (
     url,
     data,
@@ -126,12 +127,14 @@ export default function BvnVerification(Data) {
       // console.log(data)
       try {
         if(bvnButtonState === "Verify"){
+          setErrorVerify(false);
         PendingImageFxn();
         PendingText();
         }
         let response;
         bvnButtonState === "Verify" ?
-       response  = await axios.post(url, data , {
+       response  = await axios.post(url, data ,
+         {
           headers: {
             "Content-Type": "application/json",
             Authorization: authToken || getToken,
@@ -149,17 +152,26 @@ export default function BvnVerification(Data) {
           statusBvn();
           verifyPopBvn();
           setBvnButtonState(buttonStateSuccess);
+          localStorage.setItem("bvnVerification",true)
     }  else{
             alertSuccess();
             setBvnButtonState(buttonStateSuccess);
-          }
- }
+            if(Data.ConfirmAcc === false){
+             await CheckVirtualAcc(
+              authToken, customerDetail, setLoading,
+              setVirtualAccCreated, 
+               setBankNameState, setAccountNameState, setAccountNumberState,
+               verificationOpen, idVerificationOpen, bvnVerificationOpen, setIdButtonState, setBvnButtonState);
+            }
+ }  }
       } catch (error) {
         if (error.status === 401 || 400) {
           alert(ErrorMessage);
           console.log(`ERROR : ${error}`)
-          // setBvnVerifyImage(NotVerifiedImage)
-          // setBvnStatus("Not Verified");
+          if(bvnButtonState === "Verify"){
+           setBvnVerifyImage(NotVerifiedImage)
+           setBvnStatus("Not Verified");
+}
         } else if (error.status === 500) {
           alert("Error:", "INTERNAL_SERVER_ERROR");
           setBvnStatus("Not Verified");
@@ -183,6 +195,8 @@ export default function BvnVerification(Data) {
   }, [Data]);
 
   // console.log(bvnDateOfBirth);
+  const genderInfo = ["Male", "Female", "Prefer not to say"];
+
   return (
     <div>
       {bvnVerificationOpen && (
@@ -433,13 +447,16 @@ export default function BvnVerification(Data) {
 
               <div className="flex flex-col md:gap-[15px] gap-[10px] justify-start">
                 <button
-                  disabled={bankNameState.length > 1 && accountNumberState.length > 1 && accountNameState.length > 1 ? true : false}
+                 // disabled={bvn}
                   onClick={() => {
                     BvnFunctionState();
                   }}
-                  className={`lg:py-[13px] md:py-[7.868px] py-[16.531px] rounded-[4.241px] w-[100%] md:w-[150px] lg:w-[163px] lg:rounded-[12px] bg-[#04177F] font-[600] text-[12px] leading-[18px] lg:text-[16px] text-center text-white lg:leading-[24px ${
-           bankNameState.length > 1 ? "bg-slate-400" : "bg-[#04177F]"}`}>
-                  {bvnButtonState}
+                  className={`lg:py-[13px] md:py-[7.868px] py-[16.531px] rounded-[4.241px] w-[100%] md:w-[150px] lg:w-[163px] lg:rounded-[12px] bg-[#04177F]
+         font-[600] text-[12px] leading-[18px] lg:text-[16px] text-center text-white lg:leading-[24px ${
+           bankNameState.length > 1 ? "bg-slate-400" : "bg-[#04177F]"
+         }`}
+                >
+                  {(bvnButtonState) || (Data.ConfirmAcc === true && bvnButtonState === "Verify" ? "Virtual Account Created" : Data.ConfirmId === true && bvnButtonState === "Verify" && Data.ConfirmAcc === false ? "Create Virtual Account" : "Verify" )}
                 </button>
                 {errorVerify && (
                   <h2

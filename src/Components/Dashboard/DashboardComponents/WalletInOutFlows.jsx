@@ -26,11 +26,11 @@ import {
 export const WalletInOutFlows = ({className}) => {
   const { volumeValueToggle, isValue, isDarkMode, toggleSideBar } =
     useContext(ContextProvider);
-  const [blur, setBlur] = useState(false);
-  console.log(setBlur)
+  const [blur] = useState(false);
+ // console.log(setBlur)
   const [selected, setSelected] = useState("");
-  const [toggleTotalTransaction, setToggleTotalTransaction] = useState(false);
-  console.log(setToggleTotalTransaction)
+  const [toggleTotalTransaction] = useState(false);
+  //console.log(setToggleTotalTransaction)
   const [symbol, setSymbol] = useState("₦");
 
   const [activeButtons, setActiveButtons] = useState([
@@ -46,59 +46,7 @@ export const WalletInOutFlows = ({className}) => {
     setActiveButtons(updatedButtons);
   };
 
-  // const handleSelectedOption = (event) => {
-  //   const clickedoption = event.target.value;
-  //   setSelected(clickedoption);
-  //   setBlur(
-  //     clickedoption === "USD" ||
-  //       clickedoption === "GBP" ||
-  //       clickedoption === "AUD" ||
-  //       clickedoption === "KES" ||
-  //       clickedoption === "EUR"
-  //   );
-  //   clickedoption === "NGN"
-  //     ? setSymbol("₦")
-  //     : clickedoption === "USD"
-  //     ? setSymbol("$")
-  //     : clickedoption === "GBP"
-  //     ? setSymbol("£")
-  //     : clickedoption === "AUD"
-  //     ? setSymbol("AU$")
-  //     : clickedoption === "KES"
-  //     ? setSymbol("KSh")
-  //     : clickedoption === "EUR"
-  //     ? setSymbol("€")
-  //     : setSymbol("");
-  //   return;
-  // };
-
-  // const data = [
-  //   { xaxis: "0.00", inflow: 10, outflow: 0, amt: 2400 },
-  //   { xaxis: "1.00", inflow: 9, outflow: 5, amt: 2210 },
-  //   { xaxis: "2.00", inflow: 8, outflow: 1, amt: 2210 },
-  //   { xaxis: "3.00", inflow: 7, outflow: 2, amt: 2210 },
-  //   { xaxis: "4.00", inflow: 6, outflow: 3, amt: 2210 },
-  //   { xaxis: "5.00", inflow: 5, outflow: 4, amt: 2210 },
-  //   { xaxis: "6.00", inflow: 4, outflow: 5, amt: 2210 },
-  //   { xaxis: "7.00", inflow: 3, outflow: 6, amt: 2210 },
-  //   { xaxis: "8.00", inflow: 2, outflow: 7, amt: 2210 },
-  //   { xaxis: "9.00", inflow: 1, outflow: 8, amt: 2210 },
-  //   { xaxis: "10.00", inflow: 0, outflow: 9, amt: 2210 },
-  //   { xaxis: "11.00", inflow: 5, outflow: 9.5, amt: 2210 },
-  //   { xaxis: "12.00", inflow: 1, outflow: 10, amt: 2210 },
-  //   { xaxis: "13.00", inflow: 2, outflow: 9, amt: 2210 },
-  //   { xaxis: "14.00", inflow: 3, outflow: 8, amt: 2210 },
-  //   { xaxis: "15.00", inflow: 4, outflow: 7, amt: 2210 },
-  //   { xaxis: "16.00", inflow: 5, outflow: 6, amt: 2210 },
-  //   { xaxis: "17.00", inflow: 6, outflow: 5, amt: 2210 },
-  //   { xaxis: "18.00", inflow: 7, outflow: 4, amt: 2210 },
-  //   { xaxis: "19.00", inflow: 8, outflow: 3, amt: 2210 },
-  //   { xaxis: "20.00", inflow: 9, outflow: 2, amt: 2210 },
-  //   { xaxis: "21.00", inflow: 10, outflow: 1, amt: 2210 },
-  //   { xaxis: "22.00", inflow: 10, outflow: 0, amt: 2210 },
-  //   { xaxis: "23.00", inflow: 2, outflow: 9, amt: 2210 },
-  //   { xaxis: "24.00", inflow: 0, outflow: 10, amt: 2210 },
-  // ];
+  
 
   const handleSelectedOption = (event) => {
     const clickedoption = event.target.value;
@@ -120,9 +68,9 @@ export const WalletInOutFlows = ({className}) => {
     );
   };
 
-  const [activeButton, setActiveButton] = useState(0);
+  const [activeButton] = useState(0);
 
-  console.log(setActiveButton)
+  //console.log(setActiveButton)
   const [data, setData] = useState([]);
 
   useEffect(() => {

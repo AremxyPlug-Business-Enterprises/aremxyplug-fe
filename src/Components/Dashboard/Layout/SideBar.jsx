@@ -4,15 +4,21 @@ import { Link } from "react-router-dom";
 import { ContextProvider } from "../../Context";
 import styles from "./Dashboard.module.css";
 import { RemoveLocalStorage } from "../../LocalStorage/LocalStorage";
-export const SideBar = ({fullName, userId}) => {
-  const { setToggleSideBar, isDarkMode, handleClickOutside, customerDetail, bvnStatus } =
+import { useNavigate } from "react-router-dom";
+
+
+export const SideBar = ({fullName, userId, bvnVerify, NinVerify}) => {
+  const { setToggleSideBar, isDarkMode, handleClickOutside, customerDetail,setUserStatus } =
     useContext(ContextProvider);
+   
     const {full_name, id} = customerDetail;
+    const navigate= useNavigate()
   const RemoveLocalStorageKeys=()=> {
-    RemoveLocalStorage()
+    RemoveLocalStorage();
+    setUserStatus(false);
+    navigate("/Login", {replace : true})
+;
   }
-  
-   console.log(`FULLNAME: ${fullName} ------- UserId : ${userId}`)
   const [dropDownOpen, setDropDownOpen] = useState({
     dropdown1: false,
     dropdown2: false,
@@ -40,11 +46,7 @@ export const SideBar = ({fullName, userId}) => {
       document.removeEventListener("click", handleClickOutside);
     };
   });
-
-
-
-
-  return (
+return (
     <div
       className={`${styles.sidebar}  fixed overflow-auto ${
         isDarkMode ? "bg-[#000] border" : " bg-[#04177f]"
@@ -96,8 +98,8 @@ export const SideBar = ({fullName, userId}) => {
                   </p>
                   <div className="flex gap-[3px] lg:gap-[5px]">
                     <div className={`px-[4px] py-[1px] font-[600] lg:font-[700] text-[10px]
-                      md:text-[10px] lg:text-[12px] lg:rounded-[2px] ${bvnStatus === "Verified" ? "text-green-600" : "text-red-600"}`}>
-                      {bvnStatus}
+                      md:text-[10px] lg:text-[12px] lg:rounded-[2px] ${bvnVerify === true  ? "text-green-600" : "text-red-600"}`}>
+                      {bvnVerify === true  ? "Verified" : "UnVerified"}
                     </div>
                     <div className=" px-[4px] py-[1px] font-[600] lg:font-[700] text-[10px]
                      text-white md:text-[10px] lg:text-[12px] lg:rounded-[2px]">
@@ -588,7 +590,7 @@ export const SideBar = ({fullName, userId}) => {
         <p
           className={`${styles.logouttxt} cursor-pointer text-[7px] md:text-[7px] lg:text-[14px]`}
         >
-          <Link to="/Login" onClick={()=> RemoveLocalStorageKeys()}>Logout</Link>
+          <div onClick={()=> RemoveLocalStorageKeys()}>Logout</div>
         </p>
       </div>
     </div>

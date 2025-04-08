@@ -259,13 +259,16 @@ onClick={(e) => {
    onChange={(e) => {
     setExamType(e.target.value)
    }}
-className=' pt-[10.803px] pb-[13.794px] pr-[13px] pl-[10.876px] mt-2 md:mt-0
+className={`pt-[10.803px] pb-[13.794px] pr-[13px] pl-[10.876px] mt-2 md:mt-0
  md:pt-[8.802px] md:pb-[7.042px] w-full
-md:pr-[5.282px] md:pl-[5.867px] bg-white
+md:pr-[5.282px] md:pl-[5.867px]
 lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
- border-[#9C9C9C] hover:bg-[#EDEAEA]
 font-[400] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px]
-    lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer focus:outline-none border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 shadow-sm md:shadow-0 focus:outline-none focus:ring-2 text-[13.5px] sm:p-3 sm:text-lg ' readOnly/>
+    lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer focus:outline-none border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 shadow-sm md:shadow-0 focus:outline-none focus:ring-2 text-[13.5px] sm:p-3 sm:text-lg 
+    ${isDarkMode 
+      ? "bg-black text-white border border-white" 
+      : "border-[#9C9C9C] hover:bg-[#EDEAEA] bg-white"
+  }`} readOnly/>
    <img 
        className='absolute lg:top-[15px] lg:right-[9px] md:top-[8.802px] md:right-[5.282px]
         top-[21.802px] right-[13px]
@@ -274,8 +277,12 @@ font-[400] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px]
       src={arrowDown} alt="" />
        </div>
        {examActive && (
-         <div className='absolute lg:top-[90px] md:top-[60px] top-[70px] z-[2]  flex flex-col w-[100%] lg:h-225px md:h-[210px] rounded-[10px] rounded md:rounded-0
-        '>
+         <div className={`absolute lg:top-[90px] md:top-[60px] top-[70px] z-[2]  flex flex-col w-[100%] lg:h-225px md:h-[210px] rounded-[10px] rounded md:rounded-0
+            ${isDarkMode 
+      ? "bg-black text-white border border-white" 
+      : ""
+  }`}
+        >
           {(Exams.map(exam => {
             return (
                <a href={exam.path}
@@ -285,18 +292,22 @@ font-[400] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px]
              document.querySelector('.Examdrop').classList.remove('DropIt');
              console.log(e);
               })}
-              className='pb-[20px] pt-[20px] md:pb-[14px] md:pt-[14px] font-[400] text-[13.2px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
+              className={`pb-[20px] pt-[20px] md:pb-[14px] md:pt-[14px] font-[400] text-[13.2px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500]  
          md:text-[13.227px] md:leading-[17.195px] 
-         shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] bg-white
-         lg:text-[16px] lg:leading-[20.8px] cursor-pointer hover:bg-[#EDEAEA]' 
+         shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
+         lg:text-[16px] lg:leading-[20.8px] cursor-pointer
+           ${isDarkMode 
+      ? "bg-black text-white border border-white" 
+      : "border-[#9C9C9C] text-[#7C7C7C] hover:bg-[#EDEAEA] bg-white"
+  }`} 
          key= {exam.id}>
       <h2>{exam.examType}   </h2>
          </a>
         
             )
           }))}
-         
-          
+
+
              </div>
       )}
     </div>
@@ -305,7 +316,7 @@ font-[400] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px]
     <div className='relative gap-[5.868px] flex flex-col w-[100%] md:w-1/2  
     md:gap-[5.868px] lg:gap-[10px] '>
     {/* header */}
-    <label className=' md:font-[600] font-[400] text-[#7E7E7E] text-[14px] leading-[10.4px]
+    <label className='md:font-[600] font-[400] text-[#7E7E7E] text-[14px] leading-[10.4px]
       md:text-[9.389px] md:leading-[12.206px]
      lg:text-[16px] lg:leading-[20.8px]'>
     Quantity
@@ -320,13 +331,17 @@ onClick={(e) => {
   setQuantityResult(e.target.value)
   }}
   value={quantityResult}
-className=' pt-[10.803px] pb-[13.794px] pr-[13px] pl-[10.876px] mt-2 md:mt-0
+className={`pt-[10.803px] pb-[13.794px] pr-[13px] pl-[10.876px] mt-2 md:mt-0
  md:pt-[8.802px] md:pb-[7.042px] w-[100%]
-md:pr-[5.282px] md:pl-[5.867px] bg-white
+md:pr-[5.282px] md:pl-[5.867px]
 lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
-border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]
+border-[0.4px]  
 font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
-    lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer focus:outline-none border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 shadow-sm md:shadow-0 focus:outline-none focus:ring-2 text-[13.5px] sm:p-3 sm:text-lg'  readOnly/>
+    lg:text-[16px] lg:leading-[20.8px] cursor-pointer focus:outline-none border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 shadow-sm md:shadow-0 focus:outline-none focus:ring-2 text-[13.5px] sm:p-3 sm:text-lg   
+    ${isDarkMode 
+      ? "bg-black text-white border border-white" 
+      : "bg-white text-black border-[#9C9C9C]"
+  }`}   readOnly/>
    
       <img 
        className='absolute lg:top-[15px] lg:right-[9px] md:top-[8.802px] md:right-[5.282px]
@@ -338,9 +353,12 @@ font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
        {/* drop down */}
        
       {quantityActive && (
-         <div className='absolute lg:top-[90px] md:top-[60px] top-[70px] z-[1] 
+         <div className={`absolute lg:top-[90px] md:top-[60px] top-[70px] z-[1] 
          flex flex-col w-[100%] lg:h-225px md:h-[210px] rounded md:rounded-0
-         '>
+           ${isDarkMode 
+      ? "bg-black text-white border border-white" 
+      : ""
+  }`} >
           {(options.map(option => {
             return (
               <h2 onClick={(e =>{
@@ -350,10 +368,14 @@ font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
               document.querySelector('.imgdrop').classList.remove('DropIt');
          
               })}
-              className='pb-[20px] md:pb-[14px] md:pt-[14px] pt-[20px]  font-[400] text-[13.5px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
-         md:text-[13.227px] md:leading-[17.195px] w-[100%] bg-[white] 
+              className={`pb-[20px] md:pb-[14px] md:pt-[14px] pt-[20px]  font-[400] text-[13.5px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500]
+         md:text-[13.227px] md:leading-[17.195px] w-[100%]  
        shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
-         lg:text-[16px] lg:leading-[20.8px] cursor-pointer hover:bg-[#EDEAEA]' 
+         lg:text-[16px] lg:leading-[20.8px] cursor-pointer  
+         ${isDarkMode 
+      ? "bg-black text-white border border-white" 
+      : "text-[#7C7C7C] hover:bg-[#EDEAEA] bg-white"
+  }`} 
          key={option.id}>
         {option.quantity}
          </h2>
@@ -390,18 +412,22 @@ font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
   }
 
    })}
-   className='font-[410] h-[40.927px] lg:h-[51px]  md:h-[29.93px] w-[100%] mt-2 md:mt-0
-    border-[0.4px] border-[#9C9C9C] 
-   lg:text-[16px] lg:leading-[20.8px] text-black
+   className={`font-[410] h-[40.927px] lg:h-[51px]  md:h-[29.93px] w-[100%] mt-2 md:mt-0
+    border-[0.4px] 
+   lg:text-[16px] lg:leading-[20.8px] 
       leading-[16.206px]
    pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
-   focus:outline-none 
+   focus:outline-none
    md:pt-[8.802px] md:pb-[7.042px] 
    md:pr-[5.282px] md:pl-[5.867px] 
    lg:pt-[14px] lg:pb-[15.5px] lg:pr-[16px] lg:pl-[10px]
    placeholder:text-[14.389px] placeholder:leading-[18.809.4px] 
-   lg:placeholder:text-[16px] lg:placeholder:leading-[20.8px] placeholder:text-[#7E7E7E]
-   md:placeholder:text-[14.389px] md:placeholder:leading-[18.206px] focus:outline-none border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.5px] sm:p-3 sm:text-lg'
+   lg:placeholder:text-[16px] lg:placeholder:leading-[20.8px]
+   md:placeholder:text-[14.389px] md:placeholder:leading-[18.206px] focus:outline-none rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.5px] sm:p-3 sm:text-lg
+   ${isDarkMode 
+    ? "bg-black text-white border border-white" 
+    : "border-[#9C9C9C] text-[#7C7C7C] hover:bg-[#EDEAEA] text-black bg-white placeholder:text-[#7E7E7E] border md:border-[0.4px]"
+}`} 
     type="tel" name='Waec-Phone' id='phone' maxLength={11} placeholder=''
     value={educationPinPhone}
      onChange={(e)=>{
@@ -424,17 +450,21 @@ font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
    Email
    </label>
    
-   <input className ='EmailPins font-[400]  flex h-[41.927px] lg:h-[51px] md:h-[29.93px] w-[100%] mt-2 md:mt-0
-   lg:text-[16px] lg:leading-[21.8px] text-black
+   <input className ={`EmailPins font-[400]  flex h-[41.927px] lg:h-[51px] md:h-[29.93px] w-[100%] mt-2 md:mt-0
+   lg:text-[16px] lg:leading-[21.8px] 
    text-[14px] leading-[18.206px] tracking-[0.4px]
    pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] 
-    border-[0.4px] border-[#9C9C9C] focus:outline-none self-center
+    border-[0.4px] focus:outline-none self-center
    md:pt-[8.802px] md:pb-[7.042px] 
    md:pr-[5.282px] md:pl-[5.867px] 
    lg:pt-[14px] lg:pb-[15.5px] lg:pr-[16px] lg:pl-[10px] 
    placeholder:text-[14.389px] placeholder:leading-[18.809.4px] 
-   lg:placeholder:text-[16px] lg:placeholder:leading-[20.8px] placeholder:text-[#7E7E7E]
-   md:placeholder:text-[14.389px] md:placeholder:leading-[18.206px] focus:outline-none border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 sm:p-3 sm:text-lg'
+   lg:placeholder:text-[16px] lg:placeholder:leading-[20.8px] 
+   md:placeholder:text-[14.389px] md:placeholder:leading-[18.206px] focus:outline-none border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 sm:p-3 sm:text-lg   
+   ${isDarkMode 
+    ? "bg-black text-white border border-white" 
+    : "placeholder:text-[#7E7E7E] border-[#9C9C9C] text-black"
+}`}
    name='Waec-Email'
     value={educationPinEmail}
    onChange={(e) =>{
@@ -465,15 +495,19 @@ font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
     </label>
     {/* input */}
     <input 
-     className='h-[41.927px]  lg:h-[51px] md:h-[29.93px] mt-2 md:mt-0
+     className={`h-[41.927px]  lg:h-[51px] md:h-[29.93px] mt-2 md:mt-0
         md:pt-[8.802px] md:pb-[7.042px] 
        pt-[12.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
      md:pr-[5.282px] md:pl-[5.867px]
-  lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] border-[0.4px] border-[#9C9C9C]
+  lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] border-[0.4px]
   focus:outline-none text-start
      leading-[10.4px]
    font-[400]  md:text-[9.389px] md:leading-[12.206px]
-  lg:text-[16px] text-black lg:leading-[20.8px] focus:outline-none border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.5px] p-4 sm:p-3 sm:text-lg'
+  lg:text-[16px] lg:leading-[20.8px] focus:outline-none border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.5px] p-4 sm:p-3 sm:text-lg 
+  ${isDarkMode 
+    ? "bg-black text-white border border-white" 
+    : "placeholder:text-[#7E7E7E] border-[#9C9C9C] text-black"
+}`}
   maxLength={7} value={educationAmount}
   onChange={(e)=>{
    setEducationAmount(e.target.value);
@@ -498,13 +532,17 @@ onClick={(e) => {
   setPaymentResult(e.target.value)
   }}
   value={paymentResult}
-className=' pt-[10.803px] pb-[13.794px] pr-[13px] pl-[10.876px] mt-2 md:mt-0
+className={`pt-[10.803px] pb-[13.794px] pr-[13px] pl-[10.876px] mt-2 md:mt-0
  md:pt-[8.802px] md:pb-[7.042px] w-[100%]
-md:pr-[5.282px] md:pl-[5.867px] bg-white
+md:pr-[5.282px] md:pl-[5.867px]
 lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
-border-[0.4px] border-[#9C9C9C] hover:bg-[#EDEAEA]
+border-[0.4px] 
 font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
-    lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer focus:outline-none focus:outline-none border-0 md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 shadow-sm md:shadow-0 focus:outline-none focus:ring-2 text-[13.5px] sm:p-3 sm:text-lg'
+    lg:text-[16px] lg:leading-[20.8px] cursor-pointer focus:outline-none focus:outline-none border-0 md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 shadow-sm md:shadow-0 focus:outline-none focus:ring-2 text-[13.5px] sm:p-3 sm:text-lg
+    ${isDarkMode 
+      ? "bg-black text-white border border-white" 
+      : "placeholder:text-[#7E7E7E] border-[#9C9C9C] text-black bg-white hover:bg-[#EDEAEA]"
+  }`}
   readOnly/>
    
       <img 
@@ -531,18 +569,26 @@ font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
           setMethodActive(false);
        document.querySelector('.methodDrop').classList.remove('DropIt');
         })}
-        className='flex gap-[10px] lg:py-[15px] py-[10px] pl-[10px]
-        cursor-pointer hover:bg-[#EDEAEA] items-center bg-white
-        shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]' 
+        className={`flex gap-[10px] lg:py-[15px] py-[10px] pl-[10px]
+        cursor-pointer  items-center 
+        shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
+         ${isDarkMode 
+          ? "bg-black text-white border border-white" 
+          : "bg-white hover:bg-[#EDEAEA]"
+      }`}
         key={ methodOption.id }>
 
           <img className='md:h-[29.27px]  h-[14.27px]' src={methodOption.flag} alt=""/>
 
             <h2 
-              className='pb-[20px] md:pb-0 md:pt-0 pt-[20px] font-[400] text-[13.5px] leading-[10.4px]
-               font-[400] text-[#7C7C7C]  
+              className={`pb-[20px] md:pb-0 md:pt-0 pt-[20px] font-[400] text-[13.5px] leading-[10.4px]
+               font-[400] 
          md:text-[13.227px] md:leading-[17.195px] 
-         lg:text-[16px] lg:leading-[20.8px] self-center cursor-pointer' >
+         lg:text-[16px] lg:leading-[20.8px] self-center cursor-pointer
+         ${isDarkMode 
+          ? "bg-black text-white" 
+          : "text-[#7C7C7C]"
+      }`} >
         {methodOption.method + ' ' + methodOption.balance}
          </h2>
         </div>

@@ -35,7 +35,7 @@ const LaunchPage = () => {
                 className="text-[8px] whitespace-nowrap mb-2 w-52 text-white  font-semibold md:text-[12px] md:w-[70%] lg:w-[70%] lg:text-[20px] 
               2xl:w-[80%] 2xl:text-[24px] lg:mb-4"
               >
-                We are excited to lunch our global platform for all things<br /> telecom, payments, and Digital services.
+                We are excited to launch our global platform for all things<br /> telecom, payments, and Digital services.
               </h2>
               <div className="Frame758532683 w-14 h-5 px-3.5 py-1 lg:w-32 lg:h-12 lg:px-12 lg:py-4 md:w-24 md:h-9 md:px-6 md:py-2 md:gap-1.5
                bg-orange-400 rounded lg:rounded-md justify-center items-center gap-1 inline-flex">
