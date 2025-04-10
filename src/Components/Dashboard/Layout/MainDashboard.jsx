@@ -522,15 +522,22 @@ return (
                 </div>
                 </div>
                 ): (
-                  <div className="h-full w-full flex flex-col items-center justify-center ">
+                  <div className="h-full  w-full gap-[15px] lg:gap-[25%] flex flex-col items-center justify-center ">
+                    <h2 className="text-blue-900 text-[12px] leading-[16px] md:text-[14px] md:leading-[18px] lg:text-[16px] font-[600]">
+                      Global Virtual Account
+                      </h2>
+                      <div className="flex flex-col h-[45%] gap-[8px] lg:gap-[25%]">
               <p className={`text-[12px] md:text-[14px] lg:text-[16px] leading-[16px] 
-                 md:leading-[18px] lg:leading-[22px] font-[500] lg:font-[600]
-              md:my-[5%] lg:my-[7%] 
+                 md:leading-[18px] lg:leading-[22px] font-[500] 
+                text-left
                ${isDarkMode ? "text-white" : "text-black"}  `}>
          Add a means of identification to create a virtual Account.
               </p>
-              <p className={`lg:text-[16px] font-[500] lg:leading-[24px] hidden md:block ${isDarkMode ? "text-white" : "text-black"}`}>
+              <p className={`lg:text-[16px] font-[400] lg:leading-[24px]
+               text-[12px] md:text-[14px] md:leading-[18px]
+                 ${isDarkMode ? "text-white" : "text-black"}`}>
                 This is Collected for secure and cyber-attack-free transactions among AremxyPlug's users</p>
+                </div>
                 </div>
                 )}
                 </div>
