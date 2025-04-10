@@ -43,7 +43,7 @@ export default function ProfileUpdate({ fullname, Email, Phone, Username }) {
                       full_name :
                       fullname
                       ? fullname
-                      : "Hi user"}
+                      : "Hi User"}
                 </p>
                 <p
                   className={`text-[#7C7C7C] text-[10px] leading-[15px] md:text-[7.042px] md:leading-[9.154px] lg:text-[12px] lg:leading-[15.6px] ${isDarkMode ? "text-white" : ""}`}
@@ -97,7 +97,7 @@ export default function ProfileUpdate({ fullname, Email, Phone, Username }) {
                       className={`flex items-center sm:text-lg py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[12px] md:pl-[8.67px] md:pr-[5.867px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[8px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-[10px] h-full ${isDarkMode? "border-stone-50" : ""}`}
                     >
                       <p
-                        className="text-[#7E7E7E] text-sm leading-[18px] md:text-[9.389px] md:leading-[12.206px]lg:text-[16px] lg:leading-[20.8px] cursor-default"
+                        className="text-[#7E7E7E] text-sm leading-[18px] md:text-[9.389px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] cursor-default"
                       >
                          {(!full_name && fullName.length > 1)
                       ?  fullName
@@ -134,7 +134,7 @@ export default function ProfileUpdate({ fullname, Email, Phone, Username }) {
                       username :
                      Username
                       ? Username
-                      : "Hi user"}
+                      : "Hi User"}
                       </p>
                     </div>
                   </div>
@@ -167,7 +167,7 @@ export default function ProfileUpdate({ fullname, Email, Phone, Username }) {
                 {/* Start of level three */}
                 <div className="">
                   <h2
-                    className={`text-[#7E7E7E] text-[12px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] font-semibold lg:text-[16px] lg:leading-[20.8px] cursor-default ${isDarkMode ? "text-stone-50" : ""}`}
+                    className={`text-[#7E7E7E] text-[12px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] font-semibold lg:text-[16px] lg:leading-[20.8px] cursor-default mb-[5.868px] lg:mb-[10px] ${isDarkMode ? "text-stone-50" : ""}`}
                   >
                     Phone Number
                   </h2>
@@ -189,6 +189,7 @@ export default function ProfileUpdate({ fullname, Email, Phone, Username }) {
                             }`}
                       </p>
                     </div>
+                  
                     {/* Start of the message / 2nd part */}
                     <div className="flex w-[100%]  md:w-[50%] items-center  gap-[10px] lg:gap-[16px]">
                       <div className="flex gap-[5px] md:gap-[8px]">
