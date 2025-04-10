@@ -109,8 +109,8 @@ return (
                   </p>
                   <div className="flex gap-[3px] lg:gap-[5px]">
                     <div className={`px-[4px] py-[1px] font-[600] lg:font-[700] text-[10px]
-                      md:text-[10px] lg:text-[12px] lg:rounded-[2px] ${BvnVerify  ? "text-green-600" : "text-red-600"}`}>
-                      {BvnVerify  ? "Verified" : "UnVerified"}
+                      md:text-[10px] lg:text-[12px] lg:rounded-[2px] ${BvnVerify === true  ? "text-green-600" : "text-red-600"}`}>
+                      {BvnVerify === true  ? "Verified" : "UnVerified"}
                     </div>
                     <div className=" px-[4px] py-[1px] font-[600] lg:font-[700] text-[10px]
                      text-white md:text-[10px] lg:text-[12px] lg:rounded-[2px]">
