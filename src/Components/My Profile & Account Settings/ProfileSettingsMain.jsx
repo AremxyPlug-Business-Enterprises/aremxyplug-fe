@@ -165,7 +165,7 @@ export default function ProfileSettingsMain(Data) {
           </div>
 
           <ProfileUpdate
-            fullName={Data.UserFullName}
+            fullname={Data.UserFullName}
             Email={Data.UserEmail}
             Phone={Data.UserPhone}
             Username={Data.aremxyUsername}

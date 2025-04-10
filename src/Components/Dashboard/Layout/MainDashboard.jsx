@@ -132,8 +132,8 @@ return (
         {/* ============SIDE BAR========= */}
         {toggleSideBar && (
           <div className="absolute top-0 left-0 z-50">
-            <SideBar fullName ={Data.UserFullName} userId ={Data.aremxyUserId}
-            bvnVerify ={Data.ConfirmBvn} NinVerify={Data.ConfirmId}/>
+            <SideBar fullname ={Data.UserFullName} userId ={Data.aremxyUserId}
+            BvnVerify ={Data.ConfirmBvn} NinVerify={Data.ConfirmId}/>
           </div>
         )}
         <div
