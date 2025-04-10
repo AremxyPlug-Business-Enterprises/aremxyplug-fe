@@ -7,11 +7,12 @@ import messageQuestion from "../ProfileImages/message-question.svg";
 import { Link } from "react-router-dom";
 import { ContextProvider } from "../../Context";
 
-export default function ProfileUpdate({ fullName, Email, Phone, Username }) {
+export default function ProfileUpdate({ fullname, Email, Phone, Username }) {
   const { profilePage, customerDetail } = useContext(ContextProvider);
-  const { isDarkMode } = useContext(ContextProvider);
+  const { isDarkMode, state } = useContext(ContextProvider);
   const { full_name, username, email, phone } = customerDetail;
-  //console.log(customerDetail);
+  const {fullName, phoneNumber, userName} = state;
+  
   return (
     <div className="">
       {profilePage && (
@@ -37,7 +38,13 @@ export default function ProfileUpdate({ fullName, Email, Phone, Username }) {
                   className="text-sm leading-[15px] md:text-[9.389px] md:leading-[12.206px] 
   lg:text-[16px] lg:leading-[20.8px]"
                 >
-                  {full_name ? full_name : `${fullName ? fullName : "Hi User"}`}
+                  {(!full_name && fullName.length > 1)
+                      ?  fullName
+                      : full_name ?
+                      full_name :
+                      fullname
+                      ? fullname
+                      : "Hi user"}
                 </p>
                 <p
                   className=" text-[#7C7C7C] text-[10px] leading-[15px] md:text-[7.042px] md:leading-[9.154px] lg:text-[12px] lg:leading-[15.6px]"
@@ -91,9 +98,13 @@ export default function ProfileUpdate({ fullName, Email, Phone, Username }) {
                       <p
                         className="text-[#7E7E7E] text-sm leading-[18px] md:text-[9.389px] md:leading-[12.206px]lg:text-[16px] lg:leading-[20.8px] cursor-default"
                       >
-                        {full_name
-                          ? full_name
-                          : `${fullName ? fullName : "Hi User"}`}
+                         {(!full_name && fullName.length > 1)
+                      ?  fullName
+                      : full_name ?
+                      full_name :
+                      fullname
+                      ? fullname
+                      : "Hi user"}
                       </p>
                     </div>
                   </div>
@@ -116,7 +127,13 @@ export default function ProfileUpdate({ fullName, Email, Phone, Username }) {
                       <p
                         className={` text-[#7E7E7E] text-sm leading-[18px] md:text-[9.389px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] cursor-default ${isDarkMode ? "text-white" : ""}`}
                       >
-                        {username ? username : `${Username ? Username : ""}`}
+                         {(!username && userName.length > 1)
+                      ?  userName
+                      : username ?
+                      username :
+                     Username
+                      ? Username
+                      : "Hi user"}
                       </p>
                     </div>
                   </div>
@@ -133,7 +150,13 @@ export default function ProfileUpdate({ fullName, Email, Phone, Username }) {
                       <p
                         className={` text-[#7E7E7E] text-sm leading-[18px] md:text-[9.389px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] cursor-default ${isDarkMode ? "text-white" : ""}`}
                       >
-                        {email ? email : `${Email ? Email : ""}`}
+                        {(!email && state.email.length > 1)
+                      ?  state.email
+                      : email ?
+                     email :
+                     Email
+                      ? Email
+                      : "No email"}
                       </p>
                     </div>
                   </div>
@@ -158,10 +181,11 @@ export default function ProfileUpdate({ fullName, Email, Phone, Username }) {
                         className={` text-[#7E7E7E] text-sm leading-[18px] md:text-[9.389px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] cursor-default ${isDarkMode ? "text-white" : ""}`}
                       >
                         {`${
-                          phone
-                            ? phone.slice(3)
-                            : `${Phone ? Phone.slice(3) : ""} `
-                        }`}
+                          !phone && phoneNumber.length > 1
+                          ? phoneNumber :
+                          phone ? phone.slice(3) : Phone
+                          ? Phone.slice(3) : "No Phone Number"
+                            }`}
                       </p>
                     </div>
                     {/* Start of the message / 2nd part */}

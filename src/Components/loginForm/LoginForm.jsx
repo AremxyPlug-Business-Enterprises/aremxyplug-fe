@@ -28,10 +28,10 @@ function LoginForm() {
         setBankNameState, setAccountNameState, setAccountNumberState,
          verificationOpen, idVerificationOpen, bvnVerificationOpen,
          setBvnButtonState, setIdButtonState, setIdStatus, setBvnStatus,
-         setVerifyImage,setBvnVerifyImage,
+         setVerifyImage,setBvnVerifyImage,state
       } = useContext(ContextProvider);
 
-
+const {fullName, phoneNumber, userName} = state
 
   const [usernameORemail, setUsernameORemail] = useState("username");
   const [loading, setLoading] = useState(false);
@@ -155,6 +155,18 @@ function LoginForm() {
     }
   };
 
+  //SetLocalStorage for input Pin flow
+  const SetLocalStorageInputPin =()=> {
+     localStorage.setItem("userEmail", JSON.stringify(state.email))
+    localStorage.setItem("userFullName", JSON.stringify(fullName))
+    localStorage.setItem("userPhone", JSON.stringify(phoneNumber));
+   localStorage.setItem("aremxyUserName", JSON.stringify(userName))
+   localStorage.setItem("userBankName", JSON.stringify(""));
+  localStorage.setItem("aremxyAccountName", JSON.stringify(""))
+  localStorage.setItem("aremxyAccountNumber", JSON.stringify(""));
+  localStorage.setItem("aremxyUserId", JSON.stringify("NO USER ID"));
+  }
+
 
 // Function to Verify user's Virtual Account situation 2
  const ConfirmVirtualState = async() => {
@@ -207,20 +219,21 @@ setBvnButtonState("Virtual Account Created");
       localStorage.setItem("AccCreated",false);
       localStorage.setItem("idVerification",false);
       //localStorage.setItem("bvnVerification",true);
-      // const CheckVerifyStatusNin = localStorage.getItem("idVerification");
-      // const CheckVerifyStatusBvn = localStorage.getItem("idVerification");
-//       if(CheckVerifyStatusNin === true && CheckVerifyStatusBvn === false){
-//         setIdStatus("Verified");
-//         setVerifyImage(VerificationSuccess);
-// }else if(CheckVerifyStatusNin === false && CheckVerifyStatusBvn === true){
-//      setBvnStatus("Verified");
-//      setBvnVerifyImage(VerificationSuccess);
-//       }else{
-//         setIdStatus("Verified");
-//         setVerifyImage(VerificationSuccess);
-//         setBvnStatus("Verified");
-//         setBvnVerifyImage(VerificationSuccess);
-//       }
+      const CheckVerifyStatusNin = localStorage.getItem("idVerification");
+      const CheckVerifyStatusBvn = localStorage.getItem("bvnVerification");
+    
+      if(CheckVerifyStatusNin === true && CheckVerifyStatusBvn === false){
+        setIdStatus("Verified");
+        setVerifyImage(VerificationSuccess);
+}else if(CheckVerifyStatusNin === false && CheckVerifyStatusBvn === true){
+     setBvnStatus("Verified");
+     setBvnVerifyImage(VerificationSuccess);
+      }else{
+        setIdStatus("Verified");
+        setVerifyImage(VerificationSuccess);
+        setBvnStatus("Verified");
+        setBvnVerifyImage(VerificationSuccess);
+      }
       //console.log("ERROR",error.response.data.message)
     }
     }else if (error && error.status === 404){
@@ -277,31 +290,25 @@ setBvnButtonState("Virtual Account Created");
               console.log(response);
               if (response.status === 202 && response.headers.hasAuthorization) {
                 setOpenTranspin(true);
-                const customer  =  response.data.data.customer;
                 const authToken = response.headers.get('Authorization');
-                if(customer){
-                  setCustomerDetail(customer);
+              
                 if(authToken){
+                  localStorage.setItem("UserStatus", true);
+                  SetLocalStorageInputPin();
                     localStorage.setItem("getToken", authToken);
-                setTimeout(async()=>{
-                  await CheckVirtualAcc(authToken, customerDetail, setLoading,
-                      setVirtualAccCreated, 
-                    setBankNameState, setAccountNameState, setAccountNumberState,
-                     verificationOpen, idVerificationOpen, bvnVerificationOpen, setBvnButtonState);
-          
-        },10000)
+                   
+      
       }
-    }
+    
                 } else if(response.status === 200){
                   setOpen2StepVerification(true);
                   const customer  =  response.data.data.customer;
                   const authToken = response.headers.get('Authorization');
-                   if(customer){
-                   setCustomerDetail(customer);
-               
-                  if(authToken){
-                  setLoginAuthorisation(authToken);
-                  localStorage.setItem("getToken", authToken)
+                  console.log(authToken)
+                   if(authToken){
+                localStorage.setItem("getToken", authToken)
+                  if(customer){
+               setCustomerDetail(customer);
                   setTimeout(async()=>{
                   await CheckVirtualAcc(authToken, customerDetail, setLoading,
                       setVirtualAccCreated, 
@@ -312,18 +319,18 @@ setBvnButtonState("Virtual Account Created");
                   }
                    }
 
-            }else if (response.status === 404) {
-                alert("User not found");
-              } else if (response.status === 401) {
-                alert("Incorrect Password");
-              } else {
-                console.log(response.data);
-              }
+            }
             })
             .catch((error) => {
               if(error.status === 500){
               console.error(error);
               alert("A SERVER ERROR");
+              }else if (error.status === 404) {
+                alert("User not found");
+              } else if ( error.status === 401 || 400) {
+                alert("Incorrect Password or Username");
+              } else {
+                console.log(error);
               }
             });
           if (checkbox === true) {
@@ -335,7 +342,10 @@ setBvnButtonState("Virtual Account Created");
       } finally {
         if(CheckVirtualAcc){
           setLoading(false);
+          }else if(!CheckVirtualAcc) {
+             setLoading(false)
           }
+          
       }
     }
 
@@ -372,23 +382,16 @@ setBvnButtonState("Virtual Account Created");
               console.log(response);
               if (response.status === 202  && response.headers.hasAuthorization) {
                 setOpenTranspin(true);
-                const customer  =  response.data.data.customer;
                 const authToken = response.headers.get('Authorization');
-                if(customer){
-                  setCustomerDetail(customer);
-                  if(authToken){
-                    localStorage.setItem("authorisedLogin", authToken);
-                setTimeout(async()=>{
-                  await CheckVirtualAcc(authToken, customerDetail, setLoading,
-                      setVirtualAccCreated, 
-                    setBankNameState, setAccountNameState, setAccountNumberState,
-                     verificationOpen, idVerificationOpen, bvnVerificationOpen, setBvnButtonState);
-          
-        },10000)
+                if(authToken){
+                  localStorage.setItem("UserStatus", true);
+                  SetLocalStorageInputPin();
+                  localStorage.setItem("authorisedLogin", authToken);
+                 
       }
     }
-     
-               }else if(response.status === 200){
+  
+               else if(response.status === 200){
                 setOpen2StepVerification(true);
              const customer  =  response.data.data.customer;
              const authToken = response.headers.get('Authorization');
@@ -405,20 +408,20 @@ setBvnButtonState("Virtual Account Created");
              },10000)
              }
               }
-         } else if(response.status === 404){
-           alert("User not found")
-              }
-              else if (response.status === 401) {
-                alert("Incorrect Password");
-              } else {
-                console.log(response.data);
-              }
+         } 
             })
             .catch((error) => {
             if(error.status=== 500){
               console.error(error);
               alert("A SERVER ERROR");
-              }
+              }else if(error.status === 404){
+                alert("User not found")
+                   }
+                   else if (error.status === 401 || 400) {
+                     alert("Incorrect Password or Email");
+                   } else {
+                     console.log(error);
+                   }
             });
           if (checkbox === true) {
             localStorage.setItem("aremxyPassword", JSON.stringify(password));
@@ -429,14 +432,14 @@ setBvnButtonState("Virtual Account Created");
       } finally{
         if(CheckVirtualAcc){
         setLoading(false);
+        }else if(!CheckVirtualAcc){
+          setLoading(false);
         }
       }
     }
+  
   };
 
-  // if (redirect) {
-  //   navigate("/dashboard", { replace: true });
-  // }console.log(response.data.data.customer)
 
 
   

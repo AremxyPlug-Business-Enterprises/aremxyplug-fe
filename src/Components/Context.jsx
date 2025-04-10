@@ -2,7 +2,7 @@ import React, { createContext, useState, useRef, useEffect } from "react";
 import Joi from "joi";
 import axios from "axios";
 import arrowDown from "../../src/Components/EducationPins/imagesEducation/arrow-down.svg";
-import NotVerifiedIcon from "../Components/My Profile & Account Settings/ProfileImages/NotVerifiedIcon.svg"
+import NotVerifiedIcon from "../Components/My Profile & Account Settings/ProfileImages/NotVerifiedIcon.svg";
 // import { BASE_URL } from "../config";
 
 export const ContextProvider = createContext();
@@ -12,6 +12,7 @@ export const Context = ({ children }) => {
     window.location.reload(true);
     // new
   };
+  
   // Select username or email starts here
   const [hideNavbar, setHideNavbar] = useState(false);
   const [resetEmail, setResetEmail] = useState("");
@@ -297,10 +298,11 @@ export const Context = ({ children }) => {
           } 
         })
         .catch(error => {
-       if (error.response.data.status === 409) {
+       if (error && error.response.data.status === 409) {
             alert("Input already in use: " + error.response.data.data.data);
-            console.log("The phone number already exists");
-          } else if(error.response.data.status === 400){
+            
+          }
+          else if(error && error.response.data.status === 404 ){
             alert("An error has occured on your end")
             console.log(error.response.data.data.data)
           } else{

@@ -24,7 +24,7 @@ export const DashBoardLayout = ({children}, Data) => {
       }})
   return (
     <div>
-       {toggleSideBar && (<div className='absolute top-0 left-0 z-[1000]'><SideBar fullName ={Data.UserFullName} userId ={Data.aremxyUserId}/></div>)}
+       {toggleSideBar && (<div className='absolute top-0 left-0 z-[1000]'><SideBar fullname ={Data.UserFullName} userId ={Data.aremxyUserId}  BvnVerify ={Data.ConfirmBvn} NinVerify={Data.ConfirmId}/></div>)}
        <TopBar/>
        <div className={`${toggleSideBar ? "lg:w-[73.5%] lg:float-right md:w-[68.5%] md:float-right" : "" } mx-[5%] mt-[8%] lg:mt-[3%] pb-[15%] h-screen lg:h-full md:pb-[5%]`}>
         {children}
