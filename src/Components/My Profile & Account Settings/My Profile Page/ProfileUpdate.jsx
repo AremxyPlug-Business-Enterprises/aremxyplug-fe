@@ -7,11 +7,12 @@ import messageQuestion from "../ProfileImages/message-question.svg";
 import { Link } from "react-router-dom";
 import { ContextProvider } from "../../Context";
 
-export default function ProfileUpdate({ fullName, Email, Phone, Username }) {
+export default function ProfileUpdate({ fullname, Email, Phone, Username }) {
   const { profilePage, customerDetail } = useContext(ContextProvider);
-  const { isDarkMode } = useContext(ContextProvider);
+  const { isDarkMode, state } = useContext(ContextProvider);
   const { full_name, username, email, phone } = customerDetail;
-  //console.log(customerDetail);
+  const {fullName, phoneNumber, userName} = state;
+  
   return (
     <div className="">
       {profilePage && (
@@ -34,13 +35,18 @@ export default function ProfileUpdate({ fullName, Email, Phone, Username }) {
               {/* Profile text */}
               <div className="flex flex-col justify-center gap-[3.52px] lg:gap-[12px]">
                 <p
-                  className="text-sm leading-[15px] md:text-[9.389px] md:leading-[12.206px] 
-  lg:text-[16px] lg:leading-[20.8px]"
+                  className="text-[#7E7E7E] text-[12px] leading-[18px] md:text-[12.042px] md:leading-[16px] lg:text-[16px] lg:leading-[24.8px]"
                 >
-                  {full_name ? full_name : `${fullName ? fullName : "Hi User"}`}
+                  {(!full_name && fullName.length > 1)
+                      ?  fullName
+                      : full_name ?
+                      full_name :
+                      fullname
+                      ? fullname
+                      : "Hi User"}
                 </p>
                 <p
-                  className=" text-[#7C7C7C] text-[10px] leading-[15px] md:text-[7.042px] md:leading-[9.154px] lg:text-[12px] lg:leading-[15.6px]"
+                  className=" text-[#7C7C7C] text-[12px] leading-[18px] md:text-[12.042px] md:leading-[16px] lg:text-[16px] lg:leading-[24.8px]"
                 >
                   {email ? email : `${Email ? Email : ""}`}
                 </p>
@@ -89,11 +95,15 @@ export default function ProfileUpdate({ fullName, Email, Phone, Username }) {
                       className={`flex items-center h-[30px] md:h-[40px] lg:h-[51px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl sm:p-3 sm:text-lg pl-[5.868px] lg:pl-[10px] border-[0.4px] border-[#9C9C9C] ${isDarkMode? "border-stone-50" : ""}`}
                     >
                       <p
-                        className="text-[#7E7E7E] text-sm leading-[18px] md:text-[9.389px] md:leading-[12.206px]lg:text-[16px] lg:leading-[20.8px] cursor-default"
+                        className="text-[#7E7E7E] text-sm leading-[18px] md:text-[9.389px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] cursor-default"
                       >
-                        {full_name
-                          ? full_name
-                          : `${fullName ? fullName : "Hi User"}`}
+                         {(!full_name && fullName.length > 1)
+                      ?  fullName
+                      : full_name ?
+                      full_name :
+                      fullname
+                      ? fullname
+                      : "Hi user"}
                       </p>
                     </div>
                   </div>
@@ -116,7 +126,13 @@ export default function ProfileUpdate({ fullName, Email, Phone, Username }) {
                       <p
                         className={` text-[#7E7E7E] text-sm leading-[18px] md:text-[9.389px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] cursor-default ${isDarkMode ? "text-white" : ""}`}
                       >
-                        {username ? username : `${Username ? Username : ""}`}
+                         {(!username && userName.length > 1)
+                      ?  userName
+                      : username ?
+                      username :
+                     Username
+                      ? Username
+                      : "Hi User"}
                       </p>
                     </div>
                   </div>
@@ -133,7 +149,13 @@ export default function ProfileUpdate({ fullName, Email, Phone, Username }) {
                       <p
                         className={` text-[#7E7E7E] text-sm leading-[18px] md:text-[9.389px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] cursor-default ${isDarkMode ? "text-white" : ""}`}
                       >
-                        {email ? email : `${Email ? Email : ""}`}
+                        {(!email && state.email.length > 1)
+                      ?  state.email
+                      : email ?
+                     email :
+                     Email
+                      ? Email
+                      : "No email"}
                       </p>
                     </div>
                   </div>
@@ -143,7 +165,7 @@ export default function ProfileUpdate({ fullName, Email, Phone, Username }) {
                 {/* Start of level three */}
                 <div className="">
                   <h2
-                    className={`text-[#7E7E7E] text-[12px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] font-semibold lg:text-[16px] lg:leading-[20.8px] cursor-default ${isDarkMode ? "text-stone-50" : ""}`}
+                    className={`text-[#7E7E7E] text-[12px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] font-semibold lg:text-[16px] lg:leading-[20.8px] cursor-default mb-[5.868px] lg:mb-[10px] ${isDarkMode ? "text-stone-50" : ""}`}
                   >
                     Phone Number
                   </h2>
@@ -158,12 +180,14 @@ export default function ProfileUpdate({ fullName, Email, Phone, Username }) {
                         className={` text-[#7E7E7E] text-sm leading-[18px] md:text-[9.389px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] cursor-default ${isDarkMode ? "text-white" : ""}`}
                       >
                         {`${
-                          phone
-                            ? phone.slice(3)
-                            : `${Phone ? Phone.slice(3) : ""} `
-                        }`}
+                          !phone && phoneNumber.length > 1
+                          ? phoneNumber :
+                          phone ? phone.slice(3) : Phone
+                          ? Phone.slice(3) : "No Phone Number"
+                            }`}
                       </p>
                     </div>
+                  
                     {/* Start of the message / 2nd part */}
                     <div className="flex w-[100%]  md:w-[50%] items-center  gap-[10px] lg:gap-[16px]">
                       <div className="flex gap-[5px] md:gap-[8px]">

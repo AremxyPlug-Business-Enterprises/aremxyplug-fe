@@ -27,6 +27,7 @@ export default function IdVerification(Data) {
 
     const {idVerificationOpen, 
       bvnVerificationOpen, 
+      state,
       setBvnButtonState,
     setVirtualAccCreated,
   setBankNameState,
@@ -55,7 +56,7 @@ verifyImage,
 const [loading, setLoading] =useState(false);
  const {toggleSideBar, customerDetail} = useContext(ContextProvider);
   const {full_name} =  customerDetail;
-  
+  const {fullName} = state;
     // Genders
     const genderInfo = ['Male', 'Female', 'Others..'];
     const [genderResult, setGenderResult] = useState('');
@@ -131,12 +132,12 @@ const IdFunctionState = async (
     url = "https://aremxyplug.onrender.com/api/v1/verify";
     buttonStateSuccess = "Create Virtual Account";
     ErrorMessage = "NIN Name Mismatch or Network failure";
-    ifStatement = genderResult &&
+    ifStatement = (genderResult &&
     idResult &&
     idAddress &&
     idCity &&
     idCountry &&
-    idNumber;
+    idNumber)
     PendingImageFxn = () => setVerifyImage(Pending);
     PendingText = () => setIdStatus("Pending");
     verifyIdImage = () => setVerifyImage(idSuccess);
@@ -189,6 +190,8 @@ const CheckIdForm = async (
     const AccCreated = localStorage.getItem("AccCreated")
     if (ifStatement) {
       setLoading(true);
+console.log("ifStatement" ,ifStatement);
+console.log("getToken" ,getToken);
 
       // console.log(data)
       try {
@@ -324,9 +327,13 @@ useEffect(()=> {
                   <div
                     className={`py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[12px] md:pl-[8.67px] md:pr-[5.867px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[8px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-[10px] h-full  ${isDarkMode ?"border-slate-50" : ""}`}
                   >
-                    {full_name
-                      ? full_name
-                      : `${Data.UserFullName ? Data.UserFullName : "Hi User"}`}
+                     {(!full_name && fullName.length > 1)
+                      ?  fullName
+                      : full_name ?
+                      full_name :
+                      Data.UserFullName
+                      ? Data.UserFullName
+                      : "Hi user"}
                   </div>
                 </div>
                 {/* Gender */}

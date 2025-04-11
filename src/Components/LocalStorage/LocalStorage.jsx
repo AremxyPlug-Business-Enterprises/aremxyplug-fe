@@ -15,6 +15,7 @@ export const SetLocalStorage = (email, fullName,phone, username,bankName, accoun
 
 
 export const GetLocalStorage = (ConfirmId, ConfirmAcc, ConfirmBvn) => {
+  //Two step  verification flow
 const UserEmail = JSON.parse(localStorage.getItem("userEmail"));
  const UserPhone= JSON.parse(localStorage.getItem("userPhone"))
   const  UserFullName = JSON.parse(localStorage.getItem("userFullName"))
@@ -25,6 +26,7 @@ const UserEmail = JSON.parse(localStorage.getItem("userEmail"));
   const aremxyUserId = JSON.parse(localStorage.getItem("aremxyUserId"));
  const idVerification = localStorage.getItem("idVerification");
  const bvnVerification = localStorage.getItem("bvnVerification");
+ const userTransactionOtp =localStorage.getItem("userTransactionOtp")
    const AccCreated =localStorage.getItem("AccCreated");
   if(idVerification && bvnVerification && !AccCreated){
  ConfirmId = localStorage.getItem("idVerification");
@@ -35,7 +37,8 @@ ConfirmAcc = localStorage.getItem("AccCreated")
 ConfirmId =localStorage.getItem("idVerification");
 ConfirmBvn = localStorage.getItem("bvnVerification");
   } 
-return {UserEmail, 
+const GetItemsForTwoStep = {
+UserEmail, 
   UserPhone, 
   aremxyUsername,
    UserFullName, 
@@ -47,6 +50,17 @@ return {UserEmail,
      ConfirmId,
      ConfirmBvn
     }
+    const GetItemsForInputPin = {
+      UserEmail, 
+  UserPhone, 
+  aremxyUsername,
+   UserFullName, 
+    aremxyBankName, 
+    aremxyAccountNumber,
+     aremxyAccountName, 
+     aremxyUserId,
+    }
+    return userTransactionOtp ? GetItemsForInputPin : GetItemsForTwoStep
 }
 
 
@@ -60,18 +74,30 @@ export const RemoveLocalStorage = () => {
  localStorage.removeItem("aremxyAccountNumber");
  localStorage.removeItem("aremxyUserId");
  localStorage.removeItem("UserStatus");
- localStorage.removeItem("idVerification");
+ localStorage.removeItem("authorisedLogin");
+ //localStorage.removeItem("userTransactionOtp");
+
+ 
+ //localStorage.removeItem("idVerification");
 //  localStorage.removeItem("bvnVerification");
  const AccCreated = localStorage.getItem("AccCreated")
  const getToken = localStorage.getItem("getToken");
  if(getToken){
- localStorage.removeItem("getToken");
+   localStorage.removeItem("getToken");
+   const userTransactionOtp = localStorage.getItem("userTransactionOtp")
+  if(userTransactionOtp){
+    localStorage.removeItem("userTransactionOtp")
+  }
  if(AccCreated){
   localStorage.removeItem("AccCreated")
  }
  }
  else {
  localStorage.removeItem("authorisedLogin");
+ const userTransactionOtp = localStorage.getItem("userTransactionOtp")
+ if(userTransactionOtp){
+  localStorage.removeItem("userTransactionOtp")
+}
  if(AccCreated){
   localStorage.removeItem("AccCreated")
  }
