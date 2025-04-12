@@ -419,7 +419,7 @@ const ChangePin = () => {
                     <div className="relative ">
                       <input
                         type="text"
-                        className={`w-full md:w-[45%] text-[#7E7E7E] lg:w-1/2 h-8 px-2 py-[10px] border rounded-md text-sm leading-[18px] lg:leading-[20.8px] lg:text-[18px] font-semibold border-[#9C9C9C] focus:outline-none lg:h-[51px] ${
+                        className={`w-full text-[#7E7E7E] h-8 px-2 py-[10px] border rounded-md text-sm leading-[18px] lg:leading-[20.8px] lg:text-[18px] font-semibold border-[#9C9C9C] focus:outline-none lg:h-[51px] ${
                           isDarkMode
                             ? "border-slate-50 text-slate-50 bg-black"
                             : "bg-white"

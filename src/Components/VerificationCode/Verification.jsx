@@ -23,10 +23,11 @@ function Verification() {
     otpVerifySmsSignup,
     setOtpVerifySmsSignup,
     setSuccess,
-    state,
-    setState
+    state
   } = useContext(ContextProvider);
-const {phone, email} = state;
+const { phoneNumber, email} = state;
+// console.log("Phone:",phoneNumber)
+// console.log("Email:", email)
 
 
 
@@ -44,7 +45,7 @@ const getOtpSmsorEmail = async(body, url)=> {
   // const [sendSmsOrEmail, setSendSmsOrEmail] = useState("")
   if(viaEmailOrSms === "sms"){
     body = {
-      phone : phone
+      phone_number : phoneNumber
     }
     url ="https://aremxyplug.onrender.com/api/v1/sms/send";
   }else if(viaEmailOrSms === "email" ){
@@ -60,8 +61,8 @@ const getOtpSmsorEmail = async(body, url)=> {
     setLoading(true);
     try{
  
-    const response = await axios.post(url,body, {header:{ "Content-Type": "application/json"}})
-
+    const response = await axios.post(url,body, {headers:{ "Content-Type": "application/json"}})
+console.log(url,body)
 if(response.status === 200 || 201){
   twoStepVerificationHandler();
  alert("An Otp has been sent to you")
@@ -73,7 +74,7 @@ if(response.status === 200 || 201){
     alert(`INTERNAL_SERVER_ERROR`)
   }else{
     alert(`ERROR: ${error.message}`)
-   console.log(error)
+   //console.log(error)
   }
   }finally{
     setLoading(false);
@@ -100,7 +101,7 @@ const gettingSmsOrEmailFunctionOtp = async(url, body)=> {
        }
      console.log(otpVerifyEmailSignup);
       }else if(viaEmailOrSms === "sms"){
-       url = `https://aremxyplug.onrender.com/api/v1/verify-otp/signup?sms=${phone}`
+       url = `https://aremxyplug.onrender.com/api/v1/sms/verify/signup?phone=${phoneNumber}`
        body ={
        otp :otpVerifySmsSignup
        }
@@ -172,11 +173,11 @@ return () => clearInterval(timer);
 
   // Resend OTP
   const handleResendOTP = () => {
-    gettingOtpFunction()
+    getOtpSmsorEmail()
     setCanResend(false);
   };
   const handleResendOTP2 = () => {
-    gettingOtpFunction()
+    getOtpSmsorEmail();
     setCanResend2(false);
     };
   
@@ -213,15 +214,15 @@ return () => clearInterval(timer);
   const redirectHandler = () => {
     navigate("/Login");
     setSuccess(false);
-    setState({
-      country: "",
-      fullName: "",
-      userName: "",
-      email: "",
-      phoneNumber: "",
-      password: "",
-      confirmPassword: "",
-    });
+    // setState({
+    //   country: "",
+    //   fullName: "",
+    //   userName: "",
+    //   email: "",
+    //   phoneNumber: "",
+    //   password: "",
+    //   confirmPassword: "",
+    // });
   };
  
   return (

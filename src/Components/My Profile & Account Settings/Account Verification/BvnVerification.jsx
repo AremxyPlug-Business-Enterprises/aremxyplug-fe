@@ -32,7 +32,7 @@ export default function BvnVerification(Data) {
   const [bvnPopVerified, setBvnPopVerified] = useState(false);
   const [bvnPhoneMessage, setBvnPhoneMessage] = useState(false);
   const [errorVerify, setErrorVerify] = useState(false);
-  const { bvnButtonState, setBvnButtonState,
+  const {state, bvnButtonState, setBvnButtonState,
     setBankNameState, setAccountNameState,  setAccountNumberState, idVerificationOpen, setVirtualAccCreated, setIdButtonState
    } = useContext(ContextProvider);
   const { toggleSideBar, customerDetail, setLoginAuthorisation , bankNameState} =
@@ -54,7 +54,7 @@ export default function BvnVerification(Data) {
   }
 
   const { full_name } = customerDetail;
-
+const {fullName} = state;
   const BvnFunctionState = async (
     url,
     data,
@@ -238,9 +238,9 @@ export default function BvnVerification(Data) {
             {/*  */}
             <div className="flex md:gap-[14px] gap-[11px] items-center">
               <h2
-                className={`font-[500] text-[#7E7E7E] text-[8px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : ""}`}
+                className={`font-[500] text-[#7E7E7E] text-[11px] leading-[14.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : ""}`}
               >
-                Why Account Verification with my BVN?
+                Why Account Verification with my Bvn?
               </h2>
               <img
                 onClick={() => {
@@ -273,9 +273,11 @@ export default function BvnVerification(Data) {
                   <div
                     className={`py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[8px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-[10px] ${isDarkMode ? "text-white border-white" : ""}`}
                   >
-                    {full_name
-                      ? full_name
-                      : Data.UserFullName
+                    {(!full_name && fullName.length > 1)
+                      ?  fullName
+                      : full_name ?
+                      full_name :
+                      Data.UserFullName
                       ? Data.UserFullName
                       : "Hi user"}
                   </div>
@@ -328,7 +330,9 @@ export default function BvnVerification(Data) {
                     />
                   </div>
                   {dropDownGender && (
-                    <div className=" absolute lg:top-[90px] md:top-[60px] top-[70px] z-[5] flex flex-col w-[100%]">
+                    <div className={`absolute lg:top-[90px] md:top-[60px] top-[70px] z-[5] flex flex-col w-[100%] ${
+                      isDarkMode ? "bg-black border border-white" : "bg-white"
+                    }`}>
                       {genderInfo.map((info) => {
                         return (
                           <h2
@@ -339,7 +343,9 @@ export default function BvnVerification(Data) {
                                 .querySelector(".genderDrop")
                                 .classList.remove("DropIt");
                             }}
-                            className={`font-[500] text-[#7C7C7C] text-[12px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] md:py-[20px] py-[15px] pl-[10px] lg:pl-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] md:shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)] bg-white cursor-pointer ${isDarkMode ? "text-black" : ""}`}
+                            className={`font-[500] text-[#7C7C7C] text-[12px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] md:py-[20px] py-[15px] pl-[10px] lg:pl-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] md:shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)] cursor-pointer ${
+                              isDarkMode ? "bg-black text-white border-b border-white hover:bg-slate-800" : "bg-white"
+                            }`}
                           >
                             {info}
                           </h2>

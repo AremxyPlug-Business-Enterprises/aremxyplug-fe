@@ -25,10 +25,10 @@ import { CheckVirtualAcc } from "../../ApiCollection.jsx/ApiBuck";
 export default function IdVerification(Data) {
   const { verificationOpen } = useContext(ContextProvider);
 
-  const {
-    idVerificationOpen,
-    bvnVerificationOpen,
-    setBvnButtonState,
+    const {idVerificationOpen, 
+      bvnVerificationOpen, 
+      state,
+      setBvnButtonState,
     setVirtualAccCreated,
     setBankNameState,
     setAccountNameState,
@@ -54,15 +54,15 @@ export default function IdVerification(Data) {
   const [idBackView, setIdBackView] = useState(false);
   const [idPopVerified, setIdPopVerified] = useState(false);
   const [idCustomerQuery, setIdCustomerQuery] = useState(false);
-  const [idDateOfBirth, setIdDateOfBirth] = useState("");
-  const [loading, setLoading] = useState(false);
-  const { toggleSideBar, customerDetail } = useContext(ContextProvider);
-  const { full_name } = customerDetail;
-
-  // Genders
-  const genderInfo = ["Male", "Female", "Others.."];
-  const [genderResult, setGenderResult] = useState("");
-  const chooseGender = () => {
+    const [idDateOfBirth, setIdDateOfBirth] = useState("");
+const [loading, setLoading] =useState(false);
+ const {toggleSideBar, customerDetail} = useContext(ContextProvider);
+  const {full_name} =  customerDetail;
+  const {fullName} = state;
+    // Genders
+    const genderInfo = ['Male', 'Female', 'Others..'];
+    const [genderResult, setGenderResult] = useState('');
+   const chooseGender = () => {
     setDropDownGender(!dropDownGender);
     document.querySelector(".genderDrop").classList.toggle("DropIt");
   };
@@ -115,7 +115,48 @@ export default function IdVerification(Data) {
   //  e.target.setCustomValidity(addLGA ? '' : 'This is required to proceed');
   // }
 
-  const IdFunctionState = async (
+
+
+const IdFunctionState = async (
+  url,
+  data,
+  alertSuccess,
+  buttonStateSuccess,
+  ErrorMessage,
+  ifStatement,
+  PendingImageFxn,
+  PendingText,
+  verifyIdImage,
+  statusId,
+  verifyPopId
+) => {
+  if (idButtonState === "Verify") {
+    url = "https://aremxyplug.onrender.com/api/v1/verify";
+    buttonStateSuccess = "Create Virtual Account";
+    ErrorMessage = "NIN Name Mismatch or Network failure";
+    ifStatement = (genderResult &&
+    idResult &&
+    idAddress &&
+    idCity &&
+    idCountry &&
+    idNumber)
+    PendingImageFxn = () => setVerifyImage(Pending);
+    PendingText = () => setIdStatus("Pending");
+    verifyIdImage = () => setVerifyImage(idSuccess);
+    statusId = () => setIdStatus("Verified");
+    verifyPopId = () => setIdPopVerified(true);
+    data = {
+      Id: idNumber.toString(),
+    };
+  } else {
+    data =""
+    url = "https://aremxyplug.onrender.com/api/v1/virtualacc";
+    alertSuccess = () => alert("Virtual Account Created Successfully");
+    buttonStateSuccess = "Virtual Account Created";
+    ErrorMessage = "Virtual Account Creation Failed";
+    ifStatement = idStatus === "Verified";
+  }
+  CheckIdForm(
     url,
     data,
     alertSuccess,
@@ -127,48 +168,10 @@ export default function IdVerification(Data) {
     verifyIdImage,
     statusId,
     verifyPopId
-  ) => {
-    if (idButtonState === "Verify") {
-      url = "https://aremxyplug.onrender.com/api/v1/verify";
-      buttonStateSuccess = "Create Virtual Account";
-      ErrorMessage = "NIN Name Mismatch or Network failure";
-      ifStatement =
-        genderResult &&
-        idResult &&
-        idAddress &&
-        idCity &&
-        idCountry &&
-        idNumber;
-      PendingImageFxn = () => setVerifyImage(Pending);
-      PendingText = () => setIdStatus("Pending");
-      verifyIdImage = () => setVerifyImage(idSuccess);
-      statusId = () => setIdStatus("Verified");
-      verifyPopId = () => setIdPopVerified(true);
-      data = {
-        Id: idNumber.toString(),
-      };
-    } else {
-      data = "";
-      url = "https://aremxyplug.onrender.com/api/v1/virtualacc";
-      alertSuccess = () => alert("Virtual Account Created Successfully");
-      buttonStateSuccess = "Virtual Account Created";
-      ErrorMessage = "Virtual Account Creation Failed";
-      ifStatement = idStatus === "Verified";
-    }
-    CheckIdForm(
-      url,
-      data,
-      alertSuccess,
-      buttonStateSuccess,
-      ErrorMessage,
-      ifStatement,
-      PendingImageFxn,
-      PendingText,
-      verifyIdImage,
-      statusId,
-      verifyPopId
-    );
-  };
+  );
+};
+
+
 
   //The main function to verify the Id Number and create the virtual account
   const CheckIdForm = async (
@@ -189,6 +192,8 @@ export default function IdVerification(Data) {
     const AccCreated = localStorage.getItem("AccCreated");
     if (ifStatement) {
       setLoading(true);
+console.log("ifStatement" ,ifStatement);
+console.log("getToken" ,getToken);
 
       // console.log(data)
       try {
@@ -341,9 +346,13 @@ export default function IdVerification(Data) {
                       isDarkMode ? "border-slate-50" : ""
                     }`}
                   >
-                    {full_name
-                      ? full_name
-                      : `${Data.UserFullName ? Data.UserFullName : "Hi User"}`}
+                     {(!full_name && fullName.length > 1)
+                      ?  fullName
+                      : full_name ?
+                      full_name :
+                      Data.UserFullName
+                      ? Data.UserFullName
+                      : "Hi user"}
                   </div>
                 </div>
                 {/* Gender */}
@@ -392,7 +401,7 @@ export default function IdVerification(Data) {
                                 .classList.remove("DropIt");
                             }}
                             className={`font-[500] text-[#7C7C7C] text-[12px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] md:py-[20px] py-[15px] pl-[10px] lg:pl-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] md:shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)] cursor-pointer ${
-                              isDarkMode ? "bg-black text-white border-b border-white" : "bg-white"
+                              isDarkMode ? "bg-black text-white border-b border-white hover:bg-slate-800" : "bg-white"
                             }`}
                           >
                             {info}
@@ -655,7 +664,7 @@ export default function IdVerification(Data) {
                             className={`font-[500] px-2 flex justify-between text-[#7C7C7C] text-[8px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] md:py-[20px] py-[15px] pl-[10px] lg:pl-[16px] shadow-md cursor-pointer
                               ${
                                 info.Status && isDarkMode
-                                  ? "bg-black text-white border-b border-white"
+                                  ? "bg-black text-white border-b border-white hover:bg-slate-800 "
                                   : info.Status === "Inactive"
                                   ? "bg-gray-300 cursor-not-allowed"
                                    :"bg-white"

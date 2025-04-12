@@ -22,7 +22,7 @@ function LoginPopUp() {
     setOpenTranspin,
     setOpenResetTranspin,
     setOpen2StepVerification,
-    loginAuthorisation,
+  //  loginAuthorisation,
     setLoginAuthorisation,
     twoStepVerificationSuccess, 
     setTwoStepVerificationSuccess,
@@ -78,7 +78,7 @@ if((response.status === 200 || 201) && (response.headers.hasAuthorization)){
    alert(`ERROR: ${error.response.data.data.message.toUpperCase()}`)
   } 
   else if(error.response && error.response.status === 500){
-    alert(`INTERNAL_SERVER_ERROR`)
+    alert(`SERVER ERROR`)
   }
   }finally{
     setLoading(false);
@@ -194,7 +194,7 @@ const gettingSmsOrEmailFunctionOtp = async(url, body)=> {
      setVerificationPinError(true)
       alert("OOPs, an error has occured")
       }else if(error.response &&error.response.status === 500){
-        alert("INTERNAL_SERVER_ERROR");
+        alert("SERVER ERROR");
       }
     }finally{
       setLoading(false);
@@ -244,9 +244,9 @@ return () => clearInterval(timer);
     setVerificationPinError("")
   };
 
-  function handleTranspin() {
+  function HandleTranspin() {
     if (otp === otp2) {
-     sendTransactPin()
+     SendTransactPin()
      setTranspinErrors("");
      setOpenTranspin(false);
      setOtp("");
@@ -265,38 +265,44 @@ return () => clearInterval(timer);
   }
 
   //THE FUNCTION BELOW HELPS TO SEND THE USER's TRANSACTION PIIN TO THE BACKEND
-  const sendTransactPin = async()=>{
+  const SendTransactPin = async()=>{
+    const getToken = localStorage.getItem("getToken");
+    const authToken = localStorage.getItem("authorisedLogin")
+   if(authToken || authToken){
+    setLoading(true)
   try{
-     if(loginAuthorisation.length > 4){
-      const forwardPin = {
-        pin : otp
-      }
-    
-      const response = await axios.post("https://aremxyplug.onrender.com/api/v1/pin",forwardPin,{headers: {"Content-Type" : "application/json",
-        "Authorization" : loginAuthorisation
+   const forwardPin ={
+    otp : otp
+   }
+   const response = await axios.post("https://aremxyplug.onrender.com/api/v1/pin",forwardPin,{headers: {"Content-Type" : "application/json",
+        Authorization : getToken || authToken
       }})
-      setLoading(true);
+      
     
     if(response.status === 200|| 201){
       console.log(response);
          navigate("/dashboard");
-      }else if(response.status === 401){
-      alert("Something went wrong on your end");
-      }else if(response.status === 500){
-        alert(`An error occured on our end`)
-      }else{
-        alert("An error has occured")
       }
-    }else{
-      console.log("Didn't return string")
-    }
-    }catch(error){
-   console.log(`ERROR: ${error}`)
-    }finally{
+    
+  }
+    catch(error){
+     if(error.status === 401){
+        alert("Something went wrong on your end");
+        }else if(error.status === 500){
+          alert(`An error occured on our end`)
+        }else if(error.status === 404){
+          alert("Check your Network Connection")
+        }else{
+          alert(error)
+        }
+          //alert(error.response.data.message)
+        }
+      finally{
       setLoading(false);
     }
   }
-
+  }
+ 
 
 
 //console.log(GetLocalStorage());
@@ -470,7 +476,7 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
             )}
             <div className="w-full flex justify-center mt-[20px] mb-[10px] lg:mb-[10px] lg:mt-[50px]">
               <button
-                onClick={handleTranspin}
+                onClick={HandleTranspin}
                  type="submit"
                 disabled={otp.length !== 4 || otp2.length !== 4 ? true : false}
                 className={` ${
