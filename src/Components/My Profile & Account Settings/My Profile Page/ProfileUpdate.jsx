@@ -34,8 +34,7 @@ export default function ProfileUpdate({ fullName, Email, Phone, Username }) {
               {/* Profile text */}
               <div className="flex flex-col justify-center gap-[3.52px] lg:gap-[12px]">
                 <p
-                  className="text-sm leading-[15px] md:text-[9.389px] md:leading-[12.206px] 
-  lg:text-[16px] lg:leading-[20.8px]"
+                  className="text-sm leading-[15px] md:text-[9.389px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px]"
                 >
                   {full_name ? full_name : `${fullName ? fullName : "Hi User"}`}
                 </p>
