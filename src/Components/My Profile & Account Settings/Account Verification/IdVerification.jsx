@@ -114,7 +114,12 @@ const [loading, setLoading] =useState(false);
   // }
 
 
-
+//Function to inform a user that account has previously been craeted
+// and set the following functions as stated bellow
+const AccCreatedPrev = ()=>{
+  setIdButtonState("Virtual Account Created");
+  alert("Account has been created previously")
+}
 const IdFunctionState = async (
   url,
   data,
@@ -144,7 +149,7 @@ const IdFunctionState = async (
     statusId = () => setIdStatus("Verified");
     verifyPopId = () => setIdPopVerified(true);
     data = {
-      Id: idNumber.toString(),
+      nin: idNumber.toString(),
     };
   } else {
     data =""
@@ -187,7 +192,7 @@ const CheckIdForm = async (
   ) => {
     const authToken = localStorage.getItem("authorisedLogin");
     const getToken = localStorage.getItem("getToken");
-    const AccCreated = localStorage.getItem("AccCreated")
+   // const AccCreated = localStorage.getItem("AccCreated")
     if (ifStatement) {
       setLoading(true);
 console.log("ifStatement" ,ifStatement);
@@ -207,7 +212,7 @@ console.log("getToken" ,getToken);
             "Content-Type": "application/json",
             Authorization: authToken || getToken,
           },
-        }) : response  = await axios.post(url, data, {
+        }):  response  = await axios.post(url, data, {
           headers: {
             "Content-Type": "application/json",
             Authorization: authToken || getToken,
@@ -220,17 +225,18 @@ console.log("getToken" ,getToken);
           statusId();
           verifyPopId();
           setIdButtonState(buttonStateSuccess);
-          localStorage.setItem("idVerification", true)
+          localStorage.setItem("idVerification", "true")
     }  else{
             alertSuccess();
             setIdButtonState(buttonStateSuccess);
-            if(!AccCreated){
+            if(Data.ConfirmAcc === "false"){
              await CheckVirtualAcc(
               authToken, customerDetail, setLoading,
               setVirtualAccCreated, 
                setBankNameState, setAccountNameState, setAccountNumberState,
                verificationOpen, idVerificationOpen, bvnVerificationOpen,setIdButtonState, setBvnButtonState);
             }
+            localStorage.setItem("AccCreated", "true");
           }
  }
       } catch (error) {
@@ -255,13 +261,15 @@ console.log("getToken" ,getToken);
     }
   };
 // UseEffect to retain the current data object of getLocalStorage data()
+const IdNumberRef = useRef();
 const VerifyRef = useRef()
 Data = GetLocalStorage();
 useEffect(()=> {
   VerifyRef.current = Data;
- 
+ IdNumberRef.current = idNumber;
+// eslint-disable-next-line
 },[Data])
-  
+  console.log(Data);
   return (
     <div className="flex flex-col ">
       {idVerificationOpen && (
@@ -275,7 +283,7 @@ useEffect(()=> {
               className=" flex gap-[5px] py-[23px] pr-[12px] pl-[12px] md:py-[25px] md:pr-[41px] md:pl-[16px] bg-white shadow-[0px_2.34722px_5.86806px_0px_rgba(0,0,0,0.25)] md:shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)]"
             >
               <img
-                src={verifyImage}
+                src={verifyImage && (Data.ConfirmId === "true" ? idSuccess : NotVerifiedIcon)}
                 alt=""
                 className={`h-[24px] w-[24px] md:h-[44px] md:w-[44px] lg:h-[62px] lg:w-[62px]`}
               />
@@ -284,7 +292,7 @@ useEffect(()=> {
                   ID Status
                 </h2>
                 <h2 className="font-[500] lg:text-[12px] lg:leading-[15.6px] text-[8.042px] leading-[12.45px]">
-                  {idStatus}
+                  {idStatus && (Data.ConfirmId === "true"  ? "Verified" : 'Not Verified' )}
                 </h2>
               </div>
             </div>
@@ -601,7 +609,7 @@ useEffect(()=> {
       const numbersOnly = e.target.value.replace(/\D/g, '');
       e.target.value = numbersOnly;
     })}
-    value={idNumber}
+    value={idNumber && (idStatus === "Verified" && idNumber === "" ? IdNumberRef.current : idNumber)}
     onChange={(e) => {
       setIdNumber(e.target.value)
     }}
@@ -656,12 +664,16 @@ border-[0.4px] border-[solid] border-[#9C9C9C] cursor-pointer ${idResult === "Na
         </div>
         {/* SUBMIT BUTTON */}
         <div className='flex flex-col md:gap-[15px] gap-[10px] justify-start'>
-        <button onClick={() => {
+        <button 
+        disabled={Data.ConfirmAcc === "true" && Data.ConfirmId === "true"}
+        onClick={() => {
           IdFunctionState()
         }}
          className={`lg:py-[13px] md:py-[5.868px] md:rounded-[7.042px] py-[16.531px] rounded-[4.241px] w-[100%] md:w-[150px] lg:w-[163px] lg:rounded-[12px] bg-[#04177F]
-         font-[600] text-[13px] leading-[18px] lg:text-[16px] text-center text-white lg:leading-[24px`}>
-       {(idButtonState) || (Data.ConfirmAcc === true && idButtonState === "Verify" ? "Virtual Account Created" : Data.ConfirmId === true && idButtonState === "Verify" && Data.ConfirmAcc === false  ? "Create Virtual Account" : "Verify" )}
+         font-[600] text-[13px] leading-[18px] lg:text-[16px] text-center text-white lg:leading-[24px
+         ${Data.ConfirmId === "true" && Data.ConfirmAcc === "true" ?"bg-slate-400" : "bg-[#04177F]"}`}>
+       {(idButtonState) && 
+       (   Data.ConfirmId === "true" && Data.ConfirmAcc === "true" ? "Virtual Account Created" : Data.ConfirmId === "true" && Data.ConfirmAcc === "false"  ? "Create Virtual Account" : "Verify" )}
         </button>
        { errorSubmit  && (
         <h2 className={`font-[500] lg:text-[14px] lg:leading-[18px] md:text-[14px] md:leading-[18px] 

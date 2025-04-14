@@ -827,7 +827,11 @@ export const Router = () => {
           <DataBundleAddRecipient />
           </ProtectedRoute>}
         />
-        <Route path="/ProfileSettingMain" element={<ProfileSettingsMain />} />
+        <Route path="/ProfileSettingMain" element={
+          <ProtectedRoute>
+          <ProfileSettingsMain />
+        </ProtectedRoute>
+          } />
         <Route path="/EditProfile" element={
           <ProtectedRoute>
           <EditProfile />
