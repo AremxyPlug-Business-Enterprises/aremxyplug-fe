@@ -35,7 +35,7 @@ export default function BvnVerification(Data) {
   const {state, bvnButtonState, setBvnButtonState,
     setBankNameState, setAccountNameState,  setAccountNumberState, idVerificationOpen, setVirtualAccCreated, setIdButtonState
    } = useContext(ContextProvider);
-  const { toggleSideBar, customerDetail, setLoginAuthorisation , bankNameState} =
+  const { toggleSideBar, customerDetail, setLoginAuthorisation} =
     useContext(ContextProvider);
   const {idAddress, setIdAddress} = useContext(ContextProvider);
   const { dropDownGender, setDropDownGender } = useContext(ContextProvider);
@@ -55,6 +55,13 @@ export default function BvnVerification(Data) {
 
   const { full_name } = customerDetail;
 const {fullName} = state;
+
+//Function to inform a user that account has previously been craeted
+// and set the following functions as stated bellow
+// const AccCreatedPrev = ()=>{
+//   setBvnButtonState("Virtual Account Created");
+//   alert("Account has been created previously")
+// }
   const BvnFunctionState = async (
     url,
     data,
@@ -142,7 +149,7 @@ const {fullName} = state;
         }) : response  = await axios.post(url, data, {
           headers: {
             "Content-Type": "application/json",
-            Authorization: authToken || getToken,
+            Authorization: authToken || getToken
           },
         })
  if (response.status === 201 || 200) {
@@ -152,17 +159,21 @@ const {fullName} = state;
           statusBvn();
           verifyPopBvn();
           setBvnButtonState(buttonStateSuccess);
-          localStorage.setItem("bvnVerification",true)
+          localStorage.setItem("bvnVerification","true")
     }  else{
             alertSuccess();
+          
             setBvnButtonState(buttonStateSuccess);
-            if(Data.ConfirmAcc === false){
+        const ConfirmAcc = localStorage.getItem("AccCreated")
+            if(ConfirmAcc === "false"){
              await CheckVirtualAcc(
               authToken, customerDetail, setLoading,
               setVirtualAccCreated, 
                setBankNameState, setAccountNameState, setAccountNumberState,
                verificationOpen, idVerificationOpen, bvnVerificationOpen, setIdButtonState, setBvnButtonState);
+               localStorage.setItem("AccCreated","true");
             }
+            
  }  }
       } catch (error) {
         if (error.status === 401 || 400) {
@@ -187,13 +198,16 @@ const {fullName} = state;
   };
 
   //To GetLocalStorage Data
+  const BvnNumberRef = useRef()
   const ValueRef = useRef();
 
   Data = GetLocalStorage();
   useEffect(() => {
     ValueRef.current = Data;
+    BvnNumberRef.current = bvnNumber
+     // eslint-disable-next-line
   }, [Data]);
-
+console.log(Data)
   // console.log(bvnDateOfBirth);
   const genderInfo = ["Male", "Female", "Prefer not to say"];
 
@@ -222,7 +236,7 @@ const {fullName} = state;
               className=" flex gap-[5px] py-[23px] pr-[12px] pl-[12px] md:py-[25px] md:pr-[41px] md:pl-[16px] bg-white shadow-[0px_2.34722px_5.86806px_0px_rgba(0,0,0,0.25)] md:shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)]"
             >
               <img
-                src={bvnVerifyImage}
+                src={bvnVerifyImage && (Data.ConfirmBvn ===  "true" ? bvnVerifiedSuccess : NotVerifiedImage)}
                 alt=""
                 className={`h-[24px] w-[24px] md:h-[44px] md:w-[44px] lg:h-[62px] lg:w-[62px]`}
               />
@@ -231,7 +245,7 @@ const {fullName} = state;
                   Bvn Status
                 </h2>
                 <h2 className={`font-[500] lg:text-[12px] lg:leading-[15.6px] text-[8.042px] leading-[10.45px] ${isDarkMode ? "text-black" : ""}`}>
-                  {bvnStatus}
+                  {bvnStatus && (Data.ConfirmBvn === "true" ? "Verified" : "Not Verified")}
                 </h2>
               </div>
             </div>
@@ -397,7 +411,7 @@ const {fullName} = state;
                   </div>
                   {/* Input */}
                   <input
-                    readOnly={bvnStatus === "Verified"}
+                    readOnly={Data.ConfirmBvn === "true"}
                     value={bvnPhone}
                     onInput={(e) => {
                       const numericValue = e.target.value.replace(/\D/g, "");
@@ -424,7 +438,7 @@ const {fullName} = state;
                     BVN Number
                   </h2>
                   <input
-                    readOnly={bvnStatus === "Verified"}
+                    readOnly={Data.ConfirmBvn === "true"}
                     onInput={(e) => {
                       const numbersOnly = e.target.value.replace(/\D/g, "");
                       e.target.value = numbersOnly;
@@ -433,8 +447,8 @@ const {fullName} = state;
                       setLoginAuthorisation(
                         localStorage.getItem("authorisedLogin")
                       );
-                    }}
-                    value={bvnNumber}
+                   }}
+                    value={bvnNumber && (bvnStatus === "Verified" && bvnNumber === "" ? BvnNumberRef.current : bvnNumber)}
                     onChange={(e) => {
                       setBvnNumber(e.target.value);
                     }}
@@ -449,16 +463,16 @@ const {fullName} = state;
 
               <div className="flex flex-col md:gap-[15px] gap-[10px] justify-start">
                 <button
-                 // disabled={bvn}
+                  disabled={Data.ConfirmAcc === "true" && Data.ConfirmBvn === "true"}
                   onClick={() => {
                     BvnFunctionState();
                   }}
                   className={`lg:py-[13px] md:py-[7.868px] py-[16.531px] rounded-[4.241px] w-[100%] md:w-[150px] lg:w-[163px] lg:rounded-[12px] bg-[#04177F]
          font-[600] text-[12px] leading-[18px] lg:text-[16px] text-center text-white lg:leading-[24px ${
-           bankNameState.length > 1 ? "bg-slate-400" : "bg-[#04177F]"
+          Data.ConfirmAcc === "true" && Data.ConfirmBvn === "true"  ? "bg-slate-400" : "bg-[#04177F]"
          }`}
                 >
-                  {(bvnButtonState) || (Data.ConfirmAcc === true && bvnButtonState === "Verify" ? "Virtual Account Created" : Data.ConfirmId === true && bvnButtonState === "Verify" && Data.ConfirmAcc === false ? "Create Virtual Account" : "Verify" )}
+                  {(bvnButtonState) && (Data.ConfirmAcc === "true" && Data.ConfirmBvn === "true"  ? "Virtual Account Created" : Data.ConfirmBvn === "true" && Data.ConfirmAcc === "false" ? "Create Virtual Account" : "Verify" )}
                 </button>
                 {errorVerify && (
                   <h2

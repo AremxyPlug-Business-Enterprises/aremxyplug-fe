@@ -75,11 +75,9 @@ export const RemoveLocalStorage = () => {
  localStorage.removeItem("aremxyUserId");
  localStorage.removeItem("UserStatus");
  localStorage.removeItem("authorisedLogin");
- //localStorage.removeItem("userTransactionOtp");
-
- 
- //localStorage.removeItem("idVerification");
-//  localStorage.removeItem("bvnVerification");
+ localStorage.removeItem("getToken");
+ localStorage.removeItem("idVerification");
+ localStorage.removeItem("bvnVerification");
  const AccCreated = localStorage.getItem("AccCreated")
  const getToken = localStorage.getItem("getToken");
  if(getToken){

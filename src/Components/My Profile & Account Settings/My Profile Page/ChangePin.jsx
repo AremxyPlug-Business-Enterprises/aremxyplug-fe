@@ -13,7 +13,7 @@ import { AiFillEye } from "react-icons/ai";
 import Cancel from "../ProfileImages/Cancel.svg";
 import ChangePassword from "./ChangePassword";
 import Success from "../ProfileImages/success.gif";
-
+import axios from "axios";
 const ChangePin = () => {
   const { toggleSideBar, isDarkMode } = useContext(ContextProvider);
 
@@ -39,17 +39,7 @@ const ChangePin = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [update, setUpdate] = useState("");
 
-  const handleUpdate = () => {
-    if (newPin !== confirmPin) {
-      setErrorMessage("PIN does not match...");
-      document.getElementById("confirmPinInput").style.backgroundColor =
-        "#FFD8D8";
-    } else {
-      setErrorMessage("");
-      document.getElementById("confirmPinInput").style.backgroundColor = "";
-      setUpdate(true);
-    }
-  };
+ 
 
   const [resetPin, setResetPin] = useState("");
 
@@ -130,6 +120,57 @@ const ChangePin = () => {
       setCreatePin(true);
     }
   };
+
+
+// An Api to help change the user's pin
+const ChangeUserPin = async()=> {
+  const getToken = localStorage.getItem("getToken");
+  const authToken = localStorage.getItem("authToken")
+  if(authToken || getToken )
+  try{
+  const data ={
+    old_data : oldPin,
+    new_data : newPin
+   }
+   const url = "https://aremxyplug.onrender.com/api/v1/pin";
+   const response = await axios.post(url,data,{headers : {"Content-Type":"application/json",
+    Authorization : getToken || authToken
+   }})
+   if(response.status === 200 || 201){
+    alert("Pin Changed Successfully")
+    setUpdate(true);
+   }
+
+   }catch(error){
+     if(error.response.status === 400){
+      alert("Invalid Pin")
+     }else if(error.response.status === 404){
+      alert("Check your internet connection")
+     }else if(error.response.status === 500){
+      alert("SERVER ERROR")
+     }
+   }
+  }
+
+  const handleUpdate = async() => {
+    if(!oldPin || !newPin || !confirmPin){
+setErrorMessage("Please fill in all fields");
+    }else if(oldPin.length < 4 || newPin.length < 4 || confirmPin.length < 4){
+setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long")
+    }else if (newPin !== confirmPin) {
+      setErrorMessage("PIN does not match...");
+      document.getElementById("confirmPinInput").style.backgroundColor =
+        "#FFD8D8";
+    } else {
+      setErrorMessage("");
+      document.getElementById("confirmPinInput").style.backgroundColor = "";
+      await ChangeUserPin()
+      
+    }
+  };
+
+
+
 
   const [changePassword, setChangePassword] = useState("");
   const { authenticationOpen } = useContext(ContextProvider);
@@ -255,7 +296,8 @@ const ChangePin = () => {
                               ? "border-slate-50 text-slate-50 bg-black"
                               : "bg-white"
                           }`}
-                          placeholder=""
+                          placeholder="Your Old pin"
+                          maxLength={4}
                           value={oldPin}
                           onChange={(event) =>
                             handlePinInput(event.target.value, setOldPin)
@@ -281,7 +323,8 @@ const ChangePin = () => {
                               ? "border-slate-50 text-slate-50 bg-black"
                               : "bg-white"
                           }`}
-                          placeholder=""
+                          placeholder="Your New Pin"
+                          maxLength={4}
                           value={newPin}
                           onChange={(event) =>
                             handlePinInput(event.target.value, setNewPin)
@@ -308,7 +351,8 @@ const ChangePin = () => {
                             ? "border-slate-50 text-slate-50 bg-black"
                             : "bg-white"
                         }`}
-                        placeholder=""
+                        placeholder="Inputs to confirm your new pin"
+                        maxLength ={4}
                         value={confirmPin}
                         onChange={(event) =>
                           handlePinInput(event.target.value, setConfirmPin)
@@ -316,12 +360,13 @@ const ChangePin = () => {
                       />
                     </div>
 
-                    {errorMessage && (
+                   
+                  </div>
+                  {errorMessage && (
                       <p className="text-red-500 text-start text-[10px] mt-[5px]">
                         {errorMessage}
                       </p>
                     )}
-                  </div>
                 </div>
 
                 <div className="py-[30px] lg:py-[60px]">

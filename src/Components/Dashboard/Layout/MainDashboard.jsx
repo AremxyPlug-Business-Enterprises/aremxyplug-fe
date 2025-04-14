@@ -69,7 +69,7 @@ const ValueRef = useRef()
     };
     // eslint-disable-next-line
   }, []);
-
+//const ConfirmAcc = localStorage.getItem("ConfirmAcc")
 
   const handleClick = (index) => {
     const updatedButtons = activeButtons.map((isActive, i) => i === index);
@@ -122,7 +122,6 @@ setSymbol("₦")
     //   : setSymbol("");
     return;
   };
-//console.log(ConfirmAcc);
 return (
     <div className="h-[150%]">
       {/* ==============TOP BAR========== */}
@@ -375,7 +374,7 @@ return (
                 <div
                   onClick={() => {
                     handleClick(1);
-                    setBlur(true);
+                    setBlur(false);
                     // setBlurThree();
                   }}
                   className={`${styles.fcp2} ${
@@ -423,12 +422,12 @@ return (
               } w-full h-auto md:w-1/2 rounded-[8.32px] lg:rounded-[16.32px] md:rounded-[10px]
               flex flex-col justify-between lg:p-[20px] md:p-[15px] p-[10px]`} >
                 <div className="h-full w-full">
-         {Data.ConfirmAcc === false ? (
-          <div ClassName="h-full w-full">
+         {Data.ConfirmAcc === "true" ? (
+          <div ClassName="h-full w-full flex flex-col">
               <Link to="/virtual-account">
                 {" "}
                 <button
-                  className={`text-[10px] md:text-[11px] lg:text-[12px] font-[600]  ${
+                  className={`text-[10px] md:text-[11px] mb-[15px] md:mt-[0px] lg:text-[12px] font-[600]  ${
                     isDarkMode ? "border bg-black" : "bg-[#04177f]"
                   } ${styles.viewWallet}`}
                 >
@@ -436,7 +435,7 @@ return (
                 </button>
               </Link>
               <div>
-                <div className="flex mt-[8%] gap-[30px] md:mt-[5%] lg:mt-[9%]">
+                <div className="flex w-full md:w-auto mt-[8%] gap-[30px] md:mt-[5%] lg:mt-[9%]">
                   <p 
                     className={`${styles.GVA} ${
                       toggleSideBar ? "lg:text-[10px]" : "lg:text-[24px]"
@@ -471,8 +470,8 @@ return (
                     isDarkMode ? " text-[#fff]" : "text-[#04177f]"
                   } ${
                     toggleSideBar
-                      ? "backdrop-blur-[5px]  font-extrabold absolute lg:h-[27%] lg:w-[35%] lg:ml-[-8px] lg:flex lg:justify-start lg:mt-[11%] lg:pt-[2%] lg:text-[25px] lg:text-[#04177f]"
-                      : "backdrop-blur-[4.5px] absolute text-[14px] h-[13%] w-[85%] mt-[28%] lg:mt-[11%] font-extrabold flex justify-start pt-[7%] md:h-[11%] md:text-[25px] md:pt-[5%] lg:w-[45%] lg:h-[28%] lg:ml-[-1%]"
+                      ? "backdrop-blur-[5px]  font-extrabold absolute lg:h-[22%] lg:w-[35%] lg:ml-[-8px] lg:flex lg:justify-start lg:mt-[2%] lg:pt-[2%] lg:text-[25px] lg:text-[#04177f]"
+                      : "backdrop-blur-[4.5px] absolute text-[14px] h-[13%] w-[85%] mt-[4%] lg:mt-[0%] font-extrabold flex justify-start pt-[7%] md:h-[11%] md:text-[25px] md:pt-[5%] lg:pt-[3%] lg:w-[45%] lg:h-[19%] lg:ml-[-1%]"
                   } `}
                 >
                   Coming Soon...
@@ -523,7 +522,8 @@ return (
                 </div>
                 ): (
                   <div className="h-full  w-full gap-[15px] lg:gap-[25%] flex flex-col items-center justify-center ">
-                    <h2 className="text-blue-900 text-[12px] leading-[16px] md:text-[14px] md:leading-[18px] lg:text-[16px] font-[600]">
+                    <h2 className={`text-blue-900 text-[12px] leading-[16px] md:text-[14px]
+                       md:leading-[18px] lg:text-[16px] font-[600]  ${isDarkMode ? "text-white" : "text-black"}`}>
                       Global Virtual Account
                       </h2>
                       <div className="flex flex-col h-[45%] gap-[8px] lg:gap-[25%]">
@@ -531,12 +531,14 @@ return (
                  md:leading-[18px] lg:leading-[22px] font-[500] 
                 text-left
                ${isDarkMode ? "text-white" : "text-black"}  `}>
-         Add a means of identification to create a virtual Account.
+        {(Data.ConfirmId === "true" || Data.ConfirmBvn === "true") && Data.ConfirmAcc === "false" ? "Create a Virtual Account" : (Data.ConfirmId === "true" || Data.ConfirmBvn === "true") && Data.ConfirmAcc === "true" ? "Virtual Account Created" : "Add a means of verification to create a vitual account" }
               </p>
               <p className={`lg:text-[16px] font-[400] lg:leading-[24px]
                text-[12px] md:text-[14px] md:leading-[18px]
                  ${isDarkMode ? "text-white" : "text-black"}`}>
-                This is Collected for secure and cyber-attack-free transactions among AremxyPlug's users</p>
+                   {(Data.ConfirmId === "true" || Data.ConfirmBvn === "true") && Data.ConfirmAcc === "false" ? "Your account has been verified successfully. Please click the below button to generate your virtual account." : (Data.ConfirmId === "true" || Data.ConfirmBvn === "true") && Data.ConfirmAcc === "true" ? "You now have an account" : "Please verify your account to generate your virtual account." }
+                {/* This is Collected for secure and cyber-attack-free transactions among AremxyPlug's users*/}
+                </p>
                 </div>
                 </div>
                 )}
@@ -553,7 +555,10 @@ return (
                     isDarkMode ? "border bg-black" : "bg-[#04177f]"
                   } ${styles.viewWallet}`}
                 >
-               {(Data.ConfirmId === false && Data.ConfirmBvn === false) ? "Verify" : `${Data.ConfirmAcc === false  ?  "Verified" : "Generate"}` }
+               {(Data.ConfirmId === "true" ||  Data.ConfirmBvn === "true") && Data.ConfirmAcc === "false"  ? "Generate" : `${(Data.ConfirmBvn === "true" || Data.ConfirmId === "true") && Data.ConfirmAcc === "true"
+               ?  "Verified" : "Verify"}`}
+              
+               
                 </button>
               </Link>
             </div>

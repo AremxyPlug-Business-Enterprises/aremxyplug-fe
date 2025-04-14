@@ -28,7 +28,7 @@ function LoginForm() {
         setBankNameState, setAccountNameState, setAccountNumberState,
          verificationOpen, idVerificationOpen, bvnVerificationOpen,
          setBvnButtonState, setIdButtonState, setIdStatus, setBvnStatus,
-         setVerifyImage,setBvnVerifyImage,state
+         setVerifyImage,setBvnVerifyImage,state, setBvnNumber, setIdNumber
       } = useContext(ContextProvider);
 
 const {fullName, phoneNumber, userName} = state
@@ -176,68 +176,99 @@ if (authToken || getToken) {
 const url = 'https://aremxyplug.onrender.com/api/v1/check-verification';
  //
  try{
-  setLoading(true);
+   setLoading(true);
   const response = await axios.get(url,{headers : {"Content-Type" : "application/json",
   Authorization : authToken || getToken
   }})
 if (response.status === 201 || 200 ) {
-  alert("successful")
+ 
+  console.log(response);
   localStorage.setItem("AccCreated",true);
-  const CheckVerifyStatusNin = localStorage.getItem("idVerification");
-  const CheckVerifyStatusBvn = localStorage.getItem("bvnVerification");
-if( CheckVerifyStatusNin === true && CheckVerifyStatusBvn === false){
+  const nin = response.data.data.nin;
+  const bvn = response.data.data.bvn;
+  //console.log(bvn,nin)
+if( !bvn && nin){
 setIdButtonState("Virtual Account Created");
 setVerifyImage(VerificationSuccess);
 setIdStatus("Verified")
-}else if(CheckVerifyStatusNin === false && CheckVerifyStatusBvn === true){
+localStorage.setItem("bvnVerification",false);
+localStorage.setItem("idVerification",true);
+}else if(bvn && !nin){
   setBvnButtonState("Virtual Account Created");
   setBvnVerifyImage(VerificationSuccess);
   setBvnStatus("Verified")
-}else{
+  localStorage.setItem("bvnVerification",true);
+  localStorage.setItem("idVerification",false);
+}else if(bvn && nin){
   setIdButtonState("Virtual Account Created");
 setVerifyImage(VerificationSuccess);
 setIdStatus("Verified")
 setBvnButtonState("Virtual Account Created");
   setBvnVerifyImage(VerificationSuccess);
   setBvnStatus("Verified")
+  localStorage.setItem("bvnVerification",true);
+  localStorage.setItem("idVerification",true);
 }
 }
     } catch(error){
    if(error.status === 401 || 400){
    // alert(`ERROR : ${error}`)
     console.log(error);
-    console.log(error.response.data.message);
+   // console.log(error.response.data.message);
     if(error && error.response.data.message === "error"){
       localStorage.setItem("idVerification",false);
       localStorage.setItem("bvnVerification",false);
+      localStorage.setItem("AccCreated",false);
       setVerifyImage(NotVerifiedImage);
       setBvnVerifyImage(NotVerifiedImage);
       setIdStatus("Not Verified");
       setBvnStatus("Not Verified")
      // console.log("ERROR",error.response.data.message)
     }else if(error && error.response.data.message === "action_required"){
-      localStorage.setItem("AccCreated",false);
-      localStorage.setItem("idVerification",false);
-      //localStorage.setItem("bvnVerification",true);
-      const CheckVerifyStatusNin = localStorage.getItem("idVerification");
-      const CheckVerifyStatusBvn = localStorage.getItem("bvnVerification");
-    
-      if(CheckVerifyStatusNin === true && CheckVerifyStatusBvn === false){
+      localStorage.setItem("AccCreated", false)
+      const bvnCheck = error.response.data.data.bvn;
+      
+      const ninCheck = error.response.data.data.nin;
+      console.log(bvnCheck, ninCheck)
+      
+      if(bvnCheck && !ninCheck){
+        setBvnButtonState("Create Virtual Account");
+        setBvnVerifyImage(VerificationSuccess)
+        setBvnStatus("Verified")
+        setIdButtonState("Verify");
+        setVerifyImage(NotVerifiedImage)
+        setIdStatus("Not Verified");
+        setBvnNumber( error.response.data.bvn);
+        localStorage.setItem("bvnVerification",true);
+        localStorage.setItem("idVerification",false);
+      }else if(ninCheck && !bvnCheck){
+        setBvnButtonState("Verify");
+        setBvnVerifyImage(NotVerifiedImage)
+        setBvnStatus("Not Verified")
+        setIdButtonState("Create Virtual Account");
+        setVerifyImage(VerificationSuccess)
         setIdStatus("Verified");
-        setVerifyImage(VerificationSuccess);
-}else if(CheckVerifyStatusNin === false && CheckVerifyStatusBvn === true){
-     setBvnStatus("Verified");
-     setBvnVerifyImage(VerificationSuccess);
-      }else{
-        setIdStatus("Verified");
-        setVerifyImage(VerificationSuccess);
+        setIdNumber( error.response.data.nin);
+        localStorage.setItem("idVerification",true);
+        localStorage.setItem("bvnVerification",false);
+      } else if(bvnCheck && ninCheck) {
+        setBvnButtonState("Create Virtual Account");
+        setBvnVerifyImage(VerificationSuccess)
         setBvnStatus("Verified");
-        setBvnVerifyImage(VerificationSuccess);
+        setIdButtonState("Create Virtual Account");
+        setVerifyImage(VerificationSuccess)
+        setIdStatus("Verified");
+        setBvnNumber( error.response.data.bvn);
+        setIdNumber( error.response.data.nin);
+        localStorage.setItem("idVerification",false);
+        localStorage.setItem("bvnVerification",false);
       }
-      //console.log("ERROR",error.response.data.message)
+      
+      localStorage.setItem("AccCreated",false);
+    
     }
     }else if (error && error.status === 404){
-      alert("Network Error, Please Check your Connection and try again");
+      alert("Network Error:, Please Check your Connection and try again");
     }else if(error.status === 500){
         alert('Error:', "A SERVER ERROR");
      
@@ -293,7 +324,7 @@ setBvnButtonState("Virtual Account Created");
                 const authToken = response.headers.get('Authorization');
               
                 if(authToken){
-                  localStorage.setItem("UserStatus", true);
+                  localStorage.setItem("UserStatus",false)
                   SetLocalStorageInputPin();
                     localStorage.setItem("getToken", authToken);
                    
@@ -306,7 +337,8 @@ setBvnButtonState("Virtual Account Created");
                   const authToken = response.headers.get('Authorization');
                   console.log(authToken)
                    if(authToken){
-                localStorage.setItem("getToken", authToken)
+                localStorage.setItem("getToken", authToken);
+                localStorage.setItem("UserStatus",false)
                   if(customer){
                setCustomerDetail(customer);
                   setTimeout(async()=>{
@@ -335,6 +367,7 @@ setBvnButtonState("Virtual Account Created");
             });
           if (checkbox === true) {
             localStorage.setItem("aremxyPassword", JSON.stringify(password));
+            localStorage.setItem("aremxyUsername", JSON.stringify(username))
           }
         }
       } catch (error) {
@@ -384,7 +417,7 @@ setBvnButtonState("Virtual Account Created");
                 setOpenTranspin(true);
                 const authToken = response.headers.get('Authorization');
                 if(authToken){
-                  localStorage.setItem("UserStatus", true);
+                  localStorage.setItem("UserStatus",false)
                   SetLocalStorageInputPin();
                   localStorage.setItem("authorisedLogin", authToken);
                  
@@ -400,6 +433,7 @@ setBvnButtonState("Virtual Account Created");
            if(authToken){
              setLoginAuthorisation(authToken);
              localStorage.setItem("authorisedLogin", authToken)
+             localStorage.setItem("UserStatus",false)
              //To  Check if the user has a virtual Account
              setTimeout(async()=>{
       await CheckVirtualAcc( authToken, customerDetail, setLoading, setVirtualAccCreated, 
