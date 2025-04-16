@@ -42,10 +42,9 @@ export const GetVirtualAccountValue = ( virtualAccCreated,
 
  
 //Setting the bank Details after the creation of virtual accounts
-  export const InActionVirtualAccountState =(updateBankName, updateAccountName, updateAccountNumber,
- virtualAccCreated,setBankNameState, setAccountNameState, setAccountNumberState
+  export const InActionVirtualAccountState =(virtualAccCreated,setBankNameState, setAccountNameState, setAccountNumberState
   )=>{
-
+const {bank_name, account_no, account_name} = virtualAccCreated
  //LocalStorage Getting
  const email = JSON.parse(localStorage.getItem("userEmail"));
  const phone = JSON.parse(localStorage.getItem("userPhone"));
@@ -54,13 +53,14 @@ export const GetVirtualAccountValue = ( virtualAccCreated,
  const id = JSON.parse(localStorage.getItem("aremxyUserId"));
  //Checking if Virtual account is true
 
-    if(updateBankName.length > 1 && updateAccountName.length > 1 && updateAccountNumber.length > 1){
+    
 
  GetVirtualAccountValue( virtualAccCreated,
    setBankNameState, setAccountNameState, setAccountNumberState);
-    }
-   SetLocalStorage(email, full_name,phone, username, updateBankName, updateAccountName, updateAccountNumber, id)
-}
+    console.log("IN ACTION IS RUNNING");
+   SetLocalStorage(email, full_name,phone, username, bank_name, account_name, account_no, id)
+
+  }
 
 
 //Function to help check user virtual bank account details and set in the main dashboard \
@@ -83,25 +83,32 @@ export const CheckVirtualAcc = async(authToken, customerDetail, setLoading,
             setVirtualAccCreated(virtualAccCreated);
             console.log(`CustomerDetail : ${customerDetail}`)
             console.log(`virtualAccCreated : ${virtualAccCreated}`)
-            const {bank_name} = virtualAccCreated
-            if((verificationOpen && (bvnVerificationOpen || idVerificationOpen)) && bank_name.length > 1){
+            // const {bank_name} = virtualAccCreated
+            const UserStatus = localStorage.getItem("UserStatus")
+            const ConfirmId = localStorage.getItem("idVerification")
+            const ConfirmBvn = localStorage.getItem("bvnVerification")
+            const ConfirmAcc = localStorage.getItem("AccCreated")
+            alert("InAction Virtual is running")
+            if((verificationOpen && (bvnVerificationOpen || idVerificationOpen)) && UserStatus === true){
+
                 InActionVirtualAccountState(virtualAccCreated,setBankNameState, 
                   setAccountNameState, setAccountNumberState);
                alert("InAction Virtual is running")
-                  if(bvnVerificationOpen === true && idVerificationOpen === false){
+                  if(bvnVerificationOpen === true && idVerificationOpen === false && ConfirmBvn === "true" && ConfirmAcc === "true") {
                 setBvnButtonState("Virtual Account Created");
-               }else if(idVerificationOpen === true && bvnVerificationOpen === false){
+               }else if(idVerificationOpen === true && bvnVerificationOpen === false && ConfirmId === "true" && ConfirmAcc === "true"){
                   setIdButtonState("Virtual Account Created")
                }
                // if(InActionVirtualAccountState){
                //    return <Navigate to ={"/dashboard"}/>
                //    }
-          }else{
+          }else{alert("SignAction Virtual is running")
             if(virtualAccCreated){
             SignInVirtualAccountState(customerDetail, virtualAccCreated
                ,setBankNameState, setAccountNameState, setAccountNumberState);
                if(SignInVirtualAccountState){
              await confirmVirtualState();
+             alert("Sign in virtual running")
             }
            console.log(response)
          
