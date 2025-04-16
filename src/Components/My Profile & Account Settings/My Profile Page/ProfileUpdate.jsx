@@ -35,7 +35,11 @@ export default function ProfileUpdate({ fullname, Email, Phone, Username }) {
               {/* Profile text */}
               <div className="flex flex-col justify-center gap-[3.52px] lg:gap-[12px]">
                 <p
+<<<<<<< HEAD
                   className={`text-sm leading-[15px] md:text-[9.389px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : ""}`}
+=======
+                  className="text-[#7E7E7E] text-[12px] leading-[18px] md:text-[12.042px] md:leading-[16px] lg:text-[16px] lg:leading-[24.8px]"
+>>>>>>> c92fc444de5ab76e43982d8f8033e3fa101b8105
                 >
                   {(!full_name && fullName.length > 1)
                       ?  fullName
@@ -46,7 +50,11 @@ export default function ProfileUpdate({ fullname, Email, Phone, Username }) {
                       : "Hi User"}
                 </p>
                 <p
+<<<<<<< HEAD
                   className={`text-[#7C7C7C] text-[10px] leading-[15px] md:text-[7.042px] md:leading-[9.154px] lg:text-[12px] lg:leading-[15.6px] ${isDarkMode ? "text-white" : ""}`}
+=======
+                  className=" text-[#7C7C7C] text-[12px] leading-[18px] md:text-[12.042px] md:leading-[16px] lg:text-[16px] lg:leading-[24.8px]"
+>>>>>>> c92fc444de5ab76e43982d8f8033e3fa101b8105
                 >
                   {email ? email : `${Email ? Email : ""}`}
                 </p>
