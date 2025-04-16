@@ -83,18 +83,18 @@ const ChangeEmail = () => {
   return (
     <DashBoardLayout>
       <div
-        className={`bg-[#FFF] relative lg:ml-[20px] 2xl:ml-0 ${
+        className={`relative lg:ml-[20px] 2xl:ml-0 ${
           isDarkMode
             ? "bg-[#000] text-[#fff] border-[#fff]"
             : "bg-[#ffffff] text-[#000] "
         } flex flex-col justify-between h-full`}
       >
-        <section>
+        <section className={`${isDarkMode ? "bg-[#000]" : "bg-[#ffffff]"}`}>
           <ProfileHero></ProfileHero>
 
           {/* <Link to="/ChangePin"> */}
           <div className="flex items-center my-[10%] gap-[8px] md:my-[5%] md:text-[18px] lg:text-[px]">
-            <p className="text-[#7c7c7c] text-[10px] leading-[130%] md:text-[14px] lg:text-[18px] 2xl:text-[28px]">
+            <p className={`text-[#7c7c7c] text-[12px] leading-[130%] md:text-[14px] lg:text-[18px] 2xl:text-[28px] ${isDarkMode ? "text-[#fff]" : ""}`}>
               Change Email
             </p>
             <img
@@ -106,19 +106,19 @@ const ChangeEmail = () => {
           {/* </Link> */}
 
           <div>
-            <p className="text-[#9C9C9C] text-[10px] md:text-[14px] lg:text-[18px] font-semibold">
+            <p className={`text-[#9C9C9C] text-[12px] md:text-[14px] lg:text-[18px] font-semibold ${isDarkMode ? "text-[#fff]" : ""}`}>
               Kindly Input Your New Email
             </p>
           </div>
 
           <div className="mt-[30px]">
-            <h2 className="text-[10px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px]">
-              New Email{" "}
+            <h2 className={`text-[12px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] ${isDarkMode ? "text-white": ""}`}>
+              New Email
             </h2>
             <div className="relative mt-[5px] lg:mt-[15px]">
               <input
                 type="text"
-                className="w-full md:w-[50%] lg:w-[40%] h-8 px-2 py-[20px] border-[1px] rounded-md text-[10px] md:text-[14px] lg:text-[18px] font-semibold focus:outline-none lg:h-[51px]"
+                className={`w-full md:w-1/2 lg:w-[40%] h-8 px-2 py-[20px] border-[1px] rounded-md text-[12px] md:text-[14px] lg:text-[18px] font-semibold focus:outline-none lg:h-[51px] ${isDarkMode ? "bg-black text-white": ""}`}
                 placeholder=""
                 value={emailId}
                 style={{ borderColor: emailInputColor }}
@@ -130,7 +130,7 @@ const ChangeEmail = () => {
             </div>
 
             {errorMessage && (
-              <p className="text-red-500 text-start text-[10px] mt-[5px]">
+              <p className="text-red-500 text-start text-[12px] mt-[5px]">
                 {errorMessage}
               </p>
             )}
@@ -138,7 +138,7 @@ const ChangeEmail = () => {
 
           <div className="py-[30px] lg:py-[60px]">
             <button
-              className={`w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[600] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px] bg-primary
+              className={`w-full md:w-fit text-white rounded-md px-[28px] text-[12px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[600] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px] bg-primary
               `}
               onClick={handleUpdate}
             >
@@ -151,8 +151,8 @@ const ChangeEmail = () => {
           <Modal>
             <div
               className={` ${
-                toggleSideBar ? "confirm02" : "confirm2"
-              } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
+                toggleSideBar ? "absolute w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] md:ml-[20%] h-[250px] lg:h-[405px] shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)] top-[0%]" : "absolute w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] h-[250px] lg:h-[405px]  shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)]"
+              } md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px] ${isDarkMode ? "bg-stone-950 border-white border": "bg-white"}`}
             >
               <img
                 onClick={() => setUpdate(false)}
@@ -161,13 +161,12 @@ const ChangeEmail = () => {
                 alt=""
               />
 
-              <hr className="h-[6px] bg-[#04177f] lg:mt-[10%] border-none mt-[8%] md:mt-[7%] md:h-[10px]" />
-              <p className="md:mt-[15%] lg:mt-[10%] text-[10px] px-[20px] md:text-[14px] lg:text-[18px] font-extrabold text-center my-[5%] lg:my-[%]">
+              <hr className="h-[6px] bg-[#04177f] lg:mt-[10%] border-none mt-[6%] md:mt-[7%] md:h-[10px]" />
+              <p className={`md:mt-[15%] lg:mt-[10%] text-[12px] px-[20px] md:text-[14px] lg:text-[18px] font-extrabold text-center my-[4%] md:my-[5%] ${isDarkMode ? "text-white" :""}`}>
                 Verification code has been sent to your email - {emailId}
               </p>
-              <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
+              <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[5%] md:mb-[7%]">
                 <div className=" flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
-                  {" "}
                   {isVisible ? (
                     <OtpInput
                       value={inputPin}
@@ -176,28 +175,32 @@ const ChangeEmail = () => {
                       numInputs={6}
                       shouldAutoFocus={true}
                       inputStyle={{
-                        color: "#403f3f",
+                        color: isDarkMode ? "#ffffff" : "#403f3f",
                         width: 30,
                         height: 30,
                         borderRadius: 3,
+                        backgroundColor: isDarkMode ? "black" : "white",
+                          border: isDarkMode
+                            ? "1px solid white"
+                            : "1px solid #ccc",
                       }}
                       renderInput={(props) => (
                         <input {...props} className="inputOTP mx-[3px]" />
                       )}
                     />
                   ) : (
-                    <div className="text-[24px] md:text-[24px] mt-1">
-                      * * * * * *{" "}
+                    <div className="text-[24px] mt-1">
+                      * * * * * *
                     </div>
                   )}
                   <div
-                    className="text-[#0003] text-xl md:text-3xl"
+                    className={`text-[#0003] text-xl md:text-3xl ${isDarkMode? "text-white" : ""}`}
                     onClick={toggleVisibility}
                   >
                     {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
                   </div>
                 </div>
-                <p className="flex justify-between w-[67%] md:w-[55%] lg:w-[45%] text-[8px] md:text-[12px] text-[#04177f]">
+                <p className={`flex justify-between w-[67%] md:w-[55%] lg:w-[45%] text-[12px] md:text-[12px] text-[#04177f] ${isDarkMode ? "text-white" : ""}`}>
                   <p>{countdown > 0 ? `${countdown}sec` : "0sec"}</p>
                   <p
                     onClick={() => {
@@ -207,7 +210,7 @@ const ChangeEmail = () => {
                     }}
                     style={{
                       cursor: resendActive ? "pointer" : "not-allowed",
-                      color: resendActive ? "#04177f" : "#808080",
+                      color: isDarkMode? "#ffffff" : resendActive ? "#04177f" : "#808080",
                     }}
                   >
                     Resend OTP
@@ -225,7 +228,7 @@ const ChangeEmail = () => {
                 disabled={inputPin.length !== 6}
                 className={`${
                   inputPin.length !== 6 ? "bg-[#0008]" : "bg-[#04177f]"
-                } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
               >
                 Verify
               </button>
@@ -237,8 +240,9 @@ const ChangeEmail = () => {
           <Modal className="">
             <div
               className={` ${
-                toggleSideBar ? "confirm02" : "confirm2"
-              } bg-white flex flex-col justify-between items-center pb-[10px] md:pb-[30px] lg:pb-[30px] md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
+                toggleSideBar ? "bottom-[0%] absolute w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] md:ml-[20%] h-[250px] lg:h-[405px] shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)] top-[0%]" : "bottom-[0%] absolute w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] h-[250px] lg:h-[405px]  shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)]"
+                }  flex flex-col justify-between items-center pb-[10px] md:pb-[30px] lg:pb-[30px] md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]
+              ${isDarkMode ? "bg-black border-white border": "bg-white"}`}
             >
               <div className="absolute z-0 right-0" style={{ zIndex: 0 }}>
                 <img
@@ -260,13 +264,13 @@ const ChangeEmail = () => {
 
               <div className="relative z-10">
                 <p
-                  className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[8%] lg:mt-[3%] z-[1000] ${styles.overlayText}`}
+                  className={`text-[12px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[8%] lg:mt-[3%] z-[1000] ${styles.overlayText}`}
                 >
                   Successful
                 </p>
 
                 <p
-                  className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[4%] lg:my-[%] z-[1000] ${styles.overlayText}`}
+                  className={`text-[12px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[4%] lg:my-[%] z-[1000] ${styles.overlayText}`}
                 >
                   Your New Email has been updated successfully.
                 </p>
@@ -301,7 +305,7 @@ const ChangeEmail = () => {
             <div
               className={`${
                 isDarkMode ? "border" : "bg-[#04177f]"
-              } text-[10px] p-1 text-white rounded-[8px] lg:text-[18px]`}
+              } text-[12px] p-2 text-white rounded-[8px] lg:text-[18px]`}
             >
               Contact Us
             </div>

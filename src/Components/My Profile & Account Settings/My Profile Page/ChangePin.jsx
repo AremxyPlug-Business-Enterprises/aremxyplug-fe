@@ -250,7 +250,7 @@ const ChangePin = () => {
                       <div className="relative">
                         <input
                           type="number"
-                          className={`w-full h-8 px-2 py-[10px] border text-sm leading-[18px] lg:leading-[20.8px] text-[#7E7E7E] lg:text-[18px] focus:outline-none lg:h-[51px] mt-2 md:mt-0 rounded-[10px] p-[20px] md:pl-[8.67px] lg:pl-[10px] sm:p-3 sm:text-lg border-[#9C9C9C]  ${
+                          className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:py-[10] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border text-sm leading-[18px] lg:leading-[20.8px] text-[#7E7E7E] focus:outline-none rounded-[10px] lg:text-[16px] border-[#9C9C9C]  ${
                             isDarkMode
                               ? "border-slate-50 text-slate-50 bg-black"
                               : "bg-white"
@@ -276,7 +276,7 @@ const ChangePin = () => {
                       <div className="relative ">
                         <input
                           type="number"
-                          className={`w-full md:w-full lg:w-full h-8 px-2 py-[10px] border-[1px] text-sm leading-[18px] lg:leading-[20.8px] text-[#7E7E7E] lg:text-[18px]  focus:outline-none lg:h-[51px] mt-2 md:mt-0 rounded-[10px] p-[20px] md:pl-[8.67px] lg:pl-[10px] sm:p-3 sm:text-lg border-[#9C9C9C]  ${
+                          className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:py-[10] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border text-sm leading-[18px] lg:leading-[20.8px] text-[#7E7E7E] focus:outline-none rounded-[10px] lg:text-[16px] border-[#9C9C9C]  ${
                             isDarkMode
                               ? "border-slate-50 text-slate-50 bg-black"
                               : "bg-white"
@@ -303,7 +303,7 @@ const ChangePin = () => {
                       <input
                         id="confirmPinInput"
                         type="number"
-                        className={`w-full md:w-full lg:w-full h-8 px-2 py-[10px] border-[1px] text-sm leading-[18px] lg:leading-[20.8px] text-[#7E7E7E] lg:text-[18px] focus:outline-none lg:h-[51px] mt-2 md:mt-0 rounded-[10px] p-[20px] md:pl-[8.67px] lg:pl-[10px] sm:p-3 sm:text-lg border-[#9C9C9C]  ${
+                        className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:py-[10] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border text-sm leading-[18px] lg:leading-[20.8px] text-[#7E7E7E] focus:outline-none rounded-[10px] lg:text-[16px] border-[#9C9C9C]  ${
                           isDarkMode
                             ? "border-slate-50 text-slate-50 bg-black"
                             : "bg-white"
