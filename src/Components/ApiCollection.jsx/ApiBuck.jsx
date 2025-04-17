@@ -1,7 +1,6 @@
 
 import { SetLocalStorage } from '../LocalStorage/LocalStorage';
 import axios from 'axios';
-import { Navigate } from 'react-router-dom';
 //To set the different states for  virtual account
 
 
@@ -9,16 +8,16 @@ export const SignInVirtualAccountState =(customerDetail, virtualAccCreated,setBa
    setAccountNameState, setAccountNumberState)=>{
    const {email, full_name, phone, username, id} = customerDetail;
    const {bank_name, account_name, account_no} = virtualAccCreated;
-   console.log(`CustomerDetail : ${customerDetail}`)
-   console.log(`virtualAccCreated : ${virtualAccCreated}`)
+   
 //Checking if Virtual account is true
 
    if(bank_name.length > 1 && account_name.length > 1 && account_no.length > 1){
 GetVirtualAccountValue(virtualAccCreated,
    setBankNameState, setAccountNameState, setAccountNumberState);
-   
+   SetLocalStorage(email,full_name,phone, username, bank_name, account_name, account_no ,id)
+   //alert("Get Virtual account is running")
 }
-  SetLocalStorage(email,full_name,phone, username, bank_name, account_name, account_no ,id)
+ 
 }
 
 
@@ -34,7 +33,7 @@ export const GetVirtualAccountValue = ( virtualAccCreated,
     if(virtualAccCreated){
     setBankNameState(bank_name);
     setAccountNameState(account_name.slice(11));
-    setAccountNumberState(`${account_no.slice(0,4)}********`)
+    setAccountNumberState(account_no)
    console.log("The GetVirtualAccountValue is running")
     }
  }
@@ -54,20 +53,20 @@ const {bank_name, account_no, account_name} = virtualAccCreated
  //Checking if Virtual account is true
 
     
-
+if(bank_name.length > 1 ){
  GetVirtualAccountValue( virtualAccCreated,
    setBankNameState, setAccountNameState, setAccountNumberState);
-    console.log("IN ACTION IS RUNNING");
+   // alert("IN ACTION IS RUNNING");
    SetLocalStorage(email, full_name,phone, username, bank_name, account_name, account_no, id)
-
+ }
   }
 
 
 //Function to help check user virtual bank account details and set in the main dashboard \
 // as necessary
 export const CheckVirtualAcc = async(authToken, customerDetail, setLoading,
-    setVirtualAccCreated, setBankNameState, setAccountNameState, setAccountNumberState,
-    verificationOpen, idVerificationOpen, bvnVerificationOpen, setIdButtonState,setBvnButtonState, confirmVirtualState) => {
+    setVirtualAccCreated, setBankNameState, setAccountNameState, setAccountNumberState,TwoStep,setTwoStepVerificationSuccess,
+    confirmVirtualState) => {
      
   if (authToken) {
     const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc';
@@ -81,39 +80,31 @@ export const CheckVirtualAcc = async(authToken, customerDetail, setLoading,
         if (response.status === 201 || 200 ) {
              const virtualAccCreated = response.data.data.acc_details;
             setVirtualAccCreated(virtualAccCreated);
-            console.log(`CustomerDetail : ${customerDetail}`)
-            console.log(`virtualAccCreated : ${virtualAccCreated}`)
+            // console.log(`CustomerDetail : ${customerDetail}`)
+            // console.log(`virtualAccCreated : ${virtualAccCreated}`)
             // const {bank_name} = virtualAccCreated
-            const UserStatus = localStorage.getItem("UserStatus")
-            const ConfirmId = localStorage.getItem("idVerification")
-            const ConfirmBvn = localStorage.getItem("bvnVerification")
-            const ConfirmAcc = localStorage.getItem("AccCreated")
-            alert("InAction Virtual is running")
-            if((verificationOpen && (bvnVerificationOpen || idVerificationOpen)) && UserStatus === true){
-
-                InActionVirtualAccountState(virtualAccCreated,setBankNameState, 
-                  setAccountNameState, setAccountNumberState);
-               alert("InAction Virtual is running")
-                  if(bvnVerificationOpen === true && idVerificationOpen === false && ConfirmBvn === "true" && ConfirmAcc === "true") {
-                setBvnButtonState("Virtual Account Created");
-               }else if(idVerificationOpen === true && bvnVerificationOpen === false && ConfirmId === "true" && ConfirmAcc === "true"){
-                  setIdButtonState("Virtual Account Created")
-               }
-               // if(InActionVirtualAccountState){
-               //    return <Navigate to ={"/dashboard"}/>
-               //    }
-          }else{alert("SignAction Virtual is running")
-            if(virtualAccCreated){
-            SignInVirtualAccountState(customerDetail, virtualAccCreated
-               ,setBankNameState, setAccountNameState, setAccountNumberState);
-               if(SignInVirtualAccountState){
-             await confirmVirtualState();
-             alert("Sign in virtual running")
-            }
-           console.log(response)
-         
+          //  const UserStatus = localStorage.getItem("UserStatus")
+            if(TwoStep === true){
+               console.log(TwoStep)
+              if(virtualAccCreated){
+              SignInVirtualAccountState(customerDetail, virtualAccCreated
+                ,setBankNameState, setAccountNameState, setAccountNumberState);
+                // alert("Sign in virtual running")
+                if(SignInVirtualAccountState){
+                  localStorage.setItem("UserStatus",true)
+                  await confirmVirtualState();
+                  
+                }
+               //  console.log(response)
+                }}else{
+            InActionVirtualAccountState(virtualAccCreated,setBankNameState, 
+               setAccountNameState, setAccountNumberState);
+               alert("Action running")
+            //alert("InAction Virtual is running")
+               
+            
          }
-          }
+          
          }
         }catch(error){
        if(error.status === 401 || 400){
@@ -125,15 +116,17 @@ export const CheckVirtualAcc = async(authToken, customerDetail, setLoading,
          console.log(`ERROR: ${error}`)
        
      }else if(error.status === 500){
-            alert('Error:', "INTERNAL_SERVER_ERROR");
+            alert('Error:', "SERVER ERROR");
           }
         }finally{
-         if(confirmVirtualState ){
-          setLoading(false)
+         if(confirmVirtualState){
+          setLoading(false);
+          setTwoStepVerificationSuccess(false);
+
+      //  return <Navigate to ={`/dashboard`}/>
          }else if(InActionVirtualAccountState){
-            setLoading(false)
-            return <Navigate to ={"/dashboard"}/>
-         }
+            setLoading(false);
+    }
         }
 }
 }

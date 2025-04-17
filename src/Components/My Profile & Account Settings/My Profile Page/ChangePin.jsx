@@ -14,9 +14,11 @@ import Cancel from "../ProfileImages/Cancel.svg";
 import ChangePassword from "./ChangePassword";
 import Success from "../ProfileImages/success.gif";
 import axios from "axios";
+import { Loader } from "../../Loader/Loader";
+
 const ChangePin = () => {
   const { toggleSideBar, isDarkMode } = useContext(ContextProvider);
-
+  const [loading, setLoading] =useState(false);
   const [activeBtn, setActiveBtn] = useState([true, false, false]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [changePin, setChangePin] = useState(true);
@@ -126,14 +128,15 @@ const ChangePin = () => {
 const ChangeUserPin = async()=> {
   const getToken = localStorage.getItem("getToken");
   const authToken = localStorage.getItem("authToken")
-  if(authToken || getToken )
+  if(authToken || getToken ){
+    setLoading(true)
   try{
   const data ={
-    old_data : oldPin,
-    new_data : newPin
+    old_pin : oldPin,
+    new_pin : newPin
    }
    const url = "https://aremxyplug.onrender.com/api/v1/pin";
-   const response = await axios.post(url,data,{headers : {"Content-Type":"application/json",
+   const response = await axios.patch(url,data,{headers : {"Content-Type":"application/json",
     Authorization : getToken || authToken
    }})
    if(response.status === 200 || 201){
@@ -143,14 +146,16 @@ const ChangeUserPin = async()=> {
 
    }catch(error){
      if(error.response.status === 400){
-      alert("Invalid Pin")
+      alert("Invalid Old Pin")
      }else if(error.response.status === 404){
       alert("Check your internet connection")
      }else if(error.response.status === 500){
       alert("SERVER ERROR")
      }
+   }finally{
+    setLoading(false)
    }
-  }
+  }}
 
   const handleUpdate = async() => {
     if(!oldPin || !newPin || !confirmPin){
@@ -912,6 +917,11 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
             </Link>
           </div> */}
         </div>
+      )}
+      {loading && (
+        <Modal>
+          <Loader/>
+        </Modal>
       )}
     </div>
   );

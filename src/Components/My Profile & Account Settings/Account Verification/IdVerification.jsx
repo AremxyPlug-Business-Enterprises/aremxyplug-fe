@@ -20,20 +20,13 @@ import axios from "axios";
 import { Loader } from "../../Loader/Loader";
 import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 import idSuccess from "../ProfileImages/user-tick.svg";
-import { CheckVirtualAcc } from '../../ApiCollection.jsx/ApiBuck';
 
 export default function IdVerification(Data) {
   const {verificationOpen} = useContext(ContextProvider)
 
     const {idVerificationOpen, 
-      bvnVerificationOpen, 
       state,
-      setBvnButtonState,
-    setVirtualAccCreated,
-  setBankNameState,
-setAccountNameState,
-setAccountNumberState,
-verifyImage,
+    verifyImage,
  setVerifyImage,
  idStatus,
  isDarkMode,
@@ -116,14 +109,10 @@ const [loading, setLoading] =useState(false);
 
 //Function to inform a user that account has previously been craeted
 // and set the following functions as stated bellow
-const AccCreatedPrev = ()=>{
-  setIdButtonState("Virtual Account Created");
-  alert("Account has been created previously")
-}
+
 const IdFunctionState = async (
   url,
   data,
-  alertSuccess,
   buttonStateSuccess,
   ErrorMessage,
   ifStatement,
@@ -135,7 +124,7 @@ const IdFunctionState = async (
 ) => {
   if (idButtonState === "Verify") {
     url = "https://aremxyplug.onrender.com/api/v1/verify";
-    buttonStateSuccess = "Create Virtual Account";
+    buttonStateSuccess = "Verified";
     ErrorMessage = "NIN Name Mismatch or Network failure";
     ifStatement = (genderResult &&
     idResult &&
@@ -151,18 +140,10 @@ const IdFunctionState = async (
     data = {
       nin: idNumber.toString(),
     };
-  } else {
-    data =""
-    url = "https://aremxyplug.onrender.com/api/v1/virtualacc";
-    alertSuccess = () => alert("Virtual Account Created Successfully");
-    buttonStateSuccess = "Virtual Account Created";
-    ErrorMessage = "Virtual Account Creation Failed";
-    ifStatement = idStatus === "Verified";
-  }
+  } 
   CheckIdForm(
     url,
     data,
-    alertSuccess,
     buttonStateSuccess,
     ErrorMessage,
     ifStatement,
@@ -180,7 +161,6 @@ const IdFunctionState = async (
 const CheckIdForm = async (
     url,
     data,
-    alertSuccess,
     buttonStateSuccess,
     ErrorMessage,
     ifStatement,
@@ -205,39 +185,21 @@ console.log("getToken" ,getToken);
         PendingImageFxn();
         PendingText();
         }
-        let response;
-        idButtonState === "Verify" ?
-       response  = await axios.post(url, data , {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: authToken || getToken,
-          },
-        }):  response  = await axios.post(url, data, {
+       const response  = await axios.post(url, data , {
           headers: {
             "Content-Type": "application/json",
             Authorization: authToken || getToken,
           },
         })
  if (response.status === 201 || 200) {
-  if(idButtonState === "Verify"){
+
           setIdNumber(idNumber);
           verifyIdImage();
           statusId();
           verifyPopId();
           setIdButtonState(buttonStateSuccess);
           localStorage.setItem("idVerification", "true")
-    }  else{
-            alertSuccess();
-            setIdButtonState(buttonStateSuccess);
-            if(Data.ConfirmAcc === "false"){
-             await CheckVirtualAcc(
-              authToken, customerDetail, setLoading,
-              setVirtualAccCreated, 
-               setBankNameState, setAccountNameState, setAccountNumberState,
-               verificationOpen, idVerificationOpen, bvnVerificationOpen,setIdButtonState, setBvnButtonState);
-            }
-            localStorage.setItem("AccCreated", "true");
-          }
+  
  }
       } catch (error) {
         if (error.status === 401 || 400) {
@@ -609,7 +571,7 @@ useEffect(()=> {
       const numbersOnly = e.target.value.replace(/\D/g, '');
       e.target.value = numbersOnly;
     })}
-    value={idNumber && (idStatus === "Verified" && idNumber === "" ? IdNumberRef.current : idNumber)}
+    value={idNumber && (idStatus === "Verified" ? IdNumberRef.current : idNumber)}
     onChange={(e) => {
       setIdNumber(e.target.value)
     }}
@@ -665,15 +627,15 @@ border-[0.4px] border-[solid] border-[#9C9C9C] cursor-pointer ${idResult === "Na
         {/* SUBMIT BUTTON */}
         <div className='flex flex-col md:gap-[15px] gap-[10px] justify-start'>
         <button 
-        disabled={Data.ConfirmAcc === "true" && Data.ConfirmId === "true"}
+        disabled={ Data.ConfirmId === "true"}
         onClick={() => {
           IdFunctionState()
         }}
          className={`lg:py-[13px] md:py-[5.868px] md:rounded-[7.042px] py-[16.531px] rounded-[4.241px] w-[100%] md:w-[150px] lg:w-[163px] lg:rounded-[12px] bg-[#04177F]
          font-[600] text-[13px] leading-[18px] lg:text-[16px] text-center text-white lg:leading-[24px
-         ${Data.ConfirmId === "true" && Data.ConfirmAcc === "true" ?"bg-slate-400" : "bg-[#04177F]"}`}>
+         ${Data.ConfirmId === "true"  ?"bg-slate-400" : "bg-[#04177F]"}`}>
        {(idButtonState) && 
-       (   Data.ConfirmId === "true" && Data.ConfirmAcc === "true" ? "Virtual Account Created" : Data.ConfirmId === "true" && Data.ConfirmAcc === "false"  ? "Create Virtual Account" : "Verify" )}
+       (   Data.ConfirmId === "true" ? "Verified" : "Verify" )}
         </button>
        { errorSubmit  && (
         <h2 className={`font-[500] lg:text-[14px] lg:leading-[18px] md:text-[14px] md:leading-[18px] 

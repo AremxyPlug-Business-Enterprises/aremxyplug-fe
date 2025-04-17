@@ -7,7 +7,8 @@ import PopUpGreenDeskTop from "../ProfileImages/PopUpGreenDeskTop.svg";
 import { Modal } from "../../Screens/Modal/Modal";
 import styles from "../../../Components/Dashboard/DashboardComponents/TransferComponent/transfer.module.css";
 import Success from "../ProfileImages/success.gif";
-
+import axios from "axios";
+import { Loader } from "../../Loader/Loader";
 const ChangePassword = () => {
   const { toggleSideBar, isDarkMode } = useContext(ContextProvider);
 
@@ -16,30 +17,64 @@ const ChangePassword = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [update, setUpdate] = useState("");
-
+const [loading, setLoading] = useState(false)
   const validatePassword = (password) => {
     const passwordRegex =
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     return passwordRegex.test(password);
   };
 
-  const handleUpdate = () => {
-    if (newPassword !== confirmPassword) {
-      setErrorMessage("Password Does Not Match!");
-      document.getElementById("confirmPinInput").style.backgroundColor =
-        "#FFD8D8";
-    } else if (!validatePassword(newPassword)) {
+  //Function to Change the password
+  const ChangeUserPin = async()=> {
+    const getToken = localStorage.getItem("getToken");
+    const authToken = localStorage.getItem("authToken")
+    if(authToken || getToken )
+      setLoading(true)
+    try{
+    const data ={
+      old_password : oldPassword,
+      new_password : newPassword
+     }
+     const url = "https://aremxyplug.onrender.com/api/v1/update-password";
+     const response = await axios.patch(url,data,{headers : {"Content-Type":"application/json",
+      Authorization : getToken || authToken
+     }})
+     if(response.status === 200 || 201){
+      alert("Password Changed Successfully")
+      setUpdate(true);
+     }
+  
+     }catch(error){
+       if(error.response.status === 400){
+        alert("Invalid Old Password")
+       }else if(error.response.status === 404){
+        alert("Check your internet connection")
+       }else if(error.response.status === 500){
+        alert("SERVER ERROR")
+       }
+     }finally{
+      setLoading(false);
+     }
+    }
+  const handleUpdate = async() => {
+    if(!oldPassword || !newPassword || !confirmPassword){
+setErrorMessage("Please fill in all fields");
+    }else if(!validatePassword(newPassword)){
       setErrorMessage(
         "Password must have at least one alphabetical character, at least one digit, contain at least one special character (e.g., !@#$%^&*), and have a minimum length of 8 characters."
       );
+    }else if (newPassword !== confirmPassword) {
+      setErrorMessage("Password does not match...");
       document.getElementById("confirmPinInput").style.backgroundColor =
         "#FFD8D8";
     } else {
       setErrorMessage("");
       document.getElementById("confirmPinInput").style.backgroundColor = "";
-      setUpdate(true);
+      await ChangeUserPin()
+      
     }
   };
+
 
   return (
     <div>
@@ -190,6 +225,11 @@ const ChangePassword = () => {
               Done
             </button>
           </div>
+        </Modal>
+      )}
+      { loading &&(
+        <Modal>
+        <Loader/>
         </Modal>
       )}
     </div>
