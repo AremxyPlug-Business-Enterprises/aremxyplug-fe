@@ -8,7 +8,12 @@ import Neco from '../EducationPins/imagesEducation/necoImg.svg';
 import Nabteb from '../EducationPins/imagesEducation/NabtebImg.svg';
 import Waec from '../EducationPins/imagesEducation//WaecImg.svg';
 
+import { ContextProvider } from '../Context';
+import { useContext } from 'react';
+
 export default function EducationMain() {
+  const {isDarkMode} = useContext(ContextProvider)
+
   return (
        
   <DashBoardLayout>
@@ -30,7 +35,13 @@ export default function EducationMain() {
       md:gap-[21.27px] lg:h-[120px]  md:w-[100%] lg:gap-[37px]'>
         {/* WAEC Examination */}
         <Link to = "/WaecEducationPin"
-        className="md:w-1/4  md:h-[100%] h-auto w-[45%]">
+        className={`${"md:w-1/4  md:h-[100%] h-auto w-[45%]"}
+         ${
+                    isDarkMode 
+                      ? "!bg-black !text-white !border !border-white rounded-[7px]" 
+                      : "bg-black border-none border-[7px]"
+                  }
+        `}>
        <div className='flex h-[100%] p-[5.868px] gap-[3.35px] md:p-[5.868px] md:gap-[2.347px] rounded-[2.934px]
        border-[0.587px] border-[solid] border-[black] border-opacity-[30%]
       shadow-[0px_0.58686px_0.34722px_0px_rgba(0,0,0,0.25)]
@@ -54,7 +65,13 @@ export default function EducationMain() {
        </Link>
        {/* Neco Examination */}
        <Link to = "/NecoEducationPin"
-       className="md:w-1/4 md:h-[100%] h-auto w-[45%]">
+       className={`${"md:w-1/4 md:h-[100%] h-auto w-[45%]"}
+         ${
+                    isDarkMode 
+                      ? "!bg-black !text-white !border !border-white rounded-[7px]" 
+                      : "bg-black border-none border-[7px]"
+                  }
+       `}>
         <div className='flex h-[100%] p-[5.868px] gap-[3.35px] md:p-[5.868px] md:gap-[2.347px] rounded-[2.934px]
        border-[0.587px] border-[solid] border-[black] border-opacity-[30%]
       shadow-[0px_0.58686px_0.34722px_0px_rgba(0,0,0,0.25)]
@@ -76,7 +93,13 @@ export default function EducationMain() {
        </Link>
        {/* Nabteb Examination */}
        <Link to = "/NabtebEducationPin"
-       className="md:w-1/4 md:h-[100%] h-auto w-[45%] ">
+       className={`${"md:w-1/4 md:h-[100%] h-auto w-[45%]"}
+         ${
+                    isDarkMode 
+                      ? "!bg-black !text-white !border !border-white rounded-[7px]" 
+                      : "bg-black border-none border-[7px]"
+                  }
+        `}>
        <div className='flex h-[100%] p-[7.868px] gap-[3.35px] md:p-[5.868px] md:gap-[2.347px] rounded-[2.934px]
        border-[0.587px] border-[solid] border-[black] border-opacity-[30%]
       shadow-[0px_0.58686px_0.34722px_0px_rgba(0,0,0,0.25)]
@@ -98,7 +121,13 @@ export default function EducationMain() {
        </Link>
        {/* Jamb Examination */}
        <Link to = "/JambEducationPin"
-        className="md:w-1/4 md:h-[100%] h-auto w-[45%]">
+        className={`${"md:w-1/4 md:h-[100%] h-auto w-[45%]"}
+          ${
+                    isDarkMode 
+                      ? "!bg-black !text-white !border !border-white rounded-[7px]" 
+                      : "bg-black border-none border-[7px]"
+                  }
+        `}>
         <div className='flex h-[100%] p-[6.868px] gap-[3.35px] md:p-[5.868px] md:gap-[2.347px]
          rounded-[2.934px]
        border-[0.587px] border-[solid] border-[black] border-opacity-[30%]
@@ -124,7 +153,12 @@ export default function EducationMain() {
   
       {/* contact us */}
       <div className="flex gap-3 md:gap-6 justify-center px-4 mt-[100%] md:mt-8 mb-[25%] ">
-          <p className="font-medium text-[13px] md:text-[12px] lg:text-[16px] self-center text-black">
+          <p className={`${"font-medium text-[13px] md:text-[12px] lg:text-[16px] self-center text-black"}
+                   ${  
+                            
+                                   isDarkMode ? "!text-white md:text-base !text-[13px]" : ""
+                           }
+          `}>
                 You need help?
               </p>
               <Link to ="/contactUs"

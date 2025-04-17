@@ -65,6 +65,12 @@ const AirtimeTopUp = () => {
                              link='/airtime-vtu'
                              onClick='/airtime-vtu'
                              icon='./Images/airtimeTopUp/simcard.svg'
+                             className={`
+                                ${
+                                isDarkMode 
+                                    ? "!bg-black !text-white !border !border-solid !border-white" 
+                                    : "border border-solid border-[#0003] bg-white text-black"
+                            }`}
                            />
                             <TabOneItem
                              title='Airtime Roll'
