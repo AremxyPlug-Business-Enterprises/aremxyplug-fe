@@ -1,11 +1,11 @@
-import React, { useContext } from 'react'
 import { DashBoardLayout } from '../Dashboard/Layout/DashBoardLayout'
 import styles from './AirTime.module.css'
 import { useState } from 'react'
 import { Modal } from "../Screens/Modal/Modal";
 import { Link } from 'react-router-dom'
-import { ContextProvider } from '../Context';
 
+import { ContextProvider } from '../Context';
+import { useContext } from 'react';
 
 const AirTime = () => {
     const [activeTab, setActiveTab] = useState('tab_1');
@@ -15,6 +15,7 @@ const AirTime = () => {
     const [showBulk, setShowBulk] = useState(false);
     const active = styles.active;
     const inactive = styles.inactive;
+    const {isDarkMode} = useContext(ContextProvider)
 
     const handleTab1 =()=> {
         setActiveTab('tab_1')
@@ -26,13 +27,23 @@ const AirTime = () => {
 
     const TabOneItem =({title,text, icon, link, onClick})=> {
         return (
-            <Link className={styles.airtimeCol} to={link} onClick={onClick}>
-                <div className={styles.airCol}>
+            <Link className={`${styles.airtimeCol}
+            
+             ${
+                    isDarkMode 
+                      ? "!bg-black !text-white !border !border-white rounded-[7px]" 
+                      : "bg-white border-none border-[7px]"
+                  }`} to={link} onClick={onClick}>
+                <div className={`${styles.airCol}
+                `}>
                     <div className={styles.airCon}>
                         <img src={icon} alt="" className=''/>
                     </div>
                     <div className={styles.airText}>
-                        <h2>{title}</h2>
+                        <h2 className={`
+                            ${
+                                isDarkMode ? "!text-white" : "text-black"
+                            }`}>{title}</h2>
                         <p>{text}</p>
                     </div>
                 </div>
@@ -66,21 +77,37 @@ const AirTime = () => {
                         <img src="./Images/wallet/arrow-square-right.svg" alt="" />
                     </div>
                 </div>
-                <ul className={styles.localInter}>
-                    <li className={activeTab === 'tab_1' ? active : inactive} onClick={handleTab1}>Local Airtime</li>
-                    <li className={activeTab === 'tab_2' ? active : inactive}
+                <ul className={styles.localInter} >
+                    <li className={`${activeTab === 'tab_1' ? active : inactive}
+                      ${  
+                            
+                                   isDarkMode ? "!text-black md:text-base md:!text-base !text-[12.4px] !font-size-[20px] md:!pb-base md:!pt-base !pb-[20px] !pt-[10px] !mb-[16px] md:!mb-0 " : "!font-size-[20px] md:!pb-base md:!pt-base !pb-[20px] !pt-[10px] !mb-[16px] md:!mb-0"
+                           }
+                    `} onClick={handleTab1}>Local Airtime</li>
+                    <li className={`${activeTab === 'tab_2' ? active : inactive} 
+                    ${  
+                            
+                                   isDarkMode ? "!text-white md:!text-base !text-[12px] !font-size-[20px] md:!pb-base md:!pt-base !pb-[20px] !pt-[10px] !mb-[17px] md:!mb-0" : "!font-size-[20px] md:!pb-base md:!pt-base !pb-[20px] !pt-[10px] !mb-[17px] md:!mb-0"
+                           }
+                           
+                    `}
                            onClick={handleTab2}
-                           >International Airtime</li>
+                           >International Airtime
+                           
+                           </li>
                 </ul>
                 <div className="">
                 { activeTab === 'tab_1' ? 
-                        <div className={styles.containAir}>
+                        <div className={styles.containAir}
+                              
+                       >
                            <TabOneItem
                              title='Airtime VTU'
                              text='Top up your mobile sim using our automated airtime vending directly from network providers.'
                              link='/airtime-vtu'
                              onClick=''
                              icon='./Images/airtimeTopUp/simcard.svg'
+
                            />
                             <TabOneItem
                              title='Airtime Roll'
@@ -88,6 +115,7 @@ const AirTime = () => {
                              link=''
                              onClick={()=> setShowRoll(true)}
                              icon='./Images/airtimeTopUp/people.svg'
+                           
                            />
                             <TabOneItem
                              title='Airtime Voucher'
@@ -111,13 +139,18 @@ const AirTime = () => {
                              icon='./Images/airtimeTopUp/math.svg'
                            />
                         </div> :
-                        <div className={styles.containAir}>
+                        <div className={`!bg-black !text-white !border !border-solid !border-white ${styles.containAir}
+                              
+                        `}>
                              <TabOneItem
                              title='Airtime VTU'
                              text='Top up your mobile sim using our automated airtime vending directly from network providers.'
                              link='/airtime-vtu'
                              onClick=''
                              icon='./Images/airtimeTopUp/simcard.svg'
+                            
+                            
+                           
                            />
                             <TabOneItem
                              title='Airtime Roll'
