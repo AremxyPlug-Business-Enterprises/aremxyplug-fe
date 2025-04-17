@@ -583,21 +583,21 @@ const AirtimeVtu = () => {
                                                     </div>
                                                     <h2 className={`
                                                     ${
-                                                        isDarkMode ? "!text-[#7C7C7C]" : ""
+                                                        isDarkMode ? "!text-[#7C7C7C] !bg-black !border !border-none !border-0 !border-width:0" : ""
                                                     }
                                                     ${styles.head2}
                                                      !text-[13px] md:!text-[13px]`}>{networkName}</h2>
                                                 </li>
                                             ) : (
                                                 <h2 onClick={handleShowList} className={`
-                                                    ${isDarkMode ? "!text-[#7C7C7C]" : ""}
+                                                    ${isDarkMode ? "!text-[#7C7C7C] " : ""}
                                                     ${styles.head6}
                                                  
                                                 
                                                 !text-[14px] md:!text-base`}>Select Network</h2>
                                             )}
                                             <button className={`
-                                            ${isDarkMode ? "!text-[#7C7C7C]" : ""}
+                                            ${isDarkMode ? "!text-[#7C7C7C] " : ""}
                                             ${styles.btnDrop} !text-[14px] md:!text-base
                                                      
                                             `} onClick={handleShowList}>
@@ -608,7 +608,7 @@ const AirtimeVtu = () => {
                                 </div>
                                 {showList &&
                                     <div className={`${styles.colDown}
-                                      ${isDarkMode ? "!bg-black !border !border-white !text-[#7E7E7E] !border-2" : ""}
+                                      ${isDarkMode ? "!bg-black md:!bg-black border border-white text-[#7E7E7E] border-2 rounded-[5px]" : "border border-none rounded-[5px] text-black bg-[#FFF]"}
         `}
                                     >
                                         {networkList.map((item) => (
@@ -629,7 +629,7 @@ const AirtimeVtu = () => {
                                 <div className={`
                                            ${
                                             isDarkMode 
-                                                ? "!bg-black !text-white !border !border-solid !border-white" 
+                                                ? "!bg-black !text-white !border !border-solid !border-white !rounded-[7px]" 
                                                 : "border border-solid border-[#0003] bg-white text-black"
                                         }                  ${styles.input1} !h-[44.927px] md:!h-[58px]
             `}
@@ -655,7 +655,7 @@ const AirtimeVtu = () => {
                                 </div>
                                 {showProduct &&
                                     <div className={`
-                                        ${isDarkMode ? "!bg-black !border !border-white !text-[#7E7E7E]" : ""}
+                                        ${isDarkMode ? "md:!bg-black md:!border md:!border-white md:!text-[#7E7E7E] !bg-black !border !border-white !text-[#7E7E7E]" : "border border-none rounded-[5px] text-black bg-[#FFF]"}
                                         ${styles.colDown} 
            
         `}>
@@ -675,7 +675,7 @@ const AirtimeVtu = () => {
                                 <div className={`${styles.input2} !h-[44.927px] md:!h-[57px]
                                     ${
                                             isDarkMode 
-                                                ? "!bg-black !text-[#7E7E7E] !border !border-solid !border-white" 
+                                                ? "!bg-black !text-[#7E7E7E] !border !border-solid !border-white !rounded-[7px]" 
                                                 : "border border-solid border-[#0003] bg-white text-black"
                                         }`}>
                                     <h2 className={`!relative !top-[6px] md:!relative md:!top-base !text-[13px] md:!text-[13px]
@@ -879,7 +879,7 @@ const AirtimeVtu = () => {
                                     <div className={`
                                     ${
         isDarkMode 
-            ? "!bg-black !text-white !border !border-solid !border-white" 
+            ? "!bg-black !text-white !border !border-solid !border-white !rounded-[7px]"  
             : "border border-solid border-[#0003] bg-white text-black"
     }
                                     ${styles.input1} !h-[44.927px] md:!h-[58px]
