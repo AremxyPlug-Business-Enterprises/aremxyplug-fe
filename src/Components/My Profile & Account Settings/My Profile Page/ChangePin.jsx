@@ -178,7 +178,7 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
     <div>
       {authenticationOpen && (
         <div
-          className={`bg-[#FFF] relative lg:ml-[20px] 2xl:ml-0 ${
+          className={`relative lg:ml-[20px] 2xl:ml-0 ${
             isDarkMode
               ? // ? "bg-white text-[#fff] border-[#fff]"
                 "bg-black border-[#fff]"
@@ -188,7 +188,7 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
           <section>
             <div className="flex items-center my-[10%] gap-[8px] md:my-[5%] md:text-[18px] lg:text-[px]">
               <p
-                className={`text-[#7c7c7c] text-[10px] leading-[130%] md:text-[14px] lg:text-[18px] 2xl:text-[28px] ${
+                className={`text-[#7c7c7c] text-[12px] leading-[130%] md:text-[14px] lg:text-[18px] 2xl:text-[28px] ${
                   isDarkMode ? "text-white" : ""
                 }`}
               >
@@ -277,11 +277,11 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
               <div>
                 {/* <div className="grid grid-cols-1 mt-[10px] md:grid-cols-2 gap-y-[10px] md:gap-x-6 lg:gap-x-6 md:gap-y-[0px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[20px]"> */}
                 <div className="flex flex-col mt-[10px] lg:gap-[25px] gap-[20px] w-full pb-[30px] lg:py-[30px] md:mt-[20px]">
-                  <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-full">
+                  <div className="flex flex-col sm:items-center md:flex-row lg:gap-[22px] gap-[20px] w-full">
                     {/* <div className="mt-[30px] w-1/2 md:w-full "> */}
-                    <div className="mt-[30px] flex flex-col md:w-[50%] w-full md:gap-[10px] gap-2.5 ">
+                    <div className="flex flex-col md:w-[50%] w-full md:gap-[10px] gap-2.5 ">
                       <h2
-                        className={`text-[11px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] mt-2 md:mt-0 ${
+                        className={`text-[12px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] mt-2 md:mt-0 ${
                           isDarkMode ? "text-white" : ""
                         }`}
                       >
@@ -291,7 +291,7 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
                       <div className="relative">
                         <input
                           type="number"
-                          className={`w-full h-8 px-2 py-[10px] border text-sm leading-[18px] lg:leading-[20.8px] text-[#7E7E7E] lg:text-[18px] focus:outline-none lg:h-[51px] mt-2 md:mt-0 rounded-[10px] p-[20px] md:pl-[8.67px] lg:pl-[10px] sm:p-3 sm:text-lg border-[#9C9C9C]  ${
+                          className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:py-[10] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border text-[12px] leading-[18px] lg:leading-[20.8px] text-[#7E7E7E] focus:outline-none rounded-[10px] lg:text-[16px] border-[#9C9C9C]  ${
                             isDarkMode
                               ? "border-slate-50 text-slate-50 bg-black"
                               : "bg-white"
@@ -307,9 +307,9 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
                     </div>
 
                     {/* <div className="mt-[30px] md:ml-[-20px] lg:ml-[-50px] w-1/2 md:w-full "> */}
-                    <div className="mt-[30px] flex flex-col md:w-[50%] w-full md:gap-[10px] gap-2.5 ">
+                    <div className="flex flex-col md:w-1/2 w-full md:gap-[10px] gap-2.5 ">
                       <h2
-                        className={`text-[12px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] mt-2 md:mt-0 ${
+                        className={`text-[12px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] ${
                           isDarkMode ? "text-slate-50" : ""
                         }`}
                       >
@@ -318,7 +318,7 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
                       <div className="relative ">
                         <input
                           type="number"
-                          className={`w-full md:w-full lg:w-full h-8 px-2 py-[10px] border-[1px] text-sm leading-[18px] lg:leading-[20.8px] text-[#7E7E7E] lg:text-[18px]  focus:outline-none lg:h-[51px] mt-2 md:mt-0 rounded-[10px] p-[20px] md:pl-[8.67px] lg:pl-[10px] sm:p-3 sm:text-lg border-[#9C9C9C]  ${
+                          className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:py-[10] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border text-[12px] leading-[18px] lg:leading-[20.8px] text-[#7E7E7E] focus:outline-none rounded-[10px] lg:text-[16px] border-[#9C9C9C]  ${
                             isDarkMode
                               ? "border-slate-50 text-slate-50 bg-black"
                               : "bg-white"
@@ -334,7 +334,7 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
                     </div>
                   </div>
 
-                  <div className="mt-[30px] flex flex-col md:w-[50%] w-full md:gap-[10px] gap-2.5">
+                  <div className="flex flex-col md:w-1/2 w-full md:gap-[10px] gap-2.5">
                     <h2
                       className={`text-[12px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] mt-2 md:mt-0 ${
                         isDarkMode ? "text-slate-50" : ""
@@ -346,7 +346,7 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
                       <input
                         id="confirmPinInput"
                         type="number"
-                        className={`w-full md:w-full lg:w-full h-8 px-2 py-[10px] border-[1px] text-sm leading-[18px] lg:leading-[20.8px] text-[#7E7E7E] lg:text-[18px] focus:outline-none lg:h-[51px] mt-2 md:mt-0 rounded-[10px] p-[20px] md:pl-[8.67px] lg:pl-[10px] sm:p-3 sm:text-lg border-[#9C9C9C]  ${
+                        className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:py-[10] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border text-sm leading-[18px] lg:leading-[20.8px] text-[#7E7E7E] focus:outline-none rounded-[10px] lg:text-[16px] border-[#9C9C9C]  ${
                           isDarkMode
                             ? "border-slate-50 text-slate-50 bg-black"
                             : "bg-white"
@@ -375,7 +375,7 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
                       !oldPin || !newPin || !confirmPin
                         ? "bg-[#63616188] cursor-not-allowed"
                         : "bg-primary"
-                    } w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[600] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px]
+                    } w-full md:w-fit text-white rounded-md px-[28px] text-[12px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[600] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px]
               `}
                     onClick={handleUpdate}
                     disabled={!oldPin || !newPin || !confirmPin}
@@ -391,7 +391,7 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
                 <div
                   className={` ${
                     toggleSideBar ? "absolute w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] md:ml-[20%] h-[250px] lg:h-[405px] shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)] top-[0%]" : "absolute w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] h-[250px] lg:h-[405px]  shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)]"
-                  } flex flex-col justify-between items-center pb-[10px] md:pb-[30px] lg:pb-[30px] md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px] ${isDarkMode ? "bg-stone-950 border-white border": "bg-white"}`}
+                  } flex flex-col justify-between items-center pb-[10px] md:pb-[30px] lg:pb-[30px] md:mx-auto md:my-auto rounded-[12px] ${isDarkMode ? "bg-stone-950 border-white border": "bg-white"}`}
                 >
                   <div className="absolute z-0 right-0" style={{ zIndex: 0 }}>
                     <img
@@ -413,13 +413,13 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
 
                   <div className="relative z-10">
                     <p
-                      className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[8%] lg:mt-[3%] z-[1000] ${styles.overlayText}`}
+                      className={`text-[12px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[8%] lg:mt-[3%] z-[1000] ${styles.overlayText}`}
                     >
                       Successful
                     </p>
 
                     <p
-                      className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[4%] lg:my-[%] z-[1000] ${styles.overlayText}`}
+                      className={`text-[12px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[4%] lg:my-[%] z-[1000] ${styles.overlayText}`}
                     >
                       You have successfully changed your transaction PIN.
                     </p>
@@ -436,7 +436,7 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
                       setConfirmPin("");
                       handleClick(activeIndex);
                     }}
-                    className={`my-[%] mt-0  bg-[#04177f] w-[90%] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                    className={`my-[%] mt-0  bg-[#04177f] w-[90%] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
                   >
                     Done
                   </button>
@@ -464,7 +464,7 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
                     <div className="relative ">
                       <input
                         type="text"
-                        className={`w-full md:w-[45%] text-[#7E7E7E] lg:w-[40%] h-8 px-2 py-[10px] border rounded-md text-sm leading-[18px] lg:leading-[20.8px] lg:text-[18px] font-semibold border-[#9C9C9C] focus:outline-none lg:h-[51px] ${
+                        className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:py-[10] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border text-sm leading-[18px] lg:leading-[20.8px] text-[#7E7E7E] focus:outline-none rounded-[10px] lg:text-[16px] border-[#9C9C9C] ${
                           isDarkMode
                             ? "border-slate-50 text-slate-50 bg-black"
                             : "bg-white"
@@ -538,7 +538,7 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
                         !emailId || pin.length !== 4
                           ? "bg-[#63616188] cursor-not-allowed"
                           : "bg-primary"
-                      } w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[600] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px]
+                      } w-full md:w-fit text-white rounded-md px-[28px] text-[12px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[600] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px]
                     `}
                       disabled={!emailId || pin.length !== 4}
                       onClick={() => {
@@ -568,7 +568,7 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
                   />
 
                   <hr className="h-[6px] bg-[#04177f] lg:mt-[10%] border-none mt-[8%] md:mt-[7%] md:h-[10px]" />
-                  <p className="md:mt-[15%] lg:mt-[10%] text-[10px] px-[20px] md:text-[14px] lg:text-[18px] font-extrabold text-center my-[5%] lg:my-[%]">
+                  <p className="md:mt-[15%] lg:mt-[10%] text-[12px] px-[20px] md:text-[14px] lg:text-[18px] font-extrabold text-center my-[5%] lg:my-[%]">
                     Verification code has been sent to your email - {emailId}
                   </p>
                   <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
@@ -606,7 +606,7 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
                         {isVisible ? <AiFillEye className={`${isDarkMode ? "text-white" : ""}`} /> : <AiFillEyeInvisible className={`${isDarkMode ? "text-white" : ""}`} />}
                       </div>
                     </div>
-                    <p className={`flex justify-between w-[67%] md:w-[55%] lg:w-[45%] text-[8px] md:text-[12px] text-[#04177f] ${isDarkMode ? "text-white" : ""}`}>
+                    <p className={`flex justify-between w-[67%] md:w-[55%] lg:w-[45%] text-[12px] md:text-[12px] text-[#04177f] ${isDarkMode ? "text-white" : ""}`}>
                       <p>{countdown > 0 ? `${countdown}sec` : "0sec"}</p>
                       <p
                         onClick={() => {
@@ -616,7 +616,8 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
                         }}
                         style={{
                           cursor: resendActive ? "pointer" : "not-allowed",
-                          color: resendActive ? "#04177f" ? isDarkMode ? "#fff" : "" : "#808080" : "#fff",
+                          color: isDarkMode ? "#fff" :
+                            resendActive ? "#04177f"  : "#808080",
                         }}
                       >
                         Resend OTP
@@ -634,7 +635,7 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
                     disabled={inputPin.length !== 6}
                     className={`${
                       inputPin.length !== 6 ? `bg-[#0008] cursor-not-allowed ${isDarkMode ? "bg-stone-400 cursor-not-allowed": ""}` : "bg-[#04177f] cursor-pointer"
-                    } my-[5%] w-[225px] flex justify-center items-center mx-auto text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                    } my-[5%] w-[225px] flex justify-center items-center mx-auto text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
                   >
                     Verify
                   </button>
@@ -647,7 +648,7 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
                 <div
                   className={` ${
                     toggleSideBar ? "bottom-[0%] absolute w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] md:ml-[20%] h-[250px] lg:h-[405px] shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)] top-[0%]" : "bottom-[0%] absolute w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] h-[250px] lg:h-[405px]  shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)]"
-                    } bg-white flex flex-col justify-between items-center pb-[10px] md:pb-[30px] lg:pb-[30px] md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px] ${isDarkMode ? "bg-stone-950 border-white border": "bg-white"}`}
+                    } flex flex-col justify-between items-center pb-[10px] md:pb-[30px] lg:pb-[30px] md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px] ${isDarkMode ? "bg-stone-950 border-white border": "bg-white"}`}
                 >
                   <div className="absolute z-0 right-0" style={{ zIndex: 0 }}>
                     <img
@@ -669,13 +670,13 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
 
                   <div className="relative z-10">
                     <p
-                      className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[8%] lg:mt-[3%] z-[1000] ${styles.overlayText}`}
+                      className={`text-[12px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[8%] lg:mt-[3%] z-[1000] ${styles.overlayText}`}
                     >
                       Successful
                     </p>
 
                     <p
-                      className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[4%] lg:my-[%] z-[1000] ${styles.overlayText}`}
+                      className={`text-[12px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[4%] lg:my-[%] z-[1000] ${styles.overlayText}`}
                     >
                       Your transaction PIN has been reset successfully.
                     </p>
@@ -693,7 +694,7 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
                       setResetPin(false);
                       setResetPin1(true);
                     }}
-                    className={`my-[%] mt-0  bg-[#04177f] w-[90%] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                    className={`my-[%] mt-0 bg-[#04177f] w-[90%] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
                   >
                     Create New Pin
                   </button>
@@ -703,7 +704,7 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
 
             {resetPin1 && (
               <div
-                className={` relative lg:ml-[20px] 2xl:ml-0 ${
+                className={`relative lg:ml-[20px] 2xl:ml-0 ${
                   isDarkMode
                     ? "bg-[#000] text-[#fff] border-[#fff]"
                     : "bg-[#ffffff] text-[#000] "
@@ -795,13 +796,13 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
                         renderInput={(props) => (
                           <input
                             {...props}
-                            className="inputOTP text-[10px] md:text-[14px] lg:text-[20px] mx-[3px]"
+                            className="inputOTP text-[12px] md:text-[14px] lg:text-[20px] mx-[3px]"
                           />
                         )}
                         isInputNum
                       />
                       {resetPinErrorMessage && (
-                        <p className="text-red-500 text-start text-[10px] mt-[10px]">
+                        <p className="text-red-500 text-start text-[12px] mt-[10px]">
                           {resetPinErrorMessage}
                         </p>
                       )}
@@ -814,7 +815,7 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
                         newResetPin.length !== 4 || confirmResetPin.length !== 4
                           ? "bg-[#63616188] cursor-not-allowed"
                           : "bg-primary"
-                      } w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[600] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px]
+                      } w-full md:w-fit text-white rounded-md px-[28px] text-[12px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[600] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px]
         `}
                       onClick={() => {
                         handleCreatePin();
@@ -835,7 +836,7 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
                 <div
                   className={` ${
                     toggleSideBar ? "absolute w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] md:ml-[20%] h-[250px] lg:h-[405px] shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)] top-[0%]" : " absolute w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] h-[250px] lg:h-[405px]  shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)]"
-                  } bg-white flex flex-col justify-between items-center pb-[10px] md:pb-[30px] lg:pb-[30px] md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px] ${isDarkMode ? "bg-stone-950 border-white border": "bg-white"}`}
+                  } flex flex-col justify-between items-center pb-[10px] md:pb-[30px] lg:pb-[30px] md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px] ${isDarkMode ? "bg-stone-950 border-white border": "bg-white"}`}
                 >
                   <div className="absolute z-0 right-0" style={{ zIndex: 0 }}>
                     <img
@@ -857,13 +858,13 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
 
                   <div className="relative z-10">
                     <p
-                      className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[8%] lg:mt-[3%] z-[1000] ${styles.overlayText} `}
+                      className={`text-[12px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[8%] lg:mt-[3%] z-[1000] ${styles.overlayText} `}
                     >
                       Successful
                     </p>
 
                     <p
-                      className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[4%] lg:my-[%] z-[1000] ${styles.overlayText}`}
+                      className={`text-[12px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[4%] lg:my-[%] z-[1000] ${styles.overlayText}`}
                     >
                       You have successfully changed your transaction PIN.
                     </p>
@@ -882,7 +883,7 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
                       setCreatePin(false);
                       setResetPin1(false);
                     }}
-                    className={`my-[%] mt-0  bg-[#04177f] w-[90%] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                    className={`my-[%] mt-0  bg-[#04177f] w-[90%] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
                   >
                     Done
                   </button>
