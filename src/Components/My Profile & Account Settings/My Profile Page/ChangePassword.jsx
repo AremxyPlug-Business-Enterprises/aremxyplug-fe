@@ -46,8 +46,8 @@ const ChangePassword = () => {
       <div>
         {/* <div className="grid grid-cols-1 mt-[10px] md:grid-cols-2 gap-y-[10px] md:gap-x-[0px] lg:gap-x-[0px] md:gap-y-[0px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[20px]"> */}
         <div className="flex flex-col mt-[10px] lg:gap-[25px] gap-[20px] w-full pb-[30px] lg:py-[30px] md:mt-[20px]">
-          <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-full">
-          <div className="mt-[30px] flex flex-col md:w-[50%] w-full md:gap-[10px] gap-2.5">
+          <div className="mt-[10px] flex flex-col md:flex-row lg:gap-[22px] gap-[20px] md:items-center w-full">
+          <div className="flex flex-col md:w-1/2 w-full md:gap-[10px] gap-2.5">
             <h2 className={`text-[12px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] ${isDarkMode ? "text-white" : "" }`}>
               Old Password
             </h2>
@@ -55,7 +55,7 @@ const ChangePassword = () => {
             <div className="relative">
               <input
                 type="text"
-                className={`w-full h-8 px-2 py-[10px] border text-sm leading-[18px] lg:leading-[20.8px] text-[#7E7E7E] lg:text-[18px] focus:outline-none lg:h-[51px] mt-2 md:mt-0 rounded-[10px] p-[20px] md:pl-[8.67px] lg:pl-[10px] sm:p-3 sm:text-lg border-[#9C9C9C]  ${
+                className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border text-[12px] leading-[18px] lg:leading-[20.8px] text-[#7E7E7E] focus:outline-none rounded-[10px] lg:text-[16px] border-[#9C9C9C]  ${
                   isDarkMode
                     ? "border-slate-50 text-slate-50 bg-black"
                     : "bg-white"
@@ -67,14 +67,14 @@ const ChangePassword = () => {
             </div>
           </div>
 
-          <div className="mt-[30px] flex flex-col md:w-[50%] w-full md:gap-[10px] gap-2.5">
+          <div className="flex flex-col md:w-1/2 w-full md:gap-[10px] gap-2.5">
             <h2 className={`text-[12px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] ${isDarkMode ? "text-white" : "" }`}>
               New Password
             </h2>
             <div className="relative ">
               <input
                 type="text"
-                className={`w-full h-8 px-2 py-[10px] bordertext-sm leading-[18px] lg:leading-[20.8px] text-[#7E7E7E] lg:text-[18px] focus:outline-none lg:h-[51px] mt-2 md:mt-0 rounded-[10px] p-[20px] md:pl-[8.67px] lg:pl-[10px] sm:p-3 sm:text-lg border-[#9C9C9C]  ${
+                className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:py-[10] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border text-sm leading-[18px] lg:leading-[20.8px] text-[#7E7E7E] focus:outline-none rounded-[10px] lg:text-[16px] border-[#9C9C9C]  ${
                   isDarkMode
                     ? "border-slate-50 border text-slate-50 bg-black"
                     : "bg-white"
@@ -87,7 +87,7 @@ const ChangePassword = () => {
           </div>
           </div>
 
-          <div className="mt-[30px] flex flex-col md:w-[50%] w-full md:gap-[10px] gap-2.5">
+          <div className="flex flex-col md:w-[50%] w-full md:gap-[10px] gap-2.5">
             <h2 className={`text-[12px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] ${isDarkMode ? "text-white" : "" }`}>
               Confirm Password
             </h2>
@@ -95,7 +95,7 @@ const ChangePassword = () => {
               <input
                 id="confirmPinInput"
                 type="text"
-                className={`w-full h-8 px-2 py-[10px] border text-sm leading-[18px] lg:leading-[20.8px] text-[#7E7E7E] lg:text-[18px] focus:outline-none lg:h-[51px] mt-2 md:mt-0 rounded-[10px] p-[20px] md:pl-[8.67px] lg:pl-[10px] sm:p-3 sm:text-lg border-[#9C9C9C]  ${
+                className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:py-[10] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border text-sm leading-[18px] lg:leading-[20.8px] text-[#7E7E7E] focus:outline-none rounded-[10px] lg:text-[16px] border-[#9C9C9C]  ${
                   isDarkMode
                     ? "border-slate-50 text-slate-50 focus:bg-black bg-black"
                     : "bg-white"
@@ -107,13 +107,13 @@ const ChangePassword = () => {
             </div>
 
             <div>
-              <p className={`text-[10px] font-semibold text-[#04177F] md:text-[14px] lg:text-[18px] text-start mt-[5%]  ${isDarkMode ? "text-white" : ""}`}>
+              <p className={`text-[12px] font-semibold text-[#04177F] md:text-[14px] lg:text-[18px] text-start mt-[5%]  ${isDarkMode ? "text-white" : ""}`}>
                 Forgot Password?
               </p>
             </div>
 
             {errorMessage && (
-              <p className="text-red-500 text-start font-semibold text-[10px] mt-[5px] md:mt-[10px] md:text-[12px] lg:text-[14px] md:w-[70%] lg:w-[50%]">
+              <p className="text-red-500 text-start font-semibold text-[12px] mt-[5px] md:mt-[10px] md:text-[12px] lg:text-[14px] md:w-[70%] lg:w-[50%]">
                 {errorMessage}
               </p>
             )}
@@ -126,7 +126,7 @@ const ChangePassword = () => {
               !oldPassword || !newPassword || !confirmPassword
                 ? "bg-[#63616188] cursor-not-allowed"
                 : "bg-primary"
-            } w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[600] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px]
+            } w-full md:w-fit text-white rounded-md px-[28px] text-[12px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[600] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px]
               `}
             onClick={handleUpdate}
             disabled={!oldPassword || !newPassword || !confirmPassword}
@@ -163,13 +163,13 @@ const ChangePassword = () => {
 
             <div className="relative z-10">
               <p
-                className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[8%] lg:mt-[3%] z-[1000] ${styles.overlayText}`}
+                className={`text-[12px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[8%] lg:mt-[3%] z-[1000] ${styles.overlayText}`}
               >
                 Successful
               </p>
 
               <p
-                className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[4%] lg:my-[%] z-[1000] ${styles.overlayText}`}
+                className={`text-[12px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[4%] lg:my-[%] z-[1000] ${styles.overlayText}`}
               >
                 You have successfully changed your Password.
               </p>
@@ -185,7 +185,7 @@ const ChangePassword = () => {
                 setNewPassword("");
                 setConfirmPassword("");
               }}
-              className={`my-[%] mt-0  bg-[#04177f] w-[90%] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+              className={`my-[%] mt-0  bg-[#04177f] w-[90%] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
             >
               Done
             </button>

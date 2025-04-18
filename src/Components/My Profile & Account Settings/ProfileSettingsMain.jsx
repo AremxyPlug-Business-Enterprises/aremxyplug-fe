@@ -74,10 +74,10 @@ export default function ProfileSettingsMain(Data) {
                 setVerificationOpen(false);
                 setAuthenticationOpen(false);
               }}
-              className="flex flex-col md:w-1/4 w-[50%]  lg:gap-[23px] cursor-pointer md:border-none border-b-[1.7px] border-[#D9D9D999] border-opacity-[60%]"
+              className={`flex flex-col md:w-1/4 w-[50%]  lg:gap-[23px] cursor-pointer md:border-none border-b-[1.7px] border-[#D9D9D999] border-opacity-[60%] ${isDarkMode ? "border-white" : ""}`}
             >
               <h2
-                className={`font-[600] text-[#A3A3A3] py-[8px] text-start pl-[10px] text-[9.389px] lg:p-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px] ${
+                className={`font-[600] text-[#A3A3A3] py-[8px] text-start pl-[10px] text-[12px] lg:p-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px] ${
            isDarkMode ? "text-stone-50" : ""
          }`}
               >
@@ -103,7 +103,7 @@ export default function ProfileSettingsMain(Data) {
             >
               <h2
                 className={`font-[600] text-[#A3A3A3] text-center md:text-start
-                    text-[9.389px] lg:p-[10px] py-[8px]
+                    text-[12px] lg:p-[10px] py-[8px]
                   leading-[14px] lg:text-[16px] lg:leading-[24px]  cursor-pointer ${
                     isDarkMode ? "text-stone-50" : ""
                   }`}
@@ -125,7 +125,7 @@ export default function ProfileSettingsMain(Data) {
               {/* BUSINESS KYC TAB */}
               <h2
                 className={`lg:p-[10px] font-semibold text-[#A3A3A3] 
-                     text-[9.389px] leading-[14px] py-[8px] text-start pl-[10px]
+                     text-[12px] leading-[14px] py-[8px] text-start pl-[10px]
                     lg:text-[16px] lg:leading-[24px]  cursor-pointer ${
                       isDarkMode ? "text-stone-50" : ""
                     }`}
@@ -142,13 +142,13 @@ export default function ProfileSettingsMain(Data) {
                 setIdVerificationOpen(false);
                 setAccountUpgrade(false);
               }}
-              className="md:w-1/4 w-[50%] flex flex-col md:pt-[0px] pt-[30px] lg:gap-[23px] cursor-pointer
-                    md:border-none border-b-[1.7px] border-[#D9D9D999] border-opacity-[60%]"
+              className={`md:w-1/4 w-[50%] flex flex-col md:pt-[0px] pt-[30px] lg:gap-[23px] cursor-pointer
+                    md:border-none border-b-[1.7px] border-[#D9D9D999] border-opacity-[60%] ${isDarkMode ? "border-white" : ""}`}
             >
               {/* AUTHETICATION TAB */}
               <h2
                 className={`lg:p-[10px] font-[600] text-[#A3A3A3] 
-                    text-[9.389px] leading-[14px] md:text-start text-center py-[8px]
+                    text-[12px] leading-[14px] md:text-start text-center py-[8px]
                     lg:text-[16px] lg:leading-[24px]  cursor-pointer ${
                       isDarkMode ? "text-stone-50" : ""
                     }`}

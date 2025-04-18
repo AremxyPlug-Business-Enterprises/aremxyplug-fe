@@ -35,7 +35,7 @@ export default function ProfileUpdate({ fullname, Email, Phone, Username }) {
               {/* Profile text */}
               <div className="flex flex-col justify-center gap-[3.52px] lg:gap-[12px]">
                 <p
-                  className="text-[#7E7E7E] text-[12px] leading-[18px] md:text-[12.042px] md:leading-[16px] lg:text-[16px] lg:leading-[24.8px]"
+                  className={`text-[#7E7E7E] text-[12px] leading-[18px] md:text-[12.042px] md:leading-[16px] lg:text-[16px] lg:leading-[24.8px] ${isDarkMode ? "text-white" : ""}`}
                 >
                   {(!full_name && fullName.length > 1)
                       ?  fullName
@@ -46,7 +46,7 @@ export default function ProfileUpdate({ fullname, Email, Phone, Username }) {
                       : "Hi User"}
                 </p>
                 <p
-                  className=" text-[#7C7C7C] text-[12px] leading-[18px] md:text-[12.042px] md:leading-[16px] lg:text-[16px] lg:leading-[24.8px]"
+                  className={`text-[#7C7C7C] text-[12px] leading-[18px] md:text-[12.042px] md:leading-[16px] lg:text-[16px] lg:leading-[24.8px] ${isDarkMode ? "text-white" : ""}`}
                 >
                   {email ? email : `${Email ? Email : ""}`}
                 </p>
@@ -69,7 +69,7 @@ export default function ProfileUpdate({ fullname, Email, Phone, Username }) {
                       Country
                     </h2>
                     <div
-                      className={`flex items-center h-[30px] md:h-[40px] lg:h-[51px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl sm:p-3 sm:text-lg pl-[5.868px] lg:pl-[10px] border-[0.4px] border-[#9C9C9C] ${isDarkMode? "border-stone-50" : ""}`}
+                      className={`flex items-center py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[12px] md:pl-[8.67px] md:pr-[5.867px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px]placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-[10px] h-full  ${isDarkMode ?"border-slate-50" : ""}`}
                     >
                       <img
                         src={naijaFlag}
@@ -77,7 +77,7 @@ export default function ProfileUpdate({ fullname, Email, Phone, Username }) {
                         alt=""
                       />
                       <p
-                        className=" text-[#7E7E7E] text-sm leading-[18px] md:text-[10.389px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px]"
+                        className={`text-[#7E7E7E] text-[12px] leading-[18px] md:text-[10.389px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : ""}`}
                       >
                         Nigeria
                       </p>
@@ -92,10 +92,10 @@ export default function ProfileUpdate({ fullname, Email, Phone, Username }) {
                       Full Name
                     </h2>
                     <div
-                      className={`flex items-center h-[30px] md:h-[40px] lg:h-[51px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl sm:p-3 sm:text-lg pl-[5.868px] lg:pl-[10px] border-[0.4px] border-[#9C9C9C] ${isDarkMode? "border-stone-50" : ""}`}
+                      className={`flex items-center py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] ${isDarkMode? "border-slate-50": ""}`}
                     >
                       <p
-                        className="text-[#7E7E7E] text-sm leading-[18px] md:text-[9.389px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] cursor-default"
+                        className={`text-[#7E7E7E] text-[12px] leading-[18px] md:text-[9.389px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] cursor-default ${isDarkMode ? "text-white" : ""}`}
                       >
                          {(!full_name && fullName.length > 1)
                       ?  fullName
@@ -121,10 +121,10 @@ export default function ProfileUpdate({ fullname, Email, Phone, Username }) {
                       UserName
                     </h2>
                     <div
-                      className={`flex items-center h-[30px] md:h-[40px] lg:h-[51px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl sm:p-3 sm:text-lg pl-[5.868px] lg:pl-[10px] border-[0.4px] border-[#9C9C9C] ${isDarkMode? "border-stone-50" : ""}`}
+                      className={`flex items-center py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] ${isDarkMode? "border-white": ""}`}
                     >
                       <p
-                        className={` text-[#7E7E7E] text-sm leading-[18px] md:text-[9.389px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] cursor-default ${isDarkMode ? "text-white" : ""}`}
+                        className={`text-[#7E7E7E] text-[12px] leading-[18px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] cursor-default ${isDarkMode ? "text-white" : ""}`}
                       >
                          {(!username && userName.length > 1)
                       ?  userName
@@ -139,15 +139,15 @@ export default function ProfileUpdate({ fullname, Email, Phone, Username }) {
                   {/* second part level two */}
                   <div className="flex flex-col w-[100%] md:w-[50%] gap-[5.868px] lg:gap-[10px] cursor-default">
                     <h2
-                      className={`text-[#7E7E7E] text-[12px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] font-semibold lg:text-[16px] lg:leading-[20.8px] cursor-default ${isDarkMode ? "text-stone-50" : ""}`}
+                      className={`text-[#7E7E7E] text-[12px] leading-[10.4px] md:leading-[12.206px] font-semibold lg:text-[16px] lg:leading-[20.8px] cursor-default ${isDarkMode ? "text-stone-50" : ""}`}
                     >
                       Email
                     </h2>
                     <div
-                      className={`flex items-center h-[30px] md:h-[40px] lg:h-[51px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-xl sm:p-3 sm:text-lg pl-[5.868px] lg:pl-[10px] border-[0.4px] border-[#9C9C9C] ${isDarkMode? "border-stone-50" : ""}`}
+                      className={`flex items-center py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] ${isDarkMode? "border-white": ""}`}
                     >
                       <p
-                        className={` text-[#7E7E7E] text-sm leading-[18px] md:text-[9.389px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] cursor-default ${isDarkMode ? "text-white" : ""}`}
+                        className={`text-[#7E7E7E] text-[12px] leading-[18px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] cursor-default ${isDarkMode ? "text-white" : ""}`}
                       >
                         {(!email && state.email.length > 1)
                       ?  state.email
@@ -165,7 +165,7 @@ export default function ProfileUpdate({ fullname, Email, Phone, Username }) {
                 {/* Start of level three */}
                 <div className="">
                   <h2
-                    className={`text-[#7E7E7E] text-[12px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] font-semibold lg:text-[16px] lg:leading-[20.8px] cursor-default mb-[5.868px] lg:mb-[10px] ${isDarkMode ? "text-stone-50" : ""}`}
+                    className={`text-[#7E7E7E] text-[12px] leading-[10.4px] md:leading-[12.206px] font-semibold lg:text-[16px] lg:leading-[20.8px] cursor-default mb-[5.868px] lg:mb-[10px] ${isDarkMode ? "text-stone-50" : ""}`}
                   >
                     Phone Number
                   </h2>
@@ -174,10 +174,10 @@ export default function ProfileUpdate({ fullname, Email, Phone, Username }) {
                     className="flex flex-col md:flex md:flex-row gap-[20px] md:gap-[12.91px] lg:gap-[22px] w-[100%] "
                   >
                     <div
-                      className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-xl sm:p-3 sm:text-lg flex  md:w-[50%] items-center md:h-[40px] h-[30px] lg:h-[51px] pl-[5.586px] lg:pl-[10px] border-[0.4px] border-[#9C9C9C] ${isDarkMode? "border-stone-50" :""}`}
+                      className={`mt-2 md:mt-0 py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] ${isDarkMode? "border-white": ""}`}
                     >
                       <p
-                        className={` text-[#7E7E7E] text-sm leading-[18px] md:text-[9.389px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] cursor-default ${isDarkMode ? "text-white" : ""}`}
+                        className={` text-[#7E7E7E] text-[12px] leading-[18px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] cursor-default ${isDarkMode ? "text-white" : ""}`}
                       >
                         {`${
                           !phone && phoneNumber.length > 1
@@ -192,7 +192,7 @@ export default function ProfileUpdate({ fullname, Email, Phone, Username }) {
                     <div className="flex w-[100%]  md:w-[50%] items-center  gap-[10px] lg:gap-[16px]">
                       <div className="flex gap-[5px] md:gap-[8px]">
                         <h2
-                          className={`text-[#7E7E7E] font-[500] text-[12px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] gap-[10px] cursor-default ${isDarkMode ? "text-stone-50" : ""}`}
+                          className={`text-[#7E7E7E] font-[500] text-[12px] leading-[10.4px]  md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] gap-[10px] cursor-default ${isDarkMode ? "text-stone-50" : ""}`}
                         >
                           About AremxyPlug
                         </h2>
@@ -228,7 +228,7 @@ export default function ProfileUpdate({ fullname, Email, Phone, Username }) {
                   className="lg:w-[163px] w-[100%] py-[15.534px] rounded-[2.241px]  md:w-[95.649px] md:py-[5.868px] lg:py-[10px] bg-[#04177F] md:rounded-[7.042px] lg:rounded-[12px] mt-[30px] md:mt-[0px]"
                 >
                   <p
-                    className="font-[600] text-white text-center text-[12px] leading-[18px] md:text-[9.389px] md:leading-[14px] lg:text-[16px] lg:leading-[24px]"
+                    className="font-[600] text-white text-center text-[12px] leading-[18px] md:leading-[14px] lg:text-[16px] lg:leading-[24px]"
                   >
                     Update Profile
                   </p>
