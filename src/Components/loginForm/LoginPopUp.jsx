@@ -9,8 +9,14 @@ import axios from "axios";
 import CloseIcon from '../EducationPins/imagesEducation/close-circle.svg';
 import { Loader } from "../Loader/Loader";
 import { useNavigate } from "react-router-dom";
-import {  SetLocalStorage } from "../LocalStorage/LocalStorage";
+//import {  SetLocalStorage } from "../LocalStorage/LocalStorage";
+import { RemoveLocalStorage } from "../LocalStorage/LocalStorage";
+//import { GetLocalStorage } from "../LocalStorage/LocalStorage";
+import { CheckVirtualAcc } from "../ApiCollection.jsx/ApiBuck";
+import VerificationSuccess from "../My Profile & Account Settings/ProfileImages/user-tick.svg";
+import NotVerifiedImage from "../My Profile & Account Settings/ProfileImages/NotVerifiedIcon.svg";
 function LoginPopUp() {
+ // Data = GetLocalStorage();
   const {
     openTranspin,
     setOpenTranspinSuccessful,
@@ -27,18 +33,24 @@ function LoginPopUp() {
     twoStepVerificationSuccess, 
     setTwoStepVerificationSuccess,
     customerDetail,
-      virtualAccCreated,
+      setVirtualAccCreated,
       setAccountNumberState,
     setBankNameState,
-     setAccountNameState   
+     setAccountNameState,
+     setIdButtonState,
+     setBvnButtonState,
+     setBvnStatus,
+     setIdStatus,
+     setVerifyImage,
+     setBvnVerifyImage,
+     setIdNumber,
+     setBvnNumber
+
 } = useContext(ContextProvider);
 
 const {
   email,
-  phone,
-   username, 
-   full_name, 
-   id
+  phone
   } = customerDetail;
 
   const [loading, setLoading] = useState(false);
@@ -70,7 +82,9 @@ const {
 if((response.status === 200 || 201) && (response.headers.hasAuthorization)){
   twoStepVerificationHandler();
  alert("An Otp has been sent to you")
-} 
+} else if(!response.status){
+  alert("Check your network connection");
+}
  }catch(error){
   if(error.response && error.response.status === 401){
   alert(`${error}, An error occured from your end`)
@@ -79,6 +93,8 @@ if((response.status === 200 || 201) && (response.headers.hasAuthorization)){
   } 
   else if(error.response && error.response.status === 500){
     alert(`SERVER ERROR`)
+  }else if(!error.response){
+    alert("Check your network connection")
   }
   }finally{
     setLoading(false);
@@ -108,24 +124,13 @@ await  gettingOtpFunction(url,body)
 const Close2StepPopUp =()=> {
   setOpen2StepVerification(false)
   setLoginAuthorisation("");
+  RemoveLocalStorage();
   localStorage.removeItem("authorisedLogin");
-  localStorage.removeItem("getToken")
+  localStorage.removeItem("getToken");
 }
 
 
-//The syntax of this fxn is to set this useStates to the bank name,
-//account number , account name if virtual account is true 
-// virtual account can only be true if user sign properly 
-//through the various user authentications and flows provided
-const GetVirtualAccountValue = (bankname, accountname, accountno)=> {
- 
-   setBankNameState(bankname);
-   setAccountNameState(accountname.slice(11));
-   setAccountNumberState(`${accountno.slice(0,4)}********`)
-  console.log("The GetVirtualAccountValue is running")
-}
 
-//Function to get User Bank Details
 
 
 
@@ -140,17 +145,146 @@ const handleVerificationOTP = ()=> {
  } 
   }
 
+
+// Function to help check the verification status of a user
+//Verification with Bvn or NiN and if the user has created an account
+  const ConfirmVirtualState = async() => {
+    const getToken = localStorage.getItem("getToken");
+   const authToken = localStorage.getItem("authorisedLogin");
+  if (authToken || getToken) {
+  const url = 'https://aremxyplug.onrender.com/api/v1/check-verification';
+   //
+   try{
+     setLoading(true);
+    const response = await axios.get(url,{headers : {"Content-Type" : "application/json",
+    Authorization : authToken || getToken
+    }})
+  if (response.status === 201 || 200 ) {
+   
+    console.log(response);
+    localStorage.setItem("AccCreated",true);
+    const nin = response.data.data.nin;
+    const bvn = response.data.data.bvn;
+    //console.log(bvn,nin)
+  if( !bvn && nin){
+  setIdButtonState("Virtual Account Created");
+  setVerifyImage(VerificationSuccess);
+  setIdStatus("Verified")
+  setIdNumber(response.data.data.nin)
+  localStorage.setItem("bvnVerification",false);
+  localStorage.setItem("idVerification",true);
+  }else if(bvn && !nin){
+    setBvnButtonState("Virtual Account Created");
+    setBvnVerifyImage(VerificationSuccess);
+    setBvnStatus("Verified")
+    setBvnNumber(response.data.data.bvn)
+    localStorage.setItem("bvnVerification",true);
+    localStorage.setItem("idVerification",false);
+  }else if(bvn && nin){
+    setIdButtonState("Virtual Account Created");
+  setVerifyImage(VerificationSuccess);
+  setIdStatus("Verified")
+  setBvnButtonState("Virtual Account Created");
+    setBvnVerifyImage(VerificationSuccess);
+    setBvnStatus("Verified")
+    setBvnNumber(response.data.data.bvn)
+    setIdNumber(response.data.data.nin)
+    localStorage.setItem("bvnVerification",true);
+    localStorage.setItem("idVerification",true);
+  }
+  }else if(!response.status){
+    alert("Check your network connection");
+ }
+      } catch(error){
+     if(error.status === 401 || 400){
+     // alert(`ERROR : ${error}`)
+      console.log(error);
+     // console.log(error.response.data.message);
+      if(error && error.response.data.message === "error"){
+        localStorage.setItem("idVerification",false);
+        localStorage.setItem("bvnVerification",false);
+        localStorage.setItem("AccCreated",false);
+        setVerifyImage(NotVerifiedImage);
+        setBvnVerifyImage(NotVerifiedImage);
+        setIdStatus("Not Verified");
+        setBvnStatus("Not Verified")
+       // console.log("ERROR",error.response.data.message)
+      }else if(error && error.response.data.message === "action_required"){
+        localStorage.setItem("AccCreated", false);
+        const bvnCheck = error.response.data.data.bvn;
+        
+        const ninCheck = error.response.data.data.nin;
+        console.log(bvnCheck, ninCheck)
+        
+        if(bvnCheck && !ninCheck){
+          setBvnButtonState("Create Virtual Account");
+          setBvnVerifyImage(VerificationSuccess)
+          setBvnStatus("Verified")
+          setIdButtonState("Verify");
+          setVerifyImage(NotVerifiedImage)
+          setIdStatus("Not Verified");
+          setBvnNumber( error.response.data.bvn);
+          localStorage.setItem("bvnVerification",true);
+          localStorage.setItem("idVerification",false);
+        }else if(ninCheck && !bvnCheck){
+          setBvnButtonState("Verify");
+          setBvnVerifyImage(NotVerifiedImage)
+          setBvnStatus("Not Verified")
+          setIdButtonState("Create Virtual Account");
+          setVerifyImage(VerificationSuccess)
+          setIdStatus("Verified");
+          setIdNumber( error.response.data.nin);
+          localStorage.setItem("idVerification",true);
+          localStorage.setItem("bvnVerification",false);
+        } else if(bvnCheck && ninCheck) {
+          setBvnButtonState("Create Virtual Account");
+          setBvnVerifyImage(VerificationSuccess)
+          setBvnStatus("Verified");
+          setIdButtonState("Create Virtual Account");
+          setVerifyImage(VerificationSuccess)
+          setIdStatus("Verified");
+          setBvnNumber(error.response.data.bvn);
+          setIdNumber(error.response.data.nin);
+          localStorage.setItem("idVerification",false);
+          localStorage.setItem("bvnVerification",false);
+        }
+      
+      }
+      }else if (error && error.status === 404){
+        alert("Network Error:, Please Check your Connection and try again");
+      }else if(error.status === 500){
+        alert('Error:', "A SERVER ERROR");
+     }else if(!error.status){
+      alert("Check your network connection");
+   }}finally{
+       setLoading(false);
+      }
+    }}
+  
+    
+
   //Function to help set the user's account details such as bank name, 
   //account name and account Number
-const handleAccountDetails =()=> {
-  const {bank_name, account_no, account_name} = virtualAccCreated
- // console.log(virtualAccCreated);
-  setTwoStepVerificationSuccess(false);
-  if(virtualAccCreated){
-  // setTwoStepVerificationSuccess(false);
-    SetLocalStorage(email, full_name,phone, username, bank_name, account_name, account_no, id);
-     GetVirtualAccountValue(bank_name, account_name, account_no);
-  }
+const handleAccountDetails = async(AuthUsed)=> {
+  const authToken = localStorage.getItem("authorisedLogin");
+  const getToken = localStorage.getItem("getToken")
+  AuthUsed = authToken || getToken
+//   const {bank_name, account_no, account_name} = virtualAccCreated
+//  // console.log(virtualAccCreated);
+
+//   if(virtualAccCreated){
+//   // setTwoStepVerificationSuccess(false);
+//     SetLocalStorage(email, full_name,phone, username, bank_name, account_name, account_no, id);
+//      GetVirtualAccountValue(bank_name, account_name, account_no);
+ 
+      await CheckVirtualAcc( AuthUsed, customerDetail, setLoading, setVirtualAccCreated, 
+        setBankNameState, setAccountNameState, setAccountNumberState,twoStepVerificationSuccess, setTwoStepVerificationSuccess,
+         ConfirmVirtualState);
+         console.log(twoStepVerificationSuccess)
+         if(CheckVirtualAcc){
+      navigate("/dashboard")
+        }
+  
 }
 
 
@@ -184,8 +318,9 @@ const gettingSmsOrEmailFunctionOtp = async(url, body)=> {
      const response = await axios.post(url,body,{ headers : {"Content-Type" : "application/json"}})
       if(response.status === 200 || 201){
         handleVerificationOTP();
-        localStorage.setItem("UserStatus", true);
-      } 
+         } else if(!response.status){
+           alert("Check your network connection")
+         }
     }catch(error){
       if( error.response && error.response.status === 400){
         setVerificationPinError(true);
@@ -195,6 +330,8 @@ const gettingSmsOrEmailFunctionOtp = async(url, body)=> {
       alert("OOPs, an error has occured")
       }else if(error.response &&error.response.status === 500){
         alert("SERVER ERROR");
+      }else if(!error.response){
+        alert("Check yoou network connection");
       }
     }finally{
       setLoading(false);
@@ -282,6 +419,8 @@ return () => clearInterval(timer);
     if(response.status === 200|| 201){
       console.log(response);
          navigate("/dashboard");
+      }else if(response.status){
+        alert("Check your Network Connection")
       }
     
   }
@@ -290,9 +429,10 @@ return () => clearInterval(timer);
         alert("Something went wrong on your end");
         }else if(error.status === 500){
           alert(`An error occured on our end`)
-        }else if(error.status === 404){
+        }else if(!error.status){
           alert("Check your Network Connection")
-        }else{
+        }
+        else{
           alert(error)
         }
           //alert(error.response.data.message)
@@ -765,7 +905,7 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
                 </div>
            
               {/* <Link to="/"> */}
-               <Link to="/dashboard" className="w-[100%] flex justify-center">
+               <div className="w-[100%] flex justify-center">
                   <div onClick={() =>handleAccountDetails()}
                    className="flex w-[100%] lg:w-[50%]  rounded-[8px] lg:rounded-[16px]
                 mt-[20px] justify-center  lg:mt-[50px]  cursor-pointer text-[10px] font-bold leading-[11.31px] 
@@ -777,7 +917,7 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
                       Okay
                       </p>
                   </div>
-                </Link>
+                </div>
               
               {/* </Link> */}
         

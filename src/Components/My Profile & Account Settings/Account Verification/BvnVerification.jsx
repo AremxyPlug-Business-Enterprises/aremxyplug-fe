@@ -18,7 +18,6 @@ import PendingImage from "../ProfileImages/Pending.svg";
 import NotVerifiedImage from "../ProfileImages/NotVerifiedIcon.svg";
 import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 import { Loader } from "../../Loader/Loader";
-import { CheckVirtualAcc } from "../../ApiCollection.jsx/ApiBuck";
 
 export default function BvnVerification(Data) {
   const { bvnVerificationOpen } = useContext(ContextProvider);
@@ -33,7 +32,6 @@ export default function BvnVerification(Data) {
   const [bvnPhoneMessage, setBvnPhoneMessage] = useState(false);
   const [errorVerify, setErrorVerify] = useState(false);
   const {state, bvnButtonState, setBvnButtonState,
-    setBankNameState, setAccountNameState,  setAccountNumberState, idVerificationOpen, setVirtualAccCreated, setIdButtonState
    } = useContext(ContextProvider);
   const { toggleSideBar, customerDetail, setLoginAuthorisation} =
     useContext(ContextProvider);
@@ -65,10 +63,8 @@ const {fullName} = state;
   const BvnFunctionState = async (
     url,
     data,
-    alertSuccess,
     buttonStateSuccess,
     ErrorMessage,
-    ifStatement,
     PendingImageFxn,
     PendingText,
     verifyBvnImage,
@@ -77,9 +73,8 @@ const {fullName} = state;
   ) => {
     if (bvnButtonState === "Verify") {
       url = "https://aremxyplug.onrender.com/api/v1/verify";
-      buttonStateSuccess = "Create Virtual Account";
+      buttonStateSuccess = "Verified";
       ErrorMessage = "Bvn Name Mismatch or network failure";
-      ifStatement = bvnDateOfBirth && bvnNumber && bvnPhone;
       PendingImageFxn = () => setBvnVerifyImage(PendingImage);
       PendingText = () => setBvnStatus("Pending");
       verifyBvnImage = () => setBvnVerifyImage(bvnVerifiedSuccess);
@@ -88,21 +83,13 @@ const {fullName} = state;
       data = {
         bvn: bvnNumber.toString(),
       };
-    } else {
-      data =""
-      url = "https://aremxyplug.onrender.com/api/v1/virtualacc";
-      alertSuccess = () => alert("Virtual Account Created Successfully");
-      buttonStateSuccess = "Virtual Account Created";
-      ErrorMessage = "Virtual Account Creation Failed";
-      ifStatement = bvnStatus === "Verified";
     }
+    
     checkBvnform(
       url,
       data,
-      alertSuccess,
       buttonStateSuccess,
       ErrorMessage,
-      ifStatement,
       PendingImageFxn,
       PendingText,
       verifyBvnImage,
@@ -116,10 +103,8 @@ const {fullName} = state;
   const checkBvnform = async (
     url,
     data,
-    alertSuccess,
     buttonStateSuccess,
     ErrorMessage,
-    ifStatement,
     PendingImageFxn,
     PendingText,
     verifyBvnImage,
@@ -128,7 +113,7 @@ const {fullName} = state;
   ) => {
     const authToken = localStorage.getItem("authorisedLogin");
     const getToken = localStorage.getItem("getToken");
-    if (ifStatement) {
+    if (bvnDateOfBirth && bvnNumber && bvnPhone) {
       setLoading(true);
 
       // console.log(data)
@@ -138,51 +123,30 @@ const {fullName} = state;
         PendingImageFxn();
         PendingText();
         }
-        let response;
-        bvnButtonState === "Verify" ?
-       response  = await axios.post(url, data ,
+      const response = await axios.post(url, data ,
          {
           headers: {
             "Content-Type": "application/json",
             Authorization: authToken || getToken,
           },
-        }) : response  = await axios.post(url, data, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: authToken || getToken
-          },
-        })
+        }) 
  if (response.status === 201 || 200) {
-  if(bvnButtonState === "Verify"){
-          setBvnNumber(bvnNumber);
+ setBvnNumber(bvnNumber);
           verifyBvnImage();
           statusBvn();
           verifyPopBvn();
           setBvnButtonState(buttonStateSuccess);
           localStorage.setItem("bvnVerification","true")
-    }  else{
-            alertSuccess();
-          
-            setBvnButtonState(buttonStateSuccess);
-        const ConfirmAcc = localStorage.getItem("AccCreated")
-            if(ConfirmAcc === "false"){
-             await CheckVirtualAcc(
-              authToken, customerDetail, setLoading,
-              setVirtualAccCreated, 
-               setBankNameState, setAccountNameState, setAccountNumberState,
-               verificationOpen, idVerificationOpen, bvnVerificationOpen, setIdButtonState, setBvnButtonState);
-               localStorage.setItem("AccCreated","true");
-            }
+    
             
- }  }
+  }
       } catch (error) {
         if (error.status === 401 || 400) {
           alert(ErrorMessage);
           console.log(`ERROR : ${error}`)
-          if(bvnButtonState === "Verify"){
            setBvnVerifyImage(NotVerifiedImage)
            setBvnStatus("Not Verified");
-}
+
         } else if (error.status === 500) {
           alert("Error:", "INTERNAL_SERVER_ERROR");
           setBvnStatus("Not Verified");
@@ -452,7 +416,7 @@ console.log(Data)
                         localStorage.getItem("authorisedLogin")
                       );
                    }}
-                    value={bvnNumber && (bvnStatus === "Verified" && bvnNumber === "" ? BvnNumberRef.current : bvnNumber)}
+                    value={bvnNumber && (bvnStatus === "Verified" ? BvnNumberRef.current : bvnNumber)}
                     onChange={(e) => {
                       setBvnNumber(e.target.value);
                     }}
@@ -467,16 +431,16 @@ console.log(Data)
 
               <div className="flex flex-col md:gap-[15px] gap-[10px] justify-start">
                 <button
-                  disabled={Data.ConfirmAcc === "true" && Data.ConfirmBvn === "true"}
+                  disabled={Data.ConfirmBvn === "true" }
                   onClick={() => {
                     BvnFunctionState();
                   }}
                   className={`lg:py-[13px] md:py-[7.868px] py-[16.531px] rounded-[4.241px] w-[100%] md:w-[150px] lg:w-[163px] lg:rounded-[12px] bg-[#04177F]
          font-[600] text-[12px] leading-[18px] lg:text-[16px] text-center text-white lg:leading-[24px ${
-          Data.ConfirmAcc === "true" && Data.ConfirmBvn === "true"  ? "bg-slate-400" : "bg-[#04177F]"
+          Data.ConfirmBvn === "true"  ? "bg-slate-400" : "bg-[#04177F]"
          }`}
                 >
-                  {(bvnButtonState) && (Data.ConfirmAcc === "true" && Data.ConfirmBvn === "true"  ? "Virtual Account Created" : Data.ConfirmBvn === "true" && Data.ConfirmAcc === "false" ? "Create Virtual Account" : "Verify" )}
+                  {(bvnButtonState) && ( Data.ConfirmBvn === "true"  ? "Verified" : "Verify" )}
                 </button>
                 {errorVerify && (
                   <h2
