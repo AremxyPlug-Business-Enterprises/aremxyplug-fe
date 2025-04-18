@@ -21,7 +21,7 @@ import { Loader } from "../../Loader/Loader";
 import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 import { CheckVirtualAcc } from "../../ApiCollection.jsx/ApiBuck";
 import axios from "axios";
-export const MainDashboard = (Data) => {
+export const MainDashboard = (Data, balance) => {
   const { setHideNavbar, toggleSideBar, isDarkMode,
     dashLoading, bankNameState, accountNameState, accountNumberState,
     customerDetail, setDashLoading, setVirtualAccCreated, 
@@ -74,7 +74,7 @@ const ValueRef = useRef()
     // eslint-disable-next-line
   }, []);
 //const ConfirmAcc = localStorage.getItem("ConfirmAcc")
-console.log(Data)
+//console.log(Data)
   const handleClick = (index) => {
     const updatedButtons = activeButtons.map((isActive, i) => i === index);
     setActiveButtons(updatedButtons);
@@ -101,19 +101,20 @@ console.log(clickedoption)
 if((clickedoption === "NGN") && blur === true){
      setBlur(false);
      setSymbol("₦")
-    }else if(clickedoption === "USD"){
+     
+    }else if(clickedoption === "USD" || selected2 === "USD" ){
       setSymbol("$")
       setBlur(true);
-    }else if(clickedoption === "GBP"){
+    }else if(clickedoption === "GBP" || selected2 === "GBP"){
       setSymbol("£")
       setBlur(true);
-    }else if(clickedoption === "AUD"){
+    }else if(clickedoption === "AUD" || selected2 === "AUD"){
       setSymbol("AU$")
       setBlur(true);
-    }else if(clickedoption === "KES"){
+    }else if(clickedoption === "KES" || selected2 === "KES"){
       setSymbol("KSh")
       setBlur(true);
-    }else if(clickedoption === "EUR"){
+    }else if(clickedoption === "EUR" || selected2 === "EUR"){
       setSymbol("€")
       setBlur(true);
     }
@@ -140,7 +141,7 @@ if((clickedoption === "NGN") && blur === true){
     return;
   };
 
-
+const [balanceNgn, setBalanceNgn] =useState(true);
 
   //Generating an account in the dashboard
   const GenerateVirtualAccount = async(AuthUsed)=>{
@@ -176,6 +177,34 @@ if((clickedoption === "NGN") && blur === true){
         setDashLoading(false);
       }}
       }
+
+      //Code to gget the balance
+      const GenerateAccountBalance = async(balance)=>{
+        const authToken = localStorage.getItem("authorisedLogin")
+        const getToken = localStorage.getItem("getToken")
+        if(authToken || getToken){
+        try{
+        setDashLoading(true)
+         const url = "https://aremxyplug.onrender.com/api/v1/balance"
+         const response = await axios.get(url,{ headers : {"Content-Type" : "application/json",
+           Authorization : authToken || getToken},
+        })
+          if(response.status === 200 || 201){
+             setBalanceNgn(true);
+             const dataBalance =  response.data.data.balance;
+             balance = dataBalance;
+          }
+        }catch(error){
+          if( error.response && (error.response.status === 400 || 401)){
+           setBalanceNgn(false)
+         }else if(error.response.status === 404){
+         alert("Check your Network connection")
+         setBalanceNgn(false)
+          }
+        }finally{
+          setDashLoading(false);
+        }}
+        }
 return (
     <div className="h-[150%]">
       {/* ==============TOP BAR========== */}
@@ -281,15 +310,20 @@ return (
               } w-[100%] md:w-1/2 flex flex-col h-auto rounded-[8px] md:rounded-[10px] lg:rounded-[16.32px]
               lg:p-[20px] md:p-[15px] p-[10px] justify-between`}
             >
-              <Link to="/wallet">
-                <button
+              <div className ="flex justify-between items-center">
+                <Link to="/wallet"
                   className={`text-[10px] md:text-[11px] lg:text-[12px] font-[600] ${
                     isDarkMode ? "border bg-black" : "bg-[#04177f]"
                   } ${styles.viewWallet}`}
                 >
                   View Wallets
-                </button>
-              </Link>
+                </Link>
+                <p onClick={()=> {
+                  GenerateAccountBalance();
+                }} className="lg:text-[12px] text-white p-2 border  rounded-[10px]  bg-blue-900  text-[8px] font-[400] lg:font-[500] leading-[12px] lg:leading-[18px]">
+                  Refresh
+                </p>
+              </div>
               <p 
                 className={`cursor-pointer ${
                   toggleSideBar ? "lg:text-[18px]" : "lg:text-[24px]"
@@ -333,8 +367,9 @@ return (
                     <option  value="AUD">AUD</option>
                     <option  value="KES">KES</option>
                   </select>
-                  {selected2 === "NGN" || " " ? (
-                  visible ? (
+                 
+                  {balanceNgn === true ? (
+                    visible ? (
                     <span
                       className={` ${
                         toggleSideBar ? "lg:text-[19px]" : "lg:text-[37px]"
@@ -344,13 +379,14 @@ return (
                     </span>
                   ) : (
                     <span className="text-[19px] leading-normal lg:text-[37px]">
-                      {symbol}0.00
+                    {symbol}0.00
                     </span>
-                    )) : (
-                      <div className="backdrop-blur-lg p-4"/>
-
-          
+                    )):(
+                      <div>
+          {symbol}0.00
+                      </div>
                     )}
+
                   <div onClick={visibilityHandler} className=" text-[#92ABFE]">
                     {visible ? (
                       <div className={`lg:text-[40px] ${styles.eye}`}>
@@ -428,7 +464,7 @@ return (
                 <div
                   onClick={() => {
                     handleClick(1);
-                    setBlur(false);
+                    setBlur(true);
                     // setBlurThree();
                   }}
                   className={`${styles.fcp2} ${

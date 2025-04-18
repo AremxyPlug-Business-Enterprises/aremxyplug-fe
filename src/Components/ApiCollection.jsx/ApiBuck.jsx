@@ -15,7 +15,7 @@ export const SignInVirtualAccountState =(customerDetail, virtualAccCreated,setBa
 GetVirtualAccountValue(virtualAccCreated,
    setBankNameState, setAccountNameState, setAccountNumberState);
    SetLocalStorage(email,full_name,phone, username, bank_name, account_name, account_no ,id)
-   //alert("Get Virtual account is running")
+
 }
  
 }
@@ -93,8 +93,7 @@ export const CheckVirtualAcc = async(authToken, customerDetail, setLoading,
                 if(SignInVirtualAccountState){
                   localStorage.setItem("UserStatus",true)
                   await confirmVirtualState();
-                  
-                }
+                  }
                //  console.log(response)
                 }}else{
             InActionVirtualAccountState(virtualAccCreated,setBankNameState, 

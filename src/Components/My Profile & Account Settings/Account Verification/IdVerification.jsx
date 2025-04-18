@@ -115,8 +115,7 @@ const IdFunctionState = async (
   data,
   buttonStateSuccess,
   ErrorMessage,
-  ifStatement,
-  PendingImageFxn,
+ PendingImageFxn,
   PendingText,
   verifyIdImage,
   statusId,
@@ -126,12 +125,6 @@ const IdFunctionState = async (
     url = "https://aremxyplug.onrender.com/api/v1/verify";
     buttonStateSuccess = "Verified";
     ErrorMessage = "NIN Name Mismatch or Network failure";
-    ifStatement = (genderResult &&
-    idResult &&
-    idAddress &&
-    idCity &&
-    idCountry &&
-    idNumber)
     PendingImageFxn = () => setVerifyImage(Pending);
     PendingText = () => setIdStatus("Pending");
     verifyIdImage = () => setVerifyImage(idSuccess);
@@ -146,7 +139,6 @@ const IdFunctionState = async (
     data,
     buttonStateSuccess,
     ErrorMessage,
-    ifStatement,
     PendingImageFxn,
     PendingText,
     verifyIdImage,
@@ -163,7 +155,6 @@ const CheckIdForm = async (
     data,
     buttonStateSuccess,
     ErrorMessage,
-    ifStatement,
     PendingImageFxn,
     PendingText,
     verifyIdImage,
@@ -173,9 +164,16 @@ const CheckIdForm = async (
     const authToken = localStorage.getItem("authorisedLogin");
     const getToken = localStorage.getItem("getToken");
    // const AccCreated = localStorage.getItem("AccCreated")
-    if (ifStatement) {
+    if (idNumber &&
+       idResult && 
+       idDateOfBirth && 
+       genderResult && 
+       idAddress &&
+       idCity &&
+       idCountry 
+       ) {
       setLoading(true);
-console.log("ifStatement" ,ifStatement);
+
 console.log("getToken" ,getToken);
 
       // console.log(data)
@@ -205,10 +203,9 @@ console.log("getToken" ,getToken);
         if (error.status === 401 || 400) {
           alert(ErrorMessage);
           console.log(`ERROR : ${error}`)
-          if(idButtonState === "Verify"){
+        
            setVerifyImage(NotVerifiedIcon)
            setIdStatus("Not Verified");
-}
         } else if (error.status === 500) {
           alert("Error:", "INTERNAL_SERVER_ERROR");
           setIdStatus("Not Verified");
@@ -504,7 +501,11 @@ useEffect(()=> {
    lg:text-[16px] lg:leading-[20.8px]'>
      ID Type
     </h2>
-    <div onClick={chooseId}
+    <div onClick={()=> {
+      if(idStatus === "Not Verifed"){
+      chooseId()
+      }
+    }}
     className='flex justify-between items-center font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px]'>
       <h2 className='text-[#000] font-[400]  leading-[10.4px]
       lg:text-[16px] lg:leading-[20.8px]'>
@@ -521,12 +522,12 @@ useEffect(()=> {
           <div 
            key={info.id} onClick={() => {
             setIdResult(()=> {
-             if(info.id ===1 ){
+             if(info.id ===1 && idStatus ==="Not Verified" ){
             return info.idType;
             }
-            else if(info.id !== 1 && idResult === ""){
+            else if(info.id !== 1 && idResult === "" && idStatus ==="Not Verified"){
             return ""
-              }else if(  (idResult ==="National ID") &&(info.id === 2 || info.id ===3|| info.id === 4)){
+              }else if(  (idResult ==="National ID") &&(info.id === 2 || info.id ===3|| info.id === 4) && idStatus ==="Not Verified"){
                return "National ID"
                
              }
@@ -547,7 +548,7 @@ useEffect(()=> {
            cursor-pointer ${info.Status === "Inactive" ? "bg-gray-300 cursor-not-allowed" : "bg-white"} `}>
             <h2 className="font-[500] text-[#7C7C7C] text-[8px] leading-[10.4px]
             lg:text-[16px] lg:leading-[20.8px]
-            ">{info.idType}</h2>
+            ">{idStatus === "Not Verified"  ? info.idType : "National ID"}</h2>
             <p
              className={`font-[500] text-[#7C7C7C] text-[8px] leading-[10.4px]
             lg:text-[16px] lg:leading-[20.8px] ${info.Status === "Inactive" ? "text-red-500": "text-green-500"}`}>
@@ -567,7 +568,8 @@ useEffect(()=> {
    lg:text-[16px] lg:leading-[20.8px]'>
      ID Number
     </h2>
-    <input onInput={( e => {
+    <input readOnly={idStatus=== "Verified"}
+     onInput={( e => {
       const numbersOnly = e.target.value.replace(/\D/g, '');
       e.target.value = numbersOnly;
     })}

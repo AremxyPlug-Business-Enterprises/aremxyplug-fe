@@ -63,10 +63,8 @@ const {fullName} = state;
   const BvnFunctionState = async (
     url,
     data,
-    alertSuccess,
     buttonStateSuccess,
     ErrorMessage,
-    ifStatement,
     PendingImageFxn,
     PendingText,
     verifyBvnImage,
@@ -77,7 +75,6 @@ const {fullName} = state;
       url = "https://aremxyplug.onrender.com/api/v1/verify";
       buttonStateSuccess = "Verified";
       ErrorMessage = "Bvn Name Mismatch or network failure";
-      ifStatement = bvnDateOfBirth && bvnNumber && bvnPhone;
       PendingImageFxn = () => setBvnVerifyImage(PendingImage);
       PendingText = () => setBvnStatus("Pending");
       verifyBvnImage = () => setBvnVerifyImage(bvnVerifiedSuccess);
@@ -86,21 +83,13 @@ const {fullName} = state;
       data = {
         bvn: bvnNumber.toString(),
       };
-    } else {
-      data =""
-      url = "https://aremxyplug.onrender.com/api/v1/virtualacc";
-      alertSuccess = () => alert("Virtual Account Created Successfully");
-      buttonStateSuccess = "Virtual Account Created";
-      ErrorMessage = "Virtual Account Creation Failed";
-      ifStatement = bvnStatus === "Verified";
     }
+    
     checkBvnform(
       url,
       data,
-      alertSuccess,
       buttonStateSuccess,
       ErrorMessage,
-      ifStatement,
       PendingImageFxn,
       PendingText,
       verifyBvnImage,
@@ -114,10 +103,8 @@ const {fullName} = state;
   const checkBvnform = async (
     url,
     data,
-    alertSuccess,
     buttonStateSuccess,
     ErrorMessage,
-    ifStatement,
     PendingImageFxn,
     PendingText,
     verifyBvnImage,
@@ -126,7 +113,7 @@ const {fullName} = state;
   ) => {
     const authToken = localStorage.getItem("authorisedLogin");
     const getToken = localStorage.getItem("getToken");
-    if (ifStatement) {
+    if (bvnDateOfBirth && bvnNumber && bvnPhone) {
       setLoading(true);
 
       // console.log(data)
@@ -157,10 +144,9 @@ const {fullName} = state;
         if (error.status === 401 || 400) {
           alert(ErrorMessage);
           console.log(`ERROR : ${error}`)
-          if(bvnButtonState === "Verify"){
            setBvnVerifyImage(NotVerifiedImage)
            setBvnStatus("Not Verified");
-}
+
         } else if (error.status === 500) {
           alert("Error:", "INTERNAL_SERVER_ERROR");
           setBvnStatus("Not Verified");

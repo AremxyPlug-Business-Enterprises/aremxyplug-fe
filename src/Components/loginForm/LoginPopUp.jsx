@@ -150,7 +150,7 @@ const handleVerificationOTP = ()=> {
 //Verification with Bvn or NiN and if the user has created an account
   const ConfirmVirtualState = async() => {
     const getToken = localStorage.getItem("getToken");
-   const authToken = localStorage.getItem("authToken");
+   const authToken = localStorage.getItem("authorisedLogin");
   if (authToken || getToken) {
   const url = 'https://aremxyplug.onrender.com/api/v1/check-verification';
    //
