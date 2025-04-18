@@ -974,7 +974,7 @@ const MtnDataTopUpBundle = () => {
                 Select Product
               </h2>
               <div
-                className={`mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between 
+                className={`!mt-2 md:!mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between 
                    ${
       isDarkMode
         ? "bg-black text-white border !border-white"

@@ -481,13 +481,13 @@ const AirtimeVtu = () => {
                 <div className={styles.airtimeTop}>
                     <div className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] bg-gradient-to-r from-[#73FF9A] to-[#6EDCFF] flex px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px]">
                         <div className="w-[80%] pt-[19px] lg:pt-[20px]">
-                            <h2 className={`text-[12px] md:text-[13.75px] font-bold mb-2 lg:text-[24px] lg:mb-4 
+                            <h2 className={`text-[11px] md:text-[13.75px] font-bold mb-2 lg:text-[24px] lg:mb-4 
                                  ${
                                     isDarkMode ? "text-black" : ""
                                  }
                                 `}>
                                 AIRTIME VTU, FAST AND AUTOMATED.</h2>
-                            <h2 className={`text-[9px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3 
+                            <h2 className={`text-[8.4px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-4
                               ${
                                     isDarkMode ? "text-black" : ""
                                  }
@@ -565,8 +565,8 @@ const AirtimeVtu = () => {
                                     <div className={`
                                               ${
         isDarkMode 
-            ? "!bg-black !text-white !border !border-solid !border-white" 
-            : "border border-solid border-[#0003] bg-white text-black"
+            ? "!bg-black !text-white !border !border-solid !border-white !mt-2 md:!mt-0" 
+            : "border border-solid border-[#0003] bg-white text-black !mt-2 md:!mt-0"
     }
                                     ${styles.input} !h-[44.927px] md:!h-[58px]
        `} >
@@ -626,11 +626,11 @@ const AirtimeVtu = () => {
                                             : ""
                                     }
                                     ${styles.head3} !text-[15px] md:!text-[15px]`}>Select Product</h2>
-                                <div className={`
+                                <div className={` 
                                            ${
                                             isDarkMode 
-                                                ? "!bg-black !text-white !border !border-solid !border-white !rounded-[7px]" 
-                                                : "border border-solid border-[#0003] bg-white text-black"
+                                                ? "!mt-2 md:!mt-0 !bg-black !text-white !border !border-solid !border-white !rounded-[7px]" 
+                                                : "!mt-2 md:!mt-0 border border-solid border-[#0003] bg-white text-black"
                                         }                  ${styles.input1} !h-[44.927px] md:!h-[58px]
             `}
                                 >
@@ -672,7 +672,7 @@ const AirtimeVtu = () => {
                                             isDarkMode 
                                               ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
                                           }`}>Discount</h2>
-                                <div className={`${styles.input2} !h-[44.927px] md:!h-[57px]
+                                <div className={`${styles.input2} !h-[44.927px] md:!h-[57px] !mt-2 md:!mt-0
                                     ${
                                             isDarkMode 
                                                 ? "!bg-black !text-[#7E7E7E] !border !border-solid !border-white !rounded-[7px]" 
@@ -706,7 +706,7 @@ const AirtimeVtu = () => {
                                        
                                     ${styles.span3} !text-[15px] md:!text-base`}><Link to="/select-vtu-recipient"> (Select Recipient) </Link>
                                 </span></h2>
-                                <div className={`
+                                <div className={`!mt-2 md:!mt-0
                                    ${
                                             isDarkMode 
                                                 ? "!bg-black !text-white !border !border-solid !border-white" 
@@ -766,7 +766,7 @@ const AirtimeVtu = () => {
                                               ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
                                           }
                                           `}>Recipient Name <span className={`${styles.span4} !text-[15px] md:!text-base`}>(optional)</span></h2>
-                                <div className={`
+                                <div className={`!mt-2 md:!mt-0
                                      ${
                                             isDarkMode 
                                                 ? "!bg-black !text-white !border !border-solid !border-white" 
@@ -797,7 +797,7 @@ const AirtimeVtu = () => {
                                             isDarkMode 
                                               ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
                                           }`}>Type Amount</h2>
-                                <div className={`
+                                <div className={`!mt-2 md:!mt-0
                                      ${
                                             isDarkMode 
                                                 ? "!bg-black !text-white !border !border-solid !border-white" 
@@ -843,7 +843,7 @@ const AirtimeVtu = () => {
                                             isDarkMode 
                                               ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
                                           }`}>Total Amount</h2>
-                                <div className={`
+                                <div className={`!mt-2 md:!mt-0
                                 ${
         isDarkMode 
             ? "!bg-black !text-white !border !border-solid !border-white" 
@@ -876,7 +876,7 @@ const AirtimeVtu = () => {
                                             isDarkMode 
                                               ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
                                           }`}>Payment Method</h2>
-                                    <div className={`
+                                    <div className={`!mt-2 md:!mt-0
                                     ${
         isDarkMode 
             ? "!bg-black !text-white !border !border-solid !border-white !rounded-[7px]"  
