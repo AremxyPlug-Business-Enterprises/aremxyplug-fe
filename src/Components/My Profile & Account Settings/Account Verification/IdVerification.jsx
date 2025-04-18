@@ -22,7 +22,7 @@ import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 import idSuccess from "../ProfileImages/user-tick.svg";
 
 export default function IdVerification(Data) {
-  const {verificationOpen} = useContext(ContextProvider)
+  const { verificationOpen } = useContext(ContextProvider);
 
     const {idVerificationOpen, 
       state,
@@ -45,15 +45,15 @@ export default function IdVerification(Data) {
     const [idBackView, setIdBackView] = useState(false);
       const [idPopVerified, setIdPopVerified] = useState(false);
   const [idCustomerQuery, setIdCustomerQuery] = useState(false);
-    const [idDateOfBirth, setIdDateOfBirth] = useState("");
-const [loading, setLoading] =useState(false);
- const {toggleSideBar, customerDetail} = useContext(ContextProvider);
-  const {full_name} =  customerDetail;
-  const {fullName} = state;
-    // Genders
-    const genderInfo = ['Male', 'Female', 'Others..'];
-    const [genderResult, setGenderResult] = useState('');
-   const chooseGender = () => {
+  const [idDateOfBirth, setIdDateOfBirth] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { toggleSideBar, customerDetail } = useContext(ContextProvider);
+  const { full_name } = customerDetail;
+  const { fullName } = state;
+  // Genders
+  const genderInfo = ["Male", "Female", "Others.."];
+  const [genderResult, setGenderResult] = useState("");
+  const chooseGender = () => {
     setDropDownGender(!dropDownGender);
     document.querySelector(".genderDrop").classList.toggle("DropIt");
   };
@@ -149,8 +149,8 @@ const IdFunctionState = async (
 
 
 
-//The main function to verify the Id Number and create the virtual account
-const CheckIdForm = async (
+  //The main function to verify the Id Number and create the virtual account
+  const CheckIdForm = async (
     url,
     data,
     buttonStateSuccess,
@@ -178,10 +178,10 @@ console.log("getToken" ,getToken);
 
       // console.log(data)
       try {
-        if(idButtonState === "Verify"){
+        if (idButtonState === "Verify") {
           setErrorSubmit(false);
-        PendingImageFxn();
-        PendingText();
+          PendingImageFxn();
+          PendingText();
         }
        const response  = await axios.post(url, data , {
           headers: {
@@ -219,15 +219,15 @@ console.log("getToken" ,getToken);
       setErrorSubmit(true);
     }
   };
-// UseEffect to retain the current data object of getLocalStorage data()
-const IdNumberRef = useRef();
-const VerifyRef = useRef()
-Data = GetLocalStorage();
-useEffect(()=> {
-  VerifyRef.current = Data;
- IdNumberRef.current = idNumber;
-// eslint-disable-next-line
-},[Data])
+  // UseEffect to retain the current data object of getLocalStorage data()
+  const IdNumberRef = useRef();
+  const VerifyRef = useRef();
+  Data = GetLocalStorage();
+  useEffect(() => {
+    VerifyRef.current = Data;
+    IdNumberRef.current = idNumber;
+    // eslint-disable-next-line
+  }, [Data]);
   console.log(Data);
   return (
     <div className="flex flex-col ">
@@ -238,27 +238,35 @@ useEffect(()=> {
         >
           <div className="flex md:gap-[25px] gap-[11px] lg:pt-[50px]  pt-[35px] lg:mb-[50px] mb-[35px] ">
             {/* ICON == NOT VERIFIED */}
-            <div
-              className=" flex gap-[5px] py-[23px] pr-[12px] pl-[12px] md:py-[25px] md:pr-[41px] md:pl-[16px] bg-white shadow-[0px_2.34722px_5.86806px_0px_rgba(0,0,0,0.25)] md:shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)]"
-            >
+            <div className=" flex gap-[5px] py-[23px] pr-[12px] pl-[12px] md:py-[25px] md:pr-[41px] md:pl-[16px] bg-white shadow-[0px_2.34722px_5.86806px_0px_rgba(0,0,0,0.25)] md:shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)]">
               <img
-                src={verifyImage && (Data.ConfirmId === "true" ? idSuccess : NotVerifiedIcon)}
+                src={
+                  verifyImage &&
+                  (Data.ConfirmId === "true" ? idSuccess : NotVerifiedIcon)
+                }
                 alt=""
                 className={`h-[24px] w-[24px] md:h-[44px] md:w-[44px] lg:h-[62px] lg:w-[62px]`}
               />
-              <div className={`flex flex-col gap-[4.694px] md:gap-[8px] justify-center ${isDarkMode ? "text-stone-800" : ""}`}>
+              <div
+                className={`flex flex-col gap-[4.694px] md:gap-[8px] justify-center ${
+                  isDarkMode ? "text-stone-800" : ""
+                }`}
+              >
                 <h2 className="font-[500] lg:text-[12px] lg:leading-[15.6px] text-[9.042px] leading-[12.45px]">
                   ID Status
                 </h2>
                 <h2 className="font-[500] lg:text-[12px] lg:leading-[15.6px] text-[8.042px] leading-[12.45px]">
-                  {idStatus && (Data.ConfirmId === "true"  ? "Verified" : 'Not Verified' )}
+                  {idStatus &&
+                    (Data.ConfirmId === "true" ? "Verified" : "Not Verified")}
                 </h2>
               </div>
             </div>
             {/*  */}
             <div className="flex md:gap-[14px] gap-[11px] items-center">
               <h2
-                className={`font-[500] text-[#7E7E7E] text-[11px] leading-[14.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-slate-50" : ""}`}
+                className={`font-[500] text-[#7E7E7E] text-[11px] leading-[14.4px] lg:text-[16px] lg:leading-[20.8px] ${
+                  isDarkMode ? "text-slate-50" : ""
+                }`}
               >
                 Why Account Verification with my ID Document?
               </h2>
@@ -287,18 +295,22 @@ useEffect(()=> {
                 {/* Full Name */}
                 <div className="flex flex-col md:w-[50%] w-full md:gap-[10px] gap-2.5">
                   <h2
-                    className={`font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-slate-50" : ""}`}
+                    className={`font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${
+                      isDarkMode ? "text-slate-50" : ""
+                    }`}
                   >
                     Full Name
                   </h2>
                   <div
-                    className={`py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[12px] md:pl-[8.67px] md:pr-[5.867px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[8px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-[10px] h-full  ${isDarkMode ?"border-slate-50" : ""}`}
+                    className={`py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[12px] md:pl-[8.67px] md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-[10px] h-full  ${
+                      isDarkMode ? "border-slate-50 text-white " : ""
+                    }`}
                   >
-                     {(!full_name && fullName.length > 1)
-                      ?  fullName
-                      : full_name ?
-                      full_name :
-                      Data.UserFullName
+                    {!full_name && fullName.length > 1
+                      ? fullName
+                      : full_name
+                      ? full_name
+                      : Data.UserFullName
                       ? Data.UserFullName
                       : "Hi user"}
                   </div>
@@ -307,16 +319,22 @@ useEffect(()=> {
 
                 <div className="relative flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
                   <h2
-                    className={`font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-slate-50" : ""}`}
+                    className={`font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${
+                      isDarkMode ? "text-slate-50" : ""
+                    }`}
                   >
                     Gender
                   </h2>
                   <div
                     onClick={chooseGender}
-                    className={`flex justify-between items-center py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] ${isDarkMode? "border-slate-50": ""}`}
+                    className={`flex justify-between items-center py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] ${
+                      isDarkMode ? "border-slate-50" : ""
+                    }`}
                   >
                     <h2
-                      className={`text-[#000] font-[400] text-sm leading-[18px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-slate-50" :""}`}
+                      className={`text-[#000] font-[400] text-[12px] leading-[18px] lg:text-[16px] lg:leading-[20.8px] ${
+                        isDarkMode ? "text-slate-50" : ""
+                      }`}
                     >
                       {genderResult}
                     </h2>
@@ -327,7 +345,11 @@ useEffect(()=> {
                     />
                   </div>
                   {dropDownGender && (
-                    <div className=" absolute lg:top-[90px] md:top-[60px] top-[70px] z-[5] flex flex-col w-[100%]">
+                    <div
+                      className={`absolute lg:top-[90px] md:top-[60px] top-[70px] z-[5] flex flex-col w-[100%] ${
+                        isDarkMode ? "bg-black border border-white" : "bg-white"
+                      }`}
+                    >
                       {genderInfo.map((info) => {
                         return (
                           <h2
@@ -338,7 +360,11 @@ useEffect(()=> {
                                 .querySelector(".genderDrop")
                                 .classList.remove("DropIt");
                             }}
-                            className={`font-[500] text-[#7C7C7C] text-[12px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] md:py-[20px] py-[15px] pl-[10px] lg:pl-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] md:shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)] bg-white cursor-pointer ${isDarkMode?"":""}`}
+                            className={`font-[500] text-[#7C7C7C] text-[12px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] md:py-[20px] py-[15px] pl-[10px] lg:pl-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] md:shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)] cursor-pointer ${
+                              isDarkMode
+                                ? "bg-black text-white border-b border-white hover:bg-slate-800"
+                                : "bg-white"
+                            }`}
                           >
                             {info}
                           </h2>
@@ -353,7 +379,9 @@ useEffect(()=> {
                 {/* HOUSE ADDRESS */}
                 <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
                   <h2
-                    className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white": ""}`}
+                    className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${
+                      isDarkMode ? "text-white" : ""
+                    }`}
                   >
                     House Address
                   </h2>
@@ -362,7 +390,11 @@ useEffect(()=> {
                     onChange={(e) => {
                       setIdAddress(e.target.value);
                     }}
-                    className={`py-[10.33px] pl-[5.867px] pr-1 md:py-[10] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none ${isDarkMode ? "bg-transparent text-slate-50 border-slate-50": ""}`}
+                    className={`py-[10.33px] pl-[5.867px] pr-1 md:py-[10] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none ${
+                      isDarkMode
+                        ? "bg-transparent text-slate-50 border-slate-50"
+                        : ""
+                    }`}
                     placeholder=""
                     type="text"
                     onInvalid={validAddress}
@@ -373,7 +405,9 @@ useEffect(()=> {
                 {/* Date of Birth / BVN */}
                 <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
                   <h2
-                    className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-slate-50": ""}`}
+                    className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${
+                      isDarkMode ? "text-slate-50" : ""
+                    }`}
                   >
                     D.O.B
                   </h2>
@@ -382,7 +416,11 @@ useEffect(()=> {
                     onChange={(e) => {
                       setIdDateOfBirth(e.target.value);
                     }}
-                    className={`py-[10.33px] pl-[5.867px] pr-1 md:py-[10] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none ${isDarkMode ? "bg-transparent text-slate-50 border-slate-50": ""}`}
+                    className={`py-[10.33px] pl-[5.867px] pr-1 md:py-[10] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none ${
+                      isDarkMode
+                        ? "bg-transparent text-slate-50 border-slate-50"
+                        : ""
+                    }`}
                     type="date"
                     id="dob"
                     name="dob"
@@ -413,7 +451,9 @@ useEffect(()=> {
                 {/* COUNTRY */}
                 <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
                   <h2
-                    className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-slate-50": ""}`}
+                    className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${
+                      isDarkMode ? "text-slate-50" : ""
+                    }`}
                   >
                     Country
                   </h2>
@@ -422,7 +462,9 @@ useEffect(()=> {
                     onChange={(e) => {
                       setIdCountry(e.target.value);
                     }}
-                    className={`py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none ${isDarkMode ? "bg-black text-slate-50 border-slate-50": ""}`}
+                    className={`py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none ${
+                      isDarkMode ? "bg-black text-slate-50 border-slate-50" : ""
+                    }`}
                     placeholder=""
                     type="text"
                     onInvalid={validCountry}
@@ -432,7 +474,9 @@ useEffect(()=> {
                 {/* CITY */}
                 <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
                   <h2
-                    className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-slate-50": ""}`}
+                    className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${
+                      isDarkMode ? "text-slate-50" : ""
+                    }`}
                   >
                     City
                   </h2>
@@ -441,7 +485,11 @@ useEffect(()=> {
                     onChange={(e) => {
                       setIdCity(e.target.value);
                     }}
-                    className={`py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none ${isDarkMode ? "bg-transparent text-slate-50 border-slate-50": ""}`}
+                    className={`py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none ${
+                      isDarkMode
+                        ? "bg-transparent text-slate-50 border-slate-50"
+                        : ""
+                    }`}
                     placeholder=""
                     type="text"
                     onInvalid={validCity}
@@ -473,7 +521,9 @@ useEffect(()=> {
 
               <div className="flex flex-col md:w-[49%] w-[100%] md:gap-[10px] gap-2.5">
                 <h2
-                  className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-slate-50": ""}`}
+                  className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${
+                    isDarkMode ? "text-slate-50" : ""
+                  }`}
                 >
                   Postal Code(optional)
                 </h2>
@@ -486,7 +536,11 @@ useEffect(()=> {
                   onChange={(e) => {
                     setIdPostalCode(e.target.value);
                   }}
-                  className={` py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none ${isDarkMode ? "bg-black text-slate-50 border-slate-50": ""}`}
+                  className={` py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none ${
+                    isDarkMode
+                      ? "bg-black text-slate-50 border-slate-50"
+                      : "text-[#9C9C9C]"
+                  }`}
                   placeholder=""
                   type="text"
                   inputMode="numeric"
@@ -714,65 +768,85 @@ Confirming your identity ensures that the person accessing the account is indeed
         )}
     {idFrontView && (
 <Modal>
-  <div className='flex flex-col rounded-[8px] w-[100%]   h-[257.07px]  md:h-[350px] 
+  <div className={`flex flex-col rounded-[8px] w-[100%]   h-[257.07px]  md:h-[350px] 
   lg:h-[404px] bg-white lg:w-[45%] md:w-[60%] lg:rounded-[12px] mx-[19px] 
   shadow-[0px_0px_11.73611px_0px_rgba(0,0,0,0.25)] md:mx-[0px]
-   lg:shadow-[0px_0px_20px_0_px_rgba(0 0,0,0.25)]'>
-    <div className='flex justify-end p-[10px]'>
-  <img onClick={() => {
-    setIdFrontView(false);
-  }} 
-  src={closeIcon} alt=""
-  className='h-[32px] w-[32px]  cursor-pointer'/>
-  </div>
-  <div className='flex flex-col h-[100%]   md:gap-[30px] gap-[20px] justify-center items-center'>
-    <h2 className=' font-[500] text-center text-[10px] leading-[14.4px] 
-   lg:text-[16px] lg:leading-[20.8px]'>
-      Upload ID Front View
-      </h2>
-      <img className='lg:h-[200px] lg:w-[197px] md:w-[115.339px] md:h-[117.361px] h-[91px] w-[89px]'
-    src={frontView} alt="" />
-      <button onClick={(e) => {
-        e.preventDefault();
-      }}
-       className='font-[600] text-white md:w-[150px] text-[12px] leading-[18px] 
+   lg:shadow-[0px_0px_20px_0_px_rgba(0 0,0,0.25)] ${isDarkMode ? "bg-black border border-white" : "bg-white"}`}
+                >
+                  <div className="flex justify-end p-[10px]">
+                    <img
+                      onClick={() => {
+                        setIdFrontView(false);
+                      }}
+                      src={closeIcon}
+                      alt=""
+                      className="h-[32px] w-[32px]  cursor-pointer"
+                    />
+                  </div>
+                  <div className="flex flex-col h-[100%]   md:gap-[30px] gap-[20px] justify-center items-center">
+                    <h2
+                      className=" font-[500] text-center text-[12px] leading-[14.4px] 
+   lg:text-[16px] lg:leading-[20.8px]"
+                    >
+                      Upload ID Front View
+                    </h2>
+                    <img
+                      className="lg:h-[200px] lg:w-[197px] md:w-[115.339px] md:h-[117.361px] h-[91px] w-[89px]"
+                      src={frontView}
+                      alt=""
+                    />
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                      }}
+                      className="font-[600] text-white md:w-[150px] text-[12px] leading-[18px] 
       lg:text-[16px] 
       lg:leading-[24px] bg-[#04177F]  w-[80%] py-[10px]
-      lg:rounded-[12px] lg:py-[10px] rounded-[4.61px]'>
-      Upload
-      </button>
-  </div>
-
-  </div>
-</Modal>
-    )}
-    {idBackView && (
-      <Modal>
-        <div className='flex flex-col rounded-[8px] w-[100%] h-[257.07px]  md:h-[350px] 
-        lg:h-[404px] bg-white md:w-[60%] lg:w-[45%] lg:rounded-[12px] mx-[19px] 
-        shadow-[0px_0px_11.73611px_0px_rgba(0,0,0,0.25)] md:mx-[0px]
-         lg:shadow-[0px_0px_20px_0_px_rgba(0 0,0,0.25)]'>
-          <div className='flex justify-end p-[10px]'>
-        <img onClick={() => {
-          setIdBackView(false);
-        }} 
-        src={closeIcon} alt=""
-        className='h-[32px] w-[32px]  cursor-pointer'/>
-        </div>
-        <div className='flex flex-col h-[100%]  md:gap-[30px] gap-[20px] justify-center items-center '>
-          <h2 className=' font-[500] text-center text-[10px] leading-[14.4px] 
-         lg:text-[16px] lg:leading-[20.8px]'>
-            Upload ID Back View
-            </h2>
-            <img className='lg:h-[200px] lg:w-[197px] md:w-[115.339px] md:h-[117.361px]  h-[91px] w-[89px]'
-          src={BackView} alt="" />
-            <button onClick={(e) =>{
-              e.preventDefault();
-            }} 
-            className='font-[600] text-white  md:w-[150px] text-[12px] leading-[18px] 
+      lg:rounded-[12px] lg:py-[10px] rounded-[4.61px]"
+                    >
+                      Upload
+                    </button>
+                  </div>
+                </div>
+              </Modal>
+            )}
+            {idBackView && (
+              <Modal>
+                <div
+                  className={`flex flex-col rounded-[8px] w-[100%] h-[257.07px]  md:h-[350px] lg:h-[404px] md:w-[60%] lg:w-[45%] lg:rounded-[12px] mx-[19px] md:mx-[0px]
+        shadow-[0px_0px_11.73611px_0px_rgba(0,0,0,0.25)]
+         lg:shadow-[0px_0px_20px_0_px_rgba(0 0,0,0.25)] ${isDarkMode ? "bg-black border border-white" : "bg-white"}`}
+                >
+                  <div className="flex justify-end p-[10px]">
+                    <img
+                      onClick={() => {
+                        setIdBackView(false);
+                      }}
+                      src={closeIcon}
+                      alt=""
+                      className="h-[32px] w-[32px]  cursor-pointer"
+                    />
+                  </div>
+                  <div className="flex flex-col h-[100%]  md:gap-[30px] gap-[20px] justify-center items-center ">
+                    <h2
+                      className=" font-[500] text-center text-[12px] leading-[14.4px] 
+         lg:text-[16px] lg:leading-[20.8px]"
+                    >
+                      Upload ID Back View
+                    </h2>
+                    <img
+                      className="lg:h-[200px] lg:w-[197px] md:w-[115.339px] md:h-[117.361px]  h-[91px] w-[89px]"
+                      src={BackView}
+                      alt=""
+                    />
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                      }}
+                      className="font-[600] text-white  md:w-[150px] text-[12px] leading-[18px] 
             lg:text-[16px] 
             lg:leading-[24px] bg-[#04177F]  w-[80%] py-[10px]
-            lg:rounded-[12px] lg:py-[10px] rounded-[4.61px]'>
+            lg:rounded-[12px] lg:py-[10px] rounded-[4.61px]">
             Upload
             </button>
         </div>
@@ -782,14 +856,13 @@ Confirming your identity ensures that the person accessing the account is indeed
     </form>  
     
     {idPopVerified && (
-          <Modal className="">
+          <Modal>
             <div
               className={`confirm2 ${styles.inputPin} ${
                 toggleSideBar
                   ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
-                  : "lg:w-[40%]"
-              }relative md:w-[55%] w-[90%] flex flex-col justify-between md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
-            >
+                  : "lg:w-[40%]"}
+               relative md:w-[55%] w-[90%] flex flex-col justify-between md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}>
               <div className="absolute z-0 right-0" style={{ zIndex: 0 }}>
                 <img src={PopUpGreen} alt="" className="md:hidden rounded-tr-[10px]" />
                 <img src={PopUpGreenTab} alt="" className="hidden md:block lg:hidden rounded-tr-[10px]" />
@@ -798,7 +871,7 @@ Confirming your identity ensures that the person accessing the account is indeed
 
                 <div className="relative z-10">
                   <p
-                    className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] 
+                    className={`text-[12px] px-[20px] md:text-[16px] lg:text-[18px] 
                   font-semibold text-center mt-[4%] lg:my-[%] z-[1000] ${styles.overlayText}`}
                   >
                     Your request has been submitted successfully. You can check
@@ -835,6 +908,7 @@ Confirming your identity ensures that the person accessing the account is indeed
                   Done
                 </button>
               </div>
+              
             </Modal>
           )}
         </div>
