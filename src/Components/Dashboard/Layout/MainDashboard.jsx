@@ -19,10 +19,14 @@ import { RecentTransaction } from "../DashboardComponents/RecentTransaction";
 import { Link } from "react-router-dom";
 import { Loader } from "../../Loader/Loader";
 import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
-
-export const MainDashboard = (Data) => {
+import { CheckVirtualAcc } from "../../ApiCollection.jsx/ApiBuck";
+import axios from "axios";
+export const MainDashboard = (Data, balance) => {
   const { setHideNavbar, toggleSideBar, isDarkMode,
     dashLoading, bankNameState, accountNameState, accountNumberState,
+    customerDetail, setDashLoading, setVirtualAccCreated, 
+    setBankNameState, setAccountNameState, setAccountNumberState, 
+    twoStepVerificationSuccess,setTwoStepVerificationSuccess
   } = useContext(ContextProvider);
   //const {account_no, bank_name, account_name} = virtualAccCreated;
  
@@ -70,7 +74,7 @@ const ValueRef = useRef()
     // eslint-disable-next-line
   }, []);
 //const ConfirmAcc = localStorage.getItem("ConfirmAcc")
-
+//console.log(Data)
   const handleClick = (index) => {
     const updatedButtons = activeButtons.map((isActive, i) => i === index);
     setActiveButtons(updatedButtons);
@@ -94,11 +98,25 @@ const ValueRef = useRef()
     const clickedoption = event.target.value;
     setSelected2(clickedoption);
 console.log(clickedoption)
-if(clickedoption !== "NGN"){
-setBlur(true);
-setSymbol("₦")
-}else if((clickedoption === "NGN" || " ") && blur === true){
+if((clickedoption === "NGN") && blur === true){
      setBlur(false);
+     setSymbol("₦")
+     
+    }else if(clickedoption === "USD" || selected2 === "USD" ){
+      setSymbol("$")
+      setBlur(true);
+    }else if(clickedoption === "GBP" || selected2 === "GBP"){
+      setSymbol("£")
+      setBlur(true);
+    }else if(clickedoption === "AUD" || selected2 === "AUD"){
+      setSymbol("AU$")
+      setBlur(true);
+    }else if(clickedoption === "KES" || selected2 === "KES"){
+      setSymbol("KSh")
+      setBlur(true);
+    }else if(clickedoption === "EUR" || selected2 === "EUR"){
+      setSymbol("€")
+      setBlur(true);
     }
     // setBlurTwo(
     //   clickedoption === "USD" ||
@@ -122,6 +140,71 @@ setSymbol("₦")
     //   : setSymbol("");
     return;
   };
+
+const [balanceNgn, setBalanceNgn] =useState(true);
+
+  //Generating an account in the dashboard
+  const GenerateVirtualAccount = async(AuthUsed)=>{
+      const authToken = localStorage.getItem("authorisedLogin")
+      const getToken = localStorage.getItem("getToken")
+      if(authToken || getToken){
+      try{
+      setDashLoading(true)
+      const body =""
+      const url = "https://aremxyplug.onrender.com/api/v1/virtualacc"
+       const response = await axios.post(url,body,{ headers : {"Content-Type" : "application/json",
+         Authorization : authToken || getToken},
+      })
+        if(response.status === 200 || 201){
+           alert("Virtual Account Created")
+           localStorage.setItem("AccCreated","true")
+           AuthUsed = authToken || getToken;
+           await CheckVirtualAcc(AuthUsed, customerDetail, setDashLoading, setVirtualAccCreated, 
+            setBankNameState, setAccountNameState, setAccountNumberState, 
+           twoStepVerificationSuccess,setTwoStepVerificationSuccess)
+           } 
+
+      }catch(error){
+        if( error.response && error.response.status === 400){
+          alert("Virtual Account Creation failed")
+          
+        }else if(error.response.status === 404){
+       alert("Check your Network connection")
+        }else if(error.response &&error.response.status === 500){
+          alert("SERVER ERROR");
+        }
+      }finally{
+        setDashLoading(false);
+      }}
+      }
+
+      //Code to gget the balance
+      const GenerateAccountBalance = async(balance)=>{
+        const authToken = localStorage.getItem("authorisedLogin")
+        const getToken = localStorage.getItem("getToken")
+        if(authToken || getToken){
+        try{
+        setDashLoading(true)
+         const url = "https://aremxyplug.onrender.com/api/v1/balance"
+         const response = await axios.get(url,{ headers : {"Content-Type" : "application/json",
+           Authorization : authToken || getToken},
+        })
+          if(response.status === 200 || 201){
+             setBalanceNgn(true);
+             const dataBalance =  response.data.data.balance;
+             balance = dataBalance;
+          }
+        }catch(error){
+          if( error.response && (error.response.status === 400 || 401)){
+           setBalanceNgn(false)
+         }else if(error.response.status === 404){
+         alert("Check your Network connection")
+         setBalanceNgn(false)
+          }
+        }finally{
+          setDashLoading(false);
+        }}
+        }
 return (
     <div className="h-[150%]">
       {/* ==============TOP BAR========== */}
@@ -227,15 +310,20 @@ return (
               } w-[100%] md:w-1/2 flex flex-col h-auto rounded-[8px] md:rounded-[10px] lg:rounded-[16.32px]
               lg:p-[20px] md:p-[15px] p-[10px] justify-between`}
             >
-              <Link to="/wallet">
-                <button
+              <div className ="flex justify-between items-center">
+                <Link to="/wallet"
                   className={`text-[10px] md:text-[11px] lg:text-[12px] font-[600] ${
                     isDarkMode ? "border bg-black" : "bg-[#04177f]"
                   } ${styles.viewWallet}`}
                 >
                   View Wallets
-                </button>
-              </Link>
+                </Link>
+                <p onClick={()=> {
+                  GenerateAccountBalance();
+                }} className="lg:text-[12px] text-white p-2 border  rounded-[10px]  bg-blue-900  text-[8px] font-[400] lg:font-[500] leading-[12px] lg:leading-[18px]">
+                  Refresh
+                </p>
+              </div>
               <p 
                 className={`cursor-pointer ${
                   toggleSideBar ? "lg:text-[18px]" : "lg:text-[24px]"
@@ -279,8 +367,9 @@ return (
                     <option  value="AUD">AUD</option>
                     <option  value="KES">KES</option>
                   </select>
-                  {selected2 === "NGN" || " " ? (
-                  visible ? (
+                 
+                  {balanceNgn === true ? (
+                    visible ? (
                     <span
                       className={` ${
                         toggleSideBar ? "lg:text-[19px]" : "lg:text-[37px]"
@@ -290,13 +379,14 @@ return (
                     </span>
                   ) : (
                     <span className="text-[19px] leading-normal lg:text-[37px]">
-                      {symbol}0.00
+                    {symbol}0.00
                     </span>
-                    )) : (
-                      <div className="backdrop-blur-lg p-4"/>
-
-          
+                    )):(
+                      <div>
+          {symbol}0.00
+                      </div>
                     )}
+
                   <div onClick={visibilityHandler} className=" text-[#92ABFE]">
                     {visible ? (
                       <div className={`lg:text-[40px] ${styles.eye}`}>
@@ -325,7 +415,7 @@ return (
                     </span>
                   ) : (
                     <span className="flex items-center text-[19px] leading-normal lg:text-[37px]">
-                      0000.00
+                      0.00
                     </span>
                   )}
                   <div onClick={visibilityHandler} className=" text-[#92ABFE]">
@@ -374,7 +464,7 @@ return (
                 <div
                   onClick={() => {
                     handleClick(1);
-                    setBlur(false);
+                    setBlur(true);
                     // setBlurThree();
                   }}
                   className={`${styles.fcp2} ${
@@ -452,7 +542,7 @@ return (
                     value={selected}
                   >
                     <option value="NGN">NGN</option>
-                    <option value="USD">USD</option>
+                    <option  value="USD">USD</option>
                     <option value="GBP">GBP</option>
                     <option value="EUR">EUR</option>
                     <option value="AUD">AUD</option>
@@ -507,7 +597,7 @@ return (
                 >
                   <h2 className="font-semibold w-1/2 text-[10px] md:text-[11px] lg:text-[12px]">Account Number</h2>
                   <div className="flex justify-end items-center w-1/2 gap-[10px]">
-                    <p className="text-[10px]  md:text-[11px] lg:text-[12px] font-[400]" ref={textRef}>{accountNumberState ? accountNumberState : Data.aremxyAccountNumber ? `${Data.aremxyAccountNumber.slice(0,4)}********` : ""}</p>
+                    <p className="text-[10px]  md:text-[11px] lg:text-[12px] font-[400]" >{accountNumberState ? accountNumberState : Data.aremxyAccountNumber ? `${Data.aremxyAccountNumber}` : ""}</p>
                     <div
                       onClick={handleCopyClick}
                       className="text-[#92abfec3] text-[13px] font-extrabold lg:text-[16px]"
@@ -531,7 +621,7 @@ return (
                  md:leading-[18px] lg:leading-[22px] font-[500] 
                 text-left
                ${isDarkMode ? "text-white" : "text-black"}  `}>
-        {(Data.ConfirmId === "true" || Data.ConfirmBvn === "true") && Data.ConfirmAcc === "false" ? "Create a Virtual Account" : (Data.ConfirmId === "true" || Data.ConfirmBvn === "true") && Data.ConfirmAcc === "true" ? "Virtual Account Created" : "Add a means of verification to create a vitual account" }
+        {(Data.ConfirmId === "true" || Data.ConfirmBvn === "true") && Data.ConfirmAcc === "false" ? "Create a Virtual Account" : (Data.ConfirmId === "true" || Data.ConfirmBvn === "true") && Data.ConfirmAcc === "true" ? "Virtual Account Created" : "Add a means of verification to create a virtual account" }
               </p>
               <p className={`lg:text-[16px] font-[400] lg:leading-[24px]
                text-[12px] md:text-[14px] md:leading-[18px]
@@ -544,9 +634,13 @@ return (
                 )}
                 </div>
                 {/* Point of implementation */}
-              <Link to={{
+              <Link to={ (Data.ConfirmId === "false" ||  Data.ConfirmBvn === "false") && Data.ConfirmAcc === "false" ?  {
     pathname: "/ProfileSettingMain",
-    state: { verificationOpen: true }
+    state: { verificationOpen: true } 
+  } : null } onClick={()=> {
+    if((Data.ConfirmId === "true" ||  Data.ConfirmBvn === "true") && Data.ConfirmAcc === "false" ){
+     GenerateVirtualAccount()
+    }
   }}>
                 {" "}
 
@@ -556,7 +650,7 @@ return (
                   } ${styles.viewWallet}`}
                 >
                {(Data.ConfirmId === "true" ||  Data.ConfirmBvn === "true") && Data.ConfirmAcc === "false"  ? "Generate" : `${(Data.ConfirmBvn === "true" || Data.ConfirmId === "true") && Data.ConfirmAcc === "true"
-               ?  "Verified" : "Verify"}`}
+               ?  "Generated" : "Verify"}`}
               
                
                 </button>
