@@ -72,10 +72,10 @@ const DataTopUpPage = () => {
   return (
     <DashBoardLayout>
       <div
-        className={`bg-[#FFF] relative lg:ml-[20px] 2xl:ml-0 ${
+        className={`relative lg:ml-[20px] 2xl:ml-0 ${
           isDarkMode
-            ? "bg-[#000] text-[#fff] border-[#fff]"
-            : "bg-[#ffffff] text-[#000] "
+            ? "bg-black text-[#fff] border-[#fff]"
+            : "bg-[#FFF] text-[#000] "
         } flex flex-col justify-between h-full`}
       >
         <section
@@ -126,10 +126,13 @@ const DataTopUpPage = () => {
                 onClick={() => {
                   handleClick(0);
                 }}
-                className={`${
+                className={`
+  
+                  ${
                   activeBtn[0]
                     ? "bg-[#E2F3FF] rounded-[2px] border-b-[2px] border-b-[#04177f] h-[25px] flex items-center p-[5px] md:h-[35px] lg:rounded-[6px] lg:border-b-[4px] lg:h-[60px]"
                     : ""
+
                 } cursor-pointer w-[144px] justify-center rounded-[2px] md:w-[180px] md:rounded-[3px] md:justify-center md:items-center flex lg:w-[248px] lg:rounded-[6px]`}
               >
                 Local Data
@@ -338,7 +341,7 @@ const DataTopUpPage = () => {
                   </p>
                   <button
                     className={` ${
-                      isDarkMode ? "border" : "bg-[#04177f] "
+                      isDarkMode ? "border bg-[#04177f]" : "bg-[#04177f] "
                     } cursor-pointer text-white text-[10px] h-[40px] rounded-[5px] md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[25%] lg:mx-auto`}
                     onClick={resetActiveButton}
                     handleClick={activeIndex}
@@ -525,7 +528,7 @@ const DataTopUpPage = () => {
 
         <div
           className={`${
-            isDarkMode ? "" : ""
+            isDarkMode ? "bg-black" : ""
           } flex gap-[15px] justify-center items-center mt-[100%] pb-[25%] md:pb-[2%] md:mt-[40%] lg:mt-[40%] lg:pb-0`}
         >
           <div className="text-[10px] md:text-[12px] lg:text-[14px]">
