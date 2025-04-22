@@ -16,7 +16,7 @@ export default function ProfileHero() {
         </h2>
            {/* sub-text */}
            <p
-             className="font-[400] text-[10px] leading-[9.1px] md:leading-[11.917px] lg:text-[20px] lg:leading-[26px]"
+             className="font-[400] text-[10px] leading-[11.9px] md:leading-[11.917px] lg:text-[20px] lg:leading-[26px]"
            >
              <span className="md:block">
              Manage, edit, and secure your profile and account settings without limitations,

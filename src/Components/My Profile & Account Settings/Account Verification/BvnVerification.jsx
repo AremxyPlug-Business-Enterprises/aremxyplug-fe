@@ -274,7 +274,7 @@ console.log(Data)
                     onChange={(e) => {
                       setBvnDateOfBirth(e.target.value);
                     }}
-                    className={`w-[100%] py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] text-sm leading-[18px] lg:pr-[16px] pr-[9px] border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px] focus:outline-none cursor-pointer rounded-[10px] ${isDarkMode ? "text-white border-white bg-black" : ""}`}
+                    className={`w-[100%] py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] text-sm leading-[18px] lg:pr-[16px] pr-[9px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none cursor-pointer rounded-[10px] ${isDarkMode ? "text-white border-white bg-black" : ""}`}
                     type="date"
                     id="dob"
                     name="dob"
