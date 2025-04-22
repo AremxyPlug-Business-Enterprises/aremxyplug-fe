@@ -7,26 +7,16 @@ import { RemoveLocalStorage } from "../../LocalStorage/LocalStorage";
 import { useNavigate } from "react-router-dom";
 
 
-export const SideBar = ({fullname, userId, BvnVerify, NinVerify}) => {
-  const { setToggleSideBar, isDarkMode, handleClickOutside,state,setState, customerDetail,setUserStatus } =
+export const SideBar = ({fullName, userId, bvnVerify, NinVerify}) => {
+  const { setToggleSideBar, isDarkMode, handleClickOutside, customerDetail,setUserStatus } =
     useContext(ContextProvider);
    
     const {full_name, id} = customerDetail;
-    const {fullName} =state
     const navigate= useNavigate()
   const RemoveLocalStorageKeys=()=> {
     RemoveLocalStorage();
     setUserStatus(false);
     navigate("/Login", {replace : true})
-    setState({
-      country: "",
-      fullName: "",
-      userName: "",
-      email: "",
-      phoneNumber: "",
-      password: "",
-      confirmPassword: "",
-    });
 ;
   }
   const [dropDownOpen, setDropDownOpen] = useState({
@@ -79,7 +69,7 @@ return (
           >
             <img
               className="w-[59px] h-[10.23px] md:h-[10px] md:w-[67px] lg:w-[125px] lg:h-[25px]"
-              src="./Images/dashboardImages/aremxylogo.png"
+              src="./Images/dashboardImages/aremxyLogo.png"
               alt="Logo"
             />
             <img
@@ -101,16 +91,15 @@ return (
                 />
                 <div className="flex flex-col gap-[3px] justify-center mt-[4%]">
                   <p className="text-[8px] font-semibold md:text-[14px] lg:text-[14px]">
-                {(!full_name && fullName.length > 1) ? fullName : full_name 
-                 ? full_name : `${fullname ? fullname : "Hi User" }`}
+                {full_name ? full_name : `${fullName ? fullName : "Hi User" }`}
                   </p>
                   <p className="text-[8px] font-semibold md:text-[14px] lg:text-[14px] ">
                     UID: {`${id ? id: `${userId ? userId : "No User ID"}`} `} 
                   </p>
                   <div className="flex gap-[3px] lg:gap-[5px]">
                     <div className={`px-[4px] py-[1px] font-[600] lg:font-[700] text-[10px]
-                      md:text-[10px] lg:text-[12px] lg:rounded-[2px] ${BvnVerify === "true" || NinVerify === "true"  ? "text-green-600" : "text-red-600"}`}>
-                      {BvnVerify === "true" || NinVerify === "true"  ? "Verified" : "UnVerified"}
+                      md:text-[10px] lg:text-[12px] lg:rounded-[2px] ${bvnVerify === true  ? "text-green-600" : "text-red-600"}`}>
+                      {bvnVerify === true  ? "Verified" : "UnVerified"}
                     </div>
                     <div className=" px-[4px] py-[1px] font-[600] lg:font-[700] text-[10px]
                      text-white md:text-[10px] lg:text-[12px] lg:rounded-[2px]">
