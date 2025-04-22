@@ -39,7 +39,7 @@ export default function EducationMain() {
          ${
                     isDarkMode 
                       ? "!bg-black !text-white !border !border-white rounded-[7px]" 
-                      : "bg-black border-none border-[7px]"
+                      : "bg-white border-none border-[7px]"
                   }
         `}>
        <div className='flex h-[100%] p-[5.868px] gap-[3.35px] md:p-[5.868px] md:gap-[2.347px] rounded-[2.934px]
@@ -69,7 +69,7 @@ export default function EducationMain() {
          ${
                     isDarkMode 
                       ? "!bg-black !text-white !border !border-white rounded-[7px]" 
-                      : "bg-black border-none border-[7px]"
+                      : "bg-white border-none border-[7px]"
                   }
        `}>
         <div className='flex h-[100%] p-[5.868px] gap-[3.35px] md:p-[5.868px] md:gap-[2.347px] rounded-[2.934px]
@@ -97,7 +97,7 @@ export default function EducationMain() {
          ${
                     isDarkMode 
                       ? "!bg-black !text-white !border !border-white rounded-[7px]" 
-                      : "bg-black border-none border-[7px]"
+                      : "bg-white border-none border-[7px]"
                   }
         `}>
        <div className='flex h-[100%] p-[7.868px] gap-[3.35px] md:p-[5.868px] md:gap-[2.347px] rounded-[2.934px]
@@ -125,7 +125,7 @@ export default function EducationMain() {
           ${
                     isDarkMode 
                       ? "!bg-black !text-white !border !border-white rounded-[7px]" 
-                      : "bg-black border-none border-[7px]"
+                      : "bg-white border-none border-[7px]"
                   }
         `}>
         <div className='flex h-[100%] p-[6.868px] gap-[3.35px] md:p-[5.868px] md:gap-[2.347px]
