@@ -183,8 +183,8 @@ export default function ProfileSettingsMain(Data) {
      ${authenticationOpen ? "md:pt-[135%] md:pb-[50px] " : ""} `}
         >
           <p
-            className="font-[500] text-[10px] text-black 
-              leading-[10.4px] lg:text-[16px] lg:leading-[15.6px]  md:text-[6.875px] md:leading-[12.938px] self-center"
+            className={`font-[500] text-[10px] text-black 
+              leading-[10.4px] lg:text-[16px] lg:leading-[15.6px]  md:text-[6.875px] md:leading-[12.938px] self-center ${isDarkMode ? "text-white" : ""}`}
           >
             You need help?
           </p>

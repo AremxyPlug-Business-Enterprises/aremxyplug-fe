@@ -11,8 +11,8 @@ export default function ProfileUpdate({ fullname, Email, Phone, Username }) {
   const { profilePage, customerDetail } = useContext(ContextProvider);
   const { isDarkMode, state } = useContext(ContextProvider);
   const { full_name, username, email, phone } = customerDetail;
-  const {fullName, phoneNumber, userName} = state;
-  
+  const { fullName, phoneNumber, userName } = state;
+
   return (
     <div className="">
       {profilePage && (
@@ -35,18 +35,22 @@ export default function ProfileUpdate({ fullname, Email, Phone, Username }) {
               {/* Profile text */}
               <div className="flex flex-col justify-center gap-[3.52px] lg:gap-[12px]">
                 <p
-                  className={`text-[#7E7E7E] text-[12px] leading-[18px] md:text-[12.042px] md:leading-[16px] lg:text-[16px] lg:leading-[24.8px] ${isDarkMode ? "text-white" : ""}`}
+                  className={`text-[#7E7E7E] text-[12px] leading-[18px] md:text-[12.042px] md:leading-[16px] lg:text-[16px] lg:leading-[24.8px] ${
+                    isDarkMode ? "text-white" : ""
+                  }`}
                 >
-                  {(!full_name && fullName.length > 1)
-                      ?  fullName
-                      : full_name ?
-                      full_name :
-                      fullname
-                      ? fullname
-                      : "Hi User"}
+                  {!full_name && fullName.length > 1
+                    ? fullName
+                    : full_name
+                    ? full_name
+                    : fullname
+                    ? fullname
+                    : "Hi User"}
                 </p>
                 <p
-                  className={`text-[#7C7C7C] text-[12px] leading-[18px] md:text-[12.042px] md:leading-[16px] lg:text-[16px] lg:leading-[24.8px] ${isDarkMode ? "text-white" : ""}`}
+                  className={`text-[#7C7C7C] text-[12px] leading-[18px] md:text-[12.042px] md:leading-[16px] lg:text-[16px] lg:leading-[24.8px] ${
+                    isDarkMode ? "text-white" : ""
+                  }`}
                 >
                   {email ? email : `${Email ? Email : ""}`}
                 </p>
@@ -58,52 +62,65 @@ export default function ProfileUpdate({ fullname, Email, Phone, Username }) {
               {/* Container for the three levels of the inputs */}
               <div className="flex flex-col gap-[20px] md:gap-[26.41px] lg:gap-[45px]  ">
                 {/* Level 1 / First two inputs */}
-                <div
-                  className="flex flex-col gap-[20px] md:flex md:flex-row md:gap-[12.91px] lg:gap-[22px] w-[100%]"
-                >
+                <div className="flex flex-col gap-[20px] md:flex md:flex-row md:gap-[12.91px] lg:gap-[22px] w-[100%]">
                   {/* Country */}
                   <div className="flex flex-col w-[100%] md:w-[50%] gap-[5.868px] lg:gap-[10px]">
                     <h2
-                      className={`text-[#7E7E7E] text-[12px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] font-semibold lg:text-[16px] lg:leading-[20.8px] cursor-default ${isDarkMode ? "text-stone-50" : ""}`}
+                      className={`text-[#7E7E7E] text-[12px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] font-semibold lg:text-[16px] lg:leading-[20.8px] cursor-default ${
+                        isDarkMode ? "text-stone-50" : ""
+                      }`}
                     >
                       Country
                     </h2>
                     <div
-                      className={`flex items-center py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[12px] md:pl-[8.67px] md:pr-[5.867px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px]placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-[10px] h-full  ${isDarkMode ?"border-slate-50" : ""}`}
+                      className={`flex items-center py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[11.5px] lg:pl-[10px] border-[0.4px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] ${
+                        isDarkMode ? "border-slate-50" : ""
+                      }`}
                     >
+                      {/* {`flex items-center py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[12px] md:pl-[8.67px] md:pr-[5.867px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px]placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-[10px] h-full  ${
+                        isDarkMode ? "border-slate-50" : ""
+                      }`} */}
                       <img
                         src={naijaFlag}
                         className="h-[17.176px] w-[17.176px] lg:h-[29.27px] lg:w-[29.27px]"
                         alt=""
                       />
                       <p
-                        className={`text-[#7E7E7E] text-[12px] leading-[18px] md:text-[10.389px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : ""}`}
+                        className={`text-[#7E7E7E] text-[12px] leading-[18px] md:text-[10.389px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] ${
+                          isDarkMode ? "text-white" : ""
+                        }`}
                       >
                         Nigeria
                       </p>
                     </div>
                   </div>
 
-                  {/* Country */}
+                  {/* Full Name */}
                   <div className=" flex flex-col w-[100%] md:w-[50%] gap-[5.868px] lg:gap-[10px] ">
                     <h2
-                      className={`text-[#7E7E7E] text-[12px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] font-semibold lg:text-[16px] lg:leading-[20.8px] cursor-default ${isDarkMode ? "text-stone-50" : ""}`}
+                      className={`text-[#7E7E7E] text-[12px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] font-semibold lg:text-[16px] lg:leading-[20.8px] cursor-default ${
+                        isDarkMode ? "text-stone-50" : ""
+                      }`}
                     >
                       Full Name
                     </h2>
                     <div
-                      className={`flex items-center py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] ${isDarkMode? "border-slate-50": ""}`}
+                      className={`flex items-center py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] ${
+                        isDarkMode ? "border-slate-50 " : ""
+                      }`}
                     >
                       <p
-                        className={`text-[#7E7E7E] text-[12px] leading-[18px] md:text-[9.389px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] cursor-default ${isDarkMode ? "text-white" : ""}`}
+                        className={`text-[#7E7E7E] text-[12px] leading-[18px] md:text-[9.389px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] cursor-default ${
+                          isDarkMode ? "text-white" : ""
+                        }`}
                       >
-                         {(!full_name && fullName.length > 1)
-                      ?  fullName
-                      : full_name ?
-                      full_name :
-                      fullname
-                      ? fullname
-                      : "Hi user"}
+                        {!full_name && fullName.length > 1
+                          ? fullName
+                          : full_name
+                          ? full_name
+                          : fullname
+                          ? fullname
+                          : "Hi user"}
                       </p>
                     </div>
                   </div>
@@ -112,50 +129,61 @@ export default function ProfileUpdate({ fullname, Email, Phone, Username }) {
                 {/* End of level 1 */}
 
                 {/* Start of level Two */}
-                <div
-                  className="flex flex-col gap-[20px] md:flex md:flex-row  md:gap-[12.91px] lg:gap-[22px] w-[100%]"
-                >
+                <div className="flex flex-col gap-[20px] md:flex md:flex-row  md:gap-[12.91px] lg:gap-[22px] w-[100%]">
                   <div className="flex flex-col gap-[5.868px] w-[100%] md:w-[50%] lg:gap-[10px] ">
                     <h2
-                      className={`text-[#7E7E7E] text-[12px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] font-semibold lg:text-[16px] lg:leading-[20.8px] cursor-default ${isDarkMode ? "text-stone-50" : ""}`} >
+                      className={`text-[#7E7E7E] text-[12px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] font-semibold lg:text-[16px] lg:leading-[20.8px] cursor-default ${
+                        isDarkMode ? "text-stone-50" : ""
+                      }`}
+                    >
                       UserName
                     </h2>
                     <div
-                      className={`flex items-center py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] ${isDarkMode? "border-white": ""}`}
+                      className={`flex items-center py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] ${
+                        isDarkMode ? "border-white" : ""
+                      }`}
                     >
                       <p
-                        className={`text-[#7E7E7E] text-[12px] leading-[18px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] cursor-default ${isDarkMode ? "text-white" : ""}`}
+                        className={`text-[#7E7E7E] text-[12px] leading-[18px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] cursor-default ${
+                          isDarkMode ? "text-white" : ""
+                        }`}
                       >
-                         {(!username && userName.length > 1)
-                      ?  userName
-                      : username ?
-                      username :
-                     Username
-                      ? Username
-                      : "Hi User"}
+                        {!username && userName.length > 1
+                          ? userName
+                          : username
+                          ? username
+                          : Username
+                          ? Username
+                          : "Hi User"}
                       </p>
                     </div>
                   </div>
                   {/* second part level two */}
                   <div className="flex flex-col w-[100%] md:w-[50%] gap-[5.868px] lg:gap-[10px] cursor-default">
                     <h2
-                      className={`text-[#7E7E7E] text-[12px] leading-[10.4px] md:leading-[12.206px] font-semibold lg:text-[16px] lg:leading-[20.8px] cursor-default ${isDarkMode ? "text-stone-50" : ""}`}
+                      className={`text-[#7E7E7E] text-[12px] leading-[10.4px] md:leading-[12.206px] font-semibold lg:text-[16px] lg:leading-[20.8px] cursor-default ${
+                        isDarkMode ? "text-stone-50" : ""
+                      }`}
                     >
                       Email
                     </h2>
                     <div
-                      className={`flex items-center py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] ${isDarkMode? "border-white": ""}`}
+                      className={`flex items-center py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] ${
+                        isDarkMode ? "border-white" : ""
+                      }`}
                     >
                       <p
-                        className={`text-[#7E7E7E] text-[12px] leading-[18px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] cursor-default ${isDarkMode ? "text-white" : ""}`}
+                        className={`text-[#7E7E7E] text-[12px] leading-[18px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] cursor-default ${
+                          isDarkMode ? "text-white" : ""
+                        }`}
                       >
-                        {(!email && state.email.length > 1)
-                      ?  state.email
-                      : email ?
-                     email :
-                     Email
-                      ? Email
-                      : "No email"}
+                        {!email && state.email.length > 1
+                          ? state.email
+                          : email
+                          ? email
+                          : Email
+                          ? Email
+                          : "No email"}
                       </p>
                     </div>
                   </div>
@@ -163,73 +191,82 @@ export default function ProfileUpdate({ fullname, Email, Phone, Username }) {
                 {/* End of level two */}
 
                 {/* Start of level three */}
-                <div className="">
-                  <h2
-                    className={`text-[#7E7E7E] text-[12px] leading-[10.4px] md:leading-[12.206px] font-semibold lg:text-[16px] lg:leading-[20.8px] cursor-default mb-[5.868px] lg:mb-[10px] ${isDarkMode ? "text-stone-50" : ""}`}
-                  >
-                    Phone Number
-                  </h2>
-                  {/* first part */}
-                  <div
-                    className="flex flex-col md:flex md:flex-row gap-[20px] md:gap-[12.91px] lg:gap-[22px] w-[100%] "
-                  >
+                <div className="flex flex-col gap-[20px] md:flex md:flex-row md:gap-[12.91px] lg:gap-[22px] w-[100%]">
+                  {/* Phone Number */}
+                  <div className="flex flex-col w-[100%] md:w-[50%] gap-[5.868px] lg:gap-[10px]">
+                    <h2
+                      className={`text-[#7E7E7E] text-[12px] leading-[10.4px] md:leading-[12.206px] font-semibold lg:text-[16px] lg:leading-[20.8px] cursor-default mb-[5.868px] lg:mb-[10px] ${
+                        isDarkMode ? "text-stone-50" : ""
+                      }`}
+                    >
+                      Phone Number
+                    </h2>
+
                     <div
-                      className={`mt-2 md:mt-0 py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] ${isDarkMode? "border-white": ""}`}
+                      className={`py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] ${
+                        isDarkMode ? "border-white" : ""
+                      }`}
                     >
                       <p
-                        className={` text-[#7E7E7E] text-[12px] leading-[18px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] cursor-default ${isDarkMode ? "text-white" : ""}`}
+                        className={` text-[#7E7E7E] text-[12px] leading-[18px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] cursor-default ${
+                          isDarkMode ? "text-white" : ""
+                        }`}
                       >
                         {`${
                           !phone && phoneNumber.length > 1
-                          ? phoneNumber :
-                          phone ? phone.slice(3) : Phone
-                          ? Phone.slice(3) : "No Phone Number"
-                            }`}
+                            ? phoneNumber
+                            : phone
+                            ? phone.slice(3)
+                            : Phone
+                            ? Phone.slice(3)
+                            : "No Phone Number"
+                        }`}
                       </p>
                     </div>
-                  
-                    {/* Start of the message / 2nd part */}
-                    <div className="flex w-[100%]  md:w-[50%] items-center  gap-[10px] lg:gap-[16px]">
-                      <div className="flex gap-[5px] md:gap-[8px]">
-                        <h2
-                          className={`text-[#7E7E7E] font-[500] text-[12px] leading-[10.4px]  md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] gap-[10px] cursor-default ${isDarkMode ? "text-stone-50" : ""}`}
-                        >
-                          About AremxyPlug
-                        </h2>
-                        <Link to="/About-us">
-                          <img
-                            className="cursor-pointer h-[12px] w-[12px] md:h-[14.083px] md:w-[14.083px] lg:h-[24px] lg:w-[24px]"
-                            src={messageQuestion}
-                            alt=""
-                          />
-                        </Link>
-                      </div>
-                      {/* Faq */}
-                      <div className="flex gap-[5px] md:gap-[8px]">
-                        <h2
-                          className={`text-[#7E7E7E] font-[500] text-[12px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] gap-[10px] cursor-default ${isDarkMode ? "text-stone-50" : ""}`}
-                        >
-                          FAQ’s
-                        </h2>
-                        <Link to="/faq">
-                          <img
-                            className="cursor-pointer h-[12px] w-[12px] md:h-[14.083px] md:w-[14.083px] lg:h-[24px] lg:w-[24px]"
-                            src={messageQuestion}
-                            alt=""
-                          />
-                        </Link>
-                      </div>
-                    </div>
-                    {/* end of 2nd part */}
                   </div>
                 </div>
+                {/* About */}
+                <div className="flex w-[100%] md:w-[50%] items-center gap-[10px] lg:gap-[16px]">
+                  <div className="flex gap-[5px] md:gap-[8px]">
+                    <h2
+                      className={`text-[#7E7E7E] font-[500] text-[12px] leading-[10.4px]  md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] gap-[10px] cursor-default ${
+                        isDarkMode ? "text-stone-50" : ""
+                      }`}
+                    >
+                      About AremxyPlug
+                    </h2>
+                    <Link to="/About-us">
+                      <img
+                        className="cursor-pointer h-[12px] w-[12px] md:h-[14.083px] md:w-[14.083px] lg:h-[24px] lg:w-[24px]"
+                        src={messageQuestion}
+                        alt=""
+                      />
+                    </Link>
+                  </div>
+                  {/* Faq */}
+                  <div className="flex gap-[5px] md:gap-[8px]">
+                    <h2
+                      className={`text-[#7E7E7E] font-[500] text-[12px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] gap-[10px] cursor-default ${
+                        isDarkMode ? "text-stone-50" : ""
+                      }`}
+                    >
+                      FAQ’s
+                    </h2>
+                    <Link to="/faq">
+                      <img
+                        className="cursor-pointer h-[12px] w-[12px] md:h-[14.083px] md:w-[14.083px] lg:h-[24px] lg:w-[24px]"
+                        src={messageQuestion}
+                        alt=""
+                      />
+                    </Link>
+                  </div>
+                </div>
+                {/* end of 2nd part */}
                 <Link
                   to="/EditProfile"
                   className="lg:w-[163px] w-[100%] py-[15.534px] rounded-[2.241px]  md:w-[95.649px] md:py-[5.868px] lg:py-[10px] bg-[#04177F] md:rounded-[7.042px] lg:rounded-[12px] mt-[30px] md:mt-[0px]"
                 >
-                  <p
-                    className="font-[600] text-white text-center text-[12px] leading-[18px] md:leading-[14px] lg:text-[16px] lg:leading-[24px]"
-                  >
+                  <p className="font-[600] text-white text-center text-[12px] leading-[18px] md:leading-[14px] lg:text-[16px] lg:leading-[24px]">
                     Update Profile
                   </p>
                 </Link>

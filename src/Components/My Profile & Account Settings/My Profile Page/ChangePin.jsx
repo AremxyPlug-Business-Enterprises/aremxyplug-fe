@@ -271,8 +271,9 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
                         isDarkMode ? "text-black" : ""
                       }`
                     : ""
-                } cursor-pointer w-[144px] justify-center rounded-[2px] md:w-[180px] md:rounded-[3px] md:justify-center md:items-center flex lg:w-[248px] lg:rounded-[6px] 2xl:text-[24px]`}
+                } cursor-pointer w-[148px] justify-center rounded-[2px] md:w-[180px] md:rounded-[3px] md:justify-center md:items-center flex lg:w-[248px] lg:rounded-[6px] 2xl:text-[24px]`}
               >
+                {/* w-[144px] */}
                 Change Password
               </div>
             </div>
