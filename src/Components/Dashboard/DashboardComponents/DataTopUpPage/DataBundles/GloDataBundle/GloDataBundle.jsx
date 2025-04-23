@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { DashBoardLayout } from "../../../../Layout/DashBoardLayout";
 import { ContextProvider } from "../../../../../Context";
 import { useContext } from "react";
@@ -33,7 +33,7 @@ import Failed from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/Failed.svg"
 const GloDataBundle = () => {
   const { isDarkMode } = useContext(ContextProvider);
   const { selectedOption, setSelectedOption } = useContext(ContextProvider);
-  const { selectedNetworkProduct, setSelectedNetworkProduct } =
+  const { selectedProduct, setSelectedProduct } =
     useContext(ContextProvider);
   const { recipientPhoneNumber, setRecipientPhoneNumber } =
     useContext(ContextProvider);
@@ -59,8 +59,76 @@ const GloDataBundle = () => {
   const [glorefNumber, setGloRefNumber] = useState("");
   const [glodescription, setGloDescription] = useState("");
   const [proceedToShowReceipt] = useState(false);
+  const [products, setProducts] = useState([]);
+  const [productPlans, setProductPlans] = useState([]);
+  const [loadingProducts, setLoadingProducts] = useState(false);
+  const [loadingPlans, setLoadingPlans] = useState(false);
 
+  const getAuthToken = () => {
+    return localStorage.getItem("authorisedLogin") || localStorage.getItem("getToken");
+  };
 
+  useEffect(() => {
+    const fetchProducts = async () => {
+      setLoadingProducts(true);
+      try {
+        const token = getAuthToken();
+        console.log(token);
+        const response = await axios.get(
+          `https://aremxyplug.onrender.com/api/v1/products/telecom/list/2`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: token,
+            },
+          }
+        );
+        setProducts(response.data.data.products || []);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      } finally {
+        setLoadingProducts(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  // Fetch plans when product is selected
+  const fetchPlans = async (productId) => {
+    setLoadingPlans(true);
+    try {
+      const token = getAuthToken();
+      const response = await axios.get(
+        `https://aremxyplug.onrender.com/api/v1/products/telecom/${productId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token,
+          },
+        }
+      );
+      setProductPlans(response.data.data.plans || []);
+    } catch (error) {
+      console.error("Error fetching plans:", error);
+    } finally {
+      setLoadingPlans(false);
+    }
+  };
+
+  const handleSelectProduct = (product) => {
+    setSelectedProduct(`${product.Plan_Type}`);
+    setShowProductList(false);
+    fetchPlans(product.Product_ID);
+    setShowOptionList(true); // Show options after selecting a product
+  };
+
+  const handleSelectOption = (plan) => {
+    setSelectedOption(`${plan.Size} - ${plan.Validity} - ₦${plan.Amount}`);
+    setSelectedAmount(`₦${plan.Amount}`);
+    setShowOptionList(false);
+    setShowProductList(false);
+  };
 
   const handleCodes = () => {
     setCodes(false);
@@ -169,149 +237,6 @@ const GloDataBundle = () => {
   //   console.log("did not add recipient");
   // }
 
-  const productList = [
-    {
-      id: 1,
-      name: "GLO COPORATE GIFTING",
-      options: [
-        { id: 243, name: "GLO CG 200MB", amount: "₦100", duration: "1 MONTH" },
-        { id: 237, name: "GLO CG 500MB", amount: "₦150", duration: "1 MONTH" },
-        { id: 238, name: "GLO CG 1.0GB", amount: "₦250", duration: "1 MONTH" },
-        { id: 239, name: "GLO CG 2.0GB", amount: "₦500", duration: "1 MONTH" },
-        { id: 240, name: "GLO CG 3.0GB", amount: "₦750", duration: "1 MONTH" },
-        { id: 241, name: "GLO CG 5.0GB", amount: "₦1250", duration: "1 MONTH" },
-        {
-          id: 242,
-          name: "GLO CG 10.0GB",
-          amount: "₦2500",
-          duration: "1 MONTH",
-        },
-
-        // THIS ONES ARE IN THE DOCUMENTATION BUT NOT IN THE PRICE LIST FROM AREMXY
-        {
-          id: 274,
-          name: "GLO CG 1.0TB",
-          amount: "₦212000",
-          duration: "1 MONTH",
-        },
-        {
-          id: 280,
-          name: "GLO CG 100.0GB",
-          amount: "₦2140000",
-          duration: "1 MONTH",
-        },
-        {
-          id: 281,
-          name: "GLO CG 250.0GB",
-          amount: "₦53375",
-          duration: "1 MONTH",
-        },
-        {
-          id: 282,
-          name: "GLO CG 500GB",
-          amount: "₦106500",
-          duration: "1 MONTH",
-        },
-        {
-          id: 283,
-          name: "GLO CG 3.0TB",
-          amount: "₦634500",
-          duration: "1 MONTH",
-        },
-      ],
-    },
-    {
-      id: 2,
-      name: "GLO GIFTING",
-      options: [
-        {
-          id: 194,
-          name: "GLO GIFTING 1.05GB",
-          amount: "₦485",
-          duration: "1 MONTH",
-        },
-        {
-          id: 195,
-          name: "GLO GIFTING 2.9GB",
-          amount: "₦965",
-          duration: "1 MONTH",
-        },
-        {
-          id: 196,
-          name: "GLO GIFTING 4.1GB",
-          amount: "₦1450",
-          duration: "1 MONTH",
-        },
-        {
-          id: 197,
-          name: "GLO GIFTING 5.8GB",
-          amount: "₦1950",
-          duration: "1 MONTH",
-        },
-        {
-          id: 198,
-          name: "GLO GIFTING 7.7GB",
-          amount: "₦2475",
-          duration: "1 MONTH",
-        },
-        {
-          id: 199,
-          name: "GLO GIFTING 10.0GB",
-          amount: "₦2975",
-          duration: "1 MONTH",
-        },
-        {
-          id: 200,
-          name: "GLO GIFTING 13.25GB",
-          amount: "₦3960",
-          duration: "1 MONTH",
-        },
-        {
-          id: 201,
-          name: "GLO GIFTING 18.25GB",
-          amount: "₦4985",
-          duration: "1 MONTH",
-        },
-        {
-          id: 202,
-          name: "GLO GIFTING 29.5GB",
-          amount: "₦8000",
-          duration: "1 MONTH",
-        },
-        {
-          id: 203,
-          name: "GLO GIFTING 50GB",
-          amount: "₦10500",
-          duration: "1 MONTH",
-        },
-        {
-          id: 204,
-          name: "GLO GIFTING 93GB",
-          amount: "₦16665",
-          duration: "1 MONTH",
-        },
-        {
-          id: 205,
-          name: "GLO GIFTING 119.0GB",
-          amount: "₦21815",
-          duration: "1 MONTH",
-        },
-        {
-          id: 206,
-          name: "GLO GIFTING 138.0GB",
-          amount: "₦23330",
-          duration: "1 MONTH",
-        },
-      ],
-    },
-    {
-      id: 3,
-      name: "GENERAL BUNDLES ---",
-      options: [],
-    },
-  ];
-
-
   const schema = Joi.object({
     recipientPhoneNumber: Joi.string()
       .pattern(new RegExp(/^\d{11,}/))
@@ -321,98 +246,83 @@ const GloDataBundle = () => {
       }),
   });
 
-  const handleSelectProduct = (productName) => {
-    setSelectedNetworkProduct(productName);
-    setSelectedOption("");
-    setShowProductList(false);
-    setShowOptionList(false);
-  };
-
-  const handleSelectOption = (selectedOption, selectedAmount, duration, id) => {
-    setPlan(id);
-    console.log(id);
-    setSelectedOption(selectedOption);
-    setShowOptionList(false);
-    setSelectedAmount(selectedAmount);
-  };
-
   const [inputValue, setInputValue] = useState("");
 
   const GloRegex =
-      /^(234|0)(705[0-9]|805[0-9]|807[0-9]|811[0-9]|815[0-9]|905[0-9]|915[0-9])\d{6}$/;
-      
+    /^(234|0)(705[0-9]|805[0-9]|807[0-9]|811[0-9]|815[0-9]|905[0-9]|915[0-9])\d{6}$/;
 
-      const validatePhoneNumber = (phoneNumber) => {
-        if (!phoneNumber) {
-          return "Phone number is required";
-        }
-      
-        if (!GloRegex.test(phoneNumber)) {
-          return "Invalid GLO number. Please enter a valid GLO number.";
-        }
-      
-        return null; // No error
+
+  const validatePhoneNumber = (phoneNumber) => {
+    if (!phoneNumber) {
+      return "Phone number is required";
+    }
+
+    if (!GloRegex.test(phoneNumber)) {
+      return "Invalid GLO number. Please enter a valid GLO number.";
+    }
+
+    return null; // No error
+  };
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    const numericValue = value.replace(/\D/g, "").slice(0, 11);
+    setInputValue(numericValue);
+
+    // Validate phone number if it's complete
+    if (numericValue.length === 11) {
+      const error = validatePhoneNumber(numericValue);
+      if (error) {
+        setErrors({ recipientPhoneNumber: error });
+      } else {
+        setErrors({});
+      }
+    } else {
+      // Clear any previous errors if the input length is less than 11
+      setErrors({});
+    }
+  };
+
+  const handleProceed = (e) => {
+    e.preventDefault();
+
+    function validateNigerianNumberByNetwork(number) {
+      const networks = {
+        'GLO': ['0705', '0805', '0807', '0811', '0815', '0905', '0915'],
       };
 
-      const handleChange = (e) => {
-        const value = e.target.value;
-        const numericValue = value.replace(/\D/g, "").slice(0, 11);
-        setInputValue(numericValue);
-      
-        // Validate phone number if it's complete
-        if (numericValue.length === 11) {
-          const error = validatePhoneNumber(numericValue);
-          if (error) {
-            setErrors({ recipientPhoneNumber: error });
-          } else {
-            setErrors({});
+      for (let network in networks) {
+        for (let prefix of networks[network]) {
+          if (number.startsWith(prefix) && number.length === prefix.length + 7) {
+            return network;
           }
-        } else {
-          // Clear any previous errors if the input length is less than 11
-          setErrors({});
         }
-      };
+      }
 
-      const handleProceed = (e) => {
-        e.preventDefault();
-    
-        function validateNigerianNumberByNetwork(number) {
-            const networks = {
-              'GLO': ['0705', '0805', '0807', '0811', '0815', '0905', '0915'],
-            };
-    
-            for (let network in networks) {
-                for (let prefix of networks[network]) {
-                    if (number.startsWith(prefix) && number.length === prefix.length + 7) {
-                        return network;
-                    }
-                }
-            }
-    
-            return 'Unknown network';
-        }
-    
-        const { error } = schema.validate({
-            recipientPhoneNumber,
-        });
-    
-        if (error) {
-            setErrors(
-                error.details.reduce((acc, curr) => {
-                    acc[curr.path[0]] = curr.message;
-                    return acc;
-                }, {})
-            );
-        } else if (validateNigerianNumberByNetwork(recipientPhoneNumber) !== 'GLO') {
-            setErrors({
-                recipientPhoneNumber:
-                    `Invalid GLO number. Please enter a valid GLO number.`,
-            });
-        } else {
-            setProceed(true);
-            setErrors({});
-        }
-    };
+      return 'Unknown network';
+    }
+
+    const { error } = schema.validate({
+      recipientPhoneNumber,
+    });
+
+    if (error) {
+      setErrors(
+        error.details.reduce((acc, curr) => {
+          acc[curr.path[0]] = curr.message;
+          return acc;
+        }, {})
+      );
+    } else if (validateNigerianNumberByNetwork(recipientPhoneNumber) !== 'GLO') {
+      setErrors({
+        recipientPhoneNumber:
+          `Invalid GLO number. Please enter a valid GLO number.`,
+      });
+    } else {
+      setProceed(true);
+      setErrors({});
+    }
+  };
 
 
   const handleRecipientNameChange = (e) => {
@@ -444,59 +354,59 @@ const GloDataBundle = () => {
       console.log("its me")
 
       try {
-          const response = await axios.post(url, data);
-          console.log(response.data);
-          console.log(response.status);
-          // setSelectedNetworkProduct(response.data.product)
-          // console.log(response.data.product)
-          setPlan(response.data.plan_name)
-          console.log(response.data.plan_name)
-          setInputValue(response.data.Phone_Number)
-          console.log(response.data.Phone_Number)
-          setRecipientPhoneNumber(data.Phone_number)
-          console.log(data.Phone_number)
-          console.log(inputValue)
-          console.log(recipientPhoneNumber)
-          setRecipientNames(response.data.Name)
-          console.log(response.data.Name)
-          setSelectedAmount(response.data.plan_amount)
-          console.log(response.data.plan_amount)
-          setGloTransactionID(response.data.transaction_id)
-          console.log(response.data.transaction_id)
-          setGloRefNumber(response.data.reference_number)
-          console.log(response.data.reference_number)
-          setGloOrderID(response.data.order_id)
-          console.log(response.data.order_id)
-          setGloDescription(response.data.description)
-          // console.log(response.data.description)
-          return { statusCode: response.status, data: response.data };
-          // console.log(response.data);
+        const response = await axios.post(url, data);
+        console.log(response.data);
+        console.log(response.status);
+        // setSelectedProduct(response.data.product)
+        // console.log(response.data.product)
+        setPlan(response.data.plan_name)
+        console.log(response.data.plan_name)
+        setInputValue(response.data.Phone_Number)
+        console.log(response.data.Phone_Number)
+        setRecipientPhoneNumber(data.Phone_number)
+        console.log(data.Phone_number)
+        console.log(inputValue)
+        console.log(recipientPhoneNumber)
+        setRecipientNames(response.data.Name)
+        console.log(response.data.Name)
+        setSelectedAmount(response.data.plan_amount)
+        console.log(response.data.plan_amount)
+        setGloTransactionID(response.data.transaction_id)
+        console.log(response.data.transaction_id)
+        setGloRefNumber(response.data.reference_number)
+        console.log(response.data.reference_number)
+        setGloOrderID(response.data.order_id)
+        console.log(response.data.order_id)
+        setGloDescription(response.data.description)
+        // console.log(response.data.description)
+        return { statusCode: response.status, data: response.data };
+        // console.log(response.data);
       } catch (error) {
-          console.error(error);
-          return { statusCode: error.response.status, data: null };
+        console.error(error);
+        return { statusCode: error.response.status, data: null };
       }
-  }
-  
-  // usage
-  const response = await buyData(
-    2, recipientPhoneNumber, plan, recipientNames
-  );
+    }
 
-  console.log(response)
-  console.log("its me 1")
+    // usage
+    const response = await buyData(
+      2, recipientPhoneNumber, plan, recipientNames
+    );
 
-  setLoading(false)
+    console.log(response)
+    console.log("its me 1")
+
+    setLoading(false)
 
 
 
-  setConfirm(false);
-  if (response.statusCode === 200) {
+    setConfirm(false);
+    if (response.statusCode === 200) {
       // Success response
       setTransactSuccessPopUp(true); // Show success popup
-  } else {
+    } else {
       // Failure response
       setGloPurchaseStatus(true); // Show failure popup
-  }
+    }
 
   };
 
@@ -506,18 +416,16 @@ const GloDataBundle = () => {
   return (
     <DashBoardLayout>
       <div
-        className={`bg-[#FFF] relative lg:ml-[20px] 2xl:ml-0 ${
-          isDarkMode
-            ? "bg-[#000] text-[#fff] border-[#fff]"
-            : "bg-[#ffffff] text-[#000] "
-        } flex flex-col justify-between h-full`}
+        className={`bg-[#FFF] relative lg:ml-[20px] 2xl:ml-0 ${isDarkMode
+          ? "bg-[#000] text-[#fff] border-[#fff]"
+          : "bg-[#ffffff] text-[#000] "
+          } flex flex-col justify-between h-full`}
       >
         <section
-          className={`md:px-[0px] ${
-            isDarkMode
-              ? "bg-[#000] text-[#fff] border-[#fff]"
-              : "bg-[#ffffff] text-[#000] "
-          }`}
+          className={`md:px-[0px] ${isDarkMode
+            ? "bg-[#000] text-[#fff] border-[#fff]"
+            : "bg-[#ffffff] text-[#000] "
+            }`}
         >
           <div
             id="DataBundle"
@@ -547,10 +455,9 @@ const GloDataBundle = () => {
 
           <div className="flex gap-[10%] mt-[40px] md:w-full md:justify-between md:gap-[10%] ">
             <div className={`w-full flex items-center justify-between border text-[10px] md:py-[15px] md:w-[50%] rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]
-                    ${
-                isDarkMode
-                  ? "bg-black text-white border !border-white"
-                  : "border border-[#0003]"
+                    ${isDarkMode
+                ? "bg-black text-white border !border-white"
+                : "border border-[#0003]"
               }`}
             >
               <Link
@@ -567,10 +474,9 @@ const GloDataBundle = () => {
               </Link>
             </div>
             <div className={`w-full flex items-center justify-between border text-[10px] md:py-[15px] md:w-[40%] md:mr-[9%]  rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]
-                      ${
-                isDarkMode
-                  ? "bg-black text-white border !border-white"
-                  : "border border-[#0003]"
+                      ${isDarkMode
+                ? "bg-black text-white border !border-white"
+                : "border border-[#0003]"
               }`}
             >
               <Link
@@ -637,9 +543,8 @@ const GloDataBundle = () => {
             <Modal>
               (
               <div
-                className={`code ${
-                  toggleSideBar ? "code1" : "code01"
-                } overflow-auto w-[90%]`}
+                className={`code ${toggleSideBar ? "code1" : "code01"
+                  } overflow-auto w-[90%]`}
               >
                 <img
                   onClick={() => setCodes(false)}
@@ -688,73 +593,65 @@ const GloDataBundle = () => {
 
           <div className="grid grid-cols-1 mt-[25px] md:grid-cols-2 gap-y-[20px] md:gap-x-[58.68px] lg:gap-x-[100px] md:gap-y-[15px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[20px]">
             <div className="relative">
-              <h2 className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[14px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
-                                            isDarkMode 
-                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
-                                          }`}>
+              <h2 className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[14px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${isDarkMode
+                ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                }`}>
                 Select Product
               </h2>
               <div
                 className={`mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between
 
-                          ${
-      isDarkMode
-        ? "bg-black text-white border !border-white"
-        : "border border-[#0003]"
-    }
+                          ${isDarkMode
+                    ? "bg-black text-white border !border-white"
+                    : "border border-[#0003]"
+                  }
   `}
-                onClick={() => setShowProductList(!showProductList)}
+                onClick={() => {
+                  setShowOptionList(false);
+                  setShowProductList(!showProductList);
+                }}
               >
                 <h2 className="text-[12px] font-[400] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                  {selectedNetworkProduct}
+                  {selectedProduct}
                 </h2>
                 <button className="lg:w-6 lg:h-6 w-[11px] h-[12px]">
                   <img src={arrowDown} alt="" className="w-full h-full" />
                 </button>
               </div>
               {showProductList && (
-                <div className={`border md:rounded-[10px] text-[10px] md:text-[12px] lg:text-[16px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[10]
-                        ${
-      isDarkMode
-        ? "bg-black text-white border !border-white"
-        : "border border-[#0003]"
-    }
-  `}>
-                  {productList.map((item) => (
-                    <div
-                      key={item.name}
-                      className={`pb-[17px] md:pb-[6px] pt-[17px] md:pt-[6px] font-weight-bold text-[14px] cursor-pointer border-b-[0.5px] text-[#7C7C7C] md:text-[12px] lg:text-[16px]  md:rounded-[0px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
-                        selectedNetworkProduct === item.name ? "bg-white" : ""
-                      }
-                            ${
-      isDarkMode
-        ? "bg-black text-white"
-        : "text-white"
-    }
-  `}
-                      onClick={() => handleSelectProduct(item.name)}
-                    >
-                      {item.name}
-                    </div>
-                  ))}
+                <div className="border md:rounded-[10px] text-[10px] md:text-[12px] lg:text-[16px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[10]">
+                  {loadingProducts ? (
+                    <div>Loading products...</div>
+                  ) : (
+                    products.map((product) => (
+                      <div
+                        key={product.Product_ID}
+                        className={`cursor-pointer border-b-[0.5px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] py-[4px] pl-[5px]`}
+                        onClick={() => {
+                          handleSelectProduct(product);
+                          setShowOptionList(true);
+                        }}
+                      >
+                        {`${product.Plan_Type}`}
+                      </div>
+                    ))
+                  )}
                 </div>
               )}
             </div>
 
             <div className="relative">
-              <h2 className={`lg:text-[18px] md:text-[12px] lg:leading-[24px] mb-1 text-[14px] md:font-[600] font-[400] leading-[12px] ${
-                                            isDarkMode 
-                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
-                                          }`}>
+              <h2 className={`lg:text-[18px] md:text-[12px] lg:leading-[24px] mb-1 text-[14px] md:font-[600] font-[400] leading-[12px] ${isDarkMode
+                ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                }`}>
                 Select Plan
               </h2>
               <div
                 className={`mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between
-                          ${
-      isDarkMode
-        ? "bg-black text-white border !border-white"
-        : "border border-[#0003]"
-    }
+                          ${isDarkMode
+                    ? "bg-black text-white border !border-white"
+                    : "border border-[#0003]"
+                  }
   `}
                 onClick={() => setShowOptionList(!showOptionList)}
               >
@@ -768,54 +665,32 @@ const GloDataBundle = () => {
 
               {showOptionList && (
                 <div className={`border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[100]
-                        ${
-      isDarkMode
-        ? "bg-black text-white border !border-white"
-        : "border border-[#0003]"
-    }
+                        ${isDarkMode
+                    ? "bg-black text-white border !border-white"
+                    : "border border-[#0003]"
+                  }
   `}>
-                  {productList
-                    .find((item) => item.name === selectedNetworkProduct)
-                    ?.options.map((option, index) => {
-                      const amount = option.amount;
-                      const duration = option.duration;
-                      const id = option.id;
-
-                      return (
-                        <div
-                          key={option.id}
-                          className={`pb-[17px] md:pb-[6px] pt-[17px] md:pt-[6px] font-weight-bold text-[14px] cursor-pointer border-b-[0.5px] md:rounded-[0px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
-                            selectedOption === option.id ? "bg-gray-200" : ""
-                          }      ${
-      isDarkMode
-        ? "bg-black text-white"
-        : "text-white"
-    }
-  `}
-                          onClick={() =>
-                            handleSelectOption(
-                              `${option.name} (${amount}) ~ ${duration}`,
-                              amount,
-                              duration,
-                              id, // Pass the id here
-
-                              console.log(id)
-                            )
-                          }
-                        >
-                          {`${option.name} (${amount}) ~ ${duration}`}
-                        </div>
-                      );
-                    })}
+                  {loadingPlans ? (
+                    <div>Loading plans...</div>
+                  ) : (
+                    productPlans.map((plan) => (
+                      <div
+                        key={plan.PlanID}
+                        className={`cursor-pointer border-b-[0.5px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] py-[4px] pl-[5px]`}
+                        onClick={() => handleSelectOption(plan)}
+                      >
+                        {`${plan.Size} - ${plan.Validity} (₦${plan.Amount})`}
+                      </div>
+                    ))
+                  )}
                 </div>
               )}
             </div>
 
             <div className="">
-              <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
-                                            isDarkMode 
-                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
-                                          }`}>
+              <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${isDarkMode
+                ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                }`}>
                 Phone Number{" "}
                 <span className="text-[#04177F]">
                   <Link to="/DataBundleSelectRecipient">
@@ -827,11 +702,10 @@ const GloDataBundle = () => {
                 <input
                   type="number"
                   className={`mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] lg:text-[16px] font-[400] focus:outline-none lg:h-[51px]
-         ${
-      isDarkMode
-        ? "bg-black text-white border !border-white"
-        : "border border-[#0003]"
-    }
+         ${isDarkMode
+                      ? "bg-black text-white border !border-white"
+                      : "border border-[#0003]"
+                    }
   `}
 
                   placeholder=""
@@ -858,21 +732,19 @@ const GloDataBundle = () => {
             </div>
 
             <div className="">
-              <h2 className={`text-[14px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
-                                            isDarkMode 
-                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
-                                          }`}>
+              <h2 className={`text-[14px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${isDarkMode
+                ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                }`}>
                 Recipient Name<span className="text-[#7C7C7C]">(optional)</span>{" "}
               </h2>
               <div className="relative mt-[5px]">
                 <input
                   type="text"
                   className={`mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] font-[400] focus:outline-none lg:h-[51px] lg:text-[16px]
-                           ${
-      isDarkMode
-        ? "bg-black text-white border !border-white"
-        : "border border-[#0003]"
-    }
+                           ${isDarkMode
+                      ? "bg-black text-white border !border-white"
+                      : "border border-[#0003]"
+                    }
   `}
                   placeholder=""
                   value={recipientNames}
@@ -889,21 +761,19 @@ const GloDataBundle = () => {
             </div>
 
             <div className="">
-              <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
-                                            isDarkMode 
-                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
-                                          }`}>
+              <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${isDarkMode
+                ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                }`}>
                 Amount
               </h2>
               <div className="relative mt-[5px]">
                 <input
                   type="text"
                   className={`mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] font-[400] focus:outline-none lg:h-[51px] lg:text-[16px]
-                           ${
-      isDarkMode
-        ? "bg-black text-white border !border-white"
-        : "border border-[#0003]"
-    }
+                           ${isDarkMode
+                      ? "bg-black text-white border !border-white"
+                      : "border border-[#0003]"
+                    }
   `}
                   // placeholder="&#8358;100"
                   value={`${selectedAmount}`}
@@ -921,18 +791,16 @@ const GloDataBundle = () => {
 
             <div>
               <div onClick={handleShowPayment}>
-                <h2 className={`lg:text-[18px] mt-[5px] lg:leading-[24px] mb-2 text-[15px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
-                                            isDarkMode 
-                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
-                                          }`}>
+                <h2 className={`lg:text-[18px] mt-[5px] lg:leading-[24px] mb-2 text-[15px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${isDarkMode
+                  ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                  }`}>
                   Payment Method
                 </h2>
                 <div className={`mt-3 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input flex justify-between items-center border w-full h-8 px-2 rounded-md text-[10px] font-[400] focus:outline-none lg:h-[51px] lg:text-[16px]
-                       ${
-      isDarkMode
-        ? "bg-black text-white border !border-white"
-        : "border border-[#0003]"
-    }
+                       ${isDarkMode
+                    ? "bg-black text-white border !border-white"
+                    : "border border-[#0003]"
+                  }
   `}
                 >
                   {paymentSelected ? (
@@ -977,17 +845,14 @@ const GloDataBundle = () => {
               {showPayment && (
                 <div
                   className={`pb-[13px] md:pb-[6px] pt-[13px] md:pt-[6px] font-weight-bold text-[15px] border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute 
-                          ${
-      isDarkMode
-        ? "bg-black text-white border !border-white"
-        : "border border-[#0003]"
-                          }
-                    ${
-                    
-                    toggleSideBar
+                          ${isDarkMode
+                      ? "bg-black text-white border !border-white"
+                      : "border border-[#0003]"
+                    }
+                    ${toggleSideBar
                       ? "w-full md:w-[44.5%] lg:w-[45%] 2xl:w-[46%]"
                       : "w-full md:w-[46%] 2xl:w-[46.5%]"
-                  } bg-[#FFF] z-[100]`}
+                    } bg-[#FFF] z-[100]`}
                 >
                   {countryList.map((country) => (
                     <Payment
@@ -1036,9 +901,8 @@ const GloDataBundle = () => {
           {proceed && (
             <Modal>
               <div
-                className={`${isDarkMode ? "border bg-[#000]" : "bg-[#fff]"} ${
-                  toggleSideBar ? "confirm01" : "confirm"
-                } grow pt-[10px] pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:overflow-auto`}
+                className={`${isDarkMode ? "border bg-[#000]" : "bg-[#fff]"} ${toggleSideBar ? "confirm01" : "confirm"
+                  } grow pt-[10px] pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:overflow-auto`}
               >
                 <div className="w-full flex justify-end border-b-[6px] border-primary px-[12px] md:h-[25px] lg:border-b-[10px] lg:mt-[20px]">
                   <img
@@ -1084,7 +948,7 @@ const GloDataBundle = () => {
                       </h2>
                       <div className="flex gap-1">
                         <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          {selectedNetworkProduct}
+                          {selectedProduct}
                         </h2>
                       </div>
                     </div>
@@ -1197,9 +1061,8 @@ const GloDataBundle = () => {
           {confirm && (
             <Modal>
               <div
-                className={` ${
-                  toggleSideBar ? "confirm02" : "confirm2"
-                } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
+                className={` ${toggleSideBar ? "confirm02" : "confirm2"
+                  } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
               >
                 <div className="flex justify-end px-2">
                   <img
@@ -1260,9 +1123,8 @@ const GloDataBundle = () => {
                     inputPinHandler(e);
                   }}
                   disabled={inputPin.length !== 4}
-                  className={`${
-                    inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
-                  } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                  className={`${inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
+                    } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
                 >
                   Purchase
                 </button>
@@ -1271,12 +1133,11 @@ const GloDataBundle = () => {
           )}
 
 
-{glopurchaseStatus && (
+          {glopurchaseStatus && (
             <Modal>
               <div
-                className={` ${
-                  toggleSideBar ? "confirm02" : "confirm2"
-                } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
+                className={` ${toggleSideBar ? "confirm02" : "confirm2"
+                  } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
               >
                 <div className="flex justify-end px-2">
                   <img
@@ -1311,23 +1172,23 @@ const GloDataBundle = () => {
                   >
                     Done
                   </button>
-                  
+
                   <Link to="/GloFailedReceipt"
-                  state={{
-                    networkName: "MTN",
-                    selectedNetworkProduct: selectedNetworkProduct,
-                    selectedOption: selectedOption,
-                    recipientPhoneNumber: recipientPhoneNumber,
-                    inputValue: inputValue,
-                    recipientNames: recipientNames,
-                    selectedAmount: selectedAmount,
-                    glotransactionID: glotransactionID,
-                    glorefNumber: glorefNumber,
-                    gloorderID: gloorderID,
-                    glodescription: glodescription,
-                   
-                }}
-                  
+                    state={{
+                      networkName: "GLO",
+                      selectedProduct: selectedProduct,
+                      selectedOption: selectedOption,
+                      recipientPhoneNumber: recipientPhoneNumber,
+                      inputValue: inputValue,
+                      recipientNames: recipientNames,
+                      selectedAmount: selectedAmount,
+                      glotransactionID: glotransactionID,
+                      glorefNumber: glorefNumber,
+                      gloorderID: gloorderID,
+                      glodescription: glodescription,
+
+                    }}
+
                   >
                     <button
                       onClick={() => {
@@ -1348,9 +1209,8 @@ const GloDataBundle = () => {
             <Modal>
               {/* <TransactFailedPopUp/> */}
               <div
-                className={`${
-                  toggleSideBar ? "confirm01 w-[90%]" : "confirm w-[90%]"
-                } bg-white rounded-[12px] md:my-auto mx-auto overflow-auto lg:mx-auto lg:my-auto`}
+                className={`${toggleSideBar ? "confirm01 w-[90%]" : "confirm w-[90%]"
+                  } bg-white rounded-[12px] md:my-auto mx-auto overflow-auto lg:mx-auto lg:my-auto`}
               >
                 <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
                   <img
@@ -1416,7 +1276,7 @@ const GloDataBundle = () => {
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        {selectedNetworkProduct}
+                        {selectedProduct}
                       </h2>
                     </div>
                   </div>
@@ -1510,19 +1370,19 @@ const GloDataBundle = () => {
                   </Link>
 
                   <Link to="/GloReceipt"
-                  state={{
-                    selectedNetworkProduct: selectedNetworkProduct,
-                    inputValue: inputValue,
-                    recipientPhoneNumber: recipientPhoneNumber,
-                    selectedOption: selectedOption,
-                    recipientNames: recipientNames,
-                    selectedAmount: selectedAmount,
-                    glotransactionID: glotransactionID,
-                    glorefNumber: glorefNumber,
-                    gloorderID: gloorderID,
-                    glodescription: glodescription,
-                }}>
-                  
+                    state={{
+                      selectedProduct: selectedProduct,
+                      inputValue: inputValue,
+                      recipientPhoneNumber: recipientPhoneNumber,
+                      selectedOption: selectedOption,
+                      recipientNames: recipientNames,
+                      selectedAmount: selectedAmount,
+                      glotransactionID: glotransactionID,
+                      glorefNumber: glorefNumber,
+                      gloorderID: gloorderID,
+                      glodescription: glodescription,
+                    }}>
+
                     <button
                       onClick={handleReceipt}
                       className={`border-[1px] w-[100px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-[400] h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[12px] lg:w-[163px] lg:h-[38px] lg:my-[2%] md:px-[60px] md:h-[30px]`}
@@ -1535,50 +1395,49 @@ const GloDataBundle = () => {
             </Modal>
           )}
 
-{proceedToShowReceipt && (
+          {proceedToShowReceipt && (
             <GloReceipt
-            networkName='MTN'
-            selectedNetworkProduct={selectedNetworkProduct}
-            recipientPhoneNumber={recipientPhoneNumber}
-            inputValue={inputValue}
-            recipientNames={recipientNames}
-            selectedAmount={selectedAmount}
-            glotransactionID={glotransactionID}
-            glorefNumber={glorefNumber}
-            gloorderID={gloorderID}
-            glodescription={glodescription}
+              networkName='GLO'
+              selectedProduct={selectedProduct}
+              recipientPhoneNumber={recipientPhoneNumber}
+              inputValue={inputValue}
+              recipientNames={recipientNames}
+              selectedAmount={selectedAmount}
+              glotransactionID={glotransactionID}
+              glorefNumber={glorefNumber}
+              gloorderID={gloorderID}
+              glodescription={glodescription}
             />
           )}
 
-{proceedToShowReceipt && (
+          {proceedToShowReceipt && (
             <GloFailedReceipt
-            networkName='MTN'
-            selectedNetworkProduct={selectedNetworkProduct}
-            recipientPhoneNumber={recipientPhoneNumber}
-            inputValue={inputValue}
-            recipientNames={recipientNames}
-            selectedAmount={selectedAmount}
-            glotransactionID={glotransactionID}
-            glorefNumber={glorefNumber}
-            gloorderID={gloorderID}
-            glodescription={glodescription}
+              networkName='GLO'
+              selectedProduct={selectedProduct}
+              recipientPhoneNumber={recipientPhoneNumber}
+              inputValue={inputValue}
+              recipientNames={recipientNames}
+              selectedAmount={selectedAmount}
+              glotransactionID={glotransactionID}
+              glorefNumber={glorefNumber}
+              gloorderID={gloorderID}
+              glodescription={glodescription}
             />
           )}
 
           <div className="py-[30px] lg:py-[60px] mt-10">
             <button
-              className={`w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[400] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px] ${
-                !selectedNetworkProduct ||
+              className={`w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[400] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px] ${!selectedProduct ||
                 !selectedOption ||
                 !inputValue ||
                 !selectedAmount ||
                 !paymentSelected
-                  ? "bg-[#63616188] cursor-not-allowed"
-                  : "bg-primary"
-              }`}
+                ? "bg-[#63616188] cursor-not-allowed"
+                : "bg-primary"
+                }`}
               onClick={handleProceed}
               disabled={
-                !selectedNetworkProduct ||
+                !selectedProduct ||
                 !selectedOption ||
                 !inputValue ||
                 !selectedAmount ||
@@ -1592,18 +1451,16 @@ const GloDataBundle = () => {
 
         {/* =======================FOOTER=================================== */}
         <div
-          className={`${
-            isDarkMode ? "bg-black text-white flex gap-[15px] justify-center items-center  pb-[25%] md:pb-[12%] lg:pb-0 py-[40%]" : "flex gap-[15px] justify-center items-center mt-[100%] pb-[25%] md:pb-[12%] md:mt-[40%] lg:mt-[40%] lg:pb-0"
-          } `}
+          className={`${isDarkMode ? "bg-black text-white flex gap-[15px] justify-center items-center  pb-[25%] md:pb-[12%] lg:pb-0 py-[40%]" : "flex gap-[15px] justify-center items-center mt-[100%] pb-[25%] md:pb-[12%] md:mt-[40%] lg:mt-[40%] lg:pb-0"
+            } `}
         >
           <div className="text-[10px] md:text-[12px] lg:text-[14px]">
             You need help ?
           </div>
           <Link to="/ContactUs">
             <div
-              className={`${
-                isDarkMode ? "border bg-[#04177f]" : "bg-[#04177f]"
-              } text-[10px] p-1 text-white rounded-[8px] lg:text-[18px]`}
+              className={`${isDarkMode ? "border bg-[#04177f]" : "bg-[#04177f]"
+                } text-[10px] p-1 text-white rounded-[8px] lg:text-[18px]`}
             >
               Contact Us
             </div>
