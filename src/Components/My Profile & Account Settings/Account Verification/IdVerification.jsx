@@ -556,14 +556,16 @@ console.log("getToken" ,getToken);
      ID Type
     </h2>
     <div onClick={()=> {
-      if(idStatus === "Not Verifed"){
-      chooseId()
-      }
+      if(Data.ConfirmId === "false"){
+     chooseId()
+    }else{
+     return null
+    }
     }}
     className='flex justify-between items-center font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px]'>
-      <h2 className='text-[#000] font-[400]  leading-[10.4px]
-      lg:text-[16px] lg:leading-[20.8px]'>
-        {idResult}
+      <h2 className={`text-[#000] font-[400]  leading-[10.4px]
+      lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : "text-black"}`}>
+        {idResult || (Data.ConfirmId ==="true" ? "National ID" : idResult)}
       </h2>
       <img src={ArrowDown} alt=""
       className='idDrop lg:w-[24px] lg:h-[24px] w-[14.083px] h-[14.083px]'/>
@@ -576,12 +578,12 @@ console.log("getToken" ,getToken);
           <div 
            key={info.id} onClick={() => {
             setIdResult(()=> {
-             if(info.id ===1 && idStatus ==="Not Verified" ){
+             if(Data.ConfirmId === "false" && idResult === ""){
             return info.idType;
             }
-            else if(info.id !== 1 && idResult === "" && idStatus ==="Not Verified"){
-            return ""
-              }else if(  (idResult ==="National ID") &&(info.id === 2 || info.id ===3|| info.id === 4) && idStatus ==="Not Verified"){
+            else if(Data.ConfirmId === "true"){
+              return "National ID"
+              }else if( (info.id === 2 || info.id ===3|| info.id === 4) && Data.ConfirmId === "false"){
                return "National ID"
                
              }

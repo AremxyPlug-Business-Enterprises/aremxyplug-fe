@@ -40,7 +40,7 @@ export default function NecoEducationPins() {
   const { necoEducationPinPhone, setNecoEducationPinPhone } = useContext(ContextProvider);
   const { necoEducationPinEmail, setNecoEducationPinEmail } = useContext(ContextProvider);
   const { necoEducationAmount, setNecoEducationAmount } = useContext(ContextProvider);
-  const { necoWalletBalance, setNecoWalletBalance } = useContext(ContextProvider);
+  const { necoWalletBalance, setNecoWalletBalance, setEducationPinStatus } = useContext(ContextProvider);
 
   // UseStates
   const [necoImageState, setNecoImageState] = useState(arrowDown);
@@ -172,6 +172,7 @@ export default function NecoEducationPins() {
       const response = await axios.post('https://aremxyplug.onrender.com/api/v1/edu', sendNecoForm);
       if (response.status === "success" || 201 || "Successful" || 200) {
         necoEduPinSuccess();
+        setEducationPinStatus(true)
       }
       alert('submitted');
     } catch (error) {
