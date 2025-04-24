@@ -79,7 +79,7 @@ return (
           >
             <img
               className="w-[59px] h-[10.23px] md:h-[10px] md:w-[67px] lg:w-[125px] lg:h-[25px]"
-              src="./Images/dashboardImages/aremxylogo.png"
+              src="./Images/dashboardImages/aremxyLogo.png"
               alt="Logo"
             />
             <img

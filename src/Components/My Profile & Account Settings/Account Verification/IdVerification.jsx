@@ -24,26 +24,29 @@ import idSuccess from "../ProfileImages/user-tick.svg";
 export default function IdVerification(Data) {
   const { verificationOpen } = useContext(ContextProvider);
 
-    const {idVerificationOpen, 
-      state,
+  const {
+    idVerificationOpen,
+    state,
     verifyImage,
- setVerifyImage,
- idStatus,
- isDarkMode,
- setIdStatus} = useContext(ContextProvider);
-    const {dropDownGender, setDropDownGender, idButtonState, setIdButtonState} = useContext(ContextProvider);
-    const [idDropDown, setIdDropDown]= useState(false);
-    const {idAddress, setIdAddress} = useContext(ContextProvider);
-    // const {idState, setIdState} = useContext(ContextProvider);
-    const {idCity, setIdCity} = useContext(ContextProvider);
-    const {idCountry, setIdCountry} = useContext(ContextProvider);
-    // const {idLGA, setIdLGA} = useContext(ContextProvider);
-    const {idNumber, setIdNumber} = useContext(ContextProvider);
-    const {idPostalCode, setIdPostalCode} = useContext(ContextProvider);
-    const [errorSubmit, setErrorSubmit] = useState(false);
-    const [idFrontView, setIdFrontView] = useState(false);
-    const [idBackView, setIdBackView] = useState(false);
-      const [idPopVerified, setIdPopVerified] = useState(false);
+    setVerifyImage,
+    idStatus,
+    isDarkMode,
+    setIdStatus,
+  } = useContext(ContextProvider);
+  const { dropDownGender, setDropDownGender, idButtonState, setIdButtonState } =
+    useContext(ContextProvider);
+  const [idDropDown, setIdDropDown] = useState(false);
+  const { idAddress, setIdAddress } = useContext(ContextProvider);
+  // const {idState, setIdState} = useContext(ContextProvider);
+  const { idCity, setIdCity } = useContext(ContextProvider);
+  const { idCountry, setIdCountry } = useContext(ContextProvider);
+  // const {idLGA, setIdLGA} = useContext(ContextProvider);
+  const { idNumber, setIdNumber } = useContext(ContextProvider);
+  const { idPostalCode, setIdPostalCode } = useContext(ContextProvider);
+  const [errorSubmit, setErrorSubmit] = useState(false);
+  const [idFrontView, setIdFrontView] = useState(false);
+  const [idBackView, setIdBackView] = useState(false);
+  const [idPopVerified, setIdPopVerified] = useState(false);
   const [idCustomerQuery, setIdCustomerQuery] = useState(false);
   const [idDateOfBirth, setIdDateOfBirth] = useState("");
   const [loading, setLoading] = useState(false);
@@ -106,35 +109,10 @@ export default function IdVerification(Data) {
   //  e.target.setCustomValidity(addLGA ? '' : 'This is required to proceed');
   // }
 
+  //Function to inform a user that account has previously been craeted
+  // and set the following functions as stated bellow
 
-//Function to inform a user that account has previously been craeted
-// and set the following functions as stated bellow
-
-const IdFunctionState = async (
-  url,
-  data,
-  buttonStateSuccess,
-  ErrorMessage,
- PendingImageFxn,
-  PendingText,
-  verifyIdImage,
-  statusId,
-  verifyPopId
-) => {
-  if (idButtonState === "Verify") {
-    url = "https://aremxyplug.onrender.com/api/v1/verify";
-    buttonStateSuccess = "Verified";
-    ErrorMessage = "NIN Name Mismatch or Network failure";
-    PendingImageFxn = () => setVerifyImage(Pending);
-    PendingText = () => setIdStatus("Pending");
-    verifyIdImage = () => setVerifyImage(idSuccess);
-    statusId = () => setIdStatus("Verified");
-    verifyPopId = () => setIdPopVerified(true);
-    data = {
-      nin: idNumber.toString(),
-    };
-  } 
-  CheckIdForm(
+  const IdFunctionState = async (
     url,
     data,
     buttonStateSuccess,
@@ -144,10 +122,32 @@ const IdFunctionState = async (
     verifyIdImage,
     statusId,
     verifyPopId
-  );
-};
-
-
+  ) => {
+    if (idButtonState === "Verify") {
+      url = "https://aremxyplug.onrender.com/api/v1/verify";
+      buttonStateSuccess = "Verified";
+      ErrorMessage = "NIN Name Mismatch or Network failure";
+      PendingImageFxn = () => setVerifyImage(Pending);
+      PendingText = () => setIdStatus("Pending");
+      verifyIdImage = () => setVerifyImage(idSuccess);
+      statusId = () => setIdStatus("Verified");
+      verifyPopId = () => setIdPopVerified(true);
+      data = {
+        nin: idNumber.toString(),
+      };
+    }
+    CheckIdForm(
+      url,
+      data,
+      buttonStateSuccess,
+      ErrorMessage,
+      PendingImageFxn,
+      PendingText,
+      verifyIdImage,
+      statusId,
+      verifyPopId
+    );
+  };
 
   //The main function to verify the Id Number and create the virtual account
   const CheckIdForm = async (
@@ -163,18 +163,19 @@ const IdFunctionState = async (
   ) => {
     const authToken = localStorage.getItem("authorisedLogin");
     const getToken = localStorage.getItem("getToken");
-   // const AccCreated = localStorage.getItem("AccCreated")
-    if (idNumber &&
-       idResult && 
-       idDateOfBirth && 
-       genderResult && 
-       idAddress &&
-       idCity &&
-       idCountry 
-       ) {
+    // const AccCreated = localStorage.getItem("AccCreated")
+    if (
+      idNumber &&
+      idResult &&
+      idDateOfBirth &&
+      genderResult &&
+      idAddress &&
+      idCity &&
+      idCountry
+    ) {
       setLoading(true);
 
-console.log("getToken" ,getToken);
+      console.log("getToken", getToken);
 
       // console.log(data)
       try {
@@ -183,29 +184,27 @@ console.log("getToken" ,getToken);
           PendingImageFxn();
           PendingText();
         }
-       const response  = await axios.post(url, data , {
+        const response = await axios.post(url, data, {
           headers: {
             "Content-Type": "application/json",
             Authorization: authToken || getToken,
           },
-        })
- if (response.status === 201 || 200) {
-
+        });
+        if (response.status === 201 || 200) {
           setIdNumber(idNumber);
           verifyIdImage();
           statusId();
           verifyPopId();
           setIdButtonState(buttonStateSuccess);
-          localStorage.setItem("idVerification", "true")
-  
- }
+          localStorage.setItem("idVerification", "true");
+        }
       } catch (error) {
         if (error.status === 401 || 400) {
           alert(ErrorMessage);
-          console.log(`ERROR : ${error}`)
-        
-           setVerifyImage(NotVerifiedIcon)
-           setIdStatus("Not Verified");
+          console.log(`ERROR : ${error}`);
+
+          setVerifyImage(NotVerifiedIcon);
+          setIdStatus("Not Verified");
         } else if (error.status === 500) {
           alert("Error:", "INTERNAL_SERVER_ERROR");
           setIdStatus("Not Verified");
@@ -252,10 +251,10 @@ console.log("getToken" ,getToken);
                   isDarkMode ? "text-stone-800" : ""
                 }`}
               >
-                <h2 className="font-[500] lg:text-[12px] lg:leading-[15.6px] text-[9.042px] leading-[12.45px]">
+                <h2 className="font-medium lg:text-[12px] lg:leading-[15.6px] text-[9.042px] leading-[12.45px]">
                   ID Status
                 </h2>
-                <h2 className="font-[500] lg:text-[12px] lg:leading-[15.6px] text-[8.042px] leading-[12.45px]">
+                <h2 className="font-medium lg:text-[12px] lg:leading-[15.6px] text-[8.042px] leading-[12.45px]">
                   {idStatus &&
                     (Data.ConfirmId === "true" ? "Verified" : "Not Verified")}
                 </h2>
@@ -264,7 +263,7 @@ console.log("getToken" ,getToken);
             {/*  */}
             <div className="flex md:gap-[14px] gap-[11px] items-center">
               <h2
-                className={`font-[500] text-[#7E7E7E] text-[11px] leading-[14.4px] lg:text-[16px] lg:leading-[20.8px] ${
+                className={`font-medium text-[#7E7E7E] text-[11px] leading-[14.4px] lg:text-[16px] lg:leading-[20.8px] ${
                   isDarkMode ? "text-slate-50" : ""
                 }`}
               >
@@ -295,7 +294,7 @@ console.log("getToken" ,getToken);
                 {/* Full Name */}
                 <div className="flex flex-col md:w-[50%] w-full md:gap-[10px] gap-2.5">
                   <h2
-                    className={`font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${
+                    className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${
                       isDarkMode ? "text-slate-50" : ""
                     }`}
                   >
@@ -319,7 +318,7 @@ console.log("getToken" ,getToken);
 
                 <div className="relative flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
                   <h2
-                    className={`font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${
+                    className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${
                       isDarkMode ? "text-slate-50" : ""
                     }`}
                   >
@@ -360,7 +359,7 @@ console.log("getToken" ,getToken);
                                 .querySelector(".genderDrop")
                                 .classList.remove("DropIt");
                             }}
-                            className={`font-[500] text-[#7C7C7C] text-[12px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] md:py-[20px] py-[15px] pl-[10px] lg:pl-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] md:shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)] cursor-pointer ${
+                            className={`font-medium text-[#7C7C7C] text-[12px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] md:py-[20px] py-[15px] pl-[10px] lg:pl-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] md:shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)] cursor-pointer ${
                               isDarkMode
                                 ? "bg-black text-white border-b border-white hover:bg-slate-800"
                                 : "bg-white"
@@ -416,10 +415,8 @@ console.log("getToken" ,getToken);
                     onChange={(e) => {
                       setIdDateOfBirth(e.target.value);
                     }}
-                    className={`py-[10.33px] pl-[5.867px] pr-1 md:py-[10] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none ${
-                      isDarkMode
-                        ? "bg-transparent text-slate-50 border-slate-50"
-                        : ""
+                    className={`w-[100%] py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] text-sm leading-[18px] lg:pr-[16px] pr-[9px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none cursor-pointer rounded-[10px] ${
+                      isDarkMode ? "text-white border-white bg-black" : ""
                     }`}
                     type="date"
                     id="dob"
@@ -428,7 +425,7 @@ console.log("getToken" ,getToken);
                 </div>
                 {/* STATE */}
                 {/* <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
+   <h2 className='font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
     State or Province
     </h2>
@@ -437,7 +434,7 @@ console.log("getToken" ,getToken);
     onChange={(e) =>{
       setIdState(e.target.value)
     }}
-    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px] sm:p-3 sm:text-lg font-[500] py-[10.33px] pl-[5.867px] 
+    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px] sm:p-3 sm:text-lg font-medium py-[10.33px] pl-[5.867px] 
     lg:py-[15.5px] lg:pl-[10px] border-[0.4px]
      leading-[10.4px] 
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px] focus:outline-none'
@@ -498,7 +495,7 @@ console.log("getToken" ,getToken);
                 </div>
                 {/* LGA */}
                 {/* <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
+   <h2 className='font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]'>
      L.G.A
     </h2>
@@ -507,7 +504,7 @@ console.log("getToken" ,getToken);
     onChange={(e) => {
       setIdLGA(e.target.value);
     }}
-    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px]  sm:p-3 sm:text-lg font-[500] py-[10.33px] pl-[5.867px] 
+    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px]  sm:p-3 sm:text-lg font-medium py-[10.33px] pl-[5.867px] 
     lg:py-[15.5px] lg:pl-[10px] border-[0.4px] 
      leading-[10.4px] 
      border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px]
@@ -773,7 +770,9 @@ Confirming your identity ensures that the person accessing the account is indeed
   <div className={`flex flex-col rounded-[8px] w-[100%]   h-[257.07px]  md:h-[350px] 
   lg:h-[404px] bg-white lg:w-[45%] md:w-[60%] lg:rounded-[12px] mx-[19px] 
   shadow-[0px_0px_11.73611px_0px_rgba(0,0,0,0.25)] md:mx-[0px]
-   lg:shadow-[0px_0px_20px_0_px_rgba(0 0,0,0.25)] ${isDarkMode ? "bg-black border border-white" : "bg-white"}`}
+   lg:shadow-[0px_0px_20px_0_px_rgba(0 0,0,0.25)] ${
+     isDarkMode ? "bg-black border border-white" : "bg-white"
+   }`}
                 >
                   <div className="flex justify-end p-[10px]">
                     <img
@@ -786,10 +785,7 @@ Confirming your identity ensures that the person accessing the account is indeed
                     />
                   </div>
                   <div className="flex flex-col h-[100%]   md:gap-[30px] gap-[20px] justify-center items-center">
-                    <h2
-                      className=" font-[500] text-center text-[12px] leading-[14.4px] 
-   lg:text-[16px] lg:leading-[20.8px]"
-                    >
+                    <h2 className=" font-medium text-center text-[12px] leading-[14.4px] lg:text-[16px] lg:leading-[20.8px]">
                       Upload ID Front View
                     </h2>
                     <img
@@ -801,10 +797,7 @@ Confirming your identity ensures that the person accessing the account is indeed
                       onClick={(e) => {
                         e.preventDefault();
                       }}
-                      className="font-[600] text-white md:w-[150px] text-[12px] leading-[18px] 
-      lg:text-[16px] 
-      lg:leading-[24px] bg-[#04177F]  w-[80%] py-[10px]
-      lg:rounded-[12px] lg:py-[10px] rounded-[4.61px]"
+                      className="font-semibold text-white md:w-[150px] text-[12px] leading-[18px] lg:text-[16px] lg:leading-[24px] bg-[#04177F]  w-[80%] py-[10px]lg:rounded-[12px] lg:py-[10px] rounded-[4.61px]"
                     >
                       Upload
                     </button>
@@ -817,7 +810,9 @@ Confirming your identity ensures that the person accessing the account is indeed
                 <div
                   className={`flex flex-col rounded-[8px] w-[100%] h-[257.07px]  md:h-[350px] lg:h-[404px] md:w-[60%] lg:w-[45%] lg:rounded-[12px] mx-[19px] md:mx-[0px]
         shadow-[0px_0px_11.73611px_0px_rgba(0,0,0,0.25)]
-         lg:shadow-[0px_0px_20px_0_px_rgba(0 0,0,0.25)] ${isDarkMode ? "bg-black border border-white" : "bg-white"}`}
+         lg:shadow-[0px_0px_20px_0_px_rgba(0 0,0,0.25)] ${
+           isDarkMode ? "bg-black border border-white" : "bg-white"
+         }`}
                 >
                   <div className="flex justify-end p-[10px]">
                     <img
@@ -830,10 +825,7 @@ Confirming your identity ensures that the person accessing the account is indeed
                     />
                   </div>
                   <div className="flex flex-col h-[100%]  md:gap-[30px] gap-[20px] justify-center items-center ">
-                    <h2
-                      className=" font-[500] text-center text-[12px] leading-[14.4px] 
-         lg:text-[16px] lg:leading-[20.8px]"
-                    >
+                    <h2 className=" font-medium text-center text-[12px] leading-[14.4px] lg:text-[16px] lg:leading-[20.8px]">
                       Upload ID Back View
                     </h2>
                     <img
@@ -845,36 +837,47 @@ Confirming your identity ensures that the person accessing the account is indeed
                       onClick={(e) => {
                         e.preventDefault();
                       }}
-                      className="font-[600] text-white  md:w-[150px] text-[12px] leading-[18px] 
-            lg:text-[16px] 
-            lg:leading-[24px] bg-[#04177F]  w-[80%] py-[10px]
-            lg:rounded-[12px] lg:py-[10px] rounded-[4.61px]">
-            Upload
-            </button>
-        </div>
-        </div>
-      </Modal>
-          )}
-    </form>  
-    
-    {idPopVerified && (
-          <Modal>
-            <div
-              className={`confirm2 ${styles.inputPin} ${
-                toggleSideBar
-                  ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
-                  : "lg:w-[40%]"}
-               relative md:w-[55%] w-[90%] flex flex-col justify-between md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}>
-              <div className="absolute z-0 right-0" style={{ zIndex: 0 }}>
-                <img src={PopUpGreen} alt="" className="md:hidden rounded-tr-[10px]" />
-                <img src={PopUpGreenTab} alt="" className="hidden md:block lg:hidden rounded-tr-[10px]" />
-                <img src={PopUpGreenDeskTop} alt="" className="hidden lg:block rounded-tr-[20px]" />
-              </div>
+                      className="font-semibold text-white  md:w-[150px] text-[12px] leading-[18px] lg:text-[16px] lg:leading-[24px] bg-[#04177F]  w-[80%] py-[10px] lg:rounded-[12px] lg:py-[10px] rounded-[4.61px]"
+                    >
+                      Upload
+                    </button>
+                  </div>
+                </div>
+              </Modal>
+            )}
+          </form>
+
+          {idPopVerified && (
+            <Modal>
+              <div
+                className={`confirm2 ${styles.inputPin} ${
+                  toggleSideBar
+                    ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
+                    : "lg:w-[40%]"
+                }
+               relative md:w-[55%] w-[90%] flex flex-col justify-between md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
+              >
+                <div className="absolute z-0 right-0" style={{ zIndex: 0 }}>
+                  <img
+                    src={PopUpGreen}
+                    alt=""
+                    className="md:hidden rounded-tr-[10px]"
+                  />
+                  <img
+                    src={PopUpGreenTab}
+                    alt=""
+                    className="hidden md:block lg:hidden rounded-tr-[10px]"
+                  />
+                  <img
+                    src={PopUpGreenDeskTop}
+                    alt=""
+                    className="hidden lg:block rounded-tr-[20px]"
+                  />
+                </div>
 
                 <div className="relative z-10">
                   <p
-                    className={`text-[12px] px-[20px] md:text-[16px] lg:text-[18px] 
-                  font-semibold text-center mt-[4%] lg:my-[%] z-[1000] ${styles.overlayText}`}
+                    className={`text-[12px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[4%] lg:my-[%] z-[1000] ${styles.overlayText}`}
                   >
                     Your request has been submitted successfully. You can check
                     your ID Status in the next 24 hours.
@@ -903,14 +906,12 @@ Confirming your identity ensures that the person accessing the account is indeed
                     setIdNumber(idNumber);
                     setIdResult(idResult);
                   }}
-                  className={`my-[5%] bg-[#04177f] w-[90%] flex 
-                justify-center items-center mx-auto cursor-pointer text-[10px] 
+                  className={`my-[5%] bg-[#04177f] w-[90%] flex justify-center items-center mx-auto cursor-pointer text-[10px] 
                 font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
                 >
                   Done
                 </button>
               </div>
-              
             </Modal>
           )}
         </div>

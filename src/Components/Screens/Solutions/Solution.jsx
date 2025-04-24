@@ -59,7 +59,7 @@ export const Solution = () => {
           </div>
           <img
             className=" mx-auto w-[60px] h-[60px] md:mx-[0] lg:w-[100px] lg:h-[100px]"
-            src="./Images/solutionimages/ba1.png"
+            src="./Images/solutionImages/ba1.png"
             alt="/"
           />
           <div className="text-[12px] text-justify md:w-[273px] lg:w-[456px] lg:text-[18px]">
@@ -76,7 +76,7 @@ export const Solution = () => {
           </div>
           <img
             className="mx-auto w-[60px] h-[60px] md:mx-[0] lg:w-[100px] lg:h-[100px]"
-            src="./Images/solutionimages/ba2.png"
+            src="./Images/solutionImages/ba2.png"
             alt="/"
           />
           <div className="text-[12px] text-justify md:w-[273px] lg:w-[456px] lg:text-[18px]">
@@ -96,7 +96,7 @@ export const Solution = () => {
           </div>
           <img
             className=" mx-auto w-[60px] h-[60px] md:mx-[0] lg:w-[100px] lg:h-[100px]"
-            src="./Images/solutionimages/ba3.png"
+            src="./Images/solutionImages/ba3.png"
             alt="/"
           />
           <div className="text-[12px] text-justify md:w-[273px] lg:w-[456px] lg:text-[18px]">
@@ -112,7 +112,7 @@ export const Solution = () => {
           </div>
           <img
             className="mx-auto w-[60px] h-[60px] md:mx-[0] lg:w-[100px] lg:h-[100px]"
-            src="./Images/solutionimages/ba4.png"
+            src="./Images/solutionImages/ba4.png"
             alt="/"
           />
           <div className="text-[12px] text-justify md:w-[273px] lg:w-[456px] lg:text-[18px]">
@@ -129,7 +129,7 @@ export const Solution = () => {
       <div id="ecommerce" className="bg-[#ffcc8997] mb-[30%] mx-[-6%] py-[10%] md:mb-[20%] md:flex md:justify-center md:items-center lg:mx-[-10%] lg:px-[5%] lg:py-[5%]">
         <img
           className="mb-[10%] h-[240px] w-[237px] mx-auto md:mb-[0] lg:w-[395px] lg:h-[400px]"
-          src="./Images/solutionimages/Image.png"
+          src="./Images/solutionImages/Image.png"
           alt="/"
         />
         <div className="mx-[5%]">
@@ -155,7 +155,7 @@ export const Solution = () => {
           </div>
           <img
             className=" mx-auto w-[60px] h-[60px] md:mx-[0] lg:w-[100px] lg:h-[100px]"
-            src="./Images/solutionimages/ba5.png"
+            src="./Images/solutionImages/ba5.png"
             alt="/"
           />
           <div className="text-[12px] text-justify md:w-[273px] lg:w-[456px] lg:text-[18px]">
@@ -172,7 +172,7 @@ export const Solution = () => {
           </div>
           <img
             className="mx-auto w-[60px] h-[60px] md:mx-[0] lg:w-[100px] lg:h-[100px]"
-            src="./Images/solutionimages/ba6.png"
+            src="./Images/solutionImages/ba6.png"
             alt="/"
           />
           <div className="text-[12px] text-justify md:w-[273px] lg:w-[456px] lg:text-[18px]">
@@ -193,7 +193,7 @@ export const Solution = () => {
           </div>
           <img
             className=" mx-auto w-[60px] h-[60px] md:mx-[0] lg:w-[100px] lg:h-[100px]"
-            src="./Images/solutionimages/ba7.png"
+            src="./Images/solutionImages/ba7.png"
             alt="/"
           />
           <div className="text-[12px] text-justify md:w-[273px] lg:w-[456px] lg:text-[18px]">
@@ -210,7 +210,7 @@ export const Solution = () => {
           </div>
           <img
             className="mx-auto w-[60px] h-[60px] md:mx-[0] lg:w-[100px] lg:h-[100px]"
-            src="./Images/solutionimages/ba8.png"
+            src="./Images/solutionImages/ba8.png"
             alt="/"
           />
           <div className="text-[12px] text-justify md:w-[273px] lg:w-[456px] lg:text-[18px]">
@@ -228,7 +228,7 @@ export const Solution = () => {
       <div id="convert" className="bg-[#0CBC8B] mb-[30%] mx-[-6%] py-[10%] md:mb-[20%] md:flex md:justify-center md:items-center lg:mx-[-10%] lg:px-[5%] lg:py-[5%]">
         <img
           className="mb-[10%] h-[240px] w-[237px] mx-auto md:mb-[0] lg:w-[395px] lg:h-[400px]"
-          src="./Images/solutionimages/Image2.png"
+          src="./Images/solutionImages/Image2.png"
           alt="/"
         />
         <div className="mx-[5%]">

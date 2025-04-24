@@ -6,19 +6,20 @@ import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 
 function NgnVirtualAccount(Data) {
   const { isDarkMode,
-     bankNameState,
-      accountNameState, 
-      accountNumberState } = useContext(ContextProvider)
+    bankNameState,
+    accountNameState,
+    accountNumberState } = useContext(ContextProvider)
 
   const accNoRef = useRef(null);
   const accNameRef = useRef(null);
   const bankNameRef = useRef(null);
 
-  const formatAccountNumber = (text) => {
-    if ( text !== '') {
-      return text.substring(0, 4) + ' xxxx xxxx'
-    }
-  }
+
+  // const formatAccountNumber = (text) => {
+  //   if ( text !== '') {
+  //     return text.substring(0, 4) + ' xxxx xxxx'
+  //   }
+  // }
 
   const handleCopyCombineText = () => {
 
@@ -32,9 +33,10 @@ function NgnVirtualAccount(Data) {
     const combineText = `${text_1}\n${text_2}\n${text_3}`
 
     navigator.clipboard.writeText(combineText)
-    .then(() => {
-      alert('Copied to clipboard')})
-    .catch((error) => console.log('Unable to copy details', error));
+      .then(() => {
+        alert('Copied to clipboard')
+      })
+      .catch((error) => console.log('Unable to copy details', error));
   }
 
   const handleShareCombineText = () => {
@@ -42,7 +44,7 @@ function NgnVirtualAccount(Data) {
     const value_1 = bankNameRef.current.innerText;
     const value_2 = accNameRef.current.innerText;
     const value_3 = accNoRef.current.innerText;
-    
+
     const combineText = {
       Bank_Name: value_1,
       Account_Name: value_2,
@@ -51,8 +53,8 @@ function NgnVirtualAccount(Data) {
 
     if (navigator.share) {
       navigator.share(combineText)
-      .then(() => console.log('Details shared successfully'))
-      .catch(() => console.log('navigator.share is not supported'))   
+        .then(() => console.log('Details shared successfully'))
+        .catch(() => console.log('navigator.share is not supported'))
     } else {
       console.log('navigator.share is not supported')
     }
@@ -62,19 +64,20 @@ function NgnVirtualAccount(Data) {
     const text = accNoRef.current.innerText;
 
     navigator.clipboard.writeText(text)
-    .then(() => {
-      alert('Copied to clipboard')})
-    .catch((error) => console.log('Unable to copy text', error));
+      .then(() => {
+        alert('Copied to clipboard')
+      })
+      .catch((error) => console.log('Unable to copy text', error));
   }
-// To get Data from LocalStorage
-const VerifyRef = useRef()
-Data = GetLocalStorage();
-useEffect(()=> {
-  VerifyRef.current = Data;
- 
-},[Data])
+  // To get Data from LocalStorage
+  const VerifyRef = useRef()
+  Data = GetLocalStorage();
+  useEffect(() => {
+    VerifyRef.current = Data;
 
-return (
+  }, [Data])
+
+  return (
     <DashBoardLayout>
       <div className="flex flex-col justify-between h-full">
         <div>
@@ -110,20 +113,26 @@ return (
             </div>
           </div>
 
-          <div className="flex flex-col justify-center md:py-[14px] lg:py-[20px]  mt-[25.39px] md:mt-[35px] lg:mt-[60px] w-full h-[90px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] bg-[#92abfe]/[0.5] px-[16px] lg:px-[50px] lg:rounded-[20px]">
+          <div className="flex flex-col justify-center mt-[25.39px] md:mt-[35px] lg:mt-[60px] w-full h-[90px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] bg-[#92abfe]/[0.5] px-[16px] lg:px-[50px] lg:rounded-[20px]">
             <div className="">
               <div className="mb-[8px] lg:mb-[15px] flex lg:gap-x-[20px] gap-x-[15px] font-semibold">
                 <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[15%] md:w-[20%] w-[30%]">BANK NAME</p>
-                <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[85%] md:w-[20%] w-[70%]" ref={bankNameRef}>{bankNameState ? bankNameState : Data.aremxyBankName ?Data.aremxyBankName : ""}</p>
+                <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[85%] md:w-[20%] w-[70%]" ref={bankNameRef}>{bankNameState ? bankNameState : Data.aremxyBankName ? Data.aremxyBankName : ""}</p>
               </div>
               <div className="mb-[8px] lg:mb-[15px] flex lg:gap-x-[20px] gap-x-[15px] font-semibold">
-                <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[15%] md:w-[20%] w-[30%]">ACCOUNT NAME</p> 
-                <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[85%] md:w-[20%] w-[70%]" ref={accNameRef}>{accountNameState ? accountNameState.slice(11) : Data.aremxyAccountName ? Data.aremxyAccountName.slice(11) : ""}</p>
+                <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[15%] md:w-[20%] w-[30%]">ACCOUNT NAME</p>
+                <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[85%] md:w-[20%] w-[70%]" ref={accNameRef}>
+                  {
+                    (accountNameState || Data.aremxyAccountName) ?
+                      (accountNameState || Data.aremxyAccountName).split('/')[1] || ""
+                      :
+                      ""
+                  }</p>
               </div>
               <div className=" flex lg:gap-x-[20px] gap-x-[15px] font-semibold">
                 <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[15%] md:w-[20%] w-[30%]">ACCOUNT NUMBER</p>{" "}
                 <div className="flex items-center lg:w-[85%] md:w-[20%] w-[70%]">
-                  <p className="md:text-[10px] text-[8px] lg:text-[16px]" ref={accNoRef}>{accountNumberState ?  formatAccountNumber(accountNumberState) : Data.aremxyAccountNumber ? `${Data.aremxyAccountNumber.slice(0,4)}********` : ""}</p>
+                  <p className="md:text-[10px] text-[8px] lg:text-[16px]" ref={accNoRef}>{accountNumberState ? accountNumberState : Data.aremxyAccountNumber ? Data.aremxyAccountNumber : ""}</p>
                   <button onClick={handleCopyText}>
                     <img
                       src="Images/virtual-account/copy.png"
@@ -139,25 +148,25 @@ return (
           <div className='mt-[25.39px] md:mt-[35px] lg:mt-[60px] flex items-center justify-between'>
             <Link to='/CardPayment' className='bg-primary text-white text-[7px] leading-[10.5px] rounded-[4px] md:rounded-[7px] md:text-[9.17px] md:leading-[13.75px] flex items-center lg:text-[16px] lg:leading-[24px] justify-center py-[5px] w-[85.5px] md:w-[124px] lg:w-[231px] lg:py-[10px]'>
               <div className='mr-1 w-[11.38px] h-[11.38px] md:w-[19.48px] md:h-[19.48px] lg:w-[34px] lg:h-[34px]'>
-                <img src="./Images/wallet/card-add.png" alt="" className='object-cover w-full'/>
+                <img src="./Images/wallet/card-add.png" alt="" className='object-cover w-full' />
               </div>
               <h2>Fund with card</h2>
             </Link>
             <button
-              onClick={handleCopyCombineText} 
+              onClick={handleCopyCombineText}
               className='bg-primary text-white text-[7px] leading-[10.5px] md:text-[9.17px] md:leading-[13.75px] rounded-[4px] md:rounded-[7px] flex items-center lg:text-[16px] lg:leading-[24px] justify-center py-[5px] w-[85.5px] md:w-[124px] lg:w-[231px] lg:py-[10px]'
-              >
+            >
               <div className='mr-1 w-[11.38px] h-[11.38px] md:w-[19.48px] md:h-[19.48px] lg:w-[34px] lg:h-[34px]'>
-                <img src="./Images/wallet/wallet-add.png" alt="" className='object-cover w-full'/>
+                <img src="./Images/wallet/wallet-add.png" alt="" className='object-cover w-full' />
               </div>
               <h2>Copy</h2>
             </button>
             <button
-              onClick={handleShareCombineText} 
+              onClick={handleShareCombineText}
               className='bg-primary text-white text-[7px] leading-[10.5px] md:text-[9.17px] md:leading-[13.75px] rounded-[4px] md:rounded-[7px] flex items-center lg:text-[16px] lg:leading-[24px] justify-center py-[5px] w-[85.5px] md:w-[124px] lg:w-[231px] lg:py-[10px]'
-              >
+            >
               <div className='mr-1 w-[11.38px] h-[11.38px] md:w-[19.48px] md:h-[19.48px] lg:w-[34px] lg:h-[34px]'>
-                <img src="./Images/wallet/recovery-convert.png" alt="" className='object-cover w-full'/>
+                <img src="./Images/wallet/recovery-convert.png" alt="" className='object-cover w-full' />
               </div>
               <h2>Share</h2>
             </button>
@@ -175,9 +184,8 @@ return (
           </h2>
           <Link
             to={`/ContactUs`}
-            className={` ${
-              isDarkMode ? "border" : "bg-primary"
-            } text-[8px] leading-[12px] text-white  px-2 py-1 rounded-full md:text-[10px] lg:text-[12px]`}
+            className={` ${isDarkMode ? "border" : "bg-primary"
+              } text-[8px] leading-[12px] text-white  px-2 py-1 rounded-full md:text-[10px] lg:text-[12px]`}
           >
             Contact Us
           </Link>

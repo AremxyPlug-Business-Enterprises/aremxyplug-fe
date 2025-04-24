@@ -344,9 +344,9 @@ md:pr-[5.282px] md:pl-[5.867px]
 lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
 font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
     lg:text-[16px] lg:leading-[20.8px] cursor-pointer  focus:outline-none border rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.5px] sm:p-3 sm:text-lg
-       ${isDarkMode 
+     ${isDarkMode 
       ? "bg-black text-white border border-white" 
-      : "border-[#9C9C9C] hover:bg-[#EDEAEA] bg-white text-black"
+      : "bg-white text-black border-[#9C9C9C]"
   }`}
                       readOnly />
 
@@ -364,7 +364,7 @@ font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
            w-[100%] lg:h-225px md:h-[210px]  
              ${isDarkMode 
       ? "bg-black text-white border border-white" 
-      : ""
+      : "text-[#7C7C7C] bg-white"
   }`}>
                       {(necoOptions.map(option => {
                         return (
@@ -379,9 +379,9 @@ font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
                 pl-[10px] font-[500]  shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
            md:text-[13.227px] md:leading-[17.195px]
            lg:text-[16px] lg:leading-[20.8px] cursor-pointer  
-            ${isDarkMode 
+           ${isDarkMode 
       ? "bg-black text-white border border-white" 
-      : "hover:bg-[#EDEAEA] text-[#7C7C7C]"
+      : "text-[#7C7C7C] bg-white"
   }`}
                             key={option.id}>
                             {option.quantity}
