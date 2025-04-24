@@ -18,28 +18,33 @@ import { WalletInOutFlows } from "../DashboardComponents/WalletInOutFlows";
 import { RecentTransaction } from "../DashboardComponents/RecentTransaction";
 import { Link } from "react-router-dom";
 import { Loader } from "../../Loader/Loader";
+import { BalanceLoading } from "../../Loader/Loader";
 import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 import { CheckVirtualAcc } from "../../ApiCollection.jsx/ApiBuck";
+
 import axios from "axios";
-export const MainDashboard = (Data, balance) => {
+export const MainDashboard = (Data) => {
   const { setHideNavbar, toggleSideBar, isDarkMode,
     dashLoading, bankNameState, accountNameState, accountNumberState,
     customerDetail, setDashLoading, setVirtualAccCreated, 
     setBankNameState, setAccountNameState, setAccountNumberState, 
-    twoStepVerificationSuccess,setTwoStepVerificationSuccess
+    twoStepVerificationSuccess,setTwoStepVerificationSuccess, networkStatus,  setNetworkStatus,
+    newBalance, setNewBalance
   } = useContext(ContextProvider);
   //const {account_no, bank_name, account_name} = virtualAccCreated;
- 
+
   const [visible, setVisibility] = useState(true);
   const [activeButtons, setActiveButtons] = useState([true, false, false]);
   const [blur, setBlur] = useState(false);
   const [blurTwo, setBlurTwo] = useState(false);
+  
    //const [blurThree, setBlurThree] = useState(false);
   const textRef = useRef(null);
   const [selected, setSelected] = useState("");
   const [selected2, setSelected2] = useState("");
   const [symbol, setSymbol] = useState("₦");
- 
+ const [balanceLoading, setBalanceLoading] = useState(false)
+ const [balanceValue, setBalanceValue] = useState(true);
   const handleCopyClick = () => {
     const text = textRef.current.innerText;
     navigator.clipboard
@@ -62,17 +67,7 @@ export const MainDashboard = (Data, balance) => {
 
  // Handling the getLocalStoarge information by passing it to data and making available through
  // the body of the  component
-const ValueRef = useRef()
- Data = GetLocalStorage()
-  useEffect(() => {
-    ValueRef.current = Data;
-
-    setNav();
-    return () => {
-      setHideNavbar(false);
-    };
-    // eslint-disable-next-line
-  }, []);
+ 
 //const ConfirmAcc = localStorage.getItem("ConfirmAcc")
 //console.log(Data)
   const handleClick = (index) => {
@@ -102,20 +97,14 @@ if((clickedoption === "NGN") && blur === true){
      setBlur(false);
      setSymbol("₦")
      
-    }else if(clickedoption === "USD" || selected2 === "USD" ){
-      setSymbol("$")
-      setBlur(true);
-    }else if(clickedoption === "GBP" || selected2 === "GBP"){
-      setSymbol("£")
-      setBlur(true);
-    }else if(clickedoption === "AUD" || selected2 === "AUD"){
-      setSymbol("AU$")
-      setBlur(true);
-    }else if(clickedoption === "KES" || selected2 === "KES"){
-      setSymbol("KSh")
-      setBlur(true);
-    }else if(clickedoption === "EUR" || selected2 === "EUR"){
-      setSymbol("€")
+    }else if(clickedoption !== "NGN"){
+      setSymbol(clickedoption === "USD"
+       ? "$" : clickedoption === "GBP"
+        ? "£" : clickedoption === "AUD"
+        ? "AU$" : clickedoption === "EUR"
+        ? "€" : clickedoption === "KES"
+        ? "KSh" : ""
+      )
       setBlur(true);
     }
     // setBlurTwo(
@@ -141,7 +130,35 @@ if((clickedoption === "NGN") && blur === true){
     return;
   };
 
-const [balanceNgn, setBalanceNgn] =useState(true);
+  //Connectio check Code
+  
+  //   const [networkType, setNetworkType] = useState('');
+  //   const [downlink, setDownlink] = useState('');
+  //   const [rtt, setRtt] = useState('');
+  
+  //   useEffect(() => {
+  //     const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  // console.log(connection)
+  //     if (connection) {
+  //       setNetworkType(connection.effectiveType);
+  //       setDownlink(connection.downlink);
+  //       setRtt(connection.rtt);
+  
+  //       const handleConnectionChange = () => {
+  //         setNetworkType(connection.effectiveType);
+  //         setDownlink(connection.downlink);
+  //         setRtt(connection.rtt);
+  //       };
+  //       connection.addEventListener('change', handleConnectionChange);
+
+  //       return () => {
+  //         connection.removeEventListener('change', handleConnectionChange);
+  //       };
+  //     }
+  //     //eslint-disable-next-line
+  //   }, []);
+  
+
 
   //Generating an account in the dashboard
   const GenerateVirtualAccount = async(AuthUsed)=>{
@@ -179,32 +196,78 @@ const [balanceNgn, setBalanceNgn] =useState(true);
       }
 
       //Code to gget the balance
-      const GenerateAccountBalance = async(balance)=>{
+      const GenerateAccountBalance = async()=>{
         const authToken = localStorage.getItem("authorisedLogin")
         const getToken = localStorage.getItem("getToken")
-        if(authToken || getToken){
+        if((authToken || getToken) && navigator.onLine){
         try{
-        setDashLoading(true)
+          setBalanceLoading(true)
          const url = "https://aremxyplug.onrender.com/api/v1/balance"
          const response = await axios.get(url,{ headers : {"Content-Type" : "application/json",
            Authorization : authToken || getToken},
         })
-          if(response.status === 200 || 201){
-             setBalanceNgn(true);
-             const dataBalance =  response.data.data.balance;
-             balance = dataBalance;
+           if(response){
+            console.log(response)
+          if(response.status && (response.status === 200 || 201)){
+             setBalanceValue(true);
+           const checkBal =  response.data.data.data.balance;
+           console.log(checkBal);
+           setNewBalance(checkBal)
+             
           }
-        }catch(error){
-          if( error.response && (error.response.status === 400 || 401)){
-           setBalanceNgn(false)
-         }else if(error.response.status === 404){
-         alert("Check your Network connection")
-         setBalanceNgn(false)
-          }
-        }finally{
-          setDashLoading(false);
-        }}
+        }else if((response === undefined || null) || !response) {
+           setBalanceValue(false);
         }
+        }catch(error){
+          if( error.response && (error.response.status === 400 || error.response.status === 401)){
+           setBalanceValue(false)
+         }else if(error.response.status === 404){
+     setBalanceValue(false)
+          }else if(error.response.status === undefined) {
+     setBalanceValue(false)
+          }
+        
+        }finally{
+          setBalanceLoading(false);
+        }}
+       
+        }
+
+      //  const RunVirtualBalance = async()=> {
+      //     if(dataStatus === true || educationPinStatus === true || subscriptionStatus === true || airtimeStatus === true){
+      //     await  GenerateAccountBalance();
+      //     }
+      //   }
+      const HandleNetworkStatus =()=> {
+        if(navigator.onLine){
+          alert("You are now Online")
+        }else{
+          setNetworkStatus(false)
+          setBalanceValue(false);
+          alert("You are Offline");
+        }
+      }
+      
+
+     const ValueRef = useRef()
+   
+ Data = GetLocalStorage()
+  useEffect(() => {
+    ValueRef.current = Data;
+    GenerateAccountBalance();
+    setNav();
+    HandleNetworkStatus()
+    return () => {
+      setHideNavbar(false);
+    };
+    //eslint-disable-next-line
+   }, [networkStatus]); 
+        //To help check the balance when transaction has been carried out
+      //   const  PassedCondition = (dataStatus || educationPinStatus || subscriptionStatus || airtimeStatus)
+      //   useEffect(()=> {
+      // GenerateAccountBalance();
+      //    },[PassedCondition])
+      // alert(navigator.onLine);
 return (
     <div className="h-[150%]">
       {/* ==============TOP BAR========== */}
@@ -226,7 +289,7 @@ return (
           {/* ==============HERO SECTION========== */}
           <Swiper
             autoplay={{
-              delay: 3000,
+              delay: 3000, 
               disableOnInteraction: false,
             }}
             pagination={{
@@ -304,13 +367,13 @@ return (
         
           <div className={` flex flex-col md:flex-row gap-5 mt-[10%] md:mt-4
             lg:mt-12 lg:rounded-[16.32px]  w-full`}>
+             
             <div
-              className={`${
-                isDarkMode ? "bg-[#000] border border-[#fff]" : "bg-[#e9edfb]"
-              } w-[100%] md:w-1/2 flex flex-col h-auto rounded-[8px] md:rounded-[10px] lg:rounded-[16.32px]
-              lg:p-[20px] md:p-[15px] p-[10px] justify-between`}
-            >
-              <div className ="flex justify-between items-center">
+              className={`  w-[100%] md:w-1/2 flex flex-col h-auto rounded-[8px] md:rounded-[10px] lg:rounded-[16.32px]
+              lg:p-[20px] md:p-[15px] p-[10px] justify-between ${
+                isDarkMode ? "bg-[#000] border border-[#fff]" : "bg-[#e9edfb]"} 
+               `}>
+              <div className ="flex justify-end w-full items-center">
                 <Link to="/wallet"
                   className={`text-[10px] md:text-[11px] lg:text-[12px] font-[600] ${
                     isDarkMode ? "border bg-black" : "bg-[#04177f]"
@@ -318,11 +381,7 @@ return (
                 >
                   View Wallets
                 </Link>
-                <p onClick={()=> {
-                  GenerateAccountBalance();
-                }} className="lg:text-[12px] text-white p-2 border  rounded-[10px]  bg-blue-900  text-[8px] font-[400] lg:font-[500] leading-[12px] lg:leading-[18px]">
-                  Refresh
-                </p>
+              
               </div>
               <p 
                 className={`cursor-pointer ${
@@ -331,22 +390,25 @@ return (
               >
                 Available Balance
               </p>
+
               {blur && (
                 <div
                   className={`${
                     isDarkMode ? " text-[#fff]" : "text-[#04177f]"
                   } ${
                     toggleSideBar
-                      ? "backdrop-blur-[4.5px] font-bold text-[13px] pt-[4%] md:absolute md:w-[30%]  md:ml-[3%] md:text-[19px] md:text-center lg:absolute lg:mt-2 lg:ml-[2%] lg:w-[33%] lg:text-[24px]  text-[#04177f] lg:pb-[70px]"
-                      : "backdrop-blur-[4.5px] absolute w-[75%] md:w-[30%] text-[13px] font-bold text-center mt-[2%] md:mt-[5%] ml-[6%] pt-[8%] md:pt-[4%] md:text-[15px] md:pb-[6%] lg:pb-[8%]  md:text-extrabold lg:text-[24px] lg:mt-[0px] lg:ml-[4%] lg:w-[37%] lg:pt-[%] "}
+                      ? "backdrop-blur-[6px] font-bold text-[13px] pt-[4%] md:absolute md:w-[30%]  md:ml-[3%] md:text-[19px] md:text-center lg:absolute  lg:mt-[3%] lg:ml-[2%] lg:w-[33%] lg:text-[24px]  text-[#04177f] lg:pb-[50px]"
+                      : "backdrop-blur-[6px] absolute w-[75%] md:w-[30%] text-[13px] font-bold text-center mt-[9.5%] md:mt-[3%] ml-[6%] pt-[4%] md:pt-[4%] md:text-[15px] md:pb-[6%] lg:pb-[5%]  md:text-extrabold lg:text-[24px] lg:mt-[3%] lg:ml-[4%] lg:w-[37%] lg:pt-[%] "}
                     ${activeButtons[1] 
-                    ? "h-[130px] md:h-[100px] lg:h-[220px] md:pt-[8%]" :" h-[70px] md:h-[40px] lg:h-[90px] md:pt-[4%]"}`}>
+                    ? "h-[100px] md:h-[100px] lg:h-[200px] md:pt-[8%]" :"h-[50px]  md:h-[40px] lg:h-[60px] md:pt-[2%]"}`}>
                   This feature is currently not available...
                 </div>
               )}
-             
+            
               {/* ================= */}
+             
               {!activeButtons[2] ? (
+                balanceValue === true ? (
                 <div
                   className={`${toggleSideBar ? "lg:pt-[7%]" : ""} ${
                     styles.viewBalance
@@ -368,8 +430,8 @@ return (
                     <option  value="KES">KES</option>
                   </select>
                  
-                  {balanceNgn === true ? (
-                    visible ? (
+                  
+                   {visible ? (
                     <span
                       className={` ${
                         toggleSideBar ? "lg:text-[19px]" : "lg:text-[37px]"
@@ -379,12 +441,15 @@ return (
                     </span>
                   ) : (
                     <span className="text-[19px] leading-normal lg:text-[37px]">
-                    {symbol}0.00
+                      {balanceLoading === true ? (
+  <div className="flex justify-center items-center">
+  <BalanceLoading/>
+      </div>
+                      ) :(
+                      
+                        symbol === "₦" ? `${symbol+newBalance}.00` : `${symbol}0.00`
+                      )}
                     </span>
-                    )):(
-                      <div>
-          {symbol}0.00
-                      </div>
                     )}
 
                   <div onClick={visibilityHandler} className=" text-[#92ABFE]">
@@ -393,12 +458,20 @@ return (
                         <AiFillEye />
                       </div>
                     ) : (
-                      <div className={`lg:text-[40px] ${styles.eye}`}>
+                      <div className={`lg:text-[40px] ${styles.eye}`} 
+                      >
                         <AiFillEyeInvisible />
                       </div>
                     )}
                   </div>
-                </div>
+                </div>) :  (
+                  <div className=" w-full flex justify-center backdrop-blur-[6px] lg:mt-[9px] lg:h-[40px]">
+       <p className="lg:text-[16px] text-[10px] leading-[16px] lg:leading-[24px] font-[400] lg:font-[500] mt-[5px]">
+         Check your network connection
+       </p>
+                    </div>
+                 )
+                // Fiat Wallets
               ) : (
                 <div
                   className={`${toggleSideBar ? "lg:pt-[7%]" : ""} ${
@@ -500,6 +573,9 @@ return (
                 </div>
               </div>
             </div>
+            
+            
+               
 
             {/* ==========VIRTUAL ACCOUNTS============= */}
             {dashLoading ? (<div className=" flex justify-center items-center md:w-1/2  lg:h-[200px] w-[100%] h-[100px]">
@@ -513,8 +589,8 @@ return (
               flex flex-col justify-between lg:p-[20px] md:p-[15px] p-[10px]`} >
                 <div className="h-full w-full">
          {Data.ConfirmAcc === "true" ? (
-          <div ClassName="h-full w-full flex flex-col">
-              <Link to="/virtual-account">
+          <div className="h-full gap-[15px] jsutify-between w-full flex flex-col">
+              <Link to="/virtual-account" className="w-full h-[15%">
                 {" "}
                 <button
                   className={`text-[10px] md:text-[11px] mb-[15px] md:mt-[0px] lg:text-[12px] font-[600]  ${
@@ -522,13 +598,15 @@ return (
                   } ${styles.viewWallet}`}
                 >
                   View Accounts
-                </button>
+                </button> 
               </Link>
-              <div>
-                <div className="flex w-full md:w-auto mt-[8%] gap-[30px] md:mt-[5%] lg:mt-[9%]">
+              {/* <div> */}
+              <div className=" w-full justify-center  flex flex-col h-[85%] gap-[10px]">
+                <div className="flex flex-col md:gap-[10px] gap-[5px]">
+                <div className="flex w-full items-center md:w-auto  gap-[30px] ">
                   <p 
                     className={`${styles.GVA} ${
-                      toggleSideBar ? "lg:text-[10px]" : "lg:text-[24px]"
+                      toggleSideBar ? "lg:text-[16px]" : "lg:text-[24px]"
                     } text-[11px] font-extrabold cursor-pointer`}
                   >
                     Global Virtual Accounts
@@ -548,20 +626,20 @@ return (
                     <option value="AUD">AUD</option>
                     <option value="KES">KES</option>
                   </select>
-                </div>
+              </div>
                 <p className="w-[50%] text-[8px] md:text-[10px] text-[#04177f] leading-normal font-bold lg:text-[11px]">
                   The below accounts are reserved for your wallet only.
                 </p>
-              </div>
-
+           </div>
+     <div className="">
               {blurTwo && (
                 <div
-                  className={` ${
+                  className={`flex justify-center ${
                     isDarkMode ? " text-[#fff]" : "text-[#04177f]"
                   } ${
                     toggleSideBar
-                      ? "backdrop-blur-[5px]  font-extrabold absolute lg:h-[22%] lg:w-[35%] lg:ml-[-8px] lg:flex lg:justify-start lg:mt-[2%] lg:pt-[2%] lg:text-[25px] lg:text-[#04177f]"
-                      : "backdrop-blur-[4.5px] absolute text-[14px] h-[13%] w-[85%] mt-[4%] lg:mt-[0%] font-extrabold flex justify-start pt-[7%] md:h-[11%] md:text-[25px] md:pt-[5%] lg:pt-[3%] lg:w-[45%] lg:h-[19%] lg:ml-[-1%]"
+                      ? "backdrop-blur-[5px]  font-extrabold absolute lg:h-[21%] lg:w-[35%] lg:ml-[-8px] lg:flex lg:justify-start lg:mt-[2%] lg:pt-[2%] lg:text-[25px]"
+                      : "backdrop-blur-[4.5px] absolute text-[14px] h-[13%] w-[85%] mt-[4%] lg:mt-[0%] font-extrabold flex justify-start pt-[7%] md:h-[11%] md:text-[25px] md:pt-[5%] lg:pt-[3%] lg:w-[43%] lg:h-[22%] lg:ml-[-1%]"
                   } `}
                 >
                   Coming Soon...
@@ -610,12 +688,40 @@ return (
                
                 </div>
                 </div>
+                </div>
+                </div>
+                
                 ): (
                   <div className="h-full  w-full gap-[15px] lg:gap-[25%] flex flex-col items-center justify-center ">
-                    <h2 className={`text-blue-900 text-[12px] leading-[16px] md:text-[14px]
-                       md:leading-[18px] lg:text-[16px] font-[600]  ${isDarkMode ? "text-white" : "text-black"}`}>
-                      Global Virtual Account
-                      </h2>
+                   <div>
+                <div className="flex w-full md:w-auto mt-[8%] gap-[30px] md:mt-[5%] lg:mt-[9%]">
+                 <p 
+                    className={`${styles.GVA} ${
+                      toggleSideBar ? "lg:text-[10px]" : "lg:text-[24px]"
+                    } text-[11px] font-extrabold cursor-pointer`}
+                  >
+                    Global Virtual Accounts
+                  </p>
+
+                  <select
+                    className={`${styles.selected}`}
+                    name="curr"
+                    id="curr"
+                    onChange={handleSelectedOption}
+                    value={selected}
+                  >
+                    <option value="NGN">NGN</option>
+                    <option  value="USD">USD</option>
+                    <option value="GBP">GBP</option>
+                    <option value="EUR">EUR</option>
+                    <option value="AUD">AUD</option>
+                    <option value="KES">KES</option>
+                  </select>
+                </div>
+                <p className="w-[50%] text-[8px] md:text-[10px] text-[#04177f] leading-normal font-bold lg:text-[11px]">
+                  The below accounts are reserved for your wallet only.
+                </p>
+              </div>
                       <div className="flex flex-col h-[45%] gap-[8px] lg:gap-[25%]">
               <p className={`text-[12px] md:text-[14px] lg:text-[16px] leading-[16px] 
                  md:leading-[18px] lg:leading-[22px] font-[500] 
@@ -630,35 +736,37 @@ return (
                 {/* This is Collected for secure and cyber-attack-free transactions among AremxyPlug's users*/}
                 </p>
                 </div>
-                </div>
-                )}
-                </div>
-                {/* Point of implementation */}
-              <Link to={ (Data.ConfirmId === "false" ||  Data.ConfirmBvn === "false") && Data.ConfirmAcc === "false" ?  {
+                <Link to={ (Data.ConfirmId === "false" ||  Data.ConfirmBvn === "false") && Data.ConfirmAcc === "false" ?  {
     pathname: "/ProfileSettingMain",
     state: { verificationOpen: true } 
   } : null } onClick={()=> {
-    if((Data.ConfirmId === "true" ||  Data.ConfirmBvn === "true") && Data.ConfirmAcc === "false" ){
+    if((Data.ConfirmId === "true" ||  Data.ConfirmBvn === "true") && Data.ConfirmAcc === "false" && selected === "NGN" ){
      GenerateVirtualAccount()
     }
-  }}>
+  }  }>
                 {" "}
 
                 <button
                   className={`text-[10px] md:text-[11px] lg:text-[12px] font-[600] mt-[20px] lg:mt-[30px] ${
                     isDarkMode ? "border bg-black" : "bg-[#04177f]"
-                  } ${styles.viewWallet}`}
+                  } ${styles.viewWallet} ${selected !== "NGN" ? "bg-gray-400" : "bg-[#04177f]"}`}
                 >
-               {(Data.ConfirmId === "true" ||  Data.ConfirmBvn === "true") && Data.ConfirmAcc === "false"  ? "Generate" : `${(Data.ConfirmBvn === "true" || Data.ConfirmId === "true") && Data.ConfirmAcc === "true"
-               ?  "Generated" : "Verify"}`}
+               {(Data.ConfirmId === "true" ||  Data.ConfirmBvn === "true") && Data.ConfirmAcc === "false"  ? "Generate" : "Verify"
+               }
               
                
                 </button>
               </Link>
+                </div>
+                )}
+                </div>
+                {/* Point of implementation */}
+             
             </div>
                 )}
             {/* Stop*/}
-          </div>
+            </div>
+          
           {/* ================VIRTUAL ACCOUNT CLOSE=============== */}
 
           <div
@@ -756,6 +864,7 @@ return (
             </div>
           </div> 
       </div>
-    </div>
+      </div>
+  
   );
 };

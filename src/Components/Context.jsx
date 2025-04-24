@@ -945,7 +945,7 @@ export const Context = ({ children }) => {
   const [nabtebEducationPinEmail, setNabtebEducationPinEmail] = useState("");
   const [nabtebEducationAmount, setNabtebEducationAmount] = useState("₦");
   const [nabtebWalletBalance, setNabtebWalletBalance] = useState("");
-
+ const [newBalance, setNewBalance] = useState("");
   // PROFILE & ACCOUNT SETTINGS =========
   //============ Profile Page =========
   const [openImage, setOpenImage] = useState(false);
@@ -990,8 +990,11 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
   const [loginAuthorisation, setLoginAuthorisation] = useState(false);
   const [twoStepVerificationSuccess, setTwoStepVerificationSuccess]= useState(false);
  const [customerDetail, setCustomerDetail] = useState({});
-
- 
+const [airtimeStatus, setAirtimeStatus] = useState(false);
+const [dataStatus, setDataStatus] = useState(false);
+ const [educationPinStatus, setEducationPinStatus] = useState(false);
+ const [subscriptionStatus, setSubscriptionStatus] = useState(false);
+  const [networkStatus, setNetworkStatus] = useState(false);
  // Use Ref hook for user Deatils
 
 const [bankNameState, setBankNameState] = useState("")
@@ -1017,6 +1020,8 @@ const [idButtonState, setIdButtonState] = useState("Verify")
          setVerifyImage,
          idStatus,
          setIdStatus,
+         networkStatus,
+          setNetworkStatus,
 
     // ==================
     tfImage, settfImage,
@@ -1163,6 +1168,7 @@ const [idButtonState, setIdButtonState] = useState("Verify")
     isValue,
     logout,
     setLogout,
+    newBalance, setNewBalance,
 
     // Login
     showModal2,
@@ -1459,6 +1465,7 @@ const [idButtonState, setIdButtonState] = useState("Verify")
     showDropdownDstv,
     setShowDropdownDstv,
 
+
     //=======SHOWMAX
     confirmShowmaxPopup,
     setConfirmShowmaxPopup,
@@ -1527,6 +1534,11 @@ const [idButtonState, setIdButtonState] = useState("Verify")
     setNecoEducationAmount,
     necoWalletBalance,
     setNecoWalletBalance,
+    airtimeStatus, setAirtimeStatus,
+    educationPinStatus, setEducationPinStatus,
+    subscriptionStatus, setSubscriptionStatus,
+    dataStatus, setDataStatus,
+
 
     //==========   JAMB PINS =========
     jambQuantityResult,

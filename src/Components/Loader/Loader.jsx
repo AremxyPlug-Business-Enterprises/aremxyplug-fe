@@ -8,3 +8,8 @@ export const Loader = () => {
     </div>
   );
 };
+export const BalanceLoading = () => {
+  return (
+   <div className="balanceLoading"></div>
+   );
+};

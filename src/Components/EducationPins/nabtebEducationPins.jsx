@@ -40,7 +40,7 @@ useContext(ContextProvider);
 const {nabtebEducationPinPhone, setNabtebEducationPinPhone} = useContext(ContextProvider);
 const {nabtebEducationPinEmail, setNabtebEducationPinEmail} = useContext(ContextProvider);
 const {nabtebEducationAmount, setNabtebEducationAmount} = useContext(ContextProvider);
-const {nabtebWalletBalance, setNabtebWalletBalance } = useContext(ContextProvider);
+const {nabtebWalletBalance, setNabtebWalletBalance, setEducationPinStatus } = useContext(ContextProvider);
 
 // UseStates
 const [nabtebImageState, setNabtebImageState] = useState(arrowDown);
@@ -170,6 +170,7 @@ const handleNabtebSubmitPost = async(e) => {
     const response = await axios.post('https://aremxyplug.onrender.com/api/v1/edu', sendNabtebForm);
     if(response.status === "success" || 201 || "Successful" || 200){
       nabtebEduPinSuccess();
+      setEducationPinStatus(true);
     } 
     alert('submitted');
   }catch(error)  {
