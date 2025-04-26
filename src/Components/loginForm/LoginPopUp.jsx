@@ -405,7 +405,7 @@ return () => clearInterval(timer);
   const SendTransactPin = async()=>{
     const getToken = localStorage.getItem("getToken");
     const authToken = localStorage.getItem("authorisedLogin")
-   if(authToken || authToken){
+   if(authToken || getToken){
     setLoading(true)
   try{
    const forwardPin ={

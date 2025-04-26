@@ -16,7 +16,7 @@ import { AiFillEye } from "react-icons/ai";
 import OtpInput from "react-otp-input";
 import { Link } from "react-router-dom";
 import axios from 'axios';
-
+import { Loader } from "../../../Loader/Loader";
 const AEDC = () => {
 
   const { isDarkMode,
@@ -56,7 +56,7 @@ const AEDC = () => {
   const [transactionId, setTransactionId] = useState(false);
 
   const pointsEarned = "+2.00";
-
+const [loading, setLoading] = useState(false);
   // const handleValidate = () => {
 
   //   if (isEmailOrNumberValid(email) || isEmailOrNumberValid(number)) {
@@ -247,6 +247,7 @@ const AEDC = () => {
       console.log(data);
 
       try {
+        setLoading(true)
         const response = await axios.post(url, data);
         console.log(response.data);
         console.log(response.status);
@@ -265,6 +266,8 @@ const AEDC = () => {
       } catch (error) {
         console.error(error);
         return { statusCode: error.response.status, data: null };
+      }finally{
+        setLoading(false);
       }
     }
 
@@ -1009,6 +1012,11 @@ const AEDC = () => {
             </div>
           </div>
         </Modal>
+      )}
+      {loading && (
+       <Modal>
+        <Loader/>
+       </Modal>
       )}
 
     </DashBoardLayout>
