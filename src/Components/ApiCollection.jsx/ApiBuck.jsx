@@ -131,57 +131,39 @@ export const CheckVirtualAcc = async(authToken, customerDetail, setLoading,
 }
 }
 //API TO GET TO PURCAHSE TV SUBSCRIPTION
- const sendDataToBackend = async (decoder_type, plan, iuc_number, email, amount, phone, setErrorPurchase, setSuccessPurchase) => {
-   const apiUrl = "https://aremxyplug.onrender.com/api/v1/tvsub";
-
-   // Prepare the data to be sent in the request body
-   const requestData = {
-     decoder_type,
-     plan,
-     iuc_number,
-     email,
-     amount,
-     phone, 
-   };
-
-   console.log(requestData);
-
-   try {
-     // Send a POST request to the backend API using Axios
-     const response = await axios.post(apiUrl, requestData, {
-       headers: {
-         "Content-Type": "application/json",
-       },
-     });
-if(response.status === 201 || 200){
-  setSuccessPurchase(true);
-}
-     // Handle the response from the backend
-     console.log("Backend response:", response.data);
-   } catch (error) {
-     if(error && error.response.status === 400){
-        setErrorPurchase(true)
-     }else if(error  && error.response.status === 401){
-        alert("Session expired")
-        setErrorPurchase(true)
-     }else if (error && error.response.status === 500){
-        alert("Server Error: Try again some other time")
-        setErrorPurchase(true)
-     }else{
-        console.error("Error sending data to backend:", error);
-     }
-     // Handle any errors that occurred during the request
-   }
- };
+//CUSTOM FUNCTION FOR PURCHASE O ANY PLAN
+ 
  
 
 // THE CUSTOM API REQUEST FUNCTION HELP VERIFY USERS TRANSACTION PIN
 // FOR EACH PAGE
- 
+ //DESCRIPTION
+ //the function below is the function to verify user's transaction pin before 
+ //a transaction is successful, it includes the necessary authorization tokens to be carried out,
+ // make sure to always check your dev tools to know the behaviour of the api request
+ // it could return a status code of 200, 201, 202, 400, 500 if 500 make sure to always reach out to 
+ // our amiable backend developer.
+ //This function has parameters in which was passed into it on creation, this parameters
+ //should be named accordingly, text by text, in a chronological manner according to the function
+// they are  carrying out according to their function e.g otp must be called first, followed by setSuccess()
+//state not setFailed.
+//This function is a module (a reusable funtion component) that can be called 
+// with curly braces on import.
+//e.g import {VerifyTransPin} from "../ApiCollection/ApiBuck" (Not the original path)
+//if the loading components hasn't be called on the function to run after success of the
+// of the verifyPin kindly add it.The loading is added to your files also as a module
+// you call a useState const [loading, setLoading] = useState(false) ,then pass
+//if the loading is true in your components.
+//import both Loader and Modal as a module function
+//e.g {loading && (<Modal><Loader/></Modal>)}
+//Lastly the asyncFuncAtSuccess is to pass the function to actually use to get the service the
+//is requesting for, so understand this Api request isn't meant to be called initially until then
+// this function i.e "VerifyTransPin" is to be called under at the verify popup button then if it is successful it now retrieves
+// the information the user is trying to get.
+//For any questions message victory
 
 export const VerifyTransPin = async(otp, setSuccess,
-    setFailed, setLoading, setErrorMessage,
-    decoder_type, plan, iuc_number, email, amount, phone,
+    setFailed, setLoading, setErrorMessage, asyncFuncAtSuccess
      )=> {
    const authToken = localStorage.getItem("authorisedLogin");
    const getToken = localStorage.getItem("getToken")
@@ -198,8 +180,7 @@ export const VerifyTransPin = async(otp, setSuccess,
       if(response.status === 201 || 200){
          setSuccess(true);
        setErrorMessage("");
-     await sendDataToBackend(decoder_type, plan, iuc_number,
-          email, amount, phone)
+     await asyncFuncAtSuccess()
       }
    }catch(error){
       if(error && error.response.status === 400){
@@ -212,12 +193,83 @@ export const VerifyTransPin = async(otp, setSuccess,
    setErrorMessage("Server error: Try some other time")
       }
    }finally{
-      if(sendDataToBackend){
-      setLoading(false)
+      if(asyncFuncAtSuccess){
+      setLoading(false);
       }
    }
    }
 }
+
+//A general post function 
+export const PostFunction = async(path, setLoading, body, functionAtSuccess, functionAtFailed)=> {
+   const authToken = localStorage.getItem("authorisedLogin");
+   const getToken = localStorage.getItem("getToken")
+   if((authToken || getToken) && navigator.onLine){
+      try{
+         setLoading(true)
+    const url = `https://aremxyplug.onrender.com/api/v1/${path}`
+      const response = await axios.post(url, body, {headers: {"Content-Type" :"application/json",
+         Authorization : authToken || getToken
+      }})
+      if(response.status === 201 || 200){
+     
+         functionAtSuccess()
+      }
+   }catch(error){
+      if(error && error.response.status === 400){
+         functionAtFailed()
+       alert("Invalid request")
+      }else if(error && error.response.status === 404){
+         functionAtFailed()
+         alert("Check your internet connection")
+      }else if(error && error.response.status === 401){
+         functionAtFailed()
+         alert("Your Session as timed out")
+      }else if(error && error.response.status === 500){
+  
+   alert("Server error: Try some other time")
+      }
+   }finally{
+  setLoading(false);
+     }
+   }
+}
+
+// A general Function to get useful data from the backend
+export const GetFunction = async(path, setLoading, functionAtSuccess, functionAtFailed)=> {
+   const authToken = localStorage.getItem("authorisedLogin");
+   const getToken = localStorage.getItem("getToken");
+   if((authToken || getToken) && navigator.onLine){
+      try{
+         setLoading(true)
+    const url = `https://aremxyplug.onrender.com/api/v1/${path}`
+      const response = await axios.get(url, {headers: {"Content-Type" :"application/json",
+         Authorization : authToken || getToken
+      }})
+      if(response.status === 201 || 200){
+     
+         functionAtSuccess()
+      }
+   }catch(error){
+      if(error && error.response.status === 400){
+         functionAtFailed()
+       alert("Invalid request")
+      }else if(error && error.response.status === 401){
+         functionAtFailed()
+         alert("Your Session as timed out")
+      }else if(error && error.response.status === 404){
+         functionAtFailed()
+         alert("Check your internet connection")
+      }else if(error && error.response.status === 500){
+  
+   alert("Server error: Try some other time")
+      }
+   }finally{
+  setLoading(false);
+     }
+   }
+}
+
 
 
 //To set the different states for  virtual account
