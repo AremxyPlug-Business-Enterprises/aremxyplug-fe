@@ -7,8 +7,9 @@ import { AiFillEye } from "react-icons/ai";
 import OtpInput from "react-otp-input";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import styles from "../../Dashboard/DashboardComponents/TransferComponent/transfer.module.css";
-
-
+//import { VerifyTransPin } from "../../ApiCollection.jsx/ApiBuck";
+//import { Loader } from "../../Loader/Loader";
+//import { Modal } from "../../Screens/Modal/Modal";
 export const InputDstvPopup = () => {
     const {
       inputPinDstv,
@@ -21,10 +22,20 @@ export const InputDstvPopup = () => {
       setDstvSuccessful,
    } = useContext(ContextProvider)
 
-   const handleDstvSuccessful = (event) =>{
+// const [loading, setLoading] = useState(true)
+// const [errorMessage, setErrorMessage] = useState(false)
+   const handleDstvSuccessful = async(event) =>{
     event.preventDefault();
     setInputPinDstv(false);
     setDstvSuccessful(true);
+    //This is the API request function that help to verify user transaction
+    //pin
+    //States such as success, errr message is done as well as lodaing are done
+    //only to collect users information for the request
+    // await VerifyTransPin(inputPin, setDstvSuccessful,
+    //   setFailed, setLoading, setErrorMessage,
+    //   decoder_type, plan, iuc_number, email, amount, phone,
+    //    )
   }
 
    const [isFocused, setIsFocused] = useState(false);
@@ -101,6 +112,7 @@ export const InputDstvPopup = () => {
                 Forgot Pin ?
               </p>
             </div>
+            <div className="flex flex-col gap-[10px]">
             <button
               onClick={handleDstvSuccessful}
               disabled={inputPin.length !== 4 ? true : false}
@@ -110,9 +122,22 @@ export const InputDstvPopup = () => {
             >
               Purchase
             </button>
+            {/* {errorMessage && (
+              <p className="text-[10px] leading-[16px] font-[400]
+              lg:text-[12px] lg:leading-[18px] lg:font-[500] text-red-500">
+                Incorrect Pin
+                </p>
+
+            )} */}
+            </div>
         </div>
            </Modal>
           )} 
+          {/* {loading && (
+            <Modal>
+            <Loader/>
+            </Modal>
+          )} */}
     </>
    )
 }

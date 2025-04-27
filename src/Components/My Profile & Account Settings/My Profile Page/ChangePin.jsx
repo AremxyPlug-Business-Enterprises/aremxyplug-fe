@@ -145,7 +145,7 @@ const ChangeUserPin = async()=> {
    }
 
    }catch(error){
-     if(error.response.status === 400){
+     if(error.response.status === 401|| 400){
       alert("Invalid Old Pin")
      }else if(error.response.status === 404){
       alert("Check your internet connection")

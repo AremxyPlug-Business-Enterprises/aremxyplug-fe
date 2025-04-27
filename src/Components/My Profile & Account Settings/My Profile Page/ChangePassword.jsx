@@ -45,7 +45,7 @@ const [loading, setLoading] = useState(false)
      }
   
      }catch(error){
-       if(error.response.status === 400){
+       if(error.response.status === 400 || 401){
         alert("Invalid Old Password")
        }else if(error.response.status === 404){
         alert("Check your internet connection")
