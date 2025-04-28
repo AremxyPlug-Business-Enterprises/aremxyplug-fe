@@ -76,398 +76,10 @@ const countryList = [
   },
 ];
 
-const productList = [
-  {
-    id: 1,
-    name: "MTN SME & SME2",
-    options: [
-      { id: 6, name: "MTN SME & SME2 500MB", amount: "₦150", duration: "1 MONTH" },
-      { id: 7, name: "MTN SME & SME2 1GB", amount: "₦275", duration: "1 MONTH" },
-      { id: 8, name: "MTN SME & SME2 2GB", amount: "₦550", duration: "1 MONTH" },
-      { id: 44, name: "MTN SME & SME2 3GB", amount: "₦825", duration: "1 MONTH" },
-      { id: 11, name: "MTN SME & SME2 5GB", amount: "₦1375", duration: "1 MONTH" },
-      { id: 43, name: "MTN SME & SME2 10GB", amount: "₦2750", duration: "1 MONTH" },
-    ],
-  },
-
-  {
-    id: 2,
-    name: "MTN CG",
-    options: [
-      { id: 216, name: "MTN CG 50MB", amount: "₦40", duration: "1 MONTH" },
-      { id: 217, name: "MTN CG 150MB", amount: "₦100", duration: "1 MONTH" },
-      { id: 218, name: "MTN CG 250MB", amount: "₦130", duration: "1 MONTH" },
-      { id: 219, name: "MTN CG 500MB", amount: "₦150", duration: "1 MONTH" },
-      { id: 220, name: "MTN CG 1GB", amount: "₦285", duration: "1 MONTH" },
-      { id: 221, name: "MTN CG 2GB", amount: "₦570", duration: "1 MONTH" },
-      { id: 222, name: "MTN CG 3GB", amount: "₦855", duration: "1 MONTH" },
-      { id: 223, name: "MTN CG 5GB", amount: "₦1425", duration: "1 MONTH" },
-      { id: 224, name: "MTN CG 10GB", amount: "₦2850", duration: "1 MONTH" },
-      { id: 225, name: "MTN CG 15GB", amount: "₦4275", duration: "1 MONTH" },
-      { id: 226, name: "MTN CG 20GB", amount: "₦5700", duration: "1 MONTH" },
-      { id: 227, name: "MTN CG 40GB", amount: "₦10000", duration: "1 MONTH" },
-      { id: 228, name: "MTN CG 75GB", amount: "₦18750", duration: "1 MONTH" },
-      {
-        id: 229,
-        name: "MTN CG 100GB",
-        amount: "₦25000",
-        duration: "1 MONTH",
-      },
-    ],
-  },
-
-  {
-    id: 3,
-    name: "MTN DIRECT COUPONS",
-    options: [
-      {
-        id: 304,
-        name: "MTN DIRECT COUPONS 500MB",
-        amount: "₦200",
-        duration: "WEEKLY",
-      },
-      {
-        id: 264,
-        name: "MTN DIRECT COUPONS 750MB",
-        amount: "₦220",
-        duration: "WEEKLY",
-      },
-      {
-        id: 269,
-        name: "MTN DIRECT COUPONS 1GB",
-        amount: "₦260",
-        duration: "WEEKLY",
-      },
-      {
-        id: 265,
-        name: "MTN DIRECT COUPONS 1.5GB",
-        amount: "₦420",
-        duration: "1 MONTH",
-      },
-      {
-        id: 266,
-        name: "MTN DIRECT COUPONS 2GB",
-        amount: "₦550",
-        duration: "1 MONTH",
-      },
-      {
-        id: 267,
-        name: "MTN DIRECT COUPONS 3GB",
-        amount: "₦765",
-        duration: "1 MONTH",
-      },
-      {
-        id: 268,
-        name: "MTN DIRECT COUPONS 4.5GB",
-        amount: "₦1150",
-        duration: "1 MONTH",
-      },
-
-
-      // NOT IN THE DATA DOCUMENTATION SO IT HAS NO ID
-
-      {
-        id: 268,
-        name: "MTN DIRECT COUPONS 5GB",
-        amount: "₦1275",
-        duration: "1 MONTH",
-      },
-
-      {
-        id: 268,
-        name: "MTN DIRECT COUPONS 10GB",
-        amount: "₦2550",
-        duration: "1 MONTH",
-      },
-    ],
-  },
-
-  {
-    id: 4,
-    name: "MTN GIFTING",
-    options: [
-      {
-        id: 312,
-        name: "MTN GIFTING 40MB",
-        amount: "₦50",
-        duration: "DAILY",
-      },
-      {
-        id: 310,
-        name: "MTN GIFTING 100MB",
-        amount: "₦100",
-        duration: "DAILY",
-      },
-      {
-        id: 306,
-        name: "MTN GIFTING 200MB",
-        amount: "₦100",
-        duration: "DAILY DAY & NIGHT",
-      },
-
-      {
-        id: 311,
-        name: "MTN GIFTING 200MB",
-        amount: "₦200",
-        duration: "3 DAYS",
-      },
-      {
-        id: 309,
-        name: "MTN GIFTING 250MB",
-        amount: "₦250",
-        duration: "2 DAYS",
-      },
-      {
-        id: 314,
-        name: "MTN GIFTING 350MB",
-        amount: "₦350",
-        duration: "WEEKLY",
-      },
-      {
-        id: 320,
-        name: "MTN GIFTING 450MB",
-        amount: "₦400",
-        duration: "WEELY DAY & NIGHT",
-      },
-      {
-        id: 308,
-        name: "MTN GIFTING 750MB",
-        amount: "₦350",
-        duration: "3 DAYS",
-      },
-
-      {
-        id: 315,
-        name: "MTN GIFTING 750MB",
-        amount: "₦500",
-        duration: "WEEKLY",
-      },
-
-      {
-        id: 321,
-        name: "MTN GIFTING 750MB",
-        amount: "₦500",
-        duration: "2 WEEKS",
-      },
-      {
-        id: 313,
-        name: "MTN GIFTING 1GB",
-        amount: "₦365",
-        duration: "DAILY",
-      },
-      {
-        id: 317,
-        name: "MTN GIFTING 1GB",
-        amount: "₦590",
-        duration: "WEEKLY",
-      },
-      {
-        id: 305,
-        name: "MTN GIFTING 1GB",
-        amount: "₦620",
-        duration: "WEEKLY PLAN",
-      },
-      {
-        id: 319,
-        name: "MTN GIFTING 1.5GB",
-        amount: "₦980",
-        duration: "WEEKLY",
-      },
-
-      {
-        id: 323,
-        name: "MTN GIFTING 1.5GB",
-        amount: "₦1200",
-        duration: "1 MONTH",
-      },
-
-      {
-        id: 316,
-        name: "MTN GIFTING 2GB",
-        amount: "₦980",
-        duration: "WEEKLY",
-      },
-
-      {
-        id: 322,
-        name: "MTN GIFTING 2GB",
-        amount: "₦1480",
-        duration: "1 MONTH",
-      },
-      {
-        id: 307,
-        name: "MTN GIFTING 2.5GB",
-        amount: "₦550",
-        duration: "2 DAYS",
-      },
-
-      {
-        id: 328,
-        name: "MTN GIFTING 3GB",
-        amount: "₦1550",
-        duration: "1 MONTH",
-      },
-
-      {
-        id: 324,
-        name: "MTN GIFTING 4.5GB",
-        amount: "₦2475",
-        duration: "1 MONTH",
-      },
-
-      {
-        id: 318,
-        name: "MTN GIFTING 6GB",
-        amount: "₦2100",
-        duration: "WEEKLY",
-      },
-
-      {
-        id: 330,
-        name: "MTN GIFTING 6GB",
-        amount: "₦3000",
-        duration: "1 MONTH",
-      },
-
-      {
-        id: 332,
-        name: "MTN GIFTING 10GB",
-        amount: "₦3500",
-        duration: "1 MONTH",
-      },
-
-      {
-        id: 325,
-        name: "MTN GIFTING 12GB",
-        amount: "₦4000",
-        duration: "1 MONTH",
-      },
-      {
-        id: 326,
-        name: "MTN GIFTING 20GB",
-        amount: "₦5500",
-        duration: "1 MONTH",
-      },
-
-      {
-        id: 329,
-        name: "MTN GIFTING 25GB",
-        amount: "₦6400",
-        duration: "1 MONTH",
-      },
-
-      {
-        id: 337,
-        name: "MTN GIFTING 30GB",
-        amount: "₦8000",
-        duration: "2 MONTHS",
-      },
-
-      {
-        id: 327,
-        name: "MTN GIFTING 40GB",
-        amount: "₦10750",
-        duration: "1 MONTH",
-      },
-     
-    
-      {
-        id: 331,
-        name: "MTN GIFTING 75GB",
-        amount: "₦15500",
-        duration: "1 MONTH",
-      },
-
-      {
-        id: 335,
-        name: "MTN GIFTING 100GB",
-        amount: "₦20000",
-        duration: "2 MONTHS",
-      },
-   
-      {
-        id: 333,
-        name: "MTN GIFTING 120GB",
-        amount: "₦22000",
-        duration: "1 MONTH",
-      },
-
-      {
-        id: 336,
-        name: "MTN GIFTING 160GB",
-        amount: "₦30500",
-        duration: "2 MONTHS",
-      },
-      {
-        id: 334,
-        name: "MTN GIFTING 200GB",
-        amount: "₦30000",
-        duration: "1 MONTH",
-      },
-    
-      
-      {
-        id: 338,
-        name: "MTN GIFTING 400GB",
-        amount: "₦52000",
-        duration: "3 MONTHS",
-      },
-      {
-        id: 339,
-        name: "MTN GIFTING 600GB",
-        amount: "₦78000",
-        duration: "3 MONTHS",
-      },
-      {
-        id: 340,
-        name: "MTN GIFTING 800GB",
-        amount: "₦94200",
-        duration: "6 MONTHS",
-      },
-      {
-        id: 341,
-        name: "MTN GIFTING 1TB",
-        amount: "₦108000",
-        duration: "1 YEAR",
-      },
-      {
-        id: 342,
-        name: "MTN GIFTING 2.5TB",
-        amount: "₦257000",
-        duration: "1 YEAR",
-      },
-      {
-        id: 343,
-        name: "MTN GIFTING 4.5TB",
-        amount: "₦456000",
-        duration: "1 YEAR",
-      },
-      {
-        id: 344,
-        name: "MTN GIFTING 25TB",
-        amount: "₦5450000",
-        duration: "1 YEAR",
-      },
-      // {
-      //   id: 345,
-      //   name: "MTN GIFTING 360MB",
-      //   amount: "₦100000",
-      //   duration: "1 MONTH",
-      // },
-    ],
-  },
-
-  {
-    id: 6,
-    name: "GENERAL BUNDLES ---",
-    options: [],
-  },
-];
-
 const MtnDataTopUpBundle = () => {
   const { isDarkMode } = useContext(ContextProvider);
   const { selectedOption, setSelectedOption } = useContext(ContextProvider);
-  const { selectedNetworkProduct, setSelectedNetworkProduct } =
+  const { selectedProduct, setSelectedProduct } =
     useContext(ContextProvider);
   const { recipientPhoneNumber, setRecipientPhoneNumber } =
     useContext(ContextProvider);
@@ -490,6 +102,75 @@ const MtnDataTopUpBundle = () => {
   const [purchaseStatus, setPurchaseStatus] = useState(null); // State to hold purchase status
   const [loading, setLoading] = useState("");
   const [proceedToShowReceipt] = useState(false);
+  const [products, setProducts] = useState([]);
+  const [productPlans, setProductPlans] = useState([]);
+  const [loadingProducts, setLoadingProducts] = useState(false);
+  const [loadingPlans, setLoadingPlans] = useState(false);
+
+  const getAuthToken = () => {
+    return localStorage.getItem("authorisedLogin") || localStorage.getItem("getToken");
+  };
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      setLoadingProducts(true);
+      try {
+        const token = getAuthToken();
+        const response = await axios.get(
+          `https://aremxyplug.onrender.com/api/v1/products/telecom/list/1`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: token,
+            },
+          }
+        );
+        setProducts(response.data.data.products || []);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      } finally {
+        setLoadingProducts(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  // Fetch plans when product is selected
+  const fetchPlans = async (productId) => {
+    setLoadingPlans(true);
+    try {
+      const token = getAuthToken();
+      const response = await axios.get(
+        `https://aremxyplug.onrender.com/api/v1/products/telecom/${productId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token,
+          },
+        }
+      );
+      setProductPlans(response.data.data.plans || []);
+    } catch (error) {
+      console.error("Error fetching plans:", error);
+    } finally {
+      setLoadingPlans(false);
+    }
+  };
+
+  const handleSelectProduct = (product) => {
+    setSelectedProduct(`${product.Plan_Type}`);
+    setShowProductList(false);
+    fetchPlans(product.Product_ID);
+    setShowOptionList(true); // Show options after selecting a product
+  };
+
+  const handleSelectOption = (plan) => {
+    setSelectedOption(`${plan.Size} - ${plan.Validity} - ₦${plan.Amount}`);
+    setSelectedAmount(`₦${plan.Amount}`);
+    setShowOptionList(false);
+    setShowProductList(false);
+  };
 
   useEffect(() => {
     // Simulate async data loading
@@ -569,41 +250,25 @@ const MtnDataTopUpBundle = () => {
       }),
   });
 
-  const handleSelectProduct = (productName) => {
-    setSelectedNetworkProduct(productName);
-    setSelectedOption("");
-    setShowProductList(false);
-    setShowOptionList(false);
-  };
-
-  const handleSelectOption = (selectedOption, selectedAmount, duration, id) => {
-    setPlan(id);
-    console.log(id);
-    setSelectedOption(selectedOption);
-    setShowOptionList(false);
-    setSelectedAmount(selectedAmount);
-    // setDuration(duration);
-  };
-
   const [inputValue, setInputValue] = useState("");
 
   // const proceedToShowReceipt = purchaseStatus === "paid" || purchaseStatus === "failed";
 
 
   const mtnRegex =
-  /^(234|0)(703[0-9]|704[0-9]|706[0-9]|810[0-9]|813[0-9]|814[0-9]|816[0-9]|901[0-9]|903[0-9]|906[0-9]|913[0-9]|916[0-9])\d{6}$/;
-  
+    /^(234|0)(703[0-9]|704[0-9]|706[0-9]|810[0-9]|813[0-9]|814[0-9]|816[0-9]|901[0-9]|903[0-9]|906[0-9]|913[0-9]|916[0-9])\d{6}$/;
+
   const validatePhoneNumber = (inputValue) => {
     if (!inputValue) {
       return "Phone number is required";
     }
-  
+
     if (!mtnRegex.test(inputValue)) {
       return "Invalid MTN number. Please enter a valid MTN number.";
-      
+
     }
     console.log("its me")
-  
+
     return null;
   };
 
@@ -612,7 +277,7 @@ const MtnDataTopUpBundle = () => {
     const value = e.target.value;
     const numericValue = value.replace(/\D/g, "").slice(0, 11);
     setInputValue(numericValue);
-  
+
     // Validate phone number if it's complete
     if (numericValue.length === 11) {
       const error = validatePhoneNumber(numericValue);
@@ -637,45 +302,45 @@ const MtnDataTopUpBundle = () => {
     e.preventDefault();
 
     function validateNigerianNumberByNetwork(inputValue) {
-        const networks = {
-            'MTN': ['0703', '0704', '0814', '0706', '0803', '0806', '0810', '0813', '0814', '0816', '0903', '0906', '0913', '0916'],
-        };
+      const networks = {
+        'MTN': ['0703', '0704', '0814', '0706', '0803', '0806', '0810', '0813', '0814', '0816', '0903', '0906', '0913', '0916'],
+      };
 
-        for (let network in networks) {
-            for (let prefix of networks[network]) {
-                if (inputValue.startsWith(prefix) && inputValue.length === prefix.length + 7) {
-                    return network;
-                }
-            }
+      for (let network in networks) {
+        for (let prefix of networks[network]) {
+          if (inputValue.startsWith(prefix) && inputValue.length === prefix.length + 7) {
+            return network;
+          }
         }
+      }
 
-        return 'Unknown network';
+      return 'Unknown network';
     }
 
     const { error } = schema.validate({
-        recipientPhoneNumber,
+      recipientPhoneNumber,
     });
 
     if (error) {
-        setErrors(
-            error.details.reduce((acc, curr) => {
-                acc[curr.path[0]] = curr.message;
-                return acc;
-            }, {})
-        );
+      setErrors(
+        error.details.reduce((acc, curr) => {
+          acc[curr.path[0]] = curr.message;
+          return acc;
+        }, {})
+      );
     } else if (validateNigerianNumberByNetwork(recipientPhoneNumber) !== 'MTN') {
-        setErrors({
-            recipientPhoneNumber:
-                `Invalid MTN number. Please enter a valid MTN number.`,
-                
-        });
-        console.log("its me 2")
+      setErrors({
+        recipientPhoneNumber:
+          `Invalid MTN number. Please enter a valid MTN number.`,
+
+      });
+      console.log("its me 2")
     } else {
-        setProceed(true);
-        setErrors({});
+      setProceed(true);
+      setErrors({});
     }
-};
-  
+  };
+
   const handleRecipientNameChange = (e) => {
     setRecipientNames(e.target.value);
   };
@@ -683,10 +348,10 @@ const MtnDataTopUpBundle = () => {
   // console.log("confirm:", confirm);
 
 
-    const [mtntransactionID, setMtnTransactionID] = useState("");
-    const [mtnorderID, setMtnOrderID] = useState("");
-    const [mtnrefNumber, setMtnRefNumber] = useState("");
-    const [mtndescription,setMtnDescription] = useState("");
+  const [mtntransactionID, setMtnTransactionID] = useState("");
+  const [mtnorderID, setMtnOrderID] = useState("");
+  const [mtnrefNumber, setMtnRefNumber] = useState("");
+  const [mtndescription, setMtnDescription] = useState("");
 
 
   const handleReceipt = () => {
@@ -713,77 +378,75 @@ const MtnDataTopUpBundle = () => {
       console.log("its me")
 
       try {
-          const response = await axios.post(url, data);
-          console.log(response.data);
-          console.log(response.status);
-          // setSelectedNetworkProduct(response.data.product)
-          // console.log(response.data.product)
-          setPlan(response.data.plan_name)
-          console.log(response.data.plan_name)
-          setInputValue(response.data.Phone_Number)
-          console.log(response.data.Phone_Number)
-          setRecipientPhoneNumber(data.Phone_number)
-          console.log(data.Phone_number)
-          console.log(inputValue)
-          console.log(recipientPhoneNumber)
-          setRecipientNames(response.data.Name)
-          console.log(response.data.Name)
-          setSelectedAmount(response.data.plan_amount)
-          console.log(response.data.plan_amount)
-          setMtnTransactionID(response.data.transaction_id)
-          console.log(response.data.transaction_id)
-          setMtnRefNumber(response.data.reference_number)
-          console.log(response.data.reference_number)
-          setMtnOrderID(response.data.order_id)
-          console.log(response.data.order_id)
-          setMtnDescription(response.data.description)
-          // console.log(response.data.description)
-          return { statusCode: response.status, data: response.data };
-          // console.log(response.data);
+        const response = await axios.post(url, data);
+        console.log(response.data);
+        console.log(response.status);
+        // setSelectedProduct(response.data.product)
+        // console.log(response.data.product)
+        setPlan(response.data.plan_name)
+        console.log(response.data.plan_name)
+        setInputValue(response.data.Phone_Number)
+        console.log(response.data.Phone_Number)
+        setRecipientPhoneNumber(data.Phone_number)
+        console.log(data.Phone_number)
+        console.log(inputValue)
+        console.log(recipientPhoneNumber)
+        setRecipientNames(response.data.Name)
+        console.log(response.data.Name)
+        setSelectedAmount(response.data.plan_amount)
+        console.log(response.data.plan_amount)
+        setMtnTransactionID(response.data.transaction_id)
+        console.log(response.data.transaction_id)
+        setMtnRefNumber(response.data.reference_number)
+        console.log(response.data.reference_number)
+        setMtnOrderID(response.data.order_id)
+        console.log(response.data.order_id)
+        setMtnDescription(response.data.description)
+        // console.log(response.data.description)
+        return { statusCode: response.status, data: response.data };
+        // console.log(response.data);
       } catch (error) {
-          console.error(error);
-          return { statusCode: error.response.status, data: null };
+        console.error(error);
+        return { statusCode: error.response.status, data: null };
       }
-  }
+    }
 
-  // usage
-  const response = await buyData(
-    1, recipientPhoneNumber, plan, recipientNames
-  );
+    // usage
+    const response = await buyData(
+      1, recipientPhoneNumber, plan, recipientNames
+    );
 
-  console.log(response)
-  console.log("its me 1")
+    console.log(response)
+    console.log("its me 1")
 
-  setLoading(false)
+    setLoading(false)
 
 
 
-  setConfirm(false);
-  if (response.statusCode === 200) {
+    setConfirm(false);
+    if (response.statusCode === 200) {
       // Success response
       setTransactSuccessPopUp(true); // Show success popup
-  } else {
+    } else {
       // Failure response
       setPurchaseStatus(true); // Show failure popup
-  }
+    }
 
   };
 
   return (
     <DashBoardLayout>
       <div
-        className={`bg-[#FFF] relative lg:ml-[20px] 2xl:ml-0 ${
-          isDarkMode
-            ? "bg-[#000] text-[#fff] border-[#fff]"
-            : "bg-[#ffffff] text-[#000] "
-        } flex flex-col justify-between h-full`}
+        className={`bg-[#FFF] relative lg:ml-[20px] 2xl:ml-0 ${isDarkMode
+          ? "bg-[#000] text-[#fff] border-[#fff]"
+          : "bg-[#ffffff] text-[#000] "
+          } flex flex-col justify-between h-full`}
       >
         <section
-          className={`md:px-[0px] ${
-            isDarkMode
-              ? "bg-[#000] text-[#fff] border-[#fff]"
-              : "bg-[#ffffff] text-[#000] "
-          }`}
+          className={`md:px-[0px] ${isDarkMode
+            ? "bg-[#000] text-[#fff] border-[#fff]"
+            : "bg-[#ffffff] text-[#000] "
+            }`}
         >
           <div
             id="DataBundle"
@@ -793,7 +456,7 @@ const MtnDataTopUpBundle = () => {
               <p className="text-[11px] mb-2 font-bold uppercase w-[100%] md:text-[16px] md:w-[70%] lg:w-[70%] lg:text-[20px] 2xl:w-[80%] 2xl:text-[24px] lg:mb-4">
                 DATA BUNDLES, AFFORDABLE AND AUTOMATED.
               </p>
-              <p className="text-[10px] font-[400] leading-[9px] mb-3 md:text-[10px] md:leading-[12.2px] w-[90%] md:w-[75%] lg:w-[75%] 2xl:w-[85%] 2xl:mt-[5px] lg:mt-[20px] lg:text-[16px] lg:leading-[26px] 2xl:text-[20px] lg:mb-[20px]">
+              <p className="text-[10px] font-[400] leading-[13.4px] mb-4 md:text-[10px] md:leading-[12.2px] w-[90%] md:w-[75%] lg:w-[75%] 2xl:w-[85%] 2xl:mt-[5px] lg:mt-[20px] lg:text-[16px] lg:leading-[26px] 2xl:text-[20px] lg:mb-[20px]">
                 Top up your mobile sim with our automated data bundles directly
                 from network providers, enjoy discounts without any hassle or
                 hidden fee.
@@ -812,11 +475,10 @@ const MtnDataTopUpBundle = () => {
           {/* =========================Select/Add Recipient===================== */}
 
           <div className="flex gap-[10%] mt-[40px] md:w-full md:justify-between md:gap-[10%] ">
-            <div className={`w-full flex items-center justify-between border text-[12px] md:py-[15px] md:w-[50%] rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003] ${
-                    isDarkMode
-                      ? "bg-black text-white border !border-white"
-                      : "border border-[#0003]"
-                  }`}>
+            <div className={`w-full flex items-center justify-between border text-[12px] md:py-[15px] md:w-[50%] rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003] ${isDarkMode
+              ? "bg-black text-white border !border-white"
+              : "border border-[#0003]"
+              }`}>
               <Link
                 to="/DataBundleSelectRecipient"
                 style={{ display: "inline-flex", width: "100%" }}
@@ -831,10 +493,9 @@ const MtnDataTopUpBundle = () => {
               </Link>
             </div>
             <div className={`w-full flex items-center justify-between border text-[12px] md:py-[15px] md:w-[40%] md:mr-[9%]  rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]
-               ${
-                isDarkMode
-                  ? "bg-black text-white border !border-white "
-                  : "border border-[#0003]"
+               ${isDarkMode
+                ? "bg-black text-white border !border-white "
+                : "border border-[#0003]"
               }`}
             >
               <Link
@@ -901,9 +562,8 @@ const MtnDataTopUpBundle = () => {
             <Modal>
               (
               <div
-                className={`code ${
-                  toggleSideBar ? "code1" : "code01"
-                } overflow-auto w-[90%]`}
+                className={`code ${toggleSideBar ? "code1" : "code01"
+                  } overflow-auto w-[90%]`}
               >
                 <img
                   onClick={() => setCodes(false)}
@@ -967,74 +627,70 @@ const MtnDataTopUpBundle = () => {
 
           <div className="grid grid-cols-1 mt-[25px] md:grid-cols-2 gap-y-[20px] md:gap-x-[58.68px] lg:gap-x-[100px] md:gap-y-[15px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[20px]">
             <div className="relative">
-              <h2 className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[14px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
-                                            isDarkMode 
-                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
-                                          }`}>
+              <h2 className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[14px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${isDarkMode
+                ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                }`}>
                 Select Product
               </h2>
               <div
                 className={`!mt-2 md:!mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between 
-                   ${
-      isDarkMode
-        ? "bg-black text-white border !border-white"
-        : "border border-[#0003]"
-    }
+                   ${isDarkMode
+                    ? "bg-black text-white border !border-white"
+                    : "border border-[#0003]"
+                  }
   `}
-  
-              
-                  onClick={() => setShowProductList(!showProductList)}
+
+                onClick={() => {
+                  setShowOptionList(false);
+                  setShowProductList(!showProductList);
+                }}
               >
                 <h2 className=" text-[12px] font-[400] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                  {selectedNetworkProduct}
+                  {selectedProduct}
                 </h2>
                 <button className="lg:w-6 lg:h-6 w-[12px] h-[12px]">
                   <img src={arrowDown} alt="" className="w-full h-full" />
                 </button>
               </div>
               {showProductList && (
-                <div className={`border md:rounded-[10px] text-[12px] md:text-[12px] lg:text-[16px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[10] ${
-                  isDarkMode
-                    ? "bg-black text-white border !border-white"
-                    : "border border-[#0003]"
-                }
-              `}>
-                  {productList.map((item) => (
-                    <div
-                      key={item.name}
-                      className={`pb-[15px] md:pb-[6px] pt-[15px] md:pt-[6px] font-weight-bold text-[13px] cursor-pointer border-b-[0.5px] text-[#7C7C7C] md:text-[12px] lg:text-[16px]  md:rounded-[0px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
-                        selectedNetworkProduct === item.name ? "" : ""  }
-                        ${
-                          isDarkMode
-                            ? "bg-black text-white "
-                            : ""
-                        }
-                        `}
-                      onClick={() => handleSelectProduct(item.name)}
-                    >
-                      {item.name}
-                    </div>
-                  ))}
+                <div className="border md:rounded-[10px] text-[10px] md:text-[12px] lg:text-[16px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[10]">
+                  {loadingProducts ? (
+                    <div>Loading products...</div>
+                  ) : (
+                    products.map((product) => (
+                      <div
+                        key={product.Product_ID}
+                        className={`cursor-pointer border-b-[0.5px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] py-[4px] pl-[5px]`}
+                        onClick={() => {
+                          handleSelectProduct(product);
+                          setShowOptionList(true);
+                        }}
+                      >
+                        {`${product.Plan_Type}`}
+                      </div>
+                    ))
+                  )}
                 </div>
               )}
             </div>
 
             <div className="relative">
-              <h2 className={`lg:text-[18px] md:text-[12px] lg:leading-[24px] mb-1 text-[14px] md:font-[600] font-[400] leading-[12px] ${
-                                            isDarkMode 
-                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
-                                          }`}>
+              <h2 className={`lg:text-[18px] md:text-[12px] lg:leading-[24px] mb-1 text-[14px] md:font-[600] font-[400] leading-[12px] ${isDarkMode
+                ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                }`}>
                 Select Plan
               </h2>
               <div
                 className={`mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between
-                              ${
-      isDarkMode
-        ? "bg-black text-white border !border-white"
-        : "border border-[#0003]"
-    }
+                              ${isDarkMode
+                    ? "bg-black text-white border !border-white"
+                    : "border border-[#0003]"
+                  }
   `}
-                onClick={() => setShowOptionList(!showOptionList)}
+                onClick={() => {
+                  setShowProductList(false);
+                  setShowOptionList(!showOptionList);
+                }}
               >
                 <h2 className="text-[12px] font-[400] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
                   {selectedOption}
@@ -1046,55 +702,32 @@ const MtnDataTopUpBundle = () => {
 
               {showOptionList && (
                 <div className={`text-[12px] border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[100]
-                  ${
-      isDarkMode
-        ? "bg-black text-white border !border-white"
-        : "border border-[#0003]"
-    }
+                  ${isDarkMode
+                    ? "bg-black text-white border !border-white"
+                    : "border border-[#0003]"
+                  }
   `}>
-                  {productList
-                    .find((item) => item.name === selectedNetworkProduct)
-                    ?.options.map((option, index) => {
-                      const amount = option.amount;
-                      const duration = option.duration;
-                      const id = option.id;
-
-                      return (
-                        <div
-                          key={option.id}
-                          className={`pb-[18px] md:pb-[6px] pt-[18px] md:pt-[6px] font-weight-bold text-[13px] cursor-pointer border-b-[0.5px] md:rounded-[0px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
-                            selectedOption === option.id ? "bg-gray-200" : ""
-                          }
-                           ${
-                          isDarkMode
-                            ? "bg-black text-white "
-                            : ""
-                        }
-                        `}
-                          onClick={() =>
-                            handleSelectOption(
-                              `${option.name} (${amount}) ~ ${duration}`,
-                              amount,
-                              duration,
-                              id, // Pass the id here
-
-                              console.log(id)
-                            )
-                          }
-                        >
-                          {`${option.name} (${amount}) ~ ${duration}`}
-                        </div>
-                      );
-                    })}
+                  {loadingPlans ? (
+                    <div>Loading plans...</div>
+                  ) : (
+                    productPlans.map((plan) => (
+                      <div
+                        key={plan.PlanID}
+                        className={`cursor-pointer border-b-[0.5px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] py-[4px] pl-[5px]`}
+                        onClick={() => handleSelectOption(plan)}
+                      >
+                        {`${plan.Size} - ${plan.Validity} (₦${plan.Amount})`}
+                      </div>
+                    ))
+                  )}
                 </div>
               )}
             </div>
 
             <div className="">
-              <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
-                                            isDarkMode 
-                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
-                                          }`}>
+              <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${isDarkMode
+                ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                }`}>
                 Phone Number{" "}
                 <span className="text-[#04177F]">
                   <Link to="/DataBundleSelectRecipient">
@@ -1106,11 +739,10 @@ const MtnDataTopUpBundle = () => {
                 <input
                   type="number"
                   className={`mt-1 md:mt-0 border md:border-[0.4px] rounded-[11px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md  lg:text-[16px] font-[400] focus:outline-none lg:h-[51px] 
-                                  ${
-      isDarkMode
-        ? "bg-black text-white border !border-white"
-        : "border border-[#0003]"
-    }
+                                  ${isDarkMode
+                      ? "bg-black text-white border !border-white"
+                      : "border border-[#0003]"
+                    }
   `}
                   placeholder=""
                   value={inputValue}
@@ -1136,21 +768,19 @@ const MtnDataTopUpBundle = () => {
             </div>
 
             <div className="">
-              <h2 className={`text-[15px] font-[400] md:text-[12px] lg:text-[18px] ${
-                                            isDarkMode 
-                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
-                                          }`}>
+              <h2 className={`text-[15px] font-[400] md:text-[12px] lg:text-[18px] ${isDarkMode
+                ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                }`}>
                 Recipient Name<span className="text-[#7C7C7C]">(optional)</span>{" "}
               </h2>
               <div className="relative mt-[5px]">
                 <input
                   type="text"
                   className={`mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.4px] p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] font-[400] focus:outline-none lg:h-[51px] lg:text-[16px]
-                                  ${
-      isDarkMode
-        ? "bg-black text-white border !border-white"
-        : "border border-[#0003]"
-    }
+                                  ${isDarkMode
+                      ? "bg-black text-white border !border-white"
+                      : "border border-[#0003]"
+                    }
   `}
                   placeholder=""
                   value={recipientNames}
@@ -1167,29 +797,23 @@ const MtnDataTopUpBundle = () => {
             </div>
 
             <div className="">
-              <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
-                                            isDarkMode 
-                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
-                                          }`}>
+              <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${isDarkMode
+                ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                }`}>
                 Amount
               </h2>
               <div className="relative mt-[5px]">
                 <input
                   type="text"
                   className={`mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] font-[400] focus:outline-none lg:h-[51px] lg:text-[16px] 
-                                  ${
-      isDarkMode
-        ? "bg-black text-white border !border-white"
-        : "border border-[#0003]"
-    }
+                                  ${isDarkMode
+                      ? "bg-black text-white border !border-white"
+                      : "border border-[#0003]"
+                    }
   `}
                   // placeholder="&#8358;100"
                   value={`${selectedAmount}`}
-                  onChange={(event) => {
-                    // handleChanges(event);
-                    // handleSelectOption({};
-                    // setSelectedAmount(event.target.value);
-                  }}
+                  readOnly
                 />
                 <div className="absolute top-[3px] inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                   <img src={Amount} alt="" className="lg:w-[100%] lg:h-[50%]" />
@@ -1199,25 +823,23 @@ const MtnDataTopUpBundle = () => {
 
             <div>
               <div onClick={handleShowPayment}>
-                <h2 className={`lg:text-[18px] mt-[5px] lg:leading-[24px] mb-2 text-[15px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
-                                            isDarkMode 
-                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
-                                          }`}>
+                <h2 className={`lg:text-[18px] mt-[5px] lg:leading-[24px] mb-2 text-[15px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${isDarkMode
+                  ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                  }`}>
                   Payment Method
                 </h2>
                 <div className={`mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[12px] p-4 sm:p-3 sm:text-lg input flex justify-between items-center border w-full h-8 px-2 rounded-md font-[400] focus:outline-none lg:h-[51px] lg:text-[16px]
-                                             ${
-      isDarkMode
-        ? "bg-black text-white border !border-white"
-        : "border border-[#0003]"
-    }
+                                             ${isDarkMode
+                    ? "bg-black text-white border !border-white"
+                    : "border border-[#0003]"
+                  }
   `}
-                 >
+                >
                   {paymentSelected ? (
                     <li
                       onClick={handleShowPayment}
                       className={airtimestyles.labelInput}
-                      
+
                     >
                       <h2 className="text-[#7C7C7C]">{walletName}</h2>
                       <h2 className="text-[#7C7C7C]">
@@ -1235,12 +857,11 @@ const MtnDataTopUpBundle = () => {
                   {paymentSelected ? (
                     <button
                       className={`rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[15px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px] 
-                         ${
-                    isDarkMode
-                      ? "bg-black text-white"
-                      : ""
-                  }`}
-                        
+                         ${isDarkMode
+                          ? "bg-black text-white"
+                          : ""
+                        }`}
+
                       onClick={handleShowPayment}
                     >
                       <img
@@ -1262,21 +883,19 @@ const MtnDataTopUpBundle = () => {
               {showPayment && (
                 <div
                   className={`pb-[16px] pt-[16px] md:pb-[6px] md:pt-[6px] font-[400] text-[15px] border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute
-                      ${
-                    isDarkMode
+                      ${isDarkMode
                       ? "bg-black text-white"
                       : "text-white"
-                  }
-                    ${ 
-                    toggleSideBar
+                    }
+                    ${toggleSideBar
                       ? "w-full md:w-[44.5%] lg:w-[45%] 2xl:w-[46%] text-[15px]"
                       : "w-full md:w-[46%] 2xl:w-[46.5%] text-[15px]"
-                  } bg-[#FFF] z-[100] font-weight-bold text-[15px]
+                    } bg-[#FFF] z-[100] font-weight-bold text-[15px]
                 
                   `}
                 >
                   {countryList.map((country) => (
-                    <Payment 
+                    <Payment
                       key={country.id}
                       flag={country.flag}
                       code={country.code}
@@ -1289,12 +908,12 @@ const MtnDataTopUpBundle = () => {
                         )
                       }
                     />
-                   
+
                   ))}
-                 
+
                 </div>
               )}
-        
+
             </div>
           </div>
 
@@ -1325,11 +944,9 @@ const MtnDataTopUpBundle = () => {
           {proceed && (
             <Modal>
               <div
-                className={`scroll-bar ${
-                  isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
-                } ${
-                  toggleSideBar ? "confirm01" : "confirm"
-                } grow pt-[10px] pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:overflow-auto`}
+                className={`scroll-bar ${isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
+                  } ${toggleSideBar ? "confirm01" : "confirm"
+                  } grow pt-[10px] pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:overflow-auto`}
               >
                 <div className="w-full flex justify-end border-b-[6px] border-primary px-[12px] md:h-[25px] lg:border-b-[10px] lg:mt-[20px]">
                   <img
@@ -1375,7 +992,7 @@ const MtnDataTopUpBundle = () => {
                       </h2>
                       <div className="flex gap-1">
                         <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          {selectedNetworkProduct}
+                          {selectedProduct}
                         </h2>
                       </div>
                     </div>
@@ -1488,9 +1105,8 @@ const MtnDataTopUpBundle = () => {
           {purchaseStatus && (
             <Modal>
               <div
-                className={` ${
-                  toggleSideBar ? "confirm02" : "confirm2"
-                } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
+                className={` ${toggleSideBar ? "confirm02" : "confirm2"
+                  } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
               >
                 <div className="flex justify-end px-2">
                   <img
@@ -1525,22 +1141,22 @@ const MtnDataTopUpBundle = () => {
                   >
                     Done
                   </button>
-                  
+
                   <Link to="/MtnFailedReceipt"
-                  state={{
-                    networkName: "MTN",
-                    selectedNetworkProduct: selectedNetworkProduct,
-                    selectedOption: selectedOption,
-                    recipientPhoneNumber: recipientPhoneNumber,
-                    inputValue: inputValue,
-                    recipientNames: recipientNames,
-                    selectedAmount: selectedAmount,
-                    mtntransactionID: mtntransactionID,
-                    mtnrefNumber: mtnrefNumber,
-                    mtnorderID: mtnorderID,
-                    mtndescription: mtndescription,
-                }}
-                  
+                    state={{
+                      networkName: "MTN",
+                      selectedProduct: selectedProduct,
+                      selectedOption: selectedOption,
+                      recipientPhoneNumber: recipientPhoneNumber,
+                      inputValue: inputValue,
+                      recipientNames: recipientNames,
+                      selectedAmount: selectedAmount,
+                      mtntransactionID: mtntransactionID,
+                      mtnrefNumber: mtnrefNumber,
+                      mtnorderID: mtnorderID,
+                      mtndescription: mtndescription,
+                    }}
+
                   >
                     <button
                       onClick={() => {
@@ -1560,9 +1176,8 @@ const MtnDataTopUpBundle = () => {
           {confirm && (
             <Modal>
               <div
-                className={` ${
-                  toggleSideBar ? "confirm02" : "confirm2"
-                } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
+                className={` ${toggleSideBar ? "confirm02" : "confirm2"
+                  } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
               >
                 <div className="flex justify-end px-2">
                   <img
@@ -1623,9 +1238,8 @@ const MtnDataTopUpBundle = () => {
                     inputPinHandler();
                   }}
                   disabled={inputPin.length !== 4}
-                  className={`${
-                    inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
-                  } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                  className={`${inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
+                    } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
                 >
                   Purchase
                 </button>
@@ -1637,9 +1251,8 @@ const MtnDataTopUpBundle = () => {
             <Modal>
               {/* <DataBundleFailedPopUp/> */}
               <div
-                className={`scroll-bar ${
-                  toggleSideBar ? "confirm01 w-[90%]" : "confirm w-[90%]"
-                } bg-white rounded-[12px] md:my-auto mx-auto overflow-auto lg:mx-auto lg:my-auto`}
+                className={`scroll-bar ${toggleSideBar ? "confirm01 w-[90%]" : "confirm w-[90%]"
+                  } bg-white rounded-[12px] md:my-auto mx-auto overflow-auto lg:mx-auto lg:my-auto`}
               >
                 <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
                   <img
@@ -1705,7 +1318,7 @@ const MtnDataTopUpBundle = () => {
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        {selectedNetworkProduct}
+                        {selectedProduct}
                       </h2>
                     </div>
                   </div>
@@ -1749,7 +1362,7 @@ const MtnDataTopUpBundle = () => {
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                      &#8358;{selectedAmount}
+                        &#8358;{selectedAmount}
                       </h2>
                     </div>
                   </div>
@@ -1799,17 +1412,17 @@ const MtnDataTopUpBundle = () => {
                   </Link>
 
                   <Link to="/MtnReceipt" state={{
-                                        selectedNetworkProduct: selectedNetworkProduct,
-                                        inputValue: inputValue,
-                                        recipientPhoneNumber: recipientPhoneNumber,
-                                        selectedOption: selectedOption,
-                                        recipientNames: recipientNames,
-                                        selectedAmount: selectedAmount,
-                                        mtntransactionID: mtntransactionID,
-                                        mtnrefNumber: mtnrefNumber,
-                                        mtnorderID: mtnorderID,
-                                        mtndescription: mtndescription,
-                                    }}>
+                    selectedProduct: selectedProduct,
+                    inputValue: inputValue,
+                    recipientPhoneNumber: recipientPhoneNumber,
+                    selectedOption: selectedOption,
+                    recipientNames: recipientNames,
+                    selectedAmount: selectedAmount,
+                    mtntransactionID: mtntransactionID,
+                    mtnrefNumber: mtnrefNumber,
+                    mtnorderID: mtnorderID,
+                    mtndescription: mtndescription,
+                  }}>
                     <button
                       onClick={handleReceipt}
                       className={`border-[1px] w-[100px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-[400] h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[12px] lg:w-[163px] lg:h-[38px] lg:my-[2%] md:px-[60px] md:h-[30px]`}
@@ -1821,51 +1434,50 @@ const MtnDataTopUpBundle = () => {
               </div>
             </Modal>
           )}
-          
+
           {proceedToShowReceipt && (
             <MtnReceipt
-            networkName='MTN'
-            selectedNetworkProduct={selectedNetworkProduct}
-            recipientPhoneNumber={recipientPhoneNumber}
-            inputValue={inputValue}
-            recipientNames={recipientNames}
-            selectedAmount={selectedAmount}
-            mtntransactionID={mtntransactionID}
-            mtnrefNumber={mtnrefNumber}
-            mtnorderID={mtnorderID}
-            mtndescription={mtndescription}
+              networkName='MTN'
+              selectedProduct={selectedProduct}
+              recipientPhoneNumber={recipientPhoneNumber}
+              inputValue={inputValue}
+              recipientNames={recipientNames}
+              selectedAmount={selectedAmount}
+              mtntransactionID={mtntransactionID}
+              mtnrefNumber={mtnrefNumber}
+              mtnorderID={mtnorderID}
+              mtndescription={mtndescription}
             />
           )}
 
-{proceedToShowReceipt && (
+          {proceedToShowReceipt && (
             <MtnFailedReceipt
-            networkName='MTN'
-            selectedNetworkProduct={selectedNetworkProduct}
-            recipientPhoneNumber={recipientPhoneNumber}
-            inputValue={inputValue}
-            recipientNames={recipientNames}
-            selectedAmount={selectedAmount}
-            mtntransactionID={mtntransactionID}
-            mtnrefNumber={mtnrefNumber}
-            mtnorderID={mtnorderID}
-            mtndescription={mtndescription}
+              networkName='MTN'
+              selectedProduct={selectedProduct}
+              recipientPhoneNumber={recipientPhoneNumber}
+              inputValue={inputValue}
+              recipientNames={recipientNames}
+              selectedAmount={selectedAmount}
+              mtntransactionID={mtntransactionID}
+              mtnrefNumber={mtnrefNumber}
+              mtnorderID={mtnorderID}
+              mtndescription={mtndescription}
             />
           )}
 
           <div className="py-[30px] lg:py-[60px] mt-10">
             <button
-              className={`w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[400] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px] ${
-                !selectedNetworkProduct ||
+              className={`w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[400] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px] ${!selectedProduct ||
                 !selectedOption ||
                 !inputValue ||
                 !selectedAmount ||
                 !paymentSelected
-                  ? "bg-[#63616188] cursor-not-allowed"
-                  : "bg-primary"
-              }`}
+                ? "bg-[#63616188] cursor-not-allowed"
+                : "bg-primary"
+                }`}
               onClick={handleProceed}
               disabled={
-                !selectedNetworkProduct ||
+                !selectedProduct ||
                 !selectedOption ||
                 !inputValue ||
                 !selectedAmount ||
@@ -1878,22 +1490,19 @@ const MtnDataTopUpBundle = () => {
         </section>
         {/* =======================FOOTER=================================== */}
         <div
-          className={`${
-            isDarkMode ? "bg-black text-white flex gap-[15px] justify-center items-center  pb-[25%] md:pb-[12%] lg:pb-0 py-[40%]" : "flex gap-[15px] justify-center items-center mt-[100%] pb-[25%] md:pb-[12%] md:mt-[40%] lg:mt-[40%] lg:pb-0"
-          }  `}
+          className={`${isDarkMode ? "bg-black text-white flex gap-[15px] justify-center items-center  pb-[25%] md:pb-[12%] lg:pb-0 py-[40%]" : "flex gap-[15px] justify-center items-center mt-[100%] pb-[25%] md:pb-[12%] md:mt-[40%] lg:mt-[40%] lg:pb-0"
+            }  `}
         >
           <div className={`text-[10px] md:text-[12px] lg:text-[14px]
-            ${
-              isDarkMode ? "text-white" : "text-black"
+            ${isDarkMode ? "text-white" : "text-black"
             }
             `}>
             You need help ?
           </div>
           <Link to="/ContactUs">
             <div
-              className={`${
-                isDarkMode ? "text-white bg-[#04177f]" : "bg-[#04177f]"
-              } text-[10px] p-1 text-white rounded-[8px] lg:text-[18px]`}
+              className={`${isDarkMode ? "text-white bg-[#04177f]" : "bg-[#04177f]"
+                } text-[10px] p-1 text-white rounded-[8px] lg:text-[18px]`}
             >
               Contact Us
             </div>
