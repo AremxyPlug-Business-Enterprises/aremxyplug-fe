@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { DashBoardLayout } from "../../../../Layout/DashBoardLayout";
 import { ContextProvider } from "../../../../../Context";
 import { useContext } from "react";
@@ -33,7 +33,7 @@ import { AirtelFailedReceipt } from "./AirtelFailedReceipt";
 const AirtelDataBundle = () => {
   const { isDarkMode } = useContext(ContextProvider);
   const { selectedOption, setSelectedOption } = useContext(ContextProvider);
-  const { selectedNetworkProduct, setSelectedNetworkProduct } =
+  const { selectedProduct, setSelectedProduct } =
     useContext(ContextProvider);
   const { recipientPhoneNumber, setRecipientPhoneNumber } =
     useContext(ContextProvider);
@@ -57,6 +57,75 @@ const AirtelDataBundle = () => {
   const [loading, setLoading] = useState("");
   const [airtelpurchaseStatus, setAirtelPurchaseStatus] = useState(null); // State to hold purchase status
   const [proceedToShowReceipt] = useState(false);
+  const [products, setProducts] = useState([]);
+  const [productPlans, setProductPlans] = useState([]);
+  const [loadingProducts, setLoadingProducts] = useState(false);
+  const [loadingPlans, setLoadingPlans] = useState(false);
+
+  const getAuthToken = () => {
+    return localStorage.getItem("authorisedLogin") || localStorage.getItem("getToken");
+  };
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      setLoadingProducts(true);
+      try {
+        const token = getAuthToken();
+        const response = await axios.get(
+          `https://aremxyplug.onrender.com/api/v1/products/telecom/list/4`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: token,
+            },
+          }
+        );
+        setProducts(response.data.data.products || []);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      } finally {
+        setLoadingProducts(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  // Fetch plans when product is selected
+  const fetchPlans = async (productId) => {
+    setLoadingPlans(true);
+    try {
+      const token = getAuthToken();
+      const response = await axios.get(
+        `https://aremxyplug.onrender.com/api/v1/products/telecom/${productId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token,
+          },
+        }
+      );
+      setProductPlans(response.data.data.plans || []);
+    } catch (error) {
+      console.error("Error fetching plans:", error);
+    } finally {
+      setLoadingPlans(false);
+    }
+  };
+
+  const handleSelectProduct = (product) => {
+    setSelectedProduct(`${product.Plan_Type}`);
+    setShowProductList(false);
+    fetchPlans(product.Product_ID);
+    setShowOptionList(true); // Show options after selecting a product
+  };
+
+  const handleSelectOption = (plan) => {
+    setSelectedOption(`${plan.Size} - ${plan.Validity} - ₦${plan.Amount}`);
+    setSelectedAmount(`₦${plan.Amount}`);
+    setShowOptionList(false);
+    setShowProductList(false);
+  };
 
 
 
@@ -161,82 +230,6 @@ const AirtelDataBundle = () => {
     setTransactSuccessPopUp(false);
   };
 
-  // if (addRecipient) {
-  //   console.log("recipient added");
-  // } else {
-  //   console.log("did not add recipient");
-  // }
-
-  const productList = [
-    {
-      id: 1,
-      name: "AIRTEL COPORATE GIFTING",
-      options: [
-        { id: 207, name: "AIRTEL CG 100MB", amount: "₦70", duration: "WEEKLY" },
-        { id: 208, name: "AIRTEL CG 300MB", amount: "₦100", duration: "WEEKLY" },
-        { id: 209, name: "AIRTEL CG 500MB", amount: "₦150", duration: "1 MONTH" },
-        { id: 210, name: "AIRTEL CG 1GB", amount: "₦250", duration: "1 MONTH" },
-        { id: 211, name: "AIRTEL CG 2GB", amount: "₦500", duration: "1 MONTH" },
-        { id: 212, name: "AIRTEL CG 5GB", amount: "₦1250", duration: "1 MONTH" },
-        { id: 213, name: "AIRTEL CG 10GB", amount: "₦2500", duration: "1 MONTH" },
-        { id: 214, name: "AIRTEL CG 15GB", amount: "₦3750", duration: "1 MONTH" },
-        { id: 215, name: "AIRTEL CG 20GB", amount: "₦5000", duration: "1 MONTH" },
-
-        // This ones are in the data documentation but not in the price List sent from aremxy
-        { id: 290, name: "AIRTEL CG 100GB", amount: "₦20500", duration: "1 MONTH" },
-        { id: 291, name: "AIRTEL CG 250GB", amount: "₦51250", duration: "1 MONTH" },
-        { id: 292, name: "AIRTEL CG 500GB", amount: "₦100000", duration: "1 MONTH" },
-        { id: 293, name: "AIRTEL CG 3TB", amount: "₦597000", duration: "1 MONTH" },
-        { id: 294, name: "AIRTEL CG 5TB", amount: "₦995000", duration: "1 MONTH" },
-        { id: 295, name: "AIRTEL CG 10TB", amount: "₦1990000", duration: "1 MONTH" },
-      ],
-    },
-    {
-      id: 2,
-      name: "AIRTEL GIFTING",
-      options: [
-        { id: 232, name: "AIRTEL GIFTING 350MB", amount: "₦300", duration: "WEEKLY" }, 
-        { id: 231, name: "AIRTEL GIFTING 750MB", amount: "₦490", duration: "2 WEEKS" }, 
-        { id: 145, name: "AIRTEL GIFTING 1.5GB", amount: "₦1000", duration: "1 MONTH" },
-        { id: 146, name: "AIRTEL GIFTING 2GB", amount: "₦1150", duration: "1 MONTH" },
-        { id: 147, name: "AIRTEL GIFTING 3GB", amount: "₦1420", duration: "1 MONTH" },
-        { id: 148, name: "AIRTEL GIFTING 4.5GB", amount: "₦1900", duration: "1 MONTH" },
-        { id: 192, name: "AIRTEL GIFTING 6GB", amount: "₦1450", duration: "WEEKLY" },  
-        { id: 149, name: "AIRTEL GIFTING 6GB", amount: "₦2420", duration: "1 MONTH" },
-        { id: 150, name: "AIRTEL GIFTING 10GB", amount: "₦2950", duration: "1 MONTH" },
-        { id: 163, name: "AIRTEL GIFTING 11GB", amount: "₦3900", duration: "1 MONTH" },
-        // THIS IS AVAILABLE IN THE PRICING BUT NOT IN THE DOCUMENTATION
-        { id: 163, name: "AIRTEL GIFTING 15GB", amount: "₦4100", duration: "1 MONTH" },
-        { id: 164, name: "AIRTEL GIFTING 20GB", amount: "₦5000", duration: "1 MONTH" },
-        { id: 165, name: "AIRTEL GIFTING 40GB", amount: "₦10000", duration: "1 MONTH" },  
-        { id: 191, name: "AIRTEL GIFTING 75GB", amount: "₦15300", duration: "1 MONTH" },  
-        { id: 193, name: "AIRTEL GIFTING 110GB", amount: "₦20600", duration: "1 MONTH" },   
-      ],
-    },
-    {
-      id: 3,
-      name: "GENERAL BUNDLES ---",
-      options: [],
-    },
-  ];
-  
-
-  const handleSelectProduct = (productName) => {
-    setSelectedNetworkProduct(productName);
-    setSelectedOption("");
-    setShowProductList(false);
-    setShowOptionList(false);
-  };
-
-  const handleSelectOption = (selectedOption, selectedAmount, duration, id) => {
-    setPlan(id);
-    console.log(id);
-    setSelectedOption(selectedOption);
-    setShowOptionList(false);
-    setSelectedAmount(selectedAmount);
-    // setDuration(duration);
-  };
-
   const [inputValue, setInputValue] = useState("");
 
   const schema = Joi.object({
@@ -249,88 +242,88 @@ const AirtelDataBundle = () => {
   });
 
   const airtelRegex =
-      /^(234|0)(802[0-9]|701[0-9]|708[0-9]|808[0-9]|812[0-9]|901[0-9]|902[0-9]|904[0-9]|907[0-9]|912[0-9]|911[0-9])\d{6}$/;
+    /^(234|0)(802[0-9]|701[0-9]|708[0-9]|808[0-9]|812[0-9]|901[0-9]|902[0-9]|904[0-9]|907[0-9]|912[0-9]|911[0-9])\d{6}$/;
 
-   
+
   const validatePhoneNumber = (phoneNumber) => {
-        if (!phoneNumber) {
-          return "Phone number is required";
-        }
-      
-        if (!airtelRegex.test(phoneNumber)) {
-          return "Invalid AIRTEL number. Please enter a valid AIRTEL number.";
-        }
-      
-        return null; // No error
-      };
+    if (!phoneNumber) {
+      return "Phone number is required";
+    }
+
+    if (!airtelRegex.test(phoneNumber)) {
+      return "Invalid AIRTEL number. Please enter a valid AIRTEL number.";
+    }
+
+    return null; // No error
+  };
 
 
   const handleChange = (e) => {
-        const value = e.target.value;
-        const numericValue = value.replace(/\D/g, "").slice(0, 11);
-        setInputValue(numericValue);
-      
-        // Validate phone number if it's complete
-        if (numericValue.length === 11) {
-          const error = validatePhoneNumber(numericValue);
-          if (error) {
-            setErrors({ recipientPhoneNumber: error });
-          } else {
-            setErrors({});
-          }
-        } else {
-          // Clear any previous errors if the input length is less than 11
-          setErrors({});
-        }
+    const value = e.target.value;
+    const numericValue = value.replace(/\D/g, "").slice(0, 11);
+    setInputValue(numericValue);
+
+    // Validate phone number if it's complete
+    if (numericValue.length === 11) {
+      const error = validatePhoneNumber(numericValue);
+      if (error) {
+        setErrors({ recipientPhoneNumber: error });
+      } else {
+        setErrors({});
+      }
+    } else {
+      // Clear any previous errors if the input length is less than 11
+      setErrors({});
+    }
+  };
+
+
+
+  const handleProceed = (e) => {
+    e.preventDefault();
+
+    function validateNigerianNumberByNetwork(number) {
+      const networks = {
+        'AIRTEL': ['0701', '0708', '0802', '0808', '0812', '0901', '0902', '0904', '0907', '0912', '0911'],
       };
-    
-    
-    
-      const handleProceed = (e) => {
-        e.preventDefault();
-    
-        function validateNigerianNumberByNetwork(number) {
-            const networks = {
-              'AIRTEL': ['0701', '0708', '0802', '0808', '0812', '0901', '0902', '0904', '0907', '0912', '0911'],
-            };
-    
-            for (let network in networks) {
-                for (let prefix of networks[network]) {
-                    if (number.startsWith(prefix) && number.length === prefix.length + 7) {
-                        return network;
-                    }
-                }
-            }
-    
-            return 'Unknown network';
+
+      for (let network in networks) {
+        for (let prefix of networks[network]) {
+          if (number.startsWith(prefix) && number.length === prefix.length + 7) {
+            return network;
+          }
         }
-    
-        const { error } = schema.validate({
-            recipientPhoneNumber,
-        });
-    
-        if (error) {
-            setErrors(
-                error.details.reduce((acc, curr) => {
-                    acc[curr.path[0]] = curr.message;
-                    return acc;
-                }, {})
-            );
-        } else if (validateNigerianNumberByNetwork(recipientPhoneNumber) !== 'AIRTEL') {
-            setErrors({
-                recipientPhoneNumber:
-                    `Invalid AIRTEL number. Please enter a valid AIRTEL number.`,
-            });
-        } else {
-            setProceed(true);
-            setErrors({});
-        }
-    };
+      }
+
+      return 'Unknown network';
+    }
+
+    const { error } = schema.validate({
+      recipientPhoneNumber,
+    });
+
+    if (error) {
+      setErrors(
+        error.details.reduce((acc, curr) => {
+          acc[curr.path[0]] = curr.message;
+          return acc;
+        }, {})
+      );
+    } else if (validateNigerianNumberByNetwork(recipientPhoneNumber) !== 'AIRTEL') {
+      setErrors({
+        recipientPhoneNumber:
+          `Invalid AIRTEL number. Please enter a valid AIRTEL number.`,
+      });
+    } else {
+      setProceed(true);
+      setErrors({});
+    }
+  };
 
 
 
 
-  
+
   const handleRecipientNameChange = (e) => {
     setRecipientNames(e.target.value);
   };
@@ -366,80 +359,75 @@ const AirtelDataBundle = () => {
       console.log("its me")
 
       try {
-          const response = await axios.post(url, data);
-          console.log(response.data);
-          console.log(response.status);
-          // setSelectedNetworkProduct(response.data.product)
-          // console.log(response.data.product)
-          setPlan(response.data.plan_name)
-          console.log(response.data.plan_name)
-          setInputValue(response.data.Phone_Number)
-          console.log(response.data.Phone_Number)
-          setRecipientPhoneNumber(data.Phone_number)
-          console.log(data.Phone_number)
-          console.log(inputValue)
-          console.log(recipientPhoneNumber)
-          setRecipientNames(response.data.Name)
-          console.log(response.data.Name)
-          setSelectedAmount(response.data.plan_amount)
-          console.log(response.data.plan_amount)
-          setAirtelTransactionID(response.data.transaction_id)
-          console.log(response.data.transaction_id)
-          setAirtelRefNumber(response.data.reference_number)
-          console.log(response.data.reference_number)
-          setAirtelOrderID(response.data.order_id)
-          console.log(response.data.order_id)
-          setAirtelDescription(response.data.description)
-          // console.log(response.data.description)
-          return { statusCode: response.status, data: response.data };
-          // console.log(response.data);
+        const response = await axios.post(url, data);
+        console.log(response.data);
+        console.log(response.status);
+        // setSelectedProduct(response.data.product)
+        // console.log(response.data.product)
+        setPlan(response.data.plan_name)
+        console.log(response.data.plan_name)
+        setInputValue(response.data.Phone_Number)
+        console.log(response.data.Phone_Number)
+        setRecipientPhoneNumber(data.Phone_number)
+        console.log(data.Phone_number)
+        console.log(inputValue)
+        console.log(recipientPhoneNumber)
+        setRecipientNames(response.data.Name)
+        console.log(response.data.Name)
+        setSelectedAmount(response.data.plan_amount)
+        console.log(response.data.plan_amount)
+        setAirtelTransactionID(response.data.transaction_id)
+        console.log(response.data.transaction_id)
+        setAirtelRefNumber(response.data.reference_number)
+        console.log(response.data.reference_number)
+        setAirtelOrderID(response.data.order_id)
+        console.log(response.data.order_id)
+        setAirtelDescription(response.data.description)
+        // console.log(response.data.description)
+        return { statusCode: response.status, data: response.data };
+        // console.log(response.data);
       } catch (error) {
-          console.error(error);
-          return { statusCode: error.response.status, data: null };
+        console.error(error);
+        return { statusCode: error.response.status, data: null };
       }
-  }
+    }
 
-  // usage
-  const response = await buyData(
-    4, recipientPhoneNumber, plan, recipientNames
-  );
+    // usage
+    const response = await buyData(
+      4, recipientPhoneNumber, plan, recipientNames
+    );
 
-  console.log(response)
-  console.log("its me 1")
+    console.log(response)
+    console.log("its me 1")
 
-  setLoading(false)
+    setLoading(false)
 
 
 
-  setConfirm(false);
-  if (response.statusCode === 200) {
+    setConfirm(false);
+    if (response.statusCode === 200) {
       // Success response
       setTransactSuccessPopUp(true); // Show success popup
-  } else {
+    } else {
       // Failure response
       setAirtelPurchaseStatus(true); // Show failure popup
-  }
+    }
 
   };
-
-  // sendDataToBackend(2, inputValue, plan, recipientNames);
-
 
   return (
     <DashBoardLayout>
       <div
-        className={`bg-[#FFF] relative lg:ml-[20px] 2xl:ml-0 ${
-          isDarkMode
+        className={`bg-[#FFF] relative lg:ml-[20px] 2xl:ml-0 ${isDarkMode
             ? "bg-[#000] text-[#fff] border-[#fff]"
             : "bg-[#ffffff] text-[#000] "
-        } flex flex-col justify-between h-full`}
+          } flex flex-col justify-between h-full`}
       >
         <section
-          className={`md:px-[0px] ${
-            isDarkMode
+          className={`md:px-[0px] ${isDarkMode
               ? "bg-[#000] text-[#fff] border-[#fff]"
               : "bg-[#ffffff] text-[#000] "
-          }`}
+            }`}
         >
           <div
             id="DataBundle"
@@ -449,7 +437,7 @@ const AirtelDataBundle = () => {
               <p className="text-[11px] mb-2 font-bold uppercase w-[100%] md:text-[16px] md:w-[70%] lg:w-[70%] lg:text-[20px] 2xl:w-[80%] 2xl:text-[24px] lg:mb-4">
                 DATA BUNDLES, AFFORDABLE AND AUTOMATED.
               </p>
-              <p className="text-[10px] font-[400] leading-[9px] mb-3 md:text-[10px] md:leading-[12.2px] w-[90%] md:w-[75%] lg:w-[75%] 2xl:w-[85%] 2xl:mt-[5px] lg:mt-[20px] lg:text-[16px] lg:leading-[26px] 2xl:text-[20px] lg:mb-[20px]">
+              <p className="text-[10px] font-[400] leading-[13.4px] mb-4 md:text-[10px] md:leading-[12.2px] w-[90%] md:w-[75%] lg:w-[75%] 2xl:w-[85%] 2xl:mt-[5px] lg:mt-[20px] lg:text-[16px] lg:leading-[26px] 2xl:text-[20px] lg:mb-[20px]">
                 Top up your mobile sim with our automated data bundles directly
                 from network providers, enjoy discounts without any hassle or
                 hidden fee.
@@ -469,11 +457,10 @@ const AirtelDataBundle = () => {
 
           <div className="flex gap-[10%] mt-[40px] md:w-full md:justify-between md:gap-[10%] ">
             <div className={`w-full flex items-center justify-between border text-[10px] md:py-[15px] md:w-[50%] rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003] 
-              ${
-                    isDarkMode
-                      ? "bg-black text-white border !border-white"
-                      : "border border-[#0003]"
-                  }`}>
+              ${isDarkMode
+                ? "bg-black text-white border !border-white"
+                : "border border-[#0003]"
+              }`}>
               <Link
                 to="/DataBundleSelectRecipient"
                 style={{ display: "inline-flex", width: "100%" }}
@@ -488,11 +475,10 @@ const AirtelDataBundle = () => {
               </Link>
             </div>
             <div className={`w-full flex items-center justify-between border text-[10px] md:py-[15px] md:w-[40%] md:mr-[9%]  rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003] 
-          ${
-                    isDarkMode
-                      ? "bg-black text-white border !border-white"
-                      : "border border-[#0003]"
-                  }`}>
+          ${isDarkMode
+                ? "bg-black text-white border !border-white"
+                : "border border-[#0003]"
+              }`}>
               <Link
                 to="/DataBundleAddRecipient"
                 style={{ display: "inline-flex", width: "100%" }}
@@ -558,9 +544,8 @@ const AirtelDataBundle = () => {
             <Modal>
               (
               <div
-                className={`code ${
-                  toggleSideBar ? "code1" : "code01"
-                } overflow-auto w-[90%]`}
+                className={`code ${toggleSideBar ? "code1" : "code01"
+                  } overflow-auto w-[90%]`}
               >
                 <img
                   onClick={() => setCodes(false)}
@@ -609,23 +594,24 @@ const AirtelDataBundle = () => {
 
           <div className="grid grid-cols-1 mt-[25px] md:grid-cols-2 gap-y-[20px] md:gap-x-[58.68px] lg:gap-x-[100px] md:gap-y-[15px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[20px]">
             <div className="relative">
-              <h2 className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[15px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
-                                            isDarkMode 
-                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
-                                          }`}>
+              <h2 className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[15px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${isDarkMode
+                  ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                }`}>
                 Select Product
               </h2>
               <div
-                className={`mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between ${
-      isDarkMode
-        ? "bg-black text-white border !border-white"
-        : "border border-[#0003]"
-    }
+                className={`mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between ${isDarkMode
+                    ? "bg-black text-white border !border-white"
+                    : "border border-[#0003]"
+                  }
   `}
-                onClick={() => setShowProductList(!showProductList)}
+                onClick={() => {
+                  setShowOptionList(false);
+                  setShowProductList(!showProductList);
+                }}
               >
                 <h2 className="text-[12px] font-[400] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                  {selectedNetworkProduct}
+                  {selectedProduct}
                 </h2>
                 <button className="lg:w-6 lg:h-6 w-[11px] h-[12px]">
                   <img src={arrowDown} alt="" className="w-full h-full" />
@@ -633,46 +619,42 @@ const AirtelDataBundle = () => {
               </div>
               {showProductList && (
                 <div className={`border md:rounded-[10px] text-[16px] md:text-[12px] lg:text-[16px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[10]
-                  ${
-                    isDarkMode
-                      ? "bg-black text-white border !border-white"
-                      : "border border-[#0003]"
+                  ${isDarkMode
+                    ? "bg-black text-white border !border-white"
+                    : "border border-[#0003]"
                   }
                 `}>
-                  {productList.map((item) => (
-                    <div
-                      key={item.name}
-                      className={`pb-[17px] md:pb-[6px] pt-[17px] md:pt-[6px] font-weight-bold text-[13px] cursor-pointer border-b-[0.5px] text-[#7C7C7C] md:text-[12px] lg:text-[16px]  md:rounded-[0px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
-                        selectedNetworkProduct === item.name ? "bg-white" : ""
-                      }
-                      ${
-                        isDarkMode
-                          ? "bg-black text-white "
-                          : "bg-white"
-                      }
-                    `}
-                      onClick={() => handleSelectProduct(item.name)}
-                    >
-                      {item.name}
-                    </div>
-                  ))}
+                  {loadingProducts ? (
+                    <div>Loading products...</div>
+                  ) : (
+                    products.map((product) => (
+                      <div
+                        key={product.Product_ID}
+                        className={`cursor-pointer border-b-[0.5px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] py-[4px] pl-[5px]`}
+                        onClick={() => {
+                          handleSelectProduct(product);
+                          setShowOptionList(true);
+                        }}
+                      >
+                        {`${product.Plan_Type}`}
+                      </div>
+                    ))
+                  )}
                 </div>
               )}
             </div>
 
             <div className="relative">
-              <h2 className={`lg:text-[18px] md:text-[14px] lg:leading-[24px] mb-1 text-[16px] md:font-[600] font-[400] leading-[12px] ${
-                                            isDarkMode 
-                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
-                                          }`}>
+              <h2 className={`lg:text-[18px] md:text-[14px] lg:leading-[24px] mb-1 text-[16px] md:font-[600] font-[400] leading-[12px] ${isDarkMode
+                  ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                }`}>
                 Select Plan
               </h2>
               <div
-                className={`mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between ${
-      isDarkMode
-        ? "bg-black text-white border !border-white"
-        : "border border-[#0003]"
-    }
+                className={`mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between ${isDarkMode
+                    ? "bg-black text-white border !border-white"
+                    : "border border-[#0003]"
+                  }
   `}
                 onClick={() => setShowOptionList(!showOptionList)}
               >
@@ -686,70 +668,46 @@ const AirtelDataBundle = () => {
 
               {showOptionList && (
                 <div className={`border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[100]
-                  ${
-                    isDarkMode
-                      ? "bg-black text-white border !border-white"
-                      : "border border-[#0003]"
+                  ${isDarkMode
+                    ? "bg-black text-white border !border-white"
+                    : "border border-[#0003]"
                   }
                 `}>
-                  {productList
-                    .find((item) => item.name === selectedNetworkProduct)
-                    ?.options.map((option, index) => {
-                      const amount = option.amount;
-                      const duration = option.duration;
-                      const id = option.id;
-
-                      return (
-                        <div
-                          key={option.id}
-                          className={`pb-[17px] md:pb-[6px] pt-[17px] md:pt-[6px] font-weight-bold text-[13px] cursor-pointer border-b-[0.5px] md:rounded-[0px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[4px] text-[12px] pl-[5px] ${
-                            selectedOption === option.id ? "bg-gray-200" : ""
-                          }
-                           ${
-                        isDarkMode
-                          ? "bg-black text-white "
-                          : "bg-white"
-                      }
-                    `}
-                          onClick={() =>
-                            handleSelectOption(
-                              `${option.name} (${amount}) ~ ${duration}`,
-                              amount,
-                              duration,
-                              id, // Pass the id here
-
-                              console.log(id)
-                            )
-                          }
-                        >
-                          {`${option.name} (${amount}) ~ ${duration}`}
-                        </div>
-                      );
-                    })}
+                  {loadingPlans ? (
+                    <div>Loading plans...</div>
+                  ) : (
+                    productPlans.map((plan) => (
+                      <div
+                        key={plan.PlanID}
+                        className={`cursor-pointer border-b-[0.5px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] py-[4px] pl-[5px]`}
+                        onClick={() => handleSelectOption(plan)}
+                      >
+                        {`${plan.Size} - ${plan.Validity} (₦${plan.Amount})`}
+                      </div>
+                    ))
+                  )}
                 </div>
               )}
             </div>
 
             <div className="">
-              <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
-                                            isDarkMode 
-                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
-                                          }`}>
+              <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${isDarkMode
+                  ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                }`}>
                 Phone Number{" "}
                 <span className="text-[#04177F]">
                   <Link to="/DataBundleSelectRecipient">
                     (Select Recipient)
                   </Link>
-                  </span>{" "}
+                </span>{" "}
               </h2>
               <div className="relative mt-[5px]">
                 <input
                   type="number"
-                  className={`mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] lg:text-[16px] font-[400] focus:outline-none lg:h-[51px] ${
-      isDarkMode
-        ? "bg-black text-white border !border-white"
-        : "border border-[#0003]"
-    }
+                  className={`mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] lg:text-[16px] font-[400] focus:outline-none lg:h-[51px] ${isDarkMode
+                      ? "bg-black text-white border !border-white"
+                      : "border border-[#0003]"
+                    }
   `}
                   placeholder=""
                   value={inputValue}
@@ -767,28 +725,26 @@ const AirtelDataBundle = () => {
                 </div>
               </div>
               {errors.recipientPhoneNumber && (
-              <div className="text-[14px] text-red-500 italic lg:text-[14px]">
-                {errors.recipientPhoneNumber}
-              </div>
-            )}
-              
+                <div className="text-[14px] text-red-500 italic lg:text-[14px]">
+                  {errors.recipientPhoneNumber}
+                </div>
+              )}
+
             </div>
 
             <div className="">
-              <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
-                                            isDarkMode 
-                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
-                                          }`}>
+              <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${isDarkMode
+                  ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                }`}>
                 Recipient Name<span className="text-[#7C7C7C]">(optional)</span>{" "}
               </h2>
               <div className="relative mt-[5px]">
                 <input
                   type="text"
-                  className={`mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] font-[400] focus:outline-none lg:h-[51px] lg:text-[16px] ${
-      isDarkMode
-        ? "bg-black text-white border !border-white"
-        : "border border-[#0003]"
-    }
+                  className={`mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] font-[400] focus:outline-none lg:h-[51px] lg:text-[16px] ${isDarkMode
+                      ? "bg-black text-white border !border-white"
+                      : "border border-[#0003]"
+                    }
   `}
                   placeholder=""
                   value={recipientNames}
@@ -805,20 +761,18 @@ const AirtelDataBundle = () => {
             </div>
 
             <div className="">
-              <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
-                                            isDarkMode 
-                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
-                                          }`}>
+              <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${isDarkMode
+                  ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                }`}>
                 Amount
               </h2>
               <div className="relative mt-[5px]">
                 <input
                   type="text"
-                  className={`mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] font-[400] focus:outline-none lg:h-[51px] lg:text-[16px] ${
-      isDarkMode
-        ? "bg-black text-white border !border-white"
-        : "border border-[#0003]"
-    }
+                  className={`mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] font-[400] focus:outline-none lg:h-[51px] lg:text-[16px] ${isDarkMode
+                      ? "bg-black text-white border !border-white"
+                      : "border border-[#0003]"
+                    }
   `}
                   // placeholder="&#8358;100"
                   value={`${selectedAmount}`}
@@ -836,17 +790,15 @@ const AirtelDataBundle = () => {
 
             <div>
               <div onClick={handleShowPayment}>
-                <h2 className={`lg:text-[18px] mt-[5px] lg:leading-[24px] mb-2 text-[15px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
-                                            isDarkMode 
-                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
-                                          }`}>
+                <h2 className={`lg:text-[18px] mt-[5px] lg:leading-[24px] mb-2 text-[15px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${isDarkMode
+                    ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                  }`}>
                   Payment Method
                 </h2>
-                <div className={`mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input flex justify-between items-center border w-full h-8 px-2 rounded-md text-[10px] font-[400] focus:outline-none lg:h-[51px] lg:text-[16px] ${
-      isDarkMode
-        ? "bg-black text-white border !border-white"
-        : "border border-[#0003]"
-    }
+                <div className={`mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input flex justify-between items-center border w-full h-8 px-2 rounded-md text-[10px] font-[400] focus:outline-none lg:h-[51px] lg:text-[16px] ${isDarkMode
+                    ? "bg-black text-white border !border-white"
+                    : "border border-[#0003]"
+                  }
   `}>
                   {paymentSelected ? (
                     <li
@@ -890,17 +842,14 @@ const AirtelDataBundle = () => {
               {showPayment && (
                 <div
                   className={`pb-[14px] md:pb-[6px] pt-[14px] md:pt-[6px] font-weight-bold text-[13px] border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute
-                       ${
-                    isDarkMode
+                       ${isDarkMode
                       ? "bg-black text-white border !border-white"
                       : "border border-[#0003]"
-                  }
-                 ${
-                    
-                    toggleSideBar
+                    }
+                 ${toggleSideBar
                       ? "w-full md:w-[44.5%] lg:w-[45%] 2xl:w-[46%] "
                       : "w-full md:w-[46%] 2xl:w-[46.5%] "
-                  } bg-[#FFF] z-[100]  `}
+                    } bg-[#FFF] z-[100]  `}
                 >
                   {countryList.map((country) => (
                     <Payment
@@ -915,7 +864,7 @@ const AirtelDataBundle = () => {
                           country.amount
                         )
                       }
-                      
+
                     />
                   ))}
                 </div>
@@ -950,11 +899,9 @@ const AirtelDataBundle = () => {
           {proceed && (
             <Modal>
               <div
-                className={`scroll-bar ${
-                  isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
-                } ${
-                  toggleSideBar ? "confirm01" : "confirm"
-                } grow pt-[10px] pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative 
+                className={`scroll-bar ${isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
+                  } ${toggleSideBar ? "confirm01" : "confirm"
+                  } grow pt-[10px] pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative 
                 md:rounded-[11.5px] md:mx-auto md:my-auto md:overflow-auto`}
               >
                 <div className="w-full flex justify-end border-b-[6px] border-primary px-[12px] md:h-[25px] lg:border-b-[10px] lg:mt-[20px]">
@@ -1001,7 +948,7 @@ const AirtelDataBundle = () => {
                       </h2>
                       <div className="flex gap-1">
                         <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          {selectedNetworkProduct}
+                          {selectedProduct}
                         </h2>
                       </div>
                     </div>
@@ -1112,12 +1059,11 @@ const AirtelDataBundle = () => {
           )}
 
 
-{airtelpurchaseStatus && (
+          {airtelpurchaseStatus && (
             <Modal>
               <div
-                className={` ${
-                  toggleSideBar ? "confirm02" : "confirm2"
-                } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
+                className={` ${toggleSideBar ? "confirm02" : "confirm2"
+                  } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
               >
                 <div className="flex justify-end px-2">
                   <img
@@ -1153,21 +1099,21 @@ const AirtelDataBundle = () => {
                     Done
                   </button>
 
-                  <Link to="/AirtelFailedReceipt" 
-                  state={{
-                    networkName: "AIRTEL",
-                    selectedNetworkProduct: selectedNetworkProduct,
-                    selectedOption: selectedOption,
-                    recipientPhoneNumber: recipientPhoneNumber,
-                    inputValue: inputValue,
-                    recipientNames: recipientNames,
-                    selectedAmount: selectedAmount,
-                    airteltransactionID: airteltransactionID,
-                    airtelrefNumber: airtelrefNumber,
-                    airtelorderID: airtelorderID,
-                    airteldescription: airteldescription,
-                   
-                }}
+                  <Link to="/AirtelFailedReceipt"
+                    state={{
+                      networkName: "AIRTEL",
+                      selectedProduct: selectedProduct,
+                      selectedOption: selectedOption,
+                      recipientPhoneNumber: recipientPhoneNumber,
+                      inputValue: inputValue,
+                      recipientNames: recipientNames,
+                      selectedAmount: selectedAmount,
+                      airteltransactionID: airteltransactionID,
+                      airtelrefNumber: airtelrefNumber,
+                      airtelorderID: airtelorderID,
+                      airteldescription: airteldescription,
+
+                    }}
                   >
                     <button
                       onClick={() => {
@@ -1189,9 +1135,8 @@ const AirtelDataBundle = () => {
           {confirm && (
             <Modal>
               <div
-                className={` ${
-                  toggleSideBar ? "confirm02" : "confirm2"
-                } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
+                className={` ${toggleSideBar ? "confirm02" : "confirm2"
+                  } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
               >
                 <div className="flex justify-end px-2">
                   <img
@@ -1252,9 +1197,8 @@ const AirtelDataBundle = () => {
                     inputPinHandler();
                   }}
                   disabled={inputPin.length !== 4}
-                  className={`${
-                    inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
-                  } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                  className={`${inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
+                    } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
                 >
                   Purchase
                 </button>
@@ -1266,9 +1210,8 @@ const AirtelDataBundle = () => {
             <Modal>
               {/* <TransactFailedPopUp/> */}
               <div
-                className={` scroll-bar ${
-                  toggleSideBar ? "confirm01 w-[90%]" : "confirm w-[90%]"
-                } bg-white rounded-[12px] md:my-auto mx-auto overflow-auto lg:mx-auto lg:my-auto`}
+                className={` scroll-bar ${toggleSideBar ? "confirm01 w-[90%]" : "confirm w-[90%]"
+                  } bg-white rounded-[12px] md:my-auto mx-auto overflow-auto lg:mx-auto lg:my-auto`}
               >
                 <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
                   <img
@@ -1334,7 +1277,7 @@ const AirtelDataBundle = () => {
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        {selectedNetworkProduct}
+                        {selectedProduct}
                       </h2>
                     </div>
                   </div>
@@ -1378,7 +1321,7 @@ const AirtelDataBundle = () => {
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                      &#8358;{selectedAmount}
+                        &#8358;{selectedAmount}
                       </h2>
                     </div>
                   </div>
@@ -1393,7 +1336,7 @@ const AirtelDataBundle = () => {
                       </h2>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-center justify-between">
                     <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
                       Order Number
@@ -1428,17 +1371,17 @@ const AirtelDataBundle = () => {
                   </Link>
 
                   <Link to="/AirtelReceipt"
-                  state={{
-                    selectedNetworkProduct: selectedNetworkProduct,
-                    inputValue: inputValue,
-                    selectedOption: selectedOption,
-                    recipientNames: recipientNames,
-                    selectedAmount: selectedAmount,
-                    airteltransactionID: airteltransactionID,
-                    airtelrefNumber: airtelrefNumber,
-                    airtelorderID: airtelorderID,
-                    airteldescription: airteldescription,
-                }}>
+                    state={{
+                      selectedProduct: selectedProduct,
+                      inputValue: inputValue,
+                      selectedOption: selectedOption,
+                      recipientNames: recipientNames,
+                      selectedAmount: selectedAmount,
+                      airteltransactionID: airteltransactionID,
+                      airtelrefNumber: airtelrefNumber,
+                      airtelorderID: airtelorderID,
+                      airteldescription: airteldescription,
+                    }}>
                     <button
                       onClick={handleReceipt}
                       className={`border-[1px] w-[100px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-[600] h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[12px] lg:w-[163px] lg:h-[38px] lg:my-[2%] md:px-[60px] md:h-[30px]`}
@@ -1452,53 +1395,52 @@ const AirtelDataBundle = () => {
           )}
 
 
-{proceedToShowReceipt && (
+          {proceedToShowReceipt && (
             <AirtelReceipt
               networkName="AIRTEL"
-              selectedNetworkProduct={selectedNetworkProduct}
-            recipientPhoneNumber={recipientPhoneNumber}
-            recipientNames={recipientNames}
-            selectedAmount={selectedAmount}
-            airteltransactionID={airteltransactionID}
-            airtelrefNumber={airtelrefNumber}
-            airtelorderID={airtelorderID}
-            airteldescription={airteldescription}
+              selectedProduct={selectedProduct}
+              recipientPhoneNumber={recipientPhoneNumber}
+              recipientNames={recipientNames}
+              selectedAmount={selectedAmount}
+              airteltransactionID={airteltransactionID}
+              airtelrefNumber={airtelrefNumber}
+              airtelorderID={airtelorderID}
+              airteldescription={airteldescription}
             />
           )}
 
 
-{proceedToShowReceipt && (
+          {proceedToShowReceipt && (
             <AirtelFailedReceipt
               networkName="AIRTEL"
-              selectedNetworkProduct={selectedNetworkProduct}
-            recipientPhoneNumber={recipientPhoneNumber}
-            recipientNames={recipientNames}
-            selectedAmount={selectedAmount}
-            airteltransactionID={airteltransactionID}
-            airtelrefNumber={airtelrefNumber}
-            airtelorderID={airtelorderID}
-            airteldescription={airteldescription}
+              selectedProduct={selectedProduct}
+              recipientPhoneNumber={recipientPhoneNumber}
+              recipientNames={recipientNames}
+              selectedAmount={selectedAmount}
+              airteltransactionID={airteltransactionID}
+              airtelrefNumber={airtelrefNumber}
+              airtelorderID={airtelorderID}
+              airteldescription={airteldescription}
             />
           )}
 
 
 
-          
+
           <div className="py-[30px] lg:py-[60px] mt-10">
             <button
-              className={`w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[600] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px] ${
-                !selectedNetworkProduct ||
-                !selectedOption ||
-                !inputValue ||
-                !selectedAmount ||
-                !paymentSelected ||
-                !validatePhoneNumber
+              className={`w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[600] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px] ${!selectedProduct ||
+                  !selectedOption ||
+                  !inputValue ||
+                  !selectedAmount ||
+                  !paymentSelected ||
+                  !validatePhoneNumber
                   ? "bg-[#63616188] cursor-not-allowed"
                   : "bg-primary"
-              }`}
+                }`}
               onClick={handleProceed}
               disabled={
-                !selectedNetworkProduct ||
+                !selectedProduct ||
                 !selectedOption ||
                 !inputValue ||
                 !selectedAmount ||
@@ -1513,18 +1455,16 @@ const AirtelDataBundle = () => {
 
         {/* =======================FOOTER=================================== */}
         <div
-          className={`${
-            isDarkMode ? "bg-black text-white flex gap-[15px] justify-center items-center  pb-[25%] md:pb-[12%] lg:pb-0 py-[40%]" : "flex gap-[15px] justify-center items-center mt-[100%] pb-[25%] md:pb-[12%] md:mt-[40%] lg:mt-[40%] lg:pb-0"
-          } `}
+          className={`${isDarkMode ? "bg-black text-white flex gap-[15px] justify-center items-center  pb-[25%] md:pb-[12%] lg:pb-0 py-[40%]" : "flex gap-[15px] justify-center items-center mt-[100%] pb-[25%] md:pb-[12%] md:mt-[40%] lg:mt-[40%] lg:pb-0"
+            } `}
         >
           <div className="text-[10px] md:text-[12px] lg:text-[14px]">
             You need help ?
           </div>
           <Link to="/ContactUs">
             <div
-              className={`${
-                isDarkMode ? "border" : "bg-[#04177f]"
-              } text-[10px] p-1 text-white rounded-[8px] lg:text-[18px]`}
+              className={`${isDarkMode ? "border" : "bg-[#04177f]"
+                } text-[10px] p-1 text-white rounded-[8px] lg:text-[18px]`}
             >
               Contact Us
             </div>

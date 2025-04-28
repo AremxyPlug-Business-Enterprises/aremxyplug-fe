@@ -40,7 +40,9 @@ const { transactSuccessPopUp, setTransactSuccessPopUp } = useContext(ContextProv
 const {educationPinPhone, setEducationPinPhone} = useContext(ContextProvider);
 const {educationPinEmail, setEducationPinEmail} = useContext(ContextProvider);
  const {educationAmount, setEducationAmount} = useContext(ContextProvider);
- const {walletBalance, setWalletBalance } = useContext(ContextProvider);
+ const {walletBalance, setWalletBalance,setEducationPinStatus
+
+ } = useContext(ContextProvider);
 
 // UseStates
 const [imageState, setImageState] = useState(arrowDown);
@@ -157,6 +159,9 @@ const waecEduPinFailed = ()=> {
 }
 const handleWaecSubmitPost = async(e) => {
   e.preventDefault();
+  const getToken = localStorage.getItem("getToken");
+  const authToken = localStorage.getItem("authorisedLogin")
+  if(authToken || getToken){
   try{
     const sendWaecForm ={
      exam_type : examType.toLowerCase(),
@@ -167,15 +172,27 @@ const handleWaecSubmitPost = async(e) => {
       wallet_type: '',
      }
      console.log(sendWaecForm);
-    const response = await axios.post('https://aremxyplug.onrender.com/api/v1/edu', sendWaecForm);
+    const response = await axios.post('https://aremxyplug.onrender.com/api/v1/edu', sendWaecForm, {headers : {
+      "Content-Type" : "application/json",
+      Authorization : authToken || getToken
+    }});
     if(response.status === "success" || 201 || "Successful" || 200){
       eduPinSuccess();
+      setEducationPinStatus(true);
     } 
     alert('submitted');
-  }catch(error)  {
+  }catch(error) {
+    if(error && (error.response.status === 404 || 400)){
 console.error(`The Data brought back an error Of ${error}`);
 waecEduPinFailed()
+    }else if(error && (error.response.status === 500)){
+      console.error(`The Data brought back an error Of ${error}`);
+      waecEduPinFailed()
+          }else{
+            alert(error)
+          }
   }
+}
 }
 // GET RESPONSE SUCCESSFUL
 const {setEduResponse} = useContext(ContextProvider);
