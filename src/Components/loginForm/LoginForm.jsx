@@ -167,9 +167,9 @@ const {fullName, phoneNumber, userName} = state
   // ==========Login Handler===========
   const submitHandler = async (e) => {
     e.preventDefault();
-
+if( !navigator.onLine) return alert("No internet Connection, Check your network connection to proceed ")
     // ========Login form validation starts here=======
-    if (usernameORemail === "username") {
+    if (usernameORemail === "username" && navigator.onLine) {
       try {
         const schema = Joi.object({
           username: Joi.string()
@@ -252,7 +252,7 @@ const {fullName, phoneNumber, userName} = state
           }
     }
 
-    if (usernameORemail === "email") {
+    if (usernameORemail === "email" && navigator.onLine) {
       try {
         const schema = Joi.object({
           email: Joi.string()
