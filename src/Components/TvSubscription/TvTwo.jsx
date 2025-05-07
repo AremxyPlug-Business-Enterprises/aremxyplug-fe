@@ -50,13 +50,7 @@ const DsTv = () => {
 console.log(fetchedDstvPlans)
 const DstvPlans = fetchedDstvPlans ? fetchedDstvPlans.data.data.data : []
 // console.log(DstvPlans)
-  const getNumericValue = (option) => {
-    const numericPart = option.match(/\d+/);
-    if (numericPart) {
-      return formatNumberWithCommas(parseInt(numericPart[0], numericPart[2], 10));
-    }
-    return '';
-  };
+ 
 
   // const handleDstv = (event) =>{
   //       event.preventDefault();

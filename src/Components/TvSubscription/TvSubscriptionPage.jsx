@@ -40,8 +40,10 @@ const handleSubscriptionFunction = ()=> {
         alert("Dstv is On")
        fetchedPlans = setFetchedDstvPlans
     }else if(tvSubscription === "startimes"){
+        alert("Startimes is On")
         fetchedPlans = setFetchedStarTimesPlans
     }else if(tvSubscription === "showmax"){
+        alert("Showmax is On")
         fetchedPlans = setFetchedShowMaxPlans
     }
 }
