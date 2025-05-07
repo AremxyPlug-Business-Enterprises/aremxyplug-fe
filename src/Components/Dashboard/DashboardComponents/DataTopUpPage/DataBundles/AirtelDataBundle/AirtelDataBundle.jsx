@@ -24,10 +24,11 @@ import { AiFillEye } from "react-icons/ai";
 import { AirtelReceipt } from "./AirtelReceipt";
 import Joi from "joi";
 import airtimestyles from "../../../../../AirTimePage/AirtimeVtu.module.css";
-import axios from "axios";
 import Spinner from "./../MtnDataTopUpBundle/Spinner";
-import Failed from "./../MtnDataTopUpBundle/MtnDataTopUpBundleImages/Failed.svg"
+import Failed from "./../MtnDataTopUpBundle/MtnDataTopUpBundleImages/Failed.svg";
 import { AirtelFailedReceipt } from "./AirtelFailedReceipt";
+import axiosInstance from "../../../../../ApiCollection.jsx/apiClient";
+import { VerifyTransPin } from "../../../../../ApiCollection.jsx/ApiBuck";
 
 
 const AirtelDataBundle = () => {
@@ -61,24 +62,17 @@ const AirtelDataBundle = () => {
   const [productPlans, setProductPlans] = useState([]);
   const [loadingProducts, setLoadingProducts] = useState(false);
   const [loadingPlans, setLoadingPlans] = useState(false);
-
-  const getAuthToken = () => {
-    return localStorage.getItem("authorisedLogin") || localStorage.getItem("getToken");
-  };
+  const [selectedPlan, setSelectedPlan] = useState(null);
+  const [success, setSuccess] = useState(false);
+  const [failed, setFailed] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     const fetchProducts = async () => {
       setLoadingProducts(true);
       try {
-        const token = getAuthToken();
-        const response = await axios.get(
-          `https://aremxyplug.onrender.com/api/v1/products/telecom/list/4`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: token,
-            },
-          }
+        const response = await axiosInstance.get(
+          '/products/telecom/list/4'
         );
         setProducts(response.data.data.products || []);
       } catch (error) {
@@ -95,15 +89,8 @@ const AirtelDataBundle = () => {
   const fetchPlans = async (productId) => {
     setLoadingPlans(true);
     try {
-      const token = getAuthToken();
-      const response = await axios.get(
-        `https://aremxyplug.onrender.com/api/v1/products/telecom/${productId}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token,
-          },
-        }
+      const response = await axiosInstance.get(
+        `/products/telecom/${productId}`
       );
       setProductPlans(response.data.data.plans || []);
     } catch (error) {
@@ -117,12 +104,12 @@ const AirtelDataBundle = () => {
     setSelectedProduct(`${product.Plan_Type}`);
     setShowProductList(false);
     fetchPlans(product.Product_ID);
-    setShowOptionList(true); // Show options after selecting a product
   };
 
   const handleSelectOption = (plan) => {
-    setSelectedOption(`${plan.Size} - ${plan.Validity} - ₦${plan.Amount}`);
+    setSelectedOption(`${plan.Size} ~ ${plan.Validity} ~ ₦${plan.Amount}`);
     setSelectedAmount(`₦${plan.Amount}`);
+    setSelectedPlan(plan);
     setShowOptionList(false);
     setShowProductList(false);
   };
@@ -341,13 +328,23 @@ const AirtelDataBundle = () => {
   const [airteldescription, setAirtelDescription] = useState("");
 
   const inputPinHandler = async () => {
-    async function buyData(network, mobileNumber, plan, name) {
-      const url = 'https://aremxyplug.onrender.com/api/v1/data';
+    async function buyData(network, mobileNumber, planID, name) {
+
+      // Add validation for selected plan
+      if (!selectedPlan) {
+        console.error("No plan selected");
+        return;
+      }
+
+      console.log(selectedPlan)
+      console.log(selectedPlan.PlanID)
+
+      const path = '/data';
 
       const data = {
         network,
         mobile_number: mobileNumber,
-        plan,
+        plan: planID,
         name,
       };
 
@@ -359,31 +356,42 @@ const AirtelDataBundle = () => {
       console.log("its me")
 
       try {
-        const response = await axios.post(url, data);
+        const response = await axiosInstance.post(path, data);
         console.log(response.data);
         console.log(response.status);
-        // setSelectedProduct(response.data.product)
-        // console.log(response.data.product)
-        setPlan(response.data.plan_name)
-        console.log(response.data.plan_name)
-        setInputValue(response.data.Phone_Number)
-        console.log(response.data.Phone_Number)
-        setRecipientPhoneNumber(data.Phone_number)
-        console.log(data.Phone_number)
-        console.log(inputValue)
-        console.log(recipientPhoneNumber)
-        setRecipientNames(response.data.Name)
-        console.log(response.data.Name)
-        setSelectedAmount(response.data.plan_amount)
-        console.log(response.data.plan_amount)
-        setAirtelTransactionID(response.data.transaction_id)
-        console.log(response.data.transaction_id)
-        setAirtelRefNumber(response.data.reference_number)
-        console.log(response.data.reference_number)
-        setAirtelOrderID(response.data.order_id)
-        console.log(response.data.order_id)
-        setAirtelDescription(response.data.description)
-        // console.log(response.data.description)
+
+        const resData = response.data.data; // Accessing the nested `data` object
+
+        console.log(response.status);
+        setPlan(resData.plan_name);
+        console.log(resData.plan_name);
+
+        setInputValue(resData.Phone_Number);
+        console.log(resData.Phone_Number);
+
+        setRecipientPhoneNumber(data.Phone_number); // Still from your original request
+        console.log(data.Phone_number);
+
+        console.log(inputValue); // Note: this may still show the old state value here
+        console.log(recipientPhoneNumber);
+
+        setRecipientNames(resData.Name);
+        console.log(resData.Name);
+
+        setSelectedAmount(resData.plan_amount);
+        console.log(resData.plan_amount);
+
+        setAirtelTransactionID(resData.transaction_id);
+        console.log(resData.transaction_id);
+
+        setAirtelRefNumber(resData.reference_number);
+        console.log(resData.reference_number);
+
+        setAirtelOrderID(resData.order_id); // No `order_id`, using `id` instead
+        console.log(resData.order_id);
+
+        setMtnDescription(`${resData.network} - ${resData.plan_name}`); // Fabricated description
+
         return { statusCode: response.status, data: response.data };
         // console.log(response.data);
       } catch (error) {
@@ -394,7 +402,10 @@ const AirtelDataBundle = () => {
 
     // usage
     const response = await buyData(
-      4, recipientPhoneNumber, plan, recipientNames
+      4, // Network ID for MTN
+      inputValue, // Use inputValue instead of recipientPhoneNumber
+      selectedPlan.PlanID,
+      recipientNames
     );
 
     console.log(response)
@@ -403,8 +414,6 @@ const AirtelDataBundle = () => {
     setLoading(false)
 
 
-
-    setConfirm(false);
     if (response.statusCode === 200) {
       // Success response
       setTransactSuccessPopUp(true); // Show success popup
@@ -419,14 +428,14 @@ const AirtelDataBundle = () => {
     <DashBoardLayout>
       <div
         className={`bg-[#FFF] relative lg:ml-[20px] 2xl:ml-0 ${isDarkMode
-            ? "bg-[#000] text-[#fff] border-[#fff]"
-            : "bg-[#ffffff] text-[#000] "
+          ? "bg-[#000] text-[#fff] border-[#fff]"
+          : "bg-[#ffffff] text-[#000] "
           } flex flex-col justify-between h-full`}
       >
         <section
           className={`md:px-[0px] ${isDarkMode
-              ? "bg-[#000] text-[#fff] border-[#fff]"
-              : "bg-[#ffffff] text-[#000] "
+            ? "bg-[#000] text-[#fff] border-[#fff]"
+            : "bg-[#ffffff] text-[#000] "
             }`}
         >
           <div
@@ -595,14 +604,14 @@ const AirtelDataBundle = () => {
           <div className="grid grid-cols-1 mt-[25px] md:grid-cols-2 gap-y-[20px] md:gap-x-[58.68px] lg:gap-x-[100px] md:gap-y-[15px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[20px]">
             <div className="relative">
               <h2 className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[15px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${isDarkMode
-                  ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
                 }`}>
                 Select Product
               </h2>
               <div
                 className={`mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between ${isDarkMode
-                    ? "bg-black text-white border !border-white"
-                    : "border border-[#0003]"
+                  ? "bg-black text-white border !border-white"
+                  : "border border-[#0003]"
                   }
   `}
                 onClick={() => {
@@ -630,10 +639,15 @@ const AirtelDataBundle = () => {
                     products.map((product) => (
                       <div
                         key={product.Product_ID}
-                        className={`cursor-pointer border-b-[0.5px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] py-[4px] pl-[5px]`}
+                        className={`pb-[15px] md:pb-[6px] pt-[15px] md:pt-[6px] font-weight-bold text-[13px] cursor-pointer border-b-[0.5px] text-[#7C7C7C] md:text-[12px] lg:text-[16px]  md:rounded-[0px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${selectedProduct === product.Plan_Type ? "" : ""}
+                          ${isDarkMode
+                            ? "bg-black text-white "
+                            : ""
+                          }
+                          `}
                         onClick={() => {
                           handleSelectProduct(product);
-                          setShowOptionList(true);
+                          setShowOptionList(false);
                         }}
                       >
                         {`${product.Plan_Type}`}
@@ -646,14 +660,14 @@ const AirtelDataBundle = () => {
 
             <div className="relative">
               <h2 className={`lg:text-[18px] md:text-[14px] lg:leading-[24px] mb-1 text-[16px] md:font-[600] font-[400] leading-[12px] ${isDarkMode
-                  ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
                 }`}>
                 Select Plan
               </h2>
               <div
                 className={`mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between ${isDarkMode
-                    ? "bg-black text-white border !border-white"
-                    : "border border-[#0003]"
+                  ? "bg-black text-white border !border-white"
+                  : "border border-[#0003]"
                   }
   `}
                 onClick={() => setShowOptionList(!showOptionList)}
@@ -679,10 +693,16 @@ const AirtelDataBundle = () => {
                     productPlans.map((plan) => (
                       <div
                         key={plan.PlanID}
-                        className={`cursor-pointer border-b-[0.5px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] py-[4px] pl-[5px]`}
+                        className={`pb-[18px] md:pb-[6px] pt-[18px] md:pt-[6px] font-weight-bold text-[13px] cursor-pointer border-b-[0.5px] md:rounded-[0px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${selectedOption === plan.PlanID ? "bg-gray-200" : ""
+                          }
+                                                 ${isDarkMode
+                            ? "bg-black text-white "
+                            : ""
+                          }
+                                              `}
                         onClick={() => handleSelectOption(plan)}
                       >
-                        {`${plan.Size} - ${plan.Validity} (₦${plan.Amount})`}
+                        {`${plan.PlanType} (${plan.Size} ~ ${plan.Validity} ~ ₦${plan.Amount})`}
                       </div>
                     ))
                   )}
@@ -692,7 +712,7 @@ const AirtelDataBundle = () => {
 
             <div className="">
               <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${isDarkMode
-                  ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
                 }`}>
                 Phone Number{" "}
                 <span className="text-[#04177F]">
@@ -705,8 +725,8 @@ const AirtelDataBundle = () => {
                 <input
                   type="number"
                   className={`mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] lg:text-[16px] font-[400] focus:outline-none lg:h-[51px] ${isDarkMode
-                      ? "bg-black text-white border !border-white"
-                      : "border border-[#0003]"
+                    ? "bg-black text-white border !border-white"
+                    : "border border-[#0003]"
                     }
   `}
                   placeholder=""
@@ -734,7 +754,7 @@ const AirtelDataBundle = () => {
 
             <div className="">
               <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${isDarkMode
-                  ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
                 }`}>
                 Recipient Name<span className="text-[#7C7C7C]">(optional)</span>{" "}
               </h2>
@@ -742,8 +762,8 @@ const AirtelDataBundle = () => {
                 <input
                   type="text"
                   className={`mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] font-[400] focus:outline-none lg:h-[51px] lg:text-[16px] ${isDarkMode
-                      ? "bg-black text-white border !border-white"
-                      : "border border-[#0003]"
+                    ? "bg-black text-white border !border-white"
+                    : "border border-[#0003]"
                     }
   `}
                   placeholder=""
@@ -762,7 +782,7 @@ const AirtelDataBundle = () => {
 
             <div className="">
               <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${isDarkMode
-                  ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
                 }`}>
                 Amount
               </h2>
@@ -770,8 +790,8 @@ const AirtelDataBundle = () => {
                 <input
                   type="text"
                   className={`mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] font-[400] focus:outline-none lg:h-[51px] lg:text-[16px] ${isDarkMode
-                      ? "bg-black text-white border !border-white"
-                      : "border border-[#0003]"
+                    ? "bg-black text-white border !border-white"
+                    : "border border-[#0003]"
                     }
   `}
                   // placeholder="&#8358;100"
@@ -791,13 +811,13 @@ const AirtelDataBundle = () => {
             <div>
               <div onClick={handleShowPayment}>
                 <h2 className={`lg:text-[18px] mt-[5px] lg:leading-[24px] mb-2 text-[15px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${isDarkMode
-                    ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                  ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
                   }`}>
                   Payment Method
                 </h2>
                 <div className={`mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input flex justify-between items-center border w-full h-8 px-2 rounded-md text-[10px] font-[400] focus:outline-none lg:h-[51px] lg:text-[16px] ${isDarkMode
-                    ? "bg-black text-white border !border-white"
-                    : "border border-[#0003]"
+                  ? "bg-black text-white border !border-white"
+                  : "border border-[#0003]"
                   }
   `}>
                   {paymentSelected ? (
@@ -1159,7 +1179,10 @@ const AirtelDataBundle = () => {
                         <OtpInput
                           value={inputPin}
                           inputType="tel"
-                          onChange={setInputPin}
+                          onChange={(pin) => {
+                            setInputPin(pin);
+                            console.log("PIN being entered:", pin);
+                          }}
                           numInputs={4}
                           shouldAutoFocus={true}
                           inputStyle={{
@@ -1192,9 +1215,18 @@ const AirtelDataBundle = () => {
 
                 <button
                   onClick={() => {
-                    // e.preventDefault();
-                    setConfirm(false);
-                    inputPinHandler();
+                    console.log("inputPin", inputPin);
+                    VerifyTransPin(
+                      inputPin,
+                      setSuccess,
+                      setFailed,
+                      setLoading,
+                      setErrorMessage,
+                      () => {
+                        setConfirm(false); // Close modal on PIN success
+                        inputPinHandler(); // Proceed with purchase
+                      }
+                    );
                   }}
                   disabled={inputPin.length !== 4}
                   className={`${inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
@@ -1430,13 +1462,13 @@ const AirtelDataBundle = () => {
           <div className="py-[30px] lg:py-[60px] mt-10">
             <button
               className={`w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[600] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px] ${!selectedProduct ||
-                  !selectedOption ||
-                  !inputValue ||
-                  !selectedAmount ||
-                  !paymentSelected ||
-                  !validatePhoneNumber
-                  ? "bg-[#63616188] cursor-not-allowed"
-                  : "bg-primary"
+                !selectedOption ||
+                !inputValue ||
+                !selectedAmount ||
+                !paymentSelected ||
+                !validatePhoneNumber
+                ? "bg-[#63616188] cursor-not-allowed"
+                : "bg-primary"
                 }`}
               onClick={handleProceed}
               disabled={
