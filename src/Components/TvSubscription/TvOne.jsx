@@ -36,6 +36,7 @@ const GoTv = () => {
     smartCard,
     setSmartCard,
     setTvEmail,
+    tvAmount,
     setTvAmount,
     setMobileNumber,
     decoderActive,
@@ -44,7 +45,8 @@ const GoTv = () => {
     decoderType,
     methodImage,
     setMethodImage,
-    isDarkMode
+    isDarkMode,
+    fetchedGotvPlans
   } = useContext(ContextProvider)
 
   const [planName, setPlanName] = useState(false);
@@ -119,23 +121,12 @@ const GoTv = () => {
       //       console.error("Error sending data to backend:", error);
       //     });
       // };
-          
+      
+     const GotvData = fetchedGotvPlans ? fetchedGotvPlans.data.data.data : []
+   
+      console.log(GotvData)
 
-    const options = [
-    { id: 1, planName: "Gotv Smallie", amount: "₦1100", duration: "Monthly" },
-    { id: 2, planName: "GOtv Jinja", amount: "₦2250", duration: "Monthly" },
-    { id: 3, planName: "GOtv Jinja", amount: "₦4500", duration: "2 Months" },
-    { id: 4, planName: "GOtv Lite", amount: "₦2900", duration: "3 Months" },
-    { id: 5, planName: "GOtv Lite", amount: "₦8600", duration: "Annually" },
-    { id: 6, planName: "GOtv Max", amount: "₦4850", duration: "Monthly" },
-    { id: 7, planName: "GOtv Max", amount: "₦9700", duration: "2 Months" },
-    { id: 8, planName: "GOtv Joli", amount: "₦3300", duration: "Monthly" },
-    { id: 9, planName: "GOtv Joli", amount: "₦6600", duration: "2 Months" },
-    { id: 10, planName: "GOtv SUPA", amount: "₦6400", duration: "Monthly" },
-    { id: 11, planName: "GOtv SUPA", amount: "₦12800", duration: "2 Months" },
-    { id: 12, planName: "GOtv SUPA plus", amount: "₦21000", duration: "2 Months" },
-  ]
-
+    
  
 
   // function waecQuantityDropDown(){
@@ -404,15 +395,16 @@ const GoTv = () => {
               </div>
 
               {showDropdownGOTV && (
-                <ul className={`dropdown-options absolute top-[100%] w-full  cursor-pointer z-[2]
+                <ul className={`dropdown-options absolute top-[100%] w-full h-[300px] overflow-y-scroll  cursor-pointer z-[2]
                    ${
             isDarkMode 
               ? "bg-black text-white border border-white" 
               : "hover:bg-[#EDEAEA] bg-white"
           }`}>
-                  {options.map((option) => {
-                    const amount = option.amount;
-                    const duration = option.duration;
+                  {GotvData.map((option) => {
+                    const amount = option.Amount;
+
+                   // const duration = option.duration;
 
 
                     return (
@@ -426,11 +418,15 @@ const GoTv = () => {
               : "hover:bg-[#EDEAEA]  bg-white"
           }`}
                       key={option.id}
-                      onClick={() => handleOptionClickGOTV(`${option.planName} (${amount}) ~ ${duration}`, option)}
+                      onClick={() => {
+                        handleOptionClickGOTV(`${option.PackageName} (${amount})  `, option)
+                        setTvAmount(option.Amount)
+                      }
+                      }
 
                       
                     >
-                      {`${option.planName} (${option.amount}) ~ ${option.duration}`}
+                      {`${option.PackageName} (${option.Amount})`}
                     </li>
                     );
                   })}
@@ -529,7 +525,7 @@ const GoTv = () => {
                     ? "bg-black text-white border border-white" 
                     : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
                 }`}
-                value={'₦' + getNumericValue(selectedOptionGOTV)} onChange={handleTvAmount}
+                value={`₦ ${tvAmount}`} onChange={handleTvAmount}
               />
 
             </div>
