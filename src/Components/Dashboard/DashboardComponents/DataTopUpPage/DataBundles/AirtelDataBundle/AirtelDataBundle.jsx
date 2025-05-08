@@ -390,8 +390,7 @@ const AirtelDataBundle = () => {
         setAirtelOrderID(resData.order_id); // No `order_id`, using `id` instead
         console.log(resData.order_id);
 
-        // Fabricated description
-        // setMtnDescription(`${resData.network} - ${resData.plan_name}`);
+        setMtnDescription(`${resData.network} - ${resData.plan_name}`); // Fabricated description
 
         return { statusCode: response.status, data: response.data };
         // console.log(response.data);
