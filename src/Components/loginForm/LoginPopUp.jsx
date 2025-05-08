@@ -405,31 +405,34 @@ return () => clearInterval(timer);
   const SendTransactPin = async()=>{
     const getToken = localStorage.getItem("getToken");
     const authToken = localStorage.getItem("authorisedLogin")
-   if(authToken || getToken){
+    if(!navigator.onLine) return alert("Check your internet connection")
+   if((authToken || getToken) && navigator.onLine){
     setLoading(true)
   try{
    const forwardPin ={
-    otp : otp
+    pin:otp
    }
-   const response = await axios.post("https://aremxyplug.onrender.com/api/v1/pin",forwardPin,{headers: {"Content-Type" : "application/json",
+   const DataJson = JSON.stringify(forwardPin)
+   console.log(DataJson);
+   const response = await axios.post("https://aremxyplug.onrender.com/api/v1/pin",DataJson,{headers: {"Content-Type" : "application/json",
         Authorization : getToken || authToken
       }})
-      
-    
-    if(response.status === 200|| 201){
+      if(response.status === 200|| 201){
       console.log(response);
          navigate("/dashboard");
-      }else if(response.status){
+      }else if(!response.status){
         alert("Check your Network Connection")
       }
     
   }
     catch(error){
-     if(error.status === 401){
-        alert("Something went wrong on your end");
-        }else if(error.status === 500){
+     if(error && error.response.status === 401){
+        alert("Login Token expired, please login again");
+        }else if(error && error.response.status === 404){
+          alert(`Please check your internet connection`)
+        } else if(error && error.response.status === 500){
           alert(`An error occured on our end`)
-        }else if(!error.status){
+        }else if(!error.response.status){
           alert("Check your Network Connection")
         }
         else{

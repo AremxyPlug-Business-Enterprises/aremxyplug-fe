@@ -23,7 +23,7 @@ const DsTv = () => {
   const {
     setConfirmDstvPopup,
     selectedOptionDstv,
-    setSelectedOptionDstv,
+   setSelectedOptionDstv,
     showDropdownDstv,
     setShowDropdownDstv,
     formatNumberWithCommas,
@@ -41,11 +41,15 @@ const DsTv = () => {
     decoderType,
     methodImage,
     setMethodImage,
-    isDarkMode 
+    isDarkMode,
+    fetchedDstvPlans,
+    dstvAmount,
+    setDstvAmount
   } = useContext(ContextProvider)
  
-
-
+console.log(fetchedDstvPlans)
+const DstvPlans = fetchedDstvPlans ? fetchedDstvPlans.data.data.data : []
+// console.log(DstvPlans)
   const getNumericValue = (option) => {
     const numericPart = option.match(/\d+/);
     if (numericPart) {
@@ -60,24 +64,11 @@ const DsTv = () => {
   //     }
     
   const handleOptionClickDstv = (option) => {
-        setSelectedOptionDstv(option);
+       // setSelectedOptionDstv(option);
         setShowDropdownDstv(false);
       };
     
-      const options = [
-        `Dstv Padi (₦2500)`,
-        `Dstv Yanga (₦3500)`,
-        `Dstv Confam (₦6300)`,
-        `Dstv Padi Extra (₦5050) `,
-        `Dstv Yanga Extra (₦5850) `,
-        `Dstv Asia (₦8300)`,
-        `Dstv Confam Extra (₦8200)`,
-        `Dstv Compact (₦10500)`,
-        `Dstv Compact Plus (₦16600)`,
-        `Dstv Compact Extra View (₦23900)`,
-        `Dstv Premium (₦24500)`,
-        `Dstv Premium Asia (₦27500)`,
-      ]
+     
     
       const Decoders  = [
         { decoderType :'Dstv',  id : 1},
@@ -168,17 +159,18 @@ const DsTv = () => {
   }
 
   const [methodOptions, setMethodOptions] = useState([
-    { method: 'NGN Wallet', balance: " (50,000.00)", flag: nigerianFlag, id: 1 },
+    { method: 'NGN Wallet', balance: "(50,000.00)", flag: nigerianFlag, id: 1 },
     { method: 'USD Wallet ', balance: '(0.00)', flag: americaFlag, id: 2 },
     { method: 'EUR Wallet', balance: '(0.00)', flag: britainFlag, id: 3 },
     { method: 'GBP Wallet', balance: '(0.00)', flag: euroFlag, id: 4 },
     { method: 'AUD Wallet', balance: '(0.00)', flag: austriaFlag, id: 5 },
     { method: 'KES Wallet', balance: '(0.00)', flag: kenyaFlag, id: 6 }
   ])
-
+const [errorFillDecoder, setErrorFillDecoder] = useState(false)
   function packageDropdown() {
     if (!decoderType) {
       setShowDropdownDstv(false);
+      setErrorFillDecoder(true)
     }
     else {
     setShowDropdownDstv(!showDropdownDstv)
@@ -190,6 +182,9 @@ const DsTv = () => {
   function decoderDropdown() {
     setDecoderActive(!decoderActive)
     document.querySelector('.decdrop').classList.toggle('DropIt');
+    if(decoderType){
+      setErrorFillDecoder(false);
+    }
   }
 
 
@@ -228,7 +223,8 @@ const DsTv = () => {
             <div className="relative flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[14px] lg:text-[17px] md:text-[13px md:font-[600] font-[400]">
                 Confirm Decoder Type</label>
-              <div className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] p-4 sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400]  leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
+                <div className="flex flex-col gap-[5px] lg:gap-[10px]">
+              <div onClick={decoderDropdown} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] p-4 sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400]  leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px]  self-center" onClick={decoderDropdown} ${
       isDarkMode 
         ? "bg-black text-white border border-white" 
@@ -237,7 +233,14 @@ const DsTv = () => {
                 {decoderType}
                 <img className="absolute left-[90%] lg:left-[94%] self-center align-middle decdrop md:h-[14.038px] md:w-[14.038px] 
       lg:h-[24px] lg:w-[24px] w-[14px] h-[16px]" src={arrowDown} alt="" />
+      
               </div>
+              {errorFillDecoder && (
+                <p className="text-[10px] leading-[14px] font-[400] lg:text-[14px] lg:leading-[20px] text-left text-red-500">
+                 Select a decoder to choose a package
+                </p>
+              )}
+            </div>
 
                       {decoderActive && (
          <div className={`absolute lg:top-[90px] md:top-[60px] top-[74px] z-[2] flex flex-col w-[100%] lg:h-225px md:h-[210px]  
@@ -261,7 +264,7 @@ const DsTv = () => {
          lg:text-[16px] lg:leading-[20.8px] cursor-pointer ${
           isDarkMode 
             ? "bg-black text-white border border-white" 
-            : "hover:bg-[#EDEAEA] border-[#9C9C9C] text-[#7C7C7C] "
+            : "hover:bg-[#EDEAEA] bg-white border-[#9C9C9C] text-[#7C7C7C] "
         }`} 
          key= {decoder.id}>
       <h2>{decoder.decoderType}   </h2>
@@ -279,7 +282,7 @@ const DsTv = () => {
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px md:font-[600] font-[400]">
                 Select Package</label>
 
-              <div className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
+              <div onClick={packageDropdown} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center" onClick={packageDropdown} ${
       isDarkMode 
         ? "bg-black text-white border border-white" 
@@ -291,8 +294,8 @@ const DsTv = () => {
               </div>
 
               {    showDropdownDstv && (
-                <ul className="dropdown-options z-[2] absolute top-[100%] w-full bg-white cursor-pointer">
-                  {options.map((option, index) => (
+                <ul className="dropdown-options z-[2] absolute top-[100%] w-full h-[300px] overflow-y-scroll bg-white cursor-pointer">
+                  {DstvPlans.map((option, index) => (
                     <li
                       className={`pb-[20px] pt-[20px] md:pb-[14px] md:pt-[14px] font-weight-bold text-[14px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500] 
                       md:text-[13.227px] md:leading-[17.195px] 
@@ -303,9 +306,14 @@ const DsTv = () => {
                           : "hover:bg-[#EDEAEA] border-[#9C9C9C]  bg-white text-[#7C7C7C] "
                       }`}
                       key={index}
-                      onClick={() => handleOptionClickDstv(option)}
+                      onClick={() =>{
+                        handleOptionClickDstv();
+                        setSelectedOptionDstv(`${option.PackageName}`)
+                        setDstvAmount(option.Amount)
+                      }
+                      }
                     >
-                      {option}
+                    {`${option.PackageName} `}
                     </li>
                   ))}
                 </ul>
@@ -401,7 +409,7 @@ const DsTv = () => {
                   ? "bg-black text-white border border-white" 
                   : "hover:bg-[#EDEAEA] border-[#9C9C9C] text-[#7C7C7C] "
               }`}
-                value={'₦' + getNumericValue(selectedOptionDstv)}
+                value={`₦${dstvAmount} `}
               />
 
             </div>
