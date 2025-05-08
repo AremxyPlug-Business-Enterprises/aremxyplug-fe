@@ -9,7 +9,7 @@
 
 @media (min-width: 980px) {
     .alignwidth{
-        gap: 40px;
+        gap: 20px;
     }
     .alignwidth1{
         gap: 90px;
@@ -17,9 +17,9 @@
 }
 
 @media (min-width: 1024px) {
-    .alignwidth{
+    /* .alignwidth{
         gap: 0px;
-    }
+    } */
     .alignwidth1{
         gap: 30px;
     }

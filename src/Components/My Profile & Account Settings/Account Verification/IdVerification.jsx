@@ -564,7 +564,7 @@ export default function IdVerification(Data) {
                     className={`flex justify-between items-center font-medium py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[12px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] ${isDarkMode ? "border-white" : ""}`}
                   >
                     <h2
-                      className={` font-[400] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : "text-[#000]"}`}
+                      className={`font-[400] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : "text-[#000]"}`}
                     >
                       {idResult}
                     </h2>

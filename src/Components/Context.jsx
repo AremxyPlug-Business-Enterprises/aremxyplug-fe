@@ -832,6 +832,8 @@ export const Context = ({ children }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [ikedcEmail, setEmail] = useState("");
   const [ikedcamount, setIkedcamount] = useState("");
+  const [ibedcEmail, setIbedcEmail] = useState("");
+  const [ibedcamount, setIbedcamount] = useState("");
   const [billGenerate, setBillGenerate] = useState("");
   const [serviceID, setServiceID] = useState("");
   const [flag, setFlag] = useState("");
@@ -1380,6 +1382,10 @@ const [idButtonState, setIdButtonState] = useState("Verify")
     setEmail,
     ikedcamount,
     setIkedcamount,
+    ibedcEmail,
+    setIbedcEmail,
+    ibedcamount,
+    setIbedcamount,
     billGenerate,
     setBillGenerate,
     serviceID,

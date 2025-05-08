@@ -177,6 +177,7 @@ export const VerifyTransPin = async(otp, setSuccess,
       const response = await axios.post(url, body, {headers: {"Content-Type" :"application/json",
          Authorization : authToken || getToken
       }})
+      console.log(`verify-response: ${response}`)
       if(response.status === 201 || 200){
          setSuccess(true);
        setErrorMessage("");
@@ -211,9 +212,11 @@ export const PostFunction = async(path, setLoading, body, functionAtSuccess, fun
       const response = await axios.post(url, body, {headers: {"Content-Type" :"application/json",
          Authorization : authToken || getToken
       }})
+      console.log(`post-response: ${response}`)
       if(response.status === 201 || 200){
      
          functionAtSuccess()
+         console.log(response.data)
       }
    }catch(error){
       if(error && error.response.status === 400){
