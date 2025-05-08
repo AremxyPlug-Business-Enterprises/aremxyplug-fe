@@ -733,7 +733,7 @@ This verification protects you and us from fraudulent activities.
  </p>
  <img src={QueryId} alt="" 
           className='lg:w-[294px] lg:h-[234px] md:w-[172px]
-           md:h-[135.893px] w-[172.521px] h-[135.893px]'/>
+           md:h-[135.893px] w-[172.521px] h-[135.893px]' />
           </div>
           {/*  */}
           
