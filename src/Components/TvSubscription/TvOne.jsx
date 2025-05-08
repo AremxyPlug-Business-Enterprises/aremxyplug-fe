@@ -17,8 +17,12 @@ import britainFlag from '../../Components/EducationPins/imagesEducation/Britain.
 import euroFlag from '../../Components/EducationPins/imagesEducation/GBP.svg';
 import austriaFlag from '../../Components/EducationPins/imagesEducation/Austria.svg';
 import kenyaFlag from '../../Components/EducationPins/imagesEducation/Kenya.svg';
-import axios from 'axios';
+import {VerifyTransPin} from "../../Components/ApiCollection.jsx/ApiBuck";
+import {Loader} from "../Loader/Loader"
+import {Modal} from "../Screens/Modal/Modal"
+import {PostFunction} from "../../Components/ApiCollection.jsx/ApiBuck"
 // import { duration } from "html2canvas/dist/types/css/property-descriptors/duration";
+
 
 const GoTv = () => {
 
@@ -44,13 +48,16 @@ const GoTv = () => {
     decoderType,
     methodImage,
     setMethodImage,
-    isDarkMode
+    isDarkMode,
+    setErrorMessage,
+    setGotvSuccessful,
+    setInputPinGotv,
   } = useContext(ContextProvider)
 
   const [planName, setPlanName] = useState(false);
-   
-
-
+  const [tvOneOtp, setTvOneOtp] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const [failedPopup, setFailedPopup] = useState(false);
 
   // const handleOptionClickGOTV = (option, id) => {
     // setSelectedOptionGOTV(option);
@@ -119,7 +126,7 @@ const GoTv = () => {
       //       console.error("Error sending data to backend:", error);
       //     });
       // };
-          
+
 
     const options = [
     { id: 1, planName: "Gotv Smallie", amount: "₦1100", duration: "Monthly" },
@@ -173,36 +180,36 @@ const GoTv = () => {
   //   document.querySelector('.Decoderdrop').classList.toggle('DropIt');
   // }
 
-  const sendDataToBackend = async (decoder_type, plan, iuc_number, email, amount, phone) => {
-    const apiUrl = "https://aremxyplug.onrender.com/api/v1/tvsub";
+  // const sendDataToBackend = async (decoder_type, plan, iuc_number, email, amount, phone) => {
+  //   const apiUrl = "https://aremxyplug.onrender.com/api/v1/tvsub";
 
-    // Prepare the data to be sent in the request body
-    const requestData = {
-      decoder_type,
-      plan,
-      iuc_number,
-      email,
-      amount,
-      phone, 
-    };
+  //   // Prepare the data to be sent in the request body
+  //   const requestData = {
+  //     decoder_type,
+  //     plan,
+  //     iuc_number,
+  //     email,
+  //     amount,
+  //     phone, 
+  //   };
 
-    console.log(requestData);
+  //   console.log(requestData);
 
-    try {
-      // Send a POST request to the backend API using Axios
-      const response = await axios.post(apiUrl, requestData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+  //   try {
+  //     // Send a POST request to the backend API using Axios
+  //     const response = await axios.post(apiUrl, requestData, {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
 
-      // Handle the response from the backend
-      console.log("Backend response:", response.data);
-    } catch (error) {
-      // Handle any errors that occurred during the request
-      console.error("Error sending data to backend:", error);
-    }
-  };
+  //     // Handle the response from the backend
+  //     console.log("Backend response:", response.data);
+  //   } catch (error) {
+  //     // Handle any errors that occurred during the request
+  //     console.error("Error sending data to backend:", error);
+  //   }
+  // };
   
 
   const handleGotv = (event) => {
@@ -221,13 +228,40 @@ const GoTv = () => {
           return acc;
         }, {})
       );
-    } else {
-      sendDataToBackend(decoderType, planName, smartCard, tvEmail, '₦' + getNumericValue(selectedOptionGOTV), mobileNumber);
-      console.log(decoderType, planName, smartCard, tvEmail, '₦' + getNumericValue(selectedOptionGOTV), mobileNumber);
-      setConfirmGotvPopup(true);
-      setErrors({});
-    }
-  }
+    } 
+  //   else {
+  //     // sendDataToBackend(decoderType, planName, smartCard, tvEmail, '₦' + getNumericValue(selectedOptionGOTV), mobileNumber);
+  //      console.log(decoderType, planName, smartCard, tvEmail, '₦' + getNumericValue(selectedOptionGOTV), mobileNumber);
+  //     setConfirmGotvPopup(true);
+  //     setErrors({});
+    
+      
+  // }
+  try {
+    setIsLoading(true);
+    
+       // Preparing request data
+       const requestData = {
+        decoder_type: decoderType,
+        plan: planName,
+        iuc_number: smartCard,
+        email: tvEmail,
+        amount: '₦' + getNumericValue(selectedOptionGOTV),
+        phone: mobileNumber,
+      };
+//show confirmation popup
+setConfirmGotvPopup(true);
+setErrors({});
+    
+} catch (error) {
+  console.error("Error during TV subscription:", error);
+  setFailedPopup(true); 
+} finally {
+  setIsLoading(false);
+}
+
+};
+
   const [errors, setErrors] = useState({});
 
  
@@ -299,6 +333,78 @@ const GoTv = () => {
     setDecoderActive(!decoderActive)
     document.querySelector('.decdrop').classList.toggle('DropIt');
   }
+
+  // const VerifyPinHandler = async() =>{
+  //   const GotvHandler = async() => {
+  //     const requestData = {
+  //           decoder_type: decoderType,
+  //           plan: planName,
+  //           iuc_number:smartCard,
+  //           email: tvEmail,
+  //           amount: "",
+  //           phone: mobileNumber,
+  //         };
+  //         const Path = "tvsub"
+  //         const SuccessHandler = () =>{
+  //           setGotvSuccessful(true)
+  //           setInputPinGotv(false)
+            
+  //         }
+  //         const FailedHandler = () =>{
+  //            setFailedPopup(true);
+  //           setInputPinGotv(false)
+  //         }
+  //         await PostFunction(Path, setIsLoading, requestData, SuccessHandler, FailedHandler)
+
+  //   }
+  //         await VerifyTransPin(tvOneOtp, null,
+
+  //          null, setIsLoading, setErrorMessage, GotvHandler)
+  // }  
+
+
+// VerifyPinHandler to handle both success and failure cases:
+const VerifyPinHandler = async () => {
+  try {
+    const GotvHandler = async () => {
+      const requestData = {
+        decoder_type: decoderType,
+        plan: planName,
+        iuc_number: smartCard,
+        email: tvEmail,
+        amount: '₦' + getNumericValue(selectedOptionGOTV),
+        phone: mobileNumber,
+      };
+      const Path = "tvsub";
+      
+      await PostFunction(
+        Path,
+        setIsLoading,
+        requestData,
+        () => { // Success handler
+          setGotvSuccessful(true);
+          setInputPinGotv(false);
+        },
+        () => { // Failure handler
+          setFailedPopup(true);
+          setInputPinGotv(false);
+        }
+      );
+    };
+  
+    await VerifyTransPin(
+      tvOneOtp,
+      null,
+      null,
+      setIsLoading,
+      setErrorMessage,
+      GotvHandler
+    );
+  } catch (error) {
+    console.error("PIN verification error:", error);
+    setFailedPopup(true);
+  }
+  };
 
   return (
     <div>
@@ -626,6 +732,53 @@ const GoTv = () => {
       <ConfirmGotvPopup />
       <InputGotvPopup />
       <GotvSuccessfulPopup />
+
+      {/* Failed Transaction Popup */}
+{failedPopup && (
+    <div className="w-[90%] md:w-[70%] lg:w-[40%] mx-auto bg-white rounded-lg overflow-hidden">
+      <div className="flex justify-between items-center p-4">
+        <img
+          onClick={() => setFailedPopup(false)}
+          className="w-6 h-6"
+          src="/Images/login/arpLogo.png"
+          alt="Logo"
+        />
+        <img
+          onClick={() => setFailedPopup(false)}
+          className="w-6 h-6 cursor-pointer"
+          src="/Images/transferImages/close-circle.png"
+          alt="Close"
+        />
+      </div>
+      <hr className="h-1 bg-[#04177f] border-none" />
+      <div className="p-4 text-center">
+        <h2 className="text-lg md:text-xl font-semibold my-4">
+          Transaction Failed
+        </h2>
+        <img
+          className="w-32 h-32 mx-auto my-6"
+          src="./Images/failed.png"
+          alt="Failed"
+        />
+        <p className="text-sm text-gray-600 mb-8">
+          An unexpected error has occurred, please try again.
+        </p>
+        <button
+          onClick={() => setFailedPopup(false)}
+          className="bg-[#04177f] w-full max-w-xs mx-auto py-2 text-white rounded-md font-medium"
+        >
+          Done
+        </button>
+      </div>
+    </div>
+)}
+      {isLoading && (
+           <Modal>
+               <Loader/>
+
+           </Modal>
+      ) } 
+      
     </div>
   )
 }

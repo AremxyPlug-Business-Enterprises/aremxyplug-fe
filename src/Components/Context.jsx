@@ -17,6 +17,7 @@ export const Context = ({ children }) => {
   const [hideNavbar, setHideNavbar] = useState(false);
   const [resetEmail, setResetEmail] = useState("");
   const [resetNumber, setResetNumber] = useState("");
+    const [errorMessage, setErrorMessage] =useState('')
 
   // TRANSACTION PIN POP UP STATE STARTS HERE
   const [openTranspin, setOpenTranspin] = useState(false);
@@ -1447,6 +1448,7 @@ const [idButtonState, setIdButtonState] = useState("Verify")
     inputPinGotv,
     setInputPinGotv,
     gotvSuccessful,
+    errorMessage, setErrorMessage,
     setGotvSuccessful,
     selectedOptionGOTV,
     setSelectedOptionGOTV,

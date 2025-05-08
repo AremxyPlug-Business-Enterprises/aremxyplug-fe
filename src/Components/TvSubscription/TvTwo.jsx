@@ -17,7 +17,10 @@ import britainFlag from '../../Components/EducationPins/imagesEducation/Britain.
 import euroFlag from '../../Components/EducationPins/imagesEducation/GBP.svg';
 import austriaFlag from '../../Components/EducationPins/imagesEducation/Austria.svg';
 import kenyaFlag from '../../Components/EducationPins/imagesEducation/Kenya.svg';
-
+// import { Modal } from "../Screens/Modal/Modal";
+// import {Loader} from "../Loader/Loader"
+// import {Modal} from "../Screens/Modal/Modal"
+// import {PostFunction} from "../../Components/ApiCollection.jsx/ApiBuck"
 const DsTv = () => {
 
   const {
@@ -41,8 +44,16 @@ const DsTv = () => {
     decoderType,
     methodImage,
     setMethodImage,
-    isDarkMode 
+    isDarkMode,
+    // setErrorMessage,
+    // setDstvSuccessful,
+    // setInputPinDstv,
   } = useContext(ContextProvider)
+
+    // const [planName, setPlanName] = useState(false);
+    // const [tvOneOtp, setTvOneOtp] = useState('')
+    // const [isLoading, setIsLoading] = useState(false)
+    //const [handleFailed, setFailed] = useState([]);
  
 
 
@@ -122,10 +133,37 @@ const DsTv = () => {
           return acc;
         }, {})
       );
-    } else {
+    } 
+ 
+    else {
       setConfirmDstvPopup(true);
       setErrors({});
     }
+  //   try {
+  //     setIsLoading(true);
+      
+  //        // Preparing request data
+  //        const requestData = {
+  //         decoder_type: decoderType,
+  //         plan: planName,
+  //         iuc_number: smartCard,
+  //         email: tvEmail,
+  //         amount: '₦' + getNumericValue(selectedOptionGOTV),
+  //         phone: mobileNumber,
+  //       };
+  // //show confirmation popup
+  // setConfirmGotvPopup(true);
+  // setErrors({});
+      
+  // } catch (error) {
+  //   console.error("Error during TV subscription:", error);
+  //   setFailedPopup(true); 
+  // } finally {
+  //   setIsLoading(false);
+  // }
+  
+  // };
+  
   }
   const [errors, setErrors] = useState({});
 
@@ -191,6 +229,49 @@ const DsTv = () => {
     setDecoderActive(!decoderActive)
     document.querySelector('.decdrop').classList.toggle('DropIt');
   }
+
+  // const VerifyPinHandler = async () => {
+  //   try {
+  //     const GotvHandler = async () => {
+  //       const requestData = {
+  //         decoder_type: decoderType,
+  //         plan: planName,
+  //         iuc_number: smartCard,
+  //         email: tvEmail,
+  //         amount: '₦' + getNumericValue(selectedOptionGOTV),
+  //         phone: mobileNumber,
+  //       };
+  //       const Path = "tvsub";
+        
+  //       await PostFunction(
+  //         Path,
+  //         setIsLoading,
+  //         requestData,
+  //         () => { // Success handler
+  //           setGotvSuccessful(true);
+  //           setInputPinGotv(false);
+  //         },
+  //         () => { // Failure handler
+  //           setFailedPopup(true);
+  //           setInputPinGotv(false);
+  //         }
+  //       );
+  //     };
+    
+  //     await VerifyTransPin(
+  //       tvOneOtp,
+  //       null,
+  //       null,
+  //       setIsLoading,
+  //       setErrorMessage,
+  //       GotvHandler
+  //     );
+  //   } catch (error) {
+  //     console.error("PIN verification error:", error);
+  //     setFailedPopup(true);
+  //   }
+  //   };
+  
 
 
   return (
@@ -262,8 +343,8 @@ const DsTv = () => {
           isDarkMode 
             ? "bg-black text-white border border-white" 
             : "hover:bg-[#EDEAEA] border-[#9C9C9C] text-[#7C7C7C] "
-        }`} 
-         key= {decoder.id}>
+        }`}
+         key= {decoder.id} >
       <h2>{decoder.decoderType}   </h2>
          </a>
         
@@ -284,7 +365,7 @@ const DsTv = () => {
       isDarkMode 
         ? "bg-black text-white border border-white" 
         : "hover:bg-[#EDEAEA] border-[#9C9C9C] text-[#7C7C7C] "
-    }`}>
+    }`} onClick={packageDropdown}>
                 {selectedOptionDstv}
                 <img className="absolute left-[90%] lg:left-[94%] self-center align-middle imgdrop md:h-[14.038px] md:w-[14.038px] 
       lg:h-[24px] lg:w-[24px] w-[14px] h-[15px]" src={arrowDown} alt="" />
@@ -498,6 +579,14 @@ const DsTv = () => {
       <ConfirmDstvPopup/>
       <InputDstvPopup/>
       <DstvSuccessfulPopup />
+      {/* handle failed popup */}
+
+      {/* {isLoading && (
+         <Modal>
+
+
+         </Modal>
+      )} */}
     </div>
   )
 }

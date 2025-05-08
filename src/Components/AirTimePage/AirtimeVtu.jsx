@@ -618,7 +618,7 @@ const AirtimeVtu = () => {
 
                                 }
                             </div>
-                            <div>
+                            <div className={styles.headPro}>
                                 <h2 className={`
                                     ${
                                         isDarkMode 
@@ -667,7 +667,7 @@ const AirtimeVtu = () => {
                             </div>
                         </div>
                         <div className={styles.mainGridCol}>
-                            <div>
+                            <div className={styles.headPr}>
                                 <h2 className={`${styles.head3} !text-[15px] md:text-base ${
                                             isDarkMode 
                                               ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
@@ -696,7 +696,7 @@ const AirtimeVtu = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div>
+                            <div className={styles.headPro}> 
                                 <h2 className={`${styles.head3} !text-[15px] md:!text-base ${
                                             isDarkMode 
                                               ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
@@ -758,9 +758,9 @@ const AirtimeVtu = () => {
                                     </div>
                                 )}
                             </div>
-                        </div>
+                        </div >
                         <div className={styles.mainGridCol}>
-                            <div>
+                            <div className={styles.headPr}>
                                 <h2 className={`${styles.head3} !text-[15px] md:!text-base ${
                                             isDarkMode 
                                               ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
@@ -792,7 +792,7 @@ const AirtimeVtu = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div>
+                            <div className={styles.headPro}>
                                 <h2 className={`${styles.head3} !text-[15px] md:!text-base ${
                                             isDarkMode 
                                               ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
@@ -818,7 +818,7 @@ const AirtimeVtu = () => {
                                                 : ""
                                         }
                                             `}>&#8358;</span>
-                                        <input type='number' placeholder='Type amount' required className={`
+                                        <input type='number' placeholder='Type amount' required className={`pl-[8px] md:pl-base
                                              ${
                                             isDarkMode 
                                                 ? "!bg-black !text-[#7E7E7E]" 
@@ -838,7 +838,7 @@ const AirtimeVtu = () => {
                             </div>
                         </div>
                         <div className={styles.mainGridCol}>
-                            <div>
+                            <div className={styles.headPro}>
                                 <h2 className={`${styles.head3} !text-[15px] md:!text-base ${
                                             isDarkMode 
                                               ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
@@ -871,7 +871,7 @@ const AirtimeVtu = () => {
                                 </div>
                             </div>
                             <div>
-                                <div>
+                                <div className={styles.headPro}>
                                     <h2 className={`${styles.head3} !text-[15px] md:!text-base ${
                                             isDarkMode 
                                               ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
