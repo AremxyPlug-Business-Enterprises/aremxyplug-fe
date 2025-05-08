@@ -117,11 +117,11 @@ function NgnVirtualAccount(Data) {
             <div className="">
               <div className="mb-[8px] lg:mb-[15px] flex lg:gap-x-[20px] gap-x-[15px] font-semibold">
                 <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[15%] md:w-[20%] w-[30%]">BANK NAME</p>
-                <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[85%] md:w-[20%] w-[70%]" ref={bankNameRef}>{bankNameState ? bankNameState : Data.aremxyBankName ? Data.aremxyBankName : ""}</p>
+                <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[85%] md:w-[20%] w-[70%]">{bankNameState ? bankNameState : Data.aremxyBankName ? Data.aremxyBankName : ""}</p>
               </div>
               <div className="mb-[8px] lg:mb-[15px] flex lg:gap-x-[20px] gap-x-[15px] font-semibold">
                 <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[15%] md:w-[20%] w-[30%]">ACCOUNT NAME</p>
-                <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[85%] md:w-[20%] w-[70%]" ref={accNameRef}>
+                <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[85%] md:w-[20%] w-[70%]" >
                   {
                     (accountNameState || Data.aremxyAccountName) ?
                       (accountNameState || Data.aremxyAccountName).split('/')[1] || ""
@@ -132,7 +132,7 @@ function NgnVirtualAccount(Data) {
               <div className=" flex lg:gap-x-[20px] gap-x-[15px] font-semibold">
                 <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[15%] md:w-[20%] w-[30%]">ACCOUNT NUMBER</p>{" "}
                 <div className="flex items-center lg:w-[85%] md:w-[20%] w-[70%]">
-                  <p className="md:text-[10px] text-[8px] lg:text-[16px]" ref={accNoRef}>{accountNumberState ? accountNumberState : Data.aremxyAccountNumber ? Data.aremxyAccountNumber : ""}</p>
+                  <p className="md:text-[10px] text-[8px] lg:text-[16px]">{accountNumberState ? accountNumberState : Data.aremxyAccountNumber ? Data.aremxyAccountNumber : ""}</p>
                   <button onClick={handleCopyText}>
                     <img
                       src="Images/virtual-account/copy.png"

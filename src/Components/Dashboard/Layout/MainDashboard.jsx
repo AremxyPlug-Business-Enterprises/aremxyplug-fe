@@ -225,6 +225,8 @@ if((clickedoption === "NGN") && blur === true){
      setBalanceValue(false)
           }else if(error.response.status === undefined) {
      setBalanceValue(false)
+          }else if (error && error.response.status ===500){
+            setNewBalance(0);
           }
         
         }finally{
@@ -692,17 +694,16 @@ return (
                 </div>
                 
                 ): (
-                  <div className="h-full  w-full gap-[15px] lg:gap-[25%] flex flex-col items-center justify-center ">
-                   <div>
-                <div className="flex w-full md:w-auto mt-[8%] gap-[30px] md:mt-[5%] lg:mt-[9%]">
+                  <div className="md:h-[100%] gap-[30px] md:gap-[0px] h-auto  w-full  flex flex-col justify-between">
+                   <div className="md:h-[30%] flex flex-col gap-[15px]  md:gap-[15%]">
+                <div className="flex w-full  md:items-center items-end  gap-[10%]">
                  <p 
                     className={`${styles.GVA} ${
-                      toggleSideBar ? "lg:text-[10px]" : "lg:text-[24px]"
+                      toggleSideBar ? "lg:text-[20px]" : "lg:text-[24px]"
                     } text-[11px] font-extrabold cursor-pointer`}
                   >
                     Global Virtual Accounts
                   </p>
-
                   <select
                     className={`${styles.selected}`}
                     name="curr"
@@ -718,21 +719,19 @@ return (
                     <option value="KES">KES</option>
                   </select>
                 </div>
-                <p className="w-[50%] text-[8px] md:text-[10px] text-[#04177f] leading-normal font-bold lg:text-[11px]">
-                  The below accounts are reserved for your wallet only.
-                </p>
-              </div>
-                      <div className="flex flex-col h-[45%] gap-[8px] lg:gap-[25%]">
-              <p className={`text-[12px] md:text-[14px] lg:text-[16px] leading-[16px] 
+                <p className={`text-[11px] md:text-[13px] lg:text-[14px] leading-[16px] 
                  md:leading-[18px] lg:leading-[22px] font-[500] 
                 text-left
-               ${isDarkMode ? "text-white" : "text-black"}  `}>
-        {(Data.ConfirmId === "true" || Data.ConfirmBvn === "true") && Data.ConfirmAcc === "false" ? "Create a Virtual Account" : (Data.ConfirmId === "true" || Data.ConfirmBvn === "true") && Data.ConfirmAcc === "true" ? "Virtual Account Created" : "Add a means of verification to create a virtual account" }
+               ${isDarkMode ? "text-white" : "text-blue-950"}`}>
+        {(Data.ConfirmId === "true" || Data.ConfirmBvn === "true") && Data.ConfirmAcc === "false" ? "Create a virtual account dedicated to your wallet." : "The below accounts are reserved for your wallets only."}
               </p>
+              </div>
+                      <div className="flex flex-col gap-[8px] md:h-[30%]  md:gap-[10%]">
+             
               <p className={`lg:text-[16px] font-[400] lg:leading-[24px]
                text-[12px] md:text-[14px] md:leading-[18px]
                  ${isDarkMode ? "text-white" : "text-black"}`}>
-                   {(Data.ConfirmId === "true" || Data.ConfirmBvn === "true") && Data.ConfirmAcc === "false" ? "Your account has been verified successfully. Please click the below button to generate your virtual account." : (Data.ConfirmId === "true" || Data.ConfirmBvn === "true") && Data.ConfirmAcc === "true" ? "You now have an account" : "Please verify your account to generate your virtual account." }
+                   {(Data.ConfirmId === "true" || Data.ConfirmBvn === "true") && Data.ConfirmAcc === "false" ? "Your account has been verified successfully. Please click the button below to generate your virtual account." : (Data.ConfirmId === "true" || Data.ConfirmBvn === "true") && Data.ConfirmAcc === "true" ? "You now have an account" : "Please verify your account to generate your virtual account." }
                 {/* This is Collected for secure and cyber-attack-free transactions among AremxyPlug's users*/}
                 </p>
                 </div>
@@ -743,11 +742,11 @@ return (
     if((Data.ConfirmId === "true" ||  Data.ConfirmBvn === "true") && Data.ConfirmAcc === "false" && selected === "NGN" ){
      GenerateVirtualAccount()
     }
-  }  }>
+  } }>
                 {" "}
 
-                <button
-                  className={`text-[10px] md:text-[11px] lg:text-[12px] font-[600] mt-[20px] lg:mt-[30px] ${
+                <button disabled={selected !== "NGN"}
+                  className={`text-[10px] md:text-[11px] lg:text-[12px] font-[600]   ${
                     isDarkMode ? "border bg-black" : "bg-[#04177f]"
                   } ${styles.viewWallet} ${selected !== "NGN" ? "bg-gray-400" : "bg-[#04177f]"}`}
                 >

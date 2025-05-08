@@ -239,19 +239,24 @@ export const PostFunction = async(path, setLoading, body, functionAtSuccess, fun
 }
 
 // A general Function to get useful data from the backend
-export const GetFunction = async(path, setLoading, functionAtSuccess, functionAtFailed)=> {
+export const GetFunction = async(path, setLoading, functionAtSuccess,functionAtFailed,setFetchedResponse)=> {
    const authToken = localStorage.getItem("authorisedLogin");
    const getToken = localStorage.getItem("getToken");
+   if(!navigator.onLine) return alert("Check your internet connection");
    if((authToken || getToken) && navigator.onLine){
       try{
+         alert("Running");
          setLoading(true)
     const url = `https://aremxyplug.onrender.com/api/v1/${path}`
       const response = await axios.get(url, {headers: {"Content-Type" :"application/json",
          Authorization : authToken || getToken
       }})
       if(response.status === 201 || 200){
-     
-         functionAtSuccess()
+     functionAtSuccess();
+     if(functionAtSuccess){
+     setFetchedResponse(response);
+     alert("Successful");
+     }
       }
    }catch(error){
       if(error && error.response.status === 400){

@@ -115,7 +115,7 @@ if(response.status === 200 || 201){
 } 
  }catch(error){
   if(error.response && error.response.status === 404){
-  alert("ERROR:", "An error occured from your end")
+  alert("User Account not found");
   } else if(error.response && error.response.status === 500){
     alert(`INTERNAL_SERVER_ERROR`)
   }else{
