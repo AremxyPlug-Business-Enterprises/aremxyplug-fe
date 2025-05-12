@@ -27,6 +27,7 @@ const Showmax = () => {
   const {
     setConfirmShowmaxPopup,
     selectedOptionShowmax,
+    setSelectedOptionShowmax,
     showDropdownShowmax,
     setShowDropdownShowmax,
     mobileNumber,
@@ -59,7 +60,8 @@ const Showmax = () => {
 const [loading, setLoading] = useState(false);
 
   const handleOptionClickShowmax = () => {
-   // setSelectedOptionShowmax(option);
+
+
     setShowDropdownShowmax(false);
   };
 
@@ -369,6 +371,7 @@ const [loading, setLoading] = useState(false);
                       onClick={() =>{
                          handleOptionClickShowmax()
                          setShowMaxAmount(option.Amount)
+                         setSelectedOptionShowmax(option.PackageName)
                         }}
                     >
                       {option.PackageName}

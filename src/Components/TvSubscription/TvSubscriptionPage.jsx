@@ -56,12 +56,12 @@ const handleSubscriptionFunction = ()=> {
  const LinkToPage = ()=> {
    if(handleSubscriptionFunction && GlobalTvSubscription=== 1  && fetchedDstvPlans.status === (200 || 201) ){
   return  navigate("/DsTv");
-  }else if(handleSubscriptionFunction && GlobalTvSubscription ===3  && fetchedShowMaxPlans.status === (200 || 201)){
+  }else if(handleSubscriptionFunction && GlobalTvSubscription === 3  && fetchedShowMaxPlans.status === (200 || 201)){
  return navigate("/Showmax");
-  }else if(handleSubscriptionFunction && GlobalTvSubscription ===2 && fetchedStarTimesPlans.status === (200 || 201)){
+  }else if(handleSubscriptionFunction && GlobalTvSubscription === 2 && fetchedStarTimesPlans.status === (200 || 201)){
 return navigate("/StarTimes");
-   }else if(handleSubscriptionFunction && GlobalTvSubscription ===0 && fetchedGotvPlans.status === (200 || 201)){
-   return navigate("/GoTv")
+   }else if(handleSubscriptionFunction && GlobalTvSubscription === 0 && fetchedGotvPlans.status === (200 || 201)){
+   return navigate("/GoTv");
    }
    
 }

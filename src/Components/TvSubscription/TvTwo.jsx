@@ -30,7 +30,6 @@ const DsTv = () => {
    setSelectedOptionDstv,
     showDropdownDstv,
     setShowDropdownDstv,
-    formatNumberWithCommas,
     mobileNumber,
     setCardName,
     cardName,
@@ -53,9 +52,9 @@ const DsTv = () => {
     setFetchedShowMaxPlans,
     fetchedStarTimesPlans,
     setFetchedStarTimesPlans,
-    dstvAmount,
     setDstvAmount,
-    newBalance
+    newBalance,
+    dstvAmount
   } = useContext(ContextProvider);
  
 const navigate = useNavigate();

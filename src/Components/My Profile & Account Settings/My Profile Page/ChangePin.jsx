@@ -51,14 +51,14 @@ const {email} = customerDetail;
   const {
     isVisible,
     toggleVisibility,
-    inputPinHandler,
+    //inputPinHandler,
     inputPin,
     setInputPin,
   } = useContext(ContextProvider);
 Data = GetLocalStorage();
   const { emailId, setEmailId } = useContext(ContextProvider);
   const [emailInputColor, setEmailInputColor] = useState("");
-  const [pin, setPin] = useState("");
+ // const [pin, setPin] = useState("");
   const [confirmResetPin, setConfirmResetPin] = useState("");
   const [resetPinErrorMessage, setResetPinErrorMessage] = useState("");
   const [resetPinUpdate, setResetPinUpdate] = useState("");
@@ -317,7 +317,7 @@ await PutFunction(path, setLoading, body, SuccessHandler, FailedHandler);
                   setConfirmResetPin("");
                   setNewResetPin("");
                   setEmailId("");
-                  setPin("");
+                //  setPin("");
                   setEmailInputColor("");
                 }}
                 className={`${
@@ -748,7 +748,7 @@ await PutFunction(path, setLoading, body, SuccessHandler, FailedHandler);
                       setVerify(false);
                       setEmailId("");
                       setEmailInputColor("");
-                      setPin("");
+                    //  setPin("");
                       setResetPin(false);
                       setResetPin1(true);
                     }}

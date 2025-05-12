@@ -48,10 +48,10 @@ const ConfirmStarTimesPopup = () => {
    
       if(CheckSufficiency){
        setBalanceStatus("Insufficient fund")
-       alert("Insufficient Fund")
+      
       }else{
         setBalanceStatus("");
-        alert("Able to Pay")
+      
       }
     }
     HandleBalanceStatus()
@@ -70,7 +70,7 @@ const ConfirmStarTimesPopup = () => {
                 } w-[90%] md:w-[60%] overflow-auto`}
             >
               <div className="flex justify-end pr-2 mt-1 mb-3 md:mt-2 md:mb-2 lg:mb-0 lg:mt-1">
-              <img onClick={() => { setConfirmStarTimesPopup(false); window.location.reload(); }}
+              <img onClick={() => { setConfirmStarTimesPopup(false); }}
                   className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[26px] lg:h-[26px]"
                   src="/Images/transferImages/close-circle.png"
                   alt=""

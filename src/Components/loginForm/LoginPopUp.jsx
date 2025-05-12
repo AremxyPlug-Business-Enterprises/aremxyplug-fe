@@ -220,8 +220,8 @@ const handleVerificationOTP = ()=> {
         
         if(bvnCheck && !ninCheck){
           setBvnButtonState("Create Virtual Account");
-          setBvnVerifyImage(VerificationSuccess)
-          setBvnStatus("Verified")
+          setBvnVerifyImage(VerificationSuccess);
+          setBvnStatus("Verified");
           setIdButtonState("Verify");
           setVerifyImage(NotVerifiedImage)
           setIdStatus("Not Verified");
@@ -329,10 +329,10 @@ const gettingSmsOrEmailFunctionOtp = async(url, body)=> {
     }catch(error){
       if( error.response && error.response.status === 400){
         setVerificationPinError(true);
-        console.log("The Verification failed")
+        console.log("The Verification failed");
       }else if(error.response.status === 404){
-     setVerificationPinError(true)
-      alert("OOPs, an error has occured")
+     setVerificationPinError(true);
+      alert("OOPs, an error has occured");
       }else if(error.response &&error.response.status === 500){
         alert("SERVER ERROR");
       }else if(!error.response){
@@ -380,6 +380,7 @@ return () => clearInterval(timer);
     setCanResend(false);
     setVerificationPinError("")
   };
+
   const handleResendOTP2 = () => {
     getOtpSmsorEmail()
     setCanResend2(false);
@@ -393,8 +394,7 @@ return () => clearInterval(timer);
      setOpenTranspin(false);
      setOtp("");
      setOtp2("");
-     localStorage.setItem(otp,"userTransactionOtp");
-    
+     localStorage.setItem("userTransactionOtp", otp);
  } else {
       setTranspinErrors("Pin does not match!");
     }

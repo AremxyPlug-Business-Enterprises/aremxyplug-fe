@@ -154,7 +154,7 @@ function NgnVirtualAccount(Data) {
             </div>
           </div>
            
-          <div className="flex flex-col justify-center mt-[25.39px] md:mt-[35px] lg:mt-[60px] w-full h-auto md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] bg-[#92abfe]/[0.5] px-[16px] lg:px-[50px] lg:rounded-[20px]">
+          <div className="flex flex-col justify-center mt-[25.39px] py-[16px] md:mt-[35px] lg:mt-[60px] w-full h-auto md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] bg-[#92abfe]/[0.5] px-[16px] lg:px-[50px] lg:rounded-[20px]">
            {loading === true ?  (
             <div className="flex w-full justify-center">
               <Loader/>

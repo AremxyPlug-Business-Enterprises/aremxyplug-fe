@@ -62,7 +62,7 @@ const GoTv = () => {
 
   } = useContext(ContextProvider)
 const navigate = useNavigate()
-  const [planName, setPlanName] = useState(false);
+ // const [planName, setPlanName] = useState(false);
   const [loading, setLoading] = useState(false)
 
 

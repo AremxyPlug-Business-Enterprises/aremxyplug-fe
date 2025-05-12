@@ -33,7 +33,7 @@ export default function BvnVerification(Data) {
   const [errorVerify, setErrorVerify] = useState(false);
   const {state, bvnButtonState, setBvnButtonState,
    } = useContext(ContextProvider);
-  const { toggleSideBar, customerDetail, setLoginAuthorisation} =
+  const { toggleSideBar, customerDetail} =
     useContext(ContextProvider);
   const {idAddress, setIdAddress} = useContext(ContextProvider);
   const { dropDownGender, setDropDownGender } = useContext(ContextProvider);
@@ -434,7 +434,7 @@ console.log(Data)
 
               <div className="flex flex-col md:gap-[15px] gap-[10px] justify-start">
                 <button
-                  disabled={Data.ConfirmBvn === "true" }
+                  disabled={Data.ConfirmBvn === "true" || Data.ConfirmId === "true" }
                   onClick={() => {
                     BvnFunctionState();
                   }}
@@ -443,7 +443,7 @@ console.log(Data)
           Data.ConfirmBvn === "true"  ? "bg-slate-400" : "bg-[#04177F]"
          }`}
                 >
-                  {(bvnButtonState) && ( Data.ConfirmBvn === "true"  ? "Verified" : "Verify" )}
+                  {(bvnButtonState) && ( Data.ConfirmBvn === "true" || Data.ConfirmId === "true")  ? "Verified" : "Verify" }
                 </button>
                 {errorVerify && (
                   <h2
