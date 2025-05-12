@@ -457,7 +457,7 @@ const IKEDC = () => {
                       ? "text-white bg-black border border-white"
                       : "text-[#7E7E7E] bg-white"
                   }`}
-                  onClick={() => setShowProductList(!showProductList)}
+                  onClick={() => setShowProductList(false)}
                 />
               </div>
               {errors.meterNumber && (
