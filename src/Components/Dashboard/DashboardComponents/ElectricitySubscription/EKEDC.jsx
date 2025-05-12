@@ -14,49 +14,56 @@ import { Modal } from "../../../Screens/Modal/Modal";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import OtpInput from "react-otp-input";
-import { Link } from "react-router-dom";
-// import axios from 'axios';
+import { Link, useNavigate } from "react-router-dom";
 
-// import { PostFunction } from "../../../ApiCollection.jsx/ApiBuck";
-import axiosInstance from "../../../ApiCollection.jsx/apiClient";
+import {
+  PostFunction,
+  VerifyTransPin,
+} from "../../../ApiCollection.jsx/ApiBuck";
+import { Loader } from "../../../Loader/Loader";
 
 const EKEDC = () => {
+  const navigate = useNavigate();
   const {
     isDarkMode,
     toggleSideBar,
-    meterNumber,
+    ekedcMeterNumber,
+    setEkedcMeterNumber,
     showList,
-    setMeterNumber,
-    setVerifiedName,
+    ekedcVerifiedName,
+    setEkedcVerifiedName,
     setShowList,
     setSelected,
     selected,
     globalCountry,
     setGlobalCountry,
     globalTransferErrors,
-    verifiedName,
-    phoneNumber,
-    setPhoneNumber,
-    ikedcEmail,
-    setEmail,
-    ikedcamount,
-    setIkedcamount,
+    ekedcPhoneNumber,
+    setEkedcPhoneNumber,
+    ekedcEmail,
+    setEkedcEmail,
+    ekedcAmount,
+    setEkedcAmount,
     toggleVisibility,
     isVisible,
-    billGenerate,
-    setBillGenerate,
-    serviceID,
-    setServiceID,
-    flag,
-    setFlag,
+    setEkedcBillGenerate,
+    ekedcServiceID,
+    setEkedcServiceID,
+    ekedcFlag,
+    setEkedcFlag,
+    selectedEkedcMeterType,
+    setSelectedEkedcMeterType,
+    ekedcOrderId,
+    setEkedcOrderId,
+    ekedcTransactionId,
+    setEkedcTransactionId,
+    ekedcShowDescription,
+    setEkedcShowDescription,
+    ekedcFetchedResponse,
+    setEkedcFetchedResponse,
   } = useContext(ContextProvider);
 
-  const { selectedNetworkProduct, setSelectedNetworkProduct } =
-    useContext(ContextProvider);
   const [showProductList, setShowProductList] = useState(false);
-  const [showDescription, setShowDescription] = useState(false);
-  const [orderId, setOrderId] = useState(false);
-  const [transactionId, setTransactionId] = useState(false);
 
   const pointsEarned = "+2.00";
 
@@ -83,7 +90,7 @@ const EKEDC = () => {
     },
   ];
   const handleSelectProduct = (productName) => {
-    setSelectedNetworkProduct(productName);
+    setSelectedEkedcMeterType(productName);
     // setSelectedOption("");
     setShowProductList(false);
     // setShowOptionList(false);
@@ -135,9 +142,9 @@ const EKEDC = () => {
     // e.preventDefault();
 
     const { error } = schema.validate({
-      phoneNumber,
-      ikedcEmail,
-      meterNumber,
+      ekedcPhoneNumber,
+      ekedcEmail,
+      ekedcMeterNumber,
     });
 
     if (error) {
@@ -154,19 +161,19 @@ const EKEDC = () => {
   };
 
   const schema = Joi.object({
-    phoneNumber: Joi.string()
+    ekedcPhoneNumber: Joi.string()
       .pattern(new RegExp(/^\d{11,}/))
       .required()
       .messages({
         "string.pattern.base": "Phone number should be 11 digits ",
       }),
-    meterNumber: Joi.string()
+    ekedcMeterNumber: Joi.string()
       .pattern(new RegExp(/^\d{10,}/))
       .required()
       .messages({
         "string.pattern.base": "Invalid meter number",
       }),
-    ikedcEmail: Joi.string()
+    ekedcEmail: Joi.string()
       .pattern(new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i))
       .required()
       .messages({
@@ -184,7 +191,7 @@ const EKEDC = () => {
   // };
 
   const handleCountryClick = (name, flag, id, code) => {
-    setFlag(flag);
+    setEkedcFlag(flag);
     setShowList(false);
     setGlobalCountry(name);
     setSelected(true);
@@ -193,91 +200,96 @@ const EKEDC = () => {
   };
   const handleVerifiedName = (event) => {
     const newValue = event.target.value;
-    setVerifiedName(newValue);
+    setEkedcVerifiedName(newValue);
   };
   const handleMeterNumber = (event) => {
     const newValue = event.target.value;
-    setMeterNumber(newValue);
+    setEkedcMeterNumber(newValue);
   };
   const handlePhoneNumber = (event) => {
     const value = event.target.value;
     const newValue = value.replace(/\D/g, "").slice(0, 11);
-    setPhoneNumber(newValue);
+    setEkedcPhoneNumber(newValue);
   };
   const handleEmail = (event) => {
     const newValue = event.target.value;
-    setEmail(newValue);
+    setEkedcEmail(newValue);
   };
-  const handleIkedcAmount = (event) => {
+  const handleEkedcAmount = (event) => {
     const newValue = event.target.value;
     // setIkedcamount(newValue);
     if (newValue.startsWith("")) {
-      setIkedcamount(newValue);
+      setEkedcAmount(newValue);
     } else {
-      setIkedcamount(`₦${newValue}`);
+      setEkedcAmount(`₦${newValue}`);
     }
   };
   const [successPopup, setSuccessPopup] = useState(false);
   const [failedPopup, setFailedPopup] = useState(false);
 
-  const handleSuccess = async () => {
-    async function buyEKEDC(meter_type, meter_no, phone, email, amount) {
-      // const url = 'https://aremxyplug.onrender.com/api/v1/electric-bill';
+  const [errorMessage, setErrorMessage] = useState(false);
+  const [pinSuccess, setPinSuccess] = useState(false);
+  const [pinFailed, setPinFailed] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-      const parsedAmount = parseInt(amount, 10);
-
+  const verifyPin = async () => {
+    async function ElectricityHandler() {
+      const path = "electric-bill";
+      const parsedAmount = parseInt(ekedcAmount, 10);
       const data = {
-        meter_type,
-        meter_no,
-        phone, // Use the parsed integer value
-        email,
-        amount: parsedAmount, // Use the parsed integer value
+        meter_type: selectedEkedcMeterType,
+        meter_no: ekedcMeterNumber,
+        phone: ekedcPhoneNumber, // Use the parsed integer value
+        email: ekedcEmail,
+        amount: parsedAmount,
+        // amount: "",
         disco_type: "eko-electric",
       };
+      // const parsedAmount = parseInt(amount, 10);
+      const SuccessHandler = () => {
+        setInputPinPopUp(false);
+        setSuccessPopup(true);
+      };
+      const FailedHandler = () => {
+        setInputPinPopUp(false);
+        setFailedPopup(true);
+      };
 
-      console.log(data);
-
-      try {
-        const path = "electric-bill";
-        const response = await axiosInstance.post(path, data);
-        console.log(response.data);
-        console.log(response.status);
-        setSelectedNetworkProduct(response.data.data.meter_type);
-        setMeterNumber(response.data.data.meter_number);
-        setPhoneNumber(response.data.data.phone);
-        setEmail(response.data.data.email);
-        setIkedcamount(response.data.data.amount);
-        setBillGenerate(response.data.data.bill_generated);
-        setOrderId(response.data.data.order_id);
-        setTransactionId(response.data.data.transaction_id);
-        setServiceID(response.data.data.disco_type);
-        setShowDescription(response.data.data.description);
-        return { statusCode: response.status, data: response.data };
-        // console.log(response.data);
-      } catch (error) {
-        console.error(error);
-        return { statusCode: error.response.status, data: null };
-      }
+      await PostFunction(
+        path,
+        setLoading,
+        data,
+        SuccessHandler,
+        FailedHandler,
+        setEkedcFetchedResponse
+      );
     }
-
-    // Usage
-    const response = await buyEKEDC(
-      selectedNetworkProduct,
-      meterNumber,
-      phoneNumber,
-      ikedcEmail,
-      ikedcamount
+    await VerifyTransPin(
+      inputPin,
+      setPinSuccess,
+      setPinFailed,
+      setLoading,
+      setErrorMessage,
+      ElectricityHandler
     );
-
-    setInputPinPopUp(false);
-    if (response.statusCode === 200) {
-      // Success response
-      setSuccessPopup(true); // Show success popup
-    } else {
-      // Failure response
-      setFailedPopup(true); // Show failure popup
-    }
   };
+
+  function handleReceivedData() {
+    setLoading(true);
+    const receivedData = () => {
+      setEkedcBillGenerate(ekedcFetchedResponse.data.bill_generated);
+      setEkedcOrderId(ekedcFetchedResponse.data.order_id);
+      setEkedcTransactionId(ekedcFetchedResponse.data.transaction_id);
+      setEkedcServiceID(ekedcFetchedResponse.data.request_id);
+      setEkedcShowDescription(ekedcFetchedResponse.data.description);
+    };
+    receivedData();
+    if (receivedData) {
+      setSuccessPopup(false);
+      setLoading(false);
+      navigate("/ekedc-receipt");
+    }
+  }
 
   const [InputPinPopUp, setInputPinPopUp] = useState(false);
   const [inputPin, setInputPin] = useState("");
@@ -390,7 +402,7 @@ const EKEDC = () => {
                   className={`text-[12px] font-normal  leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]
                 ${isDarkMode ? "text-white bg-black" : "text-[#7C7C7C]"}`}
                 >
-                  {selectedNetworkProduct}
+                  {selectedEkedcMeterType}
                 </h2>
                 <button className="lg:w-6 lg:h-6  w-4 h-4 cursor-pointer">
                   <img src={arrowDown} alt="" className="w-full h-full" />
@@ -415,7 +427,7 @@ const EKEDC = () => {
                             ? "bg-black text-white hover:bg-slate-800 hover:rounded-t-[10px]"
                             : "text-[#7C7C7C]"
                         }
-                        ${selectedNetworkProduct === item.name ? "" : ""}`}
+                        ${selectedEkedcMeterType === item.name ? "" : ""}`}
                       onClick={() => handleSelectProduct(item.name)}
                     >
                       {item.name}
@@ -436,7 +448,7 @@ const EKEDC = () => {
               <div>
                 <input
                   type="number"
-                  value={meterNumber}
+                  value={ekedcMeterNumber}
                   onChange={handleMeterNumber}
                   className={`py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full w-full  ${
                     isDarkMode
@@ -462,7 +474,7 @@ const EKEDC = () => {
               <div>
                 <input
                   type="text"
-                  value={verifiedName}
+                  value={ekedcVerifiedName}
                   onChange={handleVerifiedName}
                   className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
                     isDarkMode
@@ -483,7 +495,7 @@ const EKEDC = () => {
               <div>
                 <input
                   type="number"
-                  value={phoneNumber}
+                  value={ekedcPhoneNumber}
                   onChange={handlePhoneNumber}
                   className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full ${
                     isDarkMode
@@ -512,7 +524,7 @@ const EKEDC = () => {
               <div>
                 <input
                   type="text"
-                  value={ikedcEmail}
+                  value={ekedcEmail}
                   onChange={handleEmail}
                   className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
                     isDarkMode
@@ -546,8 +558,8 @@ const EKEDC = () => {
                 <input
                   type="number"
                   name="ikedcamount"
-                  value={ikedcamount}
-                  onChange={handleIkedcAmount}
+                  value={ekedcAmount}
+                  onChange={handleEkedcAmount}
                   className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:py-3 md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] text-[12px] leading-[18px] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none
                  ${isDarkMode ? "text-white bg-black " : "text-[#7E7E7E]"}`}
                 />
@@ -585,7 +597,7 @@ const EKEDC = () => {
                     </p>
                     <img
                       className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
-                      src={flag}
+                      src={ekedcFlag}
                       alt=""
                     />
                   </div>
@@ -657,24 +669,24 @@ const EKEDC = () => {
             onClick={handleProceed}
             className={`text-[12px] mt-[30px] md:mt-[40px] bg-[#0008] md:w-fit lg:px-12 lg:text-[16px] lg:px md:py-1 md:rounded-md md:px-6 py-3 rounded-md font-semibold text-center text-white
              ${
-               !meterNumber ||
-               !verifiedName ||
-               !phoneNumber ||
-               !ikedcEmail ||
-               !selectedNetworkProduct ||
+               !ekedcMeterNumber ||
+               !ekedcVerifiedName ||
+               !ekedcPhoneNumber ||
+               !ekedcEmail ||
+               !selectedEkedcMeterType ||
                !selected ||
-               !ikedcamount
+               !ekedcAmount
                  ? "bg-[#63616188] cursor-not-allowed"
                  : "bg-primary cursor-pointer"
              }`}
             disabled={
-              !meterNumber ||
-              !verifiedName ||
-              !phoneNumber ||
-              !ikedcEmail ||
-              !selectedNetworkProduct ||
+              !ekedcMeterNumber ||
+              !ekedcVerifiedName ||
+              !ekedcPhoneNumber ||
+              !ekedcEmail ||
+              !selectedEkedcMeterType ||
               !selected ||
-              !ikedcamount
+              !ekedcAmount
             }
           >
             Proceed
@@ -730,7 +742,7 @@ const EKEDC = () => {
                   isDarkMode ? "text-white" : "text-[#000]"
                 }`}
               >
-                {selectedNetworkProduct} Meter (&#8358;{ikedcamount}){" "}
+                {selectedEkedcMeterType} Meter (&#8358;{ekedcAmount}){" "}
               </span>
               {/* Points to <br></br>
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">
@@ -763,7 +775,7 @@ const EKEDC = () => {
                 >
                   Meter Type
                 </p>
-                <span>{selectedNetworkProduct} </span>
+                <span>{selectedEkedcMeterType} </span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -773,7 +785,7 @@ const EKEDC = () => {
                 >
                   Meter Number
                 </p>
-                <span>{meterNumber} </span>
+                <span>{ekedcMeterNumber} </span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -784,7 +796,7 @@ const EKEDC = () => {
                 >
                   Verified Name
                 </p>
-                <span>{verifiedName}</span>
+                <span>{ekedcVerifiedName}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -795,7 +807,7 @@ const EKEDC = () => {
                 >
                   Phone Number
                 </p>
-                <span>{phoneNumber}</span>
+                <span>{ekedcPhoneNumber}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -805,7 +817,7 @@ const EKEDC = () => {
                 >
                   Email
                 </p>
-                <span>{ikedcEmail}</span>
+                <span>{ekedcEmail}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -815,7 +827,7 @@ const EKEDC = () => {
                 >
                   Amount
                 </p>
-                <span>&#8358;{ikedcamount}</span>
+                <span>&#8358;{ekedcAmount}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -877,41 +889,66 @@ const EKEDC = () => {
               isDarkMode
                 ? "bg-black absolute pt-4 h-[250px] shrink-0 rounded-lg shadow border border-white md:h-[350px] w-[481.25px] md:bottom-auto md:top-auto lg:h-[450px] lg:rounded-[20px] "
                 : styles.inputPin
-            } ${
-              toggleSideBar ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
-            } md:w-[55%] w-[90%]`}
+            }
+               ${
+                 toggleSideBar
+                   ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]"
+                   : "lg:w-[40%]"
+               } md:w-[55%] w-[90%] `}
           >
             <img
               onClick={handle}
-              className="absolute right-2 w-[18px] h-[18px] my-[1%] md:w-5 md:h-5 lg:w-[25px] lg:h-[25px]"
+              className={`absolute right-2 w-[18px] h-[18px] my-[1%] md:w-5 md:h-5 lg:w-[25px] lg:h-[25px] ${
+                isDarkMode ? "my-7" : ""
+              }`}
               src="/Images/transferImages/close-circle.png"
               alt=""
             />
-            <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
-            <p className="text-[12px] md:text-[16px] font-extrabold text-center my-[10%] lg:my-[%]">
+            <hr
+              className={`h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px] ${
+                isDarkMode ? "md:mt-10" : ""
+              }`}
+            />
+            <p className="text-[12px] md:text-[16px] font-extrabold text-center my-[10%] lg:my-[%] ">
               Input PIN to complete transaction
             </p>
             <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[8%]">
-              <div className=" flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
+              <div className=" flex justify-center  ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
                 {isVisible ? (
-                  <OtpInput
-                    value={inputPin}
-                    inputType="tel"
-                    onChange={setInputPin}
-                    numInputs={4}
-                    shouldAutoFocus={true}
-                    inputStyle={{
-                      color: isDarkMode ? "#ffffff" : "#403f3f",
-                      width: 30,
-                      height: 30,
-                      borderRadius: 3,
-                      backgroundColor: isDarkMode ? "black" : "white",
-                      border: isDarkMode ? "1px solid white" : "1px solid #ccc",
-                    }}
-                    renderInput={(props) => (
-                      <input {...props} className="inputOTP mx-[3px]" />
-                    )}
-                  />
+                  <div className="flex flex-col gap-y-1">
+                    <OtpInput
+                      value={inputPin}
+                      inputType="tel"
+                      onChange={setInputPin}
+                      numInputs={4}
+                      shouldAutoFocus={true}
+                      inputStyle={{
+                        color: isDarkMode ? "#ffffff" : "#403f3f",
+                        width: 30,
+                        height: 30,
+                        borderRadius: 3,
+                        backgroundColor: isDarkMode ? "black" : "white",
+                        border: isDarkMode
+                          ? "1px solid white"
+                          : "1px solid #ccc",
+                      }}
+                      renderInput={(props) => (
+                        <input {...props} className="inputOTP mx-[3px]" />
+                      )}
+                    />
+                    <span className="">
+                      {pinSuccess && (
+                        <p className="text-[12px] text-green-500 text-center font-medium">
+                          Pin matches
+                        </p>
+                      )}
+                      {pinFailed && errorMessage && (
+                        <p className="text-[12px] text-center text-red-600 font-medium">
+                          Incorrect Pin
+                        </p>
+                      )}
+                    </span>
+                  </div>
                 ) : (
                   <div className="text-[24px] md:text-[24px] mt-1">* * * *</div>
                 )}
@@ -922,13 +959,13 @@ const EKEDC = () => {
                   {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
                 </div>
               </div>
-              <p className="text-[8px] md:text-[12px] text-[#04177f]">
+              <p className="text-[10px] md:text-[12px] text-[#04177f]">
                 Forgot Pin ?
               </p>
             </div>
             <button
               disabled={inputPin.length !== 4 ? true : false}
-              onClick={handleSuccess}
+              onClick={verifyPin}
               className={`${
                 inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
               } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%] ${
@@ -959,14 +996,14 @@ const EKEDC = () => {
 
               <img
                 onClick={() => {
-                  setSelectedNetworkProduct("");
-                  setMeterNumber("");
-                  setVerifiedName("");
-                  setPhoneNumber("");
-                  setEmail("");
-                  setIkedcamount("");
+                  setSelectedEkedcMeterType("");
+                  setEkedcMeterNumber("");
+                  setEkedcVerifiedName("");
+                  setEkedcPhoneNumber("");
+                  setEkedcEmail("");
+                  setEkedcAmount("");
                   setGlobalCountry("");
-                  setFlag("");
+                  setEkedcFlag("");
                   setSuccessPopup(false);
                 }}
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
@@ -994,7 +1031,7 @@ const EKEDC = () => {
                   isDarkMode ? "text-white" : "text-[#000]"
                 }`}
               >
-                Eko {selectedNetworkProduct} Meter
+                Eko {selectedEkedcMeterType} Meter
               </span>
               <br></br>
               <span
@@ -1002,7 +1039,7 @@ const EKEDC = () => {
                   isDarkMode ? "text-white" : "text-[#000]"
                 }`}
               >
-                (&#8358;{ikedcamount})
+                (&#8358;{ekedcAmount})
               </span>
               From your NGN Nigerian Wallet to
             </p>
@@ -1020,7 +1057,7 @@ const EKEDC = () => {
                   <div>
                     <img className="w-[30px]" src={logo} alt="" />
                   </div>
-                  <div>{serviceID}</div>
+                  <div>{ekedcServiceID}</div>
                 </span>
               </div>
               <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -1031,7 +1068,7 @@ const EKEDC = () => {
                 >
                   Meter Type
                 </p>
-                <span>{selectedNetworkProduct} </span>
+                <span>{selectedEkedcMeterType} </span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -1041,7 +1078,7 @@ const EKEDC = () => {
                 >
                   Meter Number
                 </p>
-                <span>{meterNumber} </span>
+                <span>{ekedcMeterNumber} </span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -1052,7 +1089,7 @@ const EKEDC = () => {
                 >
                   Verified Name
                 </p>
-                <span>{verifiedName}</span>
+                <span>{ekedcVerifiedName}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -1063,7 +1100,7 @@ const EKEDC = () => {
                 >
                   Phone Number
                 </p>
-                <span>{phoneNumber}</span>
+                <span>{ekedcPhoneNumber}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -1073,7 +1110,7 @@ const EKEDC = () => {
                 >
                   Email
                 </p>
-                <span>{ikedcEmail}</span>
+                <span>{ekedcEmail}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -1083,7 +1120,7 @@ const EKEDC = () => {
                 >
                   Amount
                 </p>
-                <span>&#8358;{ikedcamount}</span>
+                <span>&#8358;{ekedcAmount}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -1123,30 +1160,13 @@ const EKEDC = () => {
               >
                 Done
               </button>
-              <Link
-                to="/ekedc-receipt"
-                state={{
-                  selectedNetworkProduct: selectedNetworkProduct,
-                  meterNumber: meterNumber,
-                  phoneNumber: phoneNumber,
-                  ikedcEmail: ikedcEmail,
-                  ikedcamount: ikedcamount,
-                  orderId: orderId,
-                  transactionId: transactionId,
-                  serviceID: serviceID,
-                  showDescription: showDescription,
-                  billGenerate: billGenerate,
-                }}
+
+              <button
+                onClick={handleReceivedData}
+                className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
               >
-                <button
-                  onClick={() => {
-                    setSuccessPopup(false);
-                  }}
-                  className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
-                >
-                  Receipt
-                </button>
-              </Link>
+                Receipt
+              </button>
             </div>
           </div>
         </Modal>
@@ -1170,15 +1190,15 @@ const EKEDC = () => {
 
               <img
                 onClick={() => {
-                  setSelectedNetworkProduct("");
-                  setMeterNumber("");
-                  setVerifiedName("");
-                  setPhoneNumber("");
-                  setEmail("");
-                  setIkedcamount("");
+                  setSelectedEkedcMeterType("");
+                  setEkedcMeterNumber("");
+                  setEkedcVerifiedName("");
+                  setEkedcPhoneNumber("");
+                  setEkedcEmail("");
+                  setEkedcAmount("");
                   setGlobalCountry("");
-                  setFlag("");
-                  setFailedPopup(false);
+                  setEkedcFlag("");
+                  setSuccessPopup(false);
                 }}
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
@@ -1213,15 +1233,15 @@ const EKEDC = () => {
               <Link
                 to="/ekedc-receipt-failed"
                 state={{
-                  selectedNetworkProduct: selectedNetworkProduct,
-                  meterNumber: meterNumber,
-                  phoneNumber: phoneNumber,
-                  ikedcEmail: ikedcEmail,
-                  ikedcamount: ikedcamount,
-                  orderId: orderId,
-                  transactionId: transactionId,
-                  serviceID: serviceID,
-                  showDescription: showDescription,
+                  selectedNetworkProduct: selectedEkedcMeterType,
+                  meterNumber: ekedcMeterNumber,
+                  phoneNumber: ekedcPhoneNumber,
+                  ikedcEmail: ekedcEmail,
+                  ikedcamount: ekedcAmount,
+                  orderId: ekedcOrderId,
+                  transactionId: ekedcTransactionId,
+                  serviceID: ekedcServiceID,
+                  showDescription: ekedcShowDescription,
                 }}
               >
                 <button
@@ -1235,6 +1255,11 @@ const EKEDC = () => {
               </Link>
             </div>
           </div>
+        </Modal>
+      )}
+      {loading && (
+        <Modal>
+          <Loader />
         </Modal>
       )}
     </DashBoardLayout>

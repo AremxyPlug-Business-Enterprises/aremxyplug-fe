@@ -16,47 +16,61 @@ import { Modal } from "../../../Screens/Modal/Modal";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import OtpInput from "react-otp-input";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // import axios from 'axios';
 import { Loader } from "../../../Loader/Loader";
-import axiosInstance from "../../../ApiCollection.jsx/apiClient";
+// import axiosInstance from "../../../ApiCollection.jsx/apiClient";
+import {
+  PostFunction,
+  VerifyTransPin,
+} from "../../../ApiCollection.jsx/ApiBuck";
 const AEDC = () => {
+  const navigate = useNavigate();
   const {
     isDarkMode,
     toggleSideBar,
-    meterNumber,
+    aedcMeterNumber,
+    setAedcMeterNumber,
     showList,
-    setMeterNumber,
-    setVerifiedName,
+    aedcVerifiedName,
+    setAedcVerifiedName,
     setShowList,
     setSelected,
     selected,
     globalCountry,
     setGlobalCountry,
     globalTransferErrors,
-    verifiedName,
-    phoneNumber,
-    setPhoneNumber,
-    ikedcEmail,
-    setEmail,
-    ikedcamount,
-    setIkedcamount,
+    aedcPhoneNumber,
+    setAedcPhoneNumber,
+    aedcEmail,
+    setAedcEmail,
+    aedcAmount,
+    setAedcAmount,
     toggleVisibility,
     isVisible,
-    billGenerate,
-    setBillGenerate,
-    serviceID,
-    setServiceID,
-    flag,
-    setFlag,
+    setAedcBillGenerate,
+    aedcServiceID,
+    setAedcServiceID,
+    aedcFlag,
+    setAedcFlag,
+    selectedAedcMeterType,
+    setSelectedAedcMeterType,
+    aedcOrderId,
+    setAedcOrderId,
+    aedcTransactionId,
+    setAedcTransactionId,
+    aedcShowDescription,
+    setAedcShowDescription,
+    aedcFetchedResponse,
+    setAedcFetchedResponse,
   } = useContext(ContextProvider);
 
-  const { selectedNetworkProduct, setSelectedNetworkProduct } =
-    useContext(ContextProvider);
+  // const { selectedNetworkProduct, setSelectedNetworkProduct } =
+  //   useContext(ContextProvider);
   const [showProductList, setShowProductList] = useState(false);
-  const [showDescription, setShowDescription] = useState(false);
-  const [orderId, setOrderId] = useState(false);
-  const [transactionId, setTransactionId] = useState(false);
+  // const [showDescription, setShowDescription] = useState(false);
+  // const [orderId, setOrderId] = useState(false);
+  // const [transactionId, setTransactionId] = useState(false);
 
   const pointsEarned = "+2.00";
   const [loading, setLoading] = useState(false);
@@ -83,7 +97,7 @@ const AEDC = () => {
     },
   ];
   const handleSelectProduct = (productName) => {
-    setSelectedNetworkProduct(productName);
+    setSelectedAedcMeterType(productName);
     // setSelectedOption("");
     setShowProductList(false);
     // setShowOptionList(false);
@@ -135,9 +149,9 @@ const AEDC = () => {
     // e.preventDefault();
 
     const { error } = schema.validate({
-      phoneNumber,
-      ikedcEmail,
-      meterNumber,
+      aedcPhoneNumber,
+      aedcEmail,
+      aedcMeterNumber,
     });
 
     if (error) {
@@ -154,19 +168,19 @@ const AEDC = () => {
   };
 
   const schema = Joi.object({
-    phoneNumber: Joi.string()
+    aedcPhoneNumber: Joi.string()
       .pattern(new RegExp(/^\d{11,}/))
       .required()
       .messages({
         "string.pattern.base": "Phone number should be 11 digits ",
       }),
-    meterNumber: Joi.string()
+    aedcMeterNumber: Joi.string()
       .pattern(new RegExp(/^\d{10,}/))
       .required()
       .messages({
         "string.pattern.base": "Invalid meter number",
       }),
-    ikedcEmail: Joi.string()
+    aedcEmail: Joi.string()
       .pattern(new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i))
       .required()
       .messages({
@@ -184,7 +198,7 @@ const AEDC = () => {
   // };
 
   const handleCountryClick = (name, flag, id, code) => {
-    setFlag(flag);
+    setAedcFlag(flag);
     setShowList(false);
     setGlobalCountry(name);
     setSelected(true);
@@ -193,103 +207,166 @@ const AEDC = () => {
   };
   const handleVerifiedName = (event) => {
     const newValue = event.target.value;
-    setVerifiedName(newValue);
+    setAedcVerifiedName(newValue);
   };
   const handleMeterNumber = (event) => {
     const newValue = event.target.value;
-    setMeterNumber(newValue);
+    setAedcMeterNumber(newValue);
   };
   const handlePhoneNumber = (event) => {
     const value = event.target.value;
     const newValue = value.replace(/\D/g, "").slice(0, 11);
-    setPhoneNumber(newValue);
+    setAedcPhoneNumber(newValue);
   };
   const handleEmail = (event) => {
     const newValue = event.target.value;
-    setEmail(newValue);
+    setAedcEmail(newValue);
   };
-  const handleIkedcAmount = (event) => {
+  const handleAedcAmount = (event) => {
     const newValue = event.target.value;
     // setIkedcamount(newValue);
     if (newValue.startsWith("")) {
-      setIkedcamount(newValue);
+      setAedcAmount(newValue);
     } else {
-      setIkedcamount(`₦${newValue}`);
+      setAedcAmount(`₦${newValue}`);
     }
   };
   const [successPopup, setSuccessPopup] = useState(false);
   const [failedPopup, setFailedPopup] = useState(false);
 
-  const handleSuccess = async () => {
-    async function buyAEDC(meter_type, meter_no, phone, email, amount) {
-      // const url = 'https://aremxyplug.onrender.com/api/v1/electric-bill';
+  const [errorMessage, setErrorMessage] = useState(false);
+  const [pinSuccess, setPinSuccess] = useState(false);
+  const [pinFailed, setPinFailed] = useState(false);
 
-      const parsedAmount = parseInt(amount, 10);
-
+  const verifyPin = async () => {
+    async function ElectricityHandler() {
+      const path = "electric-bill";
+      const parsedAmount = parseInt(aedcAmount, 10);
       const data = {
-        meter_type,
-        meter_no,
-        phone, // Use the parsed integer value
-        email,
-        amount: parsedAmount, // Use the parsed integer value
+        meter_type: selectedAedcMeterType,
+        meter_no: aedcMeterNumber,
+        phone: aedcPhoneNumber, // Use the parsed integer value
+        email: aedcEmail,
+        amount: parsedAmount,
+        // amount: "",
         disco_type: "abuja-electric",
       };
+      // const parsedAmount = parseInt(amount, 10);
+      const SuccessHandler = () => {
+        setInputPinPopUp(false);
+        setSuccessPopup(true);
+      };
+      const FailedHandler = () => {
+        setInputPinPopUp(false);
+        setFailedPopup(true);
+      };
 
-      // console.log(data);
-
-      try {
-        setLoading(true);
-        // const response = await axios.post(url, data);
-        const path = "/electric-bill";
-        const response = await axiosInstance.post(path, data);
-        console.log(response.data);
-        console.log(response.status);
-        setSelectedNetworkProduct(response.data.data.meter_type);
-        setMeterNumber(response.data.data.meter_number);
-        setPhoneNumber(response.data.data.phone);
-        setEmail(response.data.data.email);
-        setIkedcamount(response.data.data.amount);
-        setBillGenerate(response.data.data.bill_generated);
-        setOrderId(response.data.data.order_id);
-        setTransactionId(response.data.data.transaction_id);
-        setServiceID(response.data.data.disco_type);
-        setShowDescription(response.data.data.description);
-        return { statusCode: response.status, data: response.data };
-        // return { statusCode: response.data.status,  };
-      } catch (error) {
-        console.error("Full error object:", error); // Log the entire error for debugging
-
-        // Safely extract status and data
-        const statusCode = error.response?.status || 500; // Fallback to 500 if no status
-        const errorData = error.response?.data || null; // Fallback to null if no data
-
-        return {
-          statusCode,
-          data: errorData,
-        };
-      } finally {
-        setLoading(false);
-      }
+      await PostFunction(
+        path,
+        setLoading,
+        data,
+        SuccessHandler,
+        FailedHandler,
+        setAedcFetchedResponse
+      );
     }
-
-    // Usage
-    const response = await buyAEDC(
-      selectedNetworkProduct,
-      meterNumber,
-      phoneNumber,
-      ikedcEmail,
-      ikedcamount
+    await VerifyTransPin(
+      inputPin,
+      setPinSuccess,
+      setPinFailed,
+      setLoading,
+      setErrorMessage,
+      ElectricityHandler()
     );
-
-    setInputPinPopUp(false);
-    if (response.statusCode === 200) {
-      // Success response
-      setSuccessPopup(true); // Show success popup
-    } else {
-      // Failure response
-      setFailedPopup(true); // Show failure popup
-    }
   };
+
+  function handleReceivedData() {
+    setLoading(true);
+    const receivedData = () => {
+      setAedcBillGenerate(aedcFetchedResponse.data.bill_generated);
+      setAedcOrderId(aedcFetchedResponse.data.order_id);
+      setAedcTransactionId(aedcFetchedResponse.data.transaction_id);
+      setAedcServiceID(aedcFetchedResponse.data.request_id);
+      setAedcShowDescription(aedcFetchedResponse.data.description);
+    };
+    receivedData();
+    if (receivedData) {
+      setSuccessPopup(false);
+      setLoading(false);
+      navigate("/kedco-receipt");
+    }
+  }
+
+  // const handleSuccess = async () => {
+  //   async function buyAEDC(meter_type, meter_no, phone, email, amount) {
+  //     // const url = 'https://aremxyplug.onrender.com/api/v1/electric-bill';
+
+  //     const parsedAmount = parseInt(amount, 10);
+
+  //     const data = {
+  //       meter_type,
+  //       meter_no,
+  //       phone, // Use the parsed integer value
+  //       email,
+  //       amount: parsedAmount, // Use the parsed integer value
+  //       disco_type: "abuja-electric",
+  //     };
+
+  //     // console.log(data);
+
+  //     try {
+  //       setLoading(true);
+  //       // const response = await axios.post(url, data);
+  //       const path = "/electric-bill";
+  //       const response = await axiosInstance.post(path, data);
+  //       console.log(response.data);
+  //       console.log(response.status);
+  //       setSelectedNetworkProduct(response.data.data.meter_type);
+  //       setMeterNumber(response.data.data.meter_number);
+  //       setPhoneNumber(response.data.data.phone);
+  //       setEmail(response.data.data.email);
+  //       setIkedcamount(response.data.data.amount);
+  //       setBillGenerate(response.data.data.bill_generated);
+  //       setOrderId(response.data.data.order_id);
+  //       setTransactionId(response.data.data.transaction_id);
+  //       setServiceID(response.data.data.disco_type);
+  //       setShowDescription(response.data.data.description);
+  //       return { statusCode: response.status, data: response.data };
+  //       // return { statusCode: response.data.status,  };
+  //     } catch (error) {
+  //       console.error("Full error object:", error); // Log the entire error for debugging
+
+  //       // Safely extract status and data
+  //       const statusCode = error.response?.status || 500; // Fallback to 500 if no status
+  //       const errorData = error.response?.data || null; // Fallback to null if no data
+
+  //       return {
+  //         statusCode,
+  //         data: errorData,
+  //       };
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   }
+
+  //   // Usage
+  //   const response = await buyAEDC(
+  //     selectedNetworkProduct,
+  //     meterNumber,
+  //     phoneNumber,
+  //     ikedcEmail,
+  //     ikedcamount
+  //   );
+
+  //   setInputPinPopUp(false);
+  //   if (response.statusCode === 200) {
+  //     // Success response
+  //     setSuccessPopup(true); // Show success popup
+  //   } else {
+  //     // Failure response
+  //     setFailedPopup(true); // Show failure popup
+  //   }
+  // };
 
   const [InputPinPopUp, setInputPinPopUp] = useState(false);
   const [inputPin, setInputPin] = useState("");
@@ -402,7 +479,7 @@ const AEDC = () => {
                   className={`text-[12px] font-normal leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]
                 ${isDarkMode ? "text-white bg-black" : "text-[#7C7C7C]"}`}
                 >
-                  {selectedNetworkProduct}
+                  {selectedAedcMeterType}
                 </h2>
                 <button className="lg:w-6 lg:h-6 w-4 h-4 cursor-pointer">
                   <img src={arrowDown} alt="" className="w-full h-full" />
@@ -433,7 +510,7 @@ const AEDC = () => {
                             ? "bg-black text-white hover:bg-slate-800 hover:rounded-t-[10px]"
                             : "text-[#7C7C7C]"
                         }
-                        ${selectedNetworkProduct === item.name ? "" : ""}`}
+                        ${selectedAedcMeterType === item.name ? "" : ""}`}
                       onClick={() => handleSelectProduct(item.name)}
                     >
                       {item.name}
@@ -454,7 +531,7 @@ const AEDC = () => {
               <div>
                 <input
                   type="number"
-                  value={meterNumber}
+                  value={aedcMeterNumber}
                   onChange={handleMeterNumber}
                   // py-[10.33px] pl-[5.867px]
                   className={`py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full w-full  ${
@@ -482,7 +559,7 @@ const AEDC = () => {
               <div>
                 <input
                   type="text"
-                  value={verifiedName}
+                  value={aedcVerifiedName}
                   onChange={handleVerifiedName}
                   className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
                     isDarkMode
@@ -503,7 +580,7 @@ const AEDC = () => {
               <div>
                 <input
                   type="number"
-                  value={phoneNumber}
+                  value={aedcPhoneNumber}
                   onChange={handlePhoneNumber}
                   // className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none font-medium  ${
                   //   isDarkMode
@@ -535,7 +612,7 @@ const AEDC = () => {
               <div>
                 <input
                   type="text"
-                  value={ikedcEmail}
+                  value={aedcEmail}
                   onChange={handleEmail}
                   className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
                     isDarkMode
@@ -569,8 +646,8 @@ const AEDC = () => {
                 <input
                   type="number"
                   name="ikedcamount"
-                  value={ikedcamount}
-                  onChange={handleIkedcAmount}
+                  value={aedcAmount}
+                  onChange={handleAedcAmount}
                   className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:py-3 md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] text-[12px] leading-[18px] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none
                  ${
                    isDarkMode
@@ -614,7 +691,7 @@ const AEDC = () => {
                     </p>
                     <img
                       className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
-                      src={flag}
+                      src={aedcFlag}
                       alt=""
                     />
                   </div>
@@ -686,24 +763,24 @@ const AEDC = () => {
             onClick={handleProceed}
             className={`text-[12px] mt-[30px] md:mt-[40px] bg-[#0008] md:w-fit lg:px-12 lg:text-[16px] lg:px md:py-1 md:rounded-md md:px-6 py-3 rounded-md font-semibold text-center text-white
               ${
-                !meterNumber ||
-                !verifiedName ||
-                !phoneNumber ||
-                !ikedcEmail ||
-                !selectedNetworkProduct ||
+                !aedcMeterNumber ||
+                !aedcVerifiedName ||
+                !aedcPhoneNumber ||
+                !aedcEmail ||
+                !selectedAedcMeterType ||
                 !selected ||
-                !ikedcamount
+                !aedcAmount
                   ? "bg-[#63616188] cursor-not-allowed"
                   : "bg-primary cursor-pointer"
               }`}
             disabled={
-              !meterNumber ||
-              !verifiedName ||
-              !phoneNumber ||
-              !ikedcEmail ||
-              !selectedNetworkProduct ||
+              !aedcMeterNumber ||
+              !aedcVerifiedName ||
+              !aedcPhoneNumber ||
+              !aedcEmail ||
+              !selectedAedcMeterType ||
               !selected ||
-              !ikedcamount
+              !aedcAmount
             }
           >
             Proceed
@@ -753,12 +830,14 @@ const AEDC = () => {
                 isDarkMode ? "text-white" : "text-[#000]"
               }`}
             >
-              You are about to Purchase <span
+              You are about to Purchase{" "}
+              <span
                 className={`font-extrabold text-[10px] md:text-[14px] lg:text-[12px] ${
                   isDarkMode ? "text-white" : "text-[#000]"
                 }`}
               >
-                {selectedNetworkProduct} Meter (&#8358;{ikedcamount}) </span>
+                {selectedAedcMeterType} Meter (&#8358;{aedcAmount}){" "}
+              </span>
               {/* Points to <br></br>
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">
                 &#8358;{}
@@ -790,7 +869,7 @@ const AEDC = () => {
                 >
                   Meter Type
                 </p>
-                <span>{selectedNetworkProduct} </span>
+                <span>{selectedAedcMeterType} </span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -800,7 +879,7 @@ const AEDC = () => {
                 >
                   Meter Number
                 </p>
-                <span>{meterNumber} </span>
+                <span>{aedcMeterNumber} </span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -811,7 +890,7 @@ const AEDC = () => {
                 >
                   Verified Name
                 </p>
-                <span>{verifiedName}</span>
+                <span>{aedcVerifiedName}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -822,7 +901,7 @@ const AEDC = () => {
                 >
                   Phone Number
                 </p>
-                <span>{phoneNumber}</span>
+                <span>{aedcPhoneNumber}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -832,7 +911,7 @@ const AEDC = () => {
                 >
                   Email
                 </p>
-                <span>{ikedcEmail}</span>
+                <span>{aedcEmail}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -842,7 +921,7 @@ const AEDC = () => {
                 >
                   Amount
                 </p>
-                <span>&#8358;{ikedcamount}</span>
+                <span>&#8358;{aedcAmount}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -955,6 +1034,18 @@ const AEDC = () => {
                         <input {...props} className="inputOTP mx-[3px]" />
                       )}
                     />
+                    <span className="">
+                      {pinSuccess && (
+                        <p className="text-[12px] text-green-500 text-center font-medium">
+                          Pin matches
+                        </p>
+                      )}
+                      {pinFailed && errorMessage && (
+                        <p className="text-[12px] text-center text-red-600 font-medium">
+                          Incorrect Pin
+                        </p>
+                      )}
+                    </span>
                   </div>
                 ) : (
                   <div className="text-[24px] md:text-[24px] mt-1">* * * *</div>
@@ -972,7 +1063,7 @@ const AEDC = () => {
             </div>
             <button
               disabled={inputPin.length !== 4 ? true : false}
-              onClick={handleSuccess}
+              onClick={verifyPin}
               className={`${
                 inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
               } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%] ${
@@ -1003,14 +1094,14 @@ const AEDC = () => {
 
               <img
                 onClick={() => {
-                  setSelectedNetworkProduct("");
-                  setMeterNumber("");
-                  setVerifiedName("");
-                  setPhoneNumber("");
-                  setEmail("");
-                  setIkedcamount("");
+                  setSelectedAedcMeterType("");
+                  setAedcMeterNumber("");
+                  setAedcVerifiedName("");
+                  setAedcPhoneNumber("");
+                  setAedcEmail("");
+                  setAedcAmount("");
                   setGlobalCountry("");
-                  setFlag("");
+                  setAedcFlag("");
                   setSuccessPopup(false);
                 }}
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
@@ -1038,7 +1129,7 @@ const AEDC = () => {
                   isDarkMode ? "text-white" : "text-[#000]"
                 }`}
               >
-                Abuja {selectedNetworkProduct} Meter
+                Abuja {selectedAedcMeterType} Meter
               </span>
               <br></br>
               <span
@@ -1046,7 +1137,7 @@ const AEDC = () => {
                   isDarkMode ? "text-white" : "text-[#000]"
                 }`}
               >
-                (&#8358;{ikedcamount})
+                (&#8358;{aedcAmount})
               </span>
               From your NGN Nigerian Wallet to
             </p>
@@ -1064,7 +1155,7 @@ const AEDC = () => {
                   <div>
                     <img className="w-[30px]" src={logo} alt="" />
                   </div>
-                  <div>{serviceID}</div>
+                  <div>{aedcServiceID}</div>
                 </span>
               </div>
               <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -1075,7 +1166,7 @@ const AEDC = () => {
                 >
                   Meter Type
                 </p>
-                <span>{selectedNetworkProduct} </span>
+                <span>{selectedAedcMeterType} </span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -1085,7 +1176,7 @@ const AEDC = () => {
                 >
                   Meter Number
                 </p>
-                <span>{meterNumber} </span>
+                <span>{aedcMeterNumber} </span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -1096,7 +1187,7 @@ const AEDC = () => {
                 >
                   Verified Name
                 </p>
-                <span>{verifiedName}</span>
+                <span>{aedcVerifiedName}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -1107,7 +1198,7 @@ const AEDC = () => {
                 >
                   Phone Number
                 </p>
-                <span>0{phoneNumber}</span>
+                <span>0{aedcPhoneNumber}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -1117,7 +1208,7 @@ const AEDC = () => {
                 >
                   Email
                 </p>
-                <span>{ikedcEmail}</span>
+                <span>{aedcEmail}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -1127,7 +1218,7 @@ const AEDC = () => {
                 >
                   Amount
                 </p>
-                <span>&#8358;{ikedcamount}</span>
+                <span>&#8358;{aedcAmount}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -1161,44 +1252,42 @@ const AEDC = () => {
             <div className="flex w-[70%] mx-auto items-center my-6  gap-[6%] md:gap-[20px] justify-center md:w-[20%] lg:my-[5%]">
               <button
                 onClick={() => {
-                  setSelectedNetworkProduct("");
-                  setMeterNumber("");
-                  setVerifiedName("");
-                  setPhoneNumber("");
-                  setEmail("");
-                  setIkedcamount("");
+                  selectedAedcMeterType("");
+                  setAedcMeterNumber("");
+                  setAedcVerifiedName("");
+                  setAedcPhoneNumber("");
+                  setAedcEmail("");
+                  setAedcAmount("");
                   setGlobalCountry("");
-                  setFlag("");
+                  setAedcFlag("");
                   setSuccessPopup(false);
                 }}
                 className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:px-[50px] md:w-[70%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
               >
                 Done
               </button>
-              <Link
+              {/* <Link
                 to="/aedc-receipt"
                 state={{
-                  selectedNetworkProduct: selectedNetworkProduct,
-                  meterNumber: meterNumber,
-                  phoneNumber: phoneNumber,
-                  ikedcEmail: ikedcEmail,
-                  ikedcamount: ikedcamount,
+                  selectedNetworkProduct: selectedAedcMeterType,
+                  meterNumber: aedcMeterNumber,
+                  phoneNumber: setAedcPhoneNumber,
+                  ikedcEmail: aedcEmail,
+                  ikedcamount: setAedcAmount,
                   orderId: orderId,
                   transactionId: transactionId,
-                  serviceID: serviceID,
+                  serviceID: aedcServiceID,
                   showDescription: showDescription,
-                  billGenerate: billGenerate,
+                  billGenerate: aedcBillGenerate,
                 }}
+              > */}
+              <button
+                onClick={handleReceivedData}
+                className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
               >
-                <button
-                  onClick={() => {
-                    setSuccessPopup(false);
-                  }}
-                  className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
-                >
-                  Receipt
-                </button>
-              </Link>
+                Receipt
+              </button>
+              {/* </Link> */}
             </div>
           </div>
         </Modal>
@@ -1222,14 +1311,14 @@ const AEDC = () => {
 
               <img
                 onClick={() => {
-                  setSelectedNetworkProduct("");
-                  setMeterNumber("");
-                  setVerifiedName("");
-                  setPhoneNumber("");
-                  setEmail("");
-                  setIkedcamount("");
+                  setSelectedAedcMeterType("");
+                  setAedcMeterNumber("");
+                  setAedcVerifiedName("");
+                  setAedcPhoneNumber("");
+                  setAedcEmail("");
+                  setAedcAmount("");
                   setGlobalCountry("");
-                  setFlag("");
+                  setAedcFlag("");
                   setFailedPopup(false);
                 }}
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
@@ -1265,15 +1354,15 @@ const AEDC = () => {
               <Link
                 to="/aedc-receipt-failed"
                 state={{
-                  selectedNetworkProduct: selectedNetworkProduct,
-                  meterNumber: meterNumber,
-                  phoneNumber: phoneNumber,
-                  ikedcEmail: ikedcEmail,
-                  ikedcamount: ikedcamount,
-                  orderId: orderId,
-                  transactionId: transactionId,
-                  serviceID: serviceID,
-                  showDescription: showDescription,
+                  selectedNetworkProduct: selectedAedcMeterType,
+                  meterNumber: aedcMeterNumber,
+                  phoneNumber: aedcPhoneNumber,
+                  ikedcEmail: aedcEmail,
+                  ikedcamount: aedcAmount,
+                  orderId: aedcOrderId,
+                  transactionId: aedcTransactionId,
+                  serviceID: aedcServiceID,
+                  showDescription: aedcShowDescription,
                 }}
               >
                 <button

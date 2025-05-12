@@ -14,49 +14,56 @@ import { Modal } from "../../../Screens/Modal/Modal";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import OtpInput from "react-otp-input";
-import { Link } from "react-router-dom";
-// import axios from 'axios';
+import { Link, useNavigate } from "react-router-dom";
 
-// import { PostFunction } from "../../../ApiCollection.jsx/ApiBuck";
-import axiosInstance from "../../../ApiCollection.jsx/apiClient";
+import {
+  PostFunction,
+  VerifyTransPin,
+} from "../../../ApiCollection.jsx/ApiBuck";
+import { Loader } from "../../../Loader/Loader";
 
 const JED = () => {
+  const navigate = useNavigate();
   const {
     isDarkMode,
     toggleSideBar,
-    meterNumber,
+    jedMeterNumber,
+    setJedMeterNumber,
     showList,
-    setMeterNumber,
-    setVerifiedName,
+    jedVerifiedName,
+    setJedVerifiedName,
     setShowList,
     setSelected,
     selected,
     globalCountry,
     setGlobalCountry,
     globalTransferErrors,
-    verifiedName,
-    phoneNumber,
-    setPhoneNumber,
-    ikedcEmail,
-    setEmail,
-    ikedcamount,
-    setIkedcamount,
+    jedPhoneNumber,
+    setJedPhoneNumber,
+    jedEmail,
+    setJedEmail,
+    jedAmount,
+    setJedAmount,
     toggleVisibility,
     isVisible,
-    billGenerate,
-    setBillGenerate,
-    serviceID,
-    setServiceID,
-    flag,
-    setFlag,
+    setJedBillGenerate,
+    jedServiceID,
+    setJedServiceID,
+    jedFlag,
+    setJedFlag,
+    selectedJedMeterType,
+    setSelectedJedMeterType,
+    jedOrderId,
+    setJedOrderId,
+    jedTransactionId,
+    setJedTransactionId,
+    jedShowDescription,
+    setJedShowDescription,
+    jedFetchedResponse,
+    setJedFetchedResponse,
   } = useContext(ContextProvider);
 
-  const { selectedNetworkProduct, setSelectedNetworkProduct } =
-    useContext(ContextProvider);
   const [showProductList, setShowProductList] = useState(false);
-  const [showDescription, setShowDescription] = useState(false);
-  const [orderId, setOrderId] = useState(false);
-  const [transactionId, setTransactionId] = useState(false);
 
   const pointsEarned = "+2.00";
 
@@ -83,7 +90,7 @@ const JED = () => {
     },
   ];
   const handleSelectProduct = (productName) => {
-    setSelectedNetworkProduct(productName);
+    setSelectedJedMeterType(productName);
     // setSelectedOption("");
     setShowProductList(false);
     // setShowOptionList(false);
@@ -135,9 +142,9 @@ const JED = () => {
     // e.preventDefault();
 
     const { error } = schema.validate({
-      phoneNumber,
-      ikedcEmail,
-      meterNumber,
+      jedPhoneNumber,
+      jedEmail,
+      jedMeterNumber,
     });
 
     if (error) {
@@ -154,19 +161,19 @@ const JED = () => {
   };
 
   const schema = Joi.object({
-    phoneNumber: Joi.string()
+    jedPhoneNumber: Joi.string()
       .pattern(new RegExp(/^\d{11,}/))
       .required()
       .messages({
         "string.pattern.base": "Phone number should be 11 digits ",
       }),
-    meterNumber: Joi.string()
+    jedMeterNumber: Joi.string()
       .pattern(new RegExp(/^\d{10,}/))
       .required()
       .messages({
         "string.pattern.base": "Invalid meter number",
       }),
-    ikedcEmail: Joi.string()
+    jedEmail: Joi.string()
       .pattern(new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i))
       .required()
       .messages({
@@ -184,7 +191,7 @@ const JED = () => {
   // };
 
   const handleCountryClick = (name, flag, id, code) => {
-    setFlag(flag);
+    setJedFlag(flag);
     setShowList(false);
     setGlobalCountry(name);
     setSelected(true);
@@ -193,91 +200,96 @@ const JED = () => {
   };
   const handleVerifiedName = (event) => {
     const newValue = event.target.value;
-    setVerifiedName(newValue);
+    setJedVerifiedName(newValue);
   };
   const handleMeterNumber = (event) => {
     const newValue = event.target.value;
-    setMeterNumber(newValue);
+    setJedMeterNumber(newValue);
   };
   const handlePhoneNumber = (event) => {
     const value = event.target.value;
     const newValue = value.replace(/\D/g, "").slice(0, 11);
-    setPhoneNumber(newValue);
+    setJedPhoneNumber(newValue);
   };
   const handleEmail = (event) => {
     const newValue = event.target.value;
-    setEmail(newValue);
+    setJedEmail(newValue);
   };
-  const handleIkedcAmount = (event) => {
+  const handleJedAmount = (event) => {
     const newValue = event.target.value;
     // setIkedcamount(newValue);
     if (newValue.startsWith("")) {
-      setIkedcamount(newValue);
+      setJedAmount(newValue);
     } else {
-      setIkedcamount(`₦${newValue}`);
+      setJedAmount(`₦${newValue}`);
     }
   };
   const [successPopup, setSuccessPopup] = useState(false);
   const [failedPopup, setFailedPopup] = useState(false);
 
-  const handleSuccess = async () => {
-    async function buyJED(meter_type, meter_no, phone, email, amount) {
-      // const url = 'https://aremxyplug.onrender.com/api/v1/electric-bill';
+  const [errorMessage, setErrorMessage] = useState(false);
+  const [pinSuccess, setPinSuccess] = useState(false);
+  const [pinFailed, setPinFailed] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-      const parsedAmount = parseInt(amount, 10);
-
+  const verifyPin = async () => {
+    async function ElectricityHandler() {
+      const path = "electric-bill";
+      const parsedAmount = parseInt(jedAmount, 10);
       const data = {
-        meter_type,
-        meter_no,
-        phone, // Use the parsed integer value
-        email,
-        amount: parsedAmount, // Use the parsed integer value
+        meter_type: selectedJedMeterType,
+        meter_no: jedMeterNumber,
+        phone: jedPhoneNumber, // Use the parsed integer value
+        email: jedEmail,
+        amount: parsedAmount,
+        // amount: "",
         disco_type: "jos-electric",
       };
+      // const parsedAmount = parseInt(amount, 10);
+      const SuccessHandler = () => {
+        setInputPinPopUp(false);
+        setSuccessPopup(true);
+      };
+      const FailedHandler = () => {
+        setInputPinPopUp(false);
+        setFailedPopup(true);
+      };
 
-      console.log(data);
-
-      try {
-        const path = "electric-bill";
-        const response = await axiosInstance.post(path, data);
-        console.log(response.data);
-        console.log(response.status);
-        setSelectedNetworkProduct(response.data.data.meter_type);
-        setMeterNumber(response.data.data.meter_number);
-        setPhoneNumber(response.data.data.phone);
-        setEmail(response.data.data.email);
-        setIkedcamount(response.data.data.amount);
-        setBillGenerate(response.data.data.bill_generated);
-        setOrderId(response.data.data.order_id);
-        setTransactionId(response.data.data.transaction_id);
-        setServiceID(response.data.data.disco_type);
-        setShowDescription(response.data.data.description);
-        return { statusCode: response.status, data: response.data };
-        // console.log(response.data);
-      } catch (error) {
-        console.error(error);
-        return { statusCode: error.response.status, data: null };
-      }
+      await PostFunction(
+        path,
+        setLoading,
+        data,
+        SuccessHandler,
+        FailedHandler,
+        setJedFetchedResponse
+      );
     }
-
-    // Usage
-    const response = await buyJED(
-      selectedNetworkProduct,
-      meterNumber,
-      phoneNumber,
-      ikedcEmail,
-      ikedcamount
+    await VerifyTransPin(
+      inputPin,
+      setPinSuccess,
+      setPinFailed,
+      setLoading,
+      setErrorMessage,
+      ElectricityHandler
     );
-
-    setInputPinPopUp(false);
-    if (response.statusCode === 200) {
-      // Success response
-      setSuccessPopup(true); // Show success popup
-    } else {
-      // Failure response
-      setFailedPopup(true); // Show failure popup
-    }
   };
+
+  function handleReceivedData() {
+    setLoading(true);
+    const receivedData = () => {
+      setJedBillGenerate(jedFetchedResponse.data.bill_generated);
+      setJedOrderId(jedFetchedResponse.data.order_id);
+      setJedTransactionId(jedFetchedResponse.data.transaction_id);
+      setJedServiceID(jedFetchedResponse.data.request_id);
+      setJedShowDescription(jedFetchedResponse.data.description);
+    };
+    receivedData();
+    if (receivedData) {
+      setSuccessPopup(false);
+      setLoading(false);
+      navigate("/jed-receipt");
+    }
+  }
 
   const [InputPinPopUp, setInputPinPopUp] = useState(false);
   const [inputPin, setInputPin] = useState("");
@@ -389,7 +401,7 @@ const JED = () => {
                   className={`text-[12px] font-normal  leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]
                 ${isDarkMode ? "text-white bg-black" : "text-[#7C7C7C]"}`}
                 >
-                  {selectedNetworkProduct}
+                  {selectedJedMeterType}
                 </h2>
                 <button className="lg:w-6 lg:h-6 w-4 h-4 cursor-pointer">
                   <img src={arrowDown} alt="" className="w-full h-full" />
@@ -414,7 +426,7 @@ const JED = () => {
                           ? "bg-black text-white hover:bg-slate-800 hover:rounded-t-[10px]"
                           : "text-[#7C7C7C]"
                       }
-                        ${selectedNetworkProduct === item.name ? "" : ""}`}
+                        ${selectedJedMeterType === item.name ? "" : ""}`}
                       onClick={() => handleSelectProduct(item.name)}
                     >
                       {item.name}
@@ -435,7 +447,7 @@ const JED = () => {
               <div>
                 <input
                   type="number"
-                  value={meterNumber}
+                  value={jedMeterNumber}
                   onChange={handleMeterNumber}
                   className={`py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full w-full  ${
                     isDarkMode
@@ -465,7 +477,7 @@ const JED = () => {
               <div>
                 <input
                   type="text"
-                  value={verifiedName}
+                  value={jedVerifiedName}
                   onChange={handleVerifiedName}
                   className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
                     isDarkMode
@@ -486,7 +498,7 @@ const JED = () => {
               <div>
                 <input
                   type="number"
-                  value={phoneNumber}
+                  value={jedPhoneNumber}
                   onChange={handlePhoneNumber}
                   className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
                     isDarkMode
@@ -515,7 +527,7 @@ const JED = () => {
               <div>
                 <input
                   type="text"
-                  value={ikedcEmail}
+                  value={jedEmail}
                   onChange={handleEmail}
                   className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:py-3 md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none  ${
                     isDarkMode
@@ -552,8 +564,8 @@ const JED = () => {
                 <input
                   type="number"
                   name="ikedcamount"
-                  value={ikedcamount}
-                  onChange={handleIkedcAmount}
+                  value={jedAmount}
+                  onChange={handleJedAmount}
                   className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:py-3 md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] text-[12px] leading-[18px] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none
                  ${isDarkMode ? "text-white bg-black " : "text-[#7E7E7E]"}`}
                 />
@@ -591,7 +603,7 @@ const JED = () => {
                     </p>
                     <img
                       className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
-                      src={flag}
+                      src={jedFlag}
                       alt=""
                     />
                   </div>
@@ -663,24 +675,24 @@ const JED = () => {
             onClick={handleProceed}
             className={`text-[12px] mt-[30px] md:mt-[40px] bg-[#0008] md:w-fit lg:px-12 lg:text-[16px] lg:px md:py-1 md:rounded-md md:px-6 py-3 rounded-md font-semibold text-center text-white
             ${
-              !meterNumber ||
-              !verifiedName ||
-              !phoneNumber ||
-              !ikedcEmail ||
-              !selectedNetworkProduct ||
+              !jedMeterNumber ||
+              !jedVerifiedName ||
+              !jedPhoneNumber ||
+              !jedEmail ||
+              !selectedJedMeterType ||
               !selected ||
-              !ikedcamount
+              !jedAmount
                 ? "bg-[#63616188] cursor-not-allowed"
                 : "bg-primary cursor-pointer"
             }`}
             disabled={
-              !meterNumber ||
-              !verifiedName ||
-              !phoneNumber ||
-              !ikedcEmail ||
-              !selectedNetworkProduct ||
+              !jedMeterNumber ||
+              !jedVerifiedName ||
+              !jedPhoneNumber ||
+              !jedEmail ||
+              !selectedJedMeterType ||
               !selected ||
-              !ikedcamount
+              !jedAmount
             }
           >
             Proceed
@@ -736,7 +748,7 @@ const JED = () => {
                   isDarkMode ? "text-white" : "text-[#000]"
                 }`}
               >
-                {selectedNetworkProduct} Meter (&#8358;{ikedcamount}){" "}
+                {selectedJedMeterType} Meter (&#8358;{jedAmount}){" "}
               </span>
               {/* Points to <br></br>
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">
@@ -769,7 +781,7 @@ const JED = () => {
                 >
                   Meter Type
                 </p>
-                <span>{selectedNetworkProduct} </span>
+                <span>{selectedJedMeterType} </span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
                 <p
@@ -779,7 +791,7 @@ const JED = () => {
                 >
                   Meter Number
                 </p>
-                <span>{meterNumber} </span>
+                <span>{jedMeterNumber} </span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
@@ -790,7 +802,7 @@ const JED = () => {
                 >
                   Verified Name
                 </p>
-                <span>{verifiedName}</span>
+                <span>{jedVerifiedName}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
@@ -801,7 +813,7 @@ const JED = () => {
                 >
                   Phone Number
                 </p>
-                <span>{phoneNumber}</span>
+                <span>{jedPhoneNumber}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
                 <p
@@ -811,7 +823,7 @@ const JED = () => {
                 >
                   Email
                 </p>
-                <span>{ikedcEmail}</span>
+                <span>{jedEmail}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
                 <p
@@ -821,7 +833,7 @@ const JED = () => {
                 >
                   Amount
                 </p>
-                <span>&#8358;{ikedcamount}</span>
+                <span>&#8358;{jedAmount}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
                 <p
@@ -887,48 +899,71 @@ const JED = () => {
               isDarkMode
                 ? "bg-black absolute pt-4 h-[250px] shrink-0 rounded-lg shadow border border-white md:h-[350px] w-[481.25px] md:bottom-auto md:top-auto lg:h-[450px] lg:rounded-[20px] "
                 : styles.inputPin
-            } ${
-              toggleSideBar ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
-            } md:w-[55%] w-[90%]`}
+            }
+               ${
+                 toggleSideBar
+                   ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]"
+                   : "lg:w-[40%]"
+               } md:w-[55%] w-[90%] `}
           >
             <img
               onClick={handle}
-              className="absolute right-2 w-[18px] h-[18px] my-[1%] md:w-5 md:h-5 lg:w-[25px] lg:h-[25px]"
+              className={`absolute right-2 w-[18px] h-[18px] my-[1%] md:w-5 md:h-5 lg:w-[25px] lg:h-[25px] ${
+                isDarkMode ? "my-7" : ""
+              }`}
               src="/Images/transferImages/close-circle.png"
               alt=""
             />
-            <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
-            <p className="text-[12px] md:text-[16px] font-extrabold text-center my-[10%] lg:my-[%]">
+            <hr
+              className={`h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px] ${
+                isDarkMode ? "md:mt-10" : ""
+              }`}
+            />
+            <p className="text-[12px] md:text-[16px] font-extrabold text-center my-[10%] lg:my-[%] ">
               Input PIN to complete transaction
             </p>
             <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[8%]">
-              <div className=" flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
+              <div className=" flex justify-center  ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
                 {isVisible ? (
-                  <OtpInput
-                    value={inputPin}
-                    inputType="tel"
-                    onChange={setInputPin}
-                    numInputs={4}
-                    shouldAutoFocus={true}
-                    inputStyle={{
-                      color: isDarkMode ? "#ffffff" : "#403f3f",
-                      width: 30,
-                      height: 30,
-                      borderRadius: 3,
-                      backgroundColor: isDarkMode ? "black" : "white",
-                      border: isDarkMode ? "1px solid white" : "1px solid #ccc",
-                    }}
-                    renderInput={(props) => (
-                      <input {...props} className="inputOTP mx-[3px]" />
-                    )}
-                  />
+                  <div className="flex flex-col gap-y-1">
+                    <OtpInput
+                      value={inputPin}
+                      inputType="tel"
+                      onChange={setInputPin}
+                      numInputs={4}
+                      shouldAutoFocus={true}
+                      inputStyle={{
+                        color: isDarkMode ? "#ffffff" : "#403f3f",
+                        width: 30,
+                        height: 30,
+                        borderRadius: 3,
+                        backgroundColor: isDarkMode ? "black" : "white",
+                        border: isDarkMode
+                          ? "1px solid white"
+                          : "1px solid #ccc",
+                      }}
+                      renderInput={(props) => (
+                        <input {...props} className="inputOTP mx-[3px]" />
+                      )}
+                    />
+                    <span className="">
+                      {pinSuccess && (
+                        <p className="text-[12px] text-green-500 text-center font-medium">
+                          Pin matches
+                        </p>
+                      )}
+                      {pinFailed && errorMessage && (
+                        <p className="text-[12px] text-center text-red-600 font-medium">
+                          Incorrect Pin
+                        </p>
+                      )}
+                    </span>
+                  </div>
                 ) : (
                   <div className="text-[24px] md:text-[24px] mt-1">* * * *</div>
                 )}
                 <div
-                  className={`text-[13px] md:text-3xl ${
-                    isDarkMode ? "text-white" : "text-[#0003]"
-                  }`}
+                  className="text-[#0003] text-[13px] md:text-3xl"
                   onClick={toggleVisibility}
                 >
                   {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
@@ -940,7 +975,7 @@ const JED = () => {
             </div>
             <button
               disabled={inputPin.length !== 4 ? true : false}
-              onClick={handleSuccess}
+              onClick={verifyPin}
               className={`${
                 inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
               } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%] ${
@@ -971,14 +1006,14 @@ const JED = () => {
 
               <img
                 onClick={() => {
-                  setSelectedNetworkProduct("");
-                  setMeterNumber("");
-                  setVerifiedName("");
-                  setPhoneNumber("");
-                  setEmail("");
-                  setIkedcamount("");
+                  setSelectedJedMeterType("");
+                  setJedMeterNumber("");
+                  setJedVerifiedName("");
+                  setJedPhoneNumber("");
+                  setJedEmail("");
+                  setJedAmount("");
                   setGlobalCountry("");
-                  setFlag("");
+                  setJedFlag("");
                   setSuccessPopup(false);
                 }}
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
@@ -1006,7 +1041,7 @@ const JED = () => {
                   isDarkMode ? "text-white" : "text-[#000]"
                 }`}
               >
-                Jos {selectedNetworkProduct} Meter
+                Jos {selectedJedMeterType} Meter
               </span>
               <br></br>
               <span
@@ -1014,7 +1049,7 @@ const JED = () => {
                   isDarkMode ? "text-white" : "text-[#000]"
                 }`}
               >
-                (&#8358;{ikedcamount})
+                (&#8358;{jedAmount})
               </span>
               From your NGN Nigerian Wallet to
             </p>
@@ -1032,7 +1067,7 @@ const JED = () => {
                   <div>
                     <img className="w-[30px]" src={logo} alt="" />
                   </div>
-                  <div>{serviceID}</div>
+                  <div>{jedServiceID}</div>
                 </span>
               </div>
               <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -1043,7 +1078,7 @@ const JED = () => {
                 >
                   Meter Type
                 </p>
-                <span>{selectedNetworkProduct} </span>
+                <span>{selectedJedMeterType} </span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -1053,7 +1088,7 @@ const JED = () => {
                 >
                   Meter Number
                 </p>
-                <span>{meterNumber} </span>
+                <span>{jedMeterNumber} </span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -1064,7 +1099,7 @@ const JED = () => {
                 >
                   Verified Name
                 </p>
-                <span>{verifiedName}</span>
+                <span>{jedVerifiedName}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -1075,7 +1110,7 @@ const JED = () => {
                 >
                   Phone Number
                 </p>
-                <span>{phoneNumber}</span>
+                <span>{jedPhoneNumber}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -1085,7 +1120,7 @@ const JED = () => {
                 >
                   Email
                 </p>
-                <span>{ikedcEmail}</span>
+                <span>{jedEmail}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -1095,7 +1130,7 @@ const JED = () => {
                 >
                   Amount
                 </p>
-                <span>&#8358;{ikedcamount}</span>
+                <span>&#8358;{jedAmount}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -1135,30 +1170,12 @@ const JED = () => {
               >
                 Done
               </button>
-              <Link
-                to="/jed-receipt"
-                state={{
-                  selectedNetworkProduct: selectedNetworkProduct,
-                  meterNumber: meterNumber,
-                  phoneNumber: phoneNumber,
-                  ikedcEmail: ikedcEmail,
-                  ikedcamount: ikedcamount,
-                  orderId: orderId,
-                  transactionId: transactionId,
-                  serviceID: serviceID,
-                  showDescription: showDescription,
-                  billGenerate: billGenerate,
-                }}
+              <button
+                onClick={handleReceivedData}
+                className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
               >
-                <button
-                  onClick={() => {
-                    setSuccessPopup(false);
-                  }}
-                  className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
-                >
-                  Receipt
-                </button>
-              </Link>
+                Receipt
+              </button>
             </div>
           </div>
         </Modal>
@@ -1182,15 +1199,15 @@ const JED = () => {
 
               <img
                 onClick={() => {
-                  setSelectedNetworkProduct("");
-                  setMeterNumber("");
-                  setVerifiedName("");
-                  setPhoneNumber("");
-                  setEmail("");
-                  setIkedcamount("");
+                  setSelectedJedMeterType("");
+                  setJedMeterNumber("");
+                  setJedVerifiedName("");
+                  setJedPhoneNumber("");
+                  setJedEmail("");
+                  setJedAmount("");
                   setGlobalCountry("");
-                  setFlag("");
-                  setFailedPopup(false);
+                  setJedFlag("");
+                  setSuccessPopup(false);
                 }}
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
@@ -1225,15 +1242,15 @@ const JED = () => {
               <Link
                 to="/jed-receipt-failed"
                 state={{
-                  selectedNetworkProduct: selectedNetworkProduct,
-                  meterNumber: meterNumber,
-                  phoneNumber: phoneNumber,
-                  ikedcEmail: ikedcEmail,
-                  ikedcamount: ikedcamount,
-                  orderId: orderId,
-                  transactionId: transactionId,
-                  serviceID: serviceID,
-                  showDescription: showDescription,
+                  selectedNetworkProduct: selectedJedMeterType,
+                  meterNumber: jedMeterNumber,
+                  phoneNumber: jedPhoneNumber,
+                  ikedcEmail: jedEmail,
+                  ikedcamount: jedAmount,
+                  orderId: jedOrderId,
+                  transactionId: jedTransactionId,
+                  serviceID: jedServiceID,
+                  showDescription: jedShowDescription,
                 }}
               >
                 <button
@@ -1247,6 +1264,11 @@ const JED = () => {
               </Link>
             </div>
           </div>
+        </Modal>
+      )}
+      {loading && (
+        <Modal>
+          <Loader />
         </Modal>
       )}
     </DashBoardLayout>

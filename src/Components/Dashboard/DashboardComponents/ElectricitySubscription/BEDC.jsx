@@ -14,49 +14,57 @@ import { Modal } from "../../../Screens/Modal/Modal";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import OtpInput from "react-otp-input";
-import { Link } from "react-router-dom";
-// import axios from 'axios';
+import { Link, useNavigate } from "react-router-dom";
 
-// import { PostFunction } from "../../../ApiCollection.jsx/ApiBuck";
-import axiosInstance from "../../../ApiCollection.jsx/apiClient";
+import {
+  PostFunction,
+  VerifyTransPin,
+} from "../../../ApiCollection.jsx/ApiBuck";
+import { Loader } from "../../../Loader/Loader";
 
 const BEDC = () => {
+  const navigate = useNavigate();
   const {
     isDarkMode,
     toggleSideBar,
-    meterNumber,
+    bedcMeterNumber,
+    setBedcMeterNumber,
     showList,
-    setMeterNumber,
-    setVerifiedName,
+    bedcVerifiedName,
+    setBedcVerifiedName,
     setShowList,
     setSelected,
     selected,
     globalCountry,
     setGlobalCountry,
     globalTransferErrors,
-    verifiedName,
-    phoneNumber,
-    setPhoneNumber,
-    ikedcEmail,
-    setEmail,
-    ikedcamount,
-    setIkedcamount,
+    bedcPhoneNumber,
+    setBedcPhoneNumber,
+    bedcEmail,
+    setBedcEmail,
+    bedcAmount,
+    setBedcAmount,
     toggleVisibility,
     isVisible,
-    billGenerate,
-    setBillGenerate,
-    serviceID,
-    setServiceID,
-    flag,
-    setFlag,
+    setBedcBillGenerate,
+    bedcServiceID,
+    setBedcServiceID,
+    bedcFlag,
+    setBedcFlag,
+    selectedBedcMeterType,
+    setSelectedBedcMeterType,
+    bedcOrderId,
+    setBedcOrderId,
+    bedcTransactionId,
+    setBedcTransactionId,
+    bedcShowDescription,
+    setBedcShowDescription,
+    bedcFetchedResponse,
+    setBedcFetchedResponse,
   } = useContext(ContextProvider);
+  // selectedEedcMeterType
 
-  const { selectedNetworkProduct, setSelectedNetworkProduct } =
-    useContext(ContextProvider);
   const [showProductList, setShowProductList] = useState(false);
-  const [showDescription, setShowDescription] = useState(false);
-  const [orderId, setOrderId] = useState(false);
-  const [transactionId, setTransactionId] = useState(false);
 
   const pointsEarned = "+2.00";
 
@@ -83,7 +91,7 @@ const BEDC = () => {
     },
   ];
   const handleSelectProduct = (productName) => {
-    setSelectedNetworkProduct(productName);
+    setSelectedBedcMeterType(productName);
     // setSelectedOption("");
     setShowProductList(false);
     // setShowOptionList(false);
@@ -135,9 +143,9 @@ const BEDC = () => {
     // e.preventDefault();
 
     const { error } = schema.validate({
-      phoneNumber,
-      ikedcEmail,
-      meterNumber,
+      bedcPhoneNumber,
+      bedcEmail,
+      bedcMeterNumber,
     });
 
     if (error) {
@@ -154,19 +162,19 @@ const BEDC = () => {
   };
 
   const schema = Joi.object({
-    phoneNumber: Joi.string()
+    bedcPhoneNumber: Joi.string()
       .pattern(new RegExp(/^\d{11,}/))
       .required()
       .messages({
         "string.pattern.base": "Phone number should be 11 digits ",
       }),
-    meterNumber: Joi.string()
+    bedcMeterNumber: Joi.string()
       .pattern(new RegExp(/^\d{10,}/))
       .required()
       .messages({
         "string.pattern.base": "Invalid meter number",
       }),
-    ikedcEmail: Joi.string()
+    bedcEmail: Joi.string()
       .pattern(new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i))
       .required()
       .messages({
@@ -184,7 +192,7 @@ const BEDC = () => {
   // };
 
   const handleCountryClick = (name, flag, id, code) => {
-    setFlag(flag);
+    setBedcFlag(flag);
     setShowList(false);
     setGlobalCountry(name);
     setSelected(true);
@@ -193,94 +201,158 @@ const BEDC = () => {
   };
   const handleVerifiedName = (event) => {
     const newValue = event.target.value;
-    setVerifiedName(newValue);
+    setBedcVerifiedName(newValue);
   };
 
   const handleMeterNumber = (event) => {
     const newValue = event.target.value;
-    setMeterNumber(newValue);
+    setBedcMeterNumber(newValue);
   };
 
   const handlePhoneNumber = (event) => {
     const value = event.target.value;
     const newValue = value.replace(/\D/g, "").slice(0, 11);
-    setPhoneNumber(newValue);
+    setBedcPhoneNumber(newValue);
   };
   const handleEmail = (event) => {
     const newValue = event.target.value;
-    setEmail(newValue);
+    setBedcEmail(newValue);
   };
-  const handleIkedcAmount = (event) => {
+  const handleBedcAmount = (event) => {
     const newValue = event.target.value;
     // setIkedcamount(newValue);
     if (newValue.startsWith("")) {
-      setIkedcamount(newValue);
+      setBedcAmount(newValue);
     } else {
-      setIkedcamount(`₦${newValue}`);
+      setBedcAmount(`₦${newValue}`);
     }
   };
   const [successPopup, setSuccessPopup] = useState(false);
   const [failedPopup, setFailedPopup] = useState(false);
 
-  const handleSuccess = async () => {
-    async function buyBEDC(meter_type, meter_no, phone, email, amount) {
-      // const url = 'https://aremxyplug.onrender.com/api/v1/electric-bill';
+  const [errorMessage, setErrorMessage] = useState(false);
+  const [pinSuccess, setPinSuccess] = useState(false);
+  const [pinFailed, setPinFailed] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-      const parsedAmount = parseInt(amount, 10);
-
+  const verifyPin = async () => {
+    async function ElectricityHandler() {
+      const path = "electric-bill";
+      const parsedAmount = parseInt(bedcAmount, 10);
       const data = {
-        meter_type,
-        meter_no,
-        phone, // Use the parsed integer value
-        email,
-        amount: parsedAmount, // Use the parsed integer value
+        meter_type: selectedBedcMeterType,
+        meter_no: bedcMeterNumber,
+        phone: bedcPhoneNumber, // Use the parsed integer value
+        email: bedcEmail,
+        amount: parsedAmount,
+        // amount: "",
         disco_type: "benin-electric",
       };
+      // const parsedAmount = parseInt(amount, 10);
+      const SuccessHandler = () => {
+        setInputPinPopUp(false);
+        setSuccessPopup(true);
+      };
+      const FailedHandler = () => {
+        setInputPinPopUp(false);
+        setFailedPopup(true);
+      };
 
-      console.log(data);
-
-      try {
-        const path = "electric-bill";
-        // const response = await PostFunction(path, data);
-        const response = await axiosInstance.post(path, data);
-        console.log(response.data);
-        console.log(response.status);
-        setSelectedNetworkProduct(response.data.data.meter_type);
-        setMeterNumber(response.data.data.meter_number);
-        setPhoneNumber(response.data.data.phone);
-        setEmail(response.data.data.email);
-        setIkedcamount(response.data.data.amount);
-        setBillGenerate(response.data.data.bill_generated);
-        setOrderId(response.data.data.order_id);
-        setTransactionId(response.data.data.transaction_id);
-        setServiceID(response.data.data.disco_type);
-        setShowDescription(response.data.data.description);
-        return { statusCode: response.status, data: response.data };
-        // console.log(response.data);
-      } catch (error) {
-        console.error(error);
-        return { statusCode: error.response.status, data: null };
-      }
+      await PostFunction(
+        path,
+        setLoading,
+        data,
+        SuccessHandler,
+        FailedHandler,
+        setBedcFetchedResponse
+      );
     }
-
-    // Usage
-    const response = await buyBEDC(
-      selectedNetworkProduct,
-      meterNumber,
-      phoneNumber,
-      ikedcEmail,
-      ikedcamount
+    await VerifyTransPin(
+      inputPin,
+      setPinSuccess,
+      setPinFailed,
+      setLoading,
+      setErrorMessage,
+      ElectricityHandler
     );
-
-    setInputPinPopUp(false);
-    if (response.statusCode === 200) {
-      // Success response
-      setSuccessPopup(true); // Show success popup
-    } else {
-      // Failure response
-      setFailedPopup(true); // Show failure popup
-    }
   };
+
+  function handleReceivedData() {
+    setLoading(true);
+    const receivedData = () => {
+      setBedcBillGenerate(bedcFetchedResponse.data.bill_generated);
+      setBedcOrderId(bedcFetchedResponse.data.order_id);
+      setBedcTransactionId(bedcFetchedResponse.data.transaction_id);
+      setBedcServiceID(bedcFetchedResponse.data.request_id);
+      setBedcShowDescription(bedcFetchedResponse.data.description);
+    };
+    receivedData();
+    if (receivedData) {
+      setSuccessPopup(false);
+      setLoading(false);
+      navigate("/bedc-receipt");
+    }
+  }
+
+  // const handleSuccess = async () => {
+  //   async function buyBEDC(meter_type, meter_no, phone, email, amount) {
+  //     // const url = 'https://aremxyplug.onrender.com/api/v1/electric-bill';
+
+  //     const parsedAmount = parseInt(amount, 10);
+
+  //     const data = {
+  //       meter_type,
+  //       meter_no,
+  //       phone, // Use the parsed integer value
+  //       email,
+  //       amount: parsedAmount, // Use the parsed integer value
+  //       disco_type: "benin-electric",
+  //     };
+
+  //     console.log(data);
+
+  //     try {
+  //       const path = "electric-bill";
+  //       // const response = await PostFunction(path, data);
+  //       const response = await axiosInstance.post(path, data);
+  //       console.log(response.data);
+  //       console.log(response.status);
+  //       setSelectedNetworkProduct(response.data.data.meter_type);
+  //       setMeterNumber(response.data.data.meter_number);
+  //       setPhoneNumber(response.data.data.phone);
+  //       setEmail(response.data.data.email);
+  //       setIkedcamount(response.data.data.amount);
+  //       setBillGenerate(response.data.data.bill_generated);
+  //       setOrderId(response.data.data.order_id);
+  //       setTransactionId(response.data.data.transaction_id);
+  //       setServiceID(response.data.data.disco_type);
+  //       setShowDescription(response.data.data.description);
+  //       return { statusCode: response.status, data: response.data };
+  //       // console.log(response.data);
+  //     } catch (error) {
+  //       console.error(error);
+  //       return { statusCode: error.response.status, data: null };
+  //     }
+  //   }
+
+  //   // Usage
+  //   const response = await buyBEDC(
+  //     selectedNetworkProduct,
+  //     meterNumber,
+  //     phoneNumber,
+  //     ikedcEmail,
+  //     ikedcamount
+  //   );
+
+  //   setInputPinPopUp(false);
+  //   if (response.statusCode === 200) {
+  //     // Success response
+  //     setSuccessPopup(true); // Show success popup
+  //   } else {
+  //     // Failure response
+  //     setFailedPopup(true); // Show failure popup
+  //   }
+  // };
 
   const [InputPinPopUp, setInputPinPopUp] = useState(false);
   const [inputPin, setInputPin] = useState("");
@@ -392,7 +464,7 @@ const BEDC = () => {
                   className={`text-[12px] font-normal leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]
                    ${isDarkMode ? "text-white bg-black" : "text-[#7E7E7E]"}`}
                 >
-                  {selectedNetworkProduct}
+                  {selectedBedcMeterType}
                 </h2>
                 <button className="lg:w-6 lg:h-6 w-4 h-4 cursor-pointer">
                   <img src={arrowDown} alt="" className="w-full h-full" />
@@ -418,7 +490,7 @@ const BEDC = () => {
                            ? "bg-black text-white hover:bg-slate-800 hover:rounded-t-[10px]"
                            : "text-[#7C7C7C]"
                        }
-                       ${selectedNetworkProduct === item.name ? "" : ""}`}
+                       ${selectedBedcMeterType === item.name ? "" : ""}`}
                       onClick={() => handleSelectProduct(item.name)}
                     >
                       {item.name}
@@ -439,7 +511,7 @@ const BEDC = () => {
               <div>
                 <input
                   type="number"
-                  value={meterNumber}
+                  value={bedcMeterNumber}
                   onChange={handleMeterNumber}
                   className={`py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full w-full  ${
                     isDarkMode
@@ -469,7 +541,7 @@ const BEDC = () => {
               <div>
                 <input
                   type="text"
-                  value={verifiedName}
+                  value={bedcVerifiedName}
                   onChange={handleVerifiedName}
                   className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
                     isDarkMode
@@ -490,7 +562,7 @@ const BEDC = () => {
               <div>
                 <input
                   type="number"
-                  value={phoneNumber}
+                  value={bedcPhoneNumber}
                   onChange={handlePhoneNumber}
                   className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
                     isDarkMode
@@ -516,7 +588,7 @@ const BEDC = () => {
               <div>
                 <input
                   type="text"
-                  value={ikedcEmail}
+                  value={bedcEmail}
                   onChange={handleEmail}
                   className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
                     isDarkMode
@@ -550,8 +622,8 @@ const BEDC = () => {
                 <input
                   type="number"
                   name="ikedcamount"
-                  value={ikedcamount}
-                  onChange={handleIkedcAmount}
+                  value={bedcAmount}
+                  onChange={handleBedcAmount}
                   className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:py-3 md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] text-[12px] leading-[18px] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none
                  ${
                    isDarkMode
@@ -593,7 +665,7 @@ const BEDC = () => {
                     </p>
                     <img
                       className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
-                      src={flag}
+                      src={bedcFlag}
                       alt=""
                     />
                   </div>
@@ -665,24 +737,24 @@ const BEDC = () => {
             onClick={handleProceed}
             className={`text-[12px] mt-[30px] md:mt-[40px] bg-[#0008] md:w-fit lg:px-12 lg:text-[16px] lg:px md:py-1 md:rounded-md md:px-6 py-3 rounded-md font-semibold text-center text-white
             ${
-              !meterNumber ||
-              !verifiedName ||
-              !phoneNumber ||
-              !ikedcEmail ||
-              !selectedNetworkProduct ||
+              !bedcMeterNumber ||
+              !bedcVerifiedName ||
+              !bedcPhoneNumber ||
+              !bedcEmail ||
+              !selectedBedcMeterType ||
               !selected ||
-              !ikedcamount
+              !bedcAmount
                 ? "bg-[#63616188] cursor-not-allowed"
                 : "bg-primary cursor-pointer"
             }`}
             disabled={
-              !meterNumber ||
-              !verifiedName ||
-              !phoneNumber ||
-              !ikedcEmail ||
-              !selectedNetworkProduct ||
+              !bedcMeterNumber ||
+              !bedcVerifiedName ||
+              !bedcPhoneNumber ||
+              !bedcEmail ||
+              !selectedBedcMeterType ||
               !selected ||
-              !ikedcamount
+              !bedcAmount
             }
           >
             Proceed
@@ -738,7 +810,7 @@ const BEDC = () => {
                   isDarkMode ? "text-white" : "text-[#000]"
                 }`}
               >
-                {selectedNetworkProduct} Meter (&#8358;{ikedcamount}){" "}
+                {selectedBedcMeterType} Meter (&#8358;{bedcAmount}){" "}
               </span>
               {/* Points to <br></br>
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">
@@ -771,7 +843,7 @@ const BEDC = () => {
                 >
                   Meter Type
                 </p>
-                <span>{selectedNetworkProduct} </span>
+                <span>{selectedBedcMeterType} </span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -781,7 +853,7 @@ const BEDC = () => {
                 >
                   Meter Number
                 </p>
-                <span>{meterNumber} </span>
+                <span>{bedcMeterNumber} </span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -792,7 +864,7 @@ const BEDC = () => {
                 >
                   Verified Name
                 </p>
-                <span>{verifiedName}</span>
+                <span>{bedcVerifiedName}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
@@ -803,7 +875,7 @@ const BEDC = () => {
                 >
                   Phone Number
                 </p>
-                <span>{phoneNumber}</span>
+                <span>{bedcPhoneNumber}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
                 <p
@@ -813,7 +885,7 @@ const BEDC = () => {
                 >
                   Email
                 </p>
-                <span>{ikedcEmail}</span>
+                <span>{bedcEmail}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
                 <p
@@ -823,7 +895,7 @@ const BEDC = () => {
                 >
                   Amount
                 </p>
-                <span>&#8358;{ikedcamount}</span>
+                <span>&#8358;{bedcAmount}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
                 <p
@@ -936,6 +1008,18 @@ const BEDC = () => {
                         <input {...props} className="inputOTP mx-[3px]" />
                       )}
                     />
+                    <span className="">
+                      {pinSuccess && (
+                        <p className="text-[12px] text-green-500 text-center font-medium">
+                          Pin matches
+                        </p>
+                      )}
+                      {pinFailed && errorMessage && (
+                        <p className="text-[12px] text-center text-red-600 font-medium">
+                          Incorrect Pin
+                        </p>
+                      )}
+                    </span>
                   </div>
                 ) : (
                   <div className="text-[24px] md:text-[24px] mt-1">* * * *</div>
@@ -953,7 +1037,7 @@ const BEDC = () => {
             </div>
             <button
               disabled={inputPin.length !== 4 ? true : false}
-              onClick={handleSuccess}
+              onClick={verifyPin}
               className={`${
                 inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
               } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%] ${
@@ -984,14 +1068,14 @@ const BEDC = () => {
 
               <img
                 onClick={() => {
-                  setSelectedNetworkProduct("");
-                  setMeterNumber("");
-                  setVerifiedName("");
-                  setPhoneNumber("");
-                  setEmail("");
-                  setIkedcamount("");
+                  setSelectedBedcMeterType("");
+                  setBedcMeterNumber("");
+                  setBedcVerifiedName("");
+                  setBedcPhoneNumber("");
+                  setBedcEmail("");
+                  setBedcAmount("");
                   setGlobalCountry("");
-                  setFlag("");
+                  setBedcFlag("");
                   setSuccessPopup(false);
                 }}
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
@@ -1019,7 +1103,7 @@ const BEDC = () => {
                   isDarkMode ? "text-white" : "text-[#000]"
                 }`}
               >
-                Benin {selectedNetworkProduct} Meter
+                Benin {selectedBedcMeterType} Meter
               </span>
               <br></br>
               <span
@@ -1027,7 +1111,7 @@ const BEDC = () => {
                   isDarkMode ? "text-white" : "text-[#000]"
                 }`}
               >
-                (&#8358;{ikedcamount})
+                (&#8358;{bedcAmount})
               </span>
               From your NGN Nigerian Wallet to
             </p>
@@ -1045,7 +1129,7 @@ const BEDC = () => {
                   <div>
                     <img className="w-[30px]" src={logo} alt="" />
                   </div>
-                  <div>{serviceID}</div>
+                  <div>{bedcServiceID}</div>
                 </span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
@@ -1056,7 +1140,7 @@ const BEDC = () => {
                 >
                   Meter Type
                 </p>
-                <span>{selectedNetworkProduct} </span>
+                <span>{selectedBedcMeterType} </span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -1066,7 +1150,7 @@ const BEDC = () => {
                 >
                   Meter Number
                 </p>
-                <span>{meterNumber} </span>
+                <span>{bedcMeterNumber} </span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -1077,7 +1161,7 @@ const BEDC = () => {
                 >
                   Verified Name
                 </p>
-                <span>{verifiedName}</span>
+                <span>{bedcVerifiedName}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -1088,7 +1172,7 @@ const BEDC = () => {
                 >
                   Phone Number
                 </p>
-                <span>{phoneNumber}</span>
+                <span>{bedcPhoneNumber}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -1098,7 +1182,7 @@ const BEDC = () => {
                 >
                   Email
                 </p>
-                <span>{ikedcEmail}</span>
+                <span>{bedcEmail}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -1108,7 +1192,7 @@ const BEDC = () => {
                 >
                   Amount
                 </p>
-                <span>&#8358;{ikedcamount}</span>
+                <span>&#8358;{bedcAmount}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -1142,44 +1226,27 @@ const BEDC = () => {
             <div className="flex w-[70%] mx-auto items-center my-6  gap-[6%] md:gap-[20px] justify-center md:w-[20%] lg:my-[5%]">
               <button
                 onClick={() => {
-                  setSelectedNetworkProduct("");
-                  setMeterNumber("");
-                  setVerifiedName("");
-                  setPhoneNumber("");
-                  setEmail("");
-                  setIkedcamount("");
+                  setSelectedBedcMeterType("");
+                  setBedcMeterNumber("");
+                  setBedcVerifiedName("");
+                  setBedcPhoneNumber("");
+                  setBedcEmail("");
+                  setBedcAmount("");
                   setGlobalCountry("");
-                  setFlag("");
+                  setBedcFlag("");
                   setSuccessPopup(false);
                 }}
                 className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[11px] font-extrabold h-[40px] text-white rounded-[6px] md:px-[50px] md:w-[70%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
               >
                 Done
               </button>
-              <Link
-                to="/bedc-receipt"
-                state={{
-                  selectedNetworkProduct: selectedNetworkProduct,
-                  meterNumber: meterNumber,
-                  phoneNumber: phoneNumber,
-                  ikedcEmail: ikedcEmail,
-                  ikedcamount: ikedcamount,
-                  orderId: orderId,
-                  transactionId: transactionId,
-                  serviceID: serviceID,
-                  showDescription: showDescription,
-                  billGenerate: billGenerate,
-                }}
+
+              <button
+                onClick={handleReceivedData}
+                className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[11px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
               >
-                <button
-                  onClick={() => {
-                    setSuccessPopup(false);
-                  }}
-                  className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[11px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
-                >
-                  Receipt
-                </button>
-              </Link>
+                Receipt
+              </button>
             </div>
           </div>
         </Modal>
@@ -1203,15 +1270,15 @@ const BEDC = () => {
 
               <img
                 onClick={() => {
-                  setSelectedNetworkProduct("");
-                  setMeterNumber("");
-                  setVerifiedName("");
-                  setPhoneNumber("");
-                  setEmail("");
-                  setIkedcamount("");
+                  setSelectedBedcMeterType("");
+                  setBedcMeterNumber("");
+                  setBedcVerifiedName("");
+                  setBedcPhoneNumber("");
+                  setBedcEmail("");
+                  setBedcAmount("");
                   setGlobalCountry("");
-                  setFlag("");
-                  setFailedPopup(false);
+                  setBedcFlag("");
+                  setSuccessPopup(false);
                 }}
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
@@ -1246,15 +1313,15 @@ const BEDC = () => {
               <Link
                 to="/bedc-receipt-failed"
                 state={{
-                  selectedNetworkProduct: selectedNetworkProduct,
-                  meterNumber: meterNumber,
-                  phoneNumber: phoneNumber,
-                  ikedcEmail: ikedcEmail,
-                  ikedcamount: ikedcamount,
-                  orderId: orderId,
-                  transactionId: transactionId,
-                  serviceID: serviceID,
-                  showDescription: showDescription,
+                  selectedNetworkProduct: selectedBedcMeterType,
+                  meterNumber: bedcMeterNumber,
+                  phoneNumber: bedcPhoneNumber,
+                  ikedcEmail: bedcEmail,
+                  ikedcamount: bedcAmount,
+                  orderId: bedcOrderId,
+                  transactionId: bedcTransactionId,
+                  serviceID: bedcServiceID,
+                  showDescription: bedcShowDescription,
                 }}
               >
                 <button
@@ -1268,6 +1335,11 @@ const BEDC = () => {
               </Link>
             </div>
           </div>
+        </Modal>
+      )}
+      {loading && (
+        <Modal>
+          <Loader />
         </Modal>
       )}
     </DashBoardLayout>

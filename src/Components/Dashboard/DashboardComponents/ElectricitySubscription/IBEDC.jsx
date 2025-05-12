@@ -14,49 +14,57 @@ import { Modal } from "../../../Screens/Modal/Modal";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import OtpInput from "react-otp-input";
-import { Link } from "react-router-dom";
-// import axios from 'axios';
-
-// import { PostFunction } from "../../../ApiCollection.jsx/ApiBuck";
-import axiosInstance from "../../../ApiCollection.jsx/apiClient";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  PostFunction,
+  VerifyTransPin,
+} from "../../../ApiCollection.jsx/ApiBuck";
+import { Loader } from "../../../Loader/Loader";
 
 const IBEDC = () => {
+  const navigate = useNavigate();
   const {
     isDarkMode,
     toggleSideBar,
-    meterNumber,
+    ibedcMeterNumber,
+    setIbedcMeterNumber,
     showList,
-    setMeterNumber,
-    setVerifiedName,
+    ibedcVerifiedName,
+    setIbedcVerifiedName,
     setShowList,
     setSelected,
     selected,
     globalCountry,
     setGlobalCountry,
     globalTransferErrors,
-    verifiedName,
-    phoneNumber,
-    setPhoneNumber,
+    ibedcPhoneNumber,
+    setIbedcPhoneNumber,
     ibedcEmail,
     setIbedcEmail,
     ibedcamount,
     setIbedcamount,
     toggleVisibility,
     isVisible,
-    billGenerate,
-    setBillGenerate,
-    serviceID,
-    setServiceID,
+    setIbedcBillGenerate,
+    ibedcServiceID,
+    setIbedcServiceID,
     flag,
-    setFlag,
+    setIbedcFlag,
+    selectedIbedcMeterType,
+    setSelectedIbedcMeterType,
+    ibedcOrderId,
+    setIbedcOrderId,
+    ibedcTransactionId,
+    setIbedcTransactionId,
+    ibedcShowDescription,
+    setIbedcShowDescription,
+    ibedcFetchedResponse,
+    setIbedcFetchedResponse,
   } = useContext(ContextProvider);
 
-  const { selectedNetworkProduct, setSelectedNetworkProduct } =
-    useContext(ContextProvider);
+  // const { selectedNetworkProduct, setSelectedNetworkProduct } =
+  //   useContext(ContextProvider);
   const [showProductList, setShowProductList] = useState(false);
-  const [showDescription, setShowDescription] = useState(false);
-  const [orderId, setOrderId] = useState(false);
-  const [transactionId, setTransactionId] = useState(false);
 
   const pointsEarned = "+2.00";
 
@@ -83,7 +91,7 @@ const IBEDC = () => {
     },
   ];
   const handleSelectProduct = (productName) => {
-    setSelectedNetworkProduct(productName);
+    setSelectedIbedcMeterType(productName);
     // setSelectedOption("");
     setShowProductList(false);
     // setShowOptionList(false);
@@ -135,9 +143,9 @@ const IBEDC = () => {
     // e.preventDefault();
 
     const { error } = schema.validate({
-      phoneNumber,
+      ibedcPhoneNumber,
       ibedcEmail,
-      meterNumber,
+      ibedcMeterNumber,
     });
 
     if (error) {
@@ -154,19 +162,19 @@ const IBEDC = () => {
   };
 
   const schema = Joi.object({
-    phoneNumber: Joi.string()
+    ibedcPhoneNumber: Joi.string()
       .pattern(new RegExp(/^\d{11,}/))
       .required()
       .messages({
         "string.pattern.base": "Phone number should be 11 digits ",
       }),
-    meterNumber: Joi.string()
+    ibedcMeterNumber: Joi.string()
       .pattern(new RegExp(/^\d{10,}/))
       .required()
       .messages({
         "string.pattern.base": "Invalid meter number",
       }),
-    ikedcEmail: Joi.string()
+    ibedcEmail: Joi.string()
       .pattern(new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i))
       .required()
       .messages({
@@ -184,7 +192,7 @@ const IBEDC = () => {
   // };
 
   const handleCountryClick = (name, flag, id, code) => {
-    setFlag(flag);
+    setIbedcFlag(flag);
     setShowList(false);
     setGlobalCountry(name);
     setSelected(true);
@@ -193,22 +201,22 @@ const IBEDC = () => {
   };
   const handleVerifiedName = (event) => {
     const newValue = event.target.value;
-    setVerifiedName(newValue);
+    setIbedcVerifiedName(newValue);
   };
   const handleMeterNumber = (event) => {
     const newValue = event.target.value;
-    setMeterNumber(newValue);
+    setIbedcMeterNumber(newValue);
   };
   const handlePhoneNumber = (event) => {
     const value = event.target.value;
     const newValue = value.replace(/\D/g, "").slice(0, 11);
-    setPhoneNumber(newValue);
+    setIbedcPhoneNumber(newValue);
   };
   const handleEmail = (event) => {
     const newValue = event.target.value;
     setIbedcEmail(newValue);
   };
-  const handleIkedcAmount = (event) => {
+  const handleIbedcAmount = (event) => {
     const newValue = event.target.value;
     // setIkedcamount(newValue);
     if (newValue.startsWith("")) {
@@ -220,65 +228,128 @@ const IBEDC = () => {
   const [successPopup, setSuccessPopup] = useState(false);
   const [failedPopup, setFailedPopup] = useState(false);
 
-  const handleSuccess = async () => {
-    async function buyIBEDC(meter_type, meter_no, phone, email, amount) {
-      // const url = 'https://aremxyplug.onrender.com/api/v1/electric-bill';
+  const [errorMessage, setErrorMessage] = useState(false);
+  const [pinSuccess, setPinSuccess] = useState(false);
+  const [pinFailed, setPinFailed] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-      const parsedAmount = parseInt(amount, 10);
-
+  const verifyPin = async () => {
+    async function ElectricityHandler() {
+      const path = "electric-bill";
       const data = {
-        meter_type,
-        meter_no,
-        phone, // Use the parsed integer value
-        email,
-        amount: parsedAmount, // Use the parsed integer value
+        meter_type: selectedIbedcMeterType,
+        meter_no: ibedcMeterNumber,
+        phone: ibedcPhoneNumber, // Use the parsed integer value
+        email: ibedcEmail,
+        // amount: parsedAmount,
+        amount: "",
         disco_type: "ibadan-electric",
       };
+      // const parsedAmount = parseInt(amount, 10);
+      const SuccessHandler = () => {
+        setInputPinPopUp(false);
+        setSuccessPopup(true);
+      };
+      const FailedHandler = () => {
+        setInputPinPopUp(false);
+        setFailedPopup(true);
+      };
 
-      console.log(data);
-
-      try {
-        const path = "electric-bill";
-        // const response = await PostFunction(path, data);
-        const response = await axiosInstance.post(path, data);
-        console.log(response.data);
-        console.log(response.status);
-        setSelectedNetworkProduct(response.data.data.meter_type);
-        setMeterNumber(response.data.data.meter_number);
-        setPhoneNumber(response.data.data.phone);
-        setIbedcEmail(response.data.data.email);
-        setIbedcamount(response.data.data.amount);
-        setBillGenerate(response.data.data.bill_generated);
-        setOrderId(response.data.data.order_id);
-        setTransactionId(response.data.data.transaction_id);
-        setServiceID(response.data.data.disco_type);
-        setShowDescription(response.data.data.description);
-        return { statusCode: response.status, data: response.data };
-        // console.log(response.data);
-      } catch (error) {
-        console.error(error);
-        return { statusCode: error.response.status, data: null };
-      }
+      await PostFunction(
+        path,
+        setLoading,
+        data,
+        SuccessHandler,
+        FailedHandler,
+        setIbedcFetchedResponse
+      );
     }
-
-    // Usage
-    const response = await buyIBEDC(
-      selectedNetworkProduct,
-      meterNumber,
-      phoneNumber,
-      ibedcEmail,
-      ibedcamount
+    await VerifyTransPin(
+      inputPin,
+      setPinSuccess,
+      setPinFailed,
+      setLoading,
+      setErrorMessage,
+      ElectricityHandler()
     );
-
-    setInputPinPopUp(false);
-    if (response.statusCode === 200) {
-      // Success response
-      setSuccessPopup(true); // Show success popup
-    } else {
-      // Failure response
-      setFailedPopup(true); // Show failure popup
-    }
   };
+
+  function handleReceivedData() {
+    setLoading(true);
+    const receivedData = () => {
+      setIbedcBillGenerate(ibedcFetchedResponse.data.bill_generated);
+      setIbedcOrderId(ibedcFetchedResponse.data.order_id);
+      setIbedcTransactionId(ibedcFetchedResponse.data.transaction_id);
+      setIbedcServiceID(ibedcFetchedResponse.data.request_id);
+      setIbedcShowDescription(ibedcFetchedResponse.data.description);
+    };
+    receivedData();
+    if (receivedData) {
+      setSuccessPopup(false);
+      setLoading(false);
+      navigate("/ibedc-receipt");
+    }
+  }
+
+  // const handleSuccess = async () => {
+  //   async function buyIBEDC(meter_type, meter_no, phone, email, amount) {
+  //     // const url = 'https://aremxyplug.onrender.com/api/v1/electric-bill';
+
+  //     const parsedAmount = parseInt(amount, 10);
+
+  //     const data = {
+  //       meter_type,
+  //       meter_no,
+  //       phone, // Use the parsed integer value
+  //       email,
+  //       amount: parsedAmount, // Use the parsed integer value
+  //       disco_type: "ibadan-electric",
+  //     };
+
+  //     console.log(data);
+
+  //     try {
+  //       const path = "electric-bill";
+  //       // const response = await PostFunction(path, data);
+  //       const response = await axiosInstance.post(path, data);
+  //       console.log(response.data);
+  //       console.log(response.status);
+  //       setSelectedNetworkProduct(response.data.data.meter_type);
+  //       setMeterNumber(response.data.data.meter_number);
+  //       setPhoneNumber(response.data.data.phone);
+  //       setIbedcEmail(response.data.data.email);
+  //       setIbedcamount(response.data.data.amount);
+  //       setBillGenerate(response.data.data.bill_generated);
+  //       setOrderId(response.data.data.order_id);
+  //       setTransactionId(response.data.data.transaction_id);
+  //       setServiceID(response.data.data.disco_type);
+  //       setShowDescription(response.data.data.description);
+  //       return { statusCode: response.status, data: response.data };
+  //       // console.log(response.data);
+  //     } catch (error) {
+  //       console.error(error);
+  //       return { statusCode: error.response.status, data: null };
+  //     }
+  //   }
+
+  //   // Usage
+  //   const response = await buyIBEDC(
+  //     selectedNetworkProduct,
+  //     meterNumber,
+  //     phoneNumber,
+  //     ibedcEmail,
+  //     ibedcamount
+  //   );
+
+  //   setInputPinPopUp(false);
+  //   if (response.statusCode === 200) {
+  //     // Success response
+  //     setSuccessPopup(true); // Show success popup
+  //   } else {
+  //     // Failure response
+  //     setFailedPopup(true); // Show failure popup
+  //   }
+  // };
 
   const [InputPinPopUp, setInputPinPopUp] = useState(false);
   const [inputPin, setInputPin] = useState("");
@@ -391,7 +462,7 @@ const IBEDC = () => {
                   className={`text-[12px] font-normal  leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]
                 ${isDarkMode ? "text-white bg-black" : "text-[#7C7C7C]"}`}
                 >
-                  {selectedNetworkProduct}
+                  {selectedIbedcMeterType}
                 </h2>
                 <button className="lg:w-6 lg:h-6 w-4 h-4 cursor-pointer">
                   <img src={arrowDown} alt="" className="w-full h-full" />
@@ -416,7 +487,7 @@ const IBEDC = () => {
                           ? "bg-black text-white hover:bg-slate-800 hover:rounded-t-[10px]"
                           : "text-[#7C7C7C]"
                       }
-                        ${selectedNetworkProduct === item.name ? "" : ""}`}
+                        ${selectedIbedcMeterType === item.name ? "" : ""}`}
                       onClick={() => handleSelectProduct(item.name)}
                     >
                       {item.name}
@@ -437,7 +508,7 @@ const IBEDC = () => {
               <div>
                 <input
                   type="number"
-                  value={meterNumber}
+                  value={ibedcMeterNumber}
                   onChange={handleMeterNumber}
                   className={`py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full w-full  ${
                     isDarkMode
@@ -468,7 +539,7 @@ const IBEDC = () => {
               <div>
                 <input
                   type="text"
-                  value={verifiedName}
+                  value={ibedcVerifiedName}
                   onChange={handleVerifiedName}
                   className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
                     isDarkMode
@@ -489,7 +560,7 @@ const IBEDC = () => {
               <div>
                 <input
                   type="number"
-                  value={phoneNumber}
+                  value={ibedcPhoneNumber}
                   onChange={handlePhoneNumber}
                   className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
                     isDarkMode
@@ -550,7 +621,7 @@ const IBEDC = () => {
                   type="number"
                   name="ikedcamount"
                   value={ibedcamount}
-                  onChange={handleIkedcAmount}
+                  onChange={handleIbedcAmount}
                   className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:py-3 md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] text-[12px] leading-[18px] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none
                  ${isDarkMode ? "text-white bg-black" : "text-[#7E7E7E]"}`}
                 />
@@ -660,22 +731,22 @@ const IBEDC = () => {
             onClick={handleProceed}
             className={`text-[12px] mt-[30px] md:mt-[40px] bg-[#0008] md:w-fit lg:px-12 lg:text-[16px] lg:px md:py-1 md:rounded-md md:px-6 py-3 rounded-md font-semibold text-center text-white
             ${
-              !meterNumber ||
-              !verifiedName ||
-              !phoneNumber ||
+              !ibedcMeterNumber ||
+              !ibedcVerifiedName ||
+              !ibedcPhoneNumber ||
               !ibedcEmail ||
-              !selectedNetworkProduct ||
+              !selectedIbedcMeterType ||
               !selected ||
               !ibedcamount
                 ? "bg-[#63616188] cursor-not-allowed"
                 : "bg-primary cursor-pointer"
             }`}
             disabled={
-              !meterNumber ||
-              !verifiedName ||
-              !phoneNumber ||
+              !ibedcMeterNumber ||
+              !ibedcVerifiedName ||
+              !ibedcPhoneNumber ||
               !ibedcEmail ||
-              !selectedNetworkProduct ||
+              !selectedIbedcMeterType ||
               !selected ||
               !ibedcamount
             }
@@ -733,7 +804,7 @@ const IBEDC = () => {
                   isDarkMode ? "text-white" : "text-[#000]"
                 }`}
               >
-                {selectedNetworkProduct} Meter (&#8358;{ibedcamount}){" "}
+                {selectedIbedcMeterType} Meter (&#8358;{ibedcamount}){" "}
               </span>
               {/* Points to <br></br>
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">
@@ -766,7 +837,7 @@ const IBEDC = () => {
                 >
                   Meter Type
                 </p>
-                <span>{selectedNetworkProduct} </span>
+                <span>{selectedIbedcMeterType} </span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -776,7 +847,7 @@ const IBEDC = () => {
                 >
                   Meter Number
                 </p>
-                <span>{meterNumber} </span>
+                <span>{ibedcMeterNumber} </span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -787,7 +858,7 @@ const IBEDC = () => {
                 >
                   Verified Name
                 </p>
-                <span>{verifiedName}</span>
+                <span>{ibedcVerifiedName}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -798,7 +869,7 @@ const IBEDC = () => {
                 >
                   Phone Number
                 </p>
-                <span>{phoneNumber}</span>
+                <span>{ibedcPhoneNumber}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -884,46 +955,74 @@ const IBEDC = () => {
               isDarkMode
                 ? "bg-black absolute pt-4 h-[250px] shrink-0 rounded-lg shadow border border-white md:h-[350px] w-[481.25px] md:bottom-auto md:top-auto lg:h-[450px] lg:rounded-[20px] "
                 : styles.inputPin
-            } ${
-              toggleSideBar ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
-            } md:w-[55%] w-[90%]`}
+            }
+                     ${
+                       toggleSideBar
+                         ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]"
+                         : "lg:w-[40%]"
+                     } md:w-[55%] w-[90%] `}
           >
             <img
               onClick={handle}
-              className="absolute right-2 w-[18px] h-[18px] my-[1%] md:w-5 md:h-5 lg:w-[25px] lg:h-[25px]"
+              className={`absolute right-2 w-[18px] h-[18px] my-[1%] md:w-5 md:h-5 lg:w-[25px] lg:h-[25px] ${
+                isDarkMode ? "my-7" : ""
+              }`}
               src="/Images/transferImages/close-circle.png"
               alt=""
             />
-            <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
-            <p className="text-[12px] md:text-[16px] font-extrabold text-center my-[10%] lg:my-[%]">
+            <hr
+              className={`h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px] ${
+                isDarkMode ? "md:mt-10" : ""
+              }`}
+            />
+            <p className="text-[12px] md:text-[16px] font-extrabold text-center my-[10%] lg:my-[%] ">
               Input PIN to complete transaction
             </p>
             <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[8%]">
-              <div className=" flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
+              <div className=" flex justify-center  ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
                 {isVisible ? (
-                  <OtpInput
-                    value={inputPin}
-                    inputType="tel"
-                    onChange={setInputPin}
-                    numInputs={4}
-                    shouldAutoFocus={true}
-                    inputStyle={{
-                      color: isDarkMode ? "#ffffff" : "#403f3f",
-                      width: 30,
-                      height: 30,
-                      borderRadius: 3,
-                      backgroundColor: isDarkMode ? "black" : "white",
-                      border: isDarkMode ? "1px solid white" : "1px solid #ccc",
-                    }}
-                    renderInput={(props) => (
-                      <input {...props} className="inputOTP mx-[3px]" />
-                    )}
-                  />
+                  <div className="flex flex-col gap-y-1">
+                    <OtpInput
+                      value={inputPin}
+                      inputType="tel"
+                      onChange={setInputPin}
+                      numInputs={4}
+                      shouldAutoFocus={true}
+                      inputStyle={{
+                        color: isDarkMode ? "#ffffff" : "#403f3f",
+                        width: 30,
+                        height: 30,
+                        borderRadius: 3,
+                        backgroundColor: isDarkMode ? "black" : "white",
+                        border: isDarkMode
+                          ? "1px solid white"
+                          : "1px solid #ccc",
+                      }}
+                      renderInput={(props) => (
+                        <input {...props} className="inputOTP mx-[3px]" />
+                      )}
+                    />
+                    <span className="">
+                      {pinSuccess && (
+                        <p className="text-[12px] text-green-500 text-center font-medium">
+                          Pin matches
+                        </p>
+                      )}
+                      {pinFailed && errorMessage && (
+                        <p className="text-[12px] text-center text-red-600 font-medium">
+                          Incorrect Pin
+                        </p>
+                      )}
+                    </span>
+                  </div>
                 ) : (
                   <div className="text-[24px] md:text-[24px] mt-1">* * * *</div>
                 )}
+
                 <div
-                  className="text-[#0003] text-[13px] md:text-3xl"
+                  className={`text-[13px] md:text-3xl ${
+                    isDarkMode ? "text-white" : "text-[#0003]"
+                  }`}
                   onClick={toggleVisibility}
                 >
                   {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
@@ -935,7 +1034,8 @@ const IBEDC = () => {
             </div>
             <button
               disabled={inputPin.length !== 4 ? true : false}
-              onClick={handleSuccess}
+              // onClick={handleSuccess}
+              onClick={verifyPin}
               className={`${
                 inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
               } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%] ${
@@ -945,6 +1045,13 @@ const IBEDC = () => {
               Purchase
             </button>
           </div>
+        </Modal>
+      )}
+
+      {/* loading */}
+      {loading && (
+        <Modal>
+          <Loader />
         </Modal>
       )}
 
@@ -966,14 +1073,14 @@ const IBEDC = () => {
 
               <img
                 onClick={() => {
-                  setSelectedNetworkProduct("");
-                  setMeterNumber("");
-                  setVerifiedName("");
-                  setPhoneNumber("");
+                  setSelectedIbedcMeterType("");
+                  setIbedcMeterNumber("");
+                  setIbedcVerifiedName("");
+                  setIbedcPhoneNumber("");
                   setIbedcEmail("");
                   setIbedcamount("");
                   setGlobalCountry("");
-                  setFlag("");
+                  setIbedcFlag("");
                   setSuccessPopup(false);
                 }}
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
@@ -1001,7 +1108,7 @@ const IBEDC = () => {
                   isDarkMode ? "text-white" : "text-[#000]"
                 }`}
               >
-                Ibadan {selectedNetworkProduct} Meter
+                Ibadan {selectedIbedcMeterType} Meter
               </span>
               <br></br>
               <span
@@ -1027,7 +1134,7 @@ const IBEDC = () => {
                   <div>
                     <img className="w-[30px]" src={logo} alt="" />
                   </div>
-                  <div>{serviceID}</div>
+                  <div>{ibedcServiceID}</div>
                 </span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -1038,7 +1145,7 @@ const IBEDC = () => {
                 >
                   Meter Type
                 </p>
-                <span>{selectedNetworkProduct} </span>
+                <span>{selectedIbedcMeterType} </span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -1048,7 +1155,7 @@ const IBEDC = () => {
                 >
                   Meter Number
                 </p>
-                <span>{meterNumber} </span>
+                <span>{ibedcMeterNumber} </span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -1059,7 +1166,7 @@ const IBEDC = () => {
                 >
                   Verified Name
                 </p>
-                <span>{verifiedName}</span>
+                <span>{ibedcVerifiedName}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -1070,7 +1177,7 @@ const IBEDC = () => {
                 >
                   Phone Number
                 </p>
-                <span>{phoneNumber}</span>
+                <span>{ibedcPhoneNumber}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -1130,30 +1237,13 @@ const IBEDC = () => {
               >
                 Done
               </button>
-              <Link
-                to="/ibedc-receipt"
-                state={{
-                  selectedNetworkProduct: selectedNetworkProduct,
-                  meterNumber: meterNumber,
-                  phoneNumber: phoneNumber,
-                  ikedcEmail: ibedcEmail,
-                  ikedcamount: ibedcamount,
-                  orderId: orderId,
-                  transactionId: transactionId,
-                  serviceID: serviceID,
-                  showDescription: showDescription,
-                  billGenerate: billGenerate,
-                }}
+
+              <button
+                onClick={handleReceivedData}
+                className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
               >
-                <button
-                  onClick={() => {
-                    setSuccessPopup(false);
-                  }}
-                  className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
-                >
-                  Receipt
-                </button>
-              </Link>
+                Receipt
+              </button>
             </div>
           </div>
         </Modal>
@@ -1177,14 +1267,14 @@ const IBEDC = () => {
 
               <img
                 onClick={() => {
-                  setSelectedNetworkProduct("");
-                  setMeterNumber("");
-                  setVerifiedName("");
-                  setPhoneNumber("");
+                  setSelectedIbedcMeterType("");
+                  setIbedcMeterNumber("");
+                  setIbedcVerifiedName("");
+                  setIbedcPhoneNumber("");
                   setIbedcEmail("");
                   setIbedcamount("");
                   setGlobalCountry("");
-                  setFlag("");
+                  setIbedcFlag("");
                   setFailedPopup(false);
                 }}
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
@@ -1220,15 +1310,15 @@ const IBEDC = () => {
               <Link
                 to="/ibedc-receipt-failed"
                 state={{
-                  selectedNetworkProduct: selectedNetworkProduct,
-                  meterNumber: meterNumber,
-                  phoneNumber: phoneNumber,
+                  selectedNetworkProduct: selectedIbedcMeterType,
+                  meterNumber: ibedcMeterNumber,
+                  phoneNumber: ibedcPhoneNumber,
                   ikedcEmail: ibedcEmail,
                   ikedcamount: ibedcamount,
-                  orderId: orderId,
-                  transactionId: transactionId,
-                  serviceID: serviceID,
-                  showDescription: showDescription,
+                  orderId: ibedcOrderId,
+                  transactionId: ibedcTransactionId,
+                  serviceID: ibedcServiceID,
+                  showDescription: ibedcShowDescription,
                 }}
               >
                 <button

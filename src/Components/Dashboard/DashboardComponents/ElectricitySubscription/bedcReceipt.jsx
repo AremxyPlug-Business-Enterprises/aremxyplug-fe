@@ -7,38 +7,62 @@ import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import logo2 from "../ElectricitySubscription/Electricity-sub-images/BEDC-Logo-new-dark-1 1.svg";
-import { useLocation, useNavigate } from 'react-router-dom';
+// import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export const BedcReceipt = () => {
-
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { selectedNetworkProduct, meterNumber, phoneNumber, ikedcEmail, ikedcamount, serviceID, orderId, transactionId, showDescription, billGenerate  } = location.state
-
   const {
     toggleSideBar,
     isDarkMode,
     date,   
-    verifiedName, 
-    setSelectedNetworkProduct,
-    setMeterNumber,
-    setVerifiedName,
-    setPhoneNumber,
-    setEmail,
-    setIkedcamount,
+    bedcVerifiedName,
+    setBedcVerifiedName, 
+    setSelectedBedcMeterType,
+    bedcMeterNumber,
+    setBedcMeterNumber,
+    bedcPhoneNumber,
+    setBedcPhoneNumber,
+    bedcEmail,
+    setBedcEmail,
+    bedcAmount,
+    setBedcAmount,
     setGlobalCountry,
-    setFlag,
-  } = useContext(ContextProvider);
+    setBedcFlag,
+    selectedBedcMeterType,
+    bedcServiceID,
+    bedcOrderId,
+    bedcTransactionId,
+    bedcShowDescription,
+    bedcBillGenerate,
+  } = useContext(ContextProvider)
+
+  // const location = useLocation();
+  const navigate = useNavigate();
+  // const { selectedNetworkProduct, meterNumber, phoneNumber, ikedcEmail, ikedcamount, serviceID, orderId, transactionId, showDescription, billGenerate  } = location.state
+
+  const networkProduct =
+    selectedBedcMeterType?.length > 0 ? selectedBedcMeterType : "";
+  const meterNo = bedcMeterNumber?.length > 0 ? bedcMeterNumber : "";
+  const name = bedcVerifiedName?.length > 0 ? bedcVerifiedName : "";
+  const phoneNo = bedcPhoneNumber?.length > 0 ? bedcPhoneNumber : "";
+  const productEmail = bedcEmail?.length > 0 ? bedcEmail : "";
+  const productAmount = bedcAmount?.length > 0 ? bedcAmount : "";
+  const service_id = bedcServiceID?.length > 0 ? bedcServiceID : "";
+  const order_id = bedcOrderId?.length > 0 ? bedcOrderId : "";
+  const transaction_id = bedcTransactionId?.length > 0 ? bedcTransactionId : "";
+  const description = bedcShowDescription?.length > 0 ? bedcShowDescription : "";
+  const bill_generated = bedcBillGenerate?.length > 0 ? bedcBillGenerate : "";
+
 
   function handleClick() {
-    setSelectedNetworkProduct("");
-    setMeterNumber("");
-    setVerifiedName("");
-    setPhoneNumber("");
-    setEmail("");
-    setIkedcamount("");
+    setSelectedBedcMeterType("");
+    setBedcMeterNumber("");
+    setBedcVerifiedName("");
+    setBedcPhoneNumber("");
+    setBedcEmail("");
+    setBedcAmount("");
     setGlobalCountry("");
-    setFlag("");
+    setBedcFlag("");
     navigate('/electricity-subscription');
   }
 
@@ -128,7 +152,7 @@ export const BedcReceipt = () => {
             <p className="text-[9px] text-[#27AE60] bg-[#D5F6E3] rounded-[11px] border-2 border-[#27AE60] py-[5px] px-[2px] text-center mx-[5px] lg:mx-[150px] md:mx-[100px] my-2 md:text-[14px] lg:text-[14px]">
               You have successfully purchased{" "}
               <span className="text-[#000] font-extrabold text-[10px] md:text-[14px]">
-              Benin {selectedNetworkProduct} Meter &#8358;{ikedcamount}.00{" "}
+              Benin {networkProduct} Meter &#8358;{productAmount}.00{" "}
               </span>
               from your NGN wallet to{" "}
             </p>
@@ -149,34 +173,34 @@ export const BedcReceipt = () => {
                 <p className="text-[#7C7C7C] font-[500]">Disco Type</p>
                 <span className="flex items-center gap-1 ">
                   <div><img className="w-[30px]" src={logo2} alt="" /></div>
-                  <div>{serviceID}</div>
+                  <div>{service_id}</div>
                   </span>
               </div>
               <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Meter Type</p>
-                <span>{selectedNetworkProduct} </span>
+                <span>{networkProduct} </span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Meter Number</p>
-                <span>{meterNumber} </span>
+                <span>{meterNo} </span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Verified Name</p>
-                <span>{verifiedName}</span>
+                <span>{name}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Phone Number</p>
-                <span>0{phoneNumber}</span>
+                <span>0{phoneNo}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Email</p>
-                <span>{ikedcEmail}</span>
+                <span>{productEmail}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Amount</p>
-                <span>&#8358;{ikedcamount}</span>
+                <span>&#8358;{productAmount}</span>
               </div>
               
             </div>
@@ -191,7 +215,7 @@ export const BedcReceipt = () => {
                 <div className="flex flex-col gap-3 pt-[10px]">
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Customer Name</p>
-                <span>{verifiedName}</span>
+                <span>{name}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -224,19 +248,19 @@ export const BedcReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Description</p>
-                  <span>{showDescription}</span>
+                  <span>{description}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Bill / Token Generated</p>
-                  <span>{billGenerate}</span>
+                  <span>{bill_generated}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Order Number</p>
-                  <span>{orderId}</span>
+                  <span>{order_id}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Transaction ID</p>
-                  <span>{transactionId}</span>
+                  <span>{transaction_id}</span>
                 </div>
                 
               </div>

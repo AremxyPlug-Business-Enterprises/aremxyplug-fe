@@ -14,49 +14,56 @@ import { Modal } from "../../../Screens/Modal/Modal";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import OtpInput from "react-otp-input";
-import { Link } from "react-router-dom";
-// import axios from 'axios';
+import { Link, useNavigate } from "react-router-dom";
 
-// import { PostFunction } from "../../../ApiCollection.jsx/ApiBuck";
-import axiosInstance from "../../../ApiCollection.jsx/apiClient";
+import {
+  PostFunction,
+  VerifyTransPin,
+} from "../../../ApiCollection.jsx/ApiBuck";
+import { Loader } from "../../../Loader/Loader";
 
 const KAEDCO = () => {
+  const navigate = useNavigate();
   const {
     isDarkMode,
     toggleSideBar,
-    meterNumber,
+    kaedcoMeterNumber,
+    setKaedcoMeterNumber,
     showList,
-    setMeterNumber,
-    setVerifiedName,
+    kaedcoVerifiedName,
+    setKaedcoVerifiedName,
     setShowList,
     setSelected,
     selected,
     globalCountry,
     setGlobalCountry,
     globalTransferErrors,
-    verifiedName,
-    phoneNumber,
-    setPhoneNumber,
-    ikedcEmail,
-    setEmail,
-    ikedcamount,
-    setIkedcamount,
+    kaedcoPhoneNumber,
+    setKaedcoPhoneNumber,
+    kaedcoEmail,
+    setKaedcoEmail,
+    kaedcoAmount,
+    setKaedcoAmount,
     toggleVisibility,
     isVisible,
-    billGenerate,
-    setBillGenerate,
-    serviceID,
-    setServiceID,
-    flag,
-    setFlag,
+    setKaedcoBillGenerate,
+    kaedcoServiceID,
+    setKaedcoServiceID,
+    kaedcoFlag,
+    setKaedcoFlag,
+    selectedKaedcoMeterType,
+    setSelectedKaedcoMeterType,
+    kaedcoOrderId,
+    setKaedcoOrderId,
+    kaedcoTransactionId,
+    setKaedcoTransactionId,
+    kaedcoShowDescription,
+    setKaedcoShowDescription,
+    kaedcoFetchedResponse,
+    setKaedcoFetchedResponse,
   } = useContext(ContextProvider);
 
-  const { selectedNetworkProduct, setSelectedNetworkProduct } =
-    useContext(ContextProvider);
   const [showProductList, setShowProductList] = useState(false);
-  const [showDescription, setShowDescription] = useState(false);
-  const [orderId, setOrderId] = useState(false);
-  const [transactionId, setTransactionId] = useState(false);
 
   const pointsEarned = "+2.00";
 
@@ -83,7 +90,7 @@ const KAEDCO = () => {
     },
   ];
   const handleSelectProduct = (productName) => {
-    setSelectedNetworkProduct(productName);
+    setSelectedKaedcoMeterType(productName);
     // setSelectedOption("");
     setShowProductList(false);
     // setShowOptionList(false);
@@ -135,9 +142,9 @@ const KAEDCO = () => {
     // e.preventDefault();
 
     const { error } = schema.validate({
-      phoneNumber,
-      ikedcEmail,
-      meterNumber,
+      kaedcoPhoneNumber,
+      kaedcoEmail,
+      kaedcoMeterNumber,
     });
 
     if (error) {
@@ -154,19 +161,19 @@ const KAEDCO = () => {
   };
 
   const schema = Joi.object({
-    phoneNumber: Joi.string()
+    kaedcoPhoneNumber: Joi.string()
       .pattern(new RegExp(/^\d{11,}/))
       .required()
       .messages({
         "string.pattern.base": "Phone number should be 11 digits ",
       }),
-    meterNumber: Joi.string()
+    kaedcoMeterNumber: Joi.string()
       .pattern(new RegExp(/^\d{10,}/))
       .required()
       .messages({
         "string.pattern.base": "Invalid meter number",
       }),
-    ikedcEmail: Joi.string()
+    kaedcoEmail: Joi.string()
       .pattern(new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i))
       .required()
       .messages({
@@ -184,7 +191,7 @@ const KAEDCO = () => {
   // };
 
   const handleCountryClick = (name, flag, id, code) => {
-    setFlag(flag);
+    setKaedcoFlag(flag);
     setShowList(false);
     setGlobalCountry(name);
     setSelected(true);
@@ -193,92 +200,96 @@ const KAEDCO = () => {
   };
   const handleVerifiedName = (event) => {
     const newValue = event.target.value;
-    setVerifiedName(newValue);
+    setKaedcoVerifiedName(newValue);
   };
   const handleMeterNumber = (event) => {
     const newValue = event.target.value;
-    setMeterNumber(newValue);
+    setKaedcoMeterNumber(newValue);
   };
   const handlePhoneNumber = (event) => {
     const value = event.target.value;
     const newValue = value.replace(/\D/g, "").slice(0, 11);
-    setPhoneNumber(newValue);
+    setKaedcoPhoneNumber(newValue);
   };
   const handleEmail = (event) => {
     const newValue = event.target.value;
-    setEmail(newValue);
+    setKaedcoEmail(newValue);
   };
-  const handleIkedcAmount = (event) => {
+  const handleKaedcoAmount = (event) => {
     const newValue = event.target.value;
     // setIkedcamount(newValue);
     if (newValue.startsWith("")) {
-      setIkedcamount(newValue);
+      setKaedcoAmount(newValue);
     } else {
-      setIkedcamount(`₦${newValue}`);
+      setKaedcoAmount(`₦${newValue}`);
     }
   };
   const [successPopup, setSuccessPopup] = useState(false);
   const [failedPopup, setFailedPopup] = useState(false);
 
-  const handleSuccess = async () => {
-    async function buyKAEDCO(meter_type, meter_no, phone, email, amount) {
-      // const url = 'https://aremxyplug.onrender.com/api/v1/electric-bill';
+  const [errorMessage, setErrorMessage] = useState(false);
+  const [pinSuccess, setPinSuccess] = useState(false);
+  const [pinFailed, setPinFailed] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-      const parsedAmount = parseInt(amount, 10);
-
+  const verifyPin = async () => {
+    async function ElectricityHandler() {
+      const path = "electric-bill";
+      const parsedAmount = parseInt(kaedcoAmount, 10);
       const data = {
-        meter_type,
-        meter_no,
-        phone, // Use the parsed integer value
-        email,
-        amount: parsedAmount, // Use the parsed integer value
+        meter_type: selectedKaedcoMeterType,
+        meter_no: kaedcoMeterNumber,
+        phone: kaedcoPhoneNumber, // Use the parsed integer value
+        email: kaedcoEmail,
+        amount: parsedAmount,
+        // amount: "",
         disco_type: "kaduna-electric",
       };
+      // const parsedAmount = parseInt(amount, 10);
+      const SuccessHandler = () => {
+        setInputPinPopUp(false);
+        setSuccessPopup(true);
+      };
+      const FailedHandler = () => {
+        setInputPinPopUp(false);
+        setFailedPopup(true);
+      };
 
-      console.log(data);
-
-      try {
-        const path = "electric-bill";
-        // const response = await PostFunction(path, data);
-        const response = await axiosInstance.post(path, data);
-        console.log(response.data);
-        console.log(response.status);
-        setSelectedNetworkProduct(response.data.data.meter_type);
-        setMeterNumber(response.data.data.meter_number);
-        setPhoneNumber(response.data.data.phone);
-        setEmail(response.data.data.email);
-        setIkedcamount(response.data.data.amount);
-        setBillGenerate(response.data.data.bill_generated);
-        setOrderId(response.data.data.order_id);
-        setTransactionId(response.data.data.transaction_id);
-        setServiceID(response.data.data.disco_type);
-        setShowDescription(response.data.data.description);
-        return { statusCode: response.status, data: response.data };
-        // console.log(response.data);
-      } catch (error) {
-        console.error(error);
-        return { statusCode: error.response.status, data: null };
-      }
+      await PostFunction(
+        path,
+        setLoading,
+        data,
+        SuccessHandler,
+        FailedHandler,
+        setKaedcoFetchedResponse
+      );
     }
-
-    // Usage
-    const response = await buyKAEDCO(
-      selectedNetworkProduct,
-      meterNumber,
-      phoneNumber,
-      ikedcEmail,
-      ikedcamount
+    await VerifyTransPin(
+      inputPin,
+      setPinSuccess,
+      setPinFailed,
+      setLoading,
+      setErrorMessage,
+      ElectricityHandler
     );
-
-    setInputPinPopUp(false);
-    if (response.statusCode === 200) {
-      // Success response
-      setSuccessPopup(true); // Show success popup
-    } else {
-      // Failure response
-      setFailedPopup(true); // Show failure popup
-    }
   };
+
+  function handleReceivedData() {
+    setLoading(true);
+    const receivedData = () => {
+      setKaedcoBillGenerate(kaedcoFetchedResponse.data.bill_generated);
+      setKaedcoOrderId(kaedcoFetchedResponse.data.order_id);
+      setKaedcoTransactionId(kaedcoFetchedResponse.data.transaction_id);
+      setKaedcoServiceID(kaedcoFetchedResponse.data.request_id);
+      setKaedcoShowDescription(kaedcoFetchedResponse.data.description);
+    };
+    receivedData();
+    if (receivedData) {
+      setSuccessPopup(false);
+      setLoading(false);
+      navigate("/kaedco-receipt");
+    }
+  }
 
   const [InputPinPopUp, setInputPinPopUp] = useState(false);
   const [inputPin, setInputPin] = useState("");
@@ -391,7 +402,7 @@ const KAEDCO = () => {
                   className={`text-[12px] font-normal  leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]
                    ${isDarkMode ? "text-white bg-black" : "text-[#7C7C7C]"}`}
                 >
-                  {selectedNetworkProduct}
+                  {selectedKaedcoMeterType}
                 </h2>
                 <button className="lg:w-6 lg:h-6 w-4 h-4 cursor-pointer">
                   <img src={arrowDown} alt="" className="w-full h-full" />
@@ -416,7 +427,7 @@ const KAEDCO = () => {
                           ? "bg-black text-white hover:bg-slate-800 hover:rounded-t-[10px]"
                           : "text-[#7C7C7C]"
                       }
-                      ${selectedNetworkProduct === item.name ? "" : ""}  `}
+                      ${selectedKaedcoMeterType === item.name ? "" : ""}  `}
                       onClick={() => handleSelectProduct(item.name)}
                     >
                       {item.name}
@@ -437,7 +448,7 @@ const KAEDCO = () => {
               <div>
                 <input
                   type="number"
-                  value={meterNumber}
+                  value={kaedcoMeterNumber}
                   onChange={handleMeterNumber}
                   className={`py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full w-full  ${
                     isDarkMode
@@ -464,7 +475,7 @@ const KAEDCO = () => {
               <div>
                 <input
                   type="text"
-                  value={verifiedName}
+                  value={kaedcoVerifiedName}
                   onChange={handleVerifiedName}
                   className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
                     isDarkMode
@@ -485,7 +496,7 @@ const KAEDCO = () => {
               <div>
                 <input
                   type="number"
-                  value={phoneNumber}
+                  value={kaedcoPhoneNumber}
                   onChange={handlePhoneNumber}
                   className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
                     isDarkMode
@@ -511,7 +522,7 @@ const KAEDCO = () => {
               <div>
                 <input
                   type="text"
-                  value={ikedcEmail}
+                  value={kaedcoEmail}
                   onChange={handleEmail}
                   className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
                     isDarkMode
@@ -545,8 +556,8 @@ const KAEDCO = () => {
                 <input
                   type="number"
                   name="ikedcamount"
-                  value={ikedcamount}
-                  onChange={handleIkedcAmount}
+                  value={kaedcoAmount}
+                  onChange={handleKaedcoAmount}
                   className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:py-3 md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] text-[12px] leading-[18px] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none
                  ${isDarkMode ? "text-white bg-black " : "text-[#7E7E7E]"}`}
                 />
@@ -584,7 +595,7 @@ const KAEDCO = () => {
                     </p>
                     <img
                       className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
-                      src={flag}
+                      src={kaedcoFlag}
                       alt=""
                     />
                   </div>
@@ -656,24 +667,24 @@ const KAEDCO = () => {
             onClick={handleProceed}
             className={`text-[12px] mt-[30px] md:mt-[40px] bg-[#0008] md:w-fit lg:px-12 lg:text-[16px] lg:px md:py-1 md:rounded-md md:px-6 py-3 rounded-md font-semibold text-center text-white
             ${
-              !meterNumber ||
-              !verifiedName ||
-              !phoneNumber ||
-              !ikedcEmail ||
-              !selectedNetworkProduct ||
+              !kaedcoMeterNumber ||
+              !kaedcoVerifiedName ||
+              !kaedcoPhoneNumber ||
+              !kaedcoEmail ||
+              !selectedKaedcoMeterType ||
               !selected ||
-              !ikedcamount
+              !kaedcoAmount
                 ? "bg-[#63616188] cursor-not-allowed"
                 : "bg-primary cursor-pointer"
             }`}
             disabled={
-              !meterNumber ||
-              !verifiedName ||
-              !phoneNumber ||
-              !ikedcEmail ||
-              !selectedNetworkProduct ||
+              !kaedcoMeterNumber ||
+              !kaedcoVerifiedName ||
+              !kaedcoPhoneNumber ||
+              !kaedcoEmail ||
+              !selectedKaedcoMeterType ||
               !selected ||
-              !ikedcamount
+              !kaedcoAmount
             }
           >
             Proceed
@@ -729,7 +740,7 @@ const KAEDCO = () => {
                   isDarkMode ? "text-white" : "text-[#000]"
                 }`}
               >
-                {selectedNetworkProduct} Meter (&#8358;{ikedcamount}){" "}
+                {selectedKaedcoMeterType} Meter (&#8358;{kaedcoAmount}){" "}
               </span>
               {/* Points to <br></br>
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">
@@ -762,7 +773,7 @@ const KAEDCO = () => {
                 >
                   Meter Type
                 </p>
-                <span>{selectedNetworkProduct} </span>
+                <span>{selectedKaedcoMeterType} </span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -772,7 +783,7 @@ const KAEDCO = () => {
                 >
                   Meter Number
                 </p>
-                <span>{meterNumber} </span>
+                <span>{kaedcoMeterNumber} </span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -783,7 +794,7 @@ const KAEDCO = () => {
                 >
                   Verified Name
                 </p>
-                <span>{verifiedName}</span>
+                <span>{kaedcoVerifiedName}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -794,7 +805,7 @@ const KAEDCO = () => {
                 >
                   Phone Number
                 </p>
-                <span>{phoneNumber}</span>
+                <span>{kaedcoPhoneNumber}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -804,7 +815,7 @@ const KAEDCO = () => {
                 >
                   Email
                 </p>
-                <span>{ikedcEmail}</span>
+                <span>{kaedcoEmail}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -814,7 +825,7 @@ const KAEDCO = () => {
                 >
                   Amount
                 </p>
-                <span>&#8358;{ikedcamount}</span>
+                <span>&#8358;{kaedcoAmount}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -880,48 +891,71 @@ const KAEDCO = () => {
               isDarkMode
                 ? "bg-black absolute pt-4 h-[250px] shrink-0 rounded-lg shadow border border-white md:h-[350px] w-[481.25px] md:bottom-auto md:top-auto lg:h-[450px] lg:rounded-[20px] "
                 : styles.inputPin
-            } ${
-              toggleSideBar ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
-            } md:w-[55%] w-[90%]`}
+            }
+               ${
+                 toggleSideBar
+                   ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]"
+                   : "lg:w-[40%]"
+               } md:w-[55%] w-[90%] `}
           >
             <img
               onClick={handle}
-              className="absolute right-2 w-[18px] h-[18px] my-[1%] md:w-5 md:h-5 lg:w-[25px] lg:h-[25px]"
+              className={`absolute right-2 w-[18px] h-[18px] my-[1%] md:w-5 md:h-5 lg:w-[25px] lg:h-[25px] ${
+                isDarkMode ? "my-7" : ""
+              }`}
               src="/Images/transferImages/close-circle.png"
               alt=""
             />
-            <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
-            <p className="text-[12px] md:text-[16px] font-extrabold text-center my-[10%] lg:my-[%]">
+            <hr
+              className={`h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px] ${
+                isDarkMode ? "md:mt-10" : ""
+              }`}
+            />
+            <p className="text-[12px] md:text-[16px] font-extrabold text-center my-[10%] lg:my-[%] ">
               Input PIN to complete transaction
             </p>
             <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[8%]">
-              <div className=" flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
+              <div className=" flex justify-center  ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
                 {isVisible ? (
-                  <OtpInput
-                    value={inputPin}
-                    inputType="tel"
-                    onChange={setInputPin}
-                    numInputs={4}
-                    shouldAutoFocus={true}
-                    inputStyle={{
-                      color: isDarkMode ? "#ffffff" : "#403f3f",
-                      width: 30,
-                      height: 30,
-                      borderRadius: 3,
-                      backgroundColor: isDarkMode ? "black" : "white",
-                      border: isDarkMode ? "1px solid white" : "1px solid #ccc",
-                    }}
-                    renderInput={(props) => (
-                      <input {...props} className="inputOTP mx-[3px]" />
-                    )}
-                  />
+                  <div className="flex flex-col gap-y-1">
+                    <OtpInput
+                      value={inputPin}
+                      inputType="tel"
+                      onChange={setInputPin}
+                      numInputs={4}
+                      shouldAutoFocus={true}
+                      inputStyle={{
+                        color: isDarkMode ? "#ffffff" : "#403f3f",
+                        width: 30,
+                        height: 30,
+                        borderRadius: 3,
+                        backgroundColor: isDarkMode ? "black" : "white",
+                        border: isDarkMode
+                          ? "1px solid white"
+                          : "1px solid #ccc",
+                      }}
+                      renderInput={(props) => (
+                        <input {...props} className="inputOTP mx-[3px]" />
+                      )}
+                    />
+                    <span className="">
+                      {pinSuccess && (
+                        <p className="text-[12px] text-green-500 text-center font-medium">
+                          Pin matches
+                        </p>
+                      )}
+                      {pinFailed && errorMessage && (
+                        <p className="text-[12px] text-center text-red-600 font-medium">
+                          Incorrect Pin
+                        </p>
+                      )}
+                    </span>
+                  </div>
                 ) : (
                   <div className="text-[24px] md:text-[24px] mt-1">* * * *</div>
                 )}
                 <div
-                  className={`text-[13px] md:text-3xl ${
-                    isDarkMode ? "text-white" : "text-[#0003]"
-                  }`}
+                  className="text-[#0003] text-[13px] md:text-3xl"
                   onClick={toggleVisibility}
                 >
                   {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
@@ -933,7 +967,7 @@ const KAEDCO = () => {
             </div>
             <button
               disabled={inputPin.length !== 4 ? true : false}
-              onClick={handleSuccess}
+              onClick={verifyPin}
               className={`${
                 inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
               } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%] ${
@@ -964,14 +998,14 @@ const KAEDCO = () => {
 
               <img
                 onClick={() => {
-                  setSelectedNetworkProduct("");
-                  setMeterNumber("");
-                  setVerifiedName("");
-                  setPhoneNumber("");
-                  setEmail("");
-                  setIkedcamount("");
+                  setSelectedKaedcoMeterType("");
+                  setKaedcoMeterNumber("");
+                  setKaedcoVerifiedName("");
+                  setKaedcoPhoneNumber("");
+                  setKaedcoEmail("");
+                  setKaedcoAmount("");
                   setGlobalCountry("");
-                  setFlag("");
+                  setKaedcoFlag("");
                   setSuccessPopup(false);
                 }}
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
@@ -999,7 +1033,7 @@ const KAEDCO = () => {
                   isDarkMode ? "text-white" : "text-[#000]"
                 }`}
               >
-                Kaduna {selectedNetworkProduct} Meter
+                Kaduna {selectedKaedcoMeterType} Meter
               </span>
               <br></br>
               <span
@@ -1007,7 +1041,7 @@ const KAEDCO = () => {
                   isDarkMode ? "text-white" : "text-[#000]"
                 }`}
               >
-                (&#8358;{ikedcamount})
+                (&#8358;{kaedcoAmount})
               </span>
               From your NGN Nigerian Wallet to
             </p>
@@ -1025,7 +1059,7 @@ const KAEDCO = () => {
                   <div>
                     <img className="w-[30px]" src={logo} alt="" />
                   </div>
-                  <div>{serviceID}</div>
+                  <div>{kaedcoServiceID}</div>
                 </span>
               </div>
               <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -1036,7 +1070,7 @@ const KAEDCO = () => {
                 >
                   Meter Type
                 </p>
-                <span>{selectedNetworkProduct} </span>
+                <span>{selectedKaedcoMeterType} </span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -1046,7 +1080,7 @@ const KAEDCO = () => {
                 >
                   Meter Number
                 </p>
-                <span>{meterNumber} </span>
+                <span>{kaedcoMeterNumber} </span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -1057,7 +1091,7 @@ const KAEDCO = () => {
                 >
                   Verified Name
                 </p>
-                <span>{verifiedName}</span>
+                <span>{kaedcoVerifiedName}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -1068,7 +1102,7 @@ const KAEDCO = () => {
                 >
                   Phone Number
                 </p>
-                <span>{phoneNumber}</span>
+                <span>{kaedcoPhoneNumber}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -1078,7 +1112,7 @@ const KAEDCO = () => {
                 >
                   Email
                 </p>
-                <span>{ikedcEmail}</span>
+                <span>{kaedcoEmail}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -1088,7 +1122,7 @@ const KAEDCO = () => {
                 >
                   Amount
                 </p>
-                <span>&#8358;{ikedcamount}</span>
+                <span>&#8358;{kaedcoAmount}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -1128,30 +1162,13 @@ const KAEDCO = () => {
               >
                 Done
               </button>
-              <Link
-                to="/kaedco-receipt"
-                state={{
-                  selectedNetworkProduct: selectedNetworkProduct,
-                  meterNumber: meterNumber,
-                  phoneNumber: phoneNumber,
-                  ikedcEmail: ikedcEmail,
-                  ikedcamount: ikedcamount,
-                  orderId: orderId,
-                  transactionId: transactionId,
-                  serviceID: serviceID,
-                  showDescription: showDescription,
-                  billGenerate: billGenerate,
-                }}
+
+              <button
+                onClick={handleReceivedData}
+                className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
               >
-                <button
-                  onClick={() => {
-                    setSuccessPopup(false);
-                  }}
-                  className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
-                >
-                  Receipt
-                </button>
-              </Link>
+                Receipt
+              </button>
             </div>
           </div>
         </Modal>
@@ -1175,15 +1192,15 @@ const KAEDCO = () => {
 
               <img
                 onClick={() => {
-                  setSelectedNetworkProduct("");
-                  setMeterNumber("");
-                  setVerifiedName("");
-                  setPhoneNumber("");
-                  setEmail("");
-                  setIkedcamount("");
+                  setSelectedKaedcoMeterType("");
+                  setKaedcoMeterNumber("");
+                  setKaedcoVerifiedName("");
+                  setKaedcoPhoneNumber("");
+                  setKaedcoEmail("");
+                  setKaedcoAmount("");
                   setGlobalCountry("");
-                  setFlag("");
-                  setFailedPopup(false);
+                  setKaedcoFlag("");
+                  setSuccessPopup(false);
                 }}
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
@@ -1218,15 +1235,15 @@ const KAEDCO = () => {
               <Link
                 to="/kaedco-receipt-failed"
                 state={{
-                  selectedNetworkProduct: selectedNetworkProduct,
-                  meterNumber: meterNumber,
-                  phoneNumber: phoneNumber,
-                  ikedcEmail: ikedcEmail,
-                  ikedcamount: ikedcamount,
-                  orderId: orderId,
-                  transactionId: transactionId,
-                  serviceID: serviceID,
-                  showDescription: showDescription,
+                  selectedNetworkProduct: selectedKaedcoMeterType,
+                  meterNumber: kaedcoMeterNumber,
+                  phoneNumber: kaedcoPhoneNumber,
+                  ikedcEmail: kaedcoEmail,
+                  ikedcamount: kaedcoAmount,
+                  orderId: kaedcoOrderId,
+                  transactionId: kaedcoTransactionId,
+                  serviceID: kaedcoServiceID,
+                  showDescription: kaedcoShowDescription,
                 }}
               >
                 <button
@@ -1240,6 +1257,11 @@ const KAEDCO = () => {
               </Link>
             </div>
           </div>
+        </Modal>
+      )}
+      {loading && (
+        <Modal>
+          <Loader />
         </Modal>
       )}
     </DashBoardLayout>

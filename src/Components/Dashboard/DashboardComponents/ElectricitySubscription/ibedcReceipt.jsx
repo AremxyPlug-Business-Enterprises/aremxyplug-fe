@@ -7,38 +7,60 @@ import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import logo2 from "../ElectricitySubscription/Electricity-sub-images/ibedc-logo 1.svg"
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export const IbedcReceipt = () => {
-
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { selectedNetworkProduct, meterNumber, phoneNumber, ikedcEmail, ikedcamount, serviceID, orderId, transactionId, showDescription, billGenerate  } = location.state
 
   const {
     toggleSideBar,
     isDarkMode,
     date,   
-    verifiedName, 
-    setSelectedNetworkProduct,
-    setMeterNumber,
-    setVerifiedName,
-    setPhoneNumber,
-    setEmail,
-    setIkedcamount,
+    ibedcVerifiedName,
+    setIbedcVerifiedName, 
+    setSelectedIbedcMeterType,
+    ibedcMeterNumber,
+    setIbedcMeterNumber,
+    ibedcPhoneNumber,
+    setIbedcPhoneNumber,
+    ibedcEmail,
+    setIbedcEmail,
+    ibedcAmount,
+    setIbedcAmount,
     setGlobalCountry,
-    setFlag,
+    setIbedcFlag,
+    selectedIbedcMeterType,
+    ibedcServiceID,
+    ibedcOrderId,
+    ibedcTransactionId,
+    ibedcShowDescription,
+    ibedcBillGenerate,
   } = useContext(ContextProvider);
+  
+  const navigate = useNavigate();
+
+  const networkProduct =
+    selectedIbedcMeterType?.length > 0 ? selectedIbedcMeterType : "";
+  const meterNo = ibedcMeterNumber?.length > 0 ? ibedcMeterNumber : "";
+  const name = ibedcVerifiedName?.length > 0 ? ibedcVerifiedName : "";
+  const phoneNo = ibedcPhoneNumber?.length > 0 ? ibedcPhoneNumber : "";
+  const productEmail = ibedcEmail?.length > 0 ? ibedcEmail : "";
+  const productAmount = ibedcAmount?.length > 0 ? ibedcAmount : "";
+  const service_id = ibedcServiceID?.length > 0 ? ibedcServiceID : "";
+  const order_id = ibedcOrderId?.length > 0 ? ibedcOrderId : "";
+  const transaction_id = ibedcTransactionId?.length > 0 ? ibedcTransactionId : "";
+  const description = ibedcShowDescription?.length > 0 ? ibedcShowDescription : "";
+  const bill_generated = ibedcBillGenerate?.length > 0 ? ibedcBillGenerate : "";
+
 
   function handleClick() {
-    setSelectedNetworkProduct("");
-    setMeterNumber("");
-    setVerifiedName("");
-    setPhoneNumber("");
-    setEmail("");
-    setIkedcamount("");
+    setSelectedIbedcMeterType("");
+    setIbedcMeterNumber("");
+    setIbedcVerifiedName("");
+    setIbedcPhoneNumber("");
+    setIbedcEmail("");
+    setIbedcAmount("");
     setGlobalCountry("");
-    setFlag("");
+    setIbedcFlag("");
     navigate('/electricity-subscription');
   }
 
@@ -128,7 +150,7 @@ export const IbedcReceipt = () => {
             <p className="text-[9px] text-[#27AE60] bg-[#D5F6E3] rounded-[11px] border-2 border-[#27AE60] py-[5px] px-[2px] text-center mx-[5px] lg:mx-[150px] md:mx-[100px] my-2 md:text-[14px] lg:text-[14px]">
               You have successfully purchased{" "}
               <span className="text-[#000] font-extrabold text-[10px] md:text-[14px]">
-              Ibadan {selectedNetworkProduct} Meter &#8358;{ikedcamount}.00{" "}
+              Ibadan {networkProduct} Meter &#8358;{productAmount}.00{" "}
               </span>
               from your NGN wallet to{" "}
             </p>
@@ -150,34 +172,34 @@ export const IbedcReceipt = () => {
                 <p className="text-[#7C7C7C] font-[500]">Disco Type</p>
                 <span className="flex items-center gap-1 ">
                   <div><img className="w-[30px]" src={logo2} alt="" /></div>
-                  <div>{serviceID}</div>
+                  <div>{service_id}</div>
                   </span>
               </div>
               <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Meter Type</p>
-                <span>{selectedNetworkProduct} </span>
+                <span>{networkProduct} </span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Meter Number</p>
-                <span>{meterNumber} </span>
+                <span>{meterNo} </span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Verified Name</p>
-                <span>{verifiedName}</span>
+                <span>{name}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Phone Number</p>
-                <span>{phoneNumber}</span>
+                <span>{phoneNo}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Email</p>
-                <span>{ikedcEmail}</span>
+                <span>{productEmail}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Amount</p>
-                <span>&#8358;{ikedcamount}</span>
+                <span>&#8358;{productAmount}</span>
               </div>
               
             </div>
@@ -192,7 +214,7 @@ export const IbedcReceipt = () => {
                 <div className="flex flex-col gap-3 pt-[10px]">
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Customer Name</p>
-                <span>{verifiedName}</span>
+                <span>{name}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -225,19 +247,19 @@ export const IbedcReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Description</p>
-                  <span>{showDescription}</span>
+                  <span>{description}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Bill / Token Generated</p>
-                  <span>{billGenerate}</span>
+                  <span>{bill_generated}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Order Number</p>
-                  <span>{orderId}</span>
+                  <span>{order_id}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Transaction ID</p>
-                  <span>{transactionId}</span>
+                  <span>{transaction_id}</span>
                 </div>
                 
               </div>
