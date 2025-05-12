@@ -1,19 +1,59 @@
-import React, { useContext, useRef, useEffect } from "react";
+import React, { useContext, useRef, useEffect, useState } from "react";
 import { DashBoardLayout } from "../../Dashboard/Layout/DashBoardLayout";
 import { ContextProvider } from "../../Context";
 import { Link } from "react-router-dom";
 import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
+import { CheckVirtualAcc } from "../../ApiCollection.jsx/ApiBuck";
+import axios from "axios";
+import { Loader } from "../../Loader/Loader";
 
 function NgnVirtualAccount(Data) {
   const { isDarkMode,
     bankNameState,
     accountNameState,
-    accountNumberState } = useContext(ContextProvider)
+    accountNumberState ,
+  customerDetail, setDashLoading, setVirtualAccCreated, setBankNameState, setAccountNumberState, setAccountNameState,
+           twoStepVerificationSuccess,setTwoStepVerificationSuccess} = useContext(ContextProvider)
 
   const accNoRef = useRef(null);
   const accNameRef = useRef(null);
   const bankNameRef = useRef(null);
+  const [loading, setLoading]= useState(false)
 
+   const GenerateVirtualAccount = async(AuthUsed)=>{
+      const authToken = localStorage.getItem("authorisedLogin")
+      const getToken = localStorage.getItem("getToken");
+     if(!navigator.onLine) return alert("Check your internet connection")
+      if((authToken || getToken) && navigator.onLine){
+      try{
+      setDashLoading(true)
+      const body =""
+      const url = "https://aremxyplug.onrender.com/api/v1/virtualacc"
+       const response = await axios.post(url,body,{ headers : {"Content-Type" : "application/json",
+         Authorization : authToken || getToken},
+      })
+        if(response.status === 200 || 201){
+           alert("Virtual Account Created")
+           localStorage.setItem("AccCreated","true")
+           AuthUsed = authToken || getToken;
+           await CheckVirtualAcc(AuthUsed, customerDetail, setLoading, setVirtualAccCreated, 
+            setBankNameState, setAccountNameState, setAccountNumberState, 
+           twoStepVerificationSuccess,setTwoStepVerificationSuccess)
+           } 
+
+      }catch(error){
+        if( error.response && error.response.status === 400){
+          alert("Virtual Account Creation failed")
+          
+        }else if(error.response.status === 404){
+       alert("Check your Network connection")
+        }else if(error.response &&error.response.status === 500){
+          alert("SERVER ERROR");
+        }
+      }finally{
+        setDashLoading(false);
+      }}
+      }
 
   // const formatAccountNumber = (text) => {
   //   if ( text !== '') {
@@ -79,6 +119,7 @@ function NgnVirtualAccount(Data) {
 
   return (
     <DashBoardLayout>
+      
       <div className="flex flex-col justify-between h-full">
         <div>
           {/* HERO HEADER STARTS HERE */}
@@ -112,8 +153,14 @@ function NgnVirtualAccount(Data) {
               />
             </div>
           </div>
-
-          <div className="flex flex-col justify-center mt-[25.39px] md:mt-[35px] lg:mt-[60px] w-full h-[90px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] bg-[#92abfe]/[0.5] px-[16px] lg:px-[50px] lg:rounded-[20px]">
+           
+          <div className="flex flex-col justify-center mt-[25.39px] md:mt-[35px] lg:mt-[60px] w-full h-auto md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] bg-[#92abfe]/[0.5] px-[16px] lg:px-[50px] lg:rounded-[20px]">
+           {loading === true ?  (
+            <div className="flex w-full justify-center">
+              <Loader/>
+              </div>
+           ) : (
+          Data.ConfirmAcc === "true" ?  (
             <div className="">
               <div className="mb-[8px] lg:mb-[15px] flex lg:gap-x-[20px] gap-x-[15px] font-semibold">
                 <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[15%] md:w-[20%] w-[30%]">BANK NAME</p>
@@ -142,7 +189,30 @@ function NgnVirtualAccount(Data) {
                   </button>
                 </div>
               </div>
+              
             </div>
+          ) : (
+        <div className="flex flex-col justify-between py-[15px] lg:py-[20px] gap-[30px]"> 
+        <h2 className={`text-[14px] leading-[20px] font-[500] lg:text-[16px] lg:leading-[22px] text-start ${isDarkMode ? "text-white" : "text-black"}`}>
+       { (Data.ConfirmId === "true" || Data.ConfirmBvn === "true") && Data.ConfirmAcc === "false" ? "Brilliant, Now we know who you are, kindly generate a Ngn Virtual account" : "To Generate a virtual account, kindly verify your account in the profile settings page or your dashboard" }
+       </h2>
+       <div onClick={()=> {
+        if((Data.ConfirmId === "true" || Data.ConfirmBvn === "true") && Data.ConfirmAcc === "false"){
+        GenerateVirtualAccount()
+        }
+       }}
+        className={`flex md:justify-end w-full`}>
+          <button className={`text-[12px] text-white w-full text-center  leading-[20px] font-[400] lg:text-[14px] lg:leading-[22px]
+           py-[14px] rounded-[14px] md:rounded-[20px]  md:w-[300px]  md:py-[16px] md:px-[13px] 
+          ${(Data.ConfirmId === "true" || Data.ConfirmBvn === "true") && Data.ConfirmAcc === "false" ? "bg-primary" : "bg-gray-300"}
+        `}>
+            Generate
+            </button>
+         
+       </div>
+        </div>
+          )
+        )}
           </div>
 
           <div className='mt-[25.39px] md:mt-[35px] lg:mt-[60px] flex items-center justify-between'>

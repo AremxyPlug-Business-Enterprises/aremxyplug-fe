@@ -1,6 +1,6 @@
 import React from "react";
 import "../../TvSubscription/TvSubscription.css";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ContextProvider } from "../../Context";
 import { Modal } from "../../Screens/Modal/Modal";
 import arrowRight from "../../../Components/EducationPins/imagesEducation/educationArrowRight.svg";
@@ -22,6 +22,8 @@ const ConfirmStarTimesPopup = () => {
     methodImage,
     tvWalletBalance,
     flagResult,
+    starTimesAmount,
+    newBalance
   } = useContext(ContextProvider)
 
 
@@ -31,18 +33,32 @@ const ConfirmStarTimesPopup = () => {
     setConfirmStarTimesPopup(false);
     setInputPinStarTimes(true);
   }
-  const getNumericValue = (option) => {
-    const numericPart = option.match(/\d+/);
-    if (numericPart) {
-      return formatNumberWithCommas(parseInt(numericPart[0], numericPart[2], 10));
-    }
-    return '';
-  };
+  
 
   const valueWithoutTilde = selectedOptionStarTimes.split(" ~ ");
   // const trimmedValue = valueWithoutTilde.trim();
 
-  return (
+  const [balanceStatus, setBalanceStatus] = useState("");
+
+   let balanceStringToNum = Number(newBalance);
+      let starTimesAmountToNumber = Number(starTimesAmount);
+     let CheckSufficiency = starTimesAmountToNumber > balanceStringToNum
+  useEffect(()=> {
+    const HandleBalanceStatus = ()=> {
+   
+      if(CheckSufficiency){
+       setBalanceStatus("Insufficient fund")
+       alert("Insufficient Fund")
+      }else{
+        setBalanceStatus("");
+        alert("Able to Pay")
+      }
+    }
+    HandleBalanceStatus()
+  },[CheckSufficiency])
+    console.log(balanceStringToNum, starTimesAmountToNumber)
+
+    return (
     <>
       {confirmStarTimesPopup &&
         (
@@ -99,7 +115,7 @@ const ConfirmStarTimesPopup = () => {
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
                     <span className="text-[#0008]">Amount</span>
-                    <span>{'₦' + getNumericValue(selectedOptionStarTimes)}</span>
+                    <span>{starTimesAmount}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
                     <span className="text-[#0008]">Payment Method</span>
@@ -141,8 +157,11 @@ const ConfirmStarTimesPopup = () => {
                       alt="/"
                     />
                   </div>
-                  <p className="text-[10px] md:text-[14px]  lg:text-[16px] font-[500]">
-                    Available Balance{" "}
+                  <p className="text-[12px] md:text-[14px] leading-[20px] lg:leading-[22px]  lg:text-[16px] font-[500]">
+                    Available Balance {"  "} <span className="text-gray-300 text-[10px] font-[400] leading-[20px]
+                     lg:text-[14px] lg:leading-[22px]">
+                       {balanceStatus}
+                       </span>
                     <span className="text-[#0003]">
                       {tvWalletBalance}
                     </span>
@@ -156,7 +175,10 @@ const ConfirmStarTimesPopup = () => {
               </div>
               <button
                 onClick={handleInputStarTimes}
-                className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] lg:rounded-[12px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                disabled ={starTimesAmountToNumber > balanceStringToNum}
+                className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px]
+                   text-white rounded-[6px] md:w-[25%] md:rounded-[8px] lg:rounded-[12px]
+                    md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:my-[2%] ${starTimesAmountToNumber > balanceStringToNum ? "bg-gray-300" : "bg-primary"}`}
               >
                 Confirmed
               </button>

@@ -9,7 +9,7 @@ import { Modal } from "../Screens/Modal/Modal";
 import { ContextProvider } from "../Context";
 
 export const TvSubscription = () =>{
-    const [tvSubscription, setTvSubscription] = useState("")
+  
     const [loading, setLoading] = useState(false);
     const {fetchedGotvPlans, setFetchedGotvPlans, 
         fetchedDstvPlans, 
@@ -22,104 +22,84 @@ export const TvSubscription = () =>{
 
 
     //Function to fetch users planns for a specific tv subscription
-const GetFunctionHandler = async()=> {
+const GetFunctionHandler = async(GlobalTvSubscription, TvSubscriptionValue)=> {
     const SuccessHandler =()=> {
-        alert(`Successfully fetched ${tvSubscription} Plans`)
+        alert(`Successfully fetched ${TvSubscriptionValue} Plans`)
     }
     const FailedHandler =()=> {
-        alert(`Unable to fetch ${tvSubscription} Plans`);
+        alert(`Unable to fetch ${TvSubscriptionValue} Plans`);
     }
-    const path = `products/tvsub/${tvSubscription}`
+    let path;
     
     let fetchedPlans;
 const handleSubscriptionFunction = ()=> {
-    if(tvSubscription === "gotv"){
-        alert("Gotv is on")
+    if(GlobalTvSubscription === 0){
+       TvSubscriptionValue = "Gotv";
+      path = `products/tvsub/gotv`
        fetchedPlans = setFetchedGotvPlans
-    }else if(tvSubscription === "dstv"){
-        alert("Dstv is On")
+    }else if(GlobalTvSubscription === 1){
+        TvSubscriptionValue = "Dstv";
+        path =`products/tvsub/dstv`
        fetchedPlans = setFetchedDstvPlans
-    }else if(tvSubscription === "startimes"){
-        alert("Startimes is On")
+    }else if(GlobalTvSubscription === 2){
+        TvSubscriptionValue = "StarTimes";
+        path =`products/tvsub/startimes`
         fetchedPlans = setFetchedStarTimesPlans
-    }else if(tvSubscription === "showmax"){
-        alert("Showmax is On")
+    }else if(GlobalTvSubscription ===3){
+         TvSubscriptionValue = "Showmax";
         fetchedPlans = setFetchedShowMaxPlans
+     path = `products/tvsub/showmax`
     }
 }
+
+
+ const LinkToPage = ()=> {
+   if(handleSubscriptionFunction && GlobalTvSubscription=== 1  && fetchedDstvPlans.status === (200 || 201) ){
+  return  navigate("/DsTv");
+  }else if(handleSubscriptionFunction && GlobalTvSubscription ===3  && fetchedShowMaxPlans.status === (200 || 201)){
+ return navigate("/Showmax");
+  }else if(handleSubscriptionFunction && GlobalTvSubscription ===2 && fetchedStarTimesPlans.status === (200 || 201)){
+return navigate("/StarTimes");
+   }else if(handleSubscriptionFunction && GlobalTvSubscription ===0 && fetchedGotvPlans.status === (200 || 201)){
+   return navigate("/GoTv")
+   }
+   
+}
+
+
 
 // The conditional statement to help handle the getting of the plans when absent in the 
 // their respective variables
-const HandleAbsentResponse =  async() => {
-    alert("HandleResponse is running")
-   if(tvSubscription === "gotv" && (fetchedGotvPlans.status === undefined || null)){
+
+    handleSubscriptionFunction();
+   if(handleSubscriptionFunction && GlobalTvSubscription === 0 && (fetchedGotvPlans.status === undefined || null)){
    await GetFunction(path, setLoading, SuccessHandler, FailedHandler, fetchedPlans)
      if(GetFunction){
-        setTvSubscription("");
-        if(fetchedGotvPlans.length > 1){
-        console.log(fetchedGotvPlans);
-       if( fetchedGotvPlans.status === (200 || 201)){
-        navigate("/GoTv")
+      return navigate("/GoTv")
        }
-    }
-     }
-    } else if(tvSubscription === "dstv" && (fetchedDstvPlans.status === undefined || null)){
+    } else if(handleSubscriptionFunction && GlobalTvSubscription === 1 && (fetchedDstvPlans.status === undefined || null)){
     await GetFunction(path, setLoading, SuccessHandler, FailedHandler, fetchedPlans)
-
-        if(GetFunction){
-           setTvSubscription("")
-           if(fetchedDstvPlans.status === (200 || 201)){
+      if(GetFunction){
             navigate("/DsTv")
            }
-        }
-    } else if(tvSubscription === "startimes" && (fetchedStarTimesPlans.status === undefined || null)){
+        
+    } else if(handleSubscriptionFunction && GlobalTvSubscription === 2 && (fetchedStarTimesPlans.status === undefined || null)){
        await GetFunction(path, setLoading, SuccessHandler, FailedHandler, fetchedPlans)
-        if(GetFunction && fetchedStarTimesPlans.status === (200 || 201)){
-           setTvSubscription("")
-           if(fetchedStarTimesPlans.status === (201 || 200)){
-            navigate("/StarTimes")
-           }
-        }
-    }else if(tvSubscription === "showmax" && (fetchedShowMaxPlans.status === undefined || null)){
-     await GetFunction(path, setLoading, SuccessHandler, FailedHandler, fetchedPlans);
-        if(GetFunction ){
-           setTvSubscription("");
-           if(fetchedShowMaxPlans.status === (200 || 201)){
-            navigate("Showmax")
+        if(GetFunction){
+       return navigate("/StarTimes")
            }
         
+    }else if(handleSubscriptionFunction && GlobalTvSubscription === 3 && (fetchedShowMaxPlans.status === undefined || null)){
+     await GetFunction(path, setLoading, SuccessHandler, FailedHandler, fetchedPlans);
+   if(GetFunction){
+    return navigate("/Showmax")
         }
+     }else{
+       return LinkToPage();
      }
-}
-//The conditional statement to return null if the plans are present in the state
-   if(tvSubscription.length > 1){
-    handleSubscriptionFunction()
-   if(handleSubscriptionFunction && tvSubscription === "dstv" && fetchedDstvPlans.status === (200 || 201) ){
-    setTvSubscription("")
-  return  navigate("/Dstv");
-  }else if(handleSubscriptionFunction && tvSubscription === "showmax" && fetchedShowMaxPlans.status === (200 || 201)){
-    setTvSubscription("")
-   return navigate("/Showmax");
-  }else if(handleSubscriptionFunction && tvSubscription === "startimes" && fetchedStarTimesPlans.status === (200 || 201)){
-    setTvSubscription("") 
-   return navigate("/StarTimes")
-   
-   }else if(handleSubscriptionFunction && tvSubscription === "gotv" && fetchedGotvPlans.status === (200 || 201)){
-    setTvSubscription("")
-    return navigate("/Gotv")
-   }else {
-    if(handleSubscriptionFunction){
-    HandleAbsentResponse()
     }
-}
-   }
-}
 
-   
-
-
-
- return(
+return(
         <DashBoardLayout>
             <div className={style.AirtimeTops}>
                 <div className={style.airtimeTop}>
@@ -146,40 +126,26 @@ const HandleAbsentResponse =  async() => {
                         </div>
                         <div id="tvGrid" className="mx-auto flex flex-wrap justify-between  gap-[25px] md:h-[70px] md:flex-row md:flex-nowrap md:gap-[21.27px]  lg:h-[120px]  md:w-[100%] lg:gap-[37px]">
                         <div onClick ={()=>{
-                            setTvSubscription("gotv")
-                           setTimeout(()=> {
-                            GetFunctionHandler();
-                           },1000)
-                            
-                        }
+                          GetFunctionHandler(0, "Gotv");
+                            }
                         }>
                             <img src="./Images/TvSubscription/goTV.svg" alt="" className="md:w-[118px] lg:w-[270px] md:h-[94px] lg:h-[250px]"/>
                         </div>
                         <div onClick ={()=>{
-                            setTvSubscription("dstv")
-                            setTimeout(()=> {
-                                GetFunctionHandler();
-                               },1000)
-                        }
+                          GetFunctionHandler(1, "Dstv");
+                      }
                         }>
                         <img src="./Images/TvSubscription/dstv.svg" alt="" className="md:w-[118px] lg:w-[270px] md:h-[94px] lg:h-[250px]"/>
                         </div>
                         <div onClick ={()=>{
-                            setTvSubscription("startimes")
-                            setTimeout(()=> {
-                                GetFunctionHandler();
-                               },1000)
-                            
-                        }
+                            GetFunctionHandler(2, "StarTimes");
+                               }
                         }>
                         <img src="./Images/TvSubscription/starTimes.svg" alt="" className="md:w-[118px] lg:w-[270px] md:h-[94px] lg:h-[250px]"/>
                         </div>
                         <div onClick ={()=>{
-                            setTvSubscription("showmax")
-                            setTimeout(()=> {
-                                GetFunctionHandler();
-                               },1000)
-                        }
+                           GetFunctionHandler(3, "ShowMax");
+                               }
                         }>
                         <img src="./Images/TvSubscription/showmax.svg" alt="" className="md:w-[118px] lg:w-[270px] md:h-[94px] lg:h-[250px]"/>
                         </div>

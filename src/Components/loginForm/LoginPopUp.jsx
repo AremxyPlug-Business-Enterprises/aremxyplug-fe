@@ -117,8 +117,10 @@ const getOtpSmsorEmail = async(url, body)=> {
      }
      url = "https://aremxyplug.onrender.com/api/v1/send-otp/signin"
   }
- 
+  if(!navigator.onLine) return alert("Check your internet connection");
+ if(navigator.onLine){
 await  gettingOtpFunction(url,body)
+}
 }
  // Function to help resetthe login and local storage authToenand getToken to help for User LoogIn
 const Close2StepPopUp =()=> {
@@ -268,7 +270,7 @@ const handleVerificationOTP = ()=> {
 const handleAccountDetails = async(AuthUsed)=> {
   const authToken = localStorage.getItem("authorisedLogin");
   const getToken = localStorage.getItem("getToken")
-  AuthUsed = authToken || getToken
+  AuthUsed = authToken || getToken;
 //   const {bank_name, account_no, account_name} = virtualAccCreated
 //  // console.log(virtualAccCreated);
 
@@ -305,7 +307,10 @@ const gettingSmsOrEmailFunctionOtp = async(url, body)=> {
        console.log(otp3);
         }
         console.log(`URL:${url}`,`BODY:${body}`)
+        if(!navigator.onLine) return alert("Check your internet connection")
+        if(navigator.onLine){
         await VerifyOtpFunction(url, body)
+        }
 }
 
 

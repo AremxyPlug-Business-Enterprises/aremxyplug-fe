@@ -2,7 +2,7 @@ import React from "react";
 import Joi from "joi";
 import { DashBoardLayout } from "../Dashboard/Layout/DashBoardLayout";
 import "../TvSubscription/TvSubscription.css";
-import { useContext } from "react";
+import { useContext , useEffect} from "react";
 import { useState } from "react";
 import arrowDown from '../EducationPins/imagesEducation/arrow-down.svg';
 import { ContextProvider } from "../Context";
@@ -17,6 +17,10 @@ import britainFlag from '../../Components/EducationPins/imagesEducation/Britain.
 import euroFlag from '../../Components/EducationPins/imagesEducation/GBP.svg';
 import austriaFlag from '../../Components/EducationPins/imagesEducation/Austria.svg';
 import kenyaFlag from '../../Components/EducationPins/imagesEducation/Kenya.svg';
+import { Loader } from "../Loader/Loader";
+import { Modal } from "../Screens/Modal/Modal";
+import { useNavigate } from "react-router-dom";
+import { GetFunction } from "../ApiCollection.jsx/ApiBuck";
 
 const DsTv = () => {
 
@@ -43,12 +47,19 @@ const DsTv = () => {
     setMethodImage,
     isDarkMode,
     fetchedDstvPlans,
+    fetchedGotvPlans,
+    setFetchedGotvPlans,
+    fetchedShowMaxPlans,
+    setFetchedShowMaxPlans,
+    fetchedStarTimesPlans,
+    setFetchedStarTimesPlans,
     dstvAmount,
-    setDstvAmount
-  } = useContext(ContextProvider)
+    setDstvAmount,
+    newBalance
+  } = useContext(ContextProvider);
  
-console.log(fetchedDstvPlans)
-const DstvPlans = fetchedDstvPlans ? fetchedDstvPlans.data.data.data : []
+const navigate = useNavigate();
+const [loading, setLoading] = useState(false)
 // console.log(DstvPlans)
  
 
@@ -66,7 +77,7 @@ const DstvPlans = fetchedDstvPlans ? fetchedDstvPlans.data.data.data : []
     
       const Decoders  = [
         { decoderType :'Dstv',  id : 1},
-          { decoderType :'GOtv', path : "/Gotv", id : 3 },
+          { decoderType :'GOtv', path : "/GoTv", id : 3 },
           { decoderType :' StarTimes', path :  "/StarTimes", id : 2 },
         { decoderType :'Showmax', path : "/Showmax", id : 4 }
          ]
@@ -114,6 +125,59 @@ const DstvPlans = fetchedDstvPlans ? fetchedDstvPlans.data.data.data : []
   }
   const [errors, setErrors] = useState({});
 
+
+  const GetOtherDataTv = async(id, path)=> {
+   const SuccessHandler = ()=> {
+    navigate(path);
+   }
+   const FailedHandler = ()=> {
+    console.log("Error")
+   }
+  
+   const SubscriptionPresent =()=> {
+    if((fetchedStarTimesPlans.status === 200 || 201) && id === 2 ){
+      return navigate(path)
+    }else if((fetchedGotvPlans.status === 200 || 201) && id === 3) {
+     return navigate(path)
+    }else if((fetchedShowMaxPlans.status === 200 || 201) && id === 4) {
+     return navigate(path)
+    }
+    
+   }
+  
+   let TvPath;
+   let fetchedResponse;
+    if((fetchedStarTimesPlans.status === undefined || null) && id === 2 ){
+      TvPath = `products/tvsub/startimes`;
+    fetchedResponse = setFetchedStarTimesPlans;
+     await GetFunction(TvPath, setLoading, SuccessHandler, FailedHandler, fetchedResponse)
+    
+   }else if((fetchedGotvPlans.status === undefined || null) && id === 3){
+      TvPath = `products/tvsub/gotv`;
+    fetchedResponse = setFetchedGotvPlans;
+     await GetFunction(TvPath, setLoading, SuccessHandler, FailedHandler, fetchedResponse)
+   
+  }else if ((fetchedShowMaxPlans.status === undefined || null) && id === 4){
+    TvPath = `products/tvsub/showmax`;
+    fetchedResponse = setFetchedShowMaxPlans;
+     await GetFunction(TvPath, setLoading, SuccessHandler, FailedHandler, fetchedResponse)
+   
+  }else{
+    return SubscriptionPresent();
+  }
+  }
+  
+  
+       const DstvPlans = fetchedDstvPlans.data ? fetchedDstvPlans.data.data.data : []
+      useEffect(()=> {
+        if(DstvPlans.length < 1){
+          navigate("/TvSubscription")
+        }
+      })
+       // console.log(DstvPlans)
+  
+      
+   
  
   // const GOTVSchema = Joi.object({
   //   mobileNumber: Joi.string().regex(/^\d{11}$/).required(),
@@ -153,7 +217,7 @@ const DstvPlans = fetchedDstvPlans ? fetchedDstvPlans.data.data.data : []
   }
 
   const [methodOptions, setMethodOptions] = useState([
-    { method: 'NGN Wallet', balance: "(50,000.00)", flag: nigerianFlag, id: 1 },
+    { method: 'NGN Wallet',  balance: `(${newBalance})`, flag: nigerianFlag, id: 1 },
     { method: 'USD Wallet ', balance: '(0.00)', flag: americaFlag, id: 2 },
     { method: 'EUR Wallet', balance: '(0.00)', flag: britainFlag, id: 3 },
     { method: 'GBP Wallet', balance: '(0.00)', flag: euroFlag, id: 4 },
@@ -245,9 +309,10 @@ const [errorFillDecoder, setErrorFillDecoder] = useState(false)
     }`}>
           {(Decoders.map(decoder => {
             return (
-               <a href={decoder.path}
+               <p href={decoder.path}
                onClick={(e =>{
           setDecoderType(decoder.decoderType);
+          GetOtherDataTv(decoder.id, decoder.path)
                  setDecoderActive(false);
              document.querySelector('.decdrop').classList.remove('DropIt');
              console.log(e);
@@ -262,7 +327,7 @@ const [errorFillDecoder, setErrorFillDecoder] = useState(false)
         }`} 
          key= {decoder.id}>
       <h2>{decoder.decoderType}   </h2>
-         </a>
+         </p>
         
             )
           }))}
@@ -404,7 +469,7 @@ const [errorFillDecoder, setErrorFillDecoder] = useState(false)
                   : "hover:bg-[#EDEAEA] border-[#9C9C9C] text-[#7C7C7C] "
               }`}
                 value={`₦${dstvAmount} `}
-              />
+              readOnly/>
 
             </div>
 
@@ -417,7 +482,7 @@ const [errorFillDecoder, setErrorFillDecoder] = useState(false)
                     : "hover:bg-[#EDEAEA] border-[#9C9C9C] text-[#7C7C7C] "
                 }`}>
                 <p className='font-[500] text-[13px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px] cursor-pointer'>
-                  {flagResult + tvWalletBalance}
+                   {`${flagResult} ' ' ${tvWalletBalance}`}
                 </p>
                 <img className='methodDrop h-[16px] w-[14px] md:h-[14.038px] md:w-[14.038px] lg:h-[24px] lg:w-[24px]'
                   src={methodImage} alt="" />
@@ -494,7 +559,11 @@ const [errorFillDecoder, setErrorFillDecoder] = useState(false)
           </div>
             
         </div>
-
+  {loading && (
+    <Modal>
+      <Loader/>
+    </Modal>
+  )}
 
       </DashBoardLayout>
       <ConfirmDstvPopup/>
