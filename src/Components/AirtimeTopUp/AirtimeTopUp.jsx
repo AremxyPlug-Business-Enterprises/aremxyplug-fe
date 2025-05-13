@@ -1,8 +1,9 @@
 import React from 'react';
 import { DashBoardLayout } from '../Dashboard/Layout/DashBoardLayout';
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import WalletModal from '../Wallet/WalletModal'
 import { Link } from 'react-router-dom'
+import { ContextProvider } from '../Context';
 
 const AirtimeTopUp = () => {
     const [activeTab, setActiveTab] = useState('tab_1');
@@ -10,6 +11,7 @@ const AirtimeTopUp = () => {
     const [showVoucher, setShowVoucher] = useState(false);
     const [showSchedule, setShowSchedule] = useState(false);
     const [showBulk, setShowBulk] = useState(false);
+    const {isDarkMode} = useContext(ContextProvider);
     const active = 'md:text-[12px] md:leading-[18px] lg:text-[20px] lg:leading-[30px] lg:w-[248px] md:w-[145.5px] md:h-[23px] lg:h-[50px] md:flex md:justify-center md:items-center md:flex-none bg-[#E2F3FF] flex-1 text-[8px] leading-[12px] text-center py-1 border-b-2 border-primary rounded-[3px]';
     const inactive = 'md:text-[12px] md:leading-[18px] lg:text-[20px] lg:leading-[30px] lg:w-[248px] md:w-[145.5px] md:h-[23px] lg:h-[50px] md:flex md:justify-center md:items-center md:flex-none flex-1 text-[8px] leading-[12px] text-center py-1'
 

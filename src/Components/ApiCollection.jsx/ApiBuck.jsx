@@ -214,10 +214,7 @@ export const PostFunction = async(path, setLoading, body, functionAtSuccess, fun
          Authorization : authToken || getToken
       }})
       if(response.status === 201 || 200){
-
-
-     
-         functionAtSuccess()
+    functionAtSuccess()
          if(functionAtSuccess) {
             setFetchedResponse(response.data.data)
          }
@@ -227,16 +224,36 @@ export const PostFunction = async(path, setLoading, body, functionAtSuccess, fun
    }catch(error){
       if(error && error.response.status === 400){
          functionAtFailed()
-       alert("Invalid request")
-      }else if(error && error.response.status === 404){
+          if(functionAtFailed) {
+            setFetchedResponse(error.response.data.data)
+              console.log(error.response.data.data)
+            alert("Invalid request")
+         }
+        
+    }else if(error && error.response.status === 404){
          functionAtFailed()
-         alert("Check your internet connection")
+         alert("Check your internet connection");
+           if(functionAtFailed) {
+            setFetchedResponse(error.response.data.data)
+              console.log(error.response.data.data)
+            alert("Invalid request")
+         }
       }else if(error && error.response.status === 401){
          functionAtFailed()
-         alert("Your Session has timed out")
+         alert("Your Session has timed out");
+           if(functionAtFailed) {
+            setFetchedResponse(error.response.data.data)
+              console.log(error.response.data.data)
+            alert("Invalid request")
+         }
       }else if(error && error.response.status === 500){
   
-   alert("Server error: Try some other time")
+   alert("Server error: Try some other time");
+     if(functionAtFailed) {
+            setFetchedResponse(error.response.data.data)
+              console.log(error.response.data.data)
+            alert("Invalid request")
+         }
       }
    }finally{
   setLoading(false);
