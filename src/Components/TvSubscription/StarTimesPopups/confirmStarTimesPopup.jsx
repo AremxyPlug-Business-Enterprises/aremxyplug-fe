@@ -132,47 +132,38 @@ const ConfirmStarTimesPopup = () => {
                 </div>
               </div>
 
-              {/* <div className="bg-[#F6F7F7] h-[45px] my-5 lg:my-8 flex justify-between items-center px-[4%]">
-              <div className="flex gap-2 items-center">
-                <div className="bg-white rounded-full h-[27px] w-[27px] flex justify-center items-center">
-                  <img className="w-[16px] h-[16px]" src="./Images/currencyImages/nigeria.svg" alt="/" />
-                </div>
-                <p className="text-[10px] md:text-[14px]  lg:text-[16px]">
-                  Available Balance{" "}
-                  <span className="text-[#0003]">0</span>
-                </p>
-              </div>
-              <img
-                className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                src="./Images/currencyImages/right.svg"
-                alt="/"
-              />
-            </div> */}
-              <div className="bg-[#F6F7F7] h-[45px] my-5 lg:my-8 flex justify-between items-center px-[4%]">
-                <div className="flex gap-2 items-center">
-                  <div className="bg-white rounded-full h-[27px] w-[27px] flex justify-center items-center">
-                    <img
-                      className="w-[16px] h-[16px]"
-                      src={methodImage}
-                      alt="/"
-                    />
-                  </div>
-                  <p className="text-[12px] md:text-[14px] leading-[20px] lg:leading-[22px]  lg:text-[16px] font-[500]">
-                    Available Balance {"  "} <span className="text-gray-300 text-[10px] font-[400] leading-[20px]
-                     lg:text-[14px] lg:leading-[22px]">
-                       {balanceStatus}
-                       </span>
-                    <span className="text-[#0003]">
-                      {tvWalletBalance}
-                    </span>
-                  </p>
-                </div>
-                <img
-                  src={arrowRight}
-                  alt=""
-                  className="w-[12px] h-[12px] md:w-[50px] md:h-[20px] lg:w-[80px] lg:h-[30px]"
-                />
-              </div>
+             
+             
+                           <div className="bg-[#F6F7F7] w-[95%] h-auto my-5 lg:my-8 flex py-[7px] 
+                                  justify-between items-center px-[4%] mx-auto rounded-[10px]">
+                                          <div className="flex flex-col gap-2  ">
+                                            <div className="flex gap-[10px] justify-center items-center">
+                                              <img
+                                                className="w-[16px] h-[16px] bg-white"
+                                                src={methodImage}
+                                                alt="/"
+                                              />
+                                              <div className="flex gap-[10px] items-center">
+                                                  <p className="text-[12px] md:text-[14px] leading-[20px] lg:leading-[22px]  lg:text-[16px] font-[500]">
+                                              Available Balance {"  "} 
+                                               </p>
+                                               <span className="text-[#0003]">
+                                                {`(${newBalance})`}
+                                              </span>
+                                              </div>
+                                            </div>
+                                          <span className="text-gray-500 text-[14px] font-[400] leading-[20px]
+                                               lg:text-[16px] lg:leading-[22px] text-left">
+                                                 {balanceStatus}
+                                                 </span>
+                                          </div>
+                          
+                                          <img
+                                            src={arrowRight}
+                                            alt=""
+                                            className="w-[12px] h-[12px] md:w-[50px] md:h-[20px] lg:w-[80px] lg:h-[30px]"
+                                          />
+                                        </div>
               <button
                 onClick={handleInputStarTimes}
                 disabled ={starTimesAmountToNumber > balanceStringToNum}

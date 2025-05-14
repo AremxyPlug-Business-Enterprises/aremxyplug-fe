@@ -65,7 +65,7 @@ const ConfirmGotvPopup = () => {
                 } w-[90%] md:w-[60%] overflow-auto`}
             >
               <div className="flex justify-end pr-2 mt-1 mb-3 md:mt-2 md:mb-2 lg:mb-0 lg:mt-1">
-              <img onClick={() => { setConfirmGotvPopup(false); window.location.reload(); }}
+              <img onClick={() => { setConfirmGotvPopup(false);}}
                   className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[26px] lg:h-[26px]"
                   src="/Images/transferImages/close-circle.png"
                   alt=""
@@ -127,34 +127,43 @@ const ConfirmGotvPopup = () => {
                 </div>
               </div>
 
-              <div className="bg-[#F6F7F7] h-[45px] my-5 lg:my-8 flex justify-between items-center px-[4%]">
-                <div className="flex gap-2 items-center">
-                  <div className="bg-white rounded-full h-[27px] w-[27px] flex justify-center items-center">
-                    <img
-                      className="w-[16px] h-[16px]"
-                      src={methodImage}
-                      alt="/"
-                    />
-                  </div>
-                 <p className="text-[12px] md:text-[14px] leading-[20px] lg:leading-[22px]  lg:text-[16px] font-[500]">
-                    Available Balance {"  "} <span className="text-gray-300 text-[10px] font-[400] leading-[20px]
-                     lg:text-[14px] lg:leading-[22px]">
-                       {balanceStatus}
-                       </span>
-                    <span className="text-[#0003]">
-                      {tvWalletBalance}
-                    </span>
-                  </p>
-                </div>
-                <img
-                  src={arrowRight}
-                  alt=""
-                  className="w-[12px] h-[12px] md:w-[50px] md:h-[20px] lg:w-[80px] lg:h-[30px]"
-                />
-              </div>
+              <div className="bg-[#F6F7F7] w-[95%] h-auto my-5 lg:my-8 flex py-[7px] 
+                     justify-between items-center px-[4%] mx-auto rounded-[10px]">
+                             <div className="flex flex-col gap-2  ">
+                               <div className="flex gap-[10px] justify-center items-center">
+                                 <img
+                                   className="w-[16px] h-[16px] bg-white"
+                                   src={methodImage}
+                                   alt="/"
+                                 />
+                                 <div className="flex gap-[10px] items-center">
+                                     <p className="text-[12px] md:text-[14px] leading-[20px] lg:leading-[22px]  lg:text-[16px] font-[500]">
+                                 Available Balance {"  "} 
+                                  </p>
+                                  <span className="text-[#0003]">
+                                   {`(${newBalance})`}
+                                 </span>
+                                 </div>
+                               </div>
+                             <span className="text-gray-500 text-[14px] font-[400] leading-[20px]
+                                  lg:text-[16px] lg:leading-[22px] text-left">
+                                    {balanceStatus}
+                                    </span>
+                             </div>
+             
+                             <img
+                               src={arrowRight}
+                               alt=""
+                               className="w-[12px] h-[12px] md:w-[50px] md:h-[20px] lg:w-[80px] lg:h-[30px]"
+                             />
+                           </div>
               <button
+              disabled ={CheckSufficiency}
                 onClick={handleInputGotv}
-                className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] lg:rounded-[12px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto 
+                  cursor-pointer text-[14px] font-extrabold
+                   h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] lg:rounded-[12px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:my-[2%]
+                   ${CheckSufficiency ? "bg-gray-300" : "bg-primary"}`}
               >
                 Confirmed
               </button>
