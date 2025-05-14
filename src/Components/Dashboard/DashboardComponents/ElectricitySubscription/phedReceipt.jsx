@@ -39,12 +39,12 @@ export const PhedReceipt = () => {
     const networkProduct =
     selectedPhedMeterType?.length > 0 ? selectedPhedMeterType : "";
   const meterNo = phedMeterNumber?.length > 0 ? phedMeterNumber : "";
-  const name = phedVerifiedName?.length > 0 ? phedVerifiedName : "";
+  const verifiedName = phedVerifiedName?.length > 0 ? phedVerifiedName : "";
   const phoneNo = phedPhoneNumber?.length > 0 ? phedPhoneNumber : "";
   const productEmail = phedEmail?.length > 0 ? phedEmail : "";
   const productAmount = phedAmount?.length > 0 ? phedAmount : "";
   const service_id = phedServiceID?.length > 0 ? phedServiceID : "";
-  const order_id = phedOrderId?.length > 0 ? phedOrderId : "";
+  const order_id = phedOrderId === undefined ? "" : phedOrderId;
   const transaction_id = phedTransactionId?.length > 0 ? phedTransactionId : "";
   const description = phedShowDescription?.length > 0 ? phedShowDescription : "";
   const bill_generated = phedBillGenerate?.length > 0 ? phedBillGenerate : "";
@@ -183,7 +183,7 @@ export const PhedReceipt = () => {
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-medium">Verified Name</p>
-                <span>{name}</span>
+                <span>{verifiedName}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -211,7 +211,7 @@ export const PhedReceipt = () => {
                 <div className="flex flex-col gap-3 pt-[10px]">
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-medium">Customer Name</p>
-                <span>{name}</span>
+                <span>{verifiedName}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">

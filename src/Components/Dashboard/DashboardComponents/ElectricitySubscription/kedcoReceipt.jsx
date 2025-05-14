@@ -48,7 +48,7 @@ export const KedcoReceipt = () => {
   const productEmail = kedcoEmail?.length > 0 ? kedcoEmail : "";
   const productAmount = kedcoAmount?.length > 0 ? kedcoAmount : "";
   const service_id = kedcoServiceID?.length > 0 ? kedcoServiceID : "";
-  const order_id = kedcoOrderId?.length > 0 ? kedcoOrderId : "";
+  const order_id = kedcoOrderId=== undefined ? "" : kedcoOrderId;
   const transaction_id =
     kedcoTransactionId?.length > 0 ? kedcoTransactionId : "";
   const description =

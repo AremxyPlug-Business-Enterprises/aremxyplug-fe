@@ -457,12 +457,12 @@ const JED = () => {
                   }`}
                 />
               </div>
-              {errors.meterNumber && (
+              {errors.jedMeterNumber && (
                 <div
                   className={`text-[14px] text-red-500 italic lg:text-[14px]
                   ${isDarkMode ? "bg-black text-white" : ""}`}
                 >
-                  {errors.meterNumber}
+                  {errors.jedMeterNumber}
                 </div>
               )}
             </div>
@@ -508,12 +508,12 @@ const JED = () => {
                   }`}
                 />
               </div>
-              {errors.phoneNumber && (
+              {errors.jedPhoneNumber && (
                 <div
                   className={`text-[14px] text-red-500 italic lg:text-[14px]`}
                   //  ${isDarkMode ? "text-white bg-black" : ""}
                 >
-                  {errors.phoneNumber}
+                  {errors.jedPhoneNumber}
                 </div>
               )}
             </div>
@@ -537,12 +537,12 @@ const JED = () => {
                   }`}
                 />
               </div>
-              {errors.ikedcEmail && (
+              {errors.jedEmail && (
                 <div
                   className={`text-[14px] text-red-500 italic lg:text-[14px]
                   ${isDarkMode ? "text-white bg-black" : ""}`}
                 >
-                  {errors.ikedcEmail}
+                  {errors.jedEmail}
                 </div>
               )}
             </div>

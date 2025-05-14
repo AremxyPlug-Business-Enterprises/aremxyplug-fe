@@ -458,12 +458,12 @@ const EKEDC = () => {
                   }`}
                 />
               </div>
-              {errors.meterNumber && (
+              {errors.ekedcMeterNumber && (
                 <div
                   className={`text-[14px] text-red-500 italic lg:text-[14px
                   ${isDarkMode ? "text-white bg-black" : ""}`}
                 >
-                  {errors.meterNumber}
+                  {errors.ekedcMeterNumber}
                 </div>
               )}
             </div>
@@ -505,12 +505,12 @@ const EKEDC = () => {
                   }`}
                 />
               </div>
-              {errors.phoneNumber && (
+              {errors.ekedcPhoneNumber && (
                 <div
                   className={`text-[12px] text-red-500 italic lg:text-[14px]
                   ${isDarkMode ? "text-white bg-black" : ""}`}
                 >
-                  {errors.phoneNumber}
+                  {errors.ekedcPhoneNumber}
                 </div>
               )}
             </div>
@@ -534,9 +534,9 @@ const EKEDC = () => {
                   }`}
                 />
               </div>
-              {errors.ikedcEmail && (
+              {errors.ekedcEmail && (
                 <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                  {errors.ikedcEmail}
+                  {errors.ekedcEmail}
                 </div>
               )}
             </div>

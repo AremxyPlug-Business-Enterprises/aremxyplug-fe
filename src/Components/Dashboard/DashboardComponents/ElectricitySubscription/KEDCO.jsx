@@ -543,9 +543,9 @@ const KEDCO = () => {
                   }`}
                 />
               </div>
-              {errors.meterNumber && (
+              {errors.kedcoMeterNumber && (
                 <div className="text-[14px] text-red-500 italic lg:text-[14px]">
-                  {errors.meterNumber}
+                  {errors.kedcoMeterNumber}
                 </div>
               )}
             </div>
@@ -591,9 +591,9 @@ const KEDCO = () => {
                   }`}
                 />
               </div>
-              {errors.phoneNumber && (
+              {errors.kedcoPhoneNumber && (
                 <div className="text-[14px] text-red-500 italic lg:text-[14px]">
-                  {errors.phoneNumber}
+                  {errors.kedcoPhoneNumber}
                 </div>
               )}
             </div>
@@ -617,9 +617,9 @@ const KEDCO = () => {
                   }`}
                 />
               </div>
-              {errors.ikedcEmail && (
+              {errors.kedcoEmail && (
                 <div className="text-[14px] text-red-500 italic lg:text-[14px]">
-                  {errors.ikedcEmail}
+                  {errors.kedcoEmail}
                 </div>
               )}
             </div>

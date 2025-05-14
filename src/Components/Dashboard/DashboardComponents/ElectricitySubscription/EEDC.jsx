@@ -458,12 +458,12 @@ const EEDC = () => {
                   }`}
                 />
               </div>
-              {errors.meterNumber && (
+              {errors.eedcMeterNumber && (
                 <div
                   className={`text-[14px] text-red-500 italic lg:text-[14px] `}
                 >
                   {/* ${isDarkMode ? "bg-black text-white" : ""} */}
-                  {errors.meterNumber}
+                  {errors.eedcMeterNumber}
                 </div>
               )}
             </div>
@@ -509,9 +509,9 @@ const EEDC = () => {
                   }`}
                 />
               </div>
-              {errors.phoneNumber && (
+              {errors.eedcPhoneNumber && (
                 <div className="text-[14px] text-red-500 italic lg:text-[14px]">
-                  {errors.phoneNumber}
+                  {errors.eedcPhoneNumber}
                 </div>
               )}
             </div>
@@ -535,9 +535,9 @@ const EEDC = () => {
                   }`}
                 />
               </div>
-              {errors.ikedcEmail && (
+              {errors.eedcEmail && (
                 <div className="text-[14px] text-red-500 italic lg:text-[14px]">
-                  {errors.ikedcEmail}
+                  {errors.eedcEmail}
                 </div>
               )}
             </div>

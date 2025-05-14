@@ -518,13 +518,13 @@ const IBEDC = () => {
                   }`}
                 />
               </div>
-              {errors.meterNumber && (
+              {errors.ibedcMeterNumber && (
                 <div
                   className={`text-[14px] text-red-500 italic lg:text-[14px]
                 `}
                   // ${isDarkMode ? "text-white bg-black" : ""}
                 >
-                  {errors.meterNumber}
+                  {errors.ibedcMeterNumber}
                 </div>
               )}
             </div>
@@ -570,9 +570,9 @@ const IBEDC = () => {
                   }`}
                 />
               </div>
-              {errors.phoneNumber && (
+              {errors.ibedcPhoneNumber && (
                 <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                  {errors.phoneNumber}
+                  {errors.ibedcPhoneNumber}
                 </div>
               )}
             </div>
@@ -596,9 +596,9 @@ const IBEDC = () => {
                   }`}
                 />
               </div>
-              {errors.ikedcEmail && (
+              {errors.ibedcEmail && (
                 <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                  {errors.ikedcEmail}
+                  {errors.ibedcEmail}
                 </div>
               )}
             </div>

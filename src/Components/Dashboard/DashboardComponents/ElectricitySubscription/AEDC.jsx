@@ -293,7 +293,22 @@ const AEDC = () => {
     if (receivedData) {
       setSuccessPopup(false);
       setLoading(false);
-      navigate("/kedco-receipt");
+      navigate("/aedc-receipt");
+    }
+  }
+  function handleFailedData() {
+    setLoading(true);
+    const failedData = () => {
+      setAedcOrderId(aedcFetchedResponse.data.order_id);
+      setAedcTransactionId(aedcFetchedResponse.data.transaction_id);
+      setAedcServiceID(aedcFetchedResponse.data.request_id);
+      setAedcShowDescription(aedcFetchedResponse.data.description);
+    };
+    failedData();
+    if (failedData) {
+      setFailedPopup(false);
+      setLoading(false);
+      navigate("/aedc-receipt-failed");
     }
   }
 
@@ -542,9 +557,9 @@ const AEDC = () => {
                   }`}
                 />
               </div>
-              {errors.meterNumber && (
+              {errors.aedcMeterNumber && (
                 <div className="text-[13px] text-red-500 italic lg:text-[14px]">
-                  {errors.meterNumber}
+                  {errors.aedcMeterNumber}
                 </div>
               )}
             </div>
@@ -596,9 +611,9 @@ const AEDC = () => {
                   }`}
                 />
               </div>
-              {errors.phoneNumber && (
+              {errors.aedcPhoneNumber && (
                 <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                  {errors.phoneNumber}
+                  {errors.aedcPhoneNumber}
                 </div>
               )}
             </div>
@@ -622,9 +637,9 @@ const AEDC = () => {
                   }`}
                 />
               </div>
-              {errors.ikedcEmail && (
+              {errors.aedcEmail && (
                 <div className="text-[14px] text-red-500 italic lg:text-[14px]">
-                  {errors.ikedcEmail}
+                  {errors.aedcEmail}
                 </div>
               )}
             </div>
@@ -1352,7 +1367,7 @@ const AEDC = () => {
               >
                 Done
               </button>
-              <Link
+              {/* <Link
                 to="/aedc-receipt-failed"
                 state={{
                   selectedNetworkProduct: selectedAedcMeterType,
@@ -1365,16 +1380,14 @@ const AEDC = () => {
                   serviceID: aedcServiceID,
                   showDescription: aedcShowDescription,
                 }}
-              >
+              > */}
                 <button
-                  onClick={() => {
-                    setFailedPopup(false);
-                  }}
+                  onClick={handleFailedData}
                   className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
                 >
                   Receipt
                 </button>
-              </Link>
+              {/* </Link> */}
             </div>
           </div>
         </Modal>

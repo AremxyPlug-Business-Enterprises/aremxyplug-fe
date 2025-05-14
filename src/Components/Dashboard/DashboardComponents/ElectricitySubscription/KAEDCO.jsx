@@ -458,9 +458,9 @@ const KAEDCO = () => {
                   }`}
                 />
               </div>
-              {errors.meterNumber && (
+              {errors.kaedcoMeterNumber && (
                 <div className="text-[14px] text-red-500 italic lg:text-[14px]">
-                  {errors.meterNumber}
+                  {errors.kaedcoMeterNumber}
                 </div>
               )}
             </div>
@@ -506,9 +506,9 @@ const KAEDCO = () => {
                   }`}
                 />
               </div>
-              {errors.phoneNumber && (
+              {errors.kaedcoPhoneNumber && (
                 <div className="text-[14px] text-red-500 italic lg:text-[14px]">
-                  {errors.phoneNumber}
+                  {errors.kaedcoPhoneNumber}
                 </div>
               )}
             </div>
@@ -532,9 +532,9 @@ const KAEDCO = () => {
                   }`}
                 />
               </div>
-              {errors.ikedcEmail && (
+              {errors.kaedcoEmail && (
                 <div className="text-[14px] text-red-500 italic lg:text-[14px]">
-                  {errors.ikedcEmail}
+                  {errors.kaedcoEmail}
                 </div>
               )}
             </div>

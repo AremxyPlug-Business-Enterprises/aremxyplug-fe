@@ -521,12 +521,12 @@ const BEDC = () => {
                   }`}
                 />
               </div>
-              {errors.meterNumber && (
+              {errors.bedcMeterNumber && (
                 <div
                   className={`text-[14px] text-red-500 italic lg:text-[14px] `}
                   // ${isDarkMode ? "bg-black text-white" : ""}
                 >
-                  {errors.meterNumber}
+                  {errors.bedcMeterNumber}
                 </div>
               )}
             </div>
@@ -572,9 +572,9 @@ const BEDC = () => {
                   }`}
                 />
               </div>
-              {errors.phoneNumber && (
+              {errors.bedcPhoneNumber && (
                 <div className="text-[14px] text-red-500 italic lg:text-[14px]">
-                  {errors.phoneNumber}
+                  {errors.bedcPhoneNumber}
                 </div>
               )}
             </div>
@@ -598,9 +598,9 @@ const BEDC = () => {
                   }`}
                 />
               </div>
-              {errors.ikedcEmail && (
+              {errors.bedcEmail && (
                 <div className="text-[14px] text-red-500 italic lg:text-[14px]">
-                  {errors.ikedcEmail}
+                  {errors.bedcEmail}
                 </div>
               )}
             </div>

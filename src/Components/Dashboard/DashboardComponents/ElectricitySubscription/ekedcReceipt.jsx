@@ -41,12 +41,12 @@ export const EkedcReceipt = () => {
   const networkProduct =
     selectedEkedcMeterType?.length > 0 ? selectedEkedcMeterType : "";
   const meterNo = ekedcMeterNumber?.length > 0 ? ekedcMeterNumber : "";
-  const name = ekedcVerifiedName?.length > 0 ? ekedcVerifiedName : "";
+  const verifiedName = ekedcVerifiedName?.length > 0 ? ekedcVerifiedName : "";
   const phoneNo = ekedcPhoneNumber?.length > 0 ? ekedcPhoneNumber : "";
   const productEmail = ekedcEmail?.length > 0 ? ekedcEmail : "";
   const productAmount = ekedcAmount?.length > 0 ? ekedcAmount : "";
   const service_id = ekedcServiceID?.length > 0 ? ekedcServiceID : "";
-  const order_id = ekedcOrderId?.length > 0 ? ekedcOrderId : "";
+  const order_id = ekedcOrderId=== undefined ? "" : ekedcOrderId;
   const transaction_id = ekedcTransactionId?.length > 0 ? ekedcTransactionId : "";
   const description = ekedcShowDescription?.length > 0 ? ekedcShowDescription : "";
   const bill_generated = ekedcBillGenerate?.length > 0 ? ekedcBillGenerate : "";
@@ -186,7 +186,7 @@ export const EkedcReceipt = () => {
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Verified Name</p>
-                <span>{name}</span>
+                <span>{verifiedName}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -214,7 +214,7 @@ export const EkedcReceipt = () => {
                 <div className="flex flex-col gap-3 pt-[10px]">
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Customer Name</p>
-                <span>{name}</span>
+                <span>{verifiedName}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">

@@ -460,9 +460,9 @@ const IKEDC = () => {
                   onClick={() => setShowProductList(false)}
                 />
               </div>
-              {errors.meterNumber && (
+              {errors.ikedcMeterNumber && (
                 <div className="text-[14px] text-red-500 italic lg:text-[14px]">
-                  {errors.meterNumber}
+                  {errors.ikedcMeterNumber}
                 </div>
               )}
             </div>
@@ -508,9 +508,9 @@ const IKEDC = () => {
                   }`}
                 />
               </div>
-              {errors.phoneNumber && (
+              {errors.ikedcPhoneNumber && (
                 <div className="text-[14px] text-red-500 italic lg:text-[14px]">
-                  {errors.phoneNumber}
+                  {errors.ikedcPhoneNumber}
                 </div>
               )}
             </div>

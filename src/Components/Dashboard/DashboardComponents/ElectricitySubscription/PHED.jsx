@@ -460,9 +460,9 @@ const PHED = () => {
                   }`}
                 />
               </div>
-              {errors.meterNumber && (
+              {errors.phedMeterNumber && (
                 <div className="text-[14px] text-red-500 italic lg:text-[14px]">
-                  {errors.meterNumber}
+                  {errors.phedMeterNumber}
                 </div>
               )}
             </div>
@@ -508,9 +508,9 @@ const PHED = () => {
                   }`}
                 />
               </div>
-              {errors.phoneNumber && (
+              {errors.phedPhoneNumber && (
                 <div className="text-[14px] text-red-500 italic lg:text-[14px]">
-                  {errors.phoneNumber}
+                  {errors.phedPhoneNumber}
                 </div>
               )}
             </div>
@@ -534,9 +534,9 @@ const PHED = () => {
                   }`}
                 />
               </div>
-              {errors.ikedcEmail && (
+              {errors.phedEmail && (
                 <div className="text-[14px] text-red-500 italic lg:text-[14px]">
-                  {errors.ikedcEmail}
+                  {errors.phedEmail}
                 </div>
               )}
             </div>

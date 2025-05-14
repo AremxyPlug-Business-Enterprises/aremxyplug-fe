@@ -7,42 +7,60 @@ import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import logo2 from "../ElectricitySubscription/Electricity-sub-images/AEDC1 1.svg";
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export const AedcReceiptFailed = () => {
-
-  const location = useLocation();
   const navigate = useNavigate();
-  const { selectedNetworkProduct, meterNumber, phoneNumber, ikedcEmail, ikedcamount, serviceID, orderId, transactionId, showDescription  } = location.state
 
   const {
-    toggleSideBar,
-    isDarkMode,
-    date,   
-    verifiedName, 
-    setSelectedNetworkProduct,
-    setMeterNumber,
-    setVerifiedName,
-    setPhoneNumber,
-    setEmail,
-    setIkedcamount,
-    setGlobalCountry,
-    setFlag,
-  } = useContext(ContextProvider);
+        toggleSideBar,
+        isDarkMode,
+        date,   
+        aedcVerifiedName,
+        setAedcVerifiedName, 
+        setSelectedAedcMeterType,
+        aedcMeterNumber,
+        setAedcMeterNumber,
+        aedcPhoneNumber,
+        setAedcPhoneNumber,
+        aedcEmail,
+        setAedcEmail,
+        aedcAmount,
+        setAedcAmount,
+        setGlobalCountry,
+        setAedcFlag,
+        selectedAedcMeterType,
+        aedcServiceID,
+        aedcOrderId,
+        aedcTransactionId,
+        aedcShowDescription,
+      } = useContext(ContextProvider)
 
   function handleClick() {
-    setSelectedNetworkProduct("");
-    setMeterNumber("");
-    setVerifiedName("");
-    setPhoneNumber("");
-    setEmail("");
-    setIkedcamount("");
+    setSelectedAedcMeterType("");
+    setAedcMeterNumber("");
+    setAedcVerifiedName("");
+    setAedcPhoneNumber("");
+    setAedcEmail("");
+    setAedcAmount("");
     setGlobalCountry("");
-    setFlag("");
+    setAedcFlag("");
     navigate('/electricity-subscription');
   }
 
   const contentRef = useRef(null);
+
+  const networkProduct =
+    selectedAedcMeterType?.length > 0 ? selectedAedcMeterType : "";
+  const meterNo = aedcMeterNumber?.length > 0 ? aedcMeterNumber : "";
+  const verifiedName = aedcVerifiedName?.length > 0 ? aedcVerifiedName : "";
+  const phoneNo = aedcPhoneNumber?.length > 0 ? aedcPhoneNumber : "";
+  const productEmail = aedcEmail?.length > 0 ? aedcEmail : "";
+  const productAmount = aedcAmount?.length > 0 ? aedcAmount : "";
+  const service_id = aedcServiceID?.length > 0 ? aedcServiceID : "";
+  const order_id = aedcOrderId=== undefined ? "" : aedcOrderId;
+  const transaction_id = aedcTransactionId?.length > 0 ? aedcTransactionId : "";
+  const description = aedcShowDescription?.length > 0 ? aedcShowDescription : "";
 
   // ==============Share pdf Function=============
   const handleShareClick = () => {
@@ -146,16 +164,16 @@ export const AedcReceiptFailed = () => {
                 <p className="text-[#7C7C7C] font-[500]">Disco Type</p>
                 <span className="flex items-center gap-1 ">
                   <div><img className="w-[30px]" src={logo2} alt="" /></div>
-                  <div>{serviceID}</div>
+                  <div>{service_id}</div>
                   </span>
               </div>
               <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Meter Type</p>
-                <span>{selectedNetworkProduct} </span>
+                <span>{networkProduct} </span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Meter Number</p>
-                <span>{meterNumber} </span>
+                <span>{meterNo} </span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -165,15 +183,15 @@ export const AedcReceiptFailed = () => {
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Phone Number</p>
-                <span>{phoneNumber}</span>
+                <span>{phoneNo}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Email</p>
-                <span>{ikedcEmail}</span>
+                <span>{productEmail}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Amount</p>
-                <span>&#8358;{ikedcamount}</span>
+                <span>&#8358;{productAmount}</span>
               </div>
               
             </div>
@@ -221,7 +239,7 @@ export const AedcReceiptFailed = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Description</p>
-                  <span>{showDescription}</span>
+                  <span>{description}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Bill / Token Generated</p>
@@ -229,11 +247,11 @@ export const AedcReceiptFailed = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Order Number</p>
-                  <span>{orderId}</span>
+                  <span>{order_id}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Transaction ID</p>
-                  <span>{transactionId}</span>
+                  <span>{transaction_id}</span>
                 </div>
                 
               </div>
