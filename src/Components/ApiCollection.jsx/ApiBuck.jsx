@@ -202,7 +202,7 @@ export const VerifyTransPin = async(otp, setSuccess,
 }
 
 //A general post function 
-export const PostFunction = async(path, setLoading, body, functionAtSuccess, functionAtFailed)=> {
+export const PostFunction = async(path, setLoading, body, functionAtSuccess, functionAtFailed, setFetchedResponse)=> {
    const authToken = localStorage.getItem("authorisedLogin");
    const getToken = localStorage.getItem("getToken")
    if(!navigator.onLine) return alert("Check your internet connection");
@@ -214,8 +214,16 @@ export const PostFunction = async(path, setLoading, body, functionAtSuccess, fun
          Authorization : authToken || getToken
       }})
       if(response.status === 201 || 200){
-   functionAtSuccess()
+
+
+     
+         functionAtSuccess()
+         if(functionAtSuccess) {
+            setFetchedResponse(response.data.data)
          }
+         console.log(response.data)
+      }
+
    }catch(error){
       if(error && error.response.status === 400){
          functionAtFailed()

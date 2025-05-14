@@ -564,8 +564,10 @@ export default function IdVerification(Data) {
      ID Type
     </h2>
     <div onClick={()=> {
+
       if(Data.ConfirmId === "false" && Data.ConfirmBvn === "false"){
        chooseId();
+
     }else{
      return null;
     }
@@ -631,7 +633,7 @@ export default function IdVerification(Data) {
    lg:text-[16px] lg:leading-[20.8px]'>
      ID Number
     </h2>
-    <input 
+    <input readOnly={idStatus=== "Verified"}
      onInput={( e => {
       const numbersOnly = e.target.value.replace(/\D/g, '');
       e.target.value = numbersOnly;
@@ -642,9 +644,7 @@ export default function IdVerification(Data) {
     }}
     className='flex justify-between items-center font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[10px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none'
     placeholder=''
-    type="text" inputMode='numeric' maxLength={11} onInvalid={validId}
-    readOnly={Data.ConfirmId === "true" || Data.ConfirmBvn === "true"}
-      required/>
+    type="text" inputMode='numeric' maxLength={11} onInvalid={validId}  required/>
    
     </div>
       </div>
@@ -694,15 +694,17 @@ border-[0.4px] border-[solid] border-[#9C9C9C] cursor-pointer ${idResult === "Na
         {/* SUBMIT BUTTON */}
         <div className='flex flex-col md:gap-[15px] gap-[10px] justify-start'>
         <button 
-        disabled={ Data.ConfirmId === "true" || Data.ConfirmBvn === "true"}
+        disabled={ Data.ConfirmId === "true"}
         onClick={() => {
           IdFunctionState()
         }}
          className={`lg:py-[13px] md:py-[5.868px] md:rounded-[7.042px] py-[16.531px] rounded-[4.241px] w-[100%] md:w-[150px] lg:w-[163px] lg:rounded-[12px] bg-[#04177F]
          font-[600] text-[13px] leading-[18px] lg:text-[16px] text-center text-white lg:leading-[24px
+
          ${(Data.ConfirmId === "true" || Data.ConfirmBvn=== "true") ?"bg-slate-400" : "bg-[#04177F]"}`}>
        {(idButtonState) && 
        (   Data.ConfirmId === "true"  || Data.ConfirmBvn=== "true" ? "Verified" : "Verify" )}
+
         </button>
        { errorSubmit  && (
         <h2 className={`font-[500] lg:text-[14px] lg:leading-[18px] md:text-[14px] md:leading-[18px] 
