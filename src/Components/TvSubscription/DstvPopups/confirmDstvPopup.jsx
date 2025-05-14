@@ -1,6 +1,6 @@
 import React from "react";
 import "../../TvSubscription/TvSubscription.css";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ContextProvider } from "../../Context";
 import { Modal } from "../../Screens/Modal/Modal";
 import arrowRight from "../../../Components/EducationPins/imagesEducation/educationArrowRight.svg";
@@ -14,7 +14,7 @@ import styles from '../../AirTimePage/AirtimeVtu.module.css'
     setConfirmDstvPopup,
     toggleSideBar,
     selectedOptionDstv,
-    formatNumberWithCommas,
+    
     setInputPinDstv,
     mobileNumber,
     tvEmail,
@@ -23,6 +23,8 @@ import styles from '../../AirTimePage/AirtimeVtu.module.css'
     methodImage,
     tvWalletBalance,
     flagResult,
+    dstvAmount,
+    newBalance
   } = useContext(ContextProvider)
 
   
@@ -31,13 +33,28 @@ import styles from '../../AirTimePage/AirtimeVtu.module.css'
     setConfirmDstvPopup(false);
     setInputPinDstv(true);
   }
-  const getNumericValue = (option) => {
-    const numericPart = option.match(/\d+/);
-    if (numericPart) {
-      return formatNumberWithCommas(parseInt(numericPart[0], numericPart[2], 10));
-    }
-    return '';
-  };
+  // const getNumericValue = (option) => {
+  //   const numericPart = option.match(/\d+/);
+  //   if (numericPart) {
+  //     return formatNumberWithCommas(parseInt(numericPart[0], numericPart[2], 10));
+  //   }
+  //   return '';
+  // };
+const [balanceStatus,setBalanceStatus ] = useState("")
+   let balanceStringToNum = Number(newBalance);
+          let starTimesAmountToNumber = Number(dstvAmount);
+         let CheckSufficiency = starTimesAmountToNumber > balanceStringToNum
+      useEffect(()=> {
+        const HandleBalanceStatus = ()=> {
+          if(CheckSufficiency){
+           setBalanceStatus("Insufficient fund")
+          }else{
+            setBalanceStatus("");
+           }
+        }
+        HandleBalanceStatus()
+      },[CheckSufficiency])
+        console.log(balanceStringToNum, starTimesAmountToNumber)
 
   const valueWithoutTilde = selectedOptionDstv.split(" ~ ")[0];
   // const trimmedValue = valueWithoutTilde.trim();
@@ -54,7 +71,7 @@ import styles from '../../AirTimePage/AirtimeVtu.module.css'
               } w-[90%] md:w-[60%] overflow-auto`}
           >
         <div className="flex justify-end pr-2 mt-1 mb-3 md:mt-2 md:mb-2 lg:mb-0 lg:mt-1">
-        <img  onClick={()=>{setConfirmDstvPopup(false); window.location.reload()}}
+        <img  onClick={()=>{setConfirmDstvPopup(false);}}
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[26px] lg:h-[26px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
@@ -99,7 +116,7 @@ import styles from '../../AirTimePage/AirtimeVtu.module.css'
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
                     <span className="text-[#0008]">Amount</span>
-                    <span>{'₦'+ getNumericValue(selectedOptionDstv)}</span>
+                    <span>{dstvAmount}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
                     <span className="text-[#0008]">Payment Method</span>
@@ -125,8 +142,11 @@ import styles from '../../AirTimePage/AirtimeVtu.module.css'
                       alt="/"
                     />
                   </div>
-                  <p className="text-[10px] md:text-[14px]  lg:text-[16px] font-[500]">
-                    Available Balance{" "}
+                  <p className="text-[12px] md:text-[14px] leading-[20px] lg:leading-[22px]  lg:text-[16px] font-[500]">
+                    Available Balance {"  "} <span className="text-gray-300 text-[10px] font-[400] leading-[20px]
+                     lg:text-[14px] lg:leading-[22px]">
+                       {balanceStatus}
+                       </span>
                     <span className="text-[#0003]">
                       {tvWalletBalance}
                     </span>
