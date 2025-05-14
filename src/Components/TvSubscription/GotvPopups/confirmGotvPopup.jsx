@@ -1,6 +1,6 @@
 import React from "react";
 import "../../TvSubscription/TvSubscription.css";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { ContextProvider } from "../../Context";
 import { Modal } from "../../Screens/Modal/Modal";
 import arrowRight from "../../../Components/EducationPins/imagesEducation/educationArrowRight.svg";
@@ -12,7 +12,6 @@ const ConfirmGotvPopup = () => {
     confirmGotvPopup,
     setConfirmGotvPopup,
     toggleSideBar,
-    formatNumberWithCommas,
     setInputPinGotv,
     mobileNumber,
     tvEmail,
@@ -22,7 +21,9 @@ const ConfirmGotvPopup = () => {
     methodImage,
     tvWalletBalance,
     flagResult,
-  } = useContext(ContextProvider)
+    newBalance,
+   tvAmount
+ } = useContext(ContextProvider)
 
 
 
@@ -31,15 +32,26 @@ const ConfirmGotvPopup = () => {
     setConfirmGotvPopup(false);
     setInputPinGotv(true);
   }
-  const getNumericValue = (option) => {
-    const numericPart = option.match(/\d+/);
-    if (numericPart) {
-      return formatNumberWithCommas(parseInt(numericPart[0], numericPart[2], 10));
-    }
-    return '';
-  };
-
+ 
   const valueWithoutTilde = selectedOptionGOTV.split(" ~ ");
+
+   const [balanceStatus, setBalanceStatus] = useState("");
+  
+     let balanceStringToNum = Number(newBalance);
+        let starTimesAmountToNumber = Number(tvAmount);
+       let CheckSufficiency = starTimesAmountToNumber > balanceStringToNum
+    useEffect(()=> {
+      const HandleBalanceStatus = ()=> {
+        if(CheckSufficiency){
+         setBalanceStatus("Insufficient fund")
+        }else{
+          setBalanceStatus("");
+         }
+      }
+      HandleBalanceStatus()
+    },[CheckSufficiency])
+      console.log(balanceStringToNum, starTimesAmountToNumber)
+  
 
   return (
     <>
@@ -98,7 +110,7 @@ const ConfirmGotvPopup = () => {
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
                     <span className="text-[#0008]">Amount</span>
-                    <span>{'₦' + getNumericValue(selectedOptionGOTV)}</span>
+                    <span>{tvAmount}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
                     <span className="text-[#0008]">Payment Method</span>
@@ -124,8 +136,11 @@ const ConfirmGotvPopup = () => {
                       alt="/"
                     />
                   </div>
-                  <p className="text-[10px] md:text-[14px]  lg:text-[16px] font-[500]">
-                    Available Balance{" "}
+                 <p className="text-[12px] md:text-[14px] leading-[20px] lg:leading-[22px]  lg:text-[16px] font-[500]">
+                    Available Balance {"  "} <span className="text-gray-300 text-[10px] font-[400] leading-[20px]
+                     lg:text-[14px] lg:leading-[22px]">
+                       {balanceStatus}
+                       </span>
                     <span className="text-[#0003]">
                       {tvWalletBalance}
                     </span>

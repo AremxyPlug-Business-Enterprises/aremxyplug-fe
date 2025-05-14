@@ -2,7 +2,7 @@ import React from "react";
 import Joi from "joi";
 import { DashBoardLayout } from "../Dashboard/Layout/DashBoardLayout";
 import "../TvSubscription/TvSubscription.css";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useState } from "react";
 import arrowDown from '../EducationPins/imagesEducation/arrow-down.svg';
 import { ContextProvider } from "../Context";
@@ -17,7 +17,12 @@ import britainFlag from '../../Components/EducationPins/imagesEducation/Britain.
 import euroFlag from '../../Components/EducationPins/imagesEducation/GBP.svg';
 import austriaFlag from '../../Components/EducationPins/imagesEducation/Austria.svg';
 import kenyaFlag from '../../Components/EducationPins/imagesEducation/Kenya.svg';
-import axios from 'axios';
+
+import { useNavigate } from "react-router-dom";
+import { GetFunction } from "../ApiCollection.jsx/ApiBuck";
+import { Loader } from "../Loader/Loader";
+import { Modal } from "../Screens/Modal/Modal";
+
 // import { duration } from "html2canvas/dist/types/css/property-descriptors/duration";
 
 const GoTv = () => {
@@ -28,7 +33,7 @@ const GoTv = () => {
     showDropdownGOTV,
     setShowDropdownGOTV,
     setSelectedOptionGOTV,
-    formatNumberWithCommas,
+    //formatNumberWithCommas,
     mobileNumber,
     setCardName,
     cardName,
@@ -46,11 +51,19 @@ const GoTv = () => {
     methodImage,
     setMethodImage,
     isDarkMode,
-    fetchedGotvPlans
-  } = useContext(ContextProvider)
+    fetchedGotvPlans,
+    fetchedDstvPlans,
+    setFetchedDstvPlans,
+    fetchedShowMaxPlans,
+    setFetchedShowMaxPlans,
+    fetchedStarTimesPlans,
+    setFetchedStarTimesPlans,
+    newBalance
 
-  const [planName, setPlanName] = useState(false);
-   
+  } = useContext(ContextProvider)
+const navigate = useNavigate()
+ // const [planName, setPlanName] = useState(false);
+  const [loading, setLoading] = useState(false)
 
 
 
@@ -70,61 +83,76 @@ const GoTv = () => {
   // };
 
   const handleOptionClickGOTV = (option, plan) => {
-    setSelectedOptionGOTV(option); // Replace 'setInputValue' with the function to set input value
+    //setSelectedOptionGOTV(option); // Replace 'setInputValue' with the function to set input value
     setShowDropdownGOTV(false);
-    setPlanName(plan.planName);
+    //setPlanName(plan.planName);
     document.querySelector('.imgdrop').classList.remove('DropIt');
   };
   
-  const getNumericValue = (option) => {
-    if (typeof option === 'string') {
-        const numericPart = option.match(/\d+/);
-        if (numericPart) {
-            return formatNumberWithCommas(parseInt(numericPart[0], 10));
-        } else {
-            return ''; // Return an empty string if numeric part is not found
-        }
-    } else {
-        return ''; // Return an empty string for non-string inputs
-    }
-};
+//   const getNumericValue = (option) => {
+//     if (typeof option === 'string') {
+//         const numericPart = option.match(/\d+/);
+//         if (numericPart) {
+//             return formatNumberWithCommas(parseInt(numericPart[0], 10));
+//         } else {
+//             return ''; // Return an empty string if numeric part is not found
+//         }
+//     } else {
+//         return ''; // Return an empty string for non-string inputs
+//     }
+// };
 
-// const sendDataToBackend = (decoder_type, plan, iuc_number, email, amount, phone ) => {
-      //   const apiUrl = "https://aremxyplug.onrender.com/api/v1/tvsub";
+const GetOtherDataTv = async(id, path)=> {
+  console.log(id, path)
+ const SuccessHandler = ()=> {
+  navigate(path)
+ }
+ const FailedHandler = ()=> {
+  console.log("Error")
+ }
 
-      //   // Prepare the data to be sent in the request body 
-      //   const requestData = {
-      //     decoder_type,
-      //     plan,
-      //     iuc_number,
-      //     email,
-      //     amount,
-      //     phone, 
-      //   };
-      //   console.log(requestData);
-      //   // Send a POST request to the backend API 
-        
-      //   fetch(apiUrl, {
-      //     method: "POST",
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //     },
-      //     body: JSON.stringify(requestData),
-      //   })
-      //     .then((response) => response.json())
-      //     .then((data) => {
-      //       // Handle the response from the backend 
-      //       console.log("Backend response:", data);
-      //     })
-      //     .catch((error) => {
-      //       // Handle any errors that occurred during the fetch
-      //       console.error("Error sending data to backend:", error);
-      //     });
-      // };
-      
-     const GotvData = fetchedGotvPlans ? fetchedGotvPlans.data.data.data : []
+ const SubscriptionPresent =()=> {
+  if((fetchedDstvPlans.status === 200 || 201) && id === 2 ){
+    return navigate(path)
+  }else if((fetchedStarTimesPlans.status === 200 || 201) && id === 3) {
+   return navigate(path)
+  }else if((fetchedShowMaxPlans.status === 200 || 201) && id === 4) {
+   return navigate(path)
+  }
+  
+ }
+
+ let TvPath;
+ let fetchedResponse;
+  if((fetchedDstvPlans.status === undefined || null) && id === 2 ){
+    TvPath = `products/tvsub/dstv`;
+  fetchedResponse = setFetchedDstvPlans;
+   await GetFunction(TvPath, setLoading, SuccessHandler, FailedHandler, fetchedResponse)
+  
+ }else if((fetchedStarTimesPlans.status === undefined || null) && id === 3){
+    TvPath = `products/tvsub/startimes`;
+  fetchedResponse = setFetchedStarTimesPlans;
+   await GetFunction(TvPath, setLoading, SuccessHandler, FailedHandler, fetchedResponse)
    
-      console.log(GotvData)
+}else if ((fetchedShowMaxPlans.status === undefined || null) && id === 4){
+  TvPath = `products/tvsub/startimes`;
+  fetchedResponse = setFetchedShowMaxPlans;
+   await GetFunction(TvPath, setLoading, SuccessHandler, FailedHandler, fetchedResponse)
+  
+}else{
+ console.log(fetchedDstvPlans.status)
+  return SubscriptionPresent();
+}
+}
+
+
+     const GotvData = fetchedGotvPlans.data ? fetchedGotvPlans.data.data.data : []
+    useEffect(()=> {
+      if(GotvData.length < 1){
+        navigate("/TvSubscription")
+      }
+    })
+     
 
     
  
@@ -146,10 +174,10 @@ const GoTv = () => {
     const inputValue = e.target.value;
     setTvEmail(inputValue);
   }
-  const handleTvAmount = (e) => {
-    const inputValue = e.target.value;
-    setTvAmount(inputValue)
-  }
+  // const handleTvAmount = (e) => {
+  //   const inputValue = e.target.value;
+  //   setTvAmount(inputValue)
+  // }
   
 
  
@@ -164,36 +192,7 @@ const GoTv = () => {
   //   document.querySelector('.Decoderdrop').classList.toggle('DropIt');
   // }
 
-  const sendDataToBackend = async (decoder_type, plan, iuc_number, email, amount, phone) => {
-    const apiUrl = "https://aremxyplug.onrender.com/api/v1/tvsub";
-
-    // Prepare the data to be sent in the request body
-    const requestData = {
-      decoder_type,
-      plan,
-      iuc_number,
-      email,
-      amount,
-      phone, 
-    };
-
-    console.log(requestData);
-
-    try {
-      // Send a POST request to the backend API using Axios
-      const response = await axios.post(apiUrl, requestData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      // Handle the response from the backend
-      console.log("Backend response:", response.data);
-    } catch (error) {
-      // Handle any errors that occurred during the request
-      console.error("Error sending data to backend:", error);
-    }
-  };
+ 
   
 
   const handleGotv = (event) => {
@@ -213,8 +212,8 @@ const GoTv = () => {
         }, {})
       );
     } else {
-      sendDataToBackend(decoderType, planName, smartCard, tvEmail, '₦' + getNumericValue(selectedOptionGOTV), mobileNumber);
-      console.log(decoderType, planName, smartCard, tvEmail, '₦' + getNumericValue(selectedOptionGOTV), mobileNumber);
+      // sendDataToBackend(decoderType, planName, smartCard, tvEmail, '₦' + getNumericValue(selectedOptionGOTV), mobileNumber);
+      // console.log(decoderType, planName, smartCard, tvEmail, '₦' + getNumericValue(selectedOptionGOTV), mobileNumber);
       setConfirmGotvPopup(true);
       setErrors({});
     }
@@ -267,7 +266,7 @@ const GoTv = () => {
   }
 
   const [methodOptions, setMethodOptions] = useState([
-    { method: 'NGN Wallet', balance: " (50,000.00)", flag: nigerianFlag, id: 1 },
+    { method: 'NGN Wallet', balance: `(${newBalance})`, flag: nigerianFlag, id: 1 },
     { method: 'USD Wallet ', balance: '(0.00)', flag: americaFlag, id: 2 },
     { method: 'EUR Wallet', balance: '(0.00)', flag: britainFlag, id: 3 },
     { method: 'GBP Wallet', balance: '(0.00)', flag: euroFlag, id: 4 },
@@ -348,10 +347,11 @@ const GoTv = () => {
           }`}>
           {(Decoders.map(decoder => {
             return (
-               <a href={decoder.path}
+               <p
                onClick={(e =>{
           setDecoderType(decoder.decoderType );
                  setDecoderActive(false);
+             GetOtherDataTv(decoder.id, decoder.path)
              document.querySelector('.decdrop').classList.remove('DropIt');
              console.log(e);
               })}
@@ -361,15 +361,15 @@ const GoTv = () => {
          lg:text-[16px] lg:leading-[20.8px] cursor-pointer   ${
             isDarkMode 
               ? "bg-black text-white border border-white" 
-              : "hover:bg-[#EDEAEA] text-[#7C7C7C] bg-white"
+              : "hover:bg-[#EDEAEA] bg-white text-[#7C7C7C]"
           }`}
          key= {decoder.id}>
-      <h2 className={`{
+      <h2 className={`${
             isDarkMode 
               ? "bg-black text-white" 
-              : ""
+              : "bg-white text-[#7C7C7C]"
           }`}>{decoder.decoderType }   </h2>
-         </a>
+         </p>
         
             )
           }))}
@@ -402,7 +402,7 @@ const GoTv = () => {
               : "hover:bg-[#EDEAEA] bg-white"
           }`}>
                   {GotvData.map((option) => {
-                    const amount = option.Amount;
+                 
 
                    // const duration = option.duration;
 
@@ -419,8 +419,9 @@ const GoTv = () => {
           }`}
                       key={option.id}
                       onClick={() => {
-                        handleOptionClickGOTV(`${option.PackageName} (${amount})  `, option)
-                        setTvAmount(option.Amount)
+                        handleOptionClickGOTV()
+                        setSelectedOptionGOTV(option.PackageName);
+                       setTvAmount(option.Amount)
                       }
                       }
 
@@ -525,7 +526,7 @@ const GoTv = () => {
                     ? "bg-black text-white border border-white" 
                     : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
                 }`}
-                value={`₦ ${tvAmount}`} onChange={handleTvAmount}
+                value={`₦ ${tvAmount}`} readOnly
               />
 
             </div>
@@ -539,7 +540,7 @@ const GoTv = () => {
               : "border-[#9C9C9C] "
           }`}>
                 <p className='font-[500] text-[13px] leading-[10.4px] md:text-[12px] md:leading-[12.206px] lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px] cursor-pointer'>
-                  {flagResult + tvWalletBalance}
+                  {`${flagResult}  ${" "} ${tvWalletBalance}`}
                 </p>
                 <img className='methodDrop h-[16px] w-[14px] md:h-[14.038px] md:w-[14.038px] lg:h-[24px] lg:w-[24px]'
                   src={methodImage} alt="" />
@@ -616,7 +617,11 @@ const GoTv = () => {
 
         </div>
 
-        
+        {loading && (
+          <Modal>
+            <Loader/>
+          </Modal>
+        )}
 
       </DashBoardLayout>
       <ConfirmGotvPopup />
@@ -626,4 +631,4 @@ const GoTv = () => {
   )
 }
 
-export default GoTv
+export default GoTv;

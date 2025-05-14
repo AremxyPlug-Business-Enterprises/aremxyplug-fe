@@ -1,6 +1,6 @@
 import React from "react";
 import "../../TvSubscription/TvSubscription.css";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { ContextProvider } from "../../Context";
 import { Modal } from "../../Screens/Modal/Modal";
 import arrowRight from "../../../Components/EducationPins/imagesEducation/educationArrowRight.svg";
@@ -12,7 +12,7 @@ const ConfirmShowmaxPopup = () => {
     confirmShowmaxPopup,
     setConfirmShowmaxPopup,
     toggleSideBar,
-    formatNumberWithCommas,
+   // formatNumberWithCommas,
     setInputPinShowmax,
     mobileNumber,
     tvEmail,
@@ -22,6 +22,8 @@ const ConfirmShowmaxPopup = () => {
     methodImage,
     tvWalletBalance,
     flagResult,
+    newBalance,
+    showMaxAmount
   } = useContext(ContextProvider)
 
 
@@ -31,16 +33,32 @@ const ConfirmShowmaxPopup = () => {
     setConfirmShowmaxPopup(false);
     setInputPinShowmax(true);
   }
-  const getNumericValue = (option) => {
-    const numericPart = option.match(/\d+/);
-    if (numericPart) {
-      return formatNumberWithCommas(parseInt(numericPart[0], numericPart[2], 10));
-    }
-    return '';
-  };
+  // const getNumericValue = (option) => {
+  //   const numericPart = option.match(/\d+/);
+  //   if (numericPart) {
+  //     return formatNumberWithCommas(parseInt(numericPart[0], numericPart[2], 10));
+  //   }
+  //   return '';
+  // };
 
   const valueWithoutTilde = selectedOptionShowmax.split(" ~ ");
   // const trimmedValue = valueWithoutTilde.trim();
+
+  const [balanceStatus, setBalanceStatus] = useState("");
+   let balanceStringToNum = Number(newBalance);
+          let starTimesAmountToNumber = Number(showMaxAmount);
+         let CheckSufficiency = starTimesAmountToNumber > balanceStringToNum
+      useEffect(()=> {
+        const HandleBalanceStatus = ()=> {
+          if(CheckSufficiency){
+           setBalanceStatus("Insufficient fund")
+          }else{
+            setBalanceStatus("");
+           }
+        }
+        HandleBalanceStatus()
+      },[CheckSufficiency])
+        console.log(balanceStringToNum, starTimesAmountToNumber)
 
   return (
     <>
@@ -54,7 +72,7 @@ const ConfirmShowmaxPopup = () => {
                 } w-[90%] md:w-[60%] overflow-auto`}
             >
               <div className="flex justify-end pr-2 mt-1 mb-3 md:mt-2 md:mb-2 lg:mb-0 lg:mt-1">
-              <img onClick={() => { setConfirmShowmaxPopup(false); window.location.reload()}}
+              <img onClick={() => { setConfirmShowmaxPopup(false)}}
                   className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[26px] lg:h-[26px]"
                   src="/Images/transferImages/close-circle.png"
                   alt=""
@@ -99,7 +117,7 @@ const ConfirmShowmaxPopup = () => {
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
                     <span className="text-[#0008]">Amount</span>
-                    <span>{'₦' + getNumericValue(selectedOptionShowmax)}</span>
+                    <span>{`₦ ${" "} ${showMaxAmount}`}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
                     <span className="text-[#0008]">Payment Method</span>
@@ -125,8 +143,11 @@ const ConfirmShowmaxPopup = () => {
                       alt="/"
                     />
                   </div>
-                  <p className="text-[10px] md:text-[14px]  lg:text-[16px] font-[500]">
-                    Available Balance{" "}
+                  <p className="text-[12px] md:text-[14px] leading-[20px] lg:leading-[22px]  lg:text-[16px] font-[500]">
+                    Available Balance {"  "} <span className="text-gray-300 text-[10px] font-[400] leading-[20px]
+                     lg:text-[14px] lg:leading-[22px]">
+                       {balanceStatus}
+                       </span>
                     <span className="text-[#0003]">
                       {tvWalletBalance}
                     </span>

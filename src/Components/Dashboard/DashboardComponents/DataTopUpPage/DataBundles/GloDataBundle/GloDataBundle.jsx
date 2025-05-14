@@ -382,8 +382,10 @@ const GloDataBundle = () => {
         setGloRefNumber(resData.reference_number);
         console.log(resData.reference_number);
 
+
         // No `order_id`, using `id` instead
         // setMtnOrderID(resData.order_id); 
+
         console.log(resData.order_id);
 
         setGloDescription(`${resData.network} - ${resData.plan_name}`); // Fabricated description

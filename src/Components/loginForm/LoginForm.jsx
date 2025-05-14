@@ -208,7 +208,7 @@ if( !navigator.onLine) return alert("No internet Connection, Check your network 
                 const authToken = response.headers.get('Authorization');
               
                 if(authToken){
-                  localStorage.setItem("UserStatus",false)
+                 // localStorage.setItem("UserStatus",false)
                   SetLocalStorageInputPin();
                     localStorage.setItem("getToken", authToken);
                    }
@@ -219,7 +219,7 @@ if( !navigator.onLine) return alert("No internet Connection, Check your network 
                   console.log(authToken)
                    if(authToken){
                 localStorage.setItem("getToken", authToken);
-                localStorage.setItem("UserStatus",false)
+              //  localStorage.setItem("UserStatus",false)
                   if(customer){
                setCustomerDetail(customer);
                console.log(customerDetail);
@@ -287,7 +287,7 @@ if( !navigator.onLine) return alert("No internet Connection, Check your network 
                 setOpenTranspin(true);
                 const authToken = response.headers.get('Authorization');
                 if(authToken){
-                  localStorage.setItem("UserStatus",false)
+                 // localStorage.setItem("UserStatus",false)
                   SetLocalStorageInputPin();
                   localStorage.setItem("authorisedLogin", authToken);
               }
@@ -302,7 +302,7 @@ if( !navigator.onLine) return alert("No internet Connection, Check your network 
            if(authToken){
              setLoginAuthorisation(authToken);
              localStorage.setItem("authorisedLogin", authToken)
-             localStorage.setItem("UserStatus",false)
+           //  localStorage.setItem("UserStatus",false)
              if(customer){
               setCustomerDetail(customer);
              }
