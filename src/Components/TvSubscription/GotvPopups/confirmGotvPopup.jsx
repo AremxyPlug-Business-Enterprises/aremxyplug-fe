@@ -163,7 +163,7 @@ const ConfirmGotvPopup = () => {
                 className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto 
                   cursor-pointer text-[14px] font-extrabold
                    h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] lg:rounded-[12px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:my-[2%]
-                   ${CheckSufficiency ? "bg-gray-300" : "bg-primary"}`}
+                   ${CheckSufficiency ? "bg-gray-400" : "bg-primary"}`}
               >
                 Confirmed
               </button>
