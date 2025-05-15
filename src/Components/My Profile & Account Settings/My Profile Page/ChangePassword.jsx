@@ -40,7 +40,6 @@ const [loading, setLoading] = useState(false)
       Authorization : getToken || authToken
      }})
      if(response.status === 200 || 201){
-      alert("Password Changed Successfully")
       setUpdate(true);
      }
   
@@ -95,7 +94,7 @@ setErrorMessage("Please fill in all fields");
                     ? "border-slate-50 text-slate-50 bg-black"
                     : "bg-white"
                 }`}
-                placeholder=""
+                placeholder="Password at login"
                 value={oldPassword}
                 onChange={(event) => setOldPassword(event.target.value)}
               />
@@ -109,12 +108,13 @@ setErrorMessage("Please fill in all fields");
             <div className="relative ">
               <input
                 type="text"
+                placeholder="Password different from the old one"
                 className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:py-[10] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border text-sm leading-[18px] lg:leading-[20.8px] text-[#7E7E7E] focus:outline-none rounded-[10px] lg:text-[16px] border-[#9C9C9C]  ${
                   isDarkMode
                     ? "border-slate-50 border text-slate-50 bg-black"
                     : "bg-white"
                 }`}
-                placeholder=""
+                
                 value={newPassword}
                 onChange={(event) => setNewPassword(event.target.value)}
               />
@@ -130,12 +130,12 @@ setErrorMessage("Please fill in all fields");
               <input
                 id="confirmPinInput"
                 type="text"
+                placeholder="Confirm your new password"
                 className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:py-[10] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border text-sm leading-[18px] lg:leading-[20.8px] text-[#7E7E7E] focus:outline-none rounded-[10px] lg:text-[16px] border-[#9C9C9C]  ${
                   isDarkMode
                     ? "border-slate-50 text-slate-50 focus:bg-black bg-black"
                     : "bg-white"
                 }`}
-                placeholder=""
                 value={confirmPassword}
                 onChange={(event) => setConfirmPassword(event.target.value)}
               />

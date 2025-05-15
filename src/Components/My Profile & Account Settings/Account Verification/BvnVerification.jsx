@@ -278,6 +278,7 @@ console.log(Data)
                     type="date"
                     id="dob"
                     name="dob"
+                    readOnly={Data.ConfirmId === "true" || Data.ConfirmBvn === "true"}
                   />
                 </div>
                 
@@ -293,7 +294,13 @@ console.log(Data)
                     Gender
                   </h2>
                   <div
-                    onClick={chooseGender}
+                    onClick={()=> {
+                      if(Data.ConfirmId === "false" && Data.ConfirmBvn === "false"){
+                      chooseGender();
+                      }else{
+                        return null;
+                      }
+                    }}
                     className={` py-[10.33px] pl-[5.867px] md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] flex justify-between pr-[10.917px] lg:pr-[10px] border-[0.4px] border-[#9C9C9C] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] rounded-[10px] ${isDarkMode ? "border-white" : ""}`}
                   >
                     <h2
@@ -347,6 +354,7 @@ console.log(Data)
                       }}
                       className={`py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none rounded-[10px]  ${isDarkMode ? "text-white border-white bg-black" : ""}`}
                       placeholder=""
+                      readOnly={Data.ConfirmId === "true" || Data.ConfirmBvn === "true"}
                       type="text"
                       onInvalid={validAddress}
                       required
@@ -406,16 +414,11 @@ console.log(Data)
                     BVN Number
                   </h2>
                   <input
-                    readOnly={Data.ConfirmBvn === "true"}
+                    readOnly={Data.ConfirmBvn === "true" || Data.ConfirmId === "true"}
                     onInput={(e) => {
                       const numbersOnly = e.target.value.replace(/\D/g, "");
                       e.target.value = numbersOnly;
                     }}
-                    onClick={() => {
-                      setLoginAuthorisation(
-                        localStorage.getItem("authorisedLogin")
-                      );
-                   }}
                     value={bvnNumber && (bvnStatus === "Verified" ? BvnNumberRef.current : bvnNumber)}
                     onChange={(e) => {
                       setBvnNumber(e.target.value);

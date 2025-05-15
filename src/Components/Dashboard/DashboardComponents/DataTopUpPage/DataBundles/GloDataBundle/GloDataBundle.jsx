@@ -26,8 +26,10 @@ import Joi from "joi";
 import airtimestyles from "../../../../../AirTimePage/AirtimeVtu.module.css";
 import { GloFailedReceipt } from "./GloFailedReceipt";
 import Spinner from "./../MtnDataTopUpBundle/Spinner";
-import axios from "axios";
-import Failed from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/Failed.svg"
+import Failed from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/Failed.svg";
+import axiosInstance from "../../../../../ApiCollection.jsx/apiClient";
+import { VerifyTransPin } from "../../../../../ApiCollection.jsx/ApiBuck";
+
 
 
 const GloDataBundle = () => {
@@ -63,25 +65,17 @@ const GloDataBundle = () => {
   const [productPlans, setProductPlans] = useState([]);
   const [loadingProducts, setLoadingProducts] = useState(false);
   const [loadingPlans, setLoadingPlans] = useState(false);
-
-  const getAuthToken = () => {
-    return localStorage.getItem("authorisedLogin") || localStorage.getItem("getToken");
-  };
+  const [selectedPlan, setSelectedPlan] = useState(null);
+  const [success, setSuccess] = useState(false);
+  const [failed, setFailed] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     const fetchProducts = async () => {
       setLoadingProducts(true);
       try {
-        const token = getAuthToken();
-        console.log(token);
-        const response = await axios.get(
-          `https://aremxyplug.onrender.com/api/v1/products/telecom/list/2`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: token,
-            },
-          }
+        const response = await axiosInstance.get(
+          '/products/telecom/list/2'
         );
         setProducts(response.data.data.products || []);
       } catch (error) {
@@ -98,15 +92,8 @@ const GloDataBundle = () => {
   const fetchPlans = async (productId) => {
     setLoadingPlans(true);
     try {
-      const token = getAuthToken();
-      const response = await axios.get(
-        `https://aremxyplug.onrender.com/api/v1/products/telecom/${productId}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token,
-          },
-        }
+      const response = await axiosInstance.get(
+        `/products/telecom/${productId}`
       );
       setProductPlans(response.data.data.plans || []);
     } catch (error) {
@@ -124,8 +111,9 @@ const GloDataBundle = () => {
   };
 
   const handleSelectOption = (plan) => {
-    setSelectedOption(`${plan.Size} - ${plan.Validity} - ₦${plan.Amount}`);
+    setSelectedOption(`${plan.Size} ~ ${plan.Validity} ~ ₦${plan.Amount}`);
     setSelectedAmount(`₦${plan.Amount}`);
+    setSelectedPlan(plan);
     setShowOptionList(false);
     setShowProductList(false);
   };
@@ -337,7 +325,16 @@ const GloDataBundle = () => {
 
   const inputPinHandler = async () => {
     async function buyData(network, mobileNumber, plan, name) {
-      const url = 'https://aremxyplug.onrender.com/api/v1/data';
+      // Add validation for selected plan
+      if (!selectedPlan) {
+        console.error("No plan selected");
+        return;
+      }
+
+      console.log(selectedPlan)
+      console.log(selectedPlan.PlanID)
+
+      const path = '/data';
 
       const data = {
         network,
@@ -354,31 +351,43 @@ const GloDataBundle = () => {
       console.log("its me")
 
       try {
-        const response = await axios.post(url, data);
+        const response = await axiosInstance.post(path, data);
         console.log(response.data);
         console.log(response.status);
-        // setSelectedProduct(response.data.product)
-        // console.log(response.data.product)
-        setPlan(response.data.plan_name)
-        console.log(response.data.plan_name)
-        setInputValue(response.data.Phone_Number)
-        console.log(response.data.Phone_Number)
-        setRecipientPhoneNumber(data.Phone_number)
-        console.log(data.Phone_number)
-        console.log(inputValue)
-        console.log(recipientPhoneNumber)
-        setRecipientNames(response.data.Name)
-        console.log(response.data.Name)
-        setSelectedAmount(response.data.plan_amount)
-        console.log(response.data.plan_amount)
-        setGloTransactionID(response.data.transaction_id)
-        console.log(response.data.transaction_id)
-        setGloRefNumber(response.data.reference_number)
-        console.log(response.data.reference_number)
-        setGloOrderID(response.data.order_id)
-        console.log(response.data.order_id)
-        setGloDescription(response.data.description)
-        // console.log(response.data.description)
+
+        const resData = response.data.data; // Accessing the nested `data` object
+
+        console.log(response.status);
+        setPlan(resData.plan_name);
+        console.log(resData.plan_name);
+
+        setInputValue(resData.Phone_Number);
+        console.log(resData.Phone_Number);
+
+        setRecipientPhoneNumber(data.Phone_number); // Still from your original request
+        console.log(data.Phone_number);
+
+        console.log(inputValue); // Note: this may still show the old state value here
+        console.log(recipientPhoneNumber);
+
+        setRecipientNames(resData.Name);
+        console.log(resData.Name);
+
+        setSelectedAmount(resData.plan_amount);
+        console.log(resData.plan_amount);
+
+        setGloTransactionID(resData.transaction_id);
+        console.log(resData.transaction_id);
+
+        setGloRefNumber(resData.reference_number);
+        console.log(resData.reference_number);
+
+        //setMtnOrderID(resData.order_id); // No `o
+        // rder_id`, using `id` instead
+        //console.log(resData.order_id);
+
+        setGloDescription(`${resData.network} - ${resData.plan_name}`); // Fabricated description
+
         return { statusCode: response.status, data: response.data };
         // console.log(response.data);
       } catch (error) {
@@ -389,7 +398,10 @@ const GloDataBundle = () => {
 
     // usage
     const response = await buyData(
-      2, recipientPhoneNumber, plan, recipientNames
+      2, // Network ID for MTN
+      inputValue, // Use inputValue instead of recipientPhoneNumber
+      selectedPlan.PlanID,
+      recipientNames
     );
 
     console.log(response)
@@ -626,10 +638,15 @@ const GloDataBundle = () => {
                     products.map((product) => (
                       <div
                         key={product.Product_ID}
-                        className={`cursor-pointer border-b-[0.5px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] py-[4px] pl-[5px]`}
+                        className={`pb-[15px] md:pb-[6px] pt-[15px] md:pt-[6px] font-weight-bold text-[13px] cursor-pointer border-b-[0.5px] text-[#7C7C7C] md:text-[12px] lg:text-[16px]  md:rounded-[0px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${selectedProduct === product.Plan_Type ? "" : ""}
+                          ${isDarkMode
+                            ? "bg-black text-white "
+                            : ""
+                          }
+                          `}
                         onClick={() => {
                           handleSelectProduct(product);
-                          setShowOptionList(true);
+                          setShowOptionList(false);
                         }}
                       >
                         {`${product.Plan_Type}`}
@@ -676,10 +693,16 @@ const GloDataBundle = () => {
                     productPlans.map((plan) => (
                       <div
                         key={plan.PlanID}
-                        className={`cursor-pointer border-b-[0.5px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] py-[4px] pl-[5px]`}
+                        className={`pb-[18px] md:pb-[6px] pt-[18px] md:pt-[6px] font-weight-bold text-[13px] cursor-pointer border-b-[0.5px] md:rounded-[0px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${selectedOption === plan.PlanID ? "bg-gray-200" : ""
+                          }
+                                                ${isDarkMode
+                            ? "bg-black text-white "
+                            : ""
+                          }
+                                             `}
                         onClick={() => handleSelectOption(plan)}
                       >
-                        {`${plan.Size} - ${plan.Validity} (₦${plan.Amount})`}
+                        {`${plan.PlanType} (${plan.Size} ~ ${plan.Validity} ~ ₦${plan.Amount})`}
                       </div>
                     ))
                   )}
@@ -1117,10 +1140,19 @@ const GloDataBundle = () => {
                 </div>
 
                 <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setConfirm(false);
-                    inputPinHandler(e);
+                  onClick={() => {
+                    console.log("inputPin", inputPin);
+                    VerifyTransPin(
+                      inputPin,
+                      setSuccess,
+                      setFailed,
+                      setLoading,
+                      setErrorMessage,
+                      () => {
+                        setConfirm(false); // Close modal on PIN success
+                        inputPinHandler(); // Proceed with purchase
+                      }
+                    );
                   }}
                   disabled={inputPin.length !== 4}
                   className={`${inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"

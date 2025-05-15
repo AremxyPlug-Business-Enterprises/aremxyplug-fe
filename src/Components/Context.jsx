@@ -856,12 +856,8 @@ export const Context = ({ children }) => {
 
   //=============TV-subscription==============
 
-  //==========GOTV===========
-  const [confirmGotvPopup, setConfirmGotvPopup] = useState(false);
-  const [inputPinGotv, setInputPinGotv] = useState(false);
-  const [gotvSuccessful, setGotvSuccessful] = useState(false);
-  const [selectedOptionGOTV, setSelectedOptionGOTV] = useState("");
-  const [showDropdownGOTV, setShowDropdownGOTV] = useState(false);
+
+  
   const formatNumberWithCommas = (number) => {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
@@ -877,12 +873,22 @@ export const Context = ({ children }) => {
   const [decoderType, setDecoderType] = useState("");
   const [decoderActive, setDecoderActive] = useState(false);
 
+  //==========GOTV===========
+  const [confirmGotvPopup, setConfirmGotvPopup] = useState(false);
+  const [inputPinGotv, setInputPinGotv] = useState(false);
+  const [gotvSuccessful, setGotvSuccessful] = useState(false);
+  const [selectedOptionGOTV, setSelectedOptionGOTV] = useState("");
+  const [showDropdownGOTV, setShowDropdownGOTV] = useState(false);
+  const [fetchedGotvPlans, setFetchedGotvPlans] = useState([])
+
   //==========DSTV===========
   const [selectedOptionDstv, setSelectedOptionDstv] = useState("");
   const [showDropdownDstv, setShowDropdownDstv] = useState(false);
   const [confirmDstvPopup, setConfirmDstvPopup] = useState(false);
   const [inputPinDstv, setInputPinDstv] = useState(false);
   const [dstvSuccessful, setDstvSuccessful] = useState(false);
+  const [fetchedDstvPlans, setFetchedDstvPlans] = useState([])
+  const [dstvAmount, setDstvAmount] = useState("₦")
 
   //=========SHOWMAX===========
   const [selectedOptionShowmax, setSelectedOptionShowmax] = useState("");
@@ -890,6 +896,8 @@ export const Context = ({ children }) => {
   const [confirmShowmaxPopup, setConfirmShowmaxPopup] = useState(false);
   const [inputPinShowmax, setInputPinShowmax] = useState(false);
   const [showmaxSuccessful, setShowmaxSuccessful] = useState(false);
+  const [fetchedShowMaxPlans, setFetchedShowMaxPlans] = useState([])
+  const [showMaxAmount, setShowMaxAmount] = useState("₦")
 
   //=========STARTIMES===========
   const [selectedOptionStarTimes, setSelectedOptionStarTimes] = useState("");
@@ -897,6 +905,8 @@ export const Context = ({ children }) => {
   const [confirmStarTimesPopup, setConfirmStarTimesPopup] = useState(false);
   const [inputPinStarTimes, setInputPinStarTimes] = useState(false);
   const [starTimesSuccessful, setStarTimesSuccessful] = useState(false);
+  const [fetchedStarTimesPlans, setFetchedStarTimesPlans] = useState([]);
+  const [starTimesAmount, setStarTimesAmount] = useState("₦")
 
   //============= EDUCATION PINS ========================
   //===============WAEC PINS================
@@ -1454,6 +1464,8 @@ const [idButtonState, setIdButtonState] = useState("Verify")
     setSelectedOptionGOTV,
     showDropdownGOTV,
     setShowDropdownGOTV,
+    fetchedGotvPlans,
+     setFetchedGotvPlans,
 
     //=======DSTV
     confirmDstvPopup,
@@ -1466,6 +1478,10 @@ const [idButtonState, setIdButtonState] = useState("Verify")
     setSelectedOptionDstv,
     showDropdownDstv,
     setShowDropdownDstv,
+    fetchedDstvPlans,
+     setFetchedDstvPlans,
+     dstvAmount,
+      setDstvAmount,
 
 
     //=======SHOWMAX
@@ -1479,6 +1495,11 @@ const [idButtonState, setIdButtonState] = useState("Verify")
     setSelectedOptionShowmax,
     showDropdownShowmax,
     setShowDropdownShowmax,
+    fetchedShowMaxPlans,
+     setFetchedShowMaxPlans,
+     showMaxAmount,
+      setShowMaxAmount,
+      
 
     //=======STARTIMES
     confirmStarTimesPopup,
@@ -1491,6 +1512,10 @@ const [idButtonState, setIdButtonState] = useState("Verify")
     setSelectedOptionStarTimes,
     showDropdownStarTimes,
     setShowDropdownStarTimes,
+    fetchedStarTimesPlans,
+     setFetchedStarTimesPlans,
+     starTimesAmount,
+     setStarTimesAmount,
 
     //====== EDUCATION PINS
     //=======WAEC PINS

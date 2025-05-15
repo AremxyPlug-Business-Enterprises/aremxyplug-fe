@@ -9,7 +9,7 @@ import { AiFillEyeInvisible } from "react-icons/ai";
 import styles from "../../Dashboard/DashboardComponents/TransferComponent/transfer.module.css";
 
 
-export const InputGotvPopup = () => {
+export const InputGotvPopup = ({VerifyPinHandler}) => {
     const {
       inputPinGotv,
       inputPin,
@@ -83,7 +83,7 @@ export const InputGotvPopup = () => {
                 }
                     
                     renderInput={(props) => (
-                      <input {...props} className={`inputOTP mx-[2px] ${isFocused ? 'focused' : ''}`} onFocus={handleFocus}
+                      <input onClick={VerifyPinHandler} {...props} className={`inputOTP mx-[2px] ${isFocused ? 'focused' : ''}`} onFocus={handleFocus}
                       onBlur={handleBlur}/>
                     )}
                   />

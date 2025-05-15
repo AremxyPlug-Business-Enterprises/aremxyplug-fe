@@ -21,6 +21,7 @@ import {VerifyTransPin} from "../../Components/ApiCollection.jsx/ApiBuck";
 import {Loader} from "../Loader/Loader"
 import {Modal} from "../Screens/Modal/Modal"
 import {PostFunction} from "../../Components/ApiCollection.jsx/ApiBuck"
+import { useNavigate } from "react-router-dom";
 // import { duration } from "html2canvas/dist/types/css/property-descriptors/duration";
 
 
@@ -40,6 +41,7 @@ const GoTv = () => {
     smartCard,
     setSmartCard,
     setTvEmail,
+    tvAmount,
     setTvAmount,
     setMobileNumber,
     decoderActive,
@@ -52,12 +54,22 @@ const GoTv = () => {
     setErrorMessage,
     setGotvSuccessful,
     setInputPinGotv,
+    fetchedGotvPlans,
+    setSuccessPopup
   } = useContext(ContextProvider)
 
   const [planName, setPlanName] = useState(false);
   const [tvOneOtp, setTvOneOtp] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [failedPopup, setFailedPopup] = useState(false);
+   const navigate = useNavigate();
+
+     // Seting all the state values first
+ const [tvSubscriptionResponse, setTvSubscriptionResponse] = useState(null);
+const [gotvOrderId, setGotvOrderId] = useState('');
+const [gotvTransactionId, setGotvTransactionId] = useState('');
+const [gotvRequestId, setGotvRequestId] = useState('');
+const [gotvDescription, setGotvDescription] = useState('');
 
   // const handleOptionClickGOTV = (option, id) => {
     // setSelectedOptionGOTV(option);
@@ -93,7 +105,6 @@ const GoTv = () => {
         return ''; // Return an empty string for non-string inputs
     }
 };
-
 // const sendDataToBackend = (decoder_type, plan, iuc_number, email, amount, phone ) => {
       //   const apiUrl = "https://aremxyplug.onrender.com/api/v1/tvsub";
 
@@ -126,23 +137,12 @@ const GoTv = () => {
       //       console.error("Error sending data to backend:", error);
       //     });
       // };
+      
+     const GotvData = fetchedGotvPlans ? fetchedGotvPlans.data.data.data : []
+   
+      console.log(GotvData)
 
-
-    const options = [
-    { id: 1, planName: "Gotv Smallie", amount: "₦1100", duration: "Monthly" },
-    { id: 2, planName: "GOtv Jinja", amount: "₦2250", duration: "Monthly" },
-    { id: 3, planName: "GOtv Jinja", amount: "₦4500", duration: "2 Months" },
-    { id: 4, planName: "GOtv Lite", amount: "₦2900", duration: "3 Months" },
-    { id: 5, planName: "GOtv Lite", amount: "₦8600", duration: "Annually" },
-    { id: 6, planName: "GOtv Max", amount: "₦4850", duration: "Monthly" },
-    { id: 7, planName: "GOtv Max", amount: "₦9700", duration: "2 Months" },
-    { id: 8, planName: "GOtv Joli", amount: "₦3300", duration: "Monthly" },
-    { id: 9, planName: "GOtv Joli", amount: "₦6600", duration: "2 Months" },
-    { id: 10, planName: "GOtv SUPA", amount: "₦6400", duration: "Monthly" },
-    { id: 11, planName: "GOtv SUPA", amount: "₦12800", duration: "2 Months" },
-    { id: 12, planName: "GOtv SUPA plus", amount: "₦21000", duration: "2 Months" },
-  ]
-
+    
  
 
   // function waecQuantityDropDown(){
@@ -175,41 +175,7 @@ const GoTv = () => {
       { decoderType  :'StarTimes', path : "/StarTimes", id : 3 },
     { decoderType  :'Showmax', path : "/Showmax", id : 4 }
      ]
-  //   function GotvDropDown(){
-  //     setDecoderActive(!decoderActive);
-  //   document.querySelector('.Decoderdrop').classList.toggle('DropIt');
-  // }
 
-  // const sendDataToBackend = async (decoder_type, plan, iuc_number, email, amount, phone) => {
-  //   const apiUrl = "https://aremxyplug.onrender.com/api/v1/tvsub";
-
-  //   // Prepare the data to be sent in the request body
-  //   const requestData = {
-  //     decoder_type,
-  //     plan,
-  //     iuc_number,
-  //     email,
-  //     amount,
-  //     phone, 
-  //   };
-
-  //   console.log(requestData);
-
-  //   try {
-  //     // Send a POST request to the backend API using Axios
-  //     const response = await axios.post(apiUrl, requestData, {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     });
-
-  //     // Handle the response from the backend
-  //     console.log("Backend response:", response.data);
-  //   } catch (error) {
-  //     // Handle any errors that occurred during the request
-  //     console.error("Error sending data to backend:", error);
-  //   }
-  // };
   
 
   const handleGotv = (event) => {
@@ -246,7 +212,7 @@ const GoTv = () => {
         plan: planName,
         iuc_number: smartCard,
         email: tvEmail,
-        amount: '₦' + getNumericValue(selectedOptionGOTV),
+        amount: tvAmount,
         phone: mobileNumber,
       };
 //show confirmation popup
@@ -334,61 +300,57 @@ setErrors({});
     document.querySelector('.decdrop').classList.toggle('DropIt');
   }
 
-  // const VerifyPinHandler = async() =>{
-  //   const GotvHandler = async() => {
-  //     const requestData = {
-  //           decoder_type: decoderType,
-  //           plan: planName,
-  //           iuc_number:smartCard,
-  //           email: tvEmail,
-  //           amount: "",
-  //           phone: mobileNumber,
-  //         };
-  //         const Path = "tvsub"
-  //         const SuccessHandler = () =>{
-  //           setGotvSuccessful(true)
-  //           setInputPinGotv(false)
-            
-  //         }
-  //         const FailedHandler = () =>{
-  //            setFailedPopup(true);
-  //           setInputPinGotv(false)
-  //         }
-  //         await PostFunction(Path, setIsLoading, requestData, SuccessHandler, FailedHandler)
 
-  //   }
-  //         await VerifyTransPin(tvOneOtp, null,
 
-  //          null, setIsLoading, setErrorMessage, GotvHandler)
-  // }  
+const handleReceivedData = () => {
+  setIsLoading(true);
+  const receivedData = () => {
+    // Seting the relevant data from the TV subscription response
+    setGotvOrderId(tvSubscriptionResponse.data.order_id);
+    setGotvTransactionId(tvSubscriptionResponse.data.transaction_id);
+    setGotvRequestId(tvSubscriptionResponse.data.request_id);
+    setGotvDescription(tvSubscriptionResponse.data.description);
+  };
 
+  receivedData();
+  
+  if (receivedData) {
+    setSuccessPopup(false);
+    setIsLoading(false);
+    navigate("/gotv-receipt");
+  }
+};
 
 // VerifyPinHandler to handle both success and failure cases:
 const VerifyPinHandler = async () => {
-  try {
     const GotvHandler = async () => {
       const requestData = {
         decoder_type: decoderType,
         plan: planName,
         iuc_number: smartCard,
         email: tvEmail,
-        amount: '₦' + getNumericValue(selectedOptionGOTV),
+        amount: tvAmount,
         phone: mobileNumber,
       };
       const Path = "tvsub";
+      const successHandler = () =>{
+        setGotvSuccessful(true);
+        setInputPinGotv(false);
+        handleReceivedData()
+      }
+      const FailedHandler = () =>{
+       setFailedPopup(true);
+       setInputPinGotv(false);
+      }
       
       await PostFunction(
         Path,
         setIsLoading,
         requestData,
-        () => { // Success handler
-          setGotvSuccessful(true);
-          setInputPinGotv(false);
-        },
-        () => { // Failure handler
-          setFailedPopup(true);
-          setInputPinGotv(false);
-        }
+       
+        successHandler,
+        FailedHandler,
+        setTvSubscriptionResponse
       );
     };
   
@@ -400,11 +362,17 @@ const VerifyPinHandler = async () => {
       setErrorMessage,
       GotvHandler
     );
-  } catch (error) {
-    console.error("PIN verification error:", error);
-    setFailedPopup(true);
-  }
+
   };
+
+  //fetch response
+
+  // function handleRecievedData() =>{
+  //   setLoading(true);
+  //   const recievedData = () =>{
+                           
+  //   }
+  // }
 
   return (
     <div>
@@ -510,15 +478,16 @@ const VerifyPinHandler = async () => {
               </div>
 
               {showDropdownGOTV && (
-                <ul className={`dropdown-options absolute top-[100%] w-full  cursor-pointer z-[2]
+                <ul className={`dropdown-options absolute top-[100%] w-full h-[300px] overflow-y-scroll  cursor-pointer z-[2]
                    ${
             isDarkMode 
               ? "bg-black text-white border border-white" 
               : "hover:bg-[#EDEAEA] bg-white"
           }`}>
-                  {options.map((option) => {
-                    const amount = option.amount;
-                    const duration = option.duration;
+                  {GotvData.map((option) => {
+                    const amount = option.Amount;
+
+                   // const duration = option.duration;
 
 
                     return (
@@ -532,11 +501,15 @@ const VerifyPinHandler = async () => {
               : "hover:bg-[#EDEAEA]  bg-white"
           }`}
                       key={option.id}
-                      onClick={() => handleOptionClickGOTV(`${option.planName} (${amount}) ~ ${duration}`, option)}
+                      onClick={() => {
+                        handleOptionClickGOTV(`${option.PackageName} (${amount})  `, option)
+                        setTvAmount(option.Amount)
+                      }
+                      }
 
                       
                     >
-                      {`${option.planName} (${option.amount}) ~ ${option.duration}`}
+                      {`${option.PackageName} (${option.Amount})`}
                     </li>
                     );
                   })}
@@ -635,7 +608,7 @@ const VerifyPinHandler = async () => {
                     ? "bg-black text-white border border-white" 
                     : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
                 }`}
-                value={'₦' + getNumericValue(selectedOptionGOTV)} onChange={handleTvAmount}
+                value={`₦ ${tvAmount}`} onChange={handleTvAmount}
               />
 
             </div>
@@ -730,7 +703,7 @@ const VerifyPinHandler = async () => {
 
       </DashBoardLayout>
       <ConfirmGotvPopup />
-      <InputGotvPopup />
+      <InputGotvPopup VerifyPinHandler={VerifyPinHandler}/>
       <GotvSuccessfulPopup />
 
       {/* Failed Transaction Popup */}

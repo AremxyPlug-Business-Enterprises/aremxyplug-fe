@@ -21,6 +21,7 @@ import { Link } from 'react-router-dom';
 import { AirtimeVtuReceipt } from './AirtimeVtuReceipt';
 import axios from 'axios';
 import { AirtimeReceiptFailed } from './AirtimeReceiptFailed';
+import axiosInstance from '../ApiCollection.jsx/apiClient';
 
 const AirtimeVtu = () => {
     // const {  isDarkMode } = useContext(ContextProvider);
@@ -401,7 +402,7 @@ const AirtimeVtu = () => {
 
     const handleTransactionSuccessClose = async () => {
         async function buyAirtime(network, mobileno, amount, airtime_type) {
-            const url = 'https://aremxyplug.onrender.com/api/v1/airtime';
+            const path = '/airtime';
 
             const data = {
                 network,
@@ -413,17 +414,20 @@ const AirtimeVtu = () => {
             console.log(data);
 
             try {
-                const response = await axios.post(url, data);
-                console.log(response.data);
+                const response = await axiosInstance.post(path, data);
+                const result = response.data.data; // Access the nested `data`
+            
+                console.log(result);
                 console.log(response.status);
-                setNetworkName(response.data.network)
-                setSelectedProduct(response.data.product)
-                setInputValues(response.data.phone_no)
-                setAmount(response.data.amount)
-                setTransactionID(response.data.transaction_id)
-                setRefNumber(response.data.reference_number)
-                setOrderID(response.data.order_id)
-                setDescription(response.data.description)
+            
+                setNetworkName(result.network);
+                setSelectedProduct(result.product);
+                setInputValues(result.phone_no);
+                setAmount(result.amount);
+                setTransactionID(result.transaction_id);
+                setRefNumber(result.reference_number);
+                setOrderID(result.order_id);
+                setDescription(result.description);
                 return { statusCode: response.status, data: response.data };
                 // console.log(response.data);
             } catch (error) {

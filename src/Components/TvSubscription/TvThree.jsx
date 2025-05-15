@@ -17,6 +17,11 @@ import britainFlag from '../../Components/EducationPins/imagesEducation/Britain.
 import euroFlag from '../../Components/EducationPins/imagesEducation/GBP.svg';
 import austriaFlag from '../../Components/EducationPins/imagesEducation/Austria.svg';
 import kenyaFlag from '../../Components/EducationPins/imagesEducation/Kenya.svg';
+import {VerifyTransPin} from "../../Components/ApiCollection.jsx/ApiBuck";
+import {Loader} from "../Loader/Loader"
+import {Modal} from "../Screens/Modal/Modal"
+import { useNavigate } from "react-router-dom";
+import {PostFunction} from "../../Components/ApiCollection.jsx/ApiBuck"
 
 const StarTimes = () => {
 
@@ -41,14 +46,33 @@ const StarTimes = () => {
     decoderType,
     setMethodImage,
     methodImage,
-    isDarkMode
+    isDarkMode,
+    fetchedStarTimesPlans,
+    starTimesAmount,
+    setStarTimesAmount,
+    setStarTimesSuccessful,
+     setInputPinStarTimes,
+     setErrorMessage,
+     setSuccessPopup
   } = useContext(ContextProvider)
       
+
+    const [planName, setPlanName] = useState(false);
+    const [tvThreeOtp, setTvThreeOtp] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
+    const [failedPopup, setFailedPopup] = useState(false);
+    const navigate = useNavigate();
+    
+         // Seting all the state values first
+     const [tvSubscriptionResponse, setTvSubscriptionResponse] = useState(null);
+    const [starTimesOrderId, setStarTimesOrderId] = useState('');
+    const [starTimesTransactionId, setStarTimesTransactionId] = useState('');
+    const [starTimesRequestId, setStarTimesRequestId] = useState('');
+    const [starTimesDescription, setStarTimesDescription] = useState('');
        
-
-
+const starTimesPlans = fetchedStarTimesPlans ?  fetchedStarTimesPlans.data.data.data : []
   const handleOptionClickStarTimes = (option) => {
-    setSelectedOptionStarTimes(option);
+    //setSelectedOptionStarTimes(option);
     setShowDropdownStarTimes(false);
   };
 
@@ -60,17 +84,7 @@ const StarTimes = () => {
     return '';
   };
 
-  const options = [
-    `Nova Monthly (₦1200)`,
-    `Basic Weekly (₦600)`,
-    `Basic Monthly (₦2100)`,
-    `Smart Weekly (₦900) `,
-    `Smart Monthly (₦2800)`,
-    `Classic Weekly (₦1200)`,
-    `Classic Monthly (₦3100)`,
-    `Super Weekly (₦1800)`,
-    `Super Monthly (₦5300)`,
-  ]
+ 
 
   
   const Decoders  = [
@@ -119,11 +133,37 @@ const StarTimes = () => {
           return acc;
         }, {})
       );
-    } else {
-      setConfirmStarTimesPopup(true);
-      setErrors({});
     }
-  }
+  //    else {
+  //     setConfirmStarTimesPopup(true);
+  //     setErrors({});
+  //   }
+  // }
+
+   try {
+    setIsLoading(true);
+    
+       // Preparing request data
+       const requestData = {
+        decoder_type: decoderType,
+        plan: planName,
+        iuc_number: smartCard,
+        email: tvEmail,
+        amount: starTimesAmount,
+        phone: mobileNumber,
+      };
+//show confirmation popup
+setConfirmStarTimesPopup(true);
+setErrors({});
+    
+} catch (error) {
+  console.error("Error during TV subscription:", error);
+  setFailedPopup(true); 
+} finally {
+  setIsLoading(false);
+}
+
+};
   const [errors, setErrors] = useState({});
  
   // const StarTimesSchema = Joi.object({
@@ -195,6 +235,68 @@ const StarTimes = () => {
     document.querySelector('.decdrop').classList.toggle('DropIt');
   }
 
+    const handleReceivedData = () => {
+    setIsLoading(true);
+    const receivedData = () => {
+      // Seting the relevant data from the TV subscription response
+      setStarTimesOrderId(tvSubscriptionResponse.data.order_id);
+      setStarTimesTransactionId(tvSubscriptionResponse.data.transaction_id);
+      setStarTimesRequestId(tvSubscriptionResponse.data.request_id);
+      setStarTimesDescription(tvSubscriptionResponse.data.description);
+    };
+  
+    receivedData();
+    
+    if (receivedData) {
+      setSuccessPopup(false);
+      setIsLoading(false);
+      navigate("/gotv-receipt");
+    }
+  };
+
+// VerifyPinHandler to handle both success and failure cases:
+const VerifyPinHandler = async () => {
+    const StarTimesHandler = async () => {
+      const requestData = {
+        decoder_type: decoderType,
+        plan: planName,
+        iuc_number: smartCard,
+        email: tvEmail,
+        amount: starTimesAmount,
+        phone: mobileNumber,
+      };
+      const Path = "tvsub";
+      const successHandler = () =>{
+        setStarTimesSuccessful(true);
+        setInputPinStarTimes(false);
+        handleReceivedData()
+      }
+      const FailedHandler = () =>{
+       setFailedPopup(true);
+       setInputPinStarTimes(false);
+      }
+      
+      await PostFunction(
+        Path,
+        setIsLoading,
+        requestData,
+       
+        successHandler,
+        FailedHandler
+      );
+    };
+  
+    await VerifyTransPin(
+      tvThreeOtp,
+      null,
+      null,
+      setIsLoading,
+      setErrorMessage,
+      StarTimesHandler,
+      setTvSubscriptionResponse
+    );
+
+  };
 
   return (
     <div>
@@ -232,7 +334,7 @@ const StarTimes = () => {
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] font-[400] md:font-[600]">
                 Confirm Decoder Type</label>
               {/* <button className="border-[0.23px] lg:border-[0.4px] w-full md:w-1/2 h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C]">StarTimes</button> */}
-              <div className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.5px] p-4 sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
+              <div onClick={decoderDropdown} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.5px] p-4 sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] self-center" onClick={decoderDropdown} 
        ${
         isDarkMode
@@ -281,7 +383,7 @@ const StarTimes = () => {
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] md:font-[600] font-[400]">
                 Select Package</label>
 
-              <div className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.4px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
+              <div onClick ={packageDropdown} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.4px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px]  self-center" onClick={packageDropdown} ${
       
         isDarkMode
@@ -294,22 +396,26 @@ const StarTimes = () => {
               </div>
 
               {showDropdownStarTimes && (
-                <ul className="dropdown-options z-[2] absolute top-[100%] w-full bg-white cursor-pointer">
-                  {options.map((option, index) => (
+                <ul className="dropdown-options z-[2] absolute top-[100%] w-full bg-white cursor-pointer h-[300px] overflow-y-scroll">
+                  {starTimesPlans.map((option, index) => (
                     <li
                       className={`pb-[20px] md:pb-[14px] pt-[20px] md:pt-[14px] font-weight-bold text-[14px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500] 
                       md:text-[13.227px] md:leading-[17.195px] 
-                      shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] bg-white
+                      shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
                       lg:text-[16px] lg:leading-[20.8px] cursor-pointer  dropdownCSS 
                        ${
         isDarkMode
             ? "bg-black text-white border border-white"
-            : "border-[#9C9C9C] text-[#7C7C7C] hover:bg-[#EDEAEA]"
+            : "border-[#9C9C9C] bg-white text-[#7C7C7C] hover:bg-[#EDEAEA]"
        }`}
                       key={index}
-                      onClick={() => handleOptionClickStarTimes(option)}
+                      onClick={() => {
+                        handleOptionClickStarTimes();
+                        setStarTimesAmount(option.Amount)
+                        setSelectedOptionStarTimes(`${option.PackageName}`)
+                      }}
                     >
-                      {option}
+                     {`${option.PackageName}`}
                     </li>
                   ))}
                 </ul>
@@ -405,7 +511,7 @@ const StarTimes = () => {
                   ? "bg-black text-white border border-white" 
                   : "text-[#7C7C7C] border-[#9C9C9C] hover:bg-[#EDEAEA]"
               }`}    
-                value={'₦' + getNumericValue(selectedOptionStarTimes)}
+                value={`₦ ${starTimesAmount}`}
               />
 
             </div>
@@ -495,8 +601,54 @@ const StarTimes = () => {
 
       </DashBoardLayout>
       <ConfirmStarTimesPopup />
-      <InputStarTimesPopup />
+      <InputStarTimesPopup VerifyPinHandler={VerifyPinHandler}/>
       <StarTimesSuccessfulPopup />
+            {/* Failed Transaction Popup */}
+      {failedPopup && (
+          <div className="w-[90%] md:w-[70%] lg:w-[40%] mx-auto bg-white rounded-lg overflow-hidden">
+            <div className="flex justify-between items-center p-4">
+              <img
+                onClick={() => setFailedPopup(false)}
+                className="w-6 h-6"
+                src="/Images/login/arpLogo.png"
+                alt="Logo"
+              />
+              <img
+                onClick={() => setFailedPopup(false)}
+                className="w-6 h-6 cursor-pointer"
+                src="/Images/transferImages/close-circle.png"
+                alt="Close"
+              />
+            </div>
+            <hr className="h-1 bg-[#04177f] border-none" />
+            <div className="p-4 text-center">
+              <h2 className="text-lg md:text-xl font-semibold my-4">
+                Transaction Failed
+              </h2>
+              <img
+                className="w-32 h-32 mx-auto my-6"
+                src="./Images/failed.png"
+                alt="Failed"
+              />
+              <p className="text-sm text-gray-600 mb-8">
+                An unexpected error has occurred, please try again.
+              </p>
+              <button
+                onClick={() => setFailedPopup(false)}
+                className="bg-[#04177f] w-full max-w-xs mx-auto py-2 text-white rounded-md font-medium"
+              >
+                Done
+              </button>
+            </div>
+          </div>
+      )}
+            {isLoading && (
+                 <Modal>
+                     <Loader/>
+      
+                 </Modal>
+            ) } 
+            
     </div>
   )
 }
