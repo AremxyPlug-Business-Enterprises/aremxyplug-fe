@@ -26,6 +26,7 @@ export const MtnReceipt = () => {
     setSelectedOption,
     setSelectedAmount,
     setRecipientNames,
+  
    } =
     useContext(ContextProvider);
 
