@@ -329,11 +329,12 @@
     cursor: pointer;
     display: flex;
     gap: 2px;
-    padding: 8px;
+    padding : 0px, 10px, 0px, 10px ;
     margin: auto 0;
     width: 100%;
     transition: .3s;
     z-index: 99;
+  
 }
 .netList1 {
     border-bottom-width: 1px;

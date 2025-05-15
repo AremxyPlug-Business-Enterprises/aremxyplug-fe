@@ -27,8 +27,9 @@ const [loading, setLoading] = useState(false)
   //Function to Change the password
   const ChangeUserPin = async()=> {
     const getToken = localStorage.getItem("getToken");
-    const authToken = localStorage.getItem("authToken")
-    if(authToken || getToken )
+    const authToken = localStorage.getItem("authToken");
+    if(!navigator.onLine) return alert("Check your internet connection");
+    if((authToken || getToken) && navigator.onLine){
       setLoading(true)
     try{
     const data ={
@@ -55,6 +56,7 @@ const [loading, setLoading] = useState(false)
       setLoading(false);
      }
     }
+  }
   const handleUpdate = async() => {
     if(!oldPassword || !newPassword || !confirmPassword){
 setErrorMessage("Please fill in all fields");

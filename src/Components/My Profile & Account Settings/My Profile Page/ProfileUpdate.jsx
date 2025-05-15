@@ -6,13 +6,14 @@ import naijaFlag from "../../EducationPins/imagesEducation/Nigeriaflag.svg";
 import messageQuestion from "../ProfileImages/message-question.svg";
 import { Link } from "react-router-dom";
 import { ContextProvider } from "../../Context";
+import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 
-export default function ProfileUpdate({ fullname, Email, Phone, Username }) {
+export default function ProfileUpdate(Data, { fullname, Email, Phone, Username }) {
   const { profilePage, customerDetail } = useContext(ContextProvider);
   const { isDarkMode, state } = useContext(ContextProvider);
   const { full_name, username, email, phone } = customerDetail;
   const { fullName, phoneNumber, userName } = state;
-
+Data = GetLocalStorage()
   return (
     <div className="">
       {profilePage && (
@@ -43,8 +44,8 @@ export default function ProfileUpdate({ fullname, Email, Phone, Username }) {
                     ? fullName
                     : full_name
                     ? full_name
-                    : fullname
-                    ? fullname
+                    : Data.UserFullName
+                    ?  Data.UserFullName
                     : "Hi User"}
                 </p>
                 <p
@@ -52,7 +53,11 @@ export default function ProfileUpdate({ fullname, Email, Phone, Username }) {
                     isDarkMode ? "text-white" : ""
                   }`}
                 >
-                  {email ? email : `${Email ? Email : ""}`}
+                  {state.email.length > 1 && !email ?
+                   state.email : 
+                   email ? email : 
+                   Data.UserEmail 
+                    ? Data.UserEmail : "No email"}
                 </p>
               </div>
             </div>
@@ -118,8 +123,8 @@ export default function ProfileUpdate({ fullname, Email, Phone, Username }) {
                           ? fullName
                           : full_name
                           ? full_name
-                          : fullname
-                          ? fullname
+                          : Data.UserFullName
+                          ?  Data.UserFullName
                           : "Hi user"}
                       </p>
                     </div>
@@ -152,8 +157,8 @@ export default function ProfileUpdate({ fullname, Email, Phone, Username }) {
                           ? userName
                           : username
                           ? username
-                          : Username
-                          ? Username
+                          : Data.aremxyUsername
+                          ?  Data.aremxyUsername
                           : "Hi User"}
                       </p>
                     </div>
@@ -177,13 +182,11 @@ export default function ProfileUpdate({ fullname, Email, Phone, Username }) {
                           isDarkMode ? "text-white" : ""
                         }`}
                       >
-                        {!email && state.email.length > 1
-                          ? state.email
-                          : email
-                          ? email
-                          : Email
-                          ? Email
-                          : "No email"}
+                        {state.email && !email ?
+                   state.email : 
+                   email ? email : 
+                   Data.UserEmail 
+                    ? Data.UserEmail : "No email"}
                       </p>
                     </div>
                   </div>
@@ -217,8 +220,8 @@ export default function ProfileUpdate({ fullname, Email, Phone, Username }) {
                             ? phoneNumber
                             : phone
                             ? phone.slice(3)
-                            : Phone
-                            ? Phone.slice(3)
+                            : Data.UserPhone
+                            ? Data.UserPhone.slice(3)
                             : "No Phone Number"
                         }`}
                       </p>

@@ -21,6 +21,7 @@ import { Loader } from "../../Loader/Loader";
 import { BalanceLoading } from "../../Loader/Loader";
 import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 import { CheckVirtualAcc } from "../../ApiCollection.jsx/ApiBuck";
+import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 export const MainDashboard = (Data) => {
@@ -32,7 +33,7 @@ export const MainDashboard = (Data) => {
     newBalance, setNewBalance
   } = useContext(ContextProvider);
   //const {account_no, bank_name, account_name} = virtualAccCreated;
-
+const navigate = useNavigate()
   const [visible, setVisibility] = useState(true);
   const [activeButtons, setActiveButtons] = useState([true, false, false]);
   const [blur, setBlur] = useState(false);
@@ -45,6 +46,7 @@ export const MainDashboard = (Data) => {
   const [symbol, setSymbol] = useState("₦");
  const [balanceLoading, setBalanceLoading] = useState(false)
  const [balanceValue, setBalanceValue] = useState(true);
+
   const handleCopyClick = () => {
     const text = textRef.current.innerText;
     navigator.clipboard
@@ -163,8 +165,9 @@ if((clickedoption === "NGN") && blur === true){
   //Generating an account in the dashboard
   const GenerateVirtualAccount = async(AuthUsed)=>{
       const authToken = localStorage.getItem("authorisedLogin")
-      const getToken = localStorage.getItem("getToken")
-      if(authToken || getToken){
+      const getToken = localStorage.getItem("getToken");
+     if(!navigator.onLine) return alert("Check your internet connection")
+      if((authToken || getToken) && navigator.onLine){
       try{
       setDashLoading(true)
       const body =""
@@ -258,6 +261,7 @@ if((clickedoption === "NGN") && blur === true){
     ValueRef.current = Data;
     GenerateAccountBalance();
     setNav();
+    setSelected("NGN");
     HandleNetworkStatus()
     return () => {
       setHideNavbar(false);
@@ -449,7 +453,7 @@ return (
       </div>
                       ) :(
                       
-                        symbol === "₦" ? `${symbol+newBalance}.00` : `${symbol}0.00`
+                        symbol === "₦" ? `${symbol+newBalance}` : `${symbol}0.00`
                       )}
                     </span>
                     )}
@@ -694,7 +698,19 @@ return (
                 </div>
                 
                 ): (
-                  <div className="md:h-[100%] gap-[30px] md:gap-[0px] h-auto  w-full  flex flex-col justify-between">
+                  <div className="md:h-[100%] gap-[30px]  md:gap-[0px] h-auto  w-full  flex flex-col justify-between">
+                     <div onClick ={()=> {
+                      navigate("/virtual-account")
+                     }} className="w-full h-[15%] flex justify-right">
+                {" "}
+                <button
+                  className={`text-[10px] md:text-[11px] mb-[15px] md:mt-[0px] lg:text-[12px] font-[600]  ${
+                    isDarkMode ? "border bg-black" : "bg-[#04177f]"
+                  } ${styles.viewWallet}`}
+                >
+                  View Accounts
+                </button> 
+              </div>
                    <div className="md:h-[30%] flex flex-col gap-[15px]  md:gap-[15%]">
                 <div className="flex w-full  md:items-center items-end  gap-[10%]">
                  <p 
@@ -739,7 +755,7 @@ return (
     pathname: "/ProfileSettingMain",
     state: { verificationOpen: true } 
   } : null } onClick={()=> {
-    if((Data.ConfirmId === "true" ||  Data.ConfirmBvn === "true") && Data.ConfirmAcc === "false" && selected === "NGN" ){
+    if((Data.ConfirmId === "true" ||  Data.ConfirmBvn === "true") && Data.ConfirmAcc === "false" && selected === "NGN"){
      GenerateVirtualAccount()
     }
   } }>

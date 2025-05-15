@@ -9,15 +9,14 @@ export const SignInVirtualAccountState =(customerDetail, virtualAccCreated,setBa
    setAccountNameState, setAccountNumberState)=>{
    const {email, full_name, phone, username, id} = customerDetail;
    const {bank_name, account_name, account_no} = virtualAccCreated;
-   
+  
+   SetLocalStorage(email,full_name,phone, username, bank_name, account_name, account_no ,id)
 //Checking if Virtual account is true
 
    if(bank_name.length > 1 && account_name.length > 1 && account_no.length > 1){
 GetVirtualAccountValue(virtualAccCreated,
    setBankNameState, setAccountNameState, setAccountNumberState);
-   SetLocalStorage(email,full_name,phone, username, bank_name, account_name, account_no ,id)
-
-}
+   }
  
 }
 
@@ -52,13 +51,14 @@ const {bank_name, account_no, account_name} = virtualAccCreated
  const  username = JSON.parse(localStorage.getItem("aremxyUserName"));
  const id = JSON.parse(localStorage.getItem("aremxyUserId"));
  //Checking if Virtual account is true
-
+ alert("In Action Virtual Running")
     
 if(bank_name.length > 1 ){
  GetVirtualAccountValue( virtualAccCreated,
    setBankNameState, setAccountNameState, setAccountNumberState);
    // alert("IN ACTION IS RUNNING");
    SetLocalStorage(email, full_name,phone, username, bank_name, account_name, account_no, id)
+  
  }
   }
 
@@ -68,8 +68,8 @@ if(bank_name.length > 1 ){
 export const CheckVirtualAcc = async(authToken, customerDetail, setLoading,
     setVirtualAccCreated, setBankNameState, setAccountNameState, setAccountNumberState,TwoStep,setTwoStepVerificationSuccess,
     confirmVirtualState) => {
-     
-  if (authToken) {
+     if(!navigator.onLine) return alert("Check your internet Connection")
+  if (authToken && navigator.onLine ) {
     const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc';
      // console.log(data)
      try{
@@ -166,7 +166,8 @@ export const VerifyTransPin = async(otp, setSuccess,
     setFailed, setLoading, setErrorMessage, asyncFuncAtSuccess
      )=> {
    const authToken = localStorage.getItem("authorisedLogin");
-   const getToken = localStorage.getItem("getToken")
+   const getToken = localStorage.getItem("getToken");
+   if(!navigator.onLine) return alert("Check your internet connection")
    if((authToken || getToken) && navigator.onLine){
       try{
          setLoading(true)
@@ -179,7 +180,7 @@ export const VerifyTransPin = async(otp, setSuccess,
       }})
       if(response.status === 201 || 200){
          setSuccess(true);
-       setErrorMessage("");
+       setErrorMessage(false);
      await asyncFuncAtSuccess()
       }
    }catch(error){
@@ -201,9 +202,10 @@ export const VerifyTransPin = async(otp, setSuccess,
 }
 
 //A general post function 
-export const PostFunction = async(path, setLoading, body, functionAtSuccess, functionAtFailed)=> {
+export const PostFunction = async(path, setLoading, body, functionAtSuccess, functionAtFailed, setFetchedResponse)=> {
    const authToken = localStorage.getItem("authorisedLogin");
    const getToken = localStorage.getItem("getToken")
+   if(!navigator.onLine) return alert("Check your internet connection");
    if((authToken || getToken) && navigator.onLine){
       try{
          setLoading(true)
@@ -212,22 +214,46 @@ export const PostFunction = async(path, setLoading, body, functionAtSuccess, fun
          Authorization : authToken || getToken
       }})
       if(response.status === 201 || 200){
-     
-         functionAtSuccess()
+    functionAtSuccess()
+         if(functionAtSuccess) {
+            setFetchedResponse(response.data.data)
+         }
+         console.log(response.data)
       }
+
    }catch(error){
       if(error && error.response.status === 400){
          functionAtFailed()
-       alert("Invalid request")
-      }else if(error && error.response.status === 404){
+          if(functionAtFailed) {
+            setFetchedResponse(error.response.data.data)
+              console.log(error.response.data.data)
+            alert("Invalid request")
+         }
+        
+    }else if(error && error.response.status === 404){
          functionAtFailed()
-         alert("Check your internet connection")
+         alert("Check your internet connection");
+           if(functionAtFailed) {
+            setFetchedResponse(error.response.data.data)
+              console.log(error.response.data.data)
+            alert("Invalid request")
+         }
       }else if(error && error.response.status === 401){
          functionAtFailed()
-         alert("Your Session as timed out")
+         alert("Your Session has timed out");
+           if(functionAtFailed) {
+            setFetchedResponse(error.response.data.data)
+              console.log(error.response.data.data)
+            alert("Invalid request")
+         }
       }else if(error && error.response.status === 500){
   
-   alert("Server error: Try some other time")
+   alert("Server error: Try some other time");
+     if(functionAtFailed) {
+            setFetchedResponse(error.response.data.data)
+              console.log(error.response.data.data)
+            alert("Invalid request")
+         }
       }
    }finally{
   setLoading(false);
@@ -242,7 +268,6 @@ export const GetFunction = async(path, setLoading, functionAtSuccess,functionAtF
    if(!navigator.onLine) return alert("Check your internet connection");
    if((authToken || getToken) && navigator.onLine){
       try{
-         alert("Running");
          setLoading(true)
     const url = `https://aremxyplug.onrender.com/api/v1/${path}`
       const response = await axios.get(url, {headers: {"Content-Type" :"application/json",
@@ -252,7 +277,6 @@ export const GetFunction = async(path, setLoading, functionAtSuccess,functionAtF
      functionAtSuccess();
      if(functionAtSuccess){
      setFetchedResponse(response);
-     alert("Successful");
      }
       }
    }catch(error){
@@ -261,7 +285,42 @@ export const GetFunction = async(path, setLoading, functionAtSuccess,functionAtF
        alert("Invalid request")
       }else if(error && error.response.status === 401){
          functionAtFailed()
-         alert("Your Session as timed out")
+         alert("Your Session has timed out")
+      }else if(error && error.response.status === 404){
+         functionAtFailed();
+         alert("Check your internet connection")
+      }else if(error && error.response.status === 500){
+  
+   alert("Server error: Try some other time")
+      }
+   }finally{
+  setLoading(false);
+     }
+   }
+}
+
+export const PutFunction = async(path, setLoading,body, functionAtSuccess,functionAtFailed)=> {
+   const authToken = localStorage.getItem("authorisedLogin");
+   const getToken = localStorage.getItem("getToken");
+   if(!navigator.onLine) return alert("Check your internet connection");
+   if((authToken || getToken) && navigator.onLine){
+      try{
+        
+         setLoading(true)
+    const url = `https://aremxyplug.onrender.com/api/v1/${path}`
+      const response = await axios.put(url,body, {headers: {"Content-Type" :"application/json",
+         Authorization : authToken || getToken
+      }})
+      if(response.status === 201 || 200){
+     functionAtSuccess();
+      }
+   }catch(error){
+      if(error && error.response.status === 400){
+         functionAtFailed()
+       alert("Invalid request")
+      }else if(error && error.response.status === 401){
+         functionAtFailed()
+         alert("Your Session has timed out")
       }else if(error && error.response.status === 404){
          functionAtFailed()
          alert("Check your internet connection")

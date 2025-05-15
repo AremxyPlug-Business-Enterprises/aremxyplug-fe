@@ -2,7 +2,7 @@ import React from "react";
 import Joi from "joi";
 import { DashBoardLayout } from "../Dashboard/Layout/DashBoardLayout";
 import "../TvSubscription/TvSubscription.css";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useState } from "react";
 import arrowDown from '../EducationPins/imagesEducation/arrow-down.svg';
 import { ContextProvider } from "../Context";
@@ -18,15 +18,18 @@ import euroFlag from '../../Components/EducationPins/imagesEducation/GBP.svg';
 import austriaFlag from '../../Components/EducationPins/imagesEducation/Austria.svg';
 import kenyaFlag from '../../Components/EducationPins/imagesEducation/Kenya.svg';
 import {VerifyTransPin} from "../../Components/ApiCollection.jsx/ApiBuck";
-import {Loader} from "../Loader/Loader"
-import {Modal} from "../Screens/Modal/Modal"
 import {PostFunction} from "../../Components/ApiCollection.jsx/ApiBuck"
 import { useNavigate } from "react-router-dom";
+import { Loader } from "../Loader/Loader";
+import { GetFunction } from "../ApiCollection.jsx/ApiBuck";
+import { Modal } from "../Screens/Modal/Modal";
+
 const Showmax = () => {
 
   const {
     setConfirmShowmaxPopup,
     selectedOptionShowmax,
+    setSelectedOptionShowmax,
     showDropdownShowmax,
     setShowDropdownShowmax,
     mobileNumber,
@@ -49,7 +52,14 @@ const Showmax = () => {
      setErrorMessage,
        setInputPinShowmax,
       setShowmaxSuccessful,
-       setSuccessPopup
+       setSuccessPopup,
+         fetchedDstvPlans,
+    setFetchedDstvPlans,
+    fetchedStarTimesPlans,
+    setFetchedStarTimesPlans,
+    fetchedGotvPlans,
+    setFetchedGotvPlans,
+    newBalance
   } = useContext(ContextProvider)
 
 
@@ -66,12 +76,11 @@ const Showmax = () => {
            const [showmaxRequestId, setShowmaxRequestId] = useState('');
            const [showmaxDescription, setShowmaxDescription] = useState('');
        
- 
-   const ShowMaxPlans = fetchedShowMaxPlans ? fetchedShowMaxPlans.data.data.data : []   
+   const ShowMaxPlans = fetchedShowMaxPlans.data ? fetchedShowMaxPlans.data.data.data : []   
+
+  const handleOptionClickShowmax = () => {
 
 
-  const handleOptionClickShowmax = (option) => {
-   // setSelectedOptionShowmax(option);
     setShowDropdownShowmax(false);
   };
 
@@ -89,7 +98,57 @@ const Showmax = () => {
      ]
 
 
-  // function waecQuantityDropDown(){
+     const GetOtherDataTv = async(id, path)=> {
+      const SuccessHandler = ()=> {
+       navigate(path);
+      }
+      const FailedHandler = ()=> {
+       console.log("Error")
+      }
+     
+      const SubscriptionPresent =()=> {
+       if((fetchedDstvPlans.status === 200 || 201) && id === 2 ){
+         return navigate(path);
+       }else if((fetchedStarTimesPlans.status === 200 || 201) && id === 3) {
+        return navigate(path);
+       }else if((fetchedShowMaxPlans.status === 200 || 201) && id === 4) {
+        return navigate(path);
+       }
+       
+      }
+     
+      let TvPath;
+      let fetchedResponse;
+       if((fetchedDstvPlans.status === undefined || null) && id === 2 ){
+         TvPath = `products/tvsub/dstv`;
+       fetchedResponse = setFetchedDstvPlans;
+        await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse)
+       
+      }else if((fetchedStarTimesPlans.status === undefined || null) && id === 3){
+         TvPath = `products/tvsub/startimes`;
+       fetchedResponse = setFetchedStarTimesPlans;
+        await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse)
+        
+     }else if ((fetchedGotvPlans.status === undefined || null) && id === 4){
+       TvPath = `products/tvsub/gotv`;
+       fetchedResponse = setFetchedGotvPlans;
+        await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse)
+      
+     }else{
+       return SubscriptionPresent();
+     }
+     }
+     
+     
+         
+         useEffect(()=> {
+           if(ShowMaxPlans.length < 1){
+             navigate("/TvSubscription");
+           }
+         })
+         
+     
+// function waecQuantityDropDown(){
   //   setQuantityActive(!quantityActive);
   // document.querySelector('.imgdrop').classList.toggle('DropIt');
   // }
@@ -201,7 +260,7 @@ setErrors({});
   }
 
   const [methodOptions, setMethodOptions] = useState([
-    { method: 'NGN Wallet', balance: " (50,000.00)", flag: nigerianFlag, id: 1 },
+    { method: 'NGN Wallet',  balance: `(${newBalance})`, flag: nigerianFlag, id: 1 },
     { method: 'USD Wallet ', balance: '(0.00)', flag: americaFlag, id: 2 },
     { method: 'EUR Wallet', balance: '(0.00)', flag: britainFlag, id: 3 },
     { method: 'GBP Wallet', balance: '(0.00)', flag: euroFlag, id: 4 },
@@ -240,7 +299,7 @@ setErrors({});
     if (receivedData) {
       setSuccessPopup(false);
       setIsLoading(false);
-      navigate("/gotv-receipt");
+      navigate("/showmax-receipt");
     }
   };
 
@@ -348,10 +407,11 @@ setErrors({});
         >
           {(Decoders.map(decoder => {
             return (
-               <a href={decoder.path}
+               <p
                onClick={(e =>{
           setDecoderType(decoder.decoderType);
                  setDecoderActive(false);
+                 GetOtherDataTv(decoder.id, decoder.path);
              document.querySelector('.decdrop').classList.remove('DropIt');
              console.log(e);
               })}
@@ -368,7 +428,7 @@ setErrors({});
    
          key= {decoder.id}>
       <h2>{decoder.decoderType}   </h2>
-         </a>
+         </p>
         
             )
           }))}
@@ -416,6 +476,7 @@ setErrors({});
                       onClick={() =>{
                          handleOptionClickShowmax()
                          setShowMaxAmount(option.Amount)
+                         setSelectedOptionShowmax(option.PackageName)
                         }}
                     >
                       {option.PackageName}
@@ -529,7 +590,7 @@ setErrors({});
       : "border-[#9C9C9C]"
   }`} >
                 <p className='font-[400] text-[12px] leading-[10.4px] md:text-[12px] md:leading-[12.206px] lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px] cursor-pointer'>
-                  {flagResult + tvWalletBalance}
+                    {`${flagResult} ${" "} ${tvWalletBalance}`}
                 </p>
                 <img className='methodDrop h-[16px] w-[14px] md:h-[14.038px] md:w-[14.038px] lg:h-[24px] lg:w-[24px]'
                   src={methodImage} alt="" />
@@ -601,7 +662,6 @@ setErrors({});
           </div>
 
         </div>
-
 
       </DashBoardLayout>
       <ConfirmShowmaxPopup />

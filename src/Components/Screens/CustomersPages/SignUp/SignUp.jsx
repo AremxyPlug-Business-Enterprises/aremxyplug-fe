@@ -469,10 +469,11 @@ const setNav = () => {
           lg:text-[11px] lg:leading-[14px]">
           <FcGoogle />
           </div>
-          <p className="text-[10px] leading-[14px]
-          lg:text-[11px] lg:leading-[14px]">Sign Up with  Google</p>
-         
-        </div>
+          <p onClick ={()=> {
+            alert("The use of Google as a third party authentication OAuth isn't available for now.")
+          }} className="text-[10px] leading-[14px]
+          lg:text-[11px] lg:leading-[14px]">Sign Up with Google</p>
+                 </div>
         <p className="text-[14px] leading-[18px]  text-center mt-[5%] md:pb-[1%] 
         lg:mt-[2%] lg:text-[16px] lg:leading-[24px]">
           Already have an account ?{" "}
@@ -490,6 +491,3 @@ const setNav = () => {
     </div>
   );
 };
-// over:cursor-pointer px-[35px] py-[10px] flex justify-center item-center
-//            mb-[5%] lg:mb-[2%] bg-[#0003]  text-white p-[%] rounded-[4px] mx-auto text-center 
-//            mt-[7%] text-[9px] lg:px-[37px] lg:mt-[3%] lg:w-[140px] lg:h-[42px] lg:text-[14px] lg:rounded-lg

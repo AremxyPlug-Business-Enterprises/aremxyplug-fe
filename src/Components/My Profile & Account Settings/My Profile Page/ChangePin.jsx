@@ -15,8 +15,11 @@ import ChangePassword from "./ChangePassword";
 import Success from "../ProfileImages/success.gif";
 import axios from "axios";
 import { Loader } from "../../Loader/Loader";
+import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
+import { PostFunction } from "../../ApiCollection.jsx/ApiBuck";
+import { PutFunction } from "../../ApiCollection.jsx/ApiBuck";
 
-const ChangePin = () => {
+const ChangePin = (Data) => {
   const { toggleSideBar, isDarkMode, customerDetail, state } = useContext(ContextProvider);
   const [loading, setLoading] =useState(false);
   const [activeBtn, setActiveBtn] = useState([true, false, false]);
@@ -48,82 +51,38 @@ const {email} = customerDetail;
   const {
     isVisible,
     toggleVisibility,
-    inputPinHandler,
+    //inputPinHandler,
     inputPin,
     setInputPin,
   } = useContext(ContextProvider);
-
+Data = GetLocalStorage();
   const { emailId, setEmailId } = useContext(ContextProvider);
   const [emailInputColor, setEmailInputColor] = useState("");
-
-  const [pin, setPin] = useState("");
+ // const [pin, setPin] = useState("");
   const [confirmResetPin, setConfirmResetPin] = useState("");
   const [resetPinErrorMessage, setResetPinErrorMessage] = useState("");
   const [resetPinUpdate, setResetPinUpdate] = useState("");
   const [verify, setVerify] = useState("");
   const [newResetPin, setNewResetPin] = useState("");
-
-  const handleResetPinUpdate = (e) => {
-   
-    if (state.email.length > 1 || email.length > 1) {
-      setResetPinErrorMessage("");
-      setEmailInputColor("#2ED173");
-      setResetPinUpdate(true);
-      setCountdown(60);
-    } else {
-      setResetPinErrorMessage("No email..");
-      setEmailInputColor("#F95252");
-      setResetPinUpdate(false);
-    }
-  };
+  const [errorVerifyOtp, setErrorVerifyOtp] = useState(false)
+  const [errorCreateNewPin, setErrorCreateNewPin] = useState("")
 
   const [countdown, setCountdown] = useState(60);
   const [resendActive, setResendActive] = useState(false);
 
-  useEffect(() => {
-    let timer;
-
-    const decrementCountdown = () => {
-      setCountdown((prevCountdown) => prevCountdown - 1);
-    };
-
-    timer = setInterval(() => {
-      decrementCountdown();
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [countdown]);
-
-  const handleResendOTP = () => {
-    setCountdown(60);
-    setResendActive(false);
-  };
-  useEffect(() => {
-    if (countdown === 0) {
-      setResendActive(true);
-    }
-  }, [countdown]);
-
+  
   const [resetPin1, setResetPin1] = useState(false);
   const [createPin, setCreatePin] = useState("");
   const [confirmPinInputBgColor, setConfirmPinInputBgColor] = useState("");
 
-  const handleCreatePin = () => {
-    if (newResetPin !== confirmResetPin) {
-      setResetPinErrorMessage("PIN does not match...");
-      setConfirmPinInputBgColor("#FFD8D8");
-    } else {
-      setResetPinErrorMessage("");
-      setConfirmPinInputBgColor("");
-      setCreatePin(true);
-    }
-  };
+  
 
 
 // An Api to help change the user's pin
 const ChangeUserPin = async()=> {
   const getToken = localStorage.getItem("getToken");
-  const authToken = localStorage.getItem("authorisedLogin")
+  const authToken = localStorage.getItem("authorisedLogin");
+  if(!navigator.onLine) return alert("Check your internet connection")
   if(authToken || getToken ){
     setLoading(true)
   try{
@@ -176,7 +135,120 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
     }
   };
 
+// Funcytion to help set user Email
+  const ResetFunction = async()=> {
+    const SuccessHandler = ()=> {
+      alert("An Otp has been sent to you")
+      setResetPinUpdate(true);
+      setCountdown(60)
+    }
+    const FailedHandler = ()=> {
+      alert("The Otp failed to sent");
+    }
+    let path = "send-otp/resetpin"
+    const body = {
+      email : Data.UserEmail
+    }
 
+await PostFunction(path, setLoading, body, SuccessHandler, FailedHandler);
+  }
+
+  const handleResetPinUpdate = async() => {
+    if (state.email === undefined && email === undefined  && Data.UserEmail === undefined) {
+        setResetPinErrorMessage("No email..");
+      setEmailInputColor("#F95252");
+      setResetPinUpdate(false);
+    } else {
+    setResetPinErrorMessage(false);
+      setEmailInputColor("#2ED173");
+      if(!navigator.onLine) return alert("Check your internet connection");
+      if(navigator.onLine){
+   await ResetFunction();
+      }
+    }
+  };
+  
+
+  const VerifyFunction = async()=> {
+    const SuccessHandler = ()=> {
+   console.log("Successful");
+   setResetPinUpdate(false)
+   setVerify(true);
+   setInputPin("");
+   
+ 
+    }
+    const FailedHandler = ()=> {
+      setErrorVerifyOtp(true);
+      setInputPin("")
+    }
+    let path = `verify-otp/resetpin?email=${Data.UserEmail}`
+    const body = {
+      otp : inputPin
+    }
+
+await PostFunction(path, setLoading, body, SuccessHandler, FailedHandler);
+  }
+
+   const PutNewFunction = async()=> {
+    const SuccessHandler = ()=> {
+   console.log("Successful");
+    setCreatePin(true);
+    setErrorCreateNewPin("")
+
+    }
+    const FailedHandler = ()=> {
+      alert("Error");
+  setErrorCreateNewPin("Request to reset pin failed")
+}
+    let path = "pin/reset"
+    const body = {
+      pin : newResetPin
+    }
+
+await PutFunction(path, setLoading, body, SuccessHandler, FailedHandler);
+  }
+
+  const handleCreatePin = async() => {
+    if(newResetPin !== confirmResetPin){
+    
+      setConfirmPinInputBgColor("#FFD8D8");
+       setErrorCreateNewPin("PIN does not match...")
+    } else {
+      setConfirmPinInputBgColor("");
+       setErrorCreateNewPin("Pin Okay");
+     if(!navigator.onLine) return alert("Check your internet connection");
+      if(navigator.onLine){
+      await PutNewFunction();
+      }
+    }
+  };
+
+
+  useEffect(() => {
+    let timer;
+
+    const decrementCountdown = () => {
+      setCountdown((prevCountdown) => prevCountdown - 1);
+    };
+
+    timer = setInterval(() => {
+      decrementCountdown();
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [countdown]);
+
+  const handleResendOTP = async() => {
+    await ResetFunction();
+    setCountdown(60);
+    setResendActive(false);
+  };
+  useEffect(() => {
+    if (countdown === 0) {
+      setResendActive(true);
+    }
+  }, [countdown]);
 
 
   const [changePassword, setChangePassword] = useState("");
@@ -245,7 +317,7 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
                   setConfirmResetPin("");
                   setNewResetPin("");
                   setEmailId("");
-                  setPin("");
+                //  setPin("");
                   setEmailInputColor("");
                 }}
                 className={`${
@@ -405,7 +477,7 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
               <Modal className="">
                 <div
                   className={` ${
-                    toggleSideBar ? " absolute overflow-y-auto w-[90%] h-[270px] md:w-[45%] lg:w-[40%] md:h-[350px] md:ml-[20%]  lg:h-[405px] shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)] top-[0%]" : " absolute overflow-y-auto w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] h-[300px] lg:h-[405px]  shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)]"
+                    toggleSideBar ? "absolute overflow-y-auto w-[90%] h-[270px] md:w-[45%] lg:w-[40%] md:h-[350px] md:ml-[20%]  lg:h-[405px] shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)] top-[0%]" : " absolute overflow-y-auto w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] h-[300px] lg:h-[405px]  shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)]"
                   } flex flex-col justify-between items-center pb-[10px] md:pb-[30px] lg:pb-[30px] md:mx-auto md:my-auto rounded-[12px] ${isDarkMode ? "bg-stone-950 border-white border": "bg-white"}`}
                 >
                   <div className="absolute z-0 right-0" style={{ zIndex: 0 }}>
@@ -492,8 +564,8 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
                             ? state.email
                             : email
                             ? email
-                            : Email
-                            ? Email
+                            : Data.UserEmail
+                            ? Data.UserEmail
                             : "No email"
                         }
                         style={{ borderColor: emailInputColor }}
@@ -519,12 +591,12 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
                   <div className="py-[30px] lg:py-[60px]">
                     <button
                       className={`${
-                        (state.email === undefined || email === undefined) ?
+                        (state.email === undefined && email === undefined && Data.UserEmail === undefined) ?
                            "bg-[#63616188] cursor-not-allowed"
                           : "bg-primary"
                       } w-full md:w-fit text-white rounded-md px-[28px] text-[12px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[600] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px]
                     `}
-                      disabled={state.email === undefined || email === undefined}
+                      disabled={state.email === undefined && email === undefined && Data.UserEmail === undefined}
                       onClick={() => {
                         handleResetPinUpdate();
                       }}
@@ -540,12 +612,12 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
               <Modal>
               <div
               // confirm02
-                  className={` ${
-                    toggleSideBar ? "bottom-[0%] absolute w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] md:ml-[20%] h-[250px] lg:h-[405px] shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)] top-[0%] " : " bottom-[0%] absolute w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] h-[250px] lg:h-[405px]  shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)]"} 
+                  className={`flex flex-col items-center justify-center px-[20px] pb-[20px]  ${
+                    toggleSideBar ? "w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] md:ml-[20%] h-auto lg:h-[405px] shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)]  " : " w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] h-auto lg:h-[405px]  shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)]"} 
                     md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px] ${isDarkMode ? "bg-stone-950 border-white border" : "bg-white"} `}
                 >
                   <img
-                    onClick={() => setUpdate(false)}
+                    onClick={() => setResetPinUpdate(false)}
                     className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[45px] lg:h-[45px] "
                     src={Cancel}
                     alt=""
@@ -553,10 +625,10 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
 
                   <hr className="h-[6px] bg-[#04177f] lg:mt-[10%] border-none mt-[8%] md:mt-[7%] md:h-[10px]" />
                   <p className="md:mt-[15%] lg:mt-[10%] text-[12px] px-[20px] md:text-[14px] lg:text-[18px] font-extrabold text-center my-[5%] lg:my-[%]">
-                    Verification code has been sent to your email - {emailId}
+                    Verification code has been sent to your email - {emailId || Data.UserEmail}
                   </p>
                   <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
-                    <div className=" flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
+                    <div className={`flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px] ${!isVisible ? "flex gap-[1px] ml-[0px] " : "flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]"}`}>
                       {isVisible ? (
                         <OtpInput
                           value={inputPin}
@@ -590,9 +662,9 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
                         {isVisible ? <AiFillEye className={`${isDarkMode ? "text-white" : ""}`} /> : <AiFillEyeInvisible className={`${isDarkMode ? "text-white" : ""}`} />}
                       </div>
                     </div>
-                    <p className={`flex justify-between w-[67%] md:w-[55%] lg:w-[45%] text-[12px] md:text-[12px] text-[#04177f] ${isDarkMode ? "text-white" : ""}`}>
-                      <p>{countdown > 0 ? `${countdown}sec` : "0sec"}</p>
-                      <p
+                    <div className={`flex justify-between w-full `}>
+                      <p className={` text-[12px] md:text-[12px] text-[#04177f] ${isDarkMode ? "text-white" : ""}`}>{countdown > 0 ? `${countdown}sec` : "0sec"}</p>
+                      <p className={` text-[12px] md:text-[12px] text-[#04177f] ${isDarkMode ? "text-white" : ""}`}
                         onClick={() => {
                           if (resendActive) {
                             handleResendOTP();
@@ -606,20 +678,22 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
                       >
                         Resend OTP
                       </p>
-                    </p>
+                    </div>
+                    {errorVerifyOtp && (
+                      <p className="text-center text-red-500 text-[14px] font-[400] leading-[20px]">
+                        Incorrect Pin
+                      </p>
+                    )}
                   </div>
 
                   <button
                     onClick={(e) => {
-                      e.preventDefault();
-                      setResetPinUpdate(false);
-                      inputPinHandler(e);
-                      setVerify(true);
+                   VerifyFunction();
                     }}
                     disabled={inputPin.length !== 6}
-                    className={`${
+                    className={` py-[16px] ${
                       inputPin.length !== 6 ? `bg-[#0008] cursor-not-allowed ${isDarkMode ? "bg-stone-400 cursor-not-allowed": ""}` : "bg-[#04177f] cursor-pointer"
-                    } my-[5%] w-[225px] flex justify-center items-center mx-auto text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                    } w-full text-[12px] leading-[16px] md:leading-[20px]  font-extrabold text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px]  lg:my-[2%]`}
                   >
                     Verify
                   </button>
@@ -630,9 +704,9 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
             {verify && (
               <Modal className="">
                 <div
-                  className={` ${
-                    toggleSideBar ? "bottom-[0%] absolute w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] md:ml-[20%] h-[250px] lg:h-[405px] shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)] top-[0%]" : "bottom-[0%] absolute w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] h-[250px] lg:h-[405px]  shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)]"
-                    } flex flex-col justify-between items-center pb-[10px] md:pb-[30px] lg:pb-[30px] md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px] ${isDarkMode ? "bg-stone-950 border-white border": "bg-white"}`}
+                  className={` flex flex-col justify-center items-center ${
+                    toggleSideBar ? "w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] md:ml-[20%] h-[250px] lg:h-[405px] shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)] " : " w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] h-[250px] lg:h-[405px]  shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)]"
+                    }  pb-[10px] md:pb-[30px] lg:pb-[30px] md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px] ${isDarkMode ? "bg-stone-950 border-white border": "bg-white"}`}
                 >
                   <div className="absolute z-0 right-0" style={{ zIndex: 0 }}>
                     <img
@@ -662,7 +736,7 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
                     <p
                       className={`text-[12px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[4%] lg:my-[%] z-[1000] ${styles.overlayText}`}
                     >
-                      Your transaction PIN has been reset successfully.
+                      Verification Successful
                     </p>
                   </div>
 
@@ -674,7 +748,7 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
                       setVerify(false);
                       setEmailId("");
                       setEmailInputColor("");
-                      setPin("");
+                    //  setPin("");
                       setResetPin(false);
                       setResetPin1(true);
                     }}
@@ -785,9 +859,9 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
                         )}
                         isInputNum
                       />
-                      {resetPinErrorMessage && (
-                        <p className="text-red-500 text-start text-[12px] mt-[10px]">
-                          {resetPinErrorMessage}
+                      {errorCreateNewPin.length > 1 && (
+                        <p className= {`text-red-500 text-start text-[12px] mt-[10px] ${errorCreateNewPin === "Pin Okay" ? "text-green-700" : "text-red-700"}`}>
+                           {errorCreateNewPin}
                         </p>
                       )}
                     </div>
@@ -819,7 +893,7 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
               <Modal className="">
                 <div
                   className={` ${
-                    toggleSideBar ? "absolute w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] md:ml-[20%] h-[250px] lg:h-[405px] shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)] top-[0%]" : " absolute w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] h-[250px] lg:h-[405px]  shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)]"
+                    toggleSideBar ? "absolute w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] md:ml-[20%] h-auto lg:h-[405px] shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)] top-[0%]" : " absolute w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] h-[250px] lg:h-[405px]  shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)]"
                   } flex flex-col justify-between items-center pb-[10px] md:pb-[30px] lg:pb-[30px] md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px] ${isDarkMode ? "bg-stone-950 border-white border": "bg-white"}`}
                 >
                   <div className="absolute z-0 right-0" style={{ zIndex: 0 }}>
@@ -867,7 +941,7 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
                       setCreatePin(false);
                       setResetPin1(false);
                     }}
-                    className={`my-[%] mt-0  bg-[#04177f] w-[90%] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                    className={`my-[%] mt-0  bg-[#04177f] w-[90%] flex justify-center py-[16px] items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
                   >
                     Done
                   </button>

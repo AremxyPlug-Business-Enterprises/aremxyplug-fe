@@ -3,9 +3,9 @@ import { useContext } from "react";
 import { ContextProvider } from "../../../Context";
 import { useState } from "react";
 import styles from "../TransferComponent/transfer.module.css";
-import bulb from "../ElectricitySubscription/Electricity-sub-images/Group 13115.svg"
-import arrow from "../ElectricitySubscription/Electricity-sub-images/arrow-square-right.png"
-import logo from "../ElectricitySubscription/Electricity-sub-images/BEDC-Logo-new-dark-1 1.svg"
+import bulb from "../ElectricitySubscription/Electricity-sub-images/Group 13115.svg";
+import arrow from "../ElectricitySubscription/Electricity-sub-images/arrow-square-right.png";
+import logo from "../ElectricitySubscription/Electricity-sub-images/BEDC-Logo-new-dark-1 1.svg";
 import arrowDown from "../ElectricitySubscription/Electricity-sub-images/arrow-down.png";
 import nig from "../ElectricitySubscription/Electricity-sub-images/nigeriaFlag.png";
 
@@ -14,46 +14,57 @@ import { Modal } from "../../../Screens/Modal/Modal";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import OtpInput from "react-otp-input";
-import { Link } from "react-router-dom";
-import axios from 'axios';
+import { Link, useNavigate } from "react-router-dom";
+
+import {
+  PostFunction,
+  VerifyTransPin,
+} from "../../../ApiCollection.jsx/ApiBuck";
+import { Loader } from "../../../Loader/Loader";
 
 const BEDC = () => {
-
-  const { isDarkMode,
+  const navigate = useNavigate();
+  const {
+    isDarkMode,
     toggleSideBar,
-    meterNumber,
+    bedcMeterNumber,
+    setBedcMeterNumber,
     showList,
-    setMeterNumber,
-    setVerifiedName,
+    bedcVerifiedName,
+    setBedcVerifiedName,
     setShowList,
     setSelected,
     selected,
     globalCountry,
     setGlobalCountry,
     globalTransferErrors,
-    verifiedName,
-    phoneNumber,
-    setPhoneNumber,
-    ikedcEmail,
-    setEmail,
-    ikedcamount,
-    setIkedcamount,
+    bedcPhoneNumber,
+    setBedcPhoneNumber,
+    bedcEmail,
+    setBedcEmail,
+    bedcAmount,
+    setBedcAmount,
     toggleVisibility,
     isVisible,
-    billGenerate,
-    setBillGenerate,
-    serviceID,
-    setServiceID,
-    flag,
-    setFlag,
+    setBedcBillGenerate,
+    bedcServiceID,
+    setBedcServiceID,
+    bedcFlag,
+    setBedcFlag,
+    selectedBedcMeterType,
+    setSelectedBedcMeterType,
+    bedcOrderId,
+    setBedcOrderId,
+    bedcTransactionId,
+    setBedcTransactionId,
+    bedcShowDescription,
+    setBedcShowDescription,
+    bedcFetchedResponse,
+    setBedcFetchedResponse,
   } = useContext(ContextProvider);
+  // selectedEedcMeterType
 
-  const { selectedNetworkProduct, setSelectedNetworkProduct } =
-    useContext(ContextProvider);
   const [showProductList, setShowProductList] = useState(false);
-  const [showDescription, setShowDescription] = useState(false);
-  const [orderId, setOrderId] = useState(false);
-  const [transactionId, setTransactionId] = useState(false);
 
   const pointsEarned = "+2.00";
 
@@ -72,18 +83,15 @@ const BEDC = () => {
     {
       id: 1,
       name: "prepaid",
-
     },
 
     {
       id: 2,
       name: "postpaid",
-
     },
-
   ];
   const handleSelectProduct = (productName) => {
-    setSelectedNetworkProduct(productName);
+    setSelectedBedcMeterType(productName);
     // setSelectedOption("");
     setShowProductList(false);
     // setShowOptionList(false);
@@ -132,13 +140,12 @@ const BEDC = () => {
   const [proceed, setProceed] = useState(false);
 
   const handleProceed = (e) => {
-
     // e.preventDefault();
 
     const { error } = schema.validate({
-      phoneNumber,
-      ikedcEmail,
-      meterNumber
+      bedcPhoneNumber,
+      bedcEmail,
+      bedcMeterNumber,
     });
 
     if (error) {
@@ -155,137 +162,197 @@ const BEDC = () => {
   };
 
   const schema = Joi.object({
-    phoneNumber: Joi.string()
+    bedcPhoneNumber: Joi.string()
       .pattern(new RegExp(/^\d{11,}/))
       .required()
       .messages({
         "string.pattern.base": "Phone number should be 11 digits ",
       }),
-    meterNumber: Joi.string()
+    bedcMeterNumber: Joi.string()
       .pattern(new RegExp(/^\d{10,}/))
       .required()
       .messages({
         "string.pattern.base": "Invalid meter number",
       }),
-    ikedcEmail: Joi.string()
+    bedcEmail: Joi.string()
       .pattern(new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i))
       .required()
       .messages({
         "string.pattern.base": "Invalid Email",
       }),
-
   });
 
   // const isEmailValid = (input) => {
   //   const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
-
   //   if (emailRegex.test(input) ) {
-  //     return true; 
+  //     return true;
   //   }
   //   return false;
   // };
 
-
   const handleCountryClick = (name, flag, id, code) => {
-    setFlag(flag);
+    setBedcFlag(flag);
     setShowList(false);
     setGlobalCountry(name);
     setSelected(true);
     // setCountryCode(code);
     // setCurrencyAvailable(id !== 1);
-
   };
   const handleVerifiedName = (event) => {
     const newValue = event.target.value;
-    setVerifiedName(newValue);
+    setBedcVerifiedName(newValue);
   };
 
   const handleMeterNumber = (event) => {
     const newValue = event.target.value;
-    setMeterNumber(newValue);
+    setBedcMeterNumber(newValue);
   };
 
   const handlePhoneNumber = (event) => {
     const value = event.target.value;
     const newValue = value.replace(/\D/g, "").slice(0, 11);
-    setPhoneNumber(newValue);
+    setBedcPhoneNumber(newValue);
   };
   const handleEmail = (event) => {
     const newValue = event.target.value;
-    setEmail(newValue);
-
+    setBedcEmail(newValue);
   };
-  const handleIkedcAmount = (event) => {
+  const handleBedcAmount = (event) => {
     const newValue = event.target.value;
     // setIkedcamount(newValue);
-    if (newValue.startsWith('')) {
-      setIkedcamount(newValue);
+    if (newValue.startsWith("")) {
+      setBedcAmount(newValue);
     } else {
-      setIkedcamount(`₦${newValue}`);
+      setBedcAmount(`₦${newValue}`);
     }
-
   };
   const [successPopup, setSuccessPopup] = useState(false);
   const [failedPopup, setFailedPopup] = useState(false);
 
-  const handleSuccess = async () => {
-    async function buyBEDC(meter_type, meter_no, phone, email, amount) {
-      const url = 'https://aremxyplug.onrender.com/api/v1/electric-bill';
+  const [errorMessage, setErrorMessage] = useState(false);
+  const [pinSuccess, setPinSuccess] = useState(false);
+  const [pinFailed, setPinFailed] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-      const parsedAmount = parseInt(amount, 10);
-
+  const verifyPin = async () => {
+    async function ElectricityHandler() {
+      const path = "electric-bill";
+      const parsedAmount = parseInt(bedcAmount, 10);
       const data = {
-        meter_type,
-        meter_no,
-        phone, // Use the parsed integer value
-        email,
-        amount: parsedAmount, // Use the parsed integer value
+        meter_type: selectedBedcMeterType,
+        meter_no: bedcMeterNumber,
+        phone: bedcPhoneNumber, // Use the parsed integer value
+        email: bedcEmail,
+        amount: parsedAmount,
+        // amount: "",
         disco_type: "benin-electric",
       };
+      // const parsedAmount = parseInt(amount, 10);
+      const SuccessHandler = () => {
+        setInputPinPopUp(false);
+        setSuccessPopup(true);
+      };
+      const FailedHandler = () => {
+        setInputPinPopUp(false);
+        setFailedPopup(true);
+      };
 
-      console.log(data);
-
-      try {
-        const response = await axios.post(url, data);
-        console.log(response.data);
-        console.log(response.status);
-        setSelectedNetworkProduct(response.data.meter_type)
-        setMeterNumber(response.data.meter_number)
-        setPhoneNumber(response.data.phone)
-        setEmail(response.data.email)
-        setIkedcamount(response.data.amount)
-        setBillGenerate(response.data.bill_generated)
-        setOrderId(response.data.order_id)
-        setTransactionId(response.data.transaction_id)
-        setServiceID(response.data.disco_type)
-        setShowDescription(response.data.description)
-        return { statusCode: response.status, data: response.data };
-        // console.log(response.data);
-      } catch (error) {
-        console.error(error);
-        return { statusCode: error.response.status, data: null };
-      }
+      await PostFunction(
+        path,
+        setLoading,
+        data,
+        SuccessHandler,
+        FailedHandler,
+        setBedcFetchedResponse
+      );
     }
-
-    // Usage
-    const response = await buyBEDC(
-      selectedNetworkProduct,
-      meterNumber,
-      phoneNumber,
-      ikedcEmail,
-      ikedcamount,
+    await VerifyTransPin(
+      inputPin,
+      setPinSuccess,
+      setPinFailed,
+      setLoading,
+      setErrorMessage,
+      ElectricityHandler
     );
-
-    setInputPinPopUp(false);
-    if (response.statusCode === 200) {
-      // Success response
-      setSuccessPopup(true); // Show success popup
-    } else {
-      // Failure response
-      setFailedPopup(true) // Show failure popup
-    }
   };
+
+  function handleReceivedData() {
+    setLoading(true);
+    const receivedData = () => {
+      setBedcBillGenerate(bedcFetchedResponse.data.bill_generated);
+      setBedcOrderId(bedcFetchedResponse.data.order_id);
+      setBedcTransactionId(bedcFetchedResponse.data.transaction_id);
+      setBedcServiceID(bedcFetchedResponse.data.request_id);
+      setBedcShowDescription(bedcFetchedResponse.data.description);
+    };
+    receivedData();
+    if (receivedData) {
+      setSuccessPopup(false);
+      setLoading(false);
+      navigate("/bedc-receipt");
+    }
+  }
+
+  // const handleSuccess = async () => {
+  //   async function buyBEDC(meter_type, meter_no, phone, email, amount) {
+  //     // const url = 'https://aremxyplug.onrender.com/api/v1/electric-bill';
+
+  //     const parsedAmount = parseInt(amount, 10);
+
+  //     const data = {
+  //       meter_type,
+  //       meter_no,
+  //       phone, // Use the parsed integer value
+  //       email,
+  //       amount: parsedAmount, // Use the parsed integer value
+  //       disco_type: "benin-electric",
+  //     };
+
+  //     console.log(data);
+
+  //     try {
+  //       const path = "electric-bill";
+  //       // const response = await PostFunction(path, data);
+  //       const response = await axiosInstance.post(path, data);
+  //       console.log(response.data);
+  //       console.log(response.status);
+  //       setSelectedNetworkProduct(response.data.data.meter_type);
+  //       setMeterNumber(response.data.data.meter_number);
+  //       setPhoneNumber(response.data.data.phone);
+  //       setEmail(response.data.data.email);
+  //       setIkedcamount(response.data.data.amount);
+  //       setBillGenerate(response.data.data.bill_generated);
+  //       setOrderId(response.data.data.order_id);
+  //       setTransactionId(response.data.data.transaction_id);
+  //       setServiceID(response.data.data.disco_type);
+  //       setShowDescription(response.data.data.description);
+  //       return { statusCode: response.status, data: response.data };
+  //       // console.log(response.data);
+  //     } catch (error) {
+  //       console.error(error);
+  //       return { statusCode: error.response.status, data: null };
+  //     }
+  //   }
+
+  //   // Usage
+  //   const response = await buyBEDC(
+  //     selectedNetworkProduct,
+  //     meterNumber,
+  //     phoneNumber,
+  //     ikedcEmail,
+  //     ikedcamount
+  //   );
+
+  //   setInputPinPopUp(false);
+  //   if (response.statusCode === 200) {
+  //     // Success response
+  //     setSuccessPopup(true); // Show success popup
+  //   } else {
+  //     // Failure response
+  //     setFailedPopup(true); // Show failure popup
+  //   }
+  // };
 
   const [InputPinPopUp, setInputPinPopUp] = useState(false);
   const [inputPin, setInputPin] = useState("");
@@ -300,24 +367,25 @@ const BEDC = () => {
     setProceed(false);
   };
 
-
-
   return (
-
     <DashBoardLayout>
-      <div className={` ${isDarkMode
-        ? "bg-[#000] text-[#fff] border-[#fff]"
-        : "bg-[#ffffff] text-[#000] "
-        }  flex flex-col w-full justify-between h-full `}>
+      <div
+        className={` ${
+          isDarkMode
+            ? "bg-[#000] text-[#fff] border-[#fff]"
+            : "bg-[#ffffff] text-[#000] "
+        }  flex flex-col w-full justify-between h-full `}
+      >
         <div>
           {/* top part after nav bar */}
-          <div className="flex flex-row w-full pt-[10px]  h-[90px] md:h-[112.29px] lg:h-[196px] lg:px-[50px]  px-[16px] rounded-lg md:rounded-[11.5px] lg:rounded-[20px] justify-between  py-0 bg-gradient-to-r from-[#FFA733] via-[#58FF4A] to-[#98B0FF]">
+          <div className="flex flex-row w-full pt-[10px]  h-[90px] md:h-[112.29px] lg:h-[196px] lg:px-[50px]  px-[16px] rounded-lg md:rounded-[11.5px] lg:rounded-[20px] justify-between py-0 bg-gradient-to-r from-[#FFA733] via-[#58FF4A] to-[#98B0FF]">
             <div className="flex flex-col gap-2  ">
-              <div className="text-[11px] font-[600]  pt-[10px] md:text-[11px] md:leading-[20.63px] lg:pt-[25px] lg:text-[24px] lg:leading-[36px] text-[#000000] leading-[12px]">
-                ELECTRICITY BILLS, PREPAID AND POSTPAID  <br /> PAYMENTS.
+              <div className="text-[11px] font-semibold pt-[10px] md:text-[11px] md:leading-[20.63px] lg:pt-[25px] lg:text-[24px] lg:leading-[36px] text-[#000000] leading-[12px]">
+                ELECTRICITY BILLS, PREPAID AND POSTPAID <br /> PAYMENTS.
               </div>
-              <div className="text-[9px] font-[400] leading-[9px] md:text-[10px] md:leading-[14.9px] lg:text-[20px] lg:leading-[26px] text-[#000000] ">
-                Recharge your metre and pay bills  with our electricity bills <br /> payment feature for both prepaid and postpaid metertypes.
+              <div className="text-[9px] font-normal leading-[12px] md:text-[10px] md:leading-[14.9px] lg:text-[20px] lg:leading-[26px] text-[#000000] ">
+                Recharge your metre and pay bills with our electricity bills
+                <br /> payment feature for both prepaid and postpaid metertypes.
               </div>
             </div>
             <div>
@@ -325,73 +393,104 @@ const BEDC = () => {
                 className="w-[55px] h-[70px] md:w-[151.9px] md:h-[85.9px] lg:w-[265px] lg:h-[150px]"
                 src={bulb}
                 alt=""
-              />{" "}
+              />
             </div>
           </div>
-          <div className=" flex lg:mt-[20px] text-[12px] lg:text-[16px] font-[600] pt-[30px] text-[#7E7E7E] items-center ">
+          <div
+            className={`flex lg:mt-[20px] text-[10px] md:text-[12px] lg:text-[16px] font-semibold pt-[30px] items-center ${
+              isDarkMode ? "text-white" : "text-[#7E7E7E]"
+            }`}
+          >
             <div>Recharge</div>
-            <div><img className="w-[35px] lg:w-[130px] ml-1" src={logo} alt="" /></div>
-            <div className=" ml-1">Benin Electric Payment-BEDC Meter Instantly</div>
-            <div><img className="lg:w-[24px]" src={arrow} alt="" /></div>
-
+            <div>
+              <img className="w-[35px] lg:w-[130px] ml-1" src={logo} alt="" />
+            </div>
+            <div className=" ml-1">
+              Benin Electric Payment-BEDC Meter Instantly
+            </div>
+            <div className="ml-1">
+              <img className="w-4 sm:w-[18px] lg:w-[24px]" src={arrow} alt="" />
+            </div>
           </div>
           <div className="lg:flex lg:items-start ">
-            <div className={` mt-[10px] lg:mt-[15px] border-[1px] border-[] from-[#E2F3FF] font-[700] text-[10px] lg:text-[16px] lg:rounded-sm lg:py-2 text-center lg:px-3 py-1 to-[#FFF]
+            <div
+              className={` mt-[10px] lg:mt-[15px] border from-[#E2F3FF] font-bold text-[12px] lg:text-[16px] lg:rounded-sm lg:py-2 text-center lg:px-3 py-1 to-[#FFF]
             ${
               isDarkMode
                 ? "text-white bg-black border border-white"
                 : "bg-gradient-to-b"
-            }`}>Benin Electric Covers: Delta, Edo, Ekiti, and Ondo States.
+            }`}
+            >
+              Benin Electric Covers: Delta, Edo, Ekiti, and Ondo States.
             </div>
           </div>
 
-
-
-          <div className="text-[14px]  lg:text-[16px]  font-[600] mt-[20px] text-[#7E7E7E] "> Select <span className="text-[#04177F] font-[700]">Prepaid</span> MeterType if you load token on your meter.</div>
-          <div className="text-[14px]  lg:text-[16px]  font-[600] mt-[10px] text-[#7E7E7E] "> Select <span className="text-[#04177F] font-[700]">Postpaid</span> MeterType if you get a bill at the end of the month.</div>
+          <div
+            className={`text-[14px] lg:text-[16px] font-semibold mt-[20px] ${
+              isDarkMode ? "text-white" : "text-[#7E7E7E]"
+            } `}
+          >
+            Select <span className="text-[#04177F] font-bold">Prepaid </span>
+            MeterType if you load token on your meter.
+          </div>
+          <div
+            className={`text-[14px] lg:text-[16px] font-semibold mt-[10px] ${
+              isDarkMode ? "text-white" : "text-[#7E7E7E]"
+            } `}
+          >
+            Select <span className="text-[#04177F] font-bold">Postpaid </span>
+            MeterType if you get a bill at the end of the month.
+          </div>
 
           {/* input sections */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 md:gap-6 lg:gap-6 items-center lg:mt-[20px] ">
-            <div className=" flex flex-col mt-[20px] gap-1">
-              <div className="text-[#7E7E7E] text-[14px] lg:text-[16px]  md:font-[600] font-[400]">Select Meter Type</div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 md:gap-6 lg:gap-6 items-center lg:mt-[20px] ">
+            <div className="flex flex-col mt-[20px] relative gap-2 lg:gap-2.5">
               <div
-                className={`border-[1px] w-full h-[40.927px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg   pl-[4px] pr-[8px]  lg:h-[51px] lg:pl-[14px] lg:pr-[16px] flex  items-center justify-between  ${
-              isDarkMode
-                ? "bg-black text-white border border-white"
-                : ""
-            }`}
+                className={`text-[14px] lg:text-[16px]  md:font-semibold font-normal ${
+                  isDarkMode ? "text-white" : "text-[#7E7E7E]"
+                }`}
+              >
+                Select Meter Type
+              </div>
+              <div
+                className={`flex justify-between items-center py-[12px] pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
+                  isDarkMode
+                    ? "text-white bg-black border border-white"
+                    : "text-[#7E7E7E] bg-white"
+                }`}
                 onClick={() => setShowProductList(!showProductList)}
               >
-                <h2 className={`text-[14px] font-[400]  leading-[12px]  capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]
-                 ${
-                    isDarkMode
-                      ? "bg-black text-white"
-                      : "text-[#7C7C7C]"
-                  }`}>
-                  {selectedNetworkProduct}
+                <h2
+                  className={`text-[12px] font-normal leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]
+                   ${isDarkMode ? "text-white bg-black" : "text-[#7E7E7E]"}`}
+                >
+                  {selectedBedcMeterType}
                 </h2>
-                <button className="lg:w-6 lg:h-6 w-[11px] h-[11px]">
+                <button className="lg:w-6 lg:h-6 w-4 h-4 cursor-pointer">
                   <img src={arrowDown} alt="" className="w-full h-full" />
                 </button>
               </div>
               {showProductList && (
-                <div className={`border md:rounded-[10px] text-[14px] md:text-[11px] lg:text-[16px] mt-20 lg:mt-20 w-[90%] md:w-[44%]  rounded-[4px] absolute  z-[10]
-                  ${
-                    isDarkMode
-                      ? "bg-black text-white"
-                      : "bg-[#FFF] "
-                  }`}>
+                <div
+                  className={`
+                    ${
+                      isDarkMode
+                        ? "text-white bg-black divide-white border-white"
+                        : " text-[#7C7C7C] bg-white "
+                    }
+                    border flex flex-col divide-y items-center text-[14px] md:text-[12px] lg:text-[16px] mt-20 lg:mt-20 rounded-[4px] md:rounded-[10px] shadow-md absolute top-1 lg:top-[1rem] w-full z-[10]`}
+                >
+                  {/*  lg:top-[87%] */}
                   {productList.map((item) => (
                     <div
                       key={item.name}
-                      className={`pb-[18px] md:pb-[14px] pt-[18px] md:pt-[14px] font-[400] text-[14px] cursor-pointer border-b-[0.5px]  md:text-[11px] lg:text-[16px] w-[100%]  md:rounded-[0px] lg:mt-2 py-[4px] text-[13px] pl-[5px] 
-                        ${
-                          isDarkMode
-                            ? "bg-black text-white border border-white"
-                            : "text-[#7C7C7C] bg-white"
-                        }
-                        ${selectedNetworkProduct === item.name ? "" : ""
-                        }`}
+                      className={`pb-[18px] pt-[8px] md:py-[16px] font-bold cursor-pointer md:text-[12px] lg:text-[16px] w-full capitalize md:rounded-[0px] lg:mt- text-[12px] pl-[5px] transition-all duration-300 hover:bg-slate-50 
+                       ${
+                         isDarkMode
+                           ? "bg-black text-white hover:bg-slate-800 hover:rounded-t-[10px]"
+                           : "text-[#7C7C7C]"
+                       }
+                       ${selectedBedcMeterType === item.name ? "" : ""}`}
                       onClick={() => handleSelectProduct(item.name)}
                     >
                       {item.name}
@@ -401,46 +500,77 @@ const BEDC = () => {
               )}
             </div>
 
-            <div className="flex flex-col mt-[10px] md:mt-[23px] lg:mt-[23px]">
-              <div className="text-[#7E7E7E] text-[14px] lg:text-[16px] md:font-[600] font-[400] " >Meter Number</div>
+            <div className="flex flex-col sm:mt-[10px] md:mt-[23px] lg:mt-[23px] gap-2 lg:gap-2.5">
+              <div
+                className={`text-[15px] lg:text-[16px] md:font-semibold font-normal ${
+                  isDarkMode ? "text-white" : "text-[#7E7E7E]"
+                }`}
+              >
+                Meter Number
+              </div>
               <div>
-                <input type="number" value={meterNumber} onChange={handleMeterNumber} className={`w-full  pl-[9px] lg:h-[51px] lg:text-[16px]  text-[10px] font-[500]  border-[1px] h-[40.927px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg  ${
-              isDarkMode
-                ? "bg-black text-white border border-white"
-                : "text-[#7E7E7E]"
-            }`} />{" "}
+                <input
+                  type="number"
+                  value={bedcMeterNumber}
+                  onChange={handleMeterNumber}
+                  onClick={() => setShowProductList(false)}
+                  className={`py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full w-full  ${
+                    isDarkMode
+                      ? "text-white bg-black border-white"
+                      : "text-[#7E7E7E]"
+                  }`}
+                />
               </div>
               {errors.meterNumber && (
-                <div className={`text-[14px] text-red-500 italic lg:text-[14px]
-                  ${
-                    isDarkMode
-                      ? "bg-black text-white"
-                      : ""
-                  }`}>
+                <div
+                  className={`text-[14px] text-red-500 italic lg:text-[14px] `}
+                  // ${isDarkMode ? "bg-black text-white" : ""}
+                >
                   {errors.meterNumber}
                 </div>
               )}
             </div>
 
-            <div className="flex flex-col mt-[10px]">
-              <div className="text-[#7E7E7E] text-[15px] lg:text-[16px] md:font-[600] font-[400]" >Verified Name</div>
+            <div className="flex flex-col gap-2 lg:gap-2.5">
+              <div
+                className={`text-[#7E7E7E] text-[14px] lg:text-[16px] md:font-semibold font-normal ${
+                  isDarkMode ? "text-white" : ""
+                }`}
+              >
+                Verified Name
+              </div>
               <div>
-                <input type="text" value={verifiedName} onChange={handleVerifiedName} className={`w-full lg:h-[51px] lg:text-[16px]  text-[14px] pl-[9px] font-[500]  border-[1px] h-[40.927px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg  ${
-             
-              isDarkMode
-                ? "bg-black text-white border border-white"
-                : "text-[#7E7E7E]"
-            }`} />{" "}
+                <input
+                  type="text"
+                  value={bedcVerifiedName}
+                  onChange={handleVerifiedName}
+                  className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
+                    isDarkMode
+                      ? "text-white bg-black border border-white"
+                      : "text-[#7E7E7E]"
+                  }`}
+                />
               </div>
             </div>
-            <div className="flex flex-col mt-[10px]">
-              <div className="text-[#7E7E7E] text-[15px] lg:text-[16px] md:font-[600] font-[400]" >Phone Number</div>
+            <div className="flex flex-col gap-2 lg:gap-2.5">
+              <div
+                className={`text-[#7E7E7E] text-[14px] lg:text-[16px] md:font-semibold font-normal ${
+                  isDarkMode ? "text-white" : ""
+                }`}
+              >
+                Phone Number
+              </div>
               <div>
-                <input type="number" value={phoneNumber} onChange={handlePhoneNumber} className={`w-full lg:h-[51px] lg:text-[16px]  pl-[9px] text-[14px] font-[500]  border-[1px] h-[40.927px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg  ${
-              isDarkMode
-                ? "bg-black text-white border border-white"
-                : "text-[#7E7E7E]"
-            }`} />
+                <input
+                  type="number"
+                  value={bedcPhoneNumber}
+                  onChange={handlePhoneNumber}
+                  className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
+                    isDarkMode
+                      ? "text-white bg-black border border-white"
+                      : "text-[#7E7E7E]"
+                  }`}
+                />
               </div>
               {errors.phoneNumber && (
                 <div className="text-[14px] text-red-500 italic lg:text-[14px]">
@@ -448,14 +578,25 @@ const BEDC = () => {
                 </div>
               )}
             </div>
-            <div className="flex flex-col mt-[10px]">
-              <div className="text-[#7E7E7E] text-[15px] lg:text-[16px] md:font-[600] font-[400]" >Email</div>
+            <div className="flex flex-col gap-2 lg:gap-2.5">
+              <div
+                className={`text-[#7E7E7E] text-[14px] lg:text-[16px] md:font-semibold font-normal ${
+                  isDarkMode ? "text-white" : ""
+                }`}
+              >
+                Email
+              </div>
               <div>
-                <input type="text" value={ikedcEmail} onChange={handleEmail} className={`w-full lg:h-[51px] pl-[9px] lg:text-[16px] text-[14px] font-[500]  border-[1px] h-[40.927px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg  ${
-              isDarkMode
-                ? "bg-black text-white border border-white"
-                : "text-[#7E7E7E]"
-            }`} />
+                <input
+                  type="text"
+                  value={bedcEmail}
+                  onChange={handleEmail}
+                  className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
+                    isDarkMode
+                      ? "text-white bg-black border border-white"
+                      : "text-[#7E7E7E]"
+                  }`}
+                />
               </div>
               {errors.ikedcEmail && (
                 <div className="text-[14px] text-red-500 italic lg:text-[14px]">
@@ -463,102 +604,114 @@ const BEDC = () => {
                 </div>
               )}
             </div>
-            <div className="flex flex-col mt-[10px]">
-              <div className="text-[#7E7E7E] text-[14px] lg:text-[16px]  md:font-[600] font-[400]" >Amount</div>
-              <div className={`flex items-center lg:text-[16px] text-[14px] pl-2 border-[1px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[8px]  md:p-0 text-[14px] p-4 sm:p-3 sm:text-lg  ${
-              isDarkMode
-                ? "bg-black text-white border border-white"
-                : "text-[#7E7E7E]"
-            }`}>
-                &#8358;
-                <input type="number" name="ikedcamount" value={ikedcamount} onChange={handleIkedcAmount} className={`w-full outline-none lg:h-[51px] lg:text-[16px] pl-[9px] text-[13px] font-[500]  h-[40.927px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[8px]  md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg 
-                ${
+            <div className="flex flex-col gap-2 lg:gap-2.5">
+              <div
+                className={`text-[#7E7E7E] text-[14px] lg:text-[16px] md:font-semibold font-normal ${
+                  isDarkMode ? "text-white" : ""
+                }`}
+              >
+                Amount
+              </div>
+              <div
+                className={`flex items-center lg:text-[16px] text-[12px] border pl-2 border-[#9C9C9C] ${
                   isDarkMode
-                    ? "text-white bg-black border border-black"
+                    ? "text-white bg-black border-white "
                     : "text-[#7E7E7E]"
-                }`}/>
+                } rounded-md md:rounded-[10px]`}
+              >
+                &#8358;
+                <input
+                  type="number"
+                  name="ikedcamount"
+                  value={bedcAmount}
+                  onChange={handleBedcAmount}
+                  className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:py-3 md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] text-[12px] leading-[18px] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none
+                 ${
+                   isDarkMode
+                     ? "text-white bg-black border-black"
+                     : "text-[#7E7E7E]"
+                 }`}
+                />
               </div>
             </div>
 
-            <div className=" flex flex-col mt-[20px] gap-1">
-              <div className="text-[#7E7E7E] text-[14px] lg:text-[16px]  md:font-[600] font-[400]">Payment Method</div>
+            <div className=" flex flex-col relative gap-2 lg:gap-2.5">
               <div
-                className={`border-[1px] w-full h-[40.927px] mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg   pl-[4px] pr-[8px] lg:h-[51px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between  ${
-              isDarkMode
-                ? "bg-black text-white border border-white"
-                : "text-[#7E7E7E]"
-            }`}
+                className={`text-[#7E7E7E] text-[14px] lg:text-[16px] md:font-semibold ${
+                  isDarkMode ? "text-white" : ""
+                }`}
+              >
+                Payment Method
+              </div>
+              <div
+                className={`py-[10.33px] pl-[5.867px] pr-1 md:py-3 md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none flex items-center justify-between  ${
+                  isDarkMode
+                    ? "text-white bg-black border border-white"
+                    : "text-[#7E7E7E]"
+                }`}
                 onClick={() => setShowList(!showList)}
               >
                 <p></p>
                 {selected ? (
-                  <div className={`flex w-[100%] justify-between items-center
-                    ${
-                      isDarkMode
-                        ? "bg-black text-white"
-                        : ""
-                    }`}>
-
-                    <p className={`text-[14px] font-extrabold lg:text-[14px]
-                    ${
-                      isDarkMode
-                        ? "bg-black text-white"
-                        : "text-[#7E7E7E]"
-                    }`}>
-                      {" "}
+                  <div
+                    className={`flex w-full justify-between items-center
+                    ${isDarkMode ? "text-white bg-black" : "text-[#7E7E7E]"}`}
+                  >
+                    <p
+                      className={`text-[12px] lg:text-[14px]
+                    ${isDarkMode ? "text-white bg-black" : "text-[#7E7E7E]"}`}
+                    >
+                      {/* font-extrabold */}
                       {globalCountry}
                     </p>
                     <img
                       className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
-                      src={flag}
+                      src={bedcFlag}
                       alt=""
                     />
                   </div>
                 ) : (
-
                   <img
                     className=" h-[13.3px] w-[13.3px] lg:w-[24px] lg:h-[24px]  "
                     src="./Images/dashboardImages/arrow-down2.png"
                     alt="dropdown"
                   />
-
                 )}
-
-
               </div>
               {globalTransferErrors.country && (
-                <div className={`text-[11px] text-red-500 italic lg:text-[14px]
-                    ${
-                  isDarkMode
-                  ? "text-white bg-black border border-white"
-                  : ""
-              }`}>
+                <div
+                  className={`text-[14px] text-red-500 italic lg:text-[14px]
+                  ${
+                    isDarkMode ? "text-white bg-black border border-white" : ""
+                  }`}
+                >
                   {globalTransferErrors.country}
                 </div>
               )}
               {showList && (
                 <div
                   className={`
-                      ${
-                  isDarkMode
-                  ? "text-white bg-black"
-                  : "bg-[#fff]"
-              }
-                    ${toggleSideBar
-                    ? "lg:w-[31.5%] lg:top-[100.5%]"
-                    : "lg:w-[38.5%] lg:top-[105.3%]"
-                    }  ${styles.countryDropDown
-                    } rounded-br-[7px] rounded-bl-[7px] shadow-xl  border w-[100%] lg:w-full lg:rounded-br-[14px] lg:rounded-bl-[14px]`}
+                    ${
+                      isDarkMode
+                        ? "bg-black text-white border border-white divide-white"
+                        : "text-[#7C7C7C] bg-white"
+                    }
+                    ${
+                      toggleSideBar
+                        ? "lg:w-[31.5%] lg:top-[100.5%]"
+                        : "lg:w-[38.5%] lg:top-[105.3%]"
+                    }  ${
+                    styles.countryDropDown
+                  } rounded-br-[7px] rounded-bl-[7px] shadow-xl border w-full lg:w-full lg:rounded-br-[14px] lg:rounded-bl-[14px] flex flex-col divide-y absolute top-20`}
                 >
-                  {" "}
                   {countryList.map((country) => (
                     <div
-                      className={`pb-[18px] md:pb-[14px] pt-[18px] md:pt-[14px] md:font-[600] font-[400] text-[13px] cursor-pointer border-b flex items-center p-2 gap-[5px] text-[11px]  md:text-[14px] lg:text-[16px]
-                          ${
-                  isDarkMode
-                  ? "text-white bg-black border border-white"
-                  : ""
-              }`}
+                      className={`py-[18px] md:py-[14px] font-normal cursor-pointer px-2 flex items-center gap-[5px] text-[12px] md:text-[14px] lg:text-[16px] transition-all duration-300 hover:bg-slate-50
+                        ${
+                          isDarkMode
+                            ? "text-white hover:bg-slate-800 bg-black border border-white"
+                            : "text-[#7E7E7E]"
+                        }`}
                       key={country.id}
                       onClick={() =>
                         handleCountryClick(
@@ -580,43 +733,44 @@ const BEDC = () => {
                 </div>
               )}
             </div>
-
           </div>
           <div
             onClick={handleProceed}
-            className={`text-[11px] mt-[30px] md:mt-[40px] bg-[#0008] md:w-fit lg:px-12 lg:text-[16px] lg:px md:py-1 md:rounded-md md:px-6   py-3 rounded-md font-[600] text-center text-white
-            ${!meterNumber ||
-                !verifiedName ||
-                !phoneNumber ||
-                !ikedcEmail ||
-                !selectedNetworkProduct ||
-                !selected ||
-                !ikedcamount
-                ? "bg-[#63616188] cursor-not-allowed"
-                : "bg-primary"
-              }`}
-            disabled={
-              !meterNumber ||
-              !verifiedName ||
-              !phoneNumber ||
-              !ikedcEmail ||
-              !selectedNetworkProduct ||
+            className={`text-[12px] mt-[30px] md:mt-[40px] bg-[#0008] md:w-fit lg:px-12 lg:text-[16px] lg:px md:py-1 md:rounded-md md:px-6 py-3 rounded-md font-semibold text-center text-white
+            ${
+              !bedcMeterNumber ||
+              !bedcVerifiedName ||
+              !bedcPhoneNumber ||
+              !bedcEmail ||
+              !selectedBedcMeterType ||
               !selected ||
-              !ikedcamount
+              !bedcAmount
+                ? "bg-[#63616188] cursor-not-allowed"
+                : "bg-primary cursor-pointer"
+            }`}
+            disabled={
+              !bedcMeterNumber ||
+              !bedcVerifiedName ||
+              !bedcPhoneNumber ||
+              !bedcEmail ||
+              !selectedBedcMeterType ||
+              !selected ||
+              !bedcAmount
             }
           >
             Proceed
           </div>
         </div>
-        <footer className="flex justify-center text-center gap-[20px] mt-[200px] pb-[10%] md:mt-[750px]  lg:mt-[850px]">
-          <p className="text-[8px] md:text-[11px] lg:text-[20px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
+        <footer className="flex justify-center text-center gap-[20px] mt-[200px] pb-[10%] md:mt-[750px] lg:mt-[850px]">
+          <p className="text-[11px] md:text-[12px] lg:text-[18px] font-medium leading-[9.1px] mt-[5px] lg:mt-[13px]">
             You need help?
           </p>
 
           <Link to="/ContactUs">
             <div
-              className={`${isDarkMode ? "bg-[#04177f] " : "bg-[#04177f]"
-                } text-[8px] p-1 text-white rounded-[8px] lg:text-[18px]`}
+              className={`${
+                isDarkMode ? "bg-[#04177f] " : "bg-[#04177f]"
+              } text-[11px] p-1.5 text-white rounded-[8px] lg:text-[16px]`}
             >
               Contact Us
             </div>
@@ -628,87 +782,164 @@ const BEDC = () => {
       {proceed && (
         <Modal>
           <div
-            className={`${styles.transferMoneyPop} ${toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-              } w-[90%] md:w-[60%] overflow-auto`}
+            className={`${
+              isDarkMode
+                ? "absolute h-[505px] shrink-0 bottom-0 shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)] rounded-[8px] md:h-[620px] md:rounded-xl md:bottom-[30%] lg:h-[550px] lg:rounded-[20px] lg:bottom-[7%] bg-black border border-white text-white"
+                : styles.transferMoneyPop
+            } ${
+              toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+            } w-[90%] md:w-[60%] overflow-auto`}
           >
             <img
               onClick={() => setProceed(false)}
-              className="absolute right-2 w-[18px] h-[18px] my-[3%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px]"
+              className="absolute right-2 w-[18px] h-[18px] my-[3%] md:w-6 md:h-6 lg:w-[25px] lg:h-[25px]"
               src="/Images/transferImages/close-circle.png"
               alt=""
             />
             <hr className="h-[6px] bg-[#04177f] border-none mt-[9%] md:mt-[8%] md:h-[10px]" />
-            <h2 className="text-[11px] font-[600] my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
+            <h2 className="text-[12px] font-semibold my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
               Confirm Transaction
             </h2>
-            <p className="text-[10px] text-[#000] pt-[20px] font-[500] text-center mb-2 md:text-[11px] lg:text-[14px]">
+            <p
+              className={`text-[10px] pt-[20px] md:pt-[10px] lg:pt-[20px] font-medium text-center mb-2 md:text-[12px] lg:text-[14px] ${
+                isDarkMode ? "text-white" : "text-[#000]"
+              }`}
+            >
               You are about to Purchase{" "}
-              <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[11px]">
-                {selectedNetworkProduct} Meter (&#8358;{ikedcamount})
-              </span>{" "}
+              <span
+                className={`font-extrabold text-[10px] md:text-[14px] lg:text-[12px] ${
+                  isDarkMode ? "text-white" : "text-[#000]"
+                }`}
+              >
+                {selectedBedcMeterType} Meter (&#8358;{bedcAmount}){" "}
+              </span>
               {/* Points to <br></br>
-              <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[11px]">
-                &#8358;{}{" "}
+              <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">
+                &#8358;{}
               </span> */}
-              From <br /> your NGN Wallet to{" "}
+              From <br /> your NGN Wallet to
             </p>
 
             <div className="flex flex-col gap-3 pt-[10px]">
               <div className="flex text-[10px] md:text-[14px] pt-[10px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Disco Type</p>
+                <p
+                  className={`font-medium ${
+                    isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                  }`}
+                >
+                  Disco Type
+                </p>
                 <span className="flex items-center gap-1 ">
-                  <div><img className="w-[30px]" src={logo} alt="" /></div>
+                  <div>
+                    <img className="w-[30px]" src={logo} alt="" />
+                  </div>
                   <div>Benin-BEDC</div>
                 </span>
               </div>
-              <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Meter Type</p>
-                <span>{selectedNetworkProduct} </span>
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
+                <p
+                  className={`font-medium ${
+                    isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                  }`}
+                >
+                  Meter Type
+                </p>
+                <span>{selectedBedcMeterType} </span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Meter Number</p>
-                <span>{meterNumber} </span>
+                <p
+                  className={`font-medium ${
+                    isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                  }`}
+                >
+                  Meter Number
+                </p>
+                <span>{bedcMeterNumber} </span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Verified Name</p>
-                <span>{verifiedName}</span>
+                <p
+                  className={`font-medium ${
+                    isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                  }`}
+                >
+                  Verified Name
+                </p>
+                <span>{bedcVerifiedName}</span>
               </div>
 
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Phone Number</p>
-                <span>{phoneNumber}</span>
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
+                <p
+                  className={`font-medium ${
+                    isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                  }`}
+                >
+                  Phone Number
+                </p>
+                <span>{bedcPhoneNumber}</span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Email</p>
-                <span>{ikedcEmail}</span>
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
+                <p
+                  className={`font-medium ${
+                    isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                  }`}
+                >
+                  Email
+                </p>
+                <span>{bedcEmail}</span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Amount</p>
-                <span>&#8358;{ikedcamount}</span>
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
+                <p
+                  className={`font-medium ${
+                    isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                  }`}
+                >
+                  Amount
+                </p>
+                <span>&#8358;{bedcAmount}</span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Payment Method</p>
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
+                <p
+                  className={`font-medium ${
+                    isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                  }`}
+                >
+                  Payment Method
+                </p>
                 <span>Nigerian NGN Wallet</span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Points Earned</p>
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
+                <p
+                  className={`font-medium ${
+                    isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                  }`}
+                >
+                  Points Earned
+                </p>
                 <span className="text-[#00AA48]">{pointsEarned}</span>
               </div>
             </div>
 
             <div className="bg-[#0001] h-[45px] my-5 flex justify-between items-center px-[4%]">
               <div className="flex gap-2 items-center">
-                <div className="bg-white rounded-full h-[27px] w-[27px] flex justify-center items-center">
+                <div
+                  className={`rounded-full h-[27px] w-[27px] flex justify-center items-center ${
+                    isDarkMode ? "bg-[#0001] " : "bg-white"
+                  }`}
+                >
                   <img className="w-[16px] h-[16px]" src={nig} alt="/" />
                 </div>
                 <p className="text-[10px] md:text-[14px]  lg:text-[16px]">
-                  Available Balance{" "}
-                  <span className="text-[#000]">(&#8358;50,000.00)</span>
+                  Available Balance
+                  <span
+                    className={` ${isDarkMode ? "text-white" : "text-[#000] "}`}
+                  >
+                    (&#8358;50,000.00)
+                  </span>
                 </p>
               </div>
               <img
-                className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
+                className="w-[15px] h-[15px] lg:w-[20px] lg:h-[20px]"
                 src="./Images/dashboardImages/arrowright.png"
                 alt="/"
               />
@@ -717,54 +948,82 @@ const BEDC = () => {
               onClick={handleSwitch}
               className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
             >
-              Confirmed
+              Confirm
             </button>
           </div>
         </Modal>
       )}
 
-
       {/* Input pin pop up */}
       {InputPinPopUp && (
         <Modal>
           <div
-            className={`${styles.inputPin} ${toggleSideBar ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
-              } md:w-[55%] w-[90%]`}
+            className={`${
+              isDarkMode
+                ? "bg-black absolute pt-4 h-[250px] shrink-0 rounded-lg shadow border border-white md:h-[350px] w-[481.25px] md:bottom-auto md:top-auto lg:h-[450px] lg:rounded-[20px] "
+                : styles.inputPin
+            }
+               ${
+                 toggleSideBar
+                   ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]"
+                   : "lg:w-[40%]"
+               } md:w-[55%] w-[90%] `}
           >
             <img
               onClick={handle}
-              className="absolute right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px]"
+              className={`absolute right-2 w-[18px] h-[18px] my-[1%] md:w-5 md:h-5 lg:w-[25px] lg:h-[25px] ${
+                isDarkMode ? "my-7" : ""
+              }`}
               src="/Images/transferImages/close-circle.png"
               alt=""
             />
-            <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
-            <p className="text-[9px] md:text-[16px] font-extrabold text-center my-[10%] lg:my-[%]">
+            <hr
+              className={`h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px] ${
+                isDarkMode ? "md:mt-10" : ""
+              }`}
+            />
+            <p className="text-[12px] md:text-[16px] font-extrabold text-center my-[10%] lg:my-[%] ">
               Input PIN to complete transaction
             </p>
             <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[8%]">
-              <div className=" flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
-                {" "}
+              <div className=" flex justify-center  ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
                 {isVisible ? (
-                  <OtpInput
-                    value={inputPin}
-                    inputType="tel"
-                    onChange={setInputPin}
-                    numInputs={4}
-                    shouldAutoFocus={true}
-                    inputStyle={{
-                      color: "#403f3f",
-                      width: 30,
-                      height: 30,
-                      borderRadius: 3,
-                    }}
-                    renderInput={(props) => (
-                      <input {...props} className="inputOTP mx-[3px]" />
-                    )}
-                  />
-                ) : (
-                  <div className="text-[24px] md:text-[24px] mt-1">
-                    * * * *{" "}
+                  <div className="flex flex-col gap-y-1">
+                    <OtpInput
+                      value={inputPin}
+                      inputType="tel"
+                      onChange={setInputPin}
+                      numInputs={4}
+                      shouldAutoFocus={true}
+                      inputStyle={{
+                        color: isDarkMode ? "#ffffff" : "#403f3f",
+                        width: 30,
+                        height: 30,
+                        borderRadius: 3,
+                        backgroundColor: isDarkMode ? "black" : "white",
+                        border: isDarkMode
+                          ? "1px solid white"
+                          : "1px solid #ccc",
+                      }}
+                      renderInput={(props) => (
+                        <input {...props} className="inputOTP mx-[3px]" />
+                      )}
+                    />
+                    <span className="">
+                      {pinSuccess && (
+                        <p className="text-[12px] text-green-500 text-center font-medium">
+                          Pin matches
+                        </p>
+                      )}
+                      {pinFailed && errorMessage && (
+                        <p className="text-[12px] text-center text-red-600 font-medium">
+                          Incorrect Pin
+                        </p>
+                      )}
+                    </span>
                   </div>
+                ) : (
+                  <div className="text-[24px] md:text-[24px] mt-1">* * * *</div>
                 )}
                 <div
                   className="text-[#0003] text-[13px] md:text-3xl"
@@ -773,15 +1032,18 @@ const BEDC = () => {
                   {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
                 </div>
               </div>
-              <p className="text-[8px] md:text-[11px] text-[#04177f]">
+              <p className="text-[10px] md:text-[12px] text-[#04177f]">
                 Forgot Pin ?
               </p>
             </div>
             <button
               disabled={inputPin.length !== 4 ? true : false}
-              onClick={handleSuccess}
-              className={`${inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
-                } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+              onClick={verifyPin}
+              className={`${
+                inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
+              } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%] ${
+                isDarkMode ? "border border-white" : ""
+              }`}
             >
               Purchase
             </button>
@@ -789,33 +1051,33 @@ const BEDC = () => {
         </Modal>
       )}
 
-
       {/* purchase Successful Popup */}
       {successPopup && (
         <Modal>
           <div
-            className={`${styles.successfulTwo} ${toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-              } md:w-[45%] w-[90%] overflow-auto`}
+            className={`${styles.successfulTwo} ${
+              toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+            } md:w-[45%] w-[90%] overflow-auto`}
           >
             <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
               <img
                 onClick={() => setSuccessPopup(false)}
-                className=" w-[18px]   md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[25px]"
+                className=" w-[18px] md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[25px]"
                 src="/Images/login/arpLogo.png"
                 alt=""
               />
 
               <img
                 onClick={() => {
-                  setSelectedNetworkProduct("");
-                  setMeterNumber("");
-                  setVerifiedName("");
-                  setPhoneNumber("");
-                  setEmail("");
-                  setIkedcamount("");
+                  setSelectedBedcMeterType("");
+                  setBedcMeterNumber("");
+                  setBedcVerifiedName("");
+                  setBedcPhoneNumber("");
+                  setBedcEmail("");
+                  setBedcAmount("");
                   setGlobalCountry("");
-                  setFlag("");
-                  setSuccessPopup(false)
+                  setBedcFlag("");
+                  setSuccessPopup(false);
                 }}
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
@@ -831,107 +1093,161 @@ const BEDC = () => {
               src="./Gif/checkMarkGif.gif"
               alt="/"
             />
-            <p className="text-[8px] lg:text-[16px] font-[500] text-[#000] text-center mb-2 md:text-[14px] ">
-              You have successfully Purchased{" "}
-              <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
-                Benin {selectedNetworkProduct} Meter
-              </span>{" "}
-              <br></br>
-              <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
-                (&#8358;{ikedcamount}){" "}
+            <p
+              className={`text-[10px] lg:text-[16px] font-medium text-center mb-2 md:text-[14px] ${
+                isDarkMode ? "text-white" : "text-[#000]"
+              }`}
+            >
+              You have successfully Purchased
+              <span
+                className={`font-extrabold text-[11px] md:text-[16px] lg:text-[14px] ${
+                  isDarkMode ? "text-white" : "text-[#000]"
+                }`}
+              >
+                Benin {selectedBedcMeterType} Meter
               </span>
-              From your NGN Nigerian Wallet to{" "}
+              <br></br>
+              <span
+                className={`font-extrabold text-[10px] md:text-[16px] lg:text-[14px] ${
+                  isDarkMode ? "text-white" : "text-[#000]"
+                }`}
+              >
+                (&#8358;{bedcAmount})
+              </span>
+              From your NGN Nigerian Wallet to
             </p>
 
             <div className="flex flex-col gap-3 pt-[10px]">
               <div className="flex text-[10px] md:text-[14px] pt-[10px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Disco Type</p>
+                <p
+                  className={`font-medium ${
+                    isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                  }`}
+                >
+                  Disco Type
+                </p>
                 <span className="flex items-center gap-1 ">
-                  <div><img className="w-[30px]" src={logo} alt="" /></div>
-                  <div>{serviceID}</div>
+                  <div>
+                    <img className="w-[30px]" src={logo} alt="" />
+                  </div>
+                  <div>{bedcServiceID}</div>
                 </span>
               </div>
-              <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Meter Type</p>
-                <span>{selectedNetworkProduct} </span>
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
+                <p
+                  className={`font-medium ${
+                    isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                  }`}
+                >
+                  Meter Type
+                </p>
+                <span>{selectedBedcMeterType} </span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Meter Number</p>
-                <span>{meterNumber} </span>
+                <p
+                  className={`font-medium ${
+                    isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                  }`}
+                >
+                  Meter Number
+                </p>
+                <span>{bedcMeterNumber} </span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Verified Name</p>
-                <span>{verifiedName}</span>
+                <p
+                  className={`font-medium ${
+                    isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                  }`}
+                >
+                  Verified Name
+                </p>
+                <span>{bedcVerifiedName}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Phone Number</p>
-                <span>{phoneNumber}</span>
+                <p
+                  className={`font-medium ${
+                    isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                  }`}
+                >
+                  Phone Number
+                </p>
+                <span>{bedcPhoneNumber}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Email</p>
-                <span>{ikedcEmail}</span>
+                <p
+                  className={`font-medium ${
+                    isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                  }`}
+                >
+                  Email
+                </p>
+                <span>{bedcEmail}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Amount</p>
-                <span>&#8358;{ikedcamount}</span>
+                <p
+                  className={`font-medium ${
+                    isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                  }`}
+                >
+                  Amount
+                </p>
+                <span>&#8358;{bedcAmount}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Payment Method</p>
+                <p
+                  className={`font-medium ${
+                    isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                  }`}
+                >
+                  Payment Method
+                </p>
                 <span>Nigerian NGN Wallet</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Points Earned</p>
+                <p
+                  className={`font-medium ${
+                    isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                  }`}
+                >
+                  Points Earned
+                </p>
                 <span className="text-[#00AA48]">{pointsEarned}</span>
               </div>
             </div>
 
-
             <div className="bg-[#F2FAFF] mx-10 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
-              <p className="text-[6px] text-center mx-auto w-[171px] md:text-[14px] md:w-[80%] lg:text-[14px]">
-                The electricity bills / token purchase has been generated successfully. Please kindly check receipt
-                to confirm the bills / token. You can contact us for any further assistance.
+              <p className="text-[11px] text-center mx-auto w-[171px] md:text-[14px] md:w-[80%] lg:text-[14px]">
+                The electricity bills / token purchase has been generated
+                successfully. Please kindly check receipt to confirm the bills /
+                token. You can contact us for any further assistance.
               </p>
             </div>
             <div className="flex w-[70%] mx-auto items-center my-6  gap-[6%] md:gap-[20px] justify-center md:w-[20%] lg:my-[5%]">
               <button
                 onClick={() => {
-                  setSelectedNetworkProduct("");
-                  setMeterNumber("");
-                  setVerifiedName("");
-                  setPhoneNumber("");
-                  setEmail("");
-                  setIkedcamount("");
+                  setSelectedBedcMeterType("");
+                  setBedcMeterNumber("");
+                  setBedcVerifiedName("");
+                  setBedcPhoneNumber("");
+                  setBedcEmail("");
+                  setBedcAmount("");
                   setGlobalCountry("");
-                  setFlag("");
+                  setBedcFlag("");
                   setSuccessPopup(false);
                 }}
                 className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[11px] font-extrabold h-[40px] text-white rounded-[6px] md:px-[50px] md:w-[70%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
               >
                 Done
               </button>
-              <Link to="/bedc-receipt" state={{
-                selectedNetworkProduct: selectedNetworkProduct,
-                meterNumber: meterNumber,
-                phoneNumber: phoneNumber,
-                ikedcEmail: ikedcEmail,
-                ikedcamount: ikedcamount,
-                orderId: orderId,
-                transactionId: transactionId,
-                serviceID: serviceID,
-                showDescription: showDescription,
-                billGenerate: billGenerate,
-              }}>
-                <button
-                  onClick={() => {
-                    setSuccessPopup(false);
-                  }}
-                  className={`border-[1px] w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[11px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
-                >
-                  Receipt
-                </button>
-              </Link>
+
+              <button
+                onClick={handleReceivedData}
+                className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[11px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+              >
+                Receipt
+              </button>
             </div>
           </div>
         </Modal>
@@ -941,8 +1257,9 @@ const BEDC = () => {
       {failedPopup && (
         <Modal>
           <div
-            className={`${styles.successfulTwo} ${toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-              } md:w-[45%] w-[90%] overflow-auto`}
+            className={`${styles.successfulTwo} ${
+              toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+            } md:w-[45%] w-[90%] overflow-auto`}
           >
             <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
               <img
@@ -954,15 +1271,15 @@ const BEDC = () => {
 
               <img
                 onClick={() => {
-                  setSelectedNetworkProduct("");
-                  setMeterNumber("");
-                  setVerifiedName("");
-                  setPhoneNumber("");
-                  setEmail("");
-                  setIkedcamount("");
+                  setSelectedBedcMeterType("");
+                  setBedcMeterNumber("");
+                  setBedcVerifiedName("");
+                  setBedcPhoneNumber("");
+                  setBedcEmail("");
+                  setBedcAmount("");
                   setGlobalCountry("");
-                  setFlag("");
-                  setFailedPopup(false)
+                  setBedcFlag("");
+                  setSuccessPopup(false);
                 }}
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
@@ -978,7 +1295,11 @@ const BEDC = () => {
               src="./Images/failed.png"
               alt="/"
             />
-            <p className="text-[10px] text-[#0008] mx-[10px] text-center my-[60px] md:text-[14px] lg:text-[11px]">
+            <p
+              className={`text-[10px] mx-[10px] text-center my-[60px] md:text-[14px] lg:text-[12px] ${
+                isDarkMode ? "text-white" : "text-[#0008]"
+              }`}
+            >
               An unexpected error has occurred, please try again.
             </p>
             <div className="flex w-[70%] mx-auto items-center my-6  gap-[6%] md:gap-[20px] justify-center md:w-[20%] lg:my-[5%]">
@@ -990,22 +1311,25 @@ const BEDC = () => {
               >
                 Done
               </button>
-              <Link to="/bedc-receipt-failed" state={{
-                selectedNetworkProduct: selectedNetworkProduct,
-                meterNumber: meterNumber,
-                phoneNumber: phoneNumber,
-                ikedcEmail: ikedcEmail,
-                ikedcamount: ikedcamount,
-                orderId: orderId,
-                transactionId: transactionId,
-                serviceID: serviceID,
-                showDescription: showDescription,
-              }}>
+              <Link
+                to="/bedc-receipt-failed"
+                state={{
+                  selectedNetworkProduct: selectedBedcMeterType,
+                  meterNumber: bedcMeterNumber,
+                  phoneNumber: bedcPhoneNumber,
+                  ikedcEmail: bedcEmail,
+                  ikedcamount: bedcAmount,
+                  orderId: bedcOrderId,
+                  transactionId: bedcTransactionId,
+                  serviceID: bedcServiceID,
+                  showDescription: bedcShowDescription,
+                }}
+              >
                 <button
                   onClick={() => {
                     setFailedPopup(false);
                   }}
-                  className={`border-[1px] w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                  className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
                 >
                   Receipt
                 </button>
@@ -1014,9 +1338,13 @@ const BEDC = () => {
           </div>
         </Modal>
       )}
-
+      {loading && (
+        <Modal>
+          <Loader />
+        </Modal>
+      )}
     </DashBoardLayout>
   );
-}
+};
 
 export default BEDC;
