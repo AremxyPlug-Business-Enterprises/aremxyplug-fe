@@ -25,20 +25,141 @@ import { MtnReceipt } from "./MtnReceipt";
 import Joi from "joi";
 import airtimestyles from "../../../../../AirTimePage/AirtimeVtu.module.css";
 import Failed from "./MtnDataTopUpBundleImages/Failed.svg";
-import Spinner from "./Spinner";
 import { MtnFailedReceipt } from "./MtnFailedReceipt";
 import axiosInstance from "../../../../../ApiCollection.jsx/apiClient";
 import { VerifyTransPin } from "../../../../../ApiCollection.jsx/ApiBuck";
+import { Loader } from "../../../../../Loader/Loader";
+//import { GetFunction } from "../../../../../ApiCollection.jsx/ApiBuck";
 
 // import { DataBundleFailedPopUp } from "../../../TransferComponent/PopUps/TransactionFailedPopUp";
 
-const countryList = [
+
+
+const MtnDataTopUpBundle = () => {
+  const { isDarkMode } = useContext(ContextProvider);
+  const { selectedOption, setSelectedOption } = useContext(ContextProvider);
+  const { selectedProduct, setSelectedProduct } =
+    useContext(ContextProvider);
+  const { recipientPhoneNumber, setRecipientPhoneNumber } =
+    useContext(ContextProvider);
+  const { selectedAmount, setSelectedAmount } = useContext(ContextProvider);
+  const { recipientNames, setRecipientNames } = useContext(ContextProvider);
+  const { walletName, setWalletName, newBalance} = useContext(ContextProvider);
+
+  const [showProductList, setShowProductList] = useState(false);
+  const [showOptionList, setShowOptionList] = useState(false);
+  const [addRecipient, setAddRecipient] = useState(false);
+  const [proceed, setProceed] = useState(false);
+  const [confirm, setConfirm] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [paymentSelected, setPaymentSelected] = useState(false);
+  const [showPayment, setShowPayment] = useState(false);
+  const [image, setImage] = useState("");
+  const [paymentAmount, setPaymentAmount] = useState("");
+  const [codes, setCodes] = useState(false);
+  const [plan, setPlan] = useState("");
+  const [purchaseStatus, setPurchaseStatus] = useState(null); // State to hold purchase status
+  const [loading, setLoading] = useState(false);
+  const [proceedToShowReceipt] = useState(false);
+  const [products, setProducts] = useState([]);
+  const [productPlans, setProductPlans] = useState([]);
+  const [loadingProducts, setLoadingProducts] = useState(false);
+  const [loadingPlans, setLoadingPlans] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState(null);
+  const [success, setSuccess] = useState(false);
+  const [failed, setFailed] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+ const [balanceStatus,setBalanceStatus ] = useState("")
+ //const [fetchedBalance, setFetchedBalance] = useState({})
+   let balanceStringToNum = Number(newBalance);
+
+              let mtnDataAmount = Number(selectedAmount);
+             let CheckSufficiency =  mtnDataAmount > balanceStringToNum;
+           
+  useEffect(() => {
+// GetFunction
+// const GetBalance = async()=> {
+
+//   const SuccessHandler = ()=> {
+//      alert("Successful");
+//    fetchedBalance.data ?  setNewBalance(fetchedBalance.data.data.data.balance)  : null;
+  
+//   }
+//   const FailedHandler = ()=> {
+//     console.log(`Error`)
+//   }
+// await GetFunction("balance", setLoading, SuccessHandler, FailedHandler, setFetchedBalance)
+// }
+// GetBalance();
+
+
+    const fetchProducts = async () => {
+      setLoadingProducts(true);
+      try {
+        const response = await axiosInstance.get(
+          `/products/telecom/list/1`
+        );
+        setProducts(response.data.data.products || []);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      } finally {
+        setLoadingProducts(false);
+      }
+    };
+
+    fetchProducts();
+        const HandleBalanceStatus = ()=> {
+              if(CheckSufficiency){
+               setBalanceStatus("Insufficient fund")
+              }else{
+                setBalanceStatus("");
+               }
+            }
+
+            HandleBalanceStatus()
+
+          },[CheckSufficiency])
+            
+//console.log(fetchedBalance);
+
+  // Fetch plans when product is selected
+  const fetchPlans = async (productId) => {
+    setLoadingPlans(true);
+    try {
+      const response = await axiosInstance.get(
+        `/products/telecom/${productId}`
+      );
+      setProductPlans(response.data.data.plans || []);
+    } catch (error) {
+      console.error("Error fetching plans:", error);
+    } finally {
+      setLoadingPlans(false);
+    }
+  };
+
+
+  const handleSelectProduct = (product) => {
+    setSelectedProduct(`${product.Plan_Type}`);
+    setShowProductList(false);
+    fetchPlans(product.Product_ID);
+  };
+
+  const handleSelectOption = (plan) => {
+    setPlan(`${plan.ID}`);
+    setSelectedOption(`${plan.Size} ~ ${plan.Validity} ~ ₦${plan.Amount}`);
+    setSelectedAmount(`₦${plan.Amount}`);
+    setSelectedPlan(plan);
+    setShowOptionList(false);
+    setShowProductList(false);
+  };
+
+  const countryList = [
   {
     id: 1,
     name: "Nigeria",
     code: "NGN",
     flag: require("../DataBundles-Images/ng.svg").default,
-    amount: 0,
+    amount: newBalance,
   },
   {
     id: 2,
@@ -76,90 +197,6 @@ const countryList = [
     amount: 0,
   },
 ];
-
-const MtnDataTopUpBundle = () => {
-  const { isDarkMode } = useContext(ContextProvider);
-  const { selectedOption, setSelectedOption } = useContext(ContextProvider);
-  const { selectedProduct, setSelectedProduct } =
-    useContext(ContextProvider);
-  const { recipientPhoneNumber, setRecipientPhoneNumber } =
-    useContext(ContextProvider);
-  const { selectedAmount, setSelectedAmount } = useContext(ContextProvider);
-  const { recipientNames, setRecipientNames } = useContext(ContextProvider);
-  const { walletName, setWalletName } = useContext(ContextProvider);
-
-  const [showProductList, setShowProductList] = useState(false);
-  const [showOptionList, setShowOptionList] = useState(false);
-  const [addRecipient, setAddRecipient] = useState(false);
-  const [proceed, setProceed] = useState(false);
-  const [confirm, setConfirm] = useState(false);
-  const [errors, setErrors] = useState({});
-  const [paymentSelected, setPaymentSelected] = useState(false);
-  const [showPayment, setShowPayment] = useState(false);
-  const [image, setImage] = useState("");
-  const [paymentAmount, setPaymentAmount] = useState("");
-  const [codes, setCodes] = useState(false);
-  const [plan, setPlan] = useState("");
-  const [purchaseStatus, setPurchaseStatus] = useState(null); // State to hold purchase status
-  const [loading, setLoading] = useState("");
-  const [proceedToShowReceipt] = useState(false);
-  const [products, setProducts] = useState([]);
-  const [productPlans, setProductPlans] = useState([]);
-  const [loadingProducts, setLoadingProducts] = useState(false);
-  const [loadingPlans, setLoadingPlans] = useState(false);
-  const [selectedPlan, setSelectedPlan] = useState(null);
-  const [success, setSuccess] = useState(false);
-  const [failed, setFailed] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      setLoadingProducts(true);
-      try {
-        const response = await axiosInstance.get(
-          `/products/telecom/list/1`
-        );
-        setProducts(response.data.data.products || []);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      } finally {
-        setLoadingProducts(false);
-      }
-    };
-
-    fetchProducts();
-  }, []);
-
-  // Fetch plans when product is selected
-  const fetchPlans = async (productId) => {
-    setLoadingPlans(true);
-    try {
-      const response = await axiosInstance.get(
-        `/products/telecom/${productId}`
-      );
-      setProductPlans(response.data.data.plans || []);
-    } catch (error) {
-      console.error("Error fetching plans:", error);
-    } finally {
-      setLoadingPlans(false);
-    }
-  };
-
-  const handleSelectProduct = (product) => {
-    setSelectedProduct(`${product.Plan_Type}`);
-    setShowProductList(false);
-    fetchPlans(product.Product_ID);
-  };
-
-  const handleSelectOption = (plan) => {
-    setPlan(`${plan.ID}`);
-    setSelectedOption(`${plan.Size} ~ ${plan.Validity} ~ ₦${plan.Amount}`);
-    setSelectedAmount(`₦${plan.Amount}`);
-    setSelectedPlan(plan);
-    setShowOptionList(false);
-    setShowProductList(false);
-  };
-
   useEffect(() => {
     // Simulate async data loading
     setTimeout(() => {
@@ -377,36 +414,37 @@ const [inputValue, setInputValue] = useState("");
       console.log("its me")
 
       try {
+        setLoading(true)
         const response = await axiosInstance.post(path, data);
         console.log(response.data);
         console.log(response.status);
 
         const resData = response.data.data; // Accessing the nested `data` object
 
-        console.log(response.status);
-        setPlan(resData.plan_name);
-        console.log(resData.plan_name);
+        // console.log(response.status);
+        // setPlan(resData.plan_name);
+        // console.log(resData.plan_name);
 
-        setInputValue(resData.Phone_Number);
-        console.log(resData.Phone_Number);
+        // setInputValue(resData.Phone_Number);
+        // console.log(resData.Phone_Number);
 
-        setRecipientPhoneNumber(data.Phone_number); // Still from your original request
-        console.log(data.Phone_number);
+        // setRecipientPhoneNumber(data.Phone_number); // Still from your original request
+        // console.log(data.Phone_number);
 
-        console.log(inputValue); // Note: this may still show the old state value here
-        console.log(recipientPhoneNumber);
+        // console.log(inputValue); // Note: this may still show the old state value here
+        // console.log(recipientPhoneNumber);
 
-        setRecipientNames(resData.Name);
-        console.log(resData.Name);
+        // setRecipientNames(resData.Name);
+        // console.log(resData.Name);
 
-        setSelectedAmount(resData.plan_amount);
-        console.log(resData.plan_amount);
+        // setSelectedAmount(resData.plan_amount);
+        // console.log(resData.plan_amount);
 
-        setMtnTransactionID(resData.transaction_id);
-        console.log(resData.transaction_id);
+        // setMtnTransactionID(resData.transaction_id);
+        // console.log(resData.transaction_id);
 
-        setMtnRefNumber(resData.reference_number);
-        console.log(resData.reference_number);
+        // setMtnRefNumber(resData.reference_number);
+        // console.log(resData.reference_number);
 
         setMtnOrderID(resData.order_id); // No `order_id`, using `id` instead
         console.log(resData.order_id);
@@ -418,6 +456,8 @@ const [inputValue, setInputValue] = useState("");
       } catch (error) {
         console.error(error);
         return { statusCode: error.response.status, data: null };
+      }finally{
+        setLoading(false);
       }
     }
 
@@ -440,9 +480,13 @@ const [inputValue, setInputValue] = useState("");
     if (response.statusCode === 200) {
       // Success response
       setTransactSuccessPopUp(true); // Show success popup
+      setConfirm(false)
+      console.log(response);
     } else {
       // Failure response
       setPurchaseStatus(true); // Show failure popup
+      setConfirm(false);
+      console.log(response);
     }
 
   };
@@ -959,11 +1003,7 @@ const [inputValue, setInputValue] = useState("");
 
           {/* ================Proceed=================== */}
 
-          {loading && (
-            <Modal>
-              <Spinner size="large" />
-            </Modal>
-          )}
+         
 
           {proceed && (
             <Modal>
@@ -1087,32 +1127,43 @@ const [inputValue, setInputValue] = useState("");
                       </div>
                     </div>
 
-                    <div className="my-[5px] flex justify-between items-center gap-2 bg-slate-200 -mx-[20px] px-[15px] h-[49px] py-[20px]">
-                      <div className="flex gap-2 items-center">
-                        <div className="bg-white rounded-full h-[27px] w-[27px] flex justify-center items-center">
-                          <img
-                            className="w-[16px] h-[16px]"
-                            src={image}
-                            alt="/"
-                          />
-                        </div>
-                        <p className="text-[10px] md:text-[14px]  lg:text-[16px]">
-                          Available Balance{" "}
-                          <span className="text-[#0003]">
-                            ( {walletName + paymentAmount}.00 )
-                          </span>
-                        </p>
-                      </div>
-                      <img
-                        src={Select}
-                        alt=""
-                        className="w-[12px] h-[12px] md:w-[50px] md:h-[20px] lg:w-[80px] lg:h-[30px]"
-                      />
-                    </div>
+                     <div className="bg-[#F6F7F7] w-[95%] h-auto my-5 lg:my-8 flex py-[7px] 
+                           justify-between items-center px-[4%] mx-auto rounded-[10px]">
+                                   <div className="flex flex-col gap-2  ">
+                                     <div className="flex gap-[10px] justify-center items-center">
+                                       <img
+                                         className="w-[16px] h-[16px] bg-white"
+                                         src={image}
+                                         alt="/"
+                                       />
+                                       <div className="flex gap-[10px] items-center">
+                                           <p className="text-[12px] md:text-[14px] leading-[20px] lg:leading-[22px]  lg:text-[16px] font-[500]">
+                                       Available Balance {"  "} 
+                                        </p>
+                                        <span className="text-[#0003]">
+                                         {`(${newBalance})`}
+                                       </span>
+                                       </div>
+                                     </div>
+                                   <span className="text-gray-500 text-[14px] font-[400] leading-[20px]
+                                        lg:text-[16px] lg:leading-[22px] text-left">
+                                          {balanceStatus}
+                                          </span>
+                                   </div>
+                   
+                                   <img
+                                     src={Select}
+                                     alt=""
+                                     className="w-[12px] h-[12px] md:w-[50px] md:h-[20px] lg:w-[80px] lg:h-[30px]"
+                                   />
+                                 </div>
 
                     <div className="flex items-center justify-center">
                       <button
-                        className="w-full md:w-fit bg-primary text-white rounded-md px-[28px] text-[10px] md:text-[12px] leading-[15px] lg:text-[16px] lg:leading-[24px] py-[15px] md:py-[10px]"
+                      disabled ={CheckSufficiency}
+                        className={`w-full md:w-fit bg-primary text-white rounded-md px-[28px] 
+                        text-[10px] md:text-[12px] leading-[15px] lg:text-[16px] lg:leading-[24px]
+                         py-[15px] md:py-[10px]  ${CheckSufficiency ? "bg-gray-400" : "bg-primary"} `}
                         onClick={() => {
                           handleConfirm();
                         }}
@@ -1149,7 +1200,7 @@ const [inputValue, setInputValue] = useState("");
                   <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
                     <img src={Failed} alt="" />
                     <p className="text-[8px] md:text-[12px] text-[#04177f]">
-                      An unexpected error has occurred, please try again.
+                      An error has occurred, please try again.
                     </p>
                   </div>
                 </div>
@@ -1253,21 +1304,28 @@ const [inputValue, setInputValue] = useState("");
                       Forgot Pin ?
                     </p>
                   </div>
+                  {errorMessage && (
+                  <p className = "text-[14px] font-[500] text-red-500 text-center leading-[14px]"> 
+                    Incorrect otp
+                    </p>
+
+                  )}
                 </div>
 
                 <button
                   onClick={(e) => {
                     console.log("inputPin", inputPin);
+                   const DataHandler =  () => {
+                     // Close modal on PIN success
+                        inputPinHandler(); // Proceed with purchase
+                      }
                     VerifyTransPin(
                       inputPin,
                       setSuccess,
                       setFailed,
                       setLoading,
                       setErrorMessage,
-                      () => {
-                        setConfirm(false); // Close modal on PIN success
-                        inputPinHandler(); // Proceed with purchase
-                      }
+                     DataHandler
                     );
                   }}
                   disabled={inputPin.length !== 4}
@@ -1373,7 +1431,7 @@ const [inputValue, setInputValue] = useState("");
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        {inputValue}
+                        {recipientPhoneNumber}
                       </h2>
                     </div>
                   </div>
@@ -1542,6 +1600,11 @@ const [inputValue, setInputValue] = useState("");
           </Link>
         </div>
       </div>
+      {loading && (
+        <Modal>
+          <Loader/>
+        </Modal>
+      )}
     </DashBoardLayout>
   );
 };
