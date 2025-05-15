@@ -9,8 +9,6 @@ import logo from "../ElectricitySubscription/Electricity-sub-images/AEDC1 1.svg"
 import arrowDown from "../ElectricitySubscription/Electricity-sub-images/arrow-down.png";
 import nig from "../ElectricitySubscription/Electricity-sub-images/nigeriaFlag.png";
 
-// 54449030378
-
 import Joi from "joi";
 import { Modal } from "../../../Screens/Modal/Modal";
 import { AiFillEyeInvisible } from "react-icons/ai";
@@ -55,14 +53,12 @@ const AEDC = () => {
     setAedcFlag,
     selectedAedcMeterType,
     setSelectedAedcMeterType,
-    aedcOrderId,
     setAedcOrderId,
-    aedcTransactionId,
     setAedcTransactionId,
-    aedcShowDescription,
     setAedcShowDescription,
     aedcFetchedResponse,
     setAedcFetchedResponse,
+    setAedcFetchedFailedResponse,
   } = useContext(ContextProvider);
 
   // const { selectedNetworkProduct, setSelectedNetworkProduct } =
@@ -110,43 +106,53 @@ const AEDC = () => {
       name: "NGN Wallet(50,000.00)",
       code: "Nigerian NGN Wallet",
       flag: require("../ElectricitySubscription/Electricity-sub-images/nigeriaFlag.png"),
+      balance:0,
     },
     {
       id: 2,
       name: "USD Wallet. (00)",
       code: "USD",
       flag: require("../ElectricitySubscription/Electricity-sub-images/americaFlag.png"),
+      balance:0,
     },
     {
       id: 3,
       name: " GBP Wallet. (00)",
       code: "GBP",
       flag: require("../ElectricitySubscription/Electricity-sub-images/ukFlag.png"),
+      balance:0,
     },
     {
       id: 4,
       name: "EUR Wallet. (00)",
       code: "EUR ",
       flag: require("../ElectricitySubscription/Electricity-sub-images/europeanFlag.png"),
+      balance:0,
     },
     {
       id: 5,
       name: "AUD Wallet. (00)",
       code: "AUD",
       flag: require("../ElectricitySubscription/Electricity-sub-images/australiaFlag.png"),
+      balance:0,
     },
     {
       id: 6,
       name: "KES Wallet. (00)",
       code: "KES",
       flag: require("../ElectricitySubscription/Electricity-sub-images/kenyaFlag.png"),
+      balance:0,
     },
   ];
   const [errors, setErrors] = useState({});
   const [proceed, setProceed] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState(null)
+  const [amountError, setAmountError] = useState("")
 
   const handleProceed = (e) => {
     // e.preventDefault();
+    const walletBalance = selectedCountry.balance;
+    const isNairaWallet = selectedCountry.name.includes("NGN");
 
     const { error } = schema.validate({
       aedcPhoneNumber,
@@ -161,9 +167,19 @@ const AEDC = () => {
           return acc;
         }, {})
       );
-    } else {
+    } 
+    else if (isNairaWallet && aedcAmount < 1000) {
+      setAmountError("Amount must be at least ₦1000")
+    }
+    else if (aedcAmount > walletBalance) {
+      setAmountError(
+        `Amount exceeds balance. Your balance is ₦${walletBalance.toFixed(2)}.`
+      );
+    }
+    else {
       setProceed(true);
       setErrors({});
+      setAmountError("")
     }
   };
 
@@ -197,11 +213,13 @@ const AEDC = () => {
   //   return false;
   // };
 
-  const handleCountryClick = (name, flag, id, code) => {
+  const handleCountryClick = (country,name, flag, id, code) => {
     setAedcFlag(flag);
     setShowList(false);
     setGlobalCountry(name);
+    setAmountError("")
     setSelected(true);
+    setSelectedCountry(country)
     // setCountryCode(code);
     // setCurrencyAvailable(id !== 1);
   };
@@ -230,6 +248,7 @@ const AEDC = () => {
     } else {
       setAedcAmount(`₦${newValue}`);
     }
+    setAmountError("")
   };
   const [successPopup, setSuccessPopup] = useState(false);
   const [failedPopup, setFailedPopup] = useState(false);
@@ -295,14 +314,12 @@ const AEDC = () => {
       setLoading(false);
       navigate("/aedc-receipt");
     }
+    handleResetFields()
   }
   function handleFailedData() {
     setLoading(true);
     const failedData = () => {
-      setAedcOrderId(aedcFetchedResponse.data.order_id);
-      setAedcTransactionId(aedcFetchedResponse.data.transaction_id);
-      setAedcServiceID(aedcFetchedResponse.data.request_id);
-      setAedcShowDescription(aedcFetchedResponse.data.description);
+      setAedcFetchedFailedResponse(aedcFetchedResponse);
     };
     failedData();
     if (failedData) {
@@ -310,6 +327,23 @@ const AEDC = () => {
       setLoading(false);
       navigate("/aedc-receipt-failed");
     }
+  }
+
+  function handleResetFields() {
+    setSelectedAedcMeterType("");
+    setAedcMeterNumber("");
+    setAedcVerifiedName("");
+    setAedcPhoneNumber("");
+    setAedcEmail("");
+    setAedcAmount("");
+    setGlobalCountry("");
+    setAedcFlag("");
+    setAedcBillGenerate("");
+    setAedcOrderId("");
+    setAedcTransactionId("");
+    setAedcServiceID("");
+    setAedcShowDescription("");
+    setSuccessPopup(false);
   }
 
   // const handleSuccess = async () => {
@@ -388,7 +422,7 @@ const AEDC = () => {
 
   const handle = () => {
     setInputPinPopUp(false);
-    setProceed(true);
+    setProceed(false);
   };
 
   const handleSwitch = () => {
@@ -661,9 +695,10 @@ const AEDC = () => {
                 &#8358;
                 <input
                   type="number"
-                  name="ikedcamount"
+                  name="aedcamount"
                   value={aedcAmount}
                   onChange={handleAedcAmount}
+                  placeholder="Minimum of ₦1000"
                   className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:py-3 md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] text-[12px] leading-[18px] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none
                  ${
                    isDarkMode
@@ -672,6 +707,7 @@ const AEDC = () => {
                  }`}
                 />
               </div>
+              {amountError && <p className="text-[14px] text-red-500 italic lg:text-[14px]">{amountError}</p>}
             </div>
 
             <div className="flex flex-col relative gap-2 lg:gap-2.5">
@@ -756,6 +792,7 @@ const AEDC = () => {
                       key={country.id}
                       onClick={() =>
                         handleCountryClick(
+                          country,
                           country.name,
                           country.flag,
                           country.id,
@@ -799,7 +836,7 @@ const AEDC = () => {
               !aedcAmount
             }
           >
-            Proceed
+           {loading ? "Processing..." : "Proceed"}
           </div>
         </div>
         <footer className="flex justify-center text-center gap-[20px] mt-[200px] pb-[10%] md:mt-[750px] lg:mt-[850px]">
@@ -1109,17 +1146,7 @@ const AEDC = () => {
               />
 
               <img
-                onClick={() => {
-                  setSelectedAedcMeterType("");
-                  setAedcMeterNumber("");
-                  setAedcVerifiedName("");
-                  setAedcPhoneNumber("");
-                  setAedcEmail("");
-                  setAedcAmount("");
-                  setGlobalCountry("");
-                  setAedcFlag("");
-                  setSuccessPopup(false);
-                }}
+                onClick={handleResetFields}
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
@@ -1267,17 +1294,7 @@ const AEDC = () => {
             </div>
             <div className="flex w-[70%] mx-auto items-center my-6  gap-[6%] md:gap-[20px] justify-center md:w-[20%] lg:my-[5%]">
               <button
-                onClick={() => {
-                  selectedAedcMeterType("");
-                  setAedcMeterNumber("");
-                  setAedcVerifiedName("");
-                  setAedcPhoneNumber("");
-                  setAedcEmail("");
-                  setAedcAmount("");
-                  setGlobalCountry("");
-                  setAedcFlag("");
-                  setSuccessPopup(false);
-                }}
+                onClick={handleResetFields}
                 className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:px-[50px] md:w-[70%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
               >
                 Done
@@ -1326,17 +1343,7 @@ const AEDC = () => {
               />
 
               <img
-                onClick={() => {
-                  setSelectedAedcMeterType("");
-                  setAedcMeterNumber("");
-                  setAedcVerifiedName("");
-                  setAedcPhoneNumber("");
-                  setAedcEmail("");
-                  setAedcAmount("");
-                  setGlobalCountry("");
-                  setAedcFlag("");
-                  setFailedPopup(false);
-                }}
+                onClick={handleResetFields}
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
@@ -1356,7 +1363,7 @@ const AEDC = () => {
                 isDarkMode ? "text-white" : "text-[#0008]"
               }`}
             >
-              An unexpected error has occurred, please try again.
+              An error has occurred, please click on the receipt for more details.
             </p>
             <div className="flex w-[70%] mx-auto items-center my-6  gap-[6%] md:gap-[20px] justify-center md:w-[20%] lg:my-[5%]">
               <button
@@ -1381,12 +1388,12 @@ const AEDC = () => {
                   showDescription: aedcShowDescription,
                 }}
               > */}
-                <button
-                  onClick={handleFailedData}
-                  className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
-                >
-                  Receipt
-                </button>
+              <button
+                onClick={handleFailedData}
+                className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+              >
+                Receipt
+              </button>
               {/* </Link> */}
             </div>
           </div>

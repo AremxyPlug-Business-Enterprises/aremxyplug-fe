@@ -13,7 +13,7 @@ export const BedcReceiptFailed = () => {
 
   const location = useLocation();
   const navigate = useNavigate();
-  const { selectedNetworkProduct, meterNumber, phoneNumber, ikedcEmail, ikedcamount, serviceID, orderId, transactionId, showDescription  } = location.state
+  const { selectedNetworkProduct, meterNumber, phoneNumber, ikedcEmail, ikedcamount, serviceID, orderId, transactionId, showDescription} = location.state
 
   const {
     toggleSideBar,
@@ -136,7 +136,7 @@ export const BedcReceiptFailed = () => {
                 <div className="flex gap-[5px] items-center text-[10px] lg:text-[16px] font-extrabold">
                   <p>Recepient Info</p>
                   <img
-                    className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
+                    className="w-[13px] h-[13px] lg:w-[20px] lg:h-[20px]"
                     src="./Images/dashboardImages/arrowright.png"
                     alt="/"
                   />
@@ -149,7 +149,7 @@ export const BedcReceiptFailed = () => {
                   <div>{serviceID}</div>
                   </span>
               </div>
-              <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Meter Type</p>
                 <span>{selectedNetworkProduct} </span>
               </div>
