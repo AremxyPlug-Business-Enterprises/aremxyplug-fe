@@ -28,6 +28,7 @@ export const EkedcReceiptFailed = () => {
     setIkedcamount,
     setGlobalCountry,
     setFlag, 
+    
   } = useContext(ContextProvider);
 
   function handleClick() {

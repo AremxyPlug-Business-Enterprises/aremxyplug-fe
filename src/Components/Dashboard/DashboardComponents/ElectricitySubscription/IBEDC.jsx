@@ -60,6 +60,7 @@ const IBEDC = () => {
     setIbedcShowDescription,
     ibedcFetchedResponse,
     setIbedcFetchedResponse,
+    newBalance
   } = useContext(ContextProvider);
 
   // const { selectedNetworkProduct, setSelectedNetworkProduct } =
@@ -101,7 +102,7 @@ const IBEDC = () => {
   const countryList = [
     {
       id: 1,
-      name: "NGN Wallet(50,000.00)",
+     name: `NGN Wallet ${newBalance}`,
       code: "Nigerian NGN Wallet",
       flag: require("../ElectricitySubscription/Electricity-sub-images/nigeriaFlag.png"),
     },
