@@ -487,6 +487,7 @@ export default function IdVerification(Data) {
                     City
                   </h2>
                   <input
+                  readOnly ={Data.ConfirmBvn === "true" || Data.ConfirmId === "true"}
                     value={idCity}
                     onChange={(e) => {
                       setIdCity(e.target.value);
@@ -563,16 +564,18 @@ export default function IdVerification(Data) {
      ID Type
     </h2>
     <div onClick={()=> {
-      if(Data.ConfirmId === "false"){
-     chooseId()
+
+      if(Data.ConfirmId === "false" && Data.ConfirmBvn === "false"){
+       chooseId();
+
     }else{
-     return null
+     return null;
     }
     }}
     className='flex justify-between items-center font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px]'>
       <h2 className={`text-[#000] font-[400]  leading-[10.4px]
       lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : "text-black"}`}>
-        {idResult || (Data.ConfirmId ==="true" ? "National ID" : idResult)}
+        {idResult || (Data.ConfirmId ==="true"  ? "National ID" : idResult)}
       </h2>
       <img src={ArrowDown} alt=""
       className='idDrop lg:w-[24px] lg:h-[24px] w-[14.083px] h-[14.083px]'/>
@@ -584,16 +587,15 @@ export default function IdVerification(Data) {
         return (
           <div 
            key={info.id} onClick={() => {
-            setIdResult(()=> {
-             if(Data.ConfirmId === "false" && idResult === ""){
+           setIdResult(()=> {
+             if(Data.ConfirmId === "false" && Data.ConfirmBvn === "false" && idResult === "" && info.idType === 1){
             return info.idType;
             }
-            else if(Data.ConfirmId === "true"){
+            else if(Data.ConfirmId === "true" && info.idType === 1){
               return "National ID"
-              }else if( (info.id === 2 || info.id ===3|| info.id === 4) && Data.ConfirmId === "false"){
+              }else if( (info.id === 2 || info.id ===3 || info.id === 4) && Data.ConfirmId === "false"){
                return "National ID"
-               
-             }
+                }
            })
               setIdDropDown(()=>{
                 if(info.idType ==="National ID"){
@@ -611,7 +613,7 @@ export default function IdVerification(Data) {
            cursor-pointer ${info.Status === "Inactive" ? "bg-gray-300 cursor-not-allowed" : "bg-white"} `}>
             <h2 className="font-[500] text-[#7C7C7C] text-[8px] leading-[10.4px]
             lg:text-[16px] lg:leading-[20.8px]
-            ">{idStatus === "Not Verified"  ? info.idType : "National ID"}</h2>
+            ">{idStatus === "Verified" && Data.ConfirmId === "true" ? "National ID" : ""}</h2>
             <p
              className={`font-[500] text-[#7C7C7C] text-[8px] leading-[10.4px]
             lg:text-[16px] lg:leading-[20.8px] ${info.Status === "Inactive" ? "text-red-500": "text-green-500"}`}>
@@ -638,7 +640,7 @@ export default function IdVerification(Data) {
     })}
     value={idNumber && (idStatus === "Verified" ? IdNumberRef.current : idNumber)}
     onChange={(e) => {
-      setIdNumber(e.target.value)
+      setIdNumber(e.target.value);
     }}
     className='flex justify-between items-center font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[10px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none'
     placeholder=''
@@ -698,9 +700,11 @@ border-[0.4px] border-[solid] border-[#9C9C9C] cursor-pointer ${idResult === "Na
         }}
          className={`lg:py-[13px] md:py-[5.868px] md:rounded-[7.042px] py-[16.531px] rounded-[4.241px] w-[100%] md:w-[150px] lg:w-[163px] lg:rounded-[12px] bg-[#04177F]
          font-[600] text-[13px] leading-[18px] lg:text-[16px] text-center text-white lg:leading-[24px
-         ${Data.ConfirmId === "true"  ?"bg-slate-400" : "bg-[#04177F]"}`}>
+
+         ${(Data.ConfirmId === "true" || Data.ConfirmBvn=== "true") ?"bg-slate-400" : "bg-[#04177F]"}`}>
        {(idButtonState) && 
-       (   Data.ConfirmId === "true" ? "Verified" : "Verify" )}
+       (   Data.ConfirmId === "true"  || Data.ConfirmBvn=== "true" ? "Verified" : "Verify" )}
+
         </button>
        { errorSubmit  && (
         <h2 className={`font-[500] lg:text-[14px] lg:leading-[18px] md:text-[14px] md:leading-[18px] 

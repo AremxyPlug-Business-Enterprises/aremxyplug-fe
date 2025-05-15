@@ -183,18 +183,20 @@ const AirtelDataBundle = () => {
   ];
 
   const Payment = ({ code, flag, amount, onClick }) => {
-    return (
-      <li className={airtimestyles.netList} onClick={onClick}>
-        <div className={airtimestyles.netImage}>
-          <img src={flag} alt="" className={airtimestyles.NoImage} />
+      return (
+        <div className={`py-[10px]  border-[0.5px] border-y-gray-200 flex items-center
+         gap-[10px] pl-[7px] text-black`} onClick={onClick}>
+          <div className={` ${airtimestyles.netImage}`}>
+            <img src={flag} alt="" className={airtimestyles.NoImage} />
+          </div>
+          <h2 className={airtimestyles.netName}>{code}</h2>
+          <h2 className={airtimestyles.netName}>
+            Wallet({amount.toLocaleString()}.00)
+          </h2>
         </div>
-        <h2 className={airtimestyles.netName}>{code}</h2>
-        <h2 className={airtimestyles.netName}>
-          Wallet({amount.toLocaleString()}.00)
-        </h2>
-      </li>
-    );
-  };
+      );
+    };
+  
 
   const {
     toggleSideBar,
@@ -390,8 +392,10 @@ const AirtelDataBundle = () => {
         setAirtelOrderID(resData.order_id); // No `order_id`, using `id` instead
         console.log(resData.order_id);
 
+
         // Fabricated description
         // setMtnDescription(`${resData.network} - ${resData.plan_name}`);
+
 
         return { statusCode: response.status, data: response.data };
         // console.log(response.data);
@@ -441,7 +445,7 @@ const AirtelDataBundle = () => {
         >
           <div
             id="DataBundle"
-            className="w-full h-[90px] gap-[5px] md:h-[112.29px] lg:h-[196px] md:rounded-[11.5px] rounded-[7px] md:mt-[-1px] px-[10px] lg:gap-[50px] pt-[10px] lg:px-[30px] lg:rounded-[20px] lg:py-[20px] pb-[16px] flex justify-between items-center lg:ml-[-20px] lg:w-[102%] 2xl:w-full 2xl:ml-0"
+            className="w-full min-h-[90px] gap-[5px] md:h-[112.29px] lg:h-[196px] md:rounded-[11.5px] rounded-[7px] md:mt-[-1px] px-[10px] lg:gap-[50px] lg:px-[30px] lg:rounded-[20px] lg:py-[20px]  flex justify-between items-center lg:ml-[-20px] lg:w-[102%] 2xl:w-full 2xl:ml-0"
           >
             <div className="w-[100%] pt-[19px] lg:pt-[20px] pl-[8.5px] md:pl-[9px]">
               <p className="text-[11px] mb-2 font-bold uppercase w-[100%] md:text-[16px] md:w-[70%] lg:w-[70%] lg:text-[20px] 2xl:w-[80%] 2xl:text-[24px] lg:mb-4">
@@ -816,7 +820,7 @@ const AirtelDataBundle = () => {
                   }`}>
                   Payment Method
                 </h2>
-                <div className={`mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input flex justify-between items-center border w-full h-8 px-2 rounded-md text-[10px] font-[400] focus:outline-none lg:h-[51px] lg:text-[16px] ${isDarkMode
+                <div className={`mt-2 md:mt-0 border md:border-[0.4px] bg-white rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input flex justify-between items-center border w-full h-8 px-2 rounded-md text-[10px] font-[400] focus:outline-none lg:h-[51px] lg:text-[16px] ${isDarkMode
                   ? "bg-black text-white border !border-white"
                   : "border border-[#0003]"
                   }
@@ -824,7 +828,7 @@ const AirtelDataBundle = () => {
                   {paymentSelected ? (
                     <li
                       onClick={handleShowPayment}
-                      className={airtimestyles.labelInput}
+                      className={` ${airtimestyles.labelInput} bg-white `}
                     >
                       <h2 className="text-[#7C7C7C]">{walletName}</h2>
                       <h2 className="text-[#7C7C7C]">

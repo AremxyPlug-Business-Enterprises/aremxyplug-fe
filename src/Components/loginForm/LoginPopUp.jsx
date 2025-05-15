@@ -117,8 +117,10 @@ const getOtpSmsorEmail = async(url, body)=> {
      }
      url = "https://aremxyplug.onrender.com/api/v1/send-otp/signin"
   }
- 
+  if(!navigator.onLine) return alert("Check your internet connection");
+ if(navigator.onLine){
 await  gettingOtpFunction(url,body)
+}
 }
  // Function to help resetthe login and local storage authToenand getToken to help for User LoogIn
 const Close2StepPopUp =()=> {
@@ -218,8 +220,8 @@ const handleVerificationOTP = ()=> {
         
         if(bvnCheck && !ninCheck){
           setBvnButtonState("Create Virtual Account");
-          setBvnVerifyImage(VerificationSuccess)
-          setBvnStatus("Verified")
+          setBvnVerifyImage(VerificationSuccess);
+          setBvnStatus("Verified");
           setIdButtonState("Verify");
           setVerifyImage(NotVerifiedImage)
           setIdStatus("Not Verified");
@@ -268,7 +270,7 @@ const handleVerificationOTP = ()=> {
 const handleAccountDetails = async(AuthUsed)=> {
   const authToken = localStorage.getItem("authorisedLogin");
   const getToken = localStorage.getItem("getToken")
-  AuthUsed = authToken || getToken
+  AuthUsed = authToken || getToken;
 //   const {bank_name, account_no, account_name} = virtualAccCreated
 //  // console.log(virtualAccCreated);
 
@@ -305,7 +307,10 @@ const gettingSmsOrEmailFunctionOtp = async(url, body)=> {
        console.log(otp3);
         }
         console.log(`URL:${url}`,`BODY:${body}`)
+        if(!navigator.onLine) return alert("Check your internet connection")
+        if(navigator.onLine){
         await VerifyOtpFunction(url, body)
+        }
 }
 
 
@@ -324,10 +329,10 @@ const gettingSmsOrEmailFunctionOtp = async(url, body)=> {
     }catch(error){
       if( error.response && error.response.status === 400){
         setVerificationPinError(true);
-        console.log("The Verification failed")
+        console.log("The Verification failed");
       }else if(error.response.status === 404){
-     setVerificationPinError(true)
-      alert("OOPs, an error has occured")
+     setVerificationPinError(true);
+      alert("OOPs, an error has occured");
       }else if(error.response &&error.response.status === 500){
         alert("SERVER ERROR");
       }else if(!error.response){
@@ -375,6 +380,7 @@ return () => clearInterval(timer);
     setCanResend(false);
     setVerificationPinError("")
   };
+
   const handleResendOTP2 = () => {
     getOtpSmsorEmail()
     setCanResend2(false);
@@ -388,8 +394,7 @@ return () => clearInterval(timer);
      setOpenTranspin(false);
      setOtp("");
      setOtp2("");
-     localStorage.setItem(otp,"userTransactionOtp");
-    
+     localStorage.setItem("userTransactionOtp", otp);
  } else {
       setTranspinErrors("Pin does not match!");
     }
