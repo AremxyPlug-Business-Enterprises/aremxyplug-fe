@@ -426,9 +426,7 @@ font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
     }
     else if(e.target.value.length < 11){
     e.target.style.border = '2px solid red';
-  }
-
-   })}
+  } })}
    className={`font-[410] h-[40.927px] lg:h-[51px]  md:h-[29.93px] w-[100%] mt-2 md:mt-0
     border-[0.4px] 
    lg:text-[16px] lg:leading-[20.8px] 

@@ -778,7 +778,7 @@ const [inputValue, setInputValue] = useState("");
                         className={`pb-[18px] md:pb-[6px] pt-[18px] md:pt-[6px] font-weight-bold text-[13px] cursor-pointer border-b-[0.5px] md:rounded-[0px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${selectedOption === plan.PlanID ? "bg-gray-200" : ""
                           }
                          ${isDarkMode
-                            ? "bg-black text-white "
+                            ? "bg-black text-white"
                             : ""
                           }
                       `}
@@ -1010,7 +1010,7 @@ const [inputValue, setInputValue] = useState("");
               <div
                 className={`scroll-bar ${isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
                   } ${toggleSideBar ? "confirm01" : "confirm"
-                  } grow pt-[10px] pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:overflow-auto`}
+                  } grow pt-[10px] pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto mb-[20px] md:my-auto md:overflow-auto`}
               >
                 <div className="w-full flex justify-end border-b-[6px] border-primary px-[12px] md:h-[25px] lg:border-b-[10px] lg:mt-[20px]">
                   <img
@@ -1481,13 +1481,18 @@ const [inputValue, setInputValue] = useState("");
                   </div>
                 </div>
 
-                <div className="bg-[#F2FAFF] mx-10 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[75px] md:mx-[20px] md:rounded-[15px] lg:h-[75px]">
-                  <p className="text-[6px] text-center mx-auto w-[171px] md:text-[9px] md:w-full lg:text-[14px]">
+                <div className="w-full h-auto my-10 flex
+                 justify-center items-center 
+                 md:rounded-[15px] ">
+                  <div className="bg-[#F2FAFF] h-full w-[80%] p-[10px] rounded-[10px] lg:rounded-[20px]">
+                     <p className="text-[10px] text-center  md:text-[12px] lg:text-[14px]">
                     The data purchase has been sent successfully to the
                     recipient phone number. Please kindly engage the recipient
                     to check his/her balance to confirm the value. You can
                     contact us for any further assistance.
                   </p>
+                  </div>
+            
                 </div>
                 <div className="flex w-full justify-center mx-auto px-[50px] items-center gap-[5%] md:gap-[10%] mt-[30px] md:w-[50%] lg:gap-[10%] lg:mx-auto  lg:my-[5%] md:mt-[40px]">
                   <Link to="/MtnDataTopUpBundle">
