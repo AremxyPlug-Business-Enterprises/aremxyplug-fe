@@ -59,6 +59,12 @@ const Showmax = () => {
     setFetchedStarTimesPlans,
     fetchedGotvPlans,
     setFetchedGotvPlans,
+    tvSubscriptionResponse,
+    showmaxOrderId, setShowmaxOrderId,
+showmaxTransactionId, setShowmaxTransactionId,
+showmaxRequestId, setShowmaxRequestId,
+showmaxDescription, setShowmaxDescription,
+setTvSubscriptionResponse,
     newBalance
   } = useContext(ContextProvider)
 
@@ -69,12 +75,7 @@ const Showmax = () => {
       const [failedPopup, setFailedPopup] = useState(false);
             const navigate = useNavigate();
       
-              // Seting all the state values first
-            const [tvSubscriptionResponse, setTvSubscriptionResponse] = useState(null);
-           const [showmaxOrderId, setShowmaxOrderId] = useState('');
-           const [showmaxTransactionId, setShowmaxTransactionId] = useState('');
-           const [showmaxRequestId, setShowmaxRequestId] = useState('');
-           const [showmaxDescription, setShowmaxDescription] = useState('');
+            
        
    const ShowMaxPlans = fetchedShowMaxPlans.data ? fetchedShowMaxPlans.data.data.data : []   
 
@@ -185,33 +186,13 @@ const Showmax = () => {
       );
     } 
     
-    // else {
-    //   setConfirmShowmaxPopup(true);
-    //   setErrors({});
-    // }
-       try {
-    setIsLoading(true);
+    else {
+      setConfirmShowmaxPopup(true);
+      setErrors({});
+    }
+    };
+
     
-       // Preparing request data
-       const requestData = {
-        decoder_type: decoderType,
-        plan: planName,
-        iuc_number: smartCard,
-        email: tvEmail,
-        amount: showMaxAmount,
-        phone: mobileNumber,
-      };
-//show confirmation popup
-setInputPinShowmax(true);
-setErrors({});
-    
-} catch (error) {
-  console.error("Error during TV subscription:", error);
-  setFailedPopup(true); 
-} finally {
-  setIsLoading(false);
-}
-  }
   const [errors, setErrors] = useState({});
 
  

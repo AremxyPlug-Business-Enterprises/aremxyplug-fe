@@ -60,6 +60,13 @@ const DsTv = () => {
     setFetchedShowMaxPlans,
     fetchedStarTimesPlans,
     setFetchedStarTimesPlans,
+    tvSubscriptionResponse,
+    setTvSubscriptionResponse,
+      dstvOrderId, setDstvOrderId,
+     dstvTransactionId, setDstvTransactionId,
+     dstvRequestId, setDstvRequestId,
+     dstvDescription, setDstvDescription,
+     
     newBalance,
 
   } = useContext(ContextProvider)
@@ -70,12 +77,7 @@ const DsTv = () => {
      const [failedPopup, setFailedPopup] = useState(false);
       const navigate = useNavigate();
 
-        // Seting all the state values first
-      const [tvSubscriptionResponse, setTvSubscriptionResponse] = useState(null);
-     const [dstvOrderId, setDstvOrderId] = useState('');
-     const [dstvTransactionId, setDstvTransactionId] = useState('');
-     const [dstvRequestId, setDstvRequestId] = useState('');
-     const [dstvDescription, setDstvDescription] = useState('');
+
  
 
 // console.log(DstvPlans)

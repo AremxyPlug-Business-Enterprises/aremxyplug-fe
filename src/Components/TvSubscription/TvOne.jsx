@@ -65,6 +65,12 @@ const GoTv = () => {
     setFetchedShowMaxPlans,
     fetchedStarTimesPlans,
     setFetchedStarTimesPlans,
+      tvSubscriptionResponse, 
+          gotvOrderId, setGotvOrderId,
+          gotvTransactionId, setGotvTransactionId,
+          gotvRequestId, setGotvRequestId,
+          gotvDescription, setGotvDescription,
+          setTvSubscriptionResponse,
     newBalance
   } = useContext(ContextProvider)
 
@@ -74,13 +80,6 @@ const GoTv = () => {
   const [failedPopup, setFailedPopup] = useState(false);
    const navigate = useNavigate();
  
-
-     // Seting all the state values first
- const [tvSubscriptionResponse, setTvSubscriptionResponse] = useState(null);
-const [gotvOrderId, setGotvOrderId] = useState('');
-const [gotvTransactionId, setGotvTransactionId] = useState('');
-const [gotvRequestId, setGotvRequestId] = useState('');
-const [gotvDescription, setGotvDescription] = useState('');
 
   // const handleOptionClickGOTV = (option, id) => {
     // setSelectedOptionGOTV(option);

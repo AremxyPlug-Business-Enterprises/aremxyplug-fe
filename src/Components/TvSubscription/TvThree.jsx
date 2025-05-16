@@ -58,6 +58,12 @@ const StarTimes = () => {
       fetchedGotvPlans,setFetchedGotvPlans,
     fetchedDstvPlans, setFetchedDstvPlans,
     fetchedShowMaxPlans, setFetchedShowMaxPlans,
+     starTimesOrderId, setStarTimesOrderId,
+     starTimesTransactionId, setStarTimesTransactionId,
+     starTimesRequestId, setStarTimesRequestId,
+     starTimesDescription, setStarTimesDescription,
+     tvSubscriptionResponse,
+     setTvSubscriptionResponse,
     newBalance
   } = useContext(ContextProvider)
       
@@ -68,12 +74,7 @@ const StarTimes = () => {
     const [failedPopup, setFailedPopup] = useState(false);
     const navigate = useNavigate();
     
-         // Seting all the state values first
-     const [tvSubscriptionResponse, setTvSubscriptionResponse] = useState(null);
-    const [starTimesOrderId, setStarTimesOrderId] = useState('');
-    const [starTimesTransactionId, setStarTimesTransactionId] = useState('');
-    const [starTimesRequestId, setStarTimesRequestId] = useState('');
-    const [starTimesDescription, setStarTimesDescription] = useState('');
+        
            
 const StarTimesPlans = fetchedStarTimesPlans.data ?  fetchedStarTimesPlans.data.data.data : []
   const handleOptionClickStarTimes = (option) => {
