@@ -236,7 +236,6 @@ export const PostFunction = async(path, setLoading, body, functionAtSuccess, fun
            if(functionAtFailed) {
             setFetchedResponse(error.response.data.data)
               console.log(error.response.data.data)
-            alert("Invalid request")
          }
       }else if(error && error.response.status === 401){
          functionAtFailed()
@@ -244,16 +243,14 @@ export const PostFunction = async(path, setLoading, body, functionAtSuccess, fun
            if(functionAtFailed) {
             setFetchedResponse(error.response.data.data)
               console.log(error.response.data.data)
-            alert("Invalid request")
          }
       }else if(error && error.response.status === 500){
-         functionAtFailed()
-  
+        functionAtFailed();
    alert("Server error: Try some other time");
      if(functionAtFailed) {
             setFetchedResponse(error.response.data.data)
               console.log(error.response.data.data)
-            alert("Invalid request")
+            
          }
       }
    }finally{
