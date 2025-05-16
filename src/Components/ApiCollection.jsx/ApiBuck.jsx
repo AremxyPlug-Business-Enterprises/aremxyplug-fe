@@ -247,6 +247,7 @@ export const PostFunction = async(path, setLoading, body, functionAtSuccess, fun
             alert("Invalid request")
          }
       }else if(error && error.response.status === 500){
+         functionAtFailed()
   
    alert("Server error: Try some other time");
      if(functionAtFailed) {

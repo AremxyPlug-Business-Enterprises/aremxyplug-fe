@@ -866,7 +866,6 @@ export const Context = ({ children }) => {
   const [aedcTransactionId, setAedcTransactionId] = useState("");
   const [aedcShowDescription, setAedcShowDescription] = useState("");
   const [aedcFetchedResponse, setAedcFetchedResponse] = useState({});
-  const [aedcFetchedFailedResponse, setAedcFetchedFailedResponse] = useState({});
 
   // bedc
   const [bedcEmail, setBedcEmail] = useState("");
@@ -1604,8 +1603,6 @@ export const Context = ({ children }) => {
     setAedcShowDescription,
     aedcFetchedResponse,
     setAedcFetchedResponse,
-    aedcFetchedFailedResponse,
-    setAedcFetchedFailedResponse,
 
     // bedc
     bedcMeterNumber,

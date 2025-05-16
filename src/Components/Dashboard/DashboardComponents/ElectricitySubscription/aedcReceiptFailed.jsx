@@ -34,7 +34,11 @@ export const AedcReceiptFailed = () => {
     aedcOrderId,
     aedcTransactionId,
     aedcShowDescription,
+    aedcFetchedResponse,
   } = useContext(ContextProvider);
+
+  console.log(aedcFetchedResponse)
+  const message = aedcFetchedResponse.data
 
   function handleClick() {
     setSelectedAedcMeterType("");
@@ -49,19 +53,6 @@ export const AedcReceiptFailed = () => {
   }
 
   const contentRef = useRef(null);
-
-  const networkProduct =
-    selectedAedcMeterType?.length > 0 ? selectedAedcMeterType : "";
-  const meterNo = aedcMeterNumber?.length > 0 ? aedcMeterNumber : "";
-  const verifiedName = aedcVerifiedName?.length > 0 ? aedcVerifiedName : "";
-  const phoneNo = aedcPhoneNumber?.length > 0 ? aedcPhoneNumber : "";
-  const productEmail = aedcEmail?.length > 0 ? aedcEmail : "";
-  const productAmount = aedcAmount?.length > 0 ? aedcAmount : "";
-  const service_id = aedcServiceID?.length > 0 ? aedcServiceID : "";
-  const order_id = aedcOrderId === undefined ? "" : aedcOrderId;
-  const transaction_id = aedcTransactionId?.length > 0 ? aedcTransactionId : "";
-  const description =
-    aedcShowDescription?.length > 0 ? aedcShowDescription : "";
 
   // ==============Share pdf Function=============
   const handleShareClick = () => {
@@ -145,8 +136,9 @@ export const AedcReceiptFailed = () => {
               })}
             </span>
             <p className="text-[9px] text-[#F95252] bg-[#FDCECE] rounded-[11px] border-2 border-[#F95252] py-[5px] px-[2px] text-center mx-[3px] lg:mx-[130px] md:mx-[80px] my-2 md:text-[14px] lg:text-[14px]">
-              Purchase Failed due to an unexpected error that occured. Please
-              try again.
+              {/* Purchase Failed due to an unexpected error that occured. Please
+              try again. */}
+              {message}
             </p>
             <div className="flex flex-col gap-5">
               {/* ========================Recipient Info================== */}
@@ -166,34 +158,34 @@ export const AedcReceiptFailed = () => {
                       <div>
                         <img className="w-[30px]" src={logo2} alt="" />
                       </div>
-                      <div>{service_id}</div>
+                      <div>{aedcServiceID}</div>
                     </span>
                   </div>
                   <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <p className="text-[#7C7C7C] font-[500]">Meter Type</p>
-                    <span>{networkProduct} </span>
+                    <span>{selectedAedcMeterType} </span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <p className="text-[#7C7C7C] font-[500]">Meter Number</p>
-                    <span>{meterNo} </span>
+                    <span>{aedcMeterNumber} </span>
                   </div>
 
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <p className="text-[#7C7C7C] font-[500]">Verified Name</p>
-                    <span>{verifiedName}</span>
+                    <span>{aedcVerifiedName}</span>
                   </div>
 
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <p className="text-[#7C7C7C] font-[500]">Phone Number</p>
-                    <span>{phoneNo}</span>
+                    <span>{aedcPhoneNumber}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <p className="text-[#7C7C7C] font-[500]">Email</p>
-                    <span>{productEmail}</span>
+                    <span>{aedcEmail}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <p className="text-[#7C7C7C] font-[500]">Amount</p>
-                    <span>&#8358;{productAmount}</span>
+                    <span>&#8358;{aedcAmount}</span>
                   </div>
                 </div>
                 <div className="flex gap-[5px] items-center mt-[10px] md:mt-[30px] text-[10px] lg:text-[16px] font-extrabold">
@@ -207,7 +199,7 @@ export const AedcReceiptFailed = () => {
                 <div className="flex flex-col gap-3 pt-[10px]">
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <p className="text-[#7C7C7C] font-[500]">Customer Name</p>
-                    <span>{verifiedName}</span>
+                    <span>{aedcVerifiedName}</span>
                   </div>
 
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -233,7 +225,7 @@ export const AedcReceiptFailed = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Description</p>
-                  <span>{description}</span>
+                  <span>{aedcShowDescription}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Bill / Token Generated</p>
@@ -241,11 +233,11 @@ export const AedcReceiptFailed = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Order Number</p>
-                  <span>{order_id}</span>
+                  <span>{Number(aedcOrderId)}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Transaction ID</p>
-                  <span>{transaction_id}</span>
+                  <span>{aedcTransactionId}</span>
                 </div>
               </div>
             </div>

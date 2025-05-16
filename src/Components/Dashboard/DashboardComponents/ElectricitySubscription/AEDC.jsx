@@ -1,5 +1,5 @@
 import { DashBoardLayout } from "../../Layout/DashBoardLayout";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { ContextProvider } from "../../../Context";
 import { useState } from "react";
 import styles from "../TransferComponent/transfer.module.css";
@@ -58,15 +58,13 @@ const AEDC = () => {
     setAedcShowDescription,
     aedcFetchedResponse,
     setAedcFetchedResponse,
-    setAedcFetchedFailedResponse,
+
+    newBalance,
   } = useContext(ContextProvider);
 
   // const { selectedNetworkProduct, setSelectedNetworkProduct } =
   //   useContext(ContextProvider);
   const [showProductList, setShowProductList] = useState(false);
-  // const [showDescription, setShowDescription] = useState(false);
-  // const [orderId, setOrderId] = useState(false);
-  // const [transactionId, setTransactionId] = useState(false);
 
   const pointsEarned = "+2.00";
   const [loading, setLoading] = useState(false);
@@ -103,56 +101,47 @@ const AEDC = () => {
   const countryList = [
     {
       id: 1,
-      name: "NGN Wallet(50,000.00)",
+      name: `NGN Wallet ${newBalance}`,
       code: "Nigerian NGN Wallet",
       flag: require("../ElectricitySubscription/Electricity-sub-images/nigeriaFlag.png"),
-      balance:0,
     },
     {
       id: 2,
-      name: "USD Wallet. (00)",
+      name: "USD Wallet. (0.00)",
       code: "USD",
       flag: require("../ElectricitySubscription/Electricity-sub-images/americaFlag.png"),
-      balance:0,
     },
     {
       id: 3,
-      name: " GBP Wallet. (00)",
+      name: " GBP Wallet. (0.00)",
       code: "GBP",
       flag: require("../ElectricitySubscription/Electricity-sub-images/ukFlag.png"),
-      balance:0,
     },
     {
       id: 4,
-      name: "EUR Wallet. (00)",
+      name: "EUR Wallet. (0.00)",
       code: "EUR ",
       flag: require("../ElectricitySubscription/Electricity-sub-images/europeanFlag.png"),
-      balance:0,
     },
     {
       id: 5,
-      name: "AUD Wallet. (00)",
+      name: "AUD Wallet. (0.00)",
       code: "AUD",
       flag: require("../ElectricitySubscription/Electricity-sub-images/australiaFlag.png"),
-      balance:0,
     },
     {
       id: 6,
-      name: "KES Wallet. (00)",
+      name: "KES Wallet. (0.00)",
       code: "KES",
       flag: require("../ElectricitySubscription/Electricity-sub-images/kenyaFlag.png"),
-      balance:0,
     },
   ];
   const [errors, setErrors] = useState({});
   const [proceed, setProceed] = useState(false);
-  const [selectedCountry, setSelectedCountry] = useState(null)
-  const [amountError, setAmountError] = useState("")
+  const [amountError, setAmountError] = useState("");
 
   const handleProceed = (e) => {
     // e.preventDefault();
-    const walletBalance = selectedCountry.balance;
-    const isNairaWallet = selectedCountry.name.includes("NGN");
 
     const { error } = schema.validate({
       aedcPhoneNumber,
@@ -160,6 +149,7 @@ const AEDC = () => {
       aedcMeterNumber,
     });
 
+    const amount = Number(aedcAmount);
     if (error) {
       setErrors(
         error.details.reduce((acc, curr) => {
@@ -167,19 +157,16 @@ const AEDC = () => {
           return acc;
         }, {})
       );
+    } else if (amount < 1000) {
+      setAmountError("Amount must be at least ₦1000");
     } 
-    else if (isNairaWallet && aedcAmount < 1000) {
-      setAmountError("Amount must be at least ₦1000")
-    }
-    else if (aedcAmount > walletBalance) {
-      setAmountError(
-        `Amount exceeds balance. Your balance is ₦${walletBalance.toFixed(2)}.`
-      );
-    }
+    else if (CheckSufficiency) {
+        setAmountError("Insufficient fund");
+      }
     else {
       setProceed(true);
       setErrors({});
-      setAmountError("")
+      setAmountError("");
     }
   };
 
@@ -213,13 +200,13 @@ const AEDC = () => {
   //   return false;
   // };
 
-  const handleCountryClick = (country,name, flag, id, code) => {
+  const handleCountryClick = (name, flag, id, code) => {
     setAedcFlag(flag);
     setShowList(false);
     setGlobalCountry(name);
-    setAmountError("")
+    setAmountError("");
     setSelected(true);
-    setSelectedCountry(country)
+    // setSelectedCountry(country)
     // setCountryCode(code);
     // setCurrencyAvailable(id !== 1);
   };
@@ -248,7 +235,7 @@ const AEDC = () => {
     } else {
       setAedcAmount(`₦${newValue}`);
     }
-    setAmountError("")
+    setAmountError("");
   };
   const [successPopup, setSuccessPopup] = useState(false);
   const [failedPopup, setFailedPopup] = useState(false);
@@ -295,7 +282,7 @@ const AEDC = () => {
       setPinFailed,
       setLoading,
       setErrorMessage,
-      ElectricityHandler()
+      ElectricityHandler
     );
   };
 
@@ -314,19 +301,22 @@ const AEDC = () => {
       setLoading(false);
       navigate("/aedc-receipt");
     }
-    handleResetFields()
+    handleResetFields();
   }
   function handleFailedData() {
     setLoading(true);
-    const failedData = () => {
-      setAedcFetchedFailedResponse(aedcFetchedResponse);
-    };
-    failedData();
-    if (failedData) {
-      setFailedPopup(false);
-      setLoading(false);
-      navigate("/aedc-receipt-failed");
-    }
+    setFailedPopup(false);
+    navigate("/aedc-receipt-failed");
+    setLoading(false);
+    // const failedData = () => {
+    //   setAedcFetchedResponse(aedcFetchedResponse);
+    // };
+    // failedData();
+    // if (failedData) {
+    //   setFailedPopup(false);
+    //   setLoading(false);
+    //   navigate("/aedc-receipt-failed");
+    // }
   }
 
   function handleResetFields() {
@@ -345,6 +335,22 @@ const AEDC = () => {
     setAedcShowDescription("");
     setSuccessPopup(false);
   }
+
+  const [balanceStatus, setBalanceStatus] = useState("");
+  let balanceStringToNum = Number(newBalance);
+  let aedcAmountToNumber = Number(aedcAmount);
+  let CheckSufficiency = aedcAmountToNumber > balanceStringToNum;
+  useEffect(() => {
+    const HandleBalanceStatus = () => {
+      if(CheckSufficiency){
+         setBalanceStatus("Insufficient fund")
+        }else{
+          setBalanceStatus("");
+         }
+      }
+    HandleBalanceStatus();
+  }, [CheckSufficiency]);
+  console.log(balanceStringToNum, aedcAmountToNumber);
 
   // const handleSuccess = async () => {
   //   async function buyAEDC(meter_type, meter_no, phone, email, amount) {
@@ -707,7 +713,11 @@ const AEDC = () => {
                  }`}
                 />
               </div>
-              {amountError && <p className="text-[14px] text-red-500 italic lg:text-[14px]">{amountError}</p>}
+              {amountError && (
+                <p className="text-[14px] text-red-500 italic lg:text-[14px]">
+                  {amountError}
+                </p>
+              )}
             </div>
 
             <div className="flex flex-col relative gap-2 lg:gap-2.5">
@@ -792,7 +802,6 @@ const AEDC = () => {
                       key={country.id}
                       onClick={() =>
                         handleCountryClick(
-                          country,
                           country.name,
                           country.flag,
                           country.id,
@@ -822,7 +831,8 @@ const AEDC = () => {
                 !aedcEmail ||
                 !selectedAedcMeterType ||
                 !selected ||
-                !aedcAmount
+                !aedcAmount ||
+              CheckSufficiency
                   ? "bg-[#63616188] cursor-not-allowed"
                   : "bg-primary cursor-pointer"
               }`}
@@ -833,10 +843,11 @@ const AEDC = () => {
               !aedcEmail ||
               !selectedAedcMeterType ||
               !selected ||
-              !aedcAmount
+              !aedcAmount ||
+              CheckSufficiency
             }
           >
-           {loading ? "Processing..." : "Proceed"}
+            {loading ? "Processing..." : "Proceed"}
           </div>
         </div>
         <footer className="flex justify-center text-center gap-[20px] mt-[200px] pb-[10%] md:mt-[750px] lg:mt-[850px]">
@@ -1166,8 +1177,7 @@ const AEDC = () => {
                 isDarkMode ? "text-white" : "text-[#000]"
               }`}
             >
-              You have successfully Purchased
-              <span
+              You have successfully Purchased <span
                 className={`font-extrabold text-[11px] md:text-[16px] lg:text-[14px] ${
                   isDarkMode ? "text-white" : "text-[#000]"
                 }`}
@@ -1180,9 +1190,8 @@ const AEDC = () => {
                   isDarkMode ? "text-white" : "text-[#000]"
                 }`}
               >
-                (&#8358;{aedcAmount})
-              </span>
-              From your NGN Nigerian Wallet to
+                (&#8358;{aedcAmount}) </span>
+              from your NGN Nigerian Wallet to
             </p>
 
             <div className="flex flex-col gap-3 pt-[10px]">
@@ -1284,9 +1293,9 @@ const AEDC = () => {
                 <span className="text-[#00AA48]">{pointsEarned}</span>
               </div>
             </div>
-
-            <div className="bg-[#F2FAFF] mx-10 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
-              <p className="text-[11px] text-center mx-auto w-[171px] md:text-[14px] md:w-[80%] lg:text-[14px]">
+                  {/* mx-10 */}
+            <div className="bg-[#F2FAFF]  mx-2 h-[45px] my-5 flex justify-between md:h-[65px] lg:h-[75px]">
+              <p className="text-[11px] text-center w-full h-full w- md:text-[14px] md:w- lg:text-[14px]">
                 The electricity bills / token purchase has been generated
                 successfully. Please kindly check receipt to confirm the bills /
                 token. You can contact us for any further assistance.
@@ -1363,7 +1372,8 @@ const AEDC = () => {
                 isDarkMode ? "text-white" : "text-[#0008]"
               }`}
             >
-              An error has occurred, please click on the receipt for more details.
+              An error has occurred, please click on the receipt for more
+              details.
             </p>
             <div className="flex w-[70%] mx-auto items-center my-6  gap-[6%] md:gap-[20px] justify-center md:w-[20%] lg:my-[5%]">
               <button
