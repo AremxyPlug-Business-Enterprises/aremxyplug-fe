@@ -902,7 +902,7 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
             
                 <div className="flex flex-col items-center w-[100%] ">
                   <p className="lg:text-[14px] font-[500]  text-[12.021px]  text-green-500 mb-[30px]">
-                    Verification Successfull
+                    Verification Successful.
                   </p>
 
                   <img

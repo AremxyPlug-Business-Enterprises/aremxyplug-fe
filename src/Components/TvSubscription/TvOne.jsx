@@ -17,7 +17,6 @@ import britainFlag from '../../Components/EducationPins/imagesEducation/Britain.
 import euroFlag from '../../Components/EducationPins/imagesEducation/GBP.svg';
 import austriaFlag from '../../Components/EducationPins/imagesEducation/Austria.svg';
 import kenyaFlag from '../../Components/EducationPins/imagesEducation/Kenya.svg';
-
 import { useNavigate } from "react-router-dom";
 import { GetFunction } from "../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../Loader/Loader";
@@ -526,8 +525,7 @@ const GetOtherDataTv = async(id, path)=> {
                     ? "bg-black text-white border border-white" 
                     : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
                 }`}
-                value={`₦ ${tvAmount}`} readOnly
-              />
+                value={`₦ ${tvAmount}`} readOnly />
 
             </div>
 

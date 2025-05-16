@@ -62,6 +62,7 @@ const IKEDC = () => {
     setIkedcFetchedResponse,
     selectedIkedcMeterType,
     setSelectedIkedcMeterType,
+    newBalance
   } = useContext(ContextProvider);
 
   const [showProductList, setShowProductList] = useState(false);
@@ -101,7 +102,7 @@ const IKEDC = () => {
   const countryList = [
     {
       id: 1,
-      name: "NGN Wallet(50,000.00)",
+      name: `NGN Wallet ${newBalance}`,
       code: "Nigerian NGN Wallet",
       flag: require("../ElectricitySubscription/Electricity-sub-images/nigeriaFlag.png"),
     },
