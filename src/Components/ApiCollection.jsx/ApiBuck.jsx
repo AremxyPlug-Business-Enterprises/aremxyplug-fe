@@ -81,10 +81,6 @@ export const CheckVirtualAcc = async(authToken, customerDetail, setLoading,
         if (response.status === 201 || 200 ) {
              const virtualAccCreated = response.data.data.acc_details;
             setVirtualAccCreated(virtualAccCreated);
-            // console.log(`CustomerDetail : ${customerDetail}`)
-            // console.log(`virtualAccCreated : ${virtualAccCreated}`)
-            // const {bank_name} = virtualAccCreated
-          //  const UserStatus = localStorage.getItem("UserStatus")
             if(TwoStep === true){
                console.log(TwoStep)
               if(virtualAccCreated){
@@ -99,7 +95,7 @@ export const CheckVirtualAcc = async(authToken, customerDetail, setLoading,
                 }}else{
             InActionVirtualAccountState(virtualAccCreated,setBankNameState, 
                setAccountNameState, setAccountNumberState);
-               alert("Action running")
+             //  alert("Action running")
             //alert("InAction Virtual is running")
                
             
@@ -116,7 +112,9 @@ export const CheckVirtualAcc = async(authToken, customerDetail, setLoading,
          console.log(`ERROR: ${error}`)
        
      }else if(error.status === 500){
-            alert('Error:', "SERVER ERROR");
+                alert('Error:', "SERVER ERROR");
+          }else {
+            alert("Check your internet connection")
           }
         }finally{
          if(confirmVirtualState){
@@ -192,6 +190,8 @@ export const VerifyTransPin = async(otp, setSuccess,
       }else if(error && error.response.status === 500){
    setFailed(true)
    setErrorMessage("Server error: Try some other time")
+      }else {
+   alert("Check your internet connection and try again")
       }
    }finally{
       if(asyncFuncAtSuccess){
@@ -252,6 +252,8 @@ export const PostFunction = async(path, setLoading, body, functionAtSuccess, fun
               console.log(error.response.data.data)
             
          }
+      }else{
+         alert("Check your network connection")
       }
    }finally{
   setLoading(false);
@@ -290,6 +292,8 @@ export const GetFunction = async(path, setLoading, functionAtSuccess,functionAtF
       }else if(error && error.response.status === 500){
   
    alert("Server error: Try some other time")
+      }else {
+      alert("Check your internet connection")
       }
    }finally{
   setLoading(false);
@@ -325,6 +329,8 @@ export const PutFunction = async(path, setLoading,body, functionAtSuccess,functi
       }else if(error && error.response.status === 500){
   
    alert("Server error: Try some other time")
+      }else {
+         alert("Check your internet connection")
       }
    }finally{
   setLoading(false);

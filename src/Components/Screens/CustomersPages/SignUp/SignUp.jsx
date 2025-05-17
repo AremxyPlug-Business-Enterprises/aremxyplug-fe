@@ -12,7 +12,7 @@ import FirstModal from "../Password/FirstModal";
 import { useState } from "react";
 import { Loader } from "../../../Loader/Loader";
 import { Modal } from "../../Modal/Modal";
-
+import { RemoveLocalStorage } from "../../../LocalStorage/LocalStorage";
 
 
 // import { number } from "joi";
@@ -36,9 +36,10 @@ export const SignUp = () => {
     setShowPassword,
     setShowPasswordTwo,
     checkboxChecked,
-    loadSignUp
+    loadSignUp,
+    setVerification
   } = useContext(ContextProvider);
-
+  const [continueConsentModal, setContinueConsentModal] = useState(false)
   const [countryCode] = useState('ng')
 
    const handlePhoneNumberChange = (value)=> {
@@ -56,6 +57,14 @@ const setNav = () => {
 
   useEffect(() => {
     setNav();
+  
+    const ActiveSignUp = localStorage.getItem("ActiveSignUp")
+    const PhoneData = localStorage.getItem("userPhone");
+  if(ActiveSignUp === "true" && PhoneData ){
+    setContinueConsentModal(true);
+    alert("Accounts without verification are only valid for 20 minutes after signing up, kindly click on NO, if exceeded.")
+  }
+  
     return () => {
       setHideNavbar(false);
     };
@@ -80,6 +89,19 @@ const setNav = () => {
   console.log(state);
 
   const [showPassModal, setShowPassModal] = useState(false);
+
+
+
+const RefusalToProceed =()=> {
+  localStorage.removeItem("ActiveSignUp");
+  setContinueConsentModal(false);
+}
+
+const ContinueSignUp = ()=> {
+  setVerification(true);
+  setContinueConsentModal(false);
+}
+
 
   return (
     <div className="h-[1237px] bg-[#04177f] md: pb-[%] md:flex md:justify-center md:items-center md:pb-0 md:h-[100vh] lg:h-[170vh]">
@@ -146,7 +168,7 @@ const setNav = () => {
             </p>
 
             <div
-              className={`inputBorder px-[2%] flex justify-center items-center w-[98%] h-[42px] 
+              className={`inputBorder px-[2%] flex flex-col justify-center items-center w-[98%] h-[42px] 
                 rounded-[10px] lg:rounded-[15px] lg:w-[286px] border-black lg:h-[50px] ${
                 isFocused.includes(1) ? "border-[#2684fe] border" : " border-[1.5px] "
               }`}
@@ -157,10 +179,12 @@ const setNav = () => {
                 className="outline-none flex justify-center items-center leading-[18px] lg:leading-[24px]
               font-[400] lg:font-[500] text-[14px] h-full w-full lg:h-full lg:text-[16px]"
                 type="text"
+          placeholder ="Fullname used in Nin/Bvn"
                 value={state.fullName}
                 name="fullName"
                 onChange={changeHandler}
               />
+             
             </div>
             {errors.fullName && (
               <div className="text-[12px] text-red-500 italic lg:text-[14px] font-[400] leading-[16px] lg:leading-[18px]">
@@ -191,6 +215,7 @@ const setNav = () => {
                 type="text"
                 value={state.userName}
                 name="userName"
+                placeholder ="John"
                 onChange={changeHandler}
               />
             </div>
@@ -222,6 +247,7 @@ const setNav = () => {
               font-[400] lg:font-[500] text-[14px] h-full w-full  lg:text-[16px]"
                 type="email"
                 value={email}
+                placeholder ="example@gmail.com"
                 name="email"
                 onChange={changeHandler}
               />
@@ -257,6 +283,10 @@ const setNav = () => {
                 onChange={(value)=>handlePhoneNumberChange(value)}
                 enableSearch
                 disableSearchIcon
+                inputProps={{
+                  maxLength : 17
+                } }
+                
                 className="inputClass bg-black"
                 inputStyle={{
                   fontSize: "16px",
@@ -446,6 +476,8 @@ const setNav = () => {
         <button
           onClick={(e)=>{
            handleSubmit(e);
+         
+          
           }}
           disabled={checkInput ? false : true}
           className={`${checkInput === true ? "hover:cursor-pointer px-[35px] py-[10px] flex justify-center item-center mb-[5%] lg:mb-[2%] bg-[#04177F]  text-white p-[%] rounded-[4px] mx-auto text-center  mt-[7%] text-[14px] leading-[18px] lg:px-[37px] lg:mt-[3%] lg:w-[140px] lg:h-[42px] lg:text-[14px] lg:rounded-lg" : 
@@ -488,6 +520,40 @@ const setNav = () => {
           <Loader />
         </Modal>
       )}
+        { continueConsentModal && (
+             <Modal>
+              <div className="w-full flex  justify-center items-center">
+            <div className ="flex flex-col justify-center items-center py-[20px] px-[12px] gap-[20px] w-[80%] md:w-[60%] lg:w-[30%] md:h-[300px] bg-white rounded-[10px]
+             lg:rounded-[20px]">
+              <p className ="text-[14px] font-[400] leading-[18px]
+               text-black lg:text-[16px] lg:leading-[22px] ">
+                We noticed you did not complete your sign up
+                process, would you still like to proceed?</p>
+             
+              <div className="flex gap-[20px] justify-center">
+                <button onClick ={()=> {
+                  ContinueSignUp()
+                }}
+                 className="bg-[#04177f]  cursor-pointer mt-[5%] mx-auto w-[80px] py-[8px] flex justify-center items-center text-[#ffffff] 
+                  text-[10px] font-[500] lg:font-[600] rounded-md md:w-[95px] md:h-[26px]
+                   md:p-[2%] lg:w-[113px] lg:h-[38px] lg:text-[13px]">
+                     Yes
+                </button>
+                <button onClick ={()=> {
+                    RefusalToProceed()
+                    RemoveLocalStorage();
+                }}
+                 className="bg-red-500  cursor-pointer mt-[5%] mx-auto w-[80px] py-[8px] flex justify-center items-center text-[#ffffff] 
+                  text-[10px] font-[500] lg:font-[600] rounded-md md:w-[95px] md:h-[26px]
+                   md:p-[2%] lg:w-[113px] lg:h-[38px] lg:text-[13px]">
+                  No
+                </button>
+              </div>
+              </div>
+              </div>
+             </Modal>
+             )
+          }
     </div>
   );
 };
