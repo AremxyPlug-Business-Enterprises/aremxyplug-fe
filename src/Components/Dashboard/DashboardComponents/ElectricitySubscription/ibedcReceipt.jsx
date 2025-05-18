@@ -29,7 +29,8 @@ export const IbedcReceipt = () => {
     setGlobalCountry,
     setIbedcFlag,
     selectedIbedcMeterType,
-    ibedcServiceID,
+    // ibedcServiceID,
+    ibedcDiscoType,
     ibedcOrderId,
     ibedcTransactionId,
     ibedcShowDescription,
@@ -41,12 +42,13 @@ export const IbedcReceipt = () => {
   const networkProduct =
     selectedIbedcMeterType?.length > 0 ? selectedIbedcMeterType : "";
   const meterNo = ibedcMeterNumber?.length > 0 ? ibedcMeterNumber : "";
-  const name = ibedcVerifiedName?.length > 0 ? ibedcVerifiedName : "";
+  const verifiedName = ibedcVerifiedName?.length > 0 ? ibedcVerifiedName : "";
   const phoneNo = ibedcPhoneNumber?.length > 0 ? ibedcPhoneNumber : "";
   const productEmail = ibedcEmail?.length > 0 ? ibedcEmail : "";
   const productAmount = ibedcAmount?.length > 0 ? ibedcAmount : "";
-  const service_id = ibedcServiceID?.length > 0 ? ibedcServiceID : "";
-  const order_id = ibedcOrderId?.length > 0 ? ibedcOrderId : "";
+  // const service_id = ibedcServiceID?.length > 0 ? ibedcServiceID : "";
+  const disco_type = ibedcDiscoType?.length > 0 ? ibedcDiscoType : "";
+  const order_id = ibedcOrderId=== undefined ? "" : ibedcOrderId;
   const transaction_id = ibedcTransactionId?.length > 0 ? ibedcTransactionId : "";
   const description = ibedcShowDescription?.length > 0 ? ibedcShowDescription : "";
   const bill_generated = ibedcBillGenerate?.length > 0 ? ibedcBillGenerate : "";
@@ -172,7 +174,7 @@ export const IbedcReceipt = () => {
                 <p className="text-[#7C7C7C] font-[500]">Disco Type</p>
                 <span className="flex items-center gap-1 ">
                   <div><img className="w-[30px]" src={logo2} alt="" /></div>
-                  <div>{service_id}</div>
+                  <div>{disco_type}</div>
                   </span>
               </div>
               <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -186,7 +188,7 @@ export const IbedcReceipt = () => {
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Verified Name</p>
-                <span>{name}</span>
+                <span>{verifiedName}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -214,7 +216,7 @@ export const IbedcReceipt = () => {
                 <div className="flex flex-col gap-3 pt-[10px]">
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Customer Name</p>
-                <span>{name}</span>
+                <span>{verifiedName}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">

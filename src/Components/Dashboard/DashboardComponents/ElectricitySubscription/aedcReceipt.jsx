@@ -7,42 +7,63 @@ import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import logo2 from "../ElectricitySubscription/Electricity-sub-images/AEDC1 1.svg"
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export const AedcReceipt = () => {
-
-  const location = useLocation();
   const navigate = useNavigate();
-  const { selectedNetworkProduct, meterNumber, phoneNumber, ikedcEmail, ikedcamount, serviceID, orderId, transactionId, showDescription, billGenerate } = location.state
 
-  const {
-    toggleSideBar,
-    isDarkMode,
-    date,
-    verifiedName,
-    setSelectedNetworkProduct,
-    setMeterNumber,
-    setVerifiedName,
-    setPhoneNumber,
-    setEmail,
-    setIkedcamount,
-    setGlobalCountry,
-    setFlag,
-  } = useContext(ContextProvider);
+   const {
+      toggleSideBar,
+      isDarkMode,
+      date,   
+      aedcVerifiedName,
+      setAedcVerifiedName, 
+      setSelectedAedcMeterType,
+      aedcMeterNumber,
+      setAedcMeterNumber,
+      aedcPhoneNumber,
+      setAedcPhoneNumber,
+      aedcEmail,
+      setAedcEmail,
+      aedcAmount,
+      setAedcAmount,
+      setGlobalCountry,
+      setAedcFlag,
+      selectedAedcMeterType,
+      // aedcServiceID,
+      aedcDiscoType,
+      aedcOrderId,
+      aedcTransactionId,
+      aedcShowDescription,
+      aedcBillGenerate,
+    } = useContext(ContextProvider)
 
   function handleClick() {
-    setSelectedNetworkProduct("");
-    setMeterNumber("");
-    setVerifiedName("");
-    setPhoneNumber("");
-    setEmail("");
-    setIkedcamount("");
+    setSelectedAedcMeterType("");
+    setAedcMeterNumber("");
+    setAedcVerifiedName("");
+    setAedcPhoneNumber("");
+    setAedcEmail("");
+    setAedcAmount("");
     setGlobalCountry("");
-    setFlag("");
+    setAedcFlag("");
     navigate('/electricity-subscription');
   }
 
   const contentRef = useRef(null);
+
+  const networkProduct =
+    selectedAedcMeterType?.length > 0 ? selectedAedcMeterType : "";
+  const meterNo = aedcMeterNumber?.length > 0 ? aedcMeterNumber : "";
+  const verifiedName = aedcVerifiedName?.length > 0 ? aedcVerifiedName : "";
+  const phoneNo = aedcPhoneNumber?.length > 0 ? aedcPhoneNumber : "";
+  const productEmail = aedcEmail?.length > 0 ? aedcEmail : "";
+  const productAmount = aedcAmount?.length > 0 ? aedcAmount : "";
+  const disco_type = aedcDiscoType?.length > 0 ? aedcDiscoType : "";
+  const order_id = aedcOrderId=== undefined ? "" : aedcOrderId;
+  const transaction_id = aedcTransactionId?.length > 0 ? aedcTransactionId : "";
+  const description = aedcShowDescription?.length > 0 ? aedcShowDescription : "";
+  const bill_generated = aedcBillGenerate?.length > 0 ? aedcBillGenerate : "";
 
   // ==============Share pdf Function=============
   const handleShareClick = () => {
@@ -127,7 +148,7 @@ export const AedcReceipt = () => {
             <p className="text-[9px] text-[#27AE60] bg-[#D5F6E3] rounded-[11px] border-2 border-[#27AE60] py-[5px] px-[2px] text-center mx-[5px] lg:mx-[150px] md:mx-[100px] my-2 md:text-[14px] lg:text-[14px]">
               You have successfully purchased{" "}
               <span className="text-[#000] font-extrabold text-[10px] md:text-[14px]">
-                Abuja {selectedNetworkProduct} Meter &#8358;{ikedcamount}.00{" "}
+                Abuja {networkProduct} Meter &#8358;{productAmount}.00{" "}
               </span>
               from your NGN wallet to{" "}
             </p>
@@ -146,37 +167,37 @@ export const AedcReceipt = () => {
                 </div>
                 <div className="flex flex-col gap-3 pt-[10px]">
                   <div className="flex text-[10px] md:text-[14px] pt-[10px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                    <p className="text-[#7C7C7C] font-[500]">Disco Type</p>
+                    <p className="text-[#7C7C7C] font-medium">Disco Type</p>
                     <span className="flex items-center gap-1 ">
                       <div><img className="w-[30px]" src={logo2} alt="" /></div>
-                      <div>{serviceID}</div>
+                      <div>{disco_type}</div>
                     </span>
                   </div>
                   <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                    <p className="text-[#7C7C7C] font-[500]">Meter Type</p>
-                    <span>{selectedNetworkProduct} </span>
+                    <p className="text-[#7C7C7C] font-medium">Meter Type</p>
+                    <span>{networkProduct} </span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                    <p className="text-[#7C7C7C] font-[500]">Meter Number</p>
-                    <span>{meterNumber} </span>
+                    <p className="text-[#7C7C7C] font-medium">Meter Number</p>
+                    <span>{meterNo} </span>
                   </div>
 
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                    <p className="text-[#7C7C7C] font-[500]">Verified Name</p>
+                    <p className="text-[#7C7C7C] font-medium">Verified Name</p>
                     <span>{verifiedName}</span>
                   </div>
 
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                    <p className="text-[#7C7C7C] font-[500]">Phone Number</p>
-                    <span>{phoneNumber}</span>
+                    <p className="text-[#7C7C7C] font-medium">Phone Number</p>
+                    <span>{phoneNo}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                    <p className="text-[#7C7C7C] font-[500]">Email</p>
-                    <span>{ikedcEmail}</span>
+                    <p className="text-[#7C7C7C] font-medium">Email</p>
+                    <span>{productEmail}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                    <p className="text-[#7C7C7C] font-[500]">Amount</p>
-                    <span>&#8358;{ikedcamount}</span>
+                    <p className="text-[#7C7C7C] font-medium">Amount</p>
+                    <span>&#8358;{productAmount}</span>
                   </div>
 
                 </div>
@@ -190,12 +211,12 @@ export const AedcReceipt = () => {
                 </div>
                 <div className="flex flex-col gap-3 pt-[10px]">
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                    <p className="text-[#7C7C7C] font-[500]">Customer Name</p>
+                    <p className="text-[#7C7C7C] font-medium">Customer Name</p>
                     <span>{verifiedName}</span>
                   </div>
 
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                    <p className="text-[#7C7C7C] font-[500]">Wallet Type</p>
+                    <p className="text-[#7C7C7C] font-medium">Wallet Type</p>
                     <span>Nigerian NGN Wallet </span>
                   </div>
 
@@ -224,19 +245,19 @@ export const AedcReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Description</p>
-                  <span>{showDescription}</span>
+                  <span>{description}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Bill / Token Generated</p>
-                  <span>{billGenerate}</span>
+                  <span>{bill_generated}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Order Number</p>
-                  <span>{orderId}</span>
+                  <span>{order_id}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Transaction ID</p>
-                  <span>{transactionId}</span>
+                  <span>{transaction_id}</span>
                 </div>
 
               </div>

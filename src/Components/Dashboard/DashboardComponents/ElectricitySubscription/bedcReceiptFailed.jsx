@@ -1,45 +1,54 @@
 import React from "react";
 import { useContext, useRef } from "react";
 import { ContextProvider } from "../../../Context";
-import styles from "../TransferComponent/transfer.module.css"
+import styles from "../TransferComponent/transfer.module.css";
 import { DashBoardLayout } from "../../Layout/DashBoardLayout";
 import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import logo2 from "../ElectricitySubscription/Electricity-sub-images/BEDC-Logo-new-dark-1 1.svg";
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 export const BedcReceiptFailed = () => {
-
-  const location = useLocation();
   const navigate = useNavigate();
-  const { selectedNetworkProduct, meterNumber, phoneNumber, ikedcEmail, ikedcamount, serviceID, orderId, transactionId, showDescription  } = location.state
 
   const {
     toggleSideBar,
     isDarkMode,
-    date,   
-    verifiedName,
-    setSelectedNetworkProduct,
-    setMeterNumber,
-    setVerifiedName,
-    setPhoneNumber,
-    setEmail,
-    setIkedcamount,
+    date,
+    bedcVerifiedName,
+    setBedcVerifiedName,
+    setSelectedBedcMeterType,
+    bedcMeterNumber,
+    setBedcMeterNumber,
+    bedcPhoneNumber,
+    setBedcPhoneNumber,
+    bedcEmail,
+    setBedcEmail,
+    bedcAmount,
+    setBedcAmount,
     setGlobalCountry,
-    setFlag, 
+    setBedcFlag,
+    selectedBedcMeterType,
+    bedcServiceID,
+    bedcOrderId,
+    bedcTransactionId,
+    bedcShowDescription,
+    bedcFetchedResponse,
   } = useContext(ContextProvider);
 
+  const message = bedcFetchedResponse.data;
+
   function handleClick() {
-    setSelectedNetworkProduct("");
-    setMeterNumber("");
-    setVerifiedName("");
-    setPhoneNumber("");
-    setEmail("");
-    setIkedcamount("");
+    setSelectedBedcMeterType("");
+    setBedcMeterNumber("");
+    setBedcVerifiedName("");
+    setBedcPhoneNumber("");
+    setBedcEmail("");
+    setBedcAmount("");
     setGlobalCountry("");
-    setFlag("");
-    navigate('/electricity-subscription');
+    setBedcFlag("");
+    navigate("/electricity-subscription");
   }
 
   const contentRef = useRef(null);
@@ -126,58 +135,57 @@ export const BedcReceiptFailed = () => {
               })}
             </span>
             <p className="text-[9px] text-[#F95252] bg-[#FDCECE] rounded-[11px] border-2 border-[#F95252] py-[5px] px-[2px] text-center mx-[3px] lg:mx-[130px] md:mx-[80px] my-2 md:text-[14px] lg:text-[14px]">
-                    Purchase Failed due to an unexpected error that occured. Please try again.
+              {message}
             </p>
-
-
             <div className="flex flex-col gap-5">
               {/* ========================Recipient Info================== */}
               <div className="flex flex-col gap-[3px] w-[90%] mx-auto lg:gap-[5px]">
                 <div className="flex gap-[5px] items-center text-[10px] lg:text-[16px] font-extrabold">
                   <p>Recepient Info</p>
                   <img
-                    className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
+                    className="w-[13px] h-[13px] lg:w-[20px] lg:h-[20px]"
                     src="./Images/dashboardImages/arrowright.png"
                     alt="/"
                   />
                 </div>
                 <div className="flex flex-col gap-3 pt-[10px]">
-              <div className="flex text-[10px] md:text-[14px] pt-[10px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Disco Type</p>
-                <span className="flex items-center gap-1 ">
-                  <div><img className="w-[30px]" src={logo2} alt="" /></div>
-                  <div>{serviceID}</div>
-                  </span>
-              </div>
-              <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Meter Type</p>
-                <span>{selectedNetworkProduct} </span>
-              </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Meter Number</p>
-                <span>{meterNumber} </span>
-              </div>
+                  <div className="flex text-[10px] md:text-[14px] pt-[10px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                    <p className="text-[#7C7C7C] font-[500]">Disco Type</p>
+                    <span className="flex items-center gap-1 ">
+                      <div>
+                        <img className="w-[30px]" src={logo2} alt="" />
+                      </div>
+                      <div>{bedcServiceID}</div>
+                    </span>
+                  </div>
+                  <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                    <p className="text-[#7C7C7C] font-[500]">Meter Type</p>
+                    <span>{selectedBedcMeterType} </span>
+                  </div>
+                  <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                    <p className="text-[#7C7C7C] font-[500]">Meter Number</p>
+                    <span>{bedcMeterNumber} </span>
+                  </div>
 
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Verified Name</p>
-                <span>{verifiedName}</span>
-              </div>
+                  <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                    <p className="text-[#7C7C7C] font-[500]">Verified Name</p>
+                    <span>{bedcVerifiedName}</span>
+                  </div>
 
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Phone Number</p>
-                <span>{phoneNumber}</span>
-              </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Email</p>
-                <span>{ikedcEmail}</span>
-              </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Amount</p>
-                <span>&#8358;{ikedcamount}</span>
-              </div>
-              
-            </div>
-            <div className="flex gap-[5px] items-center mt-[10px] md:mt-[30px] text-[10px] lg:text-[16px] font-extrabold">
+                  <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                    <p className="text-[#7C7C7C] font-[500]">Phone Number</p>
+                    <span>{bedcPhoneNumber}</span>
+                  </div>
+                  <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                    <p className="text-[#7C7C7C] font-[500]">Email</p>
+                    <span>{bedcEmail}</span>
+                  </div>
+                  <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                    <p className="text-[#7C7C7C] font-[500]">Amount</p>
+                    <span>&#8358;{bedcAmount}</span>
+                  </div>
+                </div>
+                <div className="flex gap-[5px] items-center mt-[10px] md:mt-[30px] text-[10px] lg:text-[16px] font-extrabold">
                   <p>Sender Info</p>
                   <img
                     className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
@@ -186,24 +194,17 @@ export const BedcReceiptFailed = () => {
                   />
                 </div>
                 <div className="flex flex-col gap-3 pt-[10px]">
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Customer Name</p>
-                <span>{verifiedName}</span>
-              </div>
+                  <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                    <p className="text-[#7C7C7C] font-[500]">Customer Name</p>
+                    <span>{bedcVerifiedName}</span>
+                  </div>
 
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Wallet Type</p>
-                <span>Nigerian NGN Wallet </span>
+                  <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                    <p className="text-[#7C7C7C] font-[500]">Wallet Type</p>
+                    <span>Nigerian NGN Wallet </span>
+                  </div>
+                </div>
               </div>
-             
-              
-            </div>
-                
-              </div>
-
-              
-
-             
 
               {/* ===================Transaction Info==================== */}
               <div className="flex flex-col gap-[3px] w-[90%] mx-auto lg:gap-[5px]">
@@ -221,7 +222,7 @@ export const BedcReceiptFailed = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Description</p>
-                  <span>{showDescription}</span>
+                  <span>{bedcShowDescription}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Bill / Token Generated</p>
@@ -229,13 +230,12 @@ export const BedcReceiptFailed = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Order Number</p>
-                  <span>{orderId}</span>
+                  <span>{bedcOrderId}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Transaction ID</p>
-                  <span>{transactionId}</span>
+                  <span>{bedcTransactionId}</span>
                 </div>
-                
               </div>
             </div>
             <div className="rounded-[8px] bg-[#E2F3FF] mx-4 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
