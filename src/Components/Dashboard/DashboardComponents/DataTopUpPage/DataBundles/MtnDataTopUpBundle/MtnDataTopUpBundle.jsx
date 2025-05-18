@@ -394,8 +394,8 @@ const [inputValue, setInputValue] = useState("");
         return;
       }
 
-      console.log(selectedPlan)
-      console.log(selectedPlan.PlanID)
+      // console.log(selectedPlan)
+      // console.log(selectedPlan.PlanID)
 
       const path = '/data';
 
@@ -420,7 +420,7 @@ const [inputValue, setInputValue] = useState("");
         console.log(response.status);
 
         const resData = response.data.data; // Accessing the nested `data` object
-
+console.log(resData);
         // console.log(response.status);
         // setPlan(resData.plan_name);
         // console.log(resData.plan_name);

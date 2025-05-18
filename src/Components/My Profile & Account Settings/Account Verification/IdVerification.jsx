@@ -638,7 +638,7 @@ export default function IdVerification(Data) {
       const numbersOnly = e.target.value.replace(/\D/g, '');
       e.target.value = numbersOnly;
     })}
-    value={idNumber && idNumber.length > 1 && idStatus === "Verified" ? `${idNumber.slice(3)}*******` : idNumber}
+    value={idNumber && idNumber.length > 1 && idStatus === "Verified" ? `${idNumber.slice(0,4)}*******` : idNumber}
     
     onChange={(e) => {
       setIdNumber(e.target.value);
