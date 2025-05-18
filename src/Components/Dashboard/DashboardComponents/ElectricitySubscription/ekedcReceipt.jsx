@@ -31,8 +31,9 @@ export const EkedcReceipt = () => {
       setEkedcAmount,
       setGlobalCountry,
       setEkedcFlag,
+      ekedcDiscoType,
       selectedEkedcMeterType,
-      ekedcServiceID,
+      // ekedcServiceID,
       ekedcOrderId,
       ekedcTransactionId,
       ekedcShowDescription,
@@ -46,7 +47,8 @@ export const EkedcReceipt = () => {
   const phoneNo = ekedcPhoneNumber?.length > 0 ? ekedcPhoneNumber : "";
   const productEmail = ekedcEmail?.length > 0 ? ekedcEmail : "";
   const productAmount = ekedcAmount?.length > 0 ? ekedcAmount : "";
-  const service_id = ekedcServiceID?.length > 0 ? ekedcServiceID : "";
+  // const service_id = ekedcServiceID?.length > 0 ? ekedcServiceID : "";
+  const disco_type = ekedcDiscoType?.length > 0 ? ekedcDiscoType : "";
   const order_id = ekedcOrderId=== undefined ? "" : ekedcOrderId;
   const transaction_id = ekedcTransactionId?.length > 0 ? ekedcTransactionId : "";
   const description = ekedcShowDescription?.length > 0 ? ekedcShowDescription : "";
@@ -173,7 +175,7 @@ export const EkedcReceipt = () => {
                 <p className="text-[#7C7C7C] font-[500]">Disco Type</p>
                 <span className="flex items-center gap-1 ">
                   <div><img className="w-[30px]" src={logo2} alt="" /></div>
-                  <div>{service_id}</div>
+                  <div>{disco_type}</div>
                   </span>
               </div>
               <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">

@@ -30,7 +30,8 @@ export const AedcReceipt = () => {
       setGlobalCountry,
       setAedcFlag,
       selectedAedcMeterType,
-      aedcServiceID,
+      // aedcServiceID,
+      aedcDiscoType,
       aedcOrderId,
       aedcTransactionId,
       aedcShowDescription,
@@ -58,7 +59,7 @@ export const AedcReceipt = () => {
   const phoneNo = aedcPhoneNumber?.length > 0 ? aedcPhoneNumber : "";
   const productEmail = aedcEmail?.length > 0 ? aedcEmail : "";
   const productAmount = aedcAmount?.length > 0 ? aedcAmount : "";
-  const service_id = aedcServiceID?.length > 0 ? aedcServiceID : "";
+  const disco_type = aedcDiscoType?.length > 0 ? aedcDiscoType : "";
   const order_id = aedcOrderId=== undefined ? "" : aedcOrderId;
   const transaction_id = aedcTransactionId?.length > 0 ? aedcTransactionId : "";
   const description = aedcShowDescription?.length > 0 ? aedcShowDescription : "";
@@ -169,7 +170,7 @@ export const AedcReceipt = () => {
                     <p className="text-[#7C7C7C] font-medium">Disco Type</p>
                     <span className="flex items-center gap-1 ">
                       <div><img className="w-[30px]" src={logo2} alt="" /></div>
-                      <div>{service_id}</div>
+                      <div>{disco_type}</div>
                     </span>
                   </div>
                   <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">

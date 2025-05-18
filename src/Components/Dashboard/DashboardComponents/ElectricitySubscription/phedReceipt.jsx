@@ -29,7 +29,8 @@ export const PhedReceipt = () => {
       setGlobalCountry,
       setPhedFlag,
       selectedPhedMeterType,
-      phedServiceID,
+      // phedServiceID,
+      phedDiscoType,
       phedOrderId,
       phedTransactionId,
       phedShowDescription,
@@ -43,7 +44,8 @@ export const PhedReceipt = () => {
   const phoneNo = phedPhoneNumber?.length > 0 ? phedPhoneNumber : "";
   const productEmail = phedEmail?.length > 0 ? phedEmail : "";
   const productAmount = phedAmount?.length > 0 ? phedAmount : "";
-  const service_id = phedServiceID?.length > 0 ? phedServiceID : "";
+  // const service_id = phedServiceID?.length > 0 ? phedServiceID : "";
+  const disco_type = phedDiscoType?.length > 0 ? phedDiscoType : "";
   const order_id = phedOrderId === undefined ? "" : phedOrderId;
   const transaction_id = phedTransactionId?.length > 0 ? phedTransactionId : "";
   const description = phedShowDescription?.length > 0 ? phedShowDescription : "";
@@ -169,7 +171,7 @@ export const PhedReceipt = () => {
                 <p className="text-[#7C7C7C] font-medium">Disco Type</p>
                 <span className="flex items-center gap-1 ">
                   <div><img className="w-[30px]" src={logo2} alt="" /></div>
-                  <div>{service_id}</div>
+                  <div>{disco_type}</div>
                   </span>
               </div>
               <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">

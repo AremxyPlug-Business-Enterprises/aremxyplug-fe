@@ -7,39 +7,48 @@ import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import logo2 from "../ElectricitySubscription/Electricity-sub-images/eedclogo 1.svg"
-import { useLocation, useNavigate } from 'react-router-dom';
+import {useNavigate } from 'react-router-dom';
 
 export const EedcReceiptFailed = () => {
-
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { selectedNetworkProduct, meterNumber, phoneNumber, ikedcEmail, ikedcamount, serviceID, orderId, transactionId, showDescription  } = location.state
+ const navigate = useNavigate();
 
   const {
     toggleSideBar,
     isDarkMode,
-    date,   
-    verifiedName, 
-    setSelectedNetworkProduct,
-    setMeterNumber,
-    setVerifiedName,
-    setPhoneNumber,
-    setEmail,
-    setIkedcamount,
+    date,
+    eedcVerifiedName,
+    setEedcVerifiedName,
+    setSelectedEedcMeterType,
+    eedcMeterNumber,
+    setEedcMeterNumber,
+    eedcPhoneNumber,
+    setEedcPhoneNumber,
+    eedcEmail,
+    setEedcEmail,
+    eedcAmount,
+    setEedcAmount,
     setGlobalCountry,
-    setFlag,
+    setEedcFlag,
+    selectedEedcMeterType,
+    eedcServiceID,
+    eedcOrderId,
+    eedcTransactionId,
+    eedcShowDescription,
+    eedcFetchedResponse,
   } = useContext(ContextProvider);
 
+  const message = eedcFetchedResponse.data
+
   function handleClick() {
-    setSelectedNetworkProduct("");
-    setMeterNumber("");
-    setVerifiedName("");
-    setPhoneNumber("");
-    setEmail("");
-    setIkedcamount("");
+    setSelectedEedcMeterType("");
+    setEedcMeterNumber("");
+    setEedcVerifiedName("");
+    setEedcPhoneNumber("");
+    setEedcEmail("");
+    setEedcAmount("");
     setGlobalCountry("");
-    setFlag("");
-    navigate('/electricity-subscription');
+    setEedcFlag("");
+    navigate("/electricity-subscription");
   }
 
   const contentRef = useRef(null);
@@ -126,7 +135,7 @@ export const EedcReceiptFailed = () => {
               })}
             </span>
             <p className="text-[9px] text-[#F95252] bg-[#FDCECE] rounded-[11px] border-2 border-[#F95252] py-[5px] px-[2px] text-center mx-[3px] lg:mx-[130px] md:mx-[80px] my-2 md:text-[14px] lg:text-[14px]">
-                    Purchase Failed due to an unexpected error that occured. Please try again.
+                    {message}
             </p>
 
 
@@ -146,34 +155,34 @@ export const EedcReceiptFailed = () => {
                 <p className="text-[#7C7C7C] font-[500]">Disco Type</p>
                 <span className="flex items-center gap-1 ">
                   <div><img className="w-[30px]" src={logo2} alt="" /></div>
-                  <div>{serviceID}</div>
+                  <div>{eedcServiceID}</div>
                   </span>
               </div>
               <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Meter Type</p>
-                <span>{selectedNetworkProduct} </span>
+                <span>{selectedEedcMeterType} </span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Meter Number</p>
-                <span>{meterNumber} </span>
+                <span>{eedcMeterNumber} </span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Verified Name</p>
-                <span>{verifiedName}</span>
+                <span>{eedcVerifiedName}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Phone Number</p>
-                <span>{phoneNumber}</span>
+                <span>{eedcPhoneNumber}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Email</p>
-                <span>{ikedcEmail}</span>
+                <span>{eedcEmail}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Amount</p>
-                <span>&#8358;{ikedcamount}</span>
+                <span>&#8358;{eedcAmount}</span>
               </div>
               
             </div>
@@ -188,7 +197,7 @@ export const EedcReceiptFailed = () => {
                 <div className="flex flex-col gap-3 pt-[10px]">
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Customer Name</p>
-                <span>{verifiedName}</span>
+                <span>{eedcVerifiedName}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -221,7 +230,7 @@ export const EedcReceiptFailed = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Description</p>
-                  <span>{showDescription}</span>
+                  <span>{eedcShowDescription}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Bill / Token Generated</p>
@@ -229,11 +238,11 @@ export const EedcReceiptFailed = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Order Number</p>
-                  <span>{orderId}</span>
+                  <span>{eedcOrderId}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Transaction ID</p>
-                  <span>{transactionId}</span>
+                  <span>{eedcTransactionId}</span>
                 </div>
                 
               </div>

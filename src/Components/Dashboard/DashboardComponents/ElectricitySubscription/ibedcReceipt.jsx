@@ -29,7 +29,8 @@ export const IbedcReceipt = () => {
     setGlobalCountry,
     setIbedcFlag,
     selectedIbedcMeterType,
-    ibedcServiceID,
+    // ibedcServiceID,
+    ibedcDiscoType,
     ibedcOrderId,
     ibedcTransactionId,
     ibedcShowDescription,
@@ -45,7 +46,8 @@ export const IbedcReceipt = () => {
   const phoneNo = ibedcPhoneNumber?.length > 0 ? ibedcPhoneNumber : "";
   const productEmail = ibedcEmail?.length > 0 ? ibedcEmail : "";
   const productAmount = ibedcAmount?.length > 0 ? ibedcAmount : "";
-  const service_id = ibedcServiceID?.length > 0 ? ibedcServiceID : "";
+  // const service_id = ibedcServiceID?.length > 0 ? ibedcServiceID : "";
+  const disco_type = ibedcDiscoType?.length > 0 ? ibedcDiscoType : "";
   const order_id = ibedcOrderId=== undefined ? "" : ibedcOrderId;
   const transaction_id = ibedcTransactionId?.length > 0 ? ibedcTransactionId : "";
   const description = ibedcShowDescription?.length > 0 ? ibedcShowDescription : "";
@@ -172,7 +174,7 @@ export const IbedcReceipt = () => {
                 <p className="text-[#7C7C7C] font-[500]">Disco Type</p>
                 <span className="flex items-center gap-1 ">
                   <div><img className="w-[30px]" src={logo2} alt="" /></div>
-                  <div>{service_id}</div>
+                  <div>{disco_type}</div>
                   </span>
               </div>
               <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">

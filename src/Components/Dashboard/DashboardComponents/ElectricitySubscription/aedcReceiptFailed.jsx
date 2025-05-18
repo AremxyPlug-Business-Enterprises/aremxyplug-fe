@@ -37,7 +37,6 @@ export const AedcReceiptFailed = () => {
     aedcFetchedResponse,
   } = useContext(ContextProvider);
 
-  console.log(aedcFetchedResponse)
   const message = aedcFetchedResponse.data
 
   function handleClick() {

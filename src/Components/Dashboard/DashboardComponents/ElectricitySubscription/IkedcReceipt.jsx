@@ -30,11 +30,12 @@ export const IkedcReceipt = () => {
       setGlobalCountry,
       setIkedcFlag,
       selectedIkedcMeterType,
-      ikedcServiceID,
+      // ikedcServiceID,
       ikedcOrderId,
       ikedcTransactionId,
       ikedcShowDescription,
       ikedcBillGenerate,
+      ikedcDiscoType,
     } = useContext(ContextProvider)
 
     const networkProduct =
@@ -44,7 +45,8 @@ export const IkedcReceipt = () => {
   const phoneNo = ikedcPhoneNumber?.length > 0 ? ikedcPhoneNumber : "";
   const productEmail = ikedcEmail?.length > 0 ? ikedcEmail : "";
   const productAmount = ikedcAmount?.length > 0 ? ikedcAmount : "";
-  const service_id = ikedcServiceID?.length > 0 ? ikedcServiceID : "";
+  // const service_id = ikedcServiceID?.length > 0 ? ikedcServiceID : "";
+  const disco_type = ikedcDiscoType?.length > 0 ? ikedcDiscoType : "";
   const order_id = ikedcOrderId=== undefined ? "" : ikedcOrderId;
   const transaction_id = ikedcTransactionId?.length > 0 ? ikedcTransactionId : "";
   const description = ikedcShowDescription?.length > 0 ? ikedcShowDescription : "";
@@ -170,7 +172,7 @@ export const IkedcReceipt = () => {
                       <div>
                         <img className="w-[30px]" src={logo2} alt="" />
                       </div>
-                      <div>{service_id}</div>
+                      <div>{disco_type}</div>
                     </span>
                   </div>
                   <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">

@@ -29,7 +29,8 @@ export const KedcoReceipt = () => {
       setGlobalCountry,
       setKedcoFlag,
       selectedKedcoMeterType,
-      kedcoServiceID,
+      // kedcoServiceID,
+      kedcoDiscoType,
       kedcoOrderId,
       kedcoTransactionId,
       kedcoShowDescription,
@@ -47,7 +48,8 @@ export const KedcoReceipt = () => {
   const phoneNo = kedcoPhoneNumber?.length > 0 ? kedcoPhoneNumber : "";
   const productEmail = kedcoEmail?.length > 0 ? kedcoEmail : "";
   const productAmount = kedcoAmount?.length > 0 ? kedcoAmount : "";
-  const service_id = kedcoServiceID?.length > 0 ? kedcoServiceID : "";
+  // const service_id = kedcoServiceID?.length > 0 ? kedcoServiceID : "";
+  const service_id = kedcoDiscoType?.length > 0 ? kedcoDiscoType : "";
   const order_id = kedcoOrderId=== undefined ? "" : kedcoOrderId;
   const transaction_id =
     kedcoTransactionId?.length > 0 ? kedcoTransactionId : "";
