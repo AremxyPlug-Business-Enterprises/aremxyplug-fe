@@ -281,7 +281,7 @@ export const BedcReceipt = () => {
               onClick={() => {
                 handleSaveAsPDFClick();
               }}
-              className={` border-[1px] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%] ${isDarkMode ? "bg-black border-white":"bg-[#ffffff] border-[#0003]"}`}
+              className={`border-[1px] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%] ${isDarkMode ? "bg-black border-white":"bg-[#ffffff] border-[#0003]"}`}
             >
               Save as PDF
             </button>

@@ -579,13 +579,6 @@ const JED = () => {
                 <input
                   type="text"
                   value={jedEmail}
-                  onInput={(e) => {
-                    if (jedEmail.includes("@")) {
-                      e.target.style.border = "2px solid green";
-                    } else {
-                      e.target.style.border = "2px solid red";
-                    }
-                  }}
                   onChange={handleEmail}
                   className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:py-3 md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none  ${
                     isDarkMode
