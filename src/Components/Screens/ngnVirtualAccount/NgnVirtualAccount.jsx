@@ -12,7 +12,7 @@ function NgnVirtualAccount(Data) {
     bankNameState,
     accountNameState,
     accountNumberState ,
-  customerDetail, setDashLoading, setVirtualAccCreated, setBankNameState, setAccountNumberState, setAccountNameState,
+  customerDetail,setVirtualAccCreated, setBankNameState, setAccountNumberState, setAccountNameState,
            twoStepVerificationSuccess,setTwoStepVerificationSuccess} = useContext(ContextProvider)
 
   const accNoRef = useRef(null);
@@ -26,7 +26,7 @@ function NgnVirtualAccount(Data) {
      if(!navigator.onLine) return alert("Check your internet connection")
       if((authToken || getToken) && navigator.onLine){
       try{
-      setDashLoading(true)
+      setLoading(true)
       const body =""
       const url = "https://aremxyplug.onrender.com/api/v1/virtualacc"
        const response = await axios.post(url,body,{ headers : {"Content-Type" : "application/json",
@@ -40,20 +40,28 @@ function NgnVirtualAccount(Data) {
             setBankNameState, setAccountNameState, setAccountNumberState, 
            twoStepVerificationSuccess,setTwoStepVerificationSuccess)
            } 
+            if(CheckVirtualAcc  && Data.ConfirmAcc === "true"){
+        setLoading(false);
+        }
 
       }catch(error){
         if( error.response && error.response.status === 400){
           alert("Virtual Account Creation failed")
-          
+          setLoading(false)
+        }else if(error.response &&error.response.status === 401){
+          alert("Your session has timed out.");
+          setLoading(false)
         }else if(error.response.status === 404){
+
        alert("Check your Network connection")
+       setLoading(false)
         }else if(error.response &&error.response.status === 500){
           alert("SERVER ERROR");
+          setLoading(false)
         }
-      }finally{
-        setDashLoading(false);
-      }}
       }
+    }
+   }
 
   // const formatAccountNumber = (text) => {
   //   if ( text !== '') {
@@ -156,7 +164,7 @@ function NgnVirtualAccount(Data) {
            
           <div className="flex flex-col justify-center mt-[25.39px] py-[16px] md:mt-[35px] lg:mt-[60px] w-full h-auto md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] bg-[#92abfe]/[0.5] px-[16px] lg:px-[50px] lg:rounded-[20px]">
            {loading === true ?  (
-            <div className="flex w-full justify-center">
+            <div className="flex w-full h-[70px] items-center justify-center">
               <Loader/>
               </div>
            ) : (
@@ -169,12 +177,10 @@ function NgnVirtualAccount(Data) {
               <div className="mb-[8px] lg:mb-[15px] flex lg:gap-x-[20px] gap-x-[15px] font-semibold">
                 <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[15%] md:w-[20%] w-[30%]">ACCOUNT NAME</p>
                 <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[85%] md:w-[20%] w-[70%]" >
-                  {
-                    (accountNameState || Data.aremxyAccountName) ?
-                      (accountNameState || Data.aremxyAccountName).split('/')[1] || ""
-                      :
-                      ""
-                  }</p>
+                  {accountNameState ? accountNameState : 
+                  Data.aremxyAccountName ? Data.aremxyAccountName.slice(11) :
+                   ""}
+                  </p>
               </div>
               <div className=" flex lg:gap-x-[20px] gap-x-[15px] font-semibold">
                 <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[15%] md:w-[20%] w-[30%]">ACCOUNT NUMBER</p>{" "}

@@ -610,8 +610,7 @@ const VerifyPinHandler = async () => {
                     ? "bg-black text-white border border-white" 
                     : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
                 }`}
-                value={`₦ ${tvAmount}`} readOnly
-              />
+                value={`₦ ${tvAmount}`} readOnly />
 
             </div>
 

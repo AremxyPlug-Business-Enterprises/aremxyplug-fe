@@ -557,7 +557,7 @@ const VerifyPinHandler = async () => {
        : " border-[#9C9C9C]"
    }`}     >
                 <p className='font-[400] text-[13px] leading-[10.4px] md:text-[12px] md:leading-[12.206px] lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px] cursor-pointer'>
-                   {`${flagResult} ' ' ${tvWalletBalance}`}
+                   {`${flagResult}  ${" "} ${tvWalletBalance}`}
                 </p>
                 <img className='methodDrop h-[16px] w-[14px] md:h-[14.038px] md:w-[14.038px] lg:h-[24px] lg:w-[24px]'
                   src={methodImage} alt="" />
