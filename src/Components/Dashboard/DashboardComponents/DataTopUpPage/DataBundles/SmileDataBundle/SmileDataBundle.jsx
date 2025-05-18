@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState , useEffect} from "react";
 import { DashBoardLayout } from "../../../../Layout/DashBoardLayout";
 import { ContextProvider } from "../../../../../Context";
 import { useContext } from "react";
@@ -39,7 +39,7 @@ const SmileDataBundle = () => {
   const { recipientNames, setRecipientNames } = useContext(ContextProvider);
   const { walletName, setWalletName } = useContext(ContextProvider);
   const { accountId, setAccountId } = useContext(ContextProvider);
-  const { emailId, setEmailId } = useContext(ContextProvider);
+  const { emailId, setEmailId, newBalance } = useContext(ContextProvider);
 
   const [showProductList, setShowProductList] = useState(false);
   const [showOptionList, setShowOptionList] = useState(false);
@@ -54,8 +54,26 @@ const SmileDataBundle = () => {
   const [paymentAmount, setPaymentAmount] = useState("");
   const [accountIdInputColor, setAccountIdInputColor] = useState("#92ABFE2E");
   const [input, setInput] = useState("");
+  const [balanceStatus,setBalanceStatus ] = useState("")
   const [emailError, setEmailError] = useState("");
+ let balanceStringToNum = Number(newBalance);
 
+              let smileDataAmount = Number(selectedAmount);
+             let CheckSufficiency =  smileDataAmount > balanceStringToNum;
+
+  useEffect(()=> {
+   
+   const HandleBalanceStatus = ()=> {
+              if(CheckSufficiency){
+               setBalanceStatus("Insufficient fund")
+              }else{
+                setBalanceStatus("");
+               }
+            }
+
+            HandleBalanceStatus()
+
+          },[CheckSufficiency])
   // const [codes, setCodes] = useState(false);
 
   const points = "+2.00";
@@ -87,7 +105,7 @@ const SmileDataBundle = () => {
       name: "Nigeria",
       code: "NGN",
       flag: require("../DataBundles-Images/ng.svg").default,
-      amount: 50000,
+      amount: newBalance,
     },
     {
       id: 2,
@@ -1184,32 +1202,42 @@ const SmileDataBundle = () => {
                       </div>
                     </div>
 
-                    <div className="my-[5px] flex justify-between items-center gap-2 bg-slate-200 -mx-[20px] px-[15px] h-[49px] py-[20px]">
-                      <div className="flex gap-2 items-center">
-                        <div className="bg-white rounded-full h-[27px] w-[27px] flex justify-center items-center">
-                          <img
-                            className="w-[16px] h-[16px]"
-                            src={image}
-                            alt="/"
-                          />
-                        </div>
-                        <p className="text-[10px] md:text-[14px]  lg:text-[16px]">
-                          Available Balance{" "}
-                          <span className="text-[#0003]">
-                            ( {walletName + paymentAmount}.00 )
-                          </span>
-                        </p>
-                      </div>
-                      <img
-                        src={Select}
-                        alt=""
-                        className="w-[12px] h-[12px] md:w-[50px] md:h-[20px] lg:w-[80px] lg:h-[30px]"
-                      />
-                    </div>
+                      <div className="bg-[#F6F7F7] w-[95%] h-auto my-5 lg:my-8 flex py-[7px] 
+                                                               justify-between items-center px-[4%] mx-auto rounded-[10px]">
+                                                                       <div className="flex flex-col gap-2  ">
+                                                                         <div className="flex gap-[10px] justify-center items-center">
+                                                                           <img
+                                                                             className="w-[16px] h-[16px] bg-white"
+                                                                             src={image}
+                                                                             alt="/"
+                                                                           />
+                                                                           <div className="flex gap-[10px] items-center">
+                                                                               <p className="text-[12px] md:text-[14px] leading-[20px] lg:leading-[22px]  lg:text-[16px] font-[500]">
+                                                                           Available Balance {"  "} 
+                                                                            </p>
+                                                                            <span className="text-[#0003]">
+                                                                             {`(${newBalance})`}
+                                                                           </span>
+                                                                           </div>
+                                                                         </div>
+                                                                       <span className="text-gray-500 text-[14px] font-[400] leading-[20px]
+                                                                            lg:text-[16px] lg:leading-[22px] text-left">
+                                                                              {balanceStatus}
+                                                                              </span>
+                                                                       </div>
+                                                       
+                                                                       <img
+                                                                         src={Select}
+                                                                         alt=""
+                                                                         className="w-[12px] h-[12px] md:w-[50px] md:h-[20px] lg:w-[80px] lg:h-[30px]"
+                                                                       />
+                                                                     </div>
 
                     <div className="flex items-center justify-center">
-                      <button
-                        className="w-full md:w-fit bg-primary text-white rounded-md px-[28px] text-[10px] md:text-[12px] leading-[15px] lg:text-[16px] lg:leading-[24px] py-[15px] md:py-[10px]"
+                      <button disabled={CheckSufficiency}
+                        className={`w-full md:w-fit bg-primary text-white rounded-md px-[28px] text-[10px] md:text-[12px] 
+                          leading-[15px] lg:text-[16px] lg:leading-[24px] py-[15px] md:py-[10px]
+                            ${CheckSufficiency ? "bg-gray-400" : "bg-primary" }`}
                         onClick={() => {
                           handleConfirm();
                         }}

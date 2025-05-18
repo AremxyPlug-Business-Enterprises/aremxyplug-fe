@@ -347,7 +347,7 @@ const [loading, setLoading] = useState(false);
   `}
    >
     <p className={`text-[13.5px]  font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "bg-black !text-white border !border-white" :  "border border-[#0003]  hover:bg-[#EDEAEA] border-[#9C9C9C] text-[#7C7C7C]"}`}>
+    lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" :  "  text-[#7C7C7C]"}`}>
       {selectedOptionShowmax}</p>
                 
                 <img className="absolute left-[90%] lg:left-[94%] self-center align-middle imgdrop md:h-[14.038px] md:w-[14.038px] 

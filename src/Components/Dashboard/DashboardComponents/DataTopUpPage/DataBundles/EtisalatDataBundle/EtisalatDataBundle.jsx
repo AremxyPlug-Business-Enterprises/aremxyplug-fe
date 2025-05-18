@@ -30,6 +30,7 @@ import { EtisalatFailedReceipt } from "./9MobileFailedReceipt";
 import Failed from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/Failed.svg"
 import axiosInstance from "../../../../../ApiCollection.jsx/apiClient";
 import { VerifyTransPin } from "../../../../../ApiCollection.jsx/ApiBuck";
+import { Loader } from "../../../../../Loader/Loader";
 
 const EtisalatDataBundle = () => {
   const { isDarkMode } = useContext(ContextProvider);
@@ -40,7 +41,7 @@ const EtisalatDataBundle = () => {
     useContext(ContextProvider);
   const { selectedAmount, setSelectedAmount } = useContext(ContextProvider);
   const { recipientNames, setRecipientNames } = useContext(ContextProvider);
-  const { walletName, setWalletName } = useContext(ContextProvider);
+  const { walletName, setWalletName, newBalance } = useContext(ContextProvider);
 
   const [showProductList, setShowProductList] = useState(false);
   const [showOptionList, setShowOptionList] = useState(false);
@@ -65,7 +66,11 @@ const EtisalatDataBundle = () => {
   const [success, setSuccess] = useState(false);
   const [failed, setFailed] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+const [balanceStatus,setBalanceStatus ] = useState("")
+   let balanceStringToNum = Number(newBalance);
 
+              let etisalatDataAmount = Number(selectedAmount);
+             let CheckSufficiency =  etisalatDataAmount > balanceStringToNum;
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -83,7 +88,17 @@ const EtisalatDataBundle = () => {
     };
 
     fetchProducts();
-  }, []);
+       const HandleBalanceStatus = ()=> {
+              if(CheckSufficiency){
+               setBalanceStatus("Insufficient fund")
+              }else{
+                setBalanceStatus("");
+               }
+            }
+
+            HandleBalanceStatus()
+
+          },[CheckSufficiency])
 
   // Fetch plans when product is selected
   const fetchPlans = async (productId) => {
@@ -142,7 +157,7 @@ const EtisalatDataBundle = () => {
       name: "Nigeria",
       code: "NGN",
       flag: require("../DataBundles-Images/ng.svg").default,
-      amount: 50000,
+      amount: newBalance,
     },
     {
       id: 2,
@@ -370,17 +385,17 @@ const EtisalatDataBundle = () => {
         setInputValue(resData.Phone_Number);
         console.log(resData.Phone_Number);
 
-        setRecipientPhoneNumber(data.Phone_number); // Still from your original request
-        console.log(data.Phone_number);
+        // setRecipientPhoneNumber(data.Phone_number); // Still from your original request
+        // console.log(data.Phone_number);
 
-        console.log(inputValue); // Note: this may still show the old state value here
-        console.log(recipientPhoneNumber);
+        // console.log(inputValue); // Note: this may still show the old state value here
+        // console.log(recipientPhoneNumber);
 
-        setRecipientNames(resData.Name);
-        console.log(resData.Name);
+        // setRecipientNames(resData.Name);
+        // console.log(resData.Name);
 
-        setSelectedAmount(resData.plan_amount);
-        console.log(resData.plan_amount);
+        // setSelectedAmount(resData.plan_amount);
+        // console.log(resData.plan_amount);
 
         setEtisalatTransactionID(resData.transaction_id);
         console.log(resData.transaction_id);
@@ -420,9 +435,11 @@ const EtisalatDataBundle = () => {
     if (response.statusCode === 200) {
       // Success response
       setTransactSuccessPopUp(true); // Show success popup
+      setConfirm(false);
     } else {
       // Failure response
       setEtisalatPurchaseStatus(true); // Show failure popup
+      setConfirm(false);
     }
 
   };
@@ -917,7 +934,7 @@ const EtisalatDataBundle = () => {
 
           {loading && (
             <Modal>
-              <Spinner size="large" />
+          <Loader />
             </Modal>
           )}
 
@@ -1042,32 +1059,42 @@ const EtisalatDataBundle = () => {
                       </div>
                     </div>
 
-                    <div className="my-[5px] flex justify-between items-center gap-2 bg-slate-200 -mx-[20px] px-[15px] h-[49px] py-[20px]">
-                      <div className="flex gap-2 items-center">
-                        <div className="bg-white rounded-full h-[27px] w-[27px] flex justify-center items-center">
-                          <img
-                            className="w-[16px] h-[16px]"
-                            src={image}
-                            alt="/"
-                          />
-                        </div>
-                        <p className="text-[10px] md:text-[14px]  lg:text-[16px]">
-                          Available Balance{" "}
-                          <span className="text-[#0003]">
-                            ( {walletName + paymentAmount}.00 )
-                          </span>
-                        </p>
-                      </div>
-                      <img
-                        src={Select}
-                        alt=""
-                        className="w-[12px] h-[12px] md:w-[50px] md:h-[20px] lg:w-[80px] lg:h-[30px]"
-                      />
-                    </div>
+                      <div className="bg-[#F6F7F7] w-[95%] h-auto my-5 lg:my-8 flex py-[7px] 
+                                             justify-between items-center px-[4%] mx-auto rounded-[10px]">
+                                                     <div className="flex flex-col gap-2  ">
+                                                       <div className="flex gap-[10px] justify-center items-center">
+                                                         <img
+                                                           className="w-[16px] h-[16px] bg-white"
+                                                           src={image}
+                                                           alt="/"
+                                                         />
+                                                         <div className="flex gap-[10px] items-center">
+                                                             <p className="text-[12px] md:text-[14px] leading-[20px] lg:leading-[22px]  lg:text-[16px] font-[500]">
+                                                         Available Balance {"  "} 
+                                                          </p>
+                                                          <span className="text-[#0003]">
+                                                           {`(${newBalance})`}
+                                                         </span>
+                                                         </div>
+                                                       </div>
+                                                     <span className="text-gray-500 text-[14px] font-[400] leading-[20px]
+                                                          lg:text-[16px] lg:leading-[22px] text-left">
+                                                            {balanceStatus}
+                                                            </span>
+                                                     </div>
+                                     
+                                                     <img
+                                                       src={Select}
+                                                       alt=""
+                                                       className="w-[12px] h-[12px] md:w-[50px] md:h-[20px] lg:w-[80px] lg:h-[30px]"
+                                                     />
+                                                   </div>
 
                     <div className="flex items-center justify-center">
-                      <button
-                        className="w-full md:w-fit bg-primary text-white rounded-md px-[28px] text-[10px] md:text-[12px] leading-[15px] lg:text-[16px] lg:leading-[24px] py-[15px] md:py-[10px]"
+                      <button disabled ={CheckSufficiency}
+                        className={`w-full md:w-fit bg-primary text-white rounded-md px-[28px] text-[10px] md:text-[12px]
+                           leading-[15px] lg:text-[16px] lg:leading-[24px] py-[15px] md:py-[10px]
+                            ${CheckSufficiency ? "bg-gray-400"   : "bg-primary" } `}
                         onClick={() => {
                           handleConfirm();
                         }}
@@ -1136,22 +1163,29 @@ const EtisalatDataBundle = () => {
                     <p className="text-[8px] md:text-[12px] text-[#04177f]">
                       Forgot Pin ?
                     </p>
+                    {errorMessage && (
+                      <p className ="text-center text-[14px] text-red-500 lg:text-[16px]
+                       font-[500] leading-[18px] lg:leading-[20px]">
+                        Incorrect Otp
+                      </p>
+                    )}
                   </div>
                 </div>
 
                 <button
                   onClick={() => {
                     console.log("inputPin", inputPin);
+                    const EtisalatHandler =  () => {
+                      
+                        inputPinHandler(); // Proceed with purchase
+                      }
                     VerifyTransPin(
                       inputPin,
                       setSuccess,
                       setFailed,
                       setLoading,
                       setErrorMessage,
-                      () => {
-                        setConfirm(false); // Close modal on PIN success
-                        inputPinHandler(); // Proceed with purchase
-                      }
+                     EtisalatHandler
                     );
                   }}
                   disabled={inputPin.length !== 4}

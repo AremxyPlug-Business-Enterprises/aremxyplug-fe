@@ -183,18 +183,24 @@ if((clickedoption === "NGN") && blur === true){
             setBankNameState, setAccountNameState, setAccountNumberState, 
            twoStepVerificationSuccess,setTwoStepVerificationSuccess)
            } 
+           if(CheckVirtualAcc && Data.ConfirmAcc === "true"){
+            setDashLoading(false);
+           }
 
       }catch(error){
         if( error.response && error.response.status === 400){
           alert("Virtual Account Creation failed")
-          
+          setDashLoading(false);
         }else if(error.response.status === 404){
        alert("Check your Network connection")
+       setDashLoading(false)
+        }else if(error.response.status === 401){
+       alert("Your session has timed out.")
+       setDashLoading(false)
         }else if(error.response &&error.response.status === 500){
           alert("SERVER ERROR");
+          setDashLoading(false);
         }
-      }finally{
-        setDashLoading(false);
       }}
       }
 
@@ -217,24 +223,31 @@ if((clickedoption === "NGN") && blur === true){
            console.log(checkBal);
            setNewBalance(checkBal)
              
+
+
           }
         }else if((response === undefined || null) || !response) {
            setBalanceValue(false);
+       
         }
         }catch(error){
           if( error.response && (error.response.status === 400 || error.response.status === 401)){
-           setBalanceValue(false)
+           setBalanceValue(false);
+       
          }else if(error.response.status === 404){
-     setBalanceValue(false)
+     setBalanceValue(false);
+     
           }else if(error.response.status === undefined) {
      setBalanceValue(false)
+
           }else if (error && error.response.status ===500){
             setNewBalance(0);
-          }
+      }
         
-        }finally{
-          setBalanceLoading(false);
-        }}
+        }finally {
+          setBalanceLoading(false)
+        }
+      }
        
         }
 
@@ -701,7 +714,7 @@ return (
                   <div className="md:h-[100%] gap-[30px]  md:gap-[0px] h-auto  w-full  flex flex-col justify-between">
                      <div onClick ={()=> {
                       navigate("/virtual-account")
-                     }} className="w-full h-[15%] flex justify-right">
+                     }} className="w-full h-[15%] flex justify-end">
                 {" "}
                 <button
                   className={`text-[10px] md:text-[11px] mb-[15px] md:mt-[0px] lg:text-[12px] font-[600]  ${
@@ -751,17 +764,19 @@ return (
                 {/* This is Collected for secure and cyber-attack-free transactions among AremxyPlug's users*/}
                 </p>
                 </div>
-                <Link to={ (Data.ConfirmId === "false" ||  Data.ConfirmBvn === "false") && Data.ConfirmAcc === "false" ?  {
+                <Link to={ (!Data.ConfirmId &&  !Data.ConfirmBvn) || (Data.ConfirmId === "false" && Data.ConfirmBvn === "false") ?  {
     pathname: "/ProfileSettingMain",
     state: { verificationOpen: true } 
-  } : null } onClick={()=> {
+  } : null } >
+                {" "}
+
+                <button
+                onClick={()=> {
     if((Data.ConfirmId === "true" ||  Data.ConfirmBvn === "true") && Data.ConfirmAcc === "false" && selected === "NGN"){
      GenerateVirtualAccount()
     }
-  } }>
-                {" "}
-
-                <button disabled={selected !== "NGN"}
+  } }
+                 disabled={selected !== "NGN"}
                   className={`text-[10px] md:text-[11px] lg:text-[12px] font-[600]   ${
                     isDarkMode ? "border bg-black" : "bg-[#04177f]"
                   } ${styles.viewWallet} ${selected !== "NGN" ? "bg-gray-400" : "bg-[#04177f]"}`}

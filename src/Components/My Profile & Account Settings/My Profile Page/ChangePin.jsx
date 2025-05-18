@@ -74,8 +74,8 @@ Data = GetLocalStorage();
   const [resetPin1, setResetPin1] = useState(false);
   const [createPin, setCreatePin] = useState("");
   const [confirmPinInputBgColor, setConfirmPinInputBgColor] = useState("");
-
-  
+const [verifyResponse, setVerifyResponse] = useState({})
+  const [resetResponse, setResetResponse] = useState({})
 
 
 // An Api to help change the user's pin
@@ -139,8 +139,8 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
   const ResetFunction = async()=> {
     const SuccessHandler = ()=> {
       alert("An Otp has been sent to you")
-      setResetPinUpdate(true);
-      setCountdown(60)
+       setResetPinUpdate(true);
+       setCountdown(60)
     }
     const FailedHandler = ()=> {
       alert("The Otp failed to sent");
@@ -149,8 +149,9 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
     const body = {
       email : Data.UserEmail
     }
+    console.log(resetResponse)
 
-await PostFunction(path, setLoading, body, SuccessHandler, FailedHandler);
+await PostFunction(path, setLoading, body, SuccessHandler, FailedHandler,setResetResponse );
   }
 
   const handleResetPinUpdate = async() => {
@@ -186,9 +187,10 @@ await PostFunction(path, setLoading, body, SuccessHandler, FailedHandler);
     const body = {
       otp : inputPin
     }
-
-await PostFunction(path, setLoading, body, SuccessHandler, FailedHandler);
+console.log(verifyResponse);
+await PostFunction(path, setLoading, body, SuccessHandler, FailedHandler, setVerifyResponse);
   }
+
 
    const PutNewFunction = async()=> {
     const SuccessHandler = ()=> {

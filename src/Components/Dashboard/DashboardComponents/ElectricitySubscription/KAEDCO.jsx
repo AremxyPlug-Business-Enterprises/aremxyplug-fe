@@ -61,6 +61,7 @@ const KAEDCO = () => {
     setKaedcoShowDescription,
     kaedcoFetchedResponse,
     setKaedcoFetchedResponse,
+    newBalance
   } = useContext(ContextProvider);
 
   const [showProductList, setShowProductList] = useState(false);
@@ -100,7 +101,7 @@ const KAEDCO = () => {
   const countryList = [
     {
       id: 1,
-      name: "NGN Wallet(50,000.00)",
+       name: `NGN Wallet ${newBalance}`,
       code: "Nigerian NGN Wallet",
       flag: require("../ElectricitySubscription/Electricity-sub-images/nigeriaFlag.png"),
     },

@@ -209,7 +209,7 @@ const handleVerificationOTP = ()=> {
         setVerifyImage(NotVerifiedImage);
         setBvnVerifyImage(NotVerifiedImage);
         setIdStatus("Not Verified");
-        setBvnStatus("Not Verified")
+        setBvnStatus("Not Verified");
        // console.log("ERROR",error.response.data.message)
       }else if(error && error.response.data.message === "action_required"){
         localStorage.setItem("AccCreated", false);
@@ -247,8 +247,8 @@ const handleVerificationOTP = ()=> {
           setIdStatus("Verified");
           setBvnNumber(error.response.data.bvn);
           setIdNumber(error.response.data.nin);
-          localStorage.setItem("idVerification",false);
-          localStorage.setItem("bvnVerification",false);
+          localStorage.setItem("idVerification",true);
+          localStorage.setItem("bvnVerification",true);
         }
       
       }
@@ -415,7 +415,7 @@ return () => clearInterval(timer);
     setLoading(true)
   try{
    const forwardPin ={
-    pin:otp
+    pin: otp
    }
    const DataJson = JSON.stringify(forwardPin)
    console.log(DataJson);
@@ -424,6 +424,7 @@ return () => clearInterval(timer);
       }})
       if(response.status === 200|| 201){
       console.log(response);
+     localStorage.setItem("UserStatus", true);
          navigate("/dashboard");
       }else if(!response.status){
         alert("Check your Network Connection")
@@ -902,7 +903,7 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
             
                 <div className="flex flex-col items-center w-[100%] ">
                   <p className="lg:text-[14px] font-[500]  text-[12.021px]  text-green-500 mb-[30px]">
-                    Verification Successfull
+                    Verification Successful.
                   </p>
 
                   <img
