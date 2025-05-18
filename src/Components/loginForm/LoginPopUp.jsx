@@ -93,7 +93,7 @@ if((response.status === 200 || 201) && (response.headers.hasAuthorization)){
   } 
   else if(error.response && error.response.status === 500){
     alert(`SERVER ERROR`)
-  }else if(!error.response){
+  }else{
     alert("Check your network connection")
   }
   }finally{
@@ -202,15 +202,17 @@ const handleVerificationOTP = ()=> {
      // alert(`ERROR : ${error}`)
       console.log(error);
      // console.log(error.response.data.message);
-      if(error && error.response.data.message === "error"){
+      if(error && error.response.data.message === "unverified"){
+          setBvnNumber("");
+          setIdNumber("")
         localStorage.setItem("idVerification",false);
         localStorage.setItem("bvnVerification",false);
         localStorage.setItem("AccCreated",false);
         setVerifyImage(NotVerifiedImage);
         setBvnVerifyImage(NotVerifiedImage);
         setIdStatus("Not Verified");
-        setBvnStatus("Not Verified")
-       // console.log("ERROR",error.response.data.message)
+        setBvnStatus("Not Verified");
+       console.log("ERROR",error.response.data.message)
       }else if(error && error.response.data.message === "action_required"){
         localStorage.setItem("AccCreated", false);
         const bvnCheck = error.response.data.data.bvn;
@@ -247,8 +249,8 @@ const handleVerificationOTP = ()=> {
           setIdStatus("Verified");
           setBvnNumber(error.response.data.bvn);
           setIdNumber(error.response.data.nin);
-          localStorage.setItem("idVerification",false);
-          localStorage.setItem("bvnVerification",false);
+          localStorage.setItem("idVerification",true);
+          localStorage.setItem("bvnVerification",true);
         }
       
       }
@@ -256,8 +258,8 @@ const handleVerificationOTP = ()=> {
         alert("Network Error:, Please Check your Connection and try again");
       }else if(error.status === 500){
         alert('Error:', "A SERVER ERROR");
-     }else if(!error.status){
-      alert("Check your network connection");
+     }else{
+      alert("Check your internet connection and try again");
    }}finally{
        setLoading(false);
       }
@@ -335,7 +337,7 @@ const gettingSmsOrEmailFunctionOtp = async(url, body)=> {
       alert("OOPs, an error has occured");
       }else if(error.response &&error.response.status === 500){
         alert("SERVER ERROR");
-      }else if(!error.response){
+      }else{
         alert("Check yoou network connection");
       }
     }finally{
@@ -415,7 +417,7 @@ return () => clearInterval(timer);
     setLoading(true)
   try{
    const forwardPin ={
-    pin:otp
+    pin: otp
    }
    const DataJson = JSON.stringify(forwardPin)
    console.log(DataJson);
@@ -424,8 +426,9 @@ return () => clearInterval(timer);
       }})
       if(response.status === 200|| 201){
       console.log(response);
+     localStorage.setItem("UserStatus", true);
          navigate("/dashboard");
-      }else if(!response.status){
+      }else {
         alert("Check your Network Connection")
       }
     
@@ -437,11 +440,9 @@ return () => clearInterval(timer);
           alert(`Please check your internet connection`)
         } else if(error && error.response.status === 500){
           alert(`An error occured on our end`)
-        }else if(!error.response.status){
-          alert("Check your Network Connection")
         }
         else{
-          alert(error)
+          alert("Check your network Connection");
         }
           //alert(error.response.data.message)
         }

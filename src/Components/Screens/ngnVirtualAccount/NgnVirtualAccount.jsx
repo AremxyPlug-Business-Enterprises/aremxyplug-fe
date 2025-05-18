@@ -15,9 +15,9 @@ function NgnVirtualAccount(Data) {
   customerDetail,setVirtualAccCreated, setBankNameState, setAccountNumberState, setAccountNameState,
            twoStepVerificationSuccess,setTwoStepVerificationSuccess} = useContext(ContextProvider)
 
-  const accNoRef = useRef(null);
-  const accNameRef = useRef(null);
-  const bankNameRef = useRef(null);
+  //const accNoRef = useRef(null);
+ // const accNameRef = useRef(null);
+//  const bankNameRef = useRef(null);
   const [loading, setLoading]= useState(false)
 
    const GenerateVirtualAccount = async(AuthUsed)=>{
@@ -71,10 +71,10 @@ function NgnVirtualAccount(Data) {
 
   const handleCopyCombineText = () => {
 
-    const value_1 = bankNameRef.current.innerText;
-    const value_2 = accNameRef.current.innerText;
-    const value_3 = accNoRef.current.innerText;
-
+   const value_1 = Data.aremxyBankName;
+    const value_2 =  Data.aremxyAccountName;
+    const value_3 =  Data.aremxyAccountNumber;
+   
     const text_1 = `Bank Name: ${value_1}`
     const text_2 = `Account Name: ${value_2}`;
     const text_3 = `Account Number: ${value_3}`;
@@ -89,9 +89,9 @@ function NgnVirtualAccount(Data) {
 
   const handleShareCombineText = () => {
 
-    const value_1 = bankNameRef.current.innerText;
-    const value_2 = accNameRef.current.innerText;
-    const value_3 = accNoRef.current.innerText;
+    const value_1 = Data.aremxyBankName;
+    const value_2 =  Data.aremxyAccountName;
+    const value_3 =  Data.aremxyAccountNumber;
 
     const combineText = {
       Bank_Name: value_1,
@@ -109,7 +109,7 @@ function NgnVirtualAccount(Data) {
   }
 
   const handleCopyText = () => {
-    const text = accNoRef.current.innerText;
+    const text = Data.aremxyAccountNumber;
 
     navigator.clipboard.writeText(text)
       .then(() => {
