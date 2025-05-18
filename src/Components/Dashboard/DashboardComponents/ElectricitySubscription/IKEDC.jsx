@@ -1,5 +1,5 @@
 import { DashBoardLayout } from "../../Layout/DashBoardLayout";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { ContextProvider } from "../../../Context";
 import { useState } from "react";
 import styles from "../TransferComponent/transfer.module.css";
@@ -52,17 +52,15 @@ const IKEDC = () => {
     setIkedcServiceID,
     ikedcFlag,
     setIkedcFlag,
-    ikedcOrderId,
     setIkedcOrderId,
-    ikedcTransactionId,
     setIkedcTransactionId,
-    ikedcShowDescription,
     setIkedcShowDescription,
     ikedcFetchedResponse,
     setIkedcFetchedResponse,
     selectedIkedcMeterType,
     setSelectedIkedcMeterType,
-    newBalance
+    setIkedcDiscoType,
+    newBalance,
   } = useContext(ContextProvider);
 
   const [showProductList, setShowProductList] = useState(false);
@@ -102,7 +100,7 @@ const IKEDC = () => {
   const countryList = [
     {
       id: 1,
-      name: `NGN Wallet ${newBalance}`,
+      name: `NGN Wallet (${newBalance})`,
       code: "Nigerian NGN Wallet",
       flag: require("../ElectricitySubscription/Electricity-sub-images/nigeriaFlag.png"),
     },
@@ -139,6 +137,7 @@ const IKEDC = () => {
   ];
   const [errors, setErrors] = useState({});
   const [proceed, setProceed] = useState(false);
+  const [amountError, setAmountError] = useState("");
 
   const handleProceed = (e) => {
     // e.preventDefault();
@@ -149,6 +148,7 @@ const IKEDC = () => {
       ikedcMeterNumber,
     });
 
+    const amount = Number(ikedcAmount);
     if (error) {
       setErrors(
         error.details.reduce((acc, curr) => {
@@ -156,9 +156,12 @@ const IKEDC = () => {
           return acc;
         }, {})
       );
+    } else if (amount < 1000) {
+      setAmountError("Amount must be at least ₦1000");
     } else {
       setProceed(true);
       setErrors({});
+      setAmountError("");
     }
   };
 
@@ -284,6 +287,7 @@ const IKEDC = () => {
       setIkedcTransactionId(ikedcFetchedResponse.data.transaction_id);
       setIkedcServiceID(ikedcFetchedResponse.data.request_id);
       setIkedcShowDescription(ikedcFetchedResponse.data.description);
+      setIkedcDiscoType(ikedcFetchedResponse.data.disco_type)
     };
     receivedData();
     if (receivedData) {
@@ -293,12 +297,50 @@ const IKEDC = () => {
     }
   }
 
+  function handleFailedData() {
+    setLoading(true);
+    setFailedPopup(false);
+    navigate("/ikedc-receipt-failed");
+    setLoading(false);
+  }
+
+  function handleResetFields() {
+    setSelectedIkedcMeterType("");
+    setIkedcMeterNumber("");
+    setIkedcVerifiedName("");
+    setIkedcPhoneNumber("");
+    setIkedcEmail("");
+    setIkedcAmount("");
+    setGlobalCountry("");
+    setIkedcFlag("");
+    setIkedcBillGenerate("");
+    setIkedcOrderId("");
+    setIkedcTransactionId("");
+    setIkedcServiceID("");
+    setIkedcShowDescription("");
+  }
+
+  const [balanceStatus, setBalanceStatus] = useState("");
+  let balanceStringToNum = Number(newBalance);
+  let aedcAmountToNumber = Number(ikedcAmount);
+  let CheckSufficiency = aedcAmountToNumber > balanceStringToNum;
+  useEffect(() => {
+    const HandleBalanceStatus = () => {
+      if (CheckSufficiency) {
+        setBalanceStatus("Insufficient fund");
+      } else {
+        setBalanceStatus("");
+      }
+    };
+    HandleBalanceStatus();
+  }, [CheckSufficiency]);
+
   const [InputPinPopUp, setInputPinPopUp] = useState(false);
   const [inputPin, setInputPin] = useState("");
 
   const handle = () => {
     setInputPinPopUp(false);
-    setProceed(true);
+    setProceed(false);
   };
 
   const handleSwitch = () => {
@@ -461,9 +503,9 @@ const IKEDC = () => {
                   onClick={() => setShowProductList(false)}
                 />
               </div>
-              {errors.meterNumber && (
+              {errors.ikedcMeterNumber && (
                 <div className="text-[14px] text-red-500 italic lg:text-[14px]">
-                  {errors.meterNumber}
+                  {errors.ikedcMeterNumber}
                 </div>
               )}
             </div>
@@ -501,6 +543,13 @@ const IKEDC = () => {
                 <input
                   type="number"
                   value={ikedcPhoneNumber}
+                  onInput={(e) => {
+                    if (ikedcPhoneNumber.length === 10) {
+                      e.target.style.border = "2px solid green";
+                    } else if (e.target.value.length < 10) {
+                      e.target.style.border = "2px solid red";
+                    }
+                  }}
                   onChange={handlePhoneNumber}
                   className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
                     isDarkMode
@@ -509,9 +558,9 @@ const IKEDC = () => {
                   }`}
                 />
               </div>
-              {errors.phoneNumber && (
+              {errors.ikedcPhoneNumber && (
                 <div className="text-[14px] text-red-500 italic lg:text-[14px]">
-                  {errors.phoneNumber}
+                  {errors.ikedcPhoneNumber}
                 </div>
               )}
             </div>
@@ -562,10 +611,16 @@ const IKEDC = () => {
                   name="ikedcamount"
                   value={ikedcAmount}
                   onChange={handleIkedcAmount}
+                  placeholder="Minimum of ₦1000"
                   className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:py-3 md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] text-[12px] leading-[18px] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none
                  ${isDarkMode ? "text-white bg-black " : "text-[#7E7E7E]"}`}
                 />
               </div>
+              {amountError && (
+                <p className="text-[14px] text-red-500 italic lg:text-[14px]">
+                  {amountError}
+                </p>
+              )}
             </div>
 
             <div className=" flex flex-col relative gap-2 lg:gap-2.5">
@@ -639,7 +694,7 @@ const IKEDC = () => {
                 >
                   {countryList.map((country) => (
                     <div
-                      className={`py-[18px] md:py-[14px] font-normal cursor-pointer px-2 flex items-center gap-[5px] text-[12px] md:text-[14px] lg:text-[16px] transition-all duration-300 hover:bg-slate-50
+                      className={`py-[18px] md:py-[14px] font-normal cursor-pointer px-2 flex items-center gap-[5px] text-[12px] md:text-[14px] lg:text-[16px] transition-all duration-300 hover:bg-slate-50 shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
                         ${
                           isDarkMode
                             ? "text-white hover:bg-slate-800 bg-black border border-white"
@@ -691,7 +746,7 @@ const IKEDC = () => {
               !ikedcAmount
             }
           >
-            Proceed
+            {loading ? "Processing..." : "Proceed"}
           </div>
         </div>
         <footer className="flex justify-center items-center text-center gap-[18px] mt-[200px] pb-[10%] md:mt-[750px] lg:mt-[850px]">
@@ -853,33 +908,43 @@ const IKEDC = () => {
               </div>
             </div>
 
-            <div className="bg-[#0001] h-[45px] my-5 flex justify-between items-center px-[4%]">
-              <div className="flex gap-2 items-center">
-                <div
-                  className={`rounded-full h-[27px] w-[27px] flex justify-center items-center ${
-                    isDarkMode ? "bg-[#0001] " : "bg-white"
-                  }`}
-                >
-                  <img className="w-[16px] h-[16px]" src={nig} alt="/" />
-                </div>
-                <p className="text-[10px] md:text-[14px]  lg:text-[16px]">
-                  Available Balance
-                  <span
-                    className={` ${isDarkMode ? "text-white" : "text-[#000] "}`}
+            <div className="bg-[#0001] h-[55px] my-5 flex justify-between items-center px-[4%]">
+              <div className="flex flex-col">
+                <div className="flex gap-2 items-center">
+                  <div
+                    className={` rounded-full h-[27px] w-[27px] flex justify-center items-center ${
+                      isDarkMode ? "bg-[#0001] " : "bg-white"
+                    }`}
                   >
-                    (&#8358;50,000.00)
-                  </span>
-                </p>
+                    <img className="w-[16px] h-[16px]" src={nig} alt="/" />
+                  </div>
+                  <p className="text-[10px] md:text-[14px]  lg:text-[16px]">
+                    Available Balance
+                    <span
+                      className={` ${
+                        isDarkMode ? "text-white" : "text-[#000] "
+                      }`}
+                    >
+                      {`(${newBalance})`}
+                    </span>
+                  </p>
+                </div>
+                <span className="text-red-500 text-[14px] font-[400] leading-[20px] lg:text-[16px] lg:leading-[22px] text-left">
+                  {balanceStatus}
+                </span>
               </div>
               <img
-                className="w-[15px] h-[15px] lg:w-[20px] lg:h-[20px] cursor-pointer"
+                className="w-[15px] h-[15px] lg:w-[20px] lg:h-[20px]"
                 src="./Images/dashboardImages/arrowright.png"
                 alt="/"
               />
             </div>
             <button
               onClick={handleSwitch}
-              className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+              disabled={CheckSufficiency}
+              className={`my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:my-[2%] ${
+                CheckSufficiency ? "bg-gray-400" : "bg-primary"
+              }`}
             >
               Confirm
             </button>
@@ -1016,7 +1081,10 @@ const IKEDC = () => {
           >
             <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
               <img
-                onClick={() => setSuccessPopup(false)}
+                onClick={() => {
+                  setSuccessPopup(false);
+                  handleResetFields();
+                }}
                 className=" w-[18px]   md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[25px]"
                 src="/Images/login/arpLogo.png"
                 alt=""
@@ -1024,15 +1092,8 @@ const IKEDC = () => {
 
               <img
                 onClick={() => {
-                  setSelectedIkedcMeterType("");
-                  setIkedcMeterNumber("");
-                  setIkedcVerifiedName("");
-                  setIkedcPhoneNumber("");
-                  setIkedcEmail("");
-                  setIkedcAmount("");
-                  setGlobalCountry("");
-                  setIkedcFlag("");
                   setSuccessPopup(false);
+                  handleResetFields();
                 }}
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
@@ -1053,22 +1114,22 @@ const IKEDC = () => {
                 isDarkMode ? "text-white" : "text-[#000]"
               }`}
             >
-              You have successfully Purchased
+              You have successfully Purchased{" "}
               <span
                 className={`font-extrabold text-[11px] md:text-[16px] lg:text-[14px] ${
                   isDarkMode ? "text-white" : "text-[#000]"
                 }`}
               >
-                Ikeja {selectedIkedcMeterType} Meter
+                Ikeja {selectedIkedcMeterType} Meter{" "}
               </span>
-              <br></br>
+              <br></br>{" "}
               <span
                 className={`font-extrabold text-[10px] md:text-[16px] lg:text-[14px] ${
                   isDarkMode ? "text-white" : "text-[#000]"
                 }`}
               >
                 (&#8358;{ikedcAmount})
-              </span>
+              </span>{" "}
               From your NGN Nigerian Wallet to
             </p>
 
@@ -1171,9 +1232,9 @@ const IKEDC = () => {
                 <span className="text-[#00AA48]">{pointsEarned}</span>
               </div>
             </div>
-
-            <div className="bg-[#F2FAFF] mx-10 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
-              <p className="text-[11px] text-center mx-auto w-[171px] md:text-[14px] md:w-[80%] lg:text-[14px]">
+            {/* mx-10 */}
+            <div className="bg-[#F2FAFF] mx-2 h-[45px] my-5 flex justify-between md:h-[65px] lg:h-[75px]">
+              <p className="text-[11px] text-center w-full h-full w- md:text-[14px] md:w- lg:text-[14px]">
                 The electricity bills / token purchase has been generated
                 successfully. Please kindly check receipt to confirm the bills /
                 token. You can contact us for any further assistance.
@@ -1183,6 +1244,7 @@ const IKEDC = () => {
               <button
                 onClick={() => {
                   setSuccessPopup(false);
+                  handleResetFields();
                 }}
                 className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:px-[50px] md:w-[70%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
               >
@@ -1210,7 +1272,10 @@ const IKEDC = () => {
           >
             <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
               <img
-                onClick={() => setFailedPopup(false)}
+                onClick={() => {
+                  setFailedPopup(false);
+                  handleResetFields();
+                }}
                 className=" w-[18px]   md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[25px]"
                 src="/Images/login/arpLogo.png"
                 alt=""
@@ -1218,15 +1283,8 @@ const IKEDC = () => {
 
               <img
                 onClick={() => {
-                  setSelectedIkedcMeterType("");
-                  setIkedcMeterNumber("");
-                  setIkedcVerifiedName("");
-                  setIkedcPhoneNumber("");
-                  setIkedcEmail("");
-                  setIkedcAmount("");
-                  setGlobalCountry("");
-                  setIkedcFlag("");
-                  setSuccessPopup(false);
+                  setFailedPopup(false);
+                  handleResetFields();
                 }}
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
@@ -1243,44 +1301,29 @@ const IKEDC = () => {
               alt="/"
             />
             <p
-              className={`text-[10px] mx-[10px] text-center my-[60px] md:text-[14px] lg:text-[12px] ${
+              className={`text-[12px] mx-[10px] text-center my-[60px] md:text-[14px] lg:text-[12px] ${
                 isDarkMode ? "text-white" : "text-[#0008]"
               }`}
             >
-              An unexpected error has occurred, please try again.
+              An error has occurred, please click on the receipt for more
+              details.
             </p>
             <div className="flex w-[70%] mx-auto items-center my-6  gap-[6%] md:gap-[20px] justify-center md:w-[20%] lg:my-[5%]">
               <button
                 onClick={() => {
                   setFailedPopup(false);
+                  handleResetFields();
                 }}
                 className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:px-[50px] md:w-[70%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
               >
                 Done
               </button>
-              <Link
-                to="/ikedc-receipt-failed"
-                state={{
-                  selectedNetworkProduct: selectedIkedcMeterType,
-                  meterNumber: ikedcMeterNumber,
-                  phoneNumber: ikedcPhoneNumber,
-                  ikedcEmail: ikedcEmail,
-                  ikedcamount: ikedcAmount,
-                  orderId: ikedcOrderId,
-                  transactionId: ikedcTransactionId,
-                  serviceID: ikedcServiceID,
-                  showDescription: ikedcShowDescription,
-                }}
+              <button
+                onClick={handleFailedData}
+                className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
               >
-                <button
-                  onClick={() => {
-                    setFailedPopup(false);
-                  }}
-                  className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
-                >
-                  Receipt
-                </button>
-              </Link>
+                Receipt
+              </button>
             </div>
           </div>
         </Modal>

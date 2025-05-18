@@ -1,5 +1,5 @@
 import { DashBoardLayout } from "../../Layout/DashBoardLayout";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { ContextProvider } from "../../../Context";
 import { useState } from "react";
 import styles from "../TransferComponent/transfer.module.css";
@@ -8,8 +8,6 @@ import arrow from "../ElectricitySubscription/Electricity-sub-images/arrow-squar
 import logo from "../ElectricitySubscription/Electricity-sub-images/AEDC1 1.svg";
 import arrowDown from "../ElectricitySubscription/Electricity-sub-images/arrow-down.png";
 import nig from "../ElectricitySubscription/Electricity-sub-images/nigeriaFlag.png";
-
-// 54449030378
 
 import Joi from "joi";
 import { Modal } from "../../../Screens/Modal/Modal";
@@ -53,25 +51,21 @@ const AEDC = () => {
     setAedcServiceID,
     aedcFlag,
     setAedcFlag,
+    setAedcDiscoType,
     selectedAedcMeterType,
     setSelectedAedcMeterType,
-    aedcOrderId,
     setAedcOrderId,
-    aedcTransactionId,
     setAedcTransactionId,
-    aedcShowDescription,
     setAedcShowDescription,
     aedcFetchedResponse,
     setAedcFetchedResponse,
-    newBalance
+
+    newBalance,
   } = useContext(ContextProvider);
 
   // const { selectedNetworkProduct, setSelectedNetworkProduct } =
   //   useContext(ContextProvider);
   const [showProductList, setShowProductList] = useState(false);
-  // const [showDescription, setShowDescription] = useState(false);
-  // const [orderId, setOrderId] = useState(false);
-  // const [transactionId, setTransactionId] = useState(false);
 
   const pointsEarned = "+2.00";
   const [loading, setLoading] = useState(false);
@@ -108,43 +102,44 @@ const AEDC = () => {
   const countryList = [
     {
       id: 1,
-     name: `NGN Wallet ${newBalance}`,
+      name: `NGN Wallet (${newBalance})`,
       code: "Nigerian NGN Wallet",
       flag: require("../ElectricitySubscription/Electricity-sub-images/nigeriaFlag.png"),
     },
     {
       id: 2,
-      name: "USD Wallet. (00)",
+      name: "USD Wallet. (0.00)",
       code: "USD",
       flag: require("../ElectricitySubscription/Electricity-sub-images/americaFlag.png"),
     },
     {
       id: 3,
-      name: " GBP Wallet. (00)",
+      name: " GBP Wallet. (0.00)",
       code: "GBP",
       flag: require("../ElectricitySubscription/Electricity-sub-images/ukFlag.png"),
     },
     {
       id: 4,
-      name: "EUR Wallet. (00)",
+      name: "EUR Wallet. (0.00)",
       code: "EUR ",
       flag: require("../ElectricitySubscription/Electricity-sub-images/europeanFlag.png"),
     },
     {
       id: 5,
-      name: "AUD Wallet. (00)",
+      name: "AUD Wallet. (0.00)",
       code: "AUD",
       flag: require("../ElectricitySubscription/Electricity-sub-images/australiaFlag.png"),
     },
     {
       id: 6,
-      name: "KES Wallet. (00)",
+      name: "KES Wallet. (0.00)",
       code: "KES",
       flag: require("../ElectricitySubscription/Electricity-sub-images/kenyaFlag.png"),
     },
   ];
   const [errors, setErrors] = useState({});
   const [proceed, setProceed] = useState(false);
+  const [amountError, setAmountError] = useState("");
 
   const handleProceed = (e) => {
     // e.preventDefault();
@@ -155,6 +150,7 @@ const AEDC = () => {
       aedcMeterNumber,
     });
 
+    const amount = Number(aedcAmount);
     if (error) {
       setErrors(
         error.details.reduce((acc, curr) => {
@@ -162,9 +158,12 @@ const AEDC = () => {
           return acc;
         }, {})
       );
+    } else if (amount < 1000) {
+      setAmountError("Amount must be at least ₦1000");
     } else {
       setProceed(true);
       setErrors({});
+      setAmountError("");
     }
   };
 
@@ -202,7 +201,9 @@ const AEDC = () => {
     setAedcFlag(flag);
     setShowList(false);
     setGlobalCountry(name);
+    setAmountError("");
     setSelected(true);
+    // setSelectedCountry(country)
     // setCountryCode(code);
     // setCurrencyAvailable(id !== 1);
   };
@@ -231,6 +232,7 @@ const AEDC = () => {
     } else {
       setAedcAmount(`₦${newValue}`);
     }
+    setAmountError("");
   };
   const [successPopup, setSuccessPopup] = useState(false);
   const [failedPopup, setFailedPopup] = useState(false);
@@ -277,7 +279,7 @@ const AEDC = () => {
       setPinFailed,
       setLoading,
       setErrorMessage,
-      ElectricityHandler()
+      ElectricityHandler
     );
   };
 
@@ -289,14 +291,54 @@ const AEDC = () => {
       setAedcTransactionId(aedcFetchedResponse.data.transaction_id);
       setAedcServiceID(aedcFetchedResponse.data.request_id);
       setAedcShowDescription(aedcFetchedResponse.data.description);
+      setAedcDiscoType(aedcFetchedResponse.data.disco_type);
     };
     receivedData();
     if (receivedData) {
       setSuccessPopup(false);
       setLoading(false);
-      navigate("/kedco-receipt");
+      navigate("/aedc-receipt");
     }
+    // handleResetFields();
   }
+  function handleFailedData() {
+    setLoading(true);
+    setFailedPopup(false);
+    navigate("/aedc-receipt-failed");
+    setLoading(false);
+  }
+
+  function handleResetFields() {
+    setSelectedAedcMeterType("");
+    setAedcMeterNumber("");
+    setAedcVerifiedName("");
+    setAedcPhoneNumber("");
+    setAedcEmail("");
+    setAedcAmount("");
+    setGlobalCountry("");
+    setAedcFlag("");
+    setAedcBillGenerate("");
+    setAedcOrderId("");
+    setAedcTransactionId("");
+    setAedcServiceID("");
+    setAedcShowDescription("");
+  }
+
+  const [balanceStatus, setBalanceStatus] = useState("");
+  let balanceStringToNum = Number(newBalance);
+  let aedcAmountToNumber = Number(aedcAmount);
+  let CheckSufficiency = aedcAmountToNumber > balanceStringToNum;
+  useEffect(() => {
+    const HandleBalanceStatus = () => {
+      if (CheckSufficiency) {
+        setBalanceStatus("Insufficient fund");
+      } else {
+        setBalanceStatus("");
+      }
+    };
+    HandleBalanceStatus();
+  }, [CheckSufficiency]);
+  console.log(balanceStringToNum, aedcAmountToNumber);
 
   // const handleSuccess = async () => {
   //   async function buyAEDC(meter_type, meter_no, phone, email, amount) {
@@ -374,7 +416,7 @@ const AEDC = () => {
 
   const handle = () => {
     setInputPinPopUp(false);
-    setProceed(true);
+    setProceed(false);
   };
 
   const handleSwitch = () => {
@@ -543,9 +585,9 @@ const AEDC = () => {
                   }`}
                 />
               </div>
-              {errors.meterNumber && (
+              {errors.aedcMeterNumber && (
                 <div className="text-[13px] text-red-500 italic lg:text-[14px]">
-                  {errors.meterNumber}
+                  {errors.aedcMeterNumber}
                 </div>
               )}
             </div>
@@ -583,6 +625,13 @@ const AEDC = () => {
                 <input
                   type="number"
                   value={aedcPhoneNumber}
+                  onInput={(e) => {
+                    if (aedcPhoneNumber.length === 10) {
+                      e.target.style.border = "2px solid green";
+                    } else if (e.target.value.length < 10) {
+                      e.target.style.border = "2px solid red";
+                    }
+                  }}
                   onChange={handlePhoneNumber}
                   // className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none font-medium  ${
                   //   isDarkMode
@@ -597,9 +646,9 @@ const AEDC = () => {
                   }`}
                 />
               </div>
-              {errors.phoneNumber && (
+              {errors.aedcPhoneNumber && (
                 <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                  {errors.phoneNumber}
+                  {errors.aedcPhoneNumber}
                 </div>
               )}
             </div>
@@ -623,9 +672,9 @@ const AEDC = () => {
                   }`}
                 />
               </div>
-              {errors.ikedcEmail && (
+              {errors.aedcEmail && (
                 <div className="text-[14px] text-red-500 italic lg:text-[14px]">
-                  {errors.ikedcEmail}
+                  {errors.aedcEmail}
                 </div>
               )}
             </div>
@@ -647,9 +696,10 @@ const AEDC = () => {
                 &#8358;
                 <input
                   type="number"
-                  name="ikedcamount"
+                  name="aedcamount"
                   value={aedcAmount}
                   onChange={handleAedcAmount}
+                  placeholder="Minimum of ₦1000"
                   className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:py-3 md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] text-[12px] leading-[18px] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none
                  ${
                    isDarkMode
@@ -658,6 +708,11 @@ const AEDC = () => {
                  }`}
                 />
               </div>
+              {amountError && (
+                <p className="text-[14px] text-red-500 italic lg:text-[14px]">
+                  {amountError}
+                </p>
+              )}
             </div>
 
             <div className="flex flex-col relative gap-2 lg:gap-2.5">
@@ -733,7 +788,7 @@ const AEDC = () => {
                 >
                   {countryList.map((country) => (
                     <div
-                      className={`py-[18px] md:py-[14px] font-normal cursor-pointer px-2 flex items-center gap-[5px] text-[12px] md:text-[14px] lg:text-[16px] transition-all duration-300 hover:bg-slate-50
+                      className={`py-[18px] md:py-[14px] font-normal cursor-pointer px-2 flex items-center gap-[5px] text-[12px] md:text-[14px] lg:text-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] transition-all duration-300 hover:bg-slate-50
                        ${
                          isDarkMode
                            ? "text-white hover:bg-slate-800 bg-black border border-white"
@@ -785,7 +840,7 @@ const AEDC = () => {
               !aedcAmount
             }
           >
-            Proceed
+            {loading ? "Processing..." : "Proceed"}
           </div>
         </div>
         <footer className="flex justify-center text-center gap-[20px] mt-[200px] pb-[10%] md:mt-[750px] lg:mt-[850px]">
@@ -948,22 +1003,29 @@ const AEDC = () => {
             </div>
 
             <div className="bg-[#0001] h-[45px] my-5 flex justify-between items-center px-[4%]">
-              <div className="flex gap-2 items-center">
-                <div
-                  className={` rounded-full h-[27px] w-[27px] flex justify-center items-center ${
-                    isDarkMode ? "bg-[#0001] " : "bg-white"
-                  }`}
-                >
-                  <img className="w-[16px] h-[16px]" src={nig} alt="/" />
-                </div>
-                <p className="text-[10px] md:text-[14px]  lg:text-[16px]">
-                  Available Balance
-                  <span
-                    className={` ${isDarkMode ? "text-white" : "text-[#000] "}`}
+              <div className="flex gap-2 flex-col">
+                <div className="flex gap-2 items-center">
+                  <div
+                    className={` rounded-full h-[27px] w-[27px] flex justify-center items-center ${
+                      isDarkMode ? "bg-[#0001] " : "bg-white"
+                    }`}
                   >
-                    (&#8358;50,000.00)
-                  </span>
-                </p>
+                    <img className="w-[16px] h-[16px]" src={nig} alt="/" />
+                  </div>
+                  <p className="text-[10px] md:text-[14px]  lg:text-[16px]">
+                    Available Balance
+                    <span
+                      className={` ${
+                        isDarkMode ? "text-white" : "text-[#000] "
+                      }`}
+                    >
+                      {`(${newBalance})`}
+                    </span>
+                  </p>
+                </div>
+                <span className="text-red-500 text-[14px] font-[400] leading-[20px] lg:text-[16px] lg:leading-[22px] text-left">
+                  {balanceStatus}
+                </span>
               </div>
               <img
                 className="w-[15px] h-[15px] lg:w-[20px] lg:h-[20px]"
@@ -973,7 +1035,10 @@ const AEDC = () => {
             </div>
             <button
               onClick={handleSwitch}
-              className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+              disabled={CheckSufficiency}
+              className={`my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:my-[2%] ${
+                CheckSufficiency ? "bg-gray-400" : "bg-primary"
+              }`}
             >
               Confirm
             </button>
@@ -1088,7 +1153,10 @@ const AEDC = () => {
           >
             <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
               <img
-                onClick={() => setSuccessPopup(false)}
+                onClick={() => {
+                  setSuccessPopup(false);
+                  handleResetFields();
+                }}
                 className=" w-[18px]   md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[25px]"
                 src="/Images/login/arpLogo.png"
                 alt=""
@@ -1096,15 +1164,8 @@ const AEDC = () => {
 
               <img
                 onClick={() => {
-                  setSelectedAedcMeterType("");
-                  setAedcMeterNumber("");
-                  setAedcVerifiedName("");
-                  setAedcPhoneNumber("");
-                  setAedcEmail("");
-                  setAedcAmount("");
-                  setGlobalCountry("");
-                  setAedcFlag("");
                   setSuccessPopup(false);
+                  handleResetFields();
                 }}
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
@@ -1125,7 +1186,7 @@ const AEDC = () => {
                 isDarkMode ? "text-white" : "text-[#000]"
               }`}
             >
-              You have successfully Purchased
+              You have successfully Purchased{" "}
               <span
                 className={`font-extrabold text-[11px] md:text-[16px] lg:text-[14px] ${
                   isDarkMode ? "text-white" : "text-[#000]"
@@ -1139,9 +1200,9 @@ const AEDC = () => {
                   isDarkMode ? "text-white" : "text-[#000]"
                 }`}
               >
-                (&#8358;{aedcAmount})
+                (&#8358;{aedcAmount}){" "}
               </span>
-              From your NGN Nigerian Wallet to
+              from your NGN Nigerian Wallet to
             </p>
 
             <div className="flex flex-col gap-3 pt-[10px]">
@@ -1243,9 +1304,9 @@ const AEDC = () => {
                 <span className="text-[#00AA48]">{pointsEarned}</span>
               </div>
             </div>
-
-            <div className="bg-[#F2FAFF] mx-10 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
-              <p className="text-[11px] text-center mx-auto w-[171px] md:text-[14px] md:w-[80%] lg:text-[14px]">
+            {/* mx-10 */}
+            <div className="bg-[#F2FAFF]  mx-2 h-[45px] my-5 flex justify-between md:h-[65px] lg:h-[75px]">
+              <p className="text-[11px] text-center w-full h-full w- md:text-[14px] md:w- lg:text-[14px]">
                 The electricity bills / token purchase has been generated
                 successfully. Please kindly check receipt to confirm the bills /
                 token. You can contact us for any further assistance.
@@ -1254,15 +1315,8 @@ const AEDC = () => {
             <div className="flex w-[70%] mx-auto items-center my-6  gap-[6%] md:gap-[20px] justify-center md:w-[20%] lg:my-[5%]">
               <button
                 onClick={() => {
-                  selectedAedcMeterType("");
-                  setAedcMeterNumber("");
-                  setAedcVerifiedName("");
-                  setAedcPhoneNumber("");
-                  setAedcEmail("");
-                  setAedcAmount("");
-                  setGlobalCountry("");
-                  setAedcFlag("");
                   setSuccessPopup(false);
+                  handleResetFields();
                 }}
                 className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:px-[50px] md:w-[70%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
               >
@@ -1305,7 +1359,10 @@ const AEDC = () => {
           >
             <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
               <img
-                onClick={() => setFailedPopup(false)}
+                onClick={() => {
+                  setFailedPopup(false);
+                  handleResetFields();
+                }}
                 className=" w-[18px]   md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[25px]"
                 src="/Images/login/arpLogo.png"
                 alt=""
@@ -1313,15 +1370,8 @@ const AEDC = () => {
 
               <img
                 onClick={() => {
-                  setSelectedAedcMeterType("");
-                  setAedcMeterNumber("");
-                  setAedcVerifiedName("");
-                  setAedcPhoneNumber("");
-                  setAedcEmail("");
-                  setAedcAmount("");
-                  setGlobalCountry("");
-                  setAedcFlag("");
                   setFailedPopup(false);
+                  handleResetFields();
                 }}
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
@@ -1338,22 +1388,24 @@ const AEDC = () => {
               alt="/"
             />
             <p
-              className={`text-[10px] mx-[10px] text-center my-[60px] md:text-[14px] lg:text-[12px] ${
+              className={`text-[12px] mx-[10px] text-center my-[60px] md:text-[14px] lg:text-[12px] ${
                 isDarkMode ? "text-white" : "text-[#0008]"
               }`}
             >
-              An unexpected error has occurred, please try again.
+              An error has occurred, please click on the receipt for more
+              details.
             </p>
             <div className="flex w-[70%] mx-auto items-center my-6  gap-[6%] md:gap-[20px] justify-center md:w-[20%] lg:my-[5%]">
               <button
                 onClick={() => {
                   setFailedPopup(false);
+                  handleResetFields();
                 }}
                 className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:px-[50px] md:w-[70%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
               >
                 Done
               </button>
-              <Link
+              {/* <Link
                 to="/aedc-receipt-failed"
                 state={{
                   selectedNetworkProduct: selectedAedcMeterType,
@@ -1366,16 +1418,14 @@ const AEDC = () => {
                   serviceID: aedcServiceID,
                   showDescription: aedcShowDescription,
                 }}
+              > */}
+              <button
+                onClick={handleFailedData}
+                className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
               >
-                <button
-                  onClick={() => {
-                    setFailedPopup(false);
-                  }}
-                  className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
-                >
-                  Receipt
-                </button>
-              </Link>
+                Receipt
+              </button>
+              {/* </Link> */}
             </div>
           </div>
         </Modal>
