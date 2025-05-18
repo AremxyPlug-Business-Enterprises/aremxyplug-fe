@@ -8,6 +8,7 @@ import NotVerifiedIcon from "../Components/My Profile & Account Settings/Profile
 export const ContextProvider = createContext();
 
 export const Context = ({ children }) => {
+  
   const handleRefresh = () => {
     window.location.reload(true);
     // new
@@ -230,7 +231,19 @@ export const Context = ({ children }) => {
   // ======end of form valdiation=====
 
   // ======on submit function=======
+  const setLocalStorageForInputPin = ()=> {
+  localStorage.setItem("userEmail", JSON.stringify(state.email))
+  localStorage.setItem("userFullName", JSON.stringify(state.fullName))
+  localStorage.setItem("userPhone", JSON.stringify(state.phoneNumber));
+  localStorage.setItem("aremxyUserName", JSON.stringify(state.userName))
+  localStorage.setItem("userBankName", JSON.stringify(""));
+  localStorage.setItem("aremxyAccountName", JSON.stringify(""));
+  localStorage.setItem("aremxyAccountNumber", JSON.stringify(""));
+  localStorage.setItem("aremxyUserId", JSON.stringify("NO USER ID"));
+  localStorage.setItem("ActiveSignUp", true)
+  }
   const handleSubmit = (event) => {
+   
     event.preventDefault();
 
     const {
@@ -272,6 +285,8 @@ export const Context = ({ children }) => {
       );
     } else {
       setErrors({});
+      if(!navigator.onLine) return alert("Check your internet connection")
+      if(navigator.onLine){
       setLoadSignUp(true);
       const data = {
         fullname: fullName,
@@ -292,6 +307,7 @@ export const Context = ({ children }) => {
           console.log(response);
           if (response.status === 201 || 200) {
             setVerification(true);
+             setLocalStorageForInputPin();
           }
         })
         .catch((error) => {
@@ -302,11 +318,13 @@ export const Context = ({ children }) => {
             console.log(error.response.data.data.data);
           } else {
             console.log(error.json());
+            alert("Check your internet connection");
           }
         })
         .finally(() => {
           setLoadSignUp(false);
         });
+      }
     }
   };
   // ========End for SignUp.jsx======

@@ -31,7 +31,7 @@ export default function BvnVerification(Data) {
   const [bvnPopVerified, setBvnPopVerified] = useState(false);
   const [bvnPhoneMessage, setBvnPhoneMessage] = useState(false);
   const [errorVerify, setErrorVerify] = useState(false);
-  const {state, bvnButtonState, setBvnButtonState,
+  const { bvnButtonState, setBvnButtonState,
    } = useContext(ContextProvider);
   const { toggleSideBar, customerDetail} =
     useContext(ContextProvider);
@@ -51,8 +51,8 @@ export default function BvnVerification(Data) {
     e.target.setCustomValidity(addAddress ? '' : 'Your Address must be entered');
   }
 
-  const { full_name } = customerDetail;
-const {fullName} = state;
+  const { full_name, phone } = customerDetail;
+
 
 //Function to inform a user that account has previously been craeted
 // and set the following functions as stated bellow
@@ -113,7 +113,7 @@ const {fullName} = state;
   ) => {
     const authToken = localStorage.getItem("authorisedLogin");
     const getToken = localStorage.getItem("getToken");
-    if (bvnDateOfBirth && bvnNumber && bvnPhone) {
+    if (bvnDateOfBirth && bvnNumber) {
       setLoading(true);
 
       // console.log(data)
@@ -171,8 +171,9 @@ const {fullName} = state;
     BvnNumberRef.current = bvnNumber
      // eslint-disable-next-line
   }, [Data]);
-console.log(Data)
+
   // console.log(bvnDateOfBirth);
+ 
   const genderInfo = ["Male", "Female", "Prefer not to say"];
 
   return (
@@ -251,13 +252,7 @@ console.log(Data)
                   <div
                     className={`py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[8px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-[10px] ${isDarkMode ? "text-white border-white" : ""}`}
                   >
-                    {(!full_name && fullName.length > 1)
-                      ?  fullName
-                      : full_name ?
-                      full_name :
-                      Data.UserFullName
-                      ? Data.UserFullName
-                      : "Hi user"}
+                    {full_name ? full_name : Data.UserFullName}
                   </div>
                 </div>
                 
@@ -387,8 +382,9 @@ console.log(Data)
                   </div>
                   {/* Input */}
                   <input
-                    readOnly={Data.ConfirmBvn === "true"}
-                    value={bvnPhone}
+                
+                    readOnly
+                    value={phone ? phone : Data.UserPhone }
                     onInput={(e) => {
                       const numericValue = e.target.value.replace(/\D/g, "");
                       e.target.value = numericValue;
@@ -402,7 +398,12 @@ console.log(Data)
                     maxLength={11}
                     inputMode="tel"
                     required
-                    className={`py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[9px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-[10px] ${isDarkMode ? "text-white border-white bg-black" : ""}`}
+                    className={`py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px]
+                       md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] text-[12px] leading-[18px]
+                        border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] 
+                        focus:outline-none placeholder:text-[9px] placeholder:leading-[10.4px] 
+                        placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-[10px] ${isDarkMode ? "text-white border-white bg-black" : ""}`}
+                        
                   />
                 </div>
 
@@ -414,12 +415,13 @@ console.log(Data)
                     BVN Number
                   </h2>
                   <input
+                  disabled={Data.ConfirmBvn === "true" || Data.ConfirmId === "true"}
                     readOnly={Data.ConfirmBvn === "true" || Data.ConfirmId === "true"}
                     onInput={(e) => {
                       const numbersOnly = e.target.value.replace(/\D/g, "");
                       e.target.value = numbersOnly;
                     }}
-                    value={bvnNumber && (bvnStatus === "Verified" ? BvnNumberRef.current : bvnNumber)}
+                    value={ bvnNumber && bvnNumber.length > 1 && bvnStatus === "Verified" ?  `${bvnNumber.slice(0,4)}*******` : bvnNumber}
                     onChange={(e) => {
                       setBvnNumber(e.target.value);
                     }}
