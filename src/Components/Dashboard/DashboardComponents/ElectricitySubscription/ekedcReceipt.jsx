@@ -12,6 +12,7 @@ import {useNavigate } from 'react-router-dom';
 export const EkedcReceipt = () => {
 
   const navigate = useNavigate();
+  // setAedcFetchedFailedResponse
 
   const {
       toggleSideBar,
@@ -30,8 +31,9 @@ export const EkedcReceipt = () => {
       setEkedcAmount,
       setGlobalCountry,
       setEkedcFlag,
+      ekedcDiscoType,
       selectedEkedcMeterType,
-      ekedcServiceID,
+      // ekedcServiceID,
       ekedcOrderId,
       ekedcTransactionId,
       ekedcShowDescription,
@@ -41,12 +43,13 @@ export const EkedcReceipt = () => {
   const networkProduct =
     selectedEkedcMeterType?.length > 0 ? selectedEkedcMeterType : "";
   const meterNo = ekedcMeterNumber?.length > 0 ? ekedcMeterNumber : "";
-  const name = ekedcVerifiedName?.length > 0 ? ekedcVerifiedName : "";
+  const verifiedName = ekedcVerifiedName?.length > 0 ? ekedcVerifiedName : "";
   const phoneNo = ekedcPhoneNumber?.length > 0 ? ekedcPhoneNumber : "";
   const productEmail = ekedcEmail?.length > 0 ? ekedcEmail : "";
   const productAmount = ekedcAmount?.length > 0 ? ekedcAmount : "";
-  const service_id = ekedcServiceID?.length > 0 ? ekedcServiceID : "";
-  const order_id = ekedcOrderId?.length > 0 ? ekedcOrderId : "";
+  // const service_id = ekedcServiceID?.length > 0 ? ekedcServiceID : "";
+  const disco_type = ekedcDiscoType?.length > 0 ? ekedcDiscoType : "";
+  const order_id = ekedcOrderId=== undefined ? "" : ekedcOrderId;
   const transaction_id = ekedcTransactionId?.length > 0 ? ekedcTransactionId : "";
   const description = ekedcShowDescription?.length > 0 ? ekedcShowDescription : "";
   const bill_generated = ekedcBillGenerate?.length > 0 ? ekedcBillGenerate : "";
@@ -172,7 +175,7 @@ export const EkedcReceipt = () => {
                 <p className="text-[#7C7C7C] font-[500]">Disco Type</p>
                 <span className="flex items-center gap-1 ">
                   <div><img className="w-[30px]" src={logo2} alt="" /></div>
-                  <div>{service_id}</div>
+                  <div>{disco_type}</div>
                   </span>
               </div>
               <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -186,7 +189,7 @@ export const EkedcReceipt = () => {
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Verified Name</p>
-                <span>{name}</span>
+                <span>{verifiedName}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -214,7 +217,7 @@ export const EkedcReceipt = () => {
                 <div className="flex flex-col gap-3 pt-[10px]">
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Customer Name</p>
-                <span>{name}</span>
+                <span>{verifiedName}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">

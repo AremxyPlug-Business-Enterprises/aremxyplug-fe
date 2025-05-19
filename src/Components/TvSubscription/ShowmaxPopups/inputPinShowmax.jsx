@@ -9,12 +9,13 @@ import { AiFillEyeInvisible } from "react-icons/ai";
 import styles from "../../Dashboard/DashboardComponents/TransferComponent/transfer.module.css";
 
 
-export const InputShowmaxPopup = () => {
+export const InputShowmaxPopup = ({VerifyPinHandler}) => {
     const {
       inputPinShowmax,
       inputPin,
       setInputPin,
       toggleSideBar,
+      errorMessage,
       toggleVisibility,
       isVisible,
       setInputPinShowmax,
@@ -58,8 +59,9 @@ export const InputShowmaxPopup = () => {
               />
             </div>
             <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
-            <div className="font-extrabold text-[8px] md:text-[10px] lg:text-[16px] text-center my-[8%]
-            ">Input PIN to complete transaction</div>
+             <div className="flex flex-col">
+            <p className="font-extrabold text-[8px] md:text-[10px] lg:text-[16px] text-center my-[8%]
+            ">Input PIN to complete transaction</p>
             <div className="flex flex-col items-center gap-[1px] font-extrabold mb-[7%]">
               <div className=" flex items-center ml-[5%] md:ml-[5%] gap-[10px]">
                 {" "}
@@ -81,7 +83,7 @@ export const InputShowmaxPopup = () => {
                 }
                     
                     renderInput={(props) => (
-                      <input {...props} className={`inputOTP mx-[2px] ${isFocused ? 'focused' : ''}`} onFocus={handleFocus}
+                      <input onClick={VerifyPinHandler} {...props} className={`inputOTP mx-[2px] ${isFocused ? 'focused' : ''}`} onFocus={handleFocus}
                       onBlur={handleBlur}/>
                     )}
                   />
@@ -100,6 +102,13 @@ export const InputShowmaxPopup = () => {
               <p className="text-[8px] md:text-[12px] leading-[5px] my-3 text-[#04177f]">
                 Forgot Pin ?
               </p>
+            </div>
+            {errorMessage && (
+              <p className="font-[400] md:font-[500] text-center leading-[15px] text-red-400">
+                 Incorrect Pin
+              </p>
+            ) 
+            }
             </div>
             <button
               onClick={handleShowmaxSuccessful}

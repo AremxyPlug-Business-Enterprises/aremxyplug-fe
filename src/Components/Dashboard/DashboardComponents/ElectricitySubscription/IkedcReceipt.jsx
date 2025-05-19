@@ -30,22 +30,24 @@ export const IkedcReceipt = () => {
       setGlobalCountry,
       setIkedcFlag,
       selectedIkedcMeterType,
-      ikedcServiceID,
+      // ikedcServiceID,
       ikedcOrderId,
       ikedcTransactionId,
       ikedcShowDescription,
       ikedcBillGenerate,
+      ikedcDiscoType,
     } = useContext(ContextProvider)
 
     const networkProduct =
     selectedIkedcMeterType?.length > 0 ? selectedIkedcMeterType : "";
   const meterNo = ikedcMeterNumber?.length > 0 ? ikedcMeterNumber : "";
-  const name = ikedcVerifiedName?.length > 0 ? ikedcVerifiedName : "";
+  const verifiedName = ikedcVerifiedName?.length > 0 ? ikedcVerifiedName : "";
   const phoneNo = ikedcPhoneNumber?.length > 0 ? ikedcPhoneNumber : "";
   const productEmail = ikedcEmail?.length > 0 ? ikedcEmail : "";
   const productAmount = ikedcAmount?.length > 0 ? ikedcAmount : "";
-  const service_id = ikedcServiceID?.length > 0 ? ikedcServiceID : "";
-  const order_id = ikedcOrderId?.length > 0 ? ikedcOrderId : "";
+  // const service_id = ikedcServiceID?.length > 0 ? ikedcServiceID : "";
+  const disco_type = ikedcDiscoType?.length > 0 ? ikedcDiscoType : "";
+  const order_id = ikedcOrderId=== undefined ? "" : ikedcOrderId;
   const transaction_id = ikedcTransactionId?.length > 0 ? ikedcTransactionId : "";
   const description = ikedcShowDescription?.length > 0 ? ikedcShowDescription : "";
   const bill_generated = ikedcBillGenerate?.length > 0 ? ikedcBillGenerate : "";
@@ -170,7 +172,7 @@ export const IkedcReceipt = () => {
                       <div>
                         <img className="w-[30px]" src={logo2} alt="" />
                       </div>
-                      <div>{service_id}</div>
+                      <div>{disco_type}</div>
                     </span>
                   </div>
                   <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -184,7 +186,7 @@ export const IkedcReceipt = () => {
 
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <p className="text-[#7C7C7C] font-[500]">Verified Name</p>
-                    <span>{name}</span>
+                    <span>{verifiedName}</span>
                   </div>
 
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -211,7 +213,7 @@ export const IkedcReceipt = () => {
                 <div className="flex flex-col gap-3 pt-[10px]">
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <p className="text-[#7C7C7C] font-[500]">Customer Name</p>
-                    <span>{name}</span>
+                    <span>{verifiedName}</span>
                   </div>
 
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">

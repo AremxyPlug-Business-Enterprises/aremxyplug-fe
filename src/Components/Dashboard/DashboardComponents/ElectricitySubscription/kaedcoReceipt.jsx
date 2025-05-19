@@ -30,7 +30,8 @@ export const KaedcoReceipt = () => {
     setGlobalCountry,
     setKaedcoFlag,
     selectedKaedcoMeterType,
-    kaedcoServiceID,
+    // kaedcoServiceID,
+    kaedcoDiscoType,
     kaedcoOrderId,
     kaedcoTransactionId,
     kaedcoShowDescription,
@@ -40,12 +41,13 @@ export const KaedcoReceipt = () => {
   const networkProduct =
     selectedKaedcoMeterType?.length > 0 ? selectedKaedcoMeterType : "";
   const meterNo = kaedcoMeterNumber?.length > 0 ? kaedcoMeterNumber : "";
-  const name = kaedcoVerifiedName?.length > 0 ? kaedcoVerifiedName : "";
+  const verifiedName = kaedcoVerifiedName?.length > 0 ? kaedcoVerifiedName : "";
   const phoneNo = kaedcoPhoneNumber?.length > 0 ? kaedcoPhoneNumber : "";
   const productEmail = kaedcoEmail?.length > 0 ? kaedcoEmail : "";
   const productAmount = kaedcoAmount?.length > 0 ? kaedcoAmount : "";
-  const service_id = kaedcoServiceID?.length > 0 ? kaedcoServiceID : "";
-  const order_id = kaedcoOrderId?.length > 0 ? kaedcoOrderId : "";
+  // const service_id = kaedcoServiceID?.length > 0 ? kaedcoServiceID : "";
+  const disco_type = kaedcoDiscoType?.length > 0 ? kaedcoDiscoType : "";
+  const order_id = kaedcoOrderId === undefined ? "" : kaedcoOrderId;
   const transaction_id =
     kaedcoTransactionId?.length > 0 ? kaedcoTransactionId : "";
   const description =
@@ -173,7 +175,7 @@ export const KaedcoReceipt = () => {
                       <div>
                         <img className="w-[30px]" src={logo2} alt="" />
                       </div>
-                      <div>{service_id}</div>
+                      <div>{disco_type}</div>
                     </span>
                   </div>
                   <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -187,7 +189,7 @@ export const KaedcoReceipt = () => {
 
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <p className="text-[#7C7C7C] font-[500]">Verified Name</p>
-                    <span>{name}</span>
+                    <span>{verifiedName}</span>
                   </div>
 
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -214,7 +216,7 @@ export const KaedcoReceipt = () => {
                 <div className="flex flex-col gap-3 pt-[10px]">
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <p className="text-[#7C7C7C] font-[500]">Customer Name</p>
-                    <span>{name}</span>
+                    <span>{verifiedName}</span>
                   </div>
 
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">

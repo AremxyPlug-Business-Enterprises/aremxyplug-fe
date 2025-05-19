@@ -17,6 +17,8 @@ import britainFlag from '../../Components/EducationPins/imagesEducation/Britain.
 import euroFlag from '../../Components/EducationPins/imagesEducation/GBP.svg';
 import austriaFlag from '../../Components/EducationPins/imagesEducation/Austria.svg';
 import kenyaFlag from '../../Components/EducationPins/imagesEducation/Kenya.svg';
+import {VerifyTransPin} from "../../Components/ApiCollection.jsx/ApiBuck";
+import {PostFunction} from "../../Components/ApiCollection.jsx/ApiBuck"
 import { useNavigate } from "react-router-dom";
 import { Loader } from "../Loader/Loader";
 import { GetFunction } from "../ApiCollection.jsx/ApiBuck";
@@ -47,17 +49,35 @@ const Showmax = () => {
     fetchedShowMaxPlans,
     showMaxAmount,
     setShowMaxAmount,
-    fetchedDstvPlans,
+     setErrorMessage,
+       setInputPinShowmax,
+      setShowmaxSuccessful,
+       setSuccessPopup,
+         fetchedDstvPlans,
     setFetchedDstvPlans,
     fetchedStarTimesPlans,
     setFetchedStarTimesPlans,
     fetchedGotvPlans,
     setFetchedGotvPlans,
+    tvSubscriptionResponse,
+    showmaxOrderId, setShowmaxOrderId,
+showmaxTransactionId, setShowmaxTransactionId,
+showmaxRequestId, setShowmaxRequestId,
+showmaxDescription, setShowmaxDescription,
+setTvSubscriptionResponse,
     newBalance
-} = useContext(ContextProvider);
- const navigate = useNavigate();
+  } = useContext(ContextProvider)
+
+
+   const [planName, setPlanName] = useState(false);
+      const [tvFourOtp, setTvFourOtp] = useState('')
+      const [isLoading, setIsLoading] = useState(false)
+      const [failedPopup, setFailedPopup] = useState(false);
+            const navigate = useNavigate();
+      
+            
+       
    const ShowMaxPlans = fetchedShowMaxPlans.data ? fetchedShowMaxPlans.data.data.data : []   
-const [loading, setLoading] = useState(false);
 
   const handleOptionClickShowmax = () => {
 
@@ -103,17 +123,17 @@ const [loading, setLoading] = useState(false);
        if((fetchedDstvPlans.status === undefined || null) && id === 2 ){
          TvPath = `products/tvsub/dstv`;
        fetchedResponse = setFetchedDstvPlans;
-        await GetFunction(TvPath, setLoading, SuccessHandler, FailedHandler, fetchedResponse)
+        await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse)
        
       }else if((fetchedStarTimesPlans.status === undefined || null) && id === 3){
          TvPath = `products/tvsub/startimes`;
        fetchedResponse = setFetchedStarTimesPlans;
-        await GetFunction(TvPath, setLoading, SuccessHandler, FailedHandler, fetchedResponse)
+        await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse)
         
      }else if ((fetchedGotvPlans.status === undefined || null) && id === 4){
        TvPath = `products/tvsub/gotv`;
        fetchedResponse = setFetchedGotvPlans;
-        await GetFunction(TvPath, setLoading, SuccessHandler, FailedHandler, fetchedResponse)
+        await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse)
       
      }else{
        return SubscriptionPresent();
@@ -164,11 +184,15 @@ const [loading, setLoading] = useState(false);
           return acc;
         }, {})
       );
-    } else {
+    } 
+    
+    else {
       setConfirmShowmaxPopup(true);
       setErrors({});
     }
-  }
+    };
+
+    
   const [errors, setErrors] = useState({});
 
  
@@ -241,7 +265,69 @@ const [loading, setLoading] = useState(false);
     document.querySelector('.decdrop').classList.toggle('DropIt');
   }
 
+    const handleReceivedData = () => {
+    setIsLoading(true);
+    const receivedData = () => {
+      // Seting the relevant data from the TV subscription response
+      setShowmaxOrderId(tvSubscriptionResponse.data.order_id);
+      setShowmaxTransactionId(tvSubscriptionResponse.data.transaction_id);
+      setShowmaxRequestId(tvSubscriptionResponse.data.request_id);
+      setShowmaxDescription(tvSubscriptionResponse.data.description);
+    };
+  
+    receivedData();
+    
+    if (receivedData) {
+      setSuccessPopup(false);
+      setIsLoading(false);
+      navigate("/showmax-receipt");
+    }
+  };
 
+  
+  // VerifyPinHandler to handle both success and failure cases:
+  const VerifyPinHandler = async () => {
+      const ShowmaxHandler = async () => {
+        const requestData = {
+          decoder_type: decoderType,
+          plan: planName,
+          iuc_number: smartCard,
+          email: tvEmail,
+          amount: showMaxAmount,
+          phone: mobileNumber,
+        };
+        const Path = "tvsub";
+        const successHandler = () =>{
+          setShowmaxSuccessful(true);
+          setInputPinShowmax(false);
+          handleReceivedData()
+        }
+        const FailedHandler = () =>{
+         setFailedPopup(true);
+         setInputPinShowmax(false);
+        }
+        
+        await PostFunction(
+          Path,
+          setIsLoading,
+          requestData,
+         
+          successHandler,
+          FailedHandler
+        );
+      };
+    
+      await VerifyTransPin(
+        tvFourOtp,
+        null,
+        null,
+        setIsLoading,
+        setErrorMessage,
+        ShowmaxHandler,
+        setTvSubscriptionResponse
+      );
+  
+    };
   return (
     <div>
       <DashBoardLayout>
@@ -557,16 +643,58 @@ const [loading, setLoading] = useState(false);
           </div>
 
         </div>
-{loading && (
-  <Modal>
-    <Loader/>
-  </Modal>
-)}
 
       </DashBoardLayout>
       <ConfirmShowmaxPopup />
-      <InputShowmaxPopup />
+      <InputShowmaxPopup VerifyPinHandler={VerifyPinHandler}/>
       <ShowmaxSuccessfulPopup />
+
+        {/* Failed Transaction Popup */}
+            {failedPopup && (
+                <div className="w-[90%] md:w-[70%] lg:w-[40%] mx-auto bg-white rounded-lg overflow-hidden">
+                  <div className="flex justify-between items-center p-4">
+                    <img
+                      onClick={() => setFailedPopup(false)}
+                      className="w-6 h-6"
+                      src="/Images/login/arpLogo.png"
+                      alt="Logo"
+                    />
+                    <img
+                      onClick={() => setFailedPopup(false)}
+                      className="w-6 h-6 cursor-pointer"
+                      src="/Images/transferImages/close-circle.png"
+                      alt="Close"
+                    />
+                  </div>
+                  <hr className="h-1 bg-[#04177f] border-none" />
+                  <div className="p-4 text-center">
+                    <h2 className="text-lg md:text-xl font-semibold my-4">
+                      Transaction Failed
+                    </h2>
+                    <img
+                      className="w-32 h-32 mx-auto my-6"
+                      src="./Images/failed.png"
+                      alt="Failed"
+                    />
+                    <p className="text-sm text-gray-600 mb-8">
+                      An unexpected error has occurred, please try again.
+                    </p>
+                    <button
+                      onClick={() => setFailedPopup(false)}
+                      className="bg-[#04177f] w-full max-w-xs mx-auto py-2 text-white rounded-md font-medium"
+                    >
+                      Done
+                    </button>
+                  </div>
+                </div>
+            )}
+                  {isLoading && (
+                       <Modal>
+                           <Loader/>
+            
+                       </Modal>
+                  ) } 
+                  
     </div>
   )
 }

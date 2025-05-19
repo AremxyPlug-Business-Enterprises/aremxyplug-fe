@@ -29,8 +29,9 @@ export const JedReceipt = () => {
       setJedAmount,
       setGlobalCountry,
       setJedFlag,
+      jedDiscoType,
       selectedJedMeterType,
-      jedServiceID,
+      // jedServiceID,
       jedOrderId,
       jedTransactionId,
       jedShowDescription,
@@ -40,12 +41,13 @@ export const JedReceipt = () => {
     const networkProduct =
     selectedJedMeterType?.length > 0 ? selectedJedMeterType : "";
   const meterNo = jedMeterNumber?.length > 0 ? jedMeterNumber : "";
-  const name = jedVerifiedName?.length > 0 ? jedVerifiedName : "";
+  const verifiedName = jedVerifiedName?.length > 0 ? jedVerifiedName : "";
   const phoneNo = jedPhoneNumber?.length > 0 ? jedPhoneNumber : "";
   const productEmail = jedEmail?.length > 0 ? jedEmail : "";
   const productAmount = jedAmount?.length > 0 ? jedAmount : "";
-  const service_id = jedServiceID?.length > 0 ? jedServiceID : "";
-  const order_id = jedOrderId?.length > 0 ? jedOrderId : "";
+  // const service_id = jedServiceID?.length > 0 ? jedServiceID : "";
+  const disco_type = jedDiscoType?.length > 0 ? jedDiscoType : "";
+  const order_id = jedOrderId=== undefined ? "" : jedOrderId;
   const transaction_id = jedTransactionId?.length > 0 ? jedTransactionId : "";
   const description = jedShowDescription?.length > 0 ? jedShowDescription : "";
   const bill_generated = jedBillGenerate?.length > 0 ? jedBillGenerate : "";
@@ -170,7 +172,7 @@ export const JedReceipt = () => {
                 <p className="text-[#7C7C7C] font-[500]">Disco Type</p>
                 <span className="flex items-center gap-1 ">
                   <div><img className="w-[30px]" src={logo2} alt="" /></div>
-                  <div>{service_id}</div>
+                  <div>{disco_type}</div>
                   </span>
               </div>
               <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -184,7 +186,7 @@ export const JedReceipt = () => {
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Verified Name</p>
-                <span>{name}</span>
+                <span>{verifiedName}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -212,7 +214,7 @@ export const JedReceipt = () => {
                 <div className="flex flex-col gap-3 pt-[10px]">
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Customer Name</p>
-                <span>{name}</span>
+                <span>{verifiedName}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
