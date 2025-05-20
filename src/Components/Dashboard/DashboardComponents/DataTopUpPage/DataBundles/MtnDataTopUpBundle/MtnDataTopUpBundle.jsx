@@ -375,7 +375,7 @@ const [inputValue, setInputValue] = useState("");
 
 
   const [mtntransactionID, setMtnTransactionID] = useState("");
-  const [mtnorderID, setMtnOrderID] = useState("");
+  const [mtnOrderID, setMtnOrderID] = useState("");
   const [mtnrefNumber, setMtnRefNumber] = useState("");
   const [mtndescription, setMtnDescription] = useState("");
 
@@ -419,7 +419,7 @@ const [inputValue, setInputValue] = useState("");
         console.log(response.data);
         console.log(response.status);
 
-        const resData = response.data.data; // Accessing the nested `data` object
+        const resData = response.data.data.data; // Accessing the nested `data` object
 console.log(resData);
         // console.log(response.status);
         // setPlan(resData.plan_name);
@@ -440,11 +440,11 @@ console.log(resData);
         // setSelectedAmount(resData.plan_amount);
         // console.log(resData.plan_amount);
 
-        // setMtnTransactionID(resData.transaction_id);
-        // console.log(resData.transaction_id);
+        setMtnTransactionID(resData.transaction_id);
+        console.log(resData.transaction_id);
 
-        // setMtnRefNumber(resData.reference_number);
-        // console.log(resData.reference_number);
+        setMtnRefNumber(resData.reference_number);
+        console.log(resData.reference_number);
 
         setMtnOrderID(resData.order_id); // No `order_id`, using `id` instead
         console.log(resData.order_id);
@@ -763,7 +763,8 @@ console.log(resData);
               </div>
 
               {showOptionList && (
-                <div className={`text-[12px] border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[100]
+                <div className={`text-[12px] border md:rounded-[10px] h-[300px] overflow-y-scroll
+                   lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[100]
                   ${isDarkMode
                     ? "bg-black text-white border !border-white"
                     : "border border-[#0003]"
@@ -775,7 +776,8 @@ console.log(resData);
                     productPlans.map((plan) => (
                       <div
                         key={plan.PlanID}
-                        className={`pb-[18px] md:pb-[6px] pt-[18px] md:pt-[6px] font-weight-bold text-[13px] cursor-pointer border-b-[0.5px] md:rounded-[0px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${selectedOption === plan.PlanID ? "bg-gray-200" : ""
+                        className={`pb-[18px] md:pb-[6px] pt-[18px] md:pt-[6px] 
+                          font-weight-bold text-[13px] cursor-pointer border-b-[0.5px] md:rounded-[0px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${selectedOption === plan.PlanID ? "bg-gray-200" : ""
                           }
                          ${isDarkMode
                             ? "bg-black text-white"
@@ -1228,7 +1230,7 @@ console.log(resData);
                       selectedAmount: selectedAmount,
                       mtntransactionID: mtntransactionID,
                       mtnrefNumber: mtnrefNumber,
-                      mtnorderID: mtnorderID,
+                      mtnorderID: mtnOrderID,
                       mtndescription: mtndescription,
                     }}
 
@@ -1306,7 +1308,7 @@ console.log(resData);
                   </div>
                   {errorMessage && (
                   <p className = "text-[14px] font-[500] text-red-500 text-center leading-[14px]"> 
-                    Incorrect otp
+                    Incorrect pin
                     </p>
 
                   )}
@@ -1475,7 +1477,7 @@ console.log(resData);
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        {mtnorderID}
+                        {mtnOrderID}
                       </h2>
                     </div>
                   </div>
@@ -1516,7 +1518,7 @@ console.log(resData);
                     selectedAmount: selectedAmount,
                     mtntransactionID: mtntransactionID,
                     mtnrefNumber: mtnrefNumber,
-                    mtnorderID: mtnorderID,
+                    mtnorderID: mtnOrderID,
                     mtndescription: mtndescription,
                   }}>
                     <button
@@ -1541,7 +1543,7 @@ console.log(resData);
               selectedAmount={selectedAmount}
               mtntransactionID={mtntransactionID}
               mtnrefNumber={mtnrefNumber}
-              mtnorderID={mtnorderID}
+              mtnorderID={mtnOrderID}
               mtndescription={mtndescription}
             />
           )}
@@ -1556,7 +1558,7 @@ console.log(resData);
               selectedAmount={selectedAmount}
               mtntransactionID={mtntransactionID}
               mtnrefNumber={mtnrefNumber}
-              mtnorderID={mtnorderID}
+              mtnorderID={mtnOrderID}
               mtndescription={mtndescription}
             />
           )}

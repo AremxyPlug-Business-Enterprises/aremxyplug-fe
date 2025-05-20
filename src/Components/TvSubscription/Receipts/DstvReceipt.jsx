@@ -7,19 +7,37 @@ import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { ContextProvider } from "../../Context";
-
+import { useNavigate } from "react-router-dom";
 
 
 export const DstvReceipt= (receipt) => {
+  const navigate = useNavigate()
   const { toggleSideBar, textRef,
     flagResult,
     selectedOptionDstv,
     formatNumberWithCommas,
-    tvEmail,
-    mobileNumber,
-    smartCard,
+    dstvEmail,
+    dstvMobileNumber,
+    dstvSmartCard,
+    dstvTransactionId,
+    dstvOrderId,
+    dstvDescription,
     cardName,
-    isDarkMode, date } =
+    isDarkMode, 
+    dstvAmount,
+    date,
+   setDstvEmail,
+   setDstvMobileNumber,
+   setDstvSmartCard,
+   setDstvAmount,
+   setDstvOrderId,
+   setDstvDescription,
+   setDstvTransactionId,
+   setSelectedOptionDstv,
+   setPackageDstv,
+   setDstvDecoderType,
+    setFlagResult,
+    setTvWalletBalance,} =
     useContext(ContextProvider);
 
   const contentRef = useRef(null);
@@ -66,13 +84,33 @@ export const DstvReceipt= (receipt) => {
       });
     }
   };
-  const getNumericValue = (option) => {
-    const numericPart = option.match(/\d+/);
-    if (numericPart) {
-      return formatNumberWithCommas(parseInt(numericPart[0], numericPart[2], 10));
-    }
-    return '';
-  };
+  // const getNumericValue = (option) => {
+  //   const numericPart = option.match(/\d+/);
+  //   if (numericPart) {
+  //     return formatNumberWithCommas(parseInt(numericPart[0], numericPart[2], 10));
+  //   }
+  //   return '';
+  // };
+
+   const DstvOrderInfo = (dstvOrderId !== undefined || dstvOrderId?.length > 1) ? dstvOrderId : "";
+  const DstvTransactionInfo = (dstvTransactionId?.length > 1 || dstvTransactionId !== undefined )  ? dstvTransactionId : "";
+  const DstvDescriptionInfo = (dstvDescription?.length > 1 || dstvDescription !== undefined) ? dstvDescription : "";
+
+  const ExitTheReceipt = ()=> {
+      setDstvEmail("")
+   setDstvMobileNumber("")
+   setDstvSmartCard("");
+   setDstvAmount("");
+   setDstvOrderId("");
+   setDstvDescription("")
+   setDstvTransactionId("");
+   setSelectedOptionDstv("");
+   setPackageDstv("");
+   setDstvDecoderType("")
+    setFlagResult("");
+    setTvWalletBalance("");
+   navigate("/DsTv");
+  }
 
   return (
     <DashBoardLayout>
@@ -83,21 +121,21 @@ export const DstvReceipt= (receipt) => {
           } w-full lg:mx-auto`}
         >
           <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
-            <Link to="/">
+            <div>
               <img
                 className=" w-[15px] h-[10px] md:w-[24px] md:h-[15px] lg:w-[42px] lg:h-[25px]"
                 src="/Images/login/arpLogo.png"
                 alt=""
               />
-            </Link>
-            <Link to="/TvSubscription">
+            </div>
+            <div onClick = {()=> ExitTheReceipt()}>
               {" "}
               <img
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
               />
-            </Link>
+            </div>
           </div>
           <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
           <div ref={contentRef}>
@@ -155,7 +193,7 @@ export const DstvReceipt= (receipt) => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Smartcard / IUC Number</p>
-                  <span>{smartCard}</span>
+                  <span>{dstvSmartCard}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Card Name</p>
@@ -163,15 +201,15 @@ export const DstvReceipt= (receipt) => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Phone</p>
-                  <span>{mobileNumber}</span>
+                  <span>{dstvMobileNumber}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Email</p>
-                  <span>{tvEmail}</span>
+                  <span>{dstvEmail}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Amount</p>
-                  <span>{'₦'+ getNumericValue(selectedOptionDstv)}</span>
+                  <span>{`₦${dstvAmount}`}</span>
                 </div>
               </div>
 
@@ -215,17 +253,17 @@ export const DstvReceipt= (receipt) => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Description</p>
-                  <span>Dstv Subscription</span>
+                  <span>{DstvDescriptionInfo}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Order Number</p>
-                  <span>1256478999</span>
+                  <span>{DstvOrderInfo}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between items-center lg:text-[16px]">
                   <p className="text-[#0008]">Transaction ID</p>
                   <div className="flex items-center">
                     <span ref={textRef}>
-                    0331njokdhtf55
+                    {DstvTransactionInfo}
                     </span>
                     <div
                       onClick={handleCopyClick}

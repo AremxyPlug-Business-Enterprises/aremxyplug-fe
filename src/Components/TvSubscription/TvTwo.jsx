@@ -32,18 +32,13 @@ const DsTv = () => {
    setSelectedOptionDstv,
     showDropdownDstv,
     setShowDropdownDstv,
-    mobileNumber,
     setCardName,
     cardName,
-    tvEmail,
-    smartCard,
-    setSmartCard,
-    setTvEmail,
-    setMobileNumber,
+    dstvEmail,
+    setDstvEmail,
+    dstvSmartCard,
     decoderActive,
     setDecoderActive,
-    setDecoderType,
-    decoderType,
     methodImage,
     setMethodImage,
     isDarkMode,
@@ -54,29 +49,38 @@ const DsTv = () => {
     fetchedGotvPlans,
     dstvAmount,
     setDstvAmount,
-    setSuccessPopup,
+     dstvDecoderType,
+     setDstvDecoderType,
     setFetchedGotvPlans,
     fetchedShowMaxPlans,
     setFetchedShowMaxPlans,
     fetchedStarTimesPlans,
     setFetchedStarTimesPlans,
-    tvSubscriptionResponse,
-    setTvSubscriptionResponse,
-      dstvOrderId, setDstvOrderId,
-     dstvTransactionId, setDstvTransactionId,
-     dstvRequestId, setDstvRequestId,
-     dstvDescription, setDstvDescription,
-     
-    newBalance,
+    dstvSubscriptionResponse,
+    setDstvSubscriptionResponse,
+    inputPin,
+    setInputPin,
+    packageDstv,
+    setPackageDstv,
+      setDstvOrderId,
+   setDstvTransactionId,
+    setDstvRequestId,
+      setDstvDescription,
+      setDstvSmartCard,
+      dstvMobileNumber,
+      setDstvMobileNumber,
+        newBalance,
 
   } = useContext(ContextProvider)
 
-    const [planName, setPlanName] = useState(false);
-     const [tvTwoOtp, setTvTwoOtp] = useState('')
+   // const [packageDstv, setPackageDstv] = useState("");
+  //   const [tvTwoOtp, setTvTwoOtp] = useState('')
      const [isLoading, setIsLoading] = useState(false)
+     const [failedConfig, setFailedConfig] = useState(false)
+      const [successConfig, setSuccessConfig] = useState(false)
      const [failedPopup, setFailedPopup] = useState(false);
       const navigate = useNavigate();
-
+  
 
  
 
@@ -102,6 +106,19 @@ const DsTv = () => {
         { decoderType :'Showmax', path : "/Showmax", id : 4 }
          ]
     
+const ExitTheDoneButton = ()=> {
+      setDstvEmail("")
+   setDstvMobileNumber("")
+   setDstvSmartCard("");
+   setDstvAmount("");
+   setSelectedOptionDstv("");
+   setPackageDstv("");
+   setDstvDecoderType("")
+    setFlagResult("");
+    setTvWalletBalance("");
+    setFailedPopup(false);
+   //navigate("/DsTv");
+  }
 
 
   // function waecQuantityDropDown(){
@@ -115,20 +132,20 @@ const DsTv = () => {
   }
   const handleSmartCard = (e) => {
     const inputValue = e.target.value;
-    setSmartCard(inputValue);
+    setDstvSmartCard(inputValue);
   }
   const handleTvEmail = (e) => {
     const inputValue = e.target.value;
-    setTvEmail(inputValue);
+    setDstvEmail(inputValue);
   }
 
   const handleDstv = (event) => {
     event.preventDefault();
     
     const { error } = schema.validate({
-      mobileNumber,
-      tvEmail,
-      smartCard,
+      dstvMobileNumber,
+      dstvEmail,
+      dstvSmartCard,
     });
   
     if (error) {
@@ -207,15 +224,15 @@ const DsTv = () => {
   // });
 
   const schema = Joi.object({
-    smartCard: Joi.string().regex(/^\d{10,}$/).required()
+    dstvSmartCard: Joi.string().regex(/^\d{10,}$/).required()
       .messages({
         "string.pattern.base": "Smart card number should be more than 10 digits",
       }),
-    mobileNumber: Joi.string().regex(/^\d{11}$/).required()
+    dstvMobileNumber: Joi.string().regex(/^\d{11}$/).required()
       .messages({
         "string.pattern.base": "Phone number should be 11 digits",
       }),
-      tvEmail: Joi.string()
+      dstvEmail: Joi.string()
       .pattern(new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i))
       .required()
       .messages({ "string.pattern.base": "Invalid email" 
@@ -224,7 +241,7 @@ const DsTv = () => {
 
   const handleGOTVMobileNumberChange = (e) => {
     const inputValue = e.target.value;
-    setMobileNumber(inputValue);
+    setDstvMobileNumber(inputValue);
 
   };
 
@@ -249,7 +266,7 @@ const DsTv = () => {
   ])
 const [errorFillDecoder, setErrorFillDecoder] = useState(false)
   function packageDropdown() {
-    if (!decoderType) {
+    if (!dstvDecoderType) {
       setShowDropdownDstv(false);
       setErrorFillDecoder(true)
     }
@@ -263,7 +280,7 @@ const [errorFillDecoder, setErrorFillDecoder] = useState(false)
   function decoderDropdown() {
     setDecoderActive(!decoderActive)
     document.querySelector('.decdrop').classList.toggle('DropIt');
-    if(decoderType){
+    if(dstvDecoderType){
       setErrorFillDecoder(false);
     }
   }
@@ -272,18 +289,19 @@ const [errorFillDecoder, setErrorFillDecoder] = useState(false)
   setIsLoading(true);
   const receivedData = () => {
     // Seting the relevant data from the TV subscription response
-    setDstvOrderId(tvSubscriptionResponse.data.order_id);
-    setDstvTransactionId(tvSubscriptionResponse.data.transaction_id);
-    setDstvRequestId(tvSubscriptionResponse.data.request_id);
-    setDstvDescription(tvSubscriptionResponse.data.description);
+    setDstvOrderId(dstvSubscriptionResponse.data.order_id);
+    setDstvTransactionId(dstvSubscriptionResponse.data.transcation_id);
+    setDstvRequestId(dstvSubscriptionResponse.data.request_id);
+    setDstvDescription(dstvSubscriptionResponse.data.description);
   };
 
   receivedData();
   
   if (receivedData) {
-    setSuccessPopup(false);
+    setDstvSuccessful(false);
     setIsLoading(false);
-    navigate("/dstv-receipt");
+    navigate("/DstvReceipt");
+    
   }
 };
 
@@ -291,45 +309,48 @@ const [errorFillDecoder, setErrorFillDecoder] = useState(false)
 const VerifyPinHandler = async () => {
     const DstvHandler = async () => {
       const requestData = {
-        decoder_type: decoderType,
-        plan: planName,
-        iuc_number: smartCard,
-        email: tvEmail,
+        decoder_type: dstvDecoderType.toLowerCase(),
+        package: packageDstv,
+        iuc_number: dstvSmartCard,
+        email: dstvEmail,
         amount: dstvAmount,
-        phone: mobileNumber,
+        phone: dstvMobileNumber,
       };
       const Path = "tvsub";
       const successHandler = () =>{
         setDstvSuccessful(true);
         setInputPinDstv(false);
-        handleReceivedData()
+          setInputPin("")
+      //  handleReceivedData()
       }
       const FailedHandler = () =>{
        setFailedPopup(true);
        setInputPinDstv(false);
+         setInputPin("")
       }
       
       await PostFunction(
         Path,
         setIsLoading,
         requestData,
-       
         successHandler,
-        FailedHandler
+        FailedHandler,
+         setDstvSubscriptionResponse
       );
     };
   
     await VerifyTransPin(
-      tvTwoOtp,
-      null,
-      null,
+      inputPin,
+      setSuccessConfig,
+       setFailedConfig,
       setIsLoading,
       setErrorMessage,
     DstvHandler,
-    setTvSubscriptionResponse
+   
     );
 
   };
+  console.log(dstvSubscriptionResponse);
 
   
 
@@ -376,7 +397,7 @@ const VerifyPinHandler = async () => {
         ? "bg-black text-white border border-white" 
         : "hover:bg-[#EDEAEA] border-[#9C9C9C] text-[#7C7C7C]"
     }`} >
-                {decoderType}
+                {dstvDecoderType}
                 <img className="absolute left-[90%] lg:left-[94%] self-center align-middle decdrop md:h-[14.038px] md:w-[14.038px] 
       lg:h-[24px] lg:w-[24px] w-[14px] h-[16px]" src={arrowDown} alt="" />
       
@@ -397,9 +418,9 @@ const VerifyPinHandler = async () => {
     }`}>
           {(Decoders.map(decoder => {
             return (
-               <p href={decoder.path}
+               <p 
                onClick={(e =>{
-          setDecoderType(decoder.decoderType);
+          setDstvDecoderType(decoder.decoderType);
           GetOtherDataTv(decoder.id, decoder.path)
                  setDecoderActive(false);
              document.querySelector('.decdrop').classList.remove('DropIt');
@@ -456,6 +477,7 @@ const VerifyPinHandler = async () => {
                       onClick={() =>{
                         handleOptionClickDstv();
                         setSelectedOptionDstv(`${option.PackageName}`)
+                        setPackageDstv(option.Package)
                         setDstvAmount(option.Amount)
                       }
                       }
@@ -479,21 +501,24 @@ const VerifyPinHandler = async () => {
                 const numericValue = e.target.value.replace(/\D/g, '');
                     e.target.value = numericValue
                 })}
-                onChange={handleSmartCard} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] text-[9px] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
+                onChange={handleSmartCard} 
+                className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
       isDarkMode 
         ? "bg-black text-white border border-white" 
         : "hover:bg-[#EDEAEA] border-[#9C9C9C] text-[#7C7C7C] "
     }`} />
-             {errors.smartCard && <p className="text-[#F95252] text-[13.2px] md:text-[12px] lg:text-[14px font-[400] italic">
-                {errors.smartCard}</p>}
+             {errors.dstvSmartCard && <p className="text-[#F95252] text-[13.2px] md:text-[12px] lg:text-[14px font-[400] italic">
+                {errors.dstvSmartCard}</p>}
             </div>
 
             <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px font-[400] md:font-[600]">
                 Card Name</label>
               <input type="text"
-                onChange={handleCardName} onInput={(event)=> {event.target.value = event.target.value.replace(/[0-9]/g, '')}} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
+                onChange={handleCardName} onInput={(event)=> {event.target.value = event.target.value.replace(/[0-9]/g, '')}}
+                 className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 
+                  text-[13.2px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.9270px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
       isDarkMode 
       ? "bg-black text-white border border-white" 
@@ -505,7 +530,7 @@ const VerifyPinHandler = async () => {
             <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px font-[400] md:font-[600]">
                 Phone Number</label>
-              <input id="val" value={mobileNumber}
+              <input id="val" value={dstvMobileNumber}
                 onChange={handleGOTVMobileNumberChange}
                 onInput={(e =>{
     
@@ -525,8 +550,8 @@ const VerifyPinHandler = async () => {
         ? "bg-black text-white border border-white" 
         : "hover:bg-[#EDEAEA] border-[#9C9C9C] text-[#7C7C7C] "
     }`} />
-              {errors.mobileNumber && <p className="text-[#F95252] text-[9px] md:text-[12px] lg:text-[14px font-[400] italic">
-                {errors.mobileNumber}</p>}
+              {errors.dstvMobileNumber && <p className="text-[#F95252] text-[9px] md:text-[12px] lg:text-[14px font-[400] italic">
+                {errors.dstvMobileNumber}</p>}
             </div>
             <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
               <label htmlFor="Email" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px font-[400] md:font-[600]">
@@ -537,8 +562,8 @@ const VerifyPinHandler = async () => {
       ? "bg-black text-white border border-white" 
       : "hover:bg-[#EDEAEA] border-[#9C9C9C] text-[#7C7C7C] "
   }`} />
-              {errors.tvEmail && <p className="text-[#F95252] text-[13.4px] md:text-[12px] lg:text-[14px font-[400] italic">
-                {errors.tvEmail}</p>}
+              {errors.dstvEmail && <p className="text-[#F95252] text-[13.4px] md:text-[12px] lg:text-[14px font-[400] italic">
+                {errors.dstvEmail}</p>}
             </div>
 
           </div>
@@ -630,9 +655,9 @@ const VerifyPinHandler = async () => {
         </div>
 
         <button onClick={handleDstv}
-          disabled={mobileNumber.length !== 11 || !cardName || !tvEmail || !smartCard || !decoderType || !selectedOptionDstv}
+          disabled={dstvMobileNumber.length !== 11 || !cardName || !dstvEmail || !dstvSmartCard || !dstvDecoderType || !selectedOptionDstv}
           className={`
-             ${mobileNumber.length !== 11 || !cardName || !tvEmail || !smartCard || !decoderType || !selectedOptionDstv || !flagResult
+             ${dstvMobileNumber.length !== 11 || !cardName || !dstvEmail || !dstvSmartCard || !dstvDecoderType || !selectedOptionDstv || !flagResult
               ? "bg-[#63616188] "
               : "bg-primary"
             }
@@ -652,23 +677,18 @@ const VerifyPinHandler = async () => {
       </DashBoardLayout>
       <ConfirmDstvPopup/>
       <InputDstvPopup VerifyPinHandler={VerifyPinHandler}/>
-      <DstvSuccessfulPopup />
+      <DstvSuccessfulPopup handleReceivedData = {handleReceivedData} />
      {/* Failed Transaction Popup */}
    {failedPopup && (
+    <Modal>
        <div className="w-[90%] md:w-[70%] lg:w-[40%] mx-auto bg-white rounded-lg overflow-hidden">
-         <div className="flex justify-between items-center p-4">
+         <div className="flex justify-start w-full items-center p-4">
            <img
-             onClick={() => setFailedPopup(false)}
              className="w-6 h-6"
              src="/Images/login/arpLogo.png"
              alt="Logo"
            />
-           <img
-             onClick={() => setFailedPopup(false)}
-             className="w-6 h-6 cursor-pointer"
-             src="/Images/transferImages/close-circle.png"
-             alt="Close"
-           />
+          
          </div>
          <hr className="h-1 bg-[#04177f] border-none" />
          <div className="p-4 text-center">
@@ -684,13 +704,14 @@ const VerifyPinHandler = async () => {
              An unexpected error has occurred, please try again.
            </p>
            <button
-             onClick={() => setFailedPopup(false)}
+             onClick={() => ExitTheDoneButton()}
              className="bg-[#04177f] w-full max-w-xs mx-auto py-2 text-white rounded-md font-medium"
            >
              Done
            </button>
          </div>
        </div>
+       </Modal>
    )}
          {isLoading && (
               <Modal>

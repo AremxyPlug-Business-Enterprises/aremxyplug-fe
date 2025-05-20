@@ -20,23 +20,14 @@ export const InputDstvPopup = ({VerifyPinHandler}) => {
       toggleSideBar,
       toggleVisibility,
       isVisible,
-      setDstvSuccessful,
+    //  setDstvSuccessful,
    } = useContext(ContextProvider)
 
 // const [loading, setLoading] = useState(true)
 // const [errorMessage, setErrorMessage] = useState(false)
    const handleDstvSuccessful = async(event) =>{
-    event.preventDefault();
-    setInputPinDstv(false);
-    setDstvSuccessful(true);
-    //This is the API request function that help to verify user transaction
-    //pin
-    //States such as success, errr message is done as well as lodaing are done
-    //only to collect users information for the request
-    // await VerifyTransPin(inputPin, setDstvSuccessful,
-    //   setFailed, setLoading, setErrorMessage,
-    //   decoder_type, plan, iuc_number, email, amount, phone,
-    //    )
+await  VerifyPinHandler()
+ 
   }
 
    const [isFocused, setIsFocused] = useState(false);
@@ -94,7 +85,7 @@ export const InputDstvPopup = ({VerifyPinHandler}) => {
                 }
                     
                     renderInput={(props) => (
-                      <input onClick={VerifyPinHandler} {...props} className={`inputOTP mx-[2px] ${isFocused ? 'focused' : ''}`} onFocus={handleFocus}
+                      <input {...props} className={`inputOTP mx-[2px] ${isFocused ? 'focused' : ''}`} onFocus={handleFocus}
                       onBlur={handleBlur}/>
                     )}
                   />

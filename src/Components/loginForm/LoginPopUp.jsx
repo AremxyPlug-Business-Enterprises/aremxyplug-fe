@@ -15,6 +15,7 @@ import { RemoveLocalStorage } from "../LocalStorage/LocalStorage";
 import { CheckVirtualAcc } from "../ApiCollection.jsx/ApiBuck";
 import VerificationSuccess from "../My Profile & Account Settings/ProfileImages/user-tick.svg";
 import NotVerifiedImage from "../My Profile & Account Settings/ProfileImages/NotVerifiedIcon.svg";
+import { SetLocalStorage } from "../LocalStorage/LocalStorage";
 function LoginPopUp() {
  // Data = GetLocalStorage();
   const {
@@ -204,7 +205,7 @@ const handleVerificationOTP = ()=> {
      // console.log(error.response.data.message);
       if(error && error.response.data.message === "unverified"){
           setBvnNumber("");
-          setIdNumber("")
+          setIdNumber("");
         localStorage.setItem("idVerification",false);
         localStorage.setItem("bvnVerification",false);
         localStorage.setItem("AccCreated",false);
@@ -389,7 +390,7 @@ return () => clearInterval(timer);
     setVerificationPinError("")
   };
 
-  function HandleTranspin() {
+  function HandleTranspin () {
     if (otp === otp2) {
      SendTransactPin()
      setTranspinErrors("");
@@ -408,6 +409,24 @@ return () => clearInterval(timer);
     setOpen2StepOTP(true);
   }
 
+
+   const SetLocalStorageInputPin = ()=> {
+    setLoading(true)
+    if(customerDetail){
+     const {email, full_name, phone, username, id} = customerDetail;
+     const bank_name = "";
+     const account_name = "";
+     const account_no = "";
+     SetLocalStorage(email,full_name,phone, username, bank_name, account_name, account_no ,id)
+    if(SetLocalStorage){
+      localStorage.setItem("UserStatus", true);
+      navigate("/dashboard")
+      setLoading(false);
+         setBvnNumber("");
+          setIdNumber("")
+      }
+    }
+  }
   //THE FUNCTION BELOW HELPS TO SEND THE USER's TRANSACTION PIIN TO THE BACKEND
   const SendTransactPin = async()=>{
     const getToken = localStorage.getItem("getToken");
@@ -426,8 +445,8 @@ return () => clearInterval(timer);
       }})
       if(response.status === 200|| 201){
       console.log(response);
-     localStorage.setItem("UserStatus", true);
-         navigate("/dashboard");
+      SetLocalStorageInputPin()
+        // navigate("/dashboard");
       }else {
         alert("Check your Network Connection")
       }
@@ -439,7 +458,7 @@ return () => clearInterval(timer);
         }else if(error && error.response.status === 404){
           alert(`Please check your internet connection`)
         } else if(error && error.response.status === 500){
-          alert(`An error occured on our end`)
+          alert(`Server error : Please try again later`)
         }
         else{
           alert("Check your network Connection");
@@ -451,6 +470,7 @@ return () => clearInterval(timer);
     }
   }
   }
+ 
  
 
 

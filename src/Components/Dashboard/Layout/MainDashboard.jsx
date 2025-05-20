@@ -200,6 +200,13 @@ if((clickedoption === "NGN") && blur === true){
         }else if(error.response &&error.response.status === 500){
           alert("SERVER ERROR");
           setDashLoading(false);
+        }else if(error && error.response.status === undefined){
+           setDashLoading(false);
+           alert("Network connection unstable, kindly check your network connection")
+            alert("Virtual Account Creation failed")
+        }else {
+            setDashLoading(false);
+            alert("Virtual Account Creation failed")
         }
       }}
       }
@@ -242,9 +249,13 @@ if((clickedoption === "NGN") && blur === true){
 
           }else if (error && error.response.status ===500){
             setNewBalance(0);
+    }else if(error && error.response.status === undefined){
+        setBalanceLoading(false);
+        setBalanceValue(false);
+ }else{
+  setBalanceValue(false);
       }
-        
-        }finally {
+          }finally {
           setBalanceLoading(false)
         }
       }

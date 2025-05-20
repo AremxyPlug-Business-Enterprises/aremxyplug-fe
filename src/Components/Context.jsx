@@ -317,6 +317,10 @@ export const Context = ({ children }) => {
           } else if (error && error.response.data.status === 404) {
             alert("An error has occured on your end");
             console.log(error.response.data.data.data);
+          }else if(error && error.reponse.status === 500){
+                alert("Server error:, Try some other time");
+          }else if(error && error.reponse.status === undefined){
+                alert("Check your internet Connection");
           } else {
             console.log(error.json());
             alert("Check your internet connection");
@@ -1041,6 +1045,12 @@ export const Context = ({ children }) => {
   const [selectedOptionGOTV, setSelectedOptionGOTV] = useState("");
   const [showDropdownGOTV, setShowDropdownGOTV] = useState(false);
   const [fetchedGotvPlans, setFetchedGotvPlans] = useState([]);
+  const [tvSubscriptionResponse, setTvSubscriptionResponse] = useState({})
+ const [ gotvOrderId, setGotvOrderId] = useState("")
+  const [gotvTransactionId, setGotvTransactionId] = useState("")
+     const [gotvRequestId, setGotvRequestId] = useState("")
+       const [gotvDescription, setGotvDescription] = useState("");
+        const [packageGotv, setPackageGotv] = useState("");
 
   //==========DSTV===========
   const [selectedOptionDstv, setSelectedOptionDstv] = useState("");
@@ -1050,6 +1060,17 @@ export const Context = ({ children }) => {
   const [dstvSuccessful, setDstvSuccessful] = useState(false);
   const [fetchedDstvPlans, setFetchedDstvPlans] = useState([]);
   const [dstvAmount, setDstvAmount] = useState("₦");
+  const [dstvEmail, setDstvEmail] = useState();
+ const [ packageDstv, setPackageDstv] = useState("");
+ const [dstvSmartCard, setDstvSmartCard] = useState("");
+ const [dstvDecoderType, setDstvDecoderType] = useState("");
+  const [dstvMobileNumber, setDstvMobileNumber] = useState("")
+  const [dstvSubscriptionResponse, setDstvSubscriptionResponse] = useState({});
+  const [dstvOrderId, setDstvOrderId] = useState("");
+  const [dstvTransactionId, setDstvTransactionId] = useState("");
+  const [dstvDescription, setDstvDescription] = useState("")
+   const [dstvRequestId, setDstvRequestId] = useState("")
+
 
   //=========SHOWMAX===========
   const [selectedOptionShowmax, setSelectedOptionShowmax] = useState("");
@@ -1059,6 +1080,16 @@ export const Context = ({ children }) => {
   const [showmaxSuccessful, setShowmaxSuccessful] = useState(false);
   const [fetchedShowMaxPlans, setFetchedShowMaxPlans] = useState([]);
   const [showMaxAmount, setShowMaxAmount] = useState("₦");
+  const [showMaxEmail, setShowMaxEmail] = useState("");
+   const [ packageShowMax, setPackageShowMax] = useState("");
+    const [showMaxSmartCard, setShowMaxSmartCard] = useState("");
+     const [showMaxDecoderType, setShowMaxDecoderType] = useState("")
+      const [showMaxSubscriptionResponse, setShowMaxSubscriptionResponse] = useState({})
+      const [showMaxOrderId, setShowMaxOrderId] = useState("");
+  const [showMaxTransactionId, setShowMaxTransactionId] = useState("");
+  const [showMaxDescription, setShowMaxDescription] = useState("");
+    const [showMaxMobileNumber, setShowMaxMobileNumber] = useState("")
+
 
   //=========STARTIMES===========
   const [selectedOptionStarTimes, setSelectedOptionStarTimes] = useState("");
@@ -1068,6 +1099,16 @@ export const Context = ({ children }) => {
   const [starTimesSuccessful, setStarTimesSuccessful] = useState(false);
   const [fetchedStarTimesPlans, setFetchedStarTimesPlans] = useState([]);
   const [starTimesAmount, setStarTimesAmount] = useState("₦");
+  const [starTimesEmail, setStarTimesEmail] = useState("");
+   const [ packageStarTimes, setPackageStarTimes] = useState("");
+    const [starTimesSmartCard, setStarTimesSmartCard] = useState("");
+     const [starTimesDecoderType, setStarTimesDecoderType] = useState("");
+         const [starTimesMobileNumber, setStarTimesMobileNumber] = useState("");
+       const [starTimesSubscriptionResponse, setStarTimesSubscriptionResponse] = useState({});
+       const [starTimesOrderId, setStarTimesOrderId] = useState("");
+  const [starTimesTransactionId, setStarTimesTransactionId] = useState("");
+  const [starTimesDescription, setStarTimesDescription] = useState("")
+
 
   //============= EDUCATION PINS ========================
   //===============WAEC PINS================
@@ -1175,7 +1216,14 @@ export const Context = ({ children }) => {
   const [accountNumberState, setAccountNumberState] = useState("");
   const [userStatus, setUserStatus] = useState(false);
   const [idButtonState, setIdButtonState] = useState("Verify");
+
   const hold = {
+    tvSubscriptionResponse,
+     setTvSubscriptionResponse,
+      gotvOrderId, setGotvOrderId,
+          gotvTransactionId, setGotvTransactionId,
+          gotvRequestId, setGotvRequestId,
+          gotvDescription, setGotvDescription,
     customerDetail,
     setCustomerDetail,
     handleRefresh,
@@ -1917,6 +1965,8 @@ export const Context = ({ children }) => {
     setShowDropdownGOTV,
     fetchedGotvPlans,
     setFetchedGotvPlans,
+    packageGotv,
+     setPackageGotv,
 
     //=======DSTV
     confirmDstvPopup,
@@ -1933,6 +1983,22 @@ export const Context = ({ children }) => {
     setFetchedDstvPlans,
     dstvAmount,
     setDstvAmount,
+    dstvEmail,
+    setDstvEmail,
+    packageDstv,
+    setPackageDstv,
+    dstvSmartCard,
+    setDstvSmartCard,
+    dstvDecoderType,
+     setDstvDecoderType,
+     dstvMobileNumber,
+      setDstvMobileNumber,
+      dstvSubscriptionResponse, 
+      setDstvSubscriptionResponse,
+      dstvOrderId, setDstvOrderId,
+dstvTransactionId, setDstvTransactionId,
+dstvDescription, setDstvDescription,
+dstvRequestId, setDstvRequestId,
 
     //=======SHOWMAX
     confirmShowmaxPopup,
@@ -1949,6 +2015,21 @@ export const Context = ({ children }) => {
     setFetchedShowMaxPlans,
     showMaxAmount,
     setShowMaxAmount,
+    showMaxEmail,
+    setShowMaxEmail,
+    packageShowMax,
+    setPackageShowMax,
+    showMaxSmartCard,
+    setShowMaxSmartCard,
+    showMaxDecoderType, 
+    setShowMaxDecoderType,
+    showMaxMobileNumber,
+    setShowMaxMobileNumber,
+    showMaxSubscriptionResponse,
+   setShowMaxSubscriptionResponse,
+   showMaxOrderId, setShowMaxOrderId,
+ showMaxTransactionId, setShowMaxTransactionId,
+  showMaxDescription, setShowMaxDescription,
 
     //=======STARTIMES
     confirmStarTimesPopup,
@@ -1965,6 +2046,24 @@ export const Context = ({ children }) => {
     setFetchedStarTimesPlans,
     starTimesAmount,
     setStarTimesAmount,
+       starTimesEmail,
+       setStarTimesEmail,
+       packageStarTimes,
+       setPackageStarTimes,
+       starTimesSmartCard,
+       setStarTimesSmartCard,
+       starTimesDecoderType, 
+       setStarTimesDecoderType,
+       starTimesMobileNumber,
+        setStarTimesMobileNumber,
+        starTimesSubscriptionResponse,
+         setStarTimesSubscriptionResponse,
+         starTimesOrderId, setStarTimesOrderId,
+  starTimesTransactionId, setStarTimesTransactionId,
+ starTimesDescription, setStarTimesDescription,
+
+
+
 
     //====== EDUCATION PINS
     //=======WAEC PINS

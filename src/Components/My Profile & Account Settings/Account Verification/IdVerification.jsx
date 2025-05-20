@@ -90,12 +90,7 @@ export default function IdVerification(Data) {
     const addCity = e.target.value;
     e.target.setCustomValidity(addCity ? "" : "Your City must be entered");
   };
-  // CUSTOM VALIDITY FOR STATE
-  // const validState  = (e) => {
-  //   const addState = e.target.value;
-  //   e.target.setCustomValidity(addState ? '' : 'Your State must be entered')
-  // }
-  //CUSTOM VALIDITY FOR ID
+ 
   const validId = (e) => {
     const addId = e.target.value;
     e.target.setCustomValidity(
@@ -122,7 +117,8 @@ export default function IdVerification(Data) {
     statusId,
     verifyPopId
   ) => {
-    if (idButtonState === "Verify") {
+     if(!navigator.onLine) return alert("Check your internet connection");
+    if (idButtonState === "Verify" && navigator.onLine) {
       url = "https://aremxyplug.onrender.com/api/v1/verify";
       buttonStateSuccess = "Verified";
       ErrorMessage = "NIN Name Mismatch or Network failure";
@@ -134,7 +130,8 @@ export default function IdVerification(Data) {
       data = {
         nin: idNumber.toString(),
       };
-    }
+    
+  
     CheckIdForm(
       url,
       data,
@@ -146,6 +143,7 @@ export default function IdVerification(Data) {
       statusId,
       verifyPopId
     );
+    }
   };
 
   //The main function to verify the Id Number and create the virtual account
@@ -163,6 +161,7 @@ export default function IdVerification(Data) {
     const authToken = localStorage.getItem("authorisedLogin");
     const getToken = localStorage.getItem("getToken");
     // const AccCreated = localStorage.getItem("AccCreated")
+    
     if (
       idNumber &&
       idResult &&
@@ -425,25 +424,7 @@ export default function IdVerification(Data) {
                     readOnly={Data.ConfirmId === "true" || Data.ConfirmBvn === "true"}
                   />
                 </div>
-                {/* STATE */}
-                {/* <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5'>
-   <h2 className='font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] 
-   lg:text-[16px] lg:leading-[20.8px]'>
-    State or Province
-    </h2>
-    <input 
-    value={idState}
-    onChange={(e) =>{
-      setIdState(e.target.value)
-    }}
-    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px] sm:p-3 sm:text-lg font-medium py-[10.33px] pl-[5.867px] 
-    lg:py-[15.5px] lg:pl-[10px] border-[0.4px]
-     leading-[10.4px] 
-     border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px] focus:outline-none'
-    placeholder='' 
-    type="text" onInvalid={validState} required/>
-   
-    </div> */}
+    
               </div>
               {/* CITY AND LGA */}
               <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]">
@@ -541,7 +522,7 @@ export default function IdVerification(Data) {
                   className={` py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none ${
                     isDarkMode
                       ? "bg-black text-slate-50 border-slate-50"
-                      : "text-[#9C9C9C]"
+                      : "text-black"
                   }`}
                   placeholder=""
                   type="text"
@@ -582,40 +563,46 @@ export default function IdVerification(Data) {
           <div 
            key={info.id} onClick={() => {
            setIdResult(()=> {
-             if((Data.ConfirmBvn === "false" && Data.ConfirmId === "false") 
-              &&  info.id === 1){
-          
-            return  "National ID";
-            } else if(Data.ConfirmId === "true"  ||  Data.ConfirmBvn === "true"){
-              alert("second")
-             return " ";
-              }else if( (info.id === 2 || info.id ===3 || info.id === 4) && (Data.ConfirmId === "false" || Data.ConfirmBvn === "false") && idResult === " " ){
-              
-               return null;
-                }else if( (info.id === 2 || info.id ===3 || info.id === 4) && (Data.ConfirmId === "false" || Data.ConfirmBvn === "false") && (idResult === "National ID")){
-                
+             if(((Data.ConfirmBvn === "false" && Data.ConfirmId === "false") 
+               || (!Data.ConfirmId && !Data.ConfirmBvn ))
+              &&  info.id === 1 ){
+               // alert("One");
+             return  "National ID";
+              }else if(((Data.ConfirmId === "false" && Data.ConfirmBvn === "false") || (!Data.ConfirmId && !Data.ConfirmBvn))
+                 && info.id !==1 && idResult === ""){
+              return "";
+              }
+                 else if(Data.ConfirmId === "false"  ||  Data.ConfirmBvn === "true"){
+             return "";
+              } else if(Data.ConfirmId === "true"  ||  Data.ConfirmBvn === "false"){
+             return "National ID";
+              } else {
                return "National ID";
                 }
                })
-              setIdDropDown(()=>{
-                if(info.idType ==="National ID"){
-                  return false;
-                }else{
-                  return true;
-                }
-              });
+               setIdDropDown(false);
+              // setIdDropDown(()=>{
+              //   if(info.idType ==="National ID" && info.id === 1){
+              //     return false;
+              //   }else{
+              //     return true;
+              //   }
+              // });
                 document.querySelector('.idDrop').classList.remove('DropIt');
       }}
         className ={`font-[500] px-2 flex justify-between text-[#7C7C7C] text-[8px] leading-[10.4px]
             lg:text-[16px] lg:leading-[20.8px] md:py-[20px] py-[15px] pl-[10px]
-           lg:pl-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] md:shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)]  
-           cursor-pointer ${info.Status === "Inactive" ? "bg-gray-300 cursor-not-allowed" : "bg-white"} `}>
-            <h2 className="font-[500] text-[#7C7C7C] text-[8px] leading-[10.4px]
-            lg:text-[16px] lg:leading-[20.8px]
-            ">{info.idType}</h2>
+           lg:pl-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] md:shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)] 
+            ${isDarkMode ?  "border-y-[0.5px] border-x-[0.6px] border-white" : "boder-none"} 
+           cursor-pointer ${info.Status  === "Inactive" && !isDarkMode  ? "bg-gray-300 cursor-not-allowed" : 
+            info.Status === "Inactive" && isDarkMode ? "bg-black" : info.Status === "Active" && !isDarkMode ? "bg-white" : "bg-black" } 
+           `}>
+            <h2 className={`font-[500] text-[#7C7C7C] text-[8px] leading-[10.4px]
+            lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>{info.idType}</h2>
             <p
              className={`font-[500] text-[#7C7C7C] text-[8px] leading-[10.4px]
-            lg:text-[16px] lg:leading-[20.8px] ${info.Status === "Inactive" ? "text-red-500": "text-green-500"}`}>
+            lg:text-[16px] lg:leading-[20.8px] ${info.Status === "Inactive" ? "text-red-500": "text-green-500"}
+           `}>
      {info.Status}
             </p>
            </div>
@@ -627,9 +614,9 @@ export default function IdVerification(Data) {
       </div>
   
     {/*  */}
-    <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
-   lg:text-[16px] lg:leading-[20.8px]'>
+    <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]">
+   <h2 className="font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
+   lg:text-[16px] lg:leading-[20.8px]">
      ID Number
     </h2>
     <input readOnly={idStatus=== "Verified" ||  (Data.ConfirmId === "true" || Data.ConfirmBvn === "true")}
@@ -643,7 +630,11 @@ export default function IdVerification(Data) {
     onChange={(e) => {
       setIdNumber(e.target.value);
     }}
-    className='flex justify-between items-center font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[10px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none'
+    className={`flex justify-between items-center font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[10px]
+       md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] 
+       border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] 
+       lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] 
+       focus:outline-none  ${isDarkMode ? "bg-black" : "bg-white"}`}
     placeholder=''
     type="text" inputMode='numeric' maxLength={11} onInvalid={validId}  required/>
    

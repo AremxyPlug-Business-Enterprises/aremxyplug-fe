@@ -11,14 +11,13 @@ import Joi from "joi";
 import axios from "axios";
 import { Loader } from "../Loader/Loader";
 import { Modal } from "../Screens/Modal/Modal";
-
 function LoginForm() {
 
   const { setOpenTranspin,
     // setOpenResetTranspin,
       setOpen2StepVerification,
-      setLoginAuthorisation,
-      customerDetail,
+    //  setLoginAuthorisation,
+    //  customerDetail,
       setCustomerDetail,
       } = useContext(ContextProvider);
 
@@ -157,9 +156,11 @@ function LoginForm() {
   // ==========Login Handler===========
   const submitHandler = async (e) => {
     e.preventDefault();
-if( !navigator.onLine) return alert("No internet Connection, Check your network connection to proceed ")
+if( !navigator.onLine) return alert("No internet Connection, Check your network connection to proceed ");
+const ActiveSignUp = localStorage.getItem("ActiveSignUp");
+if(ActiveSignUp === "true") return alert("You are not allowed to login, while an active sign up is present, if you don't wish to proceed with the sign up process, click on NO in the Sign up page popup")
     // ========Login form validation starts here=======
-    if (usernameORemail === "username" && navigator.onLine) {
+    if (usernameORemail === "username" && navigator.onLine && !ActiveSignUp) {
       try {
         const schema = Joi.object({
           username: Joi.string()
@@ -195,11 +196,17 @@ if( !navigator.onLine) return alert("No internet Connection, Check your network 
               console.log(response);
               if (response.status === 202 && response.headers.hasAuthorization) {
                 setOpenTranspin(true);
+                console.log(`${response.data.data}`);
                 const authToken = response.headers.get('Authorization');
+                  const customer  =  response.data.data.customer;
               
                 if(authToken){
-                 // localStorage.setItem("UserStatus",false)
+                
                  localStorage.setItem("getToken", authToken);
+                  if(customer){
+                    console.log(customer)
+                    setCustomerDetail(customer);
+               }
                    }
      } else if(response.status === 200){
                   setOpen2StepVerification(true);
@@ -208,14 +215,13 @@ if( !navigator.onLine) return alert("No internet Connection, Check your network 
                   console.log(authToken)
                    if(authToken){
                 localStorage.setItem("getToken", authToken);
-              //  localStorage.setItem("UserStatus",false)
+              
                   if(customer){
                setCustomerDetail(customer);
-               console.log(customerDetail);
+               console.log(customer);
                   }
                    }
-
-            }
+             }
             })
             .catch((error) => {
               if(error.status === 500){
@@ -225,9 +231,13 @@ if( !navigator.onLine) return alert("No internet Connection, Check your network 
                 alert("User not found");
               } else if ( error.status === 401 || 400) {
                 alert("Incorrect Password or Username");
-              } else {
-                console.log(error);
-              }
+              }else if(error && error.status === 500){
+                alert("Server error: try some other time");
+          }else if(error && error.reponse.status === undefined){
+                alert("Check your internet Connection");
+          }else {
+            alert("Check your internet connection")
+          }
             });
           if (checkbox === true) {
             localStorage.setItem("aremxyPassword", JSON.stringify(password));
@@ -275,9 +285,15 @@ if( !navigator.onLine) return alert("No internet Connection, Check your network 
               if (response.status === 202  && response.headers.hasAuthorization) {
                 setOpenTranspin(true);
                 const authToken = response.headers.get('Authorization');
+                 console.log(`${response.data.data}`);
+                const customer = response.data.data.customer;
                 if(authToken){
                  // localStorage.setItem("UserStatus",false)
                   localStorage.setItem("authorisedLogin", authToken);
+                   if(customer){
+                    console.log(customer);
+               setCustomerDetail(customer);
+                  }
               }
     }
   
@@ -288,9 +304,7 @@ if( !navigator.onLine) return alert("No internet Connection, Check your network 
              console.log(customer)
             
            if(authToken){
-             setLoginAuthorisation(authToken);
-             localStorage.setItem("authorisedLogin", authToken)
-           //  localStorage.setItem("UserStatus",false)
+             localStorage.setItem("authorisedLogin", authToken);
              if(customer){
               setCustomerDetail(customer);
              }

@@ -376,7 +376,7 @@ const [balanceStatus,setBalanceStatus ] = useState("")
         console.log(response.data);
         console.log(response.status);
 
-        const resData = response.data.data; // Accessing the nested `data` object
+        const resData = response.data.data.data; // Accessing the nested `data` object
 
         console.log(response.status);
         setPlan(resData.plan_name);
@@ -1166,7 +1166,7 @@ const [balanceStatus,setBalanceStatus ] = useState("")
                     {errorMessage && (
                       <p className ="text-center text-[14px] text-red-500 lg:text-[16px]
                        font-[500] leading-[18px] lg:leading-[20px]">
-                        Incorrect Otp
+                        Incorrect pin
                       </p>
                     )}
                   </div>
