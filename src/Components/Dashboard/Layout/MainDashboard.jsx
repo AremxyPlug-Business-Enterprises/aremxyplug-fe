@@ -714,7 +714,7 @@ return (
                   <div className="md:h-[100%] gap-[30px]  md:gap-[0px] h-auto  w-full  flex flex-col justify-between">
                      <div onClick ={()=> {
                       navigate("/virtual-account")
-                     }} className="w-full h-[15%] flex justify-end">
+                     }} className="w-full py-[10px] flex justify-end">
                 {" "}
                 <button
                   className={`text-[10px] md:text-[11px] mb-[15px] md:mt-[0px] lg:text-[12px] font-[600]  ${

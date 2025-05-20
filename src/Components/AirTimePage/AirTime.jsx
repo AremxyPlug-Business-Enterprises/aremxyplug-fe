@@ -25,7 +25,7 @@ const AirTime = () => {
         setActiveTab('tab_2')
     }
 
-    const TabOneItem =({title,text, icon, link, onClick})=> {
+    const TabOneItem =({title,text, icon, link, onClick, style})=> {
         return (
             <Link className={`${styles.airtimeCol}
             
@@ -107,6 +107,7 @@ const AirTime = () => {
                              link='/airtime-vtu'
                              onClick=''
                              icon='./Images/airtimeTopUp/simcard.svg'
+                             style={{ marginTop: '-10px' }}
 
                            />
                             <TabOneItem

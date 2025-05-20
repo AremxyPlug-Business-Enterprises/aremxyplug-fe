@@ -12,10 +12,11 @@ import { Modal } from "../../Screens/Modal/Modal";
 import cameraProfile from "../ProfileImages/cameraProfile.svg";
 import galleryProfile from "../ProfileImages/galleryProfile.svg";
 import closeCircle from "../../EducationPins/imagesEducation/close-circle.svg";
-
-export default function EditProfile() {
-  const { openImage, setOpenImage, isDarkMode } = useContext(ContextProvider);
-
+import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
+export default function EditProfile(Data) {
+  const { openImage, setOpenImage, isDarkMode, customerDetail } = useContext(ContextProvider);
+  const {phone, email} = customerDetail;
+ Data = GetLocalStorage();
   return (
     <div>
       <DashBoardLayout>
@@ -69,7 +70,7 @@ export default function EditProfile() {
                       isDarkMode ? "text-white" : ""
                     }`}
                   >
-                    habib@aremxyplug.com
+                    {email ? email : Data.UserEmail}
                   </p>
                 </div>
               </div>
@@ -89,26 +90,18 @@ gap-2.5 lg:gap-[10px] cursor-default lg:mb-[26px] md:mb-[15.26px] mb-[20px]"
                   >
                     Email
                   </h2>
-                  {/* <div className='flex  items-center h-[30px] md:h-[40px] lg:h-[51px]
-        pl-[5.868px]  lg:pl-[10px] 
-      border-[0.4px] border-[#9C9C9C] 
-     border-[solid] lg:mb-[26px] md:mb-[15.26px] mb-[20px]'>
-      <p className='font-[500] text-[#7E7E7E] 
-      text-[8px] leading-[10.4px]
-      md:text-[9.389px] md:leading-[12.206px]
-     lg:text-[16px] lg:leading-[20.8px]'>
-   habib@aremxy.com
-     </p>
-     </div> */}
+               
                   <input
                     type="email"
                     name=""
                     id=""
+                    readOnly
                     className={`py-[10.33px] pl-[5.867px] pr-1 md:py-[10] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none  ${
                       isDarkMode
                         ? "bg-transparent text-slate-50 border-slate-50"
                         : "text-[#9C9C9C]"
                     }`}
+                    value ={email ? email : Data.userEmail}
                   />
                   <Link
                     to="/ChangeEmail"
@@ -162,6 +155,7 @@ gap-2.5 lg:gap-[10px] cursor-default"
                         ? "bg-transparent text-slate-50 border-slate-50"
                         : ""
                     }`}
+                    value = {phone  ? phone : Data.UserPhone}
                   />
                   <Link
                     to="/ChangePhoneNumber"
