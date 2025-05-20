@@ -17,9 +17,11 @@ import britainFlag from '../../Components/EducationPins/imagesEducation/Britain.
 import euroFlag from '../../Components/EducationPins/imagesEducation/GBP.svg';
 import austriaFlag from '../../Components/EducationPins/imagesEducation/Austria.svg';
 import kenyaFlag from '../../Components/EducationPins/imagesEducation/Kenya.svg';
-import { Loader } from "../Loader/Loader";
-import { Modal } from "../Screens/Modal/Modal";
+import {VerifyTransPin} from "../../Components/ApiCollection.jsx/ApiBuck";
+import {Loader} from "../Loader/Loader";
+import {Modal} from "../Screens/Modal/Modal";
 import { useNavigate } from "react-router-dom";
+import {PostFunction} from "../../Components/ApiCollection.jsx/ApiBuck";
 import { GetFunction } from "../ApiCollection.jsx/ApiBuck";
 
 const StarTimes = () => {
@@ -49,18 +51,34 @@ const StarTimes = () => {
     fetchedStarTimesPlans,
     starTimesAmount,
     setStarTimesAmount,
-    fetchedGotvPlans,setFetchedGotvPlans,
+    setStarTimesSuccessful,
+     setInputPinStarTimes,
+     setErrorMessage,
+     setSuccessPopup,
+      fetchedGotvPlans,setFetchedGotvPlans,
     fetchedDstvPlans, setFetchedDstvPlans,
     fetchedShowMaxPlans, setFetchedShowMaxPlans,
+     starTimesOrderId, setStarTimesOrderId,
+     starTimesTransactionId, setStarTimesTransactionId,
+     starTimesRequestId, setStarTimesRequestId,
+     starTimesDescription, setStarTimesDescription,
+     tvSubscriptionResponse,
+     setTvSubscriptionResponse,
     newBalance
   } = useContext(ContextProvider)
       
+
+    const [planName, setPlanName] = useState(false);
+    const [tvThreeOtp, setTvThreeOtp] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
+    const [failedPopup, setFailedPopup] = useState(false);
     const navigate = useNavigate();
     
+        
+           
 const StarTimesPlans = fetchedStarTimesPlans.data ?  fetchedStarTimesPlans.data.data.data : []
-const [loading, setLoading] = useState(false);
   const handleOptionClickStarTimes = (option) => {
-   // setSelectedOptionStarTimes(option);
+    //setSelectedOptionStarTimes(option);
     setShowDropdownStarTimes(false);
   };
 
@@ -96,17 +114,17 @@ const [loading, setLoading] = useState(false);
      if((fetchedDstvPlans.status === undefined || null) && id === 2 ){
        TvPath = `products/tvsub/dstv`;
      fetchedResponse = setFetchedDstvPlans;
-      await GetFunction(TvPath, setLoading, SuccessHandler, FailedHandler, fetchedResponse)
+      await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse)
      
     }else if((fetchedGotvPlans.status === undefined || null) && id === 3){
        TvPath = `products/tvsub/gotv`;
      fetchedResponse = setFetchedGotvPlans;
-      await GetFunction(TvPath, setLoading, SuccessHandler, FailedHandler, fetchedResponse)
+      await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse)
     
    }else if ((fetchedShowMaxPlans.status === undefined || null) && id === 4){
      TvPath = `products/tvsub/showmax`;
      fetchedResponse = setFetchedShowMaxPlans;
-      await GetFunction(TvPath, setLoading, SuccessHandler, FailedHandler, fetchedResponse)
+      await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse)
     
    }else{
      return SubscriptionPresent();
@@ -169,11 +187,14 @@ const [loading, setLoading] = useState(false);
           return acc;
         }, {})
       );
-    } else {
+    }
+     else {
       setConfirmStarTimesPopup(true);
       setErrors({});
     }
-  }
+
+
+};
   const [errors, setErrors] = useState({});
  
   // const StarTimesSchema = Joi.object({
@@ -245,6 +266,68 @@ const [loading, setLoading] = useState(false);
     document.querySelector('.decdrop').classList.toggle('DropIt');
   }
 
+    const handleReceivedData = () => {
+    setIsLoading(true);
+    const receivedData = () => {
+      // Seting the relevant data from the TV subscription response
+      setStarTimesOrderId(tvSubscriptionResponse.data.order_id);
+      setStarTimesTransactionId(tvSubscriptionResponse.data.transaction_id);
+      setStarTimesRequestId(tvSubscriptionResponse.data.request_id);
+      setStarTimesDescription(tvSubscriptionResponse.data.description);
+    };
+  
+    receivedData();
+    
+    if (receivedData) {
+      setSuccessPopup(false);
+      setIsLoading(false);
+      navigate("/starTime-receipt");
+    }
+  };
+
+// VerifyPinHandler to handle both success and failure cases:
+const VerifyPinHandler = async () => {
+    const StarTimesHandler = async () => {
+      const requestData = {
+        decoder_type: decoderType,
+        plan: planName,
+        iuc_number: smartCard,
+        email: tvEmail,
+        amount: starTimesAmount,
+        phone: mobileNumber,
+      };
+      const Path = "tvsub";
+      const successHandler = () =>{
+        setStarTimesSuccessful(true);
+        setInputPinStarTimes(false);
+        handleReceivedData()
+      }
+      const FailedHandler = () =>{
+       setFailedPopup(true);
+       setInputPinStarTimes(false);
+      }
+      
+      await PostFunction(
+        Path,
+        setIsLoading,
+        requestData,
+       
+        successHandler,
+        FailedHandler
+      );
+    };
+  
+    await VerifyTransPin(
+      tvThreeOtp,
+      null,
+      null,
+      setIsLoading,
+      setErrorMessage,
+      StarTimesHandler,
+      setTvSubscriptionResponse
+    );
+
+  };
 
   return (
     <div>
@@ -546,16 +629,57 @@ const [loading, setLoading] = useState(false);
           </div>
 
         </div>
-   {loading && (
-    <Modal>
-      <Loader/>
-    </Modal>
-   )}
 
       </DashBoardLayout>
       <ConfirmStarTimesPopup />
-      <InputStarTimesPopup />
+      <InputStarTimesPopup VerifyPinHandler={VerifyPinHandler}/>
       <StarTimesSuccessfulPopup />
+            {/* Failed Transaction Popup */}
+      {failedPopup && (
+          <div className="w-[90%] md:w-[70%] lg:w-[40%] mx-auto bg-white rounded-lg overflow-hidden">
+            <div className="flex justify-between items-center p-4">
+              <img
+                onClick={() => setFailedPopup(false)}
+                className="w-6 h-6"
+                src="/Images/login/arpLogo.png"
+                alt="Logo"
+              />
+              <img
+                onClick={() => setFailedPopup(false)}
+                className="w-6 h-6 cursor-pointer"
+                src="/Images/transferImages/close-circle.png"
+                alt="Close"
+              />
+            </div>
+            <hr className="h-1 bg-[#04177f] border-none" />
+            <div className="p-4 text-center">
+              <h2 className="text-lg md:text-xl font-semibold my-4">
+                Transaction Failed
+              </h2>
+              <img
+                className="w-32 h-32 mx-auto my-6"
+                src="./Images/failed.png"
+                alt="Failed"
+              />
+              <p className="text-sm text-gray-600 mb-8">
+                An unexpected error has occurred, please try again.
+              </p>
+              <button
+                onClick={() => setFailedPopup(false)}
+                className="bg-[#04177f] w-full max-w-xs mx-auto py-2 text-white rounded-md font-medium"
+              >
+                Done
+              </button>
+            </div>
+          </div>
+      )}
+            {isLoading && (
+                 <Modal>
+                     <Loader/>
+      
+                 </Modal>
+            ) } 
+            
     </div>
   )
 }

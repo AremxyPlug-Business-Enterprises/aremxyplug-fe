@@ -17,12 +17,16 @@ import britainFlag from '../../Components/EducationPins/imagesEducation/Britain.
 import euroFlag from '../../Components/EducationPins/imagesEducation/GBP.svg';
 import austriaFlag from '../../Components/EducationPins/imagesEducation/Austria.svg';
 import kenyaFlag from '../../Components/EducationPins/imagesEducation/Kenya.svg';
+import {VerifyTransPin} from "../../Components/ApiCollection.jsx/ApiBuck";
+import {PostFunction} from "../../Components/ApiCollection.jsx/ApiBuck"
+
 import { useNavigate } from "react-router-dom";
 import { GetFunction } from "../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../Loader/Loader";
 import { Modal } from "../Screens/Modal/Modal";
 
 // import { duration } from "html2canvas/dist/types/css/property-descriptors/duration";
+
 
 const GoTv = () => {
 
@@ -50,21 +54,32 @@ const GoTv = () => {
     methodImage,
     setMethodImage,
     isDarkMode,
+    setErrorMessage,
+    setGotvSuccessful,
+    setInputPinGotv,
     fetchedGotvPlans,
+    setSuccessPopup,
     fetchedDstvPlans,
     setFetchedDstvPlans,
     fetchedShowMaxPlans,
     setFetchedShowMaxPlans,
     fetchedStarTimesPlans,
     setFetchedStarTimesPlans,
+      tvSubscriptionResponse, 
+          gotvOrderId, setGotvOrderId,
+          gotvTransactionId, setGotvTransactionId,
+          gotvRequestId, setGotvRequestId,
+          gotvDescription, setGotvDescription,
+          setTvSubscriptionResponse,
     newBalance
-
   } = useContext(ContextProvider)
-const navigate = useNavigate()
- // const [planName, setPlanName] = useState(false);
-  const [loading, setLoading] = useState(false)
 
-
+  const [planName, setPlanName] = useState(false);
+  const [tvOneOtp, setTvOneOtp] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const [failedPopup, setFailedPopup] = useState(false);
+   const navigate = useNavigate();
+ 
 
   // const handleOptionClickGOTV = (option, id) => {
     // setSelectedOptionGOTV(option);
@@ -126,17 +141,17 @@ const GetOtherDataTv = async(id, path)=> {
   if((fetchedDstvPlans.status === undefined || null) && id === 2 ){
     TvPath = `products/tvsub/dstv`;
   fetchedResponse = setFetchedDstvPlans;
-   await GetFunction(TvPath, setLoading, SuccessHandler, FailedHandler, fetchedResponse)
+   await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse)
   
  }else if((fetchedStarTimesPlans.status === undefined || null) && id === 3){
     TvPath = `products/tvsub/startimes`;
   fetchedResponse = setFetchedStarTimesPlans;
-   await GetFunction(TvPath, setLoading, SuccessHandler, FailedHandler, fetchedResponse)
+   await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse)
    
 }else if ((fetchedShowMaxPlans.status === undefined || null) && id === 4){
   TvPath = `products/tvsub/startimes`;
   fetchedResponse = setFetchedShowMaxPlans;
-   await GetFunction(TvPath, setLoading, SuccessHandler, FailedHandler, fetchedResponse)
+   await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse)
   
 }else{
  console.log(fetchedDstvPlans.status)
@@ -186,10 +201,6 @@ const GetOtherDataTv = async(id, path)=> {
       { decoderType  :'StarTimes', path : "/StarTimes", id : 3 },
     { decoderType  :'Showmax', path : "/Showmax", id : 4 }
      ]
-  //   function GotvDropDown(){
-  //     setDecoderActive(!decoderActive);
-  //   document.querySelector('.Decoderdrop').classList.toggle('DropIt');
-  // }
 
  
   
@@ -288,6 +299,80 @@ const GetOtherDataTv = async(id, path)=> {
     setDecoderActive(!decoderActive)
     document.querySelector('.decdrop').classList.toggle('DropIt');
   }
+
+
+
+const handleReceivedData = () => {
+  setIsLoading(true);
+  const receivedData = () => {
+    // Seting the relevant data from the TV subscription response
+    setGotvOrderId(tvSubscriptionResponse.data.order_id);
+    setGotvTransactionId(tvSubscriptionResponse.data.transaction_id);
+    setGotvRequestId(tvSubscriptionResponse.data.request_id);
+    setGotvDescription(tvSubscriptionResponse.data.description);
+  };
+
+  receivedData();
+  
+  if (receivedData) {
+    setSuccessPopup(false);
+    setIsLoading(false);
+    navigate("/gotv-receipt");
+  }
+};
+
+// VerifyPinHandler to handle both success and failure cases:
+const VerifyPinHandler = async () => {
+    const GotvHandler = async () => {
+      const requestData = {
+        decoder_type: decoderType,
+        plan: planName,
+        iuc_number: smartCard,
+        email: tvEmail,
+        amount: tvAmount,
+        phone: mobileNumber,
+      };
+      const Path = "tvsub";
+      const successHandler = () =>{
+        setGotvSuccessful(true);
+        setInputPinGotv(false);
+        handleReceivedData()
+      }
+      const FailedHandler = () =>{
+       setFailedPopup(true);
+       setInputPinGotv(false);
+      }
+      
+      await PostFunction(
+        Path,
+        setIsLoading,
+        requestData,
+       
+        successHandler,
+        FailedHandler,
+        setTvSubscriptionResponse
+      );
+    };
+  
+    await VerifyTransPin(
+      tvOneOtp,
+      null,
+      null,
+      setIsLoading,
+      setErrorMessage,
+      GotvHandler
+    );
+
+  };
+
+  //fetch response
+
+  // function handleRecievedData() =>{
+  //   setLoading(true);
+  //   const recievedData = () =>{
+                           
+  //   }
+  // }
 
   return (
     <div>
@@ -614,17 +699,58 @@ const GetOtherDataTv = async(id, path)=> {
           </div>
 
         </div>
-
-        {loading && (
-          <Modal>
-            <Loader/>
-          </Modal>
-        )}
-
+        
       </DashBoardLayout>
       <ConfirmGotvPopup />
-      <InputGotvPopup />
+      <InputGotvPopup VerifyPinHandler={VerifyPinHandler}/>
       <GotvSuccessfulPopup />
+
+      {/* Failed Transaction Popup */}
+{failedPopup && (
+    <div className="w-[90%] md:w-[70%] lg:w-[40%] mx-auto bg-white rounded-lg overflow-hidden">
+      <div className="flex justify-between items-center p-4">
+        <img
+          onClick={() => setFailedPopup(false)}
+          className="w-6 h-6"
+          src="/Images/login/arpLogo.png"
+          alt="Logo"
+        />
+        <img
+          onClick={() => setFailedPopup(false)}
+          className="w-6 h-6 cursor-pointer"
+          src="/Images/transferImages/close-circle.png"
+          alt="Close"
+        />
+      </div>
+      <hr className="h-1 bg-[#04177f] border-none" />
+      <div className="p-4 text-center">
+        <h2 className="text-lg md:text-xl font-semibold my-4">
+          Transaction Failed
+        </h2>
+        <img
+          className="w-32 h-32 mx-auto my-6"
+          src="./Images/failed.png"
+          alt="Failed"
+        />
+        <p className="text-sm text-gray-600 mb-8">
+          An unexpected error has occurred, please try again.
+        </p>
+        <button
+          onClick={() => setFailedPopup(false)}
+          className="bg-[#04177f] w-full max-w-xs mx-auto py-2 text-white rounded-md font-medium"
+        >
+          Done
+        </button>
+      </div>
+    </div>
+)}
+      {isLoading && (
+           <Modal>
+               <Loader/>
+
+           </Modal>
+      ) } 
+      
     </div>
   )
 }

@@ -6,7 +6,9 @@ import OtpInput from "react-otp-input";
 import CloseIcon from '../EducationPins/imagesEducation/close-circle.svg';
 import axios from "axios";
 import { Loader } from "../Loader/Loader";
-function Verification() {
+import { GetLocalStorage } from "../LocalStorage/LocalStorage";
+function Verification( Data) {
+  Data = GetLocalStorage()
   const {
     viaEmail,
     viaSms,
@@ -23,7 +25,8 @@ function Verification() {
     otpVerifySmsSignup,
     setOtpVerifySmsSignup,
     setSuccess,
-    state
+    state,
+    setState
   } = useContext(ContextProvider);
 const { phoneNumber, email} = state;
 // console.log("Phone:",phoneNumber)
@@ -39,23 +42,35 @@ const [countdown, setCountdown] = useState(60);
   //const [verificationPinError, setVerificationPinError] = useState(false);
   const [verificationPinError, setVerificationPinError] = useState(false);
   const [canResend2, setCanResend2] = useState(false);
+
  
 // PASSING THE SEND OTP FUNCTION
 const getOtpSmsorEmail = async(body, url)=> {
   // const [sendSmsOrEmail, setSendSmsOrEmail] = useState("")
   if(viaEmailOrSms === "sms"){
-    body = {
-      phone_number : phoneNumber
+   
+    if(Data.UserPhone.length === 14 ){
+
     }
+  const parsedPhone = phoneNumber  ?
+   phoneNumber : Data.UserPhone ? Data.UserPhone : "";
+    body = {
+      phone_number : parsedPhone
+    }
+    console.log(body);
     url ="https://aremxyplug.onrender.com/api/v1/sms/send";
   }else if(viaEmailOrSms === "email" ){
+   const parsedEmail =   email  ? email : Data.UserEmail ? Data.UserEmail : "";
     body = {
-    email : email
+    email : parsedEmail
    }
+console.log(body)
    url = "https://aremxyplug.onrender.com/api/v1/send-otp/signup"
 }
+if(!navigator.onLine) return alert("Check your internet connection");
+ if(navigator.onLine){
   await gettingOtpFunction(body,url)
-}
+}}
    //THIS FUNCTION IS TO DERIVE THE OTP FROM THE BACKEND
   const gettingOtpFunction= async(body, url)=> {
     setLoading(true);
@@ -95,21 +110,23 @@ function twoStepVerificationHandler() {
 
 const gettingSmsOrEmailFunctionOtp = async(url, body)=> {
   if( viaEmailOrSms === "email"){
-     url = `https://aremxyplug.onrender.com/api/v1/verify-otp/signup?email=${email}`
+     url = `https://aremxyplug.onrender.com/api/v1/verify-otp/signup?email=${email ? email : Data.UserEmail ? Data.UserEmail : ""}`
        body ={
        otp :otpVerifyEmailSignup
        }
      console.log(otpVerifyEmailSignup);
       }else if(viaEmailOrSms === "sms"){
-       url = `https://aremxyplug.onrender.com/api/v1/sms/verify/signup?phone=${phoneNumber}`
+       url = `https://aremxyplug.onrender.com/api/v1/sms/verify/signup?phone=${phoneNumber ? phoneNumber : Data.UserPhone ? `${Data.UserPhone}` : ""}`
        body ={
        otp :otpVerifySmsSignup
        }
        console.log(otpVerifySmsSignup);
         }
         console.log(`URL:${url}`,`BODY:${body}`)
+        if(!navigator.onLine) return alert("Check your internet connection")
+        if(navigator.onLine){
         await VerifyOtpFunction(url, body)
-}
+}}
 
 
 
@@ -129,11 +146,14 @@ const VerifyOtpFunction = async(url, body)=>{
       alert(`ERROR: ${error.message}`,)
     }else if(error.response &&error.response.status === 500){
       alert("INTERNAL_SERVER_ERROR");
+    }else {
+      alert("Check your internet connection")
     }
   }finally{
     setLoading(false);
   }
   }
+
 
 
 
@@ -156,7 +176,9 @@ return () => clearInterval(timer);
   }, [countdown,viaSms, viaEmailOrSms ]);
 
 //SetTimer for Email
+  
 useEffect(() => {
+
   if (viaEmail === true && viaEmailOrSms === "email") {
     let timer;
     if (countdown2 > 0) {
@@ -169,8 +191,9 @@ useEffect(() => {
     }
 return () => clearInterval(timer);
   }
-}, [countdown2,viaEmail, viaEmailOrSms]);
+ 
 
+}, [countdown2,viaEmail, viaEmailOrSms]);
   // Resend OTP
   const handleResendOTP = () => {
     getOtpSmsorEmail()
@@ -199,7 +222,7 @@ return () => clearInterval(timer);
   
 
   
-
+//console.log(Data.UserPhone.slice(3));
  
 
 
@@ -214,16 +237,18 @@ return () => clearInterval(timer);
   const redirectHandler = () => {
     navigate("/Login");
     setSuccess(false);
-    // setState({
-    //   country: "",
-    //   fullName: "",
-    //   userName: "",
-    //   email: "",
-    //   phoneNumber: "",
-    //   password: "",
-    //   confirmPassword: "",
-    // });
+    setState({
+      country: "",
+      fullName: "",
+      userName: "",
+      email: "",
+      phoneNumber: "",
+      password: "",
+      confirmPassword: "",
+    });
+    localStorage.removeItem("ActiveSignUp");
   };
+
  
   return (
  <div>
@@ -264,7 +289,8 @@ return () => clearInterval(timer);
                   Via SMS
                   </p>
                 <p className="text-[8px] lg:text-[10px] font-[400] lg:font-[600]">
-                  {`${state.phoneNumber.slice(3,6)}*******`}
+                 {state.phoneNumber.length > 1 ? `${state.phoneNumber.slice(3,6)}*******` :
+                  Data.UserPhone ? ` ${Data.UserPhone.slice(3,6)}*******` : ""}
                   </p>
               </div>
             </div>
@@ -289,7 +315,9 @@ return () => clearInterval(timer);
               />
               <div className="flex flex-col">
                 <p className="text-[10px] lg:text-[12px] font-[400] lg:font-[600]">Via Email</p>
-                <p className="text-[8px] lg:text-[10px] font-[400] lg:font-[600]"> {`${state.email.slice(0,3)}*******`}</p>
+                <p className="text-[8px] lg:text-[10px] font-[400] lg:font-[600]">
+                   {state.email.length > 1 ? `${state.email.slice(0,3)}*******` :
+                 Data.UserEmail ? `${Data.UserEmail.slice(0,3)}*******` : "" }</p>
               </div>
             </div>
        
@@ -516,7 +544,9 @@ return () => clearInterval(timer);
           <Loader />
         </Modal>
       )}
+     
     </div>
+   
     
   );
 }

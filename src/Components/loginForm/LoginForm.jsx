@@ -15,15 +15,14 @@ import { Modal } from "../Screens/Modal/Modal";
 function LoginForm() {
 
   const { setOpenTranspin,
-     setOpenResetTranspin,
+    // setOpenResetTranspin,
       setOpen2StepVerification,
       setLoginAuthorisation,
-      state,
       customerDetail,
       setCustomerDetail,
       } = useContext(ContextProvider);
 
-const {fullName, phoneNumber, userName} = state
+
 
   const [usernameORemail, setUsernameORemail] = useState("username");
   const [loading, setLoading] = useState(false);
@@ -148,16 +147,7 @@ const {fullName, phoneNumber, userName} = state
   };
 
   //SetLocalStorage for input Pin flow
-  const SetLocalStorageInputPin =()=> {
-     localStorage.setItem("userEmail", JSON.stringify(state.email))
-    localStorage.setItem("userFullName", JSON.stringify(fullName))
-    localStorage.setItem("userPhone", JSON.stringify(phoneNumber));
-   localStorage.setItem("aremxyUserName", JSON.stringify(userName))
-   localStorage.setItem("userBankName", JSON.stringify(""));
-  localStorage.setItem("aremxyAccountName", JSON.stringify(""))
-  localStorage.setItem("aremxyAccountNumber", JSON.stringify(""));
-  localStorage.setItem("aremxyUserId", JSON.stringify("NO USER ID"));
-  }
+ 
 
 
 // Function to Verify user's Virtual Account situation 2
@@ -209,8 +199,7 @@ if( !navigator.onLine) return alert("No internet Connection, Check your network 
               
                 if(authToken){
                  // localStorage.setItem("UserStatus",false)
-                  SetLocalStorageInputPin();
-                    localStorage.setItem("getToken", authToken);
+                 localStorage.setItem("getToken", authToken);
                    }
      } else if(response.status === 200){
                   setOpen2StepVerification(true);
@@ -288,7 +277,6 @@ if( !navigator.onLine) return alert("No internet Connection, Check your network 
                 const authToken = response.headers.get('Authorization');
                 if(authToken){
                  // localStorage.setItem("UserStatus",false)
-                  SetLocalStorageInputPin();
                   localStorage.setItem("authorisedLogin", authToken);
               }
     }
@@ -559,7 +547,10 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
         </p>
         <div className="flex justify-center">
           <div
-            onClick={() => setOpenResetTranspin(true)}
+           onClick ={()=> {
+            alert("The use of Google as a third party authentication OAuth isn't available for now.")
+          }} 
+          //  onClick={() => setOpenResetTranspin(true)}
             className={`px-[10px] lg:px-[20px] py-[9px] rounded  flex items-center justify-center lg:hover:border-[#b3b3b3] lg:duration-300 border-[#cdcdcd] border-[1px] cursor-pointer `}
           >
             <img
@@ -567,7 +558,10 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
               alt="google"
               className="w-[11.46px] lg:w-[20px] "
             />
-            <p className="lg:text-[14px] md:text-[8.02px] text-[8.02px]  pl-4 font-semibold tracking-wider">
+            <p  onClick ={()=> {
+            alert("The use of Google as a third party authentication OAuth isn't available for now.")
+          }} 
+            className="lg:text-[14px] md:text-[8.02px] text-[8.02px]  pl-4 font-semibold tracking-wider">
               Signin with Google
             </p>
           </div>

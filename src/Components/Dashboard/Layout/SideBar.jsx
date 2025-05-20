@@ -8,25 +8,17 @@ import { useNavigate } from "react-router-dom";
 
 
 export const SideBar = ({fullname, userId, BvnVerify, NinVerify}) => {
-  const { setToggleSideBar, isDarkMode, handleClickOutside,state,setState, customerDetail,setUserStatus } =
+  const { setToggleSideBar, isDarkMode, handleClickOutside, customerDetail,setUserStatus } =
     useContext(ContextProvider);
    
     const {full_name, id} = customerDetail;
-    const {fullName} =state
+    
     const navigate= useNavigate()
   const RemoveLocalStorageKeys=()=> {
     RemoveLocalStorage();
     setUserStatus(false);
     navigate("/Login", {replace : true})
-    setState({
-      country: "",
-      fullName: "",
-      userName: "",
-      email: "",
-      phoneNumber: "",
-      password: "",
-      confirmPassword: "",
-    });
+ 
 ;
   }
   const [dropDownOpen, setDropDownOpen] = useState({
@@ -101,11 +93,10 @@ return (
                 />
                 <div className="flex flex-col gap-[3px] justify-center mt-[4%]">
                   <p className="text-[8px] font-semibold md:text-[14px] lg:text-[14px]">
-                {(!full_name && fullName.length > 1) ? fullName : full_name 
-                 ? full_name : `${fullname ? fullname : "Hi User" }`}
+                 {full_name ? full_name : fullname }
                   </p>
                   <p className="text-[8px] font-semibold md:text-[14px] lg:text-[14px] ">
-                    UID: {`${id ? id: `${userId ? userId : "No User ID"}`} `} 
+                    UID: {id ? id : userId} 
                   </p>
                   <div className="flex gap-[3px] lg:gap-[5px]">
                     <div className={`px-[4px] py-[1px] font-[600] lg:font-[700] text-[10px]

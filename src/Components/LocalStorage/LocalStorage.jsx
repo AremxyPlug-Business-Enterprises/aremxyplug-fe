@@ -14,7 +14,7 @@ export const SetLocalStorage = (email, fullName,phone, username,bankName, accoun
 }
 
 
-export const GetLocalStorage = (ConfirmId, ConfirmAcc, ConfirmBvn) => {
+export const GetLocalStorage = (ConfirmId, ConfirmAcc, ConfirmBvn, UserOtp) => {
   //Two step  verification flow
 const UserEmail = JSON.parse(localStorage.getItem("userEmail"));
  const UserPhone= JSON.parse(localStorage.getItem("userPhone"))
@@ -26,7 +26,8 @@ const UserEmail = JSON.parse(localStorage.getItem("userEmail"));
   const aremxyUserId = JSON.parse(localStorage.getItem("aremxyUserId"));
  const idVerification = localStorage.getItem("idVerification");
  const bvnVerification = localStorage.getItem("bvnVerification");
- const userTransactionOtp =localStorage.getItem("userTransactionOtp")
+ const userTransactionOtp =localStorage.getItem("userTransactionOtp");
+
    const AccCreated =localStorage.getItem("AccCreated");
   if(idVerification && bvnVerification && !AccCreated){
  ConfirmId = localStorage.getItem("idVerification");
