@@ -100,7 +100,7 @@ export const BedcReceipt = () => {
   };
   return (
     <DashBoardLayout>
-      <div className="flex flex-col gap-[35px] lg:gap-[85px]">
+      <div className={`flex flex-col gap-[35px] lg:gap-[85px] ${isDarkMode ? "border border-white rounded-md":""}`}>
         <div
           className={` ${styles.receipt} ${
             toggleSideBar ? "" : "lg:w-[880px] "
