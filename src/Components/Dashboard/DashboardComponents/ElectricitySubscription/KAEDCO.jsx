@@ -548,6 +548,11 @@ const KAEDCO = () => {
                       e.target.style.border = "2px solid red";
                     }
                   }}
+                  onBlur={(e) => {
+                    isDarkMode
+                      ? (e.target.style.border = "1px solid white")
+                      : (e.target.style.border = "1px solid #9C9C9C");
+                  }}
                   onChange={handlePhoneNumber}
                   className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
                     isDarkMode
@@ -667,9 +672,7 @@ const KAEDCO = () => {
               {globalTransferErrors.country && (
                 <div
                   className={`text-[14px] text-red-500 italic lg:text-[14px]
-                   ${
-                     isDarkMode ? "text-white bg-black border border-white" : ""
-                   }`}
+                   ${isDarkMode ? "text-white bg-black" : ""}`}
                 >
                   {globalTransferErrors.country}
                 </div>
@@ -677,27 +680,27 @@ const KAEDCO = () => {
               {showList && (
                 <div
                   className={`
-                  ${
-                    isDarkMode
-                      ? "bg-black text-white border border-white divide-white"
-                      : "text-[#7C7C7C] bg-white"
-                  }
-                  ${
-                    toggleSideBar
-                      ? "lg:w-[31.5%] lg:top-[100.5%]"
-                      : "lg:w-[38.5%] lg:top-[105.3%]"
-                  }  ${
+                    ${
+                      isDarkMode
+                        ? "bg-black border-white rounded-[7px] text-white"
+                        : "text-[#7C7C7C] bg-white rounded-br-[7px] rounded-bl-[7px] lg:rounded-br-[14px] lg:rounded-bl-[14px]"
+                    }
+                    ${
+                      toggleSideBar
+                        ? "lg:w-[31.5%] lg:top-[100.5%]"
+                        : "lg:w-[38.5%] lg:top-[105.3%]"
+                    }  ${
                     styles.countryDropDown
-                  } rounded-br-[7px] rounded-bl-[7px] shadow-xl border w-full lg:w-full lg:rounded-br-[14px] lg:rounded-bl-[14px] flex flex-col divide-y absolute top-20`}
+                  } shadow-xl border w-full lg:w-full  flex flex-col divide-y absolute top-20`}
                 >
                   {countryList.map((country) => (
                     <div
-                      className={`py-[18px] md:py-[14px] font-normal cursor-pointer px-2 flex items-center gap-[5px] text-[12px] md:text-[14px] lg:text-[16px] transition-all duration-300 hover:bg-slate-50 shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
-                      ${
-                        isDarkMode
-                          ? "text-white hover:bg-slate-800 bg-black border border-white"
-                          : "text-[#7E7E7E]"
-                      }`}
+                      className={`py-[18px] md:py-[14px] font-normal cursor-pointer px-2 flex items-center gap-[5px] text-[12px] md:text-[14px] lg:text-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] transition-all duration-300 hover:bg-slate-50
+                       ${
+                         isDarkMode
+                           ? "text-white hover:bg-slate-800 bg-black "
+                           : "text-[#7E7E7E] "
+                       }`}
                       key={country.id}
                       onClick={() =>
                         handleCountryClick(
@@ -906,7 +909,7 @@ const KAEDCO = () => {
               </div>
             </div>
 
-            <div className="bg-[#0001] h-[45px] my-5 flex justify-between items-center px-[4%]">
+            <div className="bg-[#0001] h-[55px] my-5 flex justify-between items-center px-[4%]">
               <div className="flex gap-2 flex-col">
                 <div className="flex gap-2 items-center">
                   <div
@@ -927,7 +930,7 @@ const KAEDCO = () => {
                     </span>
                   </p>
                 </div>
-                <span className="text-red-500 text-[14px] font-[400] leading-[20px] lg:text-[16px] lg:leading-[22px] text-left">
+                <span className="text-gray-500 text-[14px] font-[400] leading-[20px] lg:text-[16px] lg:leading-[22px] text-left">
                   {balanceStatus}
                 </span>
               </div>
@@ -939,8 +942,10 @@ const KAEDCO = () => {
             </div>
             <button
               onClick={handleSwitch}
-              disabled ={CheckSufficiency}
-              className={`my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:my-[2%] ${CheckSufficiency ? "bg-gray-400" : "bg-primary"}`}
+              disabled={CheckSufficiency}
+              className={`my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:my-[2%] ${
+                CheckSufficiency ? "bg-gray-400" : "bg-primary"
+              }`}
             >
               Confirm
             </button>
@@ -1050,8 +1055,12 @@ const KAEDCO = () => {
         <Modal>
           <div
             className={`${styles.successfulTwo} ${
-              toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-            } md:w-[45%] w-[90%] overflow-auto`}
+              isDarkMode ? "bg-black border border-white" : "bg-white"
+            } ${
+              toggleSideBar
+                ? "md:w-[65%] md:ml-[10rem] lg:ml-[20%] lg:w-[40%]"
+                : "lg:w-[40%]"
+            } md:w-[60%] w-[90%] overflow-auto`}
           >
             <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
               <img
@@ -1206,9 +1215,13 @@ const KAEDCO = () => {
                 <span className="text-[#00AA48]">{pointsEarned}</span>
               </div>
             </div>
-
-            <div className="bg-[#F2FAFF]  mx-2 h-[45px] my-5 flex justify-between md:h-[65px] lg:h-[75px]">
-              <p className="text-[11px] text-center w-full h-full w- md:text-[14px] md:w- lg:text-[14px]">
+            {/* mx-10 */}
+            <div
+              className={` mx-2 h-[45px] my-5 flex justify-between md:h-[70px] lg:h-[75px] ${
+                isDarkMode ? "bg-slate-800" : "bg-[#F2FAFF]"
+              }`}
+            >
+              <p className="text-[11px] md:pt-1 text-center w-full h-full md:text-[14px] lg:text-[14px]">
                 The electricity bills / token purchase has been generated
                 successfully. Please kindly check receipt to confirm the bills /
                 token. You can contact us for any further assistance.
@@ -1227,7 +1240,7 @@ const KAEDCO = () => {
 
               <button
                 onClick={handleReceivedData}
-                className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:px-[50px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
               >
                 Receipt
               </button>
@@ -1241,8 +1254,12 @@ const KAEDCO = () => {
         <Modal>
           <div
             className={`${styles.successfulTwo} ${
-              toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-            } md:w-[45%] w-[90%] overflow-auto`}
+              isDarkMode ? "bg-black border border-white" : "bg-white"
+            } ${
+              toggleSideBar
+                ? "md:w-[65%] md:ml-[10rem] lg:ml-[20%] lg:w-[40%]"
+                : "lg:w-[40%]"
+            } md:w-[60%] w-[90%] overflow-auto`}
           >
             <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
               <img
@@ -1275,11 +1292,12 @@ const KAEDCO = () => {
               alt="/"
             />
             <p
-              className={`text-[10px] mx-[10px] text-center my-[60px] md:text-[14px] lg:text-[12px] ${
+              className={`text-[12px] mx-[10px] text-center my-[60px] md:text-[14px] lg:text-[12px] ${
                 isDarkMode ? "text-white" : "text-[#0008]"
               }`}
             >
-              An error has occurred, please click on the receipt for more details.
+              An error has occurred, please click on the receipt for more
+              details.
             </p>
             <div className="flex w-[70%] mx-auto items-center my-6  gap-[6%] md:gap-[20px] justify-center md:w-[20%] lg:my-[5%]">
               <button
@@ -1291,13 +1309,13 @@ const KAEDCO = () => {
               >
                 Done
               </button>
-              
-                <button
-                  onClick={handleFailedData}
-                  className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
-                >
-                  Receipt
-                </button>
+
+              <button
+                onClick={handleFailedData}
+                className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:px-[50px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+              >
+                Receipt
+              </button>
             </div>
           </div>
         </Modal>

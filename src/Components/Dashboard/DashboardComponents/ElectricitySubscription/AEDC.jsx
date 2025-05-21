@@ -435,12 +435,12 @@ const AEDC = () => {
       >
         <div>
           {/* top part after nav bar */}
-          <div className="flex flex-row w-full pt-[10px]  h-[90px] md:h-[112.29px] lg:h-[196px] lg:px-[50px]  px-[16px] rounded-lg md:rounded-[11.5px] lg:rounded-[20px] justify-between py-0 bg-gradient-to-r from-[#FFA733] via-[#58FF4A] to-[#98B0FF]">
+          <div className="flex flex-row w-full pt-[10px]  h-[90px] md:h-[112.29px] lg:h-[196px] lg:px-[50px]  px-[16px] rounded-lg md:rounded-[11.5px] lg:rounded-[20px] justify-between  py-0 bg-gradient-to-r from-[#FFA733] via-[#58FF4A] to-[#98B0FF]">
             <div className="flex flex-col gap-2  ">
-              <div className="text-[11px] font-semibold  pt-[10px] md:text-[11px] md:leading-[20.63px] lg:pt-[25px] lg:text-[24px] lg:leading-[36px] text-[#000000] leading-[12px]">
+              <div className="text-[11px] font-semibold pt-[10px] md:text-[12px] md:leading-[20.63px] lg:pt-[25px] lg:text-[24px] lg:leading-[36px] text-[#000000] leading-[12px]">
                 ELECTRICITY BILLS, PREPAID AND POSTPAID <br /> PAYMENTS.
               </div>
-              <div className="text-[9px] font-normal leading-[12px] md:text-[14px] md:leading-[14.9px] lg:text-[20px] lg:leading-[26px] text-[#000000] ">
+              <div className="text-[9px] font-normal leading-[12px] md:text-[10px] md:leading-[14.9px] lg:text-[20px] lg:leading-[26px] text-[#000000]">
                 Recharge your metre and pay bills with our electricity bills
                 <br /> payment feature for both prepaid and postpaid metertypes.
               </div>
@@ -632,6 +632,11 @@ const AEDC = () => {
                       e.target.style.border = "2px solid red";
                     }
                   }}
+                  onBlur={(e) => {
+                    isDarkMode
+                      ? (e.target.style.border = "1px solid white")
+                      : (e.target.style.border = "1px solid #9C9C9C");
+                  }}
                   onChange={handlePhoneNumber}
                   // className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none font-medium  ${
                   //   isDarkMode
@@ -763,9 +768,7 @@ const AEDC = () => {
               {globalTransferErrors.country && (
                 <div
                   className={`text-[14px] text-red-500 italic lg:text-[14px]
-                  ${
-                    isDarkMode ? "text-white bg-black border border-white" : ""
-                  }`}
+                  ${isDarkMode ? "text-white bg-black " : ""}`}
                 >
                   {globalTransferErrors.country}
                 </div>
@@ -775,8 +778,8 @@ const AEDC = () => {
                   className={`
                   ${
                     isDarkMode
-                      ? "bg-black text-white border border-white divide-white"
-                      : "text-[#7C7C7C] bg-white"
+                      ? "bg-black border-white rounded-[7px] text-white"
+                      : "text-[#7C7C7C] bg-white rounded-br-[7px] rounded-bl-[7px] lg:rounded-br-[14px] lg:rounded-bl-[14px]"
                   }
                   ${
                     toggleSideBar
@@ -784,15 +787,15 @@ const AEDC = () => {
                       : "lg:w-[38.5%] lg:top-[105.3%]"
                   }  ${
                     styles.countryDropDown
-                  } rounded-br-[7px] rounded-bl-[7px] shadow-xl border w-full lg:w-full lg:rounded-br-[14px] lg:rounded-bl-[14px] flex flex-col divide-y absolute top-20`}
+                  } shadow-xl border w-full lg:w-full  flex flex-col divide-y absolute top-20`}
                 >
                   {countryList.map((country) => (
                     <div
                       className={`py-[18px] md:py-[14px] font-normal cursor-pointer px-2 flex items-center gap-[5px] text-[12px] md:text-[14px] lg:text-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] transition-all duration-300 hover:bg-slate-50
                        ${
                          isDarkMode
-                           ? "text-white hover:bg-slate-800 bg-black border border-white"
-                           : "text-[#7E7E7E]"
+                           ? "text-white hover:bg-slate-800 bg-black "
+                           : "text-[#7E7E7E] "
                        }`}
                       key={country.id}
                       onClick={() =>
@@ -1002,7 +1005,7 @@ const AEDC = () => {
               </div>
             </div>
 
-            <div className="bg-[#0001] h-[45px] my-5 flex justify-between items-center px-[4%]">
+            <div className="bg-[#0001] h-[55px] my-5 flex justify-between items-center px-[4%]">
               <div className="flex gap-2 flex-col">
                 <div className="flex gap-2 items-center">
                   <div
@@ -1023,7 +1026,7 @@ const AEDC = () => {
                     </span>
                   </p>
                 </div>
-                <span className="text-red-500 text-[14px] font-[400] leading-[20px] lg:text-[16px] lg:leading-[22px] text-left">
+                <span className="text-gray-500 text-[14px] font-[400] leading-[20px] lg:text-[16px] lg:leading-[22px] text-left">
                   {balanceStatus}
                 </span>
               </div>
@@ -1148,8 +1151,12 @@ const AEDC = () => {
         <Modal>
           <div
             className={`${styles.successfulTwo} ${
-              toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-            } md:w-[45%] w-[90%] overflow-auto`}
+              isDarkMode ? "bg-black border border-white" : "bg-white"
+            } ${
+              toggleSideBar
+                ? "md:w-[65%] md:ml-[10rem] lg:ml-[20%] lg:w-[40%]"
+                : "lg:w-[40%]"
+            } md:w-[60%] w-[90%] overflow-auto`}
           >
             <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
               <img
@@ -1157,7 +1164,7 @@ const AEDC = () => {
                   setSuccessPopup(false);
                   handleResetFields();
                 }}
-                className=" w-[18px]   md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[25px]"
+                className=" w-[18px] md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[25px]"
                 src="/Images/login/arpLogo.png"
                 alt=""
               />
@@ -1305,8 +1312,8 @@ const AEDC = () => {
               </div>
             </div>
             {/* mx-10 */}
-            <div className="bg-[#F2FAFF]  mx-2 h-[45px] my-5 flex justify-between md:h-[65px] lg:h-[75px]">
-              <p className="text-[11px] text-center w-full h-full w- md:text-[14px] md:w- lg:text-[14px]">
+            <div className={` mx-2 h-[45px] my-5 flex justify-between md:h-[70px] lg:h-[75px] ${isDarkMode ? "bg-slate-800": "bg-[#F2FAFF]"}`}>
+              <p className="text-[11px] md:pt-1 text-center w-full h-full md:text-[14px] lg:text-[14px]">
                 The electricity bills / token purchase has been generated
                 successfully. Please kindly check receipt to confirm the bills /
                 token. You can contact us for any further assistance.
@@ -1339,7 +1346,7 @@ const AEDC = () => {
               > */}
               <button
                 onClick={handleReceivedData}
-                className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                 className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] md:px-[50px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
               >
                 Receipt
               </button>
@@ -1354,8 +1361,12 @@ const AEDC = () => {
         <Modal>
           <div
             className={`${styles.successfulTwo} ${
-              toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-            } md:w-[45%] w-[90%] overflow-auto`}
+              isDarkMode ? "bg-black border border-white" : "bg-white"
+            } ${
+              toggleSideBar
+                ? "md:w-[65%] md:ml-[10rem] lg:ml-[20%] lg:w-[40%]"
+                : "lg:w-[40%]"
+            } md:w-[60%] w-[90%] overflow-auto`}
           >
             <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
               <img
@@ -1363,7 +1374,7 @@ const AEDC = () => {
                   setFailedPopup(false);
                   handleResetFields();
                 }}
-                className=" w-[18px]   md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[25px]"
+                className=" w-[18px] md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[25px]"
                 src="/Images/login/arpLogo.png"
                 alt=""
               />
@@ -1401,7 +1412,7 @@ const AEDC = () => {
                   setFailedPopup(false);
                   handleResetFields();
                 }}
-                className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:px-[50px] md:w-[70%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:px-[50px] md:w-[70%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%] `}
               >
                 Done
               </button>
@@ -1421,7 +1432,7 @@ const AEDC = () => {
               > */}
               <button
                 onClick={handleFailedData}
-                className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:px-[50px] md:rounded-[8px] md:text-[16px] px-8 lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
               >
                 Receipt
               </button>
