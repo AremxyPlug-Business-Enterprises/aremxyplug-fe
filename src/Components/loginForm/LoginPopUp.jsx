@@ -195,7 +195,7 @@ const handleVerificationOTP = ()=> {
     localStorage.setItem("bvnVerification",true);
     localStorage.setItem("idVerification",true);
   }
-  }else if(!response.status){
+  }else if(response.status === undefined){
     alert("Check your network connection");
  }
       } catch(error){
@@ -259,7 +259,9 @@ const handleVerificationOTP = ()=> {
         alert("Network Error:, Please Check your Connection and try again");
       }else if(error.status === 500){
         alert('Error:', "A SERVER ERROR");
-     }else{
+     }else if(error.status === undefined){
+    alert("Check your network connection");
+ }else{
       alert("Check your internet connection and try again");
    }}finally{
        setLoading(false);
@@ -287,10 +289,9 @@ const handleAccountDetails = async(AuthUsed)=> {
          ConfirmVirtualState);
          console.log(twoStepVerificationSuccess)
          if(CheckVirtualAcc){
-      navigate("/dashboard")
+      navigate("/dashboard");
         }
-  
-}
+  }
 
 
 

@@ -639,7 +639,7 @@ const AirtimeVtu = () => {
                                     
                                         <h2 className={`
                                            ${styles.span2} !relative !top-[5px] md:!relative 
-                                            md:!top-base !text-[13px] md:!text-[13] !pr-[0] md:pr-[5px]`} required>VNS</h2>
+                                            md:!top-base !text-[13px] md:!text-[13] !pr-[0] md:pr-[5px]`} required>VTU</h2>
                                         
                                          <button className={`
                                      ${isDarkMode ? "!text-[#7E7E7E]" : ""}
