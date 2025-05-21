@@ -12,13 +12,17 @@ import arrowDown from "../Referrals/referralImage/arrow-down.svg";
 import { Link } from "react-router-dom/dist/react-router-dom.development";
 import { useState } from "react";
 import "../../App.css";
+import {PostFunction} from "../../Components/ApiCollection.jsx/ApiBuck"
+import { Loader } from "../Loader/Loader";
+import { Modal } from "../Screens/Modal/Modal";
 
 
 export default function Referral() {
   
   const [copyTextOne, setCopyTextOne] = useState('');
   const [copyTextTwo, setCopyTextTwo] = useState('');
- 
+    const [isLoading, setIsLoading] = useState(false)
+ const [referralResponse, setReferralResponse] = useState('')
 
 
   const handleCopyClick = (e) => {
@@ -42,6 +46,34 @@ export default function Referral() {
     });
    } 
   };
+
+  const handleReferral = async () => {
+  const requestData = {
+    referral_code_1: copyTextOne,
+    referral_code_2: copyTextTwo,
+  };
+
+  const path = "My-Referral"; 
+
+  const successHandler = () => {
+    alert("Referral data submitted successfully!");
+    
+  };
+
+  const failedHandler = () => {
+    alert("Failed to submit referral data.");
+  };
+
+  await PostFunction(
+    path,
+    setIsLoading,
+    requestData,
+    successHandler,
+    failedHandler,
+    setReferralResponse
+  );
+};
+
    
     // const copyToClipBoardOne = () => {
     //     // copy(copyTextOne);
@@ -136,8 +168,8 @@ export default function Referral() {
               <div 
               id='copy-btn1'
               onClick={(e)=> {
-                handleCopyClick(e)
-            
+                handleCopyClick(e);
+                handleReferral();
               }}
                 className=" copy-btn1 flex justify-center 
        gap-[10px] w-[25%] h-[100%] bg-[#04177F] items-center 
@@ -1096,6 +1128,14 @@ lg:text-[24px] lg:leading-[30px]"
         
         </div>
       </div>
+
+          {isLoading && (
+                             <Modal>
+                                 <Loader/>
+                  
+                             </Modal>
+                        ) }  
       </div>
+
     </DashBoardLayout>
   )}

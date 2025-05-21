@@ -8,17 +8,16 @@ import NotVerifiedIcon from "../Components/My Profile & Account Settings/Profile
 export const ContextProvider = createContext();
 
 export const Context = ({ children }) => {
-  
   const handleRefresh = () => {
     window.location.reload(true);
     // new
   };
-
+  
   // Select username or email starts here
   const [hideNavbar, setHideNavbar] = useState(false);
   const [resetEmail, setResetEmail] = useState("");
   const [resetNumber, setResetNumber] = useState("");
-    const [errorMessage, setErrorMessage] =useState('')
+  const [errorMessage, setErrorMessage] =useState('');
 
   // TRANSACTION PIN POP UP STATE STARTS HERE
   const [openTranspin, setOpenTranspin] = useState(false);
@@ -129,15 +128,15 @@ export const Context = ({ children }) => {
   const [withdrawImage, setWithdrawImage] = useState("");
 
   // =========Start For SignUp.jsx==========
-  const [otpVerifyEmailSignup, setOtpVerifyEmailSignup] = useState("");
-  const [otpVerifySmsSignup, setOtpVerifySmsSignup] = useState("");
+  const [otpVerifyEmailSignup,setOtpVerifyEmailSignup] = useState("");
+  const [otpVerifySmsSignup,setOtpVerifySmsSignup] = useState("")
   const [isFocused, setIsFocused] = useState([]);
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordTwo, setShowPasswordTwo] = useState(false);
   const [errors, setErrors] = useState({});
   const [loadSignUp, setLoadSignUp] = useState(false);
   const [verification, setVerification] = useState(false);
-  const [getCountry, setGetCountry] = useState("");
+  const [getCountry, setGetCountry] = useState('')
   const [state, setState] = useState({
     country: "",
     fullName: "",
@@ -232,21 +231,10 @@ export const Context = ({ children }) => {
   // ======end of form valdiation=====
 
   // ======on submit function=======
-  const setLocalStorageForInputPin = ()=> {
-  localStorage.setItem("userEmail", JSON.stringify(state.email))
-  localStorage.setItem("userFullName", JSON.stringify(state.fullName))
-  localStorage.setItem("userPhone", JSON.stringify(state.phoneNumber));
-  localStorage.setItem("aremxyUserName", JSON.stringify(state.userName))
-  localStorage.setItem("userBankName", JSON.stringify(""));
-  localStorage.setItem("aremxyAccountName", JSON.stringify(""));
-  localStorage.setItem("aremxyAccountNumber", JSON.stringify(""));
-  localStorage.setItem("aremxyUserId", JSON.stringify("NO USER ID"));
-  localStorage.setItem("ActiveSignUp", true)
-  }
   const handleSubmit = (event) => {
-   
+    
     event.preventDefault();
-
+  
     const {
       country,
       fullName,
@@ -258,6 +246,8 @@ export const Context = ({ children }) => {
       checkbox,
     } = state;
 
+
+   
     if (password !== confirmPassword) {
       setErrors({
         confirmPassword: "Password and Confirm Password do not match",
@@ -286,8 +276,6 @@ export const Context = ({ children }) => {
       );
     } else {
       setErrors({});
-      if(!navigator.onLine) return alert("Check your internet connection")
-      if(navigator.onLine){
       setLoadSignUp(true);
       const data = {
         fullname: fullName,
@@ -307,25 +295,23 @@ export const Context = ({ children }) => {
         .then((response) => {
           console.log(response);
           if (response.status === 201 || 200) {
-            setVerification(true);
-             setLocalStorageForInputPin();
-          }
+           setVerification(true);
+          } 
         })
-        .catch((error) => {
-          if (error && error.response.data.status === 409) {
+        .catch(error => {
+       if (error && error.response.data.status === 409) {
             alert("Input already in use: " + error.response.data.data.data);
-          } else if (error && error.response.data.status === 404) {
-            alert("An error has occured on your end");
-            console.log(error.response.data.data.data);
-          } else {
-            console.log(error.json());
-            alert("Check your internet connection");
+            
           }
-        })
-        .finally(() => {
-          setLoadSignUp(false);
-        });
-      }
+          else if(error && error.response.data.status === 404 ){
+            alert("An error has occured on your end")
+            console.log(error.response.data.data.data)
+          } else{
+            console.log(error.json());
+            }
+         }).finally(()=> {
+          setLoadSignUp(false)
+         });
     }
   };
   // ========End for SignUp.jsx======
@@ -340,14 +326,16 @@ export const Context = ({ children }) => {
   const [sms] = useState(true);
   const [email] = useState(true);
   const [success, setSuccess] = useState("");
-  const [otpSent, setOtpSent] = useState("");
-  const [forgetPassVerificationPinError, setForgetPassVerificationPinError] =
-    useState("");
+  const [otpSent, setOtpSent] = useState('');
+  const [forgetPassVerificationPinError, setForgetPassVerificationPinError] = useState("");
   const [forgetPassCountdown, setForgetPassCountdown] = useState(60);
   const [forgetPassCanResend, setForgetPassCanResend] = useState(false);
   const [submission, setSubmission] = useState(null);
   const [checked, setChecked] = useState(false);
-  const [passwordAuthorisation, setPasswordAuthorisation] = useState("");
+  const[passwordAuthorisation, setPasswordAuthorisation] = useState("")
+  
+
+ 
 
   const emailorsmsHandler = () => {
     if (!viaEmail) {
@@ -450,9 +438,8 @@ export const Context = ({ children }) => {
   const handleMainInputChange = (e) => {
     const { name, value } = e.target;
     const limitedValue =
-      name === "userPhoneNumber"
-        ? value.replace(/\D/g, "").slice(0, 11)
-        : value;
+      name === "userPhoneNumber" ? value.replace(/\D/g, "").slice(0, 11) : value;
+
 
     setMainTransferState({
       ...mainTransferState,
@@ -463,7 +450,7 @@ export const Context = ({ children }) => {
   const mainTransferSchema = Joi.object({
     mainCountry: Joi.string().required(),
     userPhoneNumber: Joi.string()
-      .pattern(new RegExp(/^\d{11}$/))
+      .pattern(new RegExp(/^\d{11}$/)) 
       .required()
       .max(11)
       .messages({
@@ -841,165 +828,14 @@ export const Context = ({ children }) => {
   const [realoutputValue, setRealOutputValue] = useState("");
 
   //==============electricity subscrition===========
-  // ikedc
-  const [selectedIkedcMeterType, setSelectedIkedcMeterType] = useState("");
-  const [ikedcMeterNumber, setIkedcMeterNumber] = useState("");
-  const [ikedcVerifiedName, setIkedcVerifiedName] = useState("");
-  const [ikedcPhoneNumber, setIkedcPhoneNumber] = useState("");
-  const [ikedcEmail, setIkedcEmail] = useState("");
-  const [ikedcAmount, setIkedcAmount] = useState("");
-  const [ikedcBillGenerate, setIkedcBillGenerate] = useState("");
-  const [ikedcServiceID, setIkedcServiceID] = useState("");
-  const [ikedcFlag, setIkedcFlag] = useState("");
-  const [ikedcDiscoType, setIkedcDiscoType] = useState("");
-  const [ikedcOrderId, setIkedcOrderId] = useState("");
-  const [ikedcTransactionId, setIkedcTransactionId] = useState("");
-  const [ikedcShowDescription, setIkedcShowDescription] = useState("");
-  const [ikedcFetchedResponse, setIkedcFetchedResponse] = useState({});
-
-  // ibedc
-  const [ibedcEmail, setIbedcEmail] = useState("");
-  const [ibedcAmount, setIbedcAmount] = useState("");
-  const [ibedcMeterNumber, setIbedcMeterNumber] = useState("");
-  const [ibedcVerifiedName, setIbedcVerifiedName] = useState("");
-  const [ibedcPhoneNumber, setIbedcPhoneNumber] = useState("");
-  const [ibedcBillGenerate, setIbedcBillGenerate] = useState("");
-  const [ibedcServiceID, setIbedcServiceID] = useState("");
-  const [ibedcFlag, setIbedcFlag] = useState("");
-  const [selectedIbedcMeterType, setSelectedIbedcMeterType] = useState("");
-  const [ibedcOrderId, setIbedcOrderId] = useState("");
-  const [ibedcTransactionId, setIbedcTransactionId] = useState("");
-  const [ibedcDiscoType, setIbedcDiscoType] = useState("");
-  const [ibedcShowDescription, setIbedcShowDescription] = useState("");
-  const [ibedcFetchedResponse, setIbedcFetchedResponse] = useState({});
-
-  // aedc
-  const [aedcEmail, setAedcEmail] = useState("");
-  const [aedcAmount, setAedcAmount] = useState("");
-  const [aedcMeterNumber, setAedcMeterNumber] = useState("");
-  const [aedcVerifiedName, setAedcVerifiedName] = useState("");
-  const [aedcPhoneNumber, setAedcPhoneNumber] = useState("");
-  const [aedcBillGenerate, setAedcBillGenerate] = useState("");
-  const [aedcServiceID, setAedcServiceID] = useState("");
-  const [aedcFlag, setAedcFlag] = useState("");
-  const [selectedAedcMeterType, setSelectedAedcMeterType] = useState("");
-  const [aedcOrderId, setAedcOrderId] = useState("");
-  const [aedcDiscoType, setAedcDiscoType] = useState("");
-  const [aedcTransactionId, setAedcTransactionId] = useState("");
-  const [aedcShowDescription, setAedcShowDescription] = useState("");
-  const [aedcFetchedResponse, setAedcFetchedResponse] = useState({});
-
-  // bedc
-  const [bedcEmail, setBedcEmail] = useState("");
-  const [bedcAmount, setBedcAmount] = useState("");
-  const [bedcMeterNumber, setBedcMeterNumber] = useState("");
-  const [bedcVerifiedName, setBedcVerifiedName] = useState("");
-  const [bedcPhoneNumber, setBedcPhoneNumber] = useState("");
-  const [bedcBillGenerate, setBedcBillGenerate] = useState("");
-  const [bedcServiceID, setBedcServiceID] = useState("");
-  const [bedcFlag, setBedcFlag] = useState("");
-  const [bedcDiscoType, setBedcDiscoType] = useState("");
-  const [selectedBedcMeterType, setSelectedBedcMeterType] = useState("");
-  const [bedcOrderId, setBedcOrderId] = useState("");
-  const [bedcTransactionId, setBedcTransactionId] = useState("");
-  const [bedcShowDescription, setBedcShowDescription] = useState("");
-  const [bedcFetchedResponse, setBedcFetchedResponse] = useState({});
-
-  // eedc
-  const [eedcEmail, setEedcEmail] = useState("");
-  const [eedcAmount, setEedcAmount] = useState("");
-  const [eedcMeterNumber, setEedcMeterNumber] = useState("");
-  const [eedcVerifiedName, setEedcVerifiedName] = useState("");
-  const [eedcPhoneNumber, setEedcPhoneNumber] = useState("");
-  const [eedcBillGenerate, setEedcBillGenerate] = useState("");
-  const [eedcServiceID, setEedcServiceID] = useState("");
-  const [eedcFlag, setEedcFlag] = useState("");
-  const [eedcDiscoType, setEedcDiscoType] = useState("");
-  const [selectedEedcMeterType, setSelectedEedcMeterType] = useState("");
-  const [eedcOrderId, setEedcOrderId] = useState("");
-  const [eedcTransactionId, setEedcTransactionId] = useState("");
-  const [eedcShowDescription, setEedcShowDescription] = useState("");
-  const [eedcFetchedResponse, setEedcFetchedResponse] = useState({});
-
-  // ekedc
-  const [ekedcEmail, setEkedcEmail] = useState("");
-  const [ekedcAmount, setEkedcAmount] = useState("");
-  const [ekedcMeterNumber, setEkedcMeterNumber] = useState("");
-  const [ekedcVerifiedName, setEkedcVerifiedName] = useState("");
-  const [ekedcPhoneNumber, setEkedcPhoneNumber] = useState("");
-  const [ekedcBillGenerate, setEkedcBillGenerate] = useState("");
-  const [ekedcServiceID, setEkedcServiceID] = useState("");
-  const [ekedcFlag, setEkedcFlag] = useState("");
-  const [ekedcDiscoType, setEkedcDiscoType] = useState("");
-  const [selectedEkedcMeterType, setSelectedEkedcMeterType] = useState("");
-  const [ekedcOrderId, setEkedcOrderId] = useState("");
-  const [ekedcTransactionId, setEkedcTransactionId] = useState("");
-  const [ekedcShowDescription, setEkedcShowDescription] = useState("");
-  const [ekedcFetchedResponse, setEkedcFetchedResponse] = useState({});
-
-  // jed
-  const [jedEmail, setJedEmail] = useState("");
-  const [jedAmount, setJedAmount] = useState("");
-  const [jedMeterNumber, setJedMeterNumber] = useState("");
-  const [jedVerifiedName, setJedVerifiedName] = useState("");
-  const [jedPhoneNumber, setJedPhoneNumber] = useState("");
-  const [jedBillGenerate, setJedBillGenerate] = useState("");
-  const [jedServiceID, setJedServiceID] = useState("");
-  const [jedFlag, setJedFlag] = useState("");
-  const [jedDiscoType, setJedDiscoType] = useState("");
-  const [selectedJedMeterType, setSelectedJedMeterType] = useState("");
-  const [jedOrderId, setJedOrderId] = useState("");
-  const [jedTransactionId, setJedTransactionId] = useState("");
-  const [jedShowDescription, setJedShowDescription] = useState("");
-  const [jedFetchedResponse, setJedFetchedResponse] = useState({});
-
-  // kaedco
-  const [kaedcoEmail, setKaedcoEmail] = useState("");
-  const [kaedcoAmount, setKaedcoAmount] = useState("");
-  const [kaedcoMeterNumber, setKaedcoMeterNumber] = useState("");
-  const [kaedcoVerifiedName, setKaedcoVerifiedName] = useState("");
-  const [kaedcoPhoneNumber, setKaedcoPhoneNumber] = useState("");
-  const [kaedcoBillGenerate, setKaedcoBillGenerate] = useState("");
-  const [kaedcoServiceID, setKaedcoServiceID] = useState("");
-  const [kaedcoFlag, setKaedcoFlag] = useState("");
-  const [kaedcoDiscoType, setKaedcoDiscoType] = useState("");
-  const [selectedKaedcoMeterType, setSelectedKaedcoMeterType] = useState("");
-  const [kaedcoOrderId, setKaedcoOrderId] = useState("");
-  const [kaedcoTransactionId, setKaedcoTransactionId] = useState("");
-  const [kaedcoShowDescription, setKaedcoShowDescription] = useState("");
-  const [kaedcoFetchedResponse, setKaedcoFetchedResponse] = useState({});
-
-  // kedco
-  const [kedcoEmail, setKedcoEmail] = useState("");
-  const [kedcoAmount, setKedcoAmount] = useState("");
-  const [kedcoMeterNumber, setKedcoMeterNumber] = useState("");
-  const [kedcoVerifiedName, setKedcoVerifiedName] = useState("");
-  const [kedcoPhoneNumber, setKedcoPhoneNumber] = useState("");
-  const [kedcoBillGenerate, setKedcoBillGenerate] = useState("");
-  const [kedcoServiceID, setKedcoServiceID] = useState("");
-  const [kedcoFlag, setKedcoFlag] = useState("");
-  const [kedcoDiscoType, setKedcoDiscoType] = useState("");
-  const [selectedKedcoMeterType, setSelectedKedcoMeterType] = useState("");
-  const [kedcoOrderId, setKedcoOrderId] = useState("");
-  const [kedcoTransactionId, setKedcoTransactionId] = useState("");
-  const [kedcoShowDescription, setKedcoShowDescription] = useState("");
-  const [kedcoFetchedResponse, setKedcoFetchedResponse] = useState({});
-
-  // phed
-  const [phedEmail, setPhedEmail] = useState("");
-  const [phedAmount, setPhedAmount] = useState("");
-  const [phedMeterNumber, setPhedMeterNumber] = useState("");
-  const [phedVerifiedName, setPhedVerifiedName] = useState("");
-  const [phedPhoneNumber, setPhedPhoneNumber] = useState("");
-  const [phedBillGenerate, setPhedBillGenerate] = useState("");
-  const [phedServiceID, setPhedServiceID] = useState("");
-  const [phedFlag, setPhedFlag] = useState("");
-  const [phedDiscoType, setPhedDiscoType] = useState("");
-  const [selectedPhedMeterType, setSelectedPhedMeterType] = useState("");
-  const [phedOrderId, setPhedOrderId] = useState("");
-  const [phedTransactionId, setPhedTransactionId] = useState("");
-  const [phedShowDescription, setPhedShowDescription] = useState("");
-  const [phedFetchedResponse, setPhedFetchedResponse] = useState({});
+  const [meterNumber, setMeterNumber] = useState("");
+  const [verifiedName, setVerifiedName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [ikedcEmail, setEmail] = useState("");
+  const [ikedcamount, setIkedcamount] = useState("");
+  const [billGenerate, setBillGenerate] = useState("");
+  const [serviceID, setServiceID] = useState("");
+  const [flag, setFlag] = useState("");
 
   //------------Airtime Conversion---------
   const [inputValueA, setInputValueA] = useState("");
@@ -1009,7 +845,8 @@ export const Context = ({ children }) => {
   const [lastName, setLastName] = useState("");
   const [airEmail, setairEmail] = useState("");
   const [homeAdress, sethomeAdress] = useState("");
-
+  
+  
   //=============Currency conversion==============
   const [convertedAmount, setConvertedAmount] = useState("");
   const [initialValue, setInitialValue] = useState("");
@@ -1019,6 +856,12 @@ export const Context = ({ children }) => {
 
   //=============TV-subscription==============
 
+  //==========GOTV===========
+  const [confirmGotvPopup, setConfirmGotvPopup] = useState(false);
+  const [inputPinGotv, setInputPinGotv] = useState(false);
+  const [gotvSuccessful, setGotvSuccessful] = useState(false);
+  const [selectedOptionGOTV, setSelectedOptionGOTV] = useState("");
+  const [showDropdownGOTV, setShowDropdownGOTV] = useState(false);
   const formatNumberWithCommas = (number) => {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
@@ -1034,22 +877,12 @@ export const Context = ({ children }) => {
   const [decoderType, setDecoderType] = useState("");
   const [decoderActive, setDecoderActive] = useState(false);
 
-  //==========GOTV===========
-  const [confirmGotvPopup, setConfirmGotvPopup] = useState(false);
-  const [inputPinGotv, setInputPinGotv] = useState(false);
-  const [gotvSuccessful, setGotvSuccessful] = useState(false);
-  const [selectedOptionGOTV, setSelectedOptionGOTV] = useState("");
-  const [showDropdownGOTV, setShowDropdownGOTV] = useState(false);
-  const [fetchedGotvPlans, setFetchedGotvPlans] = useState([]);
-
   //==========DSTV===========
   const [selectedOptionDstv, setSelectedOptionDstv] = useState("");
   const [showDropdownDstv, setShowDropdownDstv] = useState(false);
   const [confirmDstvPopup, setConfirmDstvPopup] = useState(false);
   const [inputPinDstv, setInputPinDstv] = useState(false);
   const [dstvSuccessful, setDstvSuccessful] = useState(false);
-  const [fetchedDstvPlans, setFetchedDstvPlans] = useState([]);
-  const [dstvAmount, setDstvAmount] = useState("₦");
 
   //=========SHOWMAX===========
   const [selectedOptionShowmax, setSelectedOptionShowmax] = useState("");
@@ -1057,8 +890,6 @@ export const Context = ({ children }) => {
   const [confirmShowmaxPopup, setConfirmShowmaxPopup] = useState(false);
   const [inputPinShowmax, setInputPinShowmax] = useState(false);
   const [showmaxSuccessful, setShowmaxSuccessful] = useState(false);
-  const [fetchedShowMaxPlans, setFetchedShowMaxPlans] = useState([]);
-  const [showMaxAmount, setShowMaxAmount] = useState("₦");
 
   //=========STARTIMES===========
   const [selectedOptionStarTimes, setSelectedOptionStarTimes] = useState("");
@@ -1066,8 +897,6 @@ export const Context = ({ children }) => {
   const [confirmStarTimesPopup, setConfirmStarTimesPopup] = useState(false);
   const [inputPinStarTimes, setInputPinStarTimes] = useState(false);
   const [starTimesSuccessful, setStarTimesSuccessful] = useState(false);
-  const [fetchedStarTimesPlans, setFetchedStarTimesPlans] = useState([]);
-  const [starTimesAmount, setStarTimesAmount] = useState("₦");
 
   //============= EDUCATION PINS ========================
   //===============WAEC PINS================
@@ -1117,7 +946,7 @@ export const Context = ({ children }) => {
   const [nabtebEducationPinEmail, setNabtebEducationPinEmail] = useState("");
   const [nabtebEducationAmount, setNabtebEducationAmount] = useState("₦");
   const [nabtebWalletBalance, setNabtebWalletBalance] = useState("");
-  const [newBalance, setNewBalance] = useState("");
+ const [newBalance, setNewBalance] = useState("");
   // PROFILE & ACCOUNT SETTINGS =========
   //============ Profile Page =========
   const [openImage, setOpenImage] = useState(false);
@@ -1137,13 +966,13 @@ export const Context = ({ children }) => {
   const [idPostalCode, setIdPostalCode] = useState("");
   const [bvnNumber, setBvnNumber] = useState("");
   const [bvnVerifyImage, setBvnVerifyImage] = useState(NotVerifiedIcon);
-  const [bvnStatus, setBvnStatus] = useState("Not Verified");
-  const [dashLoading, setDashLoading] = useState(false);
-  const [bvnButtonState, setBvnButtonState] = useState("Verify");
-  const [virtualAccCreated, setVirtualAccCreated] = useState(false);
-  const [idCountry, setIdCountry] = useState("");
-  const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
-  const [idStatus, setIdStatus] = useState("Not Verified");
+ const [bvnStatus, setBvnStatus] = useState('Not Verified');
+const [dashLoading, setDashLoading] = useState(false);
+const [bvnButtonState, setBvnButtonState] = useState("Verify")
+const [virtualAccCreated, setVirtualAccCreated] = useState(false);
+const [idCountry, setIdCountry] = useState("");
+const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
+   const [idStatus, setIdStatus] = useState('Not Verified');
   //========== BUSINESS KYC =============
   const [businessPopUp, setBusinessPopUp] = useState(false);
 
@@ -1155,50 +984,59 @@ export const Context = ({ children }) => {
 
   //============== API COLLECTION FOR EDUCATION PINS
   const [eduResponse, setEduResponse] = useState(null);
-  const [nabtebEduResponse, setNabtebEduResponse] = useState(null);
-  const [necoEduResponse, setNecoEduResponse] = useState(null);
+  const [nabtebEduResponse,setNabtebEduResponse] = useState(null);
+  const [necoEduResponse,setNecoEduResponse] =useState(null);
 
   //============= LOGIN FORM ==========
   const [loginAuthorisation, setLoginAuthorisation] = useState(false);
-  const [twoStepVerificationSuccess, setTwoStepVerificationSuccess] =
-    useState(false);
-  const [customerDetail, setCustomerDetail] = useState({});
-  const [airtimeStatus, setAirtimeStatus] = useState(false);
-  const [dataStatus, setDataStatus] = useState(false);
-  const [educationPinStatus, setEducationPinStatus] = useState(false);
-  const [subscriptionStatus, setSubscriptionStatus] = useState(false);
+  const [twoStepVerificationSuccess, setTwoStepVerificationSuccess]= useState(false);
+ const [customerDetail, setCustomerDetail] = useState({});
+const [airtimeStatus, setAirtimeStatus] = useState(false);
+const [dataStatus, setDataStatus] = useState(false);
+ const [educationPinStatus, setEducationPinStatus] = useState(false);
+ const [subscriptionStatus, setSubscriptionStatus] = useState(false);
   const [networkStatus, setNetworkStatus] = useState(false);
-  // Use Ref hook for user Deatils
+ // Use Ref hook for user Deatils
 
-  const [bankNameState, setBankNameState] = useState("");
-  const [accountNameState, setAccountNameState] = useState("");
-  const [accountNumberState, setAccountNumberState] = useState("");
-  const [userStatus, setUserStatus] = useState(false);
-  const [idButtonState, setIdButtonState] = useState("Verify");
+const [bankNameState, setBankNameState] = useState("")
+const [accountNameState, setAccountNameState] = useState("")
+const [accountNumberState, setAccountNumberState] = useState("");
+const [userStatus, setUserStatus] = useState(false);
+const [idButtonState, setIdButtonState] = useState("Verify")
+
+ 
+    
+    
+ 
   const hold = {
-    customerDetail,
+    customerDetail, 
     setCustomerDetail,
     handleRefresh,
-    bankNameState,
-    setBankNameState,
-    accountNameState,
-    setAccountNameState,
-    accountNumberState,
-    setAccountNumberState,
-    userStatus,
-    setUserStatus,
-    setIdButtonState,
-    idButtonState,
-    verifyImage,
-    setVerifyImage,
-    idStatus,
-    setIdStatus,
-    networkStatus,
-    setNetworkStatus,
+   bankNameState, 
+   setBankNameState,
+      accountNameState,
+       setAccountNameState,
+        accountNumberState, 
+       setAccountNumberState, 
+       userStatus,
+        setUserStatus,
+        setIdButtonState,
+        idButtonState,
+        verifyImage,
+         setVerifyImage,
+         idStatus,
+         setIdStatus,
+         networkStatus,
+          setNetworkStatus,
+             
 
+           
+
+
+
+       
     // ==================
-    tfImage,
-    settfImage,
+    tfImage, settfImage,
     withdrawImage,
     setWithdrawImage,
     // ====================
@@ -1274,36 +1112,32 @@ export const Context = ({ children }) => {
     // *****************************************
 
     // ======Verification.jsx=====
-
+   
     showModal,
-    setShowModal,
+     setShowModal,
     viaEmail,
     viaSms,
     viaEmailOrSms,
-    setViaEmailOrSms,
+     setViaEmailOrSms,
     setViaEmail,
     setViaSms,
     sms,
     email,
     emailorsmsHandler,
-    success,
+    success, 
     setSuccess,
-    otpSent,
+    otpSent, 
     setOtpSent,
-    forgetPassVerificationPinError,
+    forgetPassVerificationPinError, 
     setForgetPassVerificationPinError,
-    forgetPassCountdown,
-    setForgetPassCountdown,
-    forgetPassCanResend,
-    setForgetPassCanResend,
-    inputForgetEmail,
-    setInputForgetEmail,
-    submission,
-    setSubmission,
-    checked,
-    setChecked,
-    passwordAuthorisation,
-    setPasswordAuthorisation,
+   forgetPassCountdown, setForgetPassCountdown,
+   forgetPassCanResend, setForgetPassCanResend,
+   inputForgetEmail, 
+   setInputForgetEmail,
+   submission, setSubmission,
+   checked, setChecked,
+   passwordAuthorisation, setPasswordAuthorisation,
+  
 
     // ========SignUp.jsx========
     otpVerifyEmailSignup,
@@ -1333,9 +1167,9 @@ export const Context = ({ children }) => {
     resetNumber,
     setResetNumber,
     loadSignUp,
-    setLoadSignUp,
-    getCountry,
-    setGetCountry,
+     setLoadSignUp,
+     getCountry,
+      setGetCountry,
 
     // ============Dashboard=============
     toggleSideBar,
@@ -1346,8 +1180,7 @@ export const Context = ({ children }) => {
     isValue,
     logout,
     setLogout,
-    newBalance,
-    setNewBalance,
+    newBalance, setNewBalance,
 
     // Login
     showModal2,
@@ -1549,305 +1382,22 @@ export const Context = ({ children }) => {
     setRealOutputValue,
 
     //electricity subscription
-    // ikedc
-    selectedIkedcMeterType,
-    setSelectedIkedcMeterType,
-    ikedcMeterNumber,
-    setIkedcMeterNumber,
-    ikedcVerifiedName,
-    setIkedcVerifiedName,
-    ikedcPhoneNumber,
-    setIkedcPhoneNumber,
+    meterNumber,
+    setMeterNumber,
+    verifiedName,
+    setVerifiedName,
+    phoneNumber,
+    setPhoneNumber,
     ikedcEmail,
-    setIkedcEmail,
-    ikedcAmount,
-    setIkedcAmount,
-    ikedcBillGenerate,
-    setIkedcBillGenerate,
-    ikedcServiceID,
-    setIkedcServiceID,
-    ikedcFlag,
-    setIkedcFlag,
-    ikedcDiscoType,
-    setIkedcDiscoType,
-    ikedcOrderId,
-    setIkedcOrderId,
-    ikedcTransactionId,
-    setIkedcTransactionId,
-    ikedcShowDescription,
-    setIkedcShowDescription,
-    ikedcFetchedResponse,
-    setIkedcFetchedResponse,
-
-    // ibedc
-    ibedcMeterNumber,
-    setIbedcMeterNumber,
-    ibedcVerifiedName,
-    setIbedcVerifiedName,
-    ibedcPhoneNumber,
-    setIbedcPhoneNumber,
-    ibedcEmail,
-    setIbedcEmail,
-    ibedcAmount,
-    setIbedcAmount,
-    ibedcBillGenerate,
-    setIbedcBillGenerate,
-    ibedcServiceID,
-    setIbedcServiceID,
-    ibedcFlag,
-    setIbedcFlag,
-    ibedcDiscoType,
-    setIbedcDiscoType,
-    selectedIbedcMeterType,
-    setSelectedIbedcMeterType,
-    ibedcOrderId,
-    setIbedcOrderId,
-    ibedcTransactionId,
-    setIbedcTransactionId,
-    ibedcShowDescription,
-    setIbedcShowDescription,
-    ibedcFetchedResponse,
-    setIbedcFetchedResponse,
-
-    // aedc
-    aedcMeterNumber,
-    setAedcMeterNumber,
-    aedcVerifiedName,
-    setAedcVerifiedName,
-    aedcPhoneNumber,
-    setAedcPhoneNumber,
-    aedcEmail,
-    setAedcEmail,
-    aedcAmount,
-    setAedcAmount,
-    aedcBillGenerate,
-    setAedcBillGenerate,
-    aedcServiceID,
-    setAedcServiceID,
-    aedcFlag,
-    setAedcFlag,
-    aedcDiscoType,
-    setAedcDiscoType,
-    selectedAedcMeterType,
-    setSelectedAedcMeterType,
-    aedcOrderId,
-    setAedcOrderId,
-    aedcTransactionId,
-    setAedcTransactionId,
-    aedcShowDescription,
-    setAedcShowDescription,
-    aedcFetchedResponse,
-    setAedcFetchedResponse,
-
-    // bedc
-    bedcMeterNumber,
-    setBedcMeterNumber,
-    eedcMeterNumber,
-    setEedcMeterNumber,
-    bedcVerifiedName,
-    setBedcVerifiedName,
-    bedcPhoneNumber,
-    setBedcPhoneNumber,
-    bedcEmail,
-    setBedcEmail,
-    bedcAmount,
-    setBedcAmount,
-    bedcBillGenerate,
-    setBedcBillGenerate,
-    bedcServiceID,
-    setBedcServiceID,
-    selectedBedcMeterType,
-    setSelectedBedcMeterType,
-    bedcOrderId,
-    setBedcOrderId,
-    bedcFlag,
-    setBedcFlag,
-    bedcDiscoType,
-    setBedcDiscoType,
-    bedcTransactionId,
-    setBedcTransactionId,
-    bedcShowDescription,
-    setBedcShowDescription,
-    bedcFetchedResponse,
-    setBedcFetchedResponse,
-
-    // eedc
-    eedcVerifiedName,
-    setEedcVerifiedName,
-    eedcPhoneNumber,
-    setEedcPhoneNumber,
-    eedcEmail,
-    setEedcEmail,
-    eedcAmount,
-    setEedcAmount,
-    eedcBillGenerate,
-    setEedcBillGenerate,
-    eedcServiceID,
-    setEedcServiceID,
-    eedcFlag,
-    setEedcFlag,
-    eedcDiscoType,
-    setEedcDiscoType,
-    selectedEedcMeterType,
-    setSelectedEedcMeterType,
-    eedcOrderId,
-    setEedcOrderId,
-    eedcTransactionId,
-    setEedcTransactionId,
-    eedcShowDescription,
-    setEedcShowDescription,
-    eedcFetchedResponse,
-    setEedcFetchedResponse,
-
-    // ekedc
-    ekedcMeterNumber,
-    setEkedcMeterNumber,
-    ekedcVerifiedName,
-    setEkedcVerifiedName,
-    ekedcPhoneNumber,
-    setEkedcPhoneNumber,
-    ekedcEmail,
-    setEkedcEmail,
-    ekedcAmount,
-    setEkedcAmount,
-    ekedcBillGenerate,
-    setEkedcBillGenerate,
-    ekedcServiceID,
-    setEkedcServiceID,
-    ekedcFlag,
-    setEkedcFlag,
-    ekedcDiscoType,
-    setEkedcDiscoType,
-    selectedEkedcMeterType,
-    setSelectedEkedcMeterType,
-    ekedcOrderId,
-    setEkedcOrderId,
-    ekedcTransactionId,
-    setEkedcTransactionId,
-    ekedcShowDescription,
-    setEkedcShowDescription,
-    ekedcFetchedResponse,
-    setEkedcFetchedResponse,
-
-    // jed
-    jedMeterNumber,
-    setJedMeterNumber,
-    jedVerifiedName,
-    setJedVerifiedName,
-    jedPhoneNumber,
-    setJedPhoneNumber,
-    jedEmail,
-    setJedEmail,
-    jedAmount,
-    setJedAmount,
-    jedBillGenerate,
-    setJedBillGenerate,
-    jedServiceID,
-    setJedServiceID,
-    jedFlag,
-    setJedFlag,
-    jedDiscoType,
-    setJedDiscoType,
-    selectedJedMeterType,
-    setSelectedJedMeterType,
-    jedOrderId,
-    setJedOrderId,
-    jedTransactionId,
-    setJedTransactionId,
-    jedShowDescription,
-    setJedShowDescription,
-    jedFetchedResponse,
-    setJedFetchedResponse,
-
-    // kaedco
-    kaedcoMeterNumber,
-    setKaedcoMeterNumber,
-    kaedcoVerifiedName,
-    setKaedcoVerifiedName,
-    kaedcoPhoneNumber,
-    setKaedcoPhoneNumber,
-    kaedcoEmail,
-    setKaedcoEmail,
-    kaedcoAmount,
-    setKaedcoAmount,
-    kaedcoBillGenerate,
-    setKaedcoBillGenerate,
-    kaedcoServiceID,
-    setKaedcoServiceID,
-    kaedcoFlag,
-    setKaedcoFlag,
-    kaedcoDiscoType,
-    setKaedcoDiscoType,
-    selectedKaedcoMeterType,
-    setSelectedKaedcoMeterType,
-    kaedcoOrderId,
-    setKaedcoOrderId,
-    kaedcoTransactionId,
-    setKaedcoTransactionId,
-    kaedcoShowDescription,
-    setKaedcoShowDescription,
-    kaedcoFetchedResponse,
-    setKaedcoFetchedResponse,
-
-    // kaedco
-    kedcoMeterNumber,
-    setKedcoMeterNumber,
-    kedcoVerifiedName,
-    setKedcoVerifiedName,
-    kedcoPhoneNumber,
-    setKedcoPhoneNumber,
-    kedcoEmail,
-    setKedcoEmail,
-    kedcoAmount,
-    setKedcoAmount,
-    kedcoBillGenerate,
-    setKedcoBillGenerate,
-    kedcoServiceID,
-    setKedcoServiceID,
-    kedcoFlag,
-    setKedcoFlag,
-    kedcoDiscoType,
-    setKedcoDiscoType,
-    selectedKedcoMeterType,
-    setSelectedKedcoMeterType,
-    kedcoOrderId,
-    setKedcoOrderId,
-    kedcoTransactionId,
-    setKedcoTransactionId,
-    kedcoShowDescription,
-    setKedcoShowDescription,
-    kedcoFetchedResponse,
-    setKedcoFetchedResponse,
-
-    // phed
-    phedMeterNumber,
-    setPhedMeterNumber,
-    phedVerifiedName,
-    setPhedVerifiedName,
-    phedPhoneNumber,
-    setPhedPhoneNumber,
-    phedEmail,
-    setPhedEmail,
-    phedAmount,
-    setPhedAmount,
-    phedBillGenerate,
-    setPhedBillGenerate,
-    phedServiceID,
-    setPhedServiceID,
-    phedFlag,
-    setPhedFlag,
-    phedDiscoType,
-    setPhedDiscoType,
-    selectedPhedMeterType,
-    setSelectedPhedMeterType,
-    phedOrderId,
-    setPhedOrderId,
-    phedTransactionId,
-    setPhedTransactionId,
-    phedShowDescription,
-    setPhedShowDescription,
-    phedFetchedResponse,
-    setPhedFetchedResponse,
+    setEmail,
+    ikedcamount,
+    setIkedcamount,
+    billGenerate,
+    setBillGenerate,
+    serviceID,
+    setServiceID,
+    flag,
+    setFlag,
 
     //Airtime Conversion
     inputValueA,
@@ -1915,8 +1465,6 @@ export const Context = ({ children }) => {
     setSelectedOptionGOTV,
     showDropdownGOTV,
     setShowDropdownGOTV,
-    fetchedGotvPlans,
-    setFetchedGotvPlans,
 
     //=======DSTV
     confirmDstvPopup,
@@ -1929,10 +1477,9 @@ export const Context = ({ children }) => {
     setSelectedOptionDstv,
     showDropdownDstv,
     setShowDropdownDstv,
-    fetchedDstvPlans,
-    setFetchedDstvPlans,
-    dstvAmount,
-    setDstvAmount,
+
+
+    
 
     //=======SHOWMAX
     confirmShowmaxPopup,
@@ -1945,10 +1492,6 @@ export const Context = ({ children }) => {
     setSelectedOptionShowmax,
     showDropdownShowmax,
     setShowDropdownShowmax,
-    fetchedShowMaxPlans,
-    setFetchedShowMaxPlans,
-    showMaxAmount,
-    setShowMaxAmount,
 
     //=======STARTIMES
     confirmStarTimesPopup,
@@ -1961,10 +1504,6 @@ export const Context = ({ children }) => {
     setSelectedOptionStarTimes,
     showDropdownStarTimes,
     setShowDropdownStarTimes,
-    fetchedStarTimesPlans,
-    setFetchedStarTimesPlans,
-    starTimesAmount,
-    setStarTimesAmount,
 
     //====== EDUCATION PINS
     //=======WAEC PINS
@@ -2010,14 +1549,11 @@ export const Context = ({ children }) => {
     setNecoEducationAmount,
     necoWalletBalance,
     setNecoWalletBalance,
-    airtimeStatus,
-    setAirtimeStatus,
-    educationPinStatus,
-    setEducationPinStatus,
-    subscriptionStatus,
-    setSubscriptionStatus,
-    dataStatus,
-    setDataStatus,
+    airtimeStatus, setAirtimeStatus,
+    educationPinStatus, setEducationPinStatus,
+    subscriptionStatus, setSubscriptionStatus,
+    dataStatus, setDataStatus,
+
 
     //==========   JAMB PINS =========
     jambQuantityResult,
@@ -2094,21 +1630,21 @@ export const Context = ({ children }) => {
     idPostalCode,
     setIdPostalCode,
     idCountry,
-    setIdCountry,
+     setIdCountry,
     // ==========  BVN ========
 
-    bvnNumber,
-    setBvnNumber,
-    bvnVerifyImage,
-    setBvnVerifyImage,
-    bvnStatus,
-    setBvnStatus,
-    dashLoading,
-    setDashLoading,
-    virtualAccCreated,
-    setVirtualAccCreated,
-    bvnButtonState,
-    setBvnButtonState,
+bvnNumber, 
+setBvnNumber,
+bvnVerifyImage, 
+setBvnVerifyImage,
+bvnStatus,
+setBvnStatus,
+dashLoading, 
+setDashLoading,
+virtualAccCreated,
+setVirtualAccCreated,
+bvnButtonState,
+ setBvnButtonState,
     //========== Business PopUp =======
     businessPopUp,
     setBusinessPopUp,
@@ -2121,7 +1657,7 @@ export const Context = ({ children }) => {
     authenticationOpen,
     setAuthenticationOpen,
     //========API COLLECTION FOR EDUCATION PINS =====\
-    eduResponse,
+    eduResponse, 
     setEduResponse,
     nabtebEduResponse,
     setNabtebEduResponse,
@@ -2130,10 +1666,11 @@ export const Context = ({ children }) => {
     // ====Login Authorisation
     loginAuthorisation,
     setLoginAuthorisation,
-    twoStepVerificationSuccess,
+    twoStepVerificationSuccess, 
     setTwoStepVerificationSuccess,
-  };
-  return (
+   
+  }
+return (
     <div>
       <ContextProvider.Provider value={hold}>
         {children}
