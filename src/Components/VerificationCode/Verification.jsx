@@ -49,9 +49,7 @@ const getOtpSmsorEmail = async(body, url)=> {
   // const [sendSmsOrEmail, setSendSmsOrEmail] = useState("")
   if(viaEmailOrSms === "sms"){
    
-    if(Data.UserPhone.length === 14 ){
-
-    }
+  
   const parsedPhone = phoneNumber  ?
    phoneNumber : Data.UserPhone ? Data.UserPhone : "";
     body = {
@@ -137,6 +135,7 @@ const VerifyOtpFunction = async(url, body)=>{
 
     if(response.status === 200 || 201){
       submitVerify()
+        localStorage.removeItem("ActiveSignUp");
     } 
   }catch(error){
     if( error.response  && error.response.status === 400){
@@ -246,7 +245,7 @@ return () => clearInterval(timer);
       password: "",
       confirmPassword: "",
     });
-    localStorage.removeItem("ActiveSignUp");
+  
   };
 
  

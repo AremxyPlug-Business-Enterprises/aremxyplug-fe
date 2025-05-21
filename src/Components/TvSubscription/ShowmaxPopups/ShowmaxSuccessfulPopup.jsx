@@ -7,17 +7,17 @@ import { Link } from "react-router-dom";
 import styles from "../../AirTimePage/AirtimeVtu.module.css";
 
 
- const ShowmaxSuccessfulPopup = () => {
+ const ShowmaxSuccessfulPopup = ({handleReceivedData}) => {
   
    const {
      showmaxSuccessful, 
      setShowmaxSuccessful,
      toggleSideBar,
-     mobileNumber,
+     showMaxMobileNumber,
      flagResult,
      cardName,
-     smartCard,
-     tvEmail,
+     showMaxSmartCard,
+     showMaxEmail,
      selectedOptionShowmax,
   } = useContext(ContextProvider)
 
@@ -44,6 +44,11 @@ import styles from "../../AirTimePage/AirtimeVtu.module.css";
   //     );
   //   };
 
+  const handleReceipt = ()=> {
+    setShowmaxSuccessful(false);
+    handleReceivedData();
+  }
+
     return(
        <>
        {showmaxSuccessful &&
@@ -54,22 +59,25 @@ import styles from "../../AirTimePage/AirtimeVtu.module.css";
               toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
             } md:w-[45%] w-[90%] overflow-auto`}>
         <div className="flex justify-between items-center mx-[3%] my-[2%] md:my-[1%]">
-        <Link to="/">
+        <div>
               <img
-                    onClick={() => { setShowmaxSuccessful(false);}}
+                    
                 className=" w-[15px] h-[10px] md:w-[24px] md:h-[15px] lg:w-[42px] lg:h-[25px]"
                 src="/Images/login/arpLogo.png"
                 alt=""
               />
-                </Link>
-            <Link to='/TvSubscription'>
+                </div>
+            <div>
               <img
-                onClick={()=>setShowmaxSuccessful(false)}
+                onClick={()=>{
+                  setShowmaxSuccessful(false)
+                  window.location.reload()
+                }}
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
                   />
-              </Link>
+              </div>
         </div>
         <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
         <div className="">
@@ -100,7 +108,7 @@ import styles from "../../AirTimePage/AirtimeVtu.module.css";
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[15px] font-semibold">
                     <span className="text-[#7C7C7C]">Smartcard / IUC Number</span>
-                    <span>{smartCard}</span>
+                    <span>{showMaxSmartCard}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[15px] font-semibold">
                     <span className="text-[#7C7C7C]">Card Name</span>
@@ -108,20 +116,20 @@ import styles from "../../AirTimePage/AirtimeVtu.module.css";
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[15px] font-semibold">
                     <span className="text-[#7C7C7C]">Phone Number</span>
-                    <span>{mobileNumber}</span>
+                    <span>{showMaxMobileNumber}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[15px] font-semibold">
                     <span className="text-[#7C7C7C]">Email</span>
-                    <span>{tvEmail}</span>
+                    <span>{showMaxEmail}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[15px]">
                     <span className="text-[#7C7C7C]">Payment Method</span>
                     <span>{flagResult}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[15px]">
+                {/* <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[15px]">
                     <span className="text-[#7C7C7C]">Order Number</span>
                     <span>0124yend44</span>
-                </div>
+                </div> */}
             </div>
         </div>
         <div className="bg-[#F2FAFF] mx-10 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
@@ -131,7 +139,7 @@ import styles from "../../AirTimePage/AirtimeVtu.module.css";
         </div>
 
         <div className="flex w-full justify-center items-center gap-[10px] pb-4 md:gap-[8.59px] lg:gap-[15px] md:pb-2">
-        <Link to='/TvSubscription'>
+    
                 <button
                     onClick={() => { setShowmaxSuccessful(false); 
                       window.location.reload();}} 
@@ -139,14 +147,14 @@ import styles from "../../AirTimePage/AirtimeVtu.module.css";
               >
                 Done
                   </button>
-            </Link>
-              <Link to='/ShowmaxReceipt'>
-                <button onClick={()=> {setShowmaxSuccessful(false)}}
+            
+           
+                <button onClick={()=> handleReceipt()}
                 style={{boxShadow : '0px 0px 2.0368096828460693px 0px #00000040'}} className={`border-[1px]  w-[111px] lg:w-[200px] md:w-[99px] h-[40px] md:h-[24px] lg:h-[42px] lg:my-[2%] flex justify-center items-center cursor-pointer text-[12px] md:text-[12px] lg:text-[16px] font-semibold rounded-[6px] md:rounded-[7px] lg:rounded-[12px]`}
                 >
                   Receipt
                 </button>
-                </Link>
+           
         </div>
        </div>   
             </Modal>

@@ -16,9 +16,9 @@ import styles from '../../AirTimePage/AirtimeVtu.module.css'
     selectedOptionDstv,
     
     setInputPinDstv,
-    mobileNumber,
-    tvEmail,
-    smartCard,
+    dstvMobileNumber,
+    dstvEmail,
+    dstvSmartCard,
     cardName,
     methodImage,
     tvWalletBalance,
@@ -100,7 +100,7 @@ const [balanceStatus,setBalanceStatus ] = useState("")
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
                     <span className="text-[#0008]">Smartcard / IUC Number</span>
-                    <span>{smartCard}</span>
+                    <span>{dstvSmartCard}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
                     <span className="text-[#0008]">Card Name</span>
@@ -108,11 +108,11 @@ const [balanceStatus,setBalanceStatus ] = useState("")
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
                     <span className="text-[#0008]">Phone Number</span>
-                    <span>{mobileNumber}</span>
+                    <span>{dstvMobileNumber}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
                     <span className="text-[#0008]">Email</span>
-                    <span>{tvEmail}</span>
+                    <span>{dstvEmail}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
                     <span className="text-[#0008]">Amount</span>
@@ -146,7 +146,7 @@ const [balanceStatus,setBalanceStatus ] = useState("")
                         <p className="text-[12px] md:text-[14px] leading-[20px] lg:leading-[22px]  lg:text-[16px] font-[500]">
                     Available Balance {"  "} 
                      </p>
-                     <span className="text-[#0003]">
+                     <span className="text-black">
                       {`(${newBalance})`}
                     </span>
                     </div>

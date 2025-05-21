@@ -19,14 +19,10 @@ export const InputShowmaxPopup = ({VerifyPinHandler}) => {
       toggleVisibility,
       isVisible,
       setInputPinShowmax,
-      setShowmaxSuccessful,
+    
    } = useContext(ContextProvider)
 
-   const handleShowmaxSuccessful = (event) =>{
-    event.preventDefault();;
-    setInputPinShowmax(false);
-    setShowmaxSuccessful(true);
-  }
+  
 
    const [isFocused, setIsFocused] = useState(false);
       const handleFocus = () => {
@@ -83,7 +79,7 @@ export const InputShowmaxPopup = ({VerifyPinHandler}) => {
                 }
                     
                     renderInput={(props) => (
-                      <input onClick={VerifyPinHandler} {...props} className={`inputOTP mx-[2px] ${isFocused ? 'focused' : ''}`} onFocus={handleFocus}
+                      <input {...props} className={`inputOTP mx-[2px] ${isFocused ? 'focused' : ''}`} onFocus={handleFocus}
                       onBlur={handleBlur}/>
                     )}
                   />
@@ -111,7 +107,7 @@ export const InputShowmaxPopup = ({VerifyPinHandler}) => {
             }
             </div>
             <button
-              onClick={handleShowmaxSuccessful}
+              onClick={()=> VerifyPinHandler()}
               disabled={inputPin.length !== 4 ? true : false}
               className={`${
                 inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"

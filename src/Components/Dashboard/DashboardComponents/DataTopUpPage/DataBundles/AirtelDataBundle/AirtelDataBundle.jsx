@@ -339,10 +339,10 @@ console.log(airtelDataAmount, balanceStringToNum)
   // console.log("confirm:", confirm);
 
 
-  const [airteltransactionID, setAirtelTransactionID] = useState("");
-  const [airtelorderID, setAirtelOrderID] = useState("");
+  const [airtelTransactionID, setAirtelTransactionID] = useState("");
+  const [airtelOrderID, setAirtelOrderID] = useState("");
   const [airtelrefNumber, setAirtelRefNumber] = useState("");
-  const [airteldescription, setAirtelDescription] = useState("");
+  const [airtelDescription, setAirtelDescription] = useState("");
 
   const inputPinHandler = async () => {
     async function buyData(network, mobileNumber, planID, name) {
@@ -374,11 +374,11 @@ console.log(airtelDataAmount, balanceStringToNum)
 
       try {
         const response = await axiosInstance.post(path, data);
-        console.log(response.data);
+      //  console.log(response.data);
         console.log(response.status);
 
-        const resData = response.data.data; // Accessing the nested `data` object
-
+        const resData = response.data.data.data; // Accessing the nested `data` object
+     console.log(resData);
         console.log(response.status);
         setPlan(resData.plan_name);
         console.log(resData.plan_name);
@@ -932,11 +932,7 @@ console.log(airtelDataAmount, balanceStringToNum)
 
           {/* ================Proceed=================== */}
 
-          {loading && (
-            <Modal>
-              <Loader/>
-            </Modal>
-          )}
+        
 
           {proceed && (
             <Modal>
@@ -1074,7 +1070,7 @@ console.log(airtelDataAmount, balanceStringToNum)
                                                              <p className="text-[12px] md:text-[14px] leading-[20px] lg:leading-[22px]  lg:text-[16px] font-[500]">
                                                          Available Balance {"  "} 
                                                           </p>
-                                                          <span className="text-[#0003]">
+                                                          <span className="text-black">
                                                            {`(${newBalance})`}
                                                          </span>
                                                          </div>
@@ -1159,10 +1155,10 @@ console.log(airtelDataAmount, balanceStringToNum)
                       inputValue: inputValue,
                       recipientNames: recipientNames,
                       selectedAmount: selectedAmount,
-                      airteltransactionID: airteltransactionID,
+                      airteltransactionID: airtelTransactionID,
                       airtelrefNumber: airtelrefNumber,
-                      airtelorderID: airtelorderID,
-                      airteldescription: airteldescription,
+                      airtelorderID: airtelOrderID,
+                      airteldescription: airtelDescription,
 
                     }}
                   >
@@ -1244,7 +1240,7 @@ console.log(airtelDataAmount, balanceStringToNum)
                     {errorMessage && (
                       <p className ="text-center text-[14px] text-red-500 lg:text-[16px]
                        font-[500] leading-[18px] lg:leading-[20px]">
-                        Incorrect Otp
+                        Incorrect pin
                       </p>
                     )}
                   </div>
@@ -1448,10 +1444,10 @@ console.log(airtelDataAmount, balanceStringToNum)
                       selectedOption: selectedOption,
                       recipientNames: recipientNames,
                       selectedAmount: selectedAmount,
-                      airteltransactionID: airteltransactionID,
+                      airteltransactionID: airtelTransactionID,
                       airtelrefNumber: airtelrefNumber,
-                      airtelorderID: airtelorderID,
-                      airteldescription: airteldescription,
+                      airtelorderID: airtelOrderID,
+                      airteldescription: airtelDescription,
                     }}>
                     <button
                       onClick={handleReceipt}
@@ -1473,10 +1469,10 @@ console.log(airtelDataAmount, balanceStringToNum)
               recipientPhoneNumber={recipientPhoneNumber}
               recipientNames={recipientNames}
               selectedAmount={selectedAmount}
-              airteltransactionID={airteltransactionID}
+              airteltransactionID={airtelTransactionID}
               airtelrefNumber={airtelrefNumber}
-              airtelorderID={airtelorderID}
-              airteldescription={airteldescription}
+              airtelorderID={airtelOrderID}
+              airteldescription={airtelDescription}
             />
           )}
 
@@ -1488,10 +1484,10 @@ console.log(airtelDataAmount, balanceStringToNum)
               recipientPhoneNumber={recipientPhoneNumber}
               recipientNames={recipientNames}
               selectedAmount={selectedAmount}
-              airteltransactionID={airteltransactionID}
+              airteltransactionID={airtelTransactionID}
               airtelrefNumber={airtelrefNumber}
-              airtelorderID={airtelorderID}
-              airteldescription={airteldescription}
+              airtelorderID={airtelOrderID}
+              airteldescription={airtelDescription}
             />
           )}
 
@@ -1542,6 +1538,11 @@ console.log(airtelDataAmount, balanceStringToNum)
           </Link>
         </div>
       </div>
+        {loading && (
+            <Modal>
+              <Loader/>
+            </Modal>
+          )}
     </DashBoardLayout>
   );
 };

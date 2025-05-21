@@ -12,7 +12,7 @@ export const SignInVirtualAccountState =(customerDetail, virtualAccCreated,setBa
   
    SetLocalStorage(email,full_name,phone, username, bank_name, account_name, account_no ,id)
 //Checking if Virtual account is true
-
+ 
    if(bank_name.length > 1 && account_name.length > 1 && account_no.length > 1){
 GetVirtualAccountValue(virtualAccCreated,
    setBankNameState, setAccountNameState, setAccountNumberState);
@@ -51,7 +51,6 @@ const {bank_name, account_no, account_name} = virtualAccCreated
  const  username = JSON.parse(localStorage.getItem("aremxyUserName"));
  const id = JSON.parse(localStorage.getItem("aremxyUserId"));
  //Checking if Virtual account is true
- alert("In Action Virtual Running")
     
 if(bank_name.length > 1 ){
  GetVirtualAccountValue( virtualAccCreated,
@@ -113,6 +112,8 @@ export const CheckVirtualAcc = async(authToken, customerDetail, setLoading,
        
      }else if(error.status === 500){
                 alert('Error:', "SERVER ERROR");
+          }else if(error.status === undefined){
+                alert("Check your internet Connection");
           }else {
             alert("Check your internet connection")
           }
@@ -177,20 +178,26 @@ export const VerifyTransPin = async(otp, setSuccess,
          Authorization : authToken || getToken
       }})
       if(response.status === 201 || 200){
+
          setSuccess(true);
        setErrorMessage(false);
      await asyncFuncAtSuccess()
+    
       }
    }catch(error){
+    
       if(error && error.response.status === 400){
          setFailed(true)
          setErrorMessage(true)
       }else if(error && error.response.status === 401){
-         setFailed(true)
+         setFailed(true);
+         alert("Your Session has timed out");
       }else if(error && error.response.status === 500){
    setFailed(true)
    setErrorMessage("Server error: Try some other time")
-      }else {
+      }else if(error && error.reponse.status === undefined){
+                alert("Check your internet Connection");
+          }else {
    alert("Check your internet connection and try again")
       }
    }finally{
@@ -215,14 +222,17 @@ export const PostFunction = async(path, setLoading, body, functionAtSuccess, fun
       }})
       if(response.status === 201 || 200){
     functionAtSuccess()
+   
          if(functionAtSuccess) {
             setFetchedResponse(response.data.data)
          }
-         console.log(response.data)
+         //console.log(response.data)
       }
 
    }catch(error){
+       
       if(error && error.response.status === 400){
+       
          functionAtFailed()
           if(functionAtFailed) {
             setFetchedResponse(error.response.data.data)
@@ -252,7 +262,9 @@ export const PostFunction = async(path, setLoading, body, functionAtSuccess, fun
               console.log(error.response.data.data)
             
          }
-      }else{
+      }else if(error && error.reponse.status === undefined){
+                alert("Check your internet Connection");
+          }else{
          alert("Check your network connection")
       }
    }finally{
@@ -280,6 +292,7 @@ export const GetFunction = async(path, setLoading, functionAtSuccess,functionAtF
      }
       }
    }catch(error){
+      
       if(error && error.response.status === 400){
          functionAtFailed()
        alert("Invalid request")
@@ -292,7 +305,9 @@ export const GetFunction = async(path, setLoading, functionAtSuccess,functionAtF
       }else if(error && error.response.status === 500){
   
    alert("Server error: Try some other time")
-      }else {
+      }else if(error && error.reponse.status === undefined){
+                alert("Check your internet Connection");
+          }else {
       alert("Check your internet connection")
       }
    }finally{
@@ -329,7 +344,9 @@ export const PutFunction = async(path, setLoading,body, functionAtSuccess,functi
       }else if(error && error.response.status === 500){
   
    alert("Server error: Try some other time")
-      }else {
+      }else if(error && error.reponse.status === undefined){
+                alert("Check your internet Connection");
+          }else {
          alert("Check your internet connection")
       }
    }finally{
