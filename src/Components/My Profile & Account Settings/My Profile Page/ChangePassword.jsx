@@ -27,7 +27,7 @@ const [loading, setLoading] = useState(false)
   //Function to Change the password
   const ChangeUserPin = async()=> {
     const getToken = localStorage.getItem("getToken");
-    const authToken = localStorage.getItem("authToken");
+    const authToken = localStorage.getItem("authorisedLogin");
     if(!navigator.onLine) return alert("Check your internet connection");
     if((authToken || getToken) && navigator.onLine){
       setLoading(true)
