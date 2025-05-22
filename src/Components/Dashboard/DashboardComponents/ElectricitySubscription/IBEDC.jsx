@@ -48,7 +48,7 @@ const IBEDC = () => {
     setIbedcBillGenerate,
     ibedcServiceID,
     setIbedcServiceID,
-    flag,
+    ibedcFlag,
     setIbedcFlag,
     setIbedcDiscoType,
     selectedIbedcMeterType,
@@ -199,6 +199,7 @@ const IBEDC = () => {
     setIbedcFlag(flag);
     setShowList(false);
     setGlobalCountry(name);
+    setAmountError("");
     setSelected(true);
     // setCountryCode(code);
     // setCurrencyAvailable(id !== 1);
@@ -228,6 +229,7 @@ const IBEDC = () => {
     } else {
       setIbedcAmount(`₦${newValue}`);
     }
+    setAmountError("");
   };
   const [successPopup, setSuccessPopup] = useState(false);
   const [failedPopup, setFailedPopup] = useState(false);
@@ -240,13 +242,14 @@ const IBEDC = () => {
   const verifyPin = async () => {
     async function ElectricityHandler() {
       const path = "electric-bill";
+      const parsedAmount = parseInt(ibedcAmount, 10);
       const data = {
         meter_type: selectedIbedcMeterType,
         meter_no: ibedcMeterNumber,
         phone: ibedcPhoneNumber, // Use the parsed integer value
         email: ibedcEmail,
-        // amount: parsedAmount,
-        amount: "",
+        amount: parsedAmount,
+        // amount: "",
         disco_type: "ibadan-electric",
       };
       // const parsedAmount = parseInt(amount, 10);
@@ -514,17 +517,17 @@ const IBEDC = () => {
               {showProductList && (
                 <div
                   className={`
-                ${
-                  isDarkMode
-                    ? "text-white bg-black border-white divide-white "
-                    : " text-[#7C7C7C] bg-white "
-                }
-                border flex flex-col divide-y items-center text-[14px] md:text-[12px] lg:text-[16px] mt-20 lg:mt-20 rounded-[4px] md:rounded-[10px] absolute shadow-md top-1 lg:top-[1rem] w-full z-[10]`}
+                    ${
+                      isDarkMode
+                        ? "text-white bg-black hover:bg-slate-800 divide-white border-white"
+                        : " text-[#7C7C7C] bg-white"
+                    }
+                    border flex flex-col divide-y items-center text-[14px] md:text-[12px] lg:text-[16px] mt-20 lg:mt-20  rounded-[4px] md:rounded-[10px] absolute top-1 lg:top-[1rem] w-full z-[10]`}
                 >
                   {productList.map((item) => (
                     <div
                       key={item.name}
-                      className={`pb-[18px] pt-[8px] md:py-[14px] font-bold cursor-pointer md:text-[12px] lg:text-[16px] w-[100%]  md:rounded-[0px] lg:mt- text-[12px] pl-[5px]
+                      className={`pb-[18px] pt-[8px] md:py-[14px] font-bold cursor-pointer md:text-[12px] lg:text-[16px] w-full md:rounded-[0px] text-[12px] pl-[5px]
                       ${
                         isDarkMode
                           ? "bg-black text-white hover:bg-slate-800 hover:rounded-t-[10px]"
@@ -556,7 +559,7 @@ const IBEDC = () => {
                   onClick={() => setShowProductList(false)}
                   className={`py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full w-full  ${
                     isDarkMode
-                      ? "bg-black text-white border border-white"
+                      ? "text-white bg-black border-white"
                       : "text-[#7E7E7E]"
                   }`}
                 />
@@ -666,7 +669,7 @@ const IBEDC = () => {
                 Amount
               </div>
               <div
-                className={`flex items-center lg:text-[16px] text-[10px] border border-[#9C9C9C] rounded-[10px] pl-2 ${
+                className={`flex items-center lg:text-[16px] text-[12px] border border-[#9C9C9C] rounded-[10px] pl-2 ${
                   isDarkMode
                     ? "text-white bg-black border-white "
                     : "text-[#7E7E7E]"
@@ -678,16 +681,13 @@ const IBEDC = () => {
                   name="ibedcamount"
                   value={ibedcAmount}
                   placeholder="Minimum of ₦1000"
-                  onInput={(e) => {
-                    if (ibedcEmail.includes("@")) {
-                      e.target.style.border = "2px solid green";
-                    } else {
-                      e.target.style.border = "2px solid red";
-                    }
-                  }}
                   onChange={handleIbedcAmount}
                   className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:py-3 md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] text-[12px] leading-[18px] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none
-                 ${isDarkMode ? "text-white bg-black" : "text-[#7E7E7E]"}`}
+                 ${
+                   isDarkMode
+                     ? "text-white bg-black border border-black"
+                     : "text-[#7E7E7E]"
+                 }`}
                 />
               </div>
               {amountError && (
@@ -728,7 +728,7 @@ const IBEDC = () => {
                     </p>
                     <img
                       className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
-                      src={flag}
+                      src={ibedcFlag}
                       alt=""
                     />
                   </div>
@@ -766,7 +766,7 @@ const IBEDC = () => {
                 >
                   {countryList.map((country) => (
                     <div
-                       className={`py-[18px] md:py-[14px] font-normal cursor-pointer px-2 flex items-center gap-[5px] text-[12px] md:text-[14px] lg:text-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] transition-all duration-300 hover:bg-slate-50
+                      className={`py-[18px] md:py-[14px] font-normal cursor-pointer px-2 flex items-center gap-[5px] text-[12px] md:text-[14px] lg:text-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] transition-all duration-300 hover:bg-slate-50
                        ${
                          isDarkMode
                            ? "text-white hover:bg-slate-800 bg-black "
@@ -1296,7 +1296,11 @@ const IBEDC = () => {
               </div>
             </div>
             {/* mx-10 */}
-            <div className={` mx-2 h-[45px] my-5 flex justify-between md:h-[70px] lg:h-[75px] ${isDarkMode ? "bg-slate-800": "bg-[#F2FAFF]"}`}>
+            <div
+              className={` mx-2 h-[45px] my-5 flex justify-between md:h-[70px] lg:h-[75px] ${
+                isDarkMode ? "bg-slate-800" : "bg-[#F2FAFF]"
+              }`}
+            >
               <p className="text-[11px] md:pt-1 text-center w-full h-full md:text-[14px] lg:text-[14px]">
                 The electricity bills / token purchase has been generated
                 successfully. Please kindly check receipt to confirm the bills /

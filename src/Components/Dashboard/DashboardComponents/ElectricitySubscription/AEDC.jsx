@@ -547,7 +547,7 @@ const AEDC = () => {
                   {productList.map((item) => (
                     <div
                       key={item.name}
-                      className={`pb-[18px] pt-[8px] md:py-[14px] font-bold cursor-pointer md:text-[12px] lg:text-[16px] w-full  md:rounded-[0px] lg:mt- text-[12px] pl-[5px] 
+                      className={`pb-[18px] pt-[8px] md:py-[14px] font-bold cursor-pointer md:text-[12px] lg:text-[16px] w-full md:rounded-[0px] text-[12px] pl-[5px] 
                         ${
                           isDarkMode
                             ? "bg-black text-white hover:bg-slate-800 hover:rounded-t-[10px]"
@@ -685,8 +685,10 @@ const AEDC = () => {
             </div>
             <div className="flex flex-col gap-2 lg:gap-2.5">
               <div
-                className={`text-[#7E7E7E] text-[14px] lg:text-[16px] md:font-semibold font-normal ${
-                  isDarkMode ? "text-white" : ""
+                className={`flex items-center lg:text-[16px] text-[12px] border border-[#9C9C9C] rounded-[10px] pl-2 ${
+                  isDarkMode
+                    ? "text-white bg-black border-white "
+                    : "text-[#7E7E7E]"
                 }`}
               >
                 Amount

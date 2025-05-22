@@ -205,7 +205,7 @@ export const IkedcReceipt = () => {
                 <div className="flex gap-[5px] items-center mt-[10px] md:mt-[30px] text-[10px] lg:text-[16px] font-extrabold">
                   <p>Sender Info</p>
                   <img
-                    className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
+                    className="w-[13px] h-[13px] md:w-[1rem] md:h-[1rem] lg:w-[20px] lg:h-[20px]"
                     src="./Images/dashboardImages/arrowright.png"
                     alt="/"
                   />
@@ -277,7 +277,7 @@ export const IkedcReceipt = () => {
               onClick={() => {
                 handleSaveAsPDFClick();
               }}
-              className={` border-[1px] w-[111px]  flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] md:w-[8.5rem] rounded-[6px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%] ${isDarkMode ? "bg-black border-white" : "bg-[#ffffff] border-[#0003]"}`}
+              className={`border w-[111px]  flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] md:w-[8.5rem] rounded-[6px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%] ${isDarkMode ? "bg-black border-white" : "bg-[#ffffff] border-[#0003]"}`}
             >
               Save as PDF
             </button>

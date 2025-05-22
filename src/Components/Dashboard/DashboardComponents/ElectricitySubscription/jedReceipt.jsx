@@ -1,44 +1,44 @@
 import React from "react";
 import { useContext, useRef } from "react";
 import { ContextProvider } from "../../../Context";
-import styles from "../TransferComponent/transfer.module.css"
+import styles from "../TransferComponent/transfer.module.css";
 import { DashBoardLayout } from "../../Layout/DashBoardLayout";
 import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-import logo2 from "../ElectricitySubscription/Electricity-sub-images/Jos-Electric-JED 1.svg"
-import { useNavigate } from 'react-router-dom';
+import logo2 from "../ElectricitySubscription/Electricity-sub-images/Jos-Electric-JED 1.svg";
+import { useNavigate } from "react-router-dom";
 
 export const JedReceipt = () => {
   const navigate = useNavigate();
 
   const {
-      toggleSideBar,
-      isDarkMode,
-      date,   
-      jedVerifiedName,
-      setJedVerifiedName, 
-      setSelectedJedMeterType,
-      jedMeterNumber,
-      setJedMeterNumber,
-      jedPhoneNumber,
-      setJedPhoneNumber,
-      jedEmail,
-      setJedEmail,
-      jedAmount,
-      setJedAmount,
-      setGlobalCountry,
-      setJedFlag,
-      jedDiscoType,
-      selectedJedMeterType,
-      // jedServiceID,
-      jedOrderId,
-      jedTransactionId,
-      jedShowDescription,
-      jedBillGenerate,
-    } = useContext(ContextProvider)
+    toggleSideBar,
+    isDarkMode,
+    date,
+    jedVerifiedName,
+    setJedVerifiedName,
+    setSelectedJedMeterType,
+    jedMeterNumber,
+    setJedMeterNumber,
+    jedPhoneNumber,
+    setJedPhoneNumber,
+    jedEmail,
+    setJedEmail,
+    jedAmount,
+    setJedAmount,
+    setGlobalCountry,
+    setJedFlag,
+    jedDiscoType,
+    selectedJedMeterType,
+    // jedServiceID,
+    jedOrderId,
+    jedTransactionId,
+    jedShowDescription,
+    jedBillGenerate,
+  } = useContext(ContextProvider);
 
-    const networkProduct =
+  const networkProduct =
     selectedJedMeterType?.length > 0 ? selectedJedMeterType : "";
   const meterNo = jedMeterNumber?.length > 0 ? jedMeterNumber : "";
   const verifiedName = jedVerifiedName?.length > 0 ? jedVerifiedName : "";
@@ -47,7 +47,7 @@ export const JedReceipt = () => {
   const productAmount = jedAmount?.length > 0 ? jedAmount : "";
   // const service_id = jedServiceID?.length > 0 ? jedServiceID : "";
   const disco_type = jedDiscoType?.length > 0 ? jedDiscoType : "";
-  const order_id = jedOrderId=== undefined ? "" : jedOrderId;
+  const order_id = jedOrderId === undefined ? "" : jedOrderId;
   const transaction_id = jedTransactionId?.length > 0 ? jedTransactionId : "";
   const description = jedShowDescription?.length > 0 ? jedShowDescription : "";
   const bill_generated = jedBillGenerate?.length > 0 ? jedBillGenerate : "";
@@ -61,7 +61,7 @@ export const JedReceipt = () => {
     setJedAmount("");
     setGlobalCountry("");
     setJedFlag("");
-    navigate('/electricity-subscription');
+    navigate("/electricity-subscription");
   }
 
   const contentRef = useRef(null);
@@ -97,10 +97,16 @@ export const JedReceipt = () => {
   };
   return (
     <DashBoardLayout>
-      <div className="flex flex-col gap-[35px] lg:gap-[85px]">
+      <div
+        className={`flex flex-col gap-[35px] lg:gap-[85px] ${
+          isDarkMode ? "border border-white rounded-md" : ""
+        }`}
+      >
         <div
           className={` ${styles.receipt} ${
             toggleSideBar ? "" : "lg:w-[880px] "
+          } ${
+            isDarkMode ? "bg-black text-white border border-white" : "bg-white"
           } w-full lg:mx-auto`}
         >
           <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
@@ -136,7 +142,11 @@ export const JedReceipt = () => {
             <h3 className="font-extrabold text-[12px] mt-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
               Purchase Successful on
             </h3>
-            <span className="text-[8px] md:text-[12px] text-[#0008] pt-1 font-extrabold flex justify-center items-center">
+            <span
+              className={`text-[8px] md:text-[12px] pt-1 font-extrabold flex justify-center items-center ${
+                isDarkMode ? "text-white" : "text-[#0008]"
+              }`}
+            >
               {date.toLocaleDateString(undefined, {
                 year: "numeric",
                 month: "long",
@@ -150,60 +160,101 @@ export const JedReceipt = () => {
             <p className="text-[9px] text-[#27AE60] bg-[#D5F6E3] rounded-[11px] border-2 border-[#27AE60] py-[5px] px-[2px] text-center mx-[5px] lg:mx-[150px] md:mx-[100px] my-2 md:text-[14px] lg:text-[14px]">
               You have successfully purchased{" "}
               <span className="text-[#000] font-extrabold text-[10px] md:text-[14px]">
-              Jos {networkProduct} Meter &#8358;{productAmount}.00{" "}
+                Jos {networkProduct} Meter &#8358;{productAmount}.00{" "}
               </span>
               from your NGN wallet to{" "}
             </p>
-
-
             <div className="flex flex-col gap-5">
               {/* ========================Recipient Info================== */}
               <div className="flex flex-col gap-[3px] w-[90%] mx-auto lg:gap-[5px]">
-                <div className="flex gap-[5px] items-center text-[10px] lg:text-[16px] font-extrabold">
+                <div className="flex gap-[5px] mt-1 items-center text-[12px] lg:text-[16px] font-extrabold">
                   <p>Recepient Info</p>
                   <img
-                    className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
+                    className="w-[13px] h-[13px] md:w-[1rem] md:h-[1rem] lg:w-[20px] lg:h-[20px]"
                     src="./Images/dashboardImages/arrowright.png"
                     alt="/"
                   />
                 </div>
                 <div className="flex flex-col gap-3 pt-[10px]">
-              <div className="flex text-[10px] md:text-[14px] pt-[10px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Disco Type</p>
-                <span className="flex items-center gap-1 ">
-                  <div><img className="w-[30px]" src={logo2} alt="" /></div>
-                  <div>{disco_type}</div>
-                  </span>
-              </div>
-              <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Meter Type</p>
-                <span>{networkProduct} </span>
-              </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Meter Number</p>
-                <span>{meterNo} </span>
-              </div>
+                  <div className="flex text-[10px] md:text-[14px] pt-[10px] w-[90%] mx-auto justify-between lg:text-[16px]">
+                    <p
+                      className={`font-medium ${
+                        isDarkMode ? "text-white" : "text-[#7C7C7C]"
+                      }`}
+                    >
+                      Disco Type
+                    </p>
+                    <span className="flex items-center gap-1 ">
+                      <div>
+                        <img className="w-[30px]" src={logo2} alt="" />
+                      </div>
+                      <div>{disco_type}</div>
+                    </span>
+                  </div>
+                  <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                    <p
+                      className={`font-medium ${
+                        isDarkMode ? "text-white" : "text-[#7C7C7C]"
+                      }`}
+                    >
+                      Meter Type
+                    </p>
+                    <span>{networkProduct} </span>
+                  </div>
+                  <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                    <p
+                      className={`font-medium ${
+                        isDarkMode ? "text-white" : "text-[#7C7C7C]"
+                      }`}
+                    >
+                      Meter Number
+                    </p>
+                    <span>{meterNo} </span>
+                  </div>
 
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Verified Name</p>
-                <span>{verifiedName}</span>
-              </div>
+                  <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                    <p
+                      className={`font-medium ${
+                        isDarkMode ? "text-white" : "text-[#7C7C7C]"
+                      }`}
+                    >
+                      Verified Name
+                    </p>
+                    <span>{verifiedName}</span>
+                  </div>
 
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Phone Number</p>
-                <span>{phoneNo}</span>
-              </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Email</p>
-                <span>{productEmail}</span>
-              </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Amount</p>
-                <span>&#8358;{productAmount}</span>
-              </div>
-              
-            </div>
-            <div className="flex gap-[5px] items-center mt-[10px] md:mt-[30px] text-[10px] lg:text-[16px] font-extrabold">
+                  <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                    <p
+                      className={`font-medium ${
+                        isDarkMode ? "text-white" : "text-[#7C7C7C]"
+                      }`}
+                    >
+                      Phone Number
+                    </p>
+                    <span>{phoneNo}</span>
+                  </div>
+                  <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                    <p
+                      className={`font-medium ${
+                        isDarkMode ? "text-white" : "text-[#7C7C7C]"
+                      }`}
+                    >
+                      Email
+                    </p>
+                    <span>{productEmail}</span>
+                  </div>
+                  <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                    <p
+                      className={`font-medium ${
+                        isDarkMode ? "text-white" : "text-[#7C7C7C]"
+                      }`}
+                    >
+                      Amount
+                    </p>
+                    <span>&#8358;{productAmount}</span>
+                  </div>
+                </div>
+                <div className="flex gap-[5px] items-center mt-[10px] md:mt-[30px] text-[10px] lg:text-[16px] font-extrabold">
                   <p>Sender Info</p>
                   <img
                     className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
@@ -212,24 +263,29 @@ export const JedReceipt = () => {
                   />
                 </div>
                 <div className="flex flex-col gap-3 pt-[10px]">
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Customer Name</p>
-                <span>{verifiedName}</span>
-              </div>
+                  <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                    <p
+                      className={`font-medium ${
+                        isDarkMode ? "text-white" : "text-[#7C7C7C]"
+                      }`}
+                    >
+                      Customer Name
+                    </p>
+                    <span>{verifiedName}</span>
+                  </div>
 
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C] font-[500]">Wallet Type</p>
-                <span>Nigerian NGN Wallet </span>
+                  <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                    <p
+                      className={`font-medium ${
+                        isDarkMode ? "text-white" : "text-[#7C7C7C]"
+                      }`}
+                    >
+                      Wallet Type
+                    </p>
+                    <span>Nigerian NGN Wallet </span>
+                  </div>
+                </div>
               </div>
-             
-              
-            </div>
-                
-              </div>
-
-              
-
-             
 
               {/* ===================Transaction Info==================== */}
               <div className="flex flex-col gap-[3px] w-[90%] mx-auto lg:gap-[5px]">
@@ -242,29 +298,30 @@ export const JedReceipt = () => {
                   />
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Product</p>
+                  <p className={`${isDarkMode ? "text-white" : "text-[#0008]"}`}>Product</p>
                   <span>Electricity Bills</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Description</p>
+                  <p className={`${isDarkMode ? "text-white" : "text-[#0008]"}`}>Description</p>
                   <span>{description}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Bill / Token Generated</p>
+                  <p className={`${isDarkMode ? "text-white" : "text-[#0008]"}`}>Bill / Token Generated</p>
                   <span>{bill_generated}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Order Number</p>
+                  <p className={`${isDarkMode ? "text-white" : "text-[#0008]"}`}>Order Number</p>
                   <span>{order_id}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Transaction ID</p>
+                  <p className={`${isDarkMode ? "text-white" : "text-[#0008]"}`}>Transaction ID</p>
                   <span>{transaction_id}</span>
                 </div>
-                
               </div>
             </div>
-            <div className="rounded-[8px] bg-[#E2F3FF] mx-4 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
+            <div className={`rounded-[8px] bg-[#E2F3FF] mx-4 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px] ${
+                isDarkMode ? "bg-slate-800" : "bg-[#E2F3FF]"
+              }`}>
               <p className="text-[8px] text-center mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[16px]">
                 Earn free points on every successful transactions, redeem your
                 earned points to real money, withdrawn to your bank account
@@ -278,7 +335,7 @@ export const JedReceipt = () => {
               onClick={() => {
                 handleShareClick();
               }}
-              className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+              className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[8.5rem] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
             >
               Share Receipt
             </button>
@@ -286,7 +343,11 @@ export const JedReceipt = () => {
               onClick={() => {
                 handleSaveAsPDFClick();
               }}
-              className={`bg-[#ffffff] border-[1px] w-[111px] border-[#0003] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+              className={`border w-[111px] border-[#0003] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[8.5rem] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]${
+                isDarkMode
+                  ? "bg-black border-white"
+                  : "bg-[#ffffff] border-[#0003]"
+              }`}
             >
               Save as PDF
             </button>
@@ -304,7 +365,7 @@ export const JedReceipt = () => {
             <div
               className={`${isDarkMode ? "" : "bg-[#04177f]"} ${
                 styles.contactus
-              } text-[8px] p-1 text-white rounded-[8px] lg:text-[14px]`}
+              } text-[12px] p-1 text-white rounded-[8px] lg:text-[14px]`}
             >
               Contact Us
             </div>
