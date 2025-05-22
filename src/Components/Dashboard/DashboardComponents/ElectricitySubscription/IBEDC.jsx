@@ -277,7 +277,7 @@ const IBEDC = () => {
       setPinFailed,
       setLoading,
       setErrorMessage,
-      ElectricityHandler()
+      ElectricityHandler
     );
   };
 
@@ -662,17 +662,17 @@ const IBEDC = () => {
             </div>
             <div className="flex flex-col gap-2 lg:gap-2.5">
               <div
-                className={`text-[#7E7E7E] text-[14px] lg:text-[16px] md:font-semibold font-normal ${
-                  isDarkMode ? "text-white" : ""
+                className={`text-[14px] lg:text-[16px] md:font-semibold font-normal ${
+                  isDarkMode ? "text-white" : "text-[#7E7E7E]"
                 }`}
               >
                 Amount
               </div>
               <div
-                className={`flex items-center lg:text-[16px] text-[12px] border border-[#9C9C9C] rounded-[10px] pl-2 ${
+                className={`flex items-center lg:text-[16px] text-[12px] border pl-2 rounded-md md:rounded-[10px] ${
                   isDarkMode
-                    ? "text-white bg-black border-white "
-                    : "text-[#7E7E7E]"
+                    ? "text-white bg-black border-white"
+                    : "text-[#7E7E7E] border-[#9C9C9C]"
                 }`}
               >
                 &#8358;
@@ -1297,17 +1297,20 @@ const IBEDC = () => {
             </div>
             {/* mx-10 */}
             <div
-              className={` mx-2 h-[45px] my-5 flex justify-between md:h-[70px] lg:h-[75px] ${
+              className={`mx-4 h-[45px] my-5 flex justify-between items-center md:h-[65px] px-[4%] rounded-[8px] lg:h-[75px] ${
                 isDarkMode ? "bg-slate-800" : "bg-[#F2FAFF]"
               }`}
             >
-              <p className="text-[11px] md:pt-1 text-center w-full h-full md:text-[14px] lg:text-[14px]">
+              <p 
+              // className="text-[8px] md:pt-1 text-center w-full h-full md:text-[14px] lg:text-[14px] font-semibold"
+              className="text-[8px] text-center mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[14px] font-medium"
+              >
                 The electricity bills / token purchase has been generated
                 successfully. Please kindly check receipt to confirm the bills /
                 token. You can contact us for any further assistance.
               </p>
             </div>
-            <div className="flex w-[70%] mx-auto items-center my-6  gap-[6%] md:gap-[20px] justify-center md:w-[20%] lg:my-[5%]">
+            <div className="flex w-[70%] mx-auto items-center my-6 gap-[6%] md:gap-[20px] justify-center md:w-[20%] lg:my-[5%]">
               <button
                 onClick={() => {
                   setSuccessPopup(false);

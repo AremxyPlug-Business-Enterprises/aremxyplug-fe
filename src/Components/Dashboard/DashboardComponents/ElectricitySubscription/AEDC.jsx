@@ -685,10 +685,8 @@ const AEDC = () => {
             </div>
             <div className="flex flex-col gap-2 lg:gap-2.5">
               <div
-                className={`flex items-center lg:text-[16px] text-[12px] border border-[#9C9C9C] rounded-[10px] pl-2 ${
-                  isDarkMode
-                    ? "text-white bg-black border-white "
-                    : "text-[#7E7E7E]"
+                className={`flex items-center lg:text-[16px] text-[12px] md:font-semibold font-normal ${
+                  isDarkMode ? "text-white " : "text-[#7E7E7E]"
                 }`}
               >
                 Amount
@@ -1314,8 +1312,12 @@ const AEDC = () => {
               </div>
             </div>
             {/* mx-10 */}
-            <div className={` mx-2 h-[45px] my-5 flex justify-between md:h-[70px] lg:h-[75px] ${isDarkMode ? "bg-slate-800": "bg-[#F2FAFF]"}`}>
-              <p className="text-[11px] md:pt-1 text-center w-full h-full md:text-[14px] lg:text-[14px]">
+            <div
+              className={`mx-4 h-[45px] my-5 flex justify-between items-center md:h-[65px] px-[4%] rounded-[8px] lg:h-[75px] ${
+                isDarkMode ? "bg-slate-800" : "bg-[#F2FAFF]"
+              }`}
+            >
+              <p className="text-[8px] text-center mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[14px] font-medium">
                 The electricity bills / token purchase has been generated
                 successfully. Please kindly check receipt to confirm the bills /
                 token. You can contact us for any further assistance.
@@ -1348,7 +1350,7 @@ const AEDC = () => {
               > */}
               <button
                 onClick={handleReceivedData}
-                 className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] md:px-[50px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] md:px-[50px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
               >
                 Receipt
               </button>

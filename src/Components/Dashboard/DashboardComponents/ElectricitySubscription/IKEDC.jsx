@@ -1238,14 +1238,14 @@ const IKEDC = () => {
               </div>
             </div>
             {/* mx-10 */}
-            <div className={` mx-2 h-[45px] my-5 flex justify-between md:h-[70px] lg:h-[75px] ${isDarkMode ? "bg-slate-800": "bg-[#F2FAFF]"}`}>
-              <p className="text-[11px] md:pt-1 text-center w-full h-full md:text-[14px] lg:text-[14px]">
+            <div className={`mx-4 h-[45px] my-5 flex justify-between items-center md:h-[65px] px-[4%] rounded-[8px] lg:h-[75px] ${isDarkMode ? "bg-slate-800": "bg-[#F2FAFF]"}`}>
+              <p className="text-[8px] mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[14px] font-medium">
                 The electricity bills / token purchase has been generated
                 successfully. Please kindly check receipt to confirm the bills /
                 token. You can contact us for any further assistance.
               </p>
             </div>
-            <div className="flex w-[70%] mx-auto items-center my-6  gap-[6%] md:gap-[20px] justify-center md:w-[20%] lg:my-[5%]">
+            <div className="flex w-[70%] mx-auto items-center my-6 gap-[6%] md:gap-[20px] justify-center md:w-[20%] lg:my-[5%]">
               <button
                 onClick={() => {
                   setSuccessPopup(false);
