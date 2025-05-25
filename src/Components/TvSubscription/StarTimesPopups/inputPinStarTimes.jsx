@@ -18,15 +18,14 @@ export const InputStarTimesPopup = ({VerifyPinHandler}) => {
       toggleVisibility,
       isVisible,
       errorMessage,
-      setInputPinStarTimes,
-      setStarTimesSuccessful,
+      setInputPinStarTimes
    } = useContext(ContextProvider)
 
-   const handleStarTimesSuccessful = (event) =>{
-    event.preventDefault();;
-    setInputPinStarTimes(false);
-    setStarTimesSuccessful(true);
-  }
+  //  const handleStarTimesSuccessful = (event) =>{
+  //   event.preventDefault();;
+  //   setInputPinStarTimes(false);
+  //   setStarTimesSuccessful(true);
+  // }
 
    const [isFocused, setIsFocused] = useState(false);
       const handleFocus = () => {
@@ -83,7 +82,7 @@ export const InputStarTimesPopup = ({VerifyPinHandler}) => {
                 }
                     
                     renderInput={(props) => (
-                      <input onClick={VerifyPinHandler} {...props} className={`inputOTP mx-[2px] ${isFocused ? 'focused' : ''}`} onFocus={handleFocus}
+                      <input  {...props} className={`inputOTP mx-[2px] ${isFocused ? 'focused' : ''}`} onFocus={handleFocus}
                       onBlur={handleBlur}/>
                     )}
                   />
@@ -111,7 +110,7 @@ export const InputStarTimesPopup = ({VerifyPinHandler}) => {
             }
             </div>
             <button
-              onClick={handleStarTimesSuccessful}
+              onClick={()=> VerifyPinHandler()}
               disabled={inputPin.length !== 4 ? true : false}
               className={`${
                 inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"

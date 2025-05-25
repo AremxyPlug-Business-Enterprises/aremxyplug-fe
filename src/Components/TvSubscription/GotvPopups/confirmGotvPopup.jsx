@@ -19,7 +19,8 @@ const ConfirmGotvPopup = () => {
     selectedOptionGOTV,
     cardName,
     methodImage,
-    tvWalletBalance,
+    //tvWalletBalance,
+
     flagResult,
     newBalance,
    tvAmount
@@ -140,7 +141,7 @@ const ConfirmGotvPopup = () => {
                                      <p className="text-[12px] md:text-[14px] leading-[20px] lg:leading-[22px]  lg:text-[16px] font-[500]">
                                  Available Balance {"  "} 
                                   </p>
-                                  <span className="text-[#0003]">
+                                  <span className="text-black ">
                                    {`(${newBalance})`}
                                  </span>
                                  </div>

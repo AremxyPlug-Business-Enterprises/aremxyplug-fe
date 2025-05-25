@@ -1217,8 +1217,8 @@ const IBEDC = () => {
               isDarkMode ? "bg-black border border-white" : "bg-white"
             } ${
               toggleSideBar
-                ? "md:w-[65%] md:ml-[10rem] lg:ml-[20%] lg:w-[40%]"
-                : "lg:w-[40%]"
+                ? "md:w-[65%] bg-white md:ml-[10rem] lg:ml-[20%] lg:w-[40%]"
+                : "lg:w-[40%] bg-white"
             } md:w-[60%] w-[90%] overflow-auto`}
           >
             <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
@@ -1419,9 +1419,9 @@ const IBEDC = () => {
               isDarkMode ? "bg-black border border-white" : "bg-white"
             } ${
               toggleSideBar
-                ? "md:w-[65%] md:ml-[10rem] lg:ml-[20%] lg:w-[40%]"
+                ? "md:w-[65%] bg-white md:ml-[10rem] lg:ml-[20%] lg:w-[40%]"
                 : "lg:w-[40%]"
-            } md:w-[60%] w-[90%] overflow-auto`}
+            } md:w-[60%] w-[90%] bg-white overflow-auto`}
           >
             <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
               <img

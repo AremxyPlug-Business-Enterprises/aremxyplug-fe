@@ -7,19 +7,40 @@ import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { ContextProvider } from "../../Context";
+import { useNavigate } from "react-router-dom";
 
 
 
-export const ShowmaxReceipt= (receipt) => {
+export const ShowmaxReceipt= () => {
+  const navigate = useNavigate()
   const { toggleSideBar, textRef,
     flagResult,
+    setFlagResult,
+    setTvWalletBalance,
+    setSelectedOptionShowmax,
+    setShowMaxOrderId,
+    setPackageShowMax,
+    setShowMaxTransactionId,
+    setShowMaxDescription,
+    setShowMaxSmartCard,
+    setCardName,
+    setShowMaxEmail,
+    setShowMaxAmount,
+    setShowMaxDecoderType,
     selectedOptionShowmax,
-    tvEmail,
-    mobileNumber,
-    formatNumberWithCommas,
-    smartCard,
+    showMaxEmail,
+    showMaxMobileNumber,
+    setShowMaxMobileNumber,
+    showMaxAmount,
+    showMaxTransactionId,
+    showMaxOrderId,
+    showMaxDescription,
+    
+   // formatNumberWithCommas,
+    showMaxSmartCard,
     cardName,
-    isDarkMode, date } =
+    isDarkMode,
+     date } =
     useContext(ContextProvider);
 
   const contentRef = useRef(null);
@@ -67,13 +88,34 @@ export const ShowmaxReceipt= (receipt) => {
     }
   };
 
-  const getNumericValue = (option) => {
-    const numericPart = option.match(/\d+/);
-    if (numericPart) {
-      return formatNumberWithCommas(parseInt(numericPart[0], numericPart[2], 10));
-    }
-    return '';
-  };
+  const ShowMaxOrderInfo = (showMaxOrderId !== undefined || showMaxOrderId?.length > 1) ?  showMaxOrderId : "";
+  const ShowMaxTransactionInfo = (showMaxTransactionId?.length > 1 || showMaxTransactionId !== undefined )  ? showMaxTransactionId : "";
+  const ShowMaxDescriptionInfo = (showMaxDescription?.length > 1 || showMaxDescription !== undefined) ? showMaxDescription : "";
+
+  // const getNumericValue = (option) => {
+  //   const numericPart = option.match(/\d+/);
+  //   if (numericPart) {
+  //     return formatNumberWithCommas(parseInt(numericPart[0], numericPart[2], 10));
+  //   }
+  //   return '';
+  // };
+
+  const ExitTheReceipt = ()=> {
+      setShowMaxEmail("")
+   setShowMaxMobileNumber("")
+   setShowMaxSmartCard("");
+   setShowMaxAmount("");
+   setShowMaxOrderId("");
+   setShowMaxDescription("")
+   setShowMaxTransactionId("");
+   setSelectedOptionShowmax("");
+   setPackageShowMax("");
+   setShowMaxDecoderType("")
+    setFlagResult("");
+    setTvWalletBalance("");
+    setCardName("")
+   navigate("/Showmax");
+  }
 
   return (
     <DashBoardLayout>
@@ -84,21 +126,21 @@ export const ShowmaxReceipt= (receipt) => {
           } w-full lg:mx-auto`}
         >
           <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
-            <Link to="/">
+            <div>
               <img
                 className=" w-[15px] h-[10px] md:w-[24px] md:h-[15px] lg:w-[42px] lg:h-[25px]"
                 src="/Images/login/arpLogo.png"
                 alt=""
               />
-            </Link>
-            <Link to="/TvSubscription">
+            </div>
+            <div onClick ={()=> ExitTheReceipt()}>
               {" "}
               <img
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
               />
-            </Link>
+            </div>
           </div>
           <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
           <div ref={contentRef}>
@@ -156,7 +198,7 @@ export const ShowmaxReceipt= (receipt) => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Smartcard / IUC Number</p>
-                  <span>{smartCard}</span>
+                  <span>{showMaxSmartCard}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Card Name</p>
@@ -164,15 +206,15 @@ export const ShowmaxReceipt= (receipt) => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Phone</p>
-                  <span>{mobileNumber}</span>
+                  <span>{showMaxMobileNumber}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Email</p>
-                  <span>{tvEmail}</span>
+                  <span>{showMaxEmail}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Amount</p>
-                  <span>{'₦'+ getNumericValue(selectedOptionShowmax)}</span>
+                  <span>{`₦$ ${showMaxAmount}` }</span>
                 </div>
               </div>
 
@@ -216,17 +258,17 @@ export const ShowmaxReceipt= (receipt) => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Description</p>
-                  <span>Showmax Subscription</span>
+                  <span>{ShowMaxDescriptionInfo}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Order Number</p>
-                  <span>1256478999</span>
+                  <span>{ShowMaxOrderInfo}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between items-center lg:text-[16px]">
                   <p className="text-[#0008]">Transaction ID</p>
                   <div className="flex items-center">
                     <span ref={textRef}>
-                    0331njokdhtf55
+                     {ShowMaxTransactionInfo}
                     </span>
                     <div
                       onClick={handleCopyClick}

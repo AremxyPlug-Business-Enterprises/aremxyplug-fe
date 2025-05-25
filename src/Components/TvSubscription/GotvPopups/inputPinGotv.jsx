@@ -19,13 +19,11 @@ export const InputGotvPopup = ({VerifyPinHandler}) => {
       errorMessage,
       isVisible,
       setInputPinGotv,
-      setGotvSuccessful,
+     // setGotvSuccessful,
    } = useContext(ContextProvider)
 
-   const handleGotvSuccessful = (event) =>{
-    event.preventDefault();
-    setInputPinGotv(false);
-    setGotvSuccessful(true);
+   const handleGotvSuccessful = async() =>{
+    await VerifyPinHandler();
   }
 
    const [isFocused, setIsFocused] = useState(false);
@@ -47,8 +45,8 @@ export const InputGotvPopup = ({VerifyPinHandler}) => {
             (
             <Modal>
          
-        <div className={`${styles.inputPin} ${
-              toggleSideBar ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
+        <div className={`flex flex-col   mb-[50px] py-[2px] h-auto ${styles.inputPin} ${
+              toggleSideBar ? "md:w-[45%] lg:w-[40%] lg:ml-[20%] " : "lg:w-[40%]"
             } md:w-[55%] w-[90%]`}
             >
             <div className=" pr-3 lg:pr-5 flex justify-end">
@@ -83,7 +81,7 @@ export const InputGotvPopup = ({VerifyPinHandler}) => {
                 }
                     
                     renderInput={(props) => (
-                      <input onClick={VerifyPinHandler} {...props} className={`inputOTP mx-[2px] ${isFocused ? 'focused' : ''}`} onFocus={handleFocus}
+                      <input{...props} className={`inputOTP mx-[2px] ${isFocused ? 'focused' : ''}`} onFocus={handleFocus}
                       onBlur={handleBlur}/>
                     )}
                   />
@@ -104,7 +102,7 @@ export const InputGotvPopup = ({VerifyPinHandler}) => {
               </p>
             </div>
             {errorMessage && (
-              <p className="font-[400] md:font-[500] text-center leading-[15px] text-red-400">
+              <p className="font-[400] md:font-[500] text-center leading-[15px] text-red-400 mb-[10px] lg:mb-[0px]">
                  Incorrect Pin
               </p>
             ) 
@@ -115,7 +113,8 @@ export const InputGotvPopup = ({VerifyPinHandler}) => {
               disabled={inputPin.length !== 4 ? true : false}
               className={`${
                 inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
-              } lg:my-[52px] w-[225px] md:w-[94px] lg:w-[163px] flex justify-center items-center mx-auto cursor-pointer text-[12px] md:text-[10px] lg:text-[16px] font-extrabold h-[40px] lg:h-[38px] md:h-[22px] text-white rounded-[6px] md:rounded-[6.88px] lg:rounded-[12px]`}
+              } lg:my-[52px] w-[225px] md:w-[94px] lg:w-[163px] flex justify-center items-center
+               mx-auto cursor-pointer text-[12px] md:text-[10px] py-[10px] lg:text-[16px] font-extrabold h-[40px] lg:h-[38px] md:h-[22px] text-white rounded-[6px] md:rounded-[6.88px] lg:rounded-[12px]`}
             >
               Purchase
             </button>

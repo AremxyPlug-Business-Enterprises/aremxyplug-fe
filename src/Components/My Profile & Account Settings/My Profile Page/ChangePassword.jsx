@@ -27,7 +27,7 @@ const [loading, setLoading] = useState(false)
   //Function to Change the password
   const ChangeUserPin = async()=> {
     const getToken = localStorage.getItem("getToken");
-    const authToken = localStorage.getItem("authToken");
+    const authToken = localStorage.getItem("authorisedLogin");
     if(!navigator.onLine) return alert("Check your internet connection");
     if((authToken || getToken) && navigator.onLine){
       setLoading(true)
@@ -45,12 +45,18 @@ const [loading, setLoading] = useState(false)
      }
   
      }catch(error){
-       if(error.response.status === 400 || 401){
+       if(error.response.status === 400){
         alert("Invalid Old Password")
+       }else if(error && error.response.status === 401){
+       alert("Unable to change your password, Your session has timed out.")
        }else if(error.response.status === 404){
         alert("Check your internet connection")
        }else if(error.response.status === 500){
-        alert("SERVER ERROR")
+        alert("SERVER ERROR");
+       }else if(error.response.status === undefined){
+        alert("Check your internet connection")
+       }else{
+      alert("Check your internet connection");
        }
      }finally{
       setLoading(false);

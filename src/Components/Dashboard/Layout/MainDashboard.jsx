@@ -200,6 +200,13 @@ if((clickedoption === "NGN") && blur === true){
         }else if(error.response &&error.response.status === 500){
           alert("SERVER ERROR");
           setDashLoading(false);
+        }else if(error && error.response.status === undefined){
+           setDashLoading(false);
+           alert("Network connection unstable, kindly check your network connection")
+            alert("Virtual Account Creation failed")
+        }else {
+            setDashLoading(false);
+            alert("Virtual Account Creation failed")
         }
       }}
       }
@@ -242,9 +249,13 @@ if((clickedoption === "NGN") && blur === true){
 
           }else if (error && error.response.status ===500){
             setNewBalance(0);
+    }else if(error && error.response.status === undefined){
+        setBalanceLoading(false);
+        setBalanceValue(false);
+ }else{
+  setBalanceValue(false);
       }
-        
-        }finally {
+          }finally {
           setBalanceLoading(false)
         }
       }
@@ -760,7 +771,8 @@ return (
               <p className={`lg:text-[16px] font-[400] lg:leading-[24px]
                text-[12px] md:text-[14px] md:leading-[18px]
                  ${isDarkMode ? "text-white" : "text-black"}`}>
-                   {(Data.ConfirmId === "true" || Data.ConfirmBvn === "true") && Data.ConfirmAcc === "false" ? "Your account has been verified successfully. Please click the button below to generate your virtual account." : (Data.ConfirmId === "true" || Data.ConfirmBvn === "true") && Data.ConfirmAcc === "true" ? "You now have an account" : "Please verify your account to generate your virtual account." }
+                   {(Data.ConfirmId === "true" || Data.ConfirmBvn === "true") && Data.ConfirmAcc === "false" ? "Your account has been verified successfully. Please click the button below to generate your virtual account."
+                    : (Data.ConfirmId === "true" || Data.ConfirmBvn === "true") && Data.ConfirmAcc === "true" ? "You now have an account" : "Please verify your account to generate your virtual account." }
                 {/* This is Collected for secure and cyber-attack-free transactions among AremxyPlug's users*/}
                 </p>
                 </div>
