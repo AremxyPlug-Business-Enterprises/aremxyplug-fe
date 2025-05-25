@@ -225,7 +225,7 @@ const PHED = () => {
       setAmountError("Amount must be at least ₦1000");
     } else if (network === "Unknown network") {
       setErrors({
-        eedcPhoneNumber:
+        phedPhoneNumber:
           "Invalid phone number. Please enter a valid Nigerian network number.",
       });
     } else {
