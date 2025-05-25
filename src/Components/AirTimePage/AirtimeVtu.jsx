@@ -1,4 +1,4 @@
-import React from 'react';
+//import React from 'react';
 import { useState, useEffect } from 'react';
 import styles from './AirtimeVtu.module.css'
 import { DashBoardLayout } from '../Dashboard/Layout/DashBoardLayout';
@@ -19,9 +19,10 @@ import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import { Link } from 'react-router-dom';
 import { AirtimeVtuReceipt } from './AirtimeVtuReceipt';
-import axios from 'axios';
 import { AirtimeReceiptFailed } from './AirtimeReceiptFailed';
 import axiosInstance from '../ApiCollection.jsx/apiClient';
+import { Loader } from '../Loader/Loader';
+import { VerifyTransPin } from '../ApiCollection.jsx/ApiBuck';
 
 const AirtimeVtu = () => {
     // const {  isDarkMode } = useContext(ContextProvider);
@@ -35,8 +36,8 @@ const AirtimeVtu = () => {
     const { amount, setAmount } = useContext(ContextProvider);
     const { networkImage, setNetworkImage } = useContext(ContextProvider);
     const { inputValues, setInputValues } = useContext(ContextProvider);
-    const { networkId, setNetworkId } = useContext(ContextProvider);
-    const { productId, setProductId } = useContext(ContextProvider);
+    const { networkId, setNetworkId, newBalance } = useContext(ContextProvider);
+   // const { productId, setProductId } = useContext(ContextProvider);
 
 
     const [addRecipient, setAddRecipient] = useState(false);
@@ -46,7 +47,7 @@ const AirtimeVtu = () => {
     const [paymentSelected, setPaymentSelected] = useState(false);
     const [showList, setShowList] = useState(false);
     const [showPayment, setShowPayment] = useState(false);
-    const [showProduct, setShowProduct] = useState(false);
+   // const [showProduct, setShowProduct] = useState(false);
     const [name, setName] = useState('');
     const [image, setImage] = useState('');
     const [paymentAmount, setPaymentAmount] = useState('');
@@ -59,6 +60,9 @@ const AirtimeVtu = () => {
     const [description, setDescription] = useState("");
     const [isLoading, setIsLoading] = useState(false); // For managing loading state
     const { isDarkMode } = useContext(ContextProvider);
+    const [successPin, setSuccessPin] = useState(false)
+    const [failedPin, setFailedPin] = useState(false);
+    const [errorMessage, setErrorMessage] = useState(false)
 
     useEffect(() => {
         // Populate input fields with the selected recipient's data from context
@@ -66,11 +70,7 @@ const AirtimeVtu = () => {
 
 
 
-    // if (addRecipient) {
-    //     console.log('recipient added')
-    // } else {
-    //     console.log('did not add recipient')
-    // }
+   
 
     const handleAddRecipient = async () => {
         setIsLoading(true);
@@ -119,28 +119,28 @@ const AirtimeVtu = () => {
             name: 'MTN',
             image: require('./Images/mtn.svg').default,
             discount: 3,
-            networkId: "01",
+            networkId: "1",
         },
         {
             id: 2,
             name: 'AIRTEL',
             image: require('./Images/airtel.png'),
             discount: 4,
-            networkId: "03",
+            networkId: "2",
         },
         {
             id: 3,
             name: 'GLO',
             image: require('./Images/glo.png'),
             discount: 3,
-            networkId: "02",
+            networkId: "3",
         },
         {
             id: 4,
             name: '9MOBILE',
             image: require('./Images/9mobile.svg').default,
             discount: 3,
-            networkId: "04",
+            networkId: "4",
         },
     ];
 
@@ -150,7 +150,7 @@ const AirtimeVtu = () => {
             name: 'Nigeria',
             code: 'NGN',
             flag: require('./Images/ng.svg').default,
-            amount: 50000
+            amount:  `${newBalance}`
         },
         {
             id: 2,
@@ -189,22 +189,13 @@ const AirtimeVtu = () => {
         }
     ];
 
-    const productList = [
-        {
-            id: 1,
-            name: 'VTU',
-            productId: '001'
-        },
-        {
-            id: 2,
-            name: 'SNS',
-            productId: '002'
-        },]
+   
 
 
     const Network = ({ name, image, onClick }) => {
         return (
-            <li className={styles.netList} onClick={onClick}>
+            <li className="py-[10px]  border-[0.5px] border-y-gray-200 flex items-center
+         gap-[10px] pl-[7px] text-black" onClick={onClick}>
                 <div className={styles.netImage}>
                     <img src={image} alt="" className={styles.NoImage} />
                 </div>
@@ -215,7 +206,8 @@ const AirtimeVtu = () => {
 
     const Payment = ({ code, flag, amount, onClick }) => {
         return (
-            <li className={styles.netList} onClick={onClick}>
+            <li className="py-[10px] bg-white  border-[0.5px] border-y-gray-200 flex items-center
+         gap-[10px] pl-[7px] text-black" onClick={onClick}>
                 <div className={styles.netImage}>
                     <img src={flag} alt="" className={styles.NoImage} />
                 </div>
@@ -225,13 +217,7 @@ const AirtimeVtu = () => {
         )
     }
 
-    const Product = ({ onClick, product }) => {
-        return (
-            <li className={styles.netList1} onClick={onClick}>
-                <h2 className={styles.netName1}>{product}</h2>
-            </li>
-        )
-    }
+  
 
     const handleSelectNetwork = (name, image, val, netId) => {
         setNetworkName(name);
@@ -260,11 +246,11 @@ const AirtimeVtu = () => {
         setPaymentSelected(true);
     }
 
-    const handleSelectProduct = (val, proId) => {
-        setSelectedProduct(val);
-        setShowProduct(false);
-        setProductId(proId);
-    }
+    // const handleSelectProduct = (val, proId) => {
+    //     setSelectedProduct(val);
+    //     setShowProduct(false);
+    //     setProductId(proId);
+    // }
 
     const handleShowList = () => {
         setShowList(!showList);
@@ -274,11 +260,11 @@ const AirtimeVtu = () => {
         setSelected(false);
     }
 
-    const handleShowProduct = () => {
-        if (selected) {
-            setShowProduct(!showProduct);
-        }
-    };
+    // const handleShowProduct = () => {
+    //     if (selected) {
+    //         setShowProduct(!showProduct);
+    //     }
+    // };
 
     const handleShowPayment = () => {
         setShowPayment(!showPayment)
@@ -401,38 +387,39 @@ const AirtimeVtu = () => {
     } = useContext(ContextProvider);
 
     const handleTransactionSuccessClose = async () => {
-        async function buyAirtime(network, mobileno, amount, airtime_type) {
+        async function buyAirtime(network, mobileno, amount) {
             const path = '/airtime';
 
             const data = {
                 network,
                 mobileno,
                 amount,
-                airtime_type,
-            };
+             };
 
             console.log(data);
 
             try {
+                setIsLoading(true)
                 const response = await axiosInstance.post(path, data);
-                const result = response.data.data; // Access the nested `data`
+                const result = response.data.data.data; // Access the nested `data`
             
                 console.log(result);
                 console.log(response.status);
             
-                setNetworkName(result.network);
-                setSelectedProduct(result.product);
-                setInputValues(result.phone_no);
-                setAmount(result.amount);
                 setTransactionID(result.transaction_id);
                 setRefNumber(result.reference_number);
                 setOrderID(result.order_id);
                 setDescription(result.description);
+                setInputPin("")
                 return { statusCode: response.status, data: response.data };
                 // console.log(response.data);
             } catch (error) {
                 console.error(error);
+                setInputPin("")
                 return { statusCode: error.response.status, data: null };
+
+            }finally {
+                setIsLoading(false)
             }
         }
 
@@ -441,17 +428,20 @@ const AirtimeVtu = () => {
             networkId, // Network (MTN)
             inputValues, // Mobile No
             amount, // Amount
-            productId, // Airtime Type (VTU)
+         // Airtime Type (VTU)
         );
 
 
         setConfirm(false);
         if (response.statusCode === 200) {
             // Success response
-            setTransactSuccessPopUp(true); // Show success popup
+            setTransactSuccessPopUp(true); 
+            setConfirm(false);
+            // Show success popup
         } else {
             // Failure response
-            setTransactFailedPopUp(true); // Show failure popup
+            setTransactFailedPopUp(true); 
+            setConfirm(false)// Show failure popup
         }
     };
 
@@ -474,11 +464,19 @@ const AirtimeVtu = () => {
     const handleChange = (e) => {
         const value = e.target.value;
 
-        const numericValue = value.replace(/\D/g, "").slice(0, 11);
+        const numericValue = value.replace(/\D/g, "");
 
         setInputValues(numericValue);
     };
 
+    const HandleAirtime = async()=> {
+   await VerifyTransPin(inputPin,
+    setSuccessPin,
+     setFailedPin,
+      setIsLoading,
+       setErrorMessage,
+       handleTransactionSuccessClose)
+}
     return (
         <DashBoardLayout>
             <div className={styles.AirtimeTops}>
@@ -629,7 +627,7 @@ const AirtimeVtu = () => {
                                             ? "!text-[#7E7E7E]" 
                                             : ""
                                     }
-                                    ${styles.head3} !text-[15px] md:!text-[15px]`}>Select Product</h2>
+                                    ${styles.head3} !text-[15px] md:!text-[15px]`}> Product</h2>
                                 <div className={` 
                                            ${
                                             isDarkMode 
@@ -638,36 +636,29 @@ const AirtimeVtu = () => {
                                         }                  ${styles.input1} !h-[44.927px] md:!h-[58px]
             `}
                                 >
-                                    {selectedProduct ?
-                                        <h2 onClick={handleShowProduct} className={`
-                                           
-                                            
-                                            ${styles.span2} !relative !top-[5px] md:!relative md:!top-base !text-[13px] md:!text-[13] !pr-[0] md:pr-[5px]`} required>{selectedProduct}</h2>
-                                        :
-                                        <span onClick={handleShowProduct} className={`
-                                            ${isDarkMode ? "!text-[#7E7E7E]" : ""}
-                                            !relative !top-[5px] md:!relative md:!top-base !text-[14px] md:!text-base
-                                             `}>Select Product</span>
-                                    }
-
-                                    <button className={`
+                                    
+                                        <h2 className={`
+                                           ${styles.span2} !relative !top-[5px] md:!relative 
+                                            md:!top-base !text-[13px] md:!text-[13] !pr-[0] md:pr-[5px]`} required>VTU</h2>
+                                        
+                                         <button className={`
                                      ${isDarkMode ? "!text-[#7E7E7E]" : ""}
                                     ${styles.btnDrop} !relative !top-[0px] md:!relative md:!top-base !text-[14px] md:!text-base
-                                     `} onClick={handleShowProduct} disabled={!selected}>
+                                     `} disabled={!selected}>
                                         <img src={arrowDown} alt="" />
                                     </button>
                                 </div>
-                                {showProduct &&
+                                {/* {showProduct &&
                                     <div className={`
                                         ${isDarkMode ? "md:!bg-black md:!border md:!border-white md:!text-[#7E7E7E] !bg-black !border !border-white !text-[#7E7E7E]" : "border border-none rounded-[5px] text-black bg-[#FFF]"}
                                         ${styles.colDown} 
            
         `}>
-                                        {productList.map((item) => (
-                                            <Product key={item.id} product={item.name} onClick={() => handleSelectProduct(item.name, item.productId)} />
-                                        ))}
+                                 
+                                            <Product product= "VNS" />
+                                    
                                     </div>
-                                }
+                                } */}
                             </div>
                         </div>
                         <div className={styles.mainGridCol}>
@@ -1151,9 +1142,15 @@ const AirtimeVtu = () => {
                                         <p className="text-[8px] md:text-[12px] text-[#04177f]">
                                             Forgot Pin ?
                                         </p>
+                                        {errorMessage && (
+                                            <p className='text-[14px] text-center text-red-500 leading-[18px] font-[500]
+                                            lg:text-[16px] lg:leading-[24px] '>
+                                           Incorrect pin
+                                            </p>
+                                        )}
                                     </div>
                                     <button
-                                        onClick={handleTransactionSuccessClose}
+                                        onClick={()=> HandleAirtime()}
                                         disabled={inputPin.length !== 4 ? true : false}
                                         className={`${inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
                                             } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
@@ -1235,7 +1232,7 @@ const AirtimeVtu = () => {
                                     </div>
                                     <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[12px]">
                                         <p className="text-[#0008]">Order Number</p>
-                                        <span>122334455667</span>
+                                        <span>{orderID}</span>
                                     </div>
                                 </div>
 
@@ -1391,6 +1388,11 @@ const AirtimeVtu = () => {
                     <Link to={`/ContactUs`} className={styles.btnContact}>Contact Us</Link>
                 </div>
             </div>
+            {isLoading && (
+                <Modal>
+                    <Loader/>
+                </Modal>
+            )}
         </DashBoardLayout>
     );
 }

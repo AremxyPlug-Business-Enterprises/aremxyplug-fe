@@ -373,7 +373,7 @@ const [balanceStatus,setBalanceStatus ] = useState("")
         console.log(response.data);
         console.log(response.status);
 
-        const resData = response.data.data; // Accessing the nested `data` object
+        const resData = response.data.data.data; // Accessing the nested `data` object
 
         console.log(response.status);
         setPlan(resData.plan_name);
@@ -399,10 +399,10 @@ const [balanceStatus,setBalanceStatus ] = useState("")
 
         setGloRefNumber(resData.reference_number);
         console.log(resData.reference_number);
-
+       setGloOrderID(resData.order_id)
 
         // No `order_id`, using `id` instead
-        // setMtnOrderID(resData.order_id); 
+     
 
         console.log(resData.order_id);
 
@@ -703,7 +703,8 @@ const [balanceStatus,setBalanceStatus ] = useState("")
               </div>
 
               {showOptionList && (
-                <div className={`border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[100]
+                <div className={`border md:rounded-[10px] lg:mt-2  h-[300px] overflow-y-scroll
+                  rounded-[4px] absolute w-full bg-[#FFF] z-[100]
                         ${isDarkMode
                     ? "bg-black text-white border !border-white"
                     : "border border-[#0003]"
@@ -715,7 +716,8 @@ const [balanceStatus,setBalanceStatus ] = useState("")
                     productPlans.map((plan) => (
                       <div
                         key={plan.PlanID}
-                        className={`pb-[18px] md:pb-[6px] pt-[18px] md:pt-[6px] font-weight-bold text-[13px] cursor-pointer border-b-[0.5px] md:rounded-[0px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${selectedOption === plan.PlanID ? "bg-gray-200" : ""
+                        className={`pb-[18px] md:pb-[6px] pt-[18px]
+                           md:pt-[6px] font-weight-bold text-[13px] cursor-pointer border-b-[0.5px] md:rounded-[0px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${selectedOption === plan.PlanID ? "bg-gray-200" : ""
                           }
                                                 ${isDarkMode
                             ? "bg-black text-white "
@@ -1171,7 +1173,7 @@ const [balanceStatus,setBalanceStatus ] = useState("")
                     {errorMessage && (
                       <p className ="text-center text-[14px] text-red-500 lg:text-[16px]
                        font-[500] leading-[18px] lg:leading-[20px]">
-                        Incorrect Otp
+                        Incorrect pin
                       </p>
                     )}
                   </div>
@@ -1537,6 +1539,11 @@ const [balanceStatus,setBalanceStatus ] = useState("")
           </Link>
         </div>
       </div>
+        {loading && (
+            <Modal>
+              <Loader/>
+            </Modal>
+          )}
     </DashBoardLayout>
   );
 };
