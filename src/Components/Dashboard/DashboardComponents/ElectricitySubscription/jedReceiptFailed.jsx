@@ -30,7 +30,7 @@ export const JedReceiptFailed = () => {
     setGlobalCountry,
     setJedFlag,
     selectedJedMeterType,
-    jedServiceID,
+    jedDiscoType,
     jedOrderId,
     jedTransactionId,
     jedShowDescription,
@@ -170,7 +170,7 @@ export const JedReceiptFailed = () => {
                       <div>
                         <img className="w-[30px]" src={logo2} alt="" />
                       </div>
-                      <div>{jedServiceID}</div>
+                      <div>{jedDiscoType}</div>
                     </span>
                   </div>
                   <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -334,7 +334,7 @@ export const JedReceiptFailed = () => {
             </div>
           </div>
 
-          <div className="flex w-[70%] mx-auto mb-[5%] md:w-[60%] ">
+          <div className="flex w-[70%] gap-x-3 mx-auto mb-[5%] md:w-[60%] ">
             <button
               onClick={() => {
                 handleShareClick();

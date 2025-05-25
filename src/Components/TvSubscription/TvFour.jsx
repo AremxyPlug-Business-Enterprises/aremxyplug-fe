@@ -335,7 +335,7 @@ setTvSubscriptionResponse,
         <div className={style.AirtimeTops}>
           <div className={style.airtimeTop}>
             <div>
-            <div id='tvBackground' className="h-[90px] lg:h-[196px] md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] lg:rounded-[20px] mx-auto  flex gap-6 justify-between px-[16.51px] md:px-[28.65px] lg:px-[50px]">
+            <div id='tvBackground' className="h-[90px] lg:h-[196px] md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] lg:rounded-[20px] mx-auto flex gap-6 justify-between px-[16.51px] md:px-[28.65px] lg:px-[50px]">
           <div className="py-[9.57px] md:py-[16.61px] align-middle self-center flex flex-col gap-1.5 w-[70%]">
             <p className="text-[9px] lg:text-[24px] md:text-[13.75px] font-semibold">
               SUBSCRIBE YOUR TV CHANNELS WITH AREMXYPLUG.

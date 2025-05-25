@@ -46,10 +46,11 @@ const EEDC = () => {
     toggleVisibility,
     isVisible,
     setEedcBillGenerate,
-    eedcServiceID,
+    // eedcServiceID,
     setEedcServiceID,
     eedcFlag,
     setEedcFlag,
+    eedcDiscoType,
     setEedcDiscoType,
     selectedEedcMeterType,
     setSelectedEedcMeterType,
@@ -133,6 +134,70 @@ const EEDC = () => {
       flag: require("../ElectricitySubscription/Electricity-sub-images/kenyaFlag.png"),
     },
   ];
+
+  // validating the network numbers
+  function validateNigerianNumberByNetwork(number) {
+    const networks = [
+      {
+        name: "GLO",
+        values: ["0705", "0805", "0807", "0811", "0815", "0905", "0915"],
+      },
+      {
+        name: "AIRTEL",
+        values: [
+          "0701",
+          "0708",
+          "0802",
+          "0808",
+          "0812",
+          "0901",
+          "0902",
+          "0904",
+          "0907",
+          "0912",
+          "0911",
+        ],
+      },
+      {
+        name: "9MOBILE",
+        values: ["0809", "0817", "0818", "0909", "0908"],
+      },
+      {
+        name: "GLO",
+        values: ["0705", "0805", "0807", "0811", "0815", "0905", "0915"],
+      },
+      {
+        name: "MTN",
+        values: [
+          "0703",
+          "0704",
+          "0814",
+          "0706",
+          "0803",
+          "0806",
+          "0810",
+          "0813",
+          "0814",
+          "0816",
+          "0903",
+          "0906",
+          "0913",
+          "0916",
+        ],
+      },
+    ];
+
+    for (let network of networks) {
+    for (let prefix of network.values) {
+      if (number.startsWith(prefix) && number.length === 11) {
+        return network.name;
+      }
+    }
+  }
+
+  return "Unknown network";
+  }
+
   const [errors, setErrors] = useState({});
   const [proceed, setProceed] = useState(false);
   const [amountError, setAmountError] = useState("");
@@ -147,6 +212,7 @@ const EEDC = () => {
     });
 
     const amount = Number(eedcAmount);
+    const network = validateNigerianNumberByNetwork(eedcPhoneNumber);
     if (error) {
       setErrors(
         error.details.reduce((acc, curr) => {
@@ -158,7 +224,13 @@ const EEDC = () => {
       setAmountError("Amount must be at least ₦1000");
     } else if (CheckSufficiency) {
       setAmountError("Insufficient fund");
-    } else {
+    } else if (network === "Unknown network") {
+    setErrors({
+      eedcPhoneNumber:
+        "Invalid phone number. Please enter a valid Nigerian network number.",
+    });
+  }
+    else {
       setProceed(true);
       setErrors({});
       setAmountError("");
@@ -293,7 +365,7 @@ const EEDC = () => {
     if (receivedData) {
       setSuccessPopup(false);
       setLoading(false);
-      navigate("/bedc-receipt");
+      navigate("/eedc-receipt");
     }
   }
 
@@ -366,7 +438,7 @@ const EEDC = () => {
               </div>
               <div className="text-[9px] font-normal leading-[12px] md:text-[10px] md:leading-[14.9px] lg:text-[20px] lg:leading-[26px] text-[#000000] ">
                 Recharge your metre and pay bills with our electricity bills
-                <br /> payment feature for both prepaid and postpaid metertypes.
+                payment feature for both prepaid and postpaid metertypes.
               </div>
             </div>
             <div>
@@ -382,15 +454,19 @@ const EEDC = () => {
               isDarkMode ? "text-white" : "text-[#7E7E7E]"
             }`}
           >
-            <div>Recharge</div>
+            <div className="text-[9px]">Recharge</div>
             <div>
               <img className="w-[35px] lg:w-[3.5rem] ml-1" src={logo} alt="" />
             </div>
-            <div className=" ml-1">
+            <div className="text-[9px] ml-1">
               Enugu Electric Payment-EEDC Meter Instantly
             </div>
             <div className="ml-1">
-              <img className="w-4 sm:w-[18px] lg:w-[24px]" src={arrow} alt="" />
+              <img
+                className="w-3.5 sm:w-[18px] lg:w-[24px]"
+                src={arrow}
+                alt=""
+              />
             </div>
           </div>
           <div className="lg:flex lg:items-start ">
@@ -606,7 +682,7 @@ const EEDC = () => {
                 Amount
               </div>
               <div
-                className={`flex items-center lg:text-[16px] text-[12px] border pl-2 md:rounded-[10px] ${
+                className={`flex items-center lg:text-[16px] text-[12px] border pl-2 rounded-md md:rounded-[10px] ${
                   isDarkMode
                     ? "text-white bg-black border-white rounded-[10px]"
                     : "text-[#7E7E7E] border-[#9C9C9C]"
@@ -661,7 +737,11 @@ const EEDC = () => {
                     </p>
                     <img
                       className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
-                      src={eedcFlag}
+                      src={
+                        eedcFlag
+                          ? eedcFlag
+                          : "./Images/dashboardImages/arrow-down2.png"
+                      }
                       alt=""
                     />
                   </div>
@@ -1058,7 +1138,7 @@ const EEDC = () => {
       {successPopup && (
         <Modal>
           <div
-             className={`${styles.successfulTwo} ${
+            className={`${styles.successfulTwo} ${
               isDarkMode ? "bg-black border border-white" : "bg-white"
             } ${
               toggleSideBar
@@ -1101,7 +1181,7 @@ const EEDC = () => {
                 isDarkMode ? "text-white" : "text-[#000]"
               }`}
             >
-              You have successfully Purchased
+              You have successfully Purchased{" "}
               <span
                 className={`font-extrabold text-[11px] md:text-[16px] lg:text-[14px] ${
                   isDarkMode ? "text-white" : "text-[#000]"
@@ -1109,7 +1189,7 @@ const EEDC = () => {
               >
                 Enugu {selectedEedcMeterType} Meter
               </span>
-              <br></br>
+              <br></br>{" "}
               <span
                 className={`font-extrabold text-[10px] md:text-[16px] lg:text-[14px] ${
                   isDarkMode ? "text-white" : "text-[#000]"
@@ -1133,7 +1213,7 @@ const EEDC = () => {
                   <div>
                     <img className="w-[30px]" src={logo} alt="" />
                   </div>
-                  <div>{eedcServiceID}</div>
+                  <div>{eedcDiscoType}</div>
                 </span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -1221,12 +1301,12 @@ const EEDC = () => {
             </div>
 
             {/* mx-10 */}
-             <div
+            <div
               className={`mx-4 h-[45px] my-5 flex justify-between items-center md:h-[65px] px-[4%] rounded-[8px] lg:h-[75px] ${
                 isDarkMode ? "bg-slate-800" : "bg-[#F2FAFF]"
               }`}
             >
-              <p className="text-[8px] text-center mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[14px] font-medium">
+              <p className="text-[8px] text-center md:text-[14px] md:w-[80%] lg:text-[14px] font-medium">
                 The electricity bills / token purchase has been generated
                 successfully. Please kindly check receipt to confirm the bills /
                 token. You can contact us for any further assistance.

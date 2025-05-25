@@ -31,7 +31,7 @@ export const EedcReceipt = () => {
     setEedcFlag,
     selectedEedcMeterType,
     // eedcServiceID,
-    EedcDiscoType,
+    eedcDiscoType,
     eedcOrderId,
     eedcTransactionId,
     eedcShowDescription,
@@ -46,7 +46,7 @@ export const EedcReceipt = () => {
   const productEmail = eedcEmail?.length > 0 ? eedcEmail : "";
   const productAmount = eedcAmount?.length > 0 ? eedcAmount : "";
   // const service_id = eedcServiceID?.length > 0 ? eedcServiceID : "";
-  const disco_type = EedcDiscoType?.length > 0 ? EedcDiscoType : "";
+  const disco_type = eedcDiscoType?.length > 0 ? eedcDiscoType : "";
   const order_id = eedcOrderId === undefined ? "" : eedcOrderId;
   const transaction_id = eedcTransactionId?.length > 0 ? eedcTransactionId : "";
   const description =
@@ -353,7 +353,7 @@ export const EedcReceipt = () => {
             </div>
           </div>
 
-          <div className="flex w-[70%] mx-auto mb-[5%] md:w-[60%] ">
+          <div className="flex w-[70%] mx-auto gap-x-3 mb-[5%] md:w-[60%] ">
             <button
               onClick={() => {
                 handleShareClick();

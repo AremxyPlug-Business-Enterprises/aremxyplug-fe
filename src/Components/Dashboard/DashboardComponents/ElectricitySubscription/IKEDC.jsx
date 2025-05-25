@@ -48,7 +48,7 @@ const IKEDC = () => {
     isVisible,
     // billGenerate,
     setIkedcBillGenerate,
-    ikedcServiceID,
+    // ikedcServiceID,
     setIkedcServiceID,
     ikedcFlag,
     setIkedcFlag,
@@ -59,6 +59,7 @@ const IKEDC = () => {
     setIkedcFetchedResponse,
     selectedIkedcMeterType,
     setSelectedIkedcMeterType,
+    ikedcDiscoType,
     setIkedcDiscoType,
     newBalance,
   } = useContext(ContextProvider);
@@ -135,6 +136,70 @@ const IKEDC = () => {
       flag: require("../ElectricitySubscription/Electricity-sub-images/kenyaFlag.png"),
     },
   ];
+
+  // validating the network numbers
+  function validateNigerianNumberByNetwork(number) {
+    const networks = [
+      {
+        name: "GLO",
+        values: ["0705", "0805", "0807", "0811", "0815", "0905", "0915"],
+      },
+      {
+        name: "AIRTEL",
+        values: [
+          "0701",
+          "0708",
+          "0802",
+          "0808",
+          "0812",
+          "0901",
+          "0902",
+          "0904",
+          "0907",
+          "0912",
+          "0911",
+        ],
+      },
+      {
+        name: "9MOBILE",
+        values: ["0809", "0817", "0818", "0909", "0908"],
+      },
+      {
+        name: "GLO",
+        values: ["0705", "0805", "0807", "0811", "0815", "0905", "0915"],
+      },
+      {
+        name: "MTN",
+        values: [
+          "0703",
+          "0704",
+          "0814",
+          "0706",
+          "0803",
+          "0806",
+          "0810",
+          "0813",
+          "0814",
+          "0816",
+          "0903",
+          "0906",
+          "0913",
+          "0916",
+        ],
+      },
+    ];
+
+    for (let network of networks) {
+      for (let prefix of network.values) {
+        if (number.startsWith(prefix) && number.length === 11) {
+          return network.name;
+        }
+      }
+    }
+
+    return "Unknown network";
+  }
+
   const [errors, setErrors] = useState({});
   const [proceed, setProceed] = useState(false);
   const [amountError, setAmountError] = useState("");
@@ -149,6 +214,7 @@ const IKEDC = () => {
     });
 
     const amount = Number(ikedcAmount);
+    const network = validateNigerianNumberByNetwork(ikedcPhoneNumber);
     if (error) {
       setErrors(
         error.details.reduce((acc, curr) => {
@@ -158,6 +224,11 @@ const IKEDC = () => {
       );
     } else if (amount < 1000) {
       setAmountError("Amount must be at least ₦1000");
+    } else if (network === "Unknown network") {
+      setErrors({
+        ikedcPhoneNumber:
+          "Invalid phone number. Please enter a valid Nigerian network number.",
+      });
     } else {
       setProceed(true);
       setErrors({});
@@ -287,7 +358,7 @@ const IKEDC = () => {
       setIkedcTransactionId(ikedcFetchedResponse.data.transaction_id);
       setIkedcServiceID(ikedcFetchedResponse.data.request_id);
       setIkedcShowDescription(ikedcFetchedResponse.data.description);
-      setIkedcDiscoType(ikedcFetchedResponse.data.disco_type)
+      setIkedcDiscoType(ikedcFetchedResponse.data.disco_type);
     };
     receivedData();
     if (receivedData) {
@@ -366,7 +437,7 @@ const IKEDC = () => {
               </div>
               <div className="text-[9px] font-normal leading-[12px] md:text-[10px] md:leading-[14.9px] lg:text-[20px] lg:leading-[26px] text-[#000000]">
                 Recharge your metre and pay bills with our electricity bills
-                <br /> payment feature for both prepaid and postpaid metertypes.
+                payment feature for both prepaid and postpaid metertypes.
               </div>
             </div>
             <div>
@@ -382,15 +453,19 @@ const IKEDC = () => {
               isDarkMode ? "text-white" : "text-[#7E7E7E]"
             }`}
           >
-            <div>Recharge</div>
+            <div className="text-[9px]">Recharge</div>
             <div>
               <img className="w-[35px] lg:w-[3.5rem] ml-1" src={logo} alt="" />
             </div>
-            <div className=" ml-1">
+            <div className="text-[9px] ml-1">
               Ikeja Electric Payment-IKEDC Meter Instantly
             </div>
             <div className="ml-1">
-              <img className="w-4 sm:w-[18px] lg:w-[24px]" src={arrow} alt="" />
+              <img
+                className="w-3.5 sm:w-[18px] lg:w-[24px]"
+                src={arrow}
+                alt=""
+              />
             </div>
           </div>
           <div className="lg:flex lg:items-start ">
@@ -659,7 +734,11 @@ const IKEDC = () => {
                     </p>
                     <img
                       className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
-                      src={ikedcFlag}
+                      src={
+                        ikedcFlag
+                          ? ikedcFlag
+                          : "./Images/dashboardImages/arrow-down2.png"
+                      }
                       alt=""
                     />
                   </div>
@@ -674,9 +753,7 @@ const IKEDC = () => {
               {globalTransferErrors.country && (
                 <div
                   className={`text-[14px] text-red-500 italic lg:text-[14px]
-                  ${
-                    isDarkMode ? "text-white bg-black " : ""
-                  }`}
+                  ${isDarkMode ? "text-white bg-black " : ""}`}
                 >
                   {globalTransferErrors.country}
                 </div>
@@ -1080,11 +1157,17 @@ const IKEDC = () => {
       {successPopup && (
         <Modal>
           <div
-            className={`${styles.successfulTwo} ${isDarkMode ? "bg-black border border-white": "bg-white"} ${
-              toggleSideBar ? "md:w-[65%] md:ml-[10rem] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+            className={`${styles.successfulTwo} ${
+              isDarkMode ? "bg-black border border-white" : "bg-white"
+            } ${
+              toggleSideBar
+                ? "md:w-[65%] md:ml-[10rem] lg:ml-[20%] lg:w-[40%]"
+                : "lg:w-[40%]"
             } md:w-[60%] w-[90%] overflow-auto`}
           >
-            <div className={`flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]`}>
+            <div
+              className={`flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]`}
+            >
               <img
                 onClick={() => {
                   setSuccessPopup(false);
@@ -1151,7 +1234,7 @@ const IKEDC = () => {
                   <div>
                     <img className="w-[30px]" src={logo} alt="" />
                   </div>
-                  <div>{ikedcServiceID}</div>
+                  <div>{ikedcDiscoType}</div>
                 </span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
@@ -1238,8 +1321,12 @@ const IKEDC = () => {
               </div>
             </div>
             {/* mx-10 */}
-            <div className={`mx-4 h-[45px] my-5 flex justify-between items-center md:h-[65px] px-[4%] rounded-[8px] lg:h-[75px] ${isDarkMode ? "bg-slate-800": "bg-[#F2FAFF]"}`}>
-              <p className="text-[8px] mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[14px] font-medium">
+            <div
+              className={`mx-4 h-[45px] my-5 flex justify-between items-center md:h-[65px] px-[4%] rounded-[8px] lg:h-[75px] ${
+                isDarkMode ? "bg-slate-800" : "bg-[#F2FAFF]"
+              }`}
+            >
+              <p className="text-[8px] text-center md:text-[14px] md:w-[80%] lg:text-[14px] font-medium">
                 The electricity bills / token purchase has been generated
                 successfully. Please kindly check receipt to confirm the bills /
                 token. You can contact us for any further assistance.

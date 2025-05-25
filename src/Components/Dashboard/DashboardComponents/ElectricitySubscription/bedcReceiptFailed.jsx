@@ -30,7 +30,7 @@ export const BedcReceiptFailed = () => {
     setGlobalCountry,
     setBedcFlag,
     selectedBedcMeterType,
-    bedcServiceID,
+    bedcDiscoType,
     bedcOrderId,
     bedcTransactionId,
     bedcShowDescription,
@@ -86,7 +86,7 @@ export const BedcReceiptFailed = () => {
     <DashBoardLayout>
       <div
         className={`flex flex-col gap-[35px] lg:gap-[85px] ${
-          isDarkMode ? "bg-black border border-white rounded-md" : ""
+          isDarkMode ? "bg-black border border-white rounded-md" : "bg-white"
         }`}
       >
         <div
@@ -169,7 +169,7 @@ export const BedcReceiptFailed = () => {
                       <div>
                         <img className="w-[30px]" src={logo2} alt="" />
                       </div>
-                      <div>{bedcServiceID}</div>
+                      <div>{bedcDiscoType}</div>
                     </span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -309,7 +309,7 @@ export const BedcReceiptFailed = () => {
             </div>
           </div>
 
-          <div className="flex w-[70%] mx-auto mb-[5%] md:w-[60%] ">
+          <div className="flex w-[70%] gap-x-3 mx-auto mb-[5%] md:w-[60%] ">
             <button
               onClick={() => {
                 handleShareClick();

@@ -354,7 +354,7 @@ export const AedcReceipt = () => {
             </div>
           </div>
 
-          <div className="flex w-[70%] mx-auto mb-[5%] md:w-[70%] ">
+          <div className="flex w-[70%] mx-auto gap-x-3 mb-[5%] md:w-[70%] ">
             <button
               onClick={() => {
                 handleShareClick();

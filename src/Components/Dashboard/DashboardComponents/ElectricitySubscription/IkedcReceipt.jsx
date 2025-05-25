@@ -264,7 +264,7 @@ export const IkedcReceipt = () => {
             </div>
           </div>
 
-          <div className="flex w-[70%] mx-auto justify-between mb-[5%] md:w-[70%] ">
+          <div className="flex w-[70%] gap-x-3 mx-auto justify-between mb-[5%] md:w-[70%] ">
             <button
               onClick={() => {
                 handleShareClick();

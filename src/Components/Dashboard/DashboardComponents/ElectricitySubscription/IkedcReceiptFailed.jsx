@@ -30,7 +30,7 @@ export const IkedcReceiptFailed = () => {
     setGlobalCountry,
     setIkedcFlag,
     selectedIkedcMeterType,
-    ikedcServiceID,
+    ikedcDiscoType,
     ikedcOrderId,
     ikedcTransactionId,
     ikedcShowDescription,
@@ -155,7 +155,7 @@ export const IkedcReceiptFailed = () => {
                 <p className={`font-medium ${isDarkMode ? "text-white": "text-[#7C7C7C]"}`}>Disco Type</p>
                 <span className="flex items-center gap-1 ">
                   <div><img className="w-[30px]" src={logo2} alt="" /></div>
-                  <div>{ikedcServiceID}</div>
+                  <div>{ikedcDiscoType}</div>
                   </span>
               </div>
               <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -253,7 +253,7 @@ export const IkedcReceiptFailed = () => {
             </div>
           </div>
 
-          <div className="flex w-[70%] mx-auto mb-[5%] md:w-[60%] ">
+          <div className="flex w-[70%] gap-x-3 mx-auto mb-[5%] md:w-[60%] ">
             <button
               onClick={() => {
                 handleShareClick();

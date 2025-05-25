@@ -47,10 +47,11 @@ const AEDC = () => {
     toggleVisibility,
     isVisible,
     setAedcBillGenerate,
-    aedcServiceID,
+    // aedcServiceID,
     setAedcServiceID,
     aedcFlag,
     setAedcFlag,
+    aedcDiscoType,
     setAedcDiscoType,
     selectedAedcMeterType,
     setSelectedAedcMeterType,
@@ -137,6 +138,69 @@ const AEDC = () => {
       flag: require("../ElectricitySubscription/Electricity-sub-images/kenyaFlag.png"),
     },
   ];
+
+  // validating the network numbers
+  function validateNigerianNumberByNetwork(number) {
+    const networks = [
+      {
+        name: "GLO",
+        values: ["0705", "0805", "0807", "0811", "0815", "0905", "0915"],
+      },
+      {
+        name: "AIRTEL",
+        values: [
+          "0701",
+          "0708",
+          "0802",
+          "0808",
+          "0812",
+          "0901",
+          "0902",
+          "0904",
+          "0907",
+          "0912",
+          "0911",
+        ],
+      },
+      {
+        name: "9MOBILE",
+        values: ["0809", "0817", "0818", "0909", "0908"],
+      },
+      {
+        name: "GLO",
+        values: ["0705", "0805", "0807", "0811", "0815", "0905", "0915"],
+      },
+      {
+        name: "MTN",
+        values: [
+          "0703",
+          "0704",
+          "0814",
+          "0706",
+          "0803",
+          "0806",
+          "0810",
+          "0813",
+          "0814",
+          "0816",
+          "0903",
+          "0906",
+          "0913",
+          "0916",
+        ],
+      },
+    ];
+
+    for (let network of networks) {
+    for (let prefix of network.values) {
+      if (number.startsWith(prefix) && number.length === 11) {
+        return network.name;
+      }
+    }
+  }
+
+  return "Unknown network";
+  }
   const [errors, setErrors] = useState({});
   const [proceed, setProceed] = useState(false);
   const [amountError, setAmountError] = useState("");
@@ -151,6 +215,7 @@ const AEDC = () => {
     });
 
     const amount = Number(aedcAmount);
+    const network = validateNigerianNumberByNetwork(aedcPhoneNumber);
     if (error) {
       setErrors(
         error.details.reduce((acc, curr) => {
@@ -160,7 +225,14 @@ const AEDC = () => {
       );
     } else if (amount < 1000) {
       setAmountError("Amount must be at least ₦1000");
-    } else {
+    }
+     else if (network === "Unknown network") {
+    setErrors({
+      aedcPhoneNumber:
+        "Invalid phone number. Please enter a valid Nigerian network number.",
+    });
+  }
+    else {
       setProceed(true);
       setErrors({});
       setAmountError("");
@@ -340,77 +412,7 @@ const AEDC = () => {
   }, [CheckSufficiency]);
   console.log(balanceStringToNum, aedcAmountToNumber);
 
-  // const handleSuccess = async () => {
-  //   async function buyAEDC(meter_type, meter_no, phone, email, amount) {
-  //     // const url = 'https://aremxyplug.onrender.com/api/v1/electric-bill';
-
-  //     const parsedAmount = parseInt(amount, 10);
-
-  //     const data = {
-  //       meter_type,
-  //       meter_no,
-  //       phone, // Use the parsed integer value
-  //       email,
-  //       amount: parsedAmount, // Use the parsed integer value
-  //       disco_type: "abuja-electric",
-  //     };
-
-  //     // console.log(data);
-
-  //     try {
-  //       setLoading(true);
-  //       // const response = await axios.post(url, data);
-  //       const path = "/electric-bill";
-  //       const response = await axiosInstance.post(path, data);
-  //       console.log(response.data);
-  //       console.log(response.status);
-  //       setSelectedNetworkProduct(response.data.data.meter_type);
-  //       setMeterNumber(response.data.data.meter_number);
-  //       setPhoneNumber(response.data.data.phone);
-  //       setEmail(response.data.data.email);
-  //       setIkedcamount(response.data.data.amount);
-  //       setBillGenerate(response.data.data.bill_generated);
-  //       setOrderId(response.data.data.order_id);
-  //       setTransactionId(response.data.data.transaction_id);
-  //       setServiceID(response.data.data.disco_type);
-  //       setShowDescription(response.data.data.description);
-  //       return { statusCode: response.status, data: response.data };
-  //       // return { statusCode: response.data.status,  };
-  //     } catch (error) {
-  //       console.error("Full error object:", error); // Log the entire error for debugging
-
-  //       // Safely extract status and data
-  //       const statusCode = error.response?.status || 500; // Fallback to 500 if no status
-  //       const errorData = error.response?.data || null; // Fallback to null if no data
-
-  //       return {
-  //         statusCode,
-  //         data: errorData,
-  //       };
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   }
-
-  //   // Usage
-  //   const response = await buyAEDC(
-  //     selectedNetworkProduct,
-  //     meterNumber,
-  //     phoneNumber,
-  //     ikedcEmail,
-  //     ikedcamount
-  //   );
-
-  //   setInputPinPopUp(false);
-  //   if (response.statusCode === 200) {
-  //     // Success response
-  //     setSuccessPopup(true); // Show success popup
-  //   } else {
-  //     // Failure response
-  //     setFailedPopup(true); // Show failure popup
-  //   }
-  // };
-
+ 
   const [InputPinPopUp, setInputPinPopUp] = useState(false);
   const [inputPin, setInputPin] = useState("");
 
@@ -435,14 +437,13 @@ const AEDC = () => {
       >
         <div>
           {/* top part after nav bar */}
-          <div className="flex flex-row w-full pt-[10px]  h-[90px] md:h-[112.29px] lg:h-[196px] lg:px-[50px]  px-[16px] rounded-lg md:rounded-[11.5px] lg:rounded-[20px] justify-between  py-0 bg-gradient-to-r from-[#FFA733] via-[#58FF4A] to-[#98B0FF]">
+          <div className="flex flex-row w-full pt-[10px] h-[90px] md:h-[112.29px] lg:h-[196px] lg:px-[50px]  px-[16px] rounded-lg md:rounded-[11.5px] lg:rounded-[20px] justify-between  py-0 bg-gradient-to-r from-[#FFA733] via-[#58FF4A] to-[#98B0FF]">
             <div className="flex flex-col gap-2  ">
               <div className="text-[11px] font-semibold pt-[10px] md:text-[12px] md:leading-[20.63px] lg:pt-[25px] lg:text-[24px] lg:leading-[36px] text-[#000000] leading-[12px]">
                 ELECTRICITY BILLS, PREPAID AND POSTPAID <br /> PAYMENTS.
               </div>
               <div className="text-[9px] font-normal leading-[12px] md:text-[10px] md:leading-[14.9px] lg:text-[20px] lg:leading-[26px] text-[#000000]">
-                Recharge your metre and pay bills with our electricity bills
-                <br /> payment feature for both prepaid and postpaid metertypes.
+                Recharge your metre and pay bills with our electricity bills payment feature for both prepaid and postpaid metertypes.
               </div>
             </div>
             <div>
@@ -454,19 +455,19 @@ const AEDC = () => {
             </div>
           </div>
           <div
-            className={`flex lg:mt-[20px] text-[10px] sm:text-[12px] lg:text-[16px] font-semibold pt-[30px] items-center ${
+            className={`flex lg:mt-[20px] text-[10px] sm:text-[12px] lg:text-[16px] font-semibold pt-[30px] items-center w-full ${
               isDarkMode ? "text-white" : "text-[#7E7E7E]"
             }`}
           >
-            <div>Recharge</div>
+            <div className="text-[9px]">Recharge</div>
             <div>
               <img className="w-[35px] lg:w-[3.5rem] ml-1" src={logo} alt="" />
             </div>
-            <div className="ml-1 ">
+            <div className="ml-1 text-[9px]">
               Abuja Electric Payment-AEDC Meter Instantly
             </div>
             <div className="ml-1">
-              <img className="w-4 sm:w-[18px] lg:w-[24px]" src={arrow} alt="" />
+              <img className="w-3.5 sm:w-[18px] lg:w-[24px]" src={arrow} alt="" />
             </div>
           </div>
           <div className="lg:flex lg:items-start ">
@@ -753,7 +754,7 @@ const AEDC = () => {
                     </p>
                     <img
                       className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
-                      src={aedcFlag}
+                      src={aedcFlag ? aedcFlag :"./Images/dashboardImages/arrow-down2.png" }
                       alt=""
                     />
                   </div>
@@ -1225,7 +1226,7 @@ const AEDC = () => {
                   <div>
                     <img className="w-[30px]" src={logo} alt="" />
                   </div>
-                  <div>{aedcServiceID}</div>
+                  <div>{aedcDiscoType}</div>
                 </span>
               </div>
               <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -1317,7 +1318,7 @@ const AEDC = () => {
                 isDarkMode ? "bg-slate-800" : "bg-[#F2FAFF]"
               }`}
             >
-              <p className="text-[8px] text-center mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[14px] font-medium">
+              <p className="text-[8px] text-center md:text-[14px] md:w-[80%] lg:text-[14px] font-medium">
                 The electricity bills / token purchase has been generated
                 successfully. Please kindly check receipt to confirm the bills /
                 token. You can contact us for any further assistance.

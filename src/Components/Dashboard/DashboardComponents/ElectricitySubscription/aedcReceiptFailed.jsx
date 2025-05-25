@@ -30,7 +30,7 @@ export const AedcReceiptFailed = () => {
     setGlobalCountry,
     setAedcFlag,
     selectedAedcMeterType,
-    aedcServiceID,
+    aedcDiscoType,
     aedcOrderId,
     aedcTransactionId,
     aedcShowDescription,
@@ -157,7 +157,7 @@ export const AedcReceiptFailed = () => {
                       <div>
                         <img className="w-[30px]" src={logo2} alt="" />
                       </div>
-                      <div>{aedcServiceID}</div>
+                      <div>{aedcDiscoType}</div>
                     </span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">

@@ -47,10 +47,11 @@ const BEDC = () => {
     toggleVisibility,
     isVisible,
     setBedcBillGenerate,
-    bedcServiceID,
+    // bedcServiceID,
     setBedcServiceID,
     bedcFlag,
     setBedcFlag,
+    bedcDiscoType,
     setBedcDiscoType,
     selectedBedcMeterType,
     setSelectedBedcMeterType,
@@ -136,6 +137,69 @@ const BEDC = () => {
     },
   ];
 
+  // validating the network numbers
+  function validateNigerianNumberByNetwork(number) {
+    const networks = [
+      {
+        name: "GLO",
+        values: ["0705", "0805", "0807", "0811", "0815", "0905", "0915"],
+      },
+      {
+        name: "AIRTEL",
+        values: [
+          "0701",
+          "0708",
+          "0802",
+          "0808",
+          "0812",
+          "0901",
+          "0902",
+          "0904",
+          "0907",
+          "0912",
+          "0911",
+        ],
+      },
+      {
+        name: "9MOBILE",
+        values: ["0809", "0817", "0818", "0909", "0908"],
+      },
+      {
+        name: "GLO",
+        values: ["0705", "0805", "0807", "0811", "0815", "0905", "0915"],
+      },
+      {
+        name: "MTN",
+        values: [
+          "0703",
+          "0704",
+          "0814",
+          "0706",
+          "0803",
+          "0806",
+          "0810",
+          "0813",
+          "0814",
+          "0816",
+          "0903",
+          "0906",
+          "0913",
+          "0916",
+        ],
+      },
+    ];
+
+    for (let network of networks) {
+      for (let prefix of network.values) {
+        if (number.startsWith(prefix) && number.length === 11) {
+          return network.name;
+        }
+      }
+    }
+
+    return "Unknown network";
+  }
+
   const [balanceStatus, setBalanceStatus] = useState("");
   let balanceStringToNum = Number(newBalance);
   let aedcAmountToNumber = Number(bedcAmount);
@@ -165,6 +229,7 @@ const BEDC = () => {
     });
 
     const amount = Number(bedcAmount);
+    const network = validateNigerianNumberByNetwork(bedcPhoneNumber);
 
     if (error) {
       setErrors(
@@ -175,8 +240,11 @@ const BEDC = () => {
       );
     } else if (amount < 1000) {
       setAmountError("Amount must be at least ₦1000");
-    } else if (CheckSufficiency) {
-      setAmountError("Insufficient fund");
+    } else if (network === "Unknown network") {
+      setErrors({
+        bedcPhoneNumber:
+          "Invalid phone number. Please enter a valid Nigerian network number.",
+      });
     } else {
       setProceed(true);
       setErrors({});
@@ -432,7 +500,7 @@ const BEDC = () => {
               </div>
               <div className="text-[9px] font-normal leading-[12px] md:text-[10px] md:leading-[14.9px] lg:text-[20px] lg:leading-[26px] text-[#000000] ">
                 Recharge your metre and pay bills with our electricity bills
-                <br /> payment feature for both prepaid and postpaid metertypes.
+                payment feature for both prepaid and postpaid metertypes.
               </div>
             </div>
             <div>
@@ -448,15 +516,19 @@ const BEDC = () => {
               isDarkMode ? "text-white" : "text-[#7E7E7E]"
             }`}
           >
-            <div>Recharge</div>
+            <div className="text-[9px]">Recharge</div>
             <div>
               <img className="w-[35px] lg:w-[130px] ml-1" src={logo} alt="" />
             </div>
-            <div className=" ml-1">
+            <div className="text-[9px] ml-1">
               Benin Electric Payment-BEDC Meter Instantly
             </div>
             <div className="ml-1">
-              <img className="w-4 sm:w-[18px] lg:w-[24px]" src={arrow} alt="" />
+              <img
+                className="w-3.5 sm:w-[18px] lg:w-[24px]"
+                src={arrow}
+                alt=""
+              />
             </div>
           </div>
           <div className="lg:flex lg:items-start ">
@@ -731,7 +803,11 @@ const BEDC = () => {
                     </p>
                     <img
                       className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
-                      src={bedcFlag}
+                      src={
+                        bedcFlag
+                          ? bedcFlag
+                          : "./Images/dashboardImages/arrow-down2.png"
+                      }
                       alt=""
                     />
                   </div>
@@ -1018,7 +1094,10 @@ const BEDC = () => {
             </div>
             <button
               onClick={handleSwitch}
-              className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+              disabled={CheckSufficiency}
+              className={`my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:my-[2%] ${
+                CheckSufficiency ? "bg-gray-400" : "bg-primary"
+              }`}
             >
               Confirm
             </button>
@@ -1202,7 +1281,7 @@ const BEDC = () => {
                   <div>
                     <img className="w-[30px]" src={logo} alt="" />
                   </div>
-                  <div>{bedcServiceID}</div>
+                  <div>{bedcDiscoType}</div>
                 </span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
@@ -1290,8 +1369,12 @@ const BEDC = () => {
             </div>
 
             {/* mx-10 */}
-            <div className={`mx-4 h-[45px] my-5 flex justify-between items-center md:h-[65px] px-[4%] rounded-[8px] lg:h-[75px] ${isDarkMode ? "bg-slate-800": "bg-[#F2FAFF]"}`}>
-              <p className="text-[8px] text-center mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[14px] font-medium">
+            <div
+              className={`mx-4 h-[45px] my-5 flex justify-between items-center md:h-[65px] px-[4%] rounded-[8px] lg:h-[75px] ${
+                isDarkMode ? "bg-slate-800" : "bg-[#F2FAFF]"
+              }`}
+            >
+              <p className="text-[8px] text-center md:text-[14px] md:w-[80%] lg:text-[14px] font-medium">
                 The electricity bills / token purchase has been generated
                 successfully. Please kindly check receipt to confirm the bills /
                 token. You can contact us for any further assistance.
@@ -1323,7 +1406,9 @@ const BEDC = () => {
       {failedPopup && (
         <Modal>
           <div
-            className={`${styles.successfulTwo} ${
+            className={`${styles.successfulTwo}
+            ${isDarkMode ? "bg-black" : "bg-white"}
+            ${
               toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
             } md:w-[45%] w-[90%] overflow-auto`}
           >

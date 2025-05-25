@@ -281,7 +281,7 @@ export const IbedcReceipt = () => {
             </div>
           </div>
 
-          <div className="flex w-[70%] mx-auto mb-[5%] md:w-[60%] ">
+          <div className="flex w-[70%] gap-x-3 mx-auto mb-[5%] md:w-[60%] ">
             <button
               onClick={() => {
                 handleShareClick();

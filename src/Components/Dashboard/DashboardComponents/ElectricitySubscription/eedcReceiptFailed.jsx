@@ -30,7 +30,7 @@ export const EedcReceiptFailed = () => {
     setGlobalCountry,
     setEedcFlag,
     selectedEedcMeterType,
-    eedcServiceID,
+    eedcDiscoType,
     eedcOrderId,
     eedcTransactionId,
     eedcShowDescription,
@@ -169,7 +169,7 @@ export const EedcReceiptFailed = () => {
                       <div>
                         <img className="w-[30px]" src={logo2} alt="" />
                       </div>
-                      <div>{eedcServiceID}</div>
+                      <div>{eedcDiscoType}</div>
                     </span>
                   </div>
                   <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -309,7 +309,7 @@ export const EedcReceiptFailed = () => {
             </div>
           </div>
 
-          <div className="flex w-[70%] mx-auto mb-[5%] md:w-[60%] ">
+          <div className="flex w-[70%] gap-x-3 mx-auto mb-[5%] md:w-[60%] ">
             <button
               onClick={() => {
                 handleShareClick();

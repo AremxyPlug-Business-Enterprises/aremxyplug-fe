@@ -30,7 +30,7 @@ export const IbedcReceiptFailed = () => {
     setGlobalCountry,
     setIbedcFlag,
     selectedIbedcMeterType,
-    ibedcServiceID,
+    ibedcDiscoType,
     ibedcOrderId,
     ibedcTransactionId,
     ibedcShowDescription,
@@ -155,7 +155,7 @@ export const IbedcReceiptFailed = () => {
                       <div>
                         <img className="w-[30px]" src={logo2} alt="" />
                       </div>
-                      <div>{ibedcServiceID}</div>
+                      <div>{ibedcDiscoType}</div>
                     </span>
                   </div>
                   <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -247,7 +247,7 @@ export const IbedcReceiptFailed = () => {
             </div>
           </div>
 
-          <div className="flex w-[70%] mx-auto mb-[5%] md:w-[60%] ">
+          <div className="flex w-[70%] gap-x-3 mx-auto mb-[5%] md:w-[60%] ">
             <button
               onClick={() => {
                 handleShareClick();
