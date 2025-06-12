@@ -268,6 +268,7 @@ const EEDC = () => {
   // };
 
   const handleCountryClick = (name, flag, id, code) => {
+    if (id !== 1 && code !== "Nigerian NGN Wallet") return;
     setEedcFlag(flag);
     setShowList(false);
     setGlobalCountry(name);
@@ -275,14 +276,14 @@ const EEDC = () => {
     // setCountryCode(code);
     // setCurrencyAvailable(id !== 1);
   };
-  const handleVerifiedName = (event) => {
-    const newValue = event.target.value;
-    setEedcVerifiedName(newValue);
-  };
-  const handleMeterNumber = (event) => {
-    const newValue = event.target.value;
-    setEedcMeterNumber(newValue);
-  };
+  // const handleVerifiedName = (event) => {
+  //   const newValue = event.target.value;
+  //   setEedcVerifiedName(newValue);
+  // };
+  // const handleMeterNumber = (event) => {
+  //   const newValue = event.target.value;
+  //   setEedcMeterNumber(newValue);
+  // };
   const handlePhoneNumber = (event) => {
     const value = event.target.value;
     const newValue = value.replace(/\D/g, "").slice(0, 11);
@@ -308,10 +309,61 @@ const EEDC = () => {
   const [pinSuccess, setPinSuccess] = useState(false);
   const [pinFailed, setPinFailed] = useState(false);
   const [loading, setLoading] = useState(false);
+const [isFailedMeterNumber, setIsFailedMeterNumber] = useState(false);
+
+  let passedMeterName;
+
+  const verifyMeterNumber = async (meterNumber) => {
+    async function HandleMeterNumber() {
+      const path = "bills/verify";
+      const body = {
+        disco_type: "enugu-electric",
+        meter_no: meterNumber,
+        meter_type: selectedEedcMeterType.toLowerCase(),
+      };
+      const SuccessHandler = () => {
+        setIsFailedMeterNumber(false);
+        function handleReceivedMeterData() {
+          if (eedcFetchedResponse.name) {
+            setEedcVerifiedName(eedcFetchedResponse.name);
+          } else {
+            setEedcVerifiedName("");
+          }
+        }
+        handleReceivedMeterData();
+      };
+      const FailedHandler = () => {
+        setIsFailedMeterNumber(true);
+      };
+
+      await PostFunction(
+        path,
+        setLoading,
+        body,
+        SuccessHandler,
+        FailedHandler,
+        setEedcFetchedResponse
+      );
+    }
+    HandleMeterNumber();
+    // handleReceivedMeterData();
+    passedMeterName = eedcFetchedResponse
+      ? eedcFetchedResponse.name
+      : "";
+  };
+
+  const handleVerifiedName =
+    eedcMeterNumber.length === 13 &&
+    isFailedMeterNumber === false &&
+    verifyMeterNumber &&
+    eedcVerifiedName === ""
+      ? passedMeterName
+      : eedcVerifiedName;
+  
 
   const verifyPin = async () => {
     async function ElectricityHandler() {
-      const path = "electric-bill";
+      const path = "bills/electric-bill";
       const parsedAmount = parseInt(eedcAmount, 10);
       const data = {
         meter_type: selectedEedcMeterType,
@@ -431,7 +483,7 @@ const EEDC = () => {
       >
         <div>
           {/* top part after nav bar */}
-          <div className="flex flex-row w-full pt-[10px]  h-[90px] md:h-[112.29px] lg:h-[196px] lg:px-[50px]  px-[16px] rounded-lg md:rounded-[11.5px] lg:rounded-[20px] justify-between  py-0 bg-gradient-to-r from-[#FFA733] via-[#58FF4A] to-[#98B0FF]">
+          <div className="flex flex-row w-full pt-[10px] min-h-[91px] md:h-[112.29px] lg:h-[196px] lg:px-[50px]  px-[16px] rounded-lg md:rounded-[11.5px] lg:rounded-[20px] justify-between  py-0 bg-gradient-to-r from-[#FFA733] via-[#58FF4A] to-[#98B0FF]">
             <div className="flex flex-col gap-2  ">
               <div className="text-[11px] font-semibold pt-[10px] md:text-[12px] md:leading-[20.63px] lg:pt-[25px] lg:text-[24px] lg:leading-[36px] text-[#000000] leading-[12px]">
                 ELECTRICITY BILLS, PREPAID AND POSTPAID <br /> PAYMENTS.
@@ -454,11 +506,11 @@ const EEDC = () => {
               isDarkMode ? "text-white" : "text-[#7E7E7E]"
             }`}
           >
-            <div className="text-[9px]">Recharge</div>
+            <div className="text-[9px] md:text-xs lg:text-[16px]">Recharge</div>
             <div>
               <img className="w-[35px] lg:w-[3.5rem] ml-1" src={logo} alt="" />
             </div>
-            <div className="text-[9px] ml-1">
+            <div className="text-[9px] md:text-xs lg:text-[16px] ml-1">
               Enugu Electric Payment-EEDC Meter Instantly
             </div>
             <div className="ml-1">
@@ -557,7 +609,7 @@ const EEDC = () => {
               )}
             </div>
 
-            <div className="flex flex-col sm:mt-[10px] md:mt-[23px] lg:mt-[23px] gap-2 lg:gap-2.5">
+            <div className="flex flex-col relative sm:mt-[10px] md:mt-[23px] lg:mt-[23px] gap-2 lg:gap-2.5">
               <div
                 className={` text-[14px] lg:text-[16px] md:font-semibold font-normal ${
                   isDarkMode ? "text-white" : "text-[#7E7E7E]"
@@ -567,9 +619,16 @@ const EEDC = () => {
               </div>
               <div>
                 <input
-                  type="number"
+                  type="text"
                   value={eedcMeterNumber}
-                  onChange={handleMeterNumber}
+                  maxLength={13}
+                  onChange={(e) => {
+                    const newValue = e.target.value
+                    setEedcMeterNumber(newValue);
+                    if (newValue.length === 13 && !errors.eedcMeterNumber) {
+                      verifyMeterNumber(newValue);
+                    }
+                  }}
                   onClick={() => setShowProductList(false)}
                   className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
                     isDarkMode
@@ -580,10 +639,15 @@ const EEDC = () => {
               </div>
               {errors.eedcMeterNumber && (
                 <div
-                  className={`text-[14px] text-red-500 italic lg:text-[14px] `}
+                  className={`text-[14px] absolute left-0 -bottom-[1.3rem] text-red-500 italic lg:text-[14px] `}
                 >
                   {/* ${isDarkMode ? "bg-black text-white" : ""} */}
                   {errors.eedcMeterNumber}
+                </div>
+              )}
+              {!errors.eedcMeterNumber && isFailedMeterNumber && (
+                <div className="text-[14px] absolute left-0 -bottom-[1.3rem] text-red-500 italic lg:text-[14px]">
+                  Invalid meter number
                 </div>
               )}
             </div>
@@ -599,8 +663,8 @@ const EEDC = () => {
               <div>
                 <input
                   type="text"
-                  value={eedcVerifiedName}
-                  onChange={handleVerifiedName}
+                  value={handleVerifiedName}
+                  readOnly
                   className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
                     isDarkMode
                       ? "text-white bg-black border border-white"
@@ -609,7 +673,7 @@ const EEDC = () => {
                 />
               </div>
             </div>
-            <div className="flex flex-col gap-2 lg:gap-2.5">
+            <div className="flex flex-col relative gap-2 lg:gap-2.5">
               <div
                 className={`text-[#7E7E7E] text-[14px] lg:text-[16px] md:font-semibold font-normal ${
                   isDarkMode ? "text-white" : ""
@@ -642,12 +706,12 @@ const EEDC = () => {
                 />
               </div>
               {errors.eedcPhoneNumber && (
-                <div className="text-[14px] text-red-500 italic lg:text-[14px]">
+                <div className="text-[14px] absolute left-0 -bottom-[1.5rem] leading-3 text-red-500 italic lg:text-[14px]">
                   {errors.eedcPhoneNumber}
                 </div>
               )}
             </div>
-            <div className="flex flex-col gap-2 lg:gap-2.5">
+            <div className="flex flex-col gap-2 relative lg:gap-2.5">
               <div
                 className={`text-[#7E7E7E] text-[14px] lg:text-[16px] md:font-semibold font-normal ${
                   isDarkMode ? "text-white" : ""
@@ -668,7 +732,7 @@ const EEDC = () => {
                 />
               </div>
               {errors.eedcEmail && (
-                <div className="text-[14px] text-red-500 italic lg:text-[14px]">
+                <div className="text-[14px] absolute left-0 -bottom-[1.3rem] text-red-500 italic lg:text-[14px]">
                   {errors.eedcEmail}
                 </div>
               )}
@@ -779,12 +843,12 @@ const EEDC = () => {
                 >
                   {countryList.map((country) => (
                     <div
-                      className={`py-[18px] md:py-[14px] font-normal cursor-pointer px-2 flex items-center gap-[5px] text-[12px] md:text-[14px] lg:text-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] transition-all duration-300 hover:bg-slate-50
+                      className={`py-[18px] md:py-[14px] font-normal px-2 flex items-center gap-[5px] text-[12px] md:text-[14px] lg:text-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] transition-all duration-300 hover:bg-slate-50
                        ${
                          isDarkMode
                            ? "text-white hover:bg-slate-800 bg-black "
                            : "text-[#7E7E7E] "
-                       }`}
+                       } ${country.code === "Nigerian NGN Wallet" ? "cursor-pointer" : "cursor-not-allowed opacity-50"}`}
                       key={country.id}
                       onClick={() =>
                         handleCountryClick(

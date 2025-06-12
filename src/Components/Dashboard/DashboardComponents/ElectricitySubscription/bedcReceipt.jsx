@@ -37,8 +37,8 @@ export const BedcReceipt = () => {
     bedcBillGenerate,
   } = useContext(ContextProvider);
 
-  // const location = useLocation();
   const navigate = useNavigate();
+  // const location = useLocation();
   // const { selectedNetworkProduct, meterNumber, phoneNumber, ikedcEmail, ikedcamount, serviceID, orderId, transactionId, showDescription, billGenerate  } = location.state
 
   const networkProduct =
