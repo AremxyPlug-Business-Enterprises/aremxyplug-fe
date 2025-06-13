@@ -30,7 +30,7 @@ export const AedcReceiptFailed = () => {
     setGlobalCountry,
     setAedcFlag,
     selectedAedcMeterType,
-    aedcServiceID,
+    aedcDiscoType,
     aedcOrderId,
     aedcTransactionId,
     aedcShowDescription,
@@ -93,7 +93,7 @@ export const AedcReceiptFailed = () => {
           <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
             <Link to="/">
               <img
-                className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[29px]"
+                className="w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[29px]"
                 src="/Images/login/arpLogo.png"
                 alt=""
               />
@@ -101,7 +101,7 @@ export const AedcReceiptFailed = () => {
             <div onClick={handleClick}>
               {" "}
               <img
-                className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
+                className="w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
               />
@@ -113,7 +113,7 @@ export const AedcReceiptFailed = () => {
             <h3 className="font-extrabold text-[12px] my-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
               Transaction Receipt
             </h3>
-            <div className="w-full flex justify-center ">
+            <div className="w-full flex justify-center">
               <img
                 className="absolute w-[250px] h-[450px] md:w-[70%] lg:w-[50%] lg:h-[550px]"
                 src="./Images/transferImages/receipt-background.png"
@@ -151,16 +151,16 @@ export const AedcReceiptFailed = () => {
                   />
                 </div>
                 <div className="flex flex-col gap-3 pt-[10px]">
-                  <div className="flex text-[10px] md:text-[14px] pt-[10px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                  <div className="flex text-[10px] md:text-[14px] pt-[10px] w-[90%] mx-auto justify-between lg:text-[16px]">
                     <p className={`font-medium ${isDarkMode ? "text-white": "text-[#7C7C7C]"}`}>Disco Type</p>
                     <span className="flex items-center gap-1 ">
                       <div>
                         <img className="w-[30px]" src={logo2} alt="" />
                       </div>
-                      <div>{aedcServiceID}</div>
+                      <div>{aedcDiscoType}</div>
                     </span>
                   </div>
-                  <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                  <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <p className={`font-medium ${isDarkMode ? "text-white": "text-[#7C7C7C]"}`}>Meter Type</p>
                     <span>{selectedAedcMeterType} </span>
                   </div>
@@ -262,7 +262,7 @@ export const AedcReceiptFailed = () => {
               onClick={() => {
                 handleSaveAsPDFClick();
               }}
-              className={` border-[1px] w-[111px]  flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] md:w-[8.5rem] rounded-[6px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%] ${isDarkMode ? "bg-black border-white" : "bg-[#ffffff] border-[#0003]"}`}
+              className={`border w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] md:w-[8.5rem] rounded-[6px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%] ${isDarkMode ? "bg-black border-white" : "bg-[#ffffff] border-[#0003]"}`}
             >
               Save as PDF
             </button>
@@ -280,7 +280,7 @@ export const AedcReceiptFailed = () => {
             <div
               className={`${isDarkMode ? "" : "bg-[#04177f]"} ${
                 styles.contactus
-              } text-[8px] p-1 text-white rounded-[8px] lg:text-[14px]`}
+              } text-[12px] p-1 text-white rounded-[8px] lg:text-[14px]`}
             >
               Contact Us
             </div>

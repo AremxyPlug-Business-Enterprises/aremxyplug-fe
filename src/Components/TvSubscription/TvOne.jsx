@@ -1,4 +1,4 @@
-import React from "react";
+//import React from "react";
 import Joi from "joi";
 import { DashBoardLayout } from "../Dashboard/Layout/DashBoardLayout";
 import "../TvSubscription/TvSubscription.css";
@@ -66,35 +66,27 @@ const GoTv = () => {
     fetchedStarTimesPlans,
     setFetchedStarTimesPlans,
       tvSubscriptionResponse, 
-          gotvOrderId, setGotvOrderId,
-          gotvTransactionId, setGotvTransactionId,
-          gotvRequestId, setGotvRequestId,
-          gotvDescription, setGotvDescription,
+      inputPin,
+      setInputPin,
+       setGotvTransactionId,
+  setGotvOrderId,
+ packageGotv, setPackageGotv,
+          setGotvRequestId,
+          setGotvDescription,
           setTvSubscriptionResponse,
     newBalance
   } = useContext(ContextProvider)
-
-  const [planName, setPlanName] = useState(false);
-  const [tvOneOtp, setTvOneOtp] = useState('')
+const [ failedConfig,setFailedConfig] = useState(false);
+const [ successConfig,setSuccessConfig] = useState(false);
+ 
+ 
   const [isLoading, setIsLoading] = useState(false)
   const [failedPopup, setFailedPopup] = useState(false);
    const navigate = useNavigate();
  
 
-  // const handleOptionClickGOTV = (option, id) => {
-    // setSelectedOptionGOTV(option);
-    // setShowDropdownGOTV(false);
-    // setPlan(id);
-    // document.querySelector('.imgdrop').classList.remove('DropIt');
-  // };
+  
 
-  // const getNumericValue = (option) => {
-    // const numericPart = option.match(/\d+/);
-    // if (numericPart) {
-      // return formatNumberWithCommas(parseInt(numericPart[0], numericPart[2], 10));
-    // }
-    // return '';
-  // };
 
   const handleOptionClickGOTV = (option, plan) => {
     //setSelectedOptionGOTV(option); // Replace 'setInputValue' with the function to set input value
@@ -103,18 +95,6 @@ const GoTv = () => {
     document.querySelector('.imgdrop').classList.remove('DropIt');
   };
   
-//   const getNumericValue = (option) => {
-//     if (typeof option === 'string') {
-//         const numericPart = option.match(/\d+/);
-//         if (numericPart) {
-//             return formatNumberWithCommas(parseInt(numericPart[0], 10));
-//         } else {
-//             return ''; // Return an empty string if numeric part is not found
-//         }
-//     } else {
-//         return ''; // Return an empty string for non-string inputs
-//     }
-// };
 
 const GetOtherDataTv = async(id, path)=> {
   console.log(id, path)
@@ -188,10 +168,7 @@ const GetOtherDataTv = async(id, path)=> {
     const inputValue = e.target.value;
     setTvEmail(inputValue);
   }
-  // const handleTvAmount = (e) => {
-  //   const inputValue = e.target.value;
-  //   setTvAmount(inputValue)
-  // }
+
   
 
  
@@ -307,72 +284,68 @@ const handleReceivedData = () => {
   const receivedData = () => {
     // Seting the relevant data from the TV subscription response
     setGotvOrderId(tvSubscriptionResponse.data.order_id);
-    setGotvTransactionId(tvSubscriptionResponse.data.transaction_id);
+    setGotvTransactionId(tvSubscriptionResponse.data.transcation_id);
     setGotvRequestId(tvSubscriptionResponse.data.request_id);
     setGotvDescription(tvSubscriptionResponse.data.description);
   };
-
   receivedData();
-  
-  if (receivedData) {
-    setSuccessPopup(false);
+   if (receivedData) {
+     setGotvSuccessful(false);
     setIsLoading(false);
-    navigate("/gotv-receipt");
+    navigate("/GotvReceipt");
   }
 };
 
-// VerifyPinHandler to handle both success and failure cases:
+
 const VerifyPinHandler = async () => {
     const GotvHandler = async () => {
       const requestData = {
-        decoder_type: decoderType,
-        plan: planName,
+        decoder_type: decoderType.toLowerCase(),
+        package : packageGotv,
         iuc_number: smartCard,
         email: tvEmail,
         amount: tvAmount,
         phone: mobileNumber,
       };
+      const DataJson = JSON.stringify(requestData)
+
       const Path = "tvsub";
       const successHandler = () =>{
         setGotvSuccessful(true);
         setInputPinGotv(false);
-        handleReceivedData()
+        setInputPin("");
+       // handleReceivedData()
       }
       const FailedHandler = () =>{
        setFailedPopup(true);
        setInputPinGotv(false);
+       setInputPin("");
       }
       
       await PostFunction(
         Path,
         setIsLoading,
-        requestData,
-       
+         DataJson,
         successHandler,
         FailedHandler,
+     //  setCollectResponse
         setTvSubscriptionResponse
       );
-    };
+    
+    }
   
     await VerifyTransPin(
-      tvOneOtp,
-      null,
-      null,
+       inputPin,
+       setSuccessConfig,
+       setFailedConfig,
       setIsLoading,
       setErrorMessage,
       GotvHandler
     );
 
   };
+  console.log(tvSubscriptionResponse);
 
-  //fetch response
-
-  // function handleRecievedData() =>{
-  //   setLoading(true);
-  //   const recievedData = () =>{
-                           
-  //   }
-  // }
 
   return (
     <div>
@@ -433,7 +406,7 @@ const VerifyPinHandler = async () => {
             return (
                <p
                onClick={(e =>{
-          setDecoderType(decoder.decoderType );
+          setDecoderType(decoder.decoderType);
                  setDecoderActive(false);
              GetOtherDataTv(decoder.id, decoder.path)
              document.querySelector('.decdrop').classList.remove('DropIt');
@@ -505,7 +478,8 @@ const VerifyPinHandler = async () => {
                       onClick={() => {
                         handleOptionClickGOTV()
                         setSelectedOptionGOTV(option.PackageName);
-                       setTvAmount(option.Amount)
+                       setTvAmount(option.Amount);
+                       setPackageGotv(option.Package);
                       }
                       }
 
@@ -703,12 +677,13 @@ const VerifyPinHandler = async () => {
       </DashBoardLayout>
       <ConfirmGotvPopup />
       <InputGotvPopup VerifyPinHandler={VerifyPinHandler}/>
-      <GotvSuccessfulPopup />
+      <GotvSuccessfulPopup handleReceivedData = {handleReceivedData} />
 
       {/* Failed Transaction Popup */}
 {failedPopup && (
+  <Modal>
     <div className="w-[90%] md:w-[70%] lg:w-[40%] mx-auto bg-white rounded-lg overflow-hidden">
-      <div className="flex justify-between items-center p-4">
+      <div className="flex justify-between items-center p-4 ">
         <img
           onClick={() => setFailedPopup(false)}
           className="w-6 h-6"
@@ -735,14 +710,28 @@ const VerifyPinHandler = async () => {
         <p className="text-sm text-gray-600 mb-8">
           An unexpected error has occurred, please try again.
         </p>
+        <div className="flex gap-[10px] justify-between w-full px-[10px]">
         <button
           onClick={() => setFailedPopup(false)}
-          className="bg-[#04177f] w-full max-w-xs mx-auto py-2 text-white rounded-md font-medium"
-        >
+          className="bg-[#04177f] w-[50%] max-w-xs mx-auto py-2
+           text-white rounded-md font-medium">
           Done
         </button>
+           <button
+          onClick={() =>{
+              setFailedPopup(false);
+              handleReceivedData();
+          }}
+          className="w-[50%] bg-white max-w-xs mx-auto py-2 text-blue-900
+           rounded-md font-medium"
+        >
+          Receipt
+        </button>
+        </div>
+
       </div>
     </div>
+    </Modal>
 )}
       {isLoading && (
            <Modal>

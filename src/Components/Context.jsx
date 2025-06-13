@@ -301,19 +301,24 @@ export const Context = ({ children }) => {
         .catch(error => {
        if (error && error.response.data.status === 409) {
             alert("Input already in use: " + error.response.data.data.data);
-            
-          }
-          else if(error && error.response.data.status === 404 ){
-            alert("An error has occured on your end")
-            console.log(error.response.data.data.data)
-          } else{
+          } else if (error && error.response.data.status === 404) {
+            alert("An error has occured on your end");
+            console.log(error.response.data.data.data);
+          }else if(error && error.reponse.status === 500){
+                alert("Server error:, Try some other time");
+          }else if(error && error.reponse.status === undefined){
+                alert("Check your internet Connection");
+          } else {
             console.log(error.json());
-            }
-         }).finally(()=> {
-          setLoadSignUp(false)
-         });
+            alert("Check your internet connection");
+          }
+        })
+        .finally(() => {
+          setLoadSignUp(false);
+        });
+      }
     }
-  };
+
   // ========End for SignUp.jsx======
 
   // ============Start For Verification.jsx ==========
@@ -856,12 +861,6 @@ export const Context = ({ children }) => {
 
   //=============TV-subscription==============
 
-  //==========GOTV===========
-  const [confirmGotvPopup, setConfirmGotvPopup] = useState(false);
-  const [inputPinGotv, setInputPinGotv] = useState(false);
-  const [gotvSuccessful, setGotvSuccessful] = useState(false);
-  const [selectedOptionGOTV, setSelectedOptionGOTV] = useState("");
-  const [showDropdownGOTV, setShowDropdownGOTV] = useState(false);
   const formatNumberWithCommas = (number) => {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
@@ -877,12 +876,39 @@ export const Context = ({ children }) => {
   const [decoderType, setDecoderType] = useState("");
   const [decoderActive, setDecoderActive] = useState(false);
 
+  //==========GOTV===========
+  const [confirmGotvPopup, setConfirmGotvPopup] = useState(false);
+  const [inputPinGotv, setInputPinGotv] = useState(false);
+  const [gotvSuccessful, setGotvSuccessful] = useState(false);
+  const [selectedOptionGOTV, setSelectedOptionGOTV] = useState("");
+  const [showDropdownGOTV, setShowDropdownGOTV] = useState(false);
+  const [fetchedGotvPlans, setFetchedGotvPlans] = useState([]);
+  const [tvSubscriptionResponse, setTvSubscriptionResponse] = useState({})
+ const [ gotvOrderId, setGotvOrderId] = useState("")
+  const [gotvTransactionId, setGotvTransactionId] = useState("")
+     const [gotvRequestId, setGotvRequestId] = useState("")
+       const [gotvDescription, setGotvDescription] = useState("");
+        const [packageGotv, setPackageGotv] = useState("");
+
   //==========DSTV===========
   const [selectedOptionDstv, setSelectedOptionDstv] = useState("");
   const [showDropdownDstv, setShowDropdownDstv] = useState(false);
   const [confirmDstvPopup, setConfirmDstvPopup] = useState(false);
   const [inputPinDstv, setInputPinDstv] = useState(false);
   const [dstvSuccessful, setDstvSuccessful] = useState(false);
+  const [fetchedDstvPlans, setFetchedDstvPlans] = useState([]);
+  const [dstvAmount, setDstvAmount] = useState("₦");
+  const [dstvEmail, setDstvEmail] = useState();
+ const [ packageDstv, setPackageDstv] = useState("");
+ const [dstvSmartCard, setDstvSmartCard] = useState("");
+ const [dstvDecoderType, setDstvDecoderType] = useState("");
+  const [dstvMobileNumber, setDstvMobileNumber] = useState("")
+  const [dstvSubscriptionResponse, setDstvSubscriptionResponse] = useState({});
+  const [dstvOrderId, setDstvOrderId] = useState("");
+  const [dstvTransactionId, setDstvTransactionId] = useState("");
+  const [dstvDescription, setDstvDescription] = useState("")
+   const [dstvRequestId, setDstvRequestId] = useState("")
+
 
   //=========SHOWMAX===========
   const [selectedOptionShowmax, setSelectedOptionShowmax] = useState("");
@@ -890,6 +916,18 @@ export const Context = ({ children }) => {
   const [confirmShowmaxPopup, setConfirmShowmaxPopup] = useState(false);
   const [inputPinShowmax, setInputPinShowmax] = useState(false);
   const [showmaxSuccessful, setShowmaxSuccessful] = useState(false);
+  const [fetchedShowMaxPlans, setFetchedShowMaxPlans] = useState([]);
+  const [showMaxAmount, setShowMaxAmount] = useState("₦");
+  const [showMaxEmail, setShowMaxEmail] = useState("");
+   const [ packageShowMax, setPackageShowMax] = useState("");
+    const [showMaxSmartCard, setShowMaxSmartCard] = useState("");
+     const [showMaxDecoderType, setShowMaxDecoderType] = useState("")
+      const [showMaxSubscriptionResponse, setShowMaxSubscriptionResponse] = useState({})
+      const [showMaxOrderId, setShowMaxOrderId] = useState("");
+  const [showMaxTransactionId, setShowMaxTransactionId] = useState("");
+  const [showMaxDescription, setShowMaxDescription] = useState("");
+    const [showMaxMobileNumber, setShowMaxMobileNumber] = useState("")
+
 
   //=========STARTIMES===========
   const [selectedOptionStarTimes, setSelectedOptionStarTimes] = useState("");
@@ -897,6 +935,18 @@ export const Context = ({ children }) => {
   const [confirmStarTimesPopup, setConfirmStarTimesPopup] = useState(false);
   const [inputPinStarTimes, setInputPinStarTimes] = useState(false);
   const [starTimesSuccessful, setStarTimesSuccessful] = useState(false);
+  const [fetchedStarTimesPlans, setFetchedStarTimesPlans] = useState([]);
+  const [starTimesAmount, setStarTimesAmount] = useState("₦");
+  const [starTimesEmail, setStarTimesEmail] = useState("");
+   const [ packageStarTimes, setPackageStarTimes] = useState("");
+    const [starTimesSmartCard, setStarTimesSmartCard] = useState("");
+     const [starTimesDecoderType, setStarTimesDecoderType] = useState("");
+         const [starTimesMobileNumber, setStarTimesMobileNumber] = useState("");
+       const [starTimesSubscriptionResponse, setStarTimesSubscriptionResponse] = useState({});
+       const [starTimesOrderId, setStarTimesOrderId] = useState("");
+  const [starTimesTransactionId, setStarTimesTransactionId] = useState("");
+  const [starTimesDescription, setStarTimesDescription] = useState("")
+
 
   //============= EDUCATION PINS ========================
   //===============WAEC PINS================
@@ -998,18 +1048,20 @@ const [dataStatus, setDataStatus] = useState(false);
   const [networkStatus, setNetworkStatus] = useState(false);
  // Use Ref hook for user Deatils
 
-const [bankNameState, setBankNameState] = useState("")
-const [accountNameState, setAccountNameState] = useState("")
-const [accountNumberState, setAccountNumberState] = useState("");
-const [userStatus, setUserStatus] = useState(false);
-const [idButtonState, setIdButtonState] = useState("Verify")
+  const [bankNameState, setBankNameState] = useState("");
+  const [accountNameState, setAccountNameState] = useState("");
+  const [accountNumberState, setAccountNumberState] = useState("");
+  const [userStatus, setUserStatus] = useState(false);
+  const [idButtonState, setIdButtonState] = useState("Verify");
 
- 
-    
-    
- 
   const hold = {
-    customerDetail, 
+    tvSubscriptionResponse,
+     setTvSubscriptionResponse,
+      gotvOrderId, setGotvOrderId,
+          gotvTransactionId, setGotvTransactionId,
+          gotvRequestId, setGotvRequestId,
+          gotvDescription, setGotvDescription,
+    customerDetail,
     setCustomerDetail,
     handleRefresh,
    bankNameState, 
@@ -1465,6 +1517,10 @@ const [idButtonState, setIdButtonState] = useState("Verify")
     setSelectedOptionGOTV,
     showDropdownGOTV,
     setShowDropdownGOTV,
+    fetchedGotvPlans,
+    setFetchedGotvPlans,
+    packageGotv,
+     setPackageGotv,
 
     //=======DSTV
     confirmDstvPopup,
@@ -1477,9 +1533,26 @@ const [idButtonState, setIdButtonState] = useState("Verify")
     setSelectedOptionDstv,
     showDropdownDstv,
     setShowDropdownDstv,
-
-
-    
+    fetchedDstvPlans,
+    setFetchedDstvPlans,
+    dstvAmount,
+    setDstvAmount,
+    dstvEmail,
+    setDstvEmail,
+    packageDstv,
+    setPackageDstv,
+    dstvSmartCard,
+    setDstvSmartCard,
+    dstvDecoderType,
+     setDstvDecoderType,
+     dstvMobileNumber,
+      setDstvMobileNumber,
+      dstvSubscriptionResponse, 
+      setDstvSubscriptionResponse,
+      dstvOrderId, setDstvOrderId,
+dstvTransactionId, setDstvTransactionId,
+dstvDescription, setDstvDescription,
+dstvRequestId, setDstvRequestId,
 
     //=======SHOWMAX
     confirmShowmaxPopup,
@@ -1492,6 +1565,25 @@ const [idButtonState, setIdButtonState] = useState("Verify")
     setSelectedOptionShowmax,
     showDropdownShowmax,
     setShowDropdownShowmax,
+    fetchedShowMaxPlans,
+    setFetchedShowMaxPlans,
+    showMaxAmount,
+    setShowMaxAmount,
+    showMaxEmail,
+    setShowMaxEmail,
+    packageShowMax,
+    setPackageShowMax,
+    showMaxSmartCard,
+    setShowMaxSmartCard,
+    showMaxDecoderType, 
+    setShowMaxDecoderType,
+    showMaxMobileNumber,
+    setShowMaxMobileNumber,
+    showMaxSubscriptionResponse,
+   setShowMaxSubscriptionResponse,
+   showMaxOrderId, setShowMaxOrderId,
+ showMaxTransactionId, setShowMaxTransactionId,
+  showMaxDescription, setShowMaxDescription,
 
     //=======STARTIMES
     confirmStarTimesPopup,
@@ -1504,6 +1596,28 @@ const [idButtonState, setIdButtonState] = useState("Verify")
     setSelectedOptionStarTimes,
     showDropdownStarTimes,
     setShowDropdownStarTimes,
+    fetchedStarTimesPlans,
+    setFetchedStarTimesPlans,
+    starTimesAmount,
+    setStarTimesAmount,
+       starTimesEmail,
+       setStarTimesEmail,
+       packageStarTimes,
+       setPackageStarTimes,
+       starTimesSmartCard,
+       setStarTimesSmartCard,
+       starTimesDecoderType, 
+       setStarTimesDecoderType,
+       starTimesMobileNumber,
+        setStarTimesMobileNumber,
+        starTimesSubscriptionResponse,
+         setStarTimesSubscriptionResponse,
+         starTimesOrderId, setStarTimesOrderId,
+  starTimesTransactionId, setStarTimesTransactionId,
+ starTimesDescription, setStarTimesDescription,
+
+
+
 
     //====== EDUCATION PINS
     //=======WAEC PINS

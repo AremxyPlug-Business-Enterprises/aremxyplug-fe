@@ -27,22 +27,20 @@ import { Modal } from "../Screens/Modal/Modal";
 const Showmax = () => {
 
   const {
+    inputPin,
+    setInputPin,
     setConfirmShowmaxPopup,
     selectedOptionShowmax,
     setSelectedOptionShowmax,
     showDropdownShowmax,
     setShowDropdownShowmax,
-    mobileNumber,
     setCardName,
     cardName,
-    tvEmail,
-    smartCard,
-    setSmartCard,
-    setTvEmail,
-    setMobileNumber,
+    setShowMaxSmartCard,
+    showMaxSmartCard,
     decoderActive, setDecoderActive,
-    decoderType,
-    setDecoderType,
+    showMaxDecoderType,
+    setShowMaxDecoderType,
     methodImage,
     setMethodImage,
     isDarkMode,
@@ -52,27 +50,35 @@ const Showmax = () => {
      setErrorMessage,
        setInputPinShowmax,
       setShowmaxSuccessful,
-       setSuccessPopup,
-         fetchedDstvPlans,
+      fetchedDstvPlans,
     setFetchedDstvPlans,
     fetchedStarTimesPlans,
     setFetchedStarTimesPlans,
     fetchedGotvPlans,
     setFetchedGotvPlans,
-    tvSubscriptionResponse,
-    showmaxOrderId, setShowmaxOrderId,
-showmaxTransactionId, setShowmaxTransactionId,
-showmaxRequestId, setShowmaxRequestId,
-showmaxDescription, setShowmaxDescription,
-setTvSubscriptionResponse,
+   showMaxSubscriptionResponse,
+    packageShowMax,
+    showMaxEmail,
+    setShowMaxEmail,
+    setPackageShowMax,
+   setShowMaxOrderId,
+ setShowMaxTransactionId,
+// setShowMaxRequestId,
+ setShowMaxDescription,
+setShowMaxSubscriptionResponse,
+showMaxMobileNumber, 
+setShowMaxMobileNumber,
     newBalance
   } = useContext(ContextProvider)
 
 
-   const [planName, setPlanName] = useState(false);
-      const [tvFourOtp, setTvFourOtp] = useState('')
+
+    
       const [isLoading, setIsLoading] = useState(false)
       const [failedPopup, setFailedPopup] = useState(false);
+      const [successConfig, setSuccessConfig] = useState("")
+       const [failedConfig, setFailedConfig] = useState("")
+    
             const navigate = useNavigate();
       
             
@@ -140,9 +146,7 @@ setTvSubscriptionResponse,
      }
      }
      
-     
-         
-         useEffect(()=> {
+    useEffect(()=> {
            if(ShowMaxPlans.length < 1){
              navigate("/TvSubscription");
            }
@@ -160,11 +164,11 @@ setTvSubscriptionResponse,
   }
   const handleSmartCard = (e) => {
     const inputValue = e.target.value;
-    setSmartCard(inputValue);
+    setShowMaxSmartCard(inputValue);
   }
   const handleTvEmail = (e) => {
     const inputValue = e.target.value;
-    setTvEmail(inputValue);
+    setShowMaxEmail(inputValue);
   }
 
  
@@ -172,9 +176,9 @@ setTvSubscriptionResponse,
     event.preventDefault();
     
     const { error } = schema.validate({
-      mobileNumber,
-      tvEmail,
-      smartCard,
+      showMaxMobileNumber,
+      showMaxEmail,
+      showMaxSmartCard,
     });
   
     if (error) {
@@ -201,15 +205,15 @@ setTvSubscriptionResponse,
   // });
 
   const schema = Joi.object({
-    smartCard: Joi.string().regex(/^\d{10,}$/).required()
+    showMaxSmartCard: Joi.string().regex(/^\d{10,}$/).required()
       .messages({
         "string.pattern.base": "Smart card number should be more than 10 digits",
       }),
-    mobileNumber: Joi.string().regex(/^\d{11}$/).required()
+    showMaxMobileNumber: Joi.string().regex(/^\d{11}$/).required()
       .messages({
         "string.pattern.base": "Phone number should be 11 digits",
       }),
-      tvEmail: Joi.string()
+      showMaxEmail: Joi.string()
       .pattern(new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i))
       .required()
       .messages({ "string.pattern.base": "Invalid email" 
@@ -218,7 +222,7 @@ setTvSubscriptionResponse,
 
   const handleShowmaxMobileNumberChange = (e) => {
     const inputValue = e.target.value;
-    setMobileNumber(inputValue);
+    setShowMaxMobileNumber(inputValue);
 
     // const validation = ShowmaxSchema.validate({ mobileNumber: inputValue });
 
@@ -250,7 +254,7 @@ setTvSubscriptionResponse,
   ])
 
   function packageDropdown() {
-    if (!decoderType) {
+    if (!showMaxDecoderType) {
       setShowDropdownShowmax(false);
     }
     else {
@@ -269,18 +273,18 @@ setTvSubscriptionResponse,
     setIsLoading(true);
     const receivedData = () => {
       // Seting the relevant data from the TV subscription response
-      setShowmaxOrderId(tvSubscriptionResponse.data.order_id);
-      setShowmaxTransactionId(tvSubscriptionResponse.data.transaction_id);
-      setShowmaxRequestId(tvSubscriptionResponse.data.request_id);
-      setShowmaxDescription(tvSubscriptionResponse.data.description);
+      setShowMaxOrderId(showMaxSubscriptionResponse.data.order_id);
+      setShowMaxTransactionId(showMaxSubscriptionResponse.data.transcation_id);
+     // setShowmaxRequestId(showMaxSubscriptionResponse.data.request_id);
+      setShowMaxDescription(showMaxSubscriptionResponse.data.description);
     };
   
     receivedData();
     
     if (receivedData) {
-      setSuccessPopup(false);
+      setShowmaxSuccessful(false);
       setIsLoading(false);
-      navigate("/showmax-receipt");
+      navigate("/ShowmaxReceipt");
     }
   };
 
@@ -289,45 +293,60 @@ setTvSubscriptionResponse,
   const VerifyPinHandler = async () => {
       const ShowmaxHandler = async () => {
         const requestData = {
-          decoder_type: decoderType,
-          plan: planName,
-          iuc_number: smartCard,
-          email: tvEmail,
+          decoder_type: showMaxDecoderType.toLowerCase(),
+          plan: packageShowMax,
+          iuc_number: showMaxSmartCard,
+          email: showMaxEmail,
           amount: showMaxAmount,
-          phone: mobileNumber,
+          phone: showMaxMobileNumber,
         };
         const Path = "tvsub";
         const successHandler = () =>{
           setShowmaxSuccessful(true);
           setInputPinShowmax(false);
-          handleReceivedData()
+            setInputPin("")
+         // handleReceivedData()
         }
         const FailedHandler = () =>{
          setFailedPopup(true);
          setInputPinShowmax(false);
+           setInputPin("")
         }
         
         await PostFunction(
           Path,
           setIsLoading,
           requestData,
-         
-          successHandler,
-          FailedHandler
+         successHandler,
+          FailedHandler,
+        setShowMaxSubscriptionResponse
         );
       };
     
       await VerifyTransPin(
-        tvFourOtp,
-        null,
-        null,
+        inputPin,
+       setSuccessConfig,
+       setFailedConfig,
         setIsLoading,
         setErrorMessage,
         ShowmaxHandler,
-        setTvSubscriptionResponse
+     
       );
-  
     };
+
+    const ExitTheDoneButton = ()=> {
+      setShowMaxEmail("")
+   setShowMaxMobileNumber("")
+   setShowMaxSmartCard("");
+   setShowMaxAmount("");
+   setPackageShowMax("");
+   setShowMaxDecoderType("")
+    setFlagResult("");
+    setTvWalletBalance("");
+    setCardName("");
+     setSelectedOptionShowmax("")
+  setFailedPopup(false)
+  }
   return (
     <div>
       <DashBoardLayout>
@@ -335,7 +354,7 @@ setTvSubscriptionResponse,
         <div className={style.AirtimeTops}>
           <div className={style.airtimeTop}>
             <div>
-            <div id='tvBackground' className="h-[90px] lg:h-[196px] md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] lg:rounded-[20px] mx-auto  flex gap-6 justify-between px-[16.51px] md:px-[28.65px] lg:px-[50px]">
+            <div id='tvBackground' className="h-[90px] lg:h-[196px] md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] lg:rounded-[20px] mx-auto flex gap-6 justify-between px-[16.51px] md:px-[28.65px] lg:px-[50px]">
           <div className="py-[9.57px] md:py-[16.61px] align-middle self-center flex flex-col gap-1.5 w-[70%]">
             <p className="text-[9px] lg:text-[24px] md:text-[13.75px] font-semibold">
               SUBSCRIBE YOUR TV CHANNELS WITH AREMXYPLUG.
@@ -372,7 +391,7 @@ setTvSubscriptionResponse,
     }
   `}
    >
-                {decoderType}
+                {showMaxDecoderType}
                 <img className="absolute left-[90%] lg:left-[94%] self-center align-middle decdrop md:h-[14.038px] md:w-[14.038px] 
       lg:h-[24px] lg:w-[24px] w-[14px] h-[16px]" src={arrowDown} alt="" />
               </div>
@@ -390,7 +409,7 @@ setTvSubscriptionResponse,
             return (
                <p
                onClick={(e =>{
-          setDecoderType(decoder.decoderType);
+          setShowMaxDecoderType(decoder.decoderType);
                  setDecoderActive(false);
                  GetOtherDataTv(decoder.id, decoder.path);
              document.querySelector('.decdrop').classList.remove('DropIt');
@@ -458,6 +477,7 @@ setTvSubscriptionResponse,
                          handleOptionClickShowmax()
                          setShowMaxAmount(option.Amount)
                          setSelectedOptionShowmax(option.PackageName)
+                         setPackageShowMax(option.Package);
                         }}
                     >
                       {option.PackageName}
@@ -476,24 +496,24 @@ setTvSubscriptionResponse,
                 Smart Card / IUC Number</label>
               <input type="tel"
               onInput={(e =>{
-  
-                const numericValue = e.target.value.replace(/\D/g, '');
+            const numericValue = e.target.value.replace(/\D/g, '');
                     e.target.value = numericValue
                 })}
+                   value = {showMaxSmartCard}
                 onChange={handleSmartCard} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px] self-center ${
       isDarkMode 
         ? "bg-black text-white border border-white" 
         : "border-[#9C9C9C] text-[#7C7C7C] hover:bg-[#EDEAEA]"
     }`}  />
-            {errors.smartCard && <p className="text-[#F95252] text-[13.2px] md:text-[12px] lg:text-[14px] font-[400] italic">
-                {errors.smartCard}</p>}
+            {errors.showmaxSmartCard && <p className="text-[#F95252] text-[13.2px] md:text-[12px] lg:text-[14px] font-[400] italic">
+                {errors.showMaxSmartCard}</p>}
             </div>
 
             <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[14px] lg:text-[17px] md:text-[13px] md:font-[600] font-[400]">
                 Card Name</label>
-              <input type="text"
+              <input type="text" value={cardName}
                 onChange={handleCardName} onInput={(event)=> {event.target.value = event.target.value.replace(/[0-9]/g, '')}} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[13px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] self-center ${
       isDarkMode 
@@ -506,7 +526,7 @@ setTvSubscriptionResponse,
             <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] md:font-[600] font-[400]">
                 Phone Number</label>
-              <input id="val" value={mobileNumber}
+              <input id="val" value={showMaxMobileNumber}
                 onChange={handleShowmaxMobileNumberChange}
                 onInput={(e =>{
     
@@ -526,20 +546,21 @@ setTvSubscriptionResponse,
         ? "bg-black text-white border border-white" 
         : "border-[#9C9C9C] text-[#7C7C7C]"
     }`} />
-              {errors.mobileNumber && <p className="text-[#F95252] text-[13.2px] md:text-[12px] lg:text-[14px] font-[400] italic">
-                {errors.mobileNumber}</p>}
+              {errors.showMaxMobileNumber && <p className="text-[#F95252] text-[13.2px] md:text-[12px] lg:text-[14px] font-[400] italic">
+                {errors.ShowMaxMobileNumber}</p>}
             </div>
             <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
               <label htmlFor="Email" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] font-[400] md:font-[600]">
                 Email</label>
-              <input type="email" onChange={handleTvEmail} placeholder="example@gmail.com" required className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[14px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[600] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
+              <input value={showMaxEmail}
+              type="email" onChange={handleTvEmail} placeholder="example@gmail.com" required className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[14px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[600] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] self-center ${
       isDarkMode 
       ? "bg-black text-white border border-white" 
       : "border-[#9C9C9C] text-[#7C7C7C] hover:bg-[#EDEAEA]"
   }`}  />
-             {errors.tvEmail && <p className="text-[#F95252] text-[13.4px] md:text-[12px] lg:text-[14px] font-[400] italic">
-                {errors.tvEmail}</p>}
+             {errors.showMaxEmail && <p className="text-[#F95252] text-[13.4px] md:text-[12px] lg:text-[14px] font-[400] italic">
+                {errors.showMaxEmail}</p>}
             </div>
 
           </div>
@@ -626,9 +647,9 @@ setTvSubscriptionResponse,
         </div>
 
         <button onClick={handleShowmax}
-          disabled={mobileNumber.length !== 11 || !cardName || !tvEmail || !smartCard || !decoderType || !selectedOptionShowmax}
+          disabled={showMaxMobileNumber.length !== 11 || !cardName || !showMaxEmail || !showMaxSmartCard || !showMaxDecoderType || !selectedOptionShowmax}
           className={`
-             ${mobileNumber.length !== 11 || !cardName || !tvEmail || !smartCard || !decoderType || !selectedOptionShowmax || !flagResult
+             ${showMaxMobileNumber.length !== 11 || !cardName || !showMaxEmail || !showMaxSmartCard || !showMaxDecoderType || !selectedOptionShowmax || !flagResult
               ? "bg-[#63616188] "
               : "bg-primary"
             }
@@ -647,24 +668,19 @@ setTvSubscriptionResponse,
       </DashBoardLayout>
       <ConfirmShowmaxPopup />
       <InputShowmaxPopup VerifyPinHandler={VerifyPinHandler}/>
-      <ShowmaxSuccessfulPopup />
+      <ShowmaxSuccessfulPopup  handleReceivedData = {handleReceivedData}/>
 
         {/* Failed Transaction Popup */}
             {failedPopup && (
+              <Modal>
                 <div className="w-[90%] md:w-[70%] lg:w-[40%] mx-auto bg-white rounded-lg overflow-hidden">
-                  <div className="flex justify-between items-center p-4">
+                  <div className="flex justify-start w-full items-center p-4">
                     <img
-                      onClick={() => setFailedPopup(false)}
                       className="w-6 h-6"
                       src="/Images/login/arpLogo.png"
                       alt="Logo"
                     />
-                    <img
-                      onClick={() => setFailedPopup(false)}
-                      className="w-6 h-6 cursor-pointer"
-                      src="/Images/transferImages/close-circle.png"
-                      alt="Close"
-                    />
+                   
                   </div>
                   <hr className="h-1 bg-[#04177f] border-none" />
                   <div className="p-4 text-center">
@@ -680,13 +696,14 @@ setTvSubscriptionResponse,
                       An unexpected error has occurred, please try again.
                     </p>
                     <button
-                      onClick={() => setFailedPopup(false)}
+                      onClick={() => ExitTheDoneButton()}
                       className="bg-[#04177f] w-full max-w-xs mx-auto py-2 text-white rounded-md font-medium"
                     >
                       Done
                     </button>
                   </div>
                 </div>
+                </Modal>
             )}
                   {isLoading && (
                        <Modal>

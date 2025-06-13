@@ -99,10 +99,14 @@ export const IbedcReceipt = () => {
   };
   return (
     <DashBoardLayout>
-      <div className="flex flex-col gap-[35px] lg:gap-[85px]">
+      <div className={`flex flex-col gap-[35px] lg:gap-[85px] ${
+          isDarkMode ? "border border-white rounded-md" : ""
+        }`}>
         <div
           className={` ${styles.receipt} ${
             toggleSideBar ? "" : "lg:w-[880px] "
+          } ${
+            isDarkMode ? "bg-black text-white border border-white" : "bg-white"
           } w-full lg:mx-auto`}
         >
           <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
@@ -138,7 +142,9 @@ export const IbedcReceipt = () => {
             <h3 className="font-extrabold text-[12px] mt-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
               Purchase Successful on
             </h3>
-            <span className="text-[8px] md:text-[12px] text-[#0008] pt-1 font-extrabold flex justify-center items-center">
+            <span className={`text-[8px] md:text-[12px] pt-1 font-extrabold flex justify-center items-center ${
+                isDarkMode ? "text-white" : "text-[#0008]"
+              }`}>
               {date.toLocaleDateString(undefined, {
                 year: "numeric",
                 month: "long",
@@ -161,7 +167,7 @@ export const IbedcReceipt = () => {
             <div className="flex flex-col gap-5">
               {/* ========================Recipient Info================== */}
               <div className="flex flex-col gap-[3px] w-[90%] mx-auto lg:gap-[5px]">
-                <div className="flex gap-[5px] items-center text-[10px] lg:text-[16px] font-extrabold">
+                <div className="flex gap-[5px] items-center text-[12px] lg:text-[16px] font-extrabold">
                   <p>Recepient Info</p>
                   <img
                     className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
@@ -275,7 +281,7 @@ export const IbedcReceipt = () => {
             </div>
           </div>
 
-          <div className="flex w-[70%] mx-auto mb-[5%] md:w-[60%] ">
+          <div className="flex w-[70%] gap-x-3 mx-auto mb-[5%] md:w-[60%] ">
             <button
               onClick={() => {
                 handleShareClick();
@@ -288,7 +294,11 @@ export const IbedcReceipt = () => {
               onClick={() => {
                 handleSaveAsPDFClick();
               }}
-              className={`bg-[#ffffff] border-[1px] w-[111px] border-[#0003] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+              className={`border w-[111px] border-[#0003] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]${
+                isDarkMode
+                  ? "bg-black border-white"
+                  : "bg-[#ffffff] border-[#0003]"
+              }`}
             >
               Save as PDF
             </button>

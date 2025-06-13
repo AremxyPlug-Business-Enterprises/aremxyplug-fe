@@ -48,7 +48,7 @@ const IKEDC = () => {
     isVisible,
     // billGenerate,
     setIkedcBillGenerate,
-    ikedcServiceID,
+    // ikedcServiceID,
     setIkedcServiceID,
     ikedcFlag,
     setIkedcFlag,
@@ -59,6 +59,7 @@ const IKEDC = () => {
     setIkedcFetchedResponse,
     selectedIkedcMeterType,
     setSelectedIkedcMeterType,
+    ikedcDiscoType,
     setIkedcDiscoType,
     newBalance,
   } = useContext(ContextProvider);
@@ -135,6 +136,70 @@ const IKEDC = () => {
       flag: require("../ElectricitySubscription/Electricity-sub-images/kenyaFlag.png"),
     },
   ];
+
+  // validating the network numbers
+  function validateNigerianNumberByNetwork(number) {
+    const networks = [
+      {
+        name: "GLO",
+        values: ["0705", "0805", "0807", "0811", "0815", "0905", "0915"],
+      },
+      {
+        name: "AIRTEL",
+        values: [
+          "0701",
+          "0708",
+          "0802",
+          "0808",
+          "0812",
+          "0901",
+          "0902",
+          "0904",
+          "0907",
+          "0912",
+          "0911",
+        ],
+      },
+      {
+        name: "9MOBILE",
+        values: ["0809", "0817", "0818", "0909", "0908"],
+      },
+      {
+        name: "GLO",
+        values: ["0705", "0805", "0807", "0811", "0815", "0905", "0915"],
+      },
+      {
+        name: "MTN",
+        values: [
+          "0703",
+          "0704",
+          "0814",
+          "0706",
+          "0803",
+          "0806",
+          "0810",
+          "0813",
+          "0814",
+          "0816",
+          "0903",
+          "0906",
+          "0913",
+          "0916",
+        ],
+      },
+    ];
+
+    for (let network of networks) {
+      for (let prefix of network.values) {
+        if (number.startsWith(prefix) && number.length === 11) {
+          return network.name;
+        }
+      }
+    }
+
+    return "Unknown network";
+  }
+
   const [errors, setErrors] = useState({});
   const [proceed, setProceed] = useState(false);
   const [amountError, setAmountError] = useState("");
@@ -149,6 +214,7 @@ const IKEDC = () => {
     });
 
     const amount = Number(ikedcAmount);
+    const network = validateNigerianNumberByNetwork(ikedcPhoneNumber);
     if (error) {
       setErrors(
         error.details.reduce((acc, curr) => {
@@ -158,6 +224,11 @@ const IKEDC = () => {
       );
     } else if (amount < 1000) {
       setAmountError("Amount must be at least ₦1000");
+    } else if (network === "Unknown network") {
+      setErrors({
+        ikedcPhoneNumber:
+          "Invalid phone number. Please enter a valid Nigerian network number.",
+      });
     } else {
       setProceed(true);
       setErrors({});
@@ -196,6 +267,7 @@ const IKEDC = () => {
   // };
 
   const handleCountryClick = (name, flag, id, code) => {
+    if (id !== 1 && code !== "Nigerian NGN Wallet") return;
     setIkedcFlag(flag);
     setShowList(false);
     setGlobalCountry(name);
@@ -203,14 +275,14 @@ const IKEDC = () => {
     // setCountryCode(code);
     // setCurrencyAvailable(id !== 1);
   };
-  const handleVerifiedName = (event) => {
-    const newValue = event.target.value;
-    setIkedcVerifiedName(newValue);
-  };
-  const handleMeterNumber = (event) => {
-    const newValue = event.target.value;
-    setIkedcMeterNumber(newValue);
-  };
+  // const handleVerifiedName = (event) => {
+  //   const newValue = event.target.value;
+  //   setIkedcVerifiedName(newValue);
+  // };
+  // const handleMeterNumber = (event) => {
+  //   const newValue = event.target.value;
+  //   setIkedcMeterNumber(newValue);
+  // };
   const handlePhoneNumber = (event) => {
     const value = event.target.value;
     const newValue = value.replace(/\D/g, "").slice(0, 11);
@@ -236,10 +308,61 @@ const IKEDC = () => {
   const [pinSuccess, setPinSuccess] = useState(false);
   const [pinFailed, setPinFailed] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isFailedMeterNumber, setIsFailedMeterNumber] = useState(false);
+  
+    let passedMeterName;
+  
+    const verifyMeterNumber = async (meterNumber) => {
+      async function HandleMeterNumber() {
+        const path = "bills/verify";
+        const body = {
+          disco_type: "ikeja-electric",
+          // meter_no: meterNumber || ikedcMeterNumber,
+          meter_no: meterNumber,
+          meter_type: selectedIkedcMeterType.toLowerCase(),
+        };
+        const SuccessHandler = () => {
+          setIsFailedMeterNumber(false);
+          function handleReceivedMeterData() {
+            if (ikedcFetchedResponse.name) {
+              setIkedcVerifiedName(ikedcFetchedResponse.name);
+            } else {
+              setIkedcVerifiedName("");
+            }
+          }
+          handleReceivedMeterData();
+        };
+        const FailedHandler = () => {
+          setIsFailedMeterNumber(true);
+        };
+  
+        await PostFunction(
+          path,
+          setLoading,
+          body,
+          SuccessHandler,
+          FailedHandler,
+          setIkedcFetchedResponse
+        );
+      }
+      HandleMeterNumber();
+      // handleReceivedMeterData();
+      passedMeterName = ikedcFetchedResponse
+        ? ikedcFetchedResponse.name
+        : "";
+    };
+  
+    const handleVerifiedName =
+      ikedcMeterNumber.length === 13 &&
+      isFailedMeterNumber === false &&
+      verifyMeterNumber &&
+      ikedcVerifiedName === ""
+        ? passedMeterName
+        : ikedcVerifiedName;
 
   const verifyPin = async () => {
     async function ElectricityHandler() {
-      const path = "electric-bill";
+      const path = "bills/electric-bill";
       const parsedAmount = parseInt(ikedcAmount, 10);
       const data = {
         meter_type: selectedIkedcMeterType,
@@ -287,7 +410,7 @@ const IKEDC = () => {
       setIkedcTransactionId(ikedcFetchedResponse.data.transaction_id);
       setIkedcServiceID(ikedcFetchedResponse.data.request_id);
       setIkedcShowDescription(ikedcFetchedResponse.data.description);
-      setIkedcDiscoType(ikedcFetchedResponse.data.disco_type)
+      setIkedcDiscoType(ikedcFetchedResponse.data.disco_type);
     };
     receivedData();
     if (receivedData) {
@@ -359,14 +482,14 @@ const IKEDC = () => {
       >
         <div>
           {/* top part after nav bar */}
-          <div className="flex flex-row w-full pt-[10px]  h-[90px] md:h-[112.29px] lg:h-[196px] lg:px-[50px]  px-[16px] rounded-lg md:rounded-[11.5px] lg:rounded-[20px] justify-between  py-0 bg-gradient-to-r from-[#FFA733] via-[#58FF4A] to-[#98B0FF]">
+          <div className="flex flex-row w-full pt-[10px] min-h-[91px] md:h-[112.29px] lg:h-[196px] lg:px-[50px]  px-[16px] rounded-lg md:rounded-[11.5px] lg:rounded-[20px] justify-between  py-0 bg-gradient-to-r from-[#FFA733] via-[#58FF4A] to-[#98B0FF]">
             <div className="flex flex-col gap-2  ">
               <div className="text-[11px] font-semibold pt-[10px] md:text-[12px] md:leading-[20.63px] lg:pt-[25px] lg:text-[24px] lg:leading-[36px] text-[#000000] leading-[12px]">
                 ELECTRICITY BILLS, PREPAID AND POSTPAID <br /> PAYMENTS.
               </div>
               <div className="text-[9px] font-normal leading-[12px] md:text-[10px] md:leading-[14.9px] lg:text-[20px] lg:leading-[26px] text-[#000000]">
                 Recharge your metre and pay bills with our electricity bills
-                <br /> payment feature for both prepaid and postpaid metertypes.
+                payment feature for both prepaid and postpaid metertypes.
               </div>
             </div>
             <div>
@@ -378,19 +501,23 @@ const IKEDC = () => {
             </div>
           </div>
           <div
-            className={`flex lg:mt-[20px] text-[10px] sm:text-[12px] lg:text-[16px] font-semibold pt-[30px] items-center ${
+            className={`flex lg:mt-[20px] sm:text-[12px] lg:text-[16px] font-semibold pt-[30px] items-center ${
               isDarkMode ? "text-white" : "text-[#7E7E7E]"
             }`}
           >
-            <div>Recharge</div>
+            <div className="text-[9px] md:text-xs lg:text-[16px]">Recharge</div>
             <div>
-              <img className="w-[35px] lg:w-[3.5rem] ml-1" src={logo} alt="" />
+              <img className="w-[2rem] lg:w-[3.5rem]" src={logo} alt="" />
             </div>
-            <div className=" ml-1">
+            <div className="text-[9px] md:text-xs lg:text-[16px] ml-1">
               Ikeja Electric Payment-IKEDC Meter Instantly
             </div>
             <div className="ml-1">
-              <img className="w-4 sm:w-[18px] lg:w-[24px]" src={arrow} alt="" />
+              <img
+                className="w-3.5 sm:w-[18px] lg:w-[24px]"
+                src={arrow}
+                alt=""
+              />
             </div>
           </div>
           <div className="lg:flex lg:items-start ">
@@ -482,7 +609,7 @@ const IKEDC = () => {
               )}
             </div>
 
-            <div className="flex flex-col sm:mt-[10px] md:mt-[23px] lg:mt-[23px] gap-2 lg:gap-2.5">
+            <div className="flex flex-col relative sm:mt-[10px] md:mt-[23px] lg:mt-[23px] gap-2 lg:gap-2.5">
               <div
                 className={`text-[14px] lg:text-[16px] md:font-semibold font-normal ${
                   isDarkMode ? "text-white" : "text-[#7E7E7E]"
@@ -492,9 +619,16 @@ const IKEDC = () => {
               </div>
               <div>
                 <input
-                  type="number"
+                  type="text"
                   value={ikedcMeterNumber}
-                  onChange={handleMeterNumber}
+                  maxLength={13}
+                  onChange={(e) => {
+                    const newValue = e.target.value
+                    setIkedcMeterNumber(newValue);
+                    if (newValue.length === 13 && !errors.ikedcMeterNumber) {
+                      verifyMeterNumber(newValue);
+                    }
+                  }}
                   className={`py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full w-full  ${
                     isDarkMode
                       ? "text-white bg-black border border-white"
@@ -504,8 +638,13 @@ const IKEDC = () => {
                 />
               </div>
               {errors.ikedcMeterNumber && (
-                <div className="text-[14px] text-red-500 italic lg:text-[14px]">
+                <div className="text-[14px] absolute left-0 -bottom-[1.3rem] text-red-500 italic lg:text-[14px]">
                   {errors.ikedcMeterNumber}
+                </div>
+              )}
+              {!errors.ikedcMeterNumber && isFailedMeterNumber && (
+                <div className="text-[14px] absolute left-0 -bottom-[1.3rem] text-red-500 italic lg:text-[14px]">
+                  Invalid meter number
                 </div>
               )}
             </div>
@@ -521,8 +660,9 @@ const IKEDC = () => {
               <div>
                 <input
                   type="text"
-                  value={ikedcVerifiedName}
-                  onChange={handleVerifiedName}
+                 value={handleVerifiedName}
+                  readOnly
+                  // onChange={handleVerifiedName}
                   className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
                     isDarkMode
                       ? "text-white bg-black border border-white"
@@ -531,7 +671,7 @@ const IKEDC = () => {
                 />
               </div>
             </div>
-            <div className="flex flex-col gap-2 lg:gap-2.5">
+            <div className="flex flex-col relative gap-2 lg:gap-2.5">
               <div
                 className={`text-[#7E7E7E] text-[14px] lg:text-[16px] md:font-semibold ${
                   isDarkMode ? "text-white" : ""
@@ -564,12 +704,12 @@ const IKEDC = () => {
                 />
               </div>
               {errors.ikedcPhoneNumber && (
-                <div className="text-[14px] text-red-500 italic lg:text-[14px]">
+                <div className="text-[14px] absolute left-0 -bottom-[1.5rem] leading-3 text-red-500 italic lg:text-[14px]">
                   {errors.ikedcPhoneNumber}
                 </div>
               )}
             </div>
-            <div className="flex flex-col gap-2 lg:gap-2.5">
+            <div className="flex flex-col gap-2 relative lg:gap-2.5">
               <div
                 className={`text-[#7E7E7E] text-[14px] lg:text-[16px] md:font-semibold font-normal ${
                   isDarkMode ? "text-white" : ""
@@ -590,7 +730,7 @@ const IKEDC = () => {
                 />
               </div>
               {errors.ikedcEmail && (
-                <div className="text-[14px] text-red-500 italic lg:text-[14px]">
+                <div className="text-[14px] absolute left-0 -bottom-[1.3rem] text-red-500 italic lg:text-[14px]">
                   {errors.ikedcEmail}
                 </div>
               )}
@@ -659,7 +799,11 @@ const IKEDC = () => {
                     </p>
                     <img
                       className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
-                      src={ikedcFlag}
+                      src={
+                        ikedcFlag
+                          ? ikedcFlag
+                          : "./Images/dashboardImages/arrow-down2.png"
+                      }
                       alt=""
                     />
                   </div>
@@ -674,9 +818,7 @@ const IKEDC = () => {
               {globalTransferErrors.country && (
                 <div
                   className={`text-[14px] text-red-500 italic lg:text-[14px]
-                  ${
-                    isDarkMode ? "text-white bg-black " : ""
-                  }`}
+                  ${isDarkMode ? "text-white bg-black " : ""}`}
                 >
                   {globalTransferErrors.country}
                 </div>
@@ -699,12 +841,16 @@ const IKEDC = () => {
                 >
                   {countryList.map((country) => (
                     <div
-                      className={`py-[18px] md:py-[14px] font-normal cursor-pointer px-2 flex items-center gap-[5px] text-[12px] md:text-[14px] lg:text-[16px] transition-all duration-300 hover:bg-slate-50 shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
+                      className={`py-[18px] md:py-[14px] font-normal px-2 flex items-center gap-[5px] text-[12px] md:text-[14px] lg:text-[16px] transition-all duration-300 hover:bg-slate-50 shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
                         ${
                           isDarkMode
                             ? "text-white hover:bg-slate-800 bg-black "
                             : "text-[#7E7E7E]"
-                        }`}
+                        } ${
+                        country.code === "Nigerian NGN Wallet"
+                          ? "cursor-pointer"
+                          : "cursor-not-allowed opacity-50"
+                      }`}
                       key={country.id}
                       onClick={() =>
                         handleCountryClick(
@@ -1080,11 +1226,17 @@ const IKEDC = () => {
       {successPopup && (
         <Modal>
           <div
-            className={`${styles.successfulTwo} ${isDarkMode ? "bg-black border border-white": "bg-white"} ${
-              toggleSideBar ? "md:w-[65%] md:ml-[10rem] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+            className={`${styles.successfulTwo} ${
+              isDarkMode ? "bg-black border border-white" : "bg-white"
+            } ${
+              toggleSideBar
+                ? "md:w-[65%] md:ml-[10rem] lg:ml-[20%] lg:w-[40%]"
+                : "lg:w-[40%]"
             } md:w-[60%] w-[90%] overflow-auto`}
           >
-            <div className={`flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]`}>
+            <div
+              className={`flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]`}
+            >
               <img
                 onClick={() => {
                   setSuccessPopup(false);
@@ -1151,7 +1303,7 @@ const IKEDC = () => {
                   <div>
                     <img className="w-[30px]" src={logo} alt="" />
                   </div>
-                  <div>{ikedcServiceID}</div>
+                  <div>{ikedcDiscoType}</div>
                 </span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
@@ -1238,14 +1390,18 @@ const IKEDC = () => {
               </div>
             </div>
             {/* mx-10 */}
-            <div className={` mx-2 h-[45px] my-5 flex justify-between md:h-[70px] lg:h-[75px] ${isDarkMode ? "bg-slate-800": "bg-[#F2FAFF]"}`}>
-              <p className="text-[11px] md:pt-1 text-center w-full h-full md:text-[14px] lg:text-[14px]">
+            <div
+              className={`mx-4 h-[45px] my-5 flex justify-between items-center md:h-[65px] px-[4%] rounded-[8px] lg:h-[75px] ${
+                isDarkMode ? "bg-slate-800" : "bg-[#F2FAFF]"
+              }`}
+            >
+              <p className="text-[8px] text-center md:text-[14px] md:w-[80%] lg:text-[14px] font-medium">
                 The electricity bills / token purchase has been generated
                 successfully. Please kindly check receipt to confirm the bills /
                 token. You can contact us for any further assistance.
               </p>
             </div>
-            <div className="flex w-[70%] mx-auto items-center my-6  gap-[6%] md:gap-[20px] justify-center md:w-[20%] lg:my-[5%]">
+            <div className="flex w-[70%] mx-auto items-center my-6 gap-[6%] md:gap-[20px] justify-center md:w-[20%] lg:my-[5%]">
               <button
                 onClick={() => {
                   setSuccessPopup(false);
@@ -1272,8 +1428,10 @@ const IKEDC = () => {
         <Modal>
           <div
             className={`${styles.successfulTwo} ${
-              toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-            } md:w-[45%] w-[90%] overflow-auto`}
+              toggleSideBar
+                ? "bg-white md:w-[45%] lg:ml-[20%] lg:w-[40%]"
+                : "lg:w-[40%]"
+            } md:w-[45%] bg-white w-[90%] overflow-auto`}
           >
             <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
               <img

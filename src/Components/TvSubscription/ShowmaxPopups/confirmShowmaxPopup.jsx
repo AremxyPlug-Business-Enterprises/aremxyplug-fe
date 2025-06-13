@@ -14,13 +14,13 @@ const ConfirmShowmaxPopup = () => {
     toggleSideBar,
    // formatNumberWithCommas,
     setInputPinShowmax,
-    mobileNumber,
-    tvEmail,
-    smartCard,
+    showMaxMobileNumber,
+    showMaxEmail,
+    showMaxSmartCard,
     selectedOptionShowmax,
     cardName,
     methodImage,
-    tvWalletBalance,
+   // tvWalletBalance,
     flagResult,
     newBalance,
     showMaxAmount
@@ -101,7 +101,7 @@ const ConfirmShowmaxPopup = () => {
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
                     <span className="text-[#0008]">Smartcard / IUC Number</span>
-                    <span>{smartCard}</span>
+                    <span>{showMaxSmartCard}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
                     <span className="text-[#0008]">Card Name</span>
@@ -109,11 +109,11 @@ const ConfirmShowmaxPopup = () => {
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
                     <span className="text-[#0008]">Phone Number</span>
-                    <span>{mobileNumber}</span>
+                    <span>{showMaxMobileNumber}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
                     <span className="text-[#0008]">Email</span>
-                    <span>{tvEmail}</span>
+                    <span>{showMaxEmail}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
                     <span className="text-[#0008]">Amount</span>
@@ -148,7 +148,7 @@ const ConfirmShowmaxPopup = () => {
                                                   <p className="text-[12px] md:text-[14px] leading-[20px] lg:leading-[22px]  lg:text-[16px] font-[500]">
                                               Available Balance {"  "} 
                                                </p>
-                                               <span className="text-[#0003]">
+                                               <span className="text-black">
                                                 {`(${newBalance})`}
                                               </span>
                                               </div>
