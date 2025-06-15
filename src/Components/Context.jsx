@@ -3,6 +3,7 @@ import Joi from "joi";
 import axios from "axios";
 import arrowDown from "../../src/Components/EducationPins/imagesEducation/arrow-down.svg";
 import NotVerifiedIcon from "../Components/My Profile & Account Settings/ProfileImages/NotVerifiedIcon.svg";
+import { GetFunction } from "./ApiCollection.jsx/ApiBuck";
 // import { BASE_URL } from "../config";
 
 export const ContextProvider = createContext();
@@ -806,17 +807,44 @@ export const Context = ({ children }) => {
   const [networkId, setNetworkId] = useState("");
   const [productId, setProductId] = useState("");
 
-  // =====================DATABUNDLE========================
-  const [selectedOption, setSelectedOption] = useState("");
+  // ===================== MTN  DATABUNDLE========================
+  const [selectedOptionMtn, setSelectedOptionMtn] = useState("");
   const [selectedNetworkProduct, setSelectedNetworkProduct] = useState("");
-  const [recipientPhoneNumber, setRecipientPhoneNumber] = useState("");
-  const [selectedAmount, setSelectedAmount] = useState("");
-  const [recipientNames, setRecipientNames] = useState("");
-  const [walletName, setWalletName] = useState("initialWalletName");
-
+  const [recipientPhoneNumberMtn, setRecipientPhoneNumberMtn] = useState("");
+  const  [selectedProductMtn, setSelectedProductMtn] = useState("");
+  const [selectedAmountMtn, setSelectedAmountMtn] = useState("");
+  const [recipientNamesMtn , setRecipientNamesMtn] = useState("");
+  const [walletNameMtn, setWalletNameMtn] = useState("initialWalletName");
   const [accountId, setAccountId] = useState("");
   const [numberPins, setNumberPins] = useState("");
   const [emailId, setEmailId] = useState("");
+
+  //==================GLO DataBundle ===============
+   const [selectedOptionGlo, setSelectedOptionGlo] = useState("");
+   const  [selectedProductGlo, setSelectedProductGlo] = useState("");
+  const [selectedNetworkProductGlo, setSelectedNetworkProductGlo] = useState("");
+  const [recipientPhoneNumberGlo, setRecipientPhoneNumberGlo] = useState("");
+  const [selectedAmountGlo, setSelectedAmountGlo] = useState("");
+  const [recipientNamesGlo , setRecipientNamesGlo] = useState("");
+  const [walletNameGlo, setWalletNameGlo] = useState("initialWalletName");
+
+  //================Etisalat =====================
+    const [selectedOptionEtisalat, setSelectedOptionEtisalat] = useState("");
+  const [selectedNetworkProductEtisalat, setSelectedNetworkProductEtisalat] = useState("");
+  const [recipientPhoneNumberEtisalat, setRecipientPhoneNumberEtisalat] = useState("");
+  const [selectedAmountEtisalat, setSelectedAmountEtisalat] = useState("");
+  const [recipientNamesEtisalat , setRecipientNamesEtisalat] = useState("");
+  const [walletNameEtisalat, setWalletNameEtisalat] = useState("initialWalletName");
+  const  [selectedProductEtisalat, setSelectedProductEtisalat] = useState("");
+
+  // ================ Airtel ================
+   const [selectedOptionAirtel, setSelectedOptionAirtel] = useState("");
+  const [selectedNetworkProductAirtel, setSelectedNetworkProductAirtel] = useState("");
+  const [recipientPhoneNumberAirtel, setRecipientPhoneNumberAirtel] = useState("");
+  const [selectedAmountAirtel, setSelectedAmountAirtel] = useState("");
+  const [recipientNamesAirtel, setRecipientNamesAirtel] = useState("");
+  const [walletNameAirtel, setWalletNameAirtel] = useState("initialWalletName");
+  const  [selectedProductAirtel, setSelectedProductAirtel] = useState("");
 
   // ==================Card Payment===============================
   const [cardPaymentAmount, setCardPaymentAmount] = useState("");
@@ -908,6 +936,7 @@ export const Context = ({ children }) => {
   const [dstvTransactionId, setDstvTransactionId] = useState("");
   const [dstvDescription, setDstvDescription] = useState("")
    const [dstvRequestId, setDstvRequestId] = useState("")
+   const [dstvWalletBalance, setDstvWalletBalance] = useState("")
 
 
   //=========SHOWMAX===========
@@ -927,6 +956,7 @@ export const Context = ({ children }) => {
   const [showMaxTransactionId, setShowMaxTransactionId] = useState("");
   const [showMaxDescription, setShowMaxDescription] = useState("");
     const [showMaxMobileNumber, setShowMaxMobileNumber] = useState("")
+    const [showMaxWalletBalance,setShowMaxWalletBalance] = useState("");
 
 
   //=========STARTIMES===========
@@ -945,7 +975,8 @@ export const Context = ({ children }) => {
        const [starTimesSubscriptionResponse, setStarTimesSubscriptionResponse] = useState({});
        const [starTimesOrderId, setStarTimesOrderId] = useState("");
   const [starTimesTransactionId, setStarTimesTransactionId] = useState("");
-  const [starTimesDescription, setStarTimesDescription] = useState("")
+  const [starTimesDescription, setStarTimesDescription] = useState("");
+ const [starTimesWalletBalance, setStarTimesWalletBalance] = useState("");
 
 
   //============= EDUCATION PINS ========================
@@ -1053,6 +1084,12 @@ const [dataStatus, setDataStatus] = useState(false);
   const [accountNumberState, setAccountNumberState] = useState("");
   const [userStatus, setUserStatus] = useState(false);
   const [idButtonState, setIdButtonState] = useState("Verify");
+
+  // Session Management Function for all the Api requests method
+  // const handleUnauthorisedGetMethod = async()=> {
+
+  // }
+
 
   const hold = {
     tvSubscriptionResponse,
@@ -1389,19 +1426,21 @@ const [dataStatus, setDataStatus] = useState(false);
     productId,
     setProductId,
 
-    // ==============DataBundle===============
-    selectedOption,
-    setSelectedOption,
+    // ==============MTN DataBundle===============
+    selectedOptionMtn,
+    setSelectedOptionMtn,
+    selectedProductMtn,
+    setSelectedProductMtn,
     selectedNetworkProduct,
     setSelectedNetworkProduct,
-    recipientPhoneNumber,
-    setRecipientPhoneNumber,
-    selectedAmount,
-    setSelectedAmount,
-    recipientNames,
-    setRecipientNames,
-    walletName,
-    setWalletName,
+    recipientPhoneNumberMtn,
+    setRecipientPhoneNumberMtn,
+    selectedAmountMtn,
+    setSelectedAmountMtn,
+    recipientNamesMtn,
+    setRecipientNamesMtn,
+    walletNameMtn,
+    setWalletNameMtn,
     accountId,
     setAccountId,
     numberPins,
@@ -1409,6 +1448,53 @@ const [dataStatus, setDataStatus] = useState(false);
     emailId,
     setEmailId,
 
+    //================GLO ============
+    selectedOptionGlo,
+    setSelectedOptionGlo,
+    recipientPhoneNumberGlo,
+    setRecipientPhoneNumberGlo,
+    selectedAmountGlo,
+    setSelectedAmountGlo,
+    recipientNamesGlo,
+    setRecipientNamesGlo,
+    walletNameGlo,
+    setWalletNameGlo,
+    selectedNetworkProductGlo,
+     setSelectedNetworkProductGlo,
+       selectedProductGlo,
+    setSelectedProductGlo,
+
+    // =============== Etisalat ==========
+    selectedOptionEtisalat,
+    setSelectedOptionEtisalat,
+   selectedNetworkProductEtisalat,
+    setSelectedNetworkProductEtisalat,
+    recipientPhoneNumberEtisalat,
+    setRecipientPhoneNumberEtisalat,
+    selectedAmountEtisalat,
+    setSelectedAmountEtisalat,
+    recipientNamesEtisalat,
+    setRecipientNamesEtisalat,
+    walletNameEtisalat,
+    setWalletNameEtisalat,
+      selectedProductEtisalat,
+    setSelectedProductEtisalat,
+
+    //============ Airtel ==============
+     selectedOptionAirtel,
+    setSelectedOptionAirtel,
+   selectedNetworkProductAirtel,
+    setSelectedNetworkProductAirtel,
+    setSelectedProductAirtel,
+    selectedProductAirtel,
+    recipientPhoneNumberAirtel,
+    setRecipientPhoneNumberAirtel,
+    selectedAmountAirtel,
+    setSelectedAmountAirtel,
+    recipientNamesAirtel,
+    setRecipientNamesAirtel,
+    walletNameAirtel,
+    setWalletNameAirtel,
     //===============Card payment==============
     cardPaymentAmount,
     setCardPaymentAmount,
@@ -1553,6 +1639,8 @@ const [dataStatus, setDataStatus] = useState(false);
 dstvTransactionId, setDstvTransactionId,
 dstvDescription, setDstvDescription,
 dstvRequestId, setDstvRequestId,
+dstvWalletBalance,
+ setDstvWalletBalance,
 
     //=======SHOWMAX
     confirmShowmaxPopup,
@@ -1584,6 +1672,8 @@ dstvRequestId, setDstvRequestId,
    showMaxOrderId, setShowMaxOrderId,
  showMaxTransactionId, setShowMaxTransactionId,
   showMaxDescription, setShowMaxDescription,
+  showMaxWalletBalance,
+ setShowMaxWalletBalance,
 
     //=======STARTIMES
     confirmStarTimesPopup,
@@ -1615,6 +1705,8 @@ dstvRequestId, setDstvRequestId,
          starTimesOrderId, setStarTimesOrderId,
   starTimesTransactionId, setStarTimesTransactionId,
  starTimesDescription, setStarTimesDescription,
+ starTimesWalletBalance,
+ setStarTimesWalletBalance,
 
 
 

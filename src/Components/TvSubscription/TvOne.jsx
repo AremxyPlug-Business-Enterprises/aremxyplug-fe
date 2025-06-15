@@ -19,11 +19,12 @@ import austriaFlag from '../../Components/EducationPins/imagesEducation/Austria.
 import kenyaFlag from '../../Components/EducationPins/imagesEducation/Kenya.svg';
 import {VerifyTransPin} from "../../Components/ApiCollection.jsx/ApiBuck";
 import {PostFunction} from "../../Components/ApiCollection.jsx/ApiBuck"
-
 import { useNavigate } from "react-router-dom";
 import { GetFunction } from "../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../Loader/Loader";
 import { Modal } from "../Screens/Modal/Modal";
+import { BalanceLoading } from "../Loader/Loader";
+
 
 // import { duration } from "html2canvas/dist/types/css/property-descriptors/duration";
 
@@ -58,7 +59,6 @@ const GoTv = () => {
     setGotvSuccessful,
     setInputPinGotv,
     fetchedGotvPlans,
-    setSuccessPopup,
     fetchedDstvPlans,
     setFetchedDstvPlans,
     fetchedShowMaxPlans,
@@ -70,82 +70,131 @@ const GoTv = () => {
       setInputPin,
        setGotvTransactionId,
   setGotvOrderId,
- packageGotv, setPackageGotv,
+ packageGotv,
+  setFetchedGotvPlans,
+  setPackageGotv,
           setGotvRequestId,
           setGotvDescription,
           setTvSubscriptionResponse,
-    newBalance
+    newBalance, setNewBalance
   } = useContext(ContextProvider)
 const [ failedConfig,setFailedConfig] = useState(false);
 const [ successConfig,setSuccessConfig] = useState(false);
+const [passDataBalance, setPassDataBalance] = useState({});
+const [gotvData, setGotvData] = useState([]);
+const [stateInvalidDecoderNumber, setStateInvalidDecoderNumber] = useState(false)
  
  
   const [isLoading, setIsLoading] = useState(false)
   const [failedPopup, setFailedPopup] = useState(false);
+  const [gotvLoading, setGotvLoading] = useState(false);
+  const [gotvVerifyResponse, setGotvVerifyResponse] = useState({});
    const navigate = useNavigate();
- 
-
+   
+useEffect(()=> {
+  // alert("Who do you think is handling that?")
+  if( gotvVerifyResponse?.data?.name?.length < 1 ){
+   setStateInvalidDecoderNumber(true);
+  }else{
+    setStateInvalidDecoderNumber(false)
+  }
+},[gotvVerifyResponse?.data?.name])
   
 
-
-  const handleOptionClickGOTV = (option, plan) => {
-    //setSelectedOptionGOTV(option); // Replace 'setInputValue' with the function to set input value
+const handleOptionClickGOTV = () => {
     setShowDropdownGOTV(false);
-    //setPlanName(plan.planName);
     document.querySelector('.imgdrop').classList.remove('DropIt');
   };
-  
 
-const GetOtherDataTv = async(id, path)=> {
-  console.log(id, path)
+  const GetOtherDataTv = async(id, path)=> {
+  console.log(id, path);
  const SuccessHandler = ()=> {
-  navigate(path)
+  navigate(path);
  }
- const FailedHandler = ()=> {
-  console.log("Error")
+ const FailedHandler = async()=> {
+  console.log("Error");
+   await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse)
  }
 
  const SubscriptionPresent =()=> {
   if((fetchedDstvPlans.status === 200 || 201) && id === 2 ){
-    return navigate(path)
-  }else if((fetchedStarTimesPlans.status === 200 || 201) && id === 3) {
-   return navigate(path)
+    return navigate(path);
+  } else if((fetchedStarTimesPlans.status === 200 || 201) && id === 3) {
+   return navigate(path);
   }else if((fetchedShowMaxPlans.status === 200 || 201) && id === 4) {
-   return navigate(path)
+   return navigate(path);
   }
-  
- }
+  }
 
  let TvPath;
  let fetchedResponse;
-  if((fetchedDstvPlans.status === undefined || null) && id === 2 ){
+  if((fetchedDstvPlans.status !== 200 || fetchedDstvPlans.status !== 201) && id === 2 ){
     TvPath = `products/tvsub/dstv`;
   fetchedResponse = setFetchedDstvPlans;
    await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse)
-  
- }else if((fetchedStarTimesPlans.status === undefined || null) && id === 3){
+  }else if((fetchedStarTimesPlans.status !== 200|| fetchedStarTimesPlans.status !== 201) && id === 3){
     TvPath = `products/tvsub/startimes`;
   fetchedResponse = setFetchedStarTimesPlans;
    await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse)
    
-}else if ((fetchedShowMaxPlans.status === undefined || null) && id === 4){
-  TvPath = `products/tvsub/startimes`;
+}else if ((fetchedShowMaxPlans.status !== 200 || fetchedShowMaxPlans.status !== 201) && id === 4){
+  TvPath = `products/tvsub/showmax`;
   fetchedResponse = setFetchedShowMaxPlans;
-   await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse)
-  
-}else{
- console.log(fetchedDstvPlans.status)
+   await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse);
+  }else{
+ console.log(fetchedDstvPlans.status);
   return SubscriptionPresent();
 }
 }
 
 
-     const GotvData = fetchedGotvPlans.data ? fetchedGotvPlans.data.data.data : []
+      
+//console.log(fetchedGotvPlans.status)
+const GotvOptionalPlan = gotvData?.length < 1 && fetchedGotvPlans.status === 200 ? fetchedGotvPlans.data.data.data : gotvData;
     useEffect(()=> {
-      if(GotvData.length < 1){
-        navigate("/TvSubscription")
-      }
-    })
+      if(fetchedGotvPlans.status === 200 || fetchedGotvPlans.status === 201){
+      setGotvData(fetchedGotvPlans.data.data.data);
+      }else if(fetchedGotvPlans.status === undefined){
+       const RetrieveGotvPlans = async()=> {
+          const SuccessHandler = ()=> {
+    console.log("Successfully fetched gotv plans");
+   }
+     const failedHandler = async()=> {
+    console.log("Couldn't fetch gotv plans");
+    await GetFunction(`products/tvsub/gotv`, setIsLoading, SuccessHandler, failedHandler, setFetchedGotvPlans);
+    }
+      
+ await GetFunction(`products/tvsub/gotv`, setIsLoading, SuccessHandler, failedHandler, setFetchedGotvPlans);
+// console.log(fetchedGotvPlans);
+ 
+  }
+RetrieveGotvPlans()
+}
+
+           const GetBalance =   async()=> {
+                        const SuccessHandler = ()=> {
+                      //alert("Successful");
+                 console.log("successfully retrieved balance");
+                 //alert("Successful")
+                   }
+                  const FailedHandler = async()=> {
+                    console.log(`Failed to retrieve balance`)
+                    await GetFunction("balance", setIsLoading, SuccessHandler, FailedHandler,setPassDataBalance)
+                  }
+                  await GetFunction("balance", setIsLoading, SuccessHandler, FailedHandler,setPassDataBalance)
+                    } 
+                     // Simulate async data loading
+                    
+                     if(newBalance === "" || newBalance === null || newBalance === undefined){
+                        GetBalance();
+                        if(GetBalance){
+                         setNewBalance(passDataBalance?.data ? passDataBalance.data.data.data.balance : "");
+                        }
+                      }
+                  
+    
+     //eslint-disable-next-line
+    },[])
      
 
     
@@ -160,10 +209,7 @@ const GetOtherDataTv = async(id, path)=> {
     const inputValue = e.target.value;
     setCardName(inputValue);
   }
-  const handleSmartCard = (e) => {
-    const inputValue = e.target.value;
-    setSmartCard(inputValue);
-  }
+ 
   const handleTvEmail = (e) => {
     const inputValue = e.target.value;
     setTvEmail(inputValue);
@@ -185,7 +231,7 @@ const GetOtherDataTv = async(id, path)=> {
   const handleGotv = (event) => {
     event.preventDefault();
     
-    const { error } = schema.validate({
+  const { error } = schema.validate({
       mobileNumber,
       tvEmail,
       smartCard,
@@ -251,15 +297,20 @@ const GetOtherDataTv = async(id, path)=> {
     setMethodPayment(!methodPayment);
     document.querySelector('.methodDrop').classList.toggle('DropIt');
   }
+const updateBalance = passDataBalance?.data?.data  ? passDataBalance.data.data.data.balance : "";
 
-  const [methodOptions, setMethodOptions] = useState([
-    { method: 'NGN Wallet', balance: `(${newBalance})`, flag: nigerianFlag, id: 1 },
+//console.log(passDataBalance);
+//console.log(updateBalance);
+  const methodOptions =[
+    { method: 'NGN Wallet',
+       balance: (newBalance === "" || newBalance === null || newBalance === undefined)  ? `(${updateBalance})`: `(${newBalance})`,
+                 flag: nigerianFlag, id: 1 },
     { method: 'USD Wallet ', balance: '(0.00)', flag: americaFlag, id: 2 },
     { method: 'EUR Wallet', balance: '(0.00)', flag: britainFlag, id: 3 },
     { method: 'GBP Wallet', balance: '(0.00)', flag: euroFlag, id: 4 },
     { method: 'AUD Wallet', balance: '(0.00)', flag: austriaFlag, id: 5 },
     { method: 'KES Wallet', balance: '(0.00)', flag: kenyaFlag, id: 6 }
-  ])
+  ]
 
   function packageDropdown() {
     if (!decoderType ) {
@@ -283,10 +334,11 @@ const handleReceivedData = () => {
   setIsLoading(true);
   const receivedData = () => {
     // Seting the relevant data from the TV subscription response
-    setGotvOrderId(tvSubscriptionResponse.data.order_id);
-    setGotvTransactionId(tvSubscriptionResponse.data.transcation_id);
-    setGotvRequestId(tvSubscriptionResponse.data.request_id);
-    setGotvDescription(tvSubscriptionResponse.data.description);
+    setGotvOrderId(tvSubscriptionResponse?.data ? tvSubscriptionResponse.data?.order_id : "");
+    setGotvTransactionId(tvSubscriptionResponse?.data ?  tvSubscriptionResponse.data?.transcation_id : "");
+    setGotvRequestId(tvSubscriptionResponse?.data?  tvSubscriptionResponse.data?.request_id : "");
+    setGotvDescription(tvSubscriptionResponse?.data ?  tvSubscriptionResponse.data?.description : "");
+    setCardName(userVerifiedName);
   };
   receivedData();
    if (receivedData) {
@@ -309,7 +361,7 @@ const VerifyPinHandler = async () => {
       };
       const DataJson = JSON.stringify(requestData)
 
-      const Path = "tvsub";
+      const Path = "bills/tvsub";
       const successHandler = () =>{
         setGotvSuccessful(true);
         setInputPinGotv(false);
@@ -328,7 +380,6 @@ const VerifyPinHandler = async () => {
          DataJson,
         successHandler,
         FailedHandler,
-     //  setCollectResponse
         setTvSubscriptionResponse
       );
     
@@ -342,11 +393,59 @@ const VerifyPinHandler = async () => {
       setErrorMessage,
       GotvHandler
     );
+};
+//console.log( passDataBalance.status)
 
-  };
-  console.log(tvSubscriptionResponse);
+let userVerifiedName = gotvVerifyResponse?.data ? gotvVerifyResponse?.data?.name : "";
+//Function to help Verify users account
+const VerifyUserAccount = async(UserTvSubscription)=> {
+ setGotvVerifyResponse({});
+   if(UserTvSubscription?.length === 10 && 
+    (UserTvSubscription !== "" && 
+      UserTvSubscription !== null && 
+      UserTvSubscription !== undefined)){
+        const body = {
+           decoder_type : decoderType.toLowerCase(),
+          iuc_number : UserTvSubscription
+        }
+        const bodyToJson = JSON.stringify(body)
+await PostFunction("bills/verify", setGotvLoading, bodyToJson, ()=> {
+  console.log("Succesfully verified tv subscription account.");
+  setSmartCard(UserTvSubscription);
+//   setIsLoading(true)
+//console.log(gotvVerifyResponse?.data?.name);
+  // if(gotvVerifyResponse?.data?.name?.length < 1){
+  //   setStateInvalidDecoderNumber(true)
+  // }else{
+  //   setStateInvalidDecoderNumber(false);
+  // }
+  
+}, ()=> {
+  console.log("Failed to verify tv subscription account.")
+}, setGotvVerifyResponse )
+}
+}
+//console.log(userVerifiedName)
 
+ const handleSmartCard = async(e) => {
+    const inputValue = e.target.value;
+  await VerifyUserAccount(inputValue);
+ }
 
+ const ExitTheDoneButton = ()=> {
+      setTvEmail("")
+   setMobileNumber("")
+   setSmartCard("");
+   setTvAmount("");
+   setSelectedOptionGOTV("");
+   setPackageGotv("");
+   setDecoderType("")
+    setFlagResult("");
+    setTvWalletBalance("");
+    setFailedPopup(false);
+     handleReceivedData();
+   //navigate("/DsTv");
+  }
   return (
     <div>
       <DashBoardLayout>
@@ -383,7 +482,7 @@ const VerifyPinHandler = async () => {
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[14px] lg:text-[17px] md:text-[13px] md:font-[600] font-[400]">
                 Confirm Decoder Type</label>
               {/* <button className="border-[0.23px] lg:border-[0.4px] w-full md:w-1/2 h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C]">Gotv</button> */}
-              <div className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] p-4 sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+              <div className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px]  sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
                   isDarkMode 
                     ? "bg-black text-white border border-white" 
@@ -406,16 +505,16 @@ const VerifyPinHandler = async () => {
             return (
                <p
                onClick={(e =>{
-          setDecoderType(decoder.decoderType);
+          setDecoderType(decoder.id === 1 ? decoder.decoderType : "");
                  setDecoderActive(false);
-             GetOtherDataTv(decoder.id, decoder.path)
+             GetOtherDataTv(decoder.id, decoder.path);
              document.querySelector('.decdrop').classList.remove('DropIt');
              console.log(e);
               })}
               className={`pb-[20px] pt-[20px] md:pb-[14px] md:pt-[14px] font-weight-bold text-[14px]  leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500]  
          md:text-[13.227px] md:leading-[17.195px] 
          shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
-         lg:text-[16px] lg:leading-[20.8px] cursor-pointer   ${
+         lg:text-[16px] lg:leading-[20.8px] cursor-pointer ${
             isDarkMode 
               ? "bg-black text-white border border-white" 
               : "hover:bg-[#EDEAEA] bg-white text-[#7C7C7C]"
@@ -440,7 +539,7 @@ const VerifyPinHandler = async () => {
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] md:font-[600] font-[400]">
                 Select Package</label>
 
-              <div className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] p-4 sm:p-3 sm:text-lg  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+              <div className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] sm:p-3 sm:text-lg  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
             isDarkMode 
               ? "bg-black text-white border border-white" 
@@ -452,13 +551,13 @@ const VerifyPinHandler = async () => {
               </div>
 
               {showDropdownGOTV && (
-                <ul className={`dropdown-options absolute top-[100%] w-full h-[300px] overflow-y-scroll  cursor-pointer z-[2]
+                <ul className={`dropdown-options absolute top-[100%] w-full ${GotvOptionalPlan?.length > 1 ? " h-[300px] overflow-y-scroll" : "h-[0px]" } cursor-pointer z-[2]
                    ${
             isDarkMode 
               ? "bg-black text-white border border-white" 
               : "hover:bg-[#EDEAEA] bg-white"
           }`}>
-                  {GotvData.map((option) => {
+                  {GotvOptionalPlan.map((option) => {
                  
 
                    // const duration = option.duration;
@@ -501,13 +600,13 @@ const VerifyPinHandler = async () => {
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[14px] lg:text-[17px] md:text-[13px] md:font-[600] font-[400]">
                 Smart Card / IUC Number</label>
                 {/* style={{ backgroundColor: smartCard.length !== 10 ? '#FFD8D8' : 'white' }} */}
-              <input type="tel" onChange={handleSmartCard}
+              <input type="tel"  onChange={handleSmartCard}
                 onInput={(e =>{
-  
-                  const numericValue = e.target.value.replace(/\D/g, '');
-                      e.target.value = numericValue
-                })}
-                className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+              const numericValue = e.target.value.replace(/\D/g, '');
+              e.target.value = numericValue
+          })}
+            maxLength={10}
+                className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
       isDarkMode 
         ? "bg-black text-white border border-white" 
@@ -515,18 +614,31 @@ const VerifyPinHandler = async () => {
     }`} />
               {errors.smartCard && <p className="text-[#F95252] text-[13px] md:text-[12px] lg:text-[14px] font-[400] italic">
                 {errors.smartCard}</p>}
+                {(stateInvalidDecoderNumber && !errors.smartCard) && (
+          <p className ="text-[14px] top-0 font-[500] text-red-500 text-left
+           lg:text-[14px] lg:leading-[20px] leading-[18px] ">
+            Invalid iuc number
+          </p>
+                ) }
             </div>
 
-            <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
+            <div className="flex  flex-col relative gap-[3px] lg:gap-[5px] w-full md:w-1/2">
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] md:font-[600] font-[400]">
                 Card Name</label>
               <input type="text"
-                onChange={handleCardName} onInput={(event)=> {event.target.value = event.target.value.replace(/[0-9]/g, '')}} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[13px] md:leading-[12.206px] 
+              value={userVerifiedName}
+               readOnly  className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[13px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
       isDarkMode 
         ? "bg-black text-white border border-white" 
         : "border border-[#0003] border-[#9C9C9C] hover:bg-[#EDEAEA] text-[#7C7C7C]"
     }`}/>
+    {gotvLoading && (
+      <p className="left-[10px] absolute top-[60%]">
+     <BalanceLoading/>
+     </p>
+      
+    )}
             </div>
           </div>
           <div className="flex flex-col md:flex-row gap-[20px] md:gap-[12px] lg:gap-[22px] md:my-2 lg:my-4">
@@ -546,7 +658,7 @@ const VerifyPinHandler = async () => {
                   }
                 
                    })}
-                type="tel" maxLength={11} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[12.2px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[13px] md:leading-[12.206px] 
+                type="tel" maxLength={11} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[12.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[13px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
       isDarkMode 
         ? "bg-black text-white border border-white text-[12px]" 
@@ -559,7 +671,7 @@ const VerifyPinHandler = async () => {
             <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
               <label htmlFor="Email" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] md:font-[600] font-[400]">
                 Email</label>
-              <input type="email" onChange={handleTvEmail} placeholder="example@gmail.com" required className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] text-[14px] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+              <input type="email" value ={tvEmail} onChange={handleTvEmail} placeholder="example@gmail.com" required className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] text-[14px] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
       isDarkMode 
         ? "bg-black text-white border border-white" 
@@ -578,7 +690,8 @@ const VerifyPinHandler = async () => {
 
               <input
                 type="text"
-                className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.8px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] text-[13.2px] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+                className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.8px] sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+                   leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
                 lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
                   isDarkMode 
                     ? "bg-black text-white border border-white" 
@@ -591,7 +704,7 @@ const VerifyPinHandler = async () => {
             <div className="relative flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] md:font-[600] font-[400]">
                 Payment Method</label>
-              <div onClick={methodDropDown} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg flex items-center justify-between border-[0.23px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px]  ${
+              <div onClick={methodDropDown} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px]  sm:p-3 sm:text-lg flex items-center justify-between border-[0.23px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px]  ${
             isDarkMode 
               ? "bg-black text-white border border-white" 
               : "border-[#9C9C9C] "
@@ -613,7 +726,7 @@ const VerifyPinHandler = async () => {
                     return (
                       <div
                         onClick={(e => {
-                          onchange = { setMethodOptions }
+                          //onchange = { setMethodOptions }
                           setFlagResult(methodOption.method);
                           setTvWalletBalance(methodOption.balance)
                           setMethodImage(methodOption.flag);
@@ -656,9 +769,9 @@ const VerifyPinHandler = async () => {
         </div>
 
         <button onClick={handleGotv}
-          disabled={!cardName || !tvEmail || !smartCard || !decoderType || !selectedOptionGOTV}
+          disabled={!userVerifiedName || !tvEmail || !decoderType || !selectedOptionGOTV}
           className={`
-             ${mobileNumber.length < 11 || !cardName || !tvEmail || !smartCard || !decoderType || !selectedOptionGOTV || !flagResult
+             ${mobileNumber.length < 11 || !userVerifiedName || !tvEmail || !decoderType || !selectedOptionGOTV || !flagResult
               ? "bg-[#63616188] "
               : "bg-primary"
             }
@@ -675,9 +788,9 @@ const VerifyPinHandler = async () => {
         </div>
         
       </DashBoardLayout>
-      <ConfirmGotvPopup />
+      <ConfirmGotvPopup passDataBalance ={passDataBalance} userVerifiedName ={userVerifiedName}/>
       <InputGotvPopup VerifyPinHandler={VerifyPinHandler}/>
-      <GotvSuccessfulPopup handleReceivedData = {handleReceivedData} />
+      <GotvSuccessfulPopup handleReceivedData = {handleReceivedData} userVerifiedName={userVerifiedName} />
 
       {/* Failed Transaction Popup */}
 {failedPopup && (
@@ -719,8 +832,7 @@ const VerifyPinHandler = async () => {
         </button>
            <button
           onClick={() =>{
-              setFailedPopup(false);
-              handleReceivedData();
+              ExitTheDoneButton()
           }}
           className="w-[50%] bg-white max-w-xs mx-auto py-2 text-blue-900
            rounded-md font-medium"
@@ -739,6 +851,7 @@ const VerifyPinHandler = async () => {
 
            </Modal>
       ) } 
+      
       
     </div>
   )

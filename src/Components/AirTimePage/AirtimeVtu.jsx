@@ -22,21 +22,23 @@ import { AirtimeVtuReceipt } from './AirtimeVtuReceipt';
 import { AirtimeReceiptFailed } from './AirtimeReceiptFailed';
 import axiosInstance from '../ApiCollection.jsx/apiClient';
 import { Loader } from '../Loader/Loader';
-import { VerifyTransPin } from '../ApiCollection.jsx/ApiBuck';
+import { VerifyTransPin, GetFunction } from '../ApiCollection.jsx/ApiBuck';
+import Select from  "../Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundles-Images/Select.svg";
+
 
 const AirtimeVtu = () => {
     // const {  isDarkMode } = useContext(ContextProvider);
     const tFee = 0;
     const points = '+2.00';
 
-    const { networkName, setNetworkName } = useContext(ContextProvider);
+    const { networkName, setNetworkName, newBalance, setNewBalance } = useContext(ContextProvider);
     const { selectedProduct, setSelectedProduct } = useContext(ContextProvider);
     const { recipientName, setRecipientName } = useContext(ContextProvider);
     const { recipientNumber, setRecipientNumber } = useContext(ContextProvider);
     const { amount, setAmount } = useContext(ContextProvider);
     const { networkImage, setNetworkImage } = useContext(ContextProvider);
     const { inputValues, setInputValues } = useContext(ContextProvider);
-    const { networkId, setNetworkId, newBalance } = useContext(ContextProvider);
+    const { networkId, setNetworkId } = useContext(ContextProvider);
    // const { productId, setProductId } = useContext(ContextProvider);
 
 
@@ -62,17 +64,54 @@ const AirtimeVtu = () => {
     const { isDarkMode } = useContext(ContextProvider);
     const [successPin, setSuccessPin] = useState(false)
     const [failedPin, setFailedPin] = useState(false);
-    const [errorMessage, setErrorMessage] = useState(false)
+    const [errorMessage, setErrorMessage] = useState(false);
+    const [passDataBalance, setPassDataBalance] = useState({});
+    const [balanceStatus, setBalanceStatus] = useState("")
+   const balanceStringToNum = Number(newBalance);
+     let airtelDataAmount = Number(amount.replace(/\D/g, ""));
+               const updateBalance = passDataBalance.data ?  passDataBalance.data.data.data.balance : "";
+                  const cleanUpBalanceToNumericOnly = Number(updateBalance.replace(/\D/g, ""));
+                 let CheckSufficiency =  airtelDataAmount > (newBalance === "" || newBalance === null ? cleanUpBalanceToNumericOnly : balanceStringToNum);
+                 useEffect(() => {
+                           const GetBalance =   async()=> {
+                               const SuccessHandler = ()=> {
+                             //alert("Successful");
+                        console.log("successfully retrieved balance");
+                        //alert("Successful")
+                          }
+                         const FailedHandler = ()=> {
+                           console.log(`Failed to retrieve balance`)
+                         }
+                         await GetFunction("balance", setIsLoading, SuccessHandler, FailedHandler,setPassDataBalance)
+                           } 
+                            // Simulate async data loading
+                           
+                            if(newBalance === "" || newBalance === null || newBalance === undefined){
+                               GetBalance();
+                               if(GetBalance){
+                                setNewBalance(passDataBalance.data ? passDataBalance.data.data.data.balance : "");
+                               }
+                            }
+                           //eslint-disable-next-line
+                          }, []);
+                     
+   useEffect(()=> {
+  const HandleBalanceStatus = ()=> {
+              if(CheckSufficiency){
+               setBalanceStatus("Insufficient fund")
+              }else{
+                setBalanceStatus("");
+               }
+            }
 
-    useEffect(() => {
-        // Populate input fields with the selected recipient's data from context
-    }, [networkName, recipientName, recipientNumber]);
-
+            HandleBalanceStatus()
+        },[CheckSufficiency])
 
 
    
 
     const handleAddRecipient = async () => {
+        if(!navigator.onLine) return alert("Check your internet Connection")
         setIsLoading(true);
         setErrors({});
         try {
@@ -99,12 +138,25 @@ const AirtimeVtu = () => {
             }
 
             // Handle successful response
+            if(response.status === 200 || 201){
             const data = await response.json();
             console.log('Recipient added successfully:', data);
+            }
 
         } catch (error) {
             console.error('Network error:', error);
             setErrors({ network: 'Network error, please try again later.' });
+            if(error && error.response === undefined){
+             alert("Check your internet Connection, then reload the page.")
+          } else if(error && (error.response.status === 400 || 404)){
+             alert("Couldn't save recipient,please try again later.")
+          }else if(error && error.response.status === 500){
+               alert("Couldn't save recipient,please try again later.")
+          }else if(error && error.response.status === 401){
+            alert("session expired")
+          }else {
+            alert("Error occured: Kindly check your network connection.")
+          }
         } finally {
             setIsLoading(false);
         }
@@ -150,7 +202,7 @@ const AirtimeVtu = () => {
             name: 'Nigeria',
             code: 'NGN',
             flag: require('./Images/ng.svg').default,
-            amount:  `${newBalance}`
+            amount: newBalance === "" || newBalance === null ? updateBalance : newBalance,
         },
         {
             id: 2,
@@ -411,11 +463,36 @@ const AirtimeVtu = () => {
                 setOrderID(result.order_id);
                 setDescription(result.description);
                 setInputPin("")
-                return { statusCode: response.status, data: response.data };
+                  if (response.statusCode === 200) {
+            // Success response
+            setTransactSuccessPopUp(true); 
+            setConfirm(false);
+             return { statusCode: response.status, data: response.data };
+            // Show success popup
+        }
+               
                 // console.log(response.data);
             } catch (error) {
                 console.error(error);
-                setInputPin("")
+                setInputPin("");
+                  setTransactFailedPopUp(true); 
+            setConfirm(false)// Show failure popup
+             if(error && error.response === undefined){
+             alert("Check your internet Connection, then reload the page.")
+          } else if(error && (error.response.status === 400 || 404)){
+             setInputPin("");
+                  setTransactFailedPopUp(true); 
+            setConfirm(false)// 
+          }else if(error && error.response.status === 500){
+             setInputPin("");
+                  setTransactFailedPopUp(true); 
+            setConfirm(false)// 
+          }else if(error && error.response.status === 401){
+            alert("session expired");
+            setInputPin("") 
+          }else {
+            alert("Error occured: Kindly check your network connection.")
+          }
                 return { statusCode: error.response.status, data: null };
 
             }finally {
@@ -424,7 +501,7 @@ const AirtimeVtu = () => {
         }
 
         // Usage
-        const response = await buyAirtime(
+     await buyAirtime(
             networkId, // Network (MTN)
             inputValues, // Mobile No
             amount, // Amount
@@ -432,17 +509,7 @@ const AirtimeVtu = () => {
         );
 
 
-        setConfirm(false);
-        if (response.statusCode === 200) {
-            // Success response
-            setTransactSuccessPopUp(true); 
-            setConfirm(false);
-            // Show success popup
-        } else {
-            // Failure response
-            setTransactFailedPopUp(true); 
-            setConfirm(false)// Show failure popup
-        }
+      
     };
 
     const [receipt] = useState(false);
@@ -806,7 +873,7 @@ const AirtimeVtu = () => {
                                                 : ""
                                         }
                                         ${styles.output} !relative !top-[9px] md:!relative md:!top-base !text-[14px] md:!text-base`}>
-                                        <span className={`text-gray-500 relative bottom-[1px] !relative !top-[7px] md:!relative md:!top-base !text-[14px] md:!text-base
+                                        <span className={`text-gray-500 bottom-[1px] !relative !top-[7px] md:!relative md:!top-base !text-[14px] md:!text-base
                                              ${
                                             isDarkMode 
                                                 ? "!bg-black !text-[#7E7E7E]" 
@@ -1032,7 +1099,7 @@ const AirtimeVtu = () => {
                                     </div>
                                     <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                                         <p className="text-[#0008]">Product</p>
-                                        <span>{networkName + ' ' + selectedProduct}</span>
+                                        <span>{` ${networkName + ' ' + selectedProduct} VTU`}</span>
                                     </div>
                                     <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                                         <p className="text-[#0008]">Discount</p>
@@ -1064,25 +1131,44 @@ const AirtimeVtu = () => {
                                     </div>
                                 </div>
 
-                                <div className="bg-[#0001] h-[45px] my-5 flex justify-between items-center px-[4%]">
-                                    <div className="flex gap-2 items-center">
-                                        <div className="bg-white rounded-full h-[27px] w-[27px] flex justify-center items-center">
-                                            <img className="w-[16px] h-[16px]" src={image} alt="/" />
-                                        </div>
-                                        <p className="text-[10px] md:text-[14px]  lg:text-[16px]">
-                                            Available Balance{" "}
-                                            <span className="text-[#0003]">( {name + paymentAmount}.00 )</span>
-                                        </p>
-                                    </div>
-                                    <img
-                                        className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                                        src="./Images/dashboardImages/arrowright.png"
-                                        alt="/"
-                                    />
-                                </div>
+                                  <div className="bg-[#F6F7F7] w-[95%] h-auto my-5 lg:my-8 flex py-[7px] 
+                                                                            justify-between items-center px-[4%] mx-auto rounded-[10px]">
+                                                                                    <div className="flex flex-col gap-2  ">
+                                                                                      <div className="flex gap-[10px] justify-center items-center">
+                                                                                        <img
+                                                                                          className="w-[16px] h-[16px] bg-white"
+                                                                                          src={image}
+                                                                                          alt="/"
+                                                                                        />
+                                                                                        <div className="flex gap-[10px] items-center">
+                                                                                            <p className="text-[12px] md:text-[14px] leading-[20px] lg:leading-[22px]  lg:text-[16px] font-[500]">
+                                                                                        Available Balance {"  "} 
+                                                                                         </p>
+                                                                                         <span className="text-black">
+                                                                                          {`(${newBalance === "" || newBalance === null ? updateBalance : newBalance})`}
+                                                                                        </span>
+                                                                                        </div>
+                                                                                      </div>
+                                                                                    <span className="text-gray-500 text-[14px] font-[400] leading-[20px]
+                                                                                         lg:text-[16px] lg:leading-[22px] text-left">
+                                                                                           {balanceStatus}
+                                                                                           </span>
+                                                                                    </div>
+                                                                    
+                                                                                    <img
+                                                                                      src={Select}
+                                                                                      alt=""
+                                                                                      className="w-[12px] h-[12px] md:w-[50px] md:h-[20px] lg:w-[80px] lg:h-[30px]"
+                                                                                    />
+                                                                                  </div>
                                 <button
                                     onClick={handleConfirm}
-                                    className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                                    disabled={CheckSufficiency}
+                                    className={` my-[5%] w-[88%] flex justify-center
+                                         items-center mx-auto cursor-pointer text-[14px] font-extrabold
+                                          h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px]
+                                           md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] 
+                                           lg:my-[2%] ${CheckSufficiency ?" bg-gray-400" : "bg-[#04177f]"}`}
                                 >
                                     Confirmed
                                 </button>

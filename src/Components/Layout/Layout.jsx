@@ -7,6 +7,8 @@ import { useContext } from "react";
 import { ContextProvider } from "../Context";
 
 export const Layout = () => {
+
+ 
   const { handleClickOutside } = useContext(ContextProvider);
   return (
     <div onClick={handleClickOutside}>

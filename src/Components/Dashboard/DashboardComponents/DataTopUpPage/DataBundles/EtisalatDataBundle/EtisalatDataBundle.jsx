@@ -21,28 +21,38 @@ import { Modal } from "../../../../../Screens/Modal/Modal";
 import OtpInput from "react-otp-input";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
-import { EtisalatReceipt } from "./9MobileReceipt";
 import Joi from "joi";
 import airtimestyles from "../../../../../AirTimePage/AirtimeVtu.module.css";
-import axios from "axios";
-import Spinner from "../MtnDataTopUpBundle/Spinner";
-import { EtisalatFailedReceipt } from "./9MobileFailedReceipt";
 import Failed from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/Failed.svg"
 import axiosInstance from "../../../../../ApiCollection.jsx/apiClient";
 import { VerifyTransPin } from "../../../../../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../../../../Loader/Loader";
+import { GetFunction } from "../../../../../ApiCollection.jsx/ApiBuck";
+
+
 
 const EtisalatDataBundle = () => {
-  const { isDarkMode } = useContext(ContextProvider);
-  const { selectedOption, setSelectedOption } = useContext(ContextProvider);
-  const { selectedProduct, setSelectedProduct } =
-    useContext(ContextProvider);
-  const { recipientPhoneNumber, setRecipientPhoneNumber } =
-    useContext(ContextProvider);
-  const { selectedAmount, setSelectedAmount } = useContext(ContextProvider);
-  const { recipientNames, setRecipientNames } = useContext(ContextProvider);
-  const { walletName, setWalletName, newBalance } = useContext(ContextProvider);
-
+  const { isDarkMode, newBalance,setNewBalance } = useContext(ContextProvider);
+ const {selectedOptionEtisalat,
+    setSelectedOptionEtisalat,
+   selectedNetworkProductEtisalat,
+    setSelectedNetworkProductEtisalat,
+    recipientPhoneNumberEtisalat,
+    setRecipientPhoneNumberEtisalat,
+    selectedAmountEtisalat,
+    setSelectedAmountEtisalat,
+    recipientNamesEtisalat,
+    setRecipientNamesEtisalat,
+    walletNameEtisalat,
+    setWalletNameEtisalat,
+      selectedProductEtisalat,
+       toggleSideBar,
+    inputPin,
+    setInputPin,
+    // inputPinHandler,
+    toggleVisibility,
+    isVisible,
+    setSelectedProductEtisalat} = useContext(ContextProvider)
   const [showProductList, setShowProductList] = useState(false);
   const [showOptionList, setShowOptionList] = useState(false);
   const [addRecipient, setAddRecipient] = useState(false);
@@ -57,20 +67,25 @@ const EtisalatDataBundle = () => {
   const [plan, setPlan] = useState("");
   const [etisalatpurchaseStatus, setEtisalatPurchaseStatus] = useState(null); // State to hold purchase status
   const [loading, setLoading] = useState("");
-  const [proceedToShowReceipt] = useState(false);
   const [products, setProducts] = useState([]);
   const [productPlans, setProductPlans] = useState([]);
   const [loadingProducts, setLoadingProducts] = useState(false);
   const [loadingPlans, setLoadingPlans] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [success, setSuccess] = useState(false);
-  const [failed, setFailed] = useState(false);
+  const [failed, setFailed] = useState(false); 
   const [errorMessage, setErrorMessage] = useState("");
-const [balanceStatus,setBalanceStatus ] = useState("")
+const [balanceStatus,setBalanceStatus ] = useState("");
+const [selectProductWarn, setSelectProductWarn] = useState(false);
+const [selectPlanWarn, setSelectPlanWarn]  = useState(false);
+const [passDataBalance, setPassDataBalance] = useState({});
+const [etisalatReceiptInfo, setEtisalatReceiptInfo] = useState("");
    let balanceStringToNum = Number(newBalance);
 
-              let etisalatDataAmount = Number(selectedAmount);
-             let CheckSufficiency =  etisalatDataAmount > balanceStringToNum;
+  let etisalatDataAmount = Number(selectedAmountEtisalat.replace(/\D/g, ""));
+   let updateBalance = passDataBalance.data ? passDataBalance.data.data.data.balance : "";
+   let cleanUpBalanceToNumeric = Number(updateBalance.replace(/\D/g, ""));
+             let CheckSufficiency =  etisalatDataAmount > ( newBalance === "" ?  cleanUpBalanceToNumeric : balanceStringToNum  )
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -82,7 +97,15 @@ const [balanceStatus,setBalanceStatus ] = useState("")
         setProducts(response.data.data.products || []);
       } catch (error) {
         console.error("Error fetching products:", error);
+           if(error && error.response === undefined){
+             alert("Check your internet Connection, then reload the page.")
+          } else if(error && error.response.status === 400){
+             alert("Service for etisalat is currently not available, Try again later.")
+          }else if(error && error.response.status === 500){
+             alert("Service for etisalat is currently not available, Try again later.")
+          }
       } finally {
+
         setLoadingProducts(false);
       }
     };
@@ -110,21 +133,36 @@ const [balanceStatus,setBalanceStatus ] = useState("")
       setProductPlans(response.data.data.plans || []);
     } catch (error) {
       console.error("Error fetching plans:", error);
+       if(error && error.response === undefined){
+             alert("Your internet connection is quite unstable.")
+        }else if(error && (error.response.status ===  401)){
+        alert("Session expired")
+      }else if(error && error.response.status ===  400){
+        setSelectProductWarn(true);
+      }else if(error && error.response.status ===  500){
+       setSelectProductWarn(true);
+      }else {
+        alert("Check your internet connection.")
+      }
     } finally {
       setLoadingPlans(false);
     }
   };
 
   const handleSelectProduct = (product) => {
-    setSelectedProduct(`${product.Plan_Type}`);
+    if(!navigator.onLine) return alert("Check your internet connection");
+    if(navigator.onLine){
+    setSelectedProductEtisalat(`${product.Plan_Type}`);
     setShowProductList(false);
     fetchPlans(product.Product_ID);
     setShowOptionList(true); // Show options after selecting a product
+    }
   };
 
   const handleSelectOption = (plan) => {
-    setSelectedOption(`${plan.Size} ~ ${plan.Validity} ~ ₦${plan.Amount}`);
-    setSelectedAmount(`₦${plan.Amount}`);
+    setSelectedOptionEtisalat(`${plan.Size} ~ ${plan.Validity} ~ ₦${plan.Amount}`);
+    setEtisalatReceiptInfo(plan.PlanType + " " + plan.Size)
+    setSelectedAmountEtisalat(`₦${plan.Amount}`);
     setSelectedPlan(plan);
     setShowOptionList(false);
     setShowProductList(false);
@@ -137,18 +175,20 @@ const [balanceStatus,setBalanceStatus ] = useState("")
 
   const handleShowPayment = () => {
     setShowPayment(!showPayment);
-    setWalletName("");
+    setWalletNameEtisalat("");
     setImage("");
     setPaymentAmount("");
     setPaymentSelected(false);
   };
 
-  const handleSelectPayment = (code, flag, amount) => {
-    setWalletName(code);
+  const handleSelectPayment = (code, flag, amount, id) => {
+    if(code === "NGN" && id ===1){
+    setWalletNameEtisalat(code);
     setImage(flag);
     setPaymentAmount(amount);
     setShowPayment(false);
     setPaymentSelected(true);
+    }
   };
 
   const countryList = [
@@ -157,7 +197,9 @@ const [balanceStatus,setBalanceStatus ] = useState("")
       name: "Nigeria",
       code: "NGN",
       flag: require("../DataBundles-Images/ng.svg").default,
-      amount: newBalance,
+      amount: newBalance === "" || newBalance === null ? updateBalance : newBalance,
+        status : "Active"
+    
     },
     {
       id: 2,
@@ -165,6 +207,8 @@ const [balanceStatus,setBalanceStatus ] = useState("")
       code: "USD",
       flag: require("../DataBundles-Images/us.svg").default,
       amount: 0,
+        status : "Inactive"
+    
     },
     {
       id: 3,
@@ -172,6 +216,8 @@ const [balanceStatus,setBalanceStatus ] = useState("")
       code: "GBP",
       flag: require("../DataBundles-Images/gb.svg").default,
       amount: 0,
+        status : "Inactive"
+    
     },
     {
       id: 4,
@@ -179,13 +225,16 @@ const [balanceStatus,setBalanceStatus ] = useState("")
       code: "EUR",
       flag: require("../DataBundles-Images/eu.svg").default,
       amount: 0,
+        status : "Inactive"
     },
+    
     {
       id: 5,
       name: "Australia",
       code: "AUD",
       flag: require("../DataBundles-Images/au.svg").default,
       amount: 0,
+      status : "Inactive"
     },
     {
       id: 6,
@@ -193,33 +242,60 @@ const [balanceStatus,setBalanceStatus ] = useState("")
       code: "KSH",
       flag: require("../DataBundles-Images/ke.svg").default,
       amount: 0,
+      status : "Inactive"
     },
   ];
 
- const Payment = ({ code, flag, amount, onClick }) => {
-     return (
-       <div className={`py-[10px]  border-[0.5px] border-y-gray-200 flex items-center
-        gap-[10px] pl-[7px] text-black`} onClick={onClick}>
-         <div className={` ${airtimestyles.netImage}`}>
-           <img src={flag} alt="" className={airtimestyles.NoImage} />
-         </div>
-         <h2 className={airtimestyles.netName}>{code}</h2>
-         <h2 className={airtimestyles.netName}>
-           Wallet({amount.toLocaleString()}.00)
-         </h2>
-       </div>
-     );
-   };
+  const Payment = ({ code, flag, amount, onClick, paymentMethod }) => {
+      return (
+        <div
+         className={`font-[500] flex px-2  gap-[10px] text-[#7C7C7C] text-[8px] leading-[10.4px]
+              lg:text-[16px] lg:leading-[20.8px] md:py-[20px] py-[15px] pl-[10px]
+             lg:pl-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] md:shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)] 
+              ${isDarkMode ?  "border-y-[0.5px] border-x-[0.6px] border-white" : "boder-none"} 
+             cursor-pointer ${paymentMethod  === "Inactive" && !isDarkMode  ? "bg-gray-300 cursor-not-allowed" : 
+              paymentMethod === "Inactive" && isDarkMode ? "bg-black" : paymentMethod === "Active" && !isDarkMode ? "bg-white" : "bg-black" } 
+             `} onClick={onClick}>
+          <div className={` ${airtimestyles.netImage}`}>
+            <img src={flag} alt="" className={airtimestyles.NoImage} />
+          </div>
+          <h2 className={`font-[500] text-[#7C7C7C] text-[8px] leading-[10.4px]
+              lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>{code}</h2>
+          <p className={`font-[500] text-[#7C7C7C] text-[8px] leading-[10.4px]
+              lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+            Wallet({amount.toLocaleString()})
+          </p>
+        </div>
+      );
+    };
  
+     useEffect(() => {
+         const GetBalance =   async()=> {
+             const SuccessHandler = ()=> {
+           //alert("Successful");
+      console.log("successfully retrieved balance");
+      //alert("Successful")
+        }
+       const FailedHandler = ()=> {
+         console.log(`Failed to retrieve balance`)
+       }
+       await GetFunction("balance", setLoading, SuccessHandler, FailedHandler,setPassDataBalance)
+         } 
+          // Simulate async data loading
+         
+          if(newBalance === "" || newBalance === null || newBalance === undefined){
+             GetBalance();
+             if(GetBalance){
+              setNewBalance(passDataBalance.data ? passDataBalance.data.data.data.balance : "");
+             }
+       
+          }
+         //eslint-disable-next-line
+        }, []);
+   
+       
 
-  const {
-    toggleSideBar,
-    inputPin,
-    setInputPin,
-    // inputPinHandler,
-    toggleVisibility,
-    isVisible,
-  } = useContext(ContextProvider);
+ 
 
   const handleConfirm = () => {
     setProceed(false);
@@ -240,7 +316,7 @@ const [balanceStatus,setBalanceStatus ] = useState("")
   // }
 
   const schema = Joi.object({
-    recipientPhoneNumber: Joi.string()
+    recipientPhoneNumberEtisalat: Joi.string()
       .pattern(new RegExp(/^\d{11,}/))
       .required()
       .messages({
@@ -277,7 +353,7 @@ const [balanceStatus,setBalanceStatus ] = useState("")
     if (numericValue.length === 11) {
       const error = validatePhoneNumber(numericValue);
       if (error) {
-        setErrors({ recipientPhoneNumber: error });
+        setErrors({ recipientPhoneNumberEtisalat: error });
       } else {
         setErrors({});
       }
@@ -297,7 +373,7 @@ const [balanceStatus,setBalanceStatus ] = useState("")
 
       for (let network in networks) {
         for (let prefix of networks[network]) {
-          if (inputValue.startsWith(prefix) && inputValue.length === prefix.length + 7) {
+          if (inputValue.startsWith(prefix) && inputValue.length === prefix.length + 7){
             return network;
           }
         }
@@ -307,7 +383,7 @@ const [balanceStatus,setBalanceStatus ] = useState("")
     }
 
     const { error } = schema.validate({
-      recipientPhoneNumber,
+      recipientPhoneNumberEtisalat,
     });
 
     if (error) {
@@ -317,7 +393,7 @@ const [balanceStatus,setBalanceStatus ] = useState("")
           return acc;
         }, {})
       );
-    } else if (validateNigerianNumberByNetwork(recipientPhoneNumber) !== '9MOBILE') {
+    } else if (validateNigerianNumberByNetwork(recipientPhoneNumberEtisalat) !== '9MOBILE') {
       setErrors({
         recipientPhoneNumber:
           `Invalid 9MOBILE number. Please enter a valid 9MOBILE number.`,
@@ -331,7 +407,7 @@ const [balanceStatus,setBalanceStatus ] = useState("")
   };
 
   const handleRecipientNameChange = (e) => {
-    setRecipientNames(e.target.value);
+    setRecipientNamesEtisalat(e.target.value);
   };
 
   const handleReceipt = () => {
@@ -364,12 +440,9 @@ const [balanceStatus,setBalanceStatus ] = useState("")
         plan: planID,
         name,
       };
-
-      setLoading(true)
-
-
-      console.log(data)
-      console.log("its me")
+   setLoading(true);
+     console.log(data);
+      console.log("its me");
 
       try {
         const response = await axiosInstance.post(path, data);
@@ -385,18 +458,6 @@ const [balanceStatus,setBalanceStatus ] = useState("")
         setInputValue(resData.Phone_Number);
         console.log(resData.Phone_Number);
 
-        // setRecipientPhoneNumber(data.Phone_number); // Still from your original request
-        // console.log(data.Phone_number);
-
-        // console.log(inputValue); // Note: this may still show the old state value here
-        // console.log(recipientPhoneNumber);
-
-        // setRecipientNames(resData.Name);
-        // console.log(resData.Name);
-
-        // setSelectedAmount(resData.plan_amount);
-        // console.log(resData.plan_amount);
-
         setEtisalatTransactionID(resData.transaction_id);
         console.log(resData.transaction_id);
 
@@ -408,41 +469,46 @@ const [balanceStatus,setBalanceStatus ] = useState("")
 
         setEtisalatDescription(`${resData.network} - ${resData.plan_name}`); // Fabricated description
 
-        return { statusCode: response.status, data: response.data };
+       
+         if (response.statusCode === 200) {
+      // Success response
+      setTransactSuccessPopUp(true); // Show success popup
+      setConfirm(false);
+      setInputPin("")
+    } 
         // console.log(response.data);
       } catch (error) {
         console.error(error);
+          setEtisalatPurchaseStatus(true); // Show failure popup
+      setConfirm(false);
+      setInputPin("");
         return { statusCode: error.response.status, data: null };
+      }finally{
+        setLoading(false);
       }
     }
 
     // usage
-    const response = await buyData(
+  await buyData(
       3, // Network ID for MTN
       inputValue, // Use inputValue instead of recipientPhoneNumber
       selectedPlan.PlanID,
-      recipientNames
+      recipientNamesEtisalat
     );
-
-    console.log(response)
-    console.log("its me 1")
-
-    setLoading(false)
-
-
-
-    setConfirm(false);
-    if (response.statusCode === 200) {
-      // Success response
-      setTransactSuccessPopUp(true); // Show success popup
-      setConfirm(false);
-    } else {
-      // Failure response
-      setEtisalatPurchaseStatus(true); // Show failure popup
-      setConfirm(false);
-    }
-
+// The Done handler for the done Changing the 
   };
+
+  const DoneChangeHandler = () => {
+    setSelectedProductEtisalat("");
+    setSelectedOptionEtisalat(false);
+    setSelectedAmountEtisalat("");
+    setRecipientNamesEtisalat("");
+    setWalletNameEtisalat("");
+    setRecipientPhoneNumberEtisalat("");
+    setEtisalatPurchaseStatus(null);
+    setRecipientPhoneNumberEtisalat("");
+    setInputValue("");
+ };
 
   return (
     <DashBoardLayout>
@@ -593,17 +659,26 @@ const [balanceStatus,setBalanceStatus ] = useState("")
                 <h2 className="text-[12px] my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
                   Data balance / share ussd codes.
                 </h2>
-                <h2 className="text-[12px] px-[2%] my-[5%] text-blue-600 text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
+                <h2 className="text-[12px] px-[2%] my-[5%] text-blue-600 text-center 
+                md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
                   Tap the network Dial button to check data balance:
                 </h2>
                 <div className="flex flex-col gap-1 mb-5">
                   <button
-                    className={`bg-[#FAF8F8] mt-[0%] mb-[2%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:mt-[0%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:mt-[0%] xl:mb-[1%]`}
+                    className={`bg-[#FAF8F8] mt-[0%] mb-[2%] w-[88%] flex justify-center 
+                      items-center mx-auto cursor-pointer text-[14px] font-semibold
+                       h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] 
+                       md:mt-[0%] md:rounded-[8px] md:text-[16px] lg:text-[16px]
+                        lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:mt-[0%] xl:mb-[1%]`}
                   >
                     9MOBILE Data Balance Code - *323#
                   </button>
                   <button
-                    className={`bg-[#FAF8F8] my-[2%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-semibold h-[44px] shadow-md text-black rounded-[6px] md:w-[55%] md:rounded-[8px] md:text-[16px] lg:text-[16px] lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:mt-[1%]`}
+                    className={`bg-[#FAF8F8] my-[2%] w-[88%] flex justify-center items-center mx-auto 
+                      cursor-pointer text-[14px] font-semibold h-[44px]
+                       shadow-md text-black rounded-[6px] md:w-[55%] 
+                       md:rounded-[8px] md:text-[16px] lg:text-[16px] 
+                       lg:w-[410px] lg:h-[51px] lg:my-[2%] xl:mt-[1%]`}
                   >
                     9MOBILE Data Share Code - *321#
                   </button>
@@ -623,18 +698,22 @@ const [balanceStatus,setBalanceStatus ] = useState("")
           {/* =========================PRODUCTS============================== */}
 
           <div className="grid grid-cols-1 mt-[25px] md:grid-cols-2 gap-y-[20px] md:gap-x-[58.68px] lg:gap-x-[100px] md:gap-y-[15px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[20px]">
-            <div className="relative">
-              <h2 className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[14px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${isDarkMode
+            <div className="flex flex-col lg:gap-[12px] gap-[7px]">
+              <h2 className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[14px]
+               md:text-[12px] md:font-[600] font-[400] leading-[12px] ${isDarkMode
                 ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
                 }`}>
                 Select Product
               </h2>
               <div
-                className={`mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between
-                         ${isDarkMode
-                    ? "bg-black text-white border !border-white"
-                    : "border border-[#0003]"
-                  }
+                className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.8px]
+                 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+                   leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+                lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
+                  isDarkMode 
+                    ? "bg-black text-white border border-white" 
+                    : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
+                }
   `}
                 onClick={() => {
                   setShowOptionList(false);
@@ -642,21 +721,28 @@ const [balanceStatus,setBalanceStatus ] = useState("")
                 }}
               >
                 <h2 className="text-[12px] font-[400] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                  {selectedProduct}
+                  {selectedProductEtisalat}
                 </h2>
                 <button className="lg:w-6 lg:h-6 w-[11px] h-[12px]">
                   <img src={arrowDown} alt="" className="w-full h-full" />
                 </button>
               </div>
+              <div className ="relative">
               {showProductList && (
-                <div className="border md:rounded-[10px] text-[10px] md:text-[12px] lg:text-[16px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[10]">
+                <div className={`border md:rounded-[10px] text-[10px] md:text-[12px]
+                 lg:text-[16px] lg:mt-2 rounded-[4px] absolute w-full ${products.length > 1 ? "h-[300px] overflow-y-scroll " : "h-[0px]"}
+                  bg-[#FFF] z-[10] `}>
                   {loadingProducts ? (
                     <div>Loading products...</div>
                   ) : (
                     products.map((product) => (
                       <div
                         key={product.Product_ID}
-                        className={`pb-[15px] md:pb-[6px] pt-[15px] md:pt-[6px] font-weight-bold text-[13px] cursor-pointer border-b-[0.5px] text-[#7C7C7C] md:text-[12px] lg:text-[16px]  md:rounded-[0px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${selectedProduct === product.Plan_Type ? "" : ""}
+                        className={`pb-[15px] md:pb-[6px] pt-[15px] md:pt-[6px] 
+                          font-weight-bold text-[13px] cursor-pointer border-b-[0.5px]
+                           text-[#7C7C7C] md:text-[12px] lg:text-[16px]  md:rounded-[0px]
+                            lg:mt-2 py-[4px]  pl-[5px]  
+                            ${selectedProductEtisalat === product.Plan_Type ? "" : ""}
                           ${isDarkMode
                             ? "bg-black text-white "
                             : ""
@@ -665,6 +751,13 @@ const [balanceStatus,setBalanceStatus ] = useState("")
                         onClick={() => {
                           handleSelectProduct(product);
                           setShowOptionList(false);
+                          setSelectPlanWarn(false);
+                          if(product.plan === null){
+                           setShowOptionList(false);
+                           setSelectProductWarn(true)
+                          }else {
+                            setSelectProductWarn(false)
+                          }
                         }}
                       >
                         {`${product.Plan_Type}`}
@@ -673,33 +766,55 @@ const [balanceStatus,setBalanceStatus ] = useState("")
                   )}
                 </div>
               )}
+              {selectProductWarn && (
+            <p className="absolute text-red-500 p-[10px] bg-white  
+                    text-left font-[500] text-[14px] border-[1px]  border-gray-300 
+                     rounded-[10px] lg:rounded-[20px]
+            leading-[18px] lg:text-[16px] lg:leading-[22px]">
+         Plans unavailable,kindly select another etisalat product.
+            </p>
+              )}
+            </div>
             </div>
 
-            <div className="relative">
+
+            <div className="flex flex-col lg:gap-[12px] gap-[7px]">
               <h2 className={`lg:text-[18px] md:text-[14px] lg:leading-[24px] mb-1 text-[12px] md:font-[600] font-[400] leading-[12px] ${isDarkMode
-                ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                ? "!text-[#7E7E7E]" : "!text-black"
                 }`}>
                 Select Plan
               </h2>
               <div
-                className={`mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between
-                         ${isDarkMode
-                    ? "bg-black text-white border !border-white"
-                    : "border border-[#0003]"
-                  }
+                className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.8px]
+                 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+                   leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+                lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
+                  isDarkMode 
+                    ? "bg-black text-white border border-white" 
+                    : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
+                }
   `}
-                onClick={() => setShowOptionList(!showOptionList)}
+                onClick={() =>{
+                  if(selectedProductEtisalat.length > 1){
+                   setShowOptionList(!showOptionList);
+                   setSelectPlanWarn(false)
+                }else {
+                  setSelectPlanWarn(true)
+                }
+              }
+                  }
               >
                 <h2 className="text-[12px] font-[400] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                  {selectedOption}
+                  {selectedOptionEtisalat}
                 </h2>
                 <button className="lg:w-6 lg:h-6 w-[11px] h-[12px]">
                   <img src={arrowDown} alt="" className="w-full h-full" />
                 </button>
               </div>
-
+          <div className="relative">
               {showOptionList && (
-                <div className={`border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[100]
+                <div className={`border md:rounded-[10px] lg:mt-2 ${productPlans.length > 1 ? "h-[300px] overflow-y-scoll" : "h-[0px]"}
+                  rounded-[4px] absolute w-full bg-[#FFF] z-[100]
                   ${isDarkMode
                     ? "bg-black text-white border !border-white"
                     : "border border-[#0003]"
@@ -711,7 +826,11 @@ const [balanceStatus,setBalanceStatus ] = useState("")
                     productPlans.map((plan) => (
                       <div
                         key={plan.PlanID}
-                        className={`pb-[18px] md:pb-[6px] pt-[18px] md:pt-[6px] font-weight-bold text-[13px] cursor-pointer border-b-[0.5px] md:rounded-[0px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${selectedOption === plan.PlanID ? "bg-gray-200" : ""
+                        className={`pb-[18px] md:pb-[6px] pt-[18px] md:pt-[6px] 
+                          font-weight-bold text-[13px] cursor-pointer border-b-[0.5px] 
+                          md:rounded-[0px] text-[#7C7C7C] md:text-[12px]
+                           lg:text-[16px] lg:mt-2 py-[4px]  pl-[5px]
+                            ${selectedOptionEtisalat === plan.PlanID ? "bg-gray-200" : ""
                           }
                                                  ${isDarkMode
                             ? "bg-black text-white "
@@ -720,15 +839,21 @@ const [balanceStatus,setBalanceStatus ] = useState("")
                                               `}
                         onClick={() => handleSelectOption(plan)}
                       >
-                        {`${plan.PlanType} (${plan.Size} ~ ${plan.Validity} ~ ₦${plan.Amount})`}
+                          {`${plan.PlanType} ${plan.Size} (₦${plan.Amount}) ~ ${plan.Validity ? plan.Validity.toUpperCase() : ""}`} 
                       </div>
                     ))
                   )}
                 </div>
               )}
+              {selectPlanWarn && (
+                <p className="absolute text-[14px] leading-[18px] text-red-500
+                 text-left font-[500] lg:text-[16px] lg:leading-[22px]">
+        Select product
+         </p>
+              )}
             </div>
-
-            <div className="">
+      </div>
+            <div className="flex flex-col lg:gap-[12px] gap-[7px]">
               <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${isDarkMode
                 ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
                 }`}>
@@ -742,18 +867,21 @@ const [balanceStatus,setBalanceStatus ] = useState("")
               <div className="relative mt-[5px]">
                 <input
                   type="number"
-                  className={`mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md lg:text-[16px] font-[400] focus:outline-none lg:h-[51px]
-                           ${isDarkMode
-                      ? "bg-black text-white border !border-white"
-                      : "border border-[#0003]"
-                    }
+                  className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.8px]
+                 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+                   leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+                lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
+                  isDarkMode 
+                    ? "bg-black text-white border border-white" 
+                    : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
+                }
   `}
 
-                  placeholder=""
+                  placeholder="11 digits phone number"
                   value={inputValue}
                   onChange={(event) => {
                     handleChange(event);
-                    setRecipientPhoneNumber(event.target.value);
+                    setRecipientPhoneNumberEtisalat(event.target.value);
                   }}
                 />
                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
@@ -765,14 +893,14 @@ const [balanceStatus,setBalanceStatus ] = useState("")
                 </div>
               </div>
 
-              {errors.recipientPhoneNumber && (
+              {errors.recipientPhoneNumberEtisalat && (
                 <div className="text-[14px] text-red-500 italic lg:text-[14px]">
-                  {errors.recipientPhoneNumber}
+                  {errors.recipientPhoneNumberEtisalat}
                 </div>
               )}
             </div>
 
-            <div className="">
+            <div className="flex flex-col lg:gap-[12px] gap-[7px]">
               <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${isDarkMode
                 ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
                 }`}>
@@ -781,14 +909,17 @@ const [balanceStatus,setBalanceStatus ] = useState("")
               <div className="relative mt-[5px]">
                 <input
                   type="text"
-                  className={`mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] font-[400] focus:outline-none lg:h-[51px] lg:text-[16px]
-                           ${isDarkMode
-                      ? "bg-black text-white border !border-white"
-                      : "border border-[#0003]"
-                    }
+                  className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.8px]
+                 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+                   leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+                lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
+                  isDarkMode 
+                    ? "bg-black text-white border border-white" 
+                    : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
+                }
   `}
                   placeholder=""
-                  value={recipientNames}
+                  value={recipientNamesEtisalat}
                   onChange={handleRecipientNameChange}
                 />
                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
@@ -801,7 +932,7 @@ const [balanceStatus,setBalanceStatus ] = useState("")
               </div>
             </div>
 
-            <div className="">
+            <div className="flex flex-col gap-[7px] lg:gap-[12px]">
               <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${isDarkMode
                 ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
                 }`}>
@@ -810,14 +941,17 @@ const [balanceStatus,setBalanceStatus ] = useState("")
               <div className="relative mt-[5px]">
                 <input
                   type="text"
-                  className={`mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] font-[400] focus:outline-none lg:h-[51px] lg:text-[16px]
-                           ${isDarkMode
-                      ? "bg-black text-white border !border-white"
-                      : "border border-[#0003]"
-                    }
+                  className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.8px]
+                 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+                   leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+                lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
+                  isDarkMode 
+                    ? "bg-black text-white border border-white" 
+                    : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
+                }
   `}
                   // placeholder="&#8358;100"
-                  value={`${selectedAmount}`}
+                  value={`${selectedAmountEtisalat}`}
                   onChange={(event) => {
                     // handleChanges(event);
                     // handleSelectOption({};
@@ -837,11 +971,14 @@ const [balanceStatus,setBalanceStatus ] = useState("")
                   }`}>
                   Payment Method
                 </h2>
-                <div className={`mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input flex justify-between items-center border w-full h-8 px-2 rounded-md text-[10px] font-[400] focus:outline-none lg:h-[51px] lg:text-[16px]
-                          ${isDarkMode
-                    ? "bg-black text-white border !border-white"
-                    : "border border-[#0003]"
-                  }
+                <div className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.8px]
+                 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+                   leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+                lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
+                  isDarkMode 
+                    ? "bg-black text-white border border-white" 
+                    : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
+                }
   `}
                 >
                   {paymentSelected ? (
@@ -849,9 +986,9 @@ const [balanceStatus,setBalanceStatus ] = useState("")
                       onClick={handleShowPayment}
                       className={airtimestyles.labelInput}
                     >
-                      <h2 className="text-[#7C7C7C]">{walletName}</h2>
+                      <h2 className="text-[#7C7C7C]">{walletNameEtisalat}</h2>
                       <h2 className="text-[#7C7C7C]">
-                        Wallet ({paymentAmount.toLocaleString()}.00)
+                        Wallet ({paymentAmount.toLocaleString()})
                       </h2>
                     </li>
                   ) : (
@@ -883,16 +1020,14 @@ const [balanceStatus,setBalanceStatus ] = useState("")
                   )}
                 </div>
               </div>
-              {showPayment && (
+            <div className="relative">
+                          {showPayment && (
                 <div
-                  className={`pb-[13px] md:pb-[6px] pt-[13px] md:pt-[6px] font-weight-bold text-[13px] border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute ${isDarkMode
+                  className={`pb-[13px] w-full md:pb-[6px] pt-[13px] md:pt-[6px] font-weight-bold text-[13px] border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute ${isDarkMode
                     ? "bg-black text-white border !border-white"
                     : "border border-[#0003]"
                     }
-                 ${toggleSideBar
-                      ? "w-full md:w-[44.5%] lg:w-[45%] 2xl:w-[46%]"
-                      : "w-full md:w-[46%] 2xl:w-[46.5%]"
-                    } bg-[#FFF] z-[100]`}
+                bg-[#FFF] z-[100]`}
                 >
                   {countryList.map((country) => (
                     <Payment
@@ -904,13 +1039,16 @@ const [balanceStatus,setBalanceStatus ] = useState("")
                         handleSelectPayment(
                           country.code,
                           country.flag,
-                          country.amount
+                          country.amount,
+                          country.id
                         )
                       }
+                      paymentMethod ={country.status}
                     />
                   ))}
                 </div>
               )}
+            </div>
             </div>
           </div>
 
@@ -932,11 +1070,7 @@ const [balanceStatus,setBalanceStatus ] = useState("")
 
           {/* ================Proceed=================== */}
 
-          {loading && (
-            <Modal>
-          <Loader />
-            </Modal>
-          )}
+        
 
           {proceed && (
             <Modal>
@@ -959,8 +1093,8 @@ const [balanceStatus,setBalanceStatus ] = useState("")
                   </h2>
                   <h2 className="lg:text-[16px] md:text-[12px] md:px-[30px] lg:leading-[24px] text-[10px] leading-[12px] text-center mt-[26px] mx-[10px] mb-[20px]">
                     You are about to purchase{" "}
-                    <span className="font-[400]">{selectedOption}</span> from
-                    your {walletName + " Wallet"} to
+                    <span className="font-[400]">{selectedProductEtisalat + " " + selectedOptionEtisalat}</span> from
+                    your {walletNameEtisalat + " Wallet"} to
                   </h2>
 
                   <div className="flex flex-col gap-[15px] px-[20px] mt-[50px] md:gap-[25px]">
@@ -988,7 +1122,7 @@ const [balanceStatus,setBalanceStatus ] = useState("")
                       </h2>
                       <div className="flex gap-1">
                         <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          {selectedProduct}
+                          {selectedProductEtisalat}
                         </h2>
                       </div>
                     </div>
@@ -999,7 +1133,7 @@ const [balanceStatus,setBalanceStatus ] = useState("")
                       </h2>
                       <div className="flex gap-1">
                         <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          {selectedOption}
+                          {selectedProductEtisalat + " " + selectedOptionEtisalat}
                         </h2>
                       </div>
                     </div>
@@ -1021,7 +1155,7 @@ const [balanceStatus,setBalanceStatus ] = useState("")
                       </h2>
                       <div className="flex gap-1">
                         <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          {recipientNames}
+                          {recipientNamesEtisalat}
                         </h2>
                       </div>
                     </div>
@@ -1032,7 +1166,7 @@ const [balanceStatus,setBalanceStatus ] = useState("")
                       </h2>
                       <div className="flex gap-1">
                         <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          {walletName + " Wallet"}
+                          {walletNameEtisalat + " Wallet"}
                         </h2>
                       </div>
                     </div>
@@ -1043,7 +1177,7 @@ const [balanceStatus,setBalanceStatus ] = useState("")
                       </h2>
                       <div className="flex gap-1">
                         <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          {selectedAmount}
+                          {selectedAmountEtisalat}
                         </h2>
                       </div>
                     </div>
@@ -1072,8 +1206,8 @@ const [balanceStatus,setBalanceStatus ] = useState("")
                                                              <p className="text-[12px] md:text-[14px] leading-[20px] lg:leading-[22px]  lg:text-[16px] font-[500]">
                                                          Available Balance {"  "} 
                                                           </p>
-                                                          <span className="text-[#0003]">
-                                                           {`(${newBalance})`}
+                                                          <span className="text-black">
+                                                           {`(${newBalance === "" || newBalance === null ? updateBalance : newBalance })`}
                                                          </span>
                                                          </div>
                                                        </div>
@@ -1092,7 +1226,7 @@ const [balanceStatus,setBalanceStatus ] = useState("")
 
                     <div className="flex items-center justify-center">
                       <button disabled ={CheckSufficiency}
-                        className={`w-full md:w-fit bg-primary text-white rounded-md px-[28px] text-[10px] md:text-[12px]
+                        className={`w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:text-[12px]
                            leading-[15px] lg:text-[16px] lg:leading-[24px] py-[15px] md:py-[10px]
                             ${CheckSufficiency ? "bg-gray-400"   : "bg-primary" } `}
                         onClick={() => {
@@ -1203,18 +1337,13 @@ const [balanceStatus,setBalanceStatus ] = useState("")
             <Modal>
               <div
                 className={` ${toggleSideBar ? "confirm02" : "confirm2"
-                  } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
+                  } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px] my-[20px]
+                  h-[200px] overflow-y-scroll md:overflow-y-auto md:h-auto`}
               >
-                <div className="flex justify-end px-2">
-                  <img
-                    onClick={() => setEtisalatPurchaseStatus(null)}
-                    className="cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[35px] lg:h-[35px] "
-                    src={Cancel}
-                    alt=""
-                  />
-                </div>
+               
 
-                <hr className="h-[6px] bg-[#04177f] lg:mt-[2%] border-none mt-[2%] md:mt-[2%] md:h-[10px]" />
+                <hr className="h-[8px] bg-[#04177f] lg:mt-[30px] border-none  
+                md:mt-[2%] mt-[30px] md:h-[10px]"/>
                 <div className="md:mt-[15%] lg:mt-[10%]">
                   <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[8%] md:my-[5%] lg:my-[3%]">
                     Transaction Failed
@@ -1229,10 +1358,8 @@ const [balanceStatus,setBalanceStatus ] = useState("")
 
                 <div className="flex justify-center items-center gap-[20px]">
                   <button
-                    onClick={(e) => {
-                      // e.preventDefault();
-                      // setTransaction(false);
-                      setEtisalatPurchaseStatus(null);
+                    onClick={() => {
+                      DoneChangeHandler()
                     }}
                     className="bg-[#04177f] my-[%] w-[100px] cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[%] md:rounded-[8px] md:text-[16px] lg:w-[px] lg:h-[38px] lg:my-[2%]"
                   >
@@ -1242,16 +1369,17 @@ const [balanceStatus,setBalanceStatus ] = useState("")
                   <Link to="/EtisalatFailedReceipt"
                     state={{
                       networkName: "9MOBILE",
-                      selectedProduct: selectedProduct,
-                      selectedOption: selectedOption,
-                      recipientPhoneNumber: recipientPhoneNumber,
+                      selectedProduct: selectedProductEtisalat,
+                      selectedOption: selectedOptionEtisalat,
+                      recipientPhoneNumber: recipientPhoneNumberEtisalat,
                       inputValue: inputValue,
-                      recipientNames: recipientNames,
-                      selectedAmount: selectedAmount,
+                      recipientNames: recipientNamesEtisalat,
+                      selectedAmount: selectedAmountEtisalat,
                       etisalattransactionID: etisalattransactionID,
                       etisalatrefNumber: etisalatrefNumber,
                       etisalatorderID: etisalatorderID,
                       etisalatdescription: etisalatdescription,
+                      etisalatReceiptInfo : etisalatReceiptInfo
 
                     }}
 
@@ -1261,7 +1389,10 @@ const [balanceStatus,setBalanceStatus ] = useState("")
                         // e.preventDefault();
                         setEtisalatPurchaseStatus(false);
                       }}
-                      className="bg-white my-[%] w-[100px] cursor-pointer text-[10px] font-extrabold h-[px] rounded-[6px] md:w-[%] md:rounded-[8px] md:text-[16px] lg:w-[px] lg:h-[38px] lg:my-[2%]"
+                      className="bg-white my-[%] w-[100px] cursor-pointer 
+                      text-[10px] font-extrabold h-[px] rounded-[6px] 
+                      md:w-[%] md:rounded-[8px] md:text-[16px] lg:w-[px] 
+                      lg:h-[38px] lg:my-[2%]"
                     >
                       Receipt
                     </button>
@@ -1313,9 +1444,9 @@ const [balanceStatus,setBalanceStatus ] = useState("")
                   <p className="text-[8px] text-[#0008] text-center mb-2 md:text-[14px] lg:text-[12px]">
                     You have successfully purchased{" "}
                     <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
-                      {selectedOption}{" "}
+                      {selectedProductEtisalat + " " + selectedOptionEtisalat}{" "}
                     </span>
-                    from your{walletName + " Wallet"} to{" "}
+                    from your{walletNameEtisalat + "Wallet"} to{" "}
                   </p>
 
                   <div className="flex items-center justify-between">
@@ -1342,7 +1473,7 @@ const [balanceStatus,setBalanceStatus ] = useState("")
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        {selectedProduct}
+                        {selectedProductEtisalat}
                       </h2>
                     </div>
                   </div>
@@ -1353,7 +1484,7 @@ const [balanceStatus,setBalanceStatus ] = useState("")
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        {selectedOption}
+                        {selectedProductEtisalat + " " + selectedOptionEtisalat}
                       </h2>
                     </div>
                   </div>
@@ -1375,7 +1506,7 @@ const [balanceStatus,setBalanceStatus ] = useState("")
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        {recipientNames}
+                        {recipientNamesEtisalat}
                       </h2>
                     </div>
                   </div>
@@ -1386,7 +1517,7 @@ const [balanceStatus,setBalanceStatus ] = useState("")
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        {selectedAmount}
+                        {selectedAmountEtisalat}
                       </h2>
                     </div>
                   </div>
@@ -1397,7 +1528,7 @@ const [balanceStatus,setBalanceStatus ] = useState("")
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        {walletName + " Wallet"}
+                        {walletNameEtisalat + " Wallet"}
                       </h2>
                     </div>
                   </div>
@@ -1438,16 +1569,17 @@ const [balanceStatus,setBalanceStatus ] = useState("")
                   <Link to="/EtisalatReceipt"
                     state={{
                       networkName: "9MOBILE",
-                      selectedProduct: selectedProduct,
-                      selectedOption: selectedOption,
-                      recipientPhoneNumber: recipientPhoneNumber,
+                      selectedProduct: selectedProductEtisalat,
+                      selectedOption: selectedOptionEtisalat,
+                      recipientPhoneNumber: recipientPhoneNumberEtisalat,
                       inputValue: inputValue,
-                      recipientNames: recipientNames,
-                      selectedAmount: selectedAmount,
+                      recipientNames: recipientNamesEtisalat,
+                      selectedAmount: selectedAmountEtisalat,
                       etisalattransactionID: etisalattransactionID,
                       etisalatrefNumber: etisalatrefNumber,
                       etisalatorderID: etisalatorderID,
                       etisalatdescription: etisalatdescription,
+                      etisaltReceiptInfo : etisalatReceiptInfo
 
                     }}
                   >
@@ -1463,52 +1595,28 @@ const [balanceStatus,setBalanceStatus ] = useState("")
             </Modal>
           )}
 
-          {proceedToShowReceipt && (
-            <EtisalatReceipt
-              networkName='9MOBILE'
-              selectedProduct={selectedProduct}
-              recipientPhoneNumber={recipientPhoneNumber}
-              inputValue={inputValue}
-              recipientNames={recipientNames}
-              selectedAmount={selectedAmount}
-              etisalattransactionID={etisalattransactionID}
-              etisalatrefNumber={etisalatrefNumber}
-              etisalatorderID={etisalatorderID}
-              etisalatdescription={etisalatdescription}
-            />
-          )}
-
-          {proceedToShowReceipt && (
-            <EtisalatFailedReceipt
-              networkName='9MOBILE'
-              selectedProduct={selectedProduct}
-              recipientPhoneNumber={recipientPhoneNumber}
-              inputValue={inputValue}
-              recipientNames={recipientNames}
-              selectedAmount={selectedAmount}
-              etisalattransactionID={etisalattransactionID}
-              etisalatrefNumber={etisalatrefNumber}
-              etisalatorderID={etisalatorderID}
-              etisalatdescription={etisalatdescription}
-            />
-          )}
+         
 
           <div className="py-[30px] lg:py-[60px] mt-10">
             <button
-              className={`w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[400] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px] ${!selectedProduct ||
-                !selectedOption ||
+              className={`w-full md:w-fit text-white rounded-md px-[28px] 
+                text-[10px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[400] 
+                leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px]
+                 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px]
+                  py-[15px] ${!selectedProductEtisalat ||
+                !selectedOptionEtisalat ||
                 !inputValue ||
-                !selectedAmount ||
+                !selectedAmountEtisalat ||
                 !paymentSelected
                 ? "bg-[#63616188] cursor-not-allowed"
                 : "bg-primary"
                 }`}
               onClick={handleProceed}
               disabled={
-                !selectedProduct ||
-                !selectedOption ||
+                !selectedProductEtisalat ||
+                !selectedOptionEtisalat ||
                 !inputValue ||
-                !selectedAmount ||
+                !selectedAmountEtisalat ||
                 !paymentSelected
               }
             >
@@ -1535,6 +1643,11 @@ const [balanceStatus,setBalanceStatus ] = useState("")
           </Link>
         </div>
       </div>
+        {loading && (
+            <Modal>
+          <Loader />
+            </Modal>
+          )}
     </DashBoardLayout>
   );
 };

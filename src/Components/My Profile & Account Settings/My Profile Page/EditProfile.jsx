@@ -99,9 +99,9 @@ gap-2.5 lg:gap-[10px] cursor-default lg:mb-[26px] md:mb-[15.26px] mb-[20px]"
                     className={`py-[10.33px] pl-[5.867px] pr-1 md:py-[10] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none  ${
                       isDarkMode
                         ? "bg-transparent text-slate-50 border-slate-50"
-                        : "text-[#9C9C9C]"
+                        : "text-black"
                     }`}
-                    value ={email ? email : Data.userEmail}
+                    value ={email ? email : Data.UserEmail}
                   />
                   <Link
                     to="/ChangeEmail"

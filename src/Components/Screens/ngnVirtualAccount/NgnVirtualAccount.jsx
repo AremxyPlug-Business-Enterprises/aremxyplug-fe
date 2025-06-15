@@ -203,7 +203,7 @@ function NgnVirtualAccount(Data) {
           ) : (
         <div className="flex flex-col justify-between py-[15px] lg:py-[20px] gap-[30px]"> 
         <h2 className={`text-[14px] leading-[20px] font-[500] lg:text-[16px] lg:leading-[22px] text-start ${isDarkMode ? "text-white" : "text-black"}`}>
-       { (Data.ConfirmId === "true" || Data.ConfirmBvn === "true") && Data.ConfirmAcc === "false" ? "Brilliant, Now we know who you are, kindly generate a Ngn Virtual account" : "To Generate a virtual account, kindly verify your account in the profile settings page or your dashboard" }
+       { (Data.ConfirmId === "true" || Data.ConfirmBvn === "true") && Data.ConfirmAcc === "false" ? "Brilliant, Now we know who you are, kindly generate a Ngn Virtual account" : "To generate a virtual account, kindly verify your account in the profile settings page or your dashboard." }
        </h2>
        <div onClick={()=> {
         if((Data.ConfirmId === "true" || Data.ConfirmBvn === "true") && Data.ConfirmAcc === "false"){

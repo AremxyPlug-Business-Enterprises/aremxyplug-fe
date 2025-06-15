@@ -6,7 +6,7 @@ import { Modal } from "../../Screens/Modal/Modal";
 import arrowRight from "../../../Components/EducationPins/imagesEducation/educationArrowRight.svg";
 import styles from '../../AirTimePage/AirtimeVtu.module.css'
 
-const ConfirmShowmaxPopup = () => {
+const ConfirmShowmaxPopup = ({userVerifiedName}) => {
 
   const {
     confirmShowmaxPopup,
@@ -105,7 +105,7 @@ const ConfirmShowmaxPopup = () => {
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
                     <span className="text-[#0008]">Card Name</span>
-                    <span>{cardName}</span>
+                    <span>{userVerifiedName}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
                     <span className="text-[#0008]">Phone Number</span>

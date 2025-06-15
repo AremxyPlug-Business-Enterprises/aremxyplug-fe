@@ -94,6 +94,11 @@ function LoginForm() {
   }, []);
 
   useEffect(() => {
+    const ActiveSignUp = localStorage.getItem("ActiveSignUp");
+    const PhoneData = localStorage.getItem("userPhone");
+     if(ActiveSignUp === "true" && !PhoneData){
+   return localStorage.removeItem("ActiveSignUp")
+  }
     const handleResize = () => {
       const width = window.innerWidth;
       let newSize = "";
@@ -185,6 +190,7 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
           const loginData = { username: username, password: password};
           const config = {
             headers: { "Content-Type": "application/json" },
+            withCredentials : true
           };
           await axios
             .post(
@@ -199,7 +205,7 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
                 console.log(`${response.data.data}`);
                 const authToken = response.headers.get('Authorization');
                   const customer  =  response.data.data.customer;
-              
+            
                 if(authToken){
                 
                  localStorage.setItem("getToken", authToken);
@@ -210,6 +216,7 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
                    }
      } else if(response.status === 200){
                   setOpen2StepVerification(true);
+                    console.log(response.headers)
                   const customer  =  response.data.data.customer;
                   const authToken = response.headers.get('Authorization');
                   console.log(authToken)
@@ -224,16 +231,14 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
              }
             })
             .catch((error) => {
-              if(error.status === 500){
+              if(error && error.status === 500){
               console.error(error);
-              alert("A SERVER ERROR");
+              alert("Server error: try some other time");
               }else if (error.status === 404) {
                 alert("User not found");
               } else if ( error.status === 401 || 400) {
                 alert("Incorrect Password or Username");
-              }else if(error && error.status === 500){
-                alert("Server error: try some other time");
-          }else if(error && error.reponse.status === undefined){
+              }else if(error && error.response.status === undefined){
                 alert("Check your internet Connection");
           }else {
             alert("Check your internet connection")
@@ -251,7 +256,7 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
           }
     }
 
-    if (usernameORemail === "email" && navigator.onLine) {
+    if (usernameORemail === "email" && navigator.onLine && !ActiveSignUp) {
       try {
         const schema = Joi.object({
           email: Joi.string()
@@ -273,6 +278,7 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
           const loginData = { email: email, password: password };
           const config = {
             headers: { "Content-Type": "application/json" },
+            withCredentials : true
           };
           await axios
             .post(
