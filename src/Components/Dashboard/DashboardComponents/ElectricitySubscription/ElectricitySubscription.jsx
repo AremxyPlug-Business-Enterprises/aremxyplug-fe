@@ -34,8 +34,7 @@ const ElectricitySubscription = () => {
                 ELECTRICITY BILLS, PREPAID AND POSTPAID <br /> PAYMENTS.
               </div>
               <div className="text-[9px] font-normal leading-[12px] md:text-[10px] md:leading-[14.9px] lg:text-[20px] lg:leading-[26px] text-[#000000] ">
-                Recharge your metre and pay bills with our electricity bills{" "}
-                <br /> payment feature for both prepaid and postpaid metertypes.
+                Recharge your metre and pay bills with our electricity bills payment feature for both prepaid and postpaid metertypes.
               </div>
             </div>
             <div>

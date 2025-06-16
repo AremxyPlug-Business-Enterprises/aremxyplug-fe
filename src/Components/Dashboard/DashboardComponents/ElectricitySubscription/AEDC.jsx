@@ -47,10 +47,11 @@ const AEDC = () => {
     toggleVisibility,
     isVisible,
     setAedcBillGenerate,
-    aedcServiceID,
+    // aedcServiceID,
     setAedcServiceID,
     aedcFlag,
     setAedcFlag,
+    aedcDiscoType,
     setAedcDiscoType,
     selectedAedcMeterType,
     setSelectedAedcMeterType,
@@ -137,6 +138,69 @@ const AEDC = () => {
       flag: require("../ElectricitySubscription/Electricity-sub-images/kenyaFlag.png"),
     },
   ];
+
+  // validating the network numbers
+  function validateNigerianNumberByNetwork(number) {
+    const networks = [
+      {
+        name: "GLO",
+        values: ["0705", "0805", "0807", "0811", "0815", "0905", "0915"],
+      },
+      {
+        name: "AIRTEL",
+        values: [
+          "0701",
+          "0708",
+          "0802",
+          "0808",
+          "0812",
+          "0901",
+          "0902",
+          "0904",
+          "0907",
+          "0912",
+          "0911",
+        ],
+      },
+      {
+        name: "9MOBILE",
+        values: ["0809", "0817", "0818", "0909", "0908"],
+      },
+      {
+        name: "GLO",
+        values: ["0705", "0805", "0807", "0811", "0815", "0905", "0915"],
+      },
+      {
+        name: "MTN",
+        values: [
+          "0703",
+          "0704",
+          "0814",
+          "0706",
+          "0803",
+          "0806",
+          "0810",
+          "0813",
+          "0814",
+          "0816",
+          "0903",
+          "0906",
+          "0913",
+          "0916",
+        ],
+      },
+    ];
+
+    for (let network of networks) {
+      for (let prefix of network.values) {
+        if (number.startsWith(prefix) && number.length === 11) {
+          return network.name;
+        }
+      }
+    }
+
+    return "Unknown network";
+  }
   const [errors, setErrors] = useState({});
   const [proceed, setProceed] = useState(false);
   const [amountError, setAmountError] = useState("");
@@ -151,6 +215,7 @@ const AEDC = () => {
     });
 
     const amount = Number(aedcAmount);
+    const network = validateNigerianNumberByNetwork(aedcPhoneNumber);
     if (error) {
       setErrors(
         error.details.reduce((acc, curr) => {
@@ -160,6 +225,11 @@ const AEDC = () => {
       );
     } else if (amount < 1000) {
       setAmountError("Amount must be at least ₦1000");
+    } else if (network === "Unknown network") {
+      setErrors({
+        aedcPhoneNumber:
+          "Invalid phone number. Please enter a valid Nigerian network number.",
+      });
     } else {
       setProceed(true);
       setErrors({});
@@ -198,6 +268,7 @@ const AEDC = () => {
   // };
 
   const handleCountryClick = (name, flag, id, code) => {
+    if (id !== 1 && code !== "Nigerian NGN Wallet") return;
     setAedcFlag(flag);
     setShowList(false);
     setGlobalCountry(name);
@@ -207,14 +278,14 @@ const AEDC = () => {
     // setCountryCode(code);
     // setCurrencyAvailable(id !== 1);
   };
-  const handleVerifiedName = (event) => {
-    const newValue = event.target.value;
-    setAedcVerifiedName(newValue);
-  };
-  const handleMeterNumber = (event) => {
-    const newValue = event.target.value;
-    setAedcMeterNumber(newValue);
-  };
+  // const handleVerifiedName = (event) => {
+  //   const newValue = event.target.value;
+  //   setAedcVerifiedName(newValue);
+  // };
+  // const handleMeterNumber = (event) => {
+  //   const newValue = event.target.value;
+  //   setAedcMeterNumber(newValue);
+  // };
   const handlePhoneNumber = (event) => {
     const value = event.target.value;
     const newValue = value.replace(/\D/g, "").slice(0, 11);
@@ -240,10 +311,58 @@ const AEDC = () => {
   const [errorMessage, setErrorMessage] = useState(false);
   const [pinSuccess, setPinSuccess] = useState(false);
   const [pinFailed, setPinFailed] = useState(false);
+  const [isFailedMeterNumber, setIsFailedMeterNumber] = useState(false);
+
+  let passedMeterName;
+
+  const verifyMeterNumber = async (meterNumber) => {
+    async function HandleMeterNumber() {
+      const path = "bills/verify";
+      const body = {
+        disco_type: "abuja-electric",
+        meter_no: meterNumber,
+        meter_type: selectedAedcMeterType.toLowerCase(),
+      };
+      const SuccessHandler = () => {
+        setIsFailedMeterNumber(false);
+        function handleReceivedMeterData() {
+          if (aedcFetchedResponse.name) {
+            setAedcVerifiedName(aedcFetchedResponse.name);
+          } else {
+            setAedcVerifiedName("");
+          }
+        }
+        handleReceivedMeterData();
+      };
+      const FailedHandler = () => {
+        setIsFailedMeterNumber(true);
+      };
+
+      await PostFunction(
+        path,
+        setLoading,
+        body,
+        SuccessHandler,
+        FailedHandler,
+        setAedcFetchedResponse
+      );
+    }
+    HandleMeterNumber();
+    // handleReceivedMeterData();
+    passedMeterName = aedcFetchedResponse ? aedcFetchedResponse.name : "";
+  };
+
+  const handleVerifiedName =
+    aedcMeterNumber.length === 13 &&
+    isFailedMeterNumber === false &&
+    verifyMeterNumber &&
+    aedcVerifiedName === ""
+      ? passedMeterName
+      : aedcVerifiedName;
 
   const verifyPin = async () => {
     async function ElectricityHandler() {
-      const path = "electric-bill";
+      const path = "bills/electric-bill";
       const parsedAmount = parseInt(aedcAmount, 10);
       const data = {
         meter_type: selectedAedcMeterType,
@@ -340,77 +459,6 @@ const AEDC = () => {
   }, [CheckSufficiency]);
   console.log(balanceStringToNum, aedcAmountToNumber);
 
-  // const handleSuccess = async () => {
-  //   async function buyAEDC(meter_type, meter_no, phone, email, amount) {
-  //     // const url = 'https://aremxyplug.onrender.com/api/v1/electric-bill';
-
-  //     const parsedAmount = parseInt(amount, 10);
-
-  //     const data = {
-  //       meter_type,
-  //       meter_no,
-  //       phone, // Use the parsed integer value
-  //       email,
-  //       amount: parsedAmount, // Use the parsed integer value
-  //       disco_type: "abuja-electric",
-  //     };
-
-  //     // console.log(data);
-
-  //     try {
-  //       setLoading(true);
-  //       // const response = await axios.post(url, data);
-  //       const path = "/electric-bill";
-  //       const response = await axiosInstance.post(path, data);
-  //       console.log(response.data);
-  //       console.log(response.status);
-  //       setSelectedNetworkProduct(response.data.data.meter_type);
-  //       setMeterNumber(response.data.data.meter_number);
-  //       setPhoneNumber(response.data.data.phone);
-  //       setEmail(response.data.data.email);
-  //       setIkedcamount(response.data.data.amount);
-  //       setBillGenerate(response.data.data.bill_generated);
-  //       setOrderId(response.data.data.order_id);
-  //       setTransactionId(response.data.data.transaction_id);
-  //       setServiceID(response.data.data.disco_type);
-  //       setShowDescription(response.data.data.description);
-  //       return { statusCode: response.status, data: response.data };
-  //       // return { statusCode: response.data.status,  };
-  //     } catch (error) {
-  //       console.error("Full error object:", error); // Log the entire error for debugging
-
-  //       // Safely extract status and data
-  //       const statusCode = error.response?.status || 500; // Fallback to 500 if no status
-  //       const errorData = error.response?.data || null; // Fallback to null if no data
-
-  //       return {
-  //         statusCode,
-  //         data: errorData,
-  //       };
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   }
-
-  //   // Usage
-  //   const response = await buyAEDC(
-  //     selectedNetworkProduct,
-  //     meterNumber,
-  //     phoneNumber,
-  //     ikedcEmail,
-  //     ikedcamount
-  //   );
-
-  //   setInputPinPopUp(false);
-  //   if (response.statusCode === 200) {
-  //     // Success response
-  //     setSuccessPopup(true); // Show success popup
-  //   } else {
-  //     // Failure response
-  //     setFailedPopup(true); // Show failure popup
-  //   }
-  // };
-
   const [InputPinPopUp, setInputPinPopUp] = useState(false);
   const [inputPin, setInputPin] = useState("");
 
@@ -435,14 +483,14 @@ const AEDC = () => {
       >
         <div>
           {/* top part after nav bar */}
-          <div className="flex flex-row w-full pt-[10px]  h-[90px] md:h-[112.29px] lg:h-[196px] lg:px-[50px]  px-[16px] rounded-lg md:rounded-[11.5px] lg:rounded-[20px] justify-between  py-0 bg-gradient-to-r from-[#FFA733] via-[#58FF4A] to-[#98B0FF]">
+          <div className="flex flex-row w-full pt-[10px] min-h-[91px] md:h-[112.29px] lg:h-[196px] lg:px-[50px]  px-[16px] rounded-lg md:rounded-[11.5px] lg:rounded-[20px] justify-between  py-0 bg-gradient-to-r from-[#FFA733] via-[#58FF4A] to-[#98B0FF]">
             <div className="flex flex-col gap-2  ">
               <div className="text-[11px] font-semibold pt-[10px] md:text-[12px] md:leading-[20.63px] lg:pt-[25px] lg:text-[24px] lg:leading-[36px] text-[#000000] leading-[12px]">
                 ELECTRICITY BILLS, PREPAID AND POSTPAID <br /> PAYMENTS.
               </div>
               <div className="text-[9px] font-normal leading-[12px] md:text-[10px] md:leading-[14.9px] lg:text-[20px] lg:leading-[26px] text-[#000000]">
                 Recharge your metre and pay bills with our electricity bills
-                <br /> payment feature for both prepaid and postpaid metertypes.
+                payment feature for both prepaid and postpaid metertypes.
               </div>
             </div>
             <div>
@@ -454,19 +502,23 @@ const AEDC = () => {
             </div>
           </div>
           <div
-            className={`flex lg:mt-[20px] text-[10px] sm:text-[12px] lg:text-[16px] font-semibold pt-[30px] items-center ${
+            className={`flex lg:mt-[20px] text-[10px] sm:text-[12px] lg:text-[16px] font-semibold pt-[30px] items-center w-full ${
               isDarkMode ? "text-white" : "text-[#7E7E7E]"
             }`}
           >
-            <div>Recharge</div>
+            <div className="text-[9px] md:text-xs lg:text-[16px]">Recharge</div>
             <div>
               <img className="w-[35px] lg:w-[3.5rem] ml-1" src={logo} alt="" />
             </div>
-            <div className="ml-1 ">
+            <div className="ml-1 text-[9px] md:text-xs lg:text-[16px]">
               Abuja Electric Payment-AEDC Meter Instantly
             </div>
             <div className="ml-1">
-              <img className="w-4 sm:w-[18px] lg:w-[24px]" src={arrow} alt="" />
+              <img
+                className="w-3.5 sm:w-[18px] lg:w-[24px]"
+                src={arrow}
+                alt=""
+              />
             </div>
           </div>
           <div className="lg:flex lg:items-start ">
@@ -547,7 +599,7 @@ const AEDC = () => {
                   {productList.map((item) => (
                     <div
                       key={item.name}
-                      className={`pb-[18px] pt-[8px] md:py-[14px] font-bold cursor-pointer md:text-[12px] lg:text-[16px] w-full  md:rounded-[0px] lg:mt- text-[12px] pl-[5px] 
+                      className={`pb-[18px] pt-[8px] md:py-[14px] font-bold cursor-pointer md:text-[12px] lg:text-[16px] w-full md:rounded-[0px] text-[12px] pl-[5px] 
                         ${
                           isDarkMode
                             ? "bg-black text-white hover:bg-slate-800 hover:rounded-t-[10px]"
@@ -563,7 +615,7 @@ const AEDC = () => {
               )}
             </div>
 
-            <div className="flex flex-col sm:mt-[10px] md:mt-[23px] lg:mt-[23px] gap-2 lg:gap-2.5">
+            <div className="flex flex-col relative sm:mt-[10px] md:mt-[23px] lg:mt-[23px] gap-2 lg:gap-2.5">
               <div
                 className={`text-[14px] lg:text-[16px] md:font-semibold font-normal ${
                   isDarkMode ? "text-white" : "text-[#7E7E7E]"
@@ -573,9 +625,16 @@ const AEDC = () => {
               </div>
               <div>
                 <input
-                  type="number"
+                  type="text"
                   value={aedcMeterNumber}
-                  onChange={handleMeterNumber}
+                  maxLength={13}
+                  onChange={(e) => {
+                    const newValue = e.target.value;
+                    setAedcMeterNumber(newValue);
+                    if (newValue.length === 13 && !errors.aedcMeterNumber) {
+                      verifyMeterNumber(newValue);
+                    }
+                  }}
                   onClick={() => setShowProductList(false)}
                   // py-[10.33px] pl-[5.867px]
                   className={`py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full w-full  ${
@@ -586,8 +645,13 @@ const AEDC = () => {
                 />
               </div>
               {errors.aedcMeterNumber && (
-                <div className="text-[13px] text-red-500 italic lg:text-[14px]">
+                <div className="text-[13px] absolute left-0 -bottom-[1.3rem] text-red-500 italic lg:text-[14px]">
                   {errors.aedcMeterNumber}
+                </div>
+              )}
+              {!errors.aedcMeterNumber && isFailedMeterNumber && (
+                <div className="text-[14px] absolute left-0 -bottom-[1.3rem] text-red-500 italic lg:text-[14px]">
+                  Invalid meter number
                 </div>
               )}
             </div>
@@ -603,8 +667,9 @@ const AEDC = () => {
               <div>
                 <input
                   type="text"
-                  value={aedcVerifiedName}
-                  onChange={handleVerifiedName}
+                  value={handleVerifiedName}
+                  // value="Judith"
+                  readOnly
                   className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
                     isDarkMode
                       ? "text-white bg-black border border-white"
@@ -613,7 +678,7 @@ const AEDC = () => {
                 />
               </div>
             </div>
-            <div className="flex flex-col gap-2 lg:gap-2.5">
+            <div className="flex flex-col gap-2 relative lg:gap-2.5">
               <div
                 className={`text-[#7E7E7E] text-[14px] lg:text-[16px] md:font-semibold font-normal ${
                   isDarkMode ? "text-white" : ""
@@ -652,12 +717,12 @@ const AEDC = () => {
                 />
               </div>
               {errors.aedcPhoneNumber && (
-                <div className="text-[12px] text-red-500 italic lg:text-[14px]">
+                <div className="text-[12px] text-red-500 absolute left-0 -bottom-[1.5rem] leading-3 italic lg:text-[14px]">
                   {errors.aedcPhoneNumber}
                 </div>
               )}
             </div>
-            <div className="flex flex-col gap-2 lg:gap-2.5">
+            <div className="flex flex-col relative gap-2 lg:gap-2.5">
               <div
                 className={`text-[#7E7E7E] text-[14px] lg:text-[16px] md:font-semibold font-normal ${
                   isDarkMode ? "text-white" : ""
@@ -678,15 +743,15 @@ const AEDC = () => {
                 />
               </div>
               {errors.aedcEmail && (
-                <div className="text-[14px] text-red-500 italic lg:text-[14px]">
+                <div className="text-[14px] absolute left-0 -bottom-[1.3rem] text-red-500 italic lg:text-[14px]">
                   {errors.aedcEmail}
                 </div>
               )}
             </div>
-            <div className="flex flex-col gap-2 lg:gap-2.5">
+            <div className="flex flex-col gap-2 relative lg:gap-2.5">
               <div
-                className={`text-[#7E7E7E] text-[14px] lg:text-[16px] md:font-semibold font-normal ${
-                  isDarkMode ? "text-white" : ""
+                className={`flex items-center lg:text-[16px] text-[12px] md:font-semibold font-normal ${
+                  isDarkMode ? "text-white " : "text-[#7E7E7E]"
                 }`}
               >
                 Amount
@@ -714,7 +779,7 @@ const AEDC = () => {
                 />
               </div>
               {amountError && (
-                <p className="text-[14px] text-red-500 italic lg:text-[14px]">
+                <p className="text-[14px] absolute left-0 -bottom-[1.3rem] text-red-500 italic lg:text-[14px]">
                   {amountError}
                 </p>
               )}
@@ -753,7 +818,11 @@ const AEDC = () => {
                     </p>
                     <img
                       className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
-                      src={aedcFlag}
+                      src={
+                        aedcFlag
+                          ? aedcFlag
+                          : "./Images/dashboardImages/arrow-down2.png"
+                      }
                       alt=""
                     />
                   </div>
@@ -791,12 +860,16 @@ const AEDC = () => {
                 >
                   {countryList.map((country) => (
                     <div
-                      className={`py-[18px] md:py-[14px] font-normal cursor-pointer px-2 flex items-center gap-[5px] text-[12px] md:text-[14px] lg:text-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] transition-all duration-300 hover:bg-slate-50
+                      className={`py-[18px] md:py-[14px] font-normal px-2 flex items-center gap-[5px] text-[12px] md:text-[14px] lg:text-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] transition-all duration-300 hover:bg-slate-50
                        ${
                          isDarkMode
                            ? "text-white hover:bg-slate-800 bg-black "
                            : "text-[#7E7E7E] "
-                       }`}
+                       } ${
+                        country.code === "Nigerian NGN Wallet"
+                          ? "cursor-pointer"
+                          : "cursor-not-allowed opacity-50"
+                      }`}
                       key={country.id}
                       onClick={() =>
                         handleCountryClick(
@@ -1225,7 +1298,7 @@ const AEDC = () => {
                   <div>
                     <img className="w-[30px]" src={logo} alt="" />
                   </div>
-                  <div>{aedcServiceID}</div>
+                  <div>{aedcDiscoType}</div>
                 </span>
               </div>
               <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -1312,8 +1385,12 @@ const AEDC = () => {
               </div>
             </div>
             {/* mx-10 */}
-            <div className={` mx-2 h-[45px] my-5 flex justify-between md:h-[70px] lg:h-[75px] ${isDarkMode ? "bg-slate-800": "bg-[#F2FAFF]"}`}>
-              <p className="text-[11px] md:pt-1 text-center w-full h-full md:text-[14px] lg:text-[14px]">
+            <div
+              className={`mx-4 h-[45px] my-5 flex justify-between items-center md:h-[65px] px-[4%] rounded-[8px] lg:h-[75px] ${
+                isDarkMode ? "bg-slate-800" : "bg-[#F2FAFF]"
+              }`}
+            >
+              <p className="text-[8px] text-center md:text-[14px] md:w-[80%] lg:text-[14px] font-medium">
                 The electricity bills / token purchase has been generated
                 successfully. Please kindly check receipt to confirm the bills /
                 token. You can contact us for any further assistance.
@@ -1346,7 +1423,7 @@ const AEDC = () => {
               > */}
               <button
                 onClick={handleReceivedData}
-                 className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] md:px-[50px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] md:px-[50px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
               >
                 Receipt
               </button>
