@@ -138,12 +138,15 @@ export default function BvnVerification(Data) {
           statusBvn();
           verifyPopBvn();
           setBvnButtonState(buttonStateSuccess);
-          localStorage.setItem("bvnVerification","true")
+          localStorage.setItem("bvnVerification","true");
+          localStorage.setItem("idVerification", "true");
     
-            
-  }
+        }
       } catch (error) {
-        if (error.status === 401 || 400) {
+        if(error && (error.response === undefined)){
+       alert("Your network connection is quite unstable.")
+        }
+       else if (error.status === 401 || 400) {
           alert(ErrorMessage);
           console.log(`ERROR : ${error}`)
            setBvnVerifyImage(NotVerifiedImage)
@@ -153,14 +156,14 @@ export default function BvnVerification(Data) {
           alert("Error:", "INTERNAL_SERVER_ERROR");
           setBvnStatus("Not Verified");
           setBvnVerifyImage(NotVerifiedImage);
+        }else {
+        alert("Check your internet connection.")
+        setErrorVerify(true);
         }
       } finally {
         setLoading(false);
         //alert("success")
       }
-    } else {
-      setErrorVerify(true);
-      alert("Check your internet connection");
     }
   };
 
@@ -204,7 +207,12 @@ export default function BvnVerification(Data) {
               className=" flex gap-[5px] py-[23px] pr-[12px] pl-[12px] md:py-[25px] md:pr-[41px] md:pl-[16px] bg-white shadow-[0px_2.34722px_5.86806px_0px_rgba(0,0,0,0.25)] md:shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)]"
             >
               <img
-                src={bvnVerifyImage && (Data.ConfirmBvn ===  "true" || Data.ConfirmId === "true"? bvnVerifiedSuccess : NotVerifiedImage)}
+                src={ bvnVerifyImage ===  NotVerifiedImage
+                                   && (Data.ConfirmId === "true" && Data.ConfirmBvn === "true") ? bvnVerifiedSuccess
+                                   :   bvnVerifyImage ===  NotVerifiedImage
+                                   && (Data.ConfirmId === "false" && Data.ConfirmBvn === "false") ? NotVerifiedImage :   
+                                   bvnVerifyImage ===  bvnVerifiedSuccess
+                                   || (Data.ConfirmId === "true" || Data.ConfirmBvn === "true") ? bvnVerifiedSuccess : NotVerifiedImage   }
                 alt=""
                 className={`h-[24px] w-[24px] md:h-[44px] md:w-[44px] lg:h-[62px] lg:w-[62px]`}
               />
@@ -213,7 +221,9 @@ export default function BvnVerification(Data) {
                   Bvn Status
                 </h2>
                 <h2 className={`font-[500] lg:text-[12px] lg:leading-[15.6px] text-[8.042px] leading-[10.45px] ${isDarkMode ? "text-black" : ""}`}>
-                  {bvnStatus && (Data.ConfirmBvn === "true" || Data.ConfirmId === "true" ? "Verified" : "Not Verified")}
+                  {bvnStatus === "Not Verified" && (Data.ConfirmBvn === "true" || Data.ConfirmId === "true") ? "Verified" :
+                  bvnStatus === "Not Verified" && (Data.ConfirmBvn === "false" || Data.ConfirmId === "false") ? "Not Verified" 
+                   : bvnStatus === "Verified" || (Data.ConfirmBvn === "true" || Data.ConfirmId === "true") ? "Verified"  : "Not Verified"}
                 </h2>
               </div>
             </div>

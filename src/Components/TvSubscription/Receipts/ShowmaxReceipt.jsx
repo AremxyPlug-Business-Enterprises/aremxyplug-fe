@@ -8,10 +8,12 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { ContextProvider } from "../../Context";
 import { useNavigate } from "react-router-dom";
+import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 
 
 
-export const ShowmaxReceipt= () => {
+export const ShowmaxReceipt= (Data) => {
+  Data = GetLocalStorage();
   const navigate = useNavigate()
   const { toggleSideBar, textRef,
     flagResult,
@@ -83,7 +85,7 @@ export const ShowmaxReceipt= () => {
       html2canvas(content).then((canvas) => {
         const imgData = canvas.toDataURL("image/png");
         pdf.addImage(imgData, "PNG", 10, 10, 190, 0);
-        pdf.save("page.pdf");
+        pdf.save("ShowMaxSubscription.pdf");
       });
     }
   };
@@ -232,7 +234,7 @@ export const ShowmaxReceipt= () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Customer Name</p>
-                  <span>Aremxyplug</span>
+                  <span>{Data?.aremxyUsername ? Data?.aremxyUsername : ""}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Wallet Type</p>

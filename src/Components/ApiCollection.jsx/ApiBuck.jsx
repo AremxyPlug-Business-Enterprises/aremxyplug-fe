@@ -1,6 +1,9 @@
 
 import { SetLocalStorage } from '../LocalStorage/LocalStorage';
+import { RemoveLocalStorage } from '../LocalStorage/LocalStorage';
 import axios from 'axios';
+import { Modal } from '../Screens/Modal/Modal';
+import { Navigate } from 'react-router-dom';
 
 //To set the different states for  virtual account
 
@@ -61,6 +64,44 @@ if(bank_name.length > 1 ){
  }
   }
 
+  // A reusable component to handke user session management.
+  export const HandleUserSession = ()=> {
+  return (
+   
+   <div className='w-full h-full justify-center items-center flex'>
+    <Modal>
+              <div className="w-full flex  justify-center items-center">
+            <div className ="flex flex-col justify-center items-center py-[20px] px-[12px] gap-[20px] w-[80%] md:w-[60%] lg:w-[30%] md:h-[300px] bg-white rounded-[10px]
+             lg:rounded-[20px]">
+               <div className ="flex flex-col  gap-[20px]">
+               <h2 className="text-[14px] font-[400] leading-[18px]
+               text-black lg:text-[16px] lg:leading-[22px]">
+                  Your Session has expired.
+                  </h2>
+              <p className ="text-[14px] font-[400] leading-[18px]
+               text-black lg:text-[16px] lg:leading-[22px] ">
+            User Session are used for safe and secure transactions, kindly repeat the Login
+            process to continue using the platform.
+               </p>
+               </div>
+              <div className="flex gap-[20px] justify-center">
+              <button onClick ={()=> {
+                    RemoveLocalStorage();
+                    return <Navigate to ="/Login" replace/>
+                }}
+                 className="bg-red-500  cursor-pointer mt-[5%] mx-auto w-[80px] py-[8px] flex justify-center items-center text-[#ffffff] 
+                  text-[10px] font-[500] lg:font-[600] rounded-md md:w-[95px] md:h-[26px]
+                   md:p-[2%] lg:w-[113px] lg:h-[38px] lg:text-[13px]">
+                  Okay
+                </button>
+              </div>
+              </div>
+              </div>
+             </Modal>
+      
+   </div>
+    )
+}
 
 //Function to help check user virtual bank account details and set in the main dashboard \
 // as necessary
@@ -72,7 +113,7 @@ export const CheckVirtualAcc = async(authToken, customerDetail, setLoading,
     const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc';
      // console.log(data)
      try{
-    setLoading(true)
+    setLoading(true);
           const response = await axios.get(url, {headers : {"Content-Type" : "application/json",
       Authorization : authToken
       }})
@@ -102,9 +143,25 @@ export const CheckVirtualAcc = async(authToken, customerDetail, setLoading,
           
          }
         }catch(error){
-       if(error.status === 401 || 400){
+         if(error.status === 400){
         alert("We had an error trying to get your details, click okay to repeat the login process");
-        console.log(`ERROR: ${error}`)
+         }
+      else if(error.status === 401){
+        // console.log(error.response.headers.hasAuthorization);
+       console.log(error.response.headers);
+        console.log(error.response.headers.get("x-new-auth-token"));
+    
+        if(error.response.headers["x-new-auth-token"] || error.response.headers.get("x-new-auth-token")){
+         setLoading(true);
+         const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
+        
+         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
+             console.log(newToken)
+            localStorage.setItem("authorisedLogin", newToken);
+           }else{
+      localStorage.setItem("getToken", newToken);
+    } }
+       console.log(error.response);
        }
         else if(error.status === 404){
          alert("Network Error, Please Check your Connection and try again");
@@ -112,7 +169,7 @@ export const CheckVirtualAcc = async(authToken, customerDetail, setLoading,
        
      }else if(error.status === 500){
                 alert('Error:', "SERVER ERROR");
-          }else if(error.status === undefined){
+          }else if(error.response === undefined){
                 alert("Check your internet Connection");
           }else {
             alert("Check your internet connection")
@@ -176,28 +233,40 @@ export const VerifyTransPin = async(otp, setSuccess,
       const url = "https://aremxyplug.onrender.com/api/v1/pin/verify"
       const response = await axios.post(url, body, {headers: {"Content-Type" :"application/json",
          Authorization : authToken || getToken
-      }})
+      },withCredentials : true
+   })
       if(response.status === 201 || 200){
-
-         setSuccess(true);
+     setSuccess(true);
        setErrorMessage(false);
      await asyncFuncAtSuccess()
     
       }
    }catch(error){
-    
-      if(error && error.response.status === 400){
+        if(error && error.response === undefined){
+     alert("Kindly check your internet connection")
+      } else if(error && error.response.status === 400){
          setFailed(true)
          setErrorMessage(true)
       }else if(error && error.response.status === 401){
-         setFailed(true);
-         alert("Your Session has timed out");
+         console.log(error.response.headers);
+        console.log(error.response.headers.get("x-new-auth-token"));
+    
+        if(error.response.headers["x-new-auth-token"] || error.response.headers.get("x-new-auth-token")){
+         setLoading(true)
+         const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
+        
+         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
+             console.log(newToken)
+            localStorage.setItem("authorisedLogin", newToken);
+           }else{
+      localStorage.setItem("getToken", newToken);
+    } }
+       console.log(error.response);
+         
       }else if(error && error.response.status === 500){
    setFailed(true)
-   setErrorMessage("Server error: Try some other time")
-      }else if(error && error.reponse.status === undefined){
-                alert("Check your internet Connection");
-          }else {
+   setErrorMessage(true);
+      }else {
    alert("Check your internet connection and try again")
       }
    }finally{
@@ -219,21 +288,19 @@ export const PostFunction = async(path, setLoading, body, functionAtSuccess, fun
     const url = `https://aremxyplug.onrender.com/api/v1/${path}`
       const response = await axios.post(url, body, {headers: {"Content-Type" :"application/json",
          Authorization : authToken || getToken
-      }})
+      }, withCredentials : true})
       if(response.status === 201 || 200){
     functionAtSuccess()
-   
-         if(functionAtSuccess) {
-            setFetchedResponse(response.data.data)
+     if(functionAtSuccess) {
+            setFetchedResponse(response.data.data);
          }
-         //console.log(response.data)
       }
 
    }catch(error){
-       
-      if(error && error.response.status === 400){
-       
-         functionAtFailed()
+        if(error && error.response === undefined){
+     alert("Kindly check your internet connection")
+      }  else  if(error && error.response.status === 400){
+       functionAtFailed()
           if(functionAtFailed) {
             setFetchedResponse(error.response.data.data)
               console.log(error.response.data.data)
@@ -248,12 +315,34 @@ export const PostFunction = async(path, setLoading, body, functionAtSuccess, fun
               console.log(error.response.data.data)
          }
       }else if(error && error.response.status === 401){
-         functionAtFailed()
-         alert("Your Session has timed out");
-           if(functionAtFailed) {
+       
+   
+      //  console.log(error.response);
+        console.log(error.response.headers);
+        console.log(error.response.headers.get("x-new-auth-token"));
+      //  console.log(error.response.headers.hasAuthorization());
+        // console.log(error.response.headers.hasAuthorization);
+        if(error.response.headers["x-new-auth-token"] || error.response.headers.get("x-new-auth-token")){
+         setLoading(true)
+         const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
+        
+         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
+             console.log(newToken)
+            localStorage.setItem("authorisedLogin", newToken);
+            functionAtFailed();
+             if(functionAtFailed) {
             setFetchedResponse(error.response.data.data)
-              console.log(error.response.data.data)
-         }
+           }
+   }else{
+      localStorage.setItem("getToken", newToken);
+     functionAtFailed();
+      if(functionAtFailed) {
+            setFetchedResponse(error.response.data.data)
+           }
+   }
+        }
+       console.log(error.response);
+         
       }else if(error && error.response.status === 500){
         functionAtFailed();
    alert("Server error: Try some other time");
@@ -262,7 +351,7 @@ export const PostFunction = async(path, setLoading, body, functionAtSuccess, fun
               console.log(error.response.data.data)
             
          }
-      }else if(error && error.reponse.status === undefined){
+      }else if(error && error.response.status === undefined){
                 alert("Check your internet Connection");
           }else{
          alert("Check your network connection")
@@ -280,35 +369,58 @@ export const GetFunction = async(path, setLoading, functionAtSuccess,functionAtF
    if(!navigator.onLine) return alert("Check your internet connection");
    if((authToken || getToken) && navigator.onLine){
       try{
-         setLoading(true)
+         setLoading(true);
     const url = `https://aremxyplug.onrender.com/api/v1/${path}`
       const response = await axios.get(url, {headers: {"Content-Type" :"application/json",
          Authorization : authToken || getToken
-      }})
-      if(response.status === 201 || 200){
+      }, withCredentials : true})
+    if(response.status === 201 || 200){
      functionAtSuccess();
      if(functionAtSuccess){
      setFetchedResponse(response);
      }
       }
    }catch(error){
-      
-      if(error && error.response.status === 400){
+      if(error && error.response === undefined){
+     alert("Kindly check your internet connection")
+      } else if(error && error.response.status === 400){
          functionAtFailed()
        alert("Invalid request")
-      }else if(error && error.response.status === 401){
-         functionAtFailed()
-         alert("Your Session has timed out")
-      }else if(error && error.response.status === 404){
+      }
+      else if(error && error.response.status === 401){
+         
+        setFetchedResponse(error.response);
+       
+      //  console.log(error.response);
+        console.log(error.response.headers);
+        console.log(error.response.headers.get("x-new-auth-token"));
+      //  console.log(error.response.headers.hasAuthorization());
+        // console.log(error.response.headers.hasAuthorization);
+        if(error.response.headers["x-new-auth-token"] || error.response.headers.get("x-new-auth-token")){
+         setLoading(true)
+         const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
+        
+         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
+             console.log(newToken)
+            localStorage.setItem("authorisedLogin", newToken);
+            functionAtFailed();
+   }else{
+      localStorage.setItem("getToken", newToken);
+     functionAtFailed();
+   }
+        }
+       console.log(error.response);
+      }
+      else if(error && error.response.status === 404){
          functionAtFailed();
-         alert("Check your internet connection")
+         alert("Check your internet connection");
       }else if(error && error.response.status === 500){
-  
-   alert("Server error: Try some other time")
-      }else if(error && error.reponse.status === undefined){
+     functionAtFailed();
+   alert("Server error: Try some other time");
+      }else if(error && error.response.status === undefined){
                 alert("Check your internet Connection");
           }else {
-      alert("Check your internet connection")
+      alert("Check your internet connection");
       }
    }finally{
   setLoading(false);
@@ -332,19 +444,39 @@ export const PutFunction = async(path, setLoading,body, functionAtSuccess,functi
      functionAtSuccess();
       }
    }catch(error){
-      if(error && error.response.status === 400){
+      if(error && error.response === undefined){
+         alert("Check your internet connection")
+      }else if(error && error.response.status === 400){
          functionAtFailed()
        alert("Invalid request")
       }else if(error && error.response.status === 401){
-         functionAtFailed()
-         alert("Your Session has timed out")
-      }else if(error && error.response.status === 404){
+      //   setFetchedResponse(error.response);
+       
+      //  console.log(error.response);
+        console.log(error.response.headers);
+        console.log(error.response.headers.get("x-new-auth-token"));
+      //  console.log(error.response.headers.hasAuthorization());
+        // console.log(error.response.headers.hasAuthorization);
+        if(error.response.headers["x-new-auth-token"] || error.response.headers.get("x-new-auth-token")){
+         setLoading(true)
+         const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
+        
+         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
+             console.log(newToken)
+            localStorage.setItem("authorisedLogin", newToken);
+            functionAtFailed();
+   }else{
+      localStorage.setItem("getToken", newToken);
+     functionAtFailed();
+   }
+}
+         }else if(error && error.response.status === 404){
          functionAtFailed()
          alert("Check your internet connection")
       }else if(error && error.response.status === 500){
-  
+       
    alert("Server error: Try some other time")
-      }else if(error && error.reponse.status === undefined){
+      }else if(error && error.response === undefined){
                 alert("Check your internet Connection");
           }else {
          alert("Check your internet connection")
@@ -354,6 +486,8 @@ export const PutFunction = async(path, setLoading,body, functionAtSuccess,functi
      }
    }
 }
+
+//A re-usable components to handle user session management
 
 
 
@@ -472,4 +606,5 @@ export const PutFunction = async(path, setLoading,body, functionAtSuccess,functi
 //    }
 // }
 
-
+ //Create a log Out function and pop up for user interaction on logging
+  // out user due to their inactivity. This functionality is meant to run across every page.

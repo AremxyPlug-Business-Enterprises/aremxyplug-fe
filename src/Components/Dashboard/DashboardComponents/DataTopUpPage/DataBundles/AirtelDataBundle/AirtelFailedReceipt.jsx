@@ -7,11 +7,13 @@ import styles from "../../../../../AirTimePage/AirtimeVtu.module.css";
 import { ContextProvider } from "../../../../../Context";
 import { useLocation } from "react-router-dom";
 import { DashBoardLayout } from "../../../../Layout/DashBoardLayout";
+import { GetLocalStorage } from "../../../../../LocalStorage/LocalStorage";
 
-export const AirtelFailedReceipt = () => {
+export const AirtelFailedReceipt = (Data) => {
+  Data = GetLocalStorage();
   const location = useLocation();
   const {
-    selectedNetworkProduct,
+  //  selectedNetworkProduct,
     // recipientPhoneNumber,
     inputValue,
     selectedOption,
@@ -20,6 +22,8 @@ export const AirtelFailedReceipt = () => {
     airteltransactionID,
     airtelrefNumber,
     airtelorderID,
+    selectedProduct,
+    airtelReceiptInfo
     // airteldescription,
   } = location.state;
 
@@ -27,11 +31,17 @@ export const AirtelFailedReceipt = () => {
     toggleSideBar,
     isDarkMode,
     date,
+    
     // recipientName,
     setSelectedNetworkProduct,
-    setSelectedOption,
-    setSelectedAmount,
-    setRecipientNames,
+      setSelectedProductAirtel,
+    setSelectedOptionAirtel,
+    setSelectedAmountAirtel,
+    setRecipientNamesAirtel,
+  setWalletNameAirtel,
+  setRecipientPhoneNumberAirtel,
+    // recipientName,
+    //setSelectedNetworkProductAirtel,
   } = useContext(ContextProvider);
 
   const contentRef = useRef(null);
@@ -74,16 +84,20 @@ export const AirtelFailedReceipt = () => {
       html2canvas(content).then((canvas) => {
         const imgData = canvas.toDataURL("image/png");
         pdf.addImage(imgData, "PNG", 10, 10, 190, 0);
-        pdf.save("page.pdf");
+        pdf.save("AremxyPlugDataReceipt.pdf");
       });
     }
   };
 
   const handleChange = () => {
     setSelectedNetworkProduct(false);
-    setSelectedOption(false);
-    setSelectedAmount("");
-    setRecipientNames("");
+    setSelectedOptionAirtel("");
+    setSelectedProductAirtel("");
+    setSelectedOptionAirtel("")
+    setSelectedAmountAirtel("");
+    setRecipientNamesAirtel("");
+    setWalletNameAirtel("");
+    setRecipientPhoneNumberAirtel("");
   };
   
   return (
@@ -160,7 +174,7 @@ export const AirtelFailedReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Product</p>
-                  <span>{`${selectedOption}`}</span>
+                  <span>{selectedProduct}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Phone Number</p>
@@ -188,7 +202,7 @@ export const AirtelFailedReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Customer Name</p>
-                  <span>{recipientNames}</span>
+                  <span>{Data.aremxyUsername}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Wallet Type</p>
@@ -206,13 +220,13 @@ export const AirtelFailedReceipt = () => {
                     alt="/"
                   />
                 </div>
-                {/* <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Product</p>
                   <span>Data Top-up</span>
-                </div> */}
+                </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Description</p>
-                  <span>{selectedNetworkProduct}</span>
+                  <span>{airtelReceiptInfo}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Order Number</p>

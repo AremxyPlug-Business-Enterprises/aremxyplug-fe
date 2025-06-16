@@ -8,10 +8,12 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { ContextProvider } from "../../Context";
 import { useNavigate } from "react-router-dom";
+import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 
 
-export const GotvReceipt = (receipt) => {
+export const GotvReceipt = (Data) => {
   const navigate = useNavigate();
+  Data = GetLocalStorage()
   const { toggleSideBar, textRef,
     flagResult,
     selectedOptionGOTV,
@@ -37,7 +39,7 @@ export const GotvReceipt = (receipt) => {
    // gotvRequestId,
     gotvDescription,
     setFlagResult,
-    setTvWalletBalance
+    setTvWalletBalance,
    } =
     useContext(ContextProvider);
 
@@ -81,7 +83,7 @@ export const GotvReceipt = (receipt) => {
       html2canvas(content).then((canvas) => {
         const imgData = canvas.toDataURL("image/png");
         pdf.addImage(imgData, "PNG", 10, 10, 190, 0);
-        pdf.save("page.pdf");
+        pdf.save("GoTvSubscription.pdf");
       });
     }
   };
@@ -113,6 +115,8 @@ export const GotvReceipt = (receipt) => {
     setTvWalletBalance("");
    navigate("/GoTv");
   }
+
+//console.log(tvSubscriptionResponse);
   return (
     <DashBoardLayout>
       <div className="flex flex-col gap-[35px] lg:gap-[85px]">
@@ -122,7 +126,7 @@ export const GotvReceipt = (receipt) => {
           } w-full lg:mx-auto`}
         >
           <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
-            <div >
+            <div>
               <img
                 className=" w-[15px] h-[10px] md:w-[24px] md:h-[15px] lg:w-[42px] lg:h-[25px]"
                 src="/Images/login/arpLogo.png"
@@ -230,7 +234,7 @@ export const GotvReceipt = (receipt) => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Customer Name</p>
-                  <span>Aremxyplug</span>
+                  <span>{Data?.aremxyUsername ? Data.aremxyUsername : ""}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Wallet Type</p>

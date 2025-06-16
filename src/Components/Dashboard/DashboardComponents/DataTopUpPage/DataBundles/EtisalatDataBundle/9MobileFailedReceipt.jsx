@@ -7,49 +7,42 @@ import styles from "../../../../../AirTimePage/AirtimeVtu.module.css";
 import { ContextProvider } from "../../../../../Context";
 import { useLocation } from "react-router-dom";
 import { DashBoardLayout } from "../../../../Layout/DashBoardLayout";
-
-export const EtisalatFailedReceipt = () => {
+import { GetLocalStorage } from "../../../../../LocalStorage/LocalStorage";
+export const EtisalatFailedReceipt = (Data) => {
+  Data = GetLocalStorage()
   const location = useLocation();
   const {
-    selectedNetworkProduct,
+   // selectedNetworkProduct,
     // recipientPhoneNumber,
     inputValue,
     recipientNames,
     selectedAmount,
     etisalattransactionID,
     etisalatrefNumber,
-    etisalatorderID,
-    // etisalatdescription,
-    selectedOption
+   etisalatorderID,
+    selectedProduct,
+    etisalatReceiptInfo
   } = location.state;
 
   const {
     toggleSideBar,
     isDarkMode,
     date,
-    // recipientName,
     setSelectedNetworkProduct,
-    setSelectedOption,
-    setSelectedAmount,
-    setRecipientNames,
+      setSelectedProductEtisalat,
+    setSelectedOptionEtisalat,
+    setSelectedAmountEtisalat,
+    setRecipientNamesEtisalat,
+  setWalletNameEtisalat,
+  setRecipientPhoneNumberEtisalat
+    // recipientName,
+ 
+   
   } = useContext(ContextProvider);
 
   const contentRef = useRef(null);
 
-  // ===============Copy to Clipboard Function============
-  // const handleCopyClick = () => {
-  //   const text = textRef.current.innerText;
-  //   navigator.clipboard
-  //     .writeText(text)
-  //     .then(() => {
-  //       alert("Copied to clipboard");
-  //     })
-  //     .catch((err) => {
-  //       console.error("Error copying text: ", err);
-  //     });
-  // };
-
-  // ==============Share pdf Function=============
+// ==============Share pdf Function=============
   const handleShareClick = () => {
     if (navigator.share) {
       navigator
@@ -74,16 +67,19 @@ export const EtisalatFailedReceipt = () => {
       html2canvas(content).then((canvas) => {
         const imgData = canvas.toDataURL("image/png");
         pdf.addImage(imgData, "PNG", 10, 10, 190, 0);
-        pdf.save("page.pdf");
+        pdf.save("AremxyPlugDataReceipt.pdf");
       });
     }
   };
 
   const handleChange = () => {
     setSelectedNetworkProduct(false);
-    setSelectedOption(false);
-    setSelectedAmount("");
-    setRecipientNames("");
+    setSelectedProductEtisalat("")
+    setSelectedOptionEtisalat("");
+    setSelectedAmountEtisalat("");
+    setWalletNameEtisalat("");
+    setRecipientNamesEtisalat("");
+    setRecipientPhoneNumberEtisalat("");
   };
 
   return (
@@ -160,7 +156,7 @@ export const EtisalatFailedReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Product</p>
-                  <span>{`${selectedOption}`}</span>
+                  <span>{`${selectedProduct}`}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Phone Number</p>
@@ -188,7 +184,7 @@ export const EtisalatFailedReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Customer Name</p>
-                  <span>{recipientNames}</span>
+                  <span>{Data.aremxyUsername}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Wallet Type</p>
@@ -208,11 +204,11 @@ export const EtisalatFailedReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Product</p>
-                  <span>Data Top-up</span>
+                  <span>Data top-up</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Description</p>
-                  <span>{selectedNetworkProduct}</span>
+                  <span>{etisalatReceiptInfo}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Order Number</p>

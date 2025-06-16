@@ -6,57 +6,59 @@ import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { useLocation } from 'react-router-dom';
+import { GetLocalStorage } from "../../../../../LocalStorage/LocalStorage";
 
 
-
-export const AirtelReceipt = () => { 
-
+export const AirtelReceipt = (Data) => { 
+Data = GetLocalStorage()
   const {
 
     // walletName,
     setSelectedNetworkProduct,
-    setSelectedOption,
-    setSelectedAmount,
-    setRecipientNames,
   }
    = useContext(ContextProvider);
 
    const location = useLocation()
-  const { selectedNetworkProduct, selectedOption, 
+  const {  selectedOption, 
     // recipientPhoneNumber, 
-    inputValue, recipientNames, selectedAmount, airteltransactionID, airtelrefNumber, airtelorderID,  } = location.state
+    inputValue, 
+    recipientNames,
+     selectedAmount, 
+     airteltransactionID,
+      airtelrefNumber,
+       airtelorderID,selectedProduct,
+       airtelReceiptInfo
+        } = location.state
   
    
   const { 
     toggleSideBar,
     isDarkMode,
-    date, } =
-    useContext(ContextProvider);  
+    date,
+ //  setSelectedNetworkProduct,
+      setSelectedProductAirtel,
+    setSelectedOptionAirtel,
+    setSelectedAmountAirtel,
+    setRecipientNamesAirtel,
+  setWalletNameAirtel,
+  setRecipientPhoneNumberAirtel } =  useContext(ContextProvider);  
 
   const contentRef = useRef(null);
 
   const handleChange = () => {
     setSelectedNetworkProduct(false);
-    setSelectedOption(false);
-    setSelectedAmount('');
-    setRecipientNames('');
+    setSelectedOptionAirtel("");
+    setSelectedAmountAirtel('');
+    setRecipientPhoneNumberAirtel('');
+    setWalletNameAirtel("");
+    setRecipientNamesAirtel("");
+    setSelectedProductAirtel("")
   }
 
 
 
 
-  // ===============Copy to Clipboard Function============
-//   const handleCopyClick = () => {
-//     const text = textRef.current.innerText;
-//     navigator.clipboard
-//       .writeText(text)
-//       .then(() => {
-//         alert("Copied to clipboard");
-//       })
-//       .catch((err) => {
-//         console.error("Error copying text: ", err);
-//       });
-//   };
+ 
 
   // ==============Share pdf Function=============
   const handleShareClick = () => {
@@ -82,7 +84,7 @@ export const AirtelReceipt = () => {
       html2canvas(content).then((canvas) => {
         const imgData = canvas.toDataURL("image/png");
         pdf.addImage(imgData, "PNG", 10, 10, 190, 0);
-        pdf.save("page.pdf");
+        pdf.save("AremxyPlugDataReceipt.pdf");
       });
     }
   };
@@ -145,7 +147,7 @@ export const AirtelReceipt = () => {
             <p className="text-[9px] text-[#27AE60] bg-[#D5F6E3] rounded-[11px] border-2 border-[#27AE60] py-[5px] px-[2px] text-center mx-[5px] lg:mx-[150px] md:mx-[100px] my-2 md:text-[14px] lg:text-[14px]">
               You have successfully purchased{" "}
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[16px]">
-                {`${selectedOption} Data `}
+                {selectedProduct + " " +selectedOption}
               </span>
               from your NGN wallet to{" "}
             </p>
@@ -166,7 +168,7 @@ export const AirtelReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Product</p>
-                  <span>{selectedOption}</span>
+                  <span>{selectedProduct}</span>
                 </div>
                 {/* <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Plan</p>
@@ -198,7 +200,7 @@ export const AirtelReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Customer Name</p>
-                  <span>{recipientNames}</span>
+                  <span>{Data.aremxyUsername}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Wallet Type</p>
@@ -218,11 +220,11 @@ export const AirtelReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Product</p>
-                  <span>Data Top-up</span>
+                  <span>Airtel</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Description</p>
-                  <span>{selectedNetworkProduct}</span>
+                  <span>{airtelReceiptInfo}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Order Number</p>

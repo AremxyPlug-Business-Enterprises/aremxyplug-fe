@@ -7,6 +7,7 @@ import { AiFillEye } from "react-icons/ai";
 import OtpInput from "react-otp-input";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import styles from "../../Dashboard/DashboardComponents/TransferComponent/transfer.module.css";
+import { Link } from "react-router-dom";
 
 
 export const InputStarTimesPopup = ({VerifyPinHandler}) => {
@@ -18,7 +19,8 @@ export const InputStarTimesPopup = ({VerifyPinHandler}) => {
       toggleVisibility,
       isVisible,
       errorMessage,
-      setInputPinStarTimes
+      setInputPinStarTimes,
+      authenticationOpen
    } = useContext(ContextProvider)
 
   //  const handleStarTimesSuccessful = (event) =>{
@@ -98,9 +100,13 @@ export const InputStarTimesPopup = ({VerifyPinHandler}) => {
                   {isVisible ? <AiFillEye className="w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]" /> : <AiFillEyeInvisible  className="w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]"/>}
                 </div>
               </div>
-              <p className="text-[8px] md:text-[12px] leading-[5px] my-3 text-[#04177f]">
+              <Link to ={{
+                pathname : "/ProfileSettingMain",
+                state : authenticationOpen
+              }}
+               className="text-[8px] md:text-[12px] leading-[5px] my-3 text-[#04177f]">
                 Forgot Pin ?
-              </p>
+              </Link>
             </div>
              {errorMessage && (
               <p className="font-[400] md:font-[500] text-center leading-[15px] text-red-400">

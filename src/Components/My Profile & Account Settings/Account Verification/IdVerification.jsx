@@ -195,9 +195,12 @@ export default function IdVerification(Data) {
           verifyPopId();
           setIdButtonState(buttonStateSuccess);
           localStorage.setItem("idVerification", "true");
+          localStorage.setItem("bvnVerification", "true")
         }
       } catch (error) {
-        if (error.status === 401 || 400) {
+        if(error && (error.response === undefined)){
+          alert("Your network is quite unstable.")
+        } else if (error.status === 401 || 400) {
           alert(ErrorMessage);
           console.log(`ERROR : ${error}`);
 
@@ -207,6 +210,8 @@ export default function IdVerification(Data) {
           alert("Error:", "INTERNAL_SERVER_ERROR");
           setIdStatus("Not Verified");
           setVerifyImage(NotVerifiedIcon);
+        }else {
+          alert("Check your internet connection.")
         }
       } finally {
         setLoading(false);
@@ -239,8 +244,12 @@ export default function IdVerification(Data) {
             <div className=" flex gap-[5px] py-[23px] pr-[12px] pl-[12px] md:py-[25px] md:pr-[41px] md:pl-[16px] bg-white shadow-[0px_2.34722px_5.86806px_0px_rgba(0,0,0,0.25)] md:shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)]">
               <img
                 src={
-                  verifyImage &&
-                  (Data.ConfirmId === "true" || Data.ConfirmBvn === "true" ? idSuccess : NotVerifiedIcon)
+                  verifyImage ===  NotVerifiedIcon
+                   && (Data.ConfirmId === "true" || Data.ConfirmBvn === "true") ? idSuccess 
+                   :   verifyImage ===  NotVerifiedIcon
+                   && (Data.ConfirmId === "false" && Data.ConfirmBvn === "false") ? NotVerifiedIcon :   
+                   verifyImage ===  idSuccess
+                   || (Data.ConfirmId === "true" || Data.ConfirmBvn === "true") ? idSuccess : NotVerifiedIcon   
                 }
                 alt=""
                 className={`h-[24px] w-[24px] md:h-[44px] md:w-[44px] lg:h-[62px] lg:w-[62px]`}
@@ -254,8 +263,12 @@ export default function IdVerification(Data) {
                   ID Status
                 </h2>
                 <h2 className="font-medium lg:text-[12px] lg:leading-[15.6px] text-[8.042px] leading-[12.45px]">
-                  {idStatus &&
-                    (Data.ConfirmId === "true" || Data.ConfirmBvn === "true" ? "Verified" : "Not Verified")}
+                 { idStatus ===  "Not Verified"
+                   && (Data.ConfirmId === "true" || Data.ConfirmBvn === "true") ? "Verified" 
+                   :   idStatus ===  "Not Verified"
+                   && (Data.ConfirmId === "false" && Data.ConfirmBvn === "false") ? "Not Verified" :   
+                   verifyImage ===  idSuccess
+                   || (Data.ConfirmId === "true" || Data.ConfirmBvn === "true") ? "Verified":  "Not Verified" }
                 </h2>
               </div>
             </div>
@@ -547,7 +560,8 @@ export default function IdVerification(Data) {
      return null;
     }
     }}
-    className='flex justify-between items-center font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px]'>
+    className='flex justify-between items-center font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px]
+     md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[12px] leading-[16.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px]'>
       <h2 className={`text-[#000] font-[400]  leading-[10.4px]
       lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : "text-black"}`}>
         {idResult || (Data.ConfirmId ==="true"   ? "National ID" : idResult)}
@@ -572,9 +586,9 @@ export default function IdVerification(Data) {
                  && info.id !==1 && idResult === ""){
               return "";
               }
-                 else if(Data.ConfirmId === "false"  ||  Data.ConfirmBvn === "true"){
+                 else if((Data.ConfirmId === "true"  ||  Data.ConfirmBvn === "true") && idNumber.length < 1){
              return "";
-              } else if(Data.ConfirmId === "true"  ||  Data.ConfirmBvn === "false"){
+              } else if((Data.ConfirmId === "true"  ||  Data.ConfirmBvn === "true") && idNumber.length > 1){
              return "National ID";
               } else {
                return "National ID";
@@ -632,7 +646,7 @@ export default function IdVerification(Data) {
     }}
     className={`flex justify-between items-center font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[10px]
        md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] 
-       border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] 
+       border-[0.4px] text-[12px] leading-[16.4px] border-[#9C9C9C] 
        lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] 
        focus:outline-none  ${isDarkMode ? "bg-black" : "bg-white"}`}
     placeholder=''

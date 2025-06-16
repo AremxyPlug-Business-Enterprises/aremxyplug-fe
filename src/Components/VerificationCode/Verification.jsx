@@ -140,7 +140,7 @@ const VerifyOtpFunction = async(url, body)=>{
   }catch(error){
     if( error.response  && error.response.status === 400){
       setVerificationPinError(true);
-     console.log("The Verification failed")
+     console.log("The Verification failed");
     } if( error.response  && error.response.status === 404){
       alert(`ERROR: ${error.message}`,)
     }else if(error.response &&error.response.status === 500){

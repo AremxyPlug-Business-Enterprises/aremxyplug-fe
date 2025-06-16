@@ -23,6 +23,7 @@ import {Modal} from "../Screens/Modal/Modal";
 import { useNavigate } from "react-router-dom";
 import {PostFunction} from "../../Components/ApiCollection.jsx/ApiBuck";
 import { GetFunction } from "../ApiCollection.jsx/ApiBuck";
+import { BalanceLoading } from "../Loader/Loader";
 
 const StarTimes = () => {
 
@@ -34,7 +35,7 @@ const StarTimes = () => {
     setSelectedOptionStarTimes,
   inputPin,
     setCardName,
-    cardName,
+   // cardName,
    starTimesEmail,
    setStarTimesEmail,
 
@@ -54,22 +55,24 @@ const StarTimes = () => {
     setStarTimesSuccessful,
      setInputPinStarTimes,
      setErrorMessage,
-     setSuccessPopup,
+    // setSuccessPopup,
       fetchedGotvPlans,setFetchedGotvPlans,
     fetchedDstvPlans, setFetchedDstvPlans,
     fetchedShowMaxPlans, setFetchedShowMaxPlans,
      setStarTimesOrderId,
      setStarTimesTransactionId,
- setStarTimesRequestId,
+ //setStarTimesRequestId,
    setStarTimesDescription,
      starTimesSubscriptionResponse,
      setStarTimesSubscriptionResponse,
     newBalance,
+    setNewBalance,
     packageStarTimes,
     setPackageStarTimes,
     starTimesMobileNumber,
     setStarTimesMobileNumber,
-  } = useContext(ContextProvider)
+    setFetchedStarTimesPlans
+  } = useContext(ContextProvider);
       
 
    
@@ -77,39 +80,45 @@ const StarTimes = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [failedPopup, setFailedPopup] = useState(false);
       const [successConfig, setSuccessConfig] = useState("")
-           const [failedConfig, setFailedConfig] = useState("")
+           const [failedConfig, setFailedConfig] = useState("");
+             const [starTimesVerifyResponse, setStarTimesVerifyResponse] = useState({});
+                const [starTimesLoading, setStarTimesLoading] = useState(false);
+                const [stateInvalidDecoderNumber, setStateInvalidDecoderNumber] = useState(false);
+                const [passDataBalance, setPassDataBalance] = useState({});
+                const [starTimesData, setStarTimesData] = useState([]);
     const navigate = useNavigate();
 
-        
+    
+    useEffect(()=> {
+      // alert("Who do you think is handling that?")
+      if( starTimesVerifyResponse?.data?.name?.length < 1 ){
+       setStateInvalidDecoderNumber(true);
+      }else{
+        setStateInvalidDecoderNumber(false)
+      }
+    },[starTimesVerifyResponse?.data?.name])
            
-const StarTimesPlans = fetchedStarTimesPlans.data ?  fetchedStarTimesPlans.data.data.data : []
+
   const handleOptionClickStarTimes = (option) => {
     //setSelectedOptionStarTimes(option);
     setShowDropdownStarTimes(false);
   };
 
-  // const getNumericValue = (option) => {
-  //   const numericPart = option.match(/\d+/);
-  //   if (numericPart) {
-  //     return formatNumberWithCommas(parseInt(numericPart[0], numericPart[2], 10));
-  //   }
-  //   return '';
-  // };
-
   const GetOtherDataTv = async(id, path)=> {
     const SuccessHandler = ()=> {
      navigate(path);
     }
-    const FailedHandler = ()=> {
+    const FailedHandler = async()=> {
      console.log("Error")
+     await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse)
     }
    
     const SubscriptionPresent =()=> {
-     if((fetchedDstvPlans.status === 200 || 201) && id === 2 ){
+     if((fetchedDstvPlans.status === 200 || fetchedDstvPlans.status ===  201) && id === 2 ){
        return navigate(path)
-     }else if((fetchedGotvPlans.status === 200 || 201) && id === 3) {
+     }else if((fetchedGotvPlans.status === 200 || fetchedGotvPlans.status === 201) && id === 3) {
       return navigate(path)
-     }else if((fetchedShowMaxPlans.status === 200 || 201) && id === 4) {
+     }else if((fetchedShowMaxPlans.status === 200 || fetchedShowMaxPlans.status === 201) && id === 4) {
       return navigate(path)
      }
      
@@ -117,17 +126,17 @@ const StarTimesPlans = fetchedStarTimesPlans.data ?  fetchedStarTimesPlans.data.
    
     let TvPath;
     let fetchedResponse;
-     if((fetchedDstvPlans.status === undefined || null) && id === 2 ){
+     if((fetchedDstvPlans.status === undefined || fetchedDstvPlans.status === null) && id === 2 ){
        TvPath = `products/tvsub/dstv`;
      fetchedResponse = setFetchedDstvPlans;
       await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse)
      
-    }else if((fetchedGotvPlans.status === undefined || null) && id === 3){
+    }else if((fetchedGotvPlans.status === undefined || fetchedGotvPlans.status === null) && id === 3){
        TvPath = `products/tvsub/gotv`;
      fetchedResponse = setFetchedGotvPlans;
       await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse)
     
-   }else if ((fetchedShowMaxPlans.status === undefined || null) && id === 4){
+   }else if ((fetchedShowMaxPlans.status === undefined || fetchedShowMaxPlans.status === null) && id === 4){
      TvPath = `products/tvsub/showmax`;
      fetchedResponse = setFetchedShowMaxPlans;
       await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse)
@@ -137,12 +146,48 @@ const StarTimesPlans = fetchedStarTimesPlans.data ?  fetchedStarTimesPlans.data.
    }
    }
 
-   useEffect(()=> {
-           if(StarTimesPlans.length < 1){
-             navigate("/TvSubscription")
-           }
-         })
-           
+   const starTimesOptionalPlan = starTimesData?.length < 1 && fetchedStarTimesPlans.status === 200 ? fetchedStarTimesPlans.data.data.data : starTimesData;
+         useEffect(()=> {
+          if(fetchedDstvPlans.status === 200 || fetchedDstvPlans.status === 201){
+         setStarTimesData(fetchedStarTimesPlans.data.data.data);
+         }else if(fetchedStarTimesPlans.status === undefined){
+          const RetrieveGotvPlans = async()=> {
+             const SuccessHandler = ()=> {
+       console.log("Successfully fetched startimes plans");
+      }
+        const failedHandler = async()=> {
+       console.log("Couldn't fetch starTimes plans");
+       await GetFunction(`products/tvsub/startimes`, setIsLoading, SuccessHandler, failedHandler, setFetchedStarTimesPlans);
+       }
+         
+    await GetFunction(`products/tvsub/startimes`, setIsLoading, SuccessHandler, failedHandler, setFetchedStarTimesPlans);
+   
+     }
+   RetrieveGotvPlans()
+   }
+    const GetBalance =   async()=> {
+                           const SuccessHandler = ()=> {
+                         //alert("Successful");
+                    console.log("successfully retrieved balance");
+                    //alert("Successful")
+                      }
+                     const FailedHandler = async()=> {
+                       console.log(`Failed to retrieve balance`)
+                       await GetFunction("balance", setIsLoading, SuccessHandler, FailedHandler,setPassDataBalance)
+                     }
+                     await GetFunction("balance", setIsLoading, SuccessHandler, FailedHandler,setPassDataBalance)
+                       } 
+                        // Simulate async data loading
+                       if(newBalance === "" || newBalance === null || newBalance === undefined){
+                           GetBalance();
+                           if(GetBalance){
+                            setNewBalance(passDataBalance?.data ? passDataBalance.data.data.data.balance : "");
+                           }
+                         }
+        //eslint-disable-next-line             
+         },[])
+          
+     
      
    
 
@@ -160,14 +205,7 @@ const StarTimesPlans = fetchedStarTimesPlans.data ?  fetchedStarTimesPlans.data.
   // document.querySelector('.imgdrop').classList.toggle('DropIt');
   // }
 
-  const handleCardName = (e) => {
-    const inputValue = e.target.value;
-    setCardName(inputValue);
-  }
-  const handleSmartCard = (e) => {
-    const inputValue = e.target.value;
-    setStarTimesSmartCard(inputValue);
-  }
+
   const handleTvEmail = (e) => {
     const inputValue = e.target.value;
     setStarTimesEmail(inputValue);
@@ -238,7 +276,7 @@ const StarTimesPlans = fetchedStarTimesPlans.data ?  fetchedStarTimesPlans.data.
 
   const { flagResult, setFlagResult } = useContext(ContextProvider);
   const { methodPayment, setMethodPayment } = useContext(ContextProvider);
-  const { tvWalletBalance, setTvWalletBalance } = useContext(ContextProvider);
+  const {starTimesWalletBalance,setStarTimesWalletBalance } = useContext(ContextProvider);
 
 
 
@@ -247,14 +285,16 @@ const StarTimesPlans = fetchedStarTimesPlans.data ?  fetchedStarTimesPlans.data.
     document.querySelector('.methodDrop').classList.toggle('DropIt');
   }
 
-  const [methodOptions, setMethodOptions] = useState([
-    { method: 'NGN Wallet', balance: `(${newBalance})`, flag: nigerianFlag, id: 1 },
+   const updateBalance = passDataBalance?.data?.data  ? passDataBalance.data.data.data.balance : "";
+  const methodOptions = [
+    { method: 'NGN Wallet', balance:newBalance === "" || newBalance === null || newBalance === undefined  ? `(${updateBalance})` : `(${newBalance})`,  
+    flag: nigerianFlag, id: 1 },
     { method: 'USD Wallet ', balance: '(0.00)', flag: americaFlag, id: 2 },
     { method: 'EUR Wallet', balance: '(0.00)', flag: britainFlag, id: 3 },
     { method: 'GBP Wallet', balance: '(0.00)', flag: euroFlag, id: 4 },
     { method: 'AUD Wallet', balance: '(0.00)', flag: austriaFlag, id: 5 },
     { method: 'KES Wallet', balance: '(0.00)', flag: kenyaFlag, id: 6 }
-  ])
+  ]
 
   function packageDropdown() {
     if (!starTimesDecoderType) {
@@ -276,11 +316,12 @@ const StarTimesPlans = fetchedStarTimesPlans.data ?  fetchedStarTimesPlans.data.
     setIsLoading(true);
     const receivedData = () => {
       // Seting the relevant data from the TV subscription response
-      setStarTimesOrderId(starTimesSubscriptionResponse.data.order_id);
-      setStarTimesTransactionId(starTimesSubscriptionResponse.data.transcation_id);
+      setStarTimesOrderId(starTimesSubscriptionResponse?.data ? starTimesSubscriptionResponse?.data?.order_id : "");
+      setStarTimesTransactionId(starTimesSubscriptionResponse?.data?.transcation_id ? starTimesSubscriptionResponse?.data?.transcation_id : ""  );
      // setStarTimesRequestId(starTimesSubscriptionResponse.data.request_id);
-      setStarTimesDescription(starTimesSubscriptionResponse.data.description);
-    };
+      setStarTimesDescription(starTimesSubscriptionResponse?.data?.description ? starTimesSubscriptionResponse?.data?.description : "");
+      setCardName(userVerifiedName);
+}
   
     receivedData();
     
@@ -302,7 +343,7 @@ const VerifyPinHandler = async () => {
         amount: starTimesAmount,
         phone: starTimesMobileNumber,
       };
-      const Path = "tvsub";
+      const Path = "bills/tvsub";
       const successHandler = () =>{
         setStarTimesSuccessful(true);
         setInputPinStarTimes(false);
@@ -335,7 +376,52 @@ const VerifyPinHandler = async () => {
      );
  };
 
- console.log(starTimesSubscriptionResponse);
+ let userVerifiedName = starTimesVerifyResponse?.data ? starTimesVerifyResponse?.data?.name : "";
+ //Function to help Verify users account
+ const VerifyUserAccount = async(UserTvSubscription)=> {
+  setStarTimesVerifyResponse({});
+    if(UserTvSubscription?.length === 10 && 
+     (UserTvSubscription !== "" && 
+       UserTvSubscription !== null && 
+       UserTvSubscription !== undefined)){
+         const body = {
+            decoder_type : starTimesDecoderType.toLowerCase(),
+           iuc_number : UserTvSubscription
+         }
+         const bodyToJson = JSON.stringify(body);
+ await PostFunction("bills/verify", setStarTimesLoading, bodyToJson, ()=> {
+   console.log("Succesfully verified tv subscription account.");
+   setStarTimesSmartCard(UserTvSubscription);
+ 
+   
+ }, ()=> {
+   console.log("Failed to verify tv subscription account.")
+ }, setStarTimesVerifyResponse )
+ }
+ }
+ //console.log(userVerifiedName)
+ 
+  const handleSmartCard = async(e) => {
+     const inputValue = e.target.value;
+   await VerifyUserAccount(inputValue);
+  }
+
+  //To exit the failed popup with the done button.
+  const ExitTheDoneButton = ()=> {
+      setStarTimesEmail("")
+   setStarTimesMobileNumber("")
+   setStarTimesSmartCard("");
+   setStarTimesAmount("");
+   setSelectedOptionStarTimes("");
+   setPackageStarTimes("");
+   setStarTimesDecoderType("")
+    setFlagResult("");
+    setStarTimesWalletBalance("");
+    setFailedPopup(false);
+     handleReceivedData();
+   //navigate("/DsTv");
+  }
+
   return (
     <div>
       <DashBoardLayout>
@@ -372,7 +458,7 @@ const VerifyPinHandler = async () => {
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] font-[400] md:font-[600]">
                 Confirm Decoder Type</label>
               {/* <button className="border-[0.23px] lg:border-[0.4px] w-full md:w-1/2 h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C]">StarTimes</button> */}
-              <div onClick={decoderDropdown} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.5px] p-4 sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
+              <div onClick={decoderDropdown} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.5px] sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] self-center" onClick={decoderDropdown} 
        ${
         isDarkMode
@@ -393,7 +479,7 @@ const VerifyPinHandler = async () => {
                <p
                onClick={(e =>{
                 GetOtherDataTv(decoder.id, decoder.path)
-          setStarTimesDecoderType(decoder.decoderType);
+          setStarTimesDecoderType(decoder.id === 1 ? decoder.decoderType : "");
                  setDecoderActive(false);
              document.querySelector('.decdrop').classList.remove('DropIt');
              console.log(e);
@@ -422,7 +508,7 @@ const VerifyPinHandler = async () => {
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] md:font-[600] font-[400]">
                 Select Package</label>
 
-              <div onClick ={packageDropdown} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.4px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
+              <div onClick ={packageDropdown} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.4px] sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px]  self-center" onClick={packageDropdown} ${
       
         isDarkMode
@@ -436,7 +522,7 @@ const VerifyPinHandler = async () => {
 
               {showDropdownStarTimes && (
                 <ul className="dropdown-options z-[2] absolute top-[100%] w-full bg-white cursor-pointer h-[300px] overflow-y-scroll">
-                  {StarTimesPlans.map((option, index) => (
+                  {starTimesOptionalPlan.map((option, index) => (
                     <li
                       className={`pb-[20px] md:pb-[14px] pt-[20px] md:pt-[14px] font-weight-bold text-[14px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500] 
                       md:text-[13.227px] md:leading-[17.195px] 
@@ -470,12 +556,12 @@ const VerifyPinHandler = async () => {
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] font-[400] md:font-[600]">
                 Smart Card / IUC Number</label>
               <input type="tel"
+              maxLength ={10}
               onInput={(e =>{
-  
                 const numericValue = e.target.value.replace(/\D/g, '');
                     e.target.value = numericValue
                 })}
-                onChange={handleSmartCard} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
+                onChange={handleSmartCard} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
       isDarkMode 
         ? "bg-black text-white border border-white" 
@@ -483,19 +569,32 @@ const VerifyPinHandler = async () => {
     }`}  />
             {errors.starTimesSmartCard && <p className="text-[#F95252] text-[9px] md:text-[12px] lg:text-[14px] font-[400] italic">
                 {errors.starTimesSmartCard}</p>}
+                  {(!errors.starTimesSmartCard && stateInvalidDecoderNumber) && (
+                   <p className ="text-[14px] top-0 font-[500] text-red-500 text-left
+           lg:text-[14px] lg:leading-[20px] leading-[18px] ">
+            Invalid iuc number
+          </p>
+                )}
             </div>
+            
 
-            <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
+            <div className="flex flex-col relative gap-[3px] lg:gap-[5px] w-full md:w-1/2">
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] font-[400] md:font-[600]">
                 Card Name</label>
               <input type="text"
-                onChange={handleCardName} onInput={(event)=> {event.target.value = event.target.value.replace(/[0-9]/g, '')}}
-                 className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
+              value={userVerifiedName}
+              readOnly
+                 className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] self-center ${
       isDarkMode 
       ? "bg-black text-white border border-white" 
       : "text-[#7C7C7C] border-[#9C9C9C] hover:bg-[#EDEAEA]"
   }`}    />
+  {starTimesLoading && (
+    <p className ="absolute left-[10px] top-[60%]">
+     <BalanceLoading/>
+    </p>
+  )}
             </div>
           </div>
           <div className="flex flex-col md:flex-row gap-[20px] md:gap-[12px] lg:gap-[22px] md:my-2 lg:my-4">
@@ -515,7 +614,7 @@ const VerifyPinHandler = async () => {
                   }
                 
                    })}
-                onChange={handleStarTimesMobileNumberChange} type="tel" maxLength={11} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
+                onChange={handleStarTimesMobileNumberChange} type="tel" maxLength={11} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] self-center ${
       isDarkMode 
       ? "bg-black text-white border border-white" 
@@ -528,7 +627,7 @@ const VerifyPinHandler = async () => {
               <label htmlFor="Email" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] font-[400] md:font-[600]">
                 Email</label>
               <input type="email" onChange={handleTvEmail} placeholder="example@gmail.com"
-               required className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[14px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
+               required className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[14px] sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] self-center ${
       isDarkMode 
       ? "bg-black text-white border border-white" 
@@ -547,7 +646,8 @@ const VerifyPinHandler = async () => {
 
               <input
                 type="text"
-                className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
+                readOnly
+                className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
                 lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] self-center ${
                   isDarkMode 
                   ? "bg-black text-white border border-white" 
@@ -561,13 +661,13 @@ const VerifyPinHandler = async () => {
             <div className="flex relative flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] font-[400] md:font-[600]">
                 Payment Method</label>
-              <div onClick={methodDropDown} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg flex items-center justify-between border-[0.23px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] ${
+              <div onClick={methodDropDown} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px]  sm:p-3 sm:text-lg flex items-center justify-between border-[0.23px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] ${
        isDarkMode 
        ? "bg-black text-white border border-white" 
        : " border-[#9C9C9C]"
    }`}     >
                 <p className='font-[400] text-[13px] leading-[10.4px] md:text-[12px] md:leading-[12.206px] lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px] cursor-pointer'>
-                   {`${flagResult}  ${" "} ${tvWalletBalance}`}
+                   {`${flagResult}  ${" "} ${starTimesWalletBalance}`}
                 </p>
                 <img className='methodDrop h-[16px] w-[14px] md:h-[14.038px] md:w-[14.038px] lg:h-[24px] lg:w-[24px]'
                   src={methodImage} alt="" />
@@ -579,9 +679,8 @@ const VerifyPinHandler = async () => {
                     return (
                       <div
                         onClick={(e => {
-                          onchange = { setMethodOptions }
                           setFlagResult(methodOption.method);
-                          setTvWalletBalance(methodOption.balance)
+                          setStarTimesWalletBalance(methodOption.balance)
                           setMethodImage(methodOption.flag);
                           setMethodPayment(false);
                           document.querySelector('.methodDrop').classList.remove('DropIt');
@@ -594,11 +693,8 @@ const VerifyPinHandler = async () => {
           : "bg-white hover:bg-[#EDEAEA]"
       }`}    
                         key={methodOption.id} >
-
-                        <img className='md:h-[29.27px]  h-[14.27px]' src={methodOption.flag} alt="" />
-
-                        <h2
-                          className={`text-[14px] leading-[10.4px]
+        <img className='md:h-[29.27px]  h-[14.27px]' src={methodOption.flag} alt="" />
+ <h2 className={`text-[14px] leading-[10.4px]
                font-[500]   
          md:text-[13.227px] md:leading-[17.195px]  
          lg:text-[16px] lg:leading-[20.8px] self-center cursor-pointer  
@@ -622,9 +718,9 @@ const VerifyPinHandler = async () => {
         </div>
 
         <button onClick={handleStarTimes}
-          disabled={starTimesMobileNumber.length !== 11 || !cardName || !starTimesEmail || !starTimesSmartCard || !starTimesDecoderType || !selectedOptionStarTimes}
+          disabled={starTimesMobileNumber.length !== 11 || !userVerifiedName || !starTimesEmail || !starTimesSmartCard || !starTimesDecoderType || !selectedOptionStarTimes}
           className={`
-             ${starTimesMobileNumber.length !== 11 || !cardName || !starTimesEmail || !starTimesSmartCard || !starTimesDecoderType || !selectedOptionStarTimes || !flagResult
+             ${starTimesMobileNumber.length !== 11 || !userVerifiedName || !starTimesEmail || !starTimesSmartCard || !starTimesDecoderType || !selectedOptionStarTimes || !flagResult
               ? "bg-[#63616188] "
               : "bg-primary"
             }
@@ -641,48 +737,55 @@ const VerifyPinHandler = async () => {
         </div>
 
       </DashBoardLayout>
-      <ConfirmStarTimesPopup />
+      <ConfirmStarTimesPopup userVerifiedName ={userVerifiedName} />
       <InputStarTimesPopup VerifyPinHandler={VerifyPinHandler}/>
-      <StarTimesSuccessfulPopup handleReceivedData = {handleReceivedData} />
+      <StarTimesSuccessfulPopup handleReceivedData = {handleReceivedData} userVerifiedName={userVerifiedName}/>
             {/* Failed Transaction Popup */}
       {failedPopup && (
         <Modal>
-          <div className="w-[90%] md:w-[70%] lg:w-[40%] mx-auto bg-white rounded-lg overflow-hidden">
-            <div className="flex justify-between items-center p-4">
-              <img
-              className="w-6 h-6"
-                src="/Images/login/arpLogo.png"
-                alt="Logo"
-              />
-              <img
-                onClick={() => setFailedPopup(false)}
-                className="w-6 h-6 cursor-pointer"
-                src="/Images/transferImages/close-circle.png"
-                alt="Close"
-              />
-            </div>
-            <hr className="h-1 bg-[#04177f] border-none" />
-            <div className="p-4 text-center">
-              <h2 className="text-lg md:text-xl font-semibold my-4">
-                Transaction Failed
-              </h2>
-              <img
-                className="w-32 h-32 mx-auto my-6"
-                src="./Images/failed.png"
-                alt="Failed"
-              />
-              <p className="text-sm text-gray-600 mb-8">
-                An unexpected error has occurred, please try again.
-              </p>
-              <button
-                onClick={() => setFailedPopup(false)}
-                className="bg-[#04177f] w-full max-w-xs mx-auto py-2 text-white rounded-md font-medium"
-              >
-                Done
-              </button>
-            </div>
-          </div>
-          </Modal>
+             <div className="w-[90%] md:w-[70%] lg:w-[40%] mx-auto bg-white rounded-lg overflow-hidden">
+               <div className="flex justify-start w-full items-center p-4">
+                 <img
+                   className="w-6 h-6"
+                   src="/Images/login/arpLogo.png"
+                   alt="Logo"
+                 />
+                
+               </div>
+               <hr className="h-1 bg-[#04177f] border-none" />
+               <div className="p-4 text-center">
+                 <h2 className="text-lg md:text-xl font-semibold my-4">
+                   Transaction Failed
+                 </h2>
+                 <img
+                   className="w-32 h-32 mx-auto my-6"
+                   src="./Images/failed.png"
+                   alt="Failed"
+                 />
+                 <p className="text-sm text-gray-600 mb-8">
+                   An unexpected error has occurred, please try again.
+                 </p>
+                <div className="flex gap-[10px] justify-between w-full px-[10px]">
+        <button
+          onClick={() => setFailedPopup(false)}
+          className="bg-[#04177f] w-[50%] max-w-xs mx-auto py-2
+           text-white rounded-md font-medium">
+          Done
+        </button>
+           <button
+          onClick={() =>{
+            ExitTheDoneButton()
+          }}
+          className="w-[50%] bg-white max-w-xs mx-auto py-2 text-blue-900
+           rounded-md font-medium"
+        >
+          Receipt
+        </button>
+        </div>
+
+               </div>
+             </div>
+             </Modal>
       )}
             {isLoading && (
                  <Modal>

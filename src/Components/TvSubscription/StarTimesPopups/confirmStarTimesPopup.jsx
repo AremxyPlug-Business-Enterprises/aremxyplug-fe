@@ -6,21 +6,21 @@ import { Modal } from "../../Screens/Modal/Modal";
 import arrowRight from "../../../Components/EducationPins/imagesEducation/educationArrowRight.svg";
 import styles from '../../AirTimePage/AirtimeVtu.module.css'
 
-const ConfirmStarTimesPopup = () => {
+const ConfirmStarTimesPopup = ({userVerifiedName}) => {
 
   const {
     confirmStarTimesPopup,
     setConfirmStarTimesPopup,
     toggleSideBar,
-    formatNumberWithCommas,
+   // formatNumberWithCommas,
     setInputPinStarTimes,
     starTimesMobileNumber,
     starTimesEmail,
     starTimesSmartCard,
     selectedOptionStarTimes,
-    cardName,
+//cardName,
     methodImage,
-    tvWalletBalance,
+    //starTimesWalletBalance,
     flagResult,
     starTimesAmount,
     newBalance
@@ -103,7 +103,7 @@ const ConfirmStarTimesPopup = () => {
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
                     <span className="text-[#0008]">Card Name</span>
-                    <span>{cardName}</span>
+                    <span>{userVerifiedName}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
                     <span className="text-[#0008]">Phone Number</span>

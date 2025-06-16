@@ -23,6 +23,7 @@ import { useNavigate } from "react-router-dom";
 import { Loader } from "../Loader/Loader";
 import { GetFunction } from "../ApiCollection.jsx/ApiBuck";
 import { Modal } from "../Screens/Modal/Modal";
+import { BalanceLoading } from "../Loader/Loader";
 
 const Showmax = () => {
 
@@ -35,7 +36,6 @@ const Showmax = () => {
     showDropdownShowmax,
     setShowDropdownShowmax,
     setCardName,
-    cardName,
     setShowMaxSmartCard,
     showMaxSmartCard,
     decoderActive, setDecoderActive,
@@ -68,32 +68,34 @@ const Showmax = () => {
 setShowMaxSubscriptionResponse,
 showMaxMobileNumber, 
 setShowMaxMobileNumber,
-    newBalance
+    newBalance,
+    setNewBalance
   } = useContext(ContextProvider)
-
-
-
-    
-      const [isLoading, setIsLoading] = useState(false)
+ const [isLoading, setIsLoading] = useState(false)
       const [failedPopup, setFailedPopup] = useState(false);
       const [successConfig, setSuccessConfig] = useState("")
-       const [failedConfig, setFailedConfig] = useState("")
+       const [failedConfig, setFailedConfig] = useState("");
+       const [showMaxLoading, setShowMaxLoading] = useState(false);
+                       const [stateInvalidDecoderNumber, setStateInvalidDecoderNumber] = useState(false);
+                       const [passDataBalance, setPassDataBalance] = useState({});
+                       const [showMaxData, setShowMaxData] = useState([]);
+                      const [showMaxVerifyResponse, setShowMaxVerifyResponse] = useState({});
     
             const navigate = useNavigate();
       
-            
-       
-   const ShowMaxPlans = fetchedShowMaxPlans.data ? fetchedShowMaxPlans.data.data.data : []   
-
-  const handleOptionClickShowmax = () => {
-
-
-    setShowDropdownShowmax(false);
+            const handleOptionClickShowmax = () => {
+  setShowDropdownShowmax(false);
   };
 
   
 
-  
+    useEffect(()=> {
+        if( showMaxVerifyResponse?.data?.name?.length < 1 ){
+         setStateInvalidDecoderNumber(true);
+        }else{
+          setStateInvalidDecoderNumber(false)
+        }
+      },[showMaxVerifyResponse?.data?.name])
 
   
   
@@ -109,16 +111,16 @@ setShowMaxMobileNumber,
       const SuccessHandler = ()=> {
        navigate(path);
       }
-      const FailedHandler = ()=> {
-       console.log("Error")
+      const FailedHandler = async()=> {
+         await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse)
       }
      
       const SubscriptionPresent =()=> {
-       if((fetchedDstvPlans.status === 200 || 201) && id === 2 ){
+       if((fetchedDstvPlans.status === 200 || fetchedDstvPlans.status ===201) && id === 2 ){
          return navigate(path);
-       }else if((fetchedStarTimesPlans.status === 200 || 201) && id === 3) {
+       }else if((fetchedStarTimesPlans.status === 200 || fetchedStarTimesPlans.status === 201) && id === 3) {
         return navigate(path);
-       }else if((fetchedShowMaxPlans.status === 200 || 201) && id === 4) {
+       }else if((fetchedGotvPlans.status === 200 || fetchedGotvPlans.status === 201) && id === 4) {
         return navigate(path);
        }
        
@@ -126,17 +128,17 @@ setShowMaxMobileNumber,
      
       let TvPath;
       let fetchedResponse;
-       if((fetchedDstvPlans.status === undefined || null) && id === 2 ){
+       if((fetchedDstvPlans.status === undefined || fetchedDstvPlans.status === null) && id === 2 ){
          TvPath = `products/tvsub/dstv`;
        fetchedResponse = setFetchedDstvPlans;
         await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse)
        
-      }else if((fetchedStarTimesPlans.status === undefined || null) && id === 3){
+      }else if((fetchedStarTimesPlans.status === undefined || fetchedStarTimesPlans.status === null) && id === 3){
          TvPath = `products/tvsub/startimes`;
        fetchedResponse = setFetchedStarTimesPlans;
         await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse)
         
-     }else if ((fetchedGotvPlans.status === undefined || null) && id === 4){
+     }else if ((fetchedGotvPlans.status === undefined || fetchedGotvPlans.status === null) && id === 4){
        TvPath = `products/tvsub/gotv`;
        fetchedResponse = setFetchedGotvPlans;
         await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse)
@@ -146,26 +148,53 @@ setShowMaxMobileNumber,
      }
      }
      
-    useEffect(()=> {
-           if(ShowMaxPlans.length < 1){
-             navigate("/TvSubscription");
-           }
-         })
+     const showMaxOptionalPlan = showMaxData?.length < 1 && fetchedShowMaxPlans.status === 200 ? fetchedShowMaxPlans.data.data.data : showMaxData;
+            useEffect(()=> {
+             if(fetchedShowMaxPlans.status === 200 || fetchedShowMaxPlans.status === 201){
+            setShowMaxData(fetchedShowMaxPlans.data.data.data);
+            }else if(fetchedShowMaxPlans.status === undefined){
+             const RetrieveGotvPlans = async()=> {
+                const SuccessHandler = ()=> {
+          console.log("Successfully fetched showmax plans");
+         }
+           const failedHandler = async()=> {
+          console.log("Couldn't fetch showmax plans");
+          await GetFunction(`products/tvsub/showmax`, setIsLoading, SuccessHandler, failedHandler, setFetchedStarTimesPlans);
+          }
+            
+       await GetFunction(`products/tvsub/showmax`, setIsLoading, SuccessHandler, failedHandler, setFetchedStarTimesPlans);
+      
+        }
+      RetrieveGotvPlans()
+      }
+       const GetBalance =   async()=> {
+                              const SuccessHandler = ()=> {
+                            //alert("Successful");
+                       console.log("successfully retrieved balance");
+                       //alert("Successful")
+                         }
+                        const FailedHandler = async()=> {
+                          console.log(`Failed to retrieve balance`)
+                          await GetFunction("balance", setIsLoading, SuccessHandler, FailedHandler,setPassDataBalance)
+                        }
+                        await GetFunction("balance", setIsLoading, SuccessHandler, FailedHandler,setPassDataBalance)
+                          } 
+                           // Simulate async data loading
+                          if(newBalance === "" || newBalance === null || newBalance === undefined){
+                              GetBalance();
+                              if(GetBalance){
+                               setNewBalance(passDataBalance?.data ? passDataBalance.data.data.data.balance : "");
+                              }
+                            }
+           //eslint-disable-next-line             
+            },[])
+             
          
      
 // function waecQuantityDropDown(){
   //   setQuantityActive(!quantityActive);
   // document.querySelector('.imgdrop').classList.toggle('DropIt');
   // }
-
-  const handleCardName = (e) => {
-    const inputValue = e.target.value;
-    setCardName(inputValue);
-  }
-  const handleSmartCard = (e) => {
-    const inputValue = e.target.value;
-    setShowMaxSmartCard(inputValue);
-  }
   const handleTvEmail = (e) => {
     const inputValue = e.target.value;
     setShowMaxEmail(inputValue);
@@ -235,7 +264,8 @@ setShowMaxMobileNumber,
 
   const { flagResult, setFlagResult } = useContext(ContextProvider);
   const { methodPayment, setMethodPayment } = useContext(ContextProvider);
-  const { tvWalletBalance, setTvWalletBalance } = useContext(ContextProvider);
+  const { showMaxWalletBalance,
+ setShowMaxWalletBalance } = useContext(ContextProvider);
 
 
 
@@ -244,14 +274,16 @@ setShowMaxMobileNumber,
     document.querySelector('.methodDrop').classList.toggle('DropIt');
   }
 
-  const [methodOptions, setMethodOptions] = useState([
-    { method: 'NGN Wallet',  balance: `(${newBalance})`, flag: nigerianFlag, id: 1 },
+  const updateBalance = passDataBalance?.data?.data  ? passDataBalance.data.data.data.balance : "";
+  const methodOptions= [
+    { method: 'NGN Wallet',  balance: newBalance === "" || newBalance === null || newBalance === undefined  ? `(${updateBalance})` : `(${newBalance})`,
+     flag: nigerianFlag, id: 1 },
     { method: 'USD Wallet ', balance: '(0.00)', flag: americaFlag, id: 2 },
     { method: 'EUR Wallet', balance: '(0.00)', flag: britainFlag, id: 3 },
     { method: 'GBP Wallet', balance: '(0.00)', flag: euroFlag, id: 4 },
     { method: 'AUD Wallet', balance: '(0.00)', flag: austriaFlag, id: 5 },
     { method: 'KES Wallet', balance: '(0.00)', flag: kenyaFlag, id: 6 }
-  ])
+  ]
 
   function packageDropdown() {
     if (!showMaxDecoderType) {
@@ -269,14 +301,45 @@ setShowMaxMobileNumber,
     document.querySelector('.decdrop').classList.toggle('DropIt');
   }
 
+
+  let userVerifiedName = showMaxVerifyResponse?.data ? showMaxVerifyResponse?.data?.name : "";
+   //Function to help Verify users account
+   const VerifyUserAccount = async(UserTvSubscription)=> {
+    setShowMaxVerifyResponse({});
+      if(UserTvSubscription?.length === 10 && 
+       (UserTvSubscription !== "" && 
+         UserTvSubscription !== null && 
+         UserTvSubscription !== undefined)){
+           const body = {
+              decoder_type : showMaxDecoderType.toLowerCase(),
+             iuc_number : UserTvSubscription
+           }
+           const bodyToJson = JSON.stringify(body);
+   await PostFunction("bills/verify", setShowMaxLoading, bodyToJson, ()=> {
+     console.log("Succesfully verified tv subscription account.");
+     setShowMaxSmartCard(UserTvSubscription);
+   
+     
+   }, ()=> {
+     console.log("Failed to verify tv subscription account.")
+   }, setShowMaxVerifyResponse )
+   }
+   }
+   //console.log(userVerifiedName)
+   
+    const handleSmartCard = async(e) => {
+       const inputValue = e.target.value;
+     await VerifyUserAccount(inputValue);
+    }
     const handleReceivedData = () => {
     setIsLoading(true);
     const receivedData = () => {
       // Seting the relevant data from the TV subscription response
-      setShowMaxOrderId(showMaxSubscriptionResponse.data.order_id);
-      setShowMaxTransactionId(showMaxSubscriptionResponse.data.transcation_id);
+      setShowMaxOrderId(showMaxSubscriptionResponse?.data?.order_id ? showMaxSubscriptionResponse?.data?.order_id : "");
+      setShowMaxTransactionId(showMaxSubscriptionResponse?.data?.transcation_id ? showMaxSubscriptionResponse?.data?.transcation_id : "");
      // setShowmaxRequestId(showMaxSubscriptionResponse.data.request_id);
-      setShowMaxDescription(showMaxSubscriptionResponse.data.description);
+      setShowMaxDescription(showMaxSubscriptionResponse?.data?.description ? showMaxSubscriptionResponse?.data?.description : "");
+      setCardName(userVerifiedName)
     };
   
     receivedData();
@@ -342,10 +405,11 @@ setShowMaxMobileNumber,
    setPackageShowMax("");
    setShowMaxDecoderType("")
     setFlagResult("");
-    setTvWalletBalance("");
+    setShowMaxWalletBalance("");
     setCardName("");
      setSelectedOptionShowmax("")
-  setFailedPopup(false)
+  setFailedPopup(false);
+  handleReceivedData();
   }
   return (
     <div>
@@ -383,7 +447,7 @@ setShowMaxMobileNumber,
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] md:font-[600] font-[400]">
                 Confirm Decoder Type</label>
               {/* <button className="border-[0.23px] lg:border-[0.4px] w-full md:w-1/2 h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C]">Showmax</button> */}
-              <div onClick ={decoderDropdown} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.5px] p-4 sm:p-3 sm:text-lg relative flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
+              <div onClick ={decoderDropdown} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.5px]  sm:p-3 sm:text-lg relative flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px]  self-center" onClick={decoderDropdown}             ${
       isDarkMode
         ? "bg-black text-white border !border-white"
@@ -409,7 +473,7 @@ setShowMaxMobileNumber,
             return (
                <p
                onClick={(e =>{
-          setShowMaxDecoderType(decoder.decoderType);
+          setShowMaxDecoderType(decoder.id === 1 ? decoder.decoderType : "");
                  setDecoderActive(false);
                  GetOtherDataTv(decoder.id, decoder.path);
              document.querySelector('.decdrop').classList.remove('DropIt');
@@ -442,7 +506,7 @@ setShowMaxMobileNumber,
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] md:font-[600] font-[400]">
                 Select Package</label>
 
-              <div onClick={packageDropdown} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.5px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
+              <div onClick={packageDropdown} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.5px] sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] self-center"         
         ${
       isDarkMode
@@ -461,7 +525,7 @@ setShowMaxMobileNumber,
 
               {showDropdownShowmax && (
                 <ul className="dropdown-options z-[2] absolute top-[100%] w-full h-[300px] overflow-y-scroll bg-white cursor-pointer">
-                  {ShowMaxPlans.map((option, index) => (
+                  {showMaxOptionalPlan.map((option, index) => (
                     <li
                       className={`pb-[20px] md:pb-[14px] pt-[20px] md:pt-[14px] font-weight-bold text-[15px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
                       md:text-[13.227px] md:leading-[17.195px] 
@@ -499,8 +563,7 @@ setShowMaxMobileNumber,
             const numericValue = e.target.value.replace(/\D/g, '');
                     e.target.value = numericValue
                 })}
-                   value = {showMaxSmartCard}
-                onChange={handleSmartCard} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
+                onChange={handleSmartCard} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px] self-center ${
       isDarkMode 
         ? "bg-black text-white border border-white" 
@@ -508,18 +571,30 @@ setShowMaxMobileNumber,
     }`}  />
             {errors.showmaxSmartCard && <p className="text-[#F95252] text-[13.2px] md:text-[12px] lg:text-[14px] font-[400] italic">
                 {errors.showMaxSmartCard}</p>}
+                  {(!errors.showMaxSmartCard && stateInvalidDecoderNumber) && (
+                   <p className ="text-[14px] top-0 font-[500] text-red-500 text-left
+           lg:text-[14px] lg:leading-[20px] leading-[18px] ">
+            Invalid iuc number
+          </p>
+                )}
             </div>
 
-            <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
+            <div className="flex flex-col relative gap-[3px] lg:gap-[5px] w-full md:w-1/2">
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[14px] lg:text-[17px] md:text-[13px] md:font-[600] font-[400]">
                 Card Name</label>
-              <input type="text" value={cardName}
-                onChange={handleCardName} onInput={(event)=> {event.target.value = event.target.value.replace(/[0-9]/g, '')}} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[13px] md:leading-[12.206px] 
+              <input type="text" value={userVerifiedName}
+              readOnly
+               className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[13px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] self-center ${
       isDarkMode 
       ? "bg-black text-white border border-white" 
       : "border-[#9C9C9C] text-[#7C7C7C] hover:bg-[#EDEAEA]"
   }`} />
+  {showMaxLoading && (
+    <p className="absolute left-[10px] top-[60%]">
+    <BalanceLoading/>
+    </p>
+  )}
             </div>
           </div>
           <div className="flex flex-col md:flex-row gap-[20px] md:gap-[12px] lg:gap-[22px] md:my-2 lg:my-4">
@@ -540,7 +615,7 @@ setShowMaxMobileNumber,
                   }
                 
                    })}
-                type="tel" maxLength={11} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[600] leading-[10.4px] md:text-[13px] md:leading-[12.206px] 
+                type="tel" maxLength={11} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[600] leading-[10.4px] md:text-[13px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] self-center ${
       isDarkMode 
         ? "bg-black text-white border border-white" 
@@ -553,7 +628,7 @@ setShowMaxMobileNumber,
               <label htmlFor="Email" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] font-[400] md:font-[600]">
                 Email</label>
               <input value={showMaxEmail}
-              type="email" onChange={handleTvEmail} placeholder="example@gmail.com" required className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[14px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[600] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
+              type="email" onChange={handleTvEmail} placeholder="example@gmail.com" required className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[14px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[600] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] self-center ${
       isDarkMode 
       ? "bg-black text-white border border-white" 
@@ -571,8 +646,9 @@ setShowMaxMobileNumber,
 
 
               <input
+              readOnly
                 type="text"
-                className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
+                className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
                 lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] self-center ${
                   isDarkMode 
         ? "bg-black text-white border border-white" 
@@ -586,13 +662,13 @@ setShowMaxMobileNumber,
             <div className="flex relative flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] font-[400] md:font-[600]">
                 Payment Method</label>
-              <div onClick={methodDropDown} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg flex items-center justify-between border-[0.23px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] ${
+              <div onClick={methodDropDown} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] sm:p-3 sm:text-lg flex items-center justify-between border-[0.23px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] ${
       isDarkMode 
       ? "bg-black text-white border border-white" 
       : "border-[#9C9C9C]"
   }`} >
                 <p className='font-[400] text-[12px] leading-[10.4px] md:text-[12px] md:leading-[12.206px] lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px] cursor-pointer'>
-                    {`${flagResult} ${" "} ${tvWalletBalance}`}
+                    {`${flagResult} ${" "} ${showMaxWalletBalance}`}
                 </p>
                 <img className='methodDrop h-[16px] w-[14px] md:h-[14.038px] md:w-[14.038px] lg:h-[24px] lg:w-[24px]'
                   src={methodImage} alt="" />
@@ -604,9 +680,9 @@ setShowMaxMobileNumber,
                     return (
                       <div
                         onClick={(e => {
-                          onchange = { setMethodOptions }
+                         
                           setFlagResult(methodOption.method);
-                          setTvWalletBalance(methodOption.balance)
+                          setShowMaxWalletBalance(methodOption.balance)
                           setMethodImage(methodOption.flag);
                           setMethodPayment(false);
                           document.querySelector('.methodDrop').classList.remove('DropIt');
@@ -647,9 +723,9 @@ setShowMaxMobileNumber,
         </div>
 
         <button onClick={handleShowmax}
-          disabled={showMaxMobileNumber.length !== 11 || !cardName || !showMaxEmail || !showMaxSmartCard || !showMaxDecoderType || !selectedOptionShowmax}
+          disabled={showMaxMobileNumber.length !== 11 || !userVerifiedName || !showMaxEmail || !showMaxSmartCard || !showMaxDecoderType || !selectedOptionShowmax}
           className={`
-             ${showMaxMobileNumber.length !== 11 || !cardName || !showMaxEmail || !showMaxSmartCard || !showMaxDecoderType || !selectedOptionShowmax || !flagResult
+             ${showMaxMobileNumber.length !== 11 || !userVerifiedName|| !showMaxEmail || !showMaxSmartCard || !showMaxDecoderType || !selectedOptionShowmax || !flagResult
               ? "bg-[#63616188] "
               : "bg-primary"
             }
@@ -666,51 +742,68 @@ setShowMaxMobileNumber,
         </div>
 
       </DashBoardLayout>
-      <ConfirmShowmaxPopup />
+      <ConfirmShowmaxPopup  userVerifiedName ={userVerifiedName} />
       <InputShowmaxPopup VerifyPinHandler={VerifyPinHandler}/>
-      <ShowmaxSuccessfulPopup  handleReceivedData = {handleReceivedData}/>
+      <ShowmaxSuccessfulPopup  handleReceivedData = {handleReceivedData}  userVerifiedName ={userVerifiedName}/>
 
         {/* Failed Transaction Popup */}
             {failedPopup && (
-              <Modal>
-                <div className="w-[90%] md:w-[70%] lg:w-[40%] mx-auto bg-white rounded-lg overflow-hidden">
-                  <div className="flex justify-start w-full items-center p-4">
-                    <img
-                      className="w-6 h-6"
-                      src="/Images/login/arpLogo.png"
-                      alt="Logo"
-                    />
-                   
-                  </div>
-                  <hr className="h-1 bg-[#04177f] border-none" />
-                  <div className="p-4 text-center">
-                    <h2 className="text-lg md:text-xl font-semibold my-4">
-                      Transaction Failed
-                    </h2>
-                    <img
-                      className="w-32 h-32 mx-auto my-6"
-                      src="./Images/failed.png"
-                      alt="Failed"
-                    />
-                    <p className="text-sm text-gray-600 mb-8">
-                      An unexpected error has occurred, please try again.
-                    </p>
-                    <button
-                      onClick={() => ExitTheDoneButton()}
-                      className="bg-[#04177f] w-full max-w-xs mx-auto py-2 text-white rounded-md font-medium"
-                    >
-                      Done
-                    </button>
-                  </div>
-                </div>
-                </Modal>
-            )}
-                  {isLoading && (
-                       <Modal>
-                           <Loader/>
-            
-                       </Modal>
+             <Modal>
+    <div className="w-[90%] md:w-[70%] lg:w-[40%] mx-auto bg-white rounded-lg overflow-hidden">
+      <div className="flex justify-between items-center p-4 ">
+        <img
+          onClick={() => setFailedPopup(false)}
+          className="w-6 h-6"
+          src="/Images/login/arpLogo.png"
+          alt="Logo"
+        />
+        <img
+          onClick={() => setFailedPopup(false)}
+          className="w-6 h-6 cursor-pointer"
+          src="/Images/transferImages/close-circle.png"
+          alt="Close"
+        />
+      </div>
+      <hr className="h-1 bg-[#04177f] border-none" />
+      <div className="p-4 text-center">
+        <h2 className="text-lg md:text-xl font-semibold my-4">
+          Transaction Failed
+        </h2>
+        <img
+          className="w-32 h-32 mx-auto my-6"
+          src="./Images/failed.png"
+          alt="Failed"
+        />
+        <p className="text-sm text-gray-600 mb-8">
+          An unexpected error has occurred, please try again.
+        </p>
+        <div className="flex gap-[10px] justify-between w-full px-[10px]">
+        <button
+          onClick={() => setFailedPopup(false)}
+          className="bg-[#04177f] w-[50%] max-w-xs mx-auto py-2
+           text-white rounded-md font-medium">
+          Done
+        </button>
+           <button
+          onClick={() =>{
+              ExitTheDoneButton()
+          }}
+          className="w-[50%] bg-white max-w-xs mx-auto py-2 text-blue-900
+           rounded-md font-medium"
+        >
+          Receipt
+        </button>
+        </div>
+
+      </div>
+    </div>
+    </Modal>
                   ) } 
+                  {isLoading && (
+                    <Modal>
+                      <Loader/>
+                      </Modal>
+                  )}
                   
     </div>
   )
