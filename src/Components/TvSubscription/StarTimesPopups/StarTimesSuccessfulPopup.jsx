@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import styles from "../../AirTimePage/AirtimeVtu.module.css";
 
 
- const StarTimesSuccessfulPopup = ({handleReceivedData}) => {
+ const StarTimesSuccessfulPopup = ({handleReceivedData, userVerifiedName}) => {
   
    const {
      starTimesSuccessful, 
@@ -15,7 +15,7 @@ import styles from "../../AirTimePage/AirtimeVtu.module.css";
      toggleSideBar,
      starTimesMobileNumber,
      flagResult,
-     cardName,
+    // cardName,
      starTimesSmartCard,
      starTimesEmail,
      selectedOptionStarTimes,
@@ -23,26 +23,7 @@ import styles from "../../AirTimePage/AirtimeVtu.module.css";
 
   
   const valueWithoutTilde = selectedOptionStarTimes.split(" ~ ")[0];
-  // const trimmedValue = valueWithoutTilde.trim();
-  
-  // const CopyButton = ({ textToCopy }) => {
-  //   const handleCopyClick = () => {
-  //     navigator.clipboard.writeText(textToCopy)
-  //       .then(() => {
-  //         // Handle successful copy, e.g., show a success message
-  //         alert('Copied to clipboard');
-  //       })
-  //       .catch((error) => {
-  //         // Handle error, e.g., show an error message
-  //         console.error('Copy failed: ' + error);
-  //       });
-  //   };
-  //   return (
-  //       <button onClick={handleCopyClick}>
-  //         <img src="./Images/currencyImages/copy.svg" alt="" className="md:w-[13px] md:h-[15px] lg:w-[21px] lg:h-[27px]"/>
-  //       </button>
-  //     );
-  //   };
+ 
    const handleReceipt = ()=> {
     handleReceivedData();
      setStarTimesSuccessful(false)
@@ -107,7 +88,7 @@ import styles from "../../AirTimePage/AirtimeVtu.module.css";
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[15px] font-semibold">
                     <span className="text-[#7C7C7C]">Card Name</span>
-                    <span>{cardName}</span>
+                    <span>{userVerifiedName}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[15px] font-semibold">
                     <span className="text-[#7C7C7C]">Phone Number</span>
@@ -144,7 +125,7 @@ import styles from "../../AirTimePage/AirtimeVtu.module.css";
                   </button>
             
              
-                <button onClick={()=> handleReceivedData()}
+                <button onClick={()=> handleReceipt()}
                 style={{boxShadow : '0px 0px 2.0368096828460693px 0px #00000040'}} className={`border-[1px]  w-[111px] lg:w-[200px] md:w-[99px] h-[40px] md:h-[24px] lg:h-[42px] lg:my-[2%] flex justify-center items-center cursor-pointer text-[12px] md:text-[12px] lg:text-[16px] font-semibold rounded-[6px] md:rounded-[7px] lg:rounded-[12px]`}
                 >
                   Receipt

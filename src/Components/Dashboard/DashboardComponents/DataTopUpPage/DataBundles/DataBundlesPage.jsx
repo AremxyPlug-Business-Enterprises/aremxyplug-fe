@@ -26,28 +26,77 @@ import DataBalance2 from "../DataBundles/DataBundles-Images/DataBalance2.svg";
 import { Modal } from "../../../../Screens/Modal/Modal";
 
 const DataBundlesPage = () => {
-  const { isDarkMode } = useContext(ContextProvider);
+  const { isDarkMode,  
+    setSelectedOptionMtn,
+    setSelectedProductMtn,
+    setSelectedProductAirtel,
+    setSelectedProductEtisalat,
+    setSelectedProductGlo,
+    setSelectedAmountMtn,
+    setRecipientNamesMtn,
+    setRecipientPhoneNumberMtn,
+    setWalletNameMtn,
+     setSelectedOptionAirtel,
+    setSelectedAmountAirtel,
+    setRecipientNamesAirtel,
+    setRecipientPhoneNumberAirtel,
+     setWalletNameAirtel,
+     setSelectedOptionGlo,
+    setSelectedAmountGlo,
+    setRecipientNamesGlo,
+    setRecipientPhoneNumberGlo,
+   setWalletNameGlo,
+     setSelectedOptionEtisalat,
+    setSelectedAmountEtisalat,
+    setRecipientNamesEtisalat,
+    setRecipientPhoneNumberEtisalat,
+     setWalletNameEtisalat,
+     toggleSideBar,
+    setAccountId,
+    setEmailId,
+ } = useContext(ContextProvider);
 
   const [codes, setCodes] = useState(false);
 
-  const {
-    setSelectedNetworkProduct,
-    setSelectedOption,
-    setSelectedAmount,
-    setRecipientNames,
-    toggleSideBar,
-    setAccountId,
-    setEmailId,
-  } = useContext(ContextProvider);
+  
 
-  const handleChange = () => {
-    setSelectedNetworkProduct("");
-    setSelectedOption("");
-    setSelectedAmount("");
-    setRecipientNames("");
-    setAccountId("")
-    setEmailId("")
-  };
+   const handleChangeMtn = () => {
+    setSelectedOptionMtn("");
+    setSelectedAmountMtn("");
+    setRecipientNamesMtn("");
+    setRecipientPhoneNumberMtn("");
+    setWalletNameMtn("");
+    setSelectedProductMtn("")
+    setAccountId("");
+    setEmailId("");
+   };
+
+   const handleChangeAirtel = ()=> {
+     setSelectedOptionAirtel("");
+    setSelectedAmountAirtel("");
+    setRecipientNamesAirtel("");
+    setRecipientPhoneNumberAirtel("");
+    setWalletNameAirtel("");
+    setSelectedProductAirtel("")
+   }
+
+   const handleChangeGlo = ()=> {
+     setSelectedOptionGlo("");
+    setSelectedAmountGlo("");
+    setRecipientNamesGlo("");
+    setRecipientPhoneNumberGlo("");
+    setWalletNameGlo("");
+    setSelectedProductGlo("")
+   }
+
+   const handleChangeEtisalat = ()=> {
+     setSelectedOptionEtisalat("");
+    setSelectedAmountEtisalat("");
+    setRecipientNamesEtisalat("");
+    setRecipientPhoneNumberEtisalat("");
+    setWalletNameEtisalat("");
+    setSelectedProductEtisalat("")
+   }
 
   const handleCodes = () => {
     setCodes(false);
@@ -170,7 +219,7 @@ const DataBundlesPage = () => {
                 id="Network"
                 className="rounded-[4px] relative flex flex-col justify-center items-center"
                 onClick={() => {
-                  handleChange();
+                  handleChangeMtn();
                 }}
               >
                 <img src={MTN} alt="" className="w-full" />
@@ -187,7 +236,7 @@ const DataBundlesPage = () => {
                 id="Network"
                 className="rounded-[4px] relative flex flex-col justify-center items-center"
                 onClick={() => {
-                  handleChange();
+                  handleChangeAirtel();
                 }}
               >
                 <img src={Airtel} alt="" className="w-full" />
@@ -204,7 +253,7 @@ const DataBundlesPage = () => {
                 id="Network"
                 className="rounded-[4px] relative flex flex-col justify-center items-center"
                 onClick={() => {
-                  handleChange();
+                  handleChangeGlo();
                 }}
               >
                 <img src={Glo} alt="" className="w-full" />
@@ -221,7 +270,7 @@ const DataBundlesPage = () => {
                 id="Network"
                 className="rounded-[4px] relative flex flex-col justify-center items-center"
                 onClick={() => {
-                  handleChange();
+                  handleChangeEtisalat();
                 }}
               >
                 <img src={Mobile} alt="" className="w-full" />
@@ -237,9 +286,7 @@ const DataBundlesPage = () => {
               <div
                 id="Network"
                 className="rounded-[4px] relative flex flex-col justify-center items-center"
-                onClick={() => {
-                  handleChange();
-                }}
+              
               >
                 <img src={Smile} alt="" className="w-full" />
                 <img
@@ -254,9 +301,7 @@ const DataBundlesPage = () => {
               <div
                 id="Network"
                 className="rounded-[4px] relative flex flex-col justify-center items-center"
-                onClick={() => {
-                  handleChange();
-                }}
+              
               >
                 <img src={Spectranet} alt="" className="w-full" />
                 <img

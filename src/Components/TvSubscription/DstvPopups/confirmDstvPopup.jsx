@@ -7,7 +7,7 @@ import arrowRight from "../../../Components/EducationPins/imagesEducation/educat
 import styles from '../../AirTimePage/AirtimeVtu.module.css'
 
 
- const ConfirmDstvPopup = () => {
+ const ConfirmDstvPopup = ({userVerifiedName}) => {
   
    const {
     confirmDstvPopup,
@@ -42,8 +42,8 @@ import styles from '../../AirTimePage/AirtimeVtu.module.css'
   // };
 const [balanceStatus,setBalanceStatus ] = useState("")
    let balanceStringToNum = Number(newBalance);
-          let starTimesAmountToNumber = Number(dstvAmount);
-         let CheckSufficiency = starTimesAmountToNumber > balanceStringToNum
+          let DstvAmountToNumber = Number(dstvAmount);
+         let CheckSufficiency = DstvAmountToNumber > balanceStringToNum
       useEffect(()=> {
         const HandleBalanceStatus = ()=> {
           if(CheckSufficiency){
@@ -54,7 +54,7 @@ const [balanceStatus,setBalanceStatus ] = useState("")
         }
         HandleBalanceStatus()
       },[CheckSufficiency])
-        console.log(balanceStringToNum, starTimesAmountToNumber)
+        console.log(balanceStringToNum, DstvAmountToNumber)
 
   const valueWithoutTilde = selectedOptionDstv.split(" ~ ")[0];
   // const trimmedValue = valueWithoutTilde.trim();
@@ -104,7 +104,7 @@ const [balanceStatus,setBalanceStatus ] = useState("")
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
                     <span className="text-[#0008]">Card Name</span>
-                    <span>{cardName}</span>
+                    <span>{userVerifiedName}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
                     <span className="text-[#0008]">Phone Number</span>

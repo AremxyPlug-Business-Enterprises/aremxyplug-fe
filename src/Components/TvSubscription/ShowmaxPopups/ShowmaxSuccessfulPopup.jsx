@@ -3,11 +3,10 @@ import "../../TvSubscription/TvSubscription.css";
 import { useContext } from "react";
 import { ContextProvider } from "../../Context";
 import { Modal } from "../../Screens/Modal/Modal";
-import { Link } from "react-router-dom";
 import styles from "../../AirTimePage/AirtimeVtu.module.css";
 
 
- const ShowmaxSuccessfulPopup = ({handleReceivedData}) => {
+ const ShowmaxSuccessfulPopup = ({handleReceivedData, userVerifiedName}) => {
   
    const {
      showmaxSuccessful, 
@@ -15,7 +14,6 @@ import styles from "../../AirTimePage/AirtimeVtu.module.css";
      toggleSideBar,
      showMaxMobileNumber,
      flagResult,
-     cardName,
      showMaxSmartCard,
      showMaxEmail,
      selectedOptionShowmax,
@@ -23,26 +21,7 @@ import styles from "../../AirTimePage/AirtimeVtu.module.css";
 
   
   const valueWithoutTilde = selectedOptionShowmax.split(" ~ ")[0];
-  // const trimmedValue = valueWithoutTilde.trim();
-  
-  // const CopyButton = ({ textToCopy }) => {
-  //   const handleCopyClick = () => {
-  //     navigator.clipboard.writeText(textToCopy)
-  //       .then(() => {
-  //         // Handle successful copy, e.g., show a success message
-  //         alert('Copied to clipboard');
-  //       })
-  //       .catch((error) => {
-  //         // Handle error, e.g., show an error message
-  //         console.error('Copy failed: ' + error);
-  //       });
-  //   };
-  //   return (
-  //       <button onClick={handleCopyClick}>
-  //         <img src="./Images/currencyImages/copy.svg" alt="" className="md:w-[13px] md:h-[15px] lg:w-[21px] lg:h-[27px]"/>
-  //       </button>
-  //     );
-  //   };
+ 
 
   const handleReceipt = ()=> {
     setShowmaxSuccessful(false);
@@ -112,7 +91,7 @@ import styles from "../../AirTimePage/AirtimeVtu.module.css";
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[15px] font-semibold">
                     <span className="text-[#7C7C7C]">Card Name</span>
-                    <span>{cardName}</span>
+                    <span>{userVerifiedName}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[15px] font-semibold">
                     <span className="text-[#7C7C7C]">Phone Number</span>

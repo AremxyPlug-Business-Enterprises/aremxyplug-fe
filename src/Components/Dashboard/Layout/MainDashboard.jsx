@@ -19,12 +19,12 @@ import { RecentTransaction } from "../DashboardComponents/RecentTransaction";
 import { Link } from "react-router-dom";
 import { Loader } from "../../Loader/Loader";
 import { BalanceLoading } from "../../Loader/Loader";
-import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
+import { GetLocalStorage, RemoveLocalStorage } from "../../LocalStorage/LocalStorage";
 import { CheckVirtualAcc } from "../../ApiCollection.jsx/ApiBuck";
 import { useNavigate } from "react-router-dom";
-
 import axios from "axios";
 export const MainDashboard = (Data) => {
+
   const { setHideNavbar, toggleSideBar, isDarkMode,
     dashLoading, bankNameState, accountNameState, accountNumberState,
     customerDetail, setDashLoading, setVirtualAccCreated, 
@@ -40,7 +40,6 @@ const navigate = useNavigate()
   const [blurTwo, setBlurTwo] = useState(false);
   
    //const [blurThree, setBlurThree] = useState(false);
-  const textRef = useRef(null);
   const [selected, setSelected] = useState("");
   const [selected2, setSelected2] = useState("");
   const [symbol, setSymbol] = useState("₦");
@@ -48,7 +47,7 @@ const navigate = useNavigate()
  const [balanceValue, setBalanceValue] = useState(true);
 
   const handleCopyClick = () => {
-    const text = textRef.current.innerText;
+    const text = Data.aremxyAccountNumber;
     navigator.clipboard
       .writeText(text)
       .then(() => {
@@ -188,6 +187,9 @@ if((clickedoption === "NGN") && blur === true){
            }
 
       }catch(error){
+        if(error && error.response === undefined){
+          alert("Your internet connection is quite unstable.")
+        }
         if( error.response && error.response.status === 400){
           alert("Virtual Account Creation failed")
           setDashLoading(false);
@@ -203,10 +205,10 @@ if((clickedoption === "NGN") && blur === true){
         }else if(error && error.response.status === undefined){
            setDashLoading(false);
            alert("Network connection unstable, kindly check your network connection")
-            alert("Virtual Account Creation failed")
+            alert("Virtual Account Creation failed");
         }else {
             setDashLoading(false);
-            alert("Virtual Account Creation failed")
+            alert("Virtual Account Creation failed");
         }
       }}
       }
@@ -229,75 +231,85 @@ if((clickedoption === "NGN") && blur === true){
            const checkBal =  response.data.data.data.balance;
            console.log(checkBal);
            setNewBalance(checkBal)
-             
-
-
-          }
-        }else if((response === undefined || null) || !response) {
-           setBalanceValue(false);
-       
+             }
         }
         }catch(error){
-          if( error.response && (error.response.status === 400 || error.response.status === 401)){
+           if((error.response === undefined || null) ) {
            setBalanceValue(false);
-       
-         }else if(error.response.status === 404){
+       }
+        else if( error.response && (error.response.status === 400)){
+           setBalanceValue(false);
+        }else if(error && error.response.status === 401){
+           if(error.response.headers.get("x-new-auth-token") || error.resposne.headers["x-new-auth-token"]){
+             setBalanceLoading(true)
+         const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
+        
+         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
+             console.log(newToken)
+            localStorage.setItem("authorisedLogin", newToken);
+           }else{
+      localStorage.setItem("getToken", newToken);
+      alert("Get Token is set");
+      }}
+        }
+        else if(error.response.status === 404){
      setBalanceValue(false);
      
-          }else if(error.response.status === undefined) {
+          }else if(error.response === undefined) {
      setBalanceValue(false)
 
-          }else if (error && error.response.status ===500){
-            setNewBalance(0);
-    }else if(error && error.response.status === undefined){
+          }else if (error && error.response.status === 500){
+            setNewBalance("");
+    }else if(error && error.response === undefined){
         setBalanceLoading(false);
         setBalanceValue(false);
  }else{
   setBalanceValue(false);
       }
           }finally {
-          setBalanceLoading(false)
+          setBalanceLoading(false);
         }
       }
        
         }
-
-      //  const RunVirtualBalance = async()=> {
-      //     if(dataStatus === true || educationPinStatus === true || subscriptionStatus === true || airtimeStatus === true){
-      //     await  GenerateAccountBalance();
-      //     }
-      //   }
-      const HandleNetworkStatus =()=> {
-        if(navigator.onLine){
-          alert("You are now Online")
-        }else{
-          setNetworkStatus(false)
-          setBalanceValue(false);
-          alert("You are Offline");
-        }
-      }
       
 
      const ValueRef = useRef()
    
  Data = GetLocalStorage()
+ 
   useEffect(() => {
     ValueRef.current = Data;
     GenerateAccountBalance();
     setNav();
-    setSelected("NGN");
-    HandleNetworkStatus()
-    return () => {
+    setSelected("NGN"); 
+   // HandleNetworkStatus()
+     let resetInActivityTimer;
+    const resetInactivityOnSession = ()=> {
+     clearTimeout(resetInActivityTimer);
+      resetInActivityTimer = setTimeout(()=> {
+     alert("Safety and security precautions: You have been logged out of your session due to inactivity.");
+     navigate("/Login", {replace : true});
+     RemoveLocalStorage();
+      }, 1200000)
+   }
+     resetInactivityOnSession();
+     const event = ["mousemove","mousedown", "keydown", "scroll", "touchstart"];
+     event.forEach(event=> {
+      window.addEventListener(event, resetInactivityOnSession)
+     })
+    
+     return () => {
       setHideNavbar(false);
-    };
+     if(resetInActivityTimer) return clearTimeout(resetInActivityTimer);
+     event.forEach(event => {
+      window.removeEventListener(event, resetInactivityOnSession)
+     })
+       }
     //eslint-disable-next-line
-   }, [networkStatus]); 
-        //To help check the balance when transaction has been carried out
-      //   const  PassedCondition = (dataStatus || educationPinStatus || subscriptionStatus || airtimeStatus)
-      //   useEffect(()=> {
-      // GenerateAccountBalance();
-      //    },[PassedCondition])
-      // alert(navigator.onLine);
+   }, [])
+
+      
 return (
     <div className="h-[150%]">
       {/* ==============TOP BAR========== */}
@@ -661,7 +673,7 @@ return (
                   The below accounts are reserved for your wallet only.
                 </p>
            </div>
-     <div className="">
+     <div className="relative h-[100%] w-[100%]">
               {blurTwo && (
                 <div
                   className={`flex justify-center ${
@@ -669,7 +681,7 @@ return (
                   } ${
                     toggleSideBar
                       ? "backdrop-blur-[5px]  font-extrabold absolute lg:h-[21%] lg:w-[35%] lg:ml-[-8px] lg:flex lg:justify-start lg:mt-[2%] lg:pt-[2%] lg:text-[25px]"
-                      : "backdrop-blur-[4.5px] absolute text-[14px] h-[13%] w-[85%] mt-[4%] lg:mt-[0%] font-extrabold flex justify-start pt-[7%] md:h-[11%] md:text-[25px] md:pt-[5%] lg:pt-[3%] lg:w-[43%] lg:h-[22%] lg:ml-[-1%]"
+                      : "backdrop-blur-[4.5px] absolute text-[14px] h-[100%] w-[100%] mt-[4%] lg:mt-[0%] font-extrabold flex justify-start pt-[7%] md:h-[11%] md:text-[25px] md:pt-[5%] lg:pt-[3%] lg:w-[100%] lg:h-[100%]"
                   } `}
                 >
                   Coming Soon...
@@ -776,29 +788,26 @@ return (
                 {/* This is Collected for secure and cyber-attack-free transactions among AremxyPlug's users*/}
                 </p>
                 </div>
-                <Link to={ (!Data.ConfirmId &&  !Data.ConfirmBvn) || (Data.ConfirmId === "false" && Data.ConfirmBvn === "false") ?  {
+                <div className="flex w-[100%] justify-end">
+
+  <Link  to={ (!Data.ConfirmId &&  !Data.ConfirmBvn) || (Data.ConfirmId === "false" && Data.ConfirmBvn === "false") ?  {
     pathname: "/ProfileSettingMain",
     state: { verificationOpen: true } 
-  } : null } >
-                {" "}
-
-                <button
-                onClick={()=> {
+  } : null } onClick={()=> {
     if((Data.ConfirmId === "true" ||  Data.ConfirmBvn === "true") && Data.ConfirmAcc === "false" && selected === "NGN"){
      GenerateVirtualAccount()
     }
-  } }
-                 disabled={selected !== "NGN"}
-                  className={`text-[10px] md:text-[11px] lg:text-[12px] font-[600]   ${
+  } }   disabled={selected !== "NGN"}
+                  className={`text-[10px] w-[100px] py-[10px] text-center lg:py-[13px] lg:w-[100px]
+                     rounded-[15px] lg:rounded-[30px] text-white md:text-[11px] lg:text-[12px] font-[600]   ${
                     isDarkMode ? "border bg-black" : "bg-[#04177f]"
-                  } ${styles.viewWallet} ${selected !== "NGN" ? "bg-gray-400" : "bg-[#04177f]"}`}
-                >
-               {(Data.ConfirmId === "true" ||  Data.ConfirmBvn === "true") && Data.ConfirmAcc === "false"  ? "Generate" : "Verify"
+                  } ${selected !== "NGN" && (Data.ConfirmId === "true" || Data.ConfirmBvn === "true") ? "bg-gray-400" : "bg-[#04177f]"}`}
+               >
+              {(Data.ConfirmId === "true" ||  Data.ConfirmBvn === "true") && Data.ConfirmAcc === "false"  ? "Generate" : "Verify"
                }
               
-               
-                </button>
-              </Link>
+           </Link>
+           </div>
                 </div>
                 )}
                 </div>

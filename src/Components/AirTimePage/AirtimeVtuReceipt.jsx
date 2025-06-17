@@ -7,12 +7,14 @@ import styles from './AirtimeVtu.module.css'
 import { ContextProvider } from '../Context';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { DashBoardLayout } from '../Dashboard/Layout/DashBoardLayout';
+import { GetLocalStorage } from "../LocalStorage/LocalStorage";
 
-
-export const AirtimeVtuReceipt = () => {
+export const AirtimeVtuReceipt = (Data) => {
+  Data = GetLocalStorage()
   const location = useLocation();
   const navigate = useNavigate();
-  const { networkName, selectedProduct, inputValues, amount, transactionID, refNumber, orderID, description } = location.state
+  const { networkName, selectedProduct, inputValues, amount, 
+    transactionID, refNumber, orderID, description } = location.state;
   
   const {
     toggleSideBar,
@@ -73,7 +75,7 @@ export const AirtimeVtuReceipt = () => {
       html2canvas(content).then((canvas) => {
         const imgData = canvas.toDataURL("image/png");
         pdf.addImage(imgData, "PNG", 10, 10, 190, 0);
-        pdf.save("page.pdf");
+        pdf.save("AremxyPlugAirtimeReceipt.pdf");
       });
     }
   };
@@ -152,7 +154,7 @@ export const AirtimeVtuReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Product</p>
-                  <span>{networkName + ' ' + selectedProduct}</span>
+                  <span>{`${networkName + ' ' + selectedProduct} VTU`}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Phone Number</p>
@@ -180,7 +182,7 @@ export const AirtimeVtuReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Customer Name</p>
-                  <span>Aremxyplug</span>
+                  <span>{Data.aremxyUsername}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Wallet Type</p>

@@ -3,7 +3,7 @@ import { DashBoardLayout } from "../Dashboard/Layout/DashBoardLayout";
 import "../TvSubscription/TvSubscription.css";
 import { Link, useNavigate } from "react-router-dom";
 import style from "../AirTimePage/AirtimeVtu.module.css";
-import { GetFunction } from "../ApiCollection.jsx/ApiBuck";
+import { GetFunction, HandleUserSession} from "../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../Loader/Loader";
 import { Modal } from "../Screens/Modal/Modal";
 import { ContextProvider } from "../Context";
@@ -19,42 +19,73 @@ export const TvSubscription = () =>{
         fetchedStarTimesPlans, 
         setFetchedStarTimesPlans} = useContext(ContextProvider)
     const navigate = useNavigate();
+const [sessionModal, setSessionModal]= useState(false)
 
-
-    //Function to fetch users planns for a specific tv subscription
-const GetFunctionHandler = async(GlobalTvSubscription, TvSubscriptionValue)=> {
+const GetFunctionHandler = async(GlobalTvSubscription,tvPage, TvSubscriptionValue)=> {
     const SuccessHandler =()=> {
-        alert(`Successfully fetched ${TvSubscriptionValue} Plans`)
+      //  alert(`Successfully fetched ${TvSubscriptionValue} Plans`)
+      
+      return navigate(tvPage)
+      
+     // console.log("Successfully fetched GotvPlans");
     }
-    const FailedHandler =()=> {
-        alert(`Unable to fetch ${TvSubscriptionValue} Plans`);
+    const FailedHandler = async()=> {
+        setLoading(true);
+   
+     if(GlobalTvSubscription === 0){
+    await GetFunction(`products/tvsub/gotv`, setLoading, SuccessHandler,()=> {
+        console.log("Failed to fetch Gotv with cookies")
+         setSessionModal(true);
+    }, setFetchedGotvPlans)
+     }else if(GlobalTvSubscription === 1){
+        await GetFunction(`products/tvsub/dstv`, setLoading, SuccessHandler, ()=> {
+        console.log("failed to fetch dstv plans with new authToken fetched from cookies")
+           setSessionModal(true);
+    }, setFetchedDstvPlans)
+     }else if(GlobalTvSubscription === 2 ){
+          await GetFunction(`products/tvsub/startimes`, setLoading, SuccessHandler, ()=> {
+        console.log("failed to fetch startimes plans with new authToken fetched from cookies")
+           setSessionModal(true);
+    }, setFetchedStarTimesPlans)
+     }else if(GlobalTvSubscription === 3){
+  await GetFunction(`products/tvsub/showmax`, setLoading, SuccessHandler, ()=> {
+        console.log("failed to fetch showmax plans with new authToken fetched from cookies")
+           setSessionModal(true);
+    }, setFetchedShowMaxPlans)
+     }else {
+        alert("This error did not result from unauthorization.")
+     }
+    
     }
     let path;
-    
     let fetchedPlans;
 const handleSubscriptionFunction = ()=> {
     if(GlobalTvSubscription === 0){
        TvSubscriptionValue = "Gotv";
-      path = `products/tvsub/gotv`
-       fetchedPlans = setFetchedGotvPlans
+      path = `products/tvsub/gotv`;
+       fetchedPlans = setFetchedGotvPlans;
+       tvPage = "/GoTv"
     }else if(GlobalTvSubscription === 1){
         TvSubscriptionValue = "Dstv";
-        path =`products/tvsub/dstv`
-       fetchedPlans = setFetchedDstvPlans
+        path =`products/tvsub/dstv`;
+       fetchedPlans = setFetchedDstvPlans;
+       tvPage = "/DsTv"
     }else if(GlobalTvSubscription === 2){
         TvSubscriptionValue = "StarTimes";
-        path =`products/tvsub/startimes`
-        fetchedPlans = setFetchedStarTimesPlans
+        path =`products/tvsub/startimes`;
+        fetchedPlans = setFetchedStarTimesPlans;
+        tvPage = "/StarTimes"
     }else if(GlobalTvSubscription ===3){
          TvSubscriptionValue = "Showmax";
-        fetchedPlans = setFetchedShowMaxPlans
-     path = `products/tvsub/showmax`
+        fetchedPlans = setFetchedShowMaxPlans;
+     path = `products/tvsub/showmax`;
+     tvPage = "/Showmax";
     }
 }
 
 
  const LinkToPage = ()=> {
-   if(handleSubscriptionFunction && GlobalTvSubscription=== 1  && fetchedDstvPlans.status === (200 || 201) ){
+   if(handleSubscriptionFunction && GlobalTvSubscription === 1  && (fetchedDstvPlans.status === 200 || fetchedDstvPlans.status === 201)){
   return  navigate("/DsTv");
   }else if(handleSubscriptionFunction && GlobalTvSubscription === 3  && fetchedShowMaxPlans.status === (200 || 201)){
  return navigate("/Showmax");
@@ -63,46 +94,54 @@ return navigate("/StarTimes");
    }else if(handleSubscriptionFunction && GlobalTvSubscription === 0 && fetchedGotvPlans.status === (200 || 201)){
    return navigate("/GoTv");
    }
-   
-}
+   }
 
-
-
+//console.log(fetchedPlans);
 // The conditional statement to help handle the getting of the plans when absent in the 
 // their respective variables
 
-    handleSubscriptionFunction();
-   if(handleSubscriptionFunction && GlobalTvSubscription === 0 && (fetchedGotvPlans.status === undefined || null)){
-   await GetFunction(path, setLoading, SuccessHandler, FailedHandler, fetchedPlans)
-     if(GetFunction){
-      return navigate("/GoTv")
-       }
-    } else if(handleSubscriptionFunction && GlobalTvSubscription === 1 && (fetchedDstvPlans.status === undefined || null)){
-    await GetFunction(path, setLoading, SuccessHandler, FailedHandler, fetchedPlans)
-      if(GetFunction){
-            navigate("/DsTv")
-           }
-        
-    } else if(handleSubscriptionFunction && GlobalTvSubscription === 2 && (fetchedStarTimesPlans.status === undefined || null)){
-       await GetFunction(path, setLoading, SuccessHandler, FailedHandler, fetchedPlans)
-        if(GetFunction){
-       return navigate("/StarTimes")
-           }
-        
-    }else if(handleSubscriptionFunction && GlobalTvSubscription === 3 && (fetchedShowMaxPlans.status === undefined || null)){
-     await GetFunction(path, setLoading, SuccessHandler, FailedHandler, fetchedPlans);
-   if(GetFunction){
-    return navigate("/Showmax")
-        }
+ handleSubscriptionFunction();
+   if(handleSubscriptionFunction && GlobalTvSubscription === 0 && (fetchedGotvPlans.status !== 200)){
+await GetFunction(path, setLoading, SuccessHandler, FailedHandler, fetchedPlans);
+//   if(GetFunction && (fetchedGotvPlans.status === 200 || fetchedGotvPlans.status === 201)){
+//    return navigate("/GoTv");
+//   }
+    } else if(handleSubscriptionFunction && GlobalTvSubscription === 1 && (fetchedDstvPlans.status !== 200 )){
+    try{
+  await GetFunction(path, setLoading, SuccessHandler, FailedHandler, fetchedPlans);
+     if(GetFunction && (fetchedDstvPlans.status === 200 || fetchedDstvPlans.status === 201))
+         return navigate("/DsTv");
+    }catch(error){
+        alert("Dstv Plans are unavailabe at the moment, please try again later.")
+    }
+    } else if(handleSubscriptionFunction && GlobalTvSubscription === 2 &&(fetchedStarTimesPlans.status !== 200 )){
+         try{
+ await GetFunction(path, setLoading, SuccessHandler, FailedHandler, fetchedPlans);
+ if(GetFunction && (fetchedStarTimesPlans.status === 200 || fetchedStarTimesPlans.status === 201)){
+return navigate("/StarTimes");
+ }
+ }catch(error){
+        alert("StarTimes Plans are unavailabe at the moment, please try again later.")
+    }
+    }else if(handleSubscriptionFunction && GlobalTvSubscription === 3 && (fetchedShowMaxPlans.status !== 200)){
+      try{
+  await GetFunction(path, setLoading, SuccessHandler, FailedHandler, fetchedPlans);
+  if(GetFunction && (fetchedShowMaxPlans.status === 200 || fetchedShowMaxPlans.status === 201)){
+ return navigate("/Showmax");
+  }
+}catch(error){
+        alert("Showmax Plans are unavailabe at the moment, please try again later.")
+    }
      }else{
        return LinkToPage();
      }
     }
-
+  //  console.log(fetchedGotvPlans)
 return(
         <DashBoardLayout>
             <div className={style.AirtimeTops}>
                 <div className={style.airtimeTop}>
+                  
                     <div>
                         <div id='tvBackground' className="h-[90px] lg:h-[196px] md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] lg:rounded-[20px] mx-auto  flex gap-6 justify-between px-[16.51px] md:px-[28.65px] lg:px-[50px]">
                             <div className="py-[9.57px] md:py-[16.61px] align-middle self-center flex flex-col gap-1.5 w-[70%]">
@@ -164,7 +203,11 @@ return(
                         <Loader/>
                     </Modal>
                 )}
+               
             </div>
+             {sessionModal && (
+                    <HandleUserSession/>
+                )}
         </DashBoardLayout>
     )
 }

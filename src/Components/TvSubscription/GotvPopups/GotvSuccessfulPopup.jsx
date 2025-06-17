@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import styles from "../../AirTimePage/AirtimeVtu.module.css";
 
 
- const GotvSuccessfulPopup = ({handleReceivedData}) => {
+ const GotvSuccessfulPopup = ({handleReceivedData, userVerifiedName}) => {
   
    const {
      gotvSuccessful, 
@@ -89,7 +89,7 @@ import styles from "../../AirTimePage/AirtimeVtu.module.css";
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto font-semibold justify-between lg:text-[15px]">
                     <span className="text-[#7C7C7C]">Card Name</span>
-                    <span>{cardName}</span>
+                    <span>{userVerifiedName}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto font-semibold justify-between lg:text-[15px]">
                     <span className="text-[#7C7C7C]">Phone Number</span>

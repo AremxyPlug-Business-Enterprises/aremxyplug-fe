@@ -4,9 +4,10 @@ import { useContext, useState, useEffect } from "react";
 import { ContextProvider } from "../../Context";
 import { Modal } from "../../Screens/Modal/Modal";
 import arrowRight from "../../../Components/EducationPins/imagesEducation/educationArrowRight.svg";
-import styles from '../../AirTimePage/AirtimeVtu.module.css'
+import styles from '../../AirTimePage/AirtimeVtu.module.css';
+import { Link } from "react-router-dom";
 
-const ConfirmGotvPopup = () => {
+const ConfirmGotvPopup = ({passDataBalance, userVerifiedName}) => {
 
   const {
     confirmGotvPopup,
@@ -38,9 +39,11 @@ const ConfirmGotvPopup = () => {
 
    const [balanceStatus, setBalanceStatus] = useState("");
   
-     let balanceStringToNum = Number(newBalance);
-        let starTimesAmountToNumber = Number(tvAmount);
-       let CheckSufficiency = starTimesAmountToNumber > balanceStringToNum
+     const balanceStringToNum = Number(newBalance);
+              let GotvNumericAmount = Number(tvAmount);
+           const updateBalance = passDataBalance.data &&(passDataBalance.status === 200 || passDataBalance.status === 201)  ?  passDataBalance.data.data.data.balance : "";
+              const cleanUpBalanceToNumericOnly = Number(updateBalance.replace(/\D/g, ""));
+             let CheckSufficiency =  GotvNumericAmount > (newBalance === "" || newBalance === null ? cleanUpBalanceToNumericOnly : balanceStringToNum);
     useEffect(()=> {
       const HandleBalanceStatus = ()=> {
         if(CheckSufficiency){
@@ -51,8 +54,8 @@ const ConfirmGotvPopup = () => {
       }
       HandleBalanceStatus()
     },[CheckSufficiency])
-      console.log(balanceStringToNum, starTimesAmountToNumber)
-  
+      //console.log(balanceStringToNum, GotvNumericAmount)
+ // console.log(passDataBalance)
 
   return (
     <>
@@ -99,7 +102,7 @@ const ConfirmGotvPopup = () => {
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
                     <span className="text-[#0008]">Card Name</span>
-                    <span>{cardName}</span>
+                    <span>{userVerifiedName}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
                     <span className="text-[#0008]">Phone Number</span>

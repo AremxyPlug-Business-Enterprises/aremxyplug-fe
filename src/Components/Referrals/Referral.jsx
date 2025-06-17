@@ -10,21 +10,26 @@ import twitter from "../Referrals/referralImage/twitterRefer.svg";
 import rightArrow from "../Referrals/referralImage/rightArrowRefer.svg";
 import arrowDown from "../Referrals/referralImage/arrow-down.svg";
 import { Link } from "react-router-dom/dist/react-router-dom.development";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../../App.css";
+import {GetFunction} from "../../Components/ApiCollection.jsx/ApiBuck"
+import { Loader } from "../Loader/Loader";
+import { Modal } from "../Screens/Modal/Modal";
+// import { Modal } from "../Screens/Modal/Modal";
 
 
 export default function Referral() {
   
-  const [copyTextOne, setCopyTextOne] = useState('');
-  const [copyTextTwo, setCopyTextTwo] = useState('');
- 
-
+ // const [copyTextOne, setCopyTextOne] = useState('');
+ // const [copyTextTwo, setCopyTextTwo] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  // const [error, setError] = useState(null);
+  const [referralResponds, setReferralResponds] = useState({});
 
   const handleCopyClick = (e) => {
      if(e.target.id === 'copy-btn1' ){
     navigator.clipboard
-    .writeText(copyTextOne)
+    .writeText(optionalTextOne)
     .then(() => {
       alert("Copied to clipboard");
     })
@@ -33,7 +38,7 @@ export default function Referral() {
     });
   }else if(e.target.id === 'copy-btn2'){
     navigator.clipboard
-    .writeText(copyTextTwo)
+    .writeText(optionalTextTwo)
     .then(() => {
       alert("Copied to clipboard");
     })
@@ -42,18 +47,38 @@ export default function Referral() {
     });
    } 
   };
+let optionalTextOne;
+let optionalTextTwo;
+ 
+ optionalTextOne = referralResponds?.data?.data?.referral_link ? referralResponds?.data?.data?.referral_link : "";
+   optionalTextTwo = referralResponds?.data?.data?.referral_code ? referralResponds?.data?.data?.referral_code : "";
+ 
+const handleReferralGenerate = async () => {
+  
+  const Path = "extra/referral"; 
+ 
+   const successHandler = () => {
+     console.log('successfully fetched');
+     //console.log("Referral Response:", referralResponds);
+    
+ };
+
+  const FailedHandler = async() => {
+   console.log("Failed to generate referral");
+   await GetFunction(Path, setIsLoading, successHandler, FailedHandler, setReferralResponds);
+    
+ };
    
-    // const copyToClipBoardOne = () => {
-    //     // copy(copyTextOne);
-    //     alert(`You have copied "${copyTextOne}"`);
-    // }
-        
-  
-    // const copyToClipBoardTwo = () => {
-    //     // copy(copyTextTwo);
-    //     alert(`You have copied "${copyTextTwo}"`);
-    // }
-  
+  await GetFunction(Path, setIsLoading, successHandler, FailedHandler, setReferralResponds);
+};
+ useEffect(() => {
+  if((optionalTextOne === "" || optionalTextOne ===  undefined) || (optionalTextTwo === ""||  optionalTextTwo === undefined))
+ handleReferralGenerate();
+//eslint-disable-next-line
+ }, []);   
+   
+    console.log(optionalTextOne)
+  ;
   return (
     <DashBoardLayout>
       <div className="">
@@ -121,15 +146,13 @@ export default function Referral() {
             >
               {/* THE REFER LINK */}
 
-              <input value={copyTextOne}
-              onChange={(e)=> {
-                setCopyTextOne(e.target.value);
-              }}
+              <input value={optionalTextOne}
+            readOnly
                className="copy-content1 font-[600]  text-[#7C7C7C] text-[7px] leading-[11px]
                lg:text-[16px] lg:leading-[24px] 
                 md:text-[9.167px] md:leading-[14px] flex items-center  w-[75%] h-[100%]  border-l-[1px] border-y-[1px] 
           border-[#7C7C7C] pl-[5px]  lg:pl-[18px]  md:pl-[13px]
-         lg:rounded-s-[22px] rounded-s-[9.333px] md:rounded-s-[12.607px] overflow-x-scroll md:overflow-auto focus:outline-none" readOnly/>
+         lg:rounded-s-[22px] rounded-s-[9.333px] md:rounded-s-[12.607px] overflow-x-scroll md:overflow-auto focus:outline-none"/>
              
               
               {/* COPY LINK */}
@@ -137,7 +160,6 @@ export default function Referral() {
               id='copy-btn1'
               onClick={(e)=> {
                 handleCopyClick(e)
-            
               }}
                 className=" copy-btn1 flex justify-center 
        gap-[10px] w-[25%] h-[100%] bg-[#04177F] items-center 
@@ -172,15 +194,13 @@ lg:text-[16px] lg:leading-[24px]"
         lg:h-[54px] "
             >
               {/* THE REFER LINK 2*/}
-        <input value={copyTextTwo}
-        onChange={(e)=> {
-          setCopyTextTwo(e.target.value);
-        }}
+        <input value={optionalTextTwo}
+       readOnly
           className="copy-content2 font-[600]  text-[#7C7C7C] text-[7px] leading-[11px]
        lg:text-[16px] lg:leading-[24px] 
         md:text-[9.167px] md:leading-[14px]  md:overflow-auto overflow-x-scroll  w-[75%] h-[100%]  border-l-[1px] border-y-[1px] 
           border-[#7C7C7C] pl-[5px] lg:pl-[18px] md:pl-[13px]
-         lg:rounded-s-[22px] rounded-s-[9.333px] md:rounded-s-[12.607px] focus:outline-none" readOnly/>
+         lg:rounded-s-[22px] rounded-s-[9.333px] md:rounded-s-[12.607px] focus:outline-none"/>
             
                 
               
@@ -188,7 +208,7 @@ lg:text-[16px] lg:leading-[24px]"
              <div
              id='copy-btn2'
              onClick={(e)=> {
-              handleCopyClick(e);
+              handleCopyClick(e)
              
              }}
                 className=" flex justify-center 
@@ -1096,6 +1116,14 @@ lg:text-[24px] lg:leading-[30px]"
         
         </div>
       </div>
+
+          {isLoading && (
+                             <Modal>
+                                 <Loader/>
+                  
+                             </Modal>
+                        ) }  
       </div>
+
     </DashBoardLayout>
   )}

@@ -8,9 +8,11 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { ContextProvider } from "../../Context";
 import { useNavigate } from "react-router-dom";
+import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 
 
-export const StarTimesReceipt= (receipt) => {
+export const StarTimesReceipt= (Data) => {
+  Data = GetLocalStorage()
   const navigate = useNavigate()
   const { toggleSideBar, textRef,
     flagResult,
@@ -36,7 +38,7 @@ export const StarTimesReceipt= (receipt) => {
    setPackageStarTimes,
    setStarTimesDecoderType,
     setFlagResult,
-    setTvWalletBalance,
+    setStarTimesWalletBalance,
     date } =
     useContext(ContextProvider);
 
@@ -80,7 +82,7 @@ export const StarTimesReceipt= (receipt) => {
       html2canvas(content).then((canvas) => {
         const imgData = canvas.toDataURL("image/png");
         pdf.addImage(imgData, "PNG", 10, 10, 190, 0);
-        pdf.save("page.pdf");
+        pdf.save("StarTimesSubscription.pdf");
       });
     }
   };
@@ -109,7 +111,7 @@ export const StarTimesReceipt= (receipt) => {
    setPackageStarTimes("");
    setStarTimesDecoderType("")
     setFlagResult("");
-    setTvWalletBalance("");
+    setStarTimesWalletBalance("");
    navigate("/StarTimes");
   }
 
@@ -228,7 +230,7 @@ export const StarTimesReceipt= (receipt) => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Customer Name</p>
-                  <span>Aremxyplug</span>
+                  <span>{Data?.aremxyUsername ? Data?.aremxyUsername : ""}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Wallet Type</p>

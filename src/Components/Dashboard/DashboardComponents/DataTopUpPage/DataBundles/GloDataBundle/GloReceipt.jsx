@@ -7,26 +7,35 @@ import styles from '../../../../../AirTimePage/AirtimeVtu.module.css'
 import { ContextProvider } from "../../../../../Context";
 import { useLocation } from 'react-router-dom';
 import { DashBoardLayout } from "../../../../Layout/DashBoardLayout";
+import { GetLocalStorage } from "../../../../../LocalStorage/LocalStorage";
 
-
-export const GloReceipt = () => {
+export const GloReceipt = (Data) => {
+  Data = GetLocalStorage()
   const location = useLocation()
   const { 
     selectedNetworkProduct, 
     selectedOption, 
     // recipientPhoneNumber, 
     inputValue,
-    recipientNames, selectedAmount, glotransactionID, glorefNumber, gloorderID } = location.state
+    recipientNames, selectedAmount, 
+    glotransactionID, glorefNumber, 
+    selectedProduct,
+    gloReceiptInfo,
+    gloorderID } = location.state
   
   const {
     toggleSideBar,
     isDarkMode,
     date,
     // recipientNames,
+    setSelectedProductGlo,
+    setSelectedOptionGlo,
+    setSelectedAmountGlo,
+    setRecipientNamesGlo,
+  setWalletNameGlo,
+  setRecipientPhoneNumberGlo,
     setSelectedNetworkProduct,
-    setSelectedOption,
-    setSelectedAmount,
-    setRecipientNames,
+   
    } =
     useContext(ContextProvider);
 
@@ -77,9 +86,12 @@ export const GloReceipt = () => {
 
   const handleChange = () => {
     setSelectedNetworkProduct(false);
-    setSelectedOption(false);
-    setSelectedAmount("");
-    setRecipientNames("");
+    setSelectedOptionGlo("");
+    setSelectedProductGlo("")
+    setSelectedAmountGlo("");
+    setRecipientNamesGlo("");
+    setWalletNameGlo("");
+    setRecipientPhoneNumberGlo("");
   };
 
 
@@ -138,7 +150,7 @@ export const GloReceipt = () => {
             <p className="text-[9px] text-[#27AE60] bg-[#D5F6E3] rounded-[11px] border-2 border-[#27AE60] py-[5px] px-[2px] text-center mx-[5px] lg:mx-[150px] md:mx-[100px] my-2 md:text-[14px] lg:text-[14px]">
               You have successfully purchased{" "}
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[16px]">
-                {`${selectedOption} Data `}
+                {selectedProduct + " " + selectedOption}
               </span>
               from your NGN wallet to{" "}
             </p>
@@ -159,7 +171,7 @@ export const GloReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Product</p>
-                  <span>{`${selectedOption}`}</span>
+                  <span>{selectedProduct}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Phone Number</p>
@@ -187,7 +199,7 @@ export const GloReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Customer Name</p>
-                  <span>{recipientNames}</span>
+                  <span>{Data.aremxyUsername}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Wallet Type</p>
@@ -207,11 +219,11 @@ export const GloReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Product</p>
-                  <span>Data Top-up</span>
+                  <span>Data top-up</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Description</p>
-                  <span>{selectedNetworkProduct}</span>
+                  <p className="text-[rgba(0,0,0,0.53)]">Description</p>
+                  <span>{gloReceiptInfo}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Order Number</p>

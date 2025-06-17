@@ -87,8 +87,40 @@ if((response.status === 200 || 201) && (response.headers.hasAuthorization)){
   alert("Check your network connection");
 }
  }catch(error){
+  if(error && error.response === undefined){
+  alert("Check your internet connection.")
+  }
   if(error.response && error.response.status === 401){
-  alert(`${error}, An error occured from your end`)
+  console.log(error.response.headers);
+        console.log(error.response.headers.get("x-new-auth-token"))
+        console.log(error.response.headers["x-new-auth-token"])
+        console.log(error.response.headers.hasAuthorization());
+        // console.log(error.response.headers.hasAuthorization);
+        if(error.response.headers["x-new-auth-token"] === "" || error.response.headers.get("x-new-auth-token") ){
+       
+         const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
+        
+         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
+             console.log(newToken)
+        const emailLogin = localStorage.setItem("authorisedLogin", newToken);
+            if(emailLogin){
+              try{
+               await getOtpSmsorEmail();
+              }catch{
+                alert("Session expired, kindly login again.")
+              }
+            } else { 
+    const smsLogin =  localStorage.setItem("getToken", newToken)
+    if(smsLogin){
+      try{
+        await getOtpSmsorEmail()
+      }catch{
+        alert("Session expired, kindly login again.")
+      }
+    }
+    }
+  }
+        }
   } else if(error.response.status === 404){
    alert(`ERROR: ${error.response.data.data.message.toUpperCase()}`)
   } 
@@ -195,11 +227,12 @@ const handleVerificationOTP = ()=> {
     localStorage.setItem("bvnVerification",true);
     localStorage.setItem("idVerification",true);
   }
-  }else if(response.status === undefined){
+  }
+      } catch(error){
+       if(error && (error.response=== undefined)){
     alert("Check your network connection");
  }
-      } catch(error){
-     if(error.status === 401 || 400){
+   else  if(error.status === 400){
      // alert(`ERROR : ${error}`)
       console.log(error);
      // console.log(error.response.data.message);
@@ -222,25 +255,41 @@ const handleVerificationOTP = ()=> {
         console.log(bvnCheck, ninCheck)
         
         if(bvnCheck && !ninCheck){
-          setBvnButtonState("Create Virtual Account");
+          setBvnButtonState("Verified");
           setBvnVerifyImage(VerificationSuccess);
           setBvnStatus("Verified");
-          setIdButtonState("Verify");
-          setVerifyImage(NotVerifiedImage)
-          setIdStatus("Not Verified");
-          setBvnNumber( error.response.data.bvn);
+            setVerifyImage(VerificationSuccess)
+          setIdStatus("Verified");
+           setBvnNumber( error.response.data.bvn);
           localStorage.setItem("bvnVerification",true);
-          localStorage.setItem("idVerification",false);
+          localStorage.setItem("idVerification",true);
+          // setIdButtonState("Verify");
+          // setVerifyImage(NotVerifiedImage)
+          // setIdStatus("Not Verified");
+         
         }else if(ninCheck && !bvnCheck){
-          setBvnButtonState("Verify");
-          setBvnVerifyImage(NotVerifiedImage)
-          setBvnStatus("Not Verified")
-          setIdButtonState("Create Virtual Account");
+           setIdButtonState("Verified");
+           setBvnButtonState("Verified");
+          setBvnVerifyImage(VerificationSuccess);
+          setBvnStatus("Verified");
           setVerifyImage(VerificationSuccess)
           setIdStatus("Verified");
           setIdNumber( error.response.data.nin);
           localStorage.setItem("idVerification",true);
-          localStorage.setItem("bvnVerification",false);
+          localStorage.setItem("bvnVerification",true);
+          // setBvnButtonState("Verify");
+          // setBvnVerifyImage(NotVerifiedImage)
+          // setBvnStatus("Not Verified")
+          // setIdButtonState("Verified");
+          //  setBvnButtonState("Verified");
+          // setBvnVerifyImage(VerificationSuccess);
+          // setBvnStatus("Verified");
+          // setVerifyImage(VerificationSuccess)
+          // setIdStatus("Verified");
+          // setIdNumber( error.response.data.nin);
+          // localStorage.setItem("idVerification",true);
+          // localStorage.setItem("bvnVerification",true)
+        
         } else if(bvnCheck && ninCheck) {
           setBvnButtonState("Create Virtual Account");
           setBvnVerifyImage(VerificationSuccess)
@@ -253,16 +302,48 @@ const handleVerificationOTP = ()=> {
           localStorage.setItem("idVerification",true);
           localStorage.setItem("bvnVerification",true);
         }
-      
       }
+
       }else if (error && error.status === 404){
         alert("Network Error:, Please Check your Connection and try again");
-      }else if(error.status === 500){
+      }else if(error && error.status === 401){
+    
+        console.log(error.response.headers);
+        console.log(error.response.headers.get("x-new-auth-token"))
+        console.log(error.response.headers["x-new-auth-token"])
+        console.log(error.response.headers.hasAuthorization());
+        // console.log(error.response.headers.hasAuthorization);
+        if(error.response.headers["x-new-auth-token"] === "" || error.response.headers.get("x-new-auth-token") ){
+       
+         const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
+         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
+             console.log(newToken)
+        const emailLogin = localStorage.setItem("authorisedLogin", newToken);
+            if(emailLogin){
+            try {
+              await ConfirmVirtualState()
+            }catch{
+              alert("Your Session has expired, kindly login again")
+            }
+            } 
+      }else if(newToken !== "" && localStorage.getItem("getToken") === "true"){
+        const smsLogin = localStorage.setItem("getToken", newToken)
+        if(smsLogin) {
+         try{
+          await ConfirmVirtualState()
+         }catch{
+          alert("Your Session has expired, kindly login again")
+         }
+        } 
+    }
+  }
+} else if(error.status === 500){
         alert('Error:', "A SERVER ERROR");
      }else if(error.status === undefined){
-    alert("Check your network connection");
+    alert("Check your internet connection and try logging in again.");
  }else{
-      alert("Check your internet connection and try again");
+      alert("Check your internet connection and try logging in again.");
+      //Create a pop up to assist the user into navigating back to the login page.
    }}finally{
        setLoading(false);
       }
@@ -327,20 +408,53 @@ const gettingSmsOrEmailFunctionOtp = async(url, body)=> {
      const response = await axios.post(url,body,{ headers : {"Content-Type" : "application/json"}})
       if(response.status === 200 || 201){
         handleVerificationOTP();
-         } else if(!response.status){
-           alert("Check your network connection")
-         }
+         } 
     }catch(error){
-      if( error.response && error.response.status === 400){
+      if( error && error.response ===  undefined){
+           alert("Check your network connection");
+         }else if( error && error.response.status === 400){
         setVerificationPinError(true);
         console.log("The Verification failed");
       }else if(error.response.status === 404){
      setVerificationPinError(true);
       alert("OOPs, an error has occured");
-      }else if(error.response &&error.response.status === 500){
+      
+    }else if(error && error.response.status === 401){
+    console.log(error.response.headers);
+        console.log(error.response.headers.get("x-new-auth-token"))
+        console.log(error.response.headers["x-new-auth-token"])
+        console.log(error.response.headers.hasAuthorization());
+        // console.log(error.response.headers.hasAuthorization);
+        if(error.response.headers["x-new-auth-token"] === "" || error.response.headers.get("x-new-auth-token") ){
+       
+         const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
+        
+         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
+             console.log(newToken)
+        const emailLogin = localStorage.setItem("authorisedLogin", newToken);
+            if(emailLogin){
+              try{
+               await gettingSmsOrEmailFunctionOtp();
+              }catch{
+                alert("Session expired, kindly login again.")
+              }
+            } else { 
+    const smsLogin =  localStorage.setItem("getToken", newToken)
+    if(smsLogin){
+      try{
+        await  gettingSmsOrEmailFunctionOtp()
+      }catch{
+        alert("Session expired, kindly login again.")
+      }
+    }
+    }
+  }
+        }
+    }
+    else if(error.response && error.response.status === 500){
         alert("SERVER ERROR");
       }else{
-        alert("Check yoou network connection");
+        alert("Check your network connection");
       }
     }finally{
       setLoading(false);
@@ -380,19 +494,26 @@ return () => clearInterval(timer);
 }, [countdown2, open2StepOTP, smsOrEmail]);
 
   const handleResendOTP = () => {
+    if(!navigator.onLine) return alert("Check your internet connection.")
+    if(navigator.onLine){
     getOtpSmsorEmail();
     setCanResend(false);
     setVerificationPinError("")
+    }
   };
 
   const handleResendOTP2 = () => {
+    if(!navigator.onLine) return alert("Check your internet connection.")
+    if(navigator.onLine){
     getOtpSmsorEmail()
     setCanResend2(false);
     setVerificationPinError("")
+    }
   };
 
   function HandleTranspin () {
-    if (otp === otp2) {
+    if(!navigator.onLine) return alert("Check your internet connection.")
+    if (otp === otp2 && navigator.onLine) {
      SendTransactPin()
      setTranspinErrors("");
      setOpenTranspin(false);
@@ -454,14 +575,45 @@ return () => clearInterval(timer);
     
   }
     catch(error){
-     if(error && error.response.status === 401){
-        alert("Login Token expired, please login again");
-        }else if(error && error.response.status === 404){
-          alert(`Please check your internet connection`)
-        } else if(error && error.response.status === 500){
-          alert(`Server error : Please try again later`)
+      if(error && error.response === undefined){
+        alert("Check your internet connection");
+      } if(error && error.response.status === 401){
+      
+           console.log(error.response.headers);
+        console.log(error.response.headers.get("x-new-auth-token"))
+        console.log(error.response.headers["x-new-auth-token"])
+        console.log(error.response.headers.hasAuthorization());
+        // console.log(error.response.headers.hasAuthorization);
+        if(error.response.headers["x-new-auth-token"] === "" || error.response.headers.get("x-new-auth-token") ){
+       
+         const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
+        
+         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
+             console.log(newToken)
+        const emailLogin = localStorage.setItem("authorisedLogin", newToken);
+            if(emailLogin){
+              try{
+               await SendTransactPin();
+              }catch{
+                alert("Session expired, kindly login again.")
+              }
+            } else { 
+    const smsLogin =  localStorage.setItem("getToken", newToken)
+    if(smsLogin){
+      try{
+        await SendTransactPin()
+      }catch{
+        alert("Session expired, kindly login again.")
+      }
+    }
+    }
+  }
         }
-        else{
+        }else if(error && error.response.status === 404){
+          alert(`Please check your internet connection`);
+        } else if(error && error.response.status === 500){
+          alert(`Server error : Please try again later`);
+        }else{
           alert("Check your network Connection");
         }
           //alert(error.response.data.message)

@@ -15,11 +15,14 @@ export const SideBar = ({fullname, userId, BvnVerify, NinVerify}) => {
     
     const navigate= useNavigate()
   const RemoveLocalStorageKeys=()=> {
-    RemoveLocalStorage();
+     RemoveLocalStorage();
     setUserStatus(false);
-    navigate("/Login", {replace : true})
- 
-;
+  const navigateLogin =()=>  navigate("/Login", {replace : true})
+  navigateLogin()
+  if(navigateLogin){
+    window.location.reload()
+  }
+  console.log(window.location);
   }
   const [dropDownOpen, setDropDownOpen] = useState({
     dropdown1: false,

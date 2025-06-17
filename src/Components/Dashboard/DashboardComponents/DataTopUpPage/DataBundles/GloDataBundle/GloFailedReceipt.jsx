@@ -7,8 +7,10 @@ import styles from "../../../../../AirTimePage/AirtimeVtu.module.css";
 import { ContextProvider } from "../../../../../Context";
 import { useLocation } from "react-router-dom";
 import { DashBoardLayout } from "../../../../Layout/DashBoardLayout";
+import { GetLocalStorage } from "../../../../../LocalStorage/LocalStorage";
 
-export const GloFailedReceipt = () => {
+export const GloFailedReceipt = (Data) => {
+  Data = GetLocalStorage()
   const location = useLocation();
   const {
     selectedNetworkProduct,
@@ -19,18 +21,24 @@ export const GloFailedReceipt = () => {
     glotransactionID,
     glorefNumber,
     gloorderID,
-    selectedOption
+    selectedOption,
+    gloReceiptInfo,
+    selectedProduct
   } = location.state;
 
   const {
     toggleSideBar,
     isDarkMode,
     date,
+     setSelectedProductGlo,
+    setSelectedOptionGlo,
+    setSelectedAmountGlo,
+    setRecipientNamesGlo,
+  setWalletNameGlo,
+  setRecipientPhoneNumberGlo,
     // recipientName,
     setSelectedNetworkProduct,
-    setSelectedOption,
-    setSelectedAmount,
-    setRecipientNames,
+    
   } = useContext(ContextProvider);
 
   const contentRef = useRef(null);
@@ -73,16 +81,19 @@ export const GloFailedReceipt = () => {
       html2canvas(content).then((canvas) => {
         const imgData = canvas.toDataURL("image/png");
         pdf.addImage(imgData, "PNG", 10, 10, 190, 0);
-        pdf.save("page.pdf");
+        pdf.save("AremxyPlugDataReceipt.pdf");
       });
     }
   };
 
   const handleChange = () => {
     setSelectedNetworkProduct(false);
-    setSelectedOption(false);
-    setSelectedAmount("");
-    setRecipientNames("");
+    setSelectedOptionGlo("");
+    setSelectedProductGlo("");
+    setSelectedAmountGlo("");
+    setRecipientNamesGlo("");
+    setRecipientPhoneNumberGlo("");
+    setWalletNameGlo("");
   };
 
   return (
@@ -159,7 +170,7 @@ export const GloFailedReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Product</p>
-                  <span>{`${selectedOption}`}</span>
+                  <span>{selectedProduct}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Phone Number</p>
@@ -187,7 +198,7 @@ export const GloFailedReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Customer Name</p>
-                  <span>{recipientNames}</span>
+                  <span>{Data.aremxyUsername}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Wallet Type</p>
@@ -207,11 +218,11 @@ export const GloFailedReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Product</p>
-                  <span>Data Top-up</span>
+                  <span>Data top-up</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Description</p>
-                  <span>{selectedNetworkProduct}</span>
+                  <span>{gloReceiptInfo}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Order Number</p>
