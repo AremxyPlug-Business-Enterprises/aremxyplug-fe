@@ -300,7 +300,7 @@ export const PostFunction = async(path, setLoading, body, functionAtSuccess, fun
         if(error && error.response === undefined){
      alert("Kindly check your internet connection")
       }  else  if(error && error.response.status === 400){
-       functionAtFailed()
+       functionAtFailed("Bad request");
           if(functionAtFailed) {
             setFetchedResponse(error.response.data.data)
               console.log(error.response.data.data)
@@ -308,7 +308,7 @@ export const PostFunction = async(path, setLoading, body, functionAtSuccess, fun
          }
         
     }else if(error && error.response.status === 404){
-         functionAtFailed()
+         functionAtFailed("User error")
          alert("Check your internet connection");
            if(functionAtFailed) {
             setFetchedResponse(error.response.data.data)
@@ -335,7 +335,7 @@ export const PostFunction = async(path, setLoading, body, functionAtSuccess, fun
            }
    }else{
       localStorage.setItem("getToken", newToken);
-     functionAtFailed();
+     functionAtFailed("unauthorised");
       if(functionAtFailed) {
             setFetchedResponse(error.response.data.data)
            }
@@ -344,7 +344,7 @@ export const PostFunction = async(path, setLoading, body, functionAtSuccess, fun
        console.log(error.response);
          
       }else if(error && error.response.status === 500){
-        functionAtFailed();
+        functionAtFailed("Server error");
    alert("Server error: Try some other time");
      if(functionAtFailed) {
             setFetchedResponse(error.response.data.data)
@@ -384,7 +384,7 @@ export const GetFunction = async(path, setLoading, functionAtSuccess,functionAtF
       if(error && error.response === undefined){
      alert("Kindly check your internet connection")
       } else if(error && error.response.status === 400){
-         functionAtFailed()
+         functionAtFailed("Bad request")
        alert("Invalid request")
       }
       else if(error && error.response.status === 401){
@@ -403,19 +403,19 @@ export const GetFunction = async(path, setLoading, functionAtSuccess,functionAtF
          if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
              console.log(newToken)
             localStorage.setItem("authorisedLogin", newToken);
-            functionAtFailed();
+            functionAtFailed("unauthorised");
    }else{
       localStorage.setItem("getToken", newToken);
-     functionAtFailed();
+     functionAtFailed("unauthorised");
    }
         }
        console.log(error.response);
       }
       else if(error && error.response.status === 404){
-         functionAtFailed();
+         functionAtFailed("User error");
          alert("Check your internet connection");
       }else if(error && error.response.status === 500){
-     functionAtFailed();
+     functionAtFailed("Server error");
    alert("Server error: Try some other time");
       }else if(error && error.response.status === undefined){
                 alert("Check your internet Connection");

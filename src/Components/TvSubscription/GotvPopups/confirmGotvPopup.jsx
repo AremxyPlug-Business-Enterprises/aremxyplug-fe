@@ -41,7 +41,7 @@ const ConfirmGotvPopup = ({passDataBalance, userVerifiedName}) => {
   
      const balanceStringToNum = Number(newBalance);
               let GotvNumericAmount = Number(tvAmount);
-           const updateBalance = passDataBalance.data &&(passDataBalance.status === 200 || passDataBalance.status === 201)  ?  passDataBalance.data.data.data.balance : "";
+           const updateBalance = passDataBalance?.data && (passDataBalance.status === 200 || passDataBalance.status === 201) && newBalance === ""  ?  passDataBalance?.data?.data?.data?.balance : newBalance;
               const cleanUpBalanceToNumericOnly = Number(updateBalance.replace(/\D/g, ""));
              let CheckSufficiency =  GotvNumericAmount > (newBalance === "" || newBalance === null ? cleanUpBalanceToNumericOnly : balanceStringToNum);
     useEffect(()=> {
@@ -145,7 +145,7 @@ const ConfirmGotvPopup = ({passDataBalance, userVerifiedName}) => {
                                  Available Balance {"  "} 
                                   </p>
                                   <span className="text-black ">
-                                   {`(${newBalance})`}
+                                   {`(${updateBalance})`}
                                  </span>
                                  </div>
                                </div>
