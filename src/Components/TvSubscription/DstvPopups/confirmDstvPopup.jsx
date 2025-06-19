@@ -7,7 +7,7 @@ import arrowRight from "../../../Components/EducationPins/imagesEducation/educat
 import styles from '../../AirTimePage/AirtimeVtu.module.css'
 
 
- const ConfirmDstvPopup = ({userVerifiedName}) => {
+ const ConfirmDstvPopup = ({ passDataBalance, userVerifiedName}) => {
   
    const {
     confirmDstvPopup,
@@ -19,7 +19,7 @@ import styles from '../../AirTimePage/AirtimeVtu.module.css'
     dstvMobileNumber,
     dstvEmail,
     dstvSmartCard,
-    cardName,
+    //cardName,
     methodImage,
     tvWalletBalance,
     flagResult,
@@ -42,8 +42,9 @@ import styles from '../../AirTimePage/AirtimeVtu.module.css'
   // };
 const [balanceStatus,setBalanceStatus ] = useState("")
    let balanceStringToNum = Number(newBalance);
+   const updateBalance = (newBalance === "" && passDataBalance?.data?.data?.data?.balance) ? passDataBalance?.data?.data?.data?.balance : newBalance;
           let DstvAmountToNumber = Number(dstvAmount);
-         let CheckSufficiency = DstvAmountToNumber > balanceStringToNum
+         let CheckSufficiency = DstvAmountToNumber > balanceStringToNum;
       useEffect(()=> {
         const HandleBalanceStatus = ()=> {
           if(CheckSufficiency){
@@ -147,7 +148,7 @@ const [balanceStatus,setBalanceStatus ] = useState("")
                     Available Balance {"  "} 
                      </p>
                      <span className="text-black">
-                      {`(${newBalance})`}
+                      {`(${updateBalance})`}
                     </span>
                     </div>
                   </div>

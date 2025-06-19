@@ -234,13 +234,13 @@ if((clickedoption === "NGN") && blur === true){
              }
         }
         }catch(error){
-           if((error.response === undefined || null) ) {
+           if((error.response === undefined || error.response === null) ) {
            setBalanceValue(false);
        }
         else if( error.response && (error.response.status === 400)){
            setBalanceValue(false);
         }else if(error && error.response.status === 401){
-           if(error.response.headers.get("x-new-auth-token") || error.resposne.headers["x-new-auth-token"]){
+           if(error.response?.headers.get("x-new-auth-token") || error.response?.headers["x-new-auth-token"]){
              setBalanceLoading(true)
          const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
         
