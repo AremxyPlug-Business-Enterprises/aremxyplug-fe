@@ -20,7 +20,7 @@ import {
   PostFunction,
   VerifyTransPin,
 } from "../../../ApiCollection.jsx/ApiBuck";
-import { Loader } from "../../../Loader/Loader";
+import { BalanceLoading, Loader } from "../../../Loader/Loader";
 
 const BEDC = () => {
   const navigate = useNavigate();
@@ -327,55 +327,54 @@ const BEDC = () => {
   const [pinFailed, setPinFailed] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isFailedMeterNumber, setIsFailedMeterNumber] = useState(false);
-  
-    let passedMeterName;
-  
-    const verifyMeterNumber = async (meterNumber) => {
-      async function HandleMeterNumber() {
-        const path = "bills/verify";
-        const body = {
-          disco_type: "benin-electric",
-          meter_no: meterNumber,
-          meter_type: selectedBedcMeterType.toLowerCase(),
-        };
-        const SuccessHandler = () => {
-          setIsFailedMeterNumber(false);
-          function handleReceivedMeterData() {
-            if (bedcFetchedResponse.name) {
-              setBedcVerifiedName(bedcFetchedResponse.name);
-            } else {
-              setBedcVerifiedName("");
-            }
+  const [meterNumberLoading, setMeterNumberLoading] = useState(false);
+
+  let passedMeterName;
+
+  const verifyMeterNumber = async (meterNumber) => {
+    async function HandleMeterNumber() {
+      const path = "bills/verify";
+      const body = {
+        disco_type: "benin-electric",
+        meter_no: meterNumber,
+        meter_type: selectedBedcMeterType.toLowerCase(),
+      };
+      const SuccessHandler = () => {
+        setIsFailedMeterNumber(false);
+        function handleReceivedMeterData() {
+          if (bedcFetchedResponse.name) {
+            setBedcVerifiedName(bedcFetchedResponse.name);
+          } else {
+            setBedcVerifiedName("");
           }
-          handleReceivedMeterData();
-        };
-        const FailedHandler = () => {
-          setIsFailedMeterNumber(true);
-        };
-  
-        await PostFunction(
-          path,
-          setLoading,
-          body,
-          SuccessHandler,
-          FailedHandler,
-          setBedcFetchedResponse
-        );
-      }
-      HandleMeterNumber();
-      // handleReceivedMeterData();
-      passedMeterName = bedcFetchedResponse
-        ? bedcFetchedResponse.name
-        : "";
-    };
-  
-    const handleVerifiedName =
-      bedcMeterNumber.length === 13 &&
-      isFailedMeterNumber === false &&
-      verifyMeterNumber &&
-      bedcVerifiedName === ""
-        ? passedMeterName
-        : bedcVerifiedName;
+        }
+        handleReceivedMeterData();
+      };
+      const FailedHandler = () => {
+        setIsFailedMeterNumber(true);
+      };
+
+      await PostFunction(
+        path,
+        setMeterNumberLoading,
+        body,
+        SuccessHandler,
+        FailedHandler,
+        setBedcFetchedResponse
+      );
+    }
+    HandleMeterNumber();
+    // handleReceivedMeterData();
+    passedMeterName = bedcFetchedResponse ? bedcFetchedResponse.name : "";
+  };
+
+  const handleVerifiedName =
+    bedcMeterNumber.length === 13 &&
+    isFailedMeterNumber === false &&
+    verifyMeterNumber &&
+    bedcVerifiedName === ""
+      ? passedMeterName
+      : bedcVerifiedName;
 
   const verifyPin = async () => {
     async function ElectricityHandler() {
@@ -684,9 +683,9 @@ const BEDC = () => {
                   value={bedcMeterNumber}
                   maxLength={13}
                   onChange={(e) => {
-                    const newValue = e.target.value
+                    const newValue = e.target.value;
                     setBedcMeterNumber(newValue);
-                    if (newValue.length === 13 && !errors.phedMeterNumber) {
+                    if (newValue?.length === 13 && !errors.phedMeterNumber) {
                       verifyMeterNumber(newValue);
                     }
                   }}
@@ -721,7 +720,7 @@ const BEDC = () => {
               >
                 Verified Name
               </div>
-              <div>
+              <div className="relative">
                 <input
                   type="text"
                   value={handleVerifiedName}
@@ -732,6 +731,11 @@ const BEDC = () => {
                       : "text-[#7E7E7E]"
                   }`}
                 />
+                {meterNumberLoading && (
+                  <p className="left-0 absolute top-0">
+                    <BalanceLoading />
+                  </p>
+                )}
               </div>
             </div>
             <div className="flex flex-col relative gap-2 lg:gap-2.5">
@@ -747,9 +751,9 @@ const BEDC = () => {
                   type="number"
                   value={bedcPhoneNumber}
                   onInput={(e) => {
-                    if (bedcPhoneNumber.length === 10) {
+                    if (bedcPhoneNumber?.length === 10) {
                       e.target.style.border = "2px solid green";
-                    } else if (e.target.value.length < 10) {
+                    } else if (e.target.value?.length < 10) {
                       e.target.style.border = "2px solid red";
                     }
                   }}

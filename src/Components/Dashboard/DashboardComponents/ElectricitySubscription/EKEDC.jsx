@@ -319,6 +319,7 @@ const EKEDC = () => {
           meter_no: meterNumber,
           meter_type: selectedEkedcMeterType.toLowerCase(),
         };
+        console.log(meterNumber)
         const SuccessHandler = () => {
           setIsFailedMeterNumber(false);
           function handleReceivedMeterData() {
@@ -622,6 +623,7 @@ const EKEDC = () => {
                   onChange={(e) => {
                     const newValue = e.target.value
                     setEkedcMeterNumber(newValue);
+                    // newValue.length === 13 && !errors.ekedcMeterNumber ? verifyMeterNumber(newValue) : setEkedcVerifiedName("");
                     if (newValue.length === 13 && !errors.ekedcMeterNumber) {
                       verifyMeterNumber(newValue);
                     }

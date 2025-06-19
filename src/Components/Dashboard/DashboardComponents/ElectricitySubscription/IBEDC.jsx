@@ -314,14 +314,15 @@ const IBEDC = () => {
   
     let passedMeterName;
   
-    const verifyMeterNumber = async () => {
+    const verifyMeterNumber = async (meterNumber) => {
       async function HandleMeterNumber() {
         const path = "bills/verify";
         const body = {
           disco_type: "ibadan-electric",
-          meter_no: ibedcMeterNumber,
-          meter_type: selectedIbedcMeterType,
+          meter_no: meterNumber,
+          meter_type: selectedIbedcMeterType.toLowerCase(),
         };
+        console.log(meterNumber)
         const SuccessHandler = () => {
           setIsFailedMeterNumber(false);
           function handleReceivedMeterData() {
@@ -532,15 +533,15 @@ const IBEDC = () => {
     setProceed(false);
   };
 
-  useEffect(() => {
-  if (
-    ibedcMeterNumber.length === 13 &&
-    !errors.ibedcMeterNumber
-  ) {
-    verifyMeterNumber();
-  }
-  // eslint-disable-next-line
-}, [ibedcMeterNumber]);
+//   useEffect(() => {
+//   if (
+//     ibedcMeterNumber.length === 13 &&
+//     !errors.ibedcMeterNumber
+//   ) {
+//     verifyMeterNumber();
+//   }
+//   // eslint-disable-next-line
+// }, [ibedcMeterNumber]);
 
   return (
     <DashBoardLayout>
@@ -697,9 +698,10 @@ const IBEDC = () => {
                   onChange={(e) => {
                     const newValue = e.target.value
                     setIbedcMeterNumber(newValue);
-                    // if (newValue.length === 13 && !errors.ibedcMeterNumber) {
-                    //   verifyMeterNumber();
-                    // }
+                    // newValue.length === 13 && !errors.ibedcMeterNumber ? verifyMeterNumber(newValue) : setIbedcVerifiedName("");
+                    if (newValue.length === 13 && !errors.ibedcMeterNumber) {
+                      verifyMeterNumber(newValue);
+                    }
                   }}
                   onClick={() => setShowProductList(false)}
                   className={`py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full w-full  ${

@@ -625,9 +625,10 @@ const [isFailedMeterNumber, setIsFailedMeterNumber] = useState(false);
                   onChange={(e) => {
                     const newValue = e.target.value
                     setEedcMeterNumber(newValue);
-                    if (newValue.length === 13 && !errors.eedcMeterNumber) {
-                      verifyMeterNumber(newValue);
-                    }
+                    newValue.length === 13 && !errors.eedcMeterNumber ? verifyMeterNumber(newValue) : setEedcVerifiedName("");
+                    // if (newValue.length === 13 && !errors.eedcMeterNumber) {
+                    //   verifyMeterNumber(newValue);
+                    // }
                   }}
                   onClick={() => setShowProductList(false)}
                   className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${

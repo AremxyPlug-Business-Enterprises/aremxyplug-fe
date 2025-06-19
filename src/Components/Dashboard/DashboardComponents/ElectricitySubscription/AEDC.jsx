@@ -16,7 +16,7 @@ import { AiFillEye } from "react-icons/ai";
 import OtpInput from "react-otp-input";
 import { Link, useNavigate } from "react-router-dom";
 // import axios from 'axios';
-import { Loader } from "../../../Loader/Loader";
+import { BalanceLoading, Loader } from "../../../Loader/Loader";
 // import axiosInstance from "../../../ApiCollection.jsx/apiClient";
 import {
   PostFunction,
@@ -312,6 +312,7 @@ const AEDC = () => {
   const [pinSuccess, setPinSuccess] = useState(false);
   const [pinFailed, setPinFailed] = useState(false);
   const [isFailedMeterNumber, setIsFailedMeterNumber] = useState(false);
+  const [meterNumberLoading, setMeterNumberLoading] = useState(false);
 
   let passedMeterName;
 
@@ -340,7 +341,7 @@ const AEDC = () => {
 
       await PostFunction(
         path,
-        setLoading,
+        setMeterNumberLoading,
         body,
         SuccessHandler,
         FailedHandler,
@@ -353,7 +354,7 @@ const AEDC = () => {
   };
 
   const handleVerifiedName =
-    aedcMeterNumber.length === 13 &&
+    aedcMeterNumber?.length === 13 &&
     isFailedMeterNumber === false &&
     verifyMeterNumber &&
     aedcVerifiedName === ""
@@ -631,6 +632,10 @@ const AEDC = () => {
                   onChange={(e) => {
                     const newValue = e.target.value;
                     setAedcMeterNumber(newValue);
+                    // newValue.length === 13 && !errors.aedcMeterNumber
+                    //   ? verifyMeterNumber(newValue)
+                    //   : setAedcVerifiedName("");
+
                     if (newValue.length === 13 && !errors.aedcMeterNumber) {
                       verifyMeterNumber(newValue);
                     }
@@ -656,7 +661,7 @@ const AEDC = () => {
               )}
             </div>
 
-            <div className="flex flex-col gap-2 lg:gap-2.5">
+            <div className="flex flex-col relative gap-2 lg:gap-2.5">
               <div
                 className={`text-[#7E7E7E] text-[14px] lg:text-[16px] md:font-semibold font-normal ${
                   isDarkMode ? "text-white" : ""
@@ -664,7 +669,7 @@ const AEDC = () => {
               >
                 Verified Name
               </div>
-              <div>
+              <div className="relative">
                 <input
                   type="text"
                   value={handleVerifiedName}
@@ -676,7 +681,13 @@ const AEDC = () => {
                       : "text-[#7E7E7E]"
                   }`}
                 />
+                {meterNumberLoading && (
+                <p className="left-0 absolute top-0">
+                  <BalanceLoading />
+                </p>
+              )}
               </div>
+              
             </div>
             <div className="flex flex-col gap-2 relative lg:gap-2.5">
               <div
