@@ -732,7 +732,7 @@ const BEDC = () => {
                   }`}
                 />
                 {meterNumberLoading && (
-                  <p className="left-0 absolute top-0">
+                  <p className="left-4 absolute top-3.5 lg:top-4">
                     <BalanceLoading />
                   </p>
                 )}

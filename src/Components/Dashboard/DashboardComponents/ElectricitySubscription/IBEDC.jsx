@@ -19,7 +19,7 @@ import {
   PostFunction,
   VerifyTransPin,
 } from "../../../ApiCollection.jsx/ApiBuck";
-import { Loader } from "../../../Loader/Loader";
+import { BalanceLoading, Loader } from "../../../Loader/Loader";
 
 const IBEDC = () => {
   const navigate = useNavigate();
@@ -311,56 +311,55 @@ const IBEDC = () => {
   const [pinFailed, setPinFailed] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isFailedMeterNumber, setIsFailedMeterNumber] = useState(false);
-  
-    let passedMeterName;
-  
-    const verifyMeterNumber = async (meterNumber) => {
-      async function HandleMeterNumber() {
-        const path = "bills/verify";
-        const body = {
-          disco_type: "ibadan-electric",
-          meter_no: meterNumber,
-          meter_type: selectedIbedcMeterType.toLowerCase(),
-        };
-        console.log(meterNumber)
-        const SuccessHandler = () => {
-          setIsFailedMeterNumber(false);
-          function handleReceivedMeterData() {
-            if (ibedcFetchedResponse.name) {
-              setIbedcVerifiedName(ibedcFetchedResponse.name);
-            } else {
-              setIbedcVerifiedName("");
-            }
+  const [meterNumberLoading, setMeterNumberLoading] = useState(false);
+
+  let passedMeterName;
+
+  const verifyMeterNumber = async (meterNumber) => {
+    async function HandleMeterNumber() {
+      const path = "bills/verify";
+      const body = {
+        disco_type: "ibadan-electric",
+        meter_no: meterNumber,
+        meter_type: selectedIbedcMeterType.toLowerCase(),
+      };
+      console.log(meterNumber);
+      const SuccessHandler = () => {
+        setIsFailedMeterNumber(false);
+        function handleReceivedMeterData() {
+          if (ibedcFetchedResponse.name) {
+            setIbedcVerifiedName(ibedcFetchedResponse.name);
+          } else {
+            setIbedcVerifiedName("");
           }
-          handleReceivedMeterData();
-        };
-        const FailedHandler = () => {
-          setIsFailedMeterNumber(true);
-        };
-  
-        await PostFunction(
-          path,
-          setLoading,
-          body,
-          SuccessHandler,
-          FailedHandler,
-          setIbedcFetchedResponse
-        );
-      }
-      HandleMeterNumber();
-      // handleReceivedMeterData();
-      passedMeterName = ibedcFetchedResponse
-        ? ibedcFetchedResponse.name
-        : "";
-    };
-  
-    const handleVerifiedName =
-      ibedcMeterNumber.length === 13 &&
-      isFailedMeterNumber === false &&
-      verifyMeterNumber &&
-      ibedcVerifiedName === ""
-        ? passedMeterName
-        : ibedcVerifiedName;
+        }
+        handleReceivedMeterData();
+      };
+      const FailedHandler = () => {
+        setIsFailedMeterNumber(true);
+      };
+
+      await PostFunction(
+        path,
+        setMeterNumberLoading,
+        body,
+        SuccessHandler,
+        FailedHandler,
+        setIbedcFetchedResponse
+      );
+    }
+    HandleMeterNumber();
+    // handleReceivedMeterData();
+    passedMeterName = ibedcFetchedResponse ? ibedcFetchedResponse.name : "";
+  };
+
+  const handleVerifiedName =
+    ibedcMeterNumber?.length === 13 &&
+    isFailedMeterNumber === false &&
+    verifyMeterNumber &&
+    ibedcVerifiedName === ""
+      ? passedMeterName
+      : ibedcVerifiedName;
 
   const verifyPin = async () => {
     async function ElectricityHandler() {
@@ -533,15 +532,15 @@ const IBEDC = () => {
     setProceed(false);
   };
 
-//   useEffect(() => {
-//   if (
-//     ibedcMeterNumber.length === 13 &&
-//     !errors.ibedcMeterNumber
-//   ) {
-//     verifyMeterNumber();
-//   }
-//   // eslint-disable-next-line
-// }, [ibedcMeterNumber]);
+  //   useEffect(() => {
+  //   if (
+  //     ibedcMeterNumber.length === 13 &&
+  //     !errors.ibedcMeterNumber
+  //   ) {
+  //     verifyMeterNumber();
+  //   }
+  //   // eslint-disable-next-line
+  // }, [ibedcMeterNumber]);
 
   return (
     <DashBoardLayout>
@@ -579,7 +578,11 @@ const IBEDC = () => {
           >
             <div className="text-[9px] md:text-xs lg:text-[16px]">Recharge</div>
             <div>
-              <img className="w-[2rem] sm:w-[35px] lg:w-[3.5rem] ml-1" src={logo} alt="" />
+              <img
+                className="w-[2rem] sm:w-[35px] lg:w-[3.5rem] ml-1"
+                src={logo}
+                alt=""
+              />
             </div>
             <div className="text-[9px] md:text-xs lg:text-[16px] ml-1">
               Ibadan Electric Payment-IBEDC Meter Instantly
@@ -677,9 +680,7 @@ const IBEDC = () => {
                     </div>
                   ))}
                 </div>
-                
               )}
-              
             </div>
 
             <div className="flex flex-col relative sm:mt-[10px] md:mt-[23px] lg:mt-[23px] gap-2 lg:gap-2.5">
@@ -696,10 +697,10 @@ const IBEDC = () => {
                   value={ibedcMeterNumber}
                   maxLength={13}
                   onChange={(e) => {
-                    const newValue = e.target.value
+                    const newValue = e.target.value;
                     setIbedcMeterNumber(newValue);
                     // newValue.length === 13 && !errors.ibedcMeterNumber ? verifyMeterNumber(newValue) : setIbedcVerifiedName("");
-                    if (newValue.length === 13 && !errors.ibedcMeterNumber) {
+                    if (newValue?.length === 13 && !errors.ibedcMeterNumber) {
                       verifyMeterNumber(newValue);
                     }
                   }}
@@ -710,20 +711,20 @@ const IBEDC = () => {
                       : "text-[#7E7E7E]"
                   }`}
                 />
-              {errors.ibedcMeterNumber && (
-                <div
-                  className={`text-[14px] absolute left-0 -bottom-[1.3rem] text-red-500 italic lg:text-[14px]
+                {errors.ibedcMeterNumber && (
+                  <div
+                    className={`text-[14px] absolute left-0 -bottom-[1.3rem] text-red-500 italic lg:text-[14px]
                 `}
-                  // ${isDarkMode ? "text-white bg-black" : ""}
-                >
-                  {errors.ibedcMeterNumber}
-                </div>
-              )}
-              {!errors.ibedcMeterNumber && isFailedMeterNumber && (
-                <div className="text-[14px] absolute left-0 -bottom-[1.3rem] text-red-500 italic lg:text-[14px]">
-                  Invalid meter number
-                </div>
-              )}
+                    // ${isDarkMode ? "text-white bg-black" : ""}
+                  >
+                    {errors.ibedcMeterNumber}
+                  </div>
+                )}
+                {!errors.ibedcMeterNumber && isFailedMeterNumber && (
+                  <div className="text-[14px] absolute left-0 -bottom-[1.3rem] text-red-500 italic lg:text-[14px]">
+                    Invalid meter number
+                  </div>
+                )}
               </div>
             </div>
 
@@ -735,7 +736,7 @@ const IBEDC = () => {
               >
                 Verified Name
               </div>
-              <div>
+              <div className="relative">
                 <input
                   type="text"
                   value={handleVerifiedName}
@@ -746,6 +747,11 @@ const IBEDC = () => {
                       : "text-[#7E7E7E]"
                   }`}
                 />
+                {meterNumberLoading && (
+                  <p className="left-4 absolute top-3.5 lg:top-4">
+                    <BalanceLoading />
+                  </p>
+                )}
               </div>
             </div>
             <div className="flex flex-col relative gap-2 lg:gap-2.5">
@@ -761,9 +767,9 @@ const IBEDC = () => {
                   type="number"
                   value={ibedcPhoneNumber}
                   onInput={(e) => {
-                    if (ibedcPhoneNumber.length === 10) {
+                    if (ibedcPhoneNumber?.length === 10) {
                       e.target.style.border = "2px solid green";
-                    } else if (e.target.value.length < 10) {
+                    } else if (e.target.value?.length < 10) {
                       e.target.style.border = "2px solid red";
                     }
                   }}
@@ -927,7 +933,11 @@ const IBEDC = () => {
                          isDarkMode
                            ? "text-white hover:bg-slate-800 bg-black "
                            : "text-[#7E7E7E] "
-                       } ${country.code === "Nigerian NGN Wallet" ? "cursor-pointer" : "cursor-not-allowed opacity-50"}`}
+                       } ${
+                        country.code === "Nigerian NGN Wallet"
+                          ? "cursor-pointer"
+                          : "cursor-not-allowed opacity-50"
+                      }`}
                       key={country.id}
                       onClick={() =>
                         handleCountryClick(

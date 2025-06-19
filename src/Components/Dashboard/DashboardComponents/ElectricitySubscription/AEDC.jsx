@@ -636,7 +636,7 @@ const AEDC = () => {
                     //   ? verifyMeterNumber(newValue)
                     //   : setAedcVerifiedName("");
 
-                    if (newValue.length === 13 && !errors.aedcMeterNumber) {
+                    if (newValue?.length === 13 && !errors.aedcMeterNumber) {
                       verifyMeterNumber(newValue);
                     }
                   }}
@@ -682,7 +682,7 @@ const AEDC = () => {
                   }`}
                 />
                 {meterNumberLoading && (
-                <p className="left-0 absolute top-0">
+                <p className="left-4 absolute top-3.5 lg:top-4">
                   <BalanceLoading />
                 </p>
               )}
@@ -702,9 +702,9 @@ const AEDC = () => {
                   type="number"
                   value={aedcPhoneNumber}
                   onInput={(e) => {
-                    if (aedcPhoneNumber.length === 10) {
+                    if (aedcPhoneNumber?.length === 10) {
                       e.target.style.border = "2px solid green";
-                    } else if (e.target.value.length < 10) {
+                    } else if (e.target.value?.length < 10) {
                       e.target.style.border = "2px solid red";
                     }
                   }}

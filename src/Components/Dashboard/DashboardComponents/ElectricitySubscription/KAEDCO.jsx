@@ -20,7 +20,7 @@ import {
   PostFunction,
   VerifyTransPin,
 } from "../../../ApiCollection.jsx/ApiBuck";
-import { Loader } from "../../../Loader/Loader";
+import { BalanceLoading, Loader } from "../../../Loader/Loader";
 
 const KAEDCO = () => {
   const navigate = useNavigate();
@@ -308,55 +308,54 @@ const KAEDCO = () => {
   const [pinFailed, setPinFailed] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isFailedMeterNumber, setIsFailedMeterNumber] = useState(false);
-  
-    let passedMeterName;
-  
-    const verifyMeterNumber = async (meterNumber) => {
-      async function HandleMeterNumber() {
-        const path = "bills/verify";
-        const body = {
-          disco_type: "kaduna-electric",
-          meter_no: meterNumber,
-          meter_type: selectedKaedcoMeterType.toLowerCase(),
-        };
-        const SuccessHandler = () => {
-          setIsFailedMeterNumber(false);
-          function handleReceivedMeterData() {
-            if (kaedcoFetchedResponse.name) {
-              setKaedcoVerifiedName(kaedcoFetchedResponse.name);
-            } else {
-              setKaedcoVerifiedName("");
-            }
+  const [meterNumberLoading, setMeterNumberLoading] = useState(false);
+
+  let passedMeterName;
+
+  const verifyMeterNumber = async (meterNumber) => {
+    async function HandleMeterNumber() {
+      const path = "bills/verify";
+      const body = {
+        disco_type: "kaduna-electric",
+        meter_no: meterNumber,
+        meter_type: selectedKaedcoMeterType.toLowerCase(),
+      };
+      const SuccessHandler = () => {
+        setIsFailedMeterNumber(false);
+        function handleReceivedMeterData() {
+          if (kaedcoFetchedResponse.name) {
+            setKaedcoVerifiedName(kaedcoFetchedResponse.name);
+          } else {
+            setKaedcoVerifiedName("");
           }
-          handleReceivedMeterData();
-        };
-        const FailedHandler = () => {
-          setIsFailedMeterNumber(true);
-        };
-  
-        await PostFunction(
-          path,
-          setLoading,
-          body,
-          SuccessHandler,
-          FailedHandler,
-          setKaedcoFetchedResponse
-        );
-      }
-      HandleMeterNumber();
-      // handleReceivedMeterData();
-      passedMeterName = kaedcoFetchedResponse
-        ? kaedcoFetchedResponse.name
-        : "";
-    };
-  
-    const handleVerifiedName =
-      kaedcoMeterNumber.length === 13 &&
-      isFailedMeterNumber === false &&
-      verifyMeterNumber &&
-      kaedcoVerifiedName === ""
-        ? passedMeterName
-        : kaedcoVerifiedName;
+        }
+        handleReceivedMeterData();
+      };
+      const FailedHandler = () => {
+        setIsFailedMeterNumber(true);
+      };
+
+      await PostFunction(
+        path,
+        setMeterNumberLoading,
+        body,
+        SuccessHandler,
+        FailedHandler,
+        setKaedcoFetchedResponse
+      );
+    }
+    HandleMeterNumber();
+    // handleReceivedMeterData();
+    passedMeterName = kaedcoFetchedResponse ? kaedcoFetchedResponse.name : "";
+  };
+
+  const handleVerifiedName =
+    kaedcoMeterNumber?.length === 13 &&
+    isFailedMeterNumber === false &&
+    verifyMeterNumber &&
+    kaedcoVerifiedName === ""
+      ? passedMeterName
+      : kaedcoVerifiedName;
 
   const verifyPin = async () => {
     async function ElectricityHandler() {
@@ -612,16 +611,16 @@ const KAEDCO = () => {
               </div>
               <div>
                 <input
-                type="text"
+                  type="text"
                   value={kaedcoMeterNumber}
                   maxLength={13}
                   onChange={(e) => {
-                    const newValue = e.target.value
+                    const newValue = e.target.value;
                     setKaedcoMeterNumber(newValue);
-                    if (newValue.length === 13 && !errors.kaedcoMeterNumber) {
-                        verifyMeterNumber(newValue);
-                      }
-                      // newValue.length === 13 && !errors.kaedcoMeterNumber ? verifyMeterNumber(newValue) : setKaedcoVerifiedName("");
+                    if (newValue?.length === 13 && !errors.kaedcoMeterNumber) {
+                      verifyMeterNumber(newValue);
+                    }
+                    // newValue.length === 13 && !errors.kaedcoMeterNumber ? verifyMeterNumber(newValue) : setKaedcoVerifiedName("");
                   }}
                   onClick={() => setShowProductList(false)}
                   className={`py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full w-full  ${
@@ -651,7 +650,7 @@ const KAEDCO = () => {
               >
                 Verified Name
               </div>
-              <div>
+              <div className="relative">
                 <input
                   type="text"
                   value={handleVerifiedName}
@@ -662,6 +661,11 @@ const KAEDCO = () => {
                       : "text-[#7E7E7E]"
                   }`}
                 />
+                {meterNumberLoading && (
+                  <p className="left-4 absolute top-3.5 lg:top-4">
+                    <BalanceLoading />
+                  </p>
+                )}
               </div>
             </div>
             <div className="flex flex-col gap-2 relative lg:gap-2.5">
@@ -677,9 +681,9 @@ const KAEDCO = () => {
                   type="number"
                   value={kaedcoPhoneNumber}
                   onInput={(e) => {
-                    if (kaedcoPhoneNumber.length === 10) {
+                    if (kaedcoPhoneNumber?.length === 10) {
                       e.target.style.border = "2px solid green";
-                    } else if (e.target.value.length < 10) {
+                    } else if (e.target.value?.length < 10) {
                       e.target.style.border = "2px solid red";
                     }
                   }}
