@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { Navigate } from 'react-router-dom';
-import { HandleUserSession } from './ApiCollection.jsx/ApiBuck';
-import { RemoveLocalStorage } from './LocalStorage/LocalStorage';
+// import { HandleUserSession } from './ApiCollection.jsx/ApiBuck';
+// import { RemoveLocalStorage } from './LocalStorage/LocalStorage';
 // import { RemoveLocalStorage } from './LocalStorage/LocalStorage';
 //import { ContextProvider } from './Context';
 export const ProtectedRoute = ({children}) => {
@@ -49,12 +49,12 @@ export const ProtectedRoute = ({children}) => {
 const checkSessionToken = value.split(",");
 console.log(checkSessionToken[1]);
 // console.log(value);
-window.addEventListener("visiblitychange", ()=> {
- if(document.visibilityState === "visible" && UserStatus&& !checkSessionToken[1]?.startsWith("sessionToken")){
- RemoveLocalStorage();
- return <Navigate to ="/Login" replace/>
-}}
-)
+// window.addEventListener("visiblitychange", ()=> {
+//  if(document.visibilityState === "visible" && UserStatus&& !checkSessionToken[1]?.startsWith("sessionToken")){
+//  RemoveLocalStorage();
+//  return <Navigate to ="/Login" replace/>
+// }}
+// )
 
 //   <HandleUserSession/>
 
