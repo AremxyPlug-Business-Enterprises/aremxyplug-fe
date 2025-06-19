@@ -733,7 +733,7 @@ await PostFunction("bills/verify", setDstvLoading, bodyToJson, ()=> {
  
 
       </DashBoardLayout>
-      <ConfirmDstvPopup userVerifiedName ={userVerifiedName}/>
+      <ConfirmDstvPopup  passDataBalance ={passDataBalance} userVerifiedName ={userVerifiedName}/>
       <InputDstvPopup VerifyPinHandler={VerifyPinHandler}/>
       <DstvSuccessfulPopup handleReceivedData = {handleReceivedData} userVerifiedName = {userVerifiedName} />
      {/* Failed Transaction Popup */}

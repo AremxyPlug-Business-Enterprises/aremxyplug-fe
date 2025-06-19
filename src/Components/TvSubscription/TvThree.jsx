@@ -737,7 +737,7 @@ const VerifyPinHandler = async () => {
         </div>
 
       </DashBoardLayout>
-      <ConfirmStarTimesPopup userVerifiedName ={userVerifiedName} />
+      <ConfirmStarTimesPopup passDataBalance={passDataBalance} userVerifiedName ={userVerifiedName} />
       <InputStarTimesPopup VerifyPinHandler={VerifyPinHandler}/>
       <StarTimesSuccessfulPopup handleReceivedData = {handleReceivedData} userVerifiedName={userVerifiedName}/>
             {/* Failed Transaction Popup */}

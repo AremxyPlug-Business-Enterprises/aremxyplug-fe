@@ -29,9 +29,12 @@ const GetFunctionHandler = async(GlobalTvSubscription,tvPage, TvSubscriptionValu
       
      // console.log("Successfully fetched GotvPlans");
     }
-    const FailedHandler = async()=> {
+    const FailedHandler = async(DetectAuthorisation)=> {
         setLoading(true);
-   
+    //   alert("Hello")
+    const AuthRetrieval = async()=> {
+         setLoading(true);
+        alert("Auth retrieval running")
      if(GlobalTvSubscription === 0){
     await GetFunction(`products/tvsub/gotv`, setLoading, SuccessHandler,()=> {
         console.log("Failed to fetch Gotv with cookies")
@@ -55,7 +58,19 @@ const GetFunctionHandler = async(GlobalTvSubscription,tvPage, TvSubscriptionValu
      }else {
         alert("This error did not result from unauthorization.")
      }
-    
+    }
+
+    if(DetectAuthorisation === "unauthorised"){
+    console.log(DetectAuthorisation);
+   return  AuthRetrieval();
+     }else if(DetectAuthorisation === "Server error"){
+     alert("Running main tv server error")
+     }else if(DetectAuthorisation === "User error"){
+      alert("This is an emergency, the user has entered an unexpected realm")
+     }else if(DetectAuthorisation === undefined){
+     alert("DetectAuthorisation is undefined")
+     }
+
     }
     let path;
     let fetchedPlans;
@@ -103,6 +118,8 @@ return navigate("/StarTimes");
  handleSubscriptionFunction();
    if(handleSubscriptionFunction && GlobalTvSubscription === 0 && (fetchedGotvPlans.status !== 200)){
 await GetFunction(path, setLoading, SuccessHandler, FailedHandler, fetchedPlans);
+//console.log(FailedHandler);
+//alert("Hello")
 //   if(GetFunction && (fetchedGotvPlans.status === 200 || fetchedGotvPlans.status === 201)){
 //    return navigate("/GoTv");
 //   }
@@ -137,6 +154,7 @@ return navigate("/StarTimes");
      }
     }
   //  console.log(fetchedGotvPlans)
+  console.log(sessionModal)
 return(
         <DashBoardLayout>
             <div className={style.AirtimeTops}>
@@ -191,7 +209,7 @@ return(
                         
                         </div>
                     </div>
-
+    {/* <HandleUserSession/> */}
                 </div>
 
                 <div className={style.help}>
