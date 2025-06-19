@@ -10,7 +10,7 @@ import twitter from "../Referrals/referralImage/twitterRefer.svg";
 import rightArrow from "../Referrals/referralImage/rightArrowRefer.svg";
 import arrowDown from "../Referrals/referralImage/arrow-down.svg";
 import { Link } from "react-router-dom/dist/react-router-dom.development";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import "../../App.css";
 import {GetFunction} from "../../Components/ApiCollection.jsx/ApiBuck"
 import { Loader } from "../Loader/Loader";
@@ -20,47 +20,51 @@ import { Modal } from "../Screens/Modal/Modal";
 
 export default function Referral() {
   
- // const [copyTextOne, setCopyTextOne] = useState('');
- // const [copyTextTwo, setCopyTextTwo] = useState('');
+  // const [copyTextOne, setCopyTextOne] = useState('');
+  // const [copyTextTwo, setCopyTextTwo] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   // const [error, setError] = useState(null);
-  const [referralResponds, setReferralResponds] = useState({});
+  const referral= useRef({});
+  const [referralResponds, setReferralResponds] = useState({})
+  referral.current = referralResponds
 
+const referralLink = referral.current?.data?.data?.referral_link;
+const referralCode =  referral.current?.data?.data?.referral_code;
+ 
   const handleCopyClick = (e) => {
      if(e.target.id === 'copy-btn1' ){
     navigator.clipboard
-    .writeText(optionalTextOne)
+    .writeText(referralLink)
     .then(() => {
-      alert("Copied to clipboard");
+      alert("Copied link to clipboard");
     })
     .catch((err) => {
       console.error("Error copying text: ", err);
     });
   }else if(e.target.id === 'copy-btn2'){
     navigator.clipboard
-    .writeText(optionalTextTwo)
+    .writeText(referralCode)
     .then(() => {
-      alert("Copied to clipboard");
+      alert("Copied code to clipboard");
     })
     .catch((err) => {
       console.error("Error copying text: ", err);
     });
    } 
   };
-let optionalTextOne;
-let optionalTextTwo;
- 
- optionalTextOne = referralResponds?.data?.data?.referral_link ? referralResponds?.data?.data?.referral_link : "";
-   optionalTextTwo = referralResponds?.data?.data?.referral_code ? referralResponds?.data?.data?.referral_code : "";
- 
-const handleReferralGenerate = async () => {
+
+
+
+
+ const handleReferralGenerate = async () => {
   
   const Path = "extra/referral"; 
- 
+  
    const successHandler = () => {
      console.log('successfully fetched');
      //console.log("Referral Response:", referralResponds);
     
+     
  };
 
   const FailedHandler = async() => {
@@ -72,12 +76,12 @@ const handleReferralGenerate = async () => {
   await GetFunction(Path, setIsLoading, successHandler, FailedHandler, setReferralResponds);
 };
  useEffect(() => {
-  if((optionalTextOne === "" || optionalTextOne ===  undefined) || (optionalTextTwo === ""||  optionalTextTwo === undefined))
+  if((referralLink === "" || referralLink ===  undefined) || (referralCode === ""|| referralCode === undefined))
  handleReferralGenerate();
 //eslint-disable-next-line
  }, []);   
    
-    console.log(optionalTextOne)
+  console.log(referral.current?.data?.data?.referral_link)
   ;
   return (
     <DashBoardLayout>
@@ -146,7 +150,7 @@ const handleReferralGenerate = async () => {
             >
               {/* THE REFER LINK */}
 
-              <input value={optionalTextOne}
+              <input value={referralLink}
             readOnly
                className="copy-content1 font-[600]  text-[#7C7C7C] text-[7px] leading-[11px]
                lg:text-[16px] lg:leading-[24px] 
@@ -194,7 +198,7 @@ lg:text-[16px] lg:leading-[24px]"
         lg:h-[54px] "
             >
               {/* THE REFER LINK 2*/}
-        <input value={optionalTextTwo}
+        <input value={referralCode}
        readOnly
           className="copy-content2 font-[600]  text-[#7C7C7C] text-[7px] leading-[11px]
        lg:text-[16px] lg:leading-[24px] 

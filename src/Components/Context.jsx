@@ -232,6 +232,18 @@ export const Context = ({ children }) => {
   // ======end of form valdiation=====
 
   // ======on submit function=======
+     const setLocalStorageForInputPin = ()=> {
+  localStorage.setItem("userEmail", JSON.stringify(state.email))
+  localStorage.setItem("userFullName", JSON.stringify(state.fullName))
+  localStorage.setItem("userPhone", JSON.stringify(state.phoneNumber));
+  localStorage.setItem("aremxyUserName", JSON.stringify(state.userName))
+  localStorage.setItem("userBankName", JSON.stringify(""));
+  localStorage.setItem("aremxyAccountName", JSON.stringify(""));
+  localStorage.setItem("aremxyAccountNumber", JSON.stringify(""));
+  localStorage.setItem("aremxyUserId", JSON.stringify("NO USER ID"));
+  localStorage.setItem("ActiveSignUp", true)
+  }
+
   const handleSubmit = (event) => {
     
     event.preventDefault();
@@ -276,6 +288,9 @@ export const Context = ({ children }) => {
         }, {})
       );
     } else {
+            if(!navigator.onLine) return alert("Check your internet connection")
+      if(navigator.onLine){
+
       setErrors({});
       setLoadSignUp(true);
       const data = {
@@ -296,11 +311,15 @@ export const Context = ({ children }) => {
         .then((response) => {
           console.log(response);
           if (response.status === 201 || 200) {
-           setVerification(true);
-          } 
+                      setVerification(true);
+             setLocalStorageForInputPin();
+          }
+
+          
         })
-        .catch(error => {
-       if (error && error.response.data.status === 409) {
+               .catch((error) => {
+          if (error && error.response.data.status === 409) {
+
             alert("Input already in use: " + error.response.data.data.data);
           } else if (error && error.response.data.status === 404) {
             alert("An error has occured on your end");
@@ -319,6 +338,9 @@ export const Context = ({ children }) => {
         });
       }
     }
+  }
+      
+
 
   // ========End for SignUp.jsx======
 
@@ -861,14 +883,166 @@ export const Context = ({ children }) => {
   const [realoutputValue, setRealOutputValue] = useState("");
 
   //==============electricity subscrition===========
-  const [meterNumber, setMeterNumber] = useState("");
-  const [verifiedName, setVerifiedName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [ikedcEmail, setEmail] = useState("");
-  const [ikedcamount, setIkedcamount] = useState("");
-  const [billGenerate, setBillGenerate] = useState("");
-  const [serviceID, setServiceID] = useState("");
-  const [flag, setFlag] = useState("");
+   // ikedc
+  const [selectedIkedcMeterType, setSelectedIkedcMeterType] = useState("");
+  const [ikedcMeterNumber, setIkedcMeterNumber] = useState("");
+  const [ikedcVerifiedName, setIkedcVerifiedName] = useState("");
+  const [ikedcPhoneNumber, setIkedcPhoneNumber] = useState("");
+  const [ikedcEmail, setIkedcEmail] = useState("");
+  const [ikedcAmount, setIkedcAmount] = useState("");
+  const [ikedcBillGenerate, setIkedcBillGenerate] = useState("");
+  const [ikedcServiceID, setIkedcServiceID] = useState("");
+  const [ikedcFlag, setIkedcFlag] = useState("");
+  const [ikedcDiscoType, setIkedcDiscoType] = useState("");
+  const [ikedcOrderId, setIkedcOrderId] = useState("");
+  const [ikedcTransactionId, setIkedcTransactionId] = useState("");
+  const [ikedcShowDescription, setIkedcShowDescription] = useState("");
+  const [ikedcFetchedResponse, setIkedcFetchedResponse] = useState({});
+
+  // ibedc
+  const [ibedcEmail, setIbedcEmail] = useState("");
+  const [ibedcAmount, setIbedcAmount] = useState("");
+  const [ibedcMeterNumber, setIbedcMeterNumber] = useState("");
+  const [ibedcVerifiedName, setIbedcVerifiedName] = useState("");
+  const [ibedcPhoneNumber, setIbedcPhoneNumber] = useState("");
+  const [ibedcBillGenerate, setIbedcBillGenerate] = useState("");
+  const [ibedcServiceID, setIbedcServiceID] = useState("");
+  const [ibedcFlag, setIbedcFlag] = useState("");
+  const [selectedIbedcMeterType, setSelectedIbedcMeterType] = useState("");
+  const [ibedcOrderId, setIbedcOrderId] = useState("");
+  const [ibedcTransactionId, setIbedcTransactionId] = useState("");
+  const [ibedcDiscoType, setIbedcDiscoType] = useState("");
+  const [ibedcShowDescription, setIbedcShowDescription] = useState("");
+  const [ibedcFetchedResponse, setIbedcFetchedResponse] = useState({});
+
+  // aedc
+  const [aedcEmail, setAedcEmail] = useState("");
+  const [aedcAmount, setAedcAmount] = useState("");
+  const [aedcMeterNumber, setAedcMeterNumber] = useState("");
+  const [aedcVerifiedName, setAedcVerifiedName] = useState("");
+  const [aedcPhoneNumber, setAedcPhoneNumber] = useState("");
+  const [aedcBillGenerate, setAedcBillGenerate] = useState("");
+  const [aedcServiceID, setAedcServiceID] = useState("");
+  const [aedcFlag, setAedcFlag] = useState("");
+  const [selectedAedcMeterType, setSelectedAedcMeterType] = useState("");
+  const [aedcOrderId, setAedcOrderId] = useState("");
+  const [aedcDiscoType, setAedcDiscoType] = useState("");
+  const [aedcTransactionId, setAedcTransactionId] = useState("");
+  const [aedcShowDescription, setAedcShowDescription] = useState("");
+  const [aedcFetchedResponse, setAedcFetchedResponse] = useState({});
+
+  // bedc
+  const [bedcEmail, setBedcEmail] = useState("");
+  const [bedcAmount, setBedcAmount] = useState("");
+  const [bedcMeterNumber, setBedcMeterNumber] = useState("");
+  const [bedcVerifiedName, setBedcVerifiedName] = useState("");
+  const [bedcPhoneNumber, setBedcPhoneNumber] = useState("");
+  const [bedcBillGenerate, setBedcBillGenerate] = useState("");
+  const [bedcServiceID, setBedcServiceID] = useState("");
+  const [bedcFlag, setBedcFlag] = useState("");
+  const [bedcDiscoType, setBedcDiscoType] = useState("");
+  const [selectedBedcMeterType, setSelectedBedcMeterType] = useState("");
+  const [bedcOrderId, setBedcOrderId] = useState("");
+  const [bedcTransactionId, setBedcTransactionId] = useState("");
+  const [bedcShowDescription, setBedcShowDescription] = useState("");
+  const [bedcFetchedResponse, setBedcFetchedResponse] = useState({});
+
+  // eedc
+  const [eedcEmail, setEedcEmail] = useState("");
+  const [eedcAmount, setEedcAmount] = useState("");
+  const [eedcMeterNumber, setEedcMeterNumber] = useState("");
+  const [eedcVerifiedName, setEedcVerifiedName] = useState("");
+  const [eedcPhoneNumber, setEedcPhoneNumber] = useState("");
+  const [eedcBillGenerate, setEedcBillGenerate] = useState("");
+  const [eedcServiceID, setEedcServiceID] = useState("");
+  const [eedcFlag, setEedcFlag] = useState("");
+  const [eedcDiscoType, setEedcDiscoType] = useState("");
+  const [selectedEedcMeterType, setSelectedEedcMeterType] = useState("");
+  const [eedcOrderId, setEedcOrderId] = useState("");
+  const [eedcTransactionId, setEedcTransactionId] = useState("");
+  const [eedcShowDescription, setEedcShowDescription] = useState("");
+  const [eedcFetchedResponse, setEedcFetchedResponse] = useState({});
+
+  // ekedc
+  const [ekedcEmail, setEkedcEmail] = useState("");
+  const [ekedcAmount, setEkedcAmount] = useState("");
+  const [ekedcMeterNumber, setEkedcMeterNumber] = useState("");
+  const [ekedcVerifiedName, setEkedcVerifiedName] = useState("");
+  const [ekedcPhoneNumber, setEkedcPhoneNumber] = useState("");
+  const [ekedcBillGenerate, setEkedcBillGenerate] = useState("");
+  const [ekedcServiceID, setEkedcServiceID] = useState("");
+  const [ekedcFlag, setEkedcFlag] = useState("");
+  const [ekedcDiscoType, setEkedcDiscoType] = useState("");
+  const [selectedEkedcMeterType, setSelectedEkedcMeterType] = useState("");
+  const [ekedcOrderId, setEkedcOrderId] = useState("");
+  const [ekedcTransactionId, setEkedcTransactionId] = useState("");
+  const [ekedcShowDescription, setEkedcShowDescription] = useState("");
+  const [ekedcFetchedResponse, setEkedcFetchedResponse] = useState({});
+
+  // jed
+  const [jedEmail, setJedEmail] = useState("");
+  const [jedAmount, setJedAmount] = useState("");
+  const [jedMeterNumber, setJedMeterNumber] = useState("");
+  const [jedVerifiedName, setJedVerifiedName] = useState("");
+  const [jedPhoneNumber, setJedPhoneNumber] = useState("");
+  const [jedBillGenerate, setJedBillGenerate] = useState("");
+  const [jedServiceID, setJedServiceID] = useState("");
+  const [jedFlag, setJedFlag] = useState("");
+  const [jedDiscoType, setJedDiscoType] = useState("");
+  const [selectedJedMeterType, setSelectedJedMeterType] = useState("");
+  const [jedOrderId, setJedOrderId] = useState("");
+  const [jedTransactionId, setJedTransactionId] = useState("");
+  const [jedShowDescription, setJedShowDescription] = useState("");
+  const [jedFetchedResponse, setJedFetchedResponse] = useState({});
+
+  // kaedco
+  const [kaedcoEmail, setKaedcoEmail] = useState("");
+  const [kaedcoAmount, setKaedcoAmount] = useState("");
+  const [kaedcoMeterNumber, setKaedcoMeterNumber] = useState("");
+  const [kaedcoVerifiedName, setKaedcoVerifiedName] = useState("");
+  const [kaedcoPhoneNumber, setKaedcoPhoneNumber] = useState("");
+  const [kaedcoBillGenerate, setKaedcoBillGenerate] = useState("");
+  const [kaedcoServiceID, setKaedcoServiceID] = useState("");
+  const [kaedcoFlag, setKaedcoFlag] = useState("");
+  const [kaedcoDiscoType, setKaedcoDiscoType] = useState("");
+  const [selectedKaedcoMeterType, setSelectedKaedcoMeterType] = useState("");
+  const [kaedcoOrderId, setKaedcoOrderId] = useState("");
+  const [kaedcoTransactionId, setKaedcoTransactionId] = useState("");
+  const [kaedcoShowDescription, setKaedcoShowDescription] = useState("");
+  const [kaedcoFetchedResponse, setKaedcoFetchedResponse] = useState({});
+
+  // kedco
+  const [kedcoEmail, setKedcoEmail] = useState("");
+  const [kedcoAmount, setKedcoAmount] = useState("");
+  const [kedcoMeterNumber, setKedcoMeterNumber] = useState("");
+  const [kedcoVerifiedName, setKedcoVerifiedName] = useState("");
+  const [kedcoPhoneNumber, setKedcoPhoneNumber] = useState("");
+  const [kedcoBillGenerate, setKedcoBillGenerate] = useState("");
+  const [kedcoServiceID, setKedcoServiceID] = useState("");
+  const [kedcoFlag, setKedcoFlag] = useState("");
+  const [kedcoDiscoType, setKedcoDiscoType] = useState("");
+  const [selectedKedcoMeterType, setSelectedKedcoMeterType] = useState("");
+  const [kedcoOrderId, setKedcoOrderId] = useState("");
+  const [kedcoTransactionId, setKedcoTransactionId] = useState("");
+  const [kedcoShowDescription, setKedcoShowDescription] = useState("");
+  const [kedcoFetchedResponse, setKedcoFetchedResponse] = useState({});
+
+  // phed
+  const [phedEmail, setPhedEmail] = useState("");
+  const [phedAmount, setPhedAmount] = useState("");
+  const [phedMeterNumber, setPhedMeterNumber] = useState("");
+  const [phedVerifiedName, setPhedVerifiedName] = useState("");
+  const [phedPhoneNumber, setPhedPhoneNumber] = useState("");
+  const [phedBillGenerate, setPhedBillGenerate] = useState("");
+  const [phedServiceID, setPhedServiceID] = useState("");
+  const [phedFlag, setPhedFlag] = useState("");
+  const [phedDiscoType, setPhedDiscoType] = useState("");
+  const [selectedPhedMeterType, setSelectedPhedMeterType] = useState("");
+  const [phedOrderId, setPhedOrderId] = useState("");
+  const [phedTransactionId, setPhedTransactionId] = useState("");
+  const [phedShowDescription, setPhedShowDescription] = useState("");
+  const [phedFetchedResponse, setPhedFetchedResponse] = useState({});
+
 
   //------------Airtime Conversion---------
   const [inputValueA, setInputValueA] = useState("");
@@ -1520,22 +1694,305 @@ const [dataStatus, setDataStatus] = useState(false);
     setRealOutputValue,
 
     //electricity subscription
-    meterNumber,
-    setMeterNumber,
-    verifiedName,
-    setVerifiedName,
-    phoneNumber,
-    setPhoneNumber,
+        // ikedc
+    selectedIkedcMeterType,
+    setSelectedIkedcMeterType,
+    ikedcMeterNumber,
+    setIkedcMeterNumber,
+    ikedcVerifiedName,
+    setIkedcVerifiedName,
+    ikedcPhoneNumber,
+    setIkedcPhoneNumber,
     ikedcEmail,
-    setEmail,
-    ikedcamount,
-    setIkedcamount,
-    billGenerate,
-    setBillGenerate,
-    serviceID,
-    setServiceID,
-    flag,
-    setFlag,
+    setIkedcEmail,
+    ikedcAmount,
+    setIkedcAmount,
+    ikedcBillGenerate,
+    setIkedcBillGenerate,
+    ikedcServiceID,
+    setIkedcServiceID,
+    ikedcFlag,
+    setIkedcFlag,
+    ikedcDiscoType,
+    setIkedcDiscoType,
+    ikedcOrderId,
+    setIkedcOrderId,
+    ikedcTransactionId,
+    setIkedcTransactionId,
+    ikedcShowDescription,
+    setIkedcShowDescription,
+    ikedcFetchedResponse,
+    setIkedcFetchedResponse,
+
+    // ibedc
+    ibedcMeterNumber,
+    setIbedcMeterNumber,
+    ibedcVerifiedName,
+    setIbedcVerifiedName,
+    ibedcPhoneNumber,
+    setIbedcPhoneNumber,
+    ibedcEmail,
+    setIbedcEmail,
+    ibedcAmount,
+    setIbedcAmount,
+    ibedcBillGenerate,
+    setIbedcBillGenerate,
+    ibedcServiceID,
+    setIbedcServiceID,
+    ibedcFlag,
+    setIbedcFlag,
+    ibedcDiscoType,
+    setIbedcDiscoType,
+    selectedIbedcMeterType,
+    setSelectedIbedcMeterType,
+    ibedcOrderId,
+    setIbedcOrderId,
+    ibedcTransactionId,
+    setIbedcTransactionId,
+    ibedcShowDescription,
+    setIbedcShowDescription,
+    ibedcFetchedResponse,
+    setIbedcFetchedResponse,
+
+    // aedc
+    aedcMeterNumber,
+    setAedcMeterNumber,
+    aedcVerifiedName,
+    setAedcVerifiedName,
+    aedcPhoneNumber,
+    setAedcPhoneNumber,
+    aedcEmail,
+    setAedcEmail,
+    aedcAmount,
+    setAedcAmount,
+    aedcBillGenerate,
+    setAedcBillGenerate,
+    aedcServiceID,
+    setAedcServiceID,
+    aedcFlag,
+    setAedcFlag,
+    aedcDiscoType,
+    setAedcDiscoType,
+    selectedAedcMeterType,
+    setSelectedAedcMeterType,
+    aedcOrderId,
+    setAedcOrderId,
+    aedcTransactionId,
+    setAedcTransactionId,
+    aedcShowDescription,
+    setAedcShowDescription,
+    aedcFetchedResponse,
+    setAedcFetchedResponse,
+
+    // bedc
+    bedcMeterNumber,
+    setBedcMeterNumber,
+    eedcMeterNumber,
+    setEedcMeterNumber,
+    bedcVerifiedName,
+    setBedcVerifiedName,
+    bedcPhoneNumber,
+    setBedcPhoneNumber,
+    bedcEmail,
+    setBedcEmail,
+    bedcAmount,
+    setBedcAmount,
+    bedcBillGenerate,
+    setBedcBillGenerate,
+    bedcServiceID,
+    setBedcServiceID,
+    selectedBedcMeterType,
+    setSelectedBedcMeterType,
+    bedcOrderId,
+    setBedcOrderId,
+    bedcFlag,
+    setBedcFlag,
+    bedcDiscoType,
+    setBedcDiscoType,
+    bedcTransactionId,
+    setBedcTransactionId,
+    bedcShowDescription,
+    setBedcShowDescription,
+    bedcFetchedResponse,
+    setBedcFetchedResponse,
+
+    // eedc
+    eedcVerifiedName,
+    setEedcVerifiedName,
+    eedcPhoneNumber,
+    setEedcPhoneNumber,
+    eedcEmail,
+    setEedcEmail,
+    eedcAmount,
+    setEedcAmount,
+    eedcBillGenerate,
+    setEedcBillGenerate,
+    eedcServiceID,
+    setEedcServiceID,
+    eedcFlag,
+    setEedcFlag,
+    eedcDiscoType,
+    setEedcDiscoType,
+    selectedEedcMeterType,
+    setSelectedEedcMeterType,
+    eedcOrderId,
+    setEedcOrderId,
+    eedcTransactionId,
+    setEedcTransactionId,
+    eedcShowDescription,
+    setEedcShowDescription,
+    eedcFetchedResponse,
+    setEedcFetchedResponse,
+
+    // ekedc
+    ekedcMeterNumber,
+    setEkedcMeterNumber,
+    ekedcVerifiedName,
+    setEkedcVerifiedName,
+    ekedcPhoneNumber,
+    setEkedcPhoneNumber,
+    ekedcEmail,
+    setEkedcEmail,
+    ekedcAmount,
+    setEkedcAmount,
+    ekedcBillGenerate,
+    setEkedcBillGenerate,
+    ekedcServiceID,
+    setEkedcServiceID,
+    ekedcFlag,
+    setEkedcFlag,
+    ekedcDiscoType,
+    setEkedcDiscoType,
+    selectedEkedcMeterType,
+    setSelectedEkedcMeterType,
+    ekedcOrderId,
+    setEkedcOrderId,
+    ekedcTransactionId,
+    setEkedcTransactionId,
+    ekedcShowDescription,
+    setEkedcShowDescription,
+    ekedcFetchedResponse,
+    setEkedcFetchedResponse,
+
+    // jed
+    jedMeterNumber,
+    setJedMeterNumber,
+    jedVerifiedName,
+    setJedVerifiedName,
+    jedPhoneNumber,
+    setJedPhoneNumber,
+    jedEmail,
+    setJedEmail,
+    jedAmount,
+    setJedAmount,
+    jedBillGenerate,
+    setJedBillGenerate,
+    jedServiceID,
+    setJedServiceID,
+    jedFlag,
+    setJedFlag,
+    jedDiscoType,
+    setJedDiscoType,
+    selectedJedMeterType,
+    setSelectedJedMeterType,
+    jedOrderId,
+    setJedOrderId,
+    jedTransactionId,
+    setJedTransactionId,
+    jedShowDescription,
+    setJedShowDescription,
+    jedFetchedResponse,
+    setJedFetchedResponse,
+
+    // kaedco
+    kaedcoMeterNumber,
+    setKaedcoMeterNumber,
+    kaedcoVerifiedName,
+    setKaedcoVerifiedName,
+    kaedcoPhoneNumber,
+    setKaedcoPhoneNumber,
+    kaedcoEmail,
+    setKaedcoEmail,
+    kaedcoAmount,
+    setKaedcoAmount,
+    kaedcoBillGenerate,
+    setKaedcoBillGenerate,
+    kaedcoServiceID,
+    setKaedcoServiceID,
+    kaedcoFlag,
+    setKaedcoFlag,
+    kaedcoDiscoType,
+    setKaedcoDiscoType,
+    selectedKaedcoMeterType,
+    setSelectedKaedcoMeterType,
+    kaedcoOrderId,
+    setKaedcoOrderId,
+    kaedcoTransactionId,
+    setKaedcoTransactionId,
+    kaedcoShowDescription,
+    setKaedcoShowDescription,
+    kaedcoFetchedResponse,
+    setKaedcoFetchedResponse,
+
+    // kaedco
+    kedcoMeterNumber,
+    setKedcoMeterNumber,
+    kedcoVerifiedName,
+    setKedcoVerifiedName,
+    kedcoPhoneNumber,
+    setKedcoPhoneNumber,
+    kedcoEmail,
+    setKedcoEmail,
+    kedcoAmount,
+    setKedcoAmount,
+    kedcoBillGenerate,
+    setKedcoBillGenerate,
+    kedcoServiceID,
+    setKedcoServiceID,
+    kedcoFlag,
+    setKedcoFlag,
+    kedcoDiscoType,
+    setKedcoDiscoType,
+    selectedKedcoMeterType,
+    setSelectedKedcoMeterType,
+    kedcoOrderId,
+    setKedcoOrderId,
+    kedcoTransactionId,
+    setKedcoTransactionId,
+    kedcoShowDescription,
+    setKedcoShowDescription,
+    kedcoFetchedResponse,
+    setKedcoFetchedResponse,
+
+    // phed
+    phedMeterNumber,
+    setPhedMeterNumber,
+    phedVerifiedName,
+    setPhedVerifiedName,
+    phedPhoneNumber,
+    setPhedPhoneNumber,
+    phedEmail,
+    setPhedEmail,
+    phedAmount,
+    setPhedAmount,
+    phedBillGenerate,
+    setPhedBillGenerate,
+    phedServiceID,
+    setPhedServiceID,
+    phedFlag,
+    setPhedFlag,
+    phedDiscoType,
+    setPhedDiscoType,
+    selectedPhedMeterType,
+    setSelectedPhedMeterType,
+    phedOrderId,
+    setPhedOrderId,
+    phedTransactionId,
+    setPhedTransactionId,
+    phedShowDescription,
+    setPhedShowDescription,
+    phedFetchedResponse,
+    setPhedFetchedResponse,
 
     //Airtime Conversion
     inputValueA,
