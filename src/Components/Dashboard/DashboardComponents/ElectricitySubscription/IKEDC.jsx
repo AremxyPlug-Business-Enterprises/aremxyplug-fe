@@ -15,7 +15,7 @@ import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import OtpInput from "react-otp-input";
 import { Link, useNavigate } from "react-router-dom";
-import { Loader } from "../../../Loader/Loader";
+import { BalanceLoading, Loader } from "../../../Loader/Loader";
 
 import {
   PostFunction,
@@ -309,56 +309,55 @@ const IKEDC = () => {
   const [pinFailed, setPinFailed] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isFailedMeterNumber, setIsFailedMeterNumber] = useState(false);
-  
-    let passedMeterName;
-  
-    const verifyMeterNumber = async (meterNumber) => {
-      async function HandleMeterNumber() {
-        const path = "bills/verify";
-        const body = {
-          disco_type: "ikeja-electric",
-          // meter_no: meterNumber || ikedcMeterNumber,
-          meter_no: meterNumber,
-          meter_type: selectedIkedcMeterType.toLowerCase(),
-        };
-        const SuccessHandler = () => {
-          setIsFailedMeterNumber(false);
-          function handleReceivedMeterData() {
-            if (ikedcFetchedResponse.name) {
-              setIkedcVerifiedName(ikedcFetchedResponse.name);
-            } else {
-              setIkedcVerifiedName("");
-            }
+  const [meterNumberLoading, setMeterNumberLoading] = useState(false);
+
+  let passedMeterName;
+
+  const verifyMeterNumber = async (meterNumber) => {
+    async function HandleMeterNumber() {
+      const path = "bills/verify";
+      const body = {
+        disco_type: "ikeja-electric",
+        // meter_no: meterNumber || ikedcMeterNumber,
+        meter_no: meterNumber,
+        meter_type: selectedIkedcMeterType.toLowerCase(),
+      };
+      const SuccessHandler = () => {
+        setIsFailedMeterNumber(false);
+        function handleReceivedMeterData() {
+          if (ikedcFetchedResponse.name) {
+            setIkedcVerifiedName(ikedcFetchedResponse.name);
+          } else {
+            setIkedcVerifiedName("");
           }
-          handleReceivedMeterData();
-        };
-        const FailedHandler = () => {
-          setIsFailedMeterNumber(true);
-        };
-  
-        await PostFunction(
-          path,
-          setLoading,
-          body,
-          SuccessHandler,
-          FailedHandler,
-          setIkedcFetchedResponse
-        );
-      }
-      HandleMeterNumber();
-      // handleReceivedMeterData();
-      passedMeterName = ikedcFetchedResponse
-        ? ikedcFetchedResponse.name
-        : "";
-    };
-  
-    const handleVerifiedName =
-      ikedcMeterNumber.length === 13 &&
-      isFailedMeterNumber === false &&
-      verifyMeterNumber &&
-      ikedcVerifiedName === ""
-        ? passedMeterName
-        : ikedcVerifiedName;
+        }
+        handleReceivedMeterData();
+      };
+      const FailedHandler = () => {
+        setIsFailedMeterNumber(true);
+      };
+
+      await PostFunction(
+        path,
+        setMeterNumberLoading,
+        body,
+        SuccessHandler,
+        FailedHandler,
+        setIkedcFetchedResponse
+      );
+    }
+    HandleMeterNumber();
+    // handleReceivedMeterData();
+    passedMeterName = ikedcFetchedResponse ? ikedcFetchedResponse.name : "";
+  };
+
+  const handleVerifiedName =
+    ikedcMeterNumber?.length === 13 &&
+    isFailedMeterNumber === false &&
+    verifyMeterNumber &&
+    ikedcVerifiedName === ""
+      ? passedMeterName
+      : ikedcVerifiedName;
 
   const verifyPin = async () => {
     async function ElectricityHandler() {
@@ -623,11 +622,12 @@ const IKEDC = () => {
                   value={ikedcMeterNumber}
                   maxLength={13}
                   onChange={(e) => {
-                    const newValue = e.target.value
+                    const newValue = e.target.value;
                     setIkedcMeterNumber(newValue);
-                    if (newValue.length === 13 && !errors.ikedcMeterNumber) {
+                    if (newValue?.length === 13 && !errors.ikedcMeterNumber) {
                       verifyMeterNumber(newValue);
                     }
+                    // newValue.length === 13 && !errors.ikedcMeterNumber ? verifyMeterNumber(newValue) : setIkedcVerifiedName("");
                   }}
                   className={`py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full w-full  ${
                     isDarkMode
@@ -657,10 +657,10 @@ const IKEDC = () => {
               >
                 Verified Name
               </div>
-              <div>
+              <div className="relative">
                 <input
                   type="text"
-                 value={handleVerifiedName}
+                  value={handleVerifiedName}
                   readOnly
                   // onChange={handleVerifiedName}
                   className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
@@ -669,6 +669,11 @@ const IKEDC = () => {
                       : "text-[#7E7E7E] bg-white"
                   }`}
                 />
+                {meterNumberLoading && (
+                  <p className="left-4 absolute top-3.5 lg:top-4">
+                    <BalanceLoading />
+                  </p>
+                )}
               </div>
             </div>
             <div className="flex flex-col relative gap-2 lg:gap-2.5">
@@ -684,9 +689,9 @@ const IKEDC = () => {
                   type="number"
                   value={ikedcPhoneNumber}
                   onInput={(e) => {
-                    if (ikedcPhoneNumber.length === 10) {
+                    if (ikedcPhoneNumber?.length === 10) {
                       e.target.style.border = "2px solid green";
-                    } else if (e.target.value.length < 10) {
+                    } else if (e.target.value?.length < 10) {
                       e.target.style.border = "2px solid red";
                     }
                   }}

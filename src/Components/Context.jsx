@@ -1934,7 +1934,7 @@ const [dataStatus, setDataStatus] = useState(false);
     kaedcoFetchedResponse,
     setKaedcoFetchedResponse,
 
-    // kaedco
+    // kedco
     kedcoMeterNumber,
     setKedcoMeterNumber,
     kedcoVerifiedName,

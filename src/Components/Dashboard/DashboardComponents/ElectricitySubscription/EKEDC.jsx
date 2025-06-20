@@ -20,7 +20,7 @@ import {
   PostFunction,
   VerifyTransPin,
 } from "../../../ApiCollection.jsx/ApiBuck";
-import { Loader } from "../../../Loader/Loader";
+import { BalanceLoading, Loader } from "../../../Loader/Loader";
 
 const EKEDC = () => {
   const navigate = useNavigate();
@@ -308,55 +308,55 @@ const EKEDC = () => {
   const [pinFailed, setPinFailed] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isFailedMeterNumber, setIsFailedMeterNumber] = useState(false);
-  
-    let passedMeterName;
-  
-    const verifyMeterNumber = async (meterNumber) => {
-      async function HandleMeterNumber() {
-        const path = "bills/verify";
-        const body = {
-          disco_type: "eko-electric",
-          meter_no: meterNumber,
-          meter_type: selectedEkedcMeterType.toLowerCase(),
-        };
-        const SuccessHandler = () => {
-          setIsFailedMeterNumber(false);
-          function handleReceivedMeterData() {
-            if (ekedcFetchedResponse.name) {
-              setEkedcVerifiedName(ekedcFetchedResponse.name);
-            } else {
-              setEkedcVerifiedName("");
-            }
+  const [meterNumberLoading, setMeterNumberLoading] = useState(false);
+
+  let passedMeterName;
+
+  const verifyMeterNumber = async (meterNumber) => {
+    async function HandleMeterNumber() {
+      const path = "bills/verify";
+      const body = {
+        disco_type: "eko-electric",
+        meter_no: meterNumber,
+        meter_type: selectedEkedcMeterType.toLowerCase(),
+      };
+      console.log(meterNumber);
+      const SuccessHandler = () => {
+        setIsFailedMeterNumber(false);
+        function handleReceivedMeterData() {
+          if (ekedcFetchedResponse.name) {
+            setEkedcVerifiedName(ekedcFetchedResponse.name);
+          } else {
+            setEkedcVerifiedName("");
           }
-          handleReceivedMeterData();
-        };
-        const FailedHandler = () => {
-          setIsFailedMeterNumber(true);
-        };
-  
-        await PostFunction(
-          path,
-          setLoading,
-          body,
-          SuccessHandler,
-          FailedHandler,
-          setEkedcFetchedResponse
-        );
-      }
-      HandleMeterNumber();
-      // handleReceivedMeterData();
-      passedMeterName = ekedcFetchedResponse
-        ? ekedcFetchedResponse.name
-        : "";
-    };
-  
-    const handleVerifiedName =
-      ekedcMeterNumber.length === 13 &&
-      isFailedMeterNumber === false &&
-      verifyMeterNumber &&
-      ekedcVerifiedName === ""
-        ? passedMeterName
-        : ekedcVerifiedName;
+        }
+        handleReceivedMeterData();
+      };
+      const FailedHandler = () => {
+        setIsFailedMeterNumber(true);
+      };
+
+      await PostFunction(
+        path,
+        setMeterNumberLoading,
+        body,
+        SuccessHandler,
+        FailedHandler,
+        setEkedcFetchedResponse
+      );
+    }
+    HandleMeterNumber();
+    // handleReceivedMeterData();
+    passedMeterName = ekedcFetchedResponse ? ekedcFetchedResponse.name : "";
+  };
+
+  const handleVerifiedName =
+    ekedcMeterNumber?.length === 13 &&
+    isFailedMeterNumber === false &&
+    verifyMeterNumber &&
+    ekedcVerifiedName === ""
+      ? passedMeterName
+      : ekedcVerifiedName;
 
   const verifyPin = async () => {
     async function ElectricityHandler() {
@@ -620,9 +620,10 @@ const EKEDC = () => {
                   value={ekedcMeterNumber}
                   maxLength={13}
                   onChange={(e) => {
-                    const newValue = e.target.value
+                    const newValue = e.target.value;
                     setEkedcMeterNumber(newValue);
-                    if (newValue.length === 13 && !errors.ekedcMeterNumber) {
+                    // newValue.length === 13 && !errors.ekedcMeterNumber ? verifyMeterNumber(newValue) : setEkedcVerifiedName("");
+                    if (newValue?.length === 13 && !errors.ekedcMeterNumber) {
                       verifyMeterNumber(newValue);
                     }
                   }}
@@ -653,7 +654,7 @@ const EKEDC = () => {
               <div className="text-[#7E7E7E] text-[14px] lg:text-[16px] md:font-semibold font-normal">
                 Verified Name
               </div>
-              <div>
+              <div className="relative">
                 <input
                   type="text"
                   value={handleVerifiedName}
@@ -664,6 +665,11 @@ const EKEDC = () => {
                       : "text-[#7E7E7E]"
                   }`}
                 />
+                {meterNumberLoading && (
+                  <p className="left-4 absolute top-3.5 lg:top-4">
+                    <BalanceLoading />
+                  </p>
+                )}
               </div>
             </div>
             <div className="flex flex-col relative gap-2 lg:gap-2.5">
@@ -679,9 +685,9 @@ const EKEDC = () => {
                   type="number"
                   value={ekedcPhoneNumber}
                   onInput={(e) => {
-                    if (ekedcPhoneNumber.length === 10) {
+                    if (ekedcPhoneNumber?.length === 10) {
                       e.target.style.border = "2px solid green";
-                    } else if (e.target.value.length < 10) {
+                    } else if (e.target.value?.length < 10) {
                       e.target.style.border = "2px solid red";
                     }
                   }}
