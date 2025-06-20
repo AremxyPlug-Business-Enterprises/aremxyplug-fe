@@ -17,7 +17,7 @@ import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import OtpInput from "react-otp-input";
 import { Link } from "react-router-dom";
-import { Loader } from "../../../Loader/Loader";
+import { BalanceLoading, Loader } from "../../../Loader/Loader";
 
 import {
   PostFunction,
@@ -314,55 +314,54 @@ const KEDCO = () => {
   const [pinFailed, setPinFailed] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isFailedMeterNumber, setIsFailedMeterNumber] = useState(false);
-  
-    let passedMeterName;
-  
-    const verifyMeterNumber = async (meterNumber) => {
-      async function HandleMeterNumber() {
-        const path = "bills/verify";
-        const body = {
-          disco_type: "kano-electric",
-          meter_no: meterNumber,
-          meter_type: selectedKedcoMeterType.toLowerCase(),
-        };
-        const SuccessHandler = () => {
-          setIsFailedMeterNumber(false);
-          function handleReceivedMeterData() {
-            if (kedcoFetchedResponse.name) {
-              setKedcoVerifiedName(kedcoFetchedResponse.name);
-            } else {
-              setKedcoVerifiedName("");
-            }
+  const [meterNumberLoading, setMeterNumberLoading] = useState(false);
+
+  let passedMeterName;
+
+  const verifyMeterNumber = async (meterNumber) => {
+    async function HandleMeterNumber() {
+      const path = "bills/verify";
+      const body = {
+        disco_type: "kano-electric",
+        meter_no: meterNumber,
+        meter_type: selectedKedcoMeterType.toLowerCase(),
+      };
+      const SuccessHandler = () => {
+        setIsFailedMeterNumber(false);
+        function handleReceivedMeterData() {
+          if (kedcoFetchedResponse.name) {
+            setKedcoVerifiedName(kedcoFetchedResponse.name);
+          } else {
+            setKedcoVerifiedName("");
           }
-          handleReceivedMeterData();
-        };
-        const FailedHandler = () => {
-          setIsFailedMeterNumber(true);
-        };
-  
-        await PostFunction(
-          path,
-          setLoading,
-          body,
-          SuccessHandler,
-          FailedHandler,
-          setKedcoFetchedResponse
-        );
-      }
-      HandleMeterNumber();
-      // handleReceivedMeterData();
-      passedMeterName = kedcoFetchedResponse
-        ? kedcoFetchedResponse.name
-        : "";
-    };
-  
-    const handleVerifiedName =
-      kedcoMeterNumber.length === 13 &&
-      isFailedMeterNumber === false &&
-      verifyMeterNumber &&
-      kedcoVerifiedName === ""
-        ? passedMeterName
-        : kedcoVerifiedName;
+        }
+        handleReceivedMeterData();
+      };
+      const FailedHandler = () => {
+        setIsFailedMeterNumber(true);
+      };
+
+      await PostFunction(
+        path,
+        setMeterNumberLoading,
+        body,
+        SuccessHandler,
+        FailedHandler,
+        setKedcoFetchedResponse
+      );
+    }
+    HandleMeterNumber();
+    // handleReceivedMeterData();
+    passedMeterName = kedcoFetchedResponse ? kedcoFetchedResponse.name : "";
+  };
+
+  const handleVerifiedName =
+    kedcoMeterNumber?.length === 13 &&
+    isFailedMeterNumber === false &&
+    verifyMeterNumber &&
+    kedcoVerifiedName === ""
+      ? passedMeterName
+      : kedcoVerifiedName;
 
   const verifyPin = async () => {
     async function ElectricityHandler() {
@@ -591,7 +590,6 @@ const KEDCO = () => {
           >
             <div className="text-[9px] md:text-xs lg:text-[16px]">Recharge</div>
             <div>
-              
               <img className="w-[35px] lg:w-[3.5rem] ml-1" src={logo} alt="" />
             </div>
             <div className="text-[9px] md:text-xs lg:text-[16px] ml-1">
@@ -709,11 +707,12 @@ const KEDCO = () => {
                   // onChange={handleMeterNumber}
                   maxLength={13}
                   onChange={(e) => {
-                    const newValue = e.target.value
+                    const newValue = e.target.value;
                     setKedcoMeterNumber(newValue);
-                    if (newValue.length === 13 && !errors.kedcoMeterNumber) {
+                    if (newValue?.length === 13 && !errors.kedcoMeterNumber) {
                       verifyMeterNumber(newValue);
                     }
+                    // newValue.length === 13 && !errors.kedcoMeterNumber ? verifyMeterNumber(newValue) : setKedcoVerifiedName("");
                   }}
                   onClick={() => setShowProductList(false)}
                   className={`py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full w-full  ${
@@ -743,7 +742,7 @@ const KEDCO = () => {
               >
                 Verified Name
               </div>
-              <div>
+              <div className="relative">
                 <input
                   type="text"
                   value={handleVerifiedName}
@@ -755,6 +754,11 @@ const KEDCO = () => {
                       : "text-[#7E7E7E]"
                   }`}
                 />
+                {meterNumberLoading && (
+                  <p className="left-4 absolute top-3.5 lg:top-4">
+                    <BalanceLoading />
+                  </p>
+                )}
               </div>
             </div>
             <div className="flex flex-col relative gap-2 lg:gap-2.5">
@@ -770,9 +774,9 @@ const KEDCO = () => {
                   type="number"
                   value={kedcoPhoneNumber}
                   onInput={(e) => {
-                    if (kedcoPhoneNumber.length === 10) {
+                    if (kedcoPhoneNumber?.length === 10) {
                       e.target.style.border = "2px solid green";
-                    } else if (e.target.value.length < 10) {
+                    } else if (e.target.value?.length < 10) {
                       e.target.style.border = "2px solid red";
                     }
                   }}
@@ -936,7 +940,11 @@ const KEDCO = () => {
                          isDarkMode
                            ? "text-white hover:bg-slate-800 bg-black "
                            : "text-[#7E7E7E] "
-                       } ${country.code === "Nigerian NGN Wallet" ? "cursor-pointer" : "cursor-not-allowed opacity-50"}`}
+                       } ${
+                        country.code === "Nigerian NGN Wallet"
+                          ? "cursor-pointer"
+                          : "cursor-not-allowed opacity-50"
+                      }`}
                       key={country.id}
                       onClick={() =>
                         handleCountryClick(

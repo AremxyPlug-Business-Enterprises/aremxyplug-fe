@@ -19,7 +19,7 @@ import {
   PostFunction,
   VerifyTransPin,
 } from "../../../ApiCollection.jsx/ApiBuck";
-import { Loader } from "../../../Loader/Loader";
+import { BalanceLoading, Loader } from "../../../Loader/Loader";
 
 const EEDC = () => {
   const navigate = useNavigate();
@@ -188,14 +188,14 @@ const EEDC = () => {
     ];
 
     for (let network of networks) {
-    for (let prefix of network.values) {
-      if (number.startsWith(prefix) && number.length === 11) {
-        return network.name;
+      for (let prefix of network.values) {
+        if (number.startsWith(prefix) && number.length === 11) {
+          return network.name;
+        }
       }
     }
-  }
 
-  return "Unknown network";
+    return "Unknown network";
   }
 
   const [errors, setErrors] = useState({});
@@ -225,12 +225,11 @@ const EEDC = () => {
     } else if (CheckSufficiency) {
       setAmountError("Insufficient fund");
     } else if (network === "Unknown network") {
-    setErrors({
-      eedcPhoneNumber:
-        "Invalid phone number. Please enter a valid Nigerian network number.",
-    });
-  }
-    else {
+      setErrors({
+        eedcPhoneNumber:
+          "Invalid phone number. Please enter a valid Nigerian network number.",
+      });
+    } else {
       setProceed(true);
       setErrors({});
       setAmountError("");
@@ -309,7 +308,8 @@ const EEDC = () => {
   const [pinSuccess, setPinSuccess] = useState(false);
   const [pinFailed, setPinFailed] = useState(false);
   const [loading, setLoading] = useState(false);
-const [isFailedMeterNumber, setIsFailedMeterNumber] = useState(false);
+  const [isFailedMeterNumber, setIsFailedMeterNumber] = useState(false);
+  const [meterNumberLoading, setMeterNumberLoading] = useState(false);
 
   let passedMeterName;
 
@@ -338,7 +338,7 @@ const [isFailedMeterNumber, setIsFailedMeterNumber] = useState(false);
 
       await PostFunction(
         path,
-        setLoading,
+        setMeterNumberLoading,
         body,
         SuccessHandler,
         FailedHandler,
@@ -347,19 +347,16 @@ const [isFailedMeterNumber, setIsFailedMeterNumber] = useState(false);
     }
     HandleMeterNumber();
     // handleReceivedMeterData();
-    passedMeterName = eedcFetchedResponse
-      ? eedcFetchedResponse.name
-      : "";
+    passedMeterName = eedcFetchedResponse ? eedcFetchedResponse.name : "";
   };
 
   const handleVerifiedName =
-    eedcMeterNumber.length === 13 &&
+    eedcMeterNumber?.length === 13 &&
     isFailedMeterNumber === false &&
     verifyMeterNumber &&
     eedcVerifiedName === ""
       ? passedMeterName
       : eedcVerifiedName;
-  
 
   const verifyPin = async () => {
     async function ElectricityHandler() {
@@ -623,11 +620,14 @@ const [isFailedMeterNumber, setIsFailedMeterNumber] = useState(false);
                   value={eedcMeterNumber}
                   maxLength={13}
                   onChange={(e) => {
-                    const newValue = e.target.value
+                    const newValue = e.target.value;
                     setEedcMeterNumber(newValue);
-                    if (newValue.length === 13 && !errors.eedcMeterNumber) {
-                      verifyMeterNumber(newValue);
-                    }
+                    newValue?.length === 13 && !errors.eedcMeterNumber
+                      ? verifyMeterNumber(newValue)
+                      : setEedcVerifiedName("");
+                    // if (newValue.length === 13 && !errors.eedcMeterNumber) {
+                    //   verifyMeterNumber(newValue);
+                    // }
                   }}
                   onClick={() => setShowProductList(false)}
                   className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
@@ -660,7 +660,7 @@ const [isFailedMeterNumber, setIsFailedMeterNumber] = useState(false);
               >
                 Verified Name
               </div>
-              <div>
+              <div className="relative">
                 <input
                   type="text"
                   value={handleVerifiedName}
@@ -671,6 +671,11 @@ const [isFailedMeterNumber, setIsFailedMeterNumber] = useState(false);
                       : "text-[#7E7E7E]"
                   }`}
                 />
+                {meterNumberLoading && (
+                  <p className="left-4 absolute top-3.5 lg:top-4">
+                    <BalanceLoading />
+                  </p>
+                )}
               </div>
             </div>
             <div className="flex flex-col relative gap-2 lg:gap-2.5">
@@ -686,9 +691,9 @@ const [isFailedMeterNumber, setIsFailedMeterNumber] = useState(false);
                   type="number"
                   value={eedcPhoneNumber}
                   onInput={(e) => {
-                    if (eedcPhoneNumber.length === 10) {
+                    if (eedcPhoneNumber?.length === 10) {
                       e.target.style.border = "2px solid green";
-                    } else if (e.target.value.length < 10) {
+                    } else if (e.target.value?.length < 10) {
                       e.target.style.border = "2px solid red";
                     }
                   }}
@@ -848,7 +853,11 @@ const [isFailedMeterNumber, setIsFailedMeterNumber] = useState(false);
                          isDarkMode
                            ? "text-white hover:bg-slate-800 bg-black "
                            : "text-[#7E7E7E] "
-                       } ${country.code === "Nigerian NGN Wallet" ? "cursor-pointer" : "cursor-not-allowed opacity-50"}`}
+                       } ${
+                        country.code === "Nigerian NGN Wallet"
+                          ? "cursor-pointer"
+                          : "cursor-not-allowed opacity-50"
+                      }`}
                       key={country.id}
                       onClick={() =>
                         handleCountryClick(

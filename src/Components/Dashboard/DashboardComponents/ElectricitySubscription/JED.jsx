@@ -20,7 +20,7 @@ import {
   PostFunction,
   VerifyTransPin,
 } from "../../../ApiCollection.jsx/ApiBuck";
-import { Loader } from "../../../Loader/Loader";
+import { BalanceLoading, Loader } from "../../../Loader/Loader";
 
 const JED = () => {
   const navigate = useNavigate();
@@ -309,6 +309,7 @@ const JED = () => {
   const [loading, setLoading] = useState(false);
 
   const [isFailedMeterNumber, setIsFailedMeterNumber] = useState(false);
+  const [meterNumberLoading, setMeterNumberLoading] = useState(false);
 
   let passedMeterName;
 
@@ -337,7 +338,7 @@ const JED = () => {
 
       await PostFunction(
         path,
-        setLoading,
+        setMeterNumberLoading,
         body,
         SuccessHandler,
         FailedHandler,
@@ -350,7 +351,7 @@ const JED = () => {
   };
 
   const handleVerifiedName =
-    jedMeterNumber.length === 13 &&
+    jedMeterNumber?.length === 13 &&
     isFailedMeterNumber === false &&
     verifyMeterNumber &&
     jedVerifiedName === ""
@@ -620,9 +621,10 @@ const JED = () => {
                   onChange={(e) => {
                     const newValue = e.target.value;
                     setJedMeterNumber(newValue);
-                    if (newValue.length === 13 && !errors.jedMeterNumber) {
+                    if (newValue?.length === 13 && !errors.jedMeterNumber) {
                       verifyMeterNumber(newValue);
                     }
+                    // newValue.length === 13 && !errors.jedMeterNumber ? verifyMeterNumber(newValue) : setJedVerifiedName("");
                   }}
                   onClick={() => setShowProductList(false)}
                   className={`py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full w-full  ${
@@ -655,7 +657,7 @@ const JED = () => {
               >
                 Verified Name
               </div>
-              <div>
+              <div className="relative">
                 <input
                   type="text"
                   value={handleVerifiedName}
@@ -666,6 +668,11 @@ const JED = () => {
                       : "text-[#7E7E7E]"
                   }`}
                 />
+                {meterNumberLoading && (
+                  <p className="left-4 absolute top-3.5 lg:top-4">
+                    <BalanceLoading />
+                  </p>
+                )}
               </div>
             </div>
             <div className="flex flex-col gap-2 relative lg:gap-2.5">
@@ -682,9 +689,9 @@ const JED = () => {
                   value={jedPhoneNumber}
                   onChange={handlePhoneNumber}
                   onInput={(e) => {
-                    if (jedPhoneNumber.length === 10) {
+                    if (jedPhoneNumber?.length === 10) {
                       e.target.style.border = "2px solid green";
-                    } else if (e.target.value.length < 10) {
+                    } else if (e.target.value?.length < 10) {
                       e.target.style.border = "2px solid red";
                     }
                   }}
