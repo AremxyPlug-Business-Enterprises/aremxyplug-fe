@@ -64,11 +64,11 @@ const GetFunctionHandler = async(GlobalTvSubscription,tvPage, TvSubscriptionValu
     console.log(DetectAuthorisation);
    return  AuthRetrieval();
      }else if(DetectAuthorisation === "Server error"){
-     alert("Running main tv server error")
+     console.log("Running server error")
      }else if(DetectAuthorisation === "User error"){
-      alert("This is an emergency, the user has entered an unexpected realm")
+       console.log("Running on 404")
      }else if(DetectAuthorisation === undefined){
-     alert("DetectAuthorisation is undefined")
+     alert("Error connection issue")
      }
 
     }
