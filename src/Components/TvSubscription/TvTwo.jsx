@@ -671,13 +671,16 @@ await PostFunction("bills/verify", setDstvLoading, bodyToJson, ()=> {
                     return (
                       <div
                         onClick={(e => {
-                          setFlagResult(methodOption.method);
-                          setDstvWalletBalance(methodOption.balance)
-                          setMethodImage(methodOption.flag);
+                          setFlagResult(methodOption.id === 1 ?
+                                  methodOption.method : ""
+                                );
+                          setDstvWalletBalance( methodOption.id === 1 ? methodOption.balance : "")
+                          setMethodImage(methodOption.id === 1 ? methodOption.flag : arrowDown);
                           setMethodPayment(false);
                           document.querySelector('.methodDrop').classList.remove('DropIt');
                         })}
                         className={`pb-[20px] pt-[20px] md:pb-0 md:pt-0 flex gap-[10px] lg:py-[15px] py-[10px] pl-[10px]
+                           ${methodOption.id === 1 ? "bg-white" : "bg-gray-300"}
         cursor-pointer  items-center 
         shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]  ${
                     isDarkMode 

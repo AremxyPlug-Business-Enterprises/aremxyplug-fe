@@ -118,7 +118,8 @@ const ContinueSignUp = ()=> {
       {/* =====Hero Image==== */}
 
       {/* =====Sign up Form==== */}
-      <div className="md:h-[55%] pb-[5%] bg-[#ffffff] ml-[3%] rounded-bl-3xl rounded-tl-3xl px-[4%] md:pb-[5%] md:w-[573px]  md:ml-[30%] lg:h-[1024px] lg:w-[1001px]  lg:ml-[%] lg:px-0 lg:rounded-bl-[52px] lg:rounded-tl-[52px]">
+      <div className="md:h-[55%] pb-[5%] bg-[#ffffff] ml-[3%] rounded-bl-3xl rounded-tl-3xl px-[4%] md:pb-[5%] md:w-[573px] 
+       md:ml-[30%] lg:h-[1024px] lg:w-[1001px]  h-[1400px] lg:ml-[%] lg:px-0 lg:rounded-bl-[52px] lg:rounded-tl-[52px]">
         <Link to="/">
           <img
             className="w-[36px] py-[5%] lg:w-[93px] lg:h-[] lg:py-[2%] lg:pl-[3%]"
@@ -130,12 +131,12 @@ const ContinueSignUp = ()=> {
           Welcome to <span className="text-[#04177f]">AremxyPlug!</span>
         </p>
         <p className="text-[11px] font-bold text-center text-[#00000056] lg:text-[20px]">
-          Create an account Now to get started...
+          Create an account now to get started...
         </p>
         <form className="pt-[10%] pb-[10%] md:grid md:grid-cols-2 md:gap-[2%] md:mx-[8%] lg:pt-[8%] lg:px-[10%] lg:pb-[6%]">
           {/* =====Country Input start======= */}
-          <div className="flex flex-col gap-[5px] md:gap-[10px] mt-[8%]  lg:mt-[0%] md:mt-[3%]">
-            <p className="text-[14px] leading-[18px] font-[600] lg:text-[16px] lg:leading-[24px]">
+          <div className="flex flex-col gap-[5px] md:gap-[10px] mt-[8%]  lg:mt-[2%] md:mt-[3%]">
+            <p className="text-[14px] leading-[18px] font-[600] mb-[5px] lg:text-[16px] lg:leading-[24px]">
               Country
             </p>
             <div
@@ -181,7 +182,7 @@ const ContinueSignUp = ()=> {
                 className="outline-none flex justify-center items-center leading-[18px] lg:leading-[24px]
               font-[400] lg:font-[500] text-[14px] h-full w-full lg:h-full lg:text-[16px]"
                 type="text"
-          placeholder ="Fullname used in Nin/Bvn"
+          placeholder ="Enter your full legal name"
                 value={state.fullName}
                 name="fullName"
                 onChange={changeHandler}
@@ -273,6 +274,7 @@ const ContinueSignUp = ()=> {
                 rounded-[10px] lg:rounded-[15px] lg:w-[286px] border-black lg:h-[50px] ${
                 isFocused.includes(4) ? "border-[#2684fe] border" : " border-[1.5px]"
               }`}
+              
               onFocus={() => handleFocus(4)}
               onBlur={() => handleBlur(4)}
             >
@@ -281,7 +283,7 @@ const ContinueSignUp = ()=> {
                 selected={phoneNumber}
                 value={state.phoneNumber ? state.phoneNumber : '234'}
                 name="phoneNumber"
-                placeholder=""
+                placeholder="xxxxxxxxxx (10 digits)"
                 onChange={(value)=>handlePhoneNumberChange(value)}
                 enableSearch
                 disableSearchIcon
@@ -318,7 +320,7 @@ const ContinueSignUp = ()=> {
           <div className="flex flex-col gap-[5px] md:gap-[10px] lg:mt-[2%] md:mt-[3%] mt-[8%]">
             <p className="text-[14px] leading-[18px] font-[600] mb-[5px] 
             lg:text-[16px] lg:leading-[24px]">
-              Invitation Code (optional)
+              Referral Code (optional)
             </p>
             <div
               className={`inputBorder px-[2%] flex justify-center items-center w-[98%] h-[42px] 
@@ -345,7 +347,7 @@ const ContinueSignUp = ()=> {
           <div className="flex flex-col gap-[5px] md:gap-[10px] lg:mt-[2%] md:mt-[3%] mt-[8%]">
             <p className="text-[14px] leading-[18px] font-[600] mb-[5px]
              lg:text-[16px] lg:leading-[24px]">
-              New Password
+               Password
             </p>
             <div
               className={`inputBorder px-[2%] flex justify-center items-center w-[98%] h-[42px] 
@@ -499,14 +501,14 @@ const ContinueSignUp = ()=> {
              justify-center items-center gap-[10px] p-5 font-semibold
               border-[0.57px] w-[118px] h-[30px] rounded-sm mx-auto text-center mt-[7%] text-[9px] lg:mt-[2%] lg:w-[207px] lg:h-[40px] lg:text-[16px] lg:rounded-md`}
         >
-          <div className="text-[10px] leading-[14px]
+          <div className="text-[12px] leading-[14px]
           lg:text-[11px] lg:leading-[14px]">
           <FcGoogle />
           </div>
           <p onClick ={()=> {
             alert("The use of Google as a third party authentication OAuth isn't available for now.")
-          }} className="text-[10px] leading-[14px]
-          lg:text-[11px] lg:leading-[14px]">Sign Up with Google</p>
+          }} className="text-[12px] leading-[16px] font-semibold
+          lg:text-[11px] lg:leading-[14px]">Use Google</p>
                  </div>
         <p className="text-[14px] leading-[18px]  text-center mt-[5%] md:pb-[1%] 
         lg:mt-[2%] lg:text-[16px] lg:leading-[24px]">
