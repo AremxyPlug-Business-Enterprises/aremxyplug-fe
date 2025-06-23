@@ -1228,6 +1228,8 @@ const [virtualAccCreated, setVirtualAccCreated] = useState(false);
 const [idCountry, setIdCountry] = useState("");
 const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
    const [idStatus, setIdStatus] = useState('Not Verified');
+   const [bvnCountry, setBvnCountry] = useState("");
+   const [ bvnCountryImage, setBvnCountryImage] = useState(null);
   //========== BUSINESS KYC =============
   const [businessPopUp, setBusinessPopUp] = useState(false);
 
@@ -2308,6 +2310,10 @@ virtualAccCreated,
 setVirtualAccCreated,
 bvnButtonState,
  setBvnButtonState,
+ bvnCountry,
+  setBvnCountry,
+  bvnCountryImage,
+  setBvnCountryImage,
     //========== Business PopUp =======
     businessPopUp,
     setBusinessPopUp,

@@ -281,7 +281,7 @@ className={`pt-[10.803px] pb-[13.794px] pr-[13px] pl-[10.876px] mt-2 md:mt-0
 md:pr-[5.282px] md:pl-[5.867px]
 lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
 font-[400] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px]
-    lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer focus:outline-none border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 shadow-sm md:shadow-0 focus:outline-none focus:ring-2 text-[13.5px] sm:p-3 sm:text-lg 
+    lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer  border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 shadow-sm md:shadow-0 focus:outline-none focus:ring-2 text-[13.5px] sm:p-3 sm:text-lg 
     ${isDarkMode 
       ? "bg-black text-white border border-white" 
       : "border-[#9C9C9C] hover:bg-[#EDEAEA] bg-white"
@@ -294,7 +294,7 @@ font-[400] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px]
       src={arrowDown} alt="" />
        </div>
        {examActive && (
-         <div className={`absolute lg:top-[90px] md:top-[60px] top-[70px] z-[2]  flex flex-col w-[100%] lg:h-225px md:h-[210px] rounded-[10px] rounded md:rounded-0
+         <div className={`absolute lg:top-[90px] md:top-[60px] top-[70px] z-[2]  flex flex-col w-[100%] lg:h-225px md:h-[210px] rounded-[10px]  md:rounded-0
             ${isDarkMode 
       ? "bg-black text-white border border-white" 
       : ""
@@ -309,7 +309,7 @@ font-[400] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px]
              document.querySelector('.Examdrop').classList.remove('DropIt');
              console.log(e);
               })}
-              className={`pb-[20px] pt-[20px] md:pb-[14px] md:pt-[14px] font-[400] text-[13.2px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500]  
+              className={`pb-[20px] pt-[20px] md:pb-[14px] md:pt-[14px] font-[400] text-[13.2px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] 
          md:text-[13.227px] md:leading-[17.195px] 
          shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
          lg:text-[16px] lg:leading-[20.8px] cursor-pointer
@@ -354,7 +354,7 @@ md:pr-[5.282px] md:pl-[5.867px]
 lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
 border-[0.4px]  
 font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
-    lg:text-[16px] lg:leading-[20.8px] cursor-pointer focus:outline-none border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 shadow-sm md:shadow-0 focus:outline-none focus:ring-2 text-[13.5px] sm:p-3 sm:text-lg   
+    lg:text-[16px] lg:leading-[20.8px] cursor-pointer  md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 shadow-sm md:shadow-0 focus:outline-none focus:ring-2 text-[13.5px] sm:p-3 sm:text-lg   
     ${isDarkMode 
       ? "bg-black text-white border border-white" 
       : "bg-white text-black border-[#9C9C9C]"
@@ -385,7 +385,7 @@ font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
               document.querySelector('.imgdrop').classList.remove('DropIt');
          
               })}
-              className={`pb-[20px] md:pb-[14px] md:pt-[14px] pt-[20px]  font-[400] text-[13.5px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500]
+              className={`pb-[20px] md:pb-[14px] md:pt-[14px] pt-[20px]  font-[400] text-[13.5px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] 
          md:text-[13.227px] md:leading-[17.195px] w-[100%]  
        shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
          lg:text-[16px] lg:leading-[20.8px] cursor-pointer  
@@ -438,10 +438,10 @@ font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
    lg:pt-[14px] lg:pb-[15.5px] lg:pr-[16px] lg:pl-[10px]
    placeholder:text-[14.389px] placeholder:leading-[18.809.4px] 
    lg:placeholder:text-[16px] lg:placeholder:leading-[20.8px]
-   md:placeholder:text-[14.389px] md:placeholder:leading-[18.206px] focus:outline-none rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.5px] sm:p-3 sm:text-lg
+   md:placeholder:text-[14.389px] md:placeholder:leading-[18.206px]  rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.5px] sm:p-3 sm:text-lg
    ${isDarkMode 
     ? "bg-black text-white border border-white" 
-    : "border-[#9C9C9C] text-[#7C7C7C] hover:bg-[#EDEAEA] text-black bg-white placeholder:text-[#7E7E7E] border md:border-[0.4px]"
+    : "border-[#9C9C9C] text-[#7C7C7C] hover:bg-[#EDEAEA]  bg-white placeholder:text-[#7E7E7E] border md:border-[0.4px]"
 }`} 
     type="tel" name='Waec-Phone' id='phone' maxLength={11} placeholder=''
     value={educationPinPhone}
@@ -475,7 +475,7 @@ font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
    lg:pt-[14px] lg:pb-[15.5px] lg:pr-[16px] lg:pl-[10px] 
    placeholder:text-[14.389px] placeholder:leading-[18.809.4px] 
    lg:placeholder:text-[16px] lg:placeholder:leading-[20.8px] 
-   md:placeholder:text-[14.389px] md:placeholder:leading-[18.206px] focus:outline-none border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 sm:p-3 sm:text-lg   
+   md:placeholder:text-[14.389px] md:placeholder:leading-[18.206px] md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 sm:p-3 sm:text-lg   
    ${isDarkMode 
     ? "bg-black text-white border border-white" 
     : "placeholder:text-[#7E7E7E] border-[#9C9C9C] text-black"
@@ -518,7 +518,7 @@ font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
   focus:outline-none text-start
      leading-[10.4px]
    font-[400]  md:text-[9.389px] md:leading-[12.206px]
-  lg:text-[16px] lg:leading-[20.8px] focus:outline-none border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.5px] p-4 sm:p-3 sm:text-lg 
+  lg:text-[16px] lg:leading-[20.8px] md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.5px]  sm:p-3 sm:text-lg 
   ${isDarkMode 
     ? "bg-black text-white border border-white" 
     : "placeholder:text-[#7E7E7E] border-[#9C9C9C] text-black"
@@ -553,7 +553,7 @@ md:pr-[5.282px] md:pl-[5.867px]
 lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
 border-[0.4px] 
 font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
-    lg:text-[16px] lg:leading-[20.8px] cursor-pointer focus:outline-none focus:outline-none border-0 md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 shadow-sm md:shadow-0 focus:outline-none focus:ring-2 text-[13.5px] sm:p-3 sm:text-lg
+    lg:text-[16px] lg:leading-[20.8px] cursor-pointer   md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 shadow-sm md:shadow-0 focus:outline-none focus:ring-2 text-[13.5px] sm:p-3 sm:text-lg
     ${isDarkMode 
       ? "bg-black text-white border border-white" 
       : "placeholder:text-[#7E7E7E] border-[#9C9C9C] text-black bg-white hover:bg-[#EDEAEA]"
@@ -597,7 +597,6 @@ font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
 
             <h2 
               className={`pb-[20px] md:pb-0 md:pt-0 pt-[20px] font-[400] text-[13.5px] leading-[10.4px]
-               font-[400] 
          md:text-[13.227px] md:leading-[17.195px] 
          lg:text-[16px] lg:leading-[20.8px] self-center cursor-pointer
          ${isDarkMode 

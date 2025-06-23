@@ -18,6 +18,7 @@ import PendingImage from "../ProfileImages/Pending.svg";
 import NotVerifiedImage from "../ProfileImages/NotVerifiedIcon.svg";
 import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 import { Loader } from "../../Loader/Loader";
+import countryImage from "../../EducationPins/imagesEducation/Nigeriaflag.svg"
 
 export default function BvnVerification(Data) {
   const { bvnVerificationOpen } = useContext(ContextProvider);
@@ -31,7 +32,7 @@ export default function BvnVerification(Data) {
   const [bvnPopVerified, setBvnPopVerified] = useState(false);
   const [bvnPhoneMessage, setBvnPhoneMessage] = useState(false);
   const [errorVerify, setErrorVerify] = useState(false);
-  const { bvnButtonState, setBvnButtonState,
+  const { bvnButtonState, setBvnButtonState
    } = useContext(ContextProvider);
   const { toggleSideBar, customerDetail} =
     useContext(ContextProvider);
@@ -153,7 +154,7 @@ export default function BvnVerification(Data) {
            setBvnStatus("Not Verified");
 
         } else if (error.status === 500) {
-          alert("Error:", "INTERNAL_SERVER_ERROR");
+          alert("SERVER ERROR, Try again some other time.");
           setBvnStatus("Not Verified");
           setBvnVerifyImage(NotVerifiedImage);
         }else {
@@ -255,7 +256,31 @@ export default function BvnVerification(Data) {
 
             <div className="flex flex-col lg:gap-[25px] gap-[20px]  w-full ">
               <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]">
+                {/* Country Bvn */}
+                 <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
+                  <h2
+                    className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${
+                      isDarkMode ? "text-slate-50" : ""
+                    }`}
+                  >
+                    Country
+                  </h2>
+                  <div className={`py-[10.33px]  flex gap-[10px]  pl-[5.867px] items-center pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] 
+                  lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none ${
+                      isDarkMode ? "bg-black  border-slate-50" : "bg-white"
+                    }`}>
+                       <img className=" md:h-[20.27px]  h-[14.27px]
+                   "
+                  src={countryImage} alt="Country flag" />
+                  <p className={`text-[12px] leading-[18px] 
+                   lg:text-[16px] lg:leading-[20.8px] ${
+                      isDarkMode ? " text-slate-50 " : "text-black"
+                    }`}>Nigeria</p>
+                 
+                </div>
+                </div>
                 {/* Full Name */}
+                
                 <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[13px] gap-2.5 ">
                   <h2
                     className={`font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : ""}`}
@@ -269,30 +294,11 @@ export default function BvnVerification(Data) {
                   </div>
                 </div>
                 
-                {/* Date of Birth */}
-                <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
-                  <h2
-                    className={`font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : ""}`}
-                  >
-                    D.O.B
-                  </h2>
-                  <input
-                    disabled={bvnStatus === "Verified" || (Data.ConfirmBvn === "true" || Data.ConfirmId === "true")}
-                    value={bvnDateOfBirth}
-                    onChange={(e) => {
-                      setBvnDateOfBirth(e.target.value);
-                    }}
-                    className={`w-[100%] py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] text-sm leading-[18px] lg:pr-[16px] pr-[9px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none cursor-pointer rounded-[10px] ${isDarkMode ? "text-white border-white bg-black" : ""}`}
-                    type="date"
-                    id="dob"
-                    name="dob"
-                    readOnly={Data.ConfirmId === "true" || Data.ConfirmBvn === "true"}
-                  />
-                </div>
+               
                 
               </div>
               
-              {/* Gender / House Address */}
+              {/* Gender / Date of birth */}
               <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]">
                 
               <div className="flex flex-col relative md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
@@ -347,8 +353,40 @@ export default function BvnVerification(Data) {
                     </div>
                   )}
                 </div>
+{/* Date of birth */}
+<div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
+                  <h2
+                    className={`font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : ""}`}
+                  >
+                    D.O.B
+                  </h2>
+                   <div className={`w-[100%] border-[0.4px] border-[#9C9C9C]  focus:outline-none cursor-pointer rounded-[10px] ${
+                      isDarkMode ? " border-white " : "border-[#9C9C9C]"
+                    }`}>
+                  <input
+                    value={bvnDateOfBirth}
+                    onChange={(e) => {
+                      setBvnDateOfBirth(e.target.value);
+                    }}
+                    className={`w-[100%]
+                      md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px]  lg:pr-[16px] pr-[9px] h-[100%] rounded-[10px]
+                  py-[10.33px] pl-[5.867px] lg:py-[15.5px] text-sm leading-[18px] focus:outline-none lg:text-[16px] lg:leading-[20.8px] ${
+                      isDarkMode ? "text-white  bg-black" : "bg-white text-black"
+                    }`}
+                    type="date"
+                    id="dob"
+                    name="dob"
+                    readOnly={Data.ConfirmId === "true" || Data.ConfirmBvn === "true"}
+                  />
+                  </div>
+                </div>
+                
+                  
+              </div>
 
-                  {/* HOUSE ADDRESS */}
+              {/*HOUSE ADDRESS / PHONE NUMBER */}
+              <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]">
+                {/* HOUSE ADDRESS */}
                   <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
                     <h2
                       className={`font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : ""}`}
@@ -368,11 +406,6 @@ export default function BvnVerification(Data) {
                       required
                     />
                 </div>
-                
-              </div>
-
-              {/* PHONE NUMBER / BVN */}
-              <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]">
                 
                 
                 {/* PHONE NUMBER */}
@@ -420,7 +453,11 @@ export default function BvnVerification(Data) {
                   />
                 </div>
 
-                {/*========= BVN ==========*/}
+              
+              
+              </div>
+    <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]">
+              {/* BVN NUMBER */}
                 <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
                   <h2
                     className={`font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : ""}`}
@@ -428,7 +465,6 @@ export default function BvnVerification(Data) {
                     BVN Number
                   </h2>
                   <input
-                  disabled={Data.ConfirmBvn === "true" || Data.ConfirmId === "true"}
                     readOnly={Data.ConfirmBvn === "true" || Data.ConfirmId === "true"}
                     onInput={(e) => {
                       const numbersOnly = e.target.value.replace(/\D/g, "");

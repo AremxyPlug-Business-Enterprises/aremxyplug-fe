@@ -1,9 +1,6 @@
-import React, {useState} from 'react'
+
 import { Navigate } from 'react-router-dom';
-// import { HandleUserSession } from './ApiCollection.jsx/ApiBuck';
-// import { RemoveLocalStorage } from './LocalStorage/LocalStorage';
-// import { RemoveLocalStorage } from './LocalStorage/LocalStorage';
-//import { ContextProvider } from './Context';
+import { RemoveLocalStorage } from './LocalStorage/LocalStorage';
 export const ProtectedRoute = ({children}) => {
 // The aim is to create three different situation when the user will
 // will be logged from the page
@@ -37,24 +34,106 @@ export const ProtectedRoute = ({children}) => {
 //   })
 //  })
 // }
-    const authToken = localStorage.getItem("authorisedLogin")
+      const authToken = localStorage.getItem("authorisedLogin")
  const getToken = localStorage.getItem("getToken");
- const UserStatus = localStorage.getItem("UserStatus");
+const UserStatus = localStorage.getItem("UserStatus");
  if((!authToken && !getToken) || !UserStatus  ){
-    return <Navigate to ="/login" replace/>
- }
+     return <Navigate to ="/login" replace/>
+  }
 
  //Creating of auto Logout
- const value = document.cookie;
-const checkSessionToken = value.split(",");
-console.log(checkSessionToken[1]);
+ 
 // console.log(value);
-// window.addEventListener("visiblitychange", ()=> {
-//  if(document.visibilityState === "visible" && UserStatus&& !checkSessionToken[1]?.startsWith("sessionToken")){
-//  RemoveLocalStorage();
-//  return <Navigate to ="/Login" replace/>
-// }}
-// )
+
+//Check Session Activity
+
+// let handleScrollMotion;
+// let ValueTimer;
+// let ControlValueTimer;
+// const ScrollController = ()=> {
+//   console.log("Runnimng scroll one time")
+//      //clearTimeout(ControlValueTimer);
+//        handleScrollMotion = false
+//     if(handleScrollMotion === false){
+// ControlValueTimer = setTimeout(()=>{
+ 
+//    RemoveLocalStorage();
+//    window.location.replace("/Login");
+  
+// }, 60000)
+//     }
+// console.log(ControlValueTimer);
+// window.addEventListener("scroll", ()=> {
+// clearTimeout(ControlValueTimer);
+
+// })
+// }
+// //Handling the scroll one time
+//  ScrollController();
+
+// window.addEventListener("scroll", (event)=>{
+  
+//   //console.log(event);
+// if(event.type === "scroll"){
+//  // console.log(event);
+//   handleScrollMotion = true;
+ 
+//   if(handleScrollMotion === true){
+//     console.log("Tunning here")
+//  ValueTimer = setTimeout(()=>{
+//   RemoveLocalStorage();
+//    window.location.replace("/Login");
+//   }, 60000)
+// clearTimeout(ValueTimer);
+//   }
+// }})
+
+
+
+
+ 
+
+//console.log(ControlValueTimer);
+//console.log(holdEvent);
+
+
+const value = document.cookie;
+const checkSessionToken = value.split(";");
+// console.log(holdEvent)
+//const event = ["DOMContentLoaded", "pageshow", "focus"]
+
+   
+// const handleAutoLogOut =()=> {
+//     RemoveLocalStorage();
+//   return <Navigate to ="/Login" replace/>
+// }
+
+if(children.type.name) {
+  // alert("You are under the child component of protected route")
+ if(UserStatus === "true"  && checkSessionToken?.length === 3){
+  //alert("Child returned")
+return children;
+}else if(UserStatus === "true" && checkSessionToken?.length < 3){
+   RemoveLocalStorage();
+  return <Navigate to ="/Login" replace/>
+}
+}
+// else if(children.type.name && document.visibilityState === "hidden" && UserStatus === "true" ){
+//   return handleAutoLogOut();
+// }
+
+// console.log(checkSessionToken[2]?.startsWith("sessionToken"))
+// const handleAutoLogOut =()=> {
+//     RemoveLocalStorage();
+//   return <Navigate to ="/Login" replace/>
+// }
+// if(UserStatus === "true" && checkSessionToken?.length < 3){
+//   return handleAutoLogOut();
+//  }
+
+
+
+
 
 //   <HandleUserSession/>
 
@@ -63,6 +142,13 @@ console.log(checkSessionToken[1]);
     // window.onload(()=> {
 
     // })
+//     const handleAutoLogOut =()=> {
+//     RemoveLocalStorage();
+//   return <Navigate to ="/Login" replace/>
+// }
+//console.log(children)
 
  return children;
+// console.log(children)
+
 }

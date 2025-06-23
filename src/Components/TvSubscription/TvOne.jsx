@@ -24,6 +24,7 @@ import { GetFunction } from "../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../Loader/Loader";
 import { Modal } from "../Screens/Modal/Modal";
 import { BalanceLoading } from "../Loader/Loader";
+import { HandleUserSession } from "../../Components/ApiCollection.jsx/ApiBuck";
 
 // import { duration } from "html2canvas/dist/types/css/property-descriptors/duration";
 
@@ -82,6 +83,7 @@ const GoTv = () => {
   const [gotvData, setGotvData] = useState([]);
   const [stateInvalidDecoderNumber, setStateInvalidDecoderNumber] =
     useState(false);
+    const [sessionModal, setSessionModal] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
   const [failedPopup, setFailedPopup] = useState(false);
@@ -108,15 +110,18 @@ const GoTv = () => {
     const SuccessHandler = () => {
       navigate(path);
     };
-    const FailedHandler = async () => {
+    const FailedHandler = async (ErrorType) => {
       console.log("Error");
-      await GetFunction(
+      if(ErrorType === "unauthorised"){
+       await GetFunction(
         TvPath,
         setIsLoading,
         SuccessHandler,
         FailedHandler,
         fetchedResponse
       );
+      }
+     
     };
 
     const SubscriptionPresent = () => {
@@ -133,8 +138,7 @@ const GoTv = () => {
     let fetchedResponse;
     if (
       (fetchedDstvPlans.status !== 200 || fetchedDstvPlans.status !== 201) &&
-      id === 2
-    ) {
+      id === 2) {
       TvPath = `products/tvsub/dstv`;
       fetchedResponse = setFetchedDstvPlans;
       await GetFunction(
@@ -191,8 +195,10 @@ const GoTv = () => {
         const SuccessHandler = () => {
           console.log("Successfully fetched gotv plans");
         };
-        const failedHandler = async () => {
-          console.log("Couldn't fetch gotv plans");
+        const failedHandler = async (ErrorType) => {
+
+         // console.log("Couldn't fetch gotv plans");
+         if(ErrorType === "unauthorised"){
           await GetFunction(
             `products/tvsub/gotv`,
             setIsLoading,
@@ -200,6 +206,7 @@ const GoTv = () => {
             failedHandler,
             setFetchedGotvPlans
           );
+        }
         };
 
         await GetFunction(
@@ -220,15 +227,18 @@ const GoTv = () => {
         console.log("successfully retrieved balance");
         //alert("Successful")
       };
-      const FailedHandler = async () => {
-        console.log(`Failed to retrieve balance`);
-        await GetFunction(
-          "balance",
-          setIsLoading,
-          SuccessHandler,
-          FailedHandler,
-          setPassDataBalance
-        );
+      const FailedHandler = async (ErrorType) => {
+     if(ErrorType === "unauthorised"){
+          await GetFunction(
+            `products/tvsub/gotv`,
+            setIsLoading,
+            SuccessHandler,
+            ()=> {
+              setSessionModal(true)
+            },
+            setFetchedGotvPlans
+          );
+        }
       };
       await GetFunction(
         "balance",
@@ -244,7 +254,7 @@ const GoTv = () => {
       GetBalance();
       if (GetBalance) {
         setNewBalance(
-          passDataBalance?.data ? passDataBalance.data.data.data.balance : ""
+          passDataBalance?.data?.data ? passDataBalance?.data?.data?.data?.balance : ""
         );
       }
     }
@@ -257,10 +267,10 @@ const GoTv = () => {
   // document.querySelector('.imgdrop').classList.toggle('DropIt');
   // }
 
-  const handleCardName = (e) => {
-    const inputValue = e.target.value;
-    setCardName(inputValue);
-  };
+  // const handleCardName = (e) => {
+  //   const inputValue = e.target.value;
+  //   setCardName(inputValue);
+  // };
 
   const handleTvEmail = (e) => {
     const inputValue = e.target.value;
@@ -899,20 +909,24 @@ const GoTv = () => {
                             <div
                               onClick={(e) => {
                                 //onchange = { setMethodOptions }
-                                setFlagResult(methodOption.method);
-                                setTvWalletBalance(methodOption.balance);
-                                setMethodImage(methodOption.flag);
+                                setFlagResult(methodOption.id === 1 ?
+                                  methodOption.method : ""
+                                );
+                          setTvWalletBalance( methodOption.id === 1 ? methodOption.balance : "")
+                          setMethodImage(methodOption.id === 1 ? methodOption.flag : arrowDown);
                                 setMethodPayment(false);
                                 document
                                   .querySelector(".methodDrop")
                                   .classList.remove("DropIt");
                               }}
-                              className={`flex gap-[10px] lg:py-[15px] py-[10px] pl-[10px]  pb-[20px] pt-[20px] md:pb-0 md:pt-0
-        cursor-pointer  items-center 
+                              className={`flex gap-[10px] lg:py-[15px] 
+                                py-[10px] pl-[10px]  pb-[20px] pt-[20px] md:pb-0 md:pt-0
+        cursor-pointer  items-center  ${methodOption.id === 1 ? "bg-white" : "bg-gray-300"}
          ${
            isDarkMode
              ? "bg-black text-white border border-white"
-             : "hover:bg-[#EDEAEA] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] bg-white"
+             :`hover:bg-[#EDEAEA] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] bg-white`
+            
          }`}
                               key={methodOption.id}
                             >
@@ -1044,6 +1058,9 @@ const GoTv = () => {
         <Modal>
           <Loader />
         </Modal>
+      )}
+      {sessionModal && (
+        <HandleUserSession/>
       )}
     </div>
   );
