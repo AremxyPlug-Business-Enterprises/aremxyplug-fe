@@ -13,12 +13,12 @@ export const Context = ({ children }) => {
     window.location.reload(true);
     // new
   };
-  
+
   // Select username or email starts here
   const [hideNavbar, setHideNavbar] = useState(false);
   const [resetEmail, setResetEmail] = useState("");
   const [resetNumber, setResetNumber] = useState("");
-  const [errorMessage, setErrorMessage] =useState('');
+  const [errorMessage, setErrorMessage] = useState("");
 
   // TRANSACTION PIN POP UP STATE STARTS HERE
   const [openTranspin, setOpenTranspin] = useState(false);
@@ -129,15 +129,15 @@ export const Context = ({ children }) => {
   const [withdrawImage, setWithdrawImage] = useState("");
 
   // =========Start For SignUp.jsx==========
-  const [otpVerifyEmailSignup,setOtpVerifyEmailSignup] = useState("");
-  const [otpVerifySmsSignup,setOtpVerifySmsSignup] = useState("")
+  const [otpVerifyEmailSignup, setOtpVerifyEmailSignup] = useState("");
+  const [otpVerifySmsSignup, setOtpVerifySmsSignup] = useState("");
   const [isFocused, setIsFocused] = useState([]);
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordTwo, setShowPasswordTwo] = useState(false);
   const [errors, setErrors] = useState({});
   const [loadSignUp, setLoadSignUp] = useState(false);
   const [verification, setVerification] = useState(false);
-  const [getCountry, setGetCountry] = useState('')
+  const [getCountry, setGetCountry] = useState("");
   const [state, setState] = useState({
     country: "",
     fullName: "",
@@ -232,22 +232,21 @@ export const Context = ({ children }) => {
   // ======end of form valdiation=====
 
   // ======on submit function=======
-     const setLocalStorageForInputPin = ()=> {
-  localStorage.setItem("userEmail", JSON.stringify(state.email))
-  localStorage.setItem("userFullName", JSON.stringify(state.fullName))
-  localStorage.setItem("userPhone", JSON.stringify(state.phoneNumber));
-  localStorage.setItem("aremxyUserName", JSON.stringify(state.userName))
-  localStorage.setItem("userBankName", JSON.stringify(""));
-  localStorage.setItem("aremxyAccountName", JSON.stringify(""));
-  localStorage.setItem("aremxyAccountNumber", JSON.stringify(""));
-  localStorage.setItem("aremxyUserId", JSON.stringify("NO USER ID"));
-  localStorage.setItem("ActiveSignUp", true)
-  }
+  const setLocalStorageForInputPin = () => {
+    localStorage.setItem("userEmail", JSON.stringify(state.email));
+    localStorage.setItem("userFullName", JSON.stringify(state.fullName));
+    localStorage.setItem("userPhone", JSON.stringify(state.phoneNumber));
+    localStorage.setItem("aremxyUserName", JSON.stringify(state.userName));
+    localStorage.setItem("userBankName", JSON.stringify(""));
+    localStorage.setItem("aremxyAccountName", JSON.stringify(""));
+    localStorage.setItem("aremxyAccountNumber", JSON.stringify(""));
+    localStorage.setItem("aremxyUserId", JSON.stringify("NO USER ID"));
+    localStorage.setItem("ActiveSignUp", true);
+  };
 
   const handleSubmit = (event) => {
-    
     event.preventDefault();
-  
+
     const {
       country,
       fullName,
@@ -259,8 +258,6 @@ export const Context = ({ children }) => {
       checkbox,
     } = state;
 
-
-   
     if (password !== confirmPassword) {
       setErrors({
         confirmPassword: "Password and Confirm Password do not match",
@@ -288,59 +285,53 @@ export const Context = ({ children }) => {
         }, {})
       );
     } else {
-            if(!navigator.onLine) return alert("Check your internet connection")
-      if(navigator.onLine){
-
-      setErrors({});
-      setLoadSignUp(true);
-      const data = {
-        fullname: fullName,
-        username: userName,
-        phone_number: phoneNumber,
-        // iv_code : IVCode,
-        email: email,
-        password: password,
-        country: country,
-      };
-      const config = {
-        headers: { "Content-Type": "application/json" },
-      };
-      const url = "https://aremxyplug.onrender.com/api/v1/signup";
-      axios
-        .post(url, data, config)
-        .then((response) => {
-          console.log(response);
-          if (response.status === 201 || 200) {
-                      setVerification(true);
-             setLocalStorageForInputPin();
-          }
-
-          
-        })
-               .catch((error) => {
-          if (error && error.response.data.status === 409) {
-
-            alert("Input already in use: " + error.response.data.data.data);
-          } else if (error && error.response.data.status === 404) {
-            alert("An error has occured on your end");
-            console.log(error.response.data.data.data);
-          }else if(error && error.reponse.status === 500){
-                alert("Server error:, Try some other time");
-          }else if(error && error.reponse.status === undefined){
-                alert("Check your internet Connection");
-          } else {
-            console.log(error.json());
-            alert("Check your internet connection");
-          }
-        })
-        .finally(() => {
-          setLoadSignUp(false);
-        });
+      if (!navigator.onLine) return alert("Check your internet connection");
+      if (navigator.onLine) {
+        setErrors({});
+        setLoadSignUp(true);
+        const data = {
+          fullname: fullName,
+          username: userName,
+          phone_number: phoneNumber,
+          // iv_code : IVCode,
+          email: email,
+          password: password,
+          country: country,
+        };
+        const config = {
+          headers: { "Content-Type": "application/json" },
+        };
+        const url = "https://aremxyplug.onrender.com/api/v1/signup";
+        axios
+          .post(url, data, config)
+          .then((response) => {
+            console.log(response);
+            if (response.status === 201 || 200) {
+              setVerification(true);
+              setLocalStorageForInputPin();
+            }
+          })
+          .catch((error) => {
+            if (error && error.response.data.status === 409) {
+              alert("Input already in use: " + error.response.data.data.data);
+            } else if (error && error.response.data.status === 404) {
+              alert("An error has occured on your end");
+              console.log(error.response.data.data.data);
+            } else if (error && error.reponse.status === 500) {
+              alert("Server error:, Try some other time");
+            } else if (error && error.reponse.status === undefined) {
+              alert("Check your internet Connection");
+            } else {
+              console.log(error.json());
+              alert("Check your internet connection");
+            }
+          })
+          .finally(() => {
+            setLoadSignUp(false);
+          });
       }
     }
-  }
-      
-
+  };
 
   // ========End for SignUp.jsx======
 
@@ -354,16 +345,14 @@ export const Context = ({ children }) => {
   const [sms] = useState(true);
   const [email] = useState(true);
   const [success, setSuccess] = useState("");
-  const [otpSent, setOtpSent] = useState('');
-  const [forgetPassVerificationPinError, setForgetPassVerificationPinError] = useState("");
+  const [otpSent, setOtpSent] = useState("");
+  const [forgetPassVerificationPinError, setForgetPassVerificationPinError] =
+    useState("");
   const [forgetPassCountdown, setForgetPassCountdown] = useState(60);
   const [forgetPassCanResend, setForgetPassCanResend] = useState(false);
   const [submission, setSubmission] = useState(null);
   const [checked, setChecked] = useState(false);
-  const[passwordAuthorisation, setPasswordAuthorisation] = useState("")
-  
-
- 
+  const [passwordAuthorisation, setPasswordAuthorisation] = useState("");
 
   const emailorsmsHandler = () => {
     if (!viaEmail) {
@@ -466,8 +455,9 @@ export const Context = ({ children }) => {
   const handleMainInputChange = (e) => {
     const { name, value } = e.target;
     const limitedValue =
-      name === "userPhoneNumber" ? value.replace(/\D/g, "").slice(0, 11) : value;
-
+      name === "userPhoneNumber"
+        ? value.replace(/\D/g, "").slice(0, 11)
+        : value;
 
     setMainTransferState({
       ...mainTransferState,
@@ -478,7 +468,7 @@ export const Context = ({ children }) => {
   const mainTransferSchema = Joi.object({
     mainCountry: Joi.string().required(),
     userPhoneNumber: Joi.string()
-      .pattern(new RegExp(/^\d{11}$/)) 
+      .pattern(new RegExp(/^\d{11}$/))
       .required()
       .max(11)
       .messages({
@@ -833,40 +823,46 @@ export const Context = ({ children }) => {
   const [selectedOptionMtn, setSelectedOptionMtn] = useState("");
   const [selectedNetworkProduct, setSelectedNetworkProduct] = useState("");
   const [recipientPhoneNumberMtn, setRecipientPhoneNumberMtn] = useState("");
-  const  [selectedProductMtn, setSelectedProductMtn] = useState("");
+  const [selectedProductMtn, setSelectedProductMtn] = useState("");
   const [selectedAmountMtn, setSelectedAmountMtn] = useState("");
-  const [recipientNamesMtn , setRecipientNamesMtn] = useState("");
+  const [recipientNamesMtn, setRecipientNamesMtn] = useState("");
   const [walletNameMtn, setWalletNameMtn] = useState("initialWalletName");
   const [accountId, setAccountId] = useState("");
   const [numberPins, setNumberPins] = useState("");
   const [emailId, setEmailId] = useState("");
 
   //==================GLO DataBundle ===============
-   const [selectedOptionGlo, setSelectedOptionGlo] = useState("");
-   const  [selectedProductGlo, setSelectedProductGlo] = useState("");
-  const [selectedNetworkProductGlo, setSelectedNetworkProductGlo] = useState("");
+  const [selectedOptionGlo, setSelectedOptionGlo] = useState("");
+  const [selectedProductGlo, setSelectedProductGlo] = useState("");
+  const [selectedNetworkProductGlo, setSelectedNetworkProductGlo] =
+    useState("");
   const [recipientPhoneNumberGlo, setRecipientPhoneNumberGlo] = useState("");
   const [selectedAmountGlo, setSelectedAmountGlo] = useState("");
-  const [recipientNamesGlo , setRecipientNamesGlo] = useState("");
+  const [recipientNamesGlo, setRecipientNamesGlo] = useState("");
   const [walletNameGlo, setWalletNameGlo] = useState("initialWalletName");
 
   //================Etisalat =====================
-    const [selectedOptionEtisalat, setSelectedOptionEtisalat] = useState("");
-  const [selectedNetworkProductEtisalat, setSelectedNetworkProductEtisalat] = useState("");
-  const [recipientPhoneNumberEtisalat, setRecipientPhoneNumberEtisalat] = useState("");
+  const [selectedOptionEtisalat, setSelectedOptionEtisalat] = useState("");
+  const [selectedNetworkProductEtisalat, setSelectedNetworkProductEtisalat] =
+    useState("");
+  const [recipientPhoneNumberEtisalat, setRecipientPhoneNumberEtisalat] =
+    useState("");
   const [selectedAmountEtisalat, setSelectedAmountEtisalat] = useState("");
-  const [recipientNamesEtisalat , setRecipientNamesEtisalat] = useState("");
-  const [walletNameEtisalat, setWalletNameEtisalat] = useState("initialWalletName");
-  const  [selectedProductEtisalat, setSelectedProductEtisalat] = useState("");
+  const [recipientNamesEtisalat, setRecipientNamesEtisalat] = useState("");
+  const [walletNameEtisalat, setWalletNameEtisalat] =
+    useState("initialWalletName");
+  const [selectedProductEtisalat, setSelectedProductEtisalat] = useState("");
 
   // ================ Airtel ================
-   const [selectedOptionAirtel, setSelectedOptionAirtel] = useState("");
-  const [selectedNetworkProductAirtel, setSelectedNetworkProductAirtel] = useState("");
-  const [recipientPhoneNumberAirtel, setRecipientPhoneNumberAirtel] = useState("");
+  const [selectedOptionAirtel, setSelectedOptionAirtel] = useState("");
+  const [selectedNetworkProductAirtel, setSelectedNetworkProductAirtel] =
+    useState("");
+  const [recipientPhoneNumberAirtel, setRecipientPhoneNumberAirtel] =
+    useState("");
   const [selectedAmountAirtel, setSelectedAmountAirtel] = useState("");
   const [recipientNamesAirtel, setRecipientNamesAirtel] = useState("");
   const [walletNameAirtel, setWalletNameAirtel] = useState("initialWalletName");
-  const  [selectedProductAirtel, setSelectedProductAirtel] = useState("");
+  const [selectedProductAirtel, setSelectedProductAirtel] = useState("");
 
   // ==================Card Payment===============================
   const [cardPaymentAmount, setCardPaymentAmount] = useState("");
@@ -883,7 +879,7 @@ export const Context = ({ children }) => {
   const [realoutputValue, setRealOutputValue] = useState("");
 
   //==============electricity subscrition===========
-   // ikedc
+  // ikedc
   const [selectedIkedcMeterType, setSelectedIkedcMeterType] = useState("");
   const [ikedcMeterNumber, setIkedcMeterNumber] = useState("");
   const [ikedcVerifiedName, setIkedcVerifiedName] = useState("");
@@ -1043,7 +1039,6 @@ export const Context = ({ children }) => {
   const [phedShowDescription, setPhedShowDescription] = useState("");
   const [phedFetchedResponse, setPhedFetchedResponse] = useState({});
 
-
   //------------Airtime Conversion---------
   const [inputValueA, setInputValueA] = useState("");
   const [resultValue, setResultValue] = useState("");
@@ -1052,8 +1047,7 @@ export const Context = ({ children }) => {
   const [lastName, setLastName] = useState("");
   const [airEmail, setairEmail] = useState("");
   const [homeAdress, sethomeAdress] = useState("");
-  
-  
+
   //=============Currency conversion==============
   const [convertedAmount, setConvertedAmount] = useState("");
   const [initialValue, setInitialValue] = useState("");
@@ -1085,12 +1079,12 @@ export const Context = ({ children }) => {
   const [selectedOptionGOTV, setSelectedOptionGOTV] = useState("");
   const [showDropdownGOTV, setShowDropdownGOTV] = useState(false);
   const [fetchedGotvPlans, setFetchedGotvPlans] = useState([]);
-  const [tvSubscriptionResponse, setTvSubscriptionResponse] = useState({})
- const [ gotvOrderId, setGotvOrderId] = useState("")
-  const [gotvTransactionId, setGotvTransactionId] = useState("")
-     const [gotvRequestId, setGotvRequestId] = useState("")
-       const [gotvDescription, setGotvDescription] = useState("");
-        const [packageGotv, setPackageGotv] = useState("");
+  const [tvSubscriptionResponse, setTvSubscriptionResponse] = useState({});
+  const [gotvOrderId, setGotvOrderId] = useState("");
+  const [gotvTransactionId, setGotvTransactionId] = useState("");
+  const [gotvRequestId, setGotvRequestId] = useState("");
+  const [gotvDescription, setGotvDescription] = useState("");
+  const [packageGotv, setPackageGotv] = useState("");
 
   //==========DSTV===========
   const [selectedOptionDstv, setSelectedOptionDstv] = useState("");
@@ -1101,17 +1095,16 @@ export const Context = ({ children }) => {
   const [fetchedDstvPlans, setFetchedDstvPlans] = useState([]);
   const [dstvAmount, setDstvAmount] = useState("₦");
   const [dstvEmail, setDstvEmail] = useState();
- const [ packageDstv, setPackageDstv] = useState("");
- const [dstvSmartCard, setDstvSmartCard] = useState("");
- const [dstvDecoderType, setDstvDecoderType] = useState("");
-  const [dstvMobileNumber, setDstvMobileNumber] = useState("")
+  const [packageDstv, setPackageDstv] = useState("");
+  const [dstvSmartCard, setDstvSmartCard] = useState("");
+  const [dstvDecoderType, setDstvDecoderType] = useState("");
+  const [dstvMobileNumber, setDstvMobileNumber] = useState("");
   const [dstvSubscriptionResponse, setDstvSubscriptionResponse] = useState({});
   const [dstvOrderId, setDstvOrderId] = useState("");
   const [dstvTransactionId, setDstvTransactionId] = useState("");
-  const [dstvDescription, setDstvDescription] = useState("")
-   const [dstvRequestId, setDstvRequestId] = useState("")
-   const [dstvWalletBalance, setDstvWalletBalance] = useState("")
-
+  const [dstvDescription, setDstvDescription] = useState("");
+  const [dstvRequestId, setDstvRequestId] = useState("");
+  const [dstvWalletBalance, setDstvWalletBalance] = useState("");
 
   //=========SHOWMAX===========
   const [selectedOptionShowmax, setSelectedOptionShowmax] = useState("");
@@ -1122,16 +1115,16 @@ export const Context = ({ children }) => {
   const [fetchedShowMaxPlans, setFetchedShowMaxPlans] = useState([]);
   const [showMaxAmount, setShowMaxAmount] = useState("₦");
   const [showMaxEmail, setShowMaxEmail] = useState("");
-   const [ packageShowMax, setPackageShowMax] = useState("");
-    const [showMaxSmartCard, setShowMaxSmartCard] = useState("");
-     const [showMaxDecoderType, setShowMaxDecoderType] = useState("")
-      const [showMaxSubscriptionResponse, setShowMaxSubscriptionResponse] = useState({})
-      const [showMaxOrderId, setShowMaxOrderId] = useState("");
+  const [packageShowMax, setPackageShowMax] = useState("");
+  const [showMaxSmartCard, setShowMaxSmartCard] = useState("");
+  const [showMaxDecoderType, setShowMaxDecoderType] = useState("");
+  const [showMaxSubscriptionResponse, setShowMaxSubscriptionResponse] =
+    useState({});
+  const [showMaxOrderId, setShowMaxOrderId] = useState("");
   const [showMaxTransactionId, setShowMaxTransactionId] = useState("");
   const [showMaxDescription, setShowMaxDescription] = useState("");
-    const [showMaxMobileNumber, setShowMaxMobileNumber] = useState("")
-    const [showMaxWalletBalance,setShowMaxWalletBalance] = useState("");
-
+  const [showMaxMobileNumber, setShowMaxMobileNumber] = useState("");
+  const [showMaxWalletBalance, setShowMaxWalletBalance] = useState("");
 
   //=========STARTIMES===========
   const [selectedOptionStarTimes, setSelectedOptionStarTimes] = useState("");
@@ -1142,16 +1135,16 @@ export const Context = ({ children }) => {
   const [fetchedStarTimesPlans, setFetchedStarTimesPlans] = useState([]);
   const [starTimesAmount, setStarTimesAmount] = useState("₦");
   const [starTimesEmail, setStarTimesEmail] = useState("");
-   const [ packageStarTimes, setPackageStarTimes] = useState("");
-    const [starTimesSmartCard, setStarTimesSmartCard] = useState("");
-     const [starTimesDecoderType, setStarTimesDecoderType] = useState("");
-         const [starTimesMobileNumber, setStarTimesMobileNumber] = useState("");
-       const [starTimesSubscriptionResponse, setStarTimesSubscriptionResponse] = useState({});
-       const [starTimesOrderId, setStarTimesOrderId] = useState("");
+  const [packageStarTimes, setPackageStarTimes] = useState("");
+  const [starTimesSmartCard, setStarTimesSmartCard] = useState("");
+  const [starTimesDecoderType, setStarTimesDecoderType] = useState("");
+  const [starTimesMobileNumber, setStarTimesMobileNumber] = useState("");
+  const [starTimesSubscriptionResponse, setStarTimesSubscriptionResponse] =
+    useState({});
+  const [starTimesOrderId, setStarTimesOrderId] = useState("");
   const [starTimesTransactionId, setStarTimesTransactionId] = useState("");
   const [starTimesDescription, setStarTimesDescription] = useState("");
- const [starTimesWalletBalance, setStarTimesWalletBalance] = useState("");
-
+  const [starTimesWalletBalance, setStarTimesWalletBalance] = useState("");
 
   //============= EDUCATION PINS ========================
   //===============WAEC PINS================
@@ -1164,6 +1157,7 @@ export const Context = ({ children }) => {
   const [educationPinPhone, setEducationPinPhone] = useState("");
   const [educationPinEmail, setEducationPinEmail] = useState("");
   const [educationAmount, setEducationAmount] = useState("₦");
+  const [quantityAmount, setQuantityAmount] = useState("");
   const [walletBalance, setWalletBalance] = useState("");
 
   //==============  NECO PINS  ================
@@ -1176,6 +1170,7 @@ export const Context = ({ children }) => {
   const [necoEducationPinPhone, setNecoEducationPinPhone] = useState("");
   const [necoEducationPinEmail, setNecoEducationPinEmail] = useState("");
   const [necoEducationAmount, setNecoEducationAmount] = useState("₦");
+  const [necoQuantityAmount, setNecoQuantityAmount] = useState("");
   const [necoWalletBalance, setNecoWalletBalance] = useState("");
 
   // ============== JAMB PINS ================
@@ -1188,6 +1183,7 @@ export const Context = ({ children }) => {
   const [jambEducationPinPhone, setJambEducationPinPhone] = useState("");
   const [jambEducationPinEmail, setJambEducationPinEmail] = useState("");
   const [jambEducationAmount, setJambEducationAmount] = useState("₦");
+  const [jambQuantityAmount, setJambQuantityAmount] = useState("");
   const [jambWalletBalance, setJambWalletBalance] = useState("");
 
   // ============== NABTEB PINS =============
@@ -1200,8 +1196,9 @@ export const Context = ({ children }) => {
   const [nabtebEducationPinPhone, setNabtebEducationPinPhone] = useState("");
   const [nabtebEducationPinEmail, setNabtebEducationPinEmail] = useState("");
   const [nabtebEducationAmount, setNabtebEducationAmount] = useState("₦");
+  const [nabtebQuantityAmount, setNabtebQuantityAmount] = useState("");
   const [nabtebWalletBalance, setNabtebWalletBalance] = useState("");
- const [newBalance, setNewBalance] = useState("");
+  const [newBalance, setNewBalance] = useState("");
   // PROFILE & ACCOUNT SETTINGS =========
   //============ Profile Page =========
   const [openImage, setOpenImage] = useState(false);
@@ -1221,13 +1218,13 @@ export const Context = ({ children }) => {
   const [idPostalCode, setIdPostalCode] = useState("");
   const [bvnNumber, setBvnNumber] = useState("");
   const [bvnVerifyImage, setBvnVerifyImage] = useState(NotVerifiedIcon);
- const [bvnStatus, setBvnStatus] = useState('Not Verified');
-const [dashLoading, setDashLoading] = useState(false);
-const [bvnButtonState, setBvnButtonState] = useState("Verify")
-const [virtualAccCreated, setVirtualAccCreated] = useState(false);
-const [idCountry, setIdCountry] = useState("");
-const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
-   const [idStatus, setIdStatus] = useState('Not Verified');
+  const [bvnStatus, setBvnStatus] = useState("Not Verified");
+  const [dashLoading, setDashLoading] = useState(false);
+  const [bvnButtonState, setBvnButtonState] = useState("Verify");
+  const [virtualAccCreated, setVirtualAccCreated] = useState(false);
+  const [idCountry, setIdCountry] = useState("");
+  const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
+  const [idStatus, setIdStatus] = useState("Not Verified");
   //========== BUSINESS KYC =============
   const [businessPopUp, setBusinessPopUp] = useState(false);
 
@@ -1239,19 +1236,21 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
 
   //============== API COLLECTION FOR EDUCATION PINS
   const [eduResponse, setEduResponse] = useState(null);
-  const [nabtebEduResponse,setNabtebEduResponse] = useState(null);
-  const [necoEduResponse,setNecoEduResponse] =useState(null);
+  const [nabtebEduResponse, setNabtebEduResponse] = useState(null);
+  const [necoEduResponse, setNecoEduResponse] = useState(null);
+  const [jambEduResponse, setJambEduResponse] = useState(null);
 
   //============= LOGIN FORM ==========
   const [loginAuthorisation, setLoginAuthorisation] = useState(false);
-  const [twoStepVerificationSuccess, setTwoStepVerificationSuccess]= useState(false);
- const [customerDetail, setCustomerDetail] = useState({});
-const [airtimeStatus, setAirtimeStatus] = useState(false);
-const [dataStatus, setDataStatus] = useState(false);
- const [educationPinStatus, setEducationPinStatus] = useState(false);
- const [subscriptionStatus, setSubscriptionStatus] = useState(false);
+  const [twoStepVerificationSuccess, setTwoStepVerificationSuccess] =
+    useState(false);
+  const [customerDetail, setCustomerDetail] = useState({});
+  const [airtimeStatus, setAirtimeStatus] = useState(false);
+  const [dataStatus, setDataStatus] = useState(false);
+  const [educationPinStatus, setEducationPinStatus] = useState(false);
+  const [subscriptionStatus, setSubscriptionStatus] = useState(false);
   const [networkStatus, setNetworkStatus] = useState(false);
- // Use Ref hook for user Deatils
+  // Use Ref hook for user Deatils
 
   const [bankNameState, setBankNameState] = useState("");
   const [accountNameState, setAccountNameState] = useState("");
@@ -1264,42 +1263,40 @@ const [dataStatus, setDataStatus] = useState(false);
 
   // }
 
-
   const hold = {
     tvSubscriptionResponse,
-     setTvSubscriptionResponse,
-      gotvOrderId, setGotvOrderId,
-          gotvTransactionId, setGotvTransactionId,
-          gotvRequestId, setGotvRequestId,
-          gotvDescription, setGotvDescription,
+    setTvSubscriptionResponse,
+    gotvOrderId,
+    setGotvOrderId,
+    gotvTransactionId,
+    setGotvTransactionId,
+    gotvRequestId,
+    setGotvRequestId,
+    gotvDescription,
+    setGotvDescription,
     customerDetail,
     setCustomerDetail,
     handleRefresh,
-   bankNameState, 
-   setBankNameState,
-      accountNameState,
-       setAccountNameState,
-        accountNumberState, 
-       setAccountNumberState, 
-       userStatus,
-        setUserStatus,
-        setIdButtonState,
-        idButtonState,
-        verifyImage,
-         setVerifyImage,
-         idStatus,
-         setIdStatus,
-         networkStatus,
-          setNetworkStatus,
-             
+    bankNameState,
+    setBankNameState,
+    accountNameState,
+    setAccountNameState,
+    accountNumberState,
+    setAccountNumberState,
+    userStatus,
+    setUserStatus,
+    setIdButtonState,
+    idButtonState,
+    verifyImage,
+    setVerifyImage,
+    idStatus,
+    setIdStatus,
+    networkStatus,
+    setNetworkStatus,
 
-           
-
-
-
-       
     // ==================
-    tfImage, settfImage,
+    tfImage,
+    settfImage,
     withdrawImage,
     setWithdrawImage,
     // ====================
@@ -1375,32 +1372,36 @@ const [dataStatus, setDataStatus] = useState(false);
     // *****************************************
 
     // ======Verification.jsx=====
-   
+
     showModal,
-     setShowModal,
+    setShowModal,
     viaEmail,
     viaSms,
     viaEmailOrSms,
-     setViaEmailOrSms,
+    setViaEmailOrSms,
     setViaEmail,
     setViaSms,
     sms,
     email,
     emailorsmsHandler,
-    success, 
+    success,
     setSuccess,
-    otpSent, 
+    otpSent,
     setOtpSent,
-    forgetPassVerificationPinError, 
+    forgetPassVerificationPinError,
     setForgetPassVerificationPinError,
-   forgetPassCountdown, setForgetPassCountdown,
-   forgetPassCanResend, setForgetPassCanResend,
-   inputForgetEmail, 
-   setInputForgetEmail,
-   submission, setSubmission,
-   checked, setChecked,
-   passwordAuthorisation, setPasswordAuthorisation,
-  
+    forgetPassCountdown,
+    setForgetPassCountdown,
+    forgetPassCanResend,
+    setForgetPassCanResend,
+    inputForgetEmail,
+    setInputForgetEmail,
+    submission,
+    setSubmission,
+    checked,
+    setChecked,
+    passwordAuthorisation,
+    setPasswordAuthorisation,
 
     // ========SignUp.jsx========
     otpVerifyEmailSignup,
@@ -1430,9 +1431,9 @@ const [dataStatus, setDataStatus] = useState(false);
     resetNumber,
     setResetNumber,
     loadSignUp,
-     setLoadSignUp,
-     getCountry,
-      setGetCountry,
+    setLoadSignUp,
+    getCountry,
+    setGetCountry,
 
     // ============Dashboard=============
     toggleSideBar,
@@ -1443,7 +1444,8 @@ const [dataStatus, setDataStatus] = useState(false);
     isValue,
     logout,
     setLogout,
-    newBalance, setNewBalance,
+    newBalance,
+    setNewBalance,
 
     // Login
     showModal2,
@@ -1634,14 +1636,14 @@ const [dataStatus, setDataStatus] = useState(false);
     walletNameGlo,
     setWalletNameGlo,
     selectedNetworkProductGlo,
-     setSelectedNetworkProductGlo,
-       selectedProductGlo,
+    setSelectedNetworkProductGlo,
+    selectedProductGlo,
     setSelectedProductGlo,
 
     // =============== Etisalat ==========
     selectedOptionEtisalat,
     setSelectedOptionEtisalat,
-   selectedNetworkProductEtisalat,
+    selectedNetworkProductEtisalat,
     setSelectedNetworkProductEtisalat,
     recipientPhoneNumberEtisalat,
     setRecipientPhoneNumberEtisalat,
@@ -1651,13 +1653,13 @@ const [dataStatus, setDataStatus] = useState(false);
     setRecipientNamesEtisalat,
     walletNameEtisalat,
     setWalletNameEtisalat,
-      selectedProductEtisalat,
+    selectedProductEtisalat,
     setSelectedProductEtisalat,
 
     //============ Airtel ==============
-     selectedOptionAirtel,
+    selectedOptionAirtel,
     setSelectedOptionAirtel,
-   selectedNetworkProductAirtel,
+    selectedNetworkProductAirtel,
     setSelectedNetworkProductAirtel,
     setSelectedProductAirtel,
     selectedProductAirtel,
@@ -1694,7 +1696,7 @@ const [dataStatus, setDataStatus] = useState(false);
     setRealOutputValue,
 
     //electricity subscription
-        // ikedc
+    // ikedc
     selectedIkedcMeterType,
     setSelectedIkedcMeterType,
     ikedcMeterNumber,
@@ -2054,7 +2056,8 @@ const [dataStatus, setDataStatus] = useState(false);
     inputPinGotv,
     setInputPinGotv,
     gotvSuccessful,
-    errorMessage, setErrorMessage,
+    errorMessage,
+    setErrorMessage,
     setGotvSuccessful,
     selectedOptionGOTV,
     setSelectedOptionGOTV,
@@ -2063,7 +2066,7 @@ const [dataStatus, setDataStatus] = useState(false);
     fetchedGotvPlans,
     setFetchedGotvPlans,
     packageGotv,
-     setPackageGotv,
+    setPackageGotv,
 
     //=======DSTV
     confirmDstvPopup,
@@ -2087,17 +2090,21 @@ const [dataStatus, setDataStatus] = useState(false);
     dstvSmartCard,
     setDstvSmartCard,
     dstvDecoderType,
-     setDstvDecoderType,
-     dstvMobileNumber,
-      setDstvMobileNumber,
-      dstvSubscriptionResponse, 
-      setDstvSubscriptionResponse,
-      dstvOrderId, setDstvOrderId,
-dstvTransactionId, setDstvTransactionId,
-dstvDescription, setDstvDescription,
-dstvRequestId, setDstvRequestId,
-dstvWalletBalance,
- setDstvWalletBalance,
+    setDstvDecoderType,
+    dstvMobileNumber,
+    setDstvMobileNumber,
+    dstvSubscriptionResponse,
+    setDstvSubscriptionResponse,
+    dstvOrderId,
+    setDstvOrderId,
+    dstvTransactionId,
+    setDstvTransactionId,
+    dstvDescription,
+    setDstvDescription,
+    dstvRequestId,
+    setDstvRequestId,
+    dstvWalletBalance,
+    setDstvWalletBalance,
 
     //=======SHOWMAX
     confirmShowmaxPopup,
@@ -2120,17 +2127,20 @@ dstvWalletBalance,
     setPackageShowMax,
     showMaxSmartCard,
     setShowMaxSmartCard,
-    showMaxDecoderType, 
+    showMaxDecoderType,
     setShowMaxDecoderType,
     showMaxMobileNumber,
     setShowMaxMobileNumber,
     showMaxSubscriptionResponse,
-   setShowMaxSubscriptionResponse,
-   showMaxOrderId, setShowMaxOrderId,
- showMaxTransactionId, setShowMaxTransactionId,
-  showMaxDescription, setShowMaxDescription,
-  showMaxWalletBalance,
- setShowMaxWalletBalance,
+    setShowMaxSubscriptionResponse,
+    showMaxOrderId,
+    setShowMaxOrderId,
+    showMaxTransactionId,
+    setShowMaxTransactionId,
+    showMaxDescription,
+    setShowMaxDescription,
+    showMaxWalletBalance,
+    setShowMaxWalletBalance,
 
     //=======STARTIMES
     confirmStarTimesPopup,
@@ -2147,26 +2157,26 @@ dstvWalletBalance,
     setFetchedStarTimesPlans,
     starTimesAmount,
     setStarTimesAmount,
-       starTimesEmail,
-       setStarTimesEmail,
-       packageStarTimes,
-       setPackageStarTimes,
-       starTimesSmartCard,
-       setStarTimesSmartCard,
-       starTimesDecoderType, 
-       setStarTimesDecoderType,
-       starTimesMobileNumber,
-        setStarTimesMobileNumber,
-        starTimesSubscriptionResponse,
-         setStarTimesSubscriptionResponse,
-         starTimesOrderId, setStarTimesOrderId,
-  starTimesTransactionId, setStarTimesTransactionId,
- starTimesDescription, setStarTimesDescription,
- starTimesWalletBalance,
- setStarTimesWalletBalance,
-
-
-
+    starTimesEmail,
+    setStarTimesEmail,
+    packageStarTimes,
+    setPackageStarTimes,
+    starTimesSmartCard,
+    setStarTimesSmartCard,
+    starTimesDecoderType,
+    setStarTimesDecoderType,
+    starTimesMobileNumber,
+    setStarTimesMobileNumber,
+    starTimesSubscriptionResponse,
+    setStarTimesSubscriptionResponse,
+    starTimesOrderId,
+    setStarTimesOrderId,
+    starTimesTransactionId,
+    setStarTimesTransactionId,
+    starTimesDescription,
+    setStarTimesDescription,
+    starTimesWalletBalance,
+    setStarTimesWalletBalance,
 
     //====== EDUCATION PINS
     //=======WAEC PINS
@@ -2190,6 +2200,8 @@ dstvWalletBalance,
     setEducationAmount,
     walletBalance,
     setWalletBalance,
+    quantityAmount,
+    setQuantityAmount,
 
     //======NECO PINS ==========
     necoQuantityResult,
@@ -2210,13 +2222,18 @@ dstvWalletBalance,
     setNecoEducationPinEmail,
     necoEducationAmount,
     setNecoEducationAmount,
+    necoQuantityAmount,
+    setNecoQuantityAmount,
     necoWalletBalance,
     setNecoWalletBalance,
-    airtimeStatus, setAirtimeStatus,
-    educationPinStatus, setEducationPinStatus,
-    subscriptionStatus, setSubscriptionStatus,
-    dataStatus, setDataStatus,
-
+    airtimeStatus,
+    setAirtimeStatus,
+    educationPinStatus,
+    setEducationPinStatus,
+    subscriptionStatus,
+    setSubscriptionStatus,
+    dataStatus,
+    setDataStatus,
 
     //==========   JAMB PINS =========
     jambQuantityResult,
@@ -2237,6 +2254,8 @@ dstvWalletBalance,
     setJambEducationPinEmail,
     jambEducationAmount,
     setJambEducationAmount,
+    jambQuantityAmount,
+    setJambQuantityAmount,
     jambWalletBalance,
     setJambWalletBalance,
 
@@ -2259,6 +2278,8 @@ dstvWalletBalance,
     setNabtebEducationPinEmail,
     nabtebEducationAmount,
     setNabtebEducationAmount,
+    nabtebQuantityAmount,
+    setNabtebQuantityAmount,
     nabtebWalletBalance,
     setNabtebWalletBalance,
 
@@ -2293,21 +2314,21 @@ dstvWalletBalance,
     idPostalCode,
     setIdPostalCode,
     idCountry,
-     setIdCountry,
+    setIdCountry,
     // ==========  BVN ========
 
-bvnNumber, 
-setBvnNumber,
-bvnVerifyImage, 
-setBvnVerifyImage,
-bvnStatus,
-setBvnStatus,
-dashLoading, 
-setDashLoading,
-virtualAccCreated,
-setVirtualAccCreated,
-bvnButtonState,
- setBvnButtonState,
+    bvnNumber,
+    setBvnNumber,
+    bvnVerifyImage,
+    setBvnVerifyImage,
+    bvnStatus,
+    setBvnStatus,
+    dashLoading,
+    setDashLoading,
+    virtualAccCreated,
+    setVirtualAccCreated,
+    bvnButtonState,
+    setBvnButtonState,
     //========== Business PopUp =======
     businessPopUp,
     setBusinessPopUp,
@@ -2320,20 +2341,21 @@ bvnButtonState,
     authenticationOpen,
     setAuthenticationOpen,
     //========API COLLECTION FOR EDUCATION PINS =====\
-    eduResponse, 
+    eduResponse,
     setEduResponse,
     nabtebEduResponse,
     setNabtebEduResponse,
     necoEduResponse,
     setNecoEduResponse,
+    jambEduResponse,
+    setJambEduResponse,
     // ====Login Authorisation
     loginAuthorisation,
     setLoginAuthorisation,
-    twoStepVerificationSuccess, 
+    twoStepVerificationSuccess,
     setTwoStepVerificationSuccess,
-   
-  }
-return (
+  };
+  return (
     <div>
       <ContextProvider.Provider value={hold}>
         {children}
