@@ -18,9 +18,7 @@ export default function HeroComponent() {
       
       "
             >
-            CHECK YOUR EXAMS RESULT WITH OUR EDUCATION 
-              {/* <br /> */}
-              PIN FEATURES.
+            CHECK YOUR EXAMS RESULT WITH OUR EDUCATION PIN FEATURES.
             </h2>
             {/* sub-text */}
             <p
