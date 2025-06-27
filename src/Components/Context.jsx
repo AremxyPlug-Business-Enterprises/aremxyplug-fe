@@ -1218,13 +1218,18 @@ export const Context = ({ children }) => {
   const [idPostalCode, setIdPostalCode] = useState("");
   const [bvnNumber, setBvnNumber] = useState("");
   const [bvnVerifyImage, setBvnVerifyImage] = useState(NotVerifiedIcon);
-  const [bvnStatus, setBvnStatus] = useState("Not Verified");
-  const [dashLoading, setDashLoading] = useState(false);
-  const [bvnButtonState, setBvnButtonState] = useState("Verify");
-  const [virtualAccCreated, setVirtualAccCreated] = useState(false);
-  const [idCountry, setIdCountry] = useState("");
-  const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
-  const [idStatus, setIdStatus] = useState("Not Verified");
+
+ const [bvnStatus, setBvnStatus] = useState('Not Verified');
+const [dashLoading, setDashLoading] = useState(false);
+const [bvnButtonState, setBvnButtonState] = useState("Verify")
+const [virtualAccCreated, setVirtualAccCreated] = useState(false);
+const [idCountry, setIdCountry] = useState("");
+const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
+   const [idStatus, setIdStatus] = useState('Not Verified');
+   const [bvnCountry, setBvnCountry] = useState("");
+   const [ bvnCountryImage, setBvnCountryImage] = useState(null);
+
+  
   //========== BUSINESS KYC =============
   const [businessPopUp, setBusinessPopUp] = useState(false);
 
@@ -2317,18 +2322,24 @@ export const Context = ({ children }) => {
     setIdCountry,
     // ==========  BVN ========
 
-    bvnNumber,
-    setBvnNumber,
-    bvnVerifyImage,
-    setBvnVerifyImage,
-    bvnStatus,
-    setBvnStatus,
-    dashLoading,
-    setDashLoading,
-    virtualAccCreated,
-    setVirtualAccCreated,
-    bvnButtonState,
-    setBvnButtonState,
+
+bvnNumber, 
+setBvnNumber,
+bvnVerifyImage, 
+setBvnVerifyImage,
+bvnStatus,
+setBvnStatus,
+dashLoading, 
+setDashLoading,
+virtualAccCreated,
+setVirtualAccCreated,
+bvnButtonState,
+ setBvnButtonState,
+ bvnCountry,
+  setBvnCountry,
+  bvnCountryImage,
+  setBvnCountryImage,
+
     //========== Business PopUp =======
     businessPopUp,
     setBusinessPopUp,

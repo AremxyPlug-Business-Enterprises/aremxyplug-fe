@@ -365,8 +365,9 @@ export default function WaecEducationPin() {
 
   return (
     <DashBoardLayout>
-      <div className="flex flex-col lg:h-[150%] h-[115%] justify-between ">
-        <div className="">
+
+    <div className='flex flex-col lg:h-[150%] h-[115%] justify-between '>
+ <div className="">
           {/* Hero-section */}
           <HeroComponent />
           <div className="flex lg:gap-[8px] items-center md:gap-[5.868px] gap-[4.694px] mb-[20px] lg:mb-[50px] md:mb-[30px]">
@@ -374,6 +375,401 @@ export default function WaecEducationPin() {
               className={`font-semibold text-sm leading-[12px] md:text-xs md:leading-[11.267px] lg:text-base lg:leading-[20.2px] ${
                 isDarkMode ? "text-white" : "text-[#7E7E7E]"
               } `}
+    Purchase
+      </h2>
+ <img className='h-[12px] w-[12px] md:h-[14.083px] md-w-[14.083px] lg:h-[24px] lg:w-[24px] self-center'
+      src={WaecImg} alt="" />
+
+      <h2 className='font-[600] text-[14px] leading-[12px] md:text-[9.389px]
+       md:leading-[11.267px] lg:text-[16px] text-[#7E7E7E] lg:leading-[19.2px]'>
+      WAEC E-PINs Instantly
+      </h2>
+      <img className='md:h-[14.083px] md:w-[14.083px] lg:h-[24px] lg:w-[24px] h-[14px] w-[14px]'
+      src={arrowRight} alt="" />
+    </div>
+    {/* Input for Request of examination pins  */}
+    <form onSubmit={handleWaecSubmitPost}
+    action='POST'>
+    <div  className='flex flex-col gap-[20px]  md:h-[172.73px] md:gap-[14.67px] 
+     lg:gap-[25px] lg:h-[296px] lg:mb-[30px] mb-[30px]'>
+      {/* container for the first two input */}
+      <div className=' w-[100%]
+      flex flex-col md:flex-row gap-[20px] 
+      md:gap-[12.91px] lg:gap-[22px]'>
+
+        {/* First Step Confirm exam type */}
+   <div className='relative flex flex-col w-[100%] gap-[5.868px] md:w-1/2 md:gap-[5.868px]  
+   lg:gap-[10px]'>
+    {/* header */}
+    <label className='md:font-[600] font-[400] text-[#7E7E7E] text-[14px] leading-[10.4px]  
+     md:text-[9.389px] md:leading-[12.206px]
+    lg:text-[16px] lg:leading-[20.8px]'>
+    Confirm Exam Type
+    </label>
+    {/* input */}
+    <div className='w-[100%] relative'
+onClick={(e) => {
+  waecExamDropDown();
+  }}>
+  <input type="text"
+ value={examType}
+   onChange={(e) => {
+    setExamType(e.target.value)
+   }}
+className={`pt-[10.803px] pb-[13.794px] pr-[13px] pl-[10.876px] mt-2 md:mt-0
+ md:pt-[8.802px] md:pb-[7.042px] w-full
+md:pr-[5.282px] md:pl-[5.867px]
+lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
+font-[400] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px]
+    lg:text-[16px] text-black lg:leading-[20.8px] cursor-pointer  border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 shadow-sm md:shadow-0 focus:outline-none focus:ring-2 text-[13.5px] sm:p-3 sm:text-lg 
+    ${isDarkMode 
+      ? "bg-black text-white border border-white" 
+      : "border-[#9C9C9C] hover:bg-[#EDEAEA] bg-white"
+  }`} readOnly/>
+   <img 
+       className='absolute lg:top-[15px] lg:right-[9px] md:top-[8.802px] md:right-[5.282px]
+        top-[21.802px] right-[13px]
+        Examdrop md:h-[14.038px] md:w-[14.038px] 
+      lg:h-[24px] lg:w-[24px] w-[16px] h-[16px]'
+      src={arrowDown} alt="" />
+       </div>
+       {examActive && (
+         <div className={`absolute lg:top-[90px] md:top-[60px] top-[70px] z-[2]  flex flex-col w-[100%] lg:h-225px md:h-[210px] rounded-[10px]  md:rounded-0
+            ${isDarkMode 
+      ? "bg-black text-white border border-white" 
+      : ""
+  }`}
+        >
+          {(Exams.map(exam => {
+            return (
+               <a href={exam.path}
+               onClick={(e =>{
+          setExamType(exam.examType);
+                 setExamActive(false);
+             document.querySelector('.Examdrop').classList.remove('DropIt');
+             console.log(e);
+              })}
+              className={`pb-[20px] pt-[20px] md:pb-[14px] md:pt-[14px] font-[400] text-[13.2px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] 
+         md:text-[13.227px] md:leading-[17.195px] 
+         shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
+         lg:text-[16px] lg:leading-[20.8px] cursor-pointer
+           ${isDarkMode 
+      ? "bg-black text-white border border-white" 
+      : "border-[#9C9C9C] text-[#7C7C7C] hover:bg-[#EDEAEA] bg-white"
+  }`} 
+         key= {exam.id}>
+      <h2>{exam.examType}   </h2>
+         </a>
+        
+            )
+          }))}
+
+
+             </div>
+      )}
+    </div>
+
+    {/* Quantity input Two / RightSide */}
+    <div className='relative gap-[5.868px] flex flex-col w-[100%] md:w-1/2  
+    md:gap-[5.868px] lg:gap-[10px] '>
+    {/* header */}
+    <label className='md:font-[600] font-[400] text-[#7E7E7E] text-[14px] leading-[10.4px]
+      md:text-[9.389px] md:leading-[12.206px]
+     lg:text-[16px] lg:leading-[20.8px]'>
+    Quantity
+    </label>
+    {/* input */}
+<div className='w-[100%] relative'
+onClick={(e) => {
+  waecQuantityDropDown();
+ }}>
+  <input type="text"
+ onChange={(e)=>{
+  setQuantityResult(e.target.value)
+  }}
+  value={quantityResult}
+className={`pt-[10.803px] pb-[13.794px] pr-[13px] pl-[10.876px] mt-2 md:mt-0
+ md:pt-[8.802px] md:pb-[7.042px] w-[100%]
+md:pr-[5.282px] md:pl-[5.867px]
+lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
+border-[0.4px]  
+font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
+    lg:text-[16px] lg:leading-[20.8px] cursor-pointer  md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 shadow-sm md:shadow-0 focus:outline-none focus:ring-2 text-[13.5px] sm:p-3 sm:text-lg   
+    ${isDarkMode 
+      ? "bg-black text-white border border-white" 
+      : "bg-white text-black border-[#9C9C9C]"
+  }`}   readOnly/>
+   
+      <img 
+       className='absolute lg:top-[15px] lg:right-[9px] md:top-[8.802px] md:right-[5.282px]
+        top-[21.802px] right-[13px]
+        imgdrop md:h-[14.038px] md:w-[14.038px] 
+      lg:h-[24px] lg:w-[24px] w-[16px] h-[16px]'
+      src={arrowDown} alt=""  />
+       </div>
+       {/* drop down */}
+       
+      {quantityActive && (
+         <div className={`absolute lg:top-[90px] md:top-[60px] top-[70px] z-[1] 
+         flex flex-col w-[100%] lg:h-225px md:h-[210px] rounded md:rounded-0
+           ${isDarkMode 
+      ? "bg-black text-white border border-white" 
+      : ""
+  }`} >
+          {(options.map(option => {
+            return (
+              <h2 onClick={(e =>{
+                setQuantityResult(option.quantity)
+                setQuantityActive(false);
+                setEducationAmount(option.Amount)
+              document.querySelector('.imgdrop').classList.remove('DropIt');
+         
+              })}
+              className={`pb-[20px] md:pb-[14px] md:pt-[14px] pt-[20px]  font-[400] text-[13.5px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] 
+         md:text-[13.227px] md:leading-[17.195px] w-[100%]  
+       shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
+         lg:text-[16px] lg:leading-[20.8px] cursor-pointer  
+         ${isDarkMode 
+      ? "bg-black text-white border border-white" 
+      : "text-[#7C7C7C] hover:bg-[#EDEAEA] bg-white"
+  }`} 
+         key={option.id}>
+        {option.quantity}
+         </h2>
+            )
+          }))}
+         
+          
+             </div>
+      )}
+    </div>
+   </div>
+  {/* container for Phone number and Email */}
+   <div className=' w-[100%] 
+   flex flex-col  md:flex-row gap-[20px] md:gap-[12.91px] lg:gap-[22px] z-0'>
+    {/* LeftSide */}
+     <div className=' container-phone gap-[5.868px] 
+     flex flex-col md:w-1/2 md:gap-[10px] z-0'>
+   <label className='md:font-[600] font-[400] text-[#7E7E7E] text-[15px] leading-[10.4px]
+     md:text-[9.389px] md:leading-[12.206px]
+   lg:text-[16px] lg:leading-[20.8px] '>
+  Phone Number
+
+   </label>
+   
+   <input onInput={(e =>{
+  
+  const numericValue = e.target.value.replace(/\D/g, '');
+      e.target.value = numericValue
+     if(numericValue.length === 11){
+      e.target.style.border = '2px solid green';
+    }
+    else if(e.target.value.length < 11){
+    e.target.style.border = '2px solid red';
+  } })}
+   className={`font-[410] h-[40.927px] lg:h-[51px]  md:h-[29.93px] w-[100%] mt-2 md:mt-0
+    border-[0.4px] 
+   lg:text-[16px] lg:leading-[20.8px] 
+      leading-[16.206px]
+   pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
+   focus:outline-none
+   md:pt-[8.802px] md:pb-[7.042px] 
+   md:pr-[5.282px] md:pl-[5.867px] 
+   lg:pt-[14px] lg:pb-[15.5px] lg:pr-[16px] lg:pl-[10px]
+   placeholder:text-[14.389px] placeholder:leading-[18.809.4px] 
+   lg:placeholder:text-[16px] lg:placeholder:leading-[20.8px]
+   md:placeholder:text-[14.389px] md:placeholder:leading-[18.206px]  rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.5px] sm:p-3 sm:text-lg
+   ${isDarkMode 
+    ? "bg-black text-white border border-white" 
+    : "border-[#9C9C9C] text-[#7C7C7C] hover:bg-[#EDEAEA]  bg-white placeholder:text-[#7E7E7E] border md:border-[0.4px]"
+}`} 
+    type="tel" name='Waec-Phone' id='phone' maxLength={11} placeholder=''
+    value={educationPinPhone}
+     onChange={(e)=>{
+      setEducationPinPhone(e.target.value);
+    
+     }}/>
+     {errors.educationPinPhone && (
+            <div className="text-[12px] text-red-500 italic lg:text-[14px]">
+              {errors.educationPinPhone}
+            </div>
+          )}
+   </div>
+   
+        
+   {/* right-side */}
+   <div className='flex flex-col gap-[5.868px] md:w-1/2 md:gap-[10px]'>
+   <label className='md:font-[600] font-[400] text-[15px] leading-[10.4px]
+   text-[#7E7E7E]  md:text-[9.389px] md:leading-[12.206px]
+   lg:text-[16px] lg:leading-[20.8px]'>
+   Email
+   </label>
+   
+   <input className ={`EmailPins font-[400]  flex h-[41.927px] lg:h-[51px] md:h-[29.93px] w-[100%] mt-2 md:mt-0
+   lg:text-[16px] lg:leading-[21.8px] 
+   text-[14px] leading-[18.206px] tracking-[0.4px]
+   pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] 
+    border-[0.4px] focus:outline-none self-center
+   md:pt-[8.802px] md:pb-[7.042px] 
+   md:pr-[5.282px] md:pl-[5.867px] 
+   lg:pt-[14px] lg:pb-[15.5px] lg:pr-[16px] lg:pl-[10px] 
+   placeholder:text-[14.389px] placeholder:leading-[18.809.4px] 
+   lg:placeholder:text-[16px] lg:placeholder:leading-[20.8px] 
+   md:placeholder:text-[14.389px] md:placeholder:leading-[18.206px] md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 sm:p-3 sm:text-lg   
+   ${isDarkMode 
+    ? "bg-black text-white border border-white" 
+    : "placeholder:text-[#7E7E7E] border-[#9C9C9C] text-black"
+}`}
+   name='Waec-Email'
+    value={educationPinEmail}
+   onChange={(e) =>{
+    setEducationPinEmail(e.target.value);
+   }}
+    type="Email" 
+    placeholder='example@gmail.com'/>
+    
+    {errors.educationPinEmail && (
+            <div className="text-[12px] text-red-500 italic lg:text-[14px]">
+              {errors.educationPinEmail}
+            </div>
+          )}
+   </div>
+   
+   </div>
+
+   {/* Conatiner for Amount and Payment method */}
+   <div className='flex w-[100%]
+   flex-col gap-[20px] md:flex-row md:gap-[12.91px] lg:gap-[22px]'>
+{/* Amount Step /Leftside */}
+   <div className='flex flex-col gap-[5.868px] w-[100%] md:w-1/2 md:gap-[10px]'>
+    {/* header */}
+    <label className='md:font-[600] font-[400] text-[15px] leading-[10.4px]
+     md:text-[9.389px] md:leading-[12.206px]
+     text-[#7E7E7E] lg:text-[16px] lg:leading-[20.8px]'>
+    Amount
+    </label>
+    {/* input */}
+    <input 
+     className={`h-[41.927px]  lg:h-[51px] md:h-[29.93px] mt-2 md:mt-0
+        md:pt-[8.802px] md:pb-[7.042px] 
+       pt-[12.803px] pb-[7.794px] pr-[13px] pl-[10.876px]
+     md:pr-[5.282px] md:pl-[5.867px]
+  lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] border-[0.4px]
+  focus:outline-none text-start
+     leading-[10.4px]
+   font-[400]  md:text-[9.389px] md:leading-[12.206px]
+  lg:text-[16px] lg:leading-[20.8px] md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.5px]  sm:p-3 sm:text-lg 
+  ${isDarkMode 
+    ? "bg-black text-white border border-white" 
+    : "placeholder:text-[#7E7E7E] border-[#9C9C9C] text-black"
+}`}
+  maxLength={7} value={educationAmount}
+  onChange={(e)=>{
+   setEducationAmount(e.target.value);
+  }} readOnly/>
+ </div>
+    {/* payment method */}
+    <div className='relative payment-parent gap-[5.868px]
+     flex w-[100%] flex-col md:w-1/2 md:gap-[10px]'>
+    {/* header */}
+    <label className='md:font-[600] font-[400] text-[15px] leading-[10.4px]
+     text-[#7E7E7E]  md:text-[9.389px] md:leading-[12.206px]
+     lg:text-[16px] lg:leading-[20.8px]'>
+    Payment Method
+    </label>
+    {/* input */}
+    <div className='w-[100%] relative'
+onClick={(e) => {
+  waecMethodDropDown();
+}}>
+  <input type="text" 
+  onChange={(e)=> {
+  setPaymentResult(e.target.value)
+  }}
+  value={paymentResult}
+className={`pt-[10.803px] pb-[13.794px] pr-[13px] pl-[10.876px] mt-2 md:mt-0
+ md:pt-[8.802px] md:pb-[7.042px] w-[100%]
+md:pr-[5.282px] md:pl-[5.867px]
+lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
+border-[0.4px] 
+font-[400] leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
+    lg:text-[16px] lg:leading-[20.8px] cursor-pointer   md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 shadow-sm md:shadow-0 focus:outline-none focus:ring-2 text-[13.5px] sm:p-3 sm:text-lg
+    ${isDarkMode 
+      ? "bg-black text-white border border-white" 
+      : "placeholder:text-[#7E7E7E] border-[#9C9C9C] text-black bg-white hover:bg-[#EDEAEA]"
+  }`}
+  readOnly/>
+   
+      <img 
+       className='absolute lg:top-[15px] lg:right-[9px] md:top-[8.802px] md:right-[5.282px]
+        top-[21.802px] right-[13px]
+        methodDrop md:h-[14.038px] md:w-[14.038px] 
+      lg:h-[24px] lg:w-[24px] w-[16px] h-[16px]'
+      src={imageState} alt="" />
+       </div>
+       {/* drop down */}
+       
+      {methodActive && (
+         <div className='absolute lg:top-[90px] md:top-[60px] top-[72px] z-0 flex flex-col w-[100%] rounded md:rounded-0  
+         '>
+
+        {(methodOptions.map(methodOption => {
+            return (
+        <div 
+        onClick={(e =>{
+        onchange={setMethodOptions}
+          setPaymentResult(methodOption.method);
+          setWalletBalance(methodOption.balance)
+          setImageState(methodOption.flag);
+          setMethodActive(false);
+       document.querySelector('.methodDrop').classList.remove('DropIt');
+        })}
+        className={`flex gap-[10px] lg:py-[15px] py-[10px] pl-[10px]
+        cursor-pointer  items-center 
+        shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
+         ${isDarkMode 
+          ? "bg-black text-white border border-white" 
+          : "bg-white hover:bg-[#EDEAEA]"
+      }`}
+        key={ methodOption.id }>
+
+          <img className='md:h-[29.27px]  h-[14.27px]' src={methodOption.flag} alt=""/>
+
+            <h2 
+              className={`pb-[20px] md:pb-0 md:pt-0 pt-[20px] font-[400] text-[13.5px] leading-[10.4px]
+         md:text-[13.227px] md:leading-[17.195px] 
+         lg:text-[16px] lg:leading-[20.8px] self-center cursor-pointer
+         ${isDarkMode 
+          ? "bg-black text-white" 
+          : "text-[#7C7C7C]"
+      }`} >
+        {methodOption.method + ' ' + methodOption.balance}
+         </h2>
+        </div>
+              
+            )
+          }))}
+         
+          
+             </div>
+      )}
+    </div>
+    </div>
+    {/* end of */}
+    </div>
+    {educationProceed && (
+          <Modal>
+         
+            <div
+              className={`deleteRecipientSuccess  mx-[5%]  ${
+                isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
+              } ${
+                toggleSideBar
+                  ? "confirm01"
+                  : "confirm"
+              } grow pt-[10px] pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative 
+              md:rounded-[11.5px] md:mx-auto md:my-auto md:overflow-auto`}
+
             >
               Purchase
             </h2>
