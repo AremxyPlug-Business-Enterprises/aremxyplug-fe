@@ -629,7 +629,7 @@ const AirtimeVtu = () => {
                             <div>
                                 <div className={styles.NetworkFlex}>
                                     <h2 className={`${styles.head3} !text-[15px] md:text-[15px]   ${isDarkMode 
-                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                                              ? "!text-[#7E7E7E]" : "text-[#7E7E7E]"
                                           }`}>Select Network</h2>
                                     <div className={`
                                               ${

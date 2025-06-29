@@ -138,7 +138,7 @@ useEffect(() => {
       
       if(response.status === 201 || 200){
         setProductPlans(response.data.data.plans || []);
-       if(response.data.data.plans === null || response.data.data?.length < 1){
+       if(response?.data?.data?.plans === null || response?.data?.data?.length < 1){
           setSelectProductWarn(true);
         }
       }
@@ -247,8 +247,8 @@ console.log("successfully retrieved balance");
     if(newBalance === "" || newBalance === null || newBalance === undefined){
        GetBalance();
        console.log(passDataBalance);
-       if(GetBalance && passDataBalance.data){
-        setNewBalance(passDataBalance.data.data.data.balance);
+       if(GetBalance && passDataBalance?.data){
+        setNewBalance(passDataBalance?.data?.data?.data?.balance);
        }
     }
    //eslint-disable-next-line
@@ -290,9 +290,9 @@ console.log("successfully retrieved balance");
         <div className={` ${airtimestyles.netImage}`}>
           <img src={flag} alt="" className={airtimestyles.NoImage} />
         </div>
-        <h2 className={`font-[500] text-[#7C7C7C] text-[8px] leading-[10.4px]
+        <h2 className={`font-[500] text-[#7C7C7C] text-[12px] leading-[16.4px]
             lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>{code}</h2>
-        <p className={`font-[500] text-[#7C7C7C] text-[8px] leading-[10.4px]
+        <p className={`font-[500] text-[#7C7C7C] text-[12px] leading-[16.4px]
             lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
           Wallet({amount.toLocaleString()})
         </p>
@@ -478,11 +478,11 @@ const [inputValue, setInputValue] = useState("");
         console.log(response.data);
         console.log(response.status);
 
-        const resData = response.data.data.data; // Accessing the nested `data` object
+        const resData = response?.data?.data?.data; // Accessing the nested `data` object
 console.log(resData);
         
 
-        setMtnTransactionID(resData.transaction_id);
+        setMtnTransactionID(resData?.transaction_id);
         console.log(resData.transaction_id);
 
         setMtnRefNumber(resData.reference_number);
@@ -512,8 +512,7 @@ console.log(resData);
               setPurchaseStatus(true); // Show failure popup
            setConfirm(false);
       setInputPin("");
-      alert("Failed");
-     // alert("I am the problem");
+
       }else if(error && error.response.status === 401){
      alert("the session has expired, re-run the api request to get the new Token then carry out request.")
       }
@@ -785,7 +784,9 @@ console.log(resData);
               </div>
             <div className="relative">
               {showProductList && (
-                <div className={`border md:rounded-[10px] text-[10px] md:text-[12px] ${products.length > 1 ? "h-[200px] overflow-y-scroll" : "h-[0px]"}  
+                <div className={`border md:rounded-[10px] text-[10px] 
+                   bvnQuery shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
+                  md:text-[12px] ${products.length > 1 ? "h-[300px] overflow-y-scroll" : "h-[0px]"}  
                 lg:text-[16px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[10]`}>
                   {loadingProducts  ? (
                     <div>Loading products...</div>
@@ -869,7 +870,9 @@ console.log(resData);
             
        <div className="relative">
               {(showOptionList && selectedProductMtn.length > 1 ) && (
-                <div className={`text-[12px] absolute  border md:rounded-[10px]  ${productPlans.length > 1 ? `h-[200px] overflow-y-scroll`  : "h-[0px]"}
+                <div className={`text-[12px] absolute  border md:rounded-[10px] 
+                   bvnQuery shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
+                   ${productPlans.length > 1 ? `h-[300px] overflow-y-scroll`  : "h-[0px]"}
                    lg:mt-2 rounded-[4px]  w-full bg-[#FFF] z-[100]
                   ${isDarkMode
                     ? "bg-black text-white border !border-white"

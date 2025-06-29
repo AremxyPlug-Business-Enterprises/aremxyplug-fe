@@ -108,16 +108,16 @@ const checkSessionToken = value.split(";");
 //   return <Navigate to ="/Login" replace/>
 // }
 
-if(children.type.name) {
-  // alert("You are under the child component of protected route")
- if(UserStatus === "true"  && checkSessionToken?.length === 3){
-  //alert("Child returned")
-return children;
-}else if(UserStatus === "true" && checkSessionToken?.length < 3){
-   RemoveLocalStorage();
-  return <Navigate to ="/Login" replace/>
-}
-}
+// if(children.type.name) {
+//   // alert("You are under the child component of protected route")
+//  if(UserStatus === "true"  && checkSessionToken?.length === 3){
+//   //alert("Child returned")
+// return children;
+// }else if(UserStatus === "true" && checkSessionToken?.length < 3){
+//    RemoveLocalStorage();
+//   return <Navigate to ="/Login" replace/>
+// }
+// }
 // else if(children.type.name && document.visibilityState === "hidden" && UserStatus === "true" ){
 //   return handleAutoLogOut();
 // }

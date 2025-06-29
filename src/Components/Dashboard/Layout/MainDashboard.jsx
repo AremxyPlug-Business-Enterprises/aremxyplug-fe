@@ -20,7 +20,7 @@ import { Link } from "react-router-dom";
 import { Loader } from "../../Loader/Loader";
 import { BalanceLoading } from "../../Loader/Loader";
 import { GetLocalStorage, RemoveLocalStorage } from "../../LocalStorage/LocalStorage";
-import { CheckVirtualAcc } from "../../ApiCollection.jsx/ApiBuck";
+import { CheckVirtualAcc, HandleUserSession } from "../../ApiCollection.jsx/ApiBuck";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 export const MainDashboard = (Data) => {
@@ -29,7 +29,7 @@ export const MainDashboard = (Data) => {
     dashLoading, bankNameState, accountNameState, accountNumberState,
     customerDetail, setDashLoading, setVirtualAccCreated, 
     setBankNameState, setAccountNameState, setAccountNumberState, 
-    twoStepVerificationSuccess,setTwoStepVerificationSuccess, networkStatus,  setNetworkStatus,
+    twoStepVerificationSuccess,setTwoStepVerificationSuccess, 
     newBalance, setNewBalance
   } = useContext(ContextProvider);
   //const {account_no, bank_name, account_name} = virtualAccCreated;
@@ -45,6 +45,7 @@ const navigate = useNavigate()
   const [symbol, setSymbol] = useState("₦");
  const [balanceLoading, setBalanceLoading] = useState(false)
  const [balanceValue, setBalanceValue] = useState(true);
+ const [sessionModal, setSessionModal] = useState(false)
 
   const handleCopyClick = () => {
     const text = Data.aremxyAccountNumber;
@@ -94,7 +95,7 @@ const navigate = useNavigate()
     const clickedoption = event.target.value;
     setSelected2(clickedoption);
 console.log(clickedoption)
-if((clickedoption === "NGN") && blur === true){
+if((clickedoption === "NGN")){
      setBlur(false);
      setSymbol("₦")
      
@@ -106,28 +107,9 @@ if((clickedoption === "NGN") && blur === true){
         ? "€" : clickedoption === "KES"
         ? "KSh" : ""
       )
-      setBlur(true);
+   
     }
-    // setBlurTwo(
-    //   clickedoption === "USD" ||
-    //     clickedoption === "GBP" ||
-    //     clickedoption === "AUD" ||
-    //     clickedoption === "KES" ||
-    //     clickedoption === "EUR" 
-    // );
-    // clickedoption === "NGN"
-    //   ? setSymbol("₦")
-    //   : clickedoption === "USD"
-    //   ? setSymbol("$")
-    //   : clickedoption === "GBP"
-    //   ? setSymbol("£")
-    //   : clickedoption === "AUD"
-    //   ? setSymbol("AU$")
-    //   : clickedoption === "KES"
-    //   ? setSymbol("KSh")
-    //   : clickedoption === "EUR"
-    //   ? setSymbol("€")
-    //   : setSymbol("");
+   
     return;
   };
 
@@ -228,7 +210,7 @@ if((clickedoption === "NGN") && blur === true){
             console.log(response)
           if(response.status && (response.status === 200 || 201)){
              setBalanceValue(true);
-           const checkBal =  response.data.data.data.balance;
+           const checkBal =  response?.data?.data?.data?.balance;
            console.log(checkBal);
            setNewBalance(checkBal)
              }
@@ -246,11 +228,16 @@ if((clickedoption === "NGN") && blur === true){
         
          if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
              console.log(newToken)
-            localStorage.setItem("authorisedLogin", newToken);
+          const EmailToken =  localStorage.setItem("authorisedLogin", newToken);
+          if(EmailToken?.length > 1){
+            return GenerateAccountBalance();
+          }
            }else{
       localStorage.setItem("getToken", newToken);
       alert("Get Token is set");
-      }}
+      }}else{
+        return setSessionModal(true);
+      }
         }
         else if(error.response.status === 404){
      setBalanceValue(false);
@@ -270,8 +257,7 @@ if((clickedoption === "NGN") && blur === true){
           setBalanceLoading(false);
         }
       }
-       
-        }
+ }
       
 
      const ValueRef = useRef()
@@ -283,6 +269,7 @@ if((clickedoption === "NGN") && blur === true){
     GenerateAccountBalance();
     setNav();
     setSelected("NGN"); 
+    setSelected2("NGN");
    // HandleNetworkStatus()
      let resetInActivityTimer;
     const resetInactivityOnSession = ()=> {
@@ -434,17 +421,19 @@ return (
               </p>
 
               {blur && (
+              
                 <div
-                  className={`${
-                    isDarkMode ? " text-[#fff]" : "text-[#04177f]"
+                  className={`text-[#04177f] ${
+                    isDarkMode ? " text-[#fff] bg-black" : "text-[#04177f]"
                   } ${
                     toggleSideBar
-                      ? "backdrop-blur-[6px] font-bold text-[13px] pt-[4%] md:absolute md:w-[30%]  md:ml-[3%] md:text-[19px] md:text-center lg:absolute  lg:mt-[3%] lg:ml-[2%] lg:w-[33%] lg:text-[24px]  text-[#04177f] lg:pb-[50px]"
-                      : "backdrop-blur-[6px] absolute w-[75%] md:w-[30%] text-[13px] font-bold text-center mt-[9.5%] md:mt-[3%] ml-[6%] pt-[4%] md:pt-[4%] md:text-[15px] md:pb-[6%] lg:pb-[5%]  md:text-extrabold lg:text-[24px] lg:mt-[3%] lg:ml-[4%] lg:w-[37%] lg:pt-[%] "}
+                      ? "bg-[#e9edfb]  font-bold text-[13px] pt-[4%] md:absolute md:w-[30%]  md:ml-[3%] md:text-[19px] md:text-center lg:absolute  lg:mt-[3%] lg:w-[30%] lg:text-[24px]  text-[#04177f] lg:pb-[50px]"
+                      : " bg-[#e9edfb]  absolute w-[75%] md:w-[30%] text-[13px] font-bold text-center mt-[9.5%] md:mt-[3%] pt-[4%] md:pt-[4%] md:text-[15px]  md:pb-[6%] lg:pb-[5%]  md:text-extrabold lg:text-[24px] lg:mt-[1%]  lg:w-[33%] lg:pt-[%]  "}
                     ${activeButtons[1] 
                     ? "h-[100px] md:h-[100px] lg:h-[200px] md:pt-[8%]" :"h-[50px]  md:h-[40px] lg:h-[60px] md:pt-[2%]"}`}>
                   This feature is currently not available...
                 </div>
+             
               )}
             
               {/* ================= */}
@@ -555,11 +544,7 @@ return (
                 <div
                   onClick={() => {
                     handleClick(0);
-                    if(selected2 === "NGN"){
                     setBlur(false);
-                    }else{
-                    setBlur(true);
-                    }
                     // setBlurThree();
                   }}
                   value="fiat"
@@ -676,12 +661,12 @@ return (
      <div className="relative h-[100%] w-[100%]">
               {blurTwo && (
                 <div
-                  className={`flex justify-center ${
-                    isDarkMode ? " text-[#fff]" : "text-[#04177f]"
+                  className={`flex justify-center lg:w-[100%] lg:h-[100%] ${
+                    isDarkMode ? " text-[#fff] bg-black" : "text-[#04177f]"
                   } ${
                     toggleSideBar
-                      ? "backdrop-blur-[5px]  font-extrabold absolute lg:h-[21%] lg:w-[35%] lg:ml-[-8px] lg:flex lg:justify-start lg:mt-[2%] lg:pt-[2%] lg:text-[25px]"
-                      : "backdrop-blur-[4.5px] absolute text-[14px] h-[100%] w-[100%] mt-[4%] lg:mt-[0%] font-extrabold flex justify-start pt-[7%] md:h-[11%] md:text-[25px] md:pt-[5%] lg:pt-[3%] lg:w-[100%] lg:h-[100%]"
+                      ? " bg-[#e9edfb] font-extrabold absolute   lg:flex lg:justify-start lg:mt-[2%] lg:pt-[2%] lg:text-[25px]"
+                      : "bg-[#e9edfb] absolute text-[14px] h-[90%] w-[100%] mt-[4%] lg:mt-[0%] font-extrabold flex justify-start pt-[7%] md:h-[11%] md:text-[25px] md:pt-[5%] lg:pt-[3%] lg:h-[100%]"
                   } `}
                 >
                   Coming Soon...
@@ -915,6 +900,9 @@ return (
             </div>
           </div> 
       </div>
+      {sessionModal && (
+     <HandleUserSession/>
+      )}
       </div>
   
   );
