@@ -458,7 +458,7 @@ const AEDC = () => {
     };
     HandleBalanceStatus();
   }, [CheckSufficiency]);
-  console.log(balanceStringToNum, aedcAmountToNumber);
+  // console.log(balanceStringToNum, aedcAmountToNumber);
 
   const [InputPinPopUp, setInputPinPopUp] = useState(false);
   const [inputPin, setInputPin] = useState("");
@@ -931,7 +931,7 @@ const AEDC = () => {
           </div>
         </div>
         <footer className="flex justify-center text-center gap-[20px] mt-[200px] pb-[10%] md:mt-[750px] lg:mt-[850px]">
-          <p className="text-[11px] md:text-[12px] lg:text-[18px]  font-medium leading-[9.1px] mt-[5px] lg:mt-[13px]">
+          <p className="text-[11px] md:text-[12px] lg:text-[18px] font-medium leading-[9.1px] mt-[5px] lg:mt-[13px]">
             You need help?
           </p>
 
