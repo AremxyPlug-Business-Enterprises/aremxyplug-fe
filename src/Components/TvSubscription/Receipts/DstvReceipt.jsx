@@ -152,10 +152,13 @@ export const DstvReceipt= (Data) => {
                 alt="/"
               />
             </div>
-            <h3 className="font-extrabold text-[12px] mt-[2%] text-center md:text-[20px] md:my-[7px] lg:text-[16px] lg:my-[10px]">
+            <h3 className="font-extrabold text-[12px] mt-[2%] 
+            text-center md:text-[20px] md:my-[7px] lg:text-[16px] lg:my-[10px]">
             Purchase Successful on
             </h3>
-            <span className="text-[11px] text-[#0008] font-extrabold flex justify-center items-center">
+            <span className={`text-[11px] ${isDarkMode ? "text-white" : "text-black"}
+             font-extrabold flex justify-center items-center
+            `}>
               {date.toLocaleDateString(undefined, {
                 year: "numeric",
                 month: "long",
@@ -166,9 +169,10 @@ export const DstvReceipt= (Data) => {
                 hour12: true,
               })}
             </span>
-            <p className=" pt-2 md:pt-4 text-[9px] text-[#0008] font-bold text-center my-2 md:text-[14px] lg:text-[14px]">
+            <p className={`pt-2 md:pt-4 text-[9px] text- font-bold text-center
+             my-2 md:text-[14px] lg:text-[14px] ${isDarkMode ? "text-white" : "text-black" }`}>
             You have successfully subscribed {" "}
-              <span className="text-[#000] text-[10px] md:text-[16px] lg:text-[16px]">
+              <span className="text-[10px] md:text-[16px] lg:text-[16px]">
                 {selectedOptionDstv}{" "}
               </span>
               from your{" "}
@@ -178,7 +182,7 @@ export const DstvReceipt= (Data) => {
               {/* ========================Recipient Info================== */}
               <div className="flex flex-col gap-[5px] w-[90%] mx-auto lg:gap-[10px]">
                 <div className="flex gap-[5px] items-center text-[10px] lg:text-[16px] font-extrabold">
-                  <p>Recipient Info</p>
+                  <p className= {`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>Recipient Info</p>
                   <img
                     className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
                     src="./Images/dashboardImages/arrowright.png"
@@ -186,31 +190,32 @@ export const DstvReceipt= (Data) => {
                   />
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Decoder Type</p>
+                  <p className={` ${isDarkMode ? "text-white" : "text-black"}
+                  `}>Decoder Type</p>
                   <span>Dstv</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Package</p>
+                  <p className={`text-[#0008  ${isDarkMode ? "text-white" : "text-black"}`}>Package</p>
                   <span>{selectedOptionDstv}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Smartcard / IUC Number</p>
+                  <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>Smartcard / IUC Number</p>
                   <span>{dstvSmartCard}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Card Name</p>
+                  <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>Card Name</p>
                   <span>{cardName}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Phone</p>
+                  <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>Phone</p>
                   <span>{dstvMobileNumber}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Email</p>
+                  <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>Email</p>
                   <span>{dstvEmail}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Amount</p>
+                  <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>Amount</p>
                   <span>{`₦${dstvAmount}`}</span>
                 </div>
               </div>
@@ -220,7 +225,7 @@ export const DstvReceipt= (Data) => {
               {/* ===================Sender Info==================== */}
               <div className="flex flex-col gap-[5px] w-[90%] mx-auto lg:gap-[10px]">
                 <div className="flex gap-[5px] items-center text-[10px] lg:text-[16px] font-extrabold">
-                  <p>Sender Info</p>
+                  <p className= {`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>Sender Info</p>
                   <img
                     className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
                     src="./Images/dashboardImages/arrowright.png"
@@ -228,11 +233,11 @@ export const DstvReceipt= (Data) => {
                   />
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Customer Name</p>
+                  <p className= {`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>Customer Name</p>
                   <span>{Data?.aremxyUsername ? Data?.aremxyUsername : ""}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Wallet Type</p>
+              <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>Wallet Type</p>
                   <span>{flagResult}</span>
                 </div>
                 
@@ -242,7 +247,7 @@ export const DstvReceipt= (Data) => {
               {/* ===================Transaction Info==================== */}
               <div className="flex flex-col gap-[5px] w-[90%] mx-auto lg:gap-[10px]">
                 <div className="flex gap-[5px] items-center text-[10px] lg:text-[16px] font-extrabold">
-                  <p>Transaction Info</p>
+                  <p classname= {`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>Transaction Info</p>
                   <img
                     className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
                     src="./Images/dashboardImages/arrowright.png"
@@ -250,19 +255,19 @@ export const DstvReceipt= (Data) => {
                   />
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Product</p>
+                  <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>Product</p>
                   <span>TV Subscriptions</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Description</p>
+                  <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>Description</p>
                   <span>{DstvDescriptionInfo}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Order Number</p>
+                  <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>Order Number</p>
                   <span>{DstvOrderInfo}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between items-center lg:text-[16px]">
-                  <p className="text-[#0008]">Transaction ID</p>
+                  <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>Transaction ID</p>
                   <div className="flex items-center">
                     <span ref={textRef}>
                     {DstvTransactionInfo}
@@ -279,7 +284,8 @@ export const DstvReceipt= (Data) => {
               </div>
             </div>
             <div className="rounded-[8px] bg-[#E2F3FF] mx-4 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
-              <p className="text-[8px] text-center mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[16px]">
+              <p className={`text-[8px] text-center mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[16px]
+                ${isDarkMode ? "text-black" : "text-white"}`}>
                 Earn free points on every successful transactions, redeem your
                 earned points to real money, withdrawn to your bank account
                 instantly.
@@ -292,7 +298,10 @@ export const DstvReceipt= (Data) => {
               onClick={() => {
                 handleShareClick();
               }}
-              className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+              className={`bg-[#04177f] w-[111px] flex justify-center
+                 ${isDarkMode ? "text-white" : "text-black"}
+                 items-center mx-auto cursor-pointer text-[12px] font-extrabold
+                  h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
             >
               Share Receipt
             </button>
@@ -300,7 +309,9 @@ export const DstvReceipt= (Data) => {
               onClick={() => {
                 handleSaveAsPDFClick();
               }}
-              className={`bg-[#ffffff] border-[1px] w-[111px] border-[#0003] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+              className={`bg-[#ffffff]   border-[1px] w-[111px] border-[#0003] flex justify-center items-center 
+                mx-auto cursor-pointer text-[12px] font-extrabold  ${isDarkMode ? " bg-black border-1 border-white" : " bg-[#ffffff]"}
+                h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
             >
               Save as PDF
             </button>

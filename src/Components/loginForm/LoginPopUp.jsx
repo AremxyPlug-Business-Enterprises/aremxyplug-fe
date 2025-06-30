@@ -370,7 +370,7 @@ const handleAccountDetails = async(AuthUsed)=> {
          console.log(twoStepVerificationSuccess)
          if(CheckVirtualAcc){
       navigate("/dashboard");
-       document.cookie = `sessionToken=${AuthUsed}; path=/; max-age=900`;
+      //  document.cookie = `sessionToken=${AuthUsed}; path=/; max-age=900`;
       //   }
          }
   }

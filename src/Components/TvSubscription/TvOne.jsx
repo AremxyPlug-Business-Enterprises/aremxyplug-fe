@@ -111,18 +111,21 @@ const GoTv = () => {
       navigate(path);
     };
     const FailedHandler = async (ErrorType) => {
-      console.log("Error");
+      alert("Error");
       if(ErrorType === "unauthorised"){
+        
        await GetFunction(
         TvPath,
         setIsLoading,
         SuccessHandler,
-        FailedHandler,
+       (ErrorType)=> {
+      if(ErrorType === "unauthorised"){
+      return setSessionModal(true);
+      }
+       },
         fetchedResponse
       );
-      }
-     
-    };
+} };
 
     const SubscriptionPresent = () => {
       if ((fetchedDstvPlans.status === 200 || 201) && id === 2) {
@@ -203,7 +206,12 @@ const GoTv = () => {
             `products/tvsub/gotv`,
             setIsLoading,
             SuccessHandler,
-            failedHandler,
+            (ErrorType)=> {
+             if(ErrorType === "unauthorised"){
+            return setSessionModal(true)
+              }
+            
+            },
             setFetchedGotvPlans
           );
         }
@@ -233,8 +241,10 @@ const GoTv = () => {
             `products/tvsub/gotv`,
             setIsLoading,
             SuccessHandler,
-            ()=> {
-              setSessionModal(true)
+            (ErrorType)=> {
+              if(ErrorType === "unauthorised"){
+             return setSessionModal(true)
+              }
             },
             setFetchedGotvPlans
           );
@@ -254,7 +264,8 @@ const GoTv = () => {
       GetBalance();
       if (GetBalance) {
         setNewBalance(
-          passDataBalance?.data?.data ? passDataBalance?.data?.data?.data?.balance : ""
+          passDataBalance?.data?.data ? 
+          passDataBalance?.data?.data?.data?.balance : ""
         );
       }
     }
@@ -262,15 +273,7 @@ const GoTv = () => {
     //eslint-disable-next-line
   }, []);
 
-  // function waecQuantityDropDown(){
-  //   setQuantityActive(!quantityActive);
-  // document.querySelector('.imgdrop').classList.toggle('DropIt');
-  // }
-
-  // const handleCardName = (e) => {
-  //   const inputValue = e.target.value;
-  //   setCardName(inputValue);
-  // };
+ 
 
   const handleTvEmail = (e) => {
     const inputValue = e.target.value;
@@ -337,13 +340,7 @@ const GoTv = () => {
     const inputValue = e.target.value;
     setMobileNumber(inputValue);
 
-    // const validation = GOTVSchema.validate({ mobileNumber: inputValue });
-
-    // if (validation.error) {
-    //   setGOTVErrorMessage('Incorrect Phone Number..');
-    // } else {
-    //   setGOTVErrorMessage('');
-    // }
+  
   };
 
   const { flagResult, setFlagResult } = useContext(ContextProvider);
@@ -355,7 +352,7 @@ const GoTv = () => {
     document.querySelector(".methodDrop").classList.toggle("DropIt");
   }
   const updateBalance = passDataBalance?.data?.data
-    ? passDataBalance.data.data.data.balance
+    ? passDataBalance?.data?.data?.data?.balance
     : "";
 
   //console.log(passDataBalance);
@@ -370,7 +367,7 @@ const GoTv = () => {
       flag: nigerianFlag,
       id: 1,
     },
-    { method: "USD Wallet ", balance: "(0.00)", flag: americaFlag, id: 2 },
+    { method: "USD Wallet", balance: "(0.00)", flag: americaFlag, id: 2 },
     { method: "EUR Wallet", balance: "(0.00)", flag: britainFlag, id: 3 },
     { method: "GBP Wallet", balance: "(0.00)", flag: euroFlag, id: 4 },
     { method: "AUD Wallet", balance: "(0.00)", flag: austriaFlag, id: 5 },
@@ -397,22 +394,22 @@ const GoTv = () => {
       // Seting the relevant data from the TV subscription response
       setGotvOrderId(
         tvSubscriptionResponse?.data
-          ? tvSubscriptionResponse.data?.order_id
+          ? tvSubscriptionResponse?.data?.order_id
           : ""
       );
       setGotvTransactionId(
         tvSubscriptionResponse?.data
-          ? tvSubscriptionResponse.data?.transcation_id
+          ? tvSubscriptionResponse?.data?.transaction_id
           : ""
       );
       setGotvRequestId(
         tvSubscriptionResponse?.data
-          ? tvSubscriptionResponse.data?.request_id
+          ? tvSubscriptionResponse?.data?.request_id
           : ""
       );
       setGotvDescription(
         tvSubscriptionResponse?.data
-          ? tvSubscriptionResponse.data?.description
+          ? tvSubscriptionResponse?.data?.transaction_description
           : ""
       );
       setCardName(userVerifiedName);
@@ -442,7 +439,6 @@ const GoTv = () => {
         setGotvSuccessful(true);
         setInputPinGotv(false);
         setInputPin("");
-        // handleReceivedData()
       };
       const FailedHandler = () => {
         setFailedPopup(true);
@@ -477,8 +473,8 @@ const GoTv = () => {
   //Function to help Verify users account
   const VerifyUserAccount = async (UserTvSubscription) => {
     setGotvVerifyResponse({});
-    if (
-      UserTvSubscription?.length === 10 &&
+    
+    if ( UserTvSubscription?.length === 10 &&
       UserTvSubscription !== "" &&
       UserTvSubscription !== null &&
       UserTvSubscription !== undefined
@@ -487,25 +483,35 @@ const GoTv = () => {
         decoder_type: decoderType.toLowerCase(),
         iuc_number: UserTvSubscription,
       };
-      const bodyToJson = JSON.stringify(body);
+        const bodyToJson = JSON.stringify(body);
+      const SuccessHandler =   () => {
+          console.log("Succesfully verified tv subscription account.");
+          setSmartCard(UserTvSubscription);
+      }
+      const FailedHandler = async(ErrorType)=> {
+      if(ErrorType === "unauthorised"){
+           await PostFunction(
+        "bills/verify",
+        setGotvLoading,
+        bodyToJson,
+       SuccessHandler,
+       (ErrorType)=> {
+        if(ErrorType === "unauthorised"){
+        return setSessionModal(true)
+        }
+        },
+        setGotvVerifyResponse
+      );
+      }
+        
+      }
+    
       await PostFunction(
         "bills/verify",
         setGotvLoading,
         bodyToJson,
-        () => {
-          console.log("Succesfully verified tv subscription account.");
-          setSmartCard(UserTvSubscription);
-          //   setIsLoading(true)
-          //console.log(gotvVerifyResponse?.data?.name);
-          // if(gotvVerifyResponse?.data?.name?.length < 1){
-          //   setStateInvalidDecoderNumber(true)
-          // }else{
-          //   setStateInvalidDecoderNumber(false);
-          // }
-        },
-        () => {
-          console.log("Failed to verify tv subscription account.");
-        },
+       SuccessHandler,
+       FailedHandler,
         setGotvVerifyResponse
       );
     }
@@ -517,7 +523,7 @@ const GoTv = () => {
     await VerifyUserAccount(inputValue);
   };
 
-  const ExitTheDoneButton = () => {
+  const ReceiptButton = () => {
     setTvEmail("");
     setMobileNumber("");
     setSmartCard("");
@@ -529,8 +535,22 @@ const GoTv = () => {
     setTvWalletBalance("");
     setFailedPopup(false);
     handleReceivedData();
-    //navigate("/DsTv");
+   
   };
+  const ExitTheDoneButton = () => {
+    setTvEmail("");
+    setMobileNumber("");
+    setSmartCard("");
+    setTvAmount("");
+    setSelectedOptionGOTV("");
+    setPackageGotv("");
+    setDecoderType("");
+    setFlagResult("");
+    setTvWalletBalance("");
+    setFailedPopup(false);
+    navigate("/GoTv");
+  };
+
   return (
     <div>
       <DashBoardLayout>
@@ -884,7 +904,7 @@ const GoTv = () => {
                       className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px]  sm:p-3 sm:text-lg flex items-center justify-between border-[0.23px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px]  ${
                         isDarkMode
                           ? "bg-black text-white border border-white"
-                          : "border-[#9C9C9C] "
+                          : "border-[#9C9C9C]"
                       }`}
                     >
                       <p className="font-[500] text-[13px] leading-[10.4px] md:text-[12px] md:leading-[12.206px] lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px] cursor-pointer">
@@ -898,7 +918,8 @@ const GoTv = () => {
                     </div>
                     {methodPayment && (
                       <div
-                        className={`absolute top-[102%] z-0 flex flex-col w-[100%]  cursor-pointer  ${
+                        className={`absolute top-[102%] z-0 flex flex-col w-[100%]  
+                          cursor-pointer border-[1px] border-gray-100 rounded-[3px]  ${
                           isDarkMode
                             ? "bg-black text-white border border-white"
                             : "bg-white"
@@ -909,27 +930,30 @@ const GoTv = () => {
                             <div
                               onClick={(e) => {
                                 //onchange = { setMethodOptions }
-                                setFlagResult(methodOption.id === 1 ?
-                                  methodOption.method : ""
-                                );
-                          setTvWalletBalance( methodOption.id === 1 ? methodOption.balance : "")
-                          setMethodImage(methodOption.id === 1 ? methodOption.flag : arrowDown);
+                                setFlagResult(methodOption.id === 1 ? methodOption.method : (flagResult === "NGN Wallet" && methodOption.id !== 1 ) ? "NGN Wallet" : "");
+                          setTvWalletBalance(methodOption.id === 1   ? 
+                            methodOption.balance : flagResult === "NGN Wallet" ?
+                            ( newBalance === "" || newBalance === null ? `(${updateBalance})` :
+                               `(${newBalance})`) : "");
+                          setMethodImage(methodOption.id === 1 ? methodOption.flag : methodImage);
                                 setMethodPayment(false);
-                                document
-                                  .querySelector(".methodDrop")
-                                  .classList.remove("DropIt");
+                               setMethodPayment(()=> {
+                            if(methodOption.id === 1){
+                            setMethodPayment(false)
+                             document.querySelector('.methodDrop').classList.remove('DropIt');
+                            }else{
+                              setMethodPayment(true);
+                                document.querySelector('.methodDrop').classList.add('DropIt');
+                            }
+                          });
                               }}
                               className={`flex gap-[10px] lg:py-[15px] 
                                 py-[10px] pl-[10px]  pb-[20px] pt-[20px] md:pb-0 md:pt-0
-        cursor-pointer  items-center  ${methodOption.id === 1 ? "bg-white" : "bg-gray-300"}
-         ${
-           isDarkMode
-             ? "bg-black text-white border border-white"
-             :`hover:bg-[#EDEAEA] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] bg-white`
-            
-         }`}
-                              key={methodOption.id}
-                            >
+                              border-b-[1px] border-b-gray-400
+        cursor-pointer  items-center  ${methodOption.id  !== 1 && !isDarkMode  ? "bg-gray-300 cursor-not-allowed" : 
+            methodOption.id !== 1 && isDarkMode ? "bg-black" : methodOption.id === 1 && !isDarkMode ? "bg-white" : "bg-black" }
+                  `}
+             key={methodOption.id}>
                               <img
                                 className="md:h-[29.27px]  h-[14.27px]"
                                 src={methodOption.flag}
@@ -1034,7 +1058,7 @@ const GoTv = () => {
               </p>
               <div className="flex gap-[10px] justify-between w-full px-[10px]">
                 <button
-                  onClick={() => setFailedPopup(false)}
+                  onClick={() => ExitTheDoneButton()}
                   className="bg-[#04177f] w-[50%] max-w-xs mx-auto py-2
            text-white rounded-md font-medium"
                 >
@@ -1042,7 +1066,7 @@ const GoTv = () => {
                 </button>
                 <button
                   onClick={() => {
-                    ExitTheDoneButton();
+                    ReceiptButton();
                   }}
                   className="w-[50%] bg-white max-w-xs mx-auto py-2 text-blue-900
            rounded-md font-medium"

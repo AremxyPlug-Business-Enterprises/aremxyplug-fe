@@ -31,6 +31,7 @@ import { GetFunction } from "../../../../../ApiCollection.jsx/ApiBuck";
 
 
 
+
 const GloDataBundle = () => {
   const { isDarkMode, newBalance } = useContext(ContextProvider);
   const { selectedOptionGlo,
@@ -89,7 +90,7 @@ const [balanceStatus,setBalanceStatus ] = useState("");
    const [gloReceiptInfo, setGloReceiptInfo] = useState("");
 
               let gloDataAmount = Number(selectedAmountGlo.replace(/\D/g, ""));
-              let updateBalance = passDataBalance.data ? passDataBalance.data.data.data.balance : "";
+              let updateBalance = passDataBalance?.data ? passDataBalance?.data?.data?.data?.balance : "";
               const cleanUpBalanceToNumeric = Number(updateBalance.replace(/\D/, ""));
              let CheckSufficiency =  gloDataAmount > (newBalance === "" || newBalance === null) ? cleanUpBalanceToNumeric : balanceStringToNum;
              
@@ -139,8 +140,8 @@ const [balanceStatus,setBalanceStatus ] = useState("");
         `/products/telecom/${productId}`
       );
         if(response.status === 200){
-      setProductPlans(response.data.data.plans || []);
-      if(response && (response.data.data.plan === null || response.data.data?.length < 1 )){
+      setProductPlans(response?.data?.data?.plans || []);
+      if(response && (response?.data?.data?.plan === null || response?.data?.data?.length < 1 )){
             setSelectProductWarn(true);
         }
         }
@@ -175,9 +176,9 @@ const [balanceStatus,setBalanceStatus ] = useState("");
   };
 
   const handleSelectOption = (plan) => {
-    setSelectedOptionGlo(`${plan.Size} ~ ${plan.Validity} ~ ₦${plan.Amount}`);
-    setSelectedAmountGlo(`₦${plan.Amount}`);
-    setGloReceiptInfo(plan.PlanType + " " + plan.Size);
+    setSelectedOptionGlo(`${plan?.Size} ~ ${plan?.Validity} ~ ₦${plan?.Amount}`);
+    setSelectedAmountGlo(`₦${plan?.Amount}`);
+    setGloReceiptInfo(plan?.PlanType + " " + plan?.Size);
     setSelectedPlan(plan);
     setShowOptionList(false);
     setShowProductList(false);
@@ -274,7 +275,7 @@ const [balanceStatus,setBalanceStatus ] = useState("");
       if(newBalance === "" || newBalance === null || newBalance === undefined){
          GetBalance();
          if(GetBalance){
-          setNewBalance(passDataBalance.data ? passDataBalance.data.data.data.balance : "");
+          setNewBalance(passDataBalance?.data ? passDataBalance?.data?.data?.data?.balance : "");
          }
       }
      //eslint-disable-next-line
@@ -292,9 +293,9 @@ const [balanceStatus,setBalanceStatus ] = useState("");
          <div className={` ${airtimestyles.netImage}`}>
            <img src={flag} alt="" className={airtimestyles.NoImage} />
          </div>
-         <h2 className={`font-[500] text-[#7C7C7C] text-[8px] leading-[10.4px]
+         <h2 className={`font-[500] text-[#7C7C7C] text-[12px] leading-[16.4px]
              lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>{code}</h2>
-         <p className={`font-[500] text-[#7C7C7C] text-[8px] leading-[10.4px]
+         <p className={`font-[500] text-[#7C7C7C] text-[12px] leading-[16.4px]
              lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
            Wallet({amount.toLocaleString()})
          </p>
@@ -451,17 +452,17 @@ const [balanceStatus,setBalanceStatus ] = useState("");
         console.log(response.data);
         console.log(response.status);
 
-        const resData = response.data.data.data; // Accessing the nested `data` object
+        const resData = response?.data?.data?.data; // Accessing the nested `data` object
 
         console.log(response.status);
-        setPlan(resData.plan_name);
-        console.log(resData.plan_name);
-        setGloTransactionID(resData.transaction_id);
+        setPlan(resData?.plan_name);
+        console.log(resData?.plan_name);
+        setGloTransactionID(resData?.transaction_id);
         console.log(resData.transaction_id);
 
-        setGloRefNumber(resData.reference_number);
-        console.log(resData.reference_number);
-       setGloOrderID(resData.order_id)
+        setGloRefNumber(resData?.reference_number);
+        console.log(resData?.reference_number);
+       setGloOrderID(resData?.order_id)
 
         // No `order_id`, using `id` instead
      
@@ -703,7 +704,7 @@ const [balanceStatus,setBalanceStatus ] = useState("");
           <div className="grid grid-cols-1 mt-[25px] md:grid-cols-2 gap-y-[20px] md:gap-x-[58.68px] lg:gap-x-[100px] md:gap-y-[15px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[20px]">
             <div className="flex flex-col lg:gap-[12px] gap-[7px]">
               <h2 className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[14px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${isDarkMode
-                ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                ? "!text-[#7E7E7E]" : "text-[#7E7E7E]"
                 }`}>
                 Select Product
               </h2>
@@ -732,16 +733,18 @@ const [balanceStatus,setBalanceStatus ] = useState("");
               </div>
                <div className="relative">
               {showProductList && (
-                <div className="border md:rounded-[10px] text-[10px] md:text-[12px]
+                <div className={`border md:rounded-[10px] text-[10px] md:text-[12px]
                  lg:text-[16px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF]
-                  z-[10]">
+                 bvnQuery shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
+                   ${products.length > 1 ? "overflow-y-scroll h-[300px]" : "h-[0px]"}
+                  z-[10]`}>
                   {loadingProducts ? (
                     <div>Loading products...</div>
                   ) : (
                     products.map((product) => (
                       <div
                         key={product.Product_ID}
-                        className={`pb-[15px] md:pb-[6px] ${products.length > 1 ? "overflow-y-scroll h-[300px]" : "h-[0px]"} 
+                        className={`pb-[15px] md:pb-[6px]   
                           font-weight-bold text-[13px] cursor-pointer border-b-[0.5px] text-[#7C7C7C]
                            md:text-[12px] lg:text-[16px]  md:rounded-[0px] lg:mt-2 py-[4px]
                            pl-[5px] ${selectedProductGlo === product.Plan_Type ? "" : ""}
@@ -817,6 +820,7 @@ const [balanceStatus,setBalanceStatus ] = useState("");
         <div className="relative">
               {showOptionList && (
                 <div className={`border md:rounded-[10px] lg:mt-2  
+                   bvnQuery shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
                    ${productPlans.length > 1 ? "overflow-y-scroll h-[300px]" : "h-[0px]"}
                   rounded-[4px] absolute w-full bg-[#FFF] z-[100]
                         ${isDarkMode
@@ -833,7 +837,7 @@ const [balanceStatus,setBalanceStatus ] = useState("");
                         className={`pb-[18px] md:pb-[6px] pt-[18px]
                            md:pt-[6px] font-weight-bold text-[13px] cursor-pointer 
                            border-b-[0.5px] md:rounded-[0px] text-[#7C7C7C] 
-                           md:text-[12px] lg:text-[16px] lg:mt-2 py-[4px] text-[10px]
+                           md:text-[12px] lg:text-[16px] lg:mt-2 py-[4px]
                             pl-[5px] ${selectedOptionGlo === plan.PlanID ? "bg-gray-200" : ""
                           }
                                                 ${isDarkMode

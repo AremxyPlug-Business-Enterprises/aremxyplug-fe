@@ -24,6 +24,7 @@ import {PostFunction} from "../../Components/ApiCollection.jsx/ApiBuck"
 import { useNavigate } from "react-router-dom";
 import { GetFunction } from "../ApiCollection.jsx/ApiBuck";
 import { BalanceLoading } from "../Loader/Loader";
+import { HandleUserSession } from "../../Components/ApiCollection.jsx/ApiBuck";
 
 const DsTv = () => {
 
@@ -33,8 +34,6 @@ const DsTv = () => {
    setSelectedOptionDstv,
     showDropdownDstv,
     setShowDropdownDstv,
-    setCardName,
-    cardName,
     dstvEmail,
     setDstvEmail,
     dstvSmartCard,
@@ -85,7 +84,8 @@ const DsTv = () => {
      const [passDataBalance, setPassDataBalance] = useState({});
      const [dstvVerifyResponse, setDstvVerifyResponse] = useState({});
      const [dstvLoading, setDstvLoading] = useState(false);
-     const [stateInvalidDecoderNumber, setStateInvalidDecoderNumber] = useState(false)
+     const [stateInvalidDecoderNumber, setStateInvalidDecoderNumber] = useState(false);
+     const [sessionModal, setSessionModal] = useState(false);
       const navigate = useNavigate();
   
 
@@ -101,7 +101,7 @@ const DsTv = () => {
         { decoderType :'Showmax', path : "/Showmax", id : 4 }
          ]
     
-const ExitTheDoneButton = ()=> {
+const ReceiptButton = ()=> {
       setDstvEmail("")
    setDstvMobileNumber("")
    setDstvSmartCard("");
@@ -114,6 +114,20 @@ const ExitTheDoneButton = ()=> {
     setFailedPopup(false);
     handleReceivedData();
    //navigate("/DsTv");
+  }
+
+  const ExitTheDoneButton = ()=> {
+      setDstvEmail("")
+   setDstvMobileNumber("")
+   setDstvSmartCard("");
+   setDstvAmount("");
+   setSelectedOptionDstv("");
+   setPackageDstv("");
+   setDstvDecoderType("")
+    setFlagResult("");
+    setDstvWalletBalance("");
+    setFailedPopup(false);
+     navigate("/DsTv");
   }
 
   
@@ -159,9 +173,20 @@ const ExitTheDoneButton = ()=> {
    const SuccessHandler = ()=> {
     navigate(path);
    };
-   const FailedHandler = async()=> {
+   const FailedHandler = async(ErrorType)=> {
     console.log("Error");
-     await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse)
+    if(ErrorType === "unauthorised"){
+      await GetFunction(TvPath,
+         setIsLoading,
+          SuccessHandler,
+           (ErrorType)=> {
+            if(ErrorType === "unauthorised"){
+             return setSessionModal(true);
+            }
+           }, 
+           fetchedResponse)
+    }
+    
    };
    const SubscriptionPresent =()=> {
     if((fetchedStarTimesPlans.status === 200 || fetchedStarTimesPlans.status ===  201) && id === 2){
@@ -201,14 +226,26 @@ const DstvOptionalPlan = dstvData?.length < 1 && fetchedDstvPlans.status === 200
           const SuccessHandler = ()=> {
     console.log("Successfully fetched dstv plans");
    }
-     const failedHandler = async()=> {
-    console.log("Couldn't fetch dstv plans");
-    await GetFunction(`products/tvsub/dstv`, setIsLoading, SuccessHandler, failedHandler, setFetchedDstvPlans);
-    }
+     const failedHandler = async(ErrorType)=> {
+      if(ErrorType === "unauthorised"){
+    await GetFunction(`products/tvsub/dstv`, 
+      setIsLoading,
+       SuccessHandler,
+        (ErrorType)=> {
+          if(ErrorType === "unauthorised"){
+            return setSessionModal(true)
+          }
+      },
+         setFetchedDstvPlans);
+      }
+     }
       
- await GetFunction(`products/tvsub/dstv`, setIsLoading, SuccessHandler, failedHandler, setFetchedDstvPlans);
-
-  }
+ await GetFunction(`products/tvsub/dstv`, 
+  setIsLoading, 
+  SuccessHandler,
+   failedHandler,
+    setFetchedDstvPlans);
+}
 RetrieveGotvPlans()
 }
  const GetBalance =   async()=> {
@@ -217,9 +254,20 @@ RetrieveGotvPlans()
                  console.log("successfully retrieved balance");
                  //alert("Successful")
                    }
-                  const FailedHandler = async()=> {
+                  const FailedHandler = async(ErrorType)=> {
                     console.log(`Failed to retrieve balance`)
-                    await GetFunction("balance", setIsLoading, SuccessHandler, FailedHandler,setPassDataBalance)
+                    if(ErrorType === "unauthorised"){
+                    await GetFunction("balance", 
+                      setIsLoading, 
+                      SuccessHandler,
+                      (ErrorType)=> {
+                        if(ErrorType === "unauthorised"){
+                      return setSessionModal(true)
+                        }
+                     },
+                       setPassDataBalance)
+                    }
+                  
                   }
                   await GetFunction("balance", setIsLoading, SuccessHandler, FailedHandler,setPassDataBalance)
                     } 
@@ -306,10 +354,10 @@ const [errorFillDecoder, setErrorFillDecoder] = useState(false);
   setIsLoading(true);
   const receivedData = () => {
     // Seting the relevant data from the TV subscription response
-    setDstvOrderId(dstvSubscriptionResponse?.data ? dstvSubscriptionResponse.data.order_id : "");
-    setDstvTransactionId(dstvSubscriptionResponse?.data ?  dstvSubscriptionResponse.data.transcation_id : "");
-    setDstvRequestId(dstvSubscriptionResponse?.data ?  dstvSubscriptionResponse.data.request_id : "");
-    setDstvDescription(dstvSubscriptionResponse?.data ? dstvSubscriptionResponse.data.description : "");
+    setDstvOrderId(dstvSubscriptionResponse?.data ? dstvSubscriptionResponse?.data?.order_id : "");
+    setDstvTransactionId(dstvSubscriptionResponse?.data ?  dstvSubscriptionResponse?.data?.transaction_id : "");
+    setDstvRequestId(dstvSubscriptionResponse?.data ?  dstvSubscriptionResponse?.data?.request_id : "");
+    setDstvDescription(dstvSubscriptionResponse?.data ? dstvSubscriptionResponse?.data?.transaction_description : "");
   };
 
   receivedData();
@@ -370,23 +418,38 @@ const VerifyPinHandler = async () => {
 //Function to help Verify users account
 const VerifyUserAccount = async(UserTvSubscription)=> {
  setDstvVerifyResponse({});
+  const body = {
+       decoder_type : dstvDecoderType.toLowerCase(),
+       iuc_number : UserTvSubscription
+        }
+        const bodyToJson = JSON.stringify(body)
+ const SuccessHandler = ()=> {
+  console.log("Succesfully verified tv subscription account.");
+setDstvSmartCard(UserTvSubscription);
+}
+const FailedHandler = async(ErrorType)=> {
+if(ErrorType === "unauthorised"){
+   await PostFunction("bills/verify",
+     setDstvLoading, 
+     bodyToJson, 
+     SuccessHandler,
+     (ErrorType)=> {
+      if(ErrorType === "unauthorised"){
+return setSessionModal(true);
+      }
+   })
+  }
+
+}
    if(UserTvSubscription?.length === 10 && 
     (UserTvSubscription !== "" && 
       UserTvSubscription !== null && 
       UserTvSubscription !== undefined)){
-        const body = {
-           decoder_type : dstvDecoderType.toLowerCase(),
-          iuc_number : UserTvSubscription
-        }
-        const bodyToJson = JSON.stringify(body)
-await PostFunction("bills/verify", setDstvLoading, bodyToJson, ()=> {
-  console.log("Succesfully verified tv subscription account.");
-  setDstvSmartCard(UserTvSubscription);
-
-  
-}, ()=> {
-  console.log("Failed to verify tv subscription account.")
-}, setDstvVerifyResponse )
+       await PostFunction("bills/verify", setDstvLoading, 
+  bodyToJson,
+  SuccessHandler, 
+  FailedHandler,
+   setDstvVerifyResponse)
 }
 }
 //console.log(userVerifiedName)
@@ -435,7 +498,7 @@ await PostFunction("bills/verify", setDstvLoading, bodyToJson, ()=> {
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[14px] lg:text-[17px] md:text-[13px md:font-[600] font-[400]">
                 Confirm Decoder Type</label>
                 <div className="flex flex-col gap-[5px] lg:gap-[10px]">
-              <div onClick={decoderDropdown} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] p-4 sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400]  leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
+              <div onClick={decoderDropdown} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px]  sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400]  leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px]  self-center" onClick={decoderDropdown} ${
       isDarkMode 
         ? "bg-black text-white border border-white" 
@@ -494,7 +557,7 @@ await PostFunction("bills/verify", setDstvLoading, bodyToJson, ()=> {
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px md:font-[600] font-[400]">
                 Select Package</label>
 
-              <div onClick={packageDropdown} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
+              <div onClick={packageDropdown} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center" onClick={packageDropdown} ${
       isDarkMode 
         ? "bg-black text-white border border-white" 
@@ -603,7 +666,7 @@ await PostFunction("bills/verify", setDstvLoading, bodyToJson, ()=> {
                   }
                 
                    })}
-                type="tel" maxLength={11} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
+                type="tel" maxLength={11} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center ${
       isDarkMode 
         ? "bg-black text-white border border-white" 
@@ -615,7 +678,7 @@ await PostFunction("bills/verify", setDstvLoading, bodyToJson, ()=> {
             <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
               <label htmlFor="Email" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px font-[400] md:font-[600]">
                 Email</label>
-              <input type="email" onChange={handleTvEmail} placeholder="example@gmail.com" required className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[14px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400]  leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
+              <input type="email" onChange={handleTvEmail} placeholder="example@gmail.com" required className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[14px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400]  leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
       isDarkMode 
       ? "bg-black text-white border border-white" 
@@ -634,7 +697,7 @@ await PostFunction("bills/verify", setDstvLoading, bodyToJson, ()=> {
 
               <input
                 type="text"
-                className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] p-4 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[500]  leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] 
+                className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[500]  leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] 
                 lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px] self-center ${
                   isDarkMode 
                   ? "bg-black text-white border border-white" 
@@ -648,7 +711,7 @@ await PostFunction("bills/verify", setDstvLoading, bodyToJson, ()=> {
             <div className="flex relative flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px font-[400] md:font-[600]">
                 Payment Method</label>
-              <div onClick={methodDropDown} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg flex items-center justify-between border-[0.23px] lg:border-[0.4px] w-full h-[30px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] border-[#9C9C9C] ${
+              <div onClick={methodDropDown} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] sm:p-3 sm:text-lg flex items-center justify-between border-[0.23px] lg:border-[0.4px] w-full h-[30px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] border-[#9C9C9C] ${
                     isDarkMode 
                     ? "bg-black text-white border border-white" 
                     : "hover:bg-[#EDEAEA] border-[#9C9C9C] text-[#7C7C7C] "
@@ -671,34 +734,39 @@ await PostFunction("bills/verify", setDstvLoading, bodyToJson, ()=> {
                     return (
                       <div
                         onClick={(e => {
-                          setFlagResult(methodOption.id === 1 ?
-                                  methodOption.method : ""
-                                );
-                          setDstvWalletBalance( methodOption.id === 1 ? methodOption.balance : "")
-                          setMethodImage(methodOption.id === 1 ? methodOption.flag : arrowDown);
-                          setMethodPayment(false);
-                          document.querySelector('.methodDrop').classList.remove('DropIt');
+                           setFlagResult(methodOption.id === 1 ? methodOption.method : (flagResult === "NGN Wallet" && methodOption.id !== 1 ) ? "NGN Wallet" : "");
+                          setDstvWalletBalance(methodOption.id === 1   ? 
+                            methodOption.balance : flagResult === "NGN Wallet" ?
+                            ( newBalance === "" || newBalance === null ? `(${updateBalance})` :
+                               `(${newBalance})`) : "");
+                          setMethodImage(methodOption.id === 1 ? methodOption.flag : methodImage);
+                                setMethodPayment(false);
+                               setMethodPayment(()=> {
+                            if(methodOption.id === 1){
+                            setMethodPayment(false)
+                             document.querySelector('.methodDrop').classList.remove('DropIt');
+                            }else{
+                              setMethodPayment(true);
+                                document.querySelector('.methodDrop').classList.add('DropIt');
+                            }
+                          });
                         })}
                         className={`pb-[20px] pt-[20px] md:pb-0 md:pt-0 flex gap-[10px] lg:py-[15px] py-[10px] pl-[10px]
-                           ${methodOption.id === 1 ? "bg-white" : "bg-gray-300"}
-        cursor-pointer  items-center 
-        shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]  ${
-                    isDarkMode 
-        ? "bg-black text-white border border-white" 
-        : "bg-white hover:bg-[#EDEAEA]"
-                  }`}
+        cursor-pointer  items-center shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]  
+
+           ${methodOption.id !== 1 && !isDarkMode  ? "bg-gray-300 cursor-not-allowed" : 
+            methodOption.id !== 1 && isDarkMode ? "bg-black" : methodOption.id === 1 && !isDarkMode ? "bg-white" : "bg-black" }
+                  `}
                         key={methodOption.id}>
+ <img className='md:h-[29.27px]  h-[14.27px]' src={methodOption.flag} alt="" />
 
-                        <img className='md:h-[29.27px]  h-[14.27px]' src={methodOption.flag} alt="" />
-
-                        <h2
-                          className={`text-[13px] leading-[10.4px]
+         <h2 className={`text-[13px] leading-[10.4px]
                font-[500] text-[#7C7C7C]  
          md:text-[13.227px] md:leading-[17.195px]  
          lg:text-[16px] lg:leading-[20.8px] self-center cursor-pointer ${
           isDarkMode 
-? "bg-black text-white" 
-: "bg-white hover:bg-[#EDEAEA]"
+? " text-white" 
+: " hover:bg-[#EDEAEA]"
         }`} >
                           {methodOption.method + ' ' + methodOption.balance}
                         </h2>
@@ -766,14 +834,14 @@ await PostFunction("bills/verify", setDstvLoading, bodyToJson, ()=> {
            </p>
              <div className="flex gap-[10px] justify-between w-full px-[10px]">
         <button
-          onClick={() => setFailedPopup(false)}
+          onClick={() => ExitTheDoneButton()}
           className="bg-[#04177f] w-[50%] max-w-xs mx-auto py-2
            text-white rounded-md font-medium">
           Done
         </button>
            <button
           onClick={() =>{
-              ExitTheDoneButton()
+              ReceiptButton()
               
           }}
           className="w-[50%] bg-white max-w-xs mx-auto py-2 text-blue-900
@@ -793,6 +861,9 @@ await PostFunction("bills/verify", setDstvLoading, bodyToJson, ()=> {
    
               </Modal>
          ) } 
+         {sessionModal && (
+          <HandleUserSession/>
+         )}
     </div>
   )
 }

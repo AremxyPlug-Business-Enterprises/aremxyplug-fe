@@ -310,8 +310,7 @@ export default function IdVerification(Data) {
                                  lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none ${
                                      isDarkMode ? "bg-black  border-slate-50" : "bg-white"
                                    }`}>
-                                      <img className=" md:h-[20.27px]  h-[14.27px]
-                                  "
+                                      <img className=" md:h-[20.27px]  h-[14.27px]"
                                  src={countryImage} alt="Country flag" />
                                  <p className={`text-[12px] leading-[18px] 
                                   lg:text-[16px] lg:leading-[20.8px] ${
