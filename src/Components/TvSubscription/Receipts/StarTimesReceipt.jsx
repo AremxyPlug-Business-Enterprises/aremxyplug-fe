@@ -143,7 +143,8 @@ export const StarTimesReceipt= (Data) => {
           <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
           <div ref={contentRef}>
             {" "}
-            <h3 className="font-extrabold text-[12px] my-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
+            <h3 className={`font-extrabold text-[12px] my-[2%] text-center
+             md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%] ${isDarkMode ? "text-white" : "text-black"}`}>
               Transaction Receipt
             </h3>
             <div className="w-full flex justify-center ">
@@ -156,7 +157,8 @@ export const StarTimesReceipt= (Data) => {
             <h3 className="font-extrabold text-[12px] mt-[2%] text-center md:text-[20px] md:my-[7px] lg:text-[16px] lg:my-[10px]">
             Purchase Successful on
             </h3>
-            <span className="text-[11px] text-[#0008] font-extrabold flex justify-center items-center">
+            <span className={`text-[11px] text-[#0008] font-extrabold flex 
+              justify-center items-center ${isDarkMode ? "text-white" : "text-black"}`}>
               {date.toLocaleDateString(undefined, {
                 year: "numeric",
                 month: "long",
@@ -167,9 +169,10 @@ export const StarTimesReceipt= (Data) => {
                 hour12: true,
               })}
             </span>
-            <p className=" pt-2 md:pt-4 text-[9px] text-[#0008] font-bold text-center my-2 md:text-[14px] lg:text-[14px]">
+            <p className={`pt-2 md:pt-4 text-[9px] text-[#0008] font-bold 
+            text-center my-2 md:text-[14px] lg:text-[14px] ${isDarkMode ? "text-white" : "text-black"}`}>
             You have successfully subscribed {" "}
-              <span className="text-[#000] text-[10px] md:text-[16px] lg:text-[16px]">
+              <span className= {`text-[#000] text-[10px] md:text-[16px] lg:text-[16px] ${isDarkMode ? "text-white" : "text-black"}`} >
                 {selectedOptionStarTimes}{" "}
               </span>
               from your{" "}
@@ -179,7 +182,7 @@ export const StarTimesReceipt= (Data) => {
               {/* ========================Recipient Info================== */}
               <div className="flex flex-col gap-[5px] w-[90%] mx-auto lg:gap-[10px]">
                 <div className="flex gap-[5px] items-center text-[10px] lg:text-[16px] font-extrabold">
-                  <p>Recipient Info</p>
+                  <p className ={`${isDarkMode ? "text-white" : "text-black"}`}>Recipient Info</p>
                   <img
                     className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
                     src="./Images/dashboardImages/arrowright.png"
@@ -187,31 +190,31 @@ export const StarTimesReceipt= (Data) => {
                   />
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Decoder Type</p>
+                  <p className={`${isDarkMode ? "text-white" : "text-black"}`}>Decoder Type</p>
                   <span>StarTimes</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Package</p>
+                  <p className={`${isDarkMode ? "text-white" : "text-black"}`}>Package</p>
                   <span>{selectedOptionStarTimes}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Smartcard / IUC Number</p>
+                  <p className={`${isDarkMode ? "text-white" : "text-black"}`}>Smartcard / IUC Number</p>
                   <span>{starTimesSmartCard}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Card Name</p>
+                  <p className={`${isDarkMode ? "text-white" : "text-black"}`}>Card Name</p>
                   <span>{cardName}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Phone</p>
+                  <p className={`${isDarkMode ? "text-white" : "text-black"}`}>Phone</p>
                   <span>{starTimesMobileNumber}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Email</p>
+                  <p className={`${isDarkMode ? "text-white" : "text-black"}`}>Email</p>
                   <span>{starTimesEmail}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Amount</p>
+                  <p className={`${isDarkMode ? "text-white" : "text-black"}`}>Amount</p>
                   <span>{`₦ ${starTimesAmount}`}</span>
                 </div>
               </div>
@@ -221,7 +224,7 @@ export const StarTimesReceipt= (Data) => {
               {/* ===================Sender Info==================== */}
               <div className="flex flex-col gap-[5px] w-[90%] mx-auto lg:gap-[10px]">
                 <div className="flex gap-[5px] items-center text-[10px] lg:text-[16px] font-extrabold">
-                  <p>Sender Info</p>
+                  <p className={`${isDarkMode ? "text-white" : "text-black"}`}>Sender Info</p>
                   <img
                     className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
                     src="./Images/dashboardImages/arrowright.png"
@@ -229,11 +232,11 @@ export const StarTimesReceipt= (Data) => {
                   />
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Customer Name</p>
+                  <p className={`${isDarkMode ? "text-white" : "text-black"}`}>Customer Name</p>
                   <span>{Data?.aremxyUsername ? Data?.aremxyUsername : ""}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Wallet Type</p>
+                  <p className={`${isDarkMode ? "text-white" : "text-black"}`}>Wallet Type</p>
                   <span>{flagResult}</span>
                 </div>
                 
@@ -243,7 +246,7 @@ export const StarTimesReceipt= (Data) => {
               {/* ===================Transaction Info==================== */}
               <div className="flex flex-col gap-[5px] w-[90%] mx-auto lg:gap-[10px]">
                 <div className="flex gap-[5px] items-center text-[10px] lg:text-[16px] font-extrabold">
-                  <p>Transaction Info</p>
+                  <p className= {`${isDarkMode ? "text-white" : "text-black"}`}>Transaction Info</p>
                   <img
                     className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
                     src="./Images/dashboardImages/arrowright.png"
@@ -251,19 +254,19 @@ export const StarTimesReceipt= (Data) => {
                   />
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Product</p>
+                  <p className={`${isDarkMode ? "text-white" : "text-black"}`}>Product</p>
                   <span>TV Subscriptions</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Description</p>
+                  <p className={`${isDarkMode ? "text-white" : "text-black"}`}>Description</p>
                   <span>{StarTimesDescriptionInfo}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Order Number</p>
+                  <p className={`${isDarkMode ? "text-white" : "text-black"}`}>Order Number</p>
                   <span>{StarTimesOrderInfo}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between items-center lg:text-[16px]">
-                  <p className="text-[#0008]">Transaction ID</p>
+                  <p className={`${isDarkMode ? "text-white" : "text-black"}`}>Transaction ID</p>
                   <div className="flex items-center">
                     <span ref={textRef}>
                      {StarTimesTransactionInfo}
@@ -279,8 +282,9 @@ export const StarTimesReceipt= (Data) => {
                 
               </div>
             </div>
-            <div className="rounded-[8px] bg-[#E2F3FF] mx-4 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
-              <p className="text-[8px] text-center mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[16px]">
+            <div className="rounded-[8px] text-black bg-[#E2F3FF] mx-4 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
+              <p className={`text-[8px] text-center mx-auto w-[200px] md:text-[14px] 
+              md:w-[80%] lg:text-[16px] `}>
                 Earn free points on every successful transactions, redeem your
                 earned points to real money, withdrawn to your bank account
                 instantly.

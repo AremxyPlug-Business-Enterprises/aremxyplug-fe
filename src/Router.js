@@ -695,7 +695,12 @@ export const Router = () => {
           <DataBundleAddRecipient />
           </ProtectedRoute>}
         />
-        <Route path="/TvSubscription" element={<TvSubscription />} />
+        <Route path="/TvSubscription" element={
+          <ProtectedRoute>
+            <TvSubscription />
+            </ProtectedRoute>
+          
+          } />
         <Route path="/GoTv" element={
           <ProtectedRoute>
           <GoTv />

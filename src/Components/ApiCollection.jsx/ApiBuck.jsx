@@ -3,7 +3,6 @@ import { SetLocalStorage } from '../LocalStorage/LocalStorage';
 import { RemoveLocalStorage } from '../LocalStorage/LocalStorage';
 import axios from 'axios';
 import { Modal } from '../Screens/Modal/Modal';
-import { Navigate } from 'react-router-dom';
 
 //To set the different states for  virtual account
 
@@ -64,7 +63,7 @@ if(bank_name.length > 1 ){
  }
   }
 
-  // A reusable component to handke user session management.
+  // A reusable component to handle user session management.
   export const HandleUserSession = ()=> {
   return (
    
@@ -74,27 +73,27 @@ if(bank_name.length > 1 ){
             <div className ="flex flex-col justify-center items-center py-[20px] px-[12px] gap-[20px] w-[80%] md:w-[60%] lg:w-[30%] md:h-[300px] bg-white rounded-[10px]
              lg:rounded-[20px]">
                <div className ="flex flex-col  gap-[20px]">
-               <h2 className="text-[14px] font-[400] leading-[18px]
+               <h2 className="text-[14px] text-center font-[600] leading-[18px]
                text-black lg:text-[16px] lg:leading-[22px]">
                   Your Session has expired.
                   </h2>
-              <p className ="text-[14px] font-[400] leading-[18px]
+              <p className ="text-[14px] text-center font-[400] leading-[18px]
                text-black lg:text-[16px] lg:leading-[22px] ">
-            User Session are used for safe and secure transactions, kindly repeat the Login
+            User Sessions are used for safe and secure transactions, kindly repeat the login
             process to continue using the platform.
                </p>
                </div>
-              <div className="flex gap-[20px] justify-center">
+             
               <button onClick ={()=> {
                     RemoveLocalStorage();
-                    return <Navigate to ="/Login" replace/>
+                    return window.location.replace("/Login");
                 }}
-                 className="bg-red-500  cursor-pointer mt-[5%] mx-auto w-[80px] py-[8px] flex justify-center items-center text-[#ffffff] 
+                 className="bg-red-700  cursor-pointer mt-[5%] mx-auto w-full py-[12px] flex justify-center items-center text-[#ffffff] 
                   text-[10px] font-[500] lg:font-[600] rounded-md md:w-[95px] md:h-[26px]
                    md:p-[2%] lg:w-[113px] lg:h-[38px] lg:text-[13px]">
                   Okay
                 </button>
-              </div>
+             
               </div>
               </div>
              </Modal>
@@ -315,13 +314,10 @@ export const PostFunction = async(path, setLoading, body, functionAtSuccess, fun
               console.log(error.response.data.data)
          }
       }else if(error && error.response.status === 401){
-       
-   
-      //  console.log(error.response);
+       functionAtFailed("unauthorised");
         console.log(error.response.headers);
         console.log(error.response.headers.get("x-new-auth-token"));
-      //  console.log(error.response.headers.hasAuthorization());
-        // console.log(error.response.headers.hasAuthorization);
+      
         if(error.response.headers["x-new-auth-token"] || error.response.headers.get("x-new-auth-token")){
          setLoading(true)
          const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
@@ -329,14 +325,12 @@ export const PostFunction = async(path, setLoading, body, functionAtSuccess, fun
          if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
              console.log(newToken)
             localStorage.setItem("authorisedLogin", newToken);
-            functionAtFailed();
              if(functionAtFailed) {
-            setFetchedResponse(error.response.data.data)
+            setFetchedResponse(error?.response?.data?.data)
            }
    }else{
       localStorage.setItem("getToken", newToken);
-     functionAtFailed("unauthorised");
-      if(functionAtFailed) {
+    if(functionAtFailed) {
             setFetchedResponse(error.response.data.data)
            }
    }
@@ -388,7 +382,7 @@ export const GetFunction = async(path, setLoading, functionAtSuccess,functionAtF
        alert("Invalid request")
       }
       else if(error && error.response.status === 401){
-         
+         functionAtFailed("unauthorised");
         setFetchedResponse(error.response);
        
       //  console.log(error.response);
@@ -403,10 +397,10 @@ export const GetFunction = async(path, setLoading, functionAtSuccess,functionAtF
          if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
              console.log(newToken)
             localStorage.setItem("authorisedLogin", newToken);
-            functionAtFailed("unauthorised");
+          
    }else{
       localStorage.setItem("getToken", newToken);
-     functionAtFailed("unauthorised");
+    
    }
         }
        console.log(error.response);
@@ -434,7 +428,6 @@ export const PutFunction = async(path, setLoading,body, functionAtSuccess,functi
    if(!navigator.onLine) return alert("Check your internet connection");
    if((authToken || getToken) && navigator.onLine){
       try{
-        
          setLoading(true)
     const url = `https://aremxyplug.onrender.com/api/v1/${path}`
       const response = await axios.put(url,body, {headers: {"Content-Type" :"application/json",
@@ -445,10 +438,10 @@ export const PutFunction = async(path, setLoading,body, functionAtSuccess,functi
       }
    }catch(error){
       if(error && error.response === undefined){
-         alert("Check your internet connection")
+         alert("Check your internet connection");
       }else if(error && error.response.status === 400){
-         functionAtFailed()
-       alert("Invalid request")
+         functionAtFailed("Bad request");
+       alert("Invalid request");
       }else if(error && error.response.status === 401){
       //   setFetchedResponse(error.response);
        
@@ -467,14 +460,14 @@ export const PutFunction = async(path, setLoading,body, functionAtSuccess,functi
             functionAtFailed();
    }else{
       localStorage.setItem("getToken", newToken);
-     functionAtFailed();
+     functionAtFailed("unauthorised");
    }
 }
          }else if(error && error.response.status === 404){
-         functionAtFailed()
+         functionAtFailed("User error")
          alert("Check your internet connection")
       }else if(error && error.response.status === 500){
-       
+        functionAtFailed("Server error")
    alert("Server error: Try some other time")
       }else if(error && error.response === undefined){
                 alert("Check your internet Connection");

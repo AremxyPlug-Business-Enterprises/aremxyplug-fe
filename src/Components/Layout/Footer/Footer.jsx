@@ -238,27 +238,27 @@ export const Footer = () => {
         <div className ="flex w-full justify-between px-[50px] gap-[10%] ">
        <div className="flex flex-col gap-[10px]">
         <h2 className="text-[13px]  leading-[20px] text-white
-        font-semibold"> Nigeria
+        font-semibold"> Nigeria.
         </h2>
         <div className="flex flex-col gap-[5px]">
         <p className="text-[9px] leading-[14px] 
-        text-white"> AC 5 Matazu Close </p>
+        text-white"> AC 5 Matazu Close, </p>
         <p className="text-[9px]  leading-[14px]
-        text-white">Tundu Wada Kaduna State, Nigeria </p>
+        text-white">Tundu Wada Kaduna State,</p>
          <p className="text-[9px] leading-[14px]
-        text-white">800262</p>
+        text-white">Nigeria 800262</p>
       
         </div>
        </div>
         <div className="flex flex-col gap-[10px]">
         <h2 className="text-[13px]  leading-[20px]  text-white
-        font-semibold"> United States
+        font-semibold"> United States.
         </h2>
         <div className="flex flex-col gap-[5px]">
         <p className="text-[9px]  leading-[14px]
         text-white"> 651 N Broad St, Suite 201, </p>
         <p className="text-[9px]  leading-[14px] 
-        text-white">New Castle County, Delaware</p>
+        text-white">New Castle County, Delaware,</p>
          <p className="text-[9px]  leading-[14px] 
         text-white"> United States, 19709</p>
       
@@ -558,11 +558,12 @@ export const Footer = () => {
         </h2>
         <div className="flex flex-col gap-[10px]">
         <p className="text-[16px] leading-[20px]
-        text-white"> AC 5 Matazu Close </p>
+        text-white"> AC 5 Matazu Close, </p>
         <p className="text-[16px] leading-[20px] 
-        text-white">Tundu Wada Kaduna State, Nigeria </p>
+        text-white">Tundu Wada Kaduna State,
+          </p>
          <p className="text-[1p6x] leading-[20px] 
-        text-white">800262</p>
+        text-white">Nigeria 800262</p>
       
         </div>
        </div>
@@ -571,10 +572,10 @@ export const Footer = () => {
         font-semibold"> United States.
         </h2>
         <div className="flex flex-col gap-[10px]">
-        <p className="text-[16px]  leading-[20px]6
+        <p className="text-[16px] leading-[20px]
         text-white"> 651 N Broad St, Suites 201, </p>
         <p className="text-[16px]  leading-[20px] 
-        text-white">Middletown, New Castle County, Delaware</p>
+        text-white">Middletown, New Castle County, Delaware,</p>
          <p className="text-[16px] leading-[20px] 
         text-white"> United States, 19709</p>
       

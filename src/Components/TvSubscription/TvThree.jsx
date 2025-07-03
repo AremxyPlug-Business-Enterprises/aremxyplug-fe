@@ -24,6 +24,7 @@ import { useNavigate } from "react-router-dom";
 import {PostFunction} from "../../Components/ApiCollection.jsx/ApiBuck";
 import { GetFunction } from "../ApiCollection.jsx/ApiBuck";
 import { BalanceLoading } from "../Loader/Loader";
+import { HandleUserSession } from "../../Components/ApiCollection.jsx/ApiBuck";
 
 const StarTimes = () => {
 
@@ -72,7 +73,7 @@ const StarTimes = () => {
     starTimesMobileNumber,
     setStarTimesMobileNumber,
     setFetchedStarTimesPlans
-  } = useContext(ContextProvider);
+    } = useContext(ContextProvider);
       
 
    
@@ -86,6 +87,7 @@ const StarTimes = () => {
                 const [stateInvalidDecoderNumber, setStateInvalidDecoderNumber] = useState(false);
                 const [passDataBalance, setPassDataBalance] = useState({});
                 const [starTimesData, setStarTimesData] = useState([]);
+                const [sessionModal, setSessionModal] = useState(false)
     const navigate = useNavigate();
 
     
@@ -108,9 +110,18 @@ const StarTimes = () => {
     const SuccessHandler = ()=> {
      navigate(path);
     }
-    const FailedHandler = async()=> {
-     console.log("Error")
-     await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse)
+    const FailedHandler = async(ErrorType)=> {
+     if(ErrorType === "unauthorised"){
+     await GetFunction(TvPath, 
+      setIsLoading, 
+      SuccessHandler, 
+      (ErrorType)=> {
+        if(ErrorType === "unauthorised"){
+        return setSessionModal(true);
+        }
+      },
+       fetchedResponse)
+     }
     }
    
     const SubscriptionPresent =()=> {
@@ -155,9 +166,19 @@ const StarTimes = () => {
              const SuccessHandler = ()=> {
        console.log("Successfully fetched startimes plans");
       }
-        const failedHandler = async()=> {
-       console.log("Couldn't fetch starTimes plans");
-       await GetFunction(`products/tvsub/startimes`, setIsLoading, SuccessHandler, failedHandler, setFetchedStarTimesPlans);
+        const failedHandler = async(ErrorType)=> {
+          if(ErrorType === "unauthorised"){
+           await GetFunction(`products/tvsub/startimes`, 
+            setIsLoading,
+             SuccessHandler, 
+             (ErrorType)=> {
+              if(ErrorType === "unauthorised"){
+              return setSessionModal(true);
+              }
+             },
+              setFetchedStarTimesPlans);
+          }
+      
        }
          
     await GetFunction(`products/tvsub/startimes`, setIsLoading, SuccessHandler, failedHandler, setFetchedStarTimesPlans);
@@ -166,14 +187,21 @@ const StarTimes = () => {
    RetrieveGotvPlans()
    }
     const GetBalance =   async()=> {
-                           const SuccessHandler = ()=> {
-                         //alert("Successful");
+                           const SuccessHandler = ()=> {                         //alert("Successful");
                     console.log("successfully retrieved balance");
-                    //alert("Successful")
                       }
-                     const FailedHandler = async()=> {
-                       console.log(`Failed to retrieve balance`)
-                       await GetFunction("balance", setIsLoading, SuccessHandler, FailedHandler,setPassDataBalance)
+                     const FailedHandler = async(ErrorType)=> {
+                        if(ErrorType === "unauthorised"){
+                       await GetFunction("balance",
+                         setIsLoading, 
+                         SuccessHandler, 
+                        (ErrorType)=> {
+                          if(ErrorType === "unauthorised"){
+                          return setSessionModal(true);
+                          }
+                        },
+                         setPassDataBalance);
+                        }
                      }
                      await GetFunction("balance", setIsLoading, SuccessHandler, FailedHandler,setPassDataBalance)
                        } 
@@ -181,7 +209,7 @@ const StarTimes = () => {
                        if(newBalance === "" || newBalance === null || newBalance === undefined){
                            GetBalance();
                            if(GetBalance){
-                            setNewBalance(passDataBalance?.data ? passDataBalance.data.data.data.balance : "");
+                            setNewBalance(passDataBalance?.data ? passDataBalance?.data?.data?.data?.balance : "");
                            }
                          }
         //eslint-disable-next-line             
@@ -317,9 +345,9 @@ const StarTimes = () => {
     const receivedData = () => {
       // Seting the relevant data from the TV subscription response
       setStarTimesOrderId(starTimesSubscriptionResponse?.data ? starTimesSubscriptionResponse?.data?.order_id : "");
-      setStarTimesTransactionId(starTimesSubscriptionResponse?.data?.transcation_id ? starTimesSubscriptionResponse?.data?.transcation_id : ""  );
+      setStarTimesTransactionId(starTimesSubscriptionResponse?.data?.transaction_id ? starTimesSubscriptionResponse?.data?.transaction_id : ""  );
      // setStarTimesRequestId(starTimesSubscriptionResponse.data.request_id);
-      setStarTimesDescription(starTimesSubscriptionResponse?.data?.description ? starTimesSubscriptionResponse?.data?.description : "");
+      setStarTimesDescription(starTimesSubscriptionResponse?.data?.transaction_description ? starTimesSubscriptionResponse?.data?.transaction_description : "");
       setCardName(userVerifiedName);
 }
   
@@ -380,25 +408,43 @@ const VerifyPinHandler = async () => {
  //Function to help Verify users account
  const VerifyUserAccount = async(UserTvSubscription)=> {
   setStarTimesVerifyResponse({});
-    if(UserTvSubscription?.length === 10 && 
-     (UserTvSubscription !== "" && 
-       UserTvSubscription !== null && 
-       UserTvSubscription !== undefined)){
-         const body = {
+     const body = {
             decoder_type : starTimesDecoderType.toLowerCase(),
            iuc_number : UserTvSubscription
          }
          const bodyToJson = JSON.stringify(body);
- await PostFunction("bills/verify", setStarTimesLoading, bodyToJson, ()=> {
-   console.log("Succesfully verified tv subscription account.");
+  const SuccessHandler = ()=> {
    setStarTimesSmartCard(UserTvSubscription);
+ }
+ const FailedHandler = async(ErrorType)=> {
+     if(ErrorType === "unauthorised"){
+    await PostFunction("bills/verify", 
+  setStarTimesLoading,
+   bodyToJson,
+   SuccessHandler,
+   (ErrorType)=> {
+    if(ErrorType === "unauthorised"){
+    return setSessionModal(true)
+    }
+   },
+   setStarTimesVerifyResponse )
+  }}
+     
  
-   
- }, ()=> {
-   console.log("Failed to verify tv subscription account.")
- }, setStarTimesVerifyResponse )
+     if(UserTvSubscription?.length === 10 && 
+     (UserTvSubscription !== "" && 
+       UserTvSubscription !== null && 
+       UserTvSubscription !== undefined)){
+      
+ await PostFunction("bills/verify", 
+  setStarTimesLoading,
+   bodyToJson,
+   SuccessHandler,
+   FailedHandler,
+   setStarTimesVerifyResponse )
  }
- }
+}
+ 
  //console.log(userVerifiedName)
  
   const handleSmartCard = async(e) => {
@@ -418,8 +464,21 @@ const VerifyPinHandler = async () => {
     setFlagResult("");
     setStarTimesWalletBalance("");
     setFailedPopup(false);
+  navigate("/StarTimes");
+  }
+
+   const ReceiptButton = ()=> {
+      setStarTimesEmail("")
+   setStarTimesMobileNumber("")
+   setStarTimesSmartCard("");
+   setStarTimesAmount("");
+   setSelectedOptionStarTimes("");
+   setPackageStarTimes("");
+   setStarTimesDecoderType("")
+    setFlagResult("");
+    setStarTimesWalletBalance("");
+    setFailedPopup(false);
      handleReceivedData();
-   //navigate("/DsTv");
   }
 
   return (
@@ -673,28 +732,35 @@ const VerifyPinHandler = async () => {
                   src={methodImage} alt="" />
               </div>
               {methodPayment && (
-                <div className='absolute top-[102%] z-0 flex flex-col w-[100%] bg-white cursor-pointer '>
+                <div className='absolute top-[102%] z-0 flex flex-col 
+                w-[100%] bg-white cursor-pointer '>
 
                   {(methodOptions.map(methodOption => {
                     return (
                       <div
-                        onClick={(e => {
-                          setFlagResult(methodOption.id === 1 ?
-                                  methodOption.method : ""
-                                );
-                          setStarTimesWalletBalance( methodOption.id === 1 ? methodOption.balance : "")
-                          setMethodImage(methodOption.id === 1 ? methodOption.flag : arrowDown);
-                          setMethodPayment(false);
-                          document.querySelector('.methodDrop').classList.remove('DropIt');
-                        })}
-                        className={`pb-[20px] md:pb-0 pt-[20px] md:pt-0 font-weight-bold text-[15px] flex gap-[10px] lg:py-[15px] py-[10px] pl-[10px]
+                        onClick={(e) => {
+                           setFlagResult(methodOption.id === 1 ? methodOption.method : (flagResult === "NGN Wallet" && methodOption.id !== 1 ) ? "NGN Wallet" : "");
+                          setStarTimesWalletBalance(methodOption.id === 1   ? 
+                            methodOption.balance : flagResult === "NGN Wallet" ?
+                            ( newBalance === "" || newBalance === null ? `(${updateBalance})` :
+                               `(${newBalance})`) : "");
+                          setMethodImage(methodOption.id === 1 ? methodOption.flag : methodImage);
+                                setMethodPayment(false);
+                               setMethodPayment(()=> {
+                            if(methodOption.id === 1){
+                            setMethodPayment(false)
+                             document.querySelector('.methodDrop').classList.remove('DropIt');
+                            }else{
+                              setMethodPayment(true);
+                                document.querySelector('.methodDrop').classList.add('DropIt');
+                            }})}}
+                               
+         className={`pb-[20px] md:pb-0 pt-[20px] md:pt-0 font-weight-bold text-[15px] flex gap-[10px] lg:py-[15px] py-[10px] pl-[10px]
         cursor-pointer items-center 
         shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
-         ${methodOption.id === 1 ? "bg-white" : "bg-gray-300"}
-        ${ isDarkMode 
-          ? "bg-black text-white border border-white" 
-          : "bg-white hover:bg-[#EDEAEA]"
-      }`}    
+        ${methodOption.id !== 1 && !isDarkMode  ? "bg-gray-300 cursor-not-allowed" : 
+            methodOption.id !== 1 && isDarkMode ? "bg-black"
+             : methodOption.id === 1 && !isDarkMode ? "bg-white" : "bg-black" }`}    
                         key={methodOption.id} >
         <img className='md:h-[29.27px]  h-[14.27px]' src={methodOption.flag} alt="" />
  <h2 className={`text-[14px] leading-[10.4px]
@@ -770,14 +836,14 @@ const VerifyPinHandler = async () => {
                  </p>
                 <div className="flex gap-[10px] justify-between w-full px-[10px]">
         <button
-          onClick={() => setFailedPopup(false)}
+          onClick={() => ExitTheDoneButton()}
           className="bg-[#04177f] w-[50%] max-w-xs mx-auto py-2
            text-white rounded-md font-medium">
           Done
         </button>
            <button
           onClick={() =>{
-            ExitTheDoneButton()
+            ReceiptButton()
           }}
           className="w-[50%] bg-white max-w-xs mx-auto py-2 text-blue-900
            rounded-md font-medium"
@@ -796,6 +862,9 @@ const VerifyPinHandler = async () => {
       
                  </Modal>
             ) } 
+            {sessionModal &&(
+              <HandleUserSession/>
+            )}
             
     </div>
   )

@@ -36,9 +36,10 @@ const GetFunctionHandler = async(GlobalTvSubscription,tvPage, TvSubscriptionValu
          setLoading(true);
         alert("Auth retrieval running")
      if(GlobalTvSubscription === 0){
-    await GetFunction(`products/tvsub/gotv`, setLoading, SuccessHandler,()=> {
-        console.log("Failed to fetch Gotv with cookies")
+    await GetFunction(`products/tvsub/gotv`, setLoading, SuccessHandler,(ErrorType)=> {
+        if(ErrorType){
          setSessionModal(true);
+        }
     }, setFetchedGotvPlans)
      }else if(GlobalTvSubscription === 1){
         await GetFunction(`products/tvsub/dstv`, setLoading, SuccessHandler, ()=> {
@@ -56,12 +57,11 @@ const GetFunctionHandler = async(GlobalTvSubscription,tvPage, TvSubscriptionValu
            setSessionModal(true);
     }, setFetchedShowMaxPlans)
      }else {
-        alert("This error did not result from unauthorization.")
+        console.log("This error did not result from unauthorization.")
      }
     }
 
     if(DetectAuthorisation === "unauthorised"){
-    console.log(DetectAuthorisation);
    return  AuthRetrieval();
      }else if(DetectAuthorisation === "Server error"){
      console.log("Running server error")
@@ -69,6 +69,8 @@ const GetFunctionHandler = async(GlobalTvSubscription,tvPage, TvSubscriptionValu
        console.log("Running on 404")
      }else if(DetectAuthorisation === undefined){
      alert("Error connection issue")
+     }else{
+        alert("Check your internet connection.")
      }
 
     }
