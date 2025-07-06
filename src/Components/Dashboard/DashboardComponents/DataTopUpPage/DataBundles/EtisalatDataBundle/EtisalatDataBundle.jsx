@@ -259,9 +259,9 @@ const [etisalatReceiptInfo, setEtisalatReceiptInfo] = useState("");
           <div className={` ${airtimestyles.netImage}`}>
             <img src={flag} alt="" className={airtimestyles.NoImage} />
           </div>
-          <h2 className={`font-[500] text-[#7C7C7C] text-[8px] leading-[10.4px]
+          <h2 className={`font-[500] text-[#7C7C7C] text-[12px] leading-[16.4px]
               lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>{code}</h2>
-          <p className={`font-[500] text-[#7C7C7C] text-[8px] leading-[10.4px]
+          <p className={`font-[500] text-[#7C7C7C] text-[12px] leading-[16.4px]
               lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
             Wallet({amount.toLocaleString()})
           </p>
@@ -730,6 +730,7 @@ const [etisalatReceiptInfo, setEtisalatReceiptInfo] = useState("");
               <div className ="relative">
               {showProductList && (
                 <div className={`border md:rounded-[10px] text-[10px] md:text-[12px]
+                   bvnQuery shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
                  lg:text-[16px] lg:mt-2 rounded-[4px] absolute w-full ${products.length > 1 ? "h-[300px] overflow-y-scroll " : "h-[0px]"}
                   bg-[#FFF] z-[10] `}>
                   {loadingProducts ? (
@@ -813,7 +814,9 @@ const [etisalatReceiptInfo, setEtisalatReceiptInfo] = useState("");
               </div>
           <div className="relative">
               {showOptionList && (
-                <div className={`border md:rounded-[10px] lg:mt-2 ${productPlans.length > 1 ? "h-[300px] overflow-y-scoll" : "h-[0px]"}
+                <div className={`border md:rounded-[10px] lg:mt-2 
+                   bvnQuery shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
+                  ${productPlans.length > 1 ? "h-[300px] overflow-y-scoll" : "h-[0px]"}
                   rounded-[4px] absolute w-full bg-[#FFF] z-[100]
                   ${isDarkMode
                     ? "bg-black text-white border !border-white"

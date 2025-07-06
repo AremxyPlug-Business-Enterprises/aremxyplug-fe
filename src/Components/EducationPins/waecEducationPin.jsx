@@ -462,37 +462,34 @@ export default function WaecEducationPin() {
 
   return (
     <DashBoardLayout>
-      <div className="flex flex-col lg:h-[150%] h-[115%] justify-between ">
-        <div className="">
+
+    <div className='flex flex-col lg:h-[150%] h-[115%] justify-between '>
+ <div className="">
           {/* Hero-section */}
           <HeroComponent />
           <div className="flex lg:gap-[8px] items-center md:gap-[5.868px] gap-[4.694px] mb-[20px] lg:mb-[50px] md:mb-[30px]">
             <h2
               className={`font-semibold text-sm leading-[12px] md:text-xs md:leading-[11.267px] lg:text-base lg:leading-[20.2px] ${
                 isDarkMode ? "text-white" : "text-[#7E7E7E]"
-              } `}
-            >
-              Purchase
-            </h2>
-            <img
-              className="h-[12px] w-[12px] md:h-[14.083px] md-w-[14.083px] lg:h-[24px] lg:w-[24px] self-center"
-              src={WaecImg}
-              alt=""
-            />
+              } `}>
+    Purchase
+      </h2>
+ <img className='h-[12px] w-[12px] md:h-[14.083px] md-w-[14.083px] lg:h-[24px] lg:w-[24px] self-center'
+      src={WaecImg} alt="" />
 
-            <h2
-              className={`font-semibold text-sm leading-[12px] md:text-xs md:leading-[11.267px] lg:text-base  lg:leading-[20.2px] ${
-                isDarkMode ? "text-white" : "text-[#7E7E7E]"
-              }`}
-            >
-              WAEC E-PINs Instantly
-            </h2>
-            <img
-              className="md:h-[14.083px] md:w-[14.083px] lg:h-[24px] lg:w-[24px] h-[14px] w-[14px]"
-              src={arrowRight}
-              alt=""
-            />
-          </div>
+      <h2 className='font-[600] text-[14px] leading-[12px] md:text-[9.389px]
+       md:leading-[11.267px] lg:text-[16px] text-[#7E7E7E] lg:leading-[19.2px]'>
+      WAEC E-PINs Instantly
+      </h2>
+      <img className='md:h-[14.083px] md:w-[14.083px] lg:h-[24px] lg:w-[24px] h-[14px] w-[14px]'
+      src={arrowRight} alt="" />
+    </div>
+    </div>
+  
+    {/* Input for Request of examination pins  */}
+   
+
+     
           {/* Input for Request of examination pins  */}
           <form action="">
             <div className="flex flex-col gap-5 md:gap-0">
@@ -915,6 +912,8 @@ export default function WaecEducationPin() {
                   )}
                 </div>
               </div>
+              </div>
+              </form>
               {/* end of */}
             </div>
             {educationProceed && (
@@ -1477,8 +1476,8 @@ export default function WaecEducationPin() {
                 Proceed
               </button>
             </div>
-          </form>
-        </div>
+          
+      
 
         {waecFailedTransaction && (
           <Modal>
@@ -1587,7 +1586,9 @@ export default function WaecEducationPin() {
             Contact Us
           </Link>
         </div>
-      </div>
+    
+      
+   
       {isLoading && (
         <Modal>
           <Loader />

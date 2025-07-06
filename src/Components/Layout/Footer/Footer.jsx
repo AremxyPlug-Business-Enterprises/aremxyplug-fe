@@ -45,7 +45,7 @@ export const Footer = () => {
           alt="/aremxyplug"
         />
         <hr />
-        <div className="flex flex-wrap gap-[20%] h-[] w-[261px] pt-[15px] mx-auto ">
+        <div className="flex flex-wrap gap-[20%] h-[] pb-[30px] w-[261px] pt-[15px] mx-auto ">
           <div className="flex flex-col gap-[15px] mb-[10%]">
             <div className="w-[81px] h-[16px] text-[13px] font-semibold">
               <Link to="/">AremxyPlug</Link>
@@ -230,6 +230,43 @@ export const Footer = () => {
           </div>
         </div>
 
+        {/* AremxyPlug location Handling */}
+        <div className="flex flex-col items-center gap-[20px]  w-full my-[30px]">
+  <h2 className="text-[14px] text-left leading-[18px] 
+          font-bold">
+           Address  </h2>
+        <div className ="flex w-full justify-between px-[50px] gap-[10%] ">
+       <div className="flex flex-col gap-[10px]">
+        <h2 className="text-[13px]  leading-[20px] text-white
+        font-semibold"> Nigeria.
+        </h2>
+        <div className="flex flex-col gap-[5px]">
+        <p className="text-[9px] leading-[14px] 
+        text-white"> AC 5 Matazu Close, </p>
+        <p className="text-[9px]  leading-[14px]
+        text-white">Tundu Wada Kaduna State,</p>
+         <p className="text-[9px] leading-[14px]
+        text-white">Nigeria 800262</p>
+      
+        </div>
+       </div>
+        <div className="flex flex-col gap-[10px]">
+        <h2 className="text-[13px]  leading-[20px]  text-white
+        font-semibold"> United States.
+        </h2>
+        <div className="flex flex-col gap-[5px]">
+        <p className="text-[9px]  leading-[14px]
+        text-white"> 651 N Broad St, Suite 201, </p>
+        <p className="text-[9px]  leading-[14px] 
+        text-white">New Castle County, Delaware,</p>
+         <p className="text-[9px]  leading-[14px] 
+        text-white"> United States, 19709</p>
+      
+        </div>
+       </div>
+        </div>
+        </div>
+
         <div className=" flex gap-[30px] justify-center mt-[10%] ml-[8%]">
           <div className="flex flex-col h-[52px] gap-[15px]">
             <div className="text-[10px]">Follow Us on</div>
@@ -322,7 +359,8 @@ export const Footer = () => {
         />
         <hr />
 
-        <div className="flex gap-[10%] w-[85%] pt-[15px] ml-[%] lg:gap-[100px] mx-auto">
+        <div className="flex gap-[10%] w-[85%] pt-[15px] pb-[30px] ml-[%] 
+        lg:gap-[100px] mx-auto">
           <div className="flex flex-col gap-[15px] lg:gap-[25px]">
             <div className="w-[81px] h-[16px] text-[14px] font-semibold lg:text-[25px]">
               <Link to="/">AremxyPlug</Link>
@@ -505,6 +543,45 @@ export const Footer = () => {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Handling aremxyPlug location information */}
+        <div className="flex flex-col gap-[40px] mx-auto  w-[85%] my-[80px]">
+  <h2 className="text-[25px] text-left leading-[30px] 
+           font-bold">
+           Address  </h2>
+        
+        <div className ="flex w-full gap-[10%] justify-start">
+          <div className="flex flex-col gap-[20px]">
+        <h2 className="text-[25px] leading-[30px] text-white
+        font-semibold"> Nigeria.
+        </h2>
+        <div className="flex flex-col gap-[10px]">
+        <p className="text-[16px] leading-[20px]
+        text-white"> AC 5 Matazu Close, </p>
+        <p className="text-[16px] leading-[20px] 
+        text-white">Tundu Wada Kaduna State,
+          </p>
+         <p className="text-[1p6x] leading-[20px] 
+        text-white">Nigeria 800262</p>
+      
+        </div>
+       </div>
+        <div className="flex flex-col gap-[20px]">
+        <h2 className="text-[25px]  leading-[30px] text-white
+        font-semibold"> United States.
+        </h2>
+        <div className="flex flex-col gap-[10px]">
+        <p className="text-[16px] leading-[20px]
+        text-white"> 651 N Broad St, Suites 201, </p>
+        <p className="text-[16px]  leading-[20px] 
+        text-white">Middletown, New Castle County, Delaware,</p>
+         <p className="text-[16px] leading-[20px] 
+        text-white"> United States, 19709</p>
+      
+        </div>
+       </div>
+        </div>
         </div>
 
         <div className=" right- flex gap-[90px] ml-[8%] mt-[10%]  lg:gap-[120px]">

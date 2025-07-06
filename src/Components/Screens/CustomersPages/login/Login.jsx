@@ -3,17 +3,22 @@ import LoginForm from "../../../loginForm/LoginForm";
 import { ContextProvider } from "../../../Context";
 
 function Login() {
-  const { hideNavbar, setHideNavbar } = useContext(ContextProvider);
+  const {setHideNavbar } = useContext(ContextProvider);
 
   const setNav = () => {
     setHideNavbar(true);
   };
-  console.log(hideNavbar);
+ // console.log(hideNavbar);
 
   useEffect(() => {
     setNav();
     return () => {
       setHideNavbar(false);
+      const ActiveSignUp = localStorage.getItem("ActiveSignUp");
+      const phoneData = localStorage.getItem("userPhone");
+      if(ActiveSignUp && !phoneData){
+     localStorage.removeItem("ActiveSignUp");
+      }
     };
     // eslint-disable-next-line
   }, []);

@@ -20,6 +20,7 @@ import axios from "axios";
 import { Loader } from "../../Loader/Loader";
 import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 import idSuccess from "../ProfileImages/user-tick.svg";
+import countryImage from "../../EducationPins/imagesEducation/Nigeriaflag.svg"
 
 export default function IdVerification(Data) {
   const { verificationOpen } = useContext(ContextProvider);
@@ -81,16 +82,8 @@ export default function IdVerification(Data) {
     );
   };
   //  CUSTOM VALIDITY FOR COUNTRY
-  const validCountry = (e) => {
-    const addCity = e.target.value;
-    e.target.setCustomValidity(addCity ? "" : "Your City must be entered");
-  };
-  //  CUSTOM VALIDITY FOR CITY
-  const validCity = (e) => {
-    const addCity = e.target.value;
-    e.target.setCustomValidity(addCity ? "" : "Your City must be entered");
-  };
- 
+  
+  
   const validId = (e) => {
     const addId = e.target.value;
     e.target.setCustomValidity(
@@ -103,8 +96,8 @@ export default function IdVerification(Data) {
   //  e.target.setCustomValidity(addLGA ? '' : 'This is required to proceed');
   // }
 
-  //Function to inform a user that account has previously been craeted
-  // and set the following functions as stated bellow
+  //Function to inform a user that account has previously been created
+  // and set the following functions as stated below
 
   const IdFunctionState = async (
     url,
@@ -207,7 +200,7 @@ export default function IdVerification(Data) {
           setVerifyImage(NotVerifiedIcon);
           setIdStatus("Not Verified");
         } else if (error.status === 500) {
-          alert("Error:", "INTERNAL_SERVER_ERROR");
+          alert("SERVER_ERROR, Try again some other time.");
           setIdStatus("Not Verified");
           setVerifyImage(NotVerifiedIcon);
         }else {
@@ -301,8 +294,32 @@ export default function IdVerification(Data) {
           >
             {/* Container for all Forms */}
             <div className="flex flex-col lg:gap-[25px] gap-[20px] w-full mb-[50px]">
-              {/*  Full Name / Gender */}
+            
               <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]">
+                  {/*  Country / Fullname */}
+ {/* COUNTRY */}
+                 <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
+                                 <h2
+                                   className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${
+                                     isDarkMode ? "text-slate-50" : ""
+                                   }`}
+                                 >
+                                   Country
+                                 </h2>
+                                 <div className={`py-[10.33px]  flex gap-[10px]  pl-[5.867px] items-center pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] 
+                                 lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none ${
+                                     isDarkMode ? "bg-black  border-slate-50" : "bg-white"
+                                   }`}>
+                                      <img className=" md:h-[20.27px]  h-[14.27px]"
+                                 src={countryImage} alt="Country flag" />
+                                 <p className={`text-[12px] leading-[18px] 
+                                  lg:text-[16px] lg:leading-[20.8px] ${
+                                     isDarkMode ? " text-slate-50 " : "text-black"
+                                   }`}>Nigeria</p>
+                                
+                               </div>
+                               </div>
+              {/* Country ends here  */}
                 {/* Full Name */}
                 <div className="flex flex-col md:w-[50%] w-full md:gap-[10px] gap-2.5">
                   <h2
@@ -320,9 +337,14 @@ export default function IdVerification(Data) {
                   {full_name ? full_name : Data.UserFullName }
                   </div>
                 </div>
-                {/* Gender */}
+               
 
-                <div className="relative flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
+
+              </div>
+              {/* Gender and date of birth*/}
+              <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]">
+                {/* HOUSE ADDRESS */}
+                              <div className="relative flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
                   <h2
                     className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${
                       isDarkMode ? "text-slate-50" : ""
@@ -384,11 +406,42 @@ export default function IdVerification(Data) {
                     </div>
                   )}
                 </div>
-              </div>
-              {/* HOUSE ADDRESS AND STATE*/}
-              <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]">
-                {/* HOUSE ADDRESS */}
+                {/* Date of Birth / BVN */}
                 <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
+                  <h2
+                    className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${
+                      isDarkMode ? "text-slate-50" : ""
+                    }`}
+                  >
+                    D.O.B
+                  </h2>
+                  <div className={`w-[100%] border-[0.4px] border-[#9C9C9C]  focus:outline-none cursor-pointer rounded-[10px] ${
+                      isDarkMode ? " border-white " : "border-[#9C9C9C]"
+                    }`}>
+                  <input
+                    value={idDateOfBirth}
+                    onChange={(e) => {
+                      setIdDateOfBirth(e.target.value);
+                    }}
+                    className={`w-[100%]
+                      md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px]  lg:pr-[16px] pr-[9px] h-[100%] rounded-[10px]
+                  py-[10.33px] pl-[5.867px] lg:py-[15.5px] text-sm leading-[18px] focus:outline-none lg:text-[16px] lg:leading-[20.8px] ${
+                      isDarkMode ? "text-white  bg-black" : "bg-white text-black"
+                    }`}
+                    type="date"
+                    id="dob"
+                    name="dob"
+                    readOnly={Data.ConfirmId === "true" || Data.ConfirmBvn === "true"}
+                  />
+                  </div>
+                </div>
+    
+              </div>
+             
+
+  <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]">
+    {/*House Address and postal code  */}
+  <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
                   <h2
                     className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${
                       isDarkMode ? "text-white" : ""
@@ -414,107 +467,8 @@ export default function IdVerification(Data) {
                   />
                 </div>
 
-                {/* Date of Birth / BVN */}
-                <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
-                  <h2
-                    className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${
-                      isDarkMode ? "text-slate-50" : ""
-                    }`}
-                  >
-                    D.O.B
-                  </h2>
-                  <input
-                    value={idDateOfBirth}
-                    onChange={(e) => {
-                      setIdDateOfBirth(e.target.value);
-                    }}
-                    className={`w-[100%] py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] text-sm leading-[18px] lg:pr-[16px] pr-[9px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none cursor-pointer rounded-[10px] ${
-                      isDarkMode ? "text-white border-white bg-black" : ""
-                    }`}
-                    type="date"
-                    id="dob"
-                    name="dob"
-                    readOnly={Data.ConfirmId === "true" || Data.ConfirmBvn === "true"}
-                  />
-                </div>
-    
-              </div>
-              {/* CITY AND LGA */}
-              <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]">
-                {/* COUNTRY */}
-                <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
-                  <h2
-                    className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${
-                      isDarkMode ? "text-slate-50" : ""
-                    }`}
-                  >
-                    Country
-                  </h2>
-                  <input
-                    value={idCountry}
-                    onChange={(e) => {
-                      setIdCountry(e.target.value);
-                    }}
-                    className={`py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none ${
-                      isDarkMode ? "bg-black text-slate-50 border-slate-50" : ""
-                    }`}
-                    placeholder=""
-                    type="text"
-                    onInvalid={validCountry}
-                    readOnly={Data.ConfirmId === "true" || Data.ConfirmBvn === "true"}
-                    required
-                  />
-                </div>
-                {/* CITY */}
-                <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
-                  <h2
-                    className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${
-                      isDarkMode ? "text-slate-50" : ""
-                    }`}
-                  >
-                    City
-                  </h2>
-                  <input
-                  readOnly ={Data.ConfirmBvn === "true" || Data.ConfirmId === "true"}
-                    value={idCity}
-                    onChange={(e) => {
-                      setIdCity(e.target.value);
-                    }}
-                    className={`py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none ${
-                      isDarkMode
-                        ? "bg-transparent text-slate-50 border-slate-50"
-                        : ""
-                    }`}
-                    placeholder=""
-                    type="text"
-                    onInvalid={validCity}
-                    required
-                  />
-                </div>
-                {/* LGA */}
-                {/* <div className='flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5'>
-   <h2 className='font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] 
-   lg:text-[16px] lg:leading-[20.8px]'>
-     L.G.A
-    </h2>
-    <input 
-    value={idLGA}
-    onChange={(e) => {
-      setIdLGA(e.target.value);
-    }}
-    className='mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px]  sm:p-3 sm:text-lg font-medium py-[10.33px] pl-[5.867px] 
-    lg:py-[15.5px] lg:pl-[10px] border-[0.4px] 
-     leading-[10.4px] 
-     border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px]
-      focus:outline-none'
-    placeholder=''
-    type="text"  onInvalid={validLGA}  required/>
-   
-    </div> */}
-              </div>
-              {/* POSTAL CODE */}
-
-              <div className="flex flex-col md:w-[49%] w-[100%] md:gap-[10px] gap-2.5">
+              {/* Postal code starts here */}
+             <div className="flex flex-col md:w-[49%] w-[100%] md:gap-[10px] gap-2.5">
                 <h2
                   className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${
                     isDarkMode ? "text-slate-50" : ""
@@ -542,6 +496,10 @@ export default function IdVerification(Data) {
                   inputMode="numeric"
                 />
               </div>
+              </div>
+              {/* POS */}
+
+             
 
     {/* ID TYPE & ID NUMBER */}
     <div className='flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]'>
@@ -634,7 +592,6 @@ export default function IdVerification(Data) {
      ID Number
     </h2>
     <input readOnly={idStatus=== "Verified" ||  (Data.ConfirmId === "true" || Data.ConfirmBvn === "true")}
-    disabled={idStatus === "Verified" || (Data.ConfirmId === "true" || Data.ConfirmBvn === "true")}
      onInput={( e => {
       const numbersOnly = e.target.value.replace(/\D/g, '');
       e.target.value = numbersOnly;

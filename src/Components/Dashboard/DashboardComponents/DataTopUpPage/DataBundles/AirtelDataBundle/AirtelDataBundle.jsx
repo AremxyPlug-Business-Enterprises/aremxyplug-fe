@@ -27,7 +27,7 @@ import Failed from "./../MtnDataTopUpBundle/MtnDataTopUpBundleImages/Failed.svg"
 import axiosInstance from "../../../../../ApiCollection.jsx/apiClient";
 import { GetFunction, VerifyTransPin } from "../../../../../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../../../../Loader/Loader";
-
+import { HandleUserSession } from "../../../../../ApiCollection.jsx/ApiBuck";
 
 const AirtelDataBundle = () => {
   const { isDarkMode, newBalance , setNewBalance} = useContext(ContextProvider);
@@ -79,12 +79,13 @@ const AirtelDataBundle = () => {
  const [selectProductWarn, setSelectProductWarn] = useState("") ;
  const [selectPlanWarn, setSelectPlanWarn] = useState("");
  const [passDataBalance, setPassDataBalance] = useState({});
- const [airtelReceiptInfo, setAirtelReceiptInfo] = useState("")
+ const [airtelReceiptInfo, setAirtelReceiptInfo] = useState("");
+ const [sessionModal, setSessionModal] = useState(false)
    let balanceStringToNum = Number(newBalance);
 
 
               let airtelDataAmount = Number(selectedAmountAirtel.replace(/\D/g, ""));
-           const updateBalance = passDataBalance.data ?  passDataBalance.data.data.data.balance : "";
+           const updateBalance = passDataBalance?.data ?  passDataBalance?.data?.data?.data?.balance : "";
               const cleanUpBalanceToNumericOnly = Number(updateBalance.replace(/\D/g, ""));
              let CheckSufficiency =  airtelDataAmount > (newBalance === "" || newBalance === null ? cleanUpBalanceToNumericOnly : balanceStringToNum);
   useEffect(() => {
@@ -134,8 +135,8 @@ console.log(airtelDataAmount, balanceStringToNum)
         `/products/telecom/${productId}`
       );
       if(response && ( response.status === 200 || 201)){
-      setProductPlans(response.data.data.plans || []);
-      if(response.data.data.plans === null){
+      setProductPlans(response?.data?.data?.plans || []);
+      if(response?.data?.data?.plans === null){
         setSelectProductWarn(true);
       }else {
         setSelectProductWarn(false)
@@ -266,9 +267,9 @@ console.log(airtelDataAmount, balanceStringToNum)
            <div className={` ${airtimestyles.netImage}`}>
              <img src={flag} alt="" className={airtimestyles.NoImage} />
            </div>
-           <h2 className={`font-[500] text-[#7C7C7C] text-[8px] leading-[10.4px]
+           <h2 className={`font-[500] text-[#7C7C7C] text-[12px] leading-[16.4px]
                lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>{code}</h2>
-           <p className={`font-[500] text-[#7C7C7C] text-[8px] leading-[10.4px]
+           <p className={`font-[500] text-[#7C7C7C] text-[12px] leading-[16.4px]
                lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
              Wallet({amount.toLocaleString()})
            </p>
@@ -283,17 +284,27 @@ console.log(airtelDataAmount, balanceStringToNum)
        console.log("successfully retrieved balance");
        //alert("Successful")
          }
-        const FailedHandler = ()=> {
-          console.log(`Failed to retrieve balance`)
+        const FailedHandler = async(ErrorType)=> {
+         if(ErrorType === "unauthorised"){
+       await GetFunction("balance", 
+        setLoading, SuccessHandler,
+        (ErrorType)=> {
+         if(ErrorType === "unauthorised"){
+          return setSessionModal(true);
+         }
+        },
+         setPassDataBalance)
+         }
         }
-        await GetFunction("balance", setLoading, SuccessHandler, FailedHandler,setPassDataBalance)
+            await GetFunction("balance",  setLoading, SuccessHandler, FailedHandler,
+         setPassDataBalance)
           } 
            // Simulate async data loading
           
            if(newBalance === "" || newBalance === null || newBalance === undefined){
               GetBalance();
               if(GetBalance){
-               setNewBalance(passDataBalance.data ? passDataBalance.data.data.data.balance : "");
+               setNewBalance(passDataBalance?.data ? passDataBalance?.data?.data?.data?.balance : "");
               }
            }
           //eslint-disable-next-line
@@ -469,11 +480,11 @@ console.log(airtelDataAmount, balanceStringToNum)
 
       
 
-        setAirtelTransactionID(resData.transaction_id);
-        console.log(resData.transaction_id);
+        setAirtelTransactionID(resData?.transaction_id);
+        console.log(resData?.transaction_id);
 
-        setAirtelRefNumber(resData.reference_number);
-        console.log(resData.reference_number);
+        setAirtelRefNumber(resData?.reference_number);
+        console.log(resData?.reference_number);
 
         setAirtelOrderID(resData.order_id); // No `order_id`, using `id` instead
         console.log(resData.order_id);
@@ -484,7 +495,7 @@ console.log(airtelDataAmount, balanceStringToNum)
       setTransactSuccessPopUp(true); // Show success popup
       setConfirm(false);
       setInputPin("")
-     return { statusCode: response.status, data: response.data };
+     return { statusCode: response?.status, data: response?.data };
         }
         // console.log(response.data);
       } catch (error) {
@@ -737,12 +748,13 @@ console.log(airtelDataAmount, balanceStringToNum)
               </div>
               <div className="relative">
               {showProductList && (
-                <div className={`border md:rounded-[10px] text-[16px] md:text-[12px]
+                <div className={` text-[16px] md:text-[12px]  bvnQuery
+                  shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
                   ${products.length > 1 ?  "overflow-y-scroll h-[300px]" : "h-[0px]"}
                    lg:text-[16px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[10]
                   ${isDarkMode
                     ? "bg-black text-white border !border-white"
-                    : "border border-[#0003]"
+                    : " border-[1px] border-gray-300 md:rounded-[10px]  rounded-[5px]"
                   }
                 `}>
                   {loadingProducts ? (
@@ -756,7 +768,7 @@ console.log(airtelDataAmount, balanceStringToNum)
                            text-[#7C7C7C] md:text-[12px] lg:text-[16px]  md:rounded-[0px]
                             lg:mt-2 py-[4px]  pl-[5px] ${selectedProductAirtel === product.Plan_Type ? "" : ""}
                           ${isDarkMode
-                            ? "bg-black text-white "
+                            ? "bg-black text-white"
                             : ""
                           }
                           `}
@@ -824,9 +836,10 @@ console.log(airtelDataAmount, balanceStringToNum)
                   <img src={arrowDown} alt="" className="w-full h-full" />
                 </button>
               </div>
-          <div className="relative">
+          <div className="relative ">
               {showOptionList && (
-                <div className={`border md:rounded-[10px] lg:mt-2 rounded-[4px]
+                <div className={`border md:rounded-[10px] lg:mt-2 bvnQuery rounded-[4px]
+                  shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
                    absolute w-full bg-[#FFF] z-[100] ${productPlans.length > 1 ? "h-[300px] overflow-y-scroll" : "h-[0px]"}
                   ${isDarkMode
                     ? "bg-black text-white border !border-white"
@@ -949,7 +962,7 @@ console.log(airtelDataAmount, balanceStringToNum)
 
             <div className="flex flex-col lg:gap-[14px] gap-[7px]">
               <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${isDarkMode
-                ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                ? "!text-[#7E7E7E]" : "!text-[#7E7E7E]"
                 }`}>
                 Amount
               </h2>
@@ -977,14 +990,16 @@ console.log(airtelDataAmount, balanceStringToNum)
 
             <div>
               <div onClick={handleShowPayment}>
-                <h2 className={`lg:text-[18px] mt-[5px] lg:leading-[24px] mb-2 text-[15px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${isDarkMode
-                  ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                <h2 className={`lg:text-[18px] mt-[5px] lg:leading-[24px] 
+                mb-2 text-[15px] md:text-[12px] md:font-[600]
+                 font-[400] leading-[12px] ${isDarkMode
+                  ? "!text-[#7E7E7E]" : "text-[#7E7E7E]"
                   }`}>
                   Payment Method
                 </h2>
                 <div className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.8px]
-                 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
-                   leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+                 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] 
+                 pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
                 lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
                   isDarkMode 
                     ? "bg-black text-white border border-white" 
@@ -1034,7 +1049,8 @@ console.log(airtelDataAmount, balanceStringToNum)
 
               {showPayment && (
                 <div
-                  className={`pb-[14px] w-full md:pb-[6px] pt-[14px] md:pt-[6px] font-weight-bold text-[13px] border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute
+                  className={`pb-[14px] w-full md:pb-[6px] pt-[14px] md:pt-[6px] font-weight-bold
+                     text-[13px] border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute
                        ${isDarkMode
                       ? "bg-black text-white border !border-white"
                       : "border border-[#0003]"
@@ -1659,6 +1675,9 @@ console.log(airtelDataAmount, balanceStringToNum)
             <Modal>
               <Loader/>
             </Modal>
+          )}
+          {sessionModal && (
+            <HandleUserSession/>
           )}
     </DashBoardLayout>
   );

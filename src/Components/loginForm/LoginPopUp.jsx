@@ -89,8 +89,7 @@ if((response.status === 200 || 201) && (response.headers.hasAuthorization)){
  }catch(error){
   if(error && error.response === undefined){
   alert("Check your internet connection.")
-  }
-  if(error.response && error.response.status === 401){
+  } else if(error.response && error.response.status === 401){
   console.log(error.response.headers);
         console.log(error.response.headers.get("x-new-auth-token"))
         console.log(error.response.headers["x-new-auth-token"])
@@ -371,7 +370,9 @@ const handleAccountDetails = async(AuthUsed)=> {
          console.log(twoStepVerificationSuccess)
          if(CheckVirtualAcc){
       navigate("/dashboard");
-        }
+      //  document.cookie = `sessionToken=${AuthUsed}; path=/; max-age=900`;
+      //   }
+         }
   }
 
 

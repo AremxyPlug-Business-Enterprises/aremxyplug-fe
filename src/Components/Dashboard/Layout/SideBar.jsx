@@ -79,7 +79,7 @@ return (
             />
             <img
               onClick={() => setToggleSideBar(false)}
-              className="cursor-pointer w-[13.97px] h-[13.97px] md:w-[22px] md:h-[22px] lg:h-[40px] lg:w-[40px]"
+              className="cursor-pointer w-[20px] h-[20px] md:w-[22px] md:h-[22px] lg:h-[40px] lg:w-[40px]"
               src="./Images/dashboardImages/menumenu.png"
               alt="Menu"
             />
