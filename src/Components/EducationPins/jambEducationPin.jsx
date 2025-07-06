@@ -23,8 +23,12 @@ import { Modal } from "../Screens/Modal/Modal";
 import JambReceipt from "./ReceiptEducationPins/jambReceipt";
 import AremxyPlugIcon from "./imagesEducation/AremxyPlug.svg";
 import "../Dashboard/DashboardComponents/DataTopUpPage/DataTopUp.css";
-import { GetFunction } from "../ApiCollection.jsx/ApiBuck";
-import { BalanceLoading, Loader } from "../Loader/Loader";
+import { GetFunction, PostFunction } from "../ApiCollection.jsx/ApiBuck";
+import { Loader } from "../Loader/Loader";
+import {
+  handleFormattedAmount,
+  validateNigerianNumberByNetwork,
+} from "./waecEducationPin";
 
 export default function JambEducationPin() {
   const {
@@ -41,8 +45,6 @@ export default function JambEducationPin() {
     setJambExamType,
     jambExamActive,
     setJambExamActive,
-    necoEducationPinEmail,
-    setNecoEducationPinEmail,
     transactSuccessPopUp,
     setTransactSuccessPopUp,
     jambEducationPinPhone,
@@ -69,9 +71,12 @@ export default function JambEducationPin() {
 
   //==========  QUANTITY RESULT SLIP CHECKERS ==============
   function jambQuantityDropDown() {
-    setJambQuantityActive(!jambQuantityActive);
-    document.querySelector(".imgdrop").classList.toggle("DropIt");
-    setJambExamActive(false);
+    if (!jambExamType) {
+      setJambQuantityActive(false);
+    } else {
+      setJambQuantityActive(!jambQuantityActive);
+      document.querySelector(".imgdrop").classList.toggle("DropIt");
+    }
     setJambMethodActive(false);
   }
   const jambOptions = [
@@ -93,7 +98,7 @@ export default function JambEducationPin() {
   const jambMethodOptions = [
     {
       method: "NGN Wallet",
-      balance: `(${newBalance})`,
+      balance: `(₦${newBalance})`,
       flag: nigerianFlag,
       id: 1,
     },
@@ -106,10 +111,10 @@ export default function JambEducationPin() {
 
   // CONFIRM EXAM TYPE
   const jambExams = [
-    { examType: "JAMB (₦100)", id: 1 },
-    { examType: "NECO (₦100)", path: "/NecoEducationPin", id: 2 },
-    { examType: "NABTEB (₦100)", path: "/NabtebEducationPin", id: 3 },
-    { examType: "WAEC (₦100)", path: "/WaecEducationPin", id: 4 },
+    { examType: "JAMB", id: 1 },
+    { examType: "NECO", path: "/NecoEducationPin", id: 2 },
+    { examType: "NABTEB", path: "/NabtebEducationPin", id: 3 },
+    { examType: "WAEC", path: "/WaecEducationPin", id: 4 },
   ];
   function jambExamDropDown() {
     setJambExamActive(!jambExamActive);
@@ -132,6 +137,7 @@ export default function JambEducationPin() {
       jambEducationPinPhone,
       jambEducationPinEmail,
     });
+    const network = validateNigerianNumberByNetwork(jambEducationPinPhone);
 
     if (error) {
       setErrors(
@@ -140,6 +146,11 @@ export default function JambEducationPin() {
           return acc;
         }, {})
       );
+    } else if (network === "Unknown network") {
+      setErrors({
+        educationPinPhone:
+          "Invalid phone number. Please enter a valid Nigerian network number.",
+      });
     } else {
       setJambEducationProceed(true);
       setErrors({});
@@ -160,12 +171,12 @@ export default function JambEducationPin() {
   });
 
   // Get Amount
-  const [isFailedAmount, setIsFailedAmount] = useState(false);
+  // const [isFailedAmount, setIsFailedAmount] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isAmountLoading, setIsAmountLoading] = useState(false);
+  // const [isAmountLoading, setIsAmountLoading] = useState(false);
 
   const getAmount = async function handleGetAmount() {
-    const id = 1;
+    const id = 3;
     const path = `products/edu/${id}`;
     const SuccessHandler = () => {
       setJambEduResponse((response) => {
@@ -179,8 +190,11 @@ export default function JambEducationPin() {
       });
     };
 
-    const FailedHandler = () => {
-      setIsFailedAmount(true);
+    const FailedHandler = (name) => {
+      // setIsFailedAmount(true);
+      if (name === "Server error") {
+        alert("Unable to get WAEC PINS. Please try again later");
+      }
     };
 
     await GetFunction(
@@ -200,23 +214,27 @@ export default function JambEducationPin() {
 
   // function to reset the fields
   function handleResetFields() {
-    setJambExamType("");
+    setJambExamType("JAMB");
     setJambQuantityResult("");
     setJambEducationPinPhone("");
     setJambEducationPinEmail("");
     setJambEducationAmount("");
     setJambPaymentResult("");
+    setJambQuantityActive(false);
+    setJambMethodActive(false);
+    setJambExamActive(false);
   }
 
   function handleCalculatedAmount(quantity) {
-    setIsAmountLoading(true);
+    // setIsAmountLoading(true);
     const amountCalculated =
       jambQuantityAmount > 0 ? Number(jambQuantityAmount) * quantity : "";
+    return handleFormattedAmount(amountCalculated);
 
-    setTimeout(() => {
-      setIsAmountLoading(false);
-      setJambEducationAmount(amountCalculated);
-    }, 1000);
+    // setTimeout(() => {
+    //   setIsAmountLoading(false);
+    //   setJambEducationAmount(amountCalculated);
+    // }, 1000);
   }
 
   const [balanceStatus, setBalanceStatus] = useState("");
@@ -245,6 +263,38 @@ export default function JambEducationPin() {
   const jambReceipt = () => {
     setTransactSuccessPopUp(false);
   };
+
+  const handleJambSubmitPost = async (e) => {
+    e.preventDefault();
+    // const id = 1;
+    const path = `edu`;
+    const body = {
+      exam_type: jambExamType.toLowerCase(),
+      quantity: parseInt(jambQuantityResult.slice(0, 1)),
+      phone_no: jambEducationPinPhone,
+      email: jambEducationPinEmail,
+      // amount: educationAmount.slice(1),
+      amount: String(jambEducationAmount),
+      wallet_type: "",
+    };
+    const SuccessHandler = () => {
+      // eduPinSuccess();
+      // setEducationPinStatus(true);
+    };
+    const FailedHandler = () => {
+      // waecEduPinFailed();
+    };
+
+    await PostFunction(
+      path,
+      setIsLoading,
+      body,
+      SuccessHandler,
+      FailedHandler
+      // setEduResponse
+    );
+  };
+
   return (
     <DashBoardLayout>
       <div className="flex flex-col justify-between h-[115%] lg:h-[120%]">
@@ -280,15 +330,15 @@ export default function JambEducationPin() {
             />
           </div>
           {/* Input for Request of examination pins  */}
-          <form action="">
-            <div className="flex flex-col gap-[20px] md:h-[172.73px] md:gap-[14.67px] lg:gap-[25px] lg:h-[296px] lg:mb-[30px] mb-[30px]">
+          <form action="" onSubmit={handleJambSubmitPost}>
+            <div className="flex flex-col gap-5 md:gap-0">
               {/* container for the first two input */}
-              <div className=" w-full flex flex-col md:flex-row gap-[20px] md:gap-[12.91px] lg:gap-[22px]">
+              <div className="  w-full flex flex-col md:flex-row gap-5 md:gap-3 lg:gap-[22px] md:my-2 lg:my-4">
                 {/* First Step Confirm exam type */}
-                <div className="relative flex flex-col w-full md:w-1/2 gap-2 lg:gap-2.5">
+                <div className="relative flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
                   {/* header */}
                   <h2
-                    className={`md:font-semibold font-normal text-sm leading-[10.4px] md:text-xs md:leading-[12.206px] lg:text-base lg:leading-[20.8px] ${
+                    className={`md:font-semibold font-normal text-[14px] lg:text-[17px] md:text-[13px] ${
                       isDarkMode ? "text-white" : "text-[#7E7E7E]"
                     }`}
                   >
@@ -297,16 +347,20 @@ export default function JambEducationPin() {
                   {/* input */}
                   <div
                     onClick={jambExamDropDown}
-                    className={`flex justify-between items-center py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-xs leading-[18px] lg:text-base lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full
-                     ${
-                       isDarkMode
-                         ? "bg-black text-white border-white"
-                         : "border-[#9C9C9C] hover:bg-[#EDEAEA] "
-                     }`}
+                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px]  sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-normal leading-[10.4px] md:text-[11px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+                      isDarkMode
+                        ? "bg-black text-white border border-white"
+                        : "hover:bg-[#EDEAEA]"
+                    }`}
                   >
                     <h2
-                      className={`font-normal text-xs leading-[10.4px] md:leading-[12.206px] capitalize lg:text-base  lg:leading-[20.8px]cursor-pointer
-                      ${isDarkMode ? "text-white bg-black" : "text-[#7C7C7C]"}`}
+                      className={`
+                      ${
+                        isDarkMode
+                          ? "bg-black text-white"
+                          : " text-[#7C7C7C] hover:bg-[#EDEAEA] "
+                      }`}
+                      // font-normal text-xs leading-[10.4px] md:leading-[12.206px] capitalize lg:text-base  lg:leading-[20.8px]cursor-pointer
                     >
                       {jambExamType}
                     </h2>
@@ -318,10 +372,10 @@ export default function JambEducationPin() {
                   </div>
                   {jambExamActive && (
                     <div
-                      className={`absolute lg:top-[90px] md:top-[75px] top-[68px] border divide-y z-[5] rounded flex flex-col w-full  
+                      className={`absolute lg:top-[90px] md:top-[60px] top-[74px] z-[2] flex flex-col w-full divide-y lg:h-225px md:h-[210px]
                       ${
                         isDarkMode
-                          ? "bg-black text-white divide-gray-50  border-white"
+                          ? "bg-black text-white divide-gray-50 border border-white"
                           : "text-[#7C7C7C]"
                       }`}
                     >
@@ -336,11 +390,11 @@ export default function JambEducationPin() {
                                 .querySelector(".Examdrop")
                                 .classList.remove("DropIt");
                             }}
-                            className={`pb-[21px] md:pb-[14px] md:pt-[14px] pt-[21px] text-[13.2px] leading-[10.4px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] md:py-[15px] py-[8px] pl-[10px] font-medium md:text-[13.227px] md:leading-[17.195px] w-full lg:text-base lg:leading-[20.8px] cursor-pointer transition-colors duration-300    
+                            className={`py-5 text-sm leading-[10.4px] md:py-[14px] pl-[10px] font-medium md:text-[13.227px] md:leading-[17.195px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] lg:text-base lg:leading-[20.8px] cursor-pointer transition-colors duration-300 
                             ${
                               isDarkMode
-                                ? "bg-black text-white hover:bg-gray-800 "
-                                : " hover:bg-[#EDEAEA] bg-[white] text-[#7C7C7C]"
+                                ? "bg-black text-white  hover:bg-gray-800"
+                                : " text-[#7C7C7C] hover:bg-[#EDEAEA] bg-white"
                             }`}
                             key={exam.id}
                           >
@@ -353,10 +407,10 @@ export default function JambEducationPin() {
                 </div>
 
                 {/* Quantity input Two / RightSide */}
-                <div className="relative gap-2 md:w-1/2 flex flex-col w-full lg:gap-2.5 ">
+                <div className="relative flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2 ">
                   {/* header */}
                   <h2
-                    className={`md:font-semibold font-normal text-sm leading-[10.4px] md:text-xs md:leading-[12.206px] lg:text-base lg:leading-[20.8px] ${
+                    className={`md:font-semibold font-normal text-sm md:text-[13px] lg:text-base ${
                       isDarkMode ? "text-white" : "text-[#7E7E7E]"
                     }`}
                   >
@@ -365,15 +419,19 @@ export default function JambEducationPin() {
                   {/* input */}
                   <div
                     onClick={jambQuantityDropDown}
-                    className={`flex justify-between items-center py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-xs leading-[18px] lg:text-base lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
+                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] sm:p-3 sm:text-lg  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-normal leading-[10.4px] md:text-[11px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer outline-0 w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] self-center  ${
                       isDarkMode
-                        ? "text-white bg-black border-white"
-                        : "text-[#7E7E7E] bg-white border-[#9C9C9C]"
+                        ? "bg-black text-white border border-white"
+                        : "hover:bg-[#EDEAEA] border-[0.24px] lg:border-[0.4px] border-[#9C9C9C] text-[#7C7C7C]"
                     }`}
                   >
                     <h2
-                      className={`font-normal leading-[10.4px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] 
-                      ${isDarkMode ? "text-white bg-black" : "text-[#7C7C7C]"}`}
+                      className={`w-full h-full 
+                      ${
+                        isDarkMode
+                          ? "bg-black text-white "
+                          : " text-[#7C7C7C] hover:bg-[#EDEAEA] "
+                      }`}
                     >
                       {jambQuantityResult}
                     </h2>
@@ -387,26 +445,37 @@ export default function JambEducationPin() {
 
                   {jambQuantityActive && (
                     <div
-                      className={`absolute lg:top-[90px] md:top-[75px] top-[70px] border divide-y z-[2] rounded flex flex-col w-full  
+                      className={`absolute lg:top-[90px] md:top-[60px] top-[74px] z-[1] flex flex-col w-full divide-y rounded
                       ${
                         isDarkMode
-                          ? "bg-black text-white divide-gray-50  border-white"
-                          : "text-[#7C7C7C]"
+                          ? "bg-black text-white divide-gray-50 border border-white"
+                          : "text-[#7C7C7C] hover:bg-[#EDEAEA]"
                       }`}
                     >
                       {jambOptions.map((option) => {
                         return (
                           <h2
-                            onClick={(e) => {
-                              setJambQuantityResult(option.quantity);
+                            onClick={() => {
+                              setJambQuantityResult(
+                                jambQuantityAmount > 0
+                                  ? `${
+                                      option.quantity
+                                    } (₦${handleCalculatedAmount(option.id)})`
+                                  : option.quantity
+                              );
                               setJambQuantityActive(false);
-                              // setJambEducationAmount(option.Amount);
+                              setJambEducationAmount(
+                                jambQuantityAmount > 0
+                                  ? handleFormattedAmount(
+                                      Number(jambQuantityAmount) * option.id
+                                    )
+                                  : ""
+                              );
                               document
                                 .querySelector(".imgdrop")
                                 .classList.remove("DropIt");
-                              handleCalculatedAmount(option.id);
                             }}
-                            className={`pb-[21px] md:pb-[14px] md:pt-[14px] pt-[21px] text-[13.2px] leading-[10.4px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] md:py-[15px] py-[8px] pl-[10px] font-medium md:text-[13.227px] md:leading-[17.195px] w-full lg:text-base lg:leading-[20.8px] cursor-pointer transition-colors duration-300    
+                            className={`py-5 md:py-[14px]  text-[13.5px] leading-[10.4px] pl-[10px] font-medium md:text-[13.227px] md:leading-[17.195px] w-full shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] lg:text-base lg:leading-[20.8px] cursor-pointer transition-colors duration-300    
                             ${
                               isDarkMode
                                 ? "bg-black text-white hover:bg-gray-800 "
@@ -414,7 +483,11 @@ export default function JambEducationPin() {
                             }`}
                             key={option.id}
                           >
-                            {option.quantity}
+                            {jambQuantityAmount > 0
+                              ? `${option.quantity} (₦${handleCalculatedAmount(
+                                  option.id
+                                )})`
+                              : option.quantity}
                           </h2>
                         );
                       })}
@@ -423,16 +496,16 @@ export default function JambEducationPin() {
                 </div>
               </div>
               {/* container for Phone number and Email */}
-              <div className=" w-full flex flex-col  md:flex-row  gap-[20px] md:gap-[12.91px] lg:gap-[22px]">
+              <div className=" w-full flex flex-col md:flex-row gap-5 md:gap-3 lg:gap-[22px] md:my-2 lg:my-4">
                 {/* LeftSide */}
-                <div className=" container-phone gap-2 flex flex-col md:w-1/2 md:gap-2.5 ">
-                  <h2
-                    className={`md:font-semibold font-normal text-sm leading-[10.4px] md:text-xs md:leading-[12.206px] lg:text-base lg:leading-[20.8px] ${
+                <div className=" container-phone flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2 ">
+                  <label
+                    className={`md:font-semibold font-normal text-sm md:text-[13px] lg:text-base ${
                       isDarkMode ? "text-white" : "text-[#7E7E7E]"
                     }`}
                   >
                     Phone Number
-                  </h2>
+                  </label>
 
                   <input
                     onInput={(e) => {
@@ -444,11 +517,11 @@ export default function JambEducationPin() {
                         e.target.style.border = "2px solid red";
                       }
                     }}
-                    className={`py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-xs leading-[18px] lg:text-base lg:leading-[20.8px]  placeholder:text-xs placeholder:leading-[10.4px] lg:placeholder:text-base lg:placeholder:leading-[20.8px] rounded-lg sm:rounded-[10px] 
+                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-5 md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-normal leading-[10.4px] md:text-[11px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer focus:outline-0 outline-0 border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px]  self-center
                     ${
                       isDarkMode
                         ? "bg-black text-white border-white"
-                        : "text-black placeholder:text-[#7E7E7E] border-[#9C9C9C]"
+                        : "border-[#9C9C9C] text-[#7C7C7C] hover:bg-[#EDEAEA] bg-white"
                     }`}
                     type="tel"
                     name="phone"
@@ -459,18 +532,24 @@ export default function JambEducationPin() {
                     onChange={(e) => {
                       setJambEducationPinPhone(e.target.value);
                     }}
+                    onFocus={() => {
+                      setErrors((prev) => ({
+                        ...prev,
+                        jambEducationPinPhone: "",
+                      }));
+                    }}
                   />
                   {errors.jambEducationPinPhone && (
-                    <div className="text-[12px] text-red-500 italic lg:text-sm">
+                    <div className="text-[#F95252] italic text-[13px] md:text-xs lg:text-sm">
                       {errors.jambEducationPinPhone}
                     </div>
                   )}
                 </div>
 
                 {/* right-side */}
-                <div className="flex flex-col gap-2 md:w-1/2 lg:gap-2.5">
+                <div className="flex flex-col relative gap-[3px] lg:gap-[5px] w-full md:w-1/2">
                   <h2
-                    className={`md:font-semibold font-normal text-sm leading-[10.4px] md:text-xs md:leading-[12.206px] lg:text-base lg:leading-[20.8px] ${
+                    className={`md:font-semibold font-normal text-sm md:text-[13px] lg:text-base ${
                       isDarkMode ? "text-white" : "text-[#7E7E7E]"
                     }`}
                   >
@@ -478,22 +557,28 @@ export default function JambEducationPin() {
                   </h2>
 
                   <input
-                    className={`py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-xs leading-[18px] lg:text-base lg:leading-[20.8px] focus:outline-none placeholder:text-xs placeholder:leading-[10.4px] lg:placeholder:text-base lg:placeholder:leading-[20.8px] rounded-lg sm:rounded-[10px]
+                    className={`EmailPins mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[13px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer focus:outline-0 outline-0 border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center  
                     ${
                       isDarkMode
-                        ? "bg-black text-white placeholder:text-white border-white"
-                        : " placeholder:text-[#7E7E7E] border-[#9C9C9C] text-[#7E7E7E]"
+                        ? "bg-black text-white border-white"
+                        : "placeholder:text-[#7E7E7E] border-[#9C9C9C] text-[#7C7C7C]"
                     }`}
-                    value={necoEducationPinEmail}
+                    value={jambEducationPinEmail}
                     onChange={(e) => {
-                      setNecoEducationPinEmail(e.target.value);
+                      setJambEducationPinEmail(e.target.value);
                     }}
-                    type="Email"
+                    onFocus={() => {
+                      setErrors((prev) => ({
+                        ...prev,
+                        jambEducationPinEmail: "",
+                      }));
+                    }}
+                    type="email"
                     placeholder="example@gmail.com"
                   />
 
                   {errors.jambEducationPinEmail && (
-                    <div className="text-[12px] text-red-500 italic lg:text-sm">
+                    <div className="text-[#F95252] italic text-[13px] md:text-xs lg:text-sm">
                       {errors.jambEducationPinEmail}
                     </div>
                   )}
@@ -501,12 +586,12 @@ export default function JambEducationPin() {
               </div>
 
               {/* Conatiner for Amount and Payment method */}
-              <div className="flex w-full flex-col gap-[20px] md:flex-row md:gap-[12.91px] lg:gap-[22px]">
+              <div className="w-full flex flex-col md:flex-row gap-5 md:gap-3 lg:gap-[22px] md:my-2 lg:my-4">
                 {/* Amount Step /Leftside */}
-                <div className="flex flex-col gap-2 w-full md:w-1/2 lg:gap-2.5 relative">
+                <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
                   {/* header */}
                   <label
-                    className={`md:font-semibold font-normal text-sm leading-[10.4px] md:text-xs md:leading-[12.206px] lg:text-base lg:leading-[20.8px] ${
+                    className={`md:font-semibold font-normal  text-sm md:text-[13px]  lg:text-base ${
                       isDarkMode ? "text-white" : "text-[#7E7E7E]"
                     }`}
                   >
@@ -514,29 +599,28 @@ export default function JambEducationPin() {
                   </label>
                   {/* input */}
                   <input
-                    className={`py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-xs leading-[18px] lg:text-base lg:leading-[20.8px] focus:outline-none placeholder:text-xs placeholder:leading-[10.4px] lg:placeholder:text-base lg:placeholder:leading-[20.8px] rounded-lg sm:rounded-[10px] 
+                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[13px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer focus:outline-0 outline-0 border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center  
                     ${
                       isDarkMode
-                        ? "text-white bg-black border-white"
-                        : "text-[#7E7E7E] bg-white border-[#9C9C9C]"
+                        ? "bg-black text-white border-white"
+                        : "border-[#9C9C9C] text-[#7C7C7C]"
                     }`}
-                    value={isAmountLoading ? "" : jambEducationAmount}
-                    // onChange={(e) => {
-                    //   setJambEducationAmount(e.target.value);
-                    // }}
+                    value={
+                      jambEducationAmount ? `₦${jambEducationAmount}` : "₦"
+                    }
                     readOnly
                   />
-                  {isAmountLoading && (
+                  {/* {isAmountLoading && (
                     <p className="left-4 absolute top-7 md:top-9 lg:top-12">
                       <BalanceLoading />
                     </p>
-                  )}
+                  )} */}
                 </div>
                 {/* payment method */}
-                <div className=" relative gap-2 flex w-full flex-col md:w-1/2  lg:gap-2.5">
+                <div className="flex flex-col relative gap-[3px] lg:gap-[5px] w-full md:w-1/2">
                   {/* header */}
                   <h2
-                    className={`md:font-semibold font-normal text-sm leading-[10.4px] md:text-xs md:leading-[12.206px] lg:text-base lg:leading-[20.8px] ${
+                    className={`md:font-semibold font-normal text-sm md:text-[13px] lg:text-base ${
                       isDarkMode ? "text-white" : "text-[#7E7E7E]"
                     }`}
                   >
@@ -545,24 +629,24 @@ export default function JambEducationPin() {
                   {/* input */}
                   <div
                     onClick={jambMethodDropDown}
-                    className={`flex justify-between items-center relative py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-xs leading-[18px] lg:text-base lg:leading-[20.8px]  placeholder:text-xs placeholder:leading-[10.4px] lg:placeholder:text-base lg:placeholder:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
+                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px]  sm:p-3 sm:text-lg flex items-center justify-between border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] ${
                       isDarkMode
-                        ? "text-white bg-black border-white"
-                        : "text-[#7E7E7E] bg-white border-[#9C9C9C]"
+                        ? "bg-black text-white border-white"
+                        : "border-[#9C9C9C] hover:bg-[#EDEAEA] "
                     }`}
                   >
                     <h2
-                      className={`font-normal leading-[10.4px] text-xs md:leading-[12.206px]  lg:text-base lg:leading-[20.8px] cursor-pointer
+                      className={`font-medium text-[13px] leading-[10.4px] md:text-xs md:leading-[12.206px] lg:text-base  lg:leading-[20.8px] cursor-pointer
                       ${
-                        isDarkMode ? "bg-black text-white" : "text-[#7E7E7E] "
+                        isDarkMode ? "bg-black text-white" : " text-[#7C7C7C] "
                       }`}
                     >
                       {/* {jambPaymentResult + "" + jambWalletBalance} */}
                       {jambPaymentResult}
                     </h2>
                     <img
-                      className="methodDrop h-[18px] w-[14px] md:h-[14.038px] md:w-[14.038px] lg:h-[24px] lg:w-[24px]"
-                      src={jambImageState}
+                      className="lg:w-6 lg:h-6 w-4 h-4 cursor-pointer methodDrop"
+                      src={jambPaymentResult?jambImageState:arrowDown}
                       alt=""
                     />
                   </div>
@@ -570,31 +654,43 @@ export default function JambEducationPin() {
 
                   {jambMethodActive && (
                     <div
-                      className={`absolute lg:top-[90px] md:top-[75px] top-[72px] border divide-y z-[5] rounded flex flex-col w-full  
+                      className={`absolute lg:top-[85px] md:top-[60px] top-[72px] border divide-y z-[5] rounded flex flex-col w-full  
                       ${
                         isDarkMode
                           ? "bg-black text-white divide-gray-50  border-white"
-                          : "text-[#7C7C7C]"
+                          : "text-[#7C7C7C] bg-white"
                       }`}
                     >
                       {jambMethodOptions.map((methodOption) => {
                         return (
                           <div
                             onClick={() => {
-                              setJambPaymentResult(methodOption.method);
-                              setJambWalletBalance(methodOption.balance);
-                              setJambImageState(methodOption.flag);
-                              setJambMethodActive(false);
-                              document
-                                .querySelector(".methodDrop")
-                                .classList.remove("DropIt");
+                              if (methodOption.method === "NGN Wallet") {
+                                setJambPaymentResult(newBalance
+                                    ? `${methodOption.method} ${methodOption.balance}`
+                                    : methodOption);
+                                setJambWalletBalance(methodOption.balance);
+                                setJambImageState(methodOption.flag);
+                                setJambMethodActive(false);
+                                document
+                                  .querySelector(".methodDrop")
+                                  .classList.remove("DropIt");
+                              } else {
+                                setJambMethodActive(true);
+                              }
                             }}
-                            className={`flex gap-2.5 lg:py-[15px] py-[10px] pl-[10px] cursor-pointer items-center shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]  transition-colors duration-300
+                            className={`flex gap-2.5 lg:py-[15px] py-[10px] pl-[10px] transition-colors duration-300 items-center shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
                             ${
                               isDarkMode
-                                ? " text-white hover:bg-gray-800"
-                                : "hover:bg-[#EDEAEA] bg-white"
-                            }`}
+                                ? "bg-black text-white hover:bg-gray-800"
+                                : "bg-white hover:bg-[#EDEAEA]"
+                            }
+                            ${
+                              methodOption.method === "NGN Wallet"
+                                ? "cursor-pointer "
+                                : "cursor-not-allowed opacity-50 "
+                            }
+                            `}
                             key={methodOption.id}
                           >
                             <img
@@ -604,10 +700,11 @@ export default function JambEducationPin() {
                             />
 
                             <h2
-                              className={`py-[18px]  md:pb-0 md:pt-0 text-[13.5px] leading-[10.4px] font-medium md:text-[13.227px] md:leading-[17.195px] lg:text-base lg:leading-[20.8px] self-center cursor-pointer ${
+                              className={`py-5 md:pb-0 md:pt-0 font-normal text-[13.5px] leading-[10.4px] md:text-[13.227px] md:leading-[17.195px] lg:text-base lg:leading-[20.8px] self-center
+                              ${
                                 isDarkMode
                                   ? "bg-black text-white"
-                                  : "text-[#7C7C7C] "
+                                  : "text-[#7C7C7C]"
                               }`}
                             >
                               {methodOption.method + " " + methodOption.balance}
@@ -736,10 +833,10 @@ export default function JambEducationPin() {
                         <input
                           className={`py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-xs leading-[18px] lg:text-base lg:leading-[20.8px] focus:outline-none placeholder:text-xs placeholder:leading-[10.4px] lg:placeholder:text-base lg:placeholder:leading-[20.8px] rounded-lg sm:rounded-[10px]
                           ${
-                      isDarkMode
-                        ? "bg-black text-white placeholder:text-white border-white"
-                        : " placeholder:text-[#7E7E7E] border-[#9C9C9C] text-[#7E7E7E]"
-                    }`}
+                            isDarkMode
+                              ? "bg-black text-white placeholder:text-white border-white"
+                              : " placeholder:text-[#7E7E7E] border-[#9C9C9C] text-[#7E7E7E]"
+                          }`}
                           value={jambEducationPinEmail}
                           onChange={(e) => {
                             setJambEducationPinEmail(e.target.value);
@@ -758,18 +855,14 @@ export default function JambEducationPin() {
                           Amount
                         </h2>
                         <div className="flex gap-1">
-                          <h2
-                            className="text-[10px] leading-[12px]  md:text-[12px] md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium"
-                          >
+                          <h2 className="text-[10px] leading-[12px]  md:text-[12px] md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
                             ₦{jambEducationAmount}
                           </h2>
                         </div>
                       </div>
 
                       <div className="flex items-center justify-between">
-                        <h2
-                          className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium"
-                        >
+                        <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
                           Payment Method
                         </h2>
                         <div className="flex gap-1">

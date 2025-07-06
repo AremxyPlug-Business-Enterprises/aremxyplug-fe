@@ -24,11 +24,84 @@ import { AiFillEye } from "react-icons/ai";
 import { Modal } from "../Screens/Modal/Modal";
 import AremxyPlugIcon from "./imagesEducation/AremxyPlug.svg";
 import WaecReceipt from "./ReceiptEducationPins/waecReceipt";
-import axios from "axios";
+// import axios from "axios";
 import "../Dashboard/DashboardComponents/DataTopUpPage/DataTopUp.css";
 import eduFailed from "./imagesEducation/WaecFailedTransaction.svg";
-import { GetFunction, PostFunction } from "../ApiCollection.jsx/ApiBuck";
-import { BalanceLoading, Loader } from "../Loader/Loader";
+import {
+  GetFunction,
+  PostFunction,
+  VerifyTransPin,
+} from "../ApiCollection.jsx/ApiBuck";
+import { Loader } from "../Loader/Loader";
+
+export function handleFormattedAmount(value) {
+  return value.toLocaleString("en-NG", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+}
+
+export function validateNigerianNumberByNetwork(number) {
+  const networks = [
+    {
+      name: "GLO",
+      values: ["0705", "0805", "0807", "0811", "0815", "0905", "0915"],
+    },
+    {
+      name: "AIRTEL",
+      values: [
+        "0701",
+        "0708",
+        "0802",
+        "0808",
+        "0812",
+        "0901",
+        "0902",
+        "0904",
+        "0907",
+        "0912",
+        "0911",
+      ],
+    },
+    {
+      name: "9MOBILE",
+      values: ["0809", "0817", "0818", "0909", "0908"],
+    },
+    {
+      name: "GLO",
+      values: ["0705", "0805", "0807", "0811", "0815", "0905", "0915"],
+    },
+    {
+      name: "MTN",
+      values: [
+        "0703",
+        "0704",
+        "0814",
+        "0706",
+        "0803",
+        "0806",
+        "0810",
+        "0813",
+        "0814",
+        "0816",
+        "0903",
+        "0906",
+        "0913",
+        "0916",
+      ],
+    },
+  ];
+
+  for (let network of networks) {
+    for (let prefix of network.values) {
+      if (number.startsWith(prefix) && number.length === 11) {
+        return network.name;
+      }
+    }
+  }
+
+  return "Unknown network";
+}
 
 export default function WaecEducationPin() {
   const {
@@ -58,7 +131,7 @@ export default function WaecEducationPin() {
     setEducationPinStatus,
     educationPinEmail,
     setEducationPinEmail,
-    eduResponse,
+    // eduResponse,
     setEduResponse,
     newBalance,
   } = useContext(ContextProvider);
@@ -73,8 +146,13 @@ export default function WaecEducationPin() {
 
   //==========  QUANTITY RESULT SLIP CHECKERS ==============
   function waecQuantityDropDown() {
-    setQuantityActive(!quantityActive);
-    document.querySelector(".imgdrop").classList.toggle("DropIt");
+    if (!examType) {
+      setQuantityActive(false);
+    } else {
+      setQuantityActive(!quantityActive);
+      document.querySelector(".imgdrop").classList.toggle("DropIt");
+    }
+    setMethodActive(false);
   }
   const options = [
     { quantity: "1 Piece Of Result Checker", Amount: "₦3400", id: 1 },
@@ -93,7 +171,7 @@ export default function WaecEducationPin() {
   const methodOptions = [
     {
       method: "NGN Wallet",
-      balance: `(${newBalance})`,
+      balance: `(₦${newBalance})`,
       flag: nigerianFlag,
       id: 1,
     },
@@ -114,6 +192,8 @@ export default function WaecEducationPin() {
   function waecExamDropDown() {
     setExamActive(!examActive);
     document.querySelector(".Examdrop").classList.toggle("DropIt");
+    setMethodActive(false);
+    setQuantityActive(false);
   }
   // FUNCTION OTP FOR THE POPPINS
   const { toggleSideBar, inputPin, setInputPin, toggleVisibility, isVisible } =
@@ -124,6 +204,7 @@ export default function WaecEducationPin() {
       educationPinPhone,
       educationPinEmail,
     });
+    const network = validateNigerianNumberByNetwork(educationPinPhone);
     if (error) {
       setErrors(
         error.details.reduce((acc, curr) => {
@@ -131,6 +212,11 @@ export default function WaecEducationPin() {
           return acc;
         }, {})
       );
+    } else if (network === "Unknown network") {
+      setErrors({
+        educationPinPhone:
+          "Invalid phone number. Please enter a valid Nigerian network number.",
+      });
     } else {
       setEducationProceed(true);
       setErrors({});
@@ -151,24 +237,14 @@ export default function WaecEducationPin() {
   });
 
   // Get Amount
-  const [isFailedAmount, setIsFailedAmount] = useState(false);
+  // const [isFailedAmount, setIsFailedAmount] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isAmountLoading, setIsAmountLoading] = useState(false);
+  // const navigate = useNavigate()
+  // const [isAmountLoading, setIsAmountLoading] = useState(false);
 
   const getAmount = async function handleGetAmount() {
     const id = 1;
     const path = `products/edu/${id}`;
-    // const SuccessHandler = () => {
-    //   setIsFailedAmount(false);
-    //   function handleReceivedAmount() {
-    //     if (eduResponse?.data?.data?.data?.Amount) {
-    //       setQuantityAmount(eduResponse?.data?.data?.data?.Amount);
-    //     } else {
-    //       setQuantityAmount("");
-    //     }
-    //   }
-    //   handleReceivedAmount();
-    // };
 
     const SuccessHandler = () => {
       setEduResponse((response) => {
@@ -182,8 +258,11 @@ export default function WaecEducationPin() {
       });
     };
 
-    const FailedHandler = () => {
-      setIsFailedAmount(true);
+    const FailedHandler = (name) => {
+      // setIsFailedAmount(true);
+      if (name === "Server error") {
+        alert("Unable to get WAEC PINS. Please try again later");
+      }
     };
 
     await GetFunction(
@@ -203,23 +282,27 @@ export default function WaecEducationPin() {
 
   // function to reset the fields
   function handleResetFields() {
-    setExamType("");
+    setExamType("WAEC");
     setQuantityResult("");
     setEducationPinPhone("");
     setEducationPinEmail("");
     setEducationAmount("");
     setPaymentResult("");
+    setQuantityActive(false);
+    setMethodActive(false);
+    setExamActive(false);
   }
 
   function handleCalculatedAmount(quantity) {
-    setIsAmountLoading(true);
+    // setIsAmountLoading(true);
     const amountCalculated =
       quantityAmount > 0 ? Number(quantityAmount) * quantity : "";
-
-    setTimeout(() => {
-      setIsAmountLoading(false);
-      setEducationAmount(amountCalculated);
-    }, 1000);
+    return handleFormattedAmount(amountCalculated);
+    // setEducationAmount(amountCalculated);
+    // setTimeout(() => {
+    //   setIsAmountLoading(false);
+    //   setEducationAmount(amountCalculated);
+    // }, 1000);
   }
 
   const [balanceStatus, setBalanceStatus] = useState("");
@@ -303,49 +386,63 @@ export default function WaecEducationPin() {
   //   }
   // };
 
-  const handleWaecSubmitPost = async (e) => {
-    e.preventDefault();
-    // const id = 1;
-    const path = `edu`;
-    const body = {
-      exam_type: examType.toLowerCase(),
-      quantity: parseInt(quantityResult.slice(0, 1)),
-      phone_no: educationPinPhone,
-      email: educationPinEmail,
-      // amount: educationAmount.slice(1),
-      amount: String(educationAmount),
-      wallet_type: "",
-    };
-    const SuccessHandler = () => {
-      eduPinSuccess();
-      setEducationPinStatus(true);
-    };
-    const FailedHandler = () => {
-      waecEduPinFailed();
-    };
+  const [pinSuccess, setPinSuccess] = useState(false);
+  const [pinFailed, setPinFailed] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(false);
 
-    await PostFunction(
-      path,
+  const handleWaecSubmitPost = async () => {
+    // const id = 1;
+    async function EduPinHandler() {
+      const path = `edu`;
+      const body = {
+        exam_type: examType.toLowerCase(),
+        quantity: parseInt(quantityResult.slice(0, 1)),
+        phone_no: educationPinPhone,
+        email: educationPinEmail,
+        // amount: educationAmount.slice(1),
+        amount: educationAmount,
+        wallet_type: "",
+      };
+      const bodyJSON = JSON.stringify(body)
+      const SuccessHandler = () => {
+        eduPinSuccess();
+        setEducationPinStatus(true);
+      };
+      const FailedHandler = () => {
+        waecEduPinFailed();
+      };
+
+      await PostFunction(
+        path,
+        setIsLoading,
+        bodyJSON,
+        SuccessHandler,
+        FailedHandler,
+        setEduResponse
+      );
+    }
+    await VerifyTransPin(
+      inputPin,
+      setPinSuccess,
+      setPinFailed,
       setIsLoading,
-      body,
-      SuccessHandler,
-      FailedHandler,
-      setEduResponse
+      setErrorMessage,
+      EduPinHandler
     );
   };
 
   // GET RESPONSE SUCCESSFUL
-  const requestEducationPin = async (e) => {
-    try {
-      const EducationResponse = await axios.get(
-        "https://aremxyplug.onrender.com/api/v1/edu"
-      );
-      return EducationResponse.data;
-    } catch (error) {
-      console.error("There was error fetching the Education Pins", error);
-      return null;
-    }
-  };
+  // const requestEducationPin = async (e) => {
+  //   try {
+  //     const EducationResponse = await axios.get(
+  //       "https://aremxyplug.onrender.com/api/v1/edu"
+  //     );
+  //     return EducationResponse.data;
+  //   } catch (error) {
+  //     console.error("There was error fetching the Education Pins", error);
+  //     return null;
+  //   }
+  // };
 
   // useEffect(() => {
   //   const acceptData = async () => {
@@ -397,15 +494,15 @@ export default function WaecEducationPin() {
             />
           </div>
           {/* Input for Request of examination pins  */}
-          <form onSubmit={handleWaecSubmitPost} action="POST">
-            <div className="flex flex-col gap-[20px] md:h-[172.73px] md:gap-[14.67px] lg:gap-[25px] lg:h-[296px] lg:mb-[30px] mb-[30px]">
+          <form action="">
+            <div className="flex flex-col gap-5 md:gap-0">
               {/* container for the first two input */}
-              <div className=" w-full flex flex-col md:flex-row gap-[20px] md:gap-[12.91px] lg:gap-[22px]">
+              <div className=" w-full flex flex-col md:flex-row gap-5 md:gap-3 lg:gap-[22px] md:my-2 lg:my-4">
                 {/* First Step Confirm exam type */}
-                <div className="relative flex flex-col w-full gap-2 md:w-1/2 lg:gap-2.5">
+                <div className="relative flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
                   {/* header */}
                   <label
-                    className={`md:font-semibold font-normal  text-sm leading-[10.4px] md:text-xs md:leading-[12.206px] lg:text-base lg:leading-[20.8px] ${
+                    className={`md:font-semibold font-normal text-[14px] lg:text-[17px] md:text-[13px] ${
                       isDarkMode ? "text-white" : "text-[#7E7E7E]"
                     }`}
                   >
@@ -413,15 +510,13 @@ export default function WaecEducationPin() {
                   </label>
                   {/* input */}
                   <div
-                    className={`relative flex items-center justify-between py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-xs leading-[18px] lg:text-base lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full w-full shadow-sm md:shadow-0 focus:outline-none ${
+                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px]  sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-normal leading-[10.4px] md:text-[11px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
                       isDarkMode
-                        ? "bg-black text-white border-white"
-                        : "border-[#9C9C9C] hover:bg-[#EDEAEA] "
+                        ? "bg-black text-white border border-white"
+                        : "hover:bg-[#EDEAEA]"
                     }`}
                     onClick={() => {
                       waecExamDropDown();
-                      setMethodActive(false);
-                      setQuantityActive(false);
                     }}
                   >
                     <input
@@ -430,8 +525,8 @@ export default function WaecEducationPin() {
                       onChange={(e) => {
                         setExamType(e.target.value);
                       }}
-                      className={`placeholder:text-xs placeholder:leading-[10.4px] placeholder:lg:text-base placeholder:lg:leading-[20.8px] bg-transparent
-                        text-xs font-normal leading-[12px] capitalize md:text-xs md:leading-[11.92px] lg:text-base focus:outline-none lg:leading-[24px]
+                      className={` bg-transparent
+                        text-xs focus:outline-none
                       ${
                         isDarkMode
                           ? "bg-black text-white"
@@ -452,14 +547,14 @@ export default function WaecEducationPin() {
                   </div>
                   {examActive && (
                     <div
-                      className={`absolute lg:top-[90px] md:top-[75px] top-[70px] z-[2] flex flex-col w-full border divide-y rounded-[10px] md:rounded-0
+                      className={`absolute lg:top-[90px] md:top-[60px] top-[74px] z-[2] flex flex-col w-full divide-y lg:h-225px md:h-[210px]
                       ${
                         isDarkMode
-                          ? "bg-black text-white divide-gray-50 border-white"
+                          ? "bg-black text-white divide-gray-50 border border-white"
                           : "text-[#7C7C7C]"
                       }`}
                     >
-                      {Exams.map((exam) => {
+                      {Exams?.map((exam) => {
                         return (
                           <a
                             href={exam.path}
@@ -471,7 +566,7 @@ export default function WaecEducationPin() {
                                 .classList.remove("DropIt");
                               // console.log(e);
                             }}
-                            className={`pb-[20px] pt-[20px] md:pb-[14px] md:pt-[14px] text-[13.2px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-medium md:text-[13.227px] md:leading-[17.195px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] lg:text-base lg:leading-[20.8px] cursor-pointer transition-colors duration-300 
+                            className={`py-5 text-sm leading-[10.4px] md:py-[14px] pl-[10px] font-medium md:text-[13.227px] md:leading-[17.195px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] lg:text-base lg:leading-[20.8px] cursor-pointer transition-colors duration-300 
                             ${
                               isDarkMode
                                 ? "bg-black text-white  hover:bg-gray-800"
@@ -488,10 +583,10 @@ export default function WaecEducationPin() {
                 </div>
 
                 {/* Quantity input Two / RightSide */}
-                <div className="relative gap-[5.868px] flex flex-col w-full md:w-1/2 md:gap-[5.868px] lg:gap-2.5 ">
+                <div className="relative flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2 ">
                   {/* header */}
                   <label
-                    className={`md:font-semibold font-normal  text-sm leading-[10.4px] md:text-xs md:leading-[12.206px] lg:text-base lg:leading-[20.8px] ${
+                    className={`md:font-semibold font-normal text-sm md:text-[13px] lg:text-base ${
                       isDarkMode ? "text-white" : "text-[#7E7E7E]"
                     }`}
                   >
@@ -499,15 +594,13 @@ export default function WaecEducationPin() {
                   </label>
                   {/* input */}
                   <div
-                    className={`relative flex items-center justify-between py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-xs leading-[18px] lg:text-base lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full w-full shadow-sm md:shadow-0 ${
+                    className={`mt-2 md:mt-0 text-sm rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] sm:p-3  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-normal leading-[10.4px] md:text-[11px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer outline-0 w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] self-center  ${
                       isDarkMode
-                        ? "bg-black text-white border-white"
-                        : "border-[#9C9C9C] hover:bg-[#EDEAEA] "
+                        ? "bg-black text-white border border-white"
+                        : "hover:bg-[#EDEAEA] border-[0.24px] lg:border-[0.4px] border-[#9C9C9C] text-[#7C7C7C]"
                     }`}
                     onClick={() => {
                       waecQuantityDropDown();
-                      setMethodActive(false);
-                      setExamActive(false);
                     }}
                   >
                     <input
@@ -522,8 +615,7 @@ export default function WaecEducationPin() {
                       //     ? "bg-black text-white border border-white"
                       //     : "bg-white text-black border-[#9C9C9C]"
                       // }`}
-                      className={`placeholder:text-xs placeholder:leading-[10.4px] placeholder:lg:text-base placeholder:lg:leading-[20.8px] bg-transparent
-                        text-xs font-normal leading-[12px] capitalize md:text-xs md:leading-[11.92px] lg:text-base focus:outline-none lg:leading-[24px]
+                      className={`w-full h-full bg-transparent capitalize focus:outline-none
                       ${
                         isDarkMode
                           ? "bg-black text-white "
@@ -542,26 +634,37 @@ export default function WaecEducationPin() {
 
                   {quantityActive && (
                     <div
-                      className={`absolute lg:top-[90px] md:top-[75px] top-[70px] z-[1] flex flex-col w-full border divide-y rounded
+                      className={`absolute lg:top-[90px] md:top-[60px] top-[74px] z-[1] flex flex-col w-full divide-y rounded
                       ${
                         isDarkMode
-                          ? "bg-black text-white divide-gray-50  border-white"
-                          : "text-[#7C7C7C]"
+                          ? "bg-black text-white divide-gray-50 border border-white"
+                          : "text-[#7C7C7C] hover:bg-[#EDEAEA]"
                       }`}
                     >
-                      {options.map((option) => {
+                      {options?.map((option) => {
                         return (
                           <h2
                             onClick={() => {
-                              setQuantityResult(option.quantity);
+                              setQuantityResult(
+                                quantityAmount > 0
+                                  ? `${
+                                      option.quantity
+                                    } (₦${handleCalculatedAmount(option.id)})`
+                                  : option.quantity
+                              );
                               setQuantityActive(false);
-                              // setEducationAmount(option.Amount);
+                              setEducationAmount(
+                                quantityAmount > 0
+                                  ? handleFormattedAmount(
+                                      Number(quantityAmount) * option.id
+                                    )
+                                  : ""
+                              );
                               document
                                 .querySelector(".imgdrop")
                                 .classList.remove("DropIt");
-                              handleCalculatedAmount(option.id);
                             }}
-                            className={`pb-[20px] md:pb-[14px] md:pt-[14px] pt-[20px] text-[13.5px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-medium md:text-[13.227px] md:leading-[17.195px] w-full shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] lg:text-base lg:leading-[20.8px] cursor-pointer transition-colors duration-300    
+                            className={`py-5 md:py-[14px]  text-[13.5px] leading-[10.4px] pl-[10px] font-medium md:text-[13.227px] md:leading-[17.195px] w-full shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] lg:text-base lg:leading-[20.8px] cursor-pointer transition-colors duration-300    
                             ${
                               isDarkMode
                                 ? "bg-black text-white hover:bg-gray-800 "
@@ -569,7 +672,11 @@ export default function WaecEducationPin() {
                             }`}
                             key={option.id}
                           >
-                            {option.quantity}
+                            {quantityAmount > 0
+                              ? `${option.quantity} (₦${handleCalculatedAmount(
+                                  option.id
+                                )})`
+                              : option.quantity}
                           </h2>
                         );
                       })}
@@ -578,11 +685,11 @@ export default function WaecEducationPin() {
                 </div>
               </div>
               {/* container for Phone number and Email */}
-              <div className=" w-full flex flex-col  md:flex-row gap-[20px] md:gap-[12.91px] lg:gap-[22px] ">
+              <div className=" w-full flex flex-col md:flex-row gap-5 md:gap-3 lg:gap-[22px] md:my-2 lg:my-4 ">
                 {/* LeftSide */}
-                <div className=" container-phone gap-2 flex flex-col md:w-1/2 md:gap-2.5 z-0">
+                <div className=" container-phone flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
                   <label
-                    className={`md:font-semibold font-normal  text-sm leading-[10.4px] md:text-xs md:leading-[12.206px] lg:text-base lg:leading-[20.8px] ${
+                    className={`md:font-semibold font-normal text-sm md:text-[13px] lg:text-base ${
                       isDarkMode ? "text-white" : "text-[#7E7E7E]"
                     }`}
                   >
@@ -593,40 +700,42 @@ export default function WaecEducationPin() {
                     onInput={(e) => {
                       const numericValue = e.target.value.replace(/\D/g, "");
                       e.target.value = numericValue;
-                      if (numericValue.length === 11) {
+                      if (numericValue?.length === 11) {
                         e.target.style.border = "2px solid green";
-                      } else if (e.target.value.length < 11) {
+                      } else if (e.target.value?.length < 11) {
                         e.target.style.border = "2px solid red";
                       }
                     }}
-                    className={`font-normal py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-xs leading-[18px] lg:text-base lg:leading-[20.8px] focus:outline-none placeholder:text-xs placeholder:leading-[10.4px] placeholder:lg:text-base placeholder:lg:leading-[20.8px] sm:rounded-[10px] h-full w-full md:placeholder:text-[14.389px] md:placeholder:leading-[18.206px] rounded-[10px]
+                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-5 md:p-0 text-[13.2px]  sm:p-3 text-sm flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-normal leading-[10.4px] md:text-[11px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer focus:outline-0 outline-0 border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px]  self-center
                     ${
                       isDarkMode
                         ? "bg-black text-white border-white"
-                        : "border-[#9C9C9C] text-[#7C7C7C] hover:bg-[#EDEAEA] bg-white placeholder:text-[#7E7E7E] border md:border-[0.4px]"
+                        : "border-[#9C9C9C] text-[#7C7C7C] hover:bg-[#EDEAEA] bg-white"
                     }`}
-                    //  md:rounded-0 p-[20px] md:p-0 text-[13.5px] sm:p-3 sm:text-lg
                     type="tel"
                     name="Waec-Phone"
                     id="phone"
                     maxLength={11}
                     placeholder=""
                     value={educationPinPhone}
+                    onFocus={() => {
+                      setErrors((prev) => ({ ...prev, educationPinPhone: "" }));
+                    }}
                     onChange={(e) => {
                       setEducationPinPhone(e.target.value);
                     }}
                   />
                   {errors.educationPinPhone && (
-                    <div className="text-xs text-red-500 italic lg:text-sm">
+                    <div className="text-[#F95252] italic text-[13px] md:text-xs lg:text-sm">
                       {errors.educationPinPhone}
                     </div>
                   )}
                 </div>
 
                 {/* right-side */}
-                <div className="flex flex-col gap-2 md:w-1/2 md:gap-2.5">
+                <div className="flex flex-col relative gap-[3px] lg:gap-[5px] w-full md:w-1/2">
                   <label
-                    className={`md:font-semibold font-normal  text-sm md:text-xs leading-[10.4px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] ${
+                    className={`md:font-semibold font-normal text-sm md:text-[13px] lg:text-base ${
                       isDarkMode ? "text-white" : "text-[#7E7E7E]"
                     }`}
                   >
@@ -634,7 +743,7 @@ export default function WaecEducationPin() {
                   </label>
 
                   <input
-                    className={`EmailPins font-normal py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-xs leading-[18px] lg:text-base lg:leading-[20.8px] focus:outline-none placeholder:text-xs placeholder:leading-[10.4px] placeholder:lg:text-base placeholder:lg:leading-[20.8px] sm:rounded-[10px] h-full w-full md:placeholder:text-[14.389px] md:placeholder:leading-[18.206px] rounded-[10px]  
+                    className={`EmailPins mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px]  sm:p-3 text-sm flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[13px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer focus:outline-0 outline-0 border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center  
                     ${
                       isDarkMode
                         ? "bg-black text-white border-white"
@@ -645,12 +754,15 @@ export default function WaecEducationPin() {
                     onChange={(e) => {
                       setEducationPinEmail(e.target.value);
                     }}
-                    type="Email"
+                    onFocus={() => {
+                      setErrors((prev) => ({ ...prev, educationPinEmail: "" }));
+                    }}
+                    type="email"
                     placeholder="example@gmail.com"
                   />
 
                   {errors.educationPinEmail && (
-                    <div className="text-xs text-red-500 italic lg:text-sm">
+                    <div className="text-[#F95252] italic text-[13px] md:text-xs lg:text-sm">
                       {errors.educationPinEmail}
                     </div>
                   )}
@@ -658,12 +770,12 @@ export default function WaecEducationPin() {
               </div>
 
               {/* Conatiner for Amount and Payment method */}
-              <div className="flex w-full flex-col gap-[20px] md:flex-row md:gap-[12.91px] lg:gap-[22px]">
+              <div className="w-full flex flex-col md:flex-row gap-5 md:gap-3 lg:gap-[22px] md:my-2 lg:my-4">
                 {/* Amount Step /Leftside */}
-                <div className="flex flex-col gap-2 w-full md:w-1/2 md:gap-2.5 relative">
+                <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
                   {/* header */}
                   <label
-                    className={`md:font-semibold font-normal  text-sm md:text-xs leading-[10.4px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] ${
+                    className={`md:font-semibold font-normal  text-sm md:text-[13px]  lg:text-base ${
                       isDarkMode ? "text-white" : "text-[#7E7E7E]"
                     }`}
                   >
@@ -671,30 +783,36 @@ export default function WaecEducationPin() {
                   </label>
                   {/* input */}
                   <input
-                    className={`font-normal py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-xs leading-[18px] lg:text-base lg:leading-[20.8px] focus:outline-none placeholder:text-xs placeholder:leading-[10.4px] placeholder:lg:text-base placeholder:lg:leading-[20.8px] sm:rounded-[10px] h-full w-full md:placeholder:text-[14.389px] md:placeholder:leading-[18.206px] rounded-[10px]  
+                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px]  sm:p-3 text-sm flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[13px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer focus:outline-0 outline-0 border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center  
                     ${
                       isDarkMode
                         ? "bg-black text-white border-white"
-                        : "placeholder:text-[#7E7E7E] border-[#9C9C9C] text-[#7C7C7C]"
+                        : "border-[#9C9C9C] text-[#7C7C7C]"
                     }`}
                     maxLength={7}
-                    value={isAmountLoading ? "" : educationAmount}
+                    // value={isAmountLoading ? "" : educationAmount}
+                    value={educationAmount ? `₦${educationAmount}` : "₦"}
                     // onChange={(e) => {
                     //   setEducationAmount(e.target.value);
                     // }}
                     readOnly
                   />
-                  {isAmountLoading && (
+                  {/* {isAmountLoading && (
                     <p className="left-4 absolute top-7 md:top-9 lg:top-12">
                       <BalanceLoading />
                     </p>
                   )}
+                  {isFailedAmount && (
+                    <div className="text-xs text-red-500 italic lg:text-sm absolute left-0 -bottom-4 ">
+                      Unable to get Amount. Try Again
+                    </div>
+                  )} */}
                 </div>
                 {/* payment method */}
-                <div className="relative payment-parent gap-[5.868px] flex w-full flex-col md:w-1/2 md:gap-2.5">
+                <div className="flex flex-col relative gap-[3px] lg:gap-[5px] w-full md:w-1/2">
                   {/* header */}
                   <label
-                    className={`md:font-semibold font-normal  text-sm md:text-xs leading-[10.4px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] ${
+                    className={`md:font-semibold font-normal text-sm md:text-[13px] lg:text-base ${
                       isDarkMode ? "text-white" : "text-[#7E7E7E]"
                     }`}
                   >
@@ -702,7 +820,7 @@ export default function WaecEducationPin() {
                   </label>
                   {/* input */}
                   <div
-                    className={`relative flex items-center justify-between py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-xs leading-[18px] lg:text-base lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full w-full shadow-sm md:shadow-0 focus:outline-none ${
+                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px]  sm:p-3 text-sm flex items-center justify-between border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] ${
                       isDarkMode
                         ? "bg-black text-white border-white"
                         : "border-[#9C9C9C] hover:bg-[#EDEAEA] "
@@ -713,36 +831,19 @@ export default function WaecEducationPin() {
                       setQuantityActive(false);
                     }}
                   >
-                    <input
-                      type="text"
-                      onChange={(e) => {
-                        setPaymentResult(e.target.value);
-                      }}
-                      value={paymentResult}
-                      //                       className={`pt-[10.803px] pb-[13.794px] pr-[13px] pl-[10.876px] mt-2 md:mt-0
-                      //  md:pt-[8.802px] md:pb-[7.042px] w-full
-                      // md:pr-[5.282px] md:pl-[5.867px]
-                      // lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]
-                      // border-[0.4px]
-                      // font-normal leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px]
-                      //     lg:text-base lg:leading-[20.8px] cursor-pointer border-0 md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 shadow-sm md:shadow-0 focus:outline-none focus:ring-2 text-[13.5px] sm:p-3 sm:text-lg
-                      //     ${
-                      //       isDarkMode
-                      //         ? "bg-black text-white border border-white"
-                      //         : "placeholder:text-[#7E7E7E] border-[#9C9C9C] text-black bg-white hover:bg-[#EDEAEA]"
-                      //     }`}
-                      className={`placeholder:text-xs placeholder:leading-[10.4px] placeholder:lg:text-base placeholder:lg:leading-[20.8px] bg-transparent focus:outline-none
+                    <p
+                      className={`font-medium text-[13px] leading-[10.4px] md:text-xs md:leading-[12.206px] lg:text-base  lg:leading-[20.8px] cursor-pointer
                       ${
-                        isDarkMode
-                          ? "bg-black text-white border border-white"
-                          : "border-[#9C9C9C] hover:bg-[#EDEAEA] "
+                        isDarkMode ? "bg-black text-white" : " text-[#7C7C7C] "
                       }`}
                       readOnly
-                    />
+                    >
+                      {paymentResult}
+                    </p>
 
                     <img
                       className="lg:w-6 lg:h-6 w-4 h-4 cursor-pointer methodDrop"
-                      src={imageState}
+                      src={paymentResult ? imageState : arrowDown}
                       alt=""
                     />
                   </div>
@@ -750,34 +851,45 @@ export default function WaecEducationPin() {
 
                   {methodActive && (
                     <div
-                      className={`absolute lg:top-[90px] md:top-[75px] top-[72px] border divide-y z-[5] rounded flex flex-col w-full  
+                      className={`absolute lg:top-[85px] md:top-[60px] top-[72px] border divide-y z-[5] rounded flex flex-col w-full  
                       ${
                         isDarkMode
                           ? "bg-black text-white divide-gray-50  border-white"
                           : "text-[#7C7C7C]"
                       }`}
                     >
-                      {methodOptions.map((methodOption) => {
+                      {methodOptions?.map((methodOption) => {
                         return (
                           <div
                             onClick={() => {
-                              // setPaymentResult(
-                              //   `${methodOption.method} ${methodOption.balance}`
-                              // );
-                              setPaymentResult(methodOption.method);
-                              setWalletBalance(methodOption.balance);
-                              setImageState(methodOption.flag);
-                              setMethodActive(false);
-                              document
-                                .querySelector(".methodDrop")
-                                .classList.remove("DropIt");
+                              if (methodOption.method === "NGN Wallet") {
+                                setPaymentResult(
+                                  newBalance
+                                    ? `${methodOption.method} ${methodOption.balance}`
+                                    : methodOption
+                                );
+                                setWalletBalance(methodOption.balance);
+                                setImageState(methodOption.flag);
+                                setMethodActive(false);
+                                document
+                                  .querySelector(".methodDrop")
+                                  .classList.remove("DropIt");
+                              } else {
+                                setMethodActive(true);
+                              }
                             }}
-                            className={`flex gap-2.5 lg:py-[15px] py-[10px] pl-[10px] cursor-pointer transition-colors duration-300 items-center shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
+                            className={`flex gap-2.5 lg:py-[15px] py-[10px] pl-[10px] transition-colors duration-300 items-center shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
                             ${
                               isDarkMode
                                 ? "bg-black text-white hover:bg-gray-800"
                                 : "bg-white hover:bg-[#EDEAEA]"
-                            }`}
+                            }
+                            ${
+                              methodOption.method === "NGN Wallet"
+                                ? "cursor-pointer "
+                                : "cursor-not-allowed opacity-50 "
+                            }
+                            `}
                             key={methodOption.id}
                           >
                             <img
@@ -787,7 +899,7 @@ export default function WaecEducationPin() {
                             />
 
                             <h2
-                              className={`pb-[20px] md:pb-0 md:pt-0 pt-[20px] font-normal text-[13.5px] leading-[10.4px] md:text-[13.227px] md:leading-[17.195px] lg:text-base lg:leading-[20.8px] self-center cursor-pointer
+                              className={`py-5 md:pb-0 md:pt-0 font-normal text-[13.5px] leading-[10.4px] md:text-[13.227px] md:leading-[17.195px] lg:text-base lg:leading-[20.8px] self-center
                               ${
                                 isDarkMode
                                   ? "bg-black text-white"
@@ -838,12 +950,10 @@ export default function WaecEducationPin() {
                     >
                       Confirm Transaction
                     </h2>
-                    <h2
-                      className="lg:text-base md:text-xs md:px-[30px] lg:leading-[24px] md:leading-[20px] text-[10px] leading-[12px] text-center mt-[26px] mx-[10px] mb-[20px] font-medium text-black"
-                    >
+                    <h2 className="lg:text-base md:text-xs md:px-[30px] lg:leading-[24px] md:leading-[20px] text-[10px] leading-[12px] text-center mt-[26px] mx-[10px] mb-[20px] font-medium text-black">
                       You are about to purchase{" "}
-                      <span className="font-semibold">{examType}</span> PIN (
-                      ₦{educationAmount}) from your {paymentResult} to
+                      <span className="font-semibold">{examType}</span> PIN (₦
+                      {educationAmount}) from your {paymentResult} to
                     </h2>
 
                     <div className="flex flex-col gap-[15px] px-[20px] mt-[50px] md:gap-[25px]">
@@ -866,18 +976,14 @@ export default function WaecEducationPin() {
                               className="w-full h-full object-cover md:h-[15px]"
                             />
                           </div>
-                          <h2
-                            className="text-[10px] leading-[12px] capitalize md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium"
-                          >
+                          <h2 className="text-[10px] leading-[12px] capitalize md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
                             {examType}
                           </h2>
                         </div>
                       </div>
 
                       <div className="flex items-center justify-between">
-                        <h2
-                          className="text-[#7C7C7C] text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium"
-                        >
+                        <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
                           Quantity
                         </h2>
                         <div className="flex gap-1">
@@ -892,75 +998,55 @@ export default function WaecEducationPin() {
                       </div>
 
                       <div className="flex items-center justify-between">
-                        <h2
-                          className="text-[#7C7C7C] text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium"
-                        >
+                        <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
                           Phone Number
                         </h2>
                         <div className="flex gap-1">
-                          <h2
-                            className="text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium"
-                          >
+                          <h2 className="text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
                             {educationPinPhone}
                           </h2>
                         </div>
                       </div>
 
                       <div className="flex items-center justify-between">
-                        <h2
-                          className="text-[#7C7C7C] text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium"
-                        >
+                        <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
                           Email
                         </h2>
                         <div className="flex gap-1">
-                          <h2
-                            className="text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium"
-                          >
+                          <h2 className="text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
                             {educationPinEmail}
                           </h2>
                         </div>
                       </div>
 
                       <div className="flex items-center justify-between">
-                        <h2
-                          className="text-[#7C7C7C] text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium"
-                        >
+                        <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
                           Amount
                         </h2>
                         <div className="flex gap-1">
-                          <h2
-                            className="text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium"
-                          >
-                            ₦{educationAmount}
+                          <h2 className="text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
+                            {educationAmount ? `₦${educationAmount}` : ""}
                           </h2>
                         </div>
                       </div>
 
                       <div className="flex items-center justify-between">
-                        <h2
-                          className="text-[#7C7C7C] text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium"
-                        >
+                        <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
                           Payment Method
                         </h2>
                         <div className="flex gap-1">
-                          <h2
-                            className="text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium"
-                          >
+                          <h2 className="text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
                             {paymentResult}
                           </h2>
                         </div>
                       </div>
 
                       <div className="flex items-center justify-between">
-                        <h2
-                          className="text-[#7C7C7C] text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium"
-                        >
+                        <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
                           Transaction Fee
                         </h2>
                         <div className="flex gap-1">
-                          <h2
-                            className="text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium"
-                          >
+                          <h2 className="text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
                             ₦0.00
                           </h2>
                         </div>
@@ -968,15 +1054,11 @@ export default function WaecEducationPin() {
 
                       {/* POINTS EARNED */}
                       <div className="flex items-center justify-between">
-                        <h2
-                          className="text-[#7C7C7C] text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium"
-                        >
+                        <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
                           Points Earned
                         </h2>
                         <div className="flex gap-1">
-                          <h2
-                            className="text-[10px] text-[#2ED173] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium"
-                          >
+                          <h2 className="text-[10px] text-[#2ED173] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
                             +2.00
                           </h2>
                         </div>
@@ -998,7 +1080,7 @@ export default function WaecEducationPin() {
                           <p className="text-[10px] md:text-sm  lg:text-base">
                             Available Balance{" "}
                             <span className="text-[#00000063] font-medium">
-                              (₦{walletBalance})
+                              {walletBalance}
                             </span>
                           </p>
                         </div>
@@ -1007,7 +1089,7 @@ export default function WaecEducationPin() {
                           alt=""
                           className="w-[12px] h-[12px] md:w-[50px] md:h-[20px] lg:w-[80px] lg:h-[30px]"
                         />
-                        <span className="text-gray-500 text-xs font-normal leading-[20px] lg:text-[16px] lg:leading-[22px] text-left absolute left-[3.2rem] top-8 ">
+                        <span className="text-gray-500 text-xs font-normal leading-[20px] lg:text-base lg:leading-[22px] text-left absolute left-[3.2rem] top-8 ">
                           {balanceStatus}
                         </span>
                       </div>
@@ -1058,6 +1140,7 @@ export default function WaecEducationPin() {
                     <div className=" flex justify-center items-center ml-[5%] gap-2.5 md:ml-[5%] md:gap-[30px]">
                       {" "}
                       {isVisible ? (
+                        <div className="flex flex-col gap-y-1">
                         <OtpInput
                           value={inputPin}
                           inputType="tel"
@@ -1068,15 +1151,30 @@ export default function WaecEducationPin() {
                           numInputs={4}
                           shouldAutoFocus={true}
                           inputStyle={{
-                            color: "#403f3f",
-                            width: 30,
-                            height: 30,
-                            borderRadius: 3,
+                            color: isDarkMode ? "#ffffff" : "#403f3f",
+                              width: 30,
+                              height: 30,
+                              borderRadius: 3,
+                              backgroundColor: isDarkMode ? "black" : "white",
+                              border: isDarkMode
+                                ? "1px solid white"
+                                : "1px solid #ccc",
                           }}
                           renderInput={(props) => (
                             <input {...props} className="inputOTP mx-[3px]" />
                           )}
                         />
+                        {pinSuccess && (
+                            <p className="text-[12px] text-green-500 text-center font-medium">
+                              Pin matches
+                            </p>
+                          )}
+                          {pinFailed && errorMessage && (
+                            <p className="text-[12px] text-center text-red-600 font-medium">
+                              Incorrect Pin
+                            </p>
+                          )}
+                        </div>
                       ) : (
                         <div className="text-[24px] md:text-[24px] mt-1">
                           * * * *{" "}
@@ -1095,9 +1193,8 @@ export default function WaecEducationPin() {
                   </div>
 
                   <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleWaecSubmitPost(e);
+                    onClick={() => {
+                      handleWaecSubmitPost();
                     }}
                     disabled={inputPin.length !== 4}
                     className={`${
@@ -1156,7 +1253,7 @@ export default function WaecEducationPin() {
                     alt="/"
                   />
 
-                  <div className="flex flex-col gap-[15px] md:gap-[20px] lg:gap-[30px]  px-[20px]">
+                  <div className="flex flex-col gap-[15px] md:gap-5 lg:gap-[30px]  px-[20px]">
                     <p
                       className="text-[8px] font-semibold text-black text-center mb-2 
                 md:text-sm lg:text-base"
@@ -1305,7 +1402,7 @@ export default function WaecEducationPin() {
                   </div>
                   <div
                     className="flex  justify-center  w-full 
-              items-center gap-[15px] md:gap-[20px] mt-[50px]  lg:gap-[20px] 
+              items-center gap-[15px] md:gap-5 mt-[50px]  lg:gap-5 
               lg:my-[5%] md:mt-[20px] mb-[20px]"
                   >
                     <Link
@@ -1438,7 +1535,7 @@ export default function WaecEducationPin() {
                 </p>
                 <div
                   className="flex  justify-center  w-full 
-              items-center gap-[15px] md:gap-[20px] mt-[50px]  lg:gap-[20px] 
+              items-center gap-[15px] md:gap-5 mt-[50px]  lg:gap-5 
               lg:my-[5%] md:mt-[20px] mb-[20px] "
                 >
                   <Link

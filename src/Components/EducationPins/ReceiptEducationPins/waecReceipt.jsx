@@ -97,7 +97,7 @@ export default function WaecReceipt() {
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
-                onClick={(e) => {
+                onClick={() => {
                   currentChanges();
                 }}
               />

@@ -57,6 +57,8 @@ const IBEDC = () => {
     setIbedcOrderId,
     setIbedcTransactionId,
     setIbedcShowDescription,
+    setIbedcFullName,
+    setIbedcTransactionProduct,
     ibedcFetchedResponse,
     setIbedcFetchedResponse,
     newBalance,
@@ -224,7 +226,7 @@ const IBEDC = () => {
       );
     } else if (amount < 1000) {
       setAmountError("Amount must be at least ₦1000");
-    } else if (network === "Unknown network") {
+    }  else if (network === "Unknown network") {
       setErrors({
         ibedcPhoneNumber:
           "Invalid phone number. Please enter a valid Nigerian network number.",
@@ -304,6 +306,7 @@ const IBEDC = () => {
     setAmountError("");
   };
   const [successPopup, setSuccessPopup] = useState(false);
+  const [ibedcCustomerName, setIbedcCustomerName] = useState("");
   const [failedPopup, setFailedPopup] = useState(false);
 
   const [errorMessage, setErrorMessage] = useState(false);
@@ -318,48 +321,63 @@ const IBEDC = () => {
   const verifyMeterNumber = async (meterNumber) => {
     async function HandleMeterNumber() {
       const path = "bills/verify";
-      const body = {
-        disco_type: "ibadan-electric",
-        meter_no: meterNumber,
-        meter_type: selectedIbedcMeterType.toLowerCase(),
-      };
-      console.log(meterNumber);
-      const SuccessHandler = () => {
-        setIsFailedMeterNumber(false);
-        function handleReceivedMeterData() {
-          if (ibedcFetchedResponse.name) {
-            setIbedcVerifiedName(ibedcFetchedResponse.name);
-          } else {
-            setIbedcVerifiedName("");
+      if (
+        meterNumber?.length === 13 &&
+        meterNumber !== "" &&
+        meterNumber !== null &&
+        meterNumber !== undefined
+      ) {
+        const body = {
+          disco_type: "ibadan-electric",
+          meter_no: meterNumber,
+          meter_type: selectedIbedcMeterType.toLowerCase(),
+        };
+        console.log(meterNumber);
+        const SuccessHandler = () => {
+          setIsFailedMeterNumber(false);
+          function handleReceivedMeterData() {
+            if (ibedcFetchedResponse?.data?.name) {
+              setIbedcCustomerName(ibedcFetchedResponse?.data?.name);
+            } else {
+              setIbedcCustomerName("");
+            }
           }
-        }
-        handleReceivedMeterData();
-      };
-      const FailedHandler = () => {
-        setIsFailedMeterNumber(true);
-      };
+          handleReceivedMeterData();
+        };
+        const FailedHandler = () => {
+          setIsFailedMeterNumber(true);
+        };
 
-      await PostFunction(
-        path,
-        setMeterNumberLoading,
-        body,
-        SuccessHandler,
-        FailedHandler,
-        setIbedcFetchedResponse
-      );
+        await PostFunction(
+          path,
+          setMeterNumberLoading,
+          body,
+          SuccessHandler,
+          FailedHandler,
+          setIbedcFetchedResponse
+        );
+      }
     }
     HandleMeterNumber();
     // handleReceivedMeterData();
-    passedMeterName = ibedcFetchedResponse ? ibedcFetchedResponse.name : "";
+    passedMeterName = ibedcFetchedResponse
+      ? ibedcFetchedResponse?.data?.name
+      : "";
+  };
+
+  const handleIbedcMeterNumber = async (e) => {
+    const inputValue = e.target.value;
+    setIbedcMeterNumber(inputValue);
+    await verifyMeterNumber(inputValue);
   };
 
   const handleVerifiedName =
     ibedcMeterNumber?.length === 13 &&
     isFailedMeterNumber === false &&
     verifyMeterNumber &&
-    ibedcVerifiedName === ""
+    ibedcCustomerName === ""
       ? passedMeterName
-      : ibedcVerifiedName;
+      : ibedcCustomerName;
 
   const verifyPin = async () => {
     async function ElectricityHandler() {
@@ -377,6 +395,7 @@ const IBEDC = () => {
       // const parsedAmount = parseInt(amount, 10);
       const SuccessHandler = () => {
         setInputPinPopUp(false);
+        setIbedcDiscoType(ibedcFetchedResponse?.data?.disco_type);
         setSuccessPopup(true);
       };
       const FailedHandler = () => {
@@ -406,12 +425,15 @@ const IBEDC = () => {
   function handleReceivedData() {
     setLoading(true);
     const receivedData = () => {
-      setIbedcBillGenerate(ibedcFetchedResponse.data.bill_generated);
-      setIbedcOrderId(ibedcFetchedResponse.data.order_id);
-      setIbedcTransactionId(ibedcFetchedResponse.data.transaction_id);
-      setIbedcServiceID(ibedcFetchedResponse.data.request_id);
-      setIbedcShowDescription(ibedcFetchedResponse.data.description);
-      setIbedcDiscoType(ibedcFetchedResponse.data.disco_type);
+      setIbedcBillGenerate(ibedcFetchedResponse?.data?.bill_generated);
+      setIbedcOrderId(ibedcFetchedResponse?.data?.order_id);
+      setIbedcTransactionId(ibedcFetchedResponse?.data?.transaction_id);
+      setIbedcServiceID(ibedcFetchedResponse?.data?.RequestID);
+      setIbedcShowDescription(ibedcFetchedResponse?.data?.transaction_description);
+      setIbedcDiscoType(ibedcFetchedResponse?.data?.disco_type);
+      setIbedcVerifiedName(ibedcFetchedResponse?.data?.verified_name);
+      setIbedcFullName(ibedcFetchedResponse?.data?.full_name);
+      setIbedcTransactionProduct(ibedcFetchedResponse?.data?.transaction_product);
     };
     receivedData();
     if (receivedData) {
@@ -664,7 +686,7 @@ const IBEDC = () => {
                     }
                     border flex flex-col divide-y items-center text-[14px] md:text-[12px] lg:text-[16px] mt-20 lg:mt-20  rounded-[4px] md:rounded-[10px] absolute top-1 lg:top-[1rem] w-full z-[10]`}
                 >
-                  {productList.map((item) => (
+                  {productList?.map((item) => (
                     <div
                       key={item.name}
                       className={`pb-[18px] pt-[8px] md:py-[14px] font-bold cursor-pointer md:text-[12px] lg:text-[16px] w-full md:rounded-[0px] text-[12px] pl-[5px]
@@ -696,14 +718,18 @@ const IBEDC = () => {
                   type="text"
                   value={ibedcMeterNumber}
                   maxLength={13}
-                  onChange={(e) => {
-                    const newValue = e.target.value;
-                    setIbedcMeterNumber(newValue);
-                    // newValue.length === 13 && !errors.ibedcMeterNumber ? verifyMeterNumber(newValue) : setIbedcVerifiedName("");
-                    if (newValue?.length === 13 && !errors.ibedcMeterNumber) {
-                      verifyMeterNumber(newValue);
+                   onInput={(e) => {
+                    const numericValue = e.target.value.replace(/\D/g, "");
+                    e.target.value = numericValue;
+                    if (numericValue?.length === 13) {
+                      e.target.style.border = "2px solid green";
+                    } else if (numericValue?.length < 13) {
+                      e.target.style.border = "2px solid red";
                     }
+                    setIsFailedMeterNumber(false);
+                    setErrors((prev) => ({ ...prev, ibedcMeterNumber: "" }));
                   }}
+                  onChange={handleIbedcMeterNumber}
                   onClick={() => setShowProductList(false)}
                   className={`py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full w-full  ${
                     isDarkMode
@@ -772,6 +798,7 @@ const IBEDC = () => {
                     } else if (e.target.value?.length < 10) {
                       e.target.style.border = "2px solid red";
                     }
+                    setErrors((prev) => ({ ...prev, ibedcPhoneNumber: "" }));
                   }}
                   onBlur={(e) => {
                     isDarkMode
@@ -805,6 +832,9 @@ const IBEDC = () => {
                   type="text"
                   value={ibedcEmail}
                   onChange={handleEmail}
+                  onInput={()=>{
+                    setErrors((prev) => ({ ...prev, ibedcEmail: "" }));
+                  }}
                   className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
                     isDarkMode
                       ? "text-white bg-black border border-white"
@@ -818,7 +848,7 @@ const IBEDC = () => {
                 </div>
               )}
             </div>
-            <div className="flex flex-col gap-2 lg:gap-2.5">
+            <div className="flex flex-col relative gap-2 lg:gap-2.5">
               <div
                 className={`text-[14px] lg:text-[16px] md:font-semibold font-normal ${
                   isDarkMode ? "text-white" : "text-[#7E7E7E]"
@@ -840,6 +870,9 @@ const IBEDC = () => {
                   value={ibedcAmount}
                   placeholder="Minimum of ₦1000"
                   onChange={handleIbedcAmount}
+                  onInput={()=>{
+                    setAmountError("")
+                  }}
                   className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:py-3 md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] text-[12px] leading-[18px] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none
                  ${
                    isDarkMode
@@ -849,7 +882,7 @@ const IBEDC = () => {
                 />
               </div>
               {amountError && (
-                <p className="text-[14px] text-red-500 italic lg:text-[14px]">
+                <p className="text-[14px] absolute left-0 -bottom-[1.3rem] text-red-500 italic lg:text-[14px]">
                   {amountError}
                 </p>
               )}
@@ -926,7 +959,7 @@ const IBEDC = () => {
                     styles.countryDropDown
                   } shadow-xl border w-full lg:w-full  flex flex-col divide-y absolute top-20`}
                 >
-                  {countryList.map((country) => (
+                  {countryList?.map((country) => (
                     <div
                       className={`py-[18px] md:py-[14px] font-normal px-2 flex items-center gap-[5px] text-[12px] md:text-[14px] lg:text-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] transition-all duration-300 hover:bg-slate-50
                        ${
@@ -965,7 +998,7 @@ const IBEDC = () => {
             className={`text-[12px] mt-[30px] md:mt-[40px] bg-[#0008] md:w-fit lg:px-12 lg:text-[16px] lg:px md:py-1 md:rounded-md md:px-6 py-3 rounded-md font-semibold text-center text-white
             ${
               !ibedcMeterNumber ||
-              !ibedcVerifiedName ||
+              !ibedcCustomerName ||
               !ibedcPhoneNumber ||
               !ibedcEmail ||
               !selectedIbedcMeterType ||
@@ -976,7 +1009,7 @@ const IBEDC = () => {
             }`}
             disabled={
               !ibedcMeterNumber ||
-              !ibedcVerifiedName ||
+              !ibedcCustomerName ||
               !ibedcPhoneNumber ||
               !ibedcEmail ||
               !selectedIbedcMeterType ||
@@ -1037,7 +1070,7 @@ const IBEDC = () => {
                   isDarkMode ? "text-white" : "text-[#000]"
                 }`}
               >
-                {selectedIbedcMeterType} Meter (&#8358;{ibedcAmount}){" "}
+                {selectedIbedcMeterType} Meter (&#8358;{Number(ibedcAmount).toLocaleString()}){" "}
               </span>
               {/* Points to <br></br>
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">
@@ -1091,7 +1124,7 @@ const IBEDC = () => {
                 >
                   Verified Name
                 </p>
-                <span>{ibedcVerifiedName}</span>
+                <span>{ibedcCustomerName}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -1122,7 +1155,7 @@ const IBEDC = () => {
                 >
                   Amount
                 </p>
-                <span>&#8358;{ibedcAmount}</span>
+                <span>&#8358;{Number(ibedcAmount).toLocaleString()}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -1163,7 +1196,7 @@ const IBEDC = () => {
                         isDarkMode ? "text-white" : "text-[#000] "
                       }`}
                     >
-                      {`(${newBalance})`}
+                      {`(₦${newBalance})`}
                     </span>
                   </p>
                 </div>
@@ -1357,7 +1390,7 @@ const IBEDC = () => {
                   isDarkMode ? "text-white" : "text-[#000]"
                 }`}
               >
-                (&#8358;{ibedcAmount})
+                (&#8358;{Number(ibedcAmount).toLocaleString()})
               </span>
               From your NGN Nigerian Wallet to
             </p>
@@ -1438,7 +1471,7 @@ const IBEDC = () => {
                 >
                   Amount
                 </p>
-                <span>&#8358;{ibedcAmount}</span>
+                <span>&#8358;{Number(ibedcAmount).toLocaleString()}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -1469,7 +1502,7 @@ const IBEDC = () => {
             >
               <p
                 // className="text-[8px] md:pt-1 text-center w-full h-full md:text-[14px] lg:text-[14px] font-semibold"
-                className="text-[8px] text-center md:text-[14px] md:w-[80%] lg:text-[14px] font-medium"
+                className="text-[8px] text-center md:text-[14px] md:w-[97%] lg:w-[90%] md:mx-auto lg:text-[14px] font-medium"
               >
                 The electricity bills / token purchase has been generated
                 successfully. Please kindly check receipt to confirm the bills /

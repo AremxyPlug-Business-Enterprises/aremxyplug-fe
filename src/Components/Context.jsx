@@ -893,9 +893,12 @@ export const Context = ({ children }) => {
   const [ikedcOrderId, setIkedcOrderId] = useState("");
   const [ikedcTransactionId, setIkedcTransactionId] = useState("");
   const [ikedcShowDescription, setIkedcShowDescription] = useState("");
+  const [ikedcTransactionProduct, setIkedcTransactionProduct] = useState("");
+  const [ikedcFullName, setIkedcFullName] = useState("");
   const [ikedcFetchedResponse, setIkedcFetchedResponse] = useState({});
 
   // ibedc
+  const [ibedcFullName, setIbedcFullName] = useState("");
   const [ibedcEmail, setIbedcEmail] = useState("");
   const [ibedcAmount, setIbedcAmount] = useState("");
   const [ibedcMeterNumber, setIbedcMeterNumber] = useState("");
@@ -909,9 +912,11 @@ export const Context = ({ children }) => {
   const [ibedcTransactionId, setIbedcTransactionId] = useState("");
   const [ibedcDiscoType, setIbedcDiscoType] = useState("");
   const [ibedcShowDescription, setIbedcShowDescription] = useState("");
+  const [ibedcTransactionProduct, setIbedcTransactionProduct] = useState("");
   const [ibedcFetchedResponse, setIbedcFetchedResponse] = useState({});
 
   // aedc
+  const [aedcFullName, setAedcFullName] = useState("");
   const [aedcEmail, setAedcEmail] = useState("");
   const [aedcAmount, setAedcAmount] = useState("");
   const [aedcMeterNumber, setAedcMeterNumber] = useState("");
@@ -925,9 +930,11 @@ export const Context = ({ children }) => {
   const [aedcDiscoType, setAedcDiscoType] = useState("");
   const [aedcTransactionId, setAedcTransactionId] = useState("");
   const [aedcShowDescription, setAedcShowDescription] = useState("");
+  const [aedcTransactionProduct, setAedcTransactionProduct] = useState("");
   const [aedcFetchedResponse, setAedcFetchedResponse] = useState({});
 
   // bedc
+  const [bedcFullName, setBedcFullName] = useState("");
   const [bedcEmail, setBedcEmail] = useState("");
   const [bedcAmount, setBedcAmount] = useState("");
   const [bedcMeterNumber, setBedcMeterNumber] = useState("");
@@ -941,9 +948,11 @@ export const Context = ({ children }) => {
   const [bedcOrderId, setBedcOrderId] = useState("");
   const [bedcTransactionId, setBedcTransactionId] = useState("");
   const [bedcShowDescription, setBedcShowDescription] = useState("");
+  const [bedcTransactionProduct, setBedcTransactionProduct] = useState("");
   const [bedcFetchedResponse, setBedcFetchedResponse] = useState({});
 
   // eedc
+  const [eedcFullName, setEedcFullName] = useState("");
   const [eedcEmail, setEedcEmail] = useState("");
   const [eedcAmount, setEedcAmount] = useState("");
   const [eedcMeterNumber, setEedcMeterNumber] = useState("");
@@ -957,9 +966,11 @@ export const Context = ({ children }) => {
   const [eedcOrderId, setEedcOrderId] = useState("");
   const [eedcTransactionId, setEedcTransactionId] = useState("");
   const [eedcShowDescription, setEedcShowDescription] = useState("");
+  const [eedcTransactionProduct, setEedcTransactionProduct] = useState("");
   const [eedcFetchedResponse, setEedcFetchedResponse] = useState({});
 
   // ekedc
+  const [ekedcFullName, setEkedcFullName] = useState("");
   const [ekedcEmail, setEkedcEmail] = useState("");
   const [ekedcAmount, setEkedcAmount] = useState("");
   const [ekedcMeterNumber, setEkedcMeterNumber] = useState("");
@@ -973,9 +984,11 @@ export const Context = ({ children }) => {
   const [ekedcOrderId, setEkedcOrderId] = useState("");
   const [ekedcTransactionId, setEkedcTransactionId] = useState("");
   const [ekedcShowDescription, setEkedcShowDescription] = useState("");
+  const [ekedcTransactionProduct, setEkedcTransactionProduct] = useState("");
   const [ekedcFetchedResponse, setEkedcFetchedResponse] = useState({});
 
   // jed
+  const [jedFullName, setJedFullName] = useState("");
   const [jedEmail, setJedEmail] = useState("");
   const [jedAmount, setJedAmount] = useState("");
   const [jedMeterNumber, setJedMeterNumber] = useState("");
@@ -989,9 +1002,11 @@ export const Context = ({ children }) => {
   const [jedOrderId, setJedOrderId] = useState("");
   const [jedTransactionId, setJedTransactionId] = useState("");
   const [jedShowDescription, setJedShowDescription] = useState("");
+  const [jedTransactionProduct, setJedTransactionProduct] = useState("");
   const [jedFetchedResponse, setJedFetchedResponse] = useState({});
 
   // kaedco
+  const [kaedcoFullName, setKaedcoFullName] = useState("");
   const [kaedcoEmail, setKaedcoEmail] = useState("");
   const [kaedcoAmount, setKaedcoAmount] = useState("");
   const [kaedcoMeterNumber, setKaedcoMeterNumber] = useState("");
@@ -1005,9 +1020,11 @@ export const Context = ({ children }) => {
   const [kaedcoOrderId, setKaedcoOrderId] = useState("");
   const [kaedcoTransactionId, setKaedcoTransactionId] = useState("");
   const [kaedcoShowDescription, setKaedcoShowDescription] = useState("");
+  const [kaedcoTransactionProduct, setKaedcoTransactionProduct] = useState("");
   const [kaedcoFetchedResponse, setKaedcoFetchedResponse] = useState({});
 
   // kedco
+  const [kedcoFullName, setKedcoFullName] = useState("");
   const [kedcoEmail, setKedcoEmail] = useState("");
   const [kedcoAmount, setKedcoAmount] = useState("");
   const [kedcoMeterNumber, setKedcoMeterNumber] = useState("");
@@ -1021,9 +1038,11 @@ export const Context = ({ children }) => {
   const [kedcoOrderId, setKedcoOrderId] = useState("");
   const [kedcoTransactionId, setKedcoTransactionId] = useState("");
   const [kedcoShowDescription, setKedcoShowDescription] = useState("");
+  const [kedcoTransactionProduct, setKedcoTransactionProduct] = useState("");
   const [kedcoFetchedResponse, setKedcoFetchedResponse] = useState({});
 
   // phed
+  const [phedFullName, setPhedFullName] = useState("");
   const [phedEmail, setPhedEmail] = useState("");
   const [phedAmount, setPhedAmount] = useState("");
   const [phedMeterNumber, setPhedMeterNumber] = useState("");
@@ -1037,6 +1056,7 @@ export const Context = ({ children }) => {
   const [phedOrderId, setPhedOrderId] = useState("");
   const [phedTransactionId, setPhedTransactionId] = useState("");
   const [phedShowDescription, setPhedShowDescription] = useState("");
+  const [phedTransactionProduct, setPhedTransactionProduct] = useState("");
   const [phedFetchedResponse, setPhedFetchedResponse] = useState({});
 
   //------------Airtime Conversion---------
@@ -1152,7 +1172,7 @@ export const Context = ({ children }) => {
   const [quantityActive, setQuantityActive] = useState(false);
   const [paymentResult, setPaymentResult] = useState("");
   const [methodActive, setMethodActive] = useState(false);
-  const [examType, setExamType] = useState("");
+  const [examType, setExamType] = useState("WAEC");
   const [examActive, setExamActive] = useState(false);
   const [educationPinPhone, setEducationPinPhone] = useState("");
   const [educationPinEmail, setEducationPinEmail] = useState("");
@@ -1165,7 +1185,7 @@ export const Context = ({ children }) => {
   const [necoQuantityActive, setNecoQuantityActive] = useState(false);
   const [necoPaymentResult, setNecoPaymentResult] = useState("");
   const [necoMethodActive, setNecoMethodActive] = useState(false);
-  const [necoExamType, setNecoExamType] = useState("");
+  const [necoExamType, setNecoExamType] = useState("NECO");
   const [necoExamActive, setNecoExamActive] = useState(false);
   const [necoEducationPinPhone, setNecoEducationPinPhone] = useState("");
   const [necoEducationPinEmail, setNecoEducationPinEmail] = useState("");
@@ -1178,7 +1198,7 @@ export const Context = ({ children }) => {
   const [jambQuantityActive, setJambQuantityActive] = useState(false);
   const [jambPaymentResult, setJambPaymentResult] = useState("");
   const [jambMethodActive, setJambMethodActive] = useState(false);
-  const [jambExamType, setJambExamType] = useState("");
+  const [jambExamType, setJambExamType] = useState("JAMB");
   const [jambExamActive, setJambExamActive] = useState(false);
   const [jambEducationPinPhone, setJambEducationPinPhone] = useState("");
   const [jambEducationPinEmail, setJambEducationPinEmail] = useState("");
@@ -1191,7 +1211,7 @@ export const Context = ({ children }) => {
   const [nabtebQuantityActive, setNabtebQuantityActive] = useState(false);
   const [nabtebPaymentResult, setNabtebPaymentResult] = useState("");
   const [nabtebMethodActive, setNabtebMethodActive] = useState(false);
-  const [nabtebExamType, setNabtebExamType] = useState("");
+  const [nabtebExamType, setNabtebExamType] = useState("NABTEB");
   const [nabtebExamActive, setNabtebExamActive] = useState(false);
   const [nabtebEducationPinPhone, setNabtebEducationPinPhone] = useState("");
   const [nabtebEducationPinEmail, setNabtebEducationPinEmail] = useState("");
@@ -1199,6 +1219,13 @@ export const Context = ({ children }) => {
   const [nabtebQuantityAmount, setNabtebQuantityAmount] = useState("");
   const [nabtebWalletBalance, setNabtebWalletBalance] = useState("");
   const [newBalance, setNewBalance] = useState("");
+
+  const [nabtebPinsGenerated, setNabtebPinsGenerated] = useState([]);
+  const [nabtebOrderId, setNabtebOrderId] = useState("");
+  const [nabtebTransactionId, setNabtebTransactionId] = useState("");
+  const [nabtebShowDescription, setNabtebShowDescription] = useState("");
+  const [nabtebFullName, setNabtebFullName] = useState("");
+  const [nabtebTransactionProduct, setNabtebTransactionProduct] = useState("");
   // PROFILE & ACCOUNT SETTINGS =========
   //============ Profile Page =========
   const [openImage, setOpenImage] = useState(false);
@@ -1697,6 +1724,8 @@ export const Context = ({ children }) => {
 
     //electricity subscription
     // ikedc
+    ikedcFullName,
+    setIkedcFullName,
     selectedIkedcMeterType,
     setSelectedIkedcMeterType,
     ikedcMeterNumber,
@@ -1725,8 +1754,12 @@ export const Context = ({ children }) => {
     setIkedcShowDescription,
     ikedcFetchedResponse,
     setIkedcFetchedResponse,
+    ikedcTransactionProduct,
+    setIkedcTransactionProduct,
 
     // ibedc
+    ibedcFullName,
+    setIbedcFullName,
     ibedcMeterNumber,
     setIbedcMeterNumber,
     ibedcVerifiedName,
@@ -1755,8 +1788,12 @@ export const Context = ({ children }) => {
     setIbedcShowDescription,
     ibedcFetchedResponse,
     setIbedcFetchedResponse,
+    ibedcTransactionProduct,
+    setIbedcTransactionProduct,
 
     // aedc
+    aedcFullName,
+    setAedcFullName,
     aedcMeterNumber,
     setAedcMeterNumber,
     aedcVerifiedName,
@@ -1785,8 +1822,12 @@ export const Context = ({ children }) => {
     setAedcShowDescription,
     aedcFetchedResponse,
     setAedcFetchedResponse,
+    aedcTransactionProduct,
+    setAedcTransactionProduct,
 
     // bedc
+    bedcFullName,
+    setBedcFullName,
     bedcMeterNumber,
     setBedcMeterNumber,
     eedcMeterNumber,
@@ -1817,8 +1858,12 @@ export const Context = ({ children }) => {
     setBedcShowDescription,
     bedcFetchedResponse,
     setBedcFetchedResponse,
+    bedcTransactionProduct,
+    setBedcTransactionProduct,
 
     // eedc
+    eedcFullName,
+    setEedcFullName,
     eedcVerifiedName,
     setEedcVerifiedName,
     eedcPhoneNumber,
@@ -1845,8 +1890,12 @@ export const Context = ({ children }) => {
     setEedcShowDescription,
     eedcFetchedResponse,
     setEedcFetchedResponse,
+    eedcTransactionProduct,
+    setEedcTransactionProduct,
 
     // ekedc
+    ekedcFullName,
+    setEkedcFullName,
     ekedcMeterNumber,
     setEkedcMeterNumber,
     ekedcVerifiedName,
@@ -1875,8 +1924,12 @@ export const Context = ({ children }) => {
     setEkedcShowDescription,
     ekedcFetchedResponse,
     setEkedcFetchedResponse,
+    ekedcTransactionProduct,
+    setEkedcTransactionProduct,
 
     // jed
+    jedFullName,
+    setJedFullName,
     jedMeterNumber,
     setJedMeterNumber,
     jedVerifiedName,
@@ -1905,8 +1958,12 @@ export const Context = ({ children }) => {
     setJedShowDescription,
     jedFetchedResponse,
     setJedFetchedResponse,
+    jedTransactionProduct,
+    setJedTransactionProduct,
 
     // kaedco
+    kaedcoFullName,
+    setKaedcoFullName,
     kaedcoMeterNumber,
     setKaedcoMeterNumber,
     kaedcoVerifiedName,
@@ -1935,8 +1992,12 @@ export const Context = ({ children }) => {
     setKaedcoShowDescription,
     kaedcoFetchedResponse,
     setKaedcoFetchedResponse,
+    kaedcoTransactionProduct,
+    setKaedcoTransactionProduct,
 
     // kedco
+    kedcoFullName,
+    setKedcoFullName,
     kedcoMeterNumber,
     setKedcoMeterNumber,
     kedcoVerifiedName,
@@ -1965,8 +2026,12 @@ export const Context = ({ children }) => {
     setKedcoShowDescription,
     kedcoFetchedResponse,
     setKedcoFetchedResponse,
+    kedcoTransactionProduct,
+    setKedcoTransactionProduct,
 
     // phed
+    phedFullName,
+    setPhedFullName,
     phedMeterNumber,
     setPhedMeterNumber,
     phedVerifiedName,
@@ -1995,6 +2060,8 @@ export const Context = ({ children }) => {
     setPhedShowDescription,
     phedFetchedResponse,
     setPhedFetchedResponse,
+    phedTransactionProduct,
+    setPhedTransactionProduct,
 
     //Airtime Conversion
     inputValueA,
@@ -2282,6 +2349,18 @@ export const Context = ({ children }) => {
     setNabtebQuantityAmount,
     nabtebWalletBalance,
     setNabtebWalletBalance,
+    nabtebPinsGenerated,
+    setNabtebPinsGenerated,
+    nabtebOrderId,
+    setNabtebOrderId,
+    nabtebTransactionId,
+    setNabtebTransactionId,
+    nabtebShowDescription,
+    setNabtebShowDescription,
+    nabtebFullName,
+    setNabtebFullName,
+    nabtebTransactionProduct,
+    setNabtebTransactionProduct,
 
     // ========= PROFILE & ACCOUNT SETTINGS ===========
     // ========== Profile Page ========

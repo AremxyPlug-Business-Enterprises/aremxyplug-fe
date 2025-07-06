@@ -35,9 +35,28 @@ export const EkedcReceiptFailed = () => {
     ekedcTransactionId,
     ekedcShowDescription,
     ekedcFetchedResponse,
+    ekedcBillGenerate,
+    ekedcFullName,
+    ekedcTransactionProduct,
   } = useContext(ContextProvider);
 
   const message = ekedcFetchedResponse.data
+
+  const networkProduct =
+    selectedEkedcMeterType?.length > 0 ? selectedEkedcMeterType : "";
+  const meterNo = ekedcMeterNumber?.length > 0 ? ekedcMeterNumber : "";
+  const verifiedName = ekedcVerifiedName?.length > 0 ? ekedcVerifiedName : "";
+  const fullName = ekedcFullName?.length > 0 ? ekedcFullName : "";
+  const phoneNo = ekedcPhoneNumber?.length > 0 ? ekedcPhoneNumber : "";
+  const productEmail = ekedcEmail?.length > 0 ? ekedcEmail : "";
+  const productAmount = ekedcAmount?.length > 0 ? ekedcAmount : "";
+  const disco_type = ekedcDiscoType?.length > 0 ? ekedcDiscoType : "";
+  const order_id = ekedcOrderId === undefined ? "" : ekedcOrderId;
+  const transaction_id = ekedcTransactionId?.length > 0 ? ekedcTransactionId : "";
+  const description =
+    ekedcShowDescription?.length > 0 ? ekedcShowDescription : "";
+  const transaction_product = ekedcTransactionProduct?.length > 0 ? ekedcTransactionProduct : "";
+  const bill_generated = ekedcBillGenerate?.length > 0 ? ekedcBillGenerate : "";
 
   function handleClick() {
     setSelectedEkedcMeterType("");
@@ -134,7 +153,7 @@ export const EkedcReceiptFailed = () => {
                 hour12: true,
               })}
             </span>
-            <p className="text-[9px] text-[#F95252] bg-[#FDCECE] rounded-[11px] border-2 border-[#F95252] py-[5px] px-[2px] text-center mx-[3px] lg:mx-[130px] md:mx-[80px] my-2 md:text-[14px] lg:text-[14px]">
+            <p className="text-[9px] text-[#F95252] bg-[#FDCECE] font-medium rounded-[11px] border-2 border-[#F95252] py-[5px] px-[2px] text-center mx-[3px] lg:mx-[130px] md:mx-[80px] my-2 md:text-[14px] lg:text-[14px]">
                    {message}
             </p>
 
@@ -155,34 +174,34 @@ export const EkedcReceiptFailed = () => {
                 <p className={`font-medium ${isDarkMode ? "text-white": "text-[#7C7C7C]"}`}>Disco Type</p>
                 <span className="flex items-center gap-1 ">
                   <div><img className="w-[30px]" src={logo2} alt="" /></div>
-                  <div>{ekedcDiscoType}</div>
+                  <div className="font-medium capitalize">{disco_type}</div>
                   </span>
               </div>
               <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className={`font-medium ${isDarkMode ? "text-white": "text-[#7C7C7C]"}`}>Meter Type</p>
-                <span>{selectedEkedcMeterType} </span>
+                <span className="font-medium">{networkProduct} </span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className={`font-medium ${isDarkMode ? "text-white": "text-[#7C7C7C]"}`}>Meter Number</p>
-                <span>{ekedcMeterNumber} </span>
+                <span className="font-medium">{meterNo} </span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className={`font-medium ${isDarkMode ? "text-white": "text-[#7C7C7C]"}`}>Verified Name</p>
-                <span>{ekedcVerifiedName}</span>
+                <span className="font-medium">{verifiedName}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className={`font-medium ${isDarkMode ? "text-white": "text-[#7C7C7C]"}`}>Phone Number</p>
-                <span>{ekedcPhoneNumber}</span>
+                <span className="font-medium">{phoneNo}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className={`font-medium ${isDarkMode ? "text-white": "text-[#7C7C7C]"}`}>Email</p>
-                <span>{ekedcEmail}</span>
+                <span className="font-medium">{productEmail}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className={`font-medium ${isDarkMode ? "text-white": "text-[#7C7C7C]"}`}>Amount</p>
-                <span>&#8358;{ekedcAmount}</span>
+                <span className="font-medium">&#8358;{Number(productAmount).toLocaleString()}</span>
               </div>
               
             </div>
@@ -197,12 +216,12 @@ export const EkedcReceiptFailed = () => {
                 <div className="flex flex-col gap-3 pt-[10px]">
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className={`font-medium ${isDarkMode ? "text-white": "text-[#7C7C7C]"}`}>Customer Name</p>
-                <span>{ekedcVerifiedName}</span>
+                <span className="font-medium">{verifiedName || fullName}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className={`font-medium ${isDarkMode ? "text-white": "text-[#7C7C7C]"}`}>Wallet Type</p>
-                <span>Nigerian NGN Wallet </span>
+                <span className="font-medium">Nigerian NGN Wallet </span>
               </div>
              
               
@@ -224,31 +243,31 @@ export const EkedcReceiptFailed = () => {
                     alt="/"
                   />
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-medium lg:text-[16px]">
                   <p className={`${isDarkMode ? "text-white" : "text-[#0008]"}`}>Product</p>
-                  <span>Electricity Bills</span>
+                  <span>{transaction_product}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-medium lg:text-[16px]">
                   <p className={`${isDarkMode ? "text-white" : "text-[#0008]"}`}>Description</p>
-                  <span>{ekedcShowDescription}</span>
+                  <span>{description}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-medium lg:text-[16px]">
                   <p className={`${isDarkMode ? "text-white" : "text-[#0008]"}`}>Bill / Token Generated</p>
-                  <span>Instantly</span>
+                  <span>{bill_generated}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-medium lg:text-[16px]">
                   <p className={`${isDarkMode ? "text-white" : "text-[#0008]"}`}>Order Number</p>
-                  <span>{ekedcOrderId}</span>
+                  <span>{Number(order_id)}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-medium lg:text-[16px]">
                   <p className={`${isDarkMode ? "text-white" : "text-[#0008]"}`}>Transaction ID</p>
-                  <span>{ekedcTransactionId}</span>
+                  <span>{transaction_id}</span>
                 </div>
                 
               </div>
             </div>
             <div className={`rounded-[8px] bg-[#E2F3FF] mx-4 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px] ${isDarkMode ? "bg-slate-800" : "bg-[#E2F3FF]"}`}>
-              <p className="text-[8px] text-center mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[16px]">
+              <p className={`text-[8px] text-center mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[16px] font-medium ${isDarkMode ? "text-white": "text-[#7C7C7C]"}`}>
                 Earn free points on every successful transactions, redeem your
                 earned points to real money, withdrawn to your bank account
                 instantly.

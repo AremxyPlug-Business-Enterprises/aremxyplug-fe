@@ -58,6 +58,8 @@ const EKEDC = () => {
     setEkedcOrderId,
     setEkedcTransactionId,
     setEkedcShowDescription,
+    setEkedcFullName,
+    setEkedcTransactionProduct,
     ekedcFetchedResponse,
     setEkedcFetchedResponse,
     newBalance,
@@ -223,7 +225,7 @@ const EKEDC = () => {
       );
     } else if (amount < 1000) {
       setAmountError("Amount must be at least ₦1000");
-    } else if (network === "Unknown network") {
+    }  else if (network === "Unknown network") {
       setErrors({
         ekedcPhoneNumber:
           "Invalid phone number. Please enter a valid Nigerian network number.",
@@ -302,6 +304,7 @@ const EKEDC = () => {
   };
   const [successPopup, setSuccessPopup] = useState(false);
   const [failedPopup, setFailedPopup] = useState(false);
+  const [ekedcCustomerName, setEkedcCustomerName] = useState("");
 
   const [errorMessage, setErrorMessage] = useState(false);
   const [pinSuccess, setPinSuccess] = useState(false);
@@ -315,48 +318,63 @@ const EKEDC = () => {
   const verifyMeterNumber = async (meterNumber) => {
     async function HandleMeterNumber() {
       const path = "bills/verify";
-      const body = {
-        disco_type: "eko-electric",
-        meter_no: meterNumber,
-        meter_type: selectedEkedcMeterType.toLowerCase(),
-      };
-      console.log(meterNumber);
-      const SuccessHandler = () => {
-        setIsFailedMeterNumber(false);
-        function handleReceivedMeterData() {
-          if (ekedcFetchedResponse.name) {
-            setEkedcVerifiedName(ekedcFetchedResponse.name);
-          } else {
-            setEkedcVerifiedName("");
+      if (
+        meterNumber?.length === 13 &&
+        meterNumber !== "" &&
+        meterNumber !== null &&
+        meterNumber !== undefined
+      ) {
+        const body = {
+          disco_type: "eko-electric",
+          meter_no: meterNumber,
+          meter_type: selectedEkedcMeterType.toLowerCase(),
+        };
+        console.log(meterNumber);
+        const SuccessHandler = () => {
+          setIsFailedMeterNumber(false);
+          function handleReceivedMeterData() {
+            if (ekedcFetchedResponse?.data?.name) {
+              setEkedcCustomerName(ekedcFetchedResponse?.data?.name);
+            } else {
+              setEkedcCustomerName("");
+            }
           }
-        }
-        handleReceivedMeterData();
-      };
-      const FailedHandler = () => {
-        setIsFailedMeterNumber(true);
-      };
+          handleReceivedMeterData();
+        };
+        const FailedHandler = () => {
+          setIsFailedMeterNumber(true);
+        };
 
-      await PostFunction(
-        path,
-        setMeterNumberLoading,
-        body,
-        SuccessHandler,
-        FailedHandler,
-        setEkedcFetchedResponse
-      );
+        await PostFunction(
+          path,
+          setMeterNumberLoading,
+          body,
+          SuccessHandler,
+          FailedHandler,
+          setEkedcFetchedResponse
+        );
+      }
     }
     HandleMeterNumber();
     // handleReceivedMeterData();
-    passedMeterName = ekedcFetchedResponse ? ekedcFetchedResponse.name : "";
+    passedMeterName = ekedcFetchedResponse
+      ? ekedcFetchedResponse?.data?.name
+      : "";
+  };
+
+  const handleEkedcMeterNumber = async (e) => {
+    const inputValue = e.target.value;
+    setEkedcMeterNumber(inputValue)
+    await verifyMeterNumber(inputValue);
   };
 
   const handleVerifiedName =
     ekedcMeterNumber?.length === 13 &&
     isFailedMeterNumber === false &&
     verifyMeterNumber &&
-    ekedcVerifiedName === ""
+    ekedcCustomerName === ""
       ? passedMeterName
-      : ekedcVerifiedName;
+      : ekedcCustomerName;
 
   const verifyPin = async () => {
     async function ElectricityHandler() {
@@ -374,6 +392,7 @@ const EKEDC = () => {
       // const parsedAmount = parseInt(amount, 10);
       const SuccessHandler = () => {
         setInputPinPopUp(false);
+        setEkedcDiscoType(ekedcFetchedResponse?.data?.disco_type);
         setSuccessPopup(true);
       };
       const FailedHandler = () => {
@@ -403,12 +422,16 @@ const EKEDC = () => {
   function handleReceivedData() {
     setLoading(true);
     const receivedData = () => {
-      setEkedcBillGenerate(ekedcFetchedResponse.data.bill_generated);
-      setEkedcOrderId(ekedcFetchedResponse.data.order_id);
-      setEkedcTransactionId(ekedcFetchedResponse.data.transaction_id);
-      setEkedcServiceID(ekedcFetchedResponse.data.request_id);
-      setEkedcShowDescription(ekedcFetchedResponse.data.description);
-      setEkedcDiscoType(ekedcFetchedResponse.data.disco_type);
+      setEkedcBillGenerate(ekedcFetchedResponse?.data?.bill_generated);
+      console.log("bill", ekedcFetchedResponse?.data?.bill_generated)
+      setEkedcOrderId(ekedcFetchedResponse?.data?.order_id);
+      setEkedcTransactionId(ekedcFetchedResponse?.data?.transaction_id);
+      setEkedcServiceID(ekedcFetchedResponse?.data?.RequestID);
+      setEkedcShowDescription(ekedcFetchedResponse?.data?.transaction_description);
+      setEkedcDiscoType(ekedcFetchedResponse?.data?.disco_type);
+      setEkedcVerifiedName(ekedcFetchedResponse?.data?.verified_name);
+      setEkedcFullName(ekedcFetchedResponse?.data?.full_name);
+      setEkedcTransactionProduct(ekedcFetchedResponse?.data?.transaction_product);
     };
     receivedData();
     if (receivedData) {
@@ -587,7 +610,7 @@ const EKEDC = () => {
                   }
                   border flex flex-col divide-y items-center text-[14px] md:text-[12px] lg:text-[16px] mt-20 lg:mt-20  rounded-[4px] md:rounded-[10px] absolute top-1 lg:top-[1rem] shadow-md w-full z-[10]`}
                 >
-                  {productList.map((item) => (
+                  {productList?.map((item) => (
                     <div
                       key={item.name}
                       className={`pb-[18px] pt-[8px] md:py-[14px] font-bold cursor-pointer md:text-[12px] lg:text-[16px] w-[100%]  md:rounded-[0px] lg:mt- text-[12px] pl-[5px] transition-all duration-300 hover:bg-slate-50
@@ -619,14 +642,20 @@ const EKEDC = () => {
                   type="text"
                   value={ekedcMeterNumber}
                   maxLength={13}
-                  onChange={(e) => {
-                    const newValue = e.target.value;
-                    setEkedcMeterNumber(newValue);
-                    // newValue.length === 13 && !errors.ekedcMeterNumber ? verifyMeterNumber(newValue) : setEkedcVerifiedName("");
-                    if (newValue?.length === 13 && !errors.ekedcMeterNumber) {
-                      verifyMeterNumber(newValue);
+                  onInput={(e) => {
+                    setErrors({});
+                  const numericValue = e.target.value.replace(/\D/g, "");
+                    e.target.value = numericValue;
+                    if (numericValue?.length === 13) {
+                      e.target.style.border = "2px solid green";
+                    } else if (numericValue?.length < 13) {
+                      e.target.style.border = "2px solid red";
                     }
+                    setIsFailedMeterNumber(false);
+                    setErrors((prev) => ({ ...prev, ekedcMeterNumber: "" }));
                   }}
+                  onBlur={(e) => { e.target.style.border = "1px solid #7E7E7E";}}
+                  onChange={handleEkedcMeterNumber}
                   onClick={() => setShowProductList(false)}
                   className={`py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full w-full  ${
                     isDarkMode
@@ -690,6 +719,7 @@ const EKEDC = () => {
                     } else if (e.target.value?.length < 10) {
                       e.target.style.border = "2px solid red";
                     }
+                    setErrors((prev) => ({ ...prev, ekedcPhoneNumber: "" }));
                   }}
                   onBlur={(e) => {
                     isDarkMode
@@ -726,6 +756,9 @@ const EKEDC = () => {
                   type="text"
                   value={ekedcEmail}
                   onChange={handleEmail}
+                  onInput={()=>{
+                    setErrors((prev) => ({ ...prev, ekedcEmail: "" }));
+                  }}
                   className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
                     isDarkMode
                       ? "text-white bg-black border border-white"
@@ -739,7 +772,7 @@ const EKEDC = () => {
                 </div>
               )}
             </div>
-            <div className="flex flex-col gap-2 lg:gap-2.5">
+            <div className="flex flex-col relative gap-2 lg:gap-2.5">
               <div
                 className={`text-[#7E7E7E] text-[14px] lg:text-[16px] md:font-semibold font-normal ${
                   isDarkMode ? "text-white" : ""
@@ -760,13 +793,14 @@ const EKEDC = () => {
                   name="ekedcamount"
                   value={ekedcAmount}
                   onChange={handleEkedcAmount}
+                  onInput={()=>setAmountError("")}
                   placeholder="Minimum of ₦1000"
                   className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:py-3 md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] text-[12px] leading-[18px] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none
                  ${isDarkMode ? "text-white bg-black " : "text-[#7E7E7E]"}`}
                 />
               </div>
               {amountError && (
-                <p className="text-[14px] text-red-500 italic lg:text-[14px]">
+                <p className="text-[14px] absolute left-0 -bottom-[1.3rem] text-red-500 italic lg:text-[14px]">
                   {amountError}
                 </p>
               )}
@@ -843,7 +877,7 @@ const EKEDC = () => {
                     styles.countryDropDown
                   } shadow-xl border w-full lg:w-full  flex flex-col divide-y absolute top-20`}
                 >
-                  {countryList.map((country) => (
+                  {countryList?.map((country) => (
                     <div
                       className={`py-[18px] md:py-[14px] font-normal px-2 flex items-center gap-[5px] text-[12px] md:text-[14px] lg:text-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] transition-all duration-300 hover:bg-slate-50
                      ${
@@ -882,7 +916,7 @@ const EKEDC = () => {
             className={`text-[12px] mt-[30px] md:mt-[40px] bg-[#0008] md:w-fit lg:px-12 lg:text-[16px] lg:px md:py-1 md:rounded-md md:px-6 py-3 rounded-md font-semibold text-center text-white
              ${
                !ekedcMeterNumber ||
-               !ekedcVerifiedName ||
+               !ekedcCustomerName ||
                !ekedcPhoneNumber ||
                !ekedcEmail ||
                !selectedEkedcMeterType ||
@@ -893,7 +927,7 @@ const EKEDC = () => {
              }`}
             disabled={
               !ekedcMeterNumber ||
-              !ekedcVerifiedName ||
+              !ekedcCustomerName ||
               !ekedcPhoneNumber ||
               !ekedcEmail ||
               !selectedEkedcMeterType ||
@@ -954,7 +988,7 @@ const EKEDC = () => {
                   isDarkMode ? "text-white" : "text-[#000]"
                 }`}
               >
-                {selectedEkedcMeterType} Meter (&#8358;{ekedcAmount}){" "}
+                {selectedEkedcMeterType} Meter (&#8358;{Number(ekedcAmount).toLocaleString()}){" "}
               </span>
               {/* Points to <br></br>
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">
@@ -1008,7 +1042,7 @@ const EKEDC = () => {
                 >
                   Verified Name
                 </p>
-                <span>{ekedcVerifiedName}</span>
+                <span>{ekedcCustomerName}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -1039,7 +1073,7 @@ const EKEDC = () => {
                 >
                   Amount
                 </p>
-                <span>&#8358;{ekedcAmount}</span>
+                <span>&#8358;{Number(ekedcAmount).toLocaleString()}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -1080,7 +1114,7 @@ const EKEDC = () => {
                         isDarkMode ? "text-white" : "text-[#000] "
                       }`}
                     >
-                      {`(${newBalance})`}
+                      {`(₦${newBalance})`}
                     </span>
                   </p>
                 </div>
@@ -1265,7 +1299,7 @@ const EKEDC = () => {
                   isDarkMode ? "text-white" : "text-[#000]"
                 }`}
               >
-                (&#8358;{ekedcAmount})
+                (&#8358;{Number(ekedcAmount).toLocaleString()})
               </span>
               From your NGN Nigerian Wallet to
             </p>
@@ -1346,7 +1380,7 @@ const EKEDC = () => {
                 >
                   Amount
                 </p>
-                <span>&#8358;{ekedcAmount}</span>
+                <span>&#8358;{Number(ekedcAmount).toLocaleString()}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -1375,7 +1409,7 @@ const EKEDC = () => {
                 isDarkMode ? "bg-slate-800" : "bg-[#F2FAFF]"
               }`}
             >
-              <p className="text-[8px] text-center md:text-[14px] md:w-[80%] lg:text-[14px] font-medium">
+              <p className="text-[8px] text-center md:text-[14px] md:w-[97%] lg:w-[90%] md:mx-auto lg:text-[14px] font-medium">
                 The electricity bills / token purchase has been generated
                 successfully. Please kindly check receipt to confirm the bills /
                 token. You can contact us for any further assistance.

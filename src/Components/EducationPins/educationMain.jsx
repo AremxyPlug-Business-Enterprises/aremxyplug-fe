@@ -21,12 +21,14 @@ export default function EducationMain() {
           {/* hero section */}
           <HeroComponent />
           <div className="flex mb-5 gap-2 items-center md:gap-4 md:mb-8">
-            <h2 className="font-semibold text-[16.1px] md:text-[18px] lg:text-[20px] text-[#7C7C7C]">
+            <h2 className=" lg:text-[20px] text-[#7C7C7C] text-[8px] lg:text-xl md:text-[11.46px] font-medium"
+            // font-semibold text-[16.1px] md:text-[18px]
+            >
               Select Exam Type
             </h2>
 
             <img
-              className="self-center h-4 w-4 md:h-6 md:w-6"
+              className="self-center h-4 w-4 lg:h-6 lg:w-6 md:h-[13.75px] md:w-[13.75px]"
               src={arrowRight}
               alt="arrow"
             />

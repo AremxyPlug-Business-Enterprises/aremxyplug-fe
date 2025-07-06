@@ -1,77 +1,86 @@
-import React from 'react'
+import React from "react";
 import { useContext, useRef } from "react";
- import { ContextProvider } from '../../Context';
-import { DashBoardLayout } from '../../Dashboard/Layout/DashBoardLayout';
+import { ContextProvider } from "../../Context";
+import { DashBoardLayout } from "../../Dashboard/Layout/DashBoardLayout";
 import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-import AremxyPlugIcon from '../imagesEducation/AremxyPlug.svg';
+import AremxyPlugIcon from "../imagesEducation/AremxyPlug.svg";
 
 export default function NabtebReceipt() {
   const {
-        nabtebExamType,
-        nabtebQuantityResult,
-        nabtebEducationPinPhone,
-        nabtebEducationPinEmail,
-        nabtebPaymentResult,
-        nabtebEducationAmount,
-        setNabtebExamType,
-        setNabtebQuantityResult,
-        setNabtebEducationPinEmail,
-        setNabtebEducationPinPhone,
-        setNabtebPaymentResult,
-        setNabtebEducationAmount,
-        setNabtebWalletBalance,
-        nabtebEduResponse
-        }
-         = useContext(ContextProvider);
-  
-         const { 
-          toggleSideBar,
-          isDarkMode,
-          date, } =
-          useContext(ContextProvider);  
-  
-          const contentRef = useRef(null);
-  
-          const currentNabtebChanges = () => {
-            setNabtebQuantityResult('');
-            setNabtebExamType('');
-            setNabtebEducationPinPhone('');
-            setNabtebEducationPinEmail('');
-           setNabtebPaymentResult('');
-           setNabtebEducationAmount('₦');
-           setNabtebWalletBalance('')
-          }
-        
-        //   Share function
-        const nabtebShareClick = () => {
-            if (navigator.share) {
-              navigator
-                .share({
-                  title: "Receipt",
-                  text: "Check out this receipt!",
-                  url: "https://example.com",
-                })
-                .then(() => console.log("Shared successfully"))
-                .catch((error) => console.error("Error sharing:", error));
-            } else {
-              console.log("Web Share API not supported.");
-            }
-          };
-        
-          // ==============Save Pdf Function==============
-          const nabtebSaveAsPDFClick = () => {
-            const contentNabteb = contentRef.current;
-            if (contentNabteb) {
-              const pdf = new jsPDF();
-              html2canvas(contentNabteb).then((canvas) => {
-                const imgNabtebData = canvas.toDataURL("image/png");
-                pdf.addImage(imgNabtebData, "PNG", 10, 10, 190, 0);
-                pdf.save("page.pdf");
-              });
-            }
-          };
+    nabtebExamType,
+    nabtebQuantityResult,
+    nabtebEducationPinPhone,
+    nabtebEducationPinEmail,
+    nabtebPaymentResult,
+    nabtebEducationAmount,
+    setNabtebExamType,
+    setNabtebQuantityResult,
+    setNabtebEducationPinEmail,
+    setNabtebEducationPinPhone,
+    setNabtebPaymentResult,
+    setNabtebEducationAmount,
+    setNabtebWalletBalance,
+    nabtebOrderId,
+    nabtebTransactionId,
+    nabtebShowDescription,
+    nabtebFullName,
+    nabtebTransactionProduct,
+    nabtebPinsGenerated,
+  } = useContext(ContextProvider);
+
+  const { toggleSideBar, isDarkMode, date } = useContext(ContextProvider);
+
+  const contentRef = useRef(null);
+
+  const order_id = nabtebOrderId === undefined ? "" : nabtebOrderId;
+  const transaction_id = nabtebTransactionId?.length > 0 ? nabtebTransactionId : "";
+  const description =
+  nabtebShowDescription?.length > 0 ? nabtebShowDescription : "";
+  const pins_generated = nabtebPinsGenerated?.length > 0 ? nabtebPinsGenerated : "";
+  console.log("pins-gen", pins_generated)
+  const fullName = nabtebFullName?.length > 0 ? nabtebFullName : "";
+  const transaction_product = nabtebTransactionProduct?.length > 0 ? nabtebTransactionProduct : "";
+
+  const currentNabtebChanges = () => {
+    setNabtebQuantityResult("");
+    setNabtebExamType("");
+    setNabtebEducationPinPhone("");
+    setNabtebEducationPinEmail("");
+    setNabtebPaymentResult("");
+    setNabtebEducationAmount("₦");
+    setNabtebWalletBalance("");
+  };
+
+  //   Share function
+  const nabtebShareClick = () => {
+    if (navigator.share) {
+      navigator
+        .share({
+          title: "Receipt",
+          text: "Check out this receipt!",
+          url: "https://example.com",
+        })
+        .then(() => console.log("Shared successfully"))
+        .catch((error) => console.error("Error sharing:", error));
+    } else {
+      console.log("Web Share API not supported.");
+    }
+  };
+
+  // ==============Save Pdf Function==============
+  const nabtebSaveAsPDFClick = () => {
+    const contentNabteb = contentRef.current;
+    if (contentNabteb) {
+      const pdf = new jsPDF();
+      html2canvas(contentNabteb).then((canvas) => {
+        const imgNabtebData = canvas.toDataURL("image/png");
+        pdf.addImage(imgNabtebData, "PNG", 10, 10, 190, 0);
+        pdf.save("page.pdf");
+      });
+    }
+  };
 
   return (
     <DashBoardLayout>
@@ -114,12 +123,16 @@ export default function NabtebReceipt() {
                 alt="/"
               />
             </div>
-            <h3 className="font-extrabold text-[12px] mt-[2%] text-center 
-            md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
+            <h3
+              className="font-extrabold text-[12px] mt-[2%] text-center 
+            md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]"
+            >
               Purchase Successful on
             </h3>
-            <span className="text-[11px] md:text-[14px] lg:text-[16px] text-[#0008]  
-            flex justify-center items-center font-[600]">
+            <span
+              className="text-[11px] md:text-[14px] lg:text-[16px] text-[#0008]  
+            flex justify-center items-center font-[600]"
+            >
               {date.toLocaleDateString(undefined, {
                 year: "numeric",
                 month: "long",
@@ -130,17 +143,19 @@ export default function NabtebReceipt() {
                 hour12: true,
               })}
             </span>
-            <div className='flex justify-center mx-[19px]'>
-            <p className="text-[10px] p-[5.729px] border-[0.573px] rounded-[6.302px] md:p-[5.868px] md:border-[0.578px] 
+            <div className="flex justify-center mx-[19px]">
+              <p
+                className="text-[10px] p-[5.729px] border-[0.573px] rounded-[6.302px] md:p-[5.868px] md:border-[0.578px] 
              md:rounded-[6.455px]  lg:border-[1px] lg:rounded-[11px]  border-[solid] border-[#27AE60] leading-[15px] md:leading-[20px]
            text-[#27AE60] bg-[#D5F6E3] lg:p-[10px] text-center my-2 md:text-[14px] 
-          lg:text-[16px]  lg:leading-[24px] font-[500] md:mb-7">
-              You have successfully purchased{" "}
-              <span className="font-extrabold text-[10.9px] md:text-[14.9px] lg:text-[16.9px]">
-              {nabtebExamType} {" "}
-              </span>
-              from your {nabtebPaymentResult} to{" "}
-            </p>
+          lg:text-[16px]  lg:leading-[24px] font-[500] md:mb-7"
+              >
+                You have successfully purchased{" "}
+                <span className="font-extrabold text-[10.9px] md:text-[14.9px] lg:text-[16.9px]">
+                  {nabtebExamType}{" "}
+                </span>
+                from your {nabtebPaymentResult.split(" (")[0]} to{" "}
+              </p>
             </div>
             <div className="flex flex-col  gap-7  md:gap-10">
               {/* ========================Recipient Info================== */}
@@ -153,36 +168,46 @@ export default function NabtebReceipt() {
                     alt="/"
                   />
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] 
-                mx-auto justify-between  lg:text-[16px] font-[500]">
+                <div
+                  className="flex text-[10px] md:text-[14px] w-[90%] 
+                mx-auto justify-between  lg:text-[16px] font-[500]"
+                >
                   <p className="text-[#0008]">Exam Type</p>
-                  <span>NABTEB</span>
+                  <span>{nabtebExamType}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between 
-                 lg:text-[16px] font-[500]">
+                <div
+                  className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between 
+                 lg:text-[16px] font-[500]"
+                >
                   <p className="text-[#0008]">Quantity</p>
-                  <span>{nabtebQuantityResult}</span>
+                  <span>{nabtebQuantityResult.split(" (")[0]}</span>
                 </div>
                 {/* <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Plan</p>
                   <span>{selectedOption}</span>
                 </div> */}
-                
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
-                justify-between  lg:text-[16px] font-[500]">
+
+                <div
+                  className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
+                justify-between  lg:text-[16px] font-[500]"
+                >
                   <p className="text-[#0008]">Phone Number</p>
-          <span>{nabtebEducationPinPhone}</span>
+                  <span>{nabtebEducationPinPhone}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] 
-                mx-auto justify-between  lg:text-[16px] font-[500]">
+                <div
+                  className="flex text-[10px] md:text-[14px] w-[90%] 
+                mx-auto justify-between  lg:text-[16px] font-[500]"
+                >
                   <p className="text-[#0008]">Email</p>
                   <span>{nabtebEducationPinEmail}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] 
-                mx-auto justify-between  lg:text-[16px] font-[500]">
+                <div
+                  className="flex text-[10px] md:text-[14px] w-[90%] 
+                mx-auto justify-between  lg:text-[16px] font-[500]"
+                >
                   <p className="text-[#0008]">Amount</p>
                   <span>{nabtebEducationAmount}</span>
-                </div>            
+                </div>
               </div>
 
               {/* ===================Sender Info====================== */}
@@ -195,15 +220,19 @@ export default function NabtebReceipt() {
                     alt="/"
                   />
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] 
-                mx-auto justify-between  lg:text-[16px] font-[500]">
+                <div
+                  className="flex text-[10px] md:text-[14px] w-[90%] 
+                mx-auto justify-between  lg:text-[16px] font-[500]"
+                >
                   <p className="text-[#0008]">Customer Name</p>
-                  <span>Aremxyplug</span>
+                  <span>{fullName}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto \
-                justify-between  lg:text-[16px] font-[500]">
+                <div
+                  className="flex text-[10px] md:text-[14px] w-[90%] mx-auto \
+                justify-between  lg:text-[16px] font-[500]"
+                >
                   <p className="text-[#0008]">Wallet Type</p>
-                {nabtebPaymentResult}
+                  {nabtebPaymentResult.split(" (")[0]}
                 </div>
               </div>
 
@@ -217,76 +246,90 @@ export default function NabtebReceipt() {
                     alt="/"
                   />
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] 
-                mx-auto justify-between  lg:text-[16px] font-[500]">
+                <div
+                  className="flex text-[10px] md:text-[14px] w-[90%] 
+                mx-auto justify-between  lg:text-[16px] font-[500]"
+                >
                   <p className="text-[#0008]">Product</p>
-                  <span>Education Pins</span>
+                  <span>{transaction_product}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  
-                lg:text-[16px] font-[500]">
+                <div
+                  className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  
+                lg:text-[16px] font-[500]"
+                >
                   <p className="text-[#0008]">Description</p>
-                  <span>{nabtebEduResponse.description}</span>
+                  <span>{description}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] 
-                mx-auto justify-between  lg:text-[16px] font-[500]">
+                <div
+                  className="flex text-[10px] md:text-[14px] w-[90%] 
+                mx-auto justify-between  lg:text-[16px] font-[500]"
+                >
                   <p className="text-[#0008]"> NABTEB PIN Generated</p>
-                  <span>{nabtebEduResponse.pins_generated}</span>
+                  <span>{pins_generated[0]}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
-                justify-between  lg:text-[16px] font-[500]">
+                <div
+                  className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
+                justify-between  lg:text-[16px] font-[500]"
+                >
                   <p className="text-[#0008]">Order Number</p>
-                  <span>{nabtebEduResponse.order_id}</span>
+                  <span>{order_id}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] 
-                mx-auto justify-between  lg:text-[16px] font-[500]">
+                <div
+                  className="flex text-[10px] md:text-[14px] w-[90%] 
+                mx-auto justify-between  lg:text-[16px] font-[500]"
+                >
                   <p className="text-[#0008]">Transaction ID</p>
-                  <span>{nabtebEduResponse.transaction_id}</span>
+                  <span>{transaction_id}</span>
                 </div>
               </div>
             </div>
-            <div className="rounded-[8px] bg-[#E2F3FF] mx-4 h-[45px] my-5 
-            flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
-              <p className="text-[8px] text-[#7E7E7E] text-center mx-auto w-[200px] md:text-[14px] 
-              md:w-[80%] lg:text-[16px] font-[500]">
-              <span className='md:block'>Earn free points on every successful transactions, 
-            redeem your earned points </span>
-            to real money, withdrawn to your bank account instantly.
+            <div
+              className="rounded-[8px] bg-[#E2F3FF] mx-4 h-[45px] my-5 
+            flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]"
+            >
+              <p
+                className="text-[8px] text-[#7E7E7E] text-center mx-auto w-[200px] md:text-[14px] 
+              md:w-[80%] lg:text-[16px] font-[500]"
+              >
+                <span className="md:block">
+                  Earn free points on every successful transactions, redeem your
+                  earned points{" "}
+                </span>
+                to real money, withdrawn to your bank account instantly.
               </p>
             </div>
           </div>
 
-          <div className="flex w-full justify-center 
-        gap-[10px] md:gap-[20px] px-[20px]  mb-[5%]  ">
-          <button
-            onClick={() => {
-              nabtebShareClick();
-            }}
-            className={`bg-[#04177f] w-[111px] 
+          <div
+            className="flex w-full justify-center 
+        gap-[10px] md:gap-[20px] px-[20px]  mb-[5%]  "
+          >
+            <button
+              onClick={() => {
+                nabtebShareClick();
+              }}
+              className={`bg-[#04177f] w-[111px] 
               cursor-pointer text-[12px] 
             font-extrabold h-[40px] text-white rounded-[6px]
              md:w-[150px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
-          >
-            Share Receipt
-          </button>
-          <button
-            onClick={() => {
-              nabtebSaveAsPDFClick();
-            }}
-            className={`bg-[#ffffff] border-[1px] w-[111px] 
+            >
+              Share Receipt
+            </button>
+            <button
+              onClick={() => {
+                nabtebSaveAsPDFClick();
+              }}
+              className={`bg-[#ffffff] border-[1px] w-[111px] 
             border-[#0003]  cursor-pointer text-[12px] font-extrabold h-[40px] 
             rounded-[6px] md:w-[150px] md:rounded-[8px] md:text-[16px] 
             lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
-          >
-            Save as PDF
-          </button>
+            >
+              Save as PDF
+            </button>
+          </div>
         </div>
-        </div>
 
-
-
-
-
-{/* ===============FOOTER=========== */}
+        {/* ===============FOOTER=========== */}
         <div
           className={`${
             isDarkMode ? "mb-[1%]" : "mb-[5%]"
@@ -304,7 +347,7 @@ export default function NabtebReceipt() {
             </Link>
           </div>
         </div>
-        </div>
-        </DashBoardLayout>
-  )
+      </div>
+    </DashBoardLayout>
+  );
 }
