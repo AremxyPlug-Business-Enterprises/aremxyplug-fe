@@ -40,12 +40,12 @@ Data = GetLocalStorage()
                     isDarkMode ? "text-white" : ""
                   }`}
                 >
-                  {!full_name && fullName.length > 1
+                  {!full_name && fullName?.length > 1
                     ? fullName
                     : full_name
                     ? full_name
-                    : Data.UserFullName
-                    ?  Data.UserFullName
+                    : Data?.UserFullName
+                    ?  Data?.UserFullName
                     : "Hi User"}
                 </p>
                 <p
@@ -53,11 +53,11 @@ Data = GetLocalStorage()
                     isDarkMode ? "text-white" : ""
                   }`}
                 >
-                  {state.email.length > 1 && !email ?
-                   state.email : 
+                  {state?.email.length > 1 && !email ?
+                   state?.email : 
                    email ? email : 
-                   Data.UserEmail 
-                    ? Data.UserEmail : "No email"}
+                   Data?.UserEmail 
+                    ? Data?.UserEmail : "No email"}
                 </p>
               </div>
             </div>
@@ -78,7 +78,8 @@ Data = GetLocalStorage()
                       Country
                     </h2>
                     <div
-                      className={`flex items-center py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[11.5px] lg:pl-[10px] border-[0.4px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] ${
+                      className={`flex items-center py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] gap-[5px]
+                         md:pl-[8.67px] md:pr-[5.867px] lg:py-[11.5px] lg:pl-[10px] border-[0.4px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] ${
                         isDarkMode ? "border-slate-50" : ""
                       }`}
                     >

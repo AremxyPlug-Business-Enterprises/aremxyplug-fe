@@ -161,7 +161,7 @@ function LoginForm() {
   // ==========Login Handler===========
   const submitHandler = async (e) => {
     e.preventDefault();
-if( !navigator.onLine) return alert("No internet Connection, Check your network connection to proceed ");
+if(!navigator.onLine) return alert("No internet Connection, Check your network connection to proceed ");
 const ActiveSignUp = localStorage.getItem("ActiveSignUp");
 if(ActiveSignUp === "true") return alert("You are not allowed to login, while an active sign up is present, if you don't wish to proceed with the sign up process, click on NO in the Sign up page popup")
     // ========Login form validation starts here=======
@@ -204,22 +204,20 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
                 setOpenTranspin(true);
                 console.log(`${response.data.data}`);
                 const authToken = response.headers.get('Authorization');
-                  const customer  =  response.data.data.customer;
+                  const customer  =  response?.data?.data?.customer;
             
                 if(authToken){
-                
                  localStorage.setItem("getToken", authToken);
                   if(customer){
                     console.log(customer)
                     setCustomerDetail(customer);
-               }
-                   }
+               } }
      } else if(response.status === 200){
                   setOpen2StepVerification(true);
-                    console.log(response.headers)
-                  const customer  =  response.data.data.customer;
-                  const authToken = response.headers.get('Authorization');
-                  console.log(authToken)
+                    console.log(response.headers);
+                  const customer  =  response?.data?.data?.customer;
+                  const authToken = response?.headers.get('Authorization');
+                  console.log(authToken);
                    if(authToken){
                 localStorage.setItem("getToken", authToken);
               
@@ -288,11 +286,10 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
             )
             .then((response) => {
               console.log(response);
-              if (response.status === 202  && response.headers.hasAuthorization) {
+              if (response.status === 202  && response?.headers?.hasAuthorization) {
                 setOpenTranspin(true);
                 const authToken = response.headers.get('Authorization');
-                 console.log(`${response.data.data}`);
-                const customer = response.data.data.customer;
+                const customer = response?.data?.data?.customer;
                 if(authToken){
                  // localStorage.setItem("UserStatus",false)
                   localStorage.setItem("authorisedLogin", authToken);
@@ -305,7 +302,7 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
   
                else if(response.status === 200){
                 setOpen2StepVerification(true);
-             const customer  =  response.data.data.customer;
+             const customer  =  response?.data?.data?.customer;
              const authToken = response.headers.get('Authorization');
              console.log(customer)
             

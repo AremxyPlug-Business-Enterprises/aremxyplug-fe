@@ -85,8 +85,8 @@ const setNav = () => {
  
     // confirmPassword,
   } = state;
-  const checkInput = country.length > 1 && email.length > 1 && phoneNumber.length > 1 && userName.length > 1
-  && password.length > 1 && fullName.length > 1 && checkbox === true;
+  const checkInput = country?.length > 1 && email?.length > 1 && phoneNumber?.length > 1 && userName?.length > 1
+  && password?.length > 1 && fullName?.length > 1 && checkbox === true;
   console.log(checkboxChecked);
   console.log(state);
 
@@ -106,7 +106,7 @@ const ContinueSignUp = ()=> {
 
 
   return (
-    <div className="h-[1237px] bg-[#04177f] md: pb-[%] md:flex md:justify-center md:items-center md:pb-0 md:h-[100vh] lg:h-[170vh]">
+    <div className="h-[210%] bg-[#04177f]  md:flex md:justify-center md:items-center  md:h-[100vh] lg:h-[170vh]">
       {/* =====Hero Image==== */}
       {showPassModal && <FirstModal />}
       {<Verification/>}
@@ -118,8 +118,8 @@ const ContinueSignUp = ()=> {
       {/* =====Hero Image==== */}
 
       {/* =====Sign up Form==== */}
-      <div className="md:h-[55%] pb-[5%] bg-[#ffffff] ml-[3%] rounded-bl-3xl rounded-tl-3xl px-[4%] md:pb-[5%] md:w-[573px] 
-       md:ml-[30%] lg:h-[1024px] lg:w-[1001px]  h-[1400px] lg:ml-[%] lg:px-0 lg:rounded-bl-[52px] lg:rounded-tl-[52px]">
+      <div className="md:h-[55%] pb-[2%] bg-[#ffffff] ml-[3%] rounded-bl-3xl rounded-tl-3xl px-[4%] md:pb-[5%] md:w-[573px] 
+       md:ml-[30%] lg:h-[1024px] lg:w-[1001px]  min-h-[1300px] lg:ml-[%] lg:px-0 lg:rounded-bl-[52px] lg:rounded-tl-[52px]">
         <Link to="/">
           <img
             className="w-[36px] py-[5%] lg:w-[93px] lg:h-[] lg:py-[2%] lg:pl-[3%]"
@@ -477,6 +477,7 @@ const ContinueSignUp = ()=> {
             </p>
           </Link>
         </div>  
+        
         <button
           onClick={(e)=>{
            handleSubmit(e);
@@ -484,12 +485,13 @@ const ContinueSignUp = ()=> {
           
           }}
           disabled={checkInput ? false : true}
-          className={`${checkInput === true ? "hover:cursor-pointer px-[35px] py-[10px] flex justify-center item-center mb-[5%] lg:mb-[2%] bg-[#04177F]  text-white p-[%] rounded-[4px] mx-auto text-center  mt-[7%] text-[14px] leading-[18px] lg:px-[37px] lg:mt-[3%] lg:w-[140px] lg:h-[42px] lg:text-[14px] lg:rounded-lg" : 
-            "hover:cursor-not-allowed px-[35px] py-[10px] flex justify-center item-center mb-[7%] lg:mb-[2%] bg-gray-300  text-white p-[%] rounded-[4px] mx-auto text-center  mt-[8%] text-[9px] lg:px-[37px] lg:mt-[2%] lg:w-[140px] lg:h-[42px] lg:text-[16px] lg:leading-[24px] lg:rounded-lg"
+          className={`${checkInput === true ? "hover:cursor-pointer w-full py-[20px]  flex justify-center mx-auto item-center mb-[5%] lg:mb-[2%] bg-[#04177F]  text-white  rounded-[4px] text-center  mt-[7%] text-[14px] leading-[18px] lg:px-[37px] lg:mt-[3%] lg:w-[140px] lg:text-[14px] font-[500] lg:py-[15px] lg:leading-[24px] lg:rounded-lg" : 
+            "hover:cursor-not-allowed w-full mx-auto py-[20px] lg:py-[15px] flex justify-center item-center mb-[7%] lg:mb-[2%] bg-gray-300  text-white  rounded-[4px]  text-center  mt-[8%] text-[14px] leading-[18px] font-[500] lg:px-[37px] lg:mt-[2%] lg:w-[140px]  lg:text-[16px] lg:leading-[24px] lg:rounded-lg"
           }`}
         >
           Sign Up
         </button>
+       
       
         <div className="flex text-[#00000057] justify-center items-center">
           <hr className="w-[1%]"></hr>{" "}
@@ -497,7 +499,7 @@ const ContinueSignUp = ()=> {
           <hr className="w-[1%]"></hr>
         </div>
         <div
-          className={`inputBorder flex
+          className={`inputBorder flex cursor-pointer
              justify-center items-center gap-[10px] p-5 font-semibold
               border-[0.57px] w-[118px] h-[30px] rounded-sm mx-auto text-center mt-[7%] text-[9px] lg:mt-[2%] lg:w-[207px] lg:h-[40px] lg:text-[16px] lg:rounded-md`}
         >
@@ -507,7 +509,7 @@ const ContinueSignUp = ()=> {
           </div>
           <p onClick ={()=> {
             alert("The use of Google as a third party authentication OAuth isn't available for now.")
-          }} className="text-[12px] leading-[16px] font-semibold
+          }} className="text-[12px] leading-[16px]  font-semibold
           lg:text-[11px] lg:leading-[14px]">Use Google</p>
                  </div>
         <p className="text-[14px] leading-[18px]  text-center mt-[5%] md:pb-[1%] 

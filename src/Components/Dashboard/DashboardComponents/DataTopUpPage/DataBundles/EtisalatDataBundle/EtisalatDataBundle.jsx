@@ -27,7 +27,7 @@ import Failed from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/Failed.svg"
 import axiosInstance from "../../../../../ApiCollection.jsx/apiClient";
 import { VerifyTransPin } from "../../../../../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../../../../Loader/Loader";
-import { GetFunction } from "../../../../../ApiCollection.jsx/ApiBuck";
+import { GetFunction, HandleUserSession} from "../../../../../ApiCollection.jsx/ApiBuck";
 
 
 
@@ -73,17 +73,17 @@ const EtisalatDataBundle = () => {
   const [loadingPlans, setLoadingPlans] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [success, setSuccess] = useState(false);
-  const [failed, setFailed] = useState(false); 
   const [errorMessage, setErrorMessage] = useState("");
 const [balanceStatus,setBalanceStatus ] = useState("");
 const [selectProductWarn, setSelectProductWarn] = useState(false);
 const [selectPlanWarn, setSelectPlanWarn]  = useState(false);
 const [passDataBalance, setPassDataBalance] = useState({});
 const [etisalatReceiptInfo, setEtisalatReceiptInfo] = useState("");
+const [sessionModal, setSessionModal] = useState(false)
    let balanceStringToNum = Number(newBalance);
 
   let etisalatDataAmount = Number(selectedAmountEtisalat.replace(/\D/g, ""));
-   let updateBalance = passDataBalance.data ? passDataBalance.data.data.data.balance : "";
+   let updateBalance = passDataBalance?.data ? passDataBalance?.data?.data?.data?.balance : "";
    let cleanUpBalanceToNumeric = Number(updateBalance.replace(/\D/g, ""));
              let CheckSufficiency =  etisalatDataAmount > ( newBalance === "" ?  cleanUpBalanceToNumeric : balanceStringToNum  )
 
@@ -94,13 +94,32 @@ const [etisalatReceiptInfo, setEtisalatReceiptInfo] = useState("");
         const response = await axiosInstance.get(
           '/products/telecom/list/3'
         );
-        setProducts(response.data.data.products || []);
+        setProducts(response?.data?.data?.products || []);
       } catch (error) {
         console.error("Error fetching products:", error);
            if(error && error.response === undefined){
              alert("Check your internet Connection, then reload the page.")
           } else if(error && error.response.status === 400){
              alert("Service for etisalat is currently not available, Try again later.")
+          } else if(error && error.response.status === 401){
+              if(error.response.headers["x-new-auth-token"] || error.response.headers.get("x-new-auth-token")){
+         setLoading(true)
+         const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
+        
+         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
+           const setAuthorisedToken = localStorage.setItem("authorisedLogin", newToken);
+           if(setAuthorisedToken){
+            await inputPinHandler()
+           }
+            }else{
+    const setGetToken = localStorage.setItem("getToken", newToken);
+      if(setGetToken){
+        await inputPinHandler();
+      }
+      }
+        }else{
+          return setSessionModal(true)
+        }
           }else if(error && error.response.status === 500){
              alert("Service for etisalat is currently not available, Try again later.")
           }
@@ -130,13 +149,37 @@ const [etisalatReceiptInfo, setEtisalatReceiptInfo] = useState("");
       const response = await axiosInstance.get(
         `/products/telecom/${productId}`
       );
-      setProductPlans(response.data.data.plans || []);
+       if(response && ( response.status === 200 || 201)){
+      setProductPlans(response?.data?.data?.plans || []);
+      if(response?.data?.data?.plans === null){
+        setSelectProductWarn(true);
+      }else {
+        setSelectProductWarn(false)
+      }
+      }
     } catch (error) {
       console.error("Error fetching plans:", error);
        if(error && error.response === undefined){
              alert("Your internet connection is quite unstable.")
         }else if(error && (error.response.status ===  401)){
-        alert("Session expired")
+        if(error.response.headers["x-new-auth-token"] || error.response.headers.get("x-new-auth-token")){
+         setLoading(true)
+         const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
+        
+         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
+           const setAuthorisedToken = localStorage.setItem("authorisedLogin", newToken);
+           if(setAuthorisedToken){
+            await inputPinHandler()
+           }
+            }else{
+    const setGetToken = localStorage.setItem("getToken", newToken);
+      if(setGetToken){
+        await inputPinHandler();
+      }
+      }
+        }else{
+          return setSessionModal(true)
+        }
       }else if(error && error.response.status ===  400){
         setSelectProductWarn(true);
       }else if(error && error.response.status ===  500){
@@ -160,9 +203,9 @@ const [etisalatReceiptInfo, setEtisalatReceiptInfo] = useState("");
   };
 
   const handleSelectOption = (plan) => {
-    setSelectedOptionEtisalat(`${plan.Size} ~ ${plan.Validity} ~ ₦${plan.Amount}`);
-    setEtisalatReceiptInfo(plan.PlanType + " " + plan.Size)
-    setSelectedAmountEtisalat(`₦${plan.Amount}`);
+    setSelectedOptionEtisalat(`${plan?.Size} ~ ${plan?.Validity} ~ ₦${plan?.Amount}`);
+    setEtisalatReceiptInfo(plan?.PlanType + " " + plan?.Size)
+    setSelectedAmountEtisalat(`₦${plan?.Amount}`);
     setSelectedPlan(plan);
     setShowOptionList(false);
     setShowProductList(false);
@@ -276,17 +319,29 @@ const [etisalatReceiptInfo, setEtisalatReceiptInfo] = useState("");
       console.log("successfully retrieved balance");
       //alert("Successful")
         }
-       const FailedHandler = ()=> {
-         console.log(`Failed to retrieve balance`)
+       const FailedHandler = async(ErrorType)=> {
+       if(ErrorType === "unauthorised"){
+       await GetFunction("balance", setLoading, SuccessHandler,
+        (ErrorType)=> {
+        if(ErrorType === 'unauthorised'){
+          setSessionModal(true);
+        }
+        }
+       )
        }
-       await GetFunction("balance", setLoading, SuccessHandler, FailedHandler,setPassDataBalance)
+       }
+       await GetFunction("balance", 
+        setLoading, 
+        SuccessHandler,
+         FailedHandler,
+         setPassDataBalance)
          } 
           // Simulate async data loading
          
           if(newBalance === "" || newBalance === null || newBalance === undefined){
              GetBalance();
              if(GetBalance){
-              setNewBalance(passDataBalance.data ? passDataBalance.data.data.data.balance : "");
+              setNewBalance(passDataBalance?.data ? passDataBalance.data.data.data.balance : "");
              }
        
           }
@@ -445,29 +500,30 @@ const [etisalatReceiptInfo, setEtisalatReceiptInfo] = useState("");
       console.log("its me");
 
       try {
+        setLoading(true)
         const response = await axiosInstance.post(path, data);
         console.log(response.data);
         console.log(response.status);
 
-        const resData = response.data.data.data; // Accessing the nested `data` object
+        const resData = response?.data?.data?.data; // Accessing the nested `data` object
 
         console.log(response.status);
         setPlan(resData.plan_name);
-        console.log(resData.plan_name);
+        console.log(resData?.plan_name);
 
-        setInputValue(resData.Phone_Number);
-        console.log(resData.Phone_Number);
+        setInputValue(resData?.Phone_Number);
+        console.log(resData?.Phone_Number);
 
-        setEtisalatTransactionID(resData.transaction_id);
-        console.log(resData.transaction_id);
+        setEtisalatTransactionID(resData?.transaction_id);
+        console.log(resData?.transaction_id);
 
-        setEtisalatRefNumber(resData.reference_number);
-        console.log(resData.reference_number);
+        setEtisalatRefNumber(resData?.reference_number);
+        console.log(resData?.reference_number);
 
-        setEtisalatOrderID(resData.order_id); // No `order_id`, using `id` instead
-        console.log(resData.order_id);
+        setEtisalatOrderID(resData?.order_id); // No `order_id`, using `id` instead
+        console.log(resData?.order_id);
 
-        setEtisalatDescription(`${resData.network} - ${resData.plan_name}`); // Fabricated description
+        setEtisalatDescription(`${resData?.network} - ${resData?.plan_name}`); // Fabricated description
 
        
          if (response.statusCode === 200) {
@@ -479,10 +535,35 @@ const [etisalatReceiptInfo, setEtisalatReceiptInfo] = useState("");
         // console.log(response.data);
       } catch (error) {
         console.error(error);
+        if(error && (error.response.status === 500 || error.response.status ===400)) {
           setEtisalatPurchaseStatus(true); // Show failure popup
       setConfirm(false);
       setInputPin("");
-        return { statusCode: error.response.status, data: null };
+        return { statusCode: error?.response?.status, data: null };
+        }else if(error && error.response.status === 401){
+         if(error.response.headers["x-new-auth-token"] || error.response.headers.get("x-new-auth-token")){
+         setLoading(true)
+         const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
+        
+         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
+           const setAuthorisedToken = localStorage.setItem("authorisedLogin", newToken);
+           if(setAuthorisedToken){
+            await inputPinHandler()
+           }
+            }else{
+    const setGetToken = localStorage.setItem("getToken", newToken);
+      if(setGetToken){
+        await inputPinHandler();
+      }
+      }
+        }else{
+          return setSessionModal(true)
+        }
+        }else if(error && error.response === undefined){
+      alert("Your internet connection si quite unstable.")
+        }else{
+          alert("Kindly check your internet connection.")
+        }
       }finally{
         setLoading(false);
       }
@@ -731,7 +812,7 @@ const [etisalatReceiptInfo, setEtisalatReceiptInfo] = useState("");
               {showProductList && (
                 <div className={`border md:rounded-[10px] text-[10px] md:text-[12px]
                    bvnQuery shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
-                 lg:text-[16px] lg:mt-2 rounded-[4px] absolute w-full ${products.length > 1 ? "h-[300px] overflow-y-scroll " : "h-[0px]"}
+                 lg:text-[16px] lg:mt-2 rounded-[4px] absolute w-full ${products.length > 5 ? "h-[300px] overflow-y-scroll" : ""}
                   bg-[#FFF] z-[10] `}>
                   {loadingProducts ? (
                     <div>Loading products...</div>
@@ -739,10 +820,9 @@ const [etisalatReceiptInfo, setEtisalatReceiptInfo] = useState("");
                     products.map((product) => (
                       <div
                         key={product.Product_ID}
-                        className={`pb-[15px] md:pb-[6px] pt-[15px] md:pt-[6px] 
-                          font-weight-bold text-[13px] cursor-pointer border-b-[0.5px]
+                        className={`font-[400] text-[13px] leading-[18px] lg:leading-[20px] cursor-pointer border-b-[0.5px]
                            text-[#7C7C7C] md:text-[12px] lg:text-[16px]  md:rounded-[0px]
-                            lg:mt-2 py-[4px]  pl-[5px]  
+                            lg:mt-2 py-[15px] lg:py-[20px]  pl-[5px]  
                             ${selectedProductEtisalat === product.Plan_Type ? "" : ""}
                           ${isDarkMode
                             ? "bg-black text-white "
@@ -753,7 +833,7 @@ const [etisalatReceiptInfo, setEtisalatReceiptInfo] = useState("");
                           handleSelectProduct(product);
                           setShowOptionList(false);
                           setSelectPlanWarn(false);
-                          if(product.plan === null){
+                          if(product?.plan === null){ 
                            setShowOptionList(false);
                            setSelectProductWarn(true)
                           }else {
@@ -816,7 +896,7 @@ const [etisalatReceiptInfo, setEtisalatReceiptInfo] = useState("");
               {showOptionList && (
                 <div className={`border md:rounded-[10px] lg:mt-2 
                    bvnQuery shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
-                  ${productPlans.length > 1 ? "h-[300px] overflow-y-scoll" : "h-[0px]"}
+                  ${productPlans.length > 1 ? "h-[300px] overflow-y-scoll" : ""}
                   rounded-[4px] absolute w-full bg-[#FFF] z-[100]
                   ${isDarkMode
                     ? "bg-black text-white border !border-white"
@@ -829,10 +909,10 @@ const [etisalatReceiptInfo, setEtisalatReceiptInfo] = useState("");
                     productPlans.map((plan) => (
                       <div
                         key={plan.PlanID}
-                        className={`pb-[18px] md:pb-[6px] pt-[18px] md:pt-[6px] 
-                          font-weight-bold text-[13px] cursor-pointer border-b-[0.5px] 
+                        className={`
+                          font-[400] text-[13px] leading-[18px] lg:leading-[20px] cursor-pointer border-b-[0.5px] 
                           md:rounded-[0px] text-[#7C7C7C] md:text-[12px]
-                           lg:text-[16px] lg:mt-2 py-[4px]  pl-[5px]
+                           lg:text-[16px] lg:mt-2 py-[15px] lg:py-[20px]  pl-[5px]
                             ${selectedOptionEtisalat === plan.PlanID ? "bg-gray-200" : ""
                           }
                                                  ${isDarkMode
@@ -1195,6 +1275,10 @@ const [etisalatReceiptInfo, setEtisalatReceiptInfo] = useState("");
                         </h2>
                       </div>
                     </div>
+                      <div className="flex text-[10px] md:text-[14px] w-[100%] mx-auto justify-between font-semibold lg:text-[16px]">
+                    <span className="text-[#0008]">Points Earned</span>
+                    <span className="text-[#2ED173]">+2.00</span>
+                  </div>
 
                       <div className="bg-[#F6F7F7] w-[95%] h-auto my-5 lg:my-8 flex py-[7px] 
                                              justify-between items-center px-[4%] mx-auto rounded-[10px]">
@@ -1316,6 +1400,25 @@ const [etisalatReceiptInfo, setEtisalatReceiptInfo] = useState("");
                       
                         inputPinHandler(); // Proceed with purchase
                       }
+                const setFailed = async(ErrorType)=> {
+                  if(ErrorType === "unauthorised"){
+                    await VerifyTransPin(
+                      inputPin,
+                      setSuccess,
+                      (ErrorType)=> {
+                        if(ErrorType === "unauthorised"){
+                        return setSessionModal(true)
+                        }
+                      },
+                      setLoading,
+                      setErrorMessage,
+                     EtisalatHandler
+                    );
+                  }
+                  
+                }
+                      //Function to help handle pin verification then automate 
+                      //user's transaction purchase
                     VerifyTransPin(
                       inputPin,
                       setSuccess,
@@ -1651,6 +1754,9 @@ const [etisalatReceiptInfo, setEtisalatReceiptInfo] = useState("");
           <Loader />
             </Modal>
           )}
+          {sessionModal && (
+            <HandleUserSession/>
+          )} 
     </DashBoardLayout>
   );
 };

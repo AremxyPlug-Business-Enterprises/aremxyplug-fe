@@ -120,7 +120,7 @@ export const DstvReceipt= (Data) => {
         <div
           className={` ${styles.receipt} ${
             toggleSideBar ? "" : "lg:w-[880px] "
-          } w-full lg:mx-auto`}
+          } w-full lg:mx-auto ${isDarkMode ? "border border-white" : ""}`}
         >
           <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
             <div>
@@ -284,8 +284,8 @@ export const DstvReceipt= (Data) => {
               </div>
             </div>
             <div className="rounded-[8px] bg-[#E2F3FF] mx-4 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
-              <p className={`text-[8px] text-center mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[16px]
-                ${isDarkMode ? "text-black" : "text-white"}`}>
+              <p className={`text-[8px] text-black text-center mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[16px]
+               `}>
                 Earn free points on every successful transactions, redeem your
                 earned points to real money, withdrawn to your bank account
                 instantly.

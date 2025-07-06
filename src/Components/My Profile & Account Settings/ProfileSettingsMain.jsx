@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import "../../App.css";
 import { DashBoardLayout } from "../Dashboard/Layout/DashBoardLayout";
 import ProfileHero from "./ProfileHero";
@@ -10,6 +10,7 @@ import ChangePin from "./My Profile Page/ChangePin";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { GetLocalStorage } from "../LocalStorage/LocalStorage";
+import { HandleUserSession, GetFunction } from "../ApiCollection.jsx/ApiBuck";
 
 export default function ProfileSettingsMain(Data) {
   const { profilePage, setProfilePage } = useContext(ContextProvider);
@@ -22,6 +23,9 @@ export default function ProfileSettingsMain(Data) {
   const { accountUpgrade, setAccountUpgrade } = useContext(ContextProvider);
   const { idVerificationOpen, setIdVerificationOpen } =
     useContext(ContextProvider);
+    const {setVerificationReason} = useContext(ContextProvider);
+    const { setVerificationResponse} = useContext(ContextProvider);
+    const [sessionModal, setSessionModal] = useState(false);
 
   const location = useLocation();
 
@@ -48,13 +52,53 @@ export default function ProfileSettingsMain(Data) {
     setAccountUpgrade,
   ]);
 
+
+  const QuickCheckVerification = async()=> {
+     
+    if(!navigator.onLine) return  setVerificationReason(`${idVerificationOpen === true ? "Nin" : bvnVerificationOpen === true ? "Bvn" : ""} retrieval failed: internet connection error`)
+    const path ="check-verification";
+    const SuccessHandler = ()=> {
+      console.log("Successful");
+    }
+    const FailedHandler = async(ErrorType)=> {
+      
+      if(ErrorType === "User error"){
+        setVerificationReason(`${idVerificationOpen === true ? "Nin" : bvnVerificationOpen === true ? "Bvn" : ""} retrieval failed due to unstable connection`)
+      }else if(ErrorType === "Server error"){
+        setVerificationReason(`${idVerificationOpen === true ? "Nin" : bvnVerificationOpen === true ? "Bvn" : ""} retrieval failed try some other time`)
+      }else if(ErrorType === undefined){
+      setVerificationReason(`${idVerificationOpen === true ? "Nin" : bvnVerificationOpen === true ? "Bvn" : ""} retrieval failed: internet connection error`)
+      }else if(ErrorType === "unauthorised"){
+        await GetFunction(path, 
+      setLoading, 
+      SuccessHandler,
+       (ErrorType)=> {
+        if(ErrorType === "unauthorised"){
+         setSessionModal(true)
+        }
+       },
+
+      setVerificationResponse)
+      }
+    }
+    const setLoading=(Value)=> {
+  console.log(Value)
+    }
+    await GetFunction(path, 
+      setLoading, 
+      SuccessHandler,
+       FailedHandler,
+      setVerificationResponse)
+  }
   // UseEffect to get Users Data
   const ValueRef = useRef();
 
   Data = GetLocalStorage();
   useEffect(() => {
     ValueRef.current = Data;
-  }, [Data]);
+    QuickCheckVerification();
+    //eslint-disable-next-line
+  }, [idVerificationOpen,bvnVerificationOpen]);
 
   return (
     <DashBoardLayout>
@@ -196,6 +240,9 @@ export default function ProfileSettingsMain(Data) {
           </Link>
         </div>
       </div>
+      {sessionModal && (
+        <HandleUserSession/>
+      )}
     </DashBoardLayout>
   );
 }

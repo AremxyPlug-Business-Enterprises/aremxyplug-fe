@@ -22,7 +22,7 @@ import { AirtimeVtuReceipt } from './AirtimeVtuReceipt';
 import { AirtimeReceiptFailed } from './AirtimeReceiptFailed';
 import axiosInstance from '../ApiCollection.jsx/apiClient';
 import { Loader } from '../Loader/Loader';
-import { VerifyTransPin, GetFunction } from '../ApiCollection.jsx/ApiBuck';
+import { VerifyTransPin, GetFunction, HandleUserSession } from '../ApiCollection.jsx/ApiBuck';
 import Select from  "../Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundles-Images/Select.svg";
 
 
@@ -63,13 +63,13 @@ const AirtimeVtu = () => {
     const [isLoading, setIsLoading] = useState(false); // For managing loading state
     const { isDarkMode } = useContext(ContextProvider);
     const [successPin, setSuccessPin] = useState(false)
-    const [failedPin, setFailedPin] = useState(false);
+   const [sessionModal, setSessionModal] = useState(false)
     const [errorMessage, setErrorMessage] = useState(false);
     const [passDataBalance, setPassDataBalance] = useState({});
     const [balanceStatus, setBalanceStatus] = useState("")
    const balanceStringToNum = Number(newBalance);
      let airtelDataAmount = Number(amount.replace(/\D/g, ""));
-               const updateBalance = passDataBalance.data ?  passDataBalance.data.data.data.balance : "";
+               const updateBalance = passDataBalance.data ?  passDataBalance?.data?.data?.data?.balance : "";
                   const cleanUpBalanceToNumericOnly = Number(updateBalance.replace(/\D/g, ""));
                  let CheckSufficiency =  airtelDataAmount > (newBalance === "" || newBalance === null ? cleanUpBalanceToNumericOnly : balanceStringToNum);
                  useEffect(() => {
@@ -79,17 +79,30 @@ const AirtimeVtu = () => {
                         console.log("successfully retrieved balance");
                         //alert("Successful")
                           }
-                         const FailedHandler = ()=> {
-                           console.log(`Failed to retrieve balance`)
+                         const FailedHandler = async(ErrorType)=> {
+                           if(ErrorType === "unauthorised"){
+                              await GetFunction("balance",
+                                 setIsLoading, SuccessHandler,
+                                  (ErrorType)=> {
+                                    if(ErrorType === "unauthorised"){
+                                    return setSessionModal(true);
+                                    }
+                                  },
+                                  setPassDataBalance)
+                           }
                          }
-                         await GetFunction("balance", setIsLoading, SuccessHandler, FailedHandler,setPassDataBalance)
+                         await GetFunction("balance",
+                             setIsLoading, 
+                             SuccessHandler, 
+                             FailedHandler,
+                             setPassDataBalance)
                            } 
                             // Simulate async data loading
                            
                             if(newBalance === "" || newBalance === null || newBalance === undefined){
                                GetBalance();
                                if(GetBalance){
-                                setNewBalance(passDataBalance.data ? passDataBalance.data.data.data.balance : "");
+                                setNewBalance(passDataBalance.data ? passDataBalance?.data?.data?.data?.balance : "");
                                }
                             }
                            //eslint-disable-next-line
@@ -264,7 +277,7 @@ const AirtimeVtu = () => {
                     <img src={flag} alt="" className={styles.NoImage} />
                 </div>
                 <h2 className={styles.netName}>{code}</h2>
-                <h2 className={styles.netName}>Wallet({amount.toLocaleString()}.00)</h2>
+                <h2 className={styles.netName}>Wallet({amount})</h2>
             </li>
         )
     }
@@ -453,15 +466,15 @@ const AirtimeVtu = () => {
             try {
                 setIsLoading(true)
                 const response = await axiosInstance.post(path, data);
-                const result = response.data.data.data; // Access the nested `data`
+                const result = response?.data?.data?.data; // Access the nested `data`
             
                 console.log(result);
                 console.log(response.status);
             
-                setTransactionID(result.transaction_id);
-                setRefNumber(result.reference_number);
-                setOrderID(result.order_id);
-                setDescription(result.description);
+                setTransactionID(result?.transaction_id);
+                setRefNumber(result?.reference_number);
+                setOrderID(result?.order_id);
+                setDescription(result?.description);
                 setInputPin("")
                   if (response.statusCode === 200) {
             // Success response
@@ -479,7 +492,7 @@ const AirtimeVtu = () => {
             setConfirm(false)// Show failure popup
              if(error && error.response === undefined){
              alert("Check your internet Connection, then reload the page.")
-          } else if(error && (error.response.status === 400 || 404)){
+          } else if(error && (error.response.status === 400 || error.response.status === 404)){
              setInputPin("");
                   setTransactFailedPopUp(true); 
             setConfirm(false)// 
@@ -488,13 +501,27 @@ const AirtimeVtu = () => {
                   setTransactFailedPopUp(true); 
             setConfirm(false)// 
           }else if(error && error.response.status === 401){
-            alert("session expired");
+            if(error.response.headers["x-new-auth-token"] || error.response.headers.get("x-new-auth-token")){
+         setIsLoading(true)
+         const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
+        
+         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
+           const setAuthorisedToken = localStorage.setItem("authorisedLogin", newToken);
+           if(setAuthorisedToken){
+            await handleTransactionSuccessClose()
+           }
+            }else{
+    const setGetToken = localStorage.setItem("getToken", newToken);
+      if(setGetToken){
+        await handleTransactionSuccessClose();
+      }
+      }
             setInputPin("") 
           }else {
             alert("Error occured: Kindly check your network connection.")
           }
                 return { statusCode: error.response.status, data: null };
-
+        }
             }finally {
                 setIsLoading(false)
             }
@@ -537,6 +564,20 @@ const AirtimeVtu = () => {
     };
 
     const HandleAirtime = async()=> {
+        const setFailedPin = async(ErrorType)=> {
+        if(ErrorType === "unauthorised"){
+             await VerifyTransPin(inputPin,
+    setSuccessPin,
+    (ErrorType)=> {
+        if(ErrorType === "unauthorised"){
+            return setSessionModal(true)
+        }
+    },
+      setIsLoading,
+       setErrorMessage,
+       handleTransactionSuccessClose)
+        }
+        }
    await VerifyTransPin(inputPin,
     setSuccessPin,
      setFailedPin,
@@ -1478,6 +1519,9 @@ const AirtimeVtu = () => {
                 <Modal>
                     <Loader/>
                 </Modal>
+            )}
+            {sessionModal && (
+                <HandleUserSession/>
             )}
         </DashBoardLayout>
     );

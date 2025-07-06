@@ -76,8 +76,7 @@ const DsTv = () => {
 
    // const [packageDstv, setPackageDstv] = useState("");
   //   const [tvTwoOtp, setTvTwoOtp] = useState('');
-     const [isLoading, setIsLoading] = useState(false)
-     const [failedConfig, setFailedConfig] = useState(false)
+     const [isLoading, setIsLoading] = useState(false);
       const [successConfig, setSuccessConfig] = useState(false)
      const [failedPopup, setFailedPopup] = useState(false);
      const [dstvData, setDstvData] = useState([]);
@@ -102,15 +101,7 @@ const DsTv = () => {
          ]
     
 const ReceiptButton = ()=> {
-      setDstvEmail("")
-   setDstvMobileNumber("")
-   setDstvSmartCard("");
-   setDstvAmount("");
-   setSelectedOptionDstv("");
-   setPackageDstv("");
-   setDstvDecoderType("")
-    setFlagResult("");
-    setDstvWalletBalance("");
+    
     setFailedPopup(false);
     handleReceivedData();
    //navigate("/DsTv");
@@ -127,7 +118,7 @@ const ReceiptButton = ()=> {
     setFlagResult("");
     setDstvWalletBalance("");
     setFailedPopup(false);
-     navigate("/DsTv");
+    // navigate("/DsTv");
   }
 
   
@@ -217,10 +208,10 @@ const ReceiptButton = ()=> {
   }
   
   
-const DstvOptionalPlan = dstvData?.length < 1 && fetchedDstvPlans.status === 200 ? fetchedDstvPlans.data.data.data : dstvData;
+const DstvOptionalPlan = dstvData?.length < 1 && fetchedDstvPlans.status === 200 ? fetchedDstvPlans?.data?.data?.data : dstvData;
       useEffect(()=> {
        if(fetchedDstvPlans.status === 200 || fetchedDstvPlans.status === 201){
-      setDstvData(fetchedDstvPlans.data.data.data);
+      setDstvData(fetchedDstvPlans?.data?.data?.data);
       }else if(fetchedDstvPlans.status === undefined){
        const RetrieveGotvPlans = async()=> {
           const SuccessHandler = ()=> {
@@ -275,7 +266,7 @@ RetrieveGotvPlans()
                     if(newBalance === "" || newBalance === null || newBalance === undefined){
                         GetBalance();
                         if(GetBalance){
-                         setNewBalance(passDataBalance?.data ? passDataBalance.data.data.data.balance : "");
+                         setNewBalance(passDataBalance?.data ? passDataBalance?.data?.data?.data?.balance : "");
                         }
                       }
      //eslint-disable-next-line             
@@ -389,10 +380,26 @@ const VerifyPinHandler = async () => {
           setInputPin("")
       //  handleReceivedData()
       }
-      const FailedHandler = () =>{
+      const FailedHandler = async(ErrorType) =>{
+        if(ErrorType === "unauthorised"){
+         await PostFunction(
+        Path,
+        setIsLoading,
+        requestData,
+        successHandler,
+        (ErrorType)=> {
+          if(ErrorType === "unauthorised"){
+            return setSessionModal(true)
+          }
+        },
+        setDstvSubscriptionResponse
+      );
+  
+        }else{
        setFailedPopup(true);
        setInputPinDstv(false);
          setInputPin("")
+        }
       }
       
       await PostFunction(
@@ -405,6 +412,22 @@ const VerifyPinHandler = async () => {
       );
     };
   
+    const setFailedConfig= async(ErrorType)=> {
+      if(ErrorType === "unauthorised"){
+    await VerifyTransPin(
+      inputPin,
+      setSuccessConfig,
+       (ErrorType)=> {
+        if(ErrorType === "unauthorised"){
+          return setSessionModal(true)
+        }
+       },
+      setIsLoading,
+      setErrorMessage,
+    DstvHandler,
+   );
+  }
+    }
     await VerifyTransPin(
       inputPin,
       setSuccessConfig,
@@ -437,7 +460,7 @@ if(ErrorType === "unauthorised"){
       if(ErrorType === "unauthorised"){
 return setSessionModal(true);
       }
-   })
+   }, setDstvVerifyResponse )
   }
 
 }
@@ -469,19 +492,19 @@ return setSessionModal(true);
         <div className={style.AirtimeTops}>
           <div className={style.airtimeTop}>
             <div>
-            <div id='tvBackground' className="h-[90px] lg:h-[196px] md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] lg:rounded-[20px] mx-auto  flex gap-6 justify-between px-[16.51px] md:px-[28.65px] lg:px-[50px]">
-          <div className="py-[11.57px] md:py-[16.61px] align-middle self-center flex flex-col gap-1.5 w-[70%]">
-            <p className="text-[9px] lg:text-[24px] md:text-[13.75px font-semibold">
-              SUBSCRIBE YOUR TV CHANNELS WITH AREMXYPLUG.
-            </p>
-            <p className="text-[8px] lg:text-[20px] md:text-[11.46px]">
-              Never miss a beat! Subscribe your tv channels on our platform to watch and stream your favorite movies without any hassle.
-            </p>
-          </div>
-          <div className="flex w-[23%] h-[97%] pt-2 shrink-0">
-            <img src="./Images/TvSubscription/tv.svg" alt="" className="" />
-          </div>
-        </div>
+             <div id='tvBackground' className="min-h-[90px] py-[15px] lg:h-[196px] md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] lg:rounded-[20px] mx-auto  flex gap-6 justify-between px-[16.51px] md:px-[28.65px] lg:px-[50px]">
+                            <div className="py-[9.57px] md:py-[16.61px] align-middle self-center flex flex-col gap-1.5 w-[70%]">
+                                <p className="text-[11px] leading-[13px] lg:leading-[30px] lg:text-[24px] md:text-[13.75px] font-semibold">
+                                    SUBSCRIBE YOUR TV CHANNELS WITH AREMXYPLUG.
+                                    </p>
+                                <p className="text-[10px] leading-[13px] lg:leading-[25px] lg:text-[20px] md:text-[11.46px]">
+                                Never miss a beat! Subscribe your tv channels on our platform to watch and stream your favorite movies without any hassle.
+                                </p>
+                            </div>
+                            <div className="flex w-[23%] h-[97%] pt-2 shrink-0">
+                                <img src="./Images/TvSubscription/tv.svg" alt="" className="" />
+                            </div>
+                        </div>
 
         <div className=" mx-auto flex gap-1.5 py-[25.29px] lg:py-[37px] md:py-[28.64px]">
           <div className="flex text-[#7E7E7E] text-[10px] lg:text-[18px] md:text-[14px font-semibold">
@@ -564,7 +587,8 @@ return setSessionModal(true);
         : "hover:bg-[#EDEAEA] border-[#9C9C9C] text-[#7C7C7C] "
     }`}>
                 {selectedOptionDstv}
-                <img className="absolute left-[90%] lg:left-[94%] self-center align-middle imgdrop md:h-[14.038px] md:w-[14.038px] 
+                <img className="absolute left-[90%] lg:left-[94%] self-center align-middle
+                 imgdrop md:h-[14.038px] md:w-[14.038px] 
       lg:h-[24px] lg:w-[24px] w-[14px] h-[15px]" src={arrowDown} alt="" />
               </div>
 
@@ -589,6 +613,7 @@ return setSessionModal(true);
                         setSelectedOptionDstv(`${option.PackageName}`)
                         setPackageDstv(option.Package)
                         setDstvAmount(option.Amount)
+                        document.querySelector(".imgdrop").classList.remove("DropIt");
                       }
                       }
                     >

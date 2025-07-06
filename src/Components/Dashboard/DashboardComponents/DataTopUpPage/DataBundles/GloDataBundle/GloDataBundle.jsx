@@ -25,7 +25,7 @@ import Joi from "joi";
 import airtimestyles from "../../../../../AirTimePage/AirtimeVtu.module.css";
 import Failed from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/Failed.svg";
 import axiosInstance from "../../../../../ApiCollection.jsx/apiClient";
-import { VerifyTransPin } from "../../../../../ApiCollection.jsx/ApiBuck";
+import { HandleUserSession, VerifyTransPin } from "../../../../../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../../../../Loader/Loader";
 import { GetFunction } from "../../../../../ApiCollection.jsx/ApiBuck";
 
@@ -80,7 +80,7 @@ const GloDataBundle = () => {
   const [loadingPlans, setLoadingPlans] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [success, setSuccess] = useState(false);
-  const [failed, setFailed] = useState(false);
+  
   const [errorMessage, setErrorMessage] = useState("");
 const [balanceStatus,setBalanceStatus ] = useState("");
  const [selectPlanWarn, setSelectPlanWarn] = useState(false);
@@ -88,6 +88,7 @@ const [balanceStatus,setBalanceStatus ] = useState("");
    let balanceStringToNum = Number(newBalance);
    const [passDataBalance, setPassDataBalance] = useState({});
    const [gloReceiptInfo, setGloReceiptInfo] = useState("");
+   const [sessionModal, setSessionModal]= useState(false);
 
               let gloDataAmount = Number(selectedAmountGlo.replace(/\D/g, ""));
               let updateBalance = passDataBalance?.data ? passDataBalance?.data?.data?.data?.balance : "";
@@ -101,8 +102,8 @@ const [balanceStatus,setBalanceStatus ] = useState("");
         const response = await axiosInstance.get(
           '/products/telecom/list/2'
         );
-        if(response.status === 201 || 200){
-          setProducts(response.data.data.products || []);
+        if(response.status === 201 || response.status ===  200){
+          setProducts(response?.data?.data?.products || []);
      }
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -110,6 +111,25 @@ const [balanceStatus,setBalanceStatus ] = useState("");
              alert("Check your internet Connection, then reload the page.")
           } else if(error && error.response.status === 400){
              alert("Service for glo is currently not available, Try again later.")
+          }if(error && error.response.status === 401){
+           if(error.response.headers["x-new-auth-token"] || error.response.headers.get("x-new-auth-token")){
+         setLoading(true)
+         const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
+        
+         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
+           const setAuthorisedToken = localStorage.setItem("authorisedLogin", newToken);
+           if(setAuthorisedToken){
+            await inputPinHandler()
+           }
+            }else{
+    const setGetToken = localStorage.setItem("getToken", newToken);
+      if(setGetToken){
+        await inputPinHandler();
+      }
+      }
+        }else{
+          return setSessionModal(true)
+        }
           }else if(error && error.response.status === 500){
              alert("Service for glo is currently not available, Try again later.")
           }
@@ -151,7 +171,24 @@ const [balanceStatus,setBalanceStatus ] = useState("");
        if(error && error.response === undefined){
              alert("Your internet connection is quite unstable.")
         }else if(error && (error.response.status ===  401)){
-        alert("Session expired")
+          if(error.response.headers["x-new-auth-token"] || error.response.headers.get("x-new-auth-token")){
+         setLoading(true)
+         const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
+        
+         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
+           const setAuthorisedToken = localStorage.setItem("authorisedLogin", newToken);
+           if(setAuthorisedToken){
+            await inputPinHandler()
+           }
+            }else{
+    const setGetToken = localStorage.setItem("getToken", newToken);
+      if(setGetToken){
+        await inputPinHandler();
+      }
+      }
+        }else{
+          return setSessionModal(true)
+        }
       }else if(error && error.response.status ===  400){
         setSelectProductWarn(true);
       }else if(error && error.response.status ===  500){
@@ -265,8 +302,14 @@ const [balanceStatus,setBalanceStatus ] = useState("");
   console.log("successfully retrieved balance");
   //alert("Successful")
     }
-   const FailedHandler = ()=> {
-     console.log(`Failed to retrieve balance`)
+   const FailedHandler = async(ErrorType)=> {
+     if(ErrorType === "unauthorised"){
+      await GetFunction("balance", setLoading, SuccessHandler, (ErrorType)=> {
+       if(ErrorType === "unauthorised"){
+        setSessionModal(true)
+       }
+      })
+     }
    }
    await GetFunction("balance", setLoading, SuccessHandler, FailedHandler,setPassDataBalance)
      } 
@@ -421,6 +464,7 @@ const [balanceStatus,setBalanceStatus ] = useState("");
   const [glopurchaseStatus, setGloPurchaseStatus] = useState(null); // State to hold purchase status
 
   const inputPinHandler = async () => {
+
     async function buyData(network, mobileNumber, plan, name) {
       // Add validation for selected plan
       if (!selectedPlan) {
@@ -448,13 +492,14 @@ const [balanceStatus,setBalanceStatus ] = useState("");
       console.log("its me")
 
       try {
+        setLoading(true);
         const response = await axiosInstance.post(path, data);
-        console.log(response.data);
-        console.log(response.status);
+        console.log(response?.data);
+        console.log(response?.status);
 
         const resData = response?.data?.data?.data; // Accessing the nested `data` object
 
-        console.log(response.status);
+        console.log(response?.status);
         setPlan(resData?.plan_name);
         console.log(resData?.plan_name);
         setGloTransactionID(resData?.transaction_id);
@@ -467,9 +512,9 @@ const [balanceStatus,setBalanceStatus ] = useState("");
         // No `order_id`, using `id` instead
      
 
-        console.log(resData.order_id);
+      
 
-        setGloDescription(`${resData.network} - ${resData.plan_name}`); // Fabricated description
+        setGloDescription(`${resData?.network} - ${resData?.plan_name}`); // Fabricated description
          if (response.statusCode === 200) {
       // Success response
       setTransactSuccessPopUp(true); // Show success popup
@@ -482,19 +527,38 @@ const [balanceStatus,setBalanceStatus ] = useState("");
       } catch (error) {
         console.error(error);
         if(error && error.response === undefined){
-          alert("Check your internet connection")
+          alert("Your internet connection is quite unstable")
         }else if(error && error.response.status  === 404){
         alert("Check your internet connection")
+        }else if(error && error.response.status  === 401){
+        if(error.response.headers["x-new-auth-token"] || error.response.headers.get("x-new-auth-token")){
+         setLoading(true)
+         const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
+        
+         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
+           const setAuthorisedToken = localStorage.setItem("authorisedLogin", newToken);
+           if(setAuthorisedToken){
+            await inputPinHandler()
+           }
+            }else{
+    const setGetToken = localStorage.setItem("getToken", newToken);
+      if(setGetToken){
+        await inputPinHandler();
+      }
+      }
+        }else{
+          return setSessionModal(true)
+        }
         }else if(error && error.response.status === 400){
            setGloPurchaseStatus(true); // Show failure popup
       setConfirm(false);
       setInputPin("");
-        } else if(error && error.response.status === 500){
+        } else if(error && (error.response.status === 500|| error.response.status === 400)){
         setGloPurchaseStatus(true); // Show failure popup
       setConfirm(false)
       setInputPin("");
         } else if(error && error.response.status === 401){
-        alert("Session expired let us re-run the code with the new authToken")
+         setSessionModal(true)
         }else {
           alert("An error has occurred, kindly check your internet connection.")
         }
@@ -736,7 +800,7 @@ const [balanceStatus,setBalanceStatus ] = useState("");
                 <div className={`border md:rounded-[10px] text-[10px] md:text-[12px]
                  lg:text-[16px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF]
                  bvnQuery shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
-                   ${products.length > 1 ? "overflow-y-scroll h-[300px]" : "h-[0px]"}
+                   ${products.length > 5 ? "overflow-y-scroll h-[300px]" : ""}
                   z-[10]`}>
                   {loadingProducts ? (
                     <div>Loading products...</div>
@@ -744,9 +808,8 @@ const [balanceStatus,setBalanceStatus ] = useState("");
                     products.map((product) => (
                       <div
                         key={product.Product_ID}
-                        className={`pb-[15px] md:pb-[6px]   
-                          font-weight-bold text-[13px] cursor-pointer border-b-[0.5px] text-[#7C7C7C]
-                           md:text-[12px] lg:text-[16px]  md:rounded-[0px] lg:mt-2 py-[4px]
+                        className={`font-[400] text-[13px] leading-[18px] cursor-pointer border-b-[0.5px] text-[#7C7C7C]
+                           md:text-[12px] lg:text-[16px] lg:leading-[20px] md:rounded-[0px] lg:mt-2 py-[15px] lg:py-[20px]
                            pl-[5px] ${selectedProductGlo === product.Plan_Type ? "" : ""}
                           ${isDarkMode
                             ? "bg-black text-white"
@@ -821,7 +884,7 @@ const [balanceStatus,setBalanceStatus ] = useState("");
               {showOptionList && (
                 <div className={`border md:rounded-[10px] lg:mt-2  
                    bvnQuery shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
-                   ${productPlans.length > 1 ? "overflow-y-scroll h-[300px]" : "h-[0px]"}
+                   ${productPlans.length > 5 ? "overflow-y-scroll h-[300px]" : ""}
                   rounded-[4px] absolute w-full bg-[#FFF] z-[100]
                         ${isDarkMode
                     ? "bg-black text-white border !border-white"
@@ -834,10 +897,10 @@ const [balanceStatus,setBalanceStatus ] = useState("");
                     productPlans.map((plan) => (
                       <div
                         key={plan.PlanID}
-                        className={`pb-[18px] md:pb-[6px] pt-[18px]
-                           md:pt-[6px] font-weight-bold text-[13px] cursor-pointer 
+                        className={`
+                            font-[400] text-[13px] leading-[18px] lg:leading-[20px] cursor-pointer 
                            border-b-[0.5px] md:rounded-[0px] text-[#7C7C7C] 
-                           md:text-[12px] lg:text-[16px] lg:mt-2 py-[4px]
+                           md:text-[12px] lg:text-[16px] lg:mt-2 py-[15px] lg:py-[20px]
                             pl-[5px] ${selectedOptionGlo === plan.PlanID ? "bg-gray-200" : ""
                           }
                                                 ${isDarkMode
@@ -1204,6 +1267,10 @@ const [balanceStatus,setBalanceStatus ] = useState("");
                         </h2>
                       </div>
                     </div>
+                      <div className="flex text-[10px] md:text-[14px] w-[100%] mx-auto justify-between font-semibold lg:text-[16px]">
+                    <span className="text-[#0008]">Points Earned</span>
+                    <span className="text-[#2ED173]">+2.00</span>
+                  </div>
 
                     <div className="bg-[#F6F7F7] w-[95%] h-auto my-5 lg:my-8 flex py-[7px] 
                                                              justify-between items-center px-[4%] mx-auto rounded-[10px]">
@@ -1323,6 +1390,22 @@ const [balanceStatus,setBalanceStatus ] = useState("");
                     console.log("inputPin", inputPin);
                       const GloHandler =  () => {
                       inputPinHandler(); // Proceed with purchase
+                      }
+                      const setFailed = async(ErrorType)=> {
+                        if(ErrorType === "unauthorised"){
+                         await  VerifyTransPin(
+                      inputPin,
+                      setSuccess,
+                      (ErrorType)=> {
+                        if(ErrorType === "unauthorised"){
+                          return setSessionModal(true)
+                        }
+                      },
+                      setLoading,
+                      setErrorMessage,
+                    GloHandler
+                    );
+                        }
                       }
                     VerifyTransPin(
                       inputPin,
@@ -1648,6 +1731,9 @@ const [balanceStatus,setBalanceStatus ] = useState("");
             <Modal>
               <Loader/>
             </Modal>
+          )}
+          {sessionModal && (
+            <HandleUserSession/>
           )}
     </DashBoardLayout>
   );

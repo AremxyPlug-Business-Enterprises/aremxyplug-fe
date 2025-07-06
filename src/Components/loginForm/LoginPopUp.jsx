@@ -193,29 +193,27 @@ const handleVerificationOTP = ()=> {
     const response = await axios.get(url,{headers : {"Content-Type" : "application/json",
     Authorization : authToken || getToken
     }})
-  if (response.status === 201 || 200 ) {
-   
-    console.log(response);
+  if (response.status === 201 || response.status ===  200 ) {
     localStorage.setItem("AccCreated",true);
-    const nin = response.data.data.nin;
-    const bvn = response.data.data.bvn;
+    const nin = response?.data?.data?.nin;
+    const bvn = response?.data?.data?.bvn;
     //console.log(bvn,nin)
   if( !bvn && nin){
-  setIdButtonState("Virtual Account Created");
+  setIdButtonState("Verified");
   setVerifyImage(VerificationSuccess);
   setIdStatus("Verified")
   setIdNumber(response.data.data.nin)
   localStorage.setItem("bvnVerification",false);
   localStorage.setItem("idVerification",true);
   }else if(bvn && !nin){
-    setBvnButtonState("Virtual Account Created");
+    setBvnButtonState("Verified");
     setBvnVerifyImage(VerificationSuccess);
     setBvnStatus("Verified")
     setBvnNumber(response.data.data.bvn)
     localStorage.setItem("bvnVerification",true);
     localStorage.setItem("idVerification",false);
   }else if(bvn && nin){
-    setIdButtonState("Virtual Account Created");
+    setIdButtonState("Verified");
   setVerifyImage(VerificationSuccess);
   setIdStatus("Verified")
   setBvnButtonState("Virtual Account Created");
@@ -245,12 +243,14 @@ const handleVerificationOTP = ()=> {
         setBvnVerifyImage(NotVerifiedImage);
         setIdStatus("Not Verified");
         setBvnStatus("Not Verified");
-       console.log("ERROR",error.response.data.message)
+        setBvnButtonState("Verify");
+        setIdButtonState("Verify");
+      
       }else if(error && error.response.data.message === "action_required"){
         localStorage.setItem("AccCreated", false);
-        const bvnCheck = error.response.data.data.bvn;
+        const bvnCheck = error?.response?.data?.data.bvn;
         
-        const ninCheck = error.response.data.data.nin;
+        const ninCheck = error?.response?.data?.data?.nin;
         console.log(bvnCheck, ninCheck)
         
         if(bvnCheck && !ninCheck){
@@ -290,10 +290,10 @@ const handleVerificationOTP = ()=> {
           // localStorage.setItem("bvnVerification",true)
         
         } else if(bvnCheck && ninCheck) {
-          setBvnButtonState("Create Virtual Account");
+          setBvnButtonState("Verified");
           setBvnVerifyImage(VerificationSuccess)
           setBvnStatus("Verified");
-          setIdButtonState("Create Virtual Account");
+          setIdButtonState("Verified");
           setVerifyImage(VerificationSuccess)
           setIdStatus("Verified");
           setBvnNumber(error.response.data.bvn);
@@ -306,35 +306,26 @@ const handleVerificationOTP = ()=> {
       }else if (error && error.status === 404){
         alert("Network Error:, Please Check your Connection and try again");
       }else if(error && error.status === 401){
-    
-        console.log(error.response.headers);
-        console.log(error.response.headers.get("x-new-auth-token"))
-        console.log(error.response.headers["x-new-auth-token"])
-        console.log(error.response.headers.hasAuthorization());
         // console.log(error.response.headers.hasAuthorization);
-        if(error.response.headers["x-new-auth-token"] === "" || error.response.headers.get("x-new-auth-token") ){
+        if(error.response.headers["x-new-auth-token"] || error.response.headers.get("x-new-auth-token") ){
        
          const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
          if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
              console.log(newToken)
-        const emailLogin = localStorage.setItem("authorisedLogin", newToken);
-            if(emailLogin){
-            try {
-              await ConfirmVirtualState()
-            }catch{
-              alert("Your Session has expired, kindly login again")
+       localStorage.setItem("authorisedLogin", newToken);
+            if(localStorage.getItem("authorisedLogin")?.length > 1){
+           await ConfirmVirtualState()
             }
-            } 
-      }else if(newToken !== "" && localStorage.getItem("getToken") === "true"){
-        const smsLogin = localStorage.setItem("getToken", newToken)
-        if(smsLogin) {
-         try{
-          await ConfirmVirtualState()
-         }catch{
-          alert("Your Session has expired, kindly login again")
-         }
-        } 
+            
+           } else if(newToken !== "" && localStorage.getItem("getToken") === "true"){
+        localStorage.setItem("getToken", newToken)
+        if( localStorage.setItem("getToken", newToken)?.length > 1) {
+       await ConfirmVirtualState();
+         } 
     }
+  }else{
+    alert("We Couldn't retrieve your details, click okay to repeat the login process")
+    return window.location.replace("/Login");
   }
 } else if(error.status === 500){
         alert('Error:', "A SERVER ERROR");
@@ -416,12 +407,16 @@ const gettingSmsOrEmailFunctionOtp = async(url, body)=> {
          }else if( error && error.response.status === 400){
         setVerificationPinError(true);
         console.log("The Verification failed");
+        setOtp3("")
       }else if(error.response.status === 404){
      setVerificationPinError(true);
       alert("OOPs, an error has occured");
+      setOtp3("")
       
     }else if(error && error.response.status === 401){
+      setOtp3("")
     console.log(error.response.headers);
+
         console.log(error.response.headers.get("x-new-auth-token"))
         console.log(error.response.headers["x-new-auth-token"])
         console.log(error.response.headers.hasAuthorization());
@@ -453,6 +448,7 @@ const gettingSmsOrEmailFunctionOtp = async(url, body)=> {
         }
     }
     else if(error.response && error.response.status === 500){
+      setOtp3("")
         alert("SERVER ERROR");
       }else{
         alert("Check your network connection");
