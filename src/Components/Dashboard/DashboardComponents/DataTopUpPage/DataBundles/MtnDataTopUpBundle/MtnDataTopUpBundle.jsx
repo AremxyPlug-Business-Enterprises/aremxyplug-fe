@@ -64,7 +64,6 @@ const { isDarkMode, newBalance, setNewBalance } = useContext(ContextProvider);
   const [loadingPlans, setLoadingPlans] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [success, setSuccess] = useState(false);
-  const [failed, setFailed] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
  const [balanceStatus,setBalanceStatus ] = useState("")
 
@@ -80,7 +79,7 @@ const { isDarkMode, newBalance, setNewBalance } = useContext(ContextProvider);
    let balanceStringToNum = Number(newBalance);
 
               let mtnDataAmount = Number(selectedAmountMtn.replace(/\D/g, ""));
-              const updateBalance = passDataBalance.data ?  passDataBalance.data.data.data.balance : "";
+              const updateBalance = passDataBalance?.data ?  passDataBalance?.data?.data?.data?.balance : "";
               const cleanUpBalanceToNumericOnly = Number(updateBalance.replace(/\D/g, ""));
              let CheckSufficiency =  mtnDataAmount > (newBalance === "" || newBalance === null ? cleanUpBalanceToNumericOnly : balanceStringToNum);
            

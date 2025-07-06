@@ -69,9 +69,9 @@ const AirtimeVtu = () => {
     const [balanceStatus, setBalanceStatus] = useState("")
    const balanceStringToNum = Number(newBalance);
      let airtelDataAmount = Number(amount.replace(/\D/g, ""));
-               const updateBalance = passDataBalance.data ?  passDataBalance?.data?.data?.data?.balance : "";
+               const updateBalance = passDataBalance?.data ?  passDataBalance?.data?.data?.data?.balance : "";
                   const cleanUpBalanceToNumericOnly = Number(updateBalance.replace(/\D/g, ""));
-                 let CheckSufficiency =  airtelDataAmount > (newBalance === "" || newBalance === null ? cleanUpBalanceToNumericOnly : balanceStringToNum);
+                 let CheckSufficiency = airtelDataAmount  > (newBalance === "" || newBalance === null ? cleanUpBalanceToNumericOnly : balanceStringToNum);
                  useEffect(() => {
                            const GetBalance =   async()=> {
                                const SuccessHandler = ()=> {
@@ -996,7 +996,7 @@ const AirtimeVtu = () => {
             : ""
     }
                                                 ${styles.head4} !relative !top-[3.8px] md:!relative md:!top-base !text-[14px] md:!text-[13px]`}>{name}</h2>
-                                                <h2 className={`${styles.head4} !relative !top-[3.8px] md:!relative md:!top-base !text-[14px] md:!text-[13px]`}>Wallet({paymentAmount.toLocaleString()}.00)</h2>
+                                                <h2 className={`${styles.head4} !relative !top-[3.8px] md:!relative md:!top-base !text-[14px] md:!text-[13px]`}>Wallet({paymentAmount.toLocaleString()})</h2>
                                             </li>
                                             :
                                             <h2 onClick={handleShowPayment} className={`

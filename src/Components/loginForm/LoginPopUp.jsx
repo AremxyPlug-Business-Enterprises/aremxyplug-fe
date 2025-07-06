@@ -248,7 +248,7 @@ const handleVerificationOTP = ()=> {
       
       }else if(error && error.response.data.message === "action_required"){
         localStorage.setItem("AccCreated", false);
-        const bvnCheck = error?.response?.data?.data.bvn;
+        const bvnCheck = error?.response?.data?.data?.bvn;
         
         const ninCheck = error?.response?.data?.data?.nin;
         console.log(bvnCheck, ninCheck)
@@ -259,7 +259,7 @@ const handleVerificationOTP = ()=> {
           setBvnStatus("Verified");
             setVerifyImage(VerificationSuccess)
           setIdStatus("Verified");
-           setBvnNumber( error.response.data.bvn);
+           setBvnNumber( error?.response?.data?.bvn);
           localStorage.setItem("bvnVerification",true);
           localStorage.setItem("idVerification",true);
           // setIdButtonState("Verify");
@@ -273,7 +273,7 @@ const handleVerificationOTP = ()=> {
           setBvnStatus("Verified");
           setVerifyImage(VerificationSuccess)
           setIdStatus("Verified");
-          setIdNumber( error.response.data.nin);
+          setIdNumber( error?.response?.data?.nin);
           localStorage.setItem("idVerification",true);
           localStorage.setItem("bvnVerification",true);
           // setBvnButtonState("Verify");
@@ -296,8 +296,8 @@ const handleVerificationOTP = ()=> {
           setIdButtonState("Verified");
           setVerifyImage(VerificationSuccess)
           setIdStatus("Verified");
-          setBvnNumber(error.response.data.bvn);
-          setIdNumber(error.response.data.nin);
+          setBvnNumber(error?.response?.data?.bvn);
+          setIdNumber(error?.response?.data?.nin);
           localStorage.setItem("idVerification",true);
           localStorage.setItem("bvnVerification",true);
         }
