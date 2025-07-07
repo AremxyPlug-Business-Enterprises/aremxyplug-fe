@@ -21,12 +21,13 @@ import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import { Modal } from "../Screens/Modal/Modal";
 import AremxyPlugIcon from "./imagesEducation/AremxyPlug.svg";
-import NabtebReceipt from "./ReceiptEducationPins/nabtebReceipt";
+// import NabtebReceipt from "./ReceiptEducationPins/nabtebReceipt";
 // import axios from "axios";
 import eduFailed from "./imagesEducation/WaecFailedTransaction.svg";
 import "../Dashboard/DashboardComponents/DataTopUpPage/DataTopUp.css";
 import {
   GetFunction,
+  HandleUserSession,
   PostFunction,
   VerifyTransPin,
 } from "../ApiCollection.jsx/ApiBuck";
@@ -66,6 +67,7 @@ export default function NabtebEducationPins() {
     setNabtebWalletBalance,
     setEducationPinStatus,
     newBalance,
+    setNewBalance,
 
     nabtebEduResponse,
     setNabtebPinsGenerated,
@@ -84,7 +86,101 @@ export default function NabtebEducationPins() {
   const [nabtebEducationConfirm, setNabtebEducationConfirm] = useState(false);
   const [nabtebFailedTransaction, setNabtebFailedTransaction] = useState(false);
 
-  const [receipt] = useState(false);
+  // const [receipt] = useState(false);
+
+  // Get Amount
+  const [isLoading, setIsLoading] = useState(false);
+  const [sessionModal, setSessionModal] = useState(false);
+  const [passDataBalance, setPassDataBalance] = useState({});
+
+  const getAmount = async function handleGetAmount() {
+    const id = 3;
+    const path = `products/edu/${id}`;
+    const SuccessHandler = () => {
+      setNabtebEduResponse((response) => {
+        const amount = response?.data?.data?.data?.Amount;
+        if (amount) {
+          setNabtebQuantityAmount(amount);
+        } else {
+          setNabtebQuantityAmount("");
+        }
+        return response;
+      });
+    };
+
+    const FailedHandler = (ErrorType) => {
+      if (ErrorType === "Server error") {
+        alert("Unable to get WAEC PINS. Please try again later");
+      } else if (ErrorType === "unauthorised") {
+        return setSessionModal(true);
+      }
+    };
+
+    await GetFunction(
+      path,
+      setIsLoading,
+      SuccessHandler,
+      FailedHandler,
+      setNabtebEduResponse
+    );
+  };
+  const GetBalance = async () => {
+    const SuccessHandler = () => {
+      console.log("successfully retrieved balance");
+    };
+    const FailedHandler = async (ErrorType) => {
+      if (ErrorType === "unauthorised") {
+        await GetFunction(
+          `products/edu/3`,
+          setIsLoading,
+          SuccessHandler,
+          (ErrorType) => {
+            if (ErrorType === "unauthorised") {
+              return setSessionModal(true);
+            }
+          },
+          setNabtebEduResponse
+        );
+      }
+    };
+    await GetFunction(
+      "balance",
+      setIsLoading,
+      SuccessHandler,
+      FailedHandler,
+      setPassDataBalance
+    );
+  };
+  // get the amount and balance on entering the page
+  useEffect(() => {
+    getAmount();
+    GetBalance();
+    if (newBalance === "" || newBalance === null || newBalance === undefined) {
+      GetBalance();
+      if (GetBalance) {
+        setNewBalance(
+          passDataBalance?.data?.data
+            ? passDataBalance?.data?.data?.data?.balance
+            : ""
+        );
+      }
+    }
+    handleResetFields();
+    // eslint-disable-next-line
+  }, []);
+
+  // function to reset the fields
+  function handleResetFields() {
+    setNabtebExamType("NABTEB");
+    setNabtebQuantityResult("");
+    setNabtebEducationPinPhone("");
+    setNabtebEducationPinEmail("");
+    setNabtebEducationAmount("");
+    setNabtebPaymentResult("");
+    setNabtebQuantityActive(false);
+    setNabtebMethodActive(false);
+    setNabtebExamActive(false);
+  }
 
   function nabtebQuantityDropDown() {
     if (!nabtebExamType) {
@@ -111,10 +207,20 @@ export default function NabtebEducationPins() {
     setNabtebQuantityActive(false);
     setNabtebExamActive(false);
   }
+
+  const updateBalance = passDataBalance?.data?.data
+    ? passDataBalance?.data?.data?.data?.balance
+    : "";
+
+  console.log("bal", updateBalance);
+
   const nabtebMethodOptions = [
     {
       method: "NGN Wallet",
-      balance: `(₦${newBalance})`,
+      balance:
+        newBalance === "" || newBalance === null || newBalance === undefined
+          ? `(₦${updateBalance})`
+          : `(₦${newBalance})`,
       flag: nigerianFlag,
       id: 1,
     },
@@ -181,61 +287,6 @@ export default function NabtebEducationPins() {
       .messages({ "string.pattern.base": "Invalid email " }),
   });
 
-  // Get Amount
-  // const [isFailedAmount, setIsFailedAmount] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const getAmount = async function handleGetAmount() {
-    const id = 3;
-    const path = `products/edu/${id}`;
-    const SuccessHandler = () => {
-      setNabtebEduResponse((response) => {
-        const amount = response?.data?.data?.data?.Amount;
-        console.log("amount", amount);
-        if (amount) {
-          setNabtebQuantityAmount(amount);
-        } else {
-          setNabtebQuantityAmount("");
-        }
-        return response;
-      });
-    };
-
-    const FailedHandler = (name) => {
-      // setIsFailedAmount(true);
-      if (name === "Server error") {
-        alert("Unable to get WAEC PINS. Please try again later");
-      }
-    };
-
-    await GetFunction(
-      path,
-      setIsLoading,
-      SuccessHandler,
-      FailedHandler,
-      setNabtebEduResponse
-    );
-  };
-  // get the amount on entering the page
-  useEffect(() => {
-    getAmount();
-    handleResetFields();
-    // eslint-disable-next-line
-  }, []);
-
-  // function to reset the fields
-  function handleResetFields() {
-    setNabtebExamType("NABTEB");
-    setNabtebQuantityResult("");
-    setNabtebEducationPinPhone("");
-    setNabtebEducationPinEmail("");
-    setNabtebEducationAmount("");
-    setNabtebPaymentResult("");
-    setNabtebQuantityActive(false);
-    setNabtebMethodActive(false);
-    setNabtebExamActive(false);
-  }
-
   function handleCalculatedAmount(quantity) {
     const amountCalculated =
       nabtebQuantityAmount > 0 ? Number(nabtebQuantityAmount) * quantity : "";
@@ -265,7 +316,7 @@ export default function NabtebEducationPins() {
   const nabtebTransactionSuccessClose = () => {
     setTransactSuccessPopUp(false);
   };
-  
+
   const nabtebEduPinSuccess = (e) => {
     setTransactSuccessPopUp(true);
     setNabtebEducationConfirm(false);
@@ -312,11 +363,10 @@ export default function NabtebEducationPins() {
       const path = `edu`;
       const body = {
         exam_type: nabtebExamType.toLowerCase(),
-        quantity: parseInt(nabtebQuantityResult.split(" (")[0].slice(0, 1)),
         phone_no: nabtebEducationPinPhone,
-        email: nabtebEducationPinEmail,
         amount: String(nabtebEducationAmount),
-        wallet_type: "",
+        email: nabtebEducationPinEmail,
+        quantity: parseInt(nabtebQuantityResult.split(" (")[0].slice(0, 1)),
       };
       const SuccessHandler = () => {
         nabtebEduPinSuccess();
@@ -345,6 +395,11 @@ export default function NabtebEducationPins() {
       EduPinHandler
     );
   };
+
+  console.log(
+    "quant",
+    parseInt(nabtebQuantityResult.split(" (")[0].slice(0, 1))
+  );
 
   function handleReceivedData() {
     setIsLoading(true);
@@ -792,10 +847,13 @@ export default function NabtebEducationPins() {
                           <div
                             onClick={() => {
                               if (methodOption.method === "NGN Wallet") {
+                                // setNabtebPaymentResult(
+                                //   newBalance
+                                //     ? `${methodOption.method} ${methodOption.balance}`
+                                //     : methodOption
+                                // );
                                 setNabtebPaymentResult(
-                                  newBalance
-                                    ? `${methodOption.method} ${methodOption.balance}`
-                                    : methodOption
+                                  `${methodOption.method} ${methodOption.balance}`
                                 );
                                 setNabtebWalletBalance(methodOption.balance);
                                 setNabtebImageState(methodOption.flag);
@@ -807,18 +865,17 @@ export default function NabtebEducationPins() {
                                 setNabtebMethodActive(true);
                               }
                             }}
-                            className={`flex gap-2.5 lg:py-[15px] py-[10px] pl-[10px] transition-colors duration-300 items-center shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
-                            ${
-                              isDarkMode
-                                ? "bg-black text-white hover:bg-gray-800"
-                                : "bg-white hover:bg-[#EDEAEA]"
-                            }
-                            ${
-                              methodOption.method === "NGN Wallet"
-                                ? "cursor-pointer "
-                                : "cursor-not-allowed opacity-50 "
-                            }
-                            `}
+                            className={`flex gap-2.5 lg:py-[15px] py-[10px] pl-[10px] transition-colors duration-300 items-center shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
+                              ${
+                                methodOption.id !== 1 && !isDarkMode
+                                  ? "bg-gray-300 cursor-not-allowed"
+                                  : methodOption.id !== 1 && isDarkMode
+                                  ? "bg-black cursor-not-allowed"
+                                  : methodOption.id === 1 && !isDarkMode
+                                  ? "bg-white hover:bg-[#EDEAEA] cursor-pointer"
+                                  : "bg-black cursor-pointer hover:bg-gray-800"
+                              }
+                              `}
                             key={methodOption.id}
                           >
                             <img
@@ -829,11 +886,7 @@ export default function NabtebEducationPins() {
 
                             <h2
                               className={`py-5 md:pb-0 md:pt-0 font-normal text-[13.5px] leading-[10.4px] md:text-[13.227px] md:leading-[17.195px] lg:text-base lg:leading-[20.8px] self-center
-                              ${
-                                isDarkMode
-                                  ? "bg-black text-white"
-                                  : "text-[#7C7C7C]"
-                              }`}
+                              ${isDarkMode ? " text-white" : "text-[#7C7C7C]"}`}
                             >
                               {methodOption.method + " " + methodOption.balance}
                             </h2>
@@ -879,7 +932,7 @@ export default function NabtebEducationPins() {
                         {nabtebExamType}
                       </span>{" "}
                       PIN (₦{nabtebEducationAmount}) from your{" "}
-                      {nabtebPaymentResult} to
+                      {nabtebPaymentResult.split(" (")[0]} to
                     </h2>
 
                     <div className="flex flex-col gap-[15px] px-[20px] mt-[50px] md:gap-[25px]">
@@ -916,8 +969,7 @@ export default function NabtebEducationPins() {
                         </h2>
                         <div className="flex gap-1">
                           <h2
-                            className="text-[10px] leading-[12px] capitalize md:text-[12px] 
-                      md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium"
+                            className="text-[10px] leading-[12px] capitalize md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium"
                           >
                             {nabtebQuantityResult.split(" (")[0]}
                           </h2>
@@ -966,7 +1018,7 @@ export default function NabtebEducationPins() {
                         </h2>
                         <div className="flex gap-1">
                           <h2 className="text-[10px] leading-[12px] md:text-[12px] md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
-                            {nabtebPaymentResult}
+                            {nabtebPaymentResult.split(" (")[0]}
                           </h2>
                         </div>
                       </div>
@@ -1236,8 +1288,7 @@ export default function NabtebEducationPins() {
                       </h2>
                       <div className="flex gap-1">
                         <h2
-                          className="text-[10px] leading-[12px] md:text-[12px] md:leading-[11.92px] 
-                    lg:text-base lg:leading-[24px] font-medium"
+                          className="text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium"
                         >
                           {nabtebQuantityResult.split(" (")[0]}
                         </h2>
@@ -1246,8 +1297,7 @@ export default function NabtebEducationPins() {
 
                     <div className="flex items-center justify-between">
                       <h2
-                        className="text-[#7C7C7C] text-[10px] leading-[12px]
-                   md:text-[12px] md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium"
+                        className="text-[#7C7C7C] text-[10px] leading-[12px] md:text-[12px] md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium"
                       >
                         Phone Number
                       </h2>
@@ -1368,7 +1418,7 @@ export default function NabtebEducationPins() {
             )}
 
             {/* =========== RECEIPT ============*/}
-            {receipt && (
+            {/* {receipt && (
               <NabtebReceipt
                 Exam="NABTEB"
                 ExamType={nabtebExamType}
@@ -1379,7 +1429,7 @@ export default function NabtebEducationPins() {
                 walletBalance={nabtebWalletBalance}
                 walletName={nabtebPaymentResult}
               />
-            )}
+            )} */}
 
             <div className="py-[30px] lg:py-[60px] mt-10 lg:mb-[80px] mb-[50px] md:mb-[100px]">
               <button
@@ -1519,6 +1569,7 @@ export default function NabtebEducationPins() {
           <Loader />
         </Modal>
       )}
+      {sessionModal && <HandleUserSession />}
     </DashBoardLayout>
   );
 }

@@ -23,12 +23,13 @@ import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import { Modal } from "../Screens/Modal/Modal";
 import AremxyPlugIcon from "./imagesEducation/AremxyPlug.svg";
-import WaecReceipt from "./ReceiptEducationPins/waecReceipt";
+// import WaecReceipt from "./ReceiptEducationPins/waecReceipt";
 // import axios from "axios";
 import "../Dashboard/DashboardComponents/DataTopUpPage/DataTopUp.css";
 import eduFailed from "./imagesEducation/WaecFailedTransaction.svg";
 import {
   GetFunction,
+  HandleUserSession,
   PostFunction,
   VerifyTransPin,
 } from "../ApiCollection.jsx/ApiBuck";
@@ -134,6 +135,16 @@ export default function WaecEducationPin() {
     // eduResponse,
     setEduResponse,
     newBalance,
+    setNewBalance,
+
+    EduResponse,
+    setWaecPinsGenerated,
+    waecOrderId,
+    setWaecOrderId,
+    setWaecTransactionId,
+    setWaecShowDescription,
+    setWaecFullName,
+    setWaecTransactionProduct,
   } = useContext(ContextProvider);
 
   // UseStates
@@ -141,8 +152,91 @@ export default function WaecEducationPin() {
   const [educationProceed, setEducationProceed] = useState(false);
   const [errors, setErrors] = useState({});
   const [educationConfirm, setEducationConfirm] = useState(false);
-  const [receipt] = useState(false);
+  // const [receipt] = useState(false);
   const [waecFailedTransaction, setWaecFailedTransaction] = useState(false);
+
+  // Get Amount
+  const [isLoading, setIsLoading] = useState(false);
+  const [sessionModal, setSessionModal] = useState(false);
+  const [passDataBalance, setPassDataBalance] = useState({});
+
+  const getAmount = async function handleGetAmount() {
+    const id = 1;
+    const path = `products/edu/${id}`;
+
+    const SuccessHandler = () => {
+      setEduResponse((response) => {
+        const amount = response?.data?.data?.data?.Amount;
+        if (amount) {
+          setQuantityAmount(amount);
+        } else {
+          setQuantityAmount("");
+        }
+        return response;
+      });
+    };
+
+    const FailedHandler = (ErrorType) => {
+      // setIsFailedAmount(true);
+      if (ErrorType === "Server error") {
+        alert("Unable to get WAEC PINS. Please try again later");
+      } else if (ErrorType === "unauthorised") {
+        return setSessionModal(true);
+      }
+    };
+
+    await GetFunction(
+      path,
+      setIsLoading,
+      SuccessHandler,
+      FailedHandler,
+      setEduResponse
+    );
+  };
+  const GetBalance = async () => {
+    const SuccessHandler = () => {
+      console.log("successfully retrieved balance");
+    };
+    const FailedHandler = async (ErrorType) => {
+      if (ErrorType === "unauthorised") {
+        await GetFunction(
+          `products/edu/1`,
+          setIsLoading,
+          SuccessHandler,
+          (ErrorType) => {
+            if (ErrorType === "unauthorised") {
+              return setSessionModal(true);
+            }
+          },
+          setEduResponse
+        );
+      }
+    };
+    await GetFunction(
+      "balance",
+      setIsLoading,
+      SuccessHandler,
+      FailedHandler,
+      setPassDataBalance
+    );
+  };
+  // get the amount and balance on entering the page
+  useEffect(() => {
+    getAmount();
+    GetBalance();
+    if (newBalance === "" || newBalance === null || newBalance === undefined) {
+      GetBalance();
+      if (GetBalance) {
+        setNewBalance(
+          passDataBalance?.data?.data
+            ? passDataBalance?.data?.data?.data?.balance
+            : ""
+        );
+      }
+    }
+    handleResetFields();
+    // eslint-disable-next-line
+  }, []);
 
   //==========  QUANTITY RESULT SLIP CHECKERS ==============
   function waecQuantityDropDown() {
@@ -168,10 +262,18 @@ export default function WaecEducationPin() {
     setMethodActive(!methodActive);
     document.querySelector(".methodDrop").classList.toggle("DropIt");
   }
+
+  const updateBalance = passDataBalance?.data?.data
+    ? passDataBalance?.data?.data?.data?.balance
+    : "";
+
   const methodOptions = [
     {
       method: "NGN Wallet",
-      balance: `(₦${newBalance})`,
+      balance:
+        newBalance === "" || newBalance === null || newBalance === undefined
+          ? `(₦${updateBalance})`
+          : `(₦${newBalance})`,
       flag: nigerianFlag,
       id: 1,
     },
@@ -236,50 +338,6 @@ export default function WaecEducationPin() {
       .messages({ "string.pattern.base": "Invalid email " }),
   });
 
-  // Get Amount
-  // const [isFailedAmount, setIsFailedAmount] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  // const navigate = useNavigate()
-  // const [isAmountLoading, setIsAmountLoading] = useState(false);
-
-  const getAmount = async function handleGetAmount() {
-    const id = 1;
-    const path = `products/edu/${id}`;
-
-    const SuccessHandler = () => {
-      setEduResponse((response) => {
-        const amount = response?.data?.data?.data?.Amount;
-        if (amount) {
-          setQuantityAmount(amount);
-        } else {
-          setQuantityAmount("");
-        }
-        return response;
-      });
-    };
-
-    const FailedHandler = (name) => {
-      // setIsFailedAmount(true);
-      if (name === "Server error") {
-        alert("Unable to get WAEC PINS. Please try again later");
-      }
-    };
-
-    await GetFunction(
-      path,
-      setIsLoading,
-      SuccessHandler,
-      FailedHandler,
-      setEduResponse
-    );
-  };
-  // get the amount on entering the page
-  useEffect(() => {
-    getAmount();
-    handleResetFields();
-    // eslint-disable-next-line
-  }, []);
-
   // function to reset the fields
   function handleResetFields() {
     setExamType("WAEC");
@@ -326,9 +384,6 @@ export default function WaecEducationPin() {
   };
 
   const waecTransactionSuccessClose = () => {
-    setTransactSuccessPopUp(false);
-  };
-  const waecReceipt = () => {
     setTransactSuccessPopUp(false);
   };
 
@@ -396,17 +451,15 @@ export default function WaecEducationPin() {
       const path = `edu`;
       const body = {
         exam_type: examType.toLowerCase(),
-        quantity: parseInt(quantityResult.slice(0, 1)),
-        phone_no: educationPinPhone,
         email: educationPinEmail,
-        // amount: educationAmount.slice(1),
-        amount: educationAmount,
-        wallet_type: "",
+        phone_no: educationPinPhone,
+        amount: String(educationAmount),
+        quantity: parseInt(quantityResult.split(" (")[0].slice(0, 1)),
       };
-      const bodyJSON = JSON.stringify(body)
       const SuccessHandler = () => {
         eduPinSuccess();
         setEducationPinStatus(true);
+        setWaecOrderId(EduResponse?.data?.order_id);
       };
       const FailedHandler = () => {
         waecEduPinFailed();
@@ -415,7 +468,7 @@ export default function WaecEducationPin() {
       await PostFunction(
         path,
         setIsLoading,
-        bodyJSON,
+        body,
         SuccessHandler,
         FailedHandler,
         setEduResponse
@@ -460,341 +513,369 @@ export default function WaecEducationPin() {
   //   // eslint-disable-next-line
   // }, []);
 
+  function handleReceivedData() {
+    setIsLoading(true);
+    const receivedData = () => {
+      setWaecPinsGenerated(EduResponse?.data?.pins_generated);
+      setWaecOrderId(EduResponse?.data?.order_id);
+      setWaecTransactionId(EduResponse?.data?.transaction_id);
+      setWaecShowDescription(EduResponse?.data?.transaction_description);
+      setWaecFullName(EduResponse?.data?.full_name);
+      setWaecTransactionProduct(EduResponse?.data?.transaction_product);
+    };
+    receivedData();
+    if (receivedData) {
+      setTransactSuccessPopUp(false);
+      setIsLoading(false);
+    }
+  }
+  function handleFailedData() {
+    setIsLoading(true);
+    setWaecFailedTransaction(false);
+    setIsLoading(false);
+  }
+
   return (
     <DashBoardLayout>
-
-    <div className='flex flex-col lg:h-[150%] h-[115%] justify-between '>
- <div className="">
+      <div className="flex flex-col lg:h-[150%] h-[115%] justify-between ">
+        <div className="">
           {/* Hero-section */}
           <HeroComponent />
           <div className="flex lg:gap-[8px] items-center md:gap-[5.868px] gap-[4.694px] mb-[20px] lg:mb-[50px] md:mb-[30px]">
             <h2
               className={`font-semibold text-sm leading-[12px] md:text-xs md:leading-[11.267px] lg:text-base lg:leading-[20.2px] ${
                 isDarkMode ? "text-white" : "text-[#7E7E7E]"
-              } `}>
-    Purchase
-      </h2>
- <img className='h-[12px] w-[12px] md:h-[14.083px] md-w-[14.083px] lg:h-[24px] lg:w-[24px] self-center'
-      src={WaecImg} alt="" />
+              } `}
+            >
+              Purchase
+            </h2>
+            <img
+              className="h-[12px] w-[12px] md:h-[14.083px] md-w-[14.083px] lg:h-[24px] lg:w-[24px] self-center"
+              src={WaecImg}
+              alt=""
+            />
 
-      <h2 className='font-[600] text-[14px] leading-[12px] md:text-[9.389px]
-       md:leading-[11.267px] lg:text-[16px] text-[#7E7E7E] lg:leading-[19.2px]'>
-      WAEC E-PINs Instantly
-      </h2>
-      <img className='md:h-[14.083px] md:w-[14.083px] lg:h-[24px] lg:w-[24px] h-[14px] w-[14px]'
-      src={arrowRight} alt="" />
-    </div>
-    </div>
-  
-    {/* Input for Request of examination pins  */}
-   
+            <h2
+              className="font-[600] text-[14px] leading-[12px] md:text-[9.389px]
+       md:leading-[11.267px] lg:text-[16px] text-[#7E7E7E] lg:leading-[19.2px]"
+            >
+              WAEC E-PINs Instantly
+            </h2>
+            <img
+              className="md:h-[14.083px] md:w-[14.083px] lg:h-[24px] lg:w-[24px] h-[14px] w-[14px]"
+              src={arrowRight}
+              alt=""
+            />
+          </div>
+        </div>
 
-     
-          {/* Input for Request of examination pins  */}
-          <form action="">
-            <div className="flex flex-col gap-5 md:gap-0">
-              {/* container for the first two input */}
-              <div className=" w-full flex flex-col md:flex-row gap-5 md:gap-3 lg:gap-[22px] md:my-2 lg:my-4">
-                {/* First Step Confirm exam type */}
-                <div className="relative flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
-                  {/* header */}
-                  <label
-                    className={`md:font-semibold font-normal text-[14px] lg:text-[17px] md:text-[13px] ${
-                      isDarkMode ? "text-white" : "text-[#7E7E7E]"
-                    }`}
-                  >
-                    Confirm Exam Type
-                  </label>
-                  {/* input */}
-                  <div
-                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px]  sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-normal leading-[10.4px] md:text-[11px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
-                      isDarkMode
-                        ? "bg-black text-white border border-white"
-                        : "hover:bg-[#EDEAEA]"
-                    }`}
-                    onClick={() => {
-                      waecExamDropDown();
+        {/* Input for Request of examination pins  */}
+
+        {/* Input for Request of examination pins  */}
+        <form action="">
+          <div className="flex flex-col gap-5 md:gap-0">
+            {/* container for the first two input */}
+            <div className=" w-full flex flex-col md:flex-row gap-5 md:gap-3 lg:gap-[22px] md:my-2 lg:my-4">
+              {/* First Step Confirm exam type */}
+              <div className="relative flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
+                {/* header */}
+                <label
+                  className={`md:font-semibold font-normal text-[14px] lg:text-[17px] md:text-[13px] ${
+                    isDarkMode ? "text-white" : "text-[#7E7E7E]"
+                  }`}
+                >
+                  Confirm Exam Type
+                </label>
+                {/* input */}
+                <div
+                  className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px]  sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-normal leading-[10.4px] md:text-[11px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+                    isDarkMode
+                      ? "bg-black text-white border border-white"
+                      : "hover:bg-[#EDEAEA]"
+                  }`}
+                  onClick={() => {
+                    waecExamDropDown();
+                  }}
+                >
+                  <input
+                    type="text"
+                    value={examType}
+                    onChange={(e) => {
+                      setExamType(e.target.value);
                     }}
-                  >
-                    <input
-                      type="text"
-                      value={examType}
-                      onChange={(e) => {
-                        setExamType(e.target.value);
-                      }}
-                      className={` bg-transparent
+                    className={` bg-transparent
                         text-xs focus:outline-none
                       ${
                         isDarkMode
                           ? "bg-black text-white"
                           : " text-[#7C7C7C] hover:bg-[#EDEAEA] "
                       }`}
-                      // pt-[10.803px] pb-[13.794px] pr-[13px] pl-[10.876px] mt-2 md:mt-0 md:pt-[8.802px] md:pb-[7.042px] w-full md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] font-normal leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] lg:text-base text-black lg:leading-[20.8px] cursor-pointer border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 shadow-sm md:shadow-0 focus:outline-none focus:ring-2 text-[13.5px] sm:p-3 sm:text-lg
-                      readOnly
-                    />
-                    <img
-                      className="lg:w-6 lg:h-6 w-4 h-4 cursor-pointer Examdrop"
-                      // className="absolute lg:top-[15px] lg:right-[9px] md:top-[8.802px] md:right-[5.282px]
-                      //   top-[21.802px] right-[13px]
-                      //   Examdrop md:h-[14.038px] md:w-[14.038px]
-                      // lg:h-[24px] lg:w-[24px] w-[16px] h-[16px]"
-                      src={arrowDown}
-                      alt=""
-                    />
-                  </div>
-                  {examActive && (
-                    <div
-                      className={`absolute lg:top-[90px] md:top-[60px] top-[74px] z-[2] flex flex-col w-full divide-y lg:h-225px md:h-[210px]
+                    // pt-[10.803px] pb-[13.794px] pr-[13px] pl-[10.876px] mt-2 md:mt-0 md:pt-[8.802px] md:pb-[7.042px] w-full md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] font-normal leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] lg:text-base text-black lg:leading-[20.8px] cursor-pointer border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 shadow-sm md:shadow-0 focus:outline-none focus:ring-2 text-[13.5px] sm:p-3 sm:text-lg
+                    readOnly
+                  />
+                  <img
+                    className="lg:w-6 lg:h-6 w-4 h-4 cursor-pointer Examdrop"
+                    // className="absolute lg:top-[15px] lg:right-[9px] md:top-[8.802px] md:right-[5.282px]
+                    //   top-[21.802px] right-[13px]
+                    //   Examdrop md:h-[14.038px] md:w-[14.038px]
+                    // lg:h-[24px] lg:w-[24px] w-[16px] h-[16px]"
+                    src={arrowDown}
+                    alt=""
+                  />
+                </div>
+                {examActive && (
+                  <div
+                    className={`absolute lg:top-[90px] md:top-[60px] top-[74px] z-[2] flex flex-col w-full divide-y lg:h-225px md:h-[210px]
                       ${
                         isDarkMode
                           ? "bg-black text-white divide-gray-50 border border-white"
                           : "text-[#7C7C7C]"
                       }`}
-                    >
-                      {Exams?.map((exam) => {
-                        return (
-                          <a
-                            href={exam.path}
-                            onClick={() => {
-                              setExamType(exam.examType);
-                              setExamActive(false);
-                              document
-                                .querySelector(".Examdrop")
-                                .classList.remove("DropIt");
-                              // console.log(e);
-                            }}
-                            className={`py-5 text-sm leading-[10.4px] md:py-[14px] pl-[10px] font-medium md:text-[13.227px] md:leading-[17.195px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] lg:text-base lg:leading-[20.8px] cursor-pointer transition-colors duration-300 
+                  >
+                    {Exams?.map((exam) => {
+                      return (
+                        <a
+                          href={exam.path}
+                          onClick={() => {
+                            setExamType(exam.examType);
+                            setExamActive(false);
+                            document
+                              .querySelector(".Examdrop")
+                              .classList.remove("DropIt");
+                            // console.log(e);
+                          }}
+                          className={`py-5 text-sm leading-[10.4px] md:py-[14px] pl-[10px] font-medium md:text-[13.227px] md:leading-[17.195px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] lg:text-base lg:leading-[20.8px] cursor-pointer transition-colors duration-300 
                             ${
                               isDarkMode
                                 ? "bg-black text-white  hover:bg-gray-800"
                                 : " text-[#7C7C7C] hover:bg-[#EDEAEA] bg-white"
                             }`}
-                            key={exam.id}
-                          >
-                            <h2>{exam.examType} </h2>
-                          </a>
-                        );
-                      })}
-                    </div>
-                  )}
-                </div>
+                          key={exam.id}
+                        >
+                          <h2>{exam.examType} </h2>
+                        </a>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
 
-                {/* Quantity input Two / RightSide */}
-                <div className="relative flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2 ">
-                  {/* header */}
-                  <label
-                    className={`md:font-semibold font-normal text-sm md:text-[13px] lg:text-base ${
-                      isDarkMode ? "text-white" : "text-[#7E7E7E]"
-                    }`}
-                  >
-                    Quantity
-                  </label>
-                  {/* input */}
-                  <div
-                    className={`mt-2 md:mt-0 text-sm rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] sm:p-3  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-normal leading-[10.4px] md:text-[11px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer outline-0 w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] self-center  ${
-                      isDarkMode
-                        ? "bg-black text-white border border-white"
-                        : "hover:bg-[#EDEAEA] border-[0.24px] lg:border-[0.4px] border-[#9C9C9C] text-[#7C7C7C]"
-                    }`}
-                    onClick={() => {
-                      waecQuantityDropDown();
+              {/* Quantity input Two / RightSide */}
+              <div className="relative flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2 ">
+                {/* header */}
+                <label
+                  className={`md:font-semibold font-normal text-sm md:text-[13px] lg:text-base ${
+                    isDarkMode ? "text-white" : "text-[#7E7E7E]"
+                  }`}
+                >
+                  Quantity
+                </label>
+                {/* input */}
+                <div
+                  className={`mt-2 md:mt-0 text-sm rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] sm:p-3  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-normal leading-[10.4px] md:text-[11px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer outline-0 w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] self-center  ${
+                    isDarkMode
+                      ? "bg-black text-white border border-white"
+                      : "hover:bg-[#EDEAEA] border-[0.24px] lg:border-[0.4px] border-[#9C9C9C] text-[#7C7C7C]"
+                  }`}
+                  onClick={() => {
+                    waecQuantityDropDown();
+                  }}
+                >
+                  <input
+                    type="text"
+                    onChange={(e) => {
+                      setQuantityResult(e.target.value);
                     }}
-                  >
-                    <input
-                      type="text"
-                      onChange={(e) => {
-                        setQuantityResult(e.target.value);
-                      }}
-                      value={quantityResult}
-                      //                   className={`pt-[10.803px] pb-[13.794px] pr-[13px] pl-[10.876px] mt-2 md:mt-0 md:pt-[8.802px] md:pb-[7.042px] w-full md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] border-[0.4px] font-normal leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] cursor-pointer md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 shadow-sm md:shadow-0 focus:outline-none focus:ring-2 text-[13.5px] sm:p-3 sm:text-lg
-                      // ${
-                      //   isDarkMode
-                      //     ? "bg-black text-white border border-white"
-                      //     : "bg-white text-black border-[#9C9C9C]"
-                      // }`}
-                      className={`w-full h-full bg-transparent capitalize focus:outline-none
+                    value={quantityResult}
+                    //                   className={`pt-[10.803px] pb-[13.794px] pr-[13px] pl-[10.876px] mt-2 md:mt-0 md:pt-[8.802px] md:pb-[7.042px] w-full md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] border-[0.4px] font-normal leading-[10.4px]  md:text-[9.389px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] cursor-pointer md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 shadow-sm md:shadow-0 focus:outline-none focus:ring-2 text-[13.5px] sm:p-3 sm:text-lg
+                    // ${
+                    //   isDarkMode
+                    //     ? "bg-black text-white border border-white"
+                    //     : "bg-white text-black border-[#9C9C9C]"
+                    // }`}
+                    className={`w-full h-full bg-transparent capitalize focus:outline-none
                       ${
                         isDarkMode
                           ? "bg-black text-white "
                           : " text-[#7C7C7C] hover:bg-[#EDEAEA] "
                       }`}
-                      readOnly
-                    />
+                    readOnly
+                  />
 
-                    <img
-                      className="lg:w-6 lg:h-6 w-4 h-4 cursor-pointer imgdrop"
-                      src={arrowDown}
-                      alt=""
-                    />
-                  </div>
-                  {/* drop down */}
+                  <img
+                    className="lg:w-6 lg:h-6 w-4 h-4 cursor-pointer imgdrop"
+                    src={arrowDown}
+                    alt=""
+                  />
+                </div>
+                {/* drop down */}
 
-                  {quantityActive && (
-                    <div
-                      className={`absolute lg:top-[90px] md:top-[60px] top-[74px] z-[1] flex flex-col w-full divide-y rounded
+                {quantityActive && (
+                  <div
+                    className={`absolute lg:top-[90px] md:top-[60px] top-[74px] z-[1] flex flex-col w-full divide-y rounded
                       ${
                         isDarkMode
                           ? "bg-black text-white divide-gray-50 border border-white"
                           : "text-[#7C7C7C] hover:bg-[#EDEAEA]"
                       }`}
-                    >
-                      {options?.map((option) => {
-                        return (
-                          <h2
-                            onClick={() => {
-                              setQuantityResult(
-                                quantityAmount > 0
-                                  ? `${
-                                      option.quantity
-                                    } (₦${handleCalculatedAmount(option.id)})`
-                                  : option.quantity
-                              );
-                              setQuantityActive(false);
-                              setEducationAmount(
-                                quantityAmount > 0
-                                  ? handleFormattedAmount(
-                                      Number(quantityAmount) * option.id
-                                    )
-                                  : ""
-                              );
-                              document
-                                .querySelector(".imgdrop")
-                                .classList.remove("DropIt");
-                            }}
-                            className={`py-5 md:py-[14px]  text-[13.5px] leading-[10.4px] pl-[10px] font-medium md:text-[13.227px] md:leading-[17.195px] w-full shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] lg:text-base lg:leading-[20.8px] cursor-pointer transition-colors duration-300    
+                  >
+                    {options?.map((option) => {
+                      return (
+                        <h2
+                          onClick={() => {
+                            setQuantityResult(
+                              quantityAmount > 0
+                                ? `${
+                                    option.quantity
+                                  } (₦${handleCalculatedAmount(option.id)})`
+                                : option.quantity
+                            );
+                            setQuantityActive(false);
+                            setEducationAmount(
+                              quantityAmount > 0
+                                ? handleFormattedAmount(
+                                    Number(quantityAmount) * option.id
+                                  )
+                                : ""
+                            );
+                            document
+                              .querySelector(".imgdrop")
+                              .classList.remove("DropIt");
+                          }}
+                          className={`py-5 md:py-[14px]  text-[13.5px] leading-[10.4px] pl-[10px] font-medium md:text-[13.227px] md:leading-[17.195px] w-full shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] lg:text-base lg:leading-[20.8px] cursor-pointer transition-colors duration-300    
                             ${
                               isDarkMode
                                 ? "bg-black text-white hover:bg-gray-800 "
                                 : " hover:bg-[#EDEAEA] bg-[white] text-[#7C7C7C]"
                             }`}
-                            key={option.id}
-                          >
-                            {quantityAmount > 0
-                              ? `${option.quantity} (₦${handleCalculatedAmount(
-                                  option.id
-                                )})`
-                              : option.quantity}
-                          </h2>
-                        );
-                      })}
-                    </div>
-                  )}
-                </div>
+                          key={option.id}
+                        >
+                          {quantityAmount > 0
+                            ? `${option.quantity} (₦${handleCalculatedAmount(
+                                option.id
+                              )})`
+                            : option.quantity}
+                        </h2>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
-              {/* container for Phone number and Email */}
-              <div className=" w-full flex flex-col md:flex-row gap-5 md:gap-3 lg:gap-[22px] md:my-2 lg:my-4 ">
-                {/* LeftSide */}
-                <div className=" container-phone flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
-                  <label
-                    className={`md:font-semibold font-normal text-sm md:text-[13px] lg:text-base ${
-                      isDarkMode ? "text-white" : "text-[#7E7E7E]"
-                    }`}
-                  >
-                    Phone Number
-                  </label>
+            </div>
+            {/* container for Phone number and Email */}
+            <div className=" w-full flex flex-col md:flex-row gap-5 md:gap-3 lg:gap-[22px] md:my-2 lg:my-4 ">
+              {/* LeftSide */}
+              <div className=" container-phone flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
+                <label
+                  className={`md:font-semibold font-normal text-sm md:text-[13px] lg:text-base ${
+                    isDarkMode ? "text-white" : "text-[#7E7E7E]"
+                  }`}
+                >
+                  Phone Number
+                </label>
 
-                  <input
-                    onInput={(e) => {
-                      const numericValue = e.target.value.replace(/\D/g, "");
-                      e.target.value = numericValue;
-                      if (numericValue?.length === 11) {
-                        e.target.style.border = "2px solid green";
-                      } else if (e.target.value?.length < 11) {
-                        e.target.style.border = "2px solid red";
-                      }
-                    }}
-                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-5 md:p-0 text-[13.2px]  sm:p-3 text-sm flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-normal leading-[10.4px] md:text-[11px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer focus:outline-0 outline-0 border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px]  self-center
+                <input
+                  onInput={(e) => {
+                    const numericValue = e.target.value.replace(/\D/g, "");
+                    e.target.value = numericValue;
+                    if (numericValue?.length === 11) {
+                      e.target.style.border = "2px solid green";
+                    } else if (e.target.value?.length < 11) {
+                      e.target.style.border = "2px solid red";
+                    }
+                  }}
+                  className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-5 md:p-0 text-[13.2px]  sm:p-3 text-sm flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-normal leading-[10.4px] md:text-[11px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer focus:outline-0 outline-0 border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px]  self-center
                     ${
                       isDarkMode
                         ? "bg-black text-white border-white"
                         : "border-[#9C9C9C] text-[#7C7C7C] hover:bg-[#EDEAEA] bg-white"
                     }`}
-                    type="tel"
-                    name="Waec-Phone"
-                    id="phone"
-                    maxLength={11}
-                    placeholder=""
-                    value={educationPinPhone}
-                    onFocus={() => {
-                      setErrors((prev) => ({ ...prev, educationPinPhone: "" }));
-                    }}
-                    onChange={(e) => {
-                      setEducationPinPhone(e.target.value);
-                    }}
-                  />
-                  {errors.educationPinPhone && (
-                    <div className="text-[#F95252] italic text-[13px] md:text-xs lg:text-sm">
-                      {errors.educationPinPhone}
-                    </div>
-                  )}
-                </div>
+                  type="tel"
+                  name="Waec-Phone"
+                  id="phone"
+                  maxLength={11}
+                  placeholder=""
+                  value={educationPinPhone}
+                  onFocus={() => {
+                    setErrors((prev) => ({ ...prev, educationPinPhone: "" }));
+                  }}
+                  onChange={(e) => {
+                    setEducationPinPhone(e.target.value);
+                  }}
+                />
+                {errors.educationPinPhone && (
+                  <div className="text-[#F95252] italic text-[13px] md:text-xs lg:text-sm">
+                    {errors.educationPinPhone}
+                  </div>
+                )}
+              </div>
 
-                {/* right-side */}
-                <div className="flex flex-col relative gap-[3px] lg:gap-[5px] w-full md:w-1/2">
-                  <label
-                    className={`md:font-semibold font-normal text-sm md:text-[13px] lg:text-base ${
-                      isDarkMode ? "text-white" : "text-[#7E7E7E]"
-                    }`}
-                  >
-                    Email
-                  </label>
+              {/* right-side */}
+              <div className="flex flex-col relative gap-[3px] lg:gap-[5px] w-full md:w-1/2">
+                <label
+                  className={`md:font-semibold font-normal text-sm md:text-[13px] lg:text-base ${
+                    isDarkMode ? "text-white" : "text-[#7E7E7E]"
+                  }`}
+                >
+                  Email
+                </label>
 
-                  <input
-                    className={`EmailPins mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px]  sm:p-3 text-sm flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[13px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer focus:outline-0 outline-0 border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center  
+                <input
+                  className={`EmailPins mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px]  sm:p-3 text-sm flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[13px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer focus:outline-0 outline-0 border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center  
                     ${
                       isDarkMode
                         ? "bg-black text-white border-white"
                         : "placeholder:text-[#7E7E7E] border-[#9C9C9C] text-[#7C7C7C]"
                     }`}
-                    name="Waec-Email"
-                    value={educationPinEmail}
-                    onChange={(e) => {
-                      setEducationPinEmail(e.target.value);
-                    }}
-                    onFocus={() => {
-                      setErrors((prev) => ({ ...prev, educationPinEmail: "" }));
-                    }}
-                    type="email"
-                    placeholder="example@gmail.com"
-                  />
+                  name="Waec-Email"
+                  value={educationPinEmail}
+                  onChange={(e) => {
+                    setEducationPinEmail(e.target.value);
+                  }}
+                  onFocus={() => {
+                    setErrors((prev) => ({ ...prev, educationPinEmail: "" }));
+                  }}
+                  type="email"
+                  placeholder="example@gmail.com"
+                />
 
-                  {errors.educationPinEmail && (
-                    <div className="text-[#F95252] italic text-[13px] md:text-xs lg:text-sm">
-                      {errors.educationPinEmail}
-                    </div>
-                  )}
-                </div>
+                {errors.educationPinEmail && (
+                  <div className="text-[#F95252] italic text-[13px] md:text-xs lg:text-sm">
+                    {errors.educationPinEmail}
+                  </div>
+                )}
               </div>
+            </div>
 
-              {/* Conatiner for Amount and Payment method */}
-              <div className="w-full flex flex-col md:flex-row gap-5 md:gap-3 lg:gap-[22px] md:my-2 lg:my-4">
-                {/* Amount Step /Leftside */}
-                <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
-                  {/* header */}
-                  <label
-                    className={`md:font-semibold font-normal  text-sm md:text-[13px]  lg:text-base ${
-                      isDarkMode ? "text-white" : "text-[#7E7E7E]"
-                    }`}
-                  >
-                    Amount
-                  </label>
-                  {/* input */}
-                  <input
-                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px]  sm:p-3 text-sm flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[13px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer focus:outline-0 outline-0 border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center  
+            {/* Conatiner for Amount and Payment method */}
+            <div className="w-full flex flex-col md:flex-row gap-5 md:gap-3 lg:gap-[22px] md:my-2 lg:my-4">
+              {/* Amount Step /Leftside */}
+              <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
+                {/* header */}
+                <label
+                  className={`md:font-semibold font-normal  text-sm md:text-[13px]  lg:text-base ${
+                    isDarkMode ? "text-white" : "text-[#7E7E7E]"
+                  }`}
+                >
+                  Amount
+                </label>
+                {/* input */}
+                <input
+                  className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px]  sm:p-3 text-sm flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[13px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer focus:outline-0 outline-0 border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center  
                     ${
                       isDarkMode
                         ? "bg-black text-white border-white"
                         : "border-[#9C9C9C] text-[#7C7C7C]"
                     }`}
-                    maxLength={7}
-                    // value={isAmountLoading ? "" : educationAmount}
-                    value={educationAmount ? `₦${educationAmount}` : "₦"}
-                    // onChange={(e) => {
-                    //   setEducationAmount(e.target.value);
-                    // }}
-                    readOnly
-                  />
-                  {/* {isAmountLoading && (
+                  maxLength={7}
+                  // value={isAmountLoading ? "" : educationAmount}
+                  value={educationAmount ? `₦${educationAmount}` : "₦"}
+                  // onChange={(e) => {
+                  //   setEducationAmount(e.target.value);
+                  // }}
+                  readOnly
+                />
+                {/* {isAmountLoading && (
                     <p className="left-4 absolute top-7 md:top-9 lg:top-12">
                       <BalanceLoading />
                     </p>
@@ -804,652 +885,649 @@ export default function WaecEducationPin() {
                       Unable to get Amount. Try Again
                     </div>
                   )} */}
-                </div>
-                {/* payment method */}
-                <div className="flex flex-col relative gap-[3px] lg:gap-[5px] w-full md:w-1/2">
-                  {/* header */}
-                  <label
-                    className={`md:font-semibold font-normal text-sm md:text-[13px] lg:text-base ${
-                      isDarkMode ? "text-white" : "text-[#7E7E7E]"
-                    }`}
-                  >
-                    Payment Method
-                  </label>
-                  {/* input */}
-                  <div
-                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px]  sm:p-3 text-sm flex items-center justify-between border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] ${
-                      isDarkMode
-                        ? "bg-black text-white border-white"
-                        : "border-[#9C9C9C] hover:bg-[#EDEAEA] "
-                    }`}
-                    onClick={() => {
-                      waecMethodDropDown();
-                      setExamActive(false);
-                      setQuantityActive(false);
-                    }}
-                  >
-                    <p
-                      className={`font-medium text-[13px] leading-[10.4px] md:text-xs md:leading-[12.206px] lg:text-base  lg:leading-[20.8px] cursor-pointer
+              </div>
+              {/* payment method */}
+              <div className="flex flex-col relative gap-[3px] lg:gap-[5px] w-full md:w-1/2">
+                {/* header */}
+                <label
+                  className={`md:font-semibold font-normal text-sm md:text-[13px] lg:text-base ${
+                    isDarkMode ? "text-white" : "text-[#7E7E7E]"
+                  }`}
+                >
+                  Payment Method
+                </label>
+                {/* input */}
+                <div
+                  className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px]  sm:p-3 text-sm flex items-center justify-between border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] ${
+                    isDarkMode
+                      ? "bg-black text-white border-white"
+                      : "border-[#9C9C9C] hover:bg-[#EDEAEA] "
+                  }`}
+                  onClick={() => {
+                    waecMethodDropDown();
+                    setExamActive(false);
+                    setQuantityActive(false);
+                  }}
+                >
+                  <p
+                    className={`font-medium text-[13px] leading-[10.4px] md:text-xs md:leading-[12.206px] lg:text-base  lg:leading-[20.8px] cursor-pointer
                       ${
                         isDarkMode ? "bg-black text-white" : " text-[#7C7C7C] "
                       }`}
-                      readOnly
-                    >
-                      {paymentResult}
-                    </p>
+                    readOnly
+                  >
+                    {paymentResult}
+                  </p>
 
-                    <img
-                      className="lg:w-6 lg:h-6 w-4 h-4 cursor-pointer methodDrop"
-                      src={paymentResult ? imageState : arrowDown}
-                      alt=""
-                    />
-                  </div>
-                  {/* drop down */}
+                  <img
+                    className="lg:w-6 lg:h-6 w-4 h-4 cursor-pointer methodDrop"
+                    src={paymentResult ? imageState : arrowDown}
+                    alt=""
+                  />
+                </div>
+                {/* drop down */}
 
-                  {methodActive && (
-                    <div
-                      className={`absolute lg:top-[85px] md:top-[60px] top-[72px] border divide-y z-[5] rounded flex flex-col w-full  
+                {methodActive && (
+                  <div
+                    className={`absolute lg:top-[85px] md:top-[60px] top-[72px] border divide-y z-[5] rounded flex flex-col w-full  
                       ${
                         isDarkMode
                           ? "bg-black text-white divide-gray-50  border-white"
                           : "text-[#7C7C7C]"
                       }`}
-                    >
-                      {methodOptions?.map((methodOption) => {
-                        return (
-                          <div
-                            onClick={() => {
-                              if (methodOption.method === "NGN Wallet") {
-                                setPaymentResult(
-                                  newBalance
-                                    ? `${methodOption.method} ${methodOption.balance}`
-                                    : methodOption
-                                );
-                                setWalletBalance(methodOption.balance);
-                                setImageState(methodOption.flag);
-                                setMethodActive(false);
-                                document
-                                  .querySelector(".methodDrop")
-                                  .classList.remove("DropIt");
-                              } else {
-                                setMethodActive(true);
-                              }
-                            }}
-                            className={`flex gap-2.5 lg:py-[15px] py-[10px] pl-[10px] transition-colors duration-300 items-center shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
-                            ${
-                              isDarkMode
-                                ? "bg-black text-white hover:bg-gray-800"
-                                : "bg-white hover:bg-[#EDEAEA]"
+                  >
+                    {methodOptions?.map((methodOption) => {
+                      return (
+                        <div
+                          onClick={() => {
+                            if (methodOption.method === "NGN Wallet") {
+                              setPaymentResult(
+                                `${methodOption.method} ${methodOption.balance}`
+                              );
+                              setWalletBalance(methodOption.balance);
+                              setImageState(methodOption.flag);
+                              setMethodActive(false);
+                              document
+                                .querySelector(".methodDrop")
+                                .classList.remove("DropIt");
+                            } else {
+                              setMethodActive(true);
                             }
+                          }}
+                          className={`flex gap-2.5 lg:py-[15px] py-[10px] pl-[10px] transition-colors duration-300 items-center shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
                             ${
-                              methodOption.method === "NGN Wallet"
-                                ? "cursor-pointer "
-                                : "cursor-not-allowed opacity-50 "
+                              methodOption.id !== 1 && !isDarkMode
+                                ? "bg-gray-300 cursor-not-allowed"
+                                : methodOption.id !== 1 && isDarkMode
+                                ? "bg-black cursor-not-allowed"
+                                : methodOption.id === 1 && !isDarkMode
+                                ? "bg-white hover:bg-[#EDEAEA] cursor-pointer"
+                                : "bg-black cursor-pointer hover:bg-gray-800"
                             }
                             `}
-                            key={methodOption.id}
-                          >
-                            <img
-                              className="md:h-[29.27px]  h-[14.27px]"
-                              src={methodOption.flag}
-                              alt=""
-                            />
+                          //bg-white opacity-50
+                          key={methodOption.id}
+                        >
+                          <img
+                            className="md:h-[29.27px]  h-[14.27px]"
+                            src={methodOption.flag}
+                            alt=""
+                          />
 
-                            <h2
-                              className={`py-5 md:pb-0 md:pt-0 font-normal text-[13.5px] leading-[10.4px] md:text-[13.227px] md:leading-[17.195px] lg:text-base lg:leading-[20.8px] self-center
+                          <h2
+                            className={`py-5 md:pb-0 md:pt-0 font-normal text-[13.5px] leading-[10.4px] md:text-[13.227px] md:leading-[17.195px] lg:text-base lg:leading-[20.8px] self-center
                               ${
                                 isDarkMode
                                   ? "bg-black text-white"
                                   : "text-[#7C7C7C]"
                               }`}
-                            >
-                              {methodOption.method + " " + methodOption.balance}
-                            </h2>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  )}
-                </div>
-              </div>
-              </div>
-              </form>
-              {/* end of */}
-            </div>
-            {educationProceed && (
-              <Modal>
-                <div
-                  className={`deleteRecipientSuccess mx-[5%]  ${
-                    isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
-                  } ${
-                    toggleSideBar ? "confirm01" : "confirm"
-                  } grow pt-[10px] pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative
-                  md:rounded-[11.5px] md:mx-auto md:my-auto md:overflow-auto`}
-                  // className={`${
-                  //   isDarkMode
-                  //     ? "absolute h-[505px] shrink-0 bottom-0 shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)] rounded-[8px] md:h-[620px] md:rounded-xl md:bottom-[30%] lg:h-[550px] lg:rounded-[20px] lg:bottom-[7%] bg-black border border-white text-white"
-                  //     : styles.transferMoneyPop
-                  // } ${
-                  //   toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-                  // } w-[90%] md:w-[60%] overflow-auto`}
-                >
-                  <div className="w-full flex justify-end border-b-[6px] items-center border-primary px-[12px] h-[35px] md:h-[45px] lg:h-[60px] :border-b-[10px] ">
-                    <img
-                      src={closeIcon}
-                      alt=""
-                      onClick={() => setEducationProceed(false)}
-                      className="w-[18px] h-[18px]  md:w-[25px] cursor-pointer md:h-[25px] lg:w-[35px] lg:h-[35px]"
-                    />
+                          >
+                            {methodOption.method + " " + methodOption.balance}
+                          </h2>
+                        </div>
+                      );
+                    })}
                   </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </form>
+        {/* end of */}
+      </div>
+      {educationProceed && (
+        <Modal>
+          <div
+            className={`deleteRecipientSuccess mx-[5%]  ${
+              isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
+            } ${
+              toggleSideBar ? "confirm01" : "confirm"
+            } grow pt-[10px] pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative
+                  md:rounded-[11.5px] md:mx-auto md:my-auto md:overflow-auto`}
+            // className={`${
+            //   isDarkMode
+            //     ? "absolute h-[505px] shrink-0 bottom-0 shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)] rounded-[8px] md:h-[620px] md:rounded-xl md:bottom-[30%] lg:h-[550px] lg:rounded-[20px] lg:bottom-[7%] bg-black border border-white text-white"
+            //     : styles.transferMoneyPop
+            // } ${
+            //   toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+            // } w-[90%] md:w-[60%] overflow-auto`}
+          >
+            <div className="w-full flex justify-end border-b-[6px] items-center border-primary px-[12px] h-[35px] md:h-[45px] lg:h-[60px] :border-b-[10px] ">
+              <img
+                src={closeIcon}
+                alt=""
+                onClick={() => setEducationProceed(false)}
+                className="w-[18px] h-[18px]  md:w-[25px] cursor-pointer md:h-[25px] lg:w-[35px] lg:h-[35px]"
+              />
+            </div>
 
-                  <div>
-                    <h2
-                      className="lg:text-base lg:leading-[24px] text-center mb-1
+            <div>
+              <h2
+                className="lg:text-base lg:leading-[24px] text-center mb-1
                 text-[10px] md:text-[13px] md:leading-[20px] font-semibold mt-[20px] leading-[12px]"
-                    >
-                      Confirm Transaction
-                    </h2>
-                    <h2 className="lg:text-base md:text-xs md:px-[30px] lg:leading-[24px] md:leading-[20px] text-[10px] leading-[12px] text-center mt-[26px] mx-[10px] mb-[20px] font-medium text-black">
-                      You are about to purchase{" "}
-                      <span className="font-semibold">{examType}</span> PIN (₦
-                      {educationAmount}) from your {paymentResult} to
-                    </h2>
+              >
+                Confirm Transaction
+              </h2>
+              <h2 className="lg:text-base md:text-xs md:px-[30px] lg:leading-[24px] md:leading-[20px] text-[10px] leading-[12px] text-center mt-[26px] mx-[10px] mb-[20px] font-medium text-black">
+                You are about to purchase{" "}
+                <span className="font-semibold">{examType}</span> PIN (₦
+                {educationAmount}) from your {paymentResult.split(" (")[0]} to
+              </h2>
 
-                    <div className="flex flex-col gap-[15px] px-[20px] mt-[50px] md:gap-[25px]">
-                      <div className="flex items-center justify-between">
-                        <h2
-                          className="text-[#7C7C7C] text-[10px] leading-[12px]
+              <div className="flex flex-col gap-[15px] px-[20px] mt-[50px] md:gap-[25px]">
+                <div className="flex items-center justify-between">
+                  <h2
+                    className="text-[#7C7C7C] text-[10px] leading-[12px]
                      md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium"
-                        >
-                          Exam Type
-                        </h2>
-                        <div className="flex gap-1">
-                          <div
-                            className="rounded-full w-[12.02px] h-[12.02px]
+                  >
+                    Exam Type
+                  </h2>
+                  <div className="flex gap-1">
+                    <div
+                      className="rounded-full w-[12.02px] h-[12.02px]
                        flex items-center justify-center text-[6px] overflow-hidden 
                        md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]"
-                          >
-                            <img
-                              src={WaecImg}
-                              alt=""
-                              className="w-full h-full object-cover md:h-[15px]"
-                            />
-                          </div>
-                          <h2 className="text-[10px] leading-[12px] capitalize md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
-                            {examType}
-                          </h2>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center justify-between">
-                        <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
-                          Quantity
-                        </h2>
-                        <div className="flex gap-1">
-                          <h2
-                            className={`text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium ${
-                              isDarkMode ? "text-[#7C7C7C]" : ""
-                            }`}
-                          >
-                            {quantityResult}
-                          </h2>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center justify-between">
-                        <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
-                          Phone Number
-                        </h2>
-                        <div className="flex gap-1">
-                          <h2 className="text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
-                            {educationPinPhone}
-                          </h2>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center justify-between">
-                        <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
-                          Email
-                        </h2>
-                        <div className="flex gap-1">
-                          <h2 className="text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
-                            {educationPinEmail}
-                          </h2>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center justify-between">
-                        <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
-                          Amount
-                        </h2>
-                        <div className="flex gap-1">
-                          <h2 className="text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
-                            {educationAmount ? `₦${educationAmount}` : ""}
-                          </h2>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center justify-between">
-                        <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
-                          Payment Method
-                        </h2>
-                        <div className="flex gap-1">
-                          <h2 className="text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
-                            {paymentResult}
-                          </h2>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center justify-between">
-                        <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
-                          Transaction Fee
-                        </h2>
-                        <div className="flex gap-1">
-                          <h2 className="text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
-                            ₦0.00
-                          </h2>
-                        </div>
-                      </div>
-
-                      {/* POINTS EARNED */}
-                      <div className="flex items-center justify-between">
-                        <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
-                          Points Earned
-                        </h2>
-                        <div className="flex gap-1">
-                          <h2 className="text-[10px] text-[#2ED173] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
-                            +2.00
-                          </h2>
-                        </div>
-                      </div>
-
-                      {/* WALLET */}
-                      <div
-                        className="my-[5px] relative flex justify-between items-center gap-2 
-                  bg-slate-200 -mx-[20px] px-[15px] h-[55px] py-[18px]"
-                      >
-                        <div className="flex gap-2 items-center">
-                          <div className="bg-white rounded-full h-[27px] w-[27px] flex justify-center items-center">
-                            <img
-                              className="w-[16px] h-[16px]"
-                              src={imageState}
-                              alt="/"
-                            />
-                          </div>
-                          <p className="text-[10px] md:text-sm  lg:text-base">
-                            Available Balance{" "}
-                            <span className="text-[#00000063] font-medium">
-                              {walletBalance}
-                            </span>
-                          </p>
-                        </div>
-                        <img
-                          src={arrowRight}
-                          alt=""
-                          className="w-[12px] h-[12px] md:w-[50px] md:h-[20px] lg:w-[80px] lg:h-[30px]"
-                        />
-                        <span className="text-gray-500 text-xs font-normal leading-[20px] lg:text-base lg:leading-[22px] text-left absolute left-[3.2rem] top-8 ">
-                          {balanceStatus}
-                        </span>
-                      </div>
-
-                      <div className="flex items-center justify-center mb-[60px]">
-                        <button
-                          className={`w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:text-xs leading-[15px] lg:text-base lg:leading-[24px] py-[15px] md:py-[10px] font-extrabold   ${
-                            CheckSufficiency ? "bg-gray-400" : "bg-primary"
-                          }`}
-                          onClick={() => {
-                            confirmButton();
-                          }}
-                          disabled={CheckSufficiency}
-                        >
-                          Confirmed
-                        </button>
-                      </div>
+                    >
+                      <img
+                        src={WaecImg}
+                        alt=""
+                        className="w-full h-full object-cover md:h-[15px]"
+                      />
                     </div>
+                    <h2 className="text-[10px] leading-[12px] capitalize md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
+                      {examType}
+                    </h2>
                   </div>
                 </div>
-              </Modal>
-            )}
 
-            {/* CONFIRM TRANSACTION */}
-            {educationConfirm && (
-              <Modal>
+                <div className="flex items-center justify-between">
+                  <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
+                    Quantity
+                  </h2>
+                  <div className="flex gap-1">
+                    <h2
+                      className={`text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium ${
+                        isDarkMode ? "text-[#7C7C7C]" : ""
+                      }`}
+                    >
+                      {quantityResult.split(" (")[0]}
+                    </h2>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
+                    Phone Number
+                  </h2>
+                  <div className="flex gap-1">
+                    <h2 className="text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
+                      {educationPinPhone}
+                    </h2>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
+                    Email
+                  </h2>
+                  <div className="flex gap-1">
+                    <h2 className="text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
+                      {educationPinEmail}
+                    </h2>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
+                    Amount
+                  </h2>
+                  <div className="flex gap-1">
+                    <h2 className="text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
+                      {educationAmount ? `₦${educationAmount}` : ""}
+                    </h2>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
+                    Payment Method
+                  </h2>
+                  <div className="flex gap-1">
+                    <h2 className="text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
+                      {paymentResult.split(" (")[0]}
+                    </h2>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
+                    Transaction Fee
+                  </h2>
+                  <div className="flex gap-1">
+                    <h2 className="text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
+                      ₦0.00
+                    </h2>
+                  </div>
+                </div>
+
+                {/* POINTS EARNED */}
+                <div className="flex items-center justify-between">
+                  <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
+                    Points Earned
+                  </h2>
+                  <div className="flex gap-1">
+                    <h2 className="text-[10px] text-[#2ED173] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
+                      +2.00
+                    </h2>
+                  </div>
+                </div>
+
+                {/* WALLET */}
                 <div
-                  className={`confirm2 ${styles.inputPin} ${
-                    toggleSideBar
-                      ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
-                      : "lg:w-[40%]"
-                  } md:w-[55%] w-[90%] md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
+                  className="my-[5px] relative flex justify-between items-center gap-2 
+                  bg-slate-200 -mx-[20px] px-[15px] h-[55px] py-[18px]"
                 >
-                  <img
-                    onClick={() => setEducationConfirm(false)}
-                    className="absolute cursor-pointer top-[5.5px] 
-                right-2 w-[18px] h-[18px] 
-                md:w-[35px] md:h-[25px] lg:w-[45px] lg:h-[45px]"
-                    src={closeIcon}
-                    alt=""
-                  />
-
-                  <hr className="h-[6px] bg-[#04177f] lg:mt-[10%] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
-                  <p className="text-[10px] md:text-base lg:text-[18px] font-extrabold text-center my-[8%] lg:my-[%]">
-                    Input PIN to complete transaction
-                  </p>
-                  <div className="flex flex-col gap-2.5 justify-center items-center font-extrabold mb-[7%]">
-                    <div className=" flex justify-center items-center ml-[5%] gap-2.5 md:ml-[5%] md:gap-[30px]">
-                      {" "}
-                      {isVisible ? (
-                        <div className="flex flex-col gap-y-1">
-                        <OtpInput
-                          value={inputPin}
-                          inputType="tel"
-                          onChange={(e) => {
-                            setInputPin(e);
-                            console.log(setInputPin);
-                          }}
-                          numInputs={4}
-                          shouldAutoFocus={true}
-                          inputStyle={{
-                            color: isDarkMode ? "#ffffff" : "#403f3f",
-                              width: 30,
-                              height: 30,
-                              borderRadius: 3,
-                              backgroundColor: isDarkMode ? "black" : "white",
-                              border: isDarkMode
-                                ? "1px solid white"
-                                : "1px solid #ccc",
-                          }}
-                          renderInput={(props) => (
-                            <input {...props} className="inputOTP mx-[3px]" />
-                          )}
-                        />
-                        {pinSuccess && (
-                            <p className="text-[12px] text-green-500 text-center font-medium">
-                              Pin matches
-                            </p>
-                          )}
-                          {pinFailed && errorMessage && (
-                            <p className="text-[12px] text-center text-red-600 font-medium">
-                              Incorrect Pin
-                            </p>
-                          )}
-                        </div>
-                      ) : (
-                        <div className="text-[24px] md:text-[24px] mt-1">
-                          * * * *{" "}
-                        </div>
-                      )}
-                      <div
-                        className="text-[#0003] text-xl md:text-3xl"
-                        onClick={toggleVisibility}
-                      >
-                        {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
-                      </div>
+                  <div className="flex gap-2 items-center">
+                    <div className="bg-white rounded-full h-[27px] w-[27px] flex justify-center items-center">
+                      <img
+                        className="w-[16px] h-[16px]"
+                        src={imageState}
+                        alt="/"
+                      />
                     </div>
-                    <p className="text-[8px] md:text-xs text-[#04177f]">
-                      Forgot Pin ?
+                    <p className="text-[10px] md:text-sm  lg:text-base">
+                      Available Balance{" "}
+                      <span className="text-[#00000063] font-medium">
+                        {walletBalance}
+                      </span>
                     </p>
                   </div>
+                  <img
+                    src={arrowRight}
+                    alt=""
+                    className="w-[12px] h-[12px] md:w-[50px] md:h-[20px] lg:w-[80px] lg:h-[30px]"
+                  />
+                  <span className="text-gray-500 text-xs font-normal leading-[20px] lg:text-base lg:leading-[22px] text-left absolute left-[3.2rem] top-8 ">
+                    {balanceStatus}
+                  </span>
+                </div>
 
+                <div className="flex items-center justify-center mb-[60px]">
                   <button
+                    className={`w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:text-xs leading-[15px] lg:text-base lg:leading-[24px] py-[15px] md:py-[10px] font-extrabold   ${
+                      CheckSufficiency ? "bg-gray-400" : "bg-primary"
+                    }`}
                     onClick={() => {
-                      handleWaecSubmitPost();
+                      confirmButton();
                     }}
-                    disabled={inputPin.length !== 4}
-                    className={`${
-                      inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
-                    } my-[5%] w-[225px] flex justify-center items-center
+                    disabled={CheckSufficiency}
+                  >
+                    Confirmed
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Modal>
+      )}
+
+      {/* CONFIRM TRANSACTION */}
+      {educationConfirm && (
+        <Modal>
+          <div
+            className={`confirm2 ${styles.inputPin} ${
+              toggleSideBar
+                ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
+                : "lg:w-[40%]"
+            } md:w-[55%] w-[90%] md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
+          >
+            <img
+              onClick={() => setEducationConfirm(false)}
+              className="absolute cursor-pointer top-[5.5px] 
+                right-2 w-[18px] h-[18px] 
+                md:w-[35px] md:h-[25px] lg:w-[45px] lg:h-[45px]"
+              src={closeIcon}
+              alt=""
+            />
+
+            <hr className="h-[6px] bg-[#04177f] lg:mt-[10%] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
+            <p className="text-[10px] md:text-base lg:text-[18px] font-extrabold text-center my-[8%] lg:my-[%]">
+              Input PIN to complete transaction
+            </p>
+            <div className="flex flex-col gap-2.5 justify-center items-center font-extrabold mb-[7%]">
+              <div className=" flex justify-center items-center ml-[5%] gap-2.5 md:ml-[5%] md:gap-[30px]">
+                {" "}
+                {isVisible ? (
+                  <div className="flex flex-col gap-y-1">
+                    <OtpInput
+                      value={inputPin}
+                      inputType="tel"
+                      onChange={(e) => {
+                        setInputPin(e);
+                        console.log(setInputPin);
+                      }}
+                      numInputs={4}
+                      shouldAutoFocus={true}
+                      inputStyle={{
+                        color: isDarkMode ? "#ffffff" : "#403f3f",
+                        width: 30,
+                        height: 30,
+                        borderRadius: 3,
+                        backgroundColor: isDarkMode ? "black" : "white",
+                        border: isDarkMode
+                          ? "1px solid white"
+                          : "1px solid #ccc",
+                      }}
+                      renderInput={(props) => (
+                        <input {...props} className="inputOTP mx-[3px]" />
+                      )}
+                    />
+                    {pinSuccess && (
+                      <p className="text-[12px] text-green-500 text-center font-medium">
+                        Pin matches
+                      </p>
+                    )}
+                    {pinFailed && errorMessage && (
+                      <p className="text-[12px] text-center text-red-600 font-medium">
+                        Incorrect Pin
+                      </p>
+                    )}
+                  </div>
+                ) : (
+                  <div className="text-[24px] md:text-[24px] mt-1">
+                    * * * *{" "}
+                  </div>
+                )}
+                <div
+                  className="text-[#0003] text-xl md:text-3xl"
+                  onClick={toggleVisibility}
+                >
+                  {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
+                </div>
+              </div>
+              <p className="text-[8px] md:text-xs text-[#04177f]">
+                Forgot Pin ?
+              </p>
+            </div>
+
+            <button
+              onClick={() => {
+                handleWaecSubmitPost();
+              }}
+              disabled={inputPin.length !== 4}
+              className={`${
+                inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
+              } my-[5%] w-[225px] flex justify-center items-center
                  mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] 
                  text-white rounded-[6px] md:w-[150px] md:rounded-[8px] md:text-base 
                  lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
-                  >
-                    Purchase
-                  </button>
-                </div>
-              </Modal>
-            )}
+            >
+              Purchase
+            </button>
+          </div>
+        </Modal>
+      )}
 
-            {transactSuccessPopUp && (
-              <Modal>
-                {/* <TransactFailedPopUp/> */}
-                <div
-                  className={`confirm ${styles.successfulTwo} ${
-                    toggleSideBar
-                      ? "md:w-[45%] md:ml-[20%] lg:ml-[20%] lg:w-[40%]"
-                      : "lg:w-[40%]"
-                  } md:w-[45%] w-[90%] md:my-auto md:mt-[.5%] mx-auto 
+      {transactSuccessPopUp && (
+        <Modal>
+          {/* <TransactFailedPopUp/> */}
+          <div
+            className={`confirm ${styles.successfulTwo} ${
+              toggleSideBar
+                ? "md:w-[45%] md:ml-[20%] lg:ml-[20%] lg:w-[40%]"
+                : "lg:w-[40%]"
+            } md:w-[45%] w-[90%] md:my-auto md:mt-[.5%] mx-auto 
               overflow-auto md:mb-[18%] lg:mx-auto lg:my-auto`}
-                >
-                  <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
-                    <img
-                      onClick={() => {
-                        setTransactSuccessPopUp(false);
-                        window.location.reload();
-                      }}
-                      className=" w-[18px] h-[18px] md:w-[35px] cursor-pointer
+          >
+            <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
+              <img
+                onClick={() => {
+                  setTransactSuccessPopUp(false);
+                  window.location.reload();
+                }}
+                className=" w-[18px] h-[18px] md:w-[35px] cursor-pointer
                   md:h-[35px] lg:w-[35px] lg:h-[42px]"
-                      src={AremxyPlugIcon}
-                      alt=""
-                    />
+                src={AremxyPlugIcon}
+                alt=""
+              />
 
-                    <img
-                      onClick={() => {
-                        setTransactSuccessPopUp(false);
-                        window.location.reload();
-                      }}
-                      className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
-                      src="/Images/transferImages/close-circle.png"
-                      alt=""
-                    />
-                  </div>
-                  <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
-                  <h2 className="text-xs my-[4%] font-semibold text-center md:text-[20px] md:my-[3%] lg:text-sm lg:my-[2%]">
-                    Purchase Successful
-                  </h2>
-                  <img
-                    className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[100px] lg:h-[100px]"
-                    src="./Gif/checkMarkGif.gif"
-                    alt="/"
-                  />
+              <img
+                onClick={() => {
+                  setTransactSuccessPopUp(false);
+                  window.location.reload();
+                }}
+                className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
+                src="/Images/transferImages/close-circle.png"
+                alt=""
+              />
+            </div>
+            <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
+            <h2 className="text-xs my-[4%] font-semibold text-center md:text-[20px] md:my-[3%] lg:text-sm lg:my-[2%]">
+              Purchase Successful
+            </h2>
+            <img
+              className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[100px] lg:h-[100px]"
+              src="./Gif/checkMarkGif.gif"
+              alt="/"
+            />
 
-                  <div className="flex flex-col gap-[15px] md:gap-5 lg:gap-[30px]  px-[20px]">
-                    <p
-                      className="text-[8px] font-semibold text-black text-center mb-2 
+            <div className="flex flex-col gap-[15px] md:gap-5 lg:gap-[30px]  px-[20px]">
+              <p
+                className="text-[8px] font-semibold text-black text-center mb-2 
                 md:text-sm lg:text-base"
-                    >
-                      You have successfully purchased{" "}
-                      <span className="text-[#000] font-extrabold text-[10px] md:text-sm lg:text-base">
-                        {/* WAEC (₦100){" "} */} {examType}
-                      </span>
-                      from your {paymentResult} to{" "}
-                    </p>
+              >
+                You have successfully purchased{" "}
+                <span className="text-[#000] font-extrabold text-[10px] md:text-sm lg:text-base">
+                  {/* WAEC (₦100){" "} */} {examType}
+                </span>
+                from your {paymentResult.split(" (")[0]} to{" "}
+              </p>
 
-                    <div className="flex items-center justify-between">
-                      <h2
-                        className="text-[#7C7C7C] text-[10px] leading-[12px] font-medium
+              <div className="flex items-center justify-between">
+                <h2
+                  className="text-[#7C7C7C] text-[10px] leading-[12px] font-medium
                    md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px]"
-                      >
-                        Exam Type
-                      </h2>
-                      <div className="flex gap-1">
-                        <div
-                          className="rounded-full w-[12.02px] h-[12.02px] 
+                >
+                  Exam Type
+                </h2>
+                <div className="flex gap-1">
+                  <div
+                    className="rounded-full w-[12.02px] h-[12.02px] 
                     flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] 
                     lg:w-[25px] md:h-[12.02px] lg:h-[25px]"
-                        >
-                          <img
-                            src={WaecImg}
-                            alt=""
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                        <h2
-                          className="text-[10px] leading-[12px] font-medium
-                     md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px]"
-                        >
-                          WAEC
-                        </h2>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <h2
-                        className="text-[#7C7C7C] text-[10px] leading-[12px]  font-medium
-                  md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px]"
-                      >
-                        Quantity
-                      </h2>
-                      <div className="flex gap-1">
-                        <h2
-                          className="text-[10px] leading-[12px] font-medium
-                     md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px]"
-                        >
-                          {quantityResult}
-                        </h2>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <h2
-                        className="text-[#7C7C7C] text-[10px] leading-[12px] font-medium
-                   md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px]"
-                      >
-                        Phone Number
-                      </h2>
-                      <div className="flex gap-1">
-                        <h2
-                          className="text-[10px] leading-[12px] font-medium
-                     md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px]"
-                        >
-                          {educationPinPhone}
-                        </h2>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <h2
-                        className="text-[#7C7C7C] text-[10px] leading-[12px]  font-medium
-                  md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px]"
-                      >
-                        Email
-                      </h2>
-                      <div className="flex gap-1">
-                        <h2
-                          className="text-[10px] font-medium leading-[12px]  md:text-xs 
-                    md:leading-[11.92px] lg:text-base lg:leading-[24px] "
-                        >
-                          {educationPinEmail}
-                        </h2>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <h2
-                        className="text-[#7C7C7C] text-[10px] leading-[12px] font-medium
-                   md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px]"
-                      >
-                        Payment Method
-                      </h2>
-                      <div className="flex gap-1">
-                        <h2
-                          className="text-[10px] leading-[12px] font-medium
-                     md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px]"
-                        >
-                          {paymentResult}
-                        </h2>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <h2
-                        className="text-[#7C7C7C] text-[10px] leading-[12px] font-medium
-                   md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px]"
-                      >
-                        Order Number
-                      </h2>
-                      <div className="flex gap-1">
-                        <h2
-                          className="text-[10px] leading-[12px] font-medium md:text-xs
-                     md:leading-[11.92px] lg:text-base lg:leading-[24px] "
-                        >
-                          0124yend44
-                        </h2>
-                      </div>
-                    </div>
+                  >
+                    <img
+                      src={WaecImg}
+                      alt=""
+                      className="w-full h-full object-cover"
+                    />
                   </div>
+                  <h2
+                    className="text-[10px] leading-[12px] font-medium
+                     md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px]"
+                  >
+                    WAEC
+                  </h2>
+                </div>
+              </div>
 
-                  <div
-                    className="bg-[#F2FAFF] mx-5 h-[45px] my-5 flex p-[10.193px] 
+              <div className="flex items-center justify-between">
+                <h2
+                  className="text-[#7C7C7C] text-[10px] leading-[12px]  font-medium
+                  md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px]"
+                >
+                  Quantity
+                </h2>
+                <div className="flex gap-1">
+                  <h2
+                    className="text-[10px] leading-[12px] font-medium md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px]"
+                  >
+                    {quantityResult.split(" (")[0]}
+                  </h2>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between">
+                <h2
+                  className="text-[#7C7C7C] text-[10px] leading-[12px] font-medium
+                   md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px]"
+                >
+                  Phone Number
+                </h2>
+                <div className="flex gap-1">
+                  <h2
+                    className="text-[10px] leading-[12px] font-medium
+                     md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px]"
+                  >
+                    {educationPinPhone}
+                  </h2>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between">
+                <h2
+                  className="text-[#7C7C7C] text-[10px] leading-[12px]  font-medium
+                  md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px]"
+                >
+                  Email
+                </h2>
+                <div className="flex gap-1">
+                  <h2
+                    className="text-[10px] font-medium leading-[12px]  md:text-xs 
+                    md:leading-[11.92px] lg:text-base lg:leading-[24px] "
+                  >
+                    {educationPinEmail}
+                  </h2>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between">
+                <h2
+                  className="text-[#7C7C7C] text-[10px] leading-[12px] font-medium
+                   md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px]"
+                >
+                  Payment Method
+                </h2>
+                <div className="flex gap-1">
+                  <h2
+                    className="text-[10px] leading-[12px] font-medium
+                     md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px]"
+                  >
+                    {paymentResult.split(" (")[0]}
+                  </h2>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between">
+                <h2
+                  className="text-[#7C7C7C] text-[10px] leading-[12px] font-medium
+                   md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px]"
+                >
+                  Order Number
+                </h2>
+                <div className="flex gap-1">
+                  <h2
+                    className="text-[10px] leading-[12px] font-medium md:text-xs
+                     md:leading-[11.92px] lg:text-base lg:leading-[24px] "
+                  >
+                    {waecOrderId}
+                  </h2>
+                </div>
+              </div>
+            </div>
+
+            <div
+              className="bg-[#F2FAFF] mx-5 h-[45px] my-5 flex p-[10.193px] 
               items-center justify-center   
               md:mx-[20px] md:rounded-[15px] lg:rounded-[16.308px] lg:h-[75px]"
-                  >
-                    <p
-                      className="text-[9px] text-[#7C7C7C] text-center  md:text-[11px] 
+            >
+              <p
+                className="text-[9px] text-[#7C7C7C] text-center  md:text-[11px] 
                 lg:text-[14.231px] lg:leading-[20px]"
-                    >
-                      <span className="md:block">
-                        The e-pins purchase has been generated successfully.
-                        Please kindly check
-                      </span>
-                      <span className="md:block">
-                        {" "}
-                        receipt to confirm the pin / token. You can contact us
-                        for any further{" "}
-                      </span>{" "}
-                      assistance.
-                    </p>
-                  </div>
-                  <div
-                    className="flex  justify-center  w-full 
+              >
+                <span className="md:block">
+                  The e-pins purchase has been generated successfully. Please
+                  kindly check
+                </span>
+                <span className="md:block">
+                  {" "}
+                  receipt to confirm the pin / token. You can contact us for any
+                  further{" "}
+                </span>{" "}
+                assistance.
+              </p>
+            </div>
+            <div
+              className="flex  justify-center  w-full 
               items-center gap-[15px] md:gap-5 mt-[50px]  lg:gap-5 
               lg:my-[5%] md:mt-[20px] mb-[20px]"
-                  >
-                    <Link
-                      to="/WaecEducationPin"
-                      onClick={() => {
-                        waecTransactionSuccessClose();
-                        window.location.reload();
-                      }}
-                      className={`bg-[#04177f] w-[111px] flex justify-center 
+            >
+              <Link
+                to="/WaecEducationPin"
+                onClick={() => {
+                  waecTransactionSuccessClose();
+                  window.location.reload();
+                }}
+                className={`bg-[#04177f] w-[111px] flex justify-center 
                     items-center  cursor-pointer text-center text-xs font-extrabold h-[40px]
                      text-white rounded-[6px] md:w-[150px] md:rounded-[8px] 
                      md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
-                    >
-                      Done
-                    </Link>
+              >
+                Done
+              </Link>
 
-                    <Link
-                      to="/WaecReceipt"
-                      onClick={waecReceipt}
-                      className={`bg-[#ffffff] border-[1px] w-[111px] border-[#0003] 
+              <Link
+                to="/WaecReceipt"
+                onClick={handleReceivedData}
+                className={`bg-[#ffffff] border-[1px] w-[111px] border-[#0003] 
                      flex justify-center items-center text-center  cursor-pointer text-xs 
                      font-extrabold h-[40px] rounded-[6px] md:w-[150px] md:rounded-[8px] 
                      md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
-                    >
-                      Receipt
-                    </Link>
-                  </div>
-                </div>
-              </Modal>
-            )}
+              >
+                Receipt
+              </Link>
+            </div>
+          </div>
+        </Modal>
+      )}
 
-            {/* =========== RECEIPT ============*/}
-            {receipt && (
-              <WaecReceipt
-                Exam="WAEC"
-                ExamType={examType}
-                ListOfResultCheckers={quantityResult}
-                PhoneNumber={educationPinPhone}
-                Email={educationPinEmail}
-                Amount={educationAmount}
-                walletbalance={walletBalance}
-                walletName={paymentResult}
-              />
-            )}
+      {/* =========== RECEIPT ============*/}
+      {/* {receipt && (
+        <WaecReceipt
+          Exam="WAEC"
+          ExamType={examType}
+          ListOfResultCheckers={quantityResult}
+          PhoneNumber={educationPinPhone}
+          Email={educationPinEmail}
+          Amount={educationAmount}
+          walletbalance={walletBalance}
+          walletName={paymentResult}
+        />
+      )} */}
 
-            <div className="py-[30px] lg:py-[60px] mt-10 lg:mb-[80px] mb-[50px] md:mb-[100px]">
-              <button
-                className={`font-extrabold h-[43px] w-full py-[3.534px] px-[5.301px] md:mb-[0px] rounded-[4.241px] md:w-[95.649px] text-white md:py-[5.868px] md:px-[8.802px] md:h-auto md:text-xs md:leading-[14px] md:rounded-[7.042px]
+      <div className="py-[30px] lg:py-[60px] mt-10 lg:mb-[80px] mb-[50px] md:mb-[100px]">
+        <button
+          className={`font-extrabold h-[43px] w-full py-[3.534px] px-[5.301px] md:mb-[0px] rounded-[4.241px] md:w-[95.649px] text-white md:py-[5.868px] md:px-[8.802px] md:h-auto md:text-xs md:leading-[14px] md:rounded-[7.042px]
            lg:text-base lg:leading-[24px] lg:py-[10px] lg:px-[15px] lg:w-[163px] lg:rounded-[12px] ${
              !examType ||
              !quantityResult ||
@@ -1460,140 +1538,135 @@ export default function WaecEducationPin() {
                ? "bg-[#63616188] cursor-not-allowed"
                : "bg-primary"
            }`}
-                onClick={(e) => {
-                  waecProceed();
-                  e.preventDefault();
-                }}
-                disabled={
-                  !examType ||
-                  !quantityResult ||
-                  !educationPinPhone ||
-                  !educationPinEmail ||
-                  !paymentResult ||
-                  !educationAmount
-                }
-              >
-                Proceed
-              </button>
-            </div>
-          
-      
+          onClick={(e) => {
+            waecProceed();
+            e.preventDefault();
+          }}
+          disabled={
+            !examType ||
+            !quantityResult ||
+            !educationPinPhone ||
+            !educationPinEmail ||
+            !paymentResult ||
+            !educationAmount
+          }
+        >
+          Proceed
+        </button>
+      </div>
 
-        {waecFailedTransaction && (
-          <Modal>
-            <div
-              className={`deleteRecipientSuccess  mx-[5%]  ${
-                isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
-              } ${
-                toggleSideBar ? "confirm01" : "confirm"
-              } grow  pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative 
+      {waecFailedTransaction && (
+        <Modal>
+          <div
+            className={`deleteRecipientSuccess  mx-[5%]  ${
+              isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
+            } ${
+              toggleSideBar ? "confirm01" : "confirm"
+            } grow  pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative 
               md:rounded-[11.5px] md:mx-auto md:my-auto md:overflow-auto`}
-            >
-              <div
-                className="w-full flex justify-between border-b-[6px] items-center
+          >
+            <div
+              className="w-full flex justify-between border-b-[6px] items-center
                border-primary px-[12px] h-[45px] md:h-[55px] lg:h-[70px]  lg:border-b-[10px] "
-              >
-                <img
-                  className=" w-[18px] h-[18px] md:w-[35px] cursor-pointer
+            >
+              <img
+                className=" w-[18px] h-[18px] md:w-[35px] cursor-pointer
                   md:h-[35px] lg:w-[35px] lg:h-[42px]"
-                  src={AremxyPlugIcon}
-                  alt=""
-                />
+                src={AremxyPlugIcon}
+                alt=""
+              />
 
-                <img
-                  src={closeIcon}
-                  alt=""
+              <img
+                src={closeIcon}
+                alt=""
+                onClick={() => {
+                  setWaecFailedTransaction(false);
+                  handleResetFields();
+                  // window.location.reload();
+                }}
+                className="w-[18px] h-[18px]  md:w-[25px] cursor-pointer
+               md:h-[25px] lg:w-[35px] lg:h-[35px]"
+              />
+            </div>
+
+            <div className="flex flex-col justify-between items-center h-[100%]">
+              <h2
+                className="lg:text-base lg:leading-[24px] text-center mb-1
+                text-xs md:text-[13px] md:leading-[20px] font-semibold mt-[20px] leading-[16px]"
+              >
+                Purchase Failed
+              </h2>
+              <img
+                src={eduFailed}
+                className="w-[150px] md:w-[200px]"
+                alt="transaction failed"
+              />
+
+              <p
+                className="text-center text-[#F95252]  lg:text-base lg:leading-[20.8px] font-semibold
+                text-xs md:text-[13px] md:leading-[20px] leading-[16px]"
+              >
+                An unexpected error has occurred, please try again.
+              </p>
+              <div
+                className="flex  justify-center  w-full 
+              items-center gap-[15px] md:gap-5 mt-[50px]  lg:gap-5 
+              lg:my-[5%] md:mt-[20px] mb-[20px] "
+              >
+                <Link
+                  to="/WaecEducationPin"
                   onClick={() => {
                     setWaecFailedTransaction(false);
                     handleResetFields();
                     // window.location.reload();
                   }}
-                  className="w-[18px] h-[18px]  md:w-[25px] cursor-pointer
-               md:h-[25px] lg:w-[35px] lg:h-[35px]"
-                />
-              </div>
-
-              <div className="flex flex-col justify-between items-center h-[100%]">
-                <h2
-                  className="lg:text-base lg:leading-[24px] text-center mb-1
-                text-xs md:text-[13px] md:leading-[20px] font-semibold mt-[20px] leading-[16px]"
-                >
-                  Purchase Failed
-                </h2>
-                <img
-                  src={eduFailed}
-                  className="w-[150px] md:w-[200px]"
-                  alt="transaction failed"
-                />
-
-                <p
-                  className="text-center text-[#F95252]  lg:text-base lg:leading-[20.8px] font-semibold
-                text-xs md:text-[13px] md:leading-[20px] leading-[16px]"
-                >
-                  An unexpected error has occurred, please try again.
-                </p>
-                <div
-                  className="flex  justify-center  w-full 
-              items-center gap-[15px] md:gap-5 mt-[50px]  lg:gap-5 
-              lg:my-[5%] md:mt-[20px] mb-[20px] "
-                >
-                  <Link
-                    to="/WaecEducationPin"
-                    onClick={() => {
-                      setWaecFailedTransaction(false);
-                      handleResetFields();
-                      // window.location.reload();
-                    }}
-                    className={`bg-[#04177f] w-[111px] flex justify-center 
+                  className={`bg-[#04177f] w-[111px] flex justify-center 
                     items-center  cursor-pointer text-center text-xs font-extrabold h-[40px]
                      text-white rounded-[6px] md:w-[150px] md:rounded-[8px] 
                      md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%] `}
-                  >
-                    Done
-                  </Link>
-                  <Link
-                    to="/WaecFailedReceipt"
-                    onClick={() => {
-                      setWaecFailedTransaction(false);
-                    }}
-                    className={`bg-[#ffffff] border-[1px] w-[111px] border-[#0003] 
+                >
+                  Done
+                </Link>
+                <Link
+                  to="/WaecFailedReceipt"
+                  onClick={handleFailedData}
+                  className={`bg-[#ffffff] border-[1px] w-[111px] border-[#0003] 
                  flex justify-center items-center text-center  cursor-pointer text-xs 
                  font-extrabold h-[40px] rounded-[6px] md:w-[150px] md:rounded-[8px] 
                  md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
-                  >
-                    Receipt
-                  </Link>
-                </div>
+                >
+                  Receipt
+                </Link>
               </div>
             </div>
-          </Modal>
-        )}
+          </div>
+        </Modal>
+      )}
 
-        <div
-          className=" flex gap-[8.729px]  md:gap-[14.896px] 
+      <div
+        className=" flex gap-[8.729px]  md:gap-[14.896px] 
      justify-center px-[8.594px] mb-[50px]"
-        >
-          <p
-            className="font-medium text-[11px] text-black 
+      >
+        <p
+          className="font-medium text-[11px] text-black 
               leading-[10.4px] lg:text-base lg:leading-[15.6px] md:leading-[12.938px] self-center"
-          >
-            You need help?
-          </p>
-          <Link
-            to="/contactUs"
-            className="font-medium text-white text-[11px] px-[10.594px] rounded-[8px] bg-[#04177F] lg:text-xs lg:leading-[14.4px] py-1.5 md:px-[14.594px]  lg:py-[10px] lg:px-[16px] lg:rounded-[9px]"
-          >
-            Contact Us
-          </Link>
-        </div>
-    
-      
-   
+        >
+          You need help?
+        </p>
+        <Link
+          to="/contactUs"
+          className="font-medium text-white text-[11px] px-[10.594px] rounded-[8px] bg-[#04177F] lg:text-xs lg:leading-[14.4px] py-1.5 md:px-[14.594px]  lg:py-[10px] lg:px-[16px] lg:rounded-[9px]"
+        >
+          Contact Us
+        </Link>
+      </div>
+
       {isLoading && (
         <Modal>
           <Loader />
         </Modal>
       )}
+      {sessionModal && <HandleUserSession />}
     </DashBoardLayout>
   );
 }

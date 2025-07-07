@@ -22,12 +22,13 @@ import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import { Modal } from "../Screens/Modal/Modal";
 import AremxyPlugIcon from "./imagesEducation/AremxyPlug.svg";
-import NecoReceipt from "./ReceiptEducationPins/necoReceipt";
+// import NecoReceipt from "./ReceiptEducationPins/necoReceipt";
 // import axios from "axios";
 import eduFailed from "./imagesEducation/WaecFailedTransaction.svg";
 import "../Dashboard/DashboardComponents/DataTopUpPage/DataTopUp.css";
 import {
   GetFunction,
+  HandleUserSession,
   PostFunction,
   VerifyTransPin,
 } from "../ApiCollection.jsx/ApiBuck";
@@ -68,6 +69,16 @@ export default function NecoEducationPins() {
     // necoEduResponse,
     setNecoEduResponse,
     newBalance,
+    setNewBalance,
+
+    necoEduResponse,
+    setNecoPinsGenerated,
+    necoOrderId,
+    setNecoOrderId,
+    setNecoTransactionId,
+    setNecoShowDescription,
+    setNecoFullName,
+    setNecoTransactionProduct,
   } = useContext(ContextProvider);
 
   // UseStates
@@ -75,8 +86,90 @@ export default function NecoEducationPins() {
   const [necoEducationProceed, setNecoEducationProceed] = useState(false);
   const [errors, setErrors] = useState({});
   const [necoEducationConfirm, setNecoEducationConfirm] = useState(false);
-  const [receipt] = useState(false);
+  // const [receipt] = useState(false);
   const [necoFailedTransaction, setNecoFailedTransaction] = useState(false);
+
+  // Get Amount
+  const [isLoading, setIsLoading] = useState(false);
+  const [sessionModal, setSessionModal] = useState(false);
+  const [passDataBalance, setPassDataBalance] = useState({});
+
+  const getAmount = async function handleGetAmount() {
+    const id = 2;
+    const path = `products/edu/${id}`;
+    const SuccessHandler = () => {
+      setNecoEduResponse((response) => {
+        const amount = response?.data?.data?.data?.Amount;
+        console.log("amount", amount);
+        if (amount) {
+          setNecoQuantityAmount(amount);
+        } else {
+          setNecoQuantityAmount("");
+        }
+        return response;
+      });
+    };
+
+    const FailedHandler = (ErrorType) => {
+      if (ErrorType === "Server error") {
+        alert("Unable to get WAEC PINS. Please try again later");
+      } else if (ErrorType === "unauthorised") {
+        return setSessionModal(true);
+      }
+    };
+
+    await GetFunction(
+      path,
+      setIsLoading,
+      SuccessHandler,
+      FailedHandler,
+      setNecoEduResponse
+    );
+  };
+  const GetBalance = async () => {
+    const SuccessHandler = () => {
+      console.log("successfully retrieved balance");
+    };
+    const FailedHandler = async (ErrorType) => {
+      if (ErrorType === "unauthorised") {
+        await GetFunction(
+          `products/edu/2`,
+          setIsLoading,
+          SuccessHandler,
+          (ErrorType) => {
+            if (ErrorType === "unauthorised") {
+              return setSessionModal(true);
+            }
+          },
+          setNecoEduResponse
+        );
+      }
+    };
+    await GetFunction(
+      "balance",
+      setIsLoading,
+      SuccessHandler,
+      FailedHandler,
+      setPassDataBalance
+    );
+  };
+  // get the amount and balance on entering the page
+  useEffect(() => {
+    getAmount();
+    GetBalance();
+    if (newBalance === "" || newBalance === null || newBalance === undefined) {
+      GetBalance();
+      if (GetBalance) {
+        setNewBalance(
+          passDataBalance?.data?.data
+            ? passDataBalance?.data?.data?.data?.balance
+            : ""
+        );
+      }
+    }
+    handleResetFields();
+    // eslint-disable-next-line
+  }, []);
 
   //==========  QUANTITY RESULT SLIP CHECKERS ==============
   function necoQuantityDropDown() {
@@ -101,10 +194,18 @@ export default function NecoEducationPins() {
     setNecoMethodActive(!necoMethodActive);
     document.querySelector(".methodDrop").classList.toggle("DropIt");
   }
+
+  const updateBalance = passDataBalance?.data?.data
+    ? passDataBalance?.data?.data?.data?.balance
+    : "";
+
   const necoMethodOptions = [
     {
       method: "NGN Wallet",
-      balance: `(₦${newBalance})`,
+      balance:
+        newBalance === "" || newBalance === null || newBalance === undefined
+          ? `(₦${updateBalance})`
+          : `(₦${newBalance})`,
       flag: nigerianFlag,
       id: 1,
     },
@@ -169,49 +270,6 @@ export default function NecoEducationPins() {
       .messages({ "string.pattern.base": "Invalid email " }),
   });
 
-  // Get Amount
-  // const [isFailedAmount, setIsFailedAmount] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  // const [isAmountLoading, setIsAmountLoading] = useState(false);
-
-  const getAmount = async function handleGetAmount() {
-    const id = 2;
-    const path = `products/edu/${id}`;
-    const SuccessHandler = () => {
-      setNecoEduResponse((response) => {
-        const amount = response?.data?.data?.data?.Amount;
-        console.log("amount", amount);
-        if (amount) {
-          setNecoQuantityAmount(amount);
-        } else {
-          setNecoQuantityAmount("");
-        }
-        return response;
-      });
-    };
-
-    const FailedHandler = (name) => {
-      // setIsFailedAmount(true);
-      if (name === "Server error") {
-        alert("Unable to get WAEC PINS. Please try again later");
-      }
-    };
-
-    await GetFunction(
-      path,
-      setIsLoading,
-      SuccessHandler,
-      FailedHandler,
-      setNecoEduResponse
-    );
-  };
-  // get the amount on entering the page
-  useEffect(() => {
-    getAmount();
-    handleResetFields();
-    // eslint-disable-next-line
-  }, []);
-
   // function to reset the fields
   function handleResetFields() {
     setNecoExamType("NECO");
@@ -253,10 +311,11 @@ export default function NecoEducationPins() {
 
   const waecTransactionSuccessClose = () => {
     setTransactSuccessPopUp(false);
+    
   };
-  const necoReceipt = () => {
-    setTransactSuccessPopUp(false);
-  };
+  // const necoReceipt = () => {
+  //   setTransactSuccessPopUp(false);
+  // };
   const necoEduPinSuccess = (e) => {
     setTransactSuccessPopUp(true);
     setNecoEducationConfirm(false);
@@ -267,35 +326,7 @@ export default function NecoEducationPins() {
     setNecoFailedTransaction(true);
     setInputPin("");
   };
-  // const handleNecoSubmitPost = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const sendNecoForm = {
-  //       exam_type: necoExamType.toLowerCase(),
-  //       quantity: parseInt(necoQuantityResult.slice(0, 1)),
-  //       phone_no: necoEducationPinPhone,
-  //       email: necoEducationPinEmail,
-  //       amount: necoEducationAmount.slice(1),
-  //       wallet_type: "",
-  //     };
-  //     console.log(sendNecoForm);
-
-  //     const response = await axios.post(
-  //       "https://aremxyplug.onrender.com/api/v1/edu",
-  //       sendNecoForm
-  //     );
-  //     if (response.status === "success" || 201 || "Successful" || 200) {
-  //       necoEduPinSuccess();
-  //       setEducationPinStatus(true);
-  //     }
-  //     alert("submitted");
-  //   } catch (error) {
-  //     console.error(`The Data brought back an error Of ${error}`);
-  //     necoEduPinFailed();
-  //   }
-  // };
-  // GET RESPONSE SUCCESSFUL
-
+ 
   const [pinSuccess, setPinSuccess] = useState(false);
   const [pinFailed, setPinFailed] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
@@ -306,16 +337,15 @@ export default function NecoEducationPins() {
       const path = `edu`;
       const body = {
         exam_type: necoExamType.toLowerCase(),
-        quantity: parseInt(necoQuantityResult.slice(0, 1)),
         phone_no: necoEducationPinPhone,
-        email: necoEducationPinEmail,
-        // amount: educationAmount.slice(1),
         amount: String(necoEducationAmount),
-        wallet_type: "",
+        email: necoEducationPinEmail,
+        quantity: parseInt(necoQuantityResult.split(" (")[0].slice(0, 1)),
       };
       const SuccessHandler = () => {
         necoEduPinSuccess();
         setEducationPinStatus(true);
+        setNecoOrderId(necoEduResponse?.data?.order_id);
       };
       const FailedHandler = () => {
         necoEduPinFailed();
@@ -340,33 +370,29 @@ export default function NecoEducationPins() {
     );
   };
 
-  // const requestEducationPin = async () => {
-  //   try {
-  //     const EducationResponse = await axios.get(
-  //       "https://aremxyplug.onrender.com/api/v1/edu"
-  //     );
-  //     return EducationResponse.data;
-  //   } catch (error) {
-  //     console.error("There was error fetching the Education Pins", error);
-  //     return null;
-  //   }
-  // };
-  // useEffect(() => {
-  //   const acceptData = async () => {
-  //     try {
-  //       const dataCollected = await requestEducationPin();
-  //       if (dataCollected) {
-  //         setNecoEduResponse(dataCollected);
-  //       }
-  //     } catch (error) {
-  //       console.error("There was an error trying to get the token:", error);
-  //     }
-  //   };
-
-  //   acceptData();
-  //   // eslint-disable-next-line
-  // }, []);
-  // console.log(necoEduResponse);
+  function handleReceivedData() {
+    setIsLoading(true);
+    const receivedData = () => {
+      setNecoPinsGenerated(necoEduResponse?.data?.pins_generated);
+      setNecoOrderId(necoEduResponse?.data?.order_id);
+      setNecoTransactionId(necoEduResponse?.data?.transaction_id);
+      setNecoShowDescription(
+        necoEduResponse?.data?.transaction_description
+      );
+      setNecoFullName(necoEduResponse?.data?.full_name);
+      setNecoTransactionProduct(necoEduResponse?.data?.transaction_product);
+    };
+    receivedData();
+    if (receivedData) {
+      setTransactSuccessPopUp(false);
+      setIsLoading(false);
+    }
+  }
+  function handleFailedData() {
+    setIsLoading(true);
+    setNecoFailedTransaction(false);
+    setIsLoading(false);
+  }
 
   return (
     <DashBoardLayout>
@@ -771,9 +797,7 @@ export default function NecoEducationPins() {
                             onClick={() => {
                               if (methodOption.method === "NGN Wallet") {
                                 setNecoPaymentResult(
-                                  newBalance
-                                    ? `${methodOption.method} ${methodOption.balance}`
-                                    : methodOption
+                                  `${methodOption.method} ${methodOption.balance}`
                                 );
                                 setNecoWalletBalance(methodOption.balance);
                                 setNecoImageState(methodOption.flag);
@@ -787,15 +811,14 @@ export default function NecoEducationPins() {
                             }}
                             className={`flex gap-2.5 lg:py-[15px] py-[10px] pl-[10px] transition-colors duration-300 items-center shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
                             ${
-                              isDarkMode
-                                ? "bg-black text-white hover:bg-gray-800"
-                                : "bg-white hover:bg-[#EDEAEA]"
-                            }
-                             ${
-                               methodOption.method === "NGN Wallet"
-                                 ? "cursor-pointer "
-                                 : "cursor-not-allowed opacity-50 "
-                             }`}
+                              methodOption.id !== 1 && !isDarkMode
+                                ? "bg-gray-300 cursor-not-allowed"
+                                : methodOption.id !== 1 && isDarkMode
+                                ? "bg-black cursor-not-allowed"
+                                : methodOption.id === 1 && !isDarkMode
+                                ? "bg-white hover:bg-[#EDEAEA] cursor-pointer"
+                                : "bg-black cursor-pointer hover:bg-gray-800"
+                            }`}
                             key={methodOption.id}
                           >
                             <img
@@ -870,7 +893,7 @@ export default function NecoEducationPins() {
                     >
                       You are about to purchase{" "}
                       <span className="font-semibold">{necoExamType} </span> PIN
-                      (₦{necoEducationAmount}) from your {necoPaymentResult} to
+                      (₦{necoEducationAmount}) from your {necoPaymentResult.split(" (")[0]} to
                     </h2>
 
                     <div className="flex flex-col gap-[15px] px-[20px] mt-[50px] md:gap-[25px]">
@@ -910,7 +933,7 @@ export default function NecoEducationPins() {
                         </h2>
                         <div className="flex gap-1">
                           <h2 className="text-[10px] leading-[12px] capitalize md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
-                            {necoQuantityResult}
+                            {necoQuantityResult.split(" (")[0]}
                           </h2>
                         </div>
                       </div>
@@ -960,7 +983,7 @@ export default function NecoEducationPins() {
                             className="text-[10px] leading-[12px]  md:text-xs 
                         md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium"
                           >
-                            {necoPaymentResult}
+                            {necoPaymentResult.split(" (")[0]}
                           </h2>
                         </div>
                       </div>
@@ -1062,14 +1085,14 @@ export default function NecoEducationPins() {
                       {" "}
                       {isVisible ? (
                         <div className="flex flex-col gap-y-1">
-                        <OtpInput
-                          value={inputPin}
-                          inputType="tel"
-                          onChange={setInputPin}
-                          numInputs={4}
-                          shouldAutoFocus={true}
-                          inputStyle={{
-                            color: isDarkMode ? "#ffffff" : "#403f3f",
+                          <OtpInput
+                            value={inputPin}
+                            inputType="tel"
+                            onChange={setInputPin}
+                            numInputs={4}
+                            shouldAutoFocus={true}
+                            inputStyle={{
+                              color: isDarkMode ? "#ffffff" : "#403f3f",
                               width: 30,
                               height: 30,
                               borderRadius: 3,
@@ -1077,12 +1100,12 @@ export default function NecoEducationPins() {
                               border: isDarkMode
                                 ? "1px solid white"
                                 : "1px solid #ccc",
-                          }}
-                          renderInput={(props) => (
-                            <input {...props} className="inputOTP mx-[3px]" />
-                          )}
-                        />
-                        {pinSuccess && (
+                            }}
+                            renderInput={(props) => (
+                              <input {...props} className="inputOTP mx-[3px]" />
+                            )}
+                          />
+                          {pinSuccess && (
                             <p className="text-[12px] text-green-500 text-center font-medium">
                               Pin matches
                             </p>
@@ -1092,7 +1115,7 @@ export default function NecoEducationPins() {
                               Incorrect Pin
                             </p>
                           )}
-                          </div>
+                        </div>
                       ) : (
                         <div className="text-[24px] md:text-[24px] mt-1">
                           * * * *{" "}
@@ -1184,7 +1207,7 @@ export default function NecoEducationPins() {
                       >
                         {necoExamType} PIN{" "}
                       </span>
-                      from your {necoPaymentResult} to{" "}
+                      from your {necoPaymentResult.split(" (")[0]} to{" "}
                     </p>
 
                     <div className="flex items-center justify-between">
@@ -1285,7 +1308,7 @@ export default function NecoEducationPins() {
                           className="text-[10px] leading-[12px] md:text-xs 
                       md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium"
                         >
-                          {necoPaymentResult}
+                          {necoPaymentResult.split(" (")[0]}
                         </h2>
                       </div>
                     </div>
@@ -1302,7 +1325,7 @@ export default function NecoEducationPins() {
                           className="text-[10px] leading-[12px] c md:text-xs md:leading-[11.92px] 
                       lg:text-base lg:leading-[24px] font-medium"
                         >
-                          0124yend44
+                          {necoOrderId}
                         </h2>
                       </div>
                     </div>
@@ -1351,9 +1374,7 @@ export default function NecoEducationPins() {
 
                     <Link
                       to="/NecoReceipt"
-                      onClick={() => {
-                        setNecoFailedTransaction(false);
-                      }}
+                      onClick={handleReceivedData}
                       className={`bg-[#ffffff] border-[1px] w-[111px] border-[#0003] 
                      flex justify-center items-center text-center  cursor-pointer text-xs 
                      font-extrabold h-[40px] rounded-[6px] md:w-[150px] md:rounded-[8px] 
@@ -1367,7 +1388,7 @@ export default function NecoEducationPins() {
             )}
 
             {/* =========== RECEIPT ============* */}
-            {receipt && (
+            {/* {receipt && (
               <NecoReceipt
                 Exam="WAEC"
                 ExamType={necoExamType}
@@ -1378,7 +1399,7 @@ export default function NecoEducationPins() {
                 walletBalance={necoWalletBalance}
                 walletName={necoPaymentResult}
               />
-            )}
+            )} */}
 
             <div className="py-[30px] lg:py-[60px] mt-10 lg:mb-[80px] mb-[50px] md:mb-[100px]">
               <button
@@ -1488,7 +1509,7 @@ export default function NecoEducationPins() {
                   </Link>
                   <Link
                     to="/NecoFailedReceipt"
-                    onClick={necoReceipt}
+                    onClick={handleFailedData}
                     className={`bg-[#ffffff] border-[1px] w-[111px] border-[#0003] 
                  flex justify-center items-center text-center  cursor-pointer text-xs 
                  font-extrabold h-[40px] rounded-[6px] md:w-[150px] md:rounded-[8px] 
@@ -1527,6 +1548,7 @@ export default function NecoEducationPins() {
           <Loader />
         </Modal>
       )}
+      {sessionModal && <HandleUserSession />}
     </DashBoardLayout>
   );
 }

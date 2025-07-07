@@ -1180,6 +1180,13 @@ export const Context = ({ children }) => {
   const [quantityAmount, setQuantityAmount] = useState("");
   const [walletBalance, setWalletBalance] = useState("");
 
+   const [waecPinsGenerated, setWaecPinsGenerated] = useState([]);
+  const [waecOrderId, setWaecOrderId] = useState("");
+  const [waecTransactionId, setWaecTransactionId] = useState("");
+  const [waecShowDescription, setWaecShowDescription] = useState("");
+  const [waecFullName, setWaecFullName] = useState("");
+  const [waecTransactionProduct, setWaecTransactionProduct] = useState("");
+
   //==============  NECO PINS  ================
   const [necoQuantityResult, setNecoQuantityResult] = useState("");
   const [necoQuantityActive, setNecoQuantityActive] = useState(false);
@@ -1192,6 +1199,13 @@ export const Context = ({ children }) => {
   const [necoEducationAmount, setNecoEducationAmount] = useState("₦");
   const [necoQuantityAmount, setNecoQuantityAmount] = useState("");
   const [necoWalletBalance, setNecoWalletBalance] = useState("");
+
+  const [necoPinsGenerated, setNecoPinsGenerated] = useState([]);
+  const [necoOrderId, setNecoOrderId] = useState("");
+  const [necoTransactionId, setNecoTransactionId] = useState("");
+  const [necoShowDescription, setNecoShowDescription] = useState("");
+  const [necoFullName, setNecoFullName] = useState("");
+  const [necoTransactionProduct, setNecoTransactionProduct] = useState("");
 
   // ============== JAMB PINS ================
   const [jambQuantityResult, setJambQuantityResult] = useState("");
@@ -2275,6 +2289,19 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
     quantityAmount,
     setQuantityAmount,
 
+    waecPinsGenerated,
+    setWaecPinsGenerated,
+    waecOrderId,
+    setWaecOrderId,
+    waecTransactionId,
+    setWaecTransactionId,
+    waecShowDescription,
+    setWaecShowDescription,
+    waecFullName,
+    setWaecFullName,
+    waecTransactionProduct,
+    setWaecTransactionProduct,
+
     //======NECO PINS ==========
     necoQuantityResult,
     setNecoQuantityResult,
@@ -2298,6 +2325,20 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
     setNecoQuantityAmount,
     necoWalletBalance,
     setNecoWalletBalance,
+
+    necoPinsGenerated,
+    setNecoPinsGenerated,
+    necoOrderId,
+    setNecoOrderId,
+    necoTransactionId,
+    setNecoTransactionId,
+    necoShowDescription,
+    setNecoShowDescription,
+    necoFullName,
+    setNecoFullName,
+    necoTransactionProduct,
+    setNecoTransactionProduct,
+
     airtimeStatus,
     setAirtimeStatus,
     educationPinStatus,

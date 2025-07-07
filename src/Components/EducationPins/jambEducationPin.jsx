@@ -681,15 +681,14 @@ export default function JambEducationPin() {
                             }}
                             className={`flex gap-2.5 lg:py-[15px] py-[10px] pl-[10px] transition-colors duration-300 items-center shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
                             ${
-                              isDarkMode
-                                ? "bg-black text-white hover:bg-gray-800"
-                                : "bg-white hover:bg-[#EDEAEA]"
-                            }
-                            ${
-                              methodOption.method === "NGN Wallet"
-                                ? "cursor-pointer "
-                                : "cursor-not-allowed opacity-50 "
-                            }
+                                methodOption.id !== 1 && !isDarkMode
+                                  ? "bg-gray-300 cursor-not-allowed"
+                                  : methodOption.id !== 1 && isDarkMode
+                                  ? "bg-black cursor-not-allowed"
+                                  : methodOption.id === 1 && !isDarkMode
+                                  ? "bg-white hover:bg-[#EDEAEA] cursor-pointer"
+                                  : "bg-black cursor-pointer hover:bg-gray-800"
+                              }
                             `}
                             key={methodOption.id}
                           >
