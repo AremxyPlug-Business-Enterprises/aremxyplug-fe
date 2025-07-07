@@ -34,10 +34,29 @@ export const IkedcReceiptFailed = () => {
     ikedcOrderId,
     ikedcTransactionId,
     ikedcShowDescription,
+    ikedcBillGenerate,
+    ikedcFullName,
+    ikedcTransactionProduct,
     ikedcFetchedResponse,
   } = useContext(ContextProvider);
 
   const message = ikedcFetchedResponse.data
+
+  const networkProduct =
+    selectedIkedcMeterType?.length > 0 ? selectedIkedcMeterType : "";
+  const meterNo = ikedcMeterNumber?.length > 0 ? ikedcMeterNumber : "";
+  const verifiedName = ikedcVerifiedName?.length > 0 ? ikedcVerifiedName : "";
+  const fullName = ikedcFullName?.length > 0 ? ikedcFullName : "";
+  const phoneNo = ikedcPhoneNumber?.length > 0 ? ikedcPhoneNumber : "";
+  const productEmail = ikedcEmail?.length > 0 ? ikedcEmail : "";
+  const productAmount = ikedcAmount?.length > 0 ? ikedcAmount : "";
+  const disco_type = ikedcDiscoType?.length > 0 ? ikedcDiscoType : "";
+  const order_id = ikedcOrderId === undefined ? "" : ikedcOrderId;
+  const transaction_id = ikedcTransactionId?.length > 0 ? ikedcTransactionId : "";
+  const description =
+    ikedcShowDescription?.length > 0 ? ikedcShowDescription : "";
+  const transaction_product = ikedcTransactionProduct?.length > 0 ? ikedcTransactionProduct : "";
+  const bill_generated = ikedcBillGenerate?.length > 0 ? ikedcBillGenerate : "";
 
   function handleClick() {
     setSelectedIkedcMeterType("");
@@ -155,34 +174,34 @@ export const IkedcReceiptFailed = () => {
                 <p className={`font-medium ${isDarkMode ? "text-white": "text-[#7C7C7C]"}`}>Disco Type</p>
                 <span className="flex items-center gap-1 ">
                   <div><img className="w-[30px]" src={logo2} alt="" /></div>
-                  <div>{ikedcDiscoType}</div>
+                  <div className="font-medium capitalize">{disco_type}</div>
                   </span>
               </div>
               <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className={`font-medium ${isDarkMode ? "text-white": "text-[#7C7C7C]"}`}>Meter Type</p>
-                <span>{selectedIkedcMeterType} </span>
+                <span className="font-medium">{networkProduct} </span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className={`font-medium ${isDarkMode ? "text-white": "text-[#7C7C7C]"}`}>Meter Number</p>
-                <span>{ikedcMeterNumber} </span>
+                <span className="font-medium">{meterNo} </span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className={`font-medium ${isDarkMode ? "text-white": "text-[#7C7C7C]"}`}>Verified Name</p>
-                <span>{ikedcVerifiedName}</span>
+                <span className="font-medium">{verifiedName}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className={`font-medium ${isDarkMode ? "text-white": "text-[#7C7C7C]"}`}>Phone Number</p>
-                <span>{ikedcPhoneNumber}</span>
+                <span className="font-medium">{phoneNo}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className={`font-medium ${isDarkMode ? "text-white": "text-[#7C7C7C]"}`}>Email</p>
-                <span>{ikedcEmail}</span>
+                <span className="font-medium">{productEmail}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className={`font-medium ${isDarkMode ? "text-white": "text-[#7C7C7C]"}`}>Amount</p>
-                <span>&#8358;{ikedcAmount}</span>
+                <span className="font-medium">&#8358;{Number(productAmount).toLocaleString()}</span>
               </div>
               
             </div>
@@ -197,12 +216,12 @@ export const IkedcReceiptFailed = () => {
                 <div className="flex flex-col gap-3 pt-[10px]">
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className={`font-medium ${isDarkMode ? "text-white": "text-[#7C7C7C]"}`}>Customer Name</p>
-                <span>{ikedcVerifiedName}</span>
+                <span className="font-medium">{verifiedName || fullName}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className={`font-medium ${isDarkMode ? "text-white": "text-[#7C7C7C]"}`}>Wallet Type</p>
-                <span>Nigerian NGN Wallet </span>
+                <span className="font-medium">Nigerian NGN Wallet </span>
               </div>
              
               
@@ -222,30 +241,30 @@ export const IkedcReceiptFailed = () => {
                   />
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className={`${isDarkMode ? "text-white" : "text-[#0008]"}`}>Product</p>
-                  <span>Electricity Bills</span>
+                  <p className={`font-medium ${isDarkMode ? "text-white" : "text-[#0008]"}`}>Product</p>
+                  <span className="font-medium">{transaction_product}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className={`${isDarkMode ? "text-white" : "text-[#0008]"}`}>Description</p>
-                  <span>{ikedcShowDescription}</span>
+                  <p className={`font-medium ${isDarkMode ? "text-white" : "text-[#0008]"}`}>Description</p>
+                  <span className="font-medium capitalize">{description}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className={`${isDarkMode ? "text-white" : "text-[#0008]"}`}>Bill / Token Generated</p>
-                  <span>Instantly</span>
+                  <p className={`font-medium ${isDarkMode ? "text-white" : "text-[#0008]"}`}>Bill / Token Generated</p>
+                  <span className="font-medium">{bill_generated}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className={`${isDarkMode ? "text-white" : "text-[#0008]"}`}>Order Number</p>
-                  <span>{ikedcOrderId}</span>
+                  <p className={`font-medium ${isDarkMode ? "text-white" : "text-[#0008]"}`}>Order Number</p>
+                  <span className="font-medium">{Number(order_id)}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className={`${isDarkMode ? "text-white" : "text-[#0008]"}`}>Transaction ID</p>
-                  <span>{ikedcTransactionId}</span>
+                  <p className={`font-medium ${isDarkMode ? "text-white" : "text-[#0008]"}`}>Transaction ID</p>
+                  <span className="font-medium">{transaction_id}</span>
                 </div>
                 
               </div>
             </div>
             <div className={`rounded-[8px] bg-[#E2F3FF] mx-4 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px] ${isDarkMode ? "bg-slate-800" : "bg-[#E2F3FF]"}`}>
-              <p className="text-[8px] text-center mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[16px]">
+              <p className={`text-[8px] text-center mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[16px] font-medium ${isDarkMode ? "text-white": "text-[#7C7C7C]"}`}>
                 Earn free points on every successful transactions, redeem your
                 earned points to real money, withdrawn to your bank account
                 instantly.

@@ -34,10 +34,29 @@ export const JedReceiptFailed = () => {
     jedOrderId,
     jedTransactionId,
     jedShowDescription,
+    jedBillGenerate,
+    jedFullName,
+    jedTransactionProduct,
     jedFetchedResponse,
   } = useContext(ContextProvider);
 
   const message = jedFetchedResponse.data;
+
+   const networkProduct =
+    selectedJedMeterType?.length > 0 ? selectedJedMeterType : "";
+  const meterNo = jedMeterNumber?.length > 0 ? jedMeterNumber : "";
+  const verifiedName = jedVerifiedName?.length > 0 ? jedVerifiedName : "";
+  const fullName = jedFullName?.length > 0 ? jedFullName : "";
+  const phoneNo = jedPhoneNumber?.length > 0 ? jedPhoneNumber : "";
+  const productEmail = jedEmail?.length > 0 ? jedEmail : "";
+  const productAmount = jedAmount?.length > 0 ? jedAmount : "";
+  const disco_type = jedDiscoType?.length > 0 ? jedDiscoType : "";
+  const order_id = jedOrderId === undefined ? "" : jedOrderId;
+  const transaction_id = jedTransactionId?.length > 0 ? jedTransactionId : "";
+  const description =
+    jedShowDescription?.length > 0 ? jedShowDescription : "";
+  const transaction_product = jedTransactionProduct?.length > 0 ? jedTransactionProduct : "";
+  const bill_generated = jedBillGenerate?.length > 0 ? jedBillGenerate : "";
 
   function handleClick() {
     setSelectedJedMeterType("");
@@ -170,7 +189,7 @@ export const JedReceiptFailed = () => {
                       <div>
                         <img className="w-[30px]" src={logo2} alt="" />
                       </div>
-                      <div>{jedDiscoType}</div>
+                      <div className="font-medium capitalize">{disco_type}</div>
                     </span>
                   </div>
                   <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -181,7 +200,7 @@ export const JedReceiptFailed = () => {
                     >
                       Meter Type
                     </p>
-                    <span>{selectedJedMeterType} </span>
+                    <span className="font-medium">{networkProduct} </span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <p
@@ -191,7 +210,7 @@ export const JedReceiptFailed = () => {
                     >
                       Meter Number
                     </p>
-                    <span>{jedMeterNumber} </span>
+                    <span className="font-medium">{meterNo} </span>
                   </div>
 
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -202,7 +221,7 @@ export const JedReceiptFailed = () => {
                     >
                       Verified Name
                     </p>
-                    <span>{jedVerifiedName}</span>
+                    <span className="font-medium">{verifiedName}</span>
                   </div>
 
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -213,7 +232,7 @@ export const JedReceiptFailed = () => {
                     >
                       Phone Number
                     </p>
-                    <span>{jedPhoneNumber}</span>
+                    <span className="font-medium">{phoneNo}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <p
@@ -223,7 +242,7 @@ export const JedReceiptFailed = () => {
                     >
                       Email
                     </p>
-                    <span>{jedEmail}</span>
+                    <span className="font-medium">{productEmail}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <p
@@ -233,7 +252,7 @@ export const JedReceiptFailed = () => {
                     >
                       Amount
                     </p>
-                    <span>&#8358;{jedAmount}</span>
+                    <span className="font-medium">&#8358;{Number(productAmount).toLocaleString()}</span>
                   </div>
                 </div>
                 <div className="flex gap-[5px] items-center mt-[10px] md:mt-[30px] text-[10px] lg:text-[16px] font-extrabold">
@@ -253,7 +272,7 @@ export const JedReceiptFailed = () => {
                     >
                       Customer Name
                     </p>
-                    <span>{jedVerifiedName}</span>
+                    <span className="font-medium">{verifiedName || fullName}</span>
                   </div>
 
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -264,7 +283,7 @@ export const JedReceiptFailed = () => {
                     >
                       Wallet Type
                     </p>
-                    <span>Nigerian NGN Wallet </span>
+                    <span className="font-medium">Nigerian NGN Wallet </span>
                   </div>
                 </div>
               </div>
@@ -279,45 +298,45 @@ export const JedReceiptFailed = () => {
                     alt="/"
                   />
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-medium lg:text-[16px]">
                   <p
                     className={`${isDarkMode ? "text-white" : "text-[#0008]"}`}
                   >
                     Product
                   </p>
-                  <span>Electricity Bills</span>
+                  <span>{transaction_product}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-medium lg:text-[16px]">
                   <p
                     className={`${isDarkMode ? "text-white" : "text-[#0008]"}`}
                   >
                     Description
                   </p>
-                  <span>{jedShowDescription}</span>
+                  <span className="capitalize">{description}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-medium lg:text-[16px]">
                   <p
                     className={`${isDarkMode ? "text-white" : "text-[#0008]"}`}
                   >
                     Bill / Token Generated
                   </p>
-                  <span>Instantly</span>
+                  <span>{bill_generated}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-medium lg:text-[16px]">
                   <p
                     className={`${isDarkMode ? "text-white" : "text-[#0008]"}`}
                   >
                     Order Number
                   </p>
-                  <span>{jedOrderId}</span>
+                  <span>{Number(order_id)}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-medium lg:text-[16px]">
                   <p
                     className={`${isDarkMode ? "text-white" : "text-[#0008]"}`}
                   >
                     Transaction ID
                   </p>
-                  <span>{jedTransactionId}</span>
+                  <span>{transaction_id}</span>
                 </div>
               </div>
             </div>
@@ -326,7 +345,7 @@ export const JedReceiptFailed = () => {
                 isDarkMode ? "bg-slate-800" : "bg-[#E2F3FF]"
               }`}
             >
-              <p className="text-[8px] text-center mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[16px]">
+              <p className={`text-[8px] text-center mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[16px] font-medium ${isDarkMode ? "text-white": "text-[#7C7C7C]"}`}>
                 Earn free points on every successful transactions, redeem your
                 earned points to real money, withdrawn to your bank account
                 instantly.

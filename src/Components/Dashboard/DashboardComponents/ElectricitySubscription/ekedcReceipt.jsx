@@ -36,6 +36,8 @@ export const EkedcReceipt = () => {
     ekedcOrderId,
     ekedcTransactionId,
     ekedcShowDescription,
+    ekedcFullName,
+    ekedcTransactionProduct,
     ekedcBillGenerate,
   } = useContext(ContextProvider);
 
@@ -54,6 +56,8 @@ export const EkedcReceipt = () => {
   const description =
     ekedcShowDescription?.length > 0 ? ekedcShowDescription : "";
   const bill_generated = ekedcBillGenerate?.length > 0 ? ekedcBillGenerate : "";
+  const fullName = ekedcFullName?.length > 0 ? ekedcFullName : "";
+  const transaction_product = ekedcTransactionProduct?.length > 0 ? ekedcTransactionProduct : "";
 
   function handleClick() {
     setSelectedEkedcMeterType("");
@@ -160,10 +164,10 @@ export const EkedcReceipt = () => {
                 hour12: true,
               })}
             </span>
-            <p className="text-[9px] text-[#27AE60] bg-[#D5F6E3] rounded-[11px] border-2 border-[#27AE60] py-[5px] px-[2px] text-center mx-[5px] lg:mx-[150px] md:mx-[100px] my-2 md:text-[14px] lg:text-[14px]">
+            <p className="text-[9px] text-[#27AE60] bg-[#D5F6E3] rounded-[11px] border-2 border-[#27AE60] py-[5px] lg:py-[10px] px-[2px] text-center mx-[5px] lg:mx-[100px] md:mx-[70px] my-2 md:text-[14px] lg:text-[14px]">
               You have successfully purchased{" "}
               <span className="text-[#000] font-extrabold text-[10px] md:text-[14px]">
-                Eko {networkProduct} Meter &#8358;{productAmount}.00{" "}
+                Eko {networkProduct} Meter &#8358;{Number(productAmount).toLocaleString()}.00{" "}
               </span>
               from your NGN wallet to{" "}
             </p>
@@ -191,7 +195,7 @@ export const EkedcReceipt = () => {
                       <div>
                         <img className="w-[30px]" src={logo2} alt="" />
                       </div>
-                      <div>{disco_type}</div>
+                      <div className="font-medium capitalize">{disco_type}</div>
                     </span>
                   </div>
                   <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -202,7 +206,7 @@ export const EkedcReceipt = () => {
                     >
                       Meter Type
                     </p>
-                    <span>{networkProduct} </span>
+                    <span className="font-medium">{networkProduct} </span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <p
@@ -212,7 +216,7 @@ export const EkedcReceipt = () => {
                     >
                       Meter Number
                     </p>
-                    <span>{meterNo} </span>
+                    <span className="font-medium">{meterNo} </span>
                   </div>
 
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -223,7 +227,7 @@ export const EkedcReceipt = () => {
                     >
                       Verified Name
                     </p>
-                    <span>{verifiedName}</span>
+                    <span className="font-medium">{verifiedName}</span>
                   </div>
 
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -234,7 +238,7 @@ export const EkedcReceipt = () => {
                     >
                       Phone Number
                     </p>
-                    <span>{phoneNo}</span>
+                    <span className="font-medium">{phoneNo}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <p
@@ -244,7 +248,7 @@ export const EkedcReceipt = () => {
                     >
                       Email
                     </p>
-                    <span>{productEmail}</span>
+                    <span className="font-medium">{productEmail}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <p
@@ -254,7 +258,7 @@ export const EkedcReceipt = () => {
                     >
                       Amount
                     </p>
-                    <span>&#8358;{productAmount}</span>
+                    <span className="font-medium">&#8358;{Number(productAmount).toLocaleString()}</span>
                   </div>
                 </div>
                 <div className="flex gap-[5px] items-center mt-[10px] md:mt-[30px] text-[10px] lg:text-[16px] font-extrabold">
@@ -274,7 +278,7 @@ export const EkedcReceipt = () => {
                     >
                       Customer Name
                     </p>
-                    <span>{verifiedName}</span>
+                    <span className="font-medium">{verifiedName || fullName}</span>
                   </div>
 
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -285,7 +289,7 @@ export const EkedcReceipt = () => {
                     >
                       Wallet Type
                     </p>
-                    <span>Nigerian NGN Wallet </span>
+                    <span className="font-medium">Nigerian NGN Wallet </span>
                   </div>
                 </div>
               </div>
@@ -300,23 +304,23 @@ export const EkedcReceipt = () => {
                     alt="/"
                   />
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-medium lg:text-[16px]">
                   <p
                     className={`${isDarkMode ? "text-white" : "text-[#0008]"}`}
                   >
                     Product
                   </p>
-                  <span>Electricity Bills</span>
+                  <span>{transaction_product}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-medium lg:text-[16px]">
                   <p
                     className={`${isDarkMode ? "text-white" : "text-[#0008]"}`}
                   >
                     Description
                   </p>
-                  <span>{description}</span>
+                  <span className="capitalize">{description}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-medium lg:text-[16px]">
                   <p
                     className={`${isDarkMode ? "text-white" : "text-[#0008]"}`}
                   >
@@ -324,7 +328,7 @@ export const EkedcReceipt = () => {
                   </p>
                   <span>{bill_generated}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-medium lg:text-[16px]">
                   <p
                     className={`${isDarkMode ? "text-white" : "text-[#0008]"}`}
                   >
@@ -332,7 +336,7 @@ export const EkedcReceipt = () => {
                   </p>
                   <span>{order_id}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-medium lg:text-[16px]">
                   <p
                     className={`${isDarkMode ? "text-white" : "text-[#0008]"}`}
                   >
@@ -347,7 +351,7 @@ export const EkedcReceipt = () => {
                 isDarkMode ? "bg-slate-800" : "bg-[#E2F3FF]"
               }`}
             >
-              <p className="text-[8px] text-center mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[16px]">
+              <p className={`text-[8px] text-center mx-auto w-[200px] md:text-[14px] md:w-[98%] lg:w-[80%] lg:text-[16px] font-medium ${isDarkMode ? "text-white": "text-[#7C7C7C]"}`}>
                 Earn free points on every successful transactions, redeem your
                 earned points to real money, withdrawn to your bank account
                 instantly.

@@ -60,6 +60,8 @@ const KEDCO = () => {
     setKedcoOrderId,
     setKedcoTransactionId,
     setKedcoShowDescription,
+    setKedcoFullName,
+    setKedcoTransactionProduct,
     kedcoFetchedResponse,
     setKedcoFetchedResponse,
     newBalance,
@@ -307,6 +309,7 @@ const KEDCO = () => {
   };
   const [successPopup, setSuccessPopup] = useState(false);
   const [failedPopup, setFailedPopup] = useState(false);
+  const [kedcoCustomerName, setKedcoCustomerName] = useState("");
 
   // const [fetchedResponse, setFetchedResponse] = useState({});
   const [errorMessage, setErrorMessage] = useState(false);
@@ -321,47 +324,62 @@ const KEDCO = () => {
   const verifyMeterNumber = async (meterNumber) => {
     async function HandleMeterNumber() {
       const path = "bills/verify";
-      const body = {
-        disco_type: "kano-electric",
-        meter_no: meterNumber,
-        meter_type: selectedKedcoMeterType.toLowerCase(),
-      };
-      const SuccessHandler = () => {
-        setIsFailedMeterNumber(false);
-        function handleReceivedMeterData() {
-          if (kedcoFetchedResponse.name) {
-            setKedcoVerifiedName(kedcoFetchedResponse.name);
-          } else {
-            setKedcoVerifiedName("");
+      if (
+        meterNumber?.length === 13 &&
+        meterNumber !== "" &&
+        meterNumber !== null &&
+        meterNumber !== undefined
+      ) {
+        const body = {
+          disco_type: "kano-electric",
+          meter_no: meterNumber,
+          meter_type: selectedKedcoMeterType.toLowerCase(),
+        };
+        const SuccessHandler = () => {
+          setIsFailedMeterNumber(false);
+          function handleReceivedMeterData() {
+            if (kedcoFetchedResponse?.data?.name) {
+              setKedcoCustomerName(kedcoFetchedResponse?.data?.name);
+            } else {
+              setKedcoCustomerName("");
+            }
           }
-        }
-        handleReceivedMeterData();
-      };
-      const FailedHandler = () => {
-        setIsFailedMeterNumber(true);
-      };
+          handleReceivedMeterData();
+        };
+        const FailedHandler = () => {
+          setIsFailedMeterNumber(true);
+        };
 
-      await PostFunction(
-        path,
-        setMeterNumberLoading,
-        body,
-        SuccessHandler,
-        FailedHandler,
-        setKedcoFetchedResponse
-      );
+        await PostFunction(
+          path,
+          setMeterNumberLoading,
+          body,
+          SuccessHandler,
+          FailedHandler,
+          setKedcoFetchedResponse
+        );
+      }
     }
     HandleMeterNumber();
     // handleReceivedMeterData();
-    passedMeterName = kedcoFetchedResponse ? kedcoFetchedResponse.name : "";
+    passedMeterName = kedcoFetchedResponse
+      ? kedcoFetchedResponse?.data?.name
+      : "";
+  };
+
+  const handleKedcoMeterNumber = async (e) => {
+    const inputValue = e.target.value;
+    setKedcoMeterNumber(inputValue);
+    await verifyMeterNumber(inputValue);
   };
 
   const handleVerifiedName =
     kedcoMeterNumber?.length === 13 &&
     isFailedMeterNumber === false &&
     verifyMeterNumber &&
-    kedcoVerifiedName === ""
+    kedcoCustomerName === ""
       ? passedMeterName
-      : kedcoVerifiedName;
+      : kedcoCustomerName;
 
   const verifyPin = async () => {
     async function ElectricityHandler() {
@@ -379,6 +397,7 @@ const KEDCO = () => {
       // const parsedAmount = parseInt(amount, 10);
       const SuccessHandler = () => {
         setInputPinPopUp(false);
+        setKedcoDiscoType(kedcoFetchedResponse?.data?.disco_type);
         setSuccessPopup(true);
       };
       const FailedHandler = () => {
@@ -410,12 +429,15 @@ const KEDCO = () => {
   function handleReceivedData() {
     setLoading(true);
     const receivedData = () => {
-      setKedcoBillGenerate(kedcoFetchedResponse.data.bill_generated);
-      setKedcoOrderId(kedcoFetchedResponse.data.order_id);
-      setKedcoTransactionId(kedcoFetchedResponse.data.transaction_id);
-      setKedcoServiceID(kedcoFetchedResponse.data.request_id);
-      setKedcoShowDescription(kedcoFetchedResponse.data.description);
-      setKedcoDiscoType(kedcoFetchedResponse.data.disco_type);
+      setKedcoBillGenerate(kedcoFetchedResponse?.data?.bill_generated);
+      setKedcoOrderId(kedcoFetchedResponse?.data?.order_id);
+      setKedcoTransactionId(kedcoFetchedResponse?.data?.transaction_id);
+      setKedcoServiceID(kedcoFetchedResponse?.data?.RequestID);
+      setKedcoShowDescription(kedcoFetchedResponse?.data?.transaction_description);
+      setKedcoDiscoType(kedcoFetchedResponse?.data?.disco_type);
+      setKedcoVerifiedName(kedcoFetchedResponse?.data?.verified_name);
+      setKedcoFullName(kedcoFetchedResponse?.data?.full_name);
+      setKedcoTransactionProduct(kedcoFetchedResponse?.data?.transaction_product);
     };
     receivedData();
     if (receivedData) {
@@ -671,7 +693,7 @@ const KEDCO = () => {
                   }
                   border flex flex-col divide-y items-center text-[14px] md:text-[12px] lg:text-[16px] mt-20 lg:mt-20  rounded-[4px] md:rounded-[10px] absolute top-1 lg:top-[1rem] w-full z-[10] `}
                 >
-                  {productList.map((item) => (
+                  {productList?.map((item) => (
                     <div
                       key={item.name}
                       className={`pb-[18px] pt-[8px] md:py-[14px] font-bold cursor-pointer md:text-[12px] lg:text-[16px] w-full transition-all duration-300 hover:bg-slate-50 md:rounded-[0px] lg:mt- text-[12px] pl-[5px]
@@ -706,14 +728,18 @@ const KEDCO = () => {
                   value={kedcoMeterNumber}
                   // onChange={handleMeterNumber}
                   maxLength={13}
-                  onChange={(e) => {
-                    const newValue = e.target.value;
-                    setKedcoMeterNumber(newValue);
-                    if (newValue?.length === 13 && !errors.kedcoMeterNumber) {
-                      verifyMeterNumber(newValue);
+                  onInput={(e) => {
+                    const numericValue = e.target.value.replace(/\D/g, "");
+                    e.target.value = numericValue;
+                    if (numericValue?.length === 13) {
+                      e.target.style.border = "2px solid green";
+                    } else {
+                      e.target.style.border = "2px solid red";
                     }
-                    // newValue.length === 13 && !errors.kedcoMeterNumber ? verifyMeterNumber(newValue) : setKedcoVerifiedName("");
+                    setIsFailedMeterNumber(false);
+                    setErrors((prev) => ({ ...prev, kedcoMeterNumber: "" }));
                   }}
+                  onChange={handleKedcoMeterNumber}
                   onClick={() => setShowProductList(false)}
                   className={`py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full w-full  ${
                     isDarkMode
@@ -779,6 +805,7 @@ const KEDCO = () => {
                     } else if (e.target.value?.length < 10) {
                       e.target.style.border = "2px solid red";
                     }
+                    setErrors((prev) => ({ ...prev, kedcoPhoneNumber: "" }));
                   }}
                   onBlur={(e) => {
                     isDarkMode
@@ -812,6 +839,7 @@ const KEDCO = () => {
                   type="text"
                   value={kedcoEmail}
                   onChange={handleEmail}
+                  onInput={()=>{setErrors((prev) => ({ ...prev, kedcoEmail: "" }));}}
                   className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
                     isDarkMode
                       ? "text-white bg-black border border-white"
@@ -825,7 +853,7 @@ const KEDCO = () => {
                 </div>
               )}
             </div>
-            <div className="flex flex-col gap-2 lg:gap-2.5">
+            <div className="flex flex-col relative gap-2 lg:gap-2.5">
               <div
                 className={`text-[#7E7E7E] text-[14px] lg:text-[16px] md:font-semibold font-normal ${
                   isDarkMode ? "text-white" : ""
@@ -843,9 +871,10 @@ const KEDCO = () => {
                 &#8358;
                 <input
                   type="number"
-                  name="ikedcamount"
+                  name="kedcoamount"
                   value={kedcoAmount}
                   onChange={handleKedcoAmount}
+                  onInput={()=>{setAmountError("")}}
                   placeholder="Minimum of ₦1000"
                   className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:py-3 md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] text-[12px] leading-[18px]  lg:text-[16px] lg:leading-[20.8px]  focus:outline-none
                  ${
@@ -856,7 +885,7 @@ const KEDCO = () => {
                 />
               </div>
               {amountError && (
-                <p className="text-[14px] text-red-500 italic lg:text-[14px]">
+                <p className="text-[14px] absolute left-0 -bottom-[1.3rem] text-red-500 italic lg:text-[14px]">
                   {amountError}
                 </p>
               )}
@@ -933,7 +962,7 @@ const KEDCO = () => {
                     styles.countryDropDown
                   } shadow-xl border w-full lg:w-full  flex flex-col divide-y absolute top-20`}
                 >
-                  {countryList.map((country) => (
+                  {countryList?.map((country) => (
                     <div
                       className={`py-[18px] md:py-[14px] font-normal px-2 flex items-center gap-[5px] text-[12px] md:text-[14px] lg:text-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] transition-all duration-300 hover:bg-slate-50
                        ${
@@ -972,7 +1001,7 @@ const KEDCO = () => {
             className={`text-[12px] mt-[30px] md:mt-[40px] bg-[#0008] md:w-fit lg:px-12 lg:text-[16px] lg:px md:py-1 md:rounded-md md:px-6 py-3 rounded-md font-semibold text-center text-white
             ${
               !kedcoMeterNumber ||
-              !kedcoVerifiedName ||
+              !kedcoCustomerName ||
               !kedcoPhoneNumber ||
               !kedcoEmail ||
               !selectedKedcoMeterType ||
@@ -983,7 +1012,7 @@ const KEDCO = () => {
             }`}
             disabled={
               !kedcoMeterNumber ||
-              !kedcoVerifiedName ||
+              !kedcoCustomerName ||
               !kedcoPhoneNumber ||
               !kedcoEmail ||
               !selectedKedcoMeterType ||
@@ -1044,7 +1073,7 @@ const KEDCO = () => {
                   isDarkMode ? "text-white" : "text-[#000]"
                 }`}
               >
-                {selectedKedcoMeterType} Meter (&#8358;{kedcoAmount}){" "}
+                {selectedKedcoMeterType} Meter (&#8358;{Number(kedcoAmount).toLocaleString()}){" "}
               </span>
               {/* Points to <br></br>
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">
@@ -1098,7 +1127,7 @@ const KEDCO = () => {
                 >
                   Verified Name
                 </p>
-                <span>{kedcoVerifiedName}</span>
+                <span>{kedcoCustomerName}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -1129,7 +1158,7 @@ const KEDCO = () => {
                 >
                   Amount
                 </p>
-                <span>&#8358;{kedcoAmount}</span>
+                <span>&#8358;{Number(kedcoAmount).toLocaleString()}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -1170,7 +1199,7 @@ const KEDCO = () => {
                         isDarkMode ? "text-white" : "text-[#000] "
                       }`}
                     >
-                      {`(${newBalance})`}
+                      {`(₦${newBalance})`}
                     </span>
                   </p>
                 </div>
@@ -1366,7 +1395,7 @@ const KEDCO = () => {
                   isDarkMode ? "text-white" : "text-[#000]"
                 }`}
               >
-                (&#8358;{kedcoAmount})
+                (&#8358;{Number(kedcoAmount).toLocaleString()})
               </span>
               From your NGN Nigerian Wallet to
             </p>
@@ -1447,7 +1476,7 @@ const KEDCO = () => {
                 >
                   Amount
                 </p>
-                <span>&#8358;{kedcoAmount}</span>
+                <span>&#8358;{Number(kedcoAmount).toLocaleString()}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -1476,7 +1505,7 @@ const KEDCO = () => {
                 isDarkMode ? "bg-slate-800" : "bg-[#F2FAFF]"
               }`}
             >
-              <p className="text-[8px] text-center md:text-[14px] md:w-[80%] lg:text-[14px] font-medium">
+              <p className="text-[8px] text-center md:text-[14px] md:w-[97%] lg:w-[90%] md:mx-auto lg:text-[14px] font-medium">
                 The electricity bills / token purchase has been generated
                 successfully. Please kindly check receipt to confirm the bills /
                 token. You can contact us for any further assistance.
