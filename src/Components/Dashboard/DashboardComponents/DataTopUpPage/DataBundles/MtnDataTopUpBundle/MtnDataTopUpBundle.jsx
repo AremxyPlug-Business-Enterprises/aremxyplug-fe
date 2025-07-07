@@ -27,7 +27,7 @@ import Failed from "./MtnDataTopUpBundleImages/Failed.svg";
 import axiosInstance from "../../../../../ApiCollection.jsx/apiClient";
 import { VerifyTransPin } from "../../../../../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../../../../Loader/Loader";
-import { GetFunction } from "../../../../../ApiCollection.jsx/ApiBuck";
+import { GetFunction, HandleUserSession } from "../../../../../ApiCollection.jsx/ApiBuck";
 
 
 
@@ -64,14 +64,14 @@ const { isDarkMode, newBalance, setNewBalance } = useContext(ContextProvider);
   const [loadingPlans, setLoadingPlans] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [success, setSuccess] = useState(false);
-  const [failed, setFailed] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
  const [balanceStatus,setBalanceStatus ] = useState("")
 
   const [selectPlanWarn, setSelectPlanWarn] = useState(false);
   const [selectProductWarn, setSelectProductWarn] = useState(false);
   const [passDataBalance, setPassDataBalance] = useState({});
-  const [mtnReceiptInfo,setMtnReceiptInfo ] = useState("")
+  const [mtnReceiptInfo,setMtnReceiptInfo ] = useState("");
+  const [sessionModal, setSessionModal] = useState(false)
 
   
   
@@ -79,7 +79,7 @@ const { isDarkMode, newBalance, setNewBalance } = useContext(ContextProvider);
    let balanceStringToNum = Number(newBalance);
 
               let mtnDataAmount = Number(selectedAmountMtn.replace(/\D/g, ""));
-              const updateBalance = passDataBalance.data ?  passDataBalance.data.data.data.balance : "";
+              const updateBalance = passDataBalance?.data ?  passDataBalance?.data?.data?.data?.balance : "";
               const cleanUpBalanceToNumericOnly = Number(updateBalance.replace(/\D/g, ""));
              let CheckSufficiency =  mtnDataAmount > (newBalance === "" || newBalance === null ? cleanUpBalanceToNumericOnly : balanceStringToNum);
            
@@ -93,7 +93,7 @@ useEffect(() => {
         if(response === undefined){
           alert("Check your internet Connection");
         }else if(response.status === 201 || 200){
-          setProducts(response.data.data.products || []);
+          setProducts(response?.data?.data?.products || []);
 
         }
       } catch (error) {
@@ -102,6 +102,25 @@ useEffect(() => {
              alert("Check your internet Connection, then reload the page.")
           } else if(error && error.response.status === 400){
              alert("Service for mtn is currently not available, Try again later.")
+          }else if(error && error.response.status === 401){
+             if(error.response.headers["x-new-auth-token"] || error.response.headers.get("x-new-auth-token")){
+         setLoading(true)
+         const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
+        
+         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
+           const setAuthorisedToken = localStorage.setItem("authorisedLogin", newToken);
+           if(setAuthorisedToken){
+            await inputPinHandler()
+           }
+            }else{
+    const setGetToken = localStorage.setItem("getToken", newToken);
+      if(setGetToken){
+        await inputPinHandler();
+      }
+      }
+        }else{
+          return setSessionModal(true)
+        }
           }else if(error && error.response.status === 500){
              alert("Service for mtn is currently not available, Try again later.")
           }
@@ -132,6 +151,7 @@ useEffect(() => {
     setLoadingPlans(true);
    
     try {
+      setLoadingPlans(true);
       const response = await axiosInstance.get(
         `/products/telecom/${productId}`
       );
@@ -147,7 +167,24 @@ useEffect(() => {
         if(error && error.response === undefined){
              alert("Your internet connection is quite unstable.")
         }else if(error && (error.response.status ===  401)){
-        alert("Session expired")
+        if(error.response.headers["x-new-auth-token"] || error.response.headers.get("x-new-auth-token")){
+         setLoading(true)
+         const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
+        
+         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
+           const setAuthorisedToken = localStorage.setItem("authorisedLogin", newToken);
+           if(setAuthorisedToken){
+            await inputPinHandler()
+           }
+            }else{
+    const setGetToken = localStorage.setItem("getToken", newToken);
+      if(setGetToken){
+        await inputPinHandler();
+      }
+      }
+        }else{
+          return setSessionModal(true)
+        }
       }else if(error && error.response.status ===  400){
         setSelectProductWarn(true);
       }else if(error && error.response.status ===  500){
@@ -170,10 +207,10 @@ useEffect(() => {
   };
 
   const handleSelectOption = (plan) => {
-    setPlan(`${plan.ID}`);
-    setSelectedOptionMtn(` ${plan.Size} (₦${plan.Amount}) ~ ${plan.Validity ? plan.Validity.toUpperCase() : ""} `);
-   setMtnReceiptInfo(plan.PlanType + " " + plan.Size);
-    setSelectedAmountMtn(`₦${plan.Amount}`);
+    setPlan(`${plan?.ID}`);
+    setSelectedOptionMtn(` ${plan?.Size} (₦${plan?.Amount}) ~ ${plan?.Validity ? plan?.Validity.toUpperCase() : ""} `);
+   setMtnReceiptInfo(plan?.PlanType + " " + plan?.Size);
+    setSelectedAmountMtn(`₦${plan?.Amount}`);
     setSelectedPlan(plan);
     setShowOptionList(false);
     setShowProductList(false);
@@ -237,8 +274,18 @@ useEffect(() => {
 console.log("successfully retrieved balance");
 //alert("Successful")
   }
- const FailedHandler = ()=> {
-   console.log(`Failed to retrieve balance`)
+ const FailedHandler = async(ErrorType)=> {
+  if(ErrorType === "unauthoriesed"){
+    await GetFunction("balance", 
+      setLoading, 
+      SuccessHandler, 
+     (ErrorType)=> {
+       if(ErrorType === "unauthorised"){
+        setSessionModal(true)
+       }
+     },
+      setPassDataBalance)
+  }
  }
  await GetFunction("balance", setLoading, SuccessHandler, FailedHandler,setPassDataBalance)
    } 
@@ -446,7 +493,7 @@ const [inputValue, setInputValue] = useState("");
   };
   const inputPinHandler = async () => {
     async function buyData(network, mobileNumber, planID, name) {
-
+   
       // Add validation for selected plan
       if (!selectedPlan) {
         console.error("No plan selected");
@@ -473,7 +520,7 @@ const [inputValue, setInputValue] = useState("");
       console.log("its me")
 
       try {
-        setLoading(true)
+        setLoading(true);
         const response = await axiosInstance.post(path, data);
         console.log(response.data);
         console.log(response.status);
@@ -483,15 +530,15 @@ console.log(resData);
         
 
         setMtnTransactionID(resData?.transaction_id);
-        console.log(resData.transaction_id);
+        console.log(resData?.transaction_id);
 
-        setMtnRefNumber(resData.reference_number);
-        console.log(resData.reference_number);
+        setMtnRefNumber(resData?.reference_number);
+        console.log(resData?.reference_number);
 
-        setMtnOrderID(resData.order_id); // No `order_id`, using `id` instead
-        console.log(resData.order_id);
+        setMtnOrderID(resData?.order_id); // No `order_id`, using `id` instead
+        console.log(resData?.order_id);
 
-        setMtnDescription(`${resData.network} - ${resData.plan_name}`); // Fabricated description
+        setMtnDescription(`${resData?.network} - ${resData?.plan_name}`); // Fabricated description
 
     
 
@@ -507,14 +554,31 @@ console.log(resData);
 } catch (error) {
         console.error(error);
         if(error && error.response === undefined){
-             alert("Check your network Connection");
-          }else if(error && (error.response.status === 500 || 400 )){
+             alert("Your internet connection is quite unstable.");
+          }else if(error && (error.response.status === 500 || error.response.status === 400 )){
               setPurchaseStatus(true); // Show failure popup
            setConfirm(false);
       setInputPin("");
 
       }else if(error && error.response.status === 401){
-     alert("the session has expired, re-run the api request to get the new Token then carry out request.")
+     if(error.response.headers["x-new-auth-token"] || error.response.headers.get("x-new-auth-token")){
+         setLoading(true)
+         const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
+        
+         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
+           const setAuthorisedToken = localStorage.setItem("authorisedLogin", newToken);
+           if(setAuthorisedToken){
+            await inputPinHandler()
+           }
+            }else{
+    const setGetToken = localStorage.setItem("getToken", newToken);
+      if(setGetToken){
+        await inputPinHandler();
+      }
+      }
+        }else{
+          return setSessionModal(true)
+        }
       }
       else{
         alert("Check your internet connection");
@@ -566,10 +630,17 @@ console.log(resData);
         >
           <div
             id="DataBundle"
-            className="w-full min-h-[90px] gap-[5px] md:h-[112.29px] lg:h-[196px] md:rounded-[11.5px] rounded-[7px] md:mt-[-1px] px-[10px] lg:gap-[50px]  lg:px-[30px] lg:rounded-[20px] lg:py-[20px]  flex justify-between items-center lg:ml-[-20px] lg:w-[102%] 2xl:w-full 2xl:ml-0"
+            className="w-full min-h-[90px] gap-[5px] md:h-[112.29px] lg:h-[196px]
+             md:rounded-[11.5px] rounded-[7px]
+             md:mt-[-1px] px-[10px] lg:gap-[50px] 
+              lg:px-[30px] lg:rounded-[20px] lg:py-[20px] 
+               flex justify-between items-center lg:ml-[-20px] 
+               lg:w-[102%] 2xl:w-full 2xl:ml-0"
           >
-            <div className="w-[100%] pt-[19px] lg:pt-[20px] pl-[8.5px] md:pl-[9px]">
-              <p className="text-[11px] mb-2 font-bold uppercase w-[100%] md:text-[16px] md:w-[70%] lg:w-[70%] lg:text-[20px] 2xl:w-[80%] 2xl:text-[24px] lg:mb-4">
+            <div className="w-[100%] pt-[19px]
+             lg:pt-[20px] pl-[8.5px] md:pl-[9px]">
+              <p className="text-[11px] mb-2 font-bold uppercase 
+              w-[100%] md:text-[16px] md:w-[70%] lg:w-[70%] lg:text-[20px] 2xl:w-[80%] 2xl:text-[24px] lg:mb-4">
                 DATA BUNDLES, AFFORDABLE AND AUTOMATED.
               </p>
               <p className="text-[10px] font-[400] leading-[13.4px] mb-4 md:text-[10px] md:leading-[12.2px] w-[90%] md:w-[75%] lg:w-[75%] 2xl:w-[85%] 2xl:mt-[5px] lg:mt-[20px] lg:text-[16px] lg:leading-[26px] 2xl:text-[20px] lg:mb-[20px]">
@@ -774,7 +845,7 @@ console.log(resData);
                  
                 }}
               >
-                <h2 className=" text-[12px] font-[400] leading-[12px] 
+                <h2 className="text-[12px] font-[400] leading-[12px] 
                 capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
                   {selectedProductMtn}
                 </h2>
@@ -786,7 +857,7 @@ console.log(resData);
               {showProductList && (
                 <div className={`border md:rounded-[10px] text-[10px] 
                    bvnQuery shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
-                  md:text-[12px] ${products.length > 1 ? "h-[300px] overflow-y-scroll" : "h-[0px]"}  
+                  md:text-[12px] ${products.length > 5 ? "h-[300px] overflow-y-scroll" : ""}  
                 lg:text-[16px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[10]`}>
                   {loadingProducts  ? (
                     <div>Loading products...</div>
@@ -794,9 +865,9 @@ console.log(resData);
                     products.map((product) => (
                       <div
                         key={product.Product_ID}
-                        className={`pb-[15px] md:pb-[6px] pt-[15px] md:pt-[6px] font-weight-bold text-[13px]
-                           cursor-pointer border-b-[0.5px] text-[#7C7C7C] md:text-[12px] 
-                           lg:text-[16px]  md:rounded-[0px] lg:mt-2 py-[4px]  pl-[5px] ${selectedProductMtn === product.Plan_Type ? "" : ""}
+                        className={`  font-weight-bold text-[13px] leading-[18px] lg:leading-[20px]
+                          font-[400] cursor-pointer border-b-[0.5px] text-[#7C7C7C] md:text-[12px] 
+                           lg:text-[16px]  md:rounded-[0px] lg:mt-2 lg:py-[20px] py-[15px]  pl-[5px] ${selectedProductMtn === product.Plan_Type ? "" : ""}
                           ${isDarkMode
                             ? "bg-black text-white "
                             : ""
@@ -872,7 +943,7 @@ console.log(resData);
               {(showOptionList && selectedProductMtn.length > 1 ) && (
                 <div className={`text-[12px] absolute  border md:rounded-[10px] 
                    bvnQuery shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
-                   ${productPlans.length > 1 ? `h-[300px] overflow-y-scroll`  : "h-[0px]"}
+                   ${productPlans.length > 5 ? `h-[300px] overflow-y-scroll`  : ""}
                    lg:mt-2 rounded-[4px]  w-full bg-[#FFF] z-[100]
                   ${isDarkMode
                     ? "bg-black text-white border !border-white"
@@ -885,9 +956,9 @@ console.log(resData);
                     productPlans.map((plan) => (
                       <div
                         key={plan.PlanID}
-                        className={`pb-[18px] md:pb-[6px] pt-[18px] md:pt-[6px] 
-                          font-weight-bold text-[13px] cursor-pointer border-b-[0.5px] 
-                          md:rounded-[0px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[4px] 
+                        className={` 
+                          font-[400] text-[13px] leading-[18px] lg:leading-[20px] cursor-pointer border-b-[0.5px] 
+                          md:rounded-[0px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[15px] lg:py-[20px]
                            pl-[5px] ${selectedOptionMtn === plan.PlanID ? "bg-gray-200" : ""
                           }
                          ${isDarkMode
@@ -1264,6 +1335,10 @@ console.log(resData);
                         </h2>
                       </div>
                     </div>
+                      <div className="flex text-[10px] md:text-[14px] w-[100%] mx-auto justify-between font-semibold lg:text-[16px]">
+                    <span className="text-[#0008]">Points Earned</span>
+                    <span className="text-[#2ED173]">+2.00</span>
+                  </div>
 
                      <div className="bg-[#F6F7F7] w-[95%] h-auto  lg:my-8 flex py-[7px] 
                            justify-between items-center px-[4%] mx-auto rounded-[10px]">
@@ -1462,6 +1537,24 @@ console.log(resData);
                      // Close modal on PIN success
                         inputPinHandler(); // Proceed with purchase
                       }
+                      const setFailed =(ErrorType)=> {
+                        if(ErrorType=== "unauthorised"){
+                        VerifyTransPin(
+                      inputPin,
+                      setSuccess,
+                      (ErrorType)=> {
+                        if(ErrorType === "unauthorised"){
+                          return setSessionModal(true)
+                        }
+                      },
+                      setLoading,
+                      setErrorMessage,
+                     DataHandler
+                    );
+                        }
+                      }
+                      //Run the function to check user's pin
+                      // and proceed with purchase
                     VerifyTransPin(
                       inputPin,
                       setSuccess,
@@ -1730,6 +1823,9 @@ console.log(resData);
         <Modal>
           <Loader/>
         </Modal>
+      )}
+      {sessionModal && (
+        <HandleUserSession/>
       )}
     </DashBoardLayout>
   );

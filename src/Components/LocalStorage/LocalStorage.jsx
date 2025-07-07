@@ -78,6 +78,8 @@ export const RemoveLocalStorage = () => {
  localStorage.removeItem("getToken");
  localStorage.removeItem("idVerification");
  localStorage.removeItem("bvnVerification");
+ localStorage.removeItem("ReferralLink");
+ localStorage.removeItem("ReferralCode");
  const AccCreated = localStorage.getItem("AccCreated")
  const getToken = localStorage.getItem("getToken");
  if(getToken){

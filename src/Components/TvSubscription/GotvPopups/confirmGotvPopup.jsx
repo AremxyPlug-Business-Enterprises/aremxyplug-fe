@@ -20,6 +20,7 @@ const ConfirmGotvPopup = ({passDataBalance, userVerifiedName}) => {
     selectedOptionGOTV,
     cardName,
     methodImage,
+    isDarkMode,
     //tvWalletBalance,
 
     flagResult,
@@ -62,15 +63,20 @@ const ConfirmGotvPopup = ({passDataBalance, userVerifiedName}) => {
       {confirmGotvPopup &&
         (
           <Modal >
-
+       <div className={`w-full flex justify-center h-full 
+             py-[30px] px-[10px] lg:items-center
+              items-end`}>
             <div
-              className={`${styles.transferMoneyPop} ${
+              className={`bvnQuery lg:rounded-[12px] rounded-[10px]
+                 ${isDarkMode ? "bg-black text-white border rounded-[10px] border-white": "bg-white text-black"}
+ ${
                 toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-                } w-[90%] md:w-[60%] overflow-auto`}
+                } w-[90%] md:w-[60%] overflow-auto h-[520px]`}
             >
               <div className="flex justify-end pr-2 mt-1 mb-3 md:mt-2 md:mb-2 lg:mb-0 lg:mt-1">
               <img onClick={() => { setConfirmGotvPopup(false);}}
-                  className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[26px] lg:h-[26px]"
+                  className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[26px]
+                   lg:h-[26px]"
                   src="/Images/transferImages/close-circle.png"
                   alt=""
                 />
@@ -114,7 +120,7 @@ const ConfirmGotvPopup = ({passDataBalance, userVerifiedName}) => {
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
                     <span className="text-[#0008]">Amount</span>
-                    <span>{tvAmount}</span>
+                    <span> {`₦${tvAmount}`}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
                     <span className="text-[#0008]">Payment Method</span>
@@ -171,6 +177,7 @@ const ConfirmGotvPopup = ({passDataBalance, userVerifiedName}) => {
               >
                 Confirmed
               </button>
+            </div>
             </div>
           </Modal>
         )}

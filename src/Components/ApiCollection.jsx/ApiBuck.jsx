@@ -65,21 +65,26 @@ if(bank_name.length > 1 ){
 
   // A reusable component to handle user session management.
   export const HandleUserSession = ()=> {
+   const isDarkMode = localStorage.getItem("darkModeEnabled")
   return (
    
-   <div className='w-full h-full justify-center items-center flex'>
+   <div className={`w-full h-full justify-center items-center
+   flex`}>
     <Modal>
-              <div className="w-full flex  justify-center items-center">
-            <div className ="flex flex-col justify-center items-center py-[20px] px-[12px] gap-[20px] w-[80%] md:w-[60%] lg:w-[30%] md:h-[300px] bg-white rounded-[10px]
-             lg:rounded-[20px]">
+              <div className={`w-full flex  justify-center items-center 
+             `}>
+            <div className = {`flex flex-col justify-center items-center
+             py-[20px] px-[12px] gap-[20px] w-[80%] md:w-[60%] lg:w-[30%] md:h-[300px]  rounded-[10px]
+             lg:rounded-[20px]   ${isDarkMode === "true" ? "bg-black border border-white rounded-[10px]" 
+               : "bg-white"}`}>
                <div className ="flex flex-col  gap-[20px]">
-               <h2 className="text-[14px] text-center font-[600] leading-[18px]
-               text-black lg:text-[16px] lg:leading-[22px]">
+               <h2 className={`text-[14px] text-center font-[600] leading-[18px]
+               text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode === "true" ? "text-white" : "text-black"}`}>
                   Your Session has expired.
                   </h2>
-              <p className ="text-[14px] text-center font-[400] leading-[18px]
-               text-black lg:text-[16px] lg:leading-[22px] ">
-            User Sessions are used for safe and secure transactions, kindly repeat the login
+              <p className ={`text-[14px] text-center font-[400] leading-[18px]
+               text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode === "true" ? "text-white" : "text-black"}`}>
+            User Sessions are used to ensure safe and secure transactions, kindly repeat the login
             process to continue using the platform.
                </p>
                </div>
@@ -115,10 +120,10 @@ export const CheckVirtualAcc = async(authToken, customerDetail, setLoading,
     setLoading(true);
           const response = await axios.get(url, {headers : {"Content-Type" : "application/json",
       Authorization : authToken
-      }})
+      }, withCredentials : true})
     
         if (response.status === 201 || 200 ) {
-             const virtualAccCreated = response.data.data.acc_details;
+             const virtualAccCreated = response?.data?.data?.acc_details;
             setVirtualAccCreated(virtualAccCreated);
             if(TwoStep === true){
                console.log(TwoStep)
@@ -234,7 +239,7 @@ export const VerifyTransPin = async(otp, setSuccess,
          Authorization : authToken || getToken
       },withCredentials : true
    })
-      if(response.status === 201 || 200){
+      if(response.status === 201 || response.status ===  200){
      setSuccess(true);
        setErrorMessage(false);
      await asyncFuncAtSuccess()
@@ -244,9 +249,10 @@ export const VerifyTransPin = async(otp, setSuccess,
         if(error && error.response === undefined){
      alert("Kindly check your internet connection")
       } else if(error && error.response.status === 400){
-         setFailed(true)
+         setFailed("Bad request")
          setErrorMessage(true)
       }else if(error && error.response.status === 401){
+         
          console.log(error.response.headers);
         console.log(error.response.headers.get("x-new-auth-token"));
     
@@ -257,13 +263,20 @@ export const VerifyTransPin = async(otp, setSuccess,
          if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
              console.log(newToken)
             localStorage.setItem("authorisedLogin", newToken);
+            setFailed("unauthorised")
            }else{
       localStorage.setItem("getToken", newToken);
-    } }
+      setFailed("unauthorised");
+    } }else{
+      setFailed("unauthorised")
+    }
        console.log(error.response);
          
       }else if(error && error.response.status === 500){
-   setFailed(true)
+   setFailed("Server error")
+   setErrorMessage(true);
+      }else if(error && error.response.status === 404){
+   setFailed("User error");
    setErrorMessage(true);
       }else {
    alert("Check your internet connection and try again")
@@ -300,6 +313,7 @@ export const PostFunction = async(path, setLoading, body, functionAtSuccess, fun
    }catch(error){
         if(error && error.response === undefined){
      alert("Kindly check your internet connection")
+      functionAtFailed("Network error")
       }  else  if(error && error.response.status === 400){
        functionAtFailed("Bad request");
           if(functionAtFailed) {
@@ -316,7 +330,7 @@ export const PostFunction = async(path, setLoading, body, functionAtSuccess, fun
               console.log(error.response.data.data)
          }
       }else if(error && error.response.status === 401){
-       functionAtFailed("unauthorised");
+     
         console.log(error.response.headers);
         console.log(error.response.headers.get("x-new-auth-token"));
       
@@ -327,15 +341,19 @@ export const PostFunction = async(path, setLoading, body, functionAtSuccess, fun
          if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
              console.log(newToken)
             localStorage.setItem("authorisedLogin", newToken);
+            functionAtFailed("unauthorised")
              if(functionAtFailed) {
             setFetchedResponse(error?.response?.data?.data)
            }
    }else{
       localStorage.setItem("getToken", newToken);
+      functionAtFailed("unauthorised")
     if(functionAtFailed) {
             setFetchedResponse(error.response.data.data)
            }
    }
+        }else{
+         functionAtFailed("unauthorised")
         }
        console.log(error.response);
          
@@ -371,7 +389,7 @@ export const GetFunction = async(path, setLoading, functionAtSuccess,functionAtF
          Authorization : authToken || getToken
       }, withCredentials : true})
     if(response.status === 201 || 200){
-     functionAtSuccess();
+     functionAtSuccess(response);
      if(functionAtSuccess){
      setFetchedResponse(response);
      }
@@ -379,12 +397,13 @@ export const GetFunction = async(path, setLoading, functionAtSuccess,functionAtF
    }catch(error){
       if(error && error.response === undefined){
      alert("Kindly check your internet connection")
+     functionAtFailed("Network error")
       } else if(error && error.response.status === 400){
          functionAtFailed("Bad request")
        alert("Invalid request")
       }
       else if(error && error.response.status === 401){
-         functionAtFailed("unauthorised");
+         
         setFetchedResponse(error.response);
        
       //  console.log(error.response);
@@ -393,17 +412,21 @@ export const GetFunction = async(path, setLoading, functionAtSuccess,functionAtF
       //  console.log(error.response.headers.hasAuthorization());
         // console.log(error.response.headers.hasAuthorization);
         if(error.response.headers["x-new-auth-token"] || error.response.headers.get("x-new-auth-token")){
-         setLoading(true)
+
+         setLoading(true);
          const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
         
          if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
              console.log(newToken)
             localStorage.setItem("authorisedLogin", newToken);
+            functionAtFailed("unauthorised");
           
    }else{
       localStorage.setItem("getToken", newToken);
-    
-   }
+        functionAtFailed("unauthorised");
+     }
+        }else{
+         functionAtFailed("unauthorised");
         }
        console.log(error.response);
       }
@@ -441,12 +464,12 @@ export const PutFunction = async(path, setLoading,body, functionAtSuccess,functi
    }catch(error){
       if(error && error.response === undefined){
          alert("Check your internet connection");
+          functionAtFailed("Network error")
       }else if(error && error.response.status === 400){
          functionAtFailed("Bad request");
        alert("Invalid request");
       }else if(error && error.response.status === 401){
-      //   setFetchedResponse(error.response);
-       
+      functionAtFailed("unauthorised");
       //  console.log(error.response);
         console.log(error.response.headers);
         console.log(error.response.headers.get("x-new-auth-token"));
@@ -459,7 +482,6 @@ export const PutFunction = async(path, setLoading,body, functionAtSuccess,functi
          if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
              console.log(newToken)
             localStorage.setItem("authorisedLogin", newToken);
-            functionAtFailed();
    }else{
       localStorage.setItem("getToken", newToken);
      functionAtFailed("unauthorised");

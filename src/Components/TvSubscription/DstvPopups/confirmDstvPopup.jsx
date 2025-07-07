@@ -24,7 +24,8 @@ import styles from '../../AirTimePage/AirtimeVtu.module.css'
     tvWalletBalance,
     flagResult,
     dstvAmount,
-    newBalance
+    newBalance,
+    isDarkMode
   } = useContext(ContextProvider)
 
   
@@ -42,9 +43,9 @@ import styles from '../../AirTimePage/AirtimeVtu.module.css'
   // };
 const [balanceStatus,setBalanceStatus ] = useState("")
    let balanceStringToNum = Number(newBalance);
-   const updateBalance = (newBalance === "" && passDataBalance?.data?.data?.data?.balance) ? passDataBalance?.data?.data?.data?.balance : newBalance;
+   const updateBalance = (newBalance === "" && passDataBalance?.data?.data?.data?.balance) ? passDataBalance?.data?.data?.data?.balance : balanceStringToNum;
           let DstvAmountToNumber = Number(dstvAmount);
-         let CheckSufficiency = DstvAmountToNumber > balanceStringToNum;
+         let CheckSufficiency = DstvAmountToNumber > updateBalance;
       useEffect(()=> {
         const HandleBalanceStatus = ()=> {
           if(CheckSufficiency){
@@ -55,7 +56,7 @@ const [balanceStatus,setBalanceStatus ] = useState("")
         }
         HandleBalanceStatus()
       },[CheckSufficiency])
-        console.log(balanceStringToNum, DstvAmountToNumber)
+        console.log(updateBalance, DstvAmountToNumber)
 
   const valueWithoutTilde = selectedOptionDstv.split(" ~ ")[0];
   // const trimmedValue = valueWithoutTilde.trim();
@@ -65,11 +66,14 @@ const [balanceStatus,setBalanceStatus ] = useState("")
        {confirmDstvPopup &&
             (
             <Modal >
-              
+             <div className={`w-full flex justify-center h-full 
+             py-[30px] px-[20px] lg:items-center
+              items-end`}>
+            
        <div 
-            className={`${styles.transferMoneyPop} ${
-              toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-              } w-[90%] md:w-[60%] overflow-auto`}
+            className={` bvnQuery lg:rounded-[12px] rounded-[10px] 
+              h-[520px] ${ toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+              } w-[100%] md:w-[60%] overflow-auto  ${isDarkMode ? "bg-black text-white border rounded-[10px] border-white": "bg-white text-black"} `}
           >
         <div className="flex justify-end pr-2 mt-1 mb-3 md:mt-2 md:mb-2 lg:mb-0 lg:mt-1">
         <img  onClick={()=>{setConfirmDstvPopup(false);}}
@@ -78,9 +82,10 @@ const [balanceStatus,setBalanceStatus ] = useState("")
                 alt=""
               />
         </div>
-        <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
+        <hr className="h-[6px] bg-[#04177f] borde-none md:h-[10px]"/>
         <div className="mx-auto">
-            <div className="text-[12px] my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
+            <div className="text-[12px] my-[5%] text-center md:my-[3%] md:text-[15px] 
+            lg:my-[2%] lg:text-[16px]">
               Confirm Transaction</div>
               <div className="text-[8px] text-[#0008] text-center mb-2 md:text-[12px] lg:text-[14px] mx-2">
                   You are about to purchase&nbsp;
@@ -92,50 +97,50 @@ const [balanceStatus,setBalanceStatus ] = useState("")
             <div className="flex flex-col gap-3 mt-5 md:mt-6 lg:mt-7">
 
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className="text-[#0008]">Decoder Type</span>
+                    <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>Decoder Type</span>
                     <span>Dstv</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className="text-[#0008]">Package</span>
+                    <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>Package</span>
                     <span>{selectedOptionDstv}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className="text-[#0008]">Smartcard / IUC Number</span>
+                    <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>Smartcard / IUC Number</span>
                     <span>{dstvSmartCard}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className="text-[#0008]">Card Name</span>
+                    <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>Card Name</span>
                     <span>{userVerifiedName}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className="text-[#0008]">Phone Number</span>
+                    <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>Phone Number</span>
                     <span>{dstvMobileNumber}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className="text-[#0008]">Email</span>
+                    <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>Email</span>
                     <span>{dstvEmail}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className="text-[#0008]">Amount</span>
-                    <span>{dstvAmount}</span>
+                    <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>Amount</span>
+                    <span>{`₦${dstvAmount}`}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className="text-[#0008]">Payment Method</span>
+                    <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>Payment Method</span>
                     <span>{flagResult}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className="text-[#0008]">Transaction Fee</span>
+                    <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>Transaction Fee</span>
                     <span>₦0.00</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className="text-[#0008]">Points Earned</span>
+                    <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>Points Earned</span>
                     <span className="text-[#2ED173]">+2.00</span>
                 </div>
             </div>
         </div>
 
-        <div className="bg-[#F6F7F7] w-[95%] h-auto my-5 lg:my-8 flex py-[7px] 
-        justify-between items-center px-[4%] mx-auto rounded-[10px]">
+        <div className={`bg-[#F6F7F7] w-[95%] h-auto my-5 lg:my-8 flex py-[7px] 
+        justify-between items-center px-[4%] mx-auto rounded-[10px]  ${isDarkMode ? "bg-black border rounded-[10px]  border-white" : "bg-[#F6F7F7] "}`}>
                 <div className="flex flex-col gap-2  ">
                   <div className="flex gap-[10px] justify-center items-center">
                     <img
@@ -144,10 +149,11 @@ const [balanceStatus,setBalanceStatus ] = useState("")
                       alt="/"
                     />
                     <div className="flex gap-[10px] items-center">
-                        <p className="text-[12px] md:text-[14px] leading-[20px] lg:leading-[22px]  lg:text-[16px] font-[500]">
+                        <p className={`text-[12px] md:text-[14px] leading-[20px] 
+                        lg:leading-[22px]  lg:text-[16px] font-[500 ${isDarkMode ? "text-white" : "text-black"}`}>
                     Available Balance {"  "} 
                      </p>
-                     <span className="text-black">
+                     <span className={`${isDarkMode ? "text-white" : "text-black"}`}>
                       {`(${updateBalance})`}
                     </span>
                     </div>
@@ -175,6 +181,7 @@ const [balanceStatus,setBalanceStatus ] = useState("")
               Confirmed
             </button>
        </div> 
+       </div>
             </Modal>
           )}
        </>

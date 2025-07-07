@@ -73,7 +73,7 @@ const AirtelDataBundle = () => {
   const [loadingPlans, setLoadingPlans] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [success, setSuccess] = useState(false);
-  const [failed, setFailed] = useState(false);
+ 
   const [errorMessage, setErrorMessage] = useState("");
  const [balanceStatus,setBalanceStatus ] = useState("");
  const [selectProductWarn, setSelectProductWarn] = useState("") ;
@@ -105,7 +105,24 @@ const AirtelDataBundle = () => {
           }else if(error && error.response.status === 500){
              alert("Service for airtel is currently not available, Try again later.")
           }else if(error && error.response.status === 401){
-          alert("Session Expired.")
+         if(error.response.headers["x-new-auth-token"] || error.response.headers.get("x-new-auth-token")){
+         setLoading(true)
+         const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
+        
+         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
+           const setAuthorisedToken = localStorage.setItem("authorisedLogin", newToken);
+           if(setAuthorisedToken){
+            await inputPinHandler()
+           }
+            }else{
+    const setGetToken = localStorage.setItem("getToken", newToken);
+      if(setGetToken){
+        await inputPinHandler();
+      }
+      }
+        }else{
+          return setSessionModal(true)
+        }
           }else{
             alert("Error occured: Kindly check your network connection.")
           }
@@ -147,7 +164,24 @@ console.log(airtelDataAmount, balanceStringToNum)
        if(error && error.response === undefined){
              alert("Your internet connection is quite unstable.")
         }else if(error && (error.response.status ===  401)){
-        alert("Session expired")
+       if(error.response.headers["x-new-auth-token"] || error.response.headers.get("x-new-auth-token")){
+         setLoading(true)
+         const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
+        
+         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
+           const setAuthorisedToken = localStorage.setItem("authorisedLogin", newToken);
+           if(setAuthorisedToken){
+            await inputPinHandler()
+           }
+            }else{
+    const setGetToken = localStorage.setItem("getToken", newToken);
+      if(setGetToken){
+        await inputPinHandler();
+      }
+      }
+        }else{
+          return setSessionModal(true)
+        }
       }else if(error && error.response.status ===  400){
         setSelectProductWarn(true);
       }else if(error && error.response.status ===  500){
@@ -163,16 +197,16 @@ console.log(airtelDataAmount, balanceStringToNum)
   const handleSelectProduct = (product) => { 
     if(!navigator.onLine) return alert("Check your internet connection.");
     if(navigator.onLine){
-    setSelectedProductAirtel(`${product.Plan_Type}`);
+    setSelectedProductAirtel(`${product?.Plan_Type}`);
     setShowProductList(false);
-    fetchPlans(product.Product_ID);
+    fetchPlans(product?.Product_ID);
     }
   };
 
   const handleSelectOption = (plan) => {
-    setSelectedOptionAirtel(`${plan.Size} ~ ${plan.Validity} ~ ₦${plan.Amount}`);
-    setAirtelReceiptInfo(plan.PlanType +" " + plan.Size)
-    setSelectedAmountAirtel(`₦${plan.Amount}`);
+    setSelectedOptionAirtel(`${plan?.Size} ~ ${plan?.Validity} ~ ₦${plan?.Amount}`);
+    setAirtelReceiptInfo(plan?.PlanType +" " + plan?.Size)
+    setSelectedAmountAirtel(`₦${plan?.Amount}`);
     setSelectedPlan(plan);
     setShowOptionList(false);
     setShowProductList(false);
@@ -466,17 +500,17 @@ console.log(airtelDataAmount, balanceStringToNum)
       console.log("its me")
 
       try {
-      
+      setLoading(true)
 
         const response = await axiosInstance.post(path, data);
       //  console.log(response.data);
         console.log(response.status);
 
-        const resData = response.data.data.data; // Accessing the nested `data` object
+        const resData = response?.data?.data?.data; // Accessing the nested `data` object
      console.log(resData);
-        console.log(response.status);
-        setPlan(resData.plan_name);
-        console.log(resData.plan_name);
+        console.log(response?.status);
+        setPlan(resData?.plan_name);
+        console.log(resData?.plan_name);
 
       
 
@@ -486,8 +520,8 @@ console.log(airtelDataAmount, balanceStringToNum)
         setAirtelRefNumber(resData?.reference_number);
         console.log(resData?.reference_number);
 
-        setAirtelOrderID(resData.order_id); // No `order_id`, using `id` instead
-        console.log(resData.order_id);
+        setAirtelOrderID(resData?.order_id); // No `order_id`, using `id` instead
+        console.log(resData?.order_id);
 
 
          if (response.statusCode === 200) {
@@ -500,15 +534,32 @@ console.log(airtelDataAmount, balanceStringToNum)
         // console.log(response.data);
       } catch (error) {
         if(error && error.response === undefined){
-             alert("Check your network Connection");
+             alert("Your internet connection is quite unstable.");
           }else if(error && (error.response.status === 500 || 400 )){
               setAirtelPurchaseStatus(true); // Show failure popup
            setConfirm(false);
       setInputPin("");
-      alert("Failed");
+      
      // alert("I am the problem");
       }else if(error && error.response.status === 401){
-     alert("the session has expired, re-run the api request to get the new Token then carry out request.")
+    if(error.response.headers["x-new-auth-token"] || error.response.headers.get("x-new-auth-token")){
+         setLoading(true)
+         const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
+        
+         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
+           const setAuthorisedToken = localStorage.setItem("authorisedLogin", newToken);
+           if(setAuthorisedToken){
+            await inputPinHandler()
+           }
+            }else{
+    const setGetToken = localStorage.setItem("getToken", newToken);
+      if(setGetToken){
+        await inputPinHandler();
+      }
+      }
+        }else{
+          return setSessionModal(true)
+        }
       }
       else{
         alert("Check your internet connection");
@@ -750,7 +801,7 @@ console.log(airtelDataAmount, balanceStringToNum)
               {showProductList && (
                 <div className={` text-[16px] md:text-[12px]  bvnQuery
                   shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
-                  ${products.length > 1 ?  "overflow-y-scroll h-[300px]" : "h-[0px]"}
+                  ${products.length > 5 ?  "overflow-y-scroll h-[300px]" : ""}
                    lg:text-[16px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[10]
                   ${isDarkMode
                     ? "bg-black text-white border !border-white"
@@ -763,10 +814,9 @@ console.log(airtelDataAmount, balanceStringToNum)
                     products.map((product) => (
                       <div
                         key={product.Product_ID}
-                        className={`pb-[15px] md:pb-[6px] pt-[15px] md:pt-[6px] 
-                          font-weight-bold text-[13px] cursor-pointer border-b-[0.5px]
+                        className={`font-[400] text-[13px] leading-[18px] lg:leading-[20px] cursor-pointer border-b-[0.5px]
                            text-[#7C7C7C] md:text-[12px] lg:text-[16px]  md:rounded-[0px]
-                            lg:mt-2 py-[4px]  pl-[5px] ${selectedProductAirtel === product.Plan_Type ? "" : ""}
+                            lg:mt-2 py-[15px] lg:py-[20px] pl-[5px] ${selectedProductAirtel === product.Plan_Type ? "" : ""}
                           ${isDarkMode
                             ? "bg-black text-white"
                             : ""
@@ -840,7 +890,7 @@ console.log(airtelDataAmount, balanceStringToNum)
               {showOptionList && (
                 <div className={`border md:rounded-[10px] lg:mt-2 bvnQuery rounded-[4px]
                   shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
-                   absolute w-full bg-[#FFF] z-[100] ${productPlans.length > 1 ? "h-[300px] overflow-y-scroll" : "h-[0px]"}
+                   absolute w-full bg-[#FFF] z-[100] ${productPlans.length > 5 ? "h-[300px] overflow-y-scroll" : ""}
                   ${isDarkMode
                     ? "bg-black text-white border !border-white"
                     : "border border-[#0003]"
@@ -852,9 +902,9 @@ console.log(airtelDataAmount, balanceStringToNum)
                     productPlans.map((plan) => (
                       <div
                         key={plan.PlanID}
-                        className={`pb-[18px] md:pb-[6px] pt-[18px] md:pt-[6px] font-weight-bold
-                           text-[13px] cursor-pointer border-b-[0.5px] md:rounded-[0px]
-                            text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[4px]
+                        className={`font-[400]
+                           text-[13px] leading-[18px] lg:leading-[20px] cursor-pointer border-b-[0.5px] md:rounded-[0px]
+                            text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[15px] lg:py-[20px]
                               pl-[5px] ${selectedOptionAirtel === plan.PlanID ? "bg-gray-200" : ""
                           }
                                                  ${isDarkMode
@@ -1223,6 +1273,10 @@ console.log(airtelDataAmount, balanceStringToNum)
                         </h2>
                       </div>
                     </div>
+                      <div className="flex text-[10px] md:text-[14px] w-[100%] mx-auto justify-between font-semibold lg:text-[16px]">
+                    <span className="text-[#0008]">Points Earned</span>
+                    <span className="text-[#2ED173]">+2.00</span>
+                  </div>
 
                       <div className="bg-[#F6F7F7] w-[95%] h-auto my-5 lg:my-8 flex py-[7px] 
                                              justify-between items-center px-[4%] mx-auto rounded-[10px]">
@@ -1411,6 +1465,23 @@ console.log(airtelDataAmount, balanceStringToNum)
                         setConfirm(false); // Close modal on PIN success
                         inputPinHandler(); // Proceed with purchase
                       }
+             const setFailed =async(ErrorType)=> {
+               if(ErrorType === "unauthorised"){
+                  VerifyTransPin(
+                      inputPin,
+                      setSuccess,
+                      (ErrorType)=> {
+                        if(ErrorType ==="unauthorised"){
+                          return setSessionModal(true)
+                        }
+                      },
+                      setLoading,
+                      setErrorMessage,
+                      AirtelDataHandler
+                    );
+               }
+             }
+                      //Function to verify the pin and handle the purchase of users
                     VerifyTransPin(
                       inputPin,
                       setSuccess,
@@ -1418,7 +1489,6 @@ console.log(airtelDataAmount, balanceStringToNum)
                       setLoading,
                       setErrorMessage,
                       AirtelDataHandler
-                    
                     );
                   }}
                   disabled={inputPin.length !== 4}
